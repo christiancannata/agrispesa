@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/header.php" afterDir="false" />
-    </list>
+    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1672419500965</updated>
       <workItem from="1672419502130" duration="2820000" />
-      <workItem from="1672426076559" duration="1302000" />
+      <workItem from="1672426076559" duration="1338000" />
     </task>
     <servers />
   </component>
