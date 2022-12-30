@@ -4,7 +4,6 @@ $current_user = wp_get_current_user();
 global $current_user;
 global $woocommerce;
  ?>
-
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
