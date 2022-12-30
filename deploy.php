@@ -8,7 +8,7 @@ require 'recipe/common.php';
 
 set('repository', 'git@github.com:christiancannata/agrispesa.git');
 
-add('shared_files', []);
+add('shared_files', ['wp-config.php']);
 add('shared_dirs', []);
 add('writable_dirs', ['wp-content/uploads']);
 
