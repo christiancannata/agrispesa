@@ -1,0 +1,160 @@
+/* stylelint-disable */
+* {
+	box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+
+	&:focus {
+		outline: none !important;
+	}
+}
+
+html {
+	box-sizing: border-box;
+	font-size: 50%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	@include font-size(16);
+	background: $background;
+	color: $black;
+	font-family: $font-body;
+	-webkit-font-smoothing: antialiased;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-weight: 300;
+	padding-top: 80px;
+	@include breakpoint(desktop) {
+		@include font-size(18);
+		padding-top: 90px;
+	}
+}
+
+a {
+	@include transition(all 0.3s ease);
+}
+
+p {
+	margin: 8px 0;
+	line-height: 1.2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	//font-family: $font-title;
+	font-family: $font-body;
+	font-weight: 900;
+}
+
+
+.only-mobile {
+	display: none !important;
+	@include breakpoint(mobile) {
+		display: block !important;
+	}
+}
+
+.only-desktop {
+	@include breakpoint(mobile) {
+		display: none !important;
+	}
+}
+
+.clearfix {
+	@include clearfix();
+}
+
+.text-green {
+	color: $primary;
+}
+
+.container-pg {
+	margin: 0 auto;
+	width: 1160px;
+	padding: 0 20px;
+	max-width: 100%;
+	@include breakpoint(desktop) {
+		padding: 0 40px;
+	}
+}
+
+.disclaimer {
+	@include border-radius(14px);
+	color: $black;
+	padding: 16px;
+	background: $white;
+	border: 1px solid $light-gray;
+	margin-top: 32px;
+	text-align: center;
+	@include breakpoint(desktop) {
+		@include border-radius(20px);
+		padding: 8px 16px;
+	}
+}
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+
+	50% {
+		transform: translatey(-20px);
+	}
+
+	100% {
+		transform: translatey(0px);
+	}
+}
+
+.container-xsmall {
+	max-width: 990px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.container-small {
+	max-width: 1024px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.woocommerce-info,
+.woocommerce-message {
+	@include border-radius(4px);
+	@include font-size(16);
+	max-width: 1024px;
+	margin: 0 auto 16px;
+	padding: 16px;
+	border: none;
+	background: aliceblue;
+
+	&::before {
+		content: none;
+	}
+}
+
+.woocommerce-message {
+	background: rgba($primary, .1);
+}
+
+.woocommerce-notices-wrapper {
+	max-width: 1160px;
+	margin: 0 auto;
+	padding: 0 20px;
+	ul {
+		list-style: none;
+		li {
+			&:before {
+				content: none !important;
+			}
+		}
+	}
+}

@@ -1,0 +1,163 @@
+/* stylelint-disable */
+.review-page {
+	padding: 30px 0;
+	@include breakpoint(desktop) {
+		padding: 80px 0;
+	}
+
+	&--flex {
+		@include breakpoint(desktop) {
+			display: flex;
+		}
+	}
+
+	&__sx {
+		@include breakpoint(desktop) {
+			padding-right: 32px;
+			width: 30%;
+		}
+	}
+
+	&__dx {
+		@include breakpoint(desktop) {
+			width: 70%;
+		}
+	}
+
+	&--valutation {
+		&--flex {
+			align-items: center;
+			display: flex;
+			justify-content: flex-start;
+		}
+	}
+
+	&--points {
+		margin-left: 16px;
+
+		span {
+			@include font-size(22);
+			font-weight: 300;
+			@include breakpoint(desktop) {
+				@include font-size(20);
+			}
+
+			&.total {
+				font-weight: 600;
+			}
+		}
+	}
+
+	&--stars {
+		align-items: center;
+		display: flex;
+
+		span {
+			@include font-size(22);
+			margin: 0 -2px;
+			color: $muted;
+
+			&.yellow {
+				color: $yellow;
+			}
+			@include breakpoint(desktop) {
+				@include font-size(26);
+			}
+		}
+	}
+
+	&--disclaimer {
+		padding-top: 8px;
+		text-align: left;
+
+		p {
+			@include font-size(12);
+			color: #999;
+		}
+	}
+
+	&--title {
+		@include font-size(24);
+		line-height: 1;
+		margin-bottom: 42px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			@include font-size(40);
+			margin-bottom: 80px;
+		}
+	}
+
+	&__item {
+		border-bottom: 1px solid #ddd;
+		margin: 24px 0 0;
+		padding-bottom: 24px;
+	}
+
+	&__title {
+		@include font-size(18);
+		font-weight: 700;
+		line-height: 1.1;
+		margin: 24px 0 0;
+		padding-right: 30px;
+		position: relative;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+			margin-top: 2px;
+		}
+	}
+
+	&__description {
+		padding-top: 16px;
+		@include breakpoint(desktop) {
+			padding-top: 24px;
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+}
+
+.reviews-home {
+	background: $black;
+	padding: 260px 0;
+	@include breakpoint(container) {
+		padding: 220px 0;
+	}
+
+	.slick-next-agr,
+	.slick-prev-agr {
+		color: $panna;
+	}
+}
+
+.review {
+	&--item {
+		text-align: center;
+
+		.review-page--stars {
+			justify-content: center;
+		}
+	}
+
+	&--text {
+		max-width: 600px;
+		margin: 0 auto;
+		padding: 20px;
+		color: $panna;
+	}
+
+	&--title {
+		@include font-size(36);
+		font-weight: 900;
+		line-height: 1.1;
+		margin: 16px 0;
+		font-family: $font-title;
+	}
+
+	&--name {
+		@include font-size(18);
+		margin-top: 24px;
+		font-style: italic;
+	}
+}

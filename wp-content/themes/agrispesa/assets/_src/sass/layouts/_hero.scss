@@ -1,0 +1,103 @@
+/* stylelint-disable */
+.hero {
+
+
+	&--item {
+		height: calc(90vh - 90px);
+		background-repeat: no-repeat;
+		background-position: center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		@include breakpoint(desktop) {
+
+		}
+	}
+	&--content {
+
+	}
+	&--text {
+		text-align: center;
+	}
+
+	&--title {
+		@include font-size(40);
+		font-weight: 800;
+	}
+
+	&--subtitle {
+		@include font-size(24);
+		margin-top: 16px;
+	}
+	&--btn {
+		margin-top: 24px;
+	}
+	&--box {
+		width: 300px;
+		margin: 60px auto -100px;
+		@include breakpoint(desktop) {
+			width: 600px;
+		}
+	}
+}
+
+.hero-page {
+	width: 100%;
+	height: 80vh;
+
+	&--item {
+		width: 100%;
+		height: 80vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-repeat: no-repeat;
+		background-position: center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+		position: relative;
+
+		&:before {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: $black;
+			opacity: 0.4;
+			z-index: 1;
+			mix-blend-mode: color-burn;
+			pointer-events: none;
+		}
+	}
+
+	&--text {
+		text-align: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	&--title {
+		@include font-size(45);
+		font-weight: 900;
+		color: $white;
+		font-family: $font-title;
+		font-style: normal;
+	}
+
+	&--subtitle {
+		@include font-size(22);
+		color: $white;
+	}
+}

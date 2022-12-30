@@ -1,0 +1,144 @@
+@font-face {
+	font-display: block;
+	font-family: 'icomoon';
+	font-style: normal;
+	font-weight: normal;
+	src: url("../fonts/icomoon/icomoon.eot?xqo0h6");
+	src: url("../fonts/icomoon/icomoon/icomoon.eot?xqo0h6#iefix") format('embedded-opentype'), url("../fonts/icomoon/icomoon.ttf?xqo0h6") format('truetype'), url("../fonts/icomoon/icomoon.woff?xqo0h6") format('woff'), url("../fonts/icomoon/icomoon.svg?xqo0h6#icomoon") format('svg');
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: 1;
+	speak: none;
+	text-transform: none;
+}
+
+
+.icon-account::before {
+	content: "\e91d";
+}
+
+.icon-close::before {
+	content: "\e907";
+}
+
+.icon-perfume::before {
+	content: "\e91c";
+}
+
+.icon-check-fill::before {
+	content: "\e91b";
+}
+
+.icon-cloud::before {
+	content: "\e90b";
+}
+
+.icon-heart::before {
+	content: "\e918";
+}
+
+.icon-sun::before {
+	content: "\e919";
+}
+
+.icon-water::before {
+	content: "\e91a";
+}
+
+.icon-hamburger::before {
+	content: "\e90a";
+}
+
+.icon-android::before {
+	content: "\e900";
+}
+
+.icon-apple::before {
+	content: "\e901";
+}
+
+.icon-arrow-down::before {
+	content: "\e902";
+}
+
+.icon-arrow-left::before {
+	content: "\e903";
+}
+
+.icon-arrow-right::before {
+	content: "\e904";
+}
+
+.icon-arrow-up::before {
+	content: "\e905";
+}
+
+.icon-check::before {
+	content: "\e906";
+}
+
+.icon-dots::before {
+	content: "\e908";
+}
+
+.icon-facebook::before {
+	content: "\e909";
+}
+
+.icon-instagram::before {
+	content: "\e90c";
+}
+
+.icon-linkedin::before {
+	content: "\e90d";
+}
+
+.icon-mail-full::before {
+	content: "\e90e";
+}
+
+.icon-medium::before {
+	content: "\e90f";
+}
+
+.icon-phone::before {
+	content: "\e910";
+}
+
+.icon-search::before {
+	content: "\e911";
+}
+
+.icon-spotify::before {
+	content: "\e912";
+}
+
+.icon-star::before {
+	content: "\e913";
+}
+
+.icon-twitter::before {
+	content: "\e914";
+}
+
+.icon-vimeo::before {
+	content: "\e915";
+}
+
+.icon-whatsapp::before {
+	content: "\e916";
+}
+
+.icon-youtube::before {
+	content: "\e917";
+}

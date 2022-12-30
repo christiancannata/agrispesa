@@ -1,0 +1,301 @@
+/* stylelint-disable */
+.footer {
+	padding: 40px 0;
+	margin-top: 80px;
+	position: relative;
+	background: $white;
+	border-top: 1px solid $panna;
+
+	.container-pg {
+		position: relative;
+		z-index: 2;
+	}
+
+	&--column {
+		&.one {
+			@include breakpoint(desktop) {
+				width: 40%;
+
+				.footer--menu {
+					padding-left: 0;
+				}
+			}
+		}
+	}
+
+	&--social {
+		display: flex;
+		flex-wrap: wrap;
+
+		a {
+			width: calc(50% - 8px);
+			@include border-radius(2px);
+			margin: 4px;
+			display: flex;
+			align-content: center;
+			justify-content: center;
+			background: $panna;
+			position: relative;
+
+			&:after {
+				content: "";
+				display: block;
+				padding-bottom: 100%;
+			}
+
+			& > span {
+				@include font-size(45);
+				width: 100%;
+				@include center-align();
+				position: absolute;
+				text-align: center;
+			}
+		}
+	}
+
+	&--flex {
+		@include breakpoint(desktop) {
+		padding: 0 40px 40px;
+	}
+
+		&:last-of-type {
+			padding-bottom: 0;
+			border-top: 1px solid #f1f1f1;
+		}
+		@include breakpoint(desktop) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+
+	&--sx {
+		@include breakpoint(desktop) {
+			display: flex;
+			width: 75%;
+		}
+	}
+
+	&--dx {
+		@include breakpoint(desktop) {
+			width: 25%;
+		}
+	}
+
+	&--logo {
+		text-align: center;
+		@include breakpoint(desktop) {
+			margin-top: 40px;
+			text-align: left;
+		}
+
+		&--flex {
+			display: flex;
+			align-items: flex-start;
+			@include breakpoint(mobile) {
+				justify-content: center;
+			}
+
+			span {
+				@include font-size(30);
+				color: $primary;
+				font-family: $font-title;
+			}
+
+			svg {
+				fill: $primary;
+				width: 85px;
+				display: block;
+				position: relative;
+				top: -19px;
+				left: -14px;
+				margin-right: -18px;
+			}
+		}
+	}
+
+	&--menu {
+		padding: 8px 0;
+		@include breakpoint(desktop) {
+			padding: 0 40px;
+		}
+
+		&--flex {
+			margin: 16px 0;
+			@include breakpoint(desktop) {
+				display: flex;
+				margin: 0;
+				width: 100%;
+			}
+		}
+
+		&--list {
+			@include breakpoint(mobile) {
+				display: none;
+			}
+		}
+
+		&--title {
+			@include clearfix();
+			@include font-size(16);
+			color: $black;
+			margin: 0 0 40px;
+			display: inline-block;
+			position: relative;
+
+			&:after {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 1px;
+				background: $black;
+				position: absolute;
+				left: 0;
+				bottom: -3px;
+			}
+			@include breakpoint(mobile) {
+				@include font-size(18);
+				cursor: pointer;
+				position: relative;
+				display: block;
+
+				&__icon {
+					@include transition(all 0.2s linear);
+					@include font-size(20);
+					position: absolute;
+					right: 0;
+					top: 0;
+
+					&.rotate {
+						@include transform(rotate(180deg));
+					}
+				}
+			}
+		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			&#menu-footer-1 {
+				li {
+					a {
+						@include font-size(24);
+					}
+				}
+			}
+
+			li {
+				padding: 4px 0;
+
+				a {
+					@include font-size(16);
+					color: $black;
+					position: relative;
+					font-weight: 300;
+
+					&:after {
+						@include transition(all 0.3s linear);
+						content: '';
+						display: block;
+						background: $black;
+						width: 0;
+						height: 1px;
+						position: absolute;
+						bottom: -3px;
+						left: 0;
+					}
+
+					&:hover {
+						color: $black;
+
+						&:after {
+							width: 100%;
+						}
+					}
+
+					&.social {
+						position: relative;
+						padding-left: 26px;
+
+						span {
+							@include font-size(26);
+							position: absolute;
+							left: 0;
+							top: -3px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&--info {
+		text-align: left;
+		margin-top: -20px;
+
+		span {
+			display: block;
+		}
+
+		a,
+		span {
+			@include font-size(14);
+			color: $black;
+			margin: 0;
+		}
+
+		a {
+			position: relative;
+
+			&:after {
+				@include transition(all 0.3s linear);
+				content: '';
+				display: block;
+				background: $blue;
+				width: 0;
+				height: 1px;
+				position: absolute;
+				bottom: -3px;
+				left: 0;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&:after {
+					width: 100%;
+				}
+			}
+		}
+
+		&--flex {
+			display: flex;
+			padding-top: 8px;
+		}
+	}
+}
+
+.secure-payments {
+	text-align: center;
+	padding-top: 24px;
+	@include breakpoint(mobile) {
+		text-align: center;
+	}
+
+	span {
+		@include font-size(12);
+		color: $gray;
+		display: block;
+		letter-spacing: 1px;
+		margin-bottom: 16px;
+	}
+
+	img {
+		width: 250px;
+		display: block;
+		@include breakpoint(mobile) {
+			margin: 0 auto;
+		}
+	}
+}

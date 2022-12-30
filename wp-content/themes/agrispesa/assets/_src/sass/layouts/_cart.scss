@@ -1,0 +1,42 @@
+/* stylelint-disable */
+.btn-cart {
+	width: 100%;
+}
+
+.cart-collaterals,
+.woocommerce-cart-form {
+	max-width: 1160px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.woocommerce-cart {
+	table.cart {
+		img {
+			@include border-radius(0);
+			width: 60px;
+			margin: 8px 0;
+		}
+
+		td.actions {
+			.coupon {
+				.input-text {
+					width: 220px;
+				}
+			}
+		}
+	}
+}
+
+.woocommerce {
+	table.shop_table {
+		td {
+			@include font-size(18);
+		}
+	}
+  .quantity {
+    .qty {
+      background: $background;
+    }
+  }
+}

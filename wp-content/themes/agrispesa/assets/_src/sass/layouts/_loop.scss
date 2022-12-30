@@ -1,0 +1,157 @@
+/* stylelint-disable */
+.categories-list {
+	span {
+		@include transition(all 0.2s linear);
+		@include font-size(18);
+		@include border-radius(0 16px 16px 16px);
+		background: $primary;
+		padding: 6px 16px;
+		color: $blue;
+		display: inline-block;
+		margin: 16px 8px 0 0;
+
+		&.first {
+			@include border-radius(16px 16px 16px 0);
+			margin-bottom: 24px;
+			margin-right: 0;
+		}
+	}
+
+	&.body-single-page {
+		span {
+			@include border-radius(16px 16px 16px 0);
+			margin-bottom: 24px;
+			background: $blue;
+			color: $primary;
+			@include breakpoint(mobile) {
+				margin: 4px 0;
+			}
+		}
+	}
+}
+
+.related--list {
+	display: flex;
+
+	.product-box {
+		width: 33.333%;
+		margin: 0 12px;
+	}
+}
+
+.products-home {
+	display: flex;
+
+	.product-box {
+		//width: 25%;
+		margin: 0 12px;
+	}
+}
+
+.product-box {
+	padding: 60px;
+	background: $beige;
+	@include breakpoint(container) {
+		padding: 40px;
+	}
+
+	&.text-box {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background: transparent;
+		padding: 60px 20px;
+
+		h3 {
+			@include font-size(40);
+			font-family: $font-title;
+			font-style: italic;
+			line-height: 1.1;
+			color: $blue;
+			font-weight: 900;
+			@include breakpoint(container) {
+				@include font-size(34);
+			}
+		}
+	}
+
+	&--link {
+		display: block;
+		overflow: hidden;
+
+		img {
+			@include transition(all 0.8s ease);
+			display: block;
+		}
+
+		&:hover {
+			img {
+				transform: scale(1.3);
+			}
+		}
+	}
+
+	&--text {
+		text-align: center;
+		padding-top: 16px;
+	}
+
+	&--title {
+		@include font-size(24);
+		font-weight: 800;
+	}
+
+	&--price {
+		&--flex {
+			display: flex;
+			align-items: baseline;
+			justify-content: center;
+			margin-top: -8px;
+
+			.product-info--quantity {
+				margin-right: 8px;
+			}
+		}
+
+		del {
+			text-decoration: none;
+			position: relative;
+			display: inline-block;
+
+			&:before {
+				content: '';
+				display: block;
+				width: 110%;
+				height: 2px;
+				background: $red;
+				position: absolute;
+				top: 50%;
+				left: -5%;
+				transform: rotate(-10deg);
+			}
+		}
+
+		ins {
+			text-decoration: none;
+
+			&.highlight {
+				@include font-size(18);
+			}
+		}
+
+		.woocommerce-Price {
+			&-amount {
+				@include font-size(24);
+			}
+
+			&-currencySymbol {
+				@include font-size(18);
+			}
+		}
+	}
+
+	&--button {
+		margin-top: 16px;
+	}
+}

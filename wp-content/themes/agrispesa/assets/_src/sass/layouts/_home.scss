@@ -1,0 +1,296 @@
+/* stylelint-disable */
+.how-works {
+	text-align: center;
+	padding: 120px 0;
+	max-width: 1024px;
+	margin: 0 auto;
+
+	&--flex {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&--item {
+		width: 100%;
+		padding: 24px;
+		@include breakpoint(desktop) {
+			width: 33.333%;
+			padding: 24px;
+		}
+
+		&--title {
+			@include font-size(26);
+			font-family: $font-body;
+			font-style: normal;
+			font-weight: 900;
+
+			span {
+				font-weight: 300;
+				color: $blue;
+				margin-right: 6px;
+			}
+		}
+
+		&--img {
+			max-width: 240px;
+			margin: 0 auto 24px;
+		}
+	}
+}
+
+.sec-home {
+	position: relative;
+
+	&:before {
+		content: '';
+		display: block;
+		width: 2px;
+		height: 160px;
+		background: $black;
+		@include horizontal-align();
+		position: absolute;
+		top: -80px;
+		z-index: 3;
+
+	}
+	&.line-white:before {
+		background: $white;
+	}
+
+	&.bg-black {
+		background: $black;
+		color: $white;
+	}
+
+	&.bg-beige {
+		background: $beige;
+	}
+
+	&.bg-orange {
+		background: $orange;
+		color: $panna;
+	}
+
+	&--minititle {
+		text-align: center;
+		padding-top: 140px;
+		margin-bottom: -60px;
+		@include breakpoint(container) {
+			padding-top: 120px;
+		}
+		h3 {
+			@include font-size(16);
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+	}
+
+	&--text {
+		text-align: center;
+		padding: 30px 60px;
+		@include breakpoint(container) {
+			padding: 30px;
+		}
+
+		&.pseudo-list {
+			margin: 0 auto;
+			text-align: left;
+			padding: 140px 0;
+			text-align: center;
+			@include breakpoint(container) {
+				padding: 120px 0;
+			}
+			span {
+				font-family: $font-title;
+				font-weight: 900;
+				line-height: 1.1;
+				@include font-size(34);
+				&:before {
+					content: '/';
+					color: $white;
+					padding: 0 8px;
+				}
+				&:first-of-type {
+					&:before {
+						content: none;
+					}
+				}
+			}
+		}
+
+		&.list {
+			max-width: 540px;
+			margin: 0 auto;
+			text-align: left;
+			padding: 140px 0;
+			@include breakpoint(container) {
+				padding: 120px 0;
+			}
+
+			h4 {
+				display: block;
+				font-family: $font-title;
+				font-weight: 900;
+				line-height: 1.1;
+				@include font-size(34);
+				padding: 8px 0 8px 38px;
+				position: relative;
+
+				&:before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 25px;
+					height: 2px;
+					width: 28px;
+					background: $black;
+				}
+				@include breakpoint(container) {
+					@include font-size(32);
+				}
+
+				a {
+					display: block;
+
+					&:hover {
+						color: $blue;
+					}
+				}
+			}
+		}
+	}
+
+	&--btn {
+		margin-top: 50px;
+		@include breakpoint(container) {
+			margin-top: 32px;
+		}
+	}
+
+	&--title {
+		font-family: $font-title;
+		font-weight: 900;
+		line-height: 1.1;
+
+		&.big {
+			@include font-size(45);
+			line-height: 1.1;
+			@include breakpoint(container) {
+				@include font-size(40);
+			}
+		}
+
+		&.medium {
+			@include font-size(40);
+			line-height: 1.1;
+			@include breakpoint(container) {
+				@include font-size(32);
+			}
+		}
+	}
+
+	&--subtitle {
+		@include font-size(20);
+		line-height: 1.1;
+		margin-top: 24px;
+	}
+
+	&--rounded {
+		@include border-radius(150px 150px 0 0);
+		position: relative;
+		content: '';
+		width: 300px;
+		height: 400px;
+		background: $blue;
+		margin: 0 auto;
+
+		&--floating {
+			width: 100px;
+			display: block;
+			position: absolute;
+			z-index: 2;
+		}
+	}
+}
+
+.sec-wide {
+	padding: 260px 0;
+	@include breakpoint(container) {
+		padding: 220px 0;
+	}
+	&--content {
+
+		text-align: center;
+	}
+	&--text {
+		@include font-size(40);
+		font-family: $font-title;
+		line-height: 1.2;
+	}
+	&--btn {
+		margin-top: 60px;
+	}
+}
+
+.sec-image {
+	@include clearfix();
+
+	&--content {
+		content: '';
+		width: 100%;
+		height: 60vh;
+		overflow: hidden;
+		background-repeat: no-repeat;
+		background-position: center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+}
+
+.sec-half {
+	padding: 120px 0;
+	@include breakpoint(container) {
+		padding: 60px 0;
+	}
+
+	&--flex {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		& > div {
+			max-width: 50%;
+			margin: 0 30px;
+			@include breakpoint(container) {
+				margin: 0 20px;
+			}
+		}
+	}
+
+	.sec-home--text {
+		max-width: 540px;
+		margin: 0 auto;
+		@include breakpoint(container) {
+			max-width: 380px;
+		}
+	}
+}
+
+.sec-three {
+	&--flex {
+		display: flex;
+		align-items: center;
+
+		& > div {
+			width: 33.333%;
+		}
+	}
+}

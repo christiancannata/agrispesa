@@ -1,0 +1,104 @@
+@mixin clearfix() {
+	&::after,
+	&::before {
+		content: "";
+		display: table;
+	}
+
+	&::after {
+		clear: both;
+	}
+}
+@mixin full-bg() {
+	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-size: cover;
+	background-size: cover;
+	background-size: cover;
+}
+@mixin font-size($sizeValue: 12) {
+	font-size: $sizeValue + px;
+	font-size: (0.125 * $sizeValue) + rem;
+}
+@mixin line-height($heightValue: 12) {
+	line-height: $heightValue + px;
+	line-height: (0.125 * $heightValue) + rem;
+}
+@mixin border-radius($radius) {
+	background-clip: padding-box;
+	border-radius: $radius;
+	border-radius: $radius;
+	border-radius: $radius;
+}
+@mixin opacity($opacity) {
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie);
+	opacity: $opacity;
+}
+@mixin keyframes($animation-name) {
+	@keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+}
+@mixin animation($str) {
+	animation: #{$str};
+	animation: #{$str};
+	animation: #{$str};
+	animation: #{$str};
+	animation: #{$str};
+}
+@mixin transition($args...) {
+	transition: $args;
+	transition: $args;
+	transition: $args;
+	transition: $args;
+	transition: $args;
+}
+@mixin transform($args...) {
+	transform: $args;
+	transform: $args;
+	transform: $args;
+	transform: $args;
+	transform: $args;
+}
+@mixin linear-gradient($direction, $color-stops...) {
+	background: nth(nth($color-stops, 1), 1);
+	background: linear-gradient(legacy-direction($direction), $color-stops);
+	background: linear-gradient($direction, $color-stops);
+}
+@mixin center-align($position: relative) {
+	left: 50%;
+	position: $position;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+}
+@mixin vertical-align($position: relative) {
+	position: $position;
+	top: 50%;
+	transform: translateY(-50%);
+	transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+@mixin horizontal-align($position: relative) {
+	left: 50%;
+	position: $position;
+	transform: translateX(-50%);
+	transform: translateX(-50%);
+	transform: translateX(-50%);
+}

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "incremental": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "outDir": "assets/js"
+  },
+  "include": ["assets/_src/js/**/*"],
+  "exclude": ["node_modules"]
+}
