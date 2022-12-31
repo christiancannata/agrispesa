@@ -1,0 +1,293 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GDPR Compliance & Cookie Consent\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-25 05:17+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: includes/plugins/GravityForms.php:150
+#, php-format
+msgid "Accepted on %s."
+msgstr ""
+
+#: includes/PluginOptions.php:51
+msgid "Ask visitors to accept using Cookie and data."
+msgstr ""
+
+#: includes/Plugins.php:90
+msgid "BuddyPress"
+msgstr ""
+
+#: includes/PluginOptions.php:187
+msgid "Checkbox label"
+msgstr ""
+
+#: includes/PluginOptions.php:66
+msgid "Cookie consent expire time. Default 6 months"
+msgstr ""
+
+#: includes/PluginOptions.php:114
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/PluginOptions.php:150
+msgid "Custom link text"
+msgstr ""
+
+#: includes/PluginOptions.php:219
+msgid "Data Access & To Be Forgotten"
+msgstr ""
+
+#: includes/PluginOptions.php:58
+msgid "Display Privacy and Cookie popup box"
+msgstr ""
+
+#: includes/DataAccess.php:19 includes/DataAccessWidget.php:36
+msgid "Email address (*)"
+msgstr ""
+
+#: includes/PluginOptions.php:57 includes/PluginOptions.php:181
+msgid "Enable"
+msgstr ""
+
+#: includes/DataAccess.php:28 includes/DataAccessWidget.php:45
+msgid "Erase Personal Data"
+msgstr ""
+
+#: includes/PluginOptions.php:235
+msgid "Error message"
+msgstr ""
+
+#: includes/PluginOptions.php:194
+msgid "Error notification"
+msgstr ""
+
+#: includes/PluginOptions.php:65
+msgid "Expire time (seconds)"
+msgstr ""
+
+#: includes/DataAccess.php:25 includes/DataAccessWidget.php:42
+msgid "Export Personal Data"
+msgstr ""
+
+#: includes/plugins/GravityForms.php:54 includes/plugins/GravityForms.php:135
+msgid "GDPR Accepted On"
+msgstr ""
+
+#: includes/plugins/ContactForm7.php:130 includes/plugins/WooCommerce.php:42
+msgid "GDPR accepted on:"
+msgstr ""
+
+#: includes/Plugins.php:91 includes/Plugins.php:115
+msgid ""
+"GDPR checkbox will be added automatically above the submit button. You can "
+"use HTML tags and <b>%privacy_policy%</b> shortcode link for below inputs."
+msgstr ""
+
+#: includes/Plugins.php:109
+msgid ""
+"GDPR checkbox will be added automatically at the end of the Checkout page. "
+"You can use HTML tags and <b>%privacy_policy%</b> shortcode link for below "
+"inputs."
+msgstr ""
+
+#: includes/Plugins.php:103
+msgid ""
+"GDPR checkbox will be added automatically at the end of the MailChimp form. "
+"You can use HTML tags and <b>%privacy_policy%</b> shortcode link for below "
+"inputs."
+msgstr ""
+
+#: includes/Plugins.php:97
+msgid ""
+"GDPR checkbox will be added automatically to all your Gravity Forms. You can "
+"use HTML tags and <b>%privacy_policy%</b> shortcode link for below inputs."
+msgstr ""
+
+#. Name of the plugin
+msgid "GDPR Compliance & Cookie Consent"
+msgstr ""
+
+#: includes/PluginOptions.php:43
+msgid "General"
+msgstr ""
+
+#: includes/Plugins.php:96
+msgid "Gravity Forms"
+msgstr ""
+
+#: includes/Cookie.php:28
+msgid "Ok, I agree"
+msgstr ""
+
+#: includes/PluginOptions.php:190
+msgid "I agree with storage and handling of my data by this website."
+msgstr ""
+
+#: includes/Helpers.php:195
+msgid "I agree with the storage and handling of my data by this website."
+msgstr ""
+
+#: includes/PluginOptions.php:164
+msgid "Integrated plugins"
+msgstr ""
+
+#: includes/DataAccess.php:51
+msgid "Invalid email address!"
+msgstr ""
+
+#: includes/Plugins.php:102
+msgid "MailChimp"
+msgstr ""
+
+#: includes/plugins/ContactForm7.php:127 includes/plugins/GravityForms.php:105
+#: includes/plugins/GravityForms.php:121 includes/plugins/GravityForms.php:154
+#: includes/plugins/WooCommerce.php:44
+msgid "Not accepted."
+msgstr ""
+
+#: includes/PluginOptions.php:226
+msgid "NOTE: "
+msgstr ""
+
+#: includes/DataAccess.php:59
+msgid "Please fill up required fields!"
+msgstr ""
+
+#: includes/PluginOptions.php:87
+msgid "Popup background color"
+msgstr ""
+
+#: includes/PluginOptions.php:77
+msgid "Popup content"
+msgstr ""
+
+#: includes/PluginOptions.php:101
+msgid "Popup position"
+msgstr ""
+
+#: includes/PluginOptions.php:94
+msgid "Popup text color"
+msgstr ""
+
+#: includes/PluginOptions.php:50
+msgid "Privacy and Cookie consent popup"
+msgstr ""
+
+#: includes/PluginOptions.php:128
+msgid "Privacy Policy"
+msgstr ""
+
+#: includes/PluginOptions.php:135
+msgid "Privacy Policy content"
+msgstr ""
+
+#: includes/PluginOptions.php:142
+msgid "Privacy Policy page"
+msgstr ""
+
+#: includes/DataAccess.php:55
+msgid "Request type invalid, please try again!"
+msgstr ""
+
+#: includes/DataAccessWidget.php:10
+msgid "Sample widget based on WPBeginner Tutorial"
+msgstr ""
+
+#: includes/Helpers.php:43
+msgid "Select a page"
+msgstr ""
+
+#: includes/PluginOptions.php:136
+msgid "Select Privacy Policy page and link text for the Popup"
+msgstr ""
+
+#: includes/DataAccess.php:32 includes/DataAccessWidget.php:49
+msgid "Send request"
+msgstr ""
+
+#: stm-gdpr-compliance.php:75
+msgid "Settings"
+msgstr ""
+
+#: includes/PluginOptions.php:238
+msgid "Some errors occurred:"
+msgstr ""
+
+#: includes/DataAccessWidget.php:9
+msgid "STM GDPR Widget"
+msgstr ""
+
+#. Author of the plugin
+msgid "StylemixThemes"
+msgstr ""
+
+#: includes/PluginOptions.php:242
+msgid "Success message"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"The GDPR (General Data Protection Regulation) is a set of instructions for "
+"companies that collect and process EU user data on the Internet. The new "
+"regulation is aimed at improving the level of protection and giving EU "
+"residents wide control over their data."
+msgstr ""
+
+#: includes/PluginOptions.php:203
+msgid "The list of integrated plugins"
+msgstr ""
+
+#: includes/PluginOptions.php:80
+msgid ""
+"This website uses cookies and asks your personal data to enhance your "
+"browsing experience."
+msgstr ""
+
+#: includes/DataAccess.php:69
+msgid ""
+"Unable to initiate confirmation request. Please contact the administrator."
+msgstr ""
+
+#: includes/DataAccessWidget.php:66
+msgid "Widget description:"
+msgstr ""
+
+#: includes/DataAccessWidget.php:62
+msgid "Widget title:"
+msgstr ""
+
+#: includes/Plugins.php:108
+msgid "WooCommerce"
+msgstr ""
+
+#: includes/Plugins.php:114
+msgid "WordPress Comments"
+msgstr ""
+
+#: includes/PluginOptions.php:197
+msgid "You have to accept the privacy checkbox"
+msgstr ""
+
+#: includes/Helpers.php:226
+msgid "You have to accept the privacy checkbox."
+msgstr ""
+
+#: includes/DataAccess.php:44
+msgid ""
+"Your request can’t be processed on this website. Minimum required WordPress "
+"version is 4.9.6!"
+msgstr ""
+
+#: includes/PluginOptions.php:245
+msgid ""
+"Your request have been submitted. Check your email to validate your data "
+"request."
+msgstr ""
