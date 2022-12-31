@@ -2,3 +2,6 @@
 .DS_Store
 wp-config.php
 wp-content/themes/agrispesa/node_modules/
+.htaccess
+wp-config.php
+wp-config.php
