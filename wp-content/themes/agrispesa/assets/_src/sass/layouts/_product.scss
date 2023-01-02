@@ -134,15 +134,61 @@
 			}
 
 			.price {
-				@include font-size(16);
 				margin: 0;
 				color: $black;
-				@include breakpoint(desktop) {
-					@include font-size(20);
+
+				.woocommerce-Price {
+					&-amount {
+						@include font-size(18);
+						@include breakpoint(desktop) {
+							@include font-size(20);
+						}
+					}
+
+					&-currencySymbol {
+						@include font-size(13);
+						@include breakpoint(desktop) {
+							@include font-size(16);
+						}
+					}
+				}
+
+				del {
+					text-decoration: none;
+					position: relative;
+					display: inline-block;
+					margin-right: 10px;
+					opacity: 1;
+
+					&:before {
+						content: '';
+						display: block;
+						width: 110%;
+						height: 2px;
+						background: $red;
+						position: absolute;
+						top: 50%;
+						left: -5%;
+						transform: rotate(-10deg);
+					}
+				}
+
+				ins {
+					text-decoration: none;
+					color: $red;
+					font-weight: 300;
+
+					&.highlight {
+						@include font-size(18);
+					}
 				}
 			}
 		}
 	}
+}
+
+.product-bottom {
+	margin-bottom: 50px;
 }
 
 .product-top {
@@ -223,6 +269,7 @@
 			width: 50%;
 			float: none !important;
 			padding-right: 80px;
+			margin-bottom: 0 !important;
 			@include breakpoint(container) {
 				width: 50%;
 				padding-right: 60px;

@@ -65,6 +65,18 @@ if ( post_password_required() ) {
 
 </div><!-- fine div.product-top in product-image.php -->
 
+<section class="product-bottom">
+
+	<div class="sec-home sec-full bg-black line-orange">
+		<div class="container-pg">
+			<div class="sec-product-description">
+				<?php echo the_content(); ?>
+			</div>
+		</div>
+	</div>
+
+</section>
+
 	<?php
 	/**
 	 * Hook: woocommerce_after_single_product_summary.

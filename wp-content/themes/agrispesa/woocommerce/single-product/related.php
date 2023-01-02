@@ -72,7 +72,7 @@ if ( in_array( 'box', $categories ) ): ?>
 
 					<article class="product-box text-box">
 
-						<h3 class="text-box--title">Potrebbero farti gola</h3>
+						<h3 class="text-box--title">Potrebbero<br/>farti gola</h3>
 					</article>
 
 				<?php else: ?>

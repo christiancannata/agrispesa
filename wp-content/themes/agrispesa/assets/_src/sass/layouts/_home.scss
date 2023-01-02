@@ -57,19 +57,31 @@
 		position: absolute;
 		top: -80px;
 		z-index: 3;
-
 	}
+
 	&.line-white:before {
 		background: $white;
 	}
+	&.line-orange:before {
+		background: $orange;
+	}
+
 
 	&.bg-black {
 		background: $black;
 		color: $white;
 	}
 
+	&.bg-green {
+		background: $primary;
+	}
+
 	&.bg-beige {
 		background: $beige;
+	}
+
+	&.bg-brown {
+		background: $brown;
 	}
 
 	&.bg-orange {
@@ -84,6 +96,7 @@
 		@include breakpoint(container) {
 			padding-top: 120px;
 		}
+
 		h3 {
 			@include font-size(16);
 			text-transform: uppercase;
@@ -106,16 +119,19 @@
 			@include breakpoint(container) {
 				padding: 120px 0;
 			}
+
 			span {
 				font-family: $font-title;
 				font-weight: 900;
 				line-height: 1.1;
 				@include font-size(34);
+
 				&:before {
 					content: '/';
 					color: $white;
 					padding: 0 8px;
 				}
+
 				&:first-of-type {
 					&:before {
 						content: none;
@@ -219,20 +235,51 @@
 	}
 }
 
+.sec-product-description {
+	padding: 220px 0;
+	@include breakpoint(container) {
+		padding: 180px 0;
+	}
+
+	h2,
+	h3,
+	h4 {
+		font-family: $font-title;
+		line-height: 1.1;
+		font-weight: 900;
+		margin: 32px 0 24px;
+	}
+	h2 {
+		@include font-size(40);
+	}
+	h3 {
+		@include font-size(32);
+	}
+	h4 {
+		@include font-size(28);
+	}
+
+	p {
+		@include font-size(22);
+	}
+}
+
 .sec-wide {
 	padding: 260px 0;
 	@include breakpoint(container) {
 		padding: 220px 0;
 	}
-	&--content {
 
+	&--content {
 		text-align: center;
 	}
+
 	&--text {
 		@include font-size(40);
 		font-family: $font-title;
 		line-height: 1.2;
 	}
+
 	&--btn {
 		margin-top: 60px;
 	}
@@ -254,6 +301,7 @@
 		background-size: cover;
 		background-attachment: fixed;
 	}
+
 	img {
 		width: 100%;
 		height: auto;
