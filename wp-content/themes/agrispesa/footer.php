@@ -68,7 +68,7 @@
 				<a href="https://www.facebook.com/Agrispesa" target="_blank" class="social"><span><span class="icon-facebook"></span></span></a>
 				<a href="https://twitter.com/agrispesa" target="_blank" class="social"><span><span class="icon-twitter"></span></span></a>
 				<a href="https://www.youtube.com/@agrispesaonline" target="_blank" class="social"><span><span class="icon-youtube"></span></span></a>
-			</div>		
+			</div>
 			<div class="footer--info only-mobile">
 				<span>
 					Corso Guglielmo Marconi, 64<br/>12050 Magliano Alfieri (Cn) — Italia<br/>P.IVA 03494390044
@@ -100,7 +100,7 @@
 
 <?php wp_footer(); ?>
 <script>
-jQuery('select').niceSelect();
+//jQuery('select').niceSelect();
 	AOS.init({
     easing: 'ease-in-out-sine',
 		disable: function() {

@@ -55,7 +55,6 @@ h6 {
 	font-weight: 900;
 }
 
-
 .only-mobile {
 	display: none !important;
 	@include breakpoint(mobile) {
@@ -128,13 +127,14 @@ h6 {
 
 .woocommerce-info,
 .woocommerce-message {
-	@include border-radius(4px);
+	@include border-radius(6px);
 	@include font-size(16);
 	max-width: 1024px;
-	margin: 0 auto 16px;
-	padding: 16px;
+	margin: 0;
+	padding: 28px 20px 20px;
 	border: none;
 	background: aliceblue;
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 
 	&::before {
 		content: none;
@@ -142,15 +142,61 @@ h6 {
 }
 
 .woocommerce-message {
-	background: rgba($primary, .1);
+	background: $primary;
+	color: $white;
 }
 
 .woocommerce-notices-wrapper {
-	max-width: 1160px;
-	margin: 0 auto;
-	padding: 0 20px;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	z-index: 10;
+	@include breakpoint(desktop) {
+		bottom: 20px;
+		right: 20px;
+	}
+
+	.button {
+		display: none !important;
+	}
+	.restore-item {
+		    display: inline-block;
+		@include breakpoint(desktop) {
+			color: $blue;
+
+			&::after {
+				@include transition(all 0.3s ease);
+				background: $blue;
+				content: '';
+				display: block;
+				height: 1px;
+				width: 0;
+			}
+			&:hover {
+				color: $blue;
+				&::after {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	.close-notice {
+		@include transition(all 0.3s ease);
+		@include font-size(20);
+		position: absolute;
+		right: 18px;
+		top: 10px;
+		cursor: pointer;
+
+		&:hover {
+			color: $black;
+		}
+	}
+
 	ul {
 		list-style: none;
+
 		li {
 			&:before {
 				content: none !important;

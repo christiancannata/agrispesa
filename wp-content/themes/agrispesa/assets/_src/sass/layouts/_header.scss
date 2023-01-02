@@ -204,7 +204,7 @@
 				@include breakpoint(desktop) {
 					color: $primary;
 
-					::after {
+					&::after {
 						@include transition(all 0.3s ease);
 						background: $primary;
 						content: '';

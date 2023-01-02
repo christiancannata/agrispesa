@@ -109,12 +109,12 @@ $count = count( $customer_orders );
 		?>
 		<div class="empty-states">
 			<div class="empty-states--image">
-				<img src="<?php echo get_template_directory_uri(); ?>/img/empty/perfume.svg" />
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
 			</div>
 			<div class="empty-states--text">
-				<h4 class="empty-states--title">Non ci sono profumi, qui.</h4>
-				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Posh. Cosa aspetti?</p>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>quiz" class="posh-button posh-button-primary posh-button-small empty-states--button" title="Crea il tuo primo Posh" class="empty-states--subtitle">Crea il tuo primo Posh</a>
+				<h4 class="empty-states--title">Non ci sono porri, qui.</h4>
+				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary btn-small empty-states--button" title="Crea la tua box" class="empty-states--subtitle">Crea la tua box</a>
 			</div>
 		</div>
 		<?php

@@ -84,7 +84,6 @@ if ( woocommerce_product_loop() ) {
     );
 	}
 
-
    $categories = get_terms( $args );
    foreach ( $categories as $category_slug ) {
       $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
@@ -94,9 +93,6 @@ if ( woocommerce_product_loop() ) {
       echo '</div>';
       wp_reset_postdata();
    }
-
-
-
 
 
 

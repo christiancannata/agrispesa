@@ -57,7 +57,7 @@ $col    = 1;
 	<div class="woocommerce-Address">
 		<header class="woocommerce-Address-title">
 			<h3 class="my-account--minititle address-title"><?php echo esc_html( $address_title ); ?></h3>
-			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="posh-button posh-button-primary posh-button-small"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
+			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="btn btn-primary btn-small"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
 		</header>
 		<address>
 			<?php

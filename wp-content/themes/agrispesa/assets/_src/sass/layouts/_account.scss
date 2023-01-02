@@ -201,31 +201,6 @@ body.woocommerce-account {
 	width: 100%;
 }
 
-.woocommerce-notices-wrapper {
-	.woocommerce-error {
-		@include border-radius(4px);
-		background: #FFEEEB;
-		border-top: none;
-		color: $red;
-		padding: 10px 24px;
-
-		&::before {
-			content: none;
-		}
-	}
-
-	.woocommerce-message {
-		@include border-radius(4px);
-		background: #E5FEF8;
-		border-top: none;
-		color: $green;
-		padding: 10px 24px;
-
-		&::before {
-			content: none;
-		}
-	}
-}
 
 .woocommerce-Address-title {
 	align-items: flex-start;

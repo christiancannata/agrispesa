@@ -14,6 +14,15 @@ hideBreadcrum();
 productsHome();
 loginForms();
 showCoupon();
+closeNotices();
+
+
+function closeNotices() {
+  jQuery('.woocommerce-message .close-notice').on('click', function(e) {
+    e.preventDefault();
+    jQuery(this).closest('.woocommerce-notices-wrapper').remove();
+  });
+}
 
 function showCoupon() {
   jQuery('.show-coupon').on('click', function(e) {
@@ -44,7 +53,6 @@ function loginForms() {
 function hideBreadcrum() {
   var boxPage = jQuery('.the-box-page');
   if (boxPage.length) {
-    console.log('ecco');
     jQuery('.woocommerce-breadcrumb').hide();
     jQuery('.summary .price').hide();
   }

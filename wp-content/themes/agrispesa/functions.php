@@ -103,7 +103,8 @@ $ag_includes = array(
 	'/agrispesa.php',
 	'/post-produttori.php',
 	'/post-faq.php',
-	//'/load-more.php',
+	'/box.php',
+	'/shop.php'
 );
 
 foreach ( $ag_includes as $file ) {
