@@ -6,7 +6,7 @@ clearSearch();
 openSearch();
 openSubMenu();
 quantityInput();
-variablesToRadio();
+letiablesToRadio();
 faqs();
 reviewsSlider();
 footerMenu();
@@ -32,10 +32,10 @@ function showCoupon() {
 }
 
 function loginForms() {
-  var showLogin = jQuery('.show-login-form');
-  var showRegister = jQuery('.show-register-form');
-  var loginForm = jQuery('.check-login-form');
-  var registerForm = jQuery('.check-register-form');
+  let showLogin = jQuery('.show-login-form');
+  let showRegister = jQuery('.show-register-form');
+  let loginForm = jQuery('.check-login-form');
+  let registerForm = jQuery('.check-register-form');
 
   showLogin.on('click', function(e) {
     e.preventDefault();
@@ -51,7 +51,7 @@ function loginForms() {
 }
 
 function hideBreadcrum() {
-  var boxPage = jQuery('.the-box-page');
+  let boxPage = jQuery('.the-box-page');
   if (boxPage.length) {
     jQuery('.woocommerce-breadcrumb').hide();
     jQuery('.summary .price').hide();
@@ -81,7 +81,7 @@ function reviewsSlider() {
     arrows: true,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
-    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    preletrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
       breakpoint: 600,
       settings: {
@@ -104,7 +104,7 @@ function productsHome() {
     arrows: false,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
-    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    preletrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
       breakpoint: 1300,
       settings: {
@@ -140,12 +140,12 @@ function productsHome() {
 
 function faqs() {
 
-  var faqTitle = jQuery('.faq__title');
+  let faqTitle = jQuery('.faq__title');
 
   faqTitle.on('click', function(e) {
     e.preventDefault();
-    var description = jQuery(this).next('.faq__description');
-    var others = jQuery(this).closest('.faq__item').siblings();
+    let description = jQuery(this).next('.faq__description');
+    let others = jQuery(this).closest('.faq__item').siblings();
 
     jQuery(this).find('.faq__icon').toggleClass('show-faq');
     others.find('.faq__icon').removeClass('show-faq');
@@ -157,20 +157,20 @@ function faqs() {
   }
 }
 
-function variablesToRadio() {
-  jQuery(document).on('change', '.variation-radios input', function() {
-    jQuery('.variation-radios input:checked').each(function(index, element) {
-      var $el = jQuery(element);
-      var thisName = $el.attr('name');
-      var thisVal = $el.attr('value');
+function letiablesToRadio() {
+  jQuery(document).on('change', '.letiation-radios input', function() {
+    jQuery('.letiation-radios input:checked').each(function(index, element) {
+      let $el = jQuery(element);
+      let thisName = $el.attr('name');
+      let thisVal = $el.attr('value');
       jQuery('select[name="' + thisName + '"]').val(thisVal).trigger('change');
     });
   });
-  jQuery(document).on('woocommerce_update_variation_values', function() {
-    jQuery('.variation-radios input').each(function(index, element) {
-      var $el = jQuery(element);
-      var thisName = $el.attr('name');
-      var thisVal = $el.attr('value');
+  jQuery(document).on('woocommerce_update_letiation_values', function() {
+    jQuery('.letiation-radios input').each(function(index, element) {
+      let $el = jQuery(element);
+      let thisName = $el.attr('name');
+      let thisVal = $el.attr('value');
       $el.removeAttr('disabled');
       if (jQuery('select[name="' + thisName + '"] option[value="' + thisVal + '"]').is(':disabled')) {
         $el.prop('disabled', true);
@@ -184,9 +184,9 @@ function quantityInput() {
     // Stop acting like a button
     e.preventDefault();
     // Get the field name
-    var fieldName = jQuery(this).attr('field');
+    let fieldName = jQuery(this).attr('field');
     // Get its current value
-    var currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
+    let currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
     // If is not undefined
     if (!isNaN(currentVal)) {
       // Increment
@@ -203,9 +203,9 @@ function quantityInput() {
     // Stop acting like a button
     e.preventDefault();
     // Get the field name
-    var fieldName = jQuery(this).attr('field');
+    let fieldName = jQuery(this).attr('field');
     // Get its current value
-    var currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
+    let currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
     // If it isn't undefined or its greater than 0
 
     console.log(currentVal);
@@ -227,8 +227,8 @@ function quantityInput() {
 }
 
 function openSubMenu() {
-  var link = jQuery('.get-user-menu');
-  var menu = jQuery('.top-user__menu');
+  let link = jQuery('.get-user-menu');
+  let menu = jQuery('.top-user__menu');
 
   if (window.screen.width > 640) {
     link.on('click', function(e) {
@@ -254,13 +254,13 @@ function clearSearch() {
 }
 
 function stickyHeader() {
-  var scrollTop = jQuery(this).scrollTop();
-  var header = jQuery('.header');
-  var headerH = header.outerHeight();
-  var lastScrollTop = 0;
+  let scrollTop = jQuery(this).scrollTop();
+  let header = jQuery('.header');
+  let headerH = header.outerHeight();
+  let lastScrollTop = 0;
 
   jQuery(window).on('scroll', function() {
-    var st = jQuery(this).scrollTop();
+    let st = jQuery(this).scrollTop();
 
     if (jQuery(document).scrollTop() >= headerH) {
       if (st > lastScrollTop) {
@@ -283,8 +283,8 @@ function openMenu() {
   jQuery('.get-menu, .close-menu').on('click', function(e) {
     e.preventDefault();
 
-    var menu = jQuery('.agr-menu');
-    var body = jQuery('body');
+    let menu = jQuery('.agr-menu');
+    let body = jQuery('body');
 
     menu.toggleClass('show-menu');
     body.toggleClass('fixed');
@@ -293,10 +293,10 @@ function openMenu() {
 
 
 function hideGlossarioAlpha() {
-  var glossarioElements = jQuery('.glossario--anchor');
+  let glossarioElements = jQuery('.glossario--anchor');
   glossarioElements.each(function(index) {
-    var alphabet = jQuery('.glossario--link');
-    var target = jQuery(this).attr('data-alpha');
+    let alphabet = jQuery('.glossario--link');
+    let target = jQuery(this).attr('data-alpha');
 
     jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
   });
@@ -306,8 +306,8 @@ function hideGlossarioAlpha() {
 function scrollTo() {
 
   jQuery('.sliding-link').on('click', function(event) {
-    var target = jQuery(this.getAttribute('href'));
-    var scrollto = target.offset().top - 35
+    let target = jQuery(this.getAttribute('href'));
+    let scrollto = target.offset().top - 35
 
     if (target.length) {
       event.preventDefault();
