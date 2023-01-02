@@ -29,7 +29,7 @@ $arrow_color: $gray !default;
 	font-size: $font_size;
 	font-weight: normal;
 	height: $input_height;
-	line-height: $input_height - 2;
+	line-height: calc($input_height - 2px);
 	outline: none;
 	padding-left: $dropdown_padding;
 	padding-right: $dropdown_padding + 12;
@@ -112,7 +112,7 @@ $arrow_color: $gray !default;
 	&.small {
 		font-size: $font_size_small;
 		height: $input_height_small;
-		line-height: $input_height_small - 2;
+		line-height: calc($input_height_small - 2px);
 
 		&::after {
 			height: 4px;
@@ -120,8 +120,8 @@ $arrow_color: $gray !default;
 		}
 
 		.option {
-			line-height: $input_height_small - 2;
-			min-height: $input_height_small - 2;
+			line-height: calc($input_height_small - 2);
+			min-height: calc($input_height_small - 2);
 		}
 	}
 
@@ -151,9 +151,9 @@ $arrow_color: $gray !default;
 	.option {
 		cursor: pointer;
 		font-weight: 400;
-		line-height: $input_height - 2;
+		line-height: calc($input_height - 2px);
 		list-style: none;
-		min-height: $input_height - 2;
+		min-height: calc($input_height - 2px);
 		outline: none;
 		padding-left: $dropdown_padding;
 		padding-right: $dropdown_padding + 11;
