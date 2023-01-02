@@ -1,5 +1,5 @@
 <section class="hero">
-  <div class="hero--item" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/farmers/langhe.jpg);">
+  <div class="hero--item" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/farmers/home.jpg);">
     <div class="hero--content">
       <div class="hero--text">
         <h1 class="hero--title">Frutta e verdura a casa tua. Semplice.</h1>

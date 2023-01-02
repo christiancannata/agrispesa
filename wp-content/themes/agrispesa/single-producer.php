@@ -34,11 +34,6 @@
 
 
 
-
-					<section class="teacher-profile">
-
-
-
 						<?php
 
 						$product_procuders = get_posts(array(
@@ -93,7 +88,6 @@
 						</div>
 					</section>
 						<?php endif; ?>
-					</section>
 
 
 

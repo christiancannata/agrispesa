@@ -12,6 +12,13 @@ function woocommerce_add_to_cart_button_text_single() {
     return __( 'Aggiungi alla box', 'woocommerce' );
 }
 
+//Prezzo prima del pulsante add to cart 
+add_action( 'woocommerce_before_add_to_cart_button', 'misha_before_add_to_cart_btn' );
+function misha_before_add_to_cart_btn(){
+  global $product;
+  echo '<div class="btn-price">'.$product->get_price_html().'</div>';
+}
+
 
 //// Layout pagina negozio vuoto
 add_action( 'woocommerce_no_products_found', 'shop_page_empty_layout' );

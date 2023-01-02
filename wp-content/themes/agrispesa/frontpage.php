@@ -8,10 +8,8 @@ $_SESSION['havesearch'] = false;
 <?php get_header(); ?>
 
 <?php get_template_part( 'global-elements/hero', 'agrispesa' ); ?>
-<?php get_template_part( 'global-elements/steps', 'home' ); ?>
 
-
-<section class="sec-home sec-wide bg-orange">
+<section class="sec-home sec-wide bg-orange no-line">
 
     <div class="container-pg">
       <div class="sec-wide--content">
@@ -25,6 +23,9 @@ $_SESSION['havesearch'] = false;
 
 </section>
 
+<div class="clearfix"></div>
+
+<?php get_template_part( 'global-elements/steps', 'home' ); ?>
 
 
 <div class="clearfix"></div>

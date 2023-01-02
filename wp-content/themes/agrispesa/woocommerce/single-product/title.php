@@ -20,8 +20,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $product_quantity = get_field('product_quantity');
+$produttori = get_field('product_producer');
 
 the_title( '<h1 class="product_title entry-title">', '</h1>' );
+echo '<div class="product-info">';
 if($product_quantity) {
-	echo '<div class="product-info--quantity">' . $product_quantity . '</div>';
+	echo '<span class="product-info--quantity">' . $product_quantity . '</span>';
 }
+
+if($produttori) {
+	foreach( $produttori as $produttore ) {
+		echo '<span class="product-info--producer">/ <a href="'.get_permalink( $produttore->ID ).'">'.get_the_title( $produttore->ID ).'</a></span>';
+	}
+}
+
+echo '</div>';

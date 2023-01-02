@@ -63,6 +63,28 @@
 		margin: 24px 0;
 		text-transform: uppercase;
 		letter-spacing: 2px;
+
+		a {
+			display: inline-block;
+			@include breakpoint(desktop) {
+				&::after {
+					@include transition(all 0.3s ease);
+					background: $blue;
+					content: '';
+					display: block;
+					height: 1px;
+					width: 0;
+				}
+
+				&:hover {
+					color: $blue;
+
+					&::after {
+						width: 100%;
+					}
+				}
+			}
+		}
 	}
 
 	ul.products {
@@ -129,7 +151,61 @@
 	@include breakpoint(desktop) {
 		padding: 0;
 		display: flex;
+		justify-content: flex-start;
+	}
+
+	.price {
+		display: none;
+	}
+
+	.product-price--flex {
+		display: flex;
+		align-items: center;
 		justify-content: space-between;
+
+		.btn-price {
+			.woocommerce-Price {
+				&-amount {
+					@include font-size(40);
+				}
+
+				&-currencySymbol {
+					@include font-size(24);
+				}
+			}
+
+			del {
+				text-decoration: none;
+				position: relative;
+				display: inline-block;
+				margin-right: 10px;
+
+				&:before {
+					content: '';
+					display: block;
+					width: 110%;
+					height: 2px;
+					background: $red;
+					position: absolute;
+					top: 50%;
+					left: -5%;
+					transform: rotate(-10deg);
+				}
+			}
+
+			ins {
+				text-decoration: none;
+				color: $red;
+
+				&.highlight {
+					@include font-size(18);
+				}
+			}
+		}
+	}
+
+	.cart {
+		width: 100%;
 	}
 }
 
@@ -138,17 +214,13 @@
 		position: relative;
 	}
 
-	.woocommerce-breadcrumb {
-		position: absolute;
-		top: 0;
-		left: 60%;
-	}
+	.woocommerce-breadcrumb {}
 }
 
 .woocommerce {
 	div.product {
 		div.images.woocommerce-product-gallery {
-			width: 60%;
+			width: 50%;
 			float: none !important;
 			padding-right: 80px;
 			@include breakpoint(container) {
@@ -165,6 +237,41 @@
 			@include breakpoint(container) {
 				width: 50%;
 			}
+
+			.qty {
+				background: #fff;
+			}
+		}
+	}
+}
+
+.product-info {
+	&--quantity {
+		margin-right: 5px;
+	}
+
+	&--producer {
+		a {
+			display: inline-block;
+			color: $blue;
+			@include breakpoint(desktop) {
+				&::after {
+					@include transition(all 0.3s ease);
+					background: $blue;
+					content: '';
+					display: block;
+					height: 1px;
+					width: 0;
+				}
+
+				&:hover {
+					color: $blue;
+
+					&::after {
+						width: 100%;
+					}
+				}
+			}
 		}
 	}
 }
@@ -180,6 +287,7 @@
 
 		.qty {
 			height: 36px;
+			width: 60px !important;
 		}
 	}
 
@@ -238,7 +346,8 @@
 		display: block;
 	}
 
-	.nice-select {
+	.nice-select,
+	select {
 		display: none;
 	}
 

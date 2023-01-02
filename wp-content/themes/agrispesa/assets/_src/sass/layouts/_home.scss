@@ -41,6 +41,12 @@
 .sec-home {
 	position: relative;
 
+	&.no-line {
+		&:before {
+			content: none;
+		}
+	}
+
 	&:before {
 		content: '';
 		display: block;
