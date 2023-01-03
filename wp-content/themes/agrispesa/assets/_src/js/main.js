@@ -13,6 +13,7 @@ productsHome();
 loginForms();
 showCoupon();
 closeNotices();
+relatedSlider();
 
 
 function closeNotices() {
@@ -79,7 +80,7 @@ function reviewsSlider() {
     arrows: true,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
-    preletrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
       breakpoint: 600,
       settings: {
@@ -102,7 +103,52 @@ function productsHome() {
     arrows: false,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
-    preletrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1300,
+      settings: {
+        slidesToShow: 4,
+        arrows: false,
+        dots: true
+      }
+    }, {
+      breakpoint: 1140,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true
+      }
+    },{
+      breakpoint: 860,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true
+      }
+    }, {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true
+      }
+    }]
+  });
+}
+function relatedSlider() {
+
+  let _carousel = jQuery(".related--list");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
       breakpoint: 1300,
       settings: {

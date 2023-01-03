@@ -148,11 +148,17 @@
 	}
 
 	&--title {
-		@include font-size(36);
+		@include font-size(32);
 		font-weight: 900;
 		line-height: 1.1;
 		margin: 16px 0;
 		font-family: $font-title;
+	}
+
+	&--description {
+		p {
+			@include font-size(22);
+		}
 	}
 
 	&--name {

@@ -5,7 +5,7 @@ $post_id = $page->ID;
 if( have_rows('lista_recensioni' , $post_id) ):
   $i = 0;
   echo '<div class="reviews-home">';
-  echo '<div class="container-xsmall">';
+  echo '<div class="container-pg">';
   echo '<div class="reviews--slider">';
     while( have_rows('lista_recensioni' , $post_id) ) : the_row();
     $review_name = get_sub_field('review_name' , $post_id);

@@ -71,9 +71,10 @@ if ( in_array( 'box', $categories ) ): ?>
 					if($i == 2): ?>
 
 					<article class="product-box text-box">
-
 						<h3 class="text-box--title">Potrebbero<br/>farti gola</h3>
 					</article>
+
+					<?php get_template_part( 'template-parts/loop', 'shop' ); ?>
 
 				<?php else: ?>
 						<?php get_template_part( 'template-parts/loop', 'shop' ); ?>

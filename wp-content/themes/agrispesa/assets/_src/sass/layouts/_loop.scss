@@ -30,11 +30,14 @@
 	}
 }
 
+.related {
+	width: 100%;
+}
+
 .related--list {
-	display: flex;
+	width: 100%;
 
 	.product-box {
-		width: 33.333%;
 		margin: 0 12px;
 	}
 }
@@ -62,7 +65,10 @@
 		text-align: center;
 		background: transparent;
 		padding: 60px 20px;
- 
+		@include breakpoint(mobile) {
+			display: none !important;
+		}
+
 		h3 {
 			@include font-size(40);
 			font-family: $font-title;

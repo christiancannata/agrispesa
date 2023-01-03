@@ -51,15 +51,20 @@
 
 
 							<section class="related products">
-								<h2 class="related--title">Prodotti</h2>
-								<div class="related--list">
-							<?php foreach( $product_procuders as $producer ):
+								<div class="related--list producer">
+							<?php $i = 1; foreach( $product_procuders as $producer ):
 								setup_postdata(  $producer );
 								$thumb_id = get_post_thumbnail_id($producer->ID);
 								$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
 								$thumb_url = $thumb_url_array[0];
 								$product_quantity = get_field('product_quantity', $producer->ID);
+
+								if($i == 1):
 								?>
+
+								<article class="product-box text-box">
+									<h3 class="text-box--title">Produce<br/>cose buone</h3>
+								</article>
 
 								<article class="product-box">
 								  <a href="<?php the_permalink($producer->ID); ?>" class="product-box--link" title="<?php echo get_the_title($producer->ID); ?>">
@@ -84,7 +89,33 @@
 								  </div>
 								</article>
 
-							<?php endforeach; ?>
+							<?php else: ?>
+
+								<article class="product-box">
+								  <a href="<?php the_permalink($producer->ID); ?>" class="product-box--link" title="<?php echo get_the_title($producer->ID); ?>">
+								    <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo get_the_title($producer->ID); ?>" />
+								  </a>
+								  <div class="product-box--text">
+								    <div class="product-box--text--top">
+								      <h2 class="product-box--title"><?php echo get_the_title($producer->ID); ?></h2>
+											<div class="product-box--price--flex">
+												<?php if($product_quantity) {
+													echo '<p class="product-box--description product-info--quantity">' . $product_quantity . ' — </p>';
+												} ?>
+									      <div class="product-box--price">
+									        <?php echo $product->get_price_html($producer->ID); ?>
+									      </div>
+								      </div>
+								      <a href="<?php the_permalink($producer->ID); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo get_the_title($producer->ID); ?>">Scopri di più</a>
+								        <div class="categories-list">
+
+								        </div>
+								    </div>
+								  </div>
+								</article>
+
+							<?php endif;
+										$i++; endforeach; ?>
 						</div>
 					</section>
 						<?php endif; ?>
