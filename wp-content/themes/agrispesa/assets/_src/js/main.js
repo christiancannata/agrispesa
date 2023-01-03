@@ -146,7 +146,7 @@ function relatedSlider() {
     slidesToScroll: 1,
     arrows: false,
     dots: false,
-    centerMode: false,
+    centerMode: false, 
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
