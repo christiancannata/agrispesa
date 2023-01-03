@@ -6,7 +6,7 @@
 	margin: 0 auto;
 
 	&--flex {
-		display: flex; 
+		display: flex;
 		flex-wrap: wrap;
 	}
 
@@ -20,7 +20,7 @@
 
 		&--title {
 			@include font-size(26);
-			font-family: $font-body;
+			font-family: $font-title;
 			font-style: normal;
 			font-weight: 900;
 
