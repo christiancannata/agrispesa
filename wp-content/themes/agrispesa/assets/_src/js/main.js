@@ -1,6 +1,4 @@
 stickyHeader();
-scrollTo();
-hideGlossarioAlpha();
 openMenu();
 clearSearch();
 openSearch();
@@ -254,7 +252,6 @@ function clearSearch() {
 }
 
 function stickyHeader() {
-  let scrollTop = jQuery(this).scrollTop();
   let header = jQuery('.header');
   let headerH = header.outerHeight();
   let lastScrollTop = 0;
@@ -288,32 +285,5 @@ function openMenu() {
 
     menu.toggleClass('show-menu');
     body.toggleClass('fixed');
-  });
-}
-
-
-function hideGlossarioAlpha() {
-  let glossarioElements = jQuery('.glossario--anchor');
-  glossarioElements.each(function(index) {
-    let alphabet = jQuery('.glossario--link');
-    let target = jQuery(this).attr('data-alpha');
-
-    jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
-  });
-}
-
-
-function scrollTo() {
-
-  jQuery('.sliding-link').on('click', function(event) {
-    let target = jQuery(this.getAttribute('href'));
-    let scrollto = target.offset().top - 35
-
-    if (target.length) {
-      event.preventDefault();
-      jQuery('html, body').stop().animate({
-        scrollTop: scrollto
-      }, 800);
-    }
   });
 }
