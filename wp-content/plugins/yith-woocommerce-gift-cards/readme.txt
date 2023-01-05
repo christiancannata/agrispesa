@@ -4,7 +4,7 @@ Contributors: yithemes
 Tags: gift card, gift certificate, certificate, gift, woocommerce
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 2.16.0
+Stable tag: 2.17.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -192,6 +192,12 @@ Want to add a new language to our YITH WooCommerce Gift Cards? Learn how to cont
 
 
 == Changelog ==
+
+= 2.17.0 - Released on 04 January 2023 =
+
+* New: support for WooCommerce 7.3
+* Update: YITH Plugin Framework
+* Fix: count column in the image categories table
 
 = 2.16.0 - Released on 15 December 2022 =
 

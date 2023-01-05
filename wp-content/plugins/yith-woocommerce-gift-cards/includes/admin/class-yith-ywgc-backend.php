@@ -106,7 +106,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			 */
 			add_filter( 'ywgc_custom_condition_to_create_gift_card', array( $this, 'ywgc_custom_condition_to_create_gift_card_call_back' ), 10, 2 );
 
-			add_action( 'save_post', array( $this, 'set_gift_card_category_to_product' ) );
+			add_action( 'save_post_product', array( $this, 'set_gift_card_category_to_product' ) );
 
 			/**
 			 * Set the CSS class 'show_if_gift-card in 'sold indidually' section
@@ -165,6 +165,10 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 
 			add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 			add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages' ), 10, 2 );
+
+			add_filter( 'manage_edit-' . YWGC_CATEGORY_TAXONOMY . '_columns', array( $this, 'gift_card_categories_taxonomy_columns' ), 15 );
+			add_filter( 'manage_' . YWGC_CATEGORY_TAXONOMY . '_custom_column', array( $this, 'gift_card_categories_taxonomy_custom_column' ), 15, 3 );
+			add_filter( 'manage_edit-' . YWGC_CATEGORY_TAXONOMY . '_sortable_columns', array( $this, 'add_sortable_columns' ) );
 		}
 
 		/**
@@ -224,7 +228,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 				wp_enqueue_script( 'yith-plugin-fw-fields' );
 			}
 
-			if ( ( 'product' === $post_type ) || ( 'gift_card' === $post_type ) || ( 'shop_order' === $post_type ) || isset( $_REQUEST['page'] ) && 'yith_woocommerce_gift_cards_panel' === $_REQUEST['page'] ) {//phpcs:ignore WordPress.Security.NonceVerification
+			if ( ( 'product' === $post_type ) || ( 'gift_card' === $post_type ) || ( 'shop_order' === $post_type ) || ( isset( $_REQUEST['page'] ) && 'yith_woocommerce_gift_cards_panel' === $_REQUEST['page'] ) || 'edit-giftcard-category' === $screen->id ) {//phpcs:ignore WordPress.Security.NonceVerification
 
 				// Add style and scripts.
 				wp_enqueue_style(
@@ -1416,6 +1420,73 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		public function hide_postbox_only_for_gift_card_products( $classes ) {
 			$classes[] = 'hide_if_gift-card';
 			return $classes;
+		}
+
+		/**
+		 * Register custom columns for the Image Categories table
+		 *
+		 * @param mixed $columns Columns.
+		 *
+		 * @return array
+		 */
+		public function gift_card_categories_taxonomy_columns( $columns ) {
+			if ( isset( $columns['posts'] ) ) {
+				unset( $columns['posts'] );
+			}
+
+			$columns['count'] = _x( 'Count', 'Column heading in the image categories table', 'yith-woocommerce-gift-cards' );
+
+			return $columns;
+		}
+
+		/**
+		 * Prints custom columns for the Image Categories table
+		 *
+		 * @param string $content Custom column output.
+		 * @param string $column  Current column.
+		 * @param int    $id      Term ID.
+		 *
+		 * @return string
+		 */
+		public function gift_card_categories_taxonomy_custom_column( $content, $column, $id ) {
+			switch ( $column ) {
+				case 'count':
+					$term     = get_term( $id );
+					$taxonomy = get_taxonomy( $term->taxonomy );
+					$count    = number_format_i18n( $term->count );
+
+					if ( $taxonomy->query_var ) {
+						$args = array( $taxonomy->query_var => $term->slug );
+					} else {
+						$args = array(
+							'taxonomy' => $taxonomy->name,
+							'term'     => $term->slug,
+						);
+					}
+
+					$args['post_type'] = 'attachment';
+
+					$count_url = add_query_arg( $args, 'upload.php' );
+
+					$content = '<a href="' . $count_url . '">' . $count . '</a>';
+
+					break;
+			}
+
+			return $content;
+		}
+
+		/**
+		 * Manage sortable columns in brands table
+		 *
+		 * @param array $sortable_columns Sortable columns.
+		 *
+		 * @return array
+		 */
+		public function add_sortable_columns( $sortable_columns ) {
+			$sortable_columns['count'] = 'count';
+
+			return $sortable_columns;
 		}
 	}
 }

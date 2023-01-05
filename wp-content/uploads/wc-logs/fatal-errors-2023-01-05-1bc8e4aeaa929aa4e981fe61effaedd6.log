@@ -1,0 +1,12 @@
+2023-01-05T15:33:57+00:00 CRITICAL Uncaught Error: Call to undefined function has_active_subscription() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:51
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): settings_box_content('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3161): do_action('woocommerce_acc...', '')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(54): do_action('woocommerce_acc...')
+#8 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/in in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 51
+

@@ -427,3 +427,7 @@ tr.type-gift_card td {
 #yith_woocommerce_gift_cards_panel_recipient_delivery #-description p::before{
     content: unset;
 }
+
+.wp-list-table .column-count {
+    width: 10%;
+}

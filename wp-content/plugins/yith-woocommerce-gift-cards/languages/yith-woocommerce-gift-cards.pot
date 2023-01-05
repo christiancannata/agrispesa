@@ -1,14 +1,14 @@
-# Copyright (C) 2022 YITH
+# Copyright (C) 2023 YITH
 # This file is distributed under the same license as the YITH WooCommerce Gift Cards package.
 msgid ""
 msgstr ""
-"Project-Id-Version: YITH WooCommerce Gift Cards 2.16.0\n"
+"Project-Id-Version: YITH WooCommerce Gift Cards 2.17.0\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2022-12-15 15:16:20+00:00\n"
+"POT-Creation-Date: 2023-01-04 14:31:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: YITH <info@yithemes.com>\n"
 "Language: en\n"
@@ -24,183 +24,183 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/admin/class-yith-ywgc-backend.php:194
+#: includes/admin/class-yith-ywgc-backend.php:198
 #: includes/class-yith-ywgc-frontend.php:301
 msgid "Gift card code: "
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:256
+#: includes/admin/class-yith-ywgc-backend.php:260
 msgid "Choose Image"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:286
+#: includes/admin/class-yith-ywgc-backend.php:290
 msgid "Set gift card image category"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:287
+#: includes/admin/class-yith-ywgc-backend.php:291
 msgid "Unset gift card image category"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:315
+#: includes/admin/class-yith-ywgc-backend.php:319
 msgid "Manage the Media library"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:316
+#: includes/admin/class-yith-ywgc-backend.php:320
 msgid "Done"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:356
+#: includes/admin/class-yith-ywgc-backend.php:360
 #: templates/yith-gift-cards/ywgc-gift-card-template.php:72
 msgid "Gift card"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1075
+#: includes/admin/class-yith-ywgc-backend.php:1079
 msgid "Gift card: "
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1103
+#: includes/admin/class-yith-ywgc-backend.php:1107
 msgid "Used"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1151
+#: includes/admin/class-yith-ywgc-backend.php:1155
 msgid "Product ID"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1153
+#: includes/admin/class-yith-ywgc-backend.php:1157
 msgid "Product as a present"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1155
+#: includes/admin/class-yith-ywgc-backend.php:1159
 msgid "Present product ID"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1157
+#: includes/admin/class-yith-ywgc-backend.php:1161
 msgid "Present variation ID"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1159
+#: includes/admin/class-yith-ywgc-backend.php:1163
 #: includes/class-yith-woocommerce-gift-cards.php:229
 msgid "Amount"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1161
+#: includes/admin/class-yith-ywgc-backend.php:1165
 msgid "Digital"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1163
+#: includes/admin/class-yith-ywgc-backend.php:1167
 #: includes/class-yith-woocommerce-gift-cards.php:250
 msgid "Sender's name"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1165
+#: includes/admin/class-yith-ywgc-backend.php:1169
 #: includes/class-yith-woocommerce-gift-cards.php:273
 msgid "Recipient's name"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1167
+#: includes/admin/class-yith-ywgc-backend.php:1171
 #: includes/class-yith-woocommerce-gift-cards.php:284
 msgid "Message"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1169
+#: includes/admin/class-yith-ywgc-backend.php:1173
 msgid "Design type"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1171
+#: includes/admin/class-yith-ywgc-backend.php:1175
 msgid "Design"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1173
+#: includes/admin/class-yith-ywgc-backend.php:1177
 msgid "Subtotal"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1175
+#: includes/admin/class-yith-ywgc-backend.php:1179
 msgid "Subtotal tax"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1177
+#: includes/admin/class-yith-ywgc-backend.php:1181
 msgid "Version"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1179
+#: includes/admin/class-yith-ywgc-backend.php:1183
 msgid "Delivery date"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1181
+#: includes/admin/class-yith-ywgc-backend.php:1185
 msgid "Postdated"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1325
-#: includes/admin/class-yith-ywgc-backend.php:1328
+#: includes/admin/class-yith-ywgc-backend.php:1329
+#: includes/admin/class-yith-ywgc-backend.php:1332
 msgid "Gift card updated"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1326
+#: includes/admin/class-yith-ywgc-backend.php:1330
 msgid "Custom field updated"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1327
+#: includes/admin/class-yith-ywgc-backend.php:1331
 msgid "Custom field deleted"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1329
+#: includes/admin/class-yith-ywgc-backend.php:1333
 msgid "Gift card restored"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1330
+#: includes/admin/class-yith-ywgc-backend.php:1334
 msgid "Gift card published"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1331
+#: includes/admin/class-yith-ywgc-backend.php:1335
 msgid "Gift card saved"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1332
+#: includes/admin/class-yith-ywgc-backend.php:1336
 msgid "Gift card submitted"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1335
+#: includes/admin/class-yith-ywgc-backend.php:1339
 #. translators: %s is the date
 msgid "Gift card scheduled for: %s."
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1338
+#: includes/admin/class-yith-ywgc-backend.php:1342
 msgid "Gift card draft updated."
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1357
+#: includes/admin/class-yith-ywgc-backend.php:1361
 msgid "This code is already used. Please choose another one"
 msgstr ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1379
+#: includes/admin/class-yith-ywgc-backend.php:1383
 #. translators: %s: gift card count
 msgid "%s gift card updated."
 msgid_plural "%s gift cards updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1381
+#: includes/admin/class-yith-ywgc-backend.php:1385
 #. translators: %s: gift card count
 msgid "%s gift card not updated, somebody is editing it."
 msgid_plural "%s gift cards not updated, somebody is editing them."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1383
+#: includes/admin/class-yith-ywgc-backend.php:1387
 #. translators: %s: gift count
 msgid "%s gift card permanently deleted."
 msgid_plural "%s gift cards permanently deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1385
+#: includes/admin/class-yith-ywgc-backend.php:1389
 #. translators: %s: gift card count
 msgid "%s gift card moved to the Trash."
 msgid_plural "%s gift cards moved to the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-yith-ywgc-backend.php:1387
+#: includes/admin/class-yith-ywgc-backend.php:1391
 #. translators: %s: gift card count
 msgid "%s gift card restored from the Trash."
 msgid_plural "%s gift cards restored from the Trash."
@@ -1002,6 +1002,11 @@ msgid ""
 "of your brand, your sales, and average spend, especially during the "
 "holidays. <a href=\"https://yithemes.com/\" target=\"_blank\">Get more "
 "plugins for your e-commerce shop on <strong>YITH</strong></a>."
+msgstr ""
+
+#: includes/admin/class-yith-ywgc-backend.php:1437
+msgctxt "Column heading in the image categories table"
+msgid "Count"
 msgstr ""
 
 #: includes/admin/views/gift-cards-product-settings.php:15

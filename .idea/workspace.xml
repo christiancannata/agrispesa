@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="" />
+    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.devilbox/nginx.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/assets/css/ywgc-backend.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/assets/css/ywgc-backend.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/includes/admin/class-yith-ywgc-backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/includes/admin/class-yith-ywgc-backend.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/init.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/languages/yith-woocommerce-gift-cards.pot" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/languages/yith-woocommerce-gift-cards.pot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +52,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -47,7 +66,10 @@
       <option name="presentableId" value="Default" />
       <updated>1672419500965</updated>
       <workItem from="1672419502130" duration="2820000" />
-      <workItem from="1672426076559" duration="1338000" />
+      <workItem from="1672426076559" duration="1856000" />
+      <workItem from="1672853014771" duration="1076000" />
+      <workItem from="1672924306320" duration="602000" />
+      <workItem from="1672929571796" duration="2619000" />
     </task>
     <servers />
   </component>

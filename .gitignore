@@ -3,3 +3,5 @@
 wp-config.php
 wp-content/themes/agrispesa/node_modules/
 .htaccess
+/.idea/
+/.devilbox/
