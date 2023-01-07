@@ -146,7 +146,7 @@ body.woocommerce-account {
 	.woocommerce-Address-title {
 		h3 {
 			@include font-size(20);
-			float: none!important;
+			float: none !important;
 		}
 	}
 }
@@ -297,6 +297,7 @@ body.woocommerce-view-order {
 		& > h2 {
 			display: none;
 		}
+
 		table.shop_table {
 			padding: 32px 24px 24px !important;
 
@@ -461,4 +462,14 @@ body.woocommerce-view-order {
 	&--button {
 		margin-top: 24px;
 	}
+}
+
+
+.woocommerce div.shop_table {
+	background: #fff;
+	border: none;
+	padding: 32px 16px;
+	padding-bottom: 32px;
+	position: relative;
+	border-radius: 0;
 }

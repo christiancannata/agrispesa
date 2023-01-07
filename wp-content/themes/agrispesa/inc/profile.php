@@ -48,10 +48,36 @@ add_filter('woocommerce_account_menu_items', 'settings_box_link_my_account');
 
 function settings_box_content()
 {
-	if (wcs_user_has_subscription()) { // Current user has an active subscription
-		echo '<p>I have active subscription</p>';
-	}
-	echo "test";
+	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
+	?>
+	<div class="woocommerce-PreferenzeBox-content">
+
+		<div class="woocommerce-notices-wrapper"></div>
+		<h3 class="my-account--minititle address-title">Preferenze BOX</h3>
+
+		<div class="table-shadow-relative">
+			<div
+				class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
+				<?php foreach ($subscriptions as $subscription): ?>
+					<h4>
+						<?php $products = $subscription->get_items();
+						foreach ($products as $product) {
+							echo $product->get_name();
+						}
+						?>
+					</h4>
+					<br>
+					<br>
+
+				<?php endforeach; ?>
+			</div>
+
+			<div class="table-shadow"></div>
+		</div>
+
+
+	</div>
+	<?php
 }
 
 add_action('woocommerce_account_settings-box_endpoint', 'settings_box_content');
