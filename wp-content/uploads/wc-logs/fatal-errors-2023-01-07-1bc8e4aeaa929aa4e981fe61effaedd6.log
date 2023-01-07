@@ -1,0 +1,86 @@
+2023-01-07T11:18:41+00:00 CRITICAL Cannot redeclare add_settings_box_endpoint() (previously declared in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:9) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 6
+
+2023-01-07T11:30:36+00:00 CRITICAL syntax error, unexpected '?>' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 13
+
+2023-01-07T11:30:47+00:00 CRITICAL syntax error, unexpected '?>' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 13
+
+2023-01-07T11:32:17+00:00 CRITICAL Uncaught Error: Call to undefined function dd() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 12
+
+2023-01-07T11:40:33+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_product() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:81
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 81
+
+2023-01-07T11:44:02+00:00 CRITICAL Uncaught Error: Call to a member function get_start_date() on array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:88
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 88
+
+2023-01-07T11:44:12+00:00 CRITICAL Uncaught Error: Call to a member function get_scheduled_start() on array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:88
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 88
+
+2023-01-07T11:44:57+00:00 CRITICAL Uncaught Error: Call to a member function get_time() on array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:88
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 88
+
+2023-01-07T11:45:11+00:00 CRITICAL Uncaught Error: Call to a member function get_time() on array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:89
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 89
+
+2023-01-07T12:08:20+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:18
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(34): create_order_from_subscription('203')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 18
+
+2023-01-07T12:12:38+00:00 CRITICAL syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 17
+
+2023-01-07T13:16:44+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_shipping_email() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:49
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(77): create_order_from_subscription('203')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 49
+
+2023-01-07T13:29:40+00:00 CRITICAL syntax error, unexpected '}', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 64
+
+2023-01-07T13:47:22+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 95
+

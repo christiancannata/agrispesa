@@ -105,7 +105,8 @@ $ag_includes = array(
 	'/post-faq.php',
 	'/box.php',
 	'/shop.php',
-	'/profile.php'
+	'/profile.php',
+	'/admin.php',
 );
 
 foreach ( $ag_includes as $file ) {

@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.devilbox/nginx.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/assets/css/ywgc-backend.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/assets/css/ywgc-backend.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/includes/admin/class-yith-ywgc-backend.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/includes/admin/class-yith-ywgc-backend.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/init.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/languages/yith-woocommerce-gift-cards.pot" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/languages/yith-woocommerce-gift-cards.pot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/yith-woocommerce-gift-cards/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,22 +29,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/christiancannata/projects/agrispesa&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/christiancannata/projects/agrispesa/wp-content/themes/agrispesa/inc",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "/Users/christiancannata/projects/agrispesa/wp-content/themes/agrispesa/node_modules/stylelint",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/wp-content/themes/agrispesa/inc" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -69,7 +63,8 @@
       <workItem from="1672426076559" duration="1856000" />
       <workItem from="1672853014771" duration="1076000" />
       <workItem from="1672924306320" duration="602000" />
-      <workItem from="1672929571796" duration="2619000" />
+      <workItem from="1672929571796" duration="3478000" />
+      <workItem from="1673090089510" duration="6555000" />
     </task>
     <servers />
   </component>

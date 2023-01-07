@@ -52,7 +52,6 @@ function settings_box_content()
 		echo '<p>I have active subscription</p>';
 	}
 	echo "test";
-
 }
 
 add_action('woocommerce_account_settings-box_endpoint', 'settings_box_content');
