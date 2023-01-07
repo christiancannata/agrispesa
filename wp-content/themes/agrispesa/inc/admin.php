@@ -106,6 +106,7 @@ function create_order_from_subscription($id)
 
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
+	update_post_meta($order->get_id(), '_order_type', 'BOX');
 
 }
 
@@ -353,3 +354,47 @@ function my_custom_submenu_page_callback()
 }
 
 add_action('admin_menu', 'register_my_custom_submenu_page', 99);
+
+
+add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
+function custom_shop_order_column($columns)
+{
+	$reordered_columns = array();
+
+	// Inserting columns to a specific location
+	foreach ($columns as $key => $column) {
+		$reordered_columns[$key] = $column;
+		if ($key == 'order_status') {
+			// Inserting after "Status" column
+			$reordered_columns['my-column1'] = 'Tipo';
+			$reordered_columns['my-column2'] = 'Settimana';
+		}
+	}
+	return $reordered_columns;
+}
+
+// Adding custom fields meta data for each new column (example)
+add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
+function custom_orders_list_column_content($column, $post_id)
+{
+	switch ($column) {
+		case 'my-column1' :
+			// Get custom post meta data
+			$orderType = get_post_meta($post_id, '_order_type', true);
+			if (!empty($orderType))
+				echo $orderType;
+			// Testing (to be removed) - Empty value case
+			else
+				echo '';
+
+			break;
+
+		case 'my-column2' :
+			// Get custom post meta data
+			$week = get_post_meta($post_id, '_week', true);
+			if (!empty($week))
+				echo $week;
+
+			break;
+	}
+}
