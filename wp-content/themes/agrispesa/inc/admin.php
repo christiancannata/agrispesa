@@ -1,5 +1,5 @@
 <?php
-function dd(...$vars)
+function dd($vars)
 {
 	die(var_dump($vars));
 }
@@ -183,17 +183,35 @@ function my_custom_submenu_page_callback()
 						<th scope="col" id="comment" class="manage-column column-comment column-primary">Abbonamento
 						</th>
 						<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da</th>
-
+						<th>
+							Ordine
+						</th>
 					</tr>
 					</thead>
 
 					<tbody id="the-comment-list" data-wp-lists="list:comment">
-					<?php foreach ($subscriptions as $subscription): ?>
+					<?php foreach ($subscriptions as $subscription):
+
+						$orders = wc_get_orders([
+							'customer_id' => $subscription->get_customer_id(),
+							'limit' => -1,
+							'meta_key' => '_week',
+							'meta_value' => $week,
+							'meta_compare' => '=',
+						]);
+
+						?>
+
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
 							<th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Seleziona
 									un abbonamento</label>
-								<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-									   value="<?php echo $subscription->get_id(); ?>">
+								<?php if (count($orders) == 0): ?>
+									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+										   value="<?php echo $subscription->get_id(); ?>">
+								<?php else: ?>
+									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+										   value="<?php echo $subscription->get_id(); ?>" disabled><br>
+								<?php endif; ?>
 							</th>
 							<td class="author column-author" data-colname="Autore">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
@@ -206,13 +224,19 @@ function my_custom_submenu_page_callback()
 									?>
 									</span>
 							</td>
+
 							<td class="response column-response" data-colname="In risposta a">
 								<span>
 								<?php
 								echo (new DateTime($subscription->get_date_created()))->format("d-m-Y H:i"); ?>
 								</span>
 							</td>
-
+							<td>
+								<?php if (count($orders) > 0): ?>
+									<a href="/wp-admin/post.php?post=<?php echo $orders[0]->get_id() ?>&action=edit">Vai
+										all'ordine</a>
+								<?php endif; ?>
+							</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -224,129 +248,6 @@ function my_custom_submenu_page_callback()
 		</div>
 
 		<div id="ajax-response"></div>
-
-		<form method="get">
-			<table style="display:none;">
-				<tbody id="com-reply">
-				<tr id="replyrow" class="inline-edit-row" style="display:none;">
-					<td colspan="5" class="colspanchange">
-						<fieldset class="comment-reply">
-							<legend>
-								<span class="hidden" id="editlegend">Modifica commento</span>
-								<span class="hidden" id="replyhead">Rispondi al commento</span>
-								<span class="hidden" id="addhead">Aggiungi un nuovo commento</span>
-							</legend>
-
-							<div id="replycontainer">
-								<label for="replycontent" class="screen-reader-text">Commento</label>
-								<div id="wp-replycontent-wrap" class="wp-core-ui wp-editor-wrap html-active">
-									<link rel="stylesheet" id="editor-buttons-css"
-										  href="https://agrispesa.loc/wp-includes/css/editor.min.css?ver=6.1.1"
-										  media="all">
-									<div id="wp-replycontent-editor-container" class="wp-editor-container">
-										<div id="qt_replycontent_toolbar" class="quicktags-toolbar hide-if-no-js"><input
-												type="button" id="qt_replycontent_strong"
-												class="ed_button button button-small" aria-label="Grassetto"
-												value="b"><input type="button" id="qt_replycontent_em"
-																 class="ed_button button button-small"
-																 aria-label="Corsivo" value="i"><input type="button"
-																									   id="qt_replycontent_link"
-																									   class="ed_button button button-small"
-																									   aria-label="Inserisci link"
-																									   value="link"><input
-												type="button" id="qt_replycontent_block"
-												class="ed_button button button-small" aria-label="Citazione"
-												value="b-quote"><input type="button" id="qt_replycontent_del"
-																	   class="ed_button button button-small"
-																	   aria-label="Testo eliminato (barrato)"
-																	   value="del"><input type="button"
-																						  id="qt_replycontent_ins"
-																						  class="ed_button button button-small"
-																						  aria-label="Testo inserito"
-																						  value="ins"><input
-												type="button" id="qt_replycontent_img"
-												class="ed_button button button-small" aria-label="Inserisci immagine"
-												value="img"><input type="button" id="qt_replycontent_ul"
-																   class="ed_button button button-small"
-																   aria-label="Elenco puntato" value="ul"><input
-												type="button" id="qt_replycontent_ol"
-												class="ed_button button button-small" aria-label="Elenco numerato"
-												value="ol"><input type="button" id="qt_replycontent_li"
-																  class="ed_button button button-small"
-																  aria-label="Voce in elenco" value="li"><input
-												type="button" id="qt_replycontent_code"
-												class="ed_button button button-small" aria-label="Codice"
-												value="code"><input type="button" id="qt_replycontent_close"
-																	class="ed_button button button-small"
-																	title="Chiudi tutti i tag aperti"
-																	value="chiudi tag"></div>
-										<textarea class="wp-editor-area" rows="20" cols="40" name="replycontent"
-												  id="replycontent"></textarea></div>
-								</div>
-
-							</div>
-
-							<div id="edithead" style="display:none;">
-								<div class="inside">
-									<label for="author-name">Nome</label>
-									<input type="text" name="newcomment_author" size="50" value="" id="author-name">
-								</div>
-
-								<div class="inside">
-									<label for="author-email">Email</label>
-									<input type="text" name="newcomment_author_email" size="50" value=""
-										   id="author-email">
-								</div>
-
-								<div class="inside">
-									<label for="author-url">URL</label>
-									<input type="text" id="author-url" name="newcomment_author_url" class="code"
-										   size="103" value="">
-								</div>
-							</div>
-
-							<div id="replysubmit" class="submit">
-								<p class="reply-submit-buttons">
-									<button type="button" class="save button button-primary">
-										<span id="addbtn" style="display: none;">Aggiungi commento</span>
-										<span id="savebtn" style="display: none;">Aggiorna commento</span>
-										<span id="replybtn" style="display: none;">Invia risposta</span>
-									</button>
-									<button type="button" class="cancel button">Annulla</button>
-									<span class="waiting spinner"></span>
-								</p>
-								<div class="notice notice-error notice-alt inline hidden">
-									<p class="error"></p>
-								</div>
-							</div>
-
-							<input type="hidden" name="action" id="action" value="">
-							<input type="hidden" name="comment_ID" id="comment_ID" value="">
-							<input type="hidden" name="comment_post_ID" id="comment_post_ID" value="">
-							<input type="hidden" name="status" id="status" value="">
-							<input type="hidden" name="position" id="position" value="-1">
-							<input type="hidden" name="checkbox" id="checkbox" value="1">
-							<input type="hidden" name="mode" id="mode" value="detail">
-							<input type="hidden" id="_ajax_nonce-replyto-comment" name="_ajax_nonce-replyto-comment"
-								   value="ae5f6779d4"><input type="hidden" id="_wp_unfiltered_html_comment"
-															 name="_wp_unfiltered_html_comment" value="0531d6012c">
-						</fieldset>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</form>
-		<div class="hidden" id="trash-undo-holder">
-			<div class="trash-undo-inside">
-				Commento di <strong></strong> spostato nel cestino. <span class="undo untrash"><a
-						href="#">Annulla</a></span>
-			</div>
-		</div>
-		<div class="hidden" id="spam-undo-holder">
-			<div class="spam-undo-inside">
-				Il commento di <strong></strong> adesso è marcato come spam. <span class="undo unspam"><a href="#">Annulla</a></span>
-			</div>
-		</div>
 
 		<div class="clear"></div>
 	</div>
@@ -398,3 +299,327 @@ function custom_orders_list_column_content($column, $post_id)
 			break;
 	}
 }
+
+
+function cptui_register_my_cpts_delivery_group()
+{
+
+	/**
+	 * Post Type: Gruppi di Consegna.
+	 */
+
+	$labels = [
+		"name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
+		"singular_name" => esc_html__("Gruppo di consegna", "custom-post-type-ui"),
+	];
+
+	$args = [
+		"label" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => ["slug" => "delivery-group", "with_front" => true],
+		"query_var" => true,
+		"supports" => ["title", "editor"],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type("delivery-group", $args);
+
+
+	/**
+	 * Post Type: Gruppi di Consegna.
+	 */
+
+	$labels = [
+		"name" => esc_html__("Consegne", "custom-post-type-ui"),
+		"singular_name" => esc_html__("Consegna", "custom-post-type-ui"),
+	];
+
+	$args = [
+		"label" => esc_html__("Consegna", "custom-post-type-ui"),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => ["slug" => "delivery-item", "with_front" => true],
+		"query_var" => true,
+		"supports" => ["title", "editor"],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type("delivery-item", $args);
+}
+
+add_action('init', 'cptui_register_my_cpts_delivery_group');
+
+
+add_action('admin_menu', 'my_menu_pages');
+function my_menu_pages()
+{
+	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'my-menu', function () {
+		$groups = get_posts([
+			'post_type' => 'delivery-group',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		]);
+
+		?>
+		<div id="wpbody-content">
+
+			<div class="wrap">
+				<h1 class="wp-heading-inline">
+					Consegne Ordini</h1>
+
+				<hr class="wp-header-end">
+
+				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
+					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
+					prodotti che preferisci.</p>
+
+				<form id="comments-form" method="POST"
+					  action="">
+
+					<input type="hidden" name="generate_orders" value="1">
+					<table class="wp-list-table widefat fixed striped table-view-list comments">
+						<thead>
+						<tr>
+							<!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
+																							for="cb-select-all-1">Seleziona
+									tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
+							<th scope="col" id="author" class="manage-column column-author sortable desc">
+								<span>Gruppo</span></th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">Ordini
+							</th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da
+							</th>
+							<th>
+								Ordine
+							</th>
+						</tr>
+						</thead>
+
+						<tbody id="the-comment-list" data-wp-lists="list:comment">
+						<?php foreach ($groups as $group):
+
+							$caps = get_post_meta($group->ID, 'cap', true);
+
+							$orders = wc_get_orders([
+								'limit' => -1,
+								'meta_key' => '_shipping_postcode',
+								'meta_value' => $caps,
+								'meta_compare' => 'IN',
+							]);
+
+							$orders = array_filter($orders, function ($order) {
+								return $order->get_status() == 'processing';
+							});
+
+							?>
+
+							<tr id="comment-1" class="comment even thread-even depth-1 approved">
+								<!--	<th scope="row" class="check-column"><label class="screen-reader-text"
+																			for="cb-select-1">Seleziona
+										un abbonamento</label>
+									<?php if (count($orders) == 0): ?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $group->ID; ?>">
+									<?php else: ?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $group->ID; ?>" disabled><br>
+									<?php endif; ?>
+								</th>-->
+								<td class="author column-author" data-colname="Autore">
+									<span><?php echo $group->post_name; ?></span>
+								</td>
+								<td class="comment column-comment has-row-actions column-primary"
+									data-colname="Commento">
+									<?php foreach ($orders as $order): ?>
+										<span>
+											#<?php echo $order->get_id(); ?> - <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?>
+									</span><br>
+									<?php endforeach; ?>
+								</td>
+
+								<td class="response column-response" data-colname="In risposta a">
+								<span>
+
+								</span>
+								</td>
+								<td>
+
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<br><br>
+
+					<!--<button type="submit" class="button-primary">Genera Ordini</button>-->
+				</form>
+			</div>
+
+			<div id="ajax-response"></div>
+
+			<div class="clear"></div>
+		</div>
+
+		<?php
+	});
+}
+
+
+add_action('woocommerce_product_after_variable_attributes', 'variation_settings_fields', 10, 3);
+add_action('woocommerce_save_product_variation', 'save_variation_settings_fields', 10, 2);
+add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
+
+function variation_settings_fields($loop, $variation_data, $variation)
+{
+
+	$categoriesSelect = [];
+
+	$taxonomy = 'product_cat';
+	$orderby = 'name';
+	$show_count = 0;      // 1 for yes, 0 for no
+	$pad_counts = 0;      // 1 for yes, 0 for no
+	$hierarchical = 1;      // 1 for yes, 0 for no
+	$title = '';
+	$empty = 0;
+
+	$args = array(
+		'taxonomy' => $taxonomy,
+		'orderby' => $orderby,
+		'show_count' => $show_count,
+		'pad_counts' => $pad_counts,
+		'hierarchical' => $hierarchical,
+		'title_li' => $title,
+		'hide_empty' => $empty
+	);
+	$all_categories = get_categories($args);
+	foreach ($all_categories as $cat) {
+
+		if ($cat->category_parent == 0) {
+
+			$category_id = $cat->term_id;
+			$categoriesSelect[$category_id] = strtoupper('TUTTI ' . $cat->name);
+
+			$args2 = array(
+				'taxonomy' => $taxonomy,
+				'child_of' => 0,
+				'parent' => $category_id,
+				'orderby' => $orderby,
+				'show_count' => $show_count,
+				'pad_counts' => $pad_counts,
+				'hierarchical' => $hierarchical,
+				'title_li' => $title,
+				'hide_empty' => $empty
+			);
+			$sub_cats = get_categories($args2);
+			if ($sub_cats) {
+				foreach ($sub_cats as $sub_category) {
+					$categoriesSelect[$sub_category->term_id] = $cat->name . ' > ' . $sub_category->name;
+				}
+			}
+		}
+	}
+
+	$categoriesVariation = get_post_meta($variation->ID, '_box_categories', true);
+
+	woocommerce_wp_multi_select(array(
+		'id' => "_box_categories{$loop}",
+		'name' => "_box_categories[{$loop}][]",
+		'wrapper_class' => 'form-row form-row-full',
+		'label' => 'Categorie compatibili',
+		'options' => $categoriesSelect,
+		'value' => $categoriesVariation
+	), $variation_data->ID);
+
+}
+
+function save_variation_settings_fields($variation_id, $loop)
+{
+
+	if (isset($_POST['_box_categories'][$loop])) {
+		$post_data = $_POST['_box_categories'][$loop];
+		$sanitize_data = [];
+		if (is_array($post_data) && !empty($post_data)) {
+			foreach ($post_data as $value) {
+				$sanitize_data[] = intval(esc_attr($value));
+			}
+		}
+		update_post_meta($variation_id, '_box_categories', $sanitize_data);
+	}
+
+}
+
+function load_variation_settings_fields($variation)
+{
+	$variation['box_categories'] = get_post_meta($variation['variation_id'], 'box_categories', true);
+
+	return $variation;
+}
+
+
+function woocommerce_wp_multi_select($field, $variation_id = 0)
+{
+	global $thepostid, $post;
+
+	if ($variation_id == 0)
+		$the_id = empty($thepostid) ? $post->ID : $thepostid;
+	else
+		$the_id = $variation_id;
+
+	$field['class'] = isset($field['class']) ? $field['class'] : 'select short';
+	$field['wrapper_class'] = isset($field['wrapper_class']) ? $field['wrapper_class'] : '';
+	$field['name'] = isset($field['name']) ? $field['name'] : $field['id'];
+
+	$meta_data = maybe_unserialize(get_post_meta($the_id, $field['id'], true));
+	$meta_data = $meta_data ? $meta_data : array();
+
+	$field['value'] = isset($field['value']) ? $field['value'] : $meta_data;
+
+	echo '<p class="form-field ' . esc_attr($field['id']) . '_field ' . esc_attr($field['wrapper_class']) . '"><label for="' . esc_attr($field['id']) . '">' . wp_kses_post($field['label']) . '</label><select id="' . esc_attr($field['id']) . '" name="' . esc_attr($field['name']) . '" class="' . esc_attr($field['class']) . '" multiple="multiple">';
+
+	foreach ($field['options'] as $key => $value) {
+		echo '<option value="' . esc_attr($key) . '" ' . (in_array($key, $field['value']) ? 'selected="selected"' : '') . '>' . esc_html($value) . '</option>';
+	}
+	echo '</select> ';
+	if (!empty($field['description'])) {
+		if (isset($field['desc_tip']) && false !== $field['desc_tip']) {
+			echo '<img class="help_tip" data-tip="' . esc_attr($field['description']) . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />';
+		} else {
+			echo '<span class="description">' . wp_kses_post($field['description']) . '</span>';
+		}
+	}
+}
+
+
