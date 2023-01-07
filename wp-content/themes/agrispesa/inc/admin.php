@@ -10,8 +10,34 @@ add_action('add_meta_boxes', 'mv_add_meta_boxes');
 if (!function_exists('mv_add_meta_boxes')) {
 	function mv_add_meta_boxes()
 	{
+		add_meta_box(
+			'box_preferences',
+			'Preferenze BOX ',
+			'box_preferences_meta_box_callback',
+			'shop_order',
+			'advanced',
+			'core',
+			[]
+		);
+
 		add_meta_box('mv_other_fields', 'Informazioni BOX', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 	}
+
+	function box_preferences_meta_box_callback($order)
+	{
+		global $post;
+
+		$subscriptionId = get_post_meta($post->ID, '_subscription_id', true);
+		echo $subscriptionId;
+
+		?>
+		<h4>Da Eliminare</h4><br>
+
+		<h4>Da Aggiungere</h4>
+		<?php
+
+	}
+
 }
 
 // Adding Meta field in the meta container admin shop_order pages
@@ -107,6 +133,7 @@ function create_order_from_subscription($id)
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
+	update_post_meta($order->get_id(), '_subscription_id', $id);
 
 }
 
@@ -192,26 +219,38 @@ function my_custom_submenu_page_callback()
 					<tbody id="the-comment-list" data-wp-lists="list:comment">
 					<?php foreach ($subscriptions as $subscription):
 
-						$orders = wc_get_orders([
-							'customer_id' => $subscription->get_customer_id(),
-							'limit' => -1,
-							'meta_key' => '_week',
-							'meta_value' => $week,
-							'meta_compare' => '=',
-						]);
+						$args = [
+							'posts_per_page' => -1,
+							'post_type' => 'shop_order',
+							'post_status' => ['wc-processing', 'wc-completed'],
+							'meta_query' => [
+								'relation' => 'AND',
+								[
+									'key' => '_week',
+									'value' => $week,
+									'compare' => '='
+								],
+								[
+									'key' => '_subscription_id',
+									'value' => $subscription->get_id(),
+									'compare' => '='
+								]
+							]
+						];
+						$orders = new WP_Query($args);
+						$orders = $orders->get_posts();
 
 						?>
-
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
 							<th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Seleziona
 									un abbonamento</label>
-								<?php if (count($orders) == 0): ?>
-									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-										   value="<?php echo $subscription->get_id(); ?>">
-								<?php else: ?>
-									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-										   value="<?php echo $subscription->get_id(); ?>" disabled><br>
-								<?php endif; ?>
+
+								<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+									   value="<?php echo $subscription->get_id(); ?>"
+									<?php if (count($orders) > 0): ?>
+										disabled
+									<?php endif; ?>
+								><br>
 							</th>
 							<td class="author column-author" data-colname="Autore">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
@@ -233,7 +272,7 @@ function my_custom_submenu_page_callback()
 							</td>
 							<td>
 								<?php if (count($orders) > 0): ?>
-									<a href="/wp-admin/post.php?post=<?php echo $orders[0]->get_id() ?>&action=edit">Vai
+									<a href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
 										all'ordine</a>
 								<?php endif; ?>
 							</td>

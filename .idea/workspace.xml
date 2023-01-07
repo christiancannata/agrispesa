@@ -6,39 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/languages/plugins/akismet-it_IT.mo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/languages/plugins/akismet-it_IT.po" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/languages/plugins/hello-dolly-it_IT.mo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/languages/plugins/hello-dolly-it_IT.po" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/.htaccess" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/_inc/akismet-frontend.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/_inc/akismet.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/_inc/akismet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/_inc/img/logo-a-2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/_inc/img/logo-full-2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/akismet.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/changelog.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/class.akismet-admin.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/class.akismet-cli.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/class.akismet-rest-api.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/class.akismet-widget.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/class.akismet.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/activate.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/connect-jp.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/enter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/get.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/notice.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/predefined.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/setup.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/start.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/stats.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/views/title.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/akismet/wrapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/hello.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/uploads/wc-logs/fatal-errors-2023-01-07-1bc8e4aeaa929aa4e981fe61effaedd6.log" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/uploads/wc-logs/fatal-errors-2023-01-07-1bc8e4aeaa929aa4e981fe61effaedd6.log" afterDir="false" />
     </list>
@@ -96,7 +63,7 @@
       <workItem from="1672853014771" duration="1076000" />
       <workItem from="1672924306320" duration="602000" />
       <workItem from="1672929571796" duration="3478000" />
-      <workItem from="1673090089510" duration="13610000" />
+      <workItem from="1673090089510" duration="16755000" />
     </task>
     <servers />
   </component>
