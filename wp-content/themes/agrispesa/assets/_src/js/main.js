@@ -4,7 +4,7 @@ clearSearch();
 openSearch();
 openSubMenu();
 quantityInput();
-letiablesToRadio();
+variationToRadio();
 faqs();
 reviewsSlider();
 footerMenu();
@@ -17,7 +17,7 @@ relatedSlider();
 
 
 function closeNotices() {
-  jQuery('.woocommerce-message .close-notice').on('click', function(e) {
+  jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function(e) {
     e.preventDefault();
     jQuery(this).closest('.woocommerce-notices-wrapper').remove();
   });
@@ -146,7 +146,7 @@ function relatedSlider() {
     slidesToScroll: 1,
     arrows: false,
     dots: false,
-    centerMode: false, 
+    centerMode: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
@@ -201,17 +201,17 @@ function faqs() {
   }
 }
 
-function letiablesToRadio() {
-  jQuery(document).on('change', '.letiation-radios input', function() {
-    jQuery('.letiation-radios input:checked').each(function(index, element) {
+function variationToRadio() {
+  jQuery(document).on('change', '.variation-radios input', function() {
+    jQuery('.variation-radios input:checked').each(function(index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');
       jQuery('select[name="' + thisName + '"]').val(thisVal).trigger('change');
     });
   });
-  jQuery(document).on('woocommerce_update_letiation_values', function() {
-    jQuery('.letiation-radios input').each(function(index, element) {
+  jQuery(document).on('woocommerce_update_variation_values', function() {
+    jQuery('.variation-radios input').each(function(index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');

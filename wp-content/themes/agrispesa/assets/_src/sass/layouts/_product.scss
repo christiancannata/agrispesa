@@ -385,7 +385,9 @@
 	background: $primary;
 }
 
+.summary form.variations_form .variations,
 .woocommerce div.product form.cart .variations {
+	td.label,
 	th {
 		width: 100%;
 		display: block;
@@ -406,6 +408,7 @@
 	}
 
 	.nice-select,
+	.reset_variations,
 	select {
 		display: none;
 	}
@@ -497,11 +500,13 @@
 	}
 }
 
+.woocommerce-variation-add-to-cart,
 .woocommerce-variation-price {
 	float: left;
 	padding: 0;
 	margin-top: 21px;
 
+	.btn-price,
 	.price {
 		color: $black;
 

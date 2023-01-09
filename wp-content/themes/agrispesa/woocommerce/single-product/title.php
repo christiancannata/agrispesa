@@ -19,13 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$product_quantity = get_field('product_quantity');
+global $product;
 $produttori = get_field('product_producer');
+$attributes = $product->get_attributes();
 
 the_title( '<h1 class="product_title entry-title">', '</h1>' );
 echo '<div class="product-info">';
-if($product_quantity) {
-	echo '<span class="product-info--quantity">' . $product_quantity . '</span>';
+if ( $product->has_weight() ) {
+	echo '<span class="product-info--quantity">' . $product->get_weight() . ' kg</span>';
 }
 
 if($produttori) {

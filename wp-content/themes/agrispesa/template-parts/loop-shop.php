@@ -15,8 +15,8 @@ $product_quantity = get_field('product_quantity');
     <div class="product-box--text--top">
       <h2 class="product-box--title"><?php echo the_title(); ?></h2>
       <div class="product-box--price--flex">
-        <?php if($product_quantity) {
-          echo '<p class="product-box--description product-info--quantity">' . $product_quantity . ' — </p>';
+        <?php if ( $product->has_weight() ) {
+        	echo '<p class="product-box--description product-info--quantity">' .  $product->get_weight() . ' kg — </p>';
         } ?>
         <div class="product-box--price">
           <?php echo $product->get_price_html(); ?>
