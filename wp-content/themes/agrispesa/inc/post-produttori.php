@@ -1,6 +1,6 @@
 <?php
 
-//***** Custom post: CORSI *****//
+//***** Custom post: PRODUTTORI *****//
 
 add_action( 'init', 'producers_posts_init' );
 function producers_posts_init() {

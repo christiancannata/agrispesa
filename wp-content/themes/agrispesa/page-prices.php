@@ -2,7 +2,7 @@
 /* Template Name: Prezzi */
 
 get_header(); ?>
-
+ 
 
 <div class="wrapper" id="index-wrapper">
 

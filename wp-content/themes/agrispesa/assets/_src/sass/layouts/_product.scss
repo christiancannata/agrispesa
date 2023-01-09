@@ -105,8 +105,27 @@
 			border-top: 2px solid $background;
 			padding: 16px;
 			background: $white;
+			position: relative;
 			@include breakpoint(desktop) {
 				padding: 24px;
+			}
+
+			.button {
+				@include button();
+				@include buttonprimary();
+				@include buttonsmall();
+			}
+
+			.onsale {
+				@include font-size(10);
+				top: 13px;
+				padding: 6px 8px;
+				left: 113px;
+				right: auto;
+				line-height: 1;
+				min-height: 0;
+				display: block;
+				margin: 0;
 			}
 
 			a {
@@ -200,8 +219,12 @@
 		justify-content: flex-start;
 	}
 
-	.price {
-		display: none;
+	.woocommerce-variation-add-to-cart {
+		@include clearfix();
+
+		.btn-price {
+			display: none;
+		}
 	}
 
 	.product-price--flex {
@@ -430,10 +453,17 @@
 		&.attribute_pa_dimensione,
 		&.attribute_pa_tipologia {
 			display: flex;
+			@include breakpoint(mobile) {
+				flex-wrap: wrap;
+			}
 
 			label {
-				width: 25%;
-				margin: 0 4px 0 0;
+				width: 100%;
+				margin: 4px 0;
+				@include breakpoint(desktop) {
+					width: 25%;
+					margin: 0 4px 0 0;
+				}
 
 				&:last-of-type {
 					margin-right: 0;
@@ -502,8 +532,7 @@
 
 .woocommerce-variation-add-to-cart,
 .woocommerce-variation-price {
-	float: left;
-	padding: 0;
+	width: 100%;
 	margin-top: 21px;
 
 	.btn-price,
@@ -521,12 +550,17 @@
 				color: $black;
 			}
 		}
+
+		.subscription-details {
+			@include font-size(24);
+			color: $black;
+		}
 	}
 }
 
 .woocommerce-variation-add-to-cart {
 	text-align: right;
-	margin-top: 24px;
+	margin-top: -50px;
 }
 
 .shipping-info {

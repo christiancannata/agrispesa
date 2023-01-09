@@ -232,7 +232,7 @@ textarea {
 
     &.perfect span:before,
     input[type=checkbox]:checked + span:before {
-      background: #fff url("../img/elements/check.svg") center center no-repeat;
+      background: #fff url("../images/elements/check.svg") center center no-repeat;
       background-size: 85% auto;
     }
   }
@@ -281,7 +281,7 @@ textarea {
 
   &.perfect label:before,
   input[type=checkbox]:checked + label:before {
-    background: #fff url("../img/elements/check.svg") center center no-repeat;
+    background: #fff url("../images/elements/check.svg") center center no-repeat;
     background-size: 85% auto;
   }
 }

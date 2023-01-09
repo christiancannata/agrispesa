@@ -24,7 +24,7 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 ?>
 <h3 class="checkout--title"><?php esc_html_e( 'Codice sconto', 'woocommerce' ); ?></h3>
 
-	<div class="woocommerce-info">
+	<div class="woocommerce-info coupon-box">
 		<span class="icon-heart gift-card-icon-heart"></span>Hai un codice sconto? <a href="#" class="show-coupon">Usalo qui!</a>
 	</div>
 

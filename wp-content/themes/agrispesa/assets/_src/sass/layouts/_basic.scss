@@ -130,14 +130,38 @@ h6 {
 	@include border-radius(6px);
 	@include font-size(16);
 	max-width: 1024px;
-	margin: 0;
+	margin: 4px 0;
 	padding: 28px 20px 20px;
 	border: none;
 	background: aliceblue;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+	max-width: 450px;
 
 	&::before {
 		content: none;
+	}
+
+	&.coupon-box {
+		background: $white;
+		width: 100%;
+    max-width: 100%;
+		box-shadow: none;
+	}
+}
+
+.woocommerce-form-login-toggle {
+	.woocommerce-info {
+		background: $panna;
+		width: 100%;
+    max-width: 100%;
+		box-shadow: none;
+		.close-notice {
+			display: none;
+		}
+	}
+
+	.woocommerce-checkout & {
+		//display: none;
 	}
 }
 

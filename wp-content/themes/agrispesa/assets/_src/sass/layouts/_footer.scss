@@ -55,8 +55,8 @@
 
 	&--flex {
 		@include breakpoint(desktop) {
-		padding: 0 40px 40px;
-	}
+			padding: 0 40px 40px;
+		}
 
 		&:last-of-type {
 			padding-bottom: 0;
@@ -232,7 +232,13 @@
 
 	&--info {
 		text-align: left;
-		margin-top: -20px;
+		margin-top: 16px;
+		text-align: center;
+		margin: 16px 0;
+		@include breakpoint(desktop) {
+			margin: -20px 0 0 0;
+			text-align: left;
+		}
 
 		span {
 			display: block;
