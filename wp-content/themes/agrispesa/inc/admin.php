@@ -134,9 +134,33 @@ function create_order_from_subscription($id)
 		return false;
 	}
 
+	$date = new DateTime();
+	$week = $date->format("W");
+
 	$products = $subscription->get_items();
 	$product = reset($products)->get_product();
 	$productData = $product->get_data();
+	dd($productData);
+	//get product data box
+	$box = get_posts([
+		'post_type' => 'weekly-box',
+		'post_status' => 'publish',
+		'posts_per_page' => 1,
+		'meta_query' => [
+			'relation' => 'AND',
+			[
+				'key' => '_week',
+				'value' => $week,
+				'compare' => '='
+			],
+			[
+				'key' => '_product_box_id',
+				'value' => $product->ID,
+				'compare' => '='
+			]
+		]
+	]);
+
 
 	$weight = 0;
 	if (!empty($productData['weight'])) {
@@ -180,9 +204,6 @@ function create_order_from_subscription($id)
 	], 'shipping');
 
 
-	$date = new DateTime();
-	$week = $date->format("W");
-
 	/*$items = $subscription->get_items();
 	foreach ($items as $item) {
 
@@ -214,11 +235,8 @@ function my_custom_submenu_page_callback()
 
 	if (isset($_POST['generate_orders'])) {
 		$subscriptionIds = $_POST['subscriptions'];
-
 		foreach ($subscriptionIds as $subscriptionId) {
-
 			create_order_from_subscription($subscriptionId);
-
 		}
 	}
 
@@ -846,7 +864,7 @@ function consegne_ordini_pages()
 											<tr>
 												<td><?php echo $product['name']; ?></td>
 												<td><input value="<?php echo $product['quantity']; ?>"
-														   <?php if($week<$currentWeek): ?> disabled <?php endif; ?>
+														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]">Kg
 												</td>
