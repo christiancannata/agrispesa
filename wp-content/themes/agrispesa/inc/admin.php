@@ -638,7 +638,6 @@ function consegne_ordini_pages()
 	add_menu_page('Box Settimanali', 'Box Settimanali', 'manage_options', 'box-settimanali', function () {
 
 		if (isset($_GET['delete_box'])) {
-			delete_post_meta($_GET['delete_box']);
 			wp_delete_post($_GET['delete_box']);
 
 		}
@@ -763,7 +762,7 @@ function consegne_ordini_pages()
 				<select name="box_id" id="box_id" class="select2">
 					<option disabled selected>-- Scegli la box --</option>
 					<?php foreach ($products as $product): ?>
-						<option value="<?php echo $product->ID ?>"><?php echo $product->post_name; ?></option>
+						<option value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
 					<?php endforeach; ?>
 				</select>
 
@@ -837,7 +836,7 @@ function consegne_ordini_pages()
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento">
-									<span><?php echo $productBox->post_name; ?></span>
+									<span><?php echo $productBox->post_title; ?></span>
 								</td>
 
 								<td class="response column-response" data-colname="In risposta a">
