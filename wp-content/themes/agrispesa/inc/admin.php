@@ -4,6 +4,45 @@ function dd($vars)
 	die(var_dump($vars));
 }
 
+add_action('rest_api_init', function () {
+	register_rest_route('agrispesa/v1', 'weekly-box', array(
+		'methods' => 'POST',
+		'callback' => function ($request) {
+
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(201);
+
+			return $response;
+		}
+	));
+});
+
+
+function my_enqueue($hook)
+{
+	if ('toplevel_page_box-settimanali' !== $hook) {
+		return;
+	}
+
+	wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
+	wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+	wp_enqueue_style('select2css');
+	wp_enqueue_script('select2');
+
+
+	wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
+	wp_enqueue_script('axios');
+	wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
+	wp_enqueue_script('vuejs');
+	wp_enqueue_script('axios');
+
+
+	wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
+	wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
+}
+
+add_action('admin_enqueue_scripts', 'my_enqueue');
 
 // Adding Meta container admin shop_order pages
 add_action('add_meta_boxes', 'mv_add_meta_boxes');
@@ -416,16 +455,48 @@ function cptui_register_my_cpts_delivery_group()
 		"show_in_graphql" => false,
 	];
 
-	register_post_type("delivery-item", $args);
+
+	$labels = [
+		"name" => esc_html__("Box settimanali", "custom-post-type-ui"),
+		"singular_name" => esc_html__("Box settimanale", "custom-post-type-ui"),
+	];
+
+	$args = [
+		"label" => esc_html__("Box settimanale", "custom-post-type-ui"),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => ["slug" => "weekly-box", "with_front" => true],
+		"query_var" => true,
+		"supports" => ["title", "editor"],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type("weekly-box", $args);
 }
 
 add_action('init', 'cptui_register_my_cpts_delivery_group');
 
 
-add_action('admin_menu', 'my_menu_pages');
-function my_menu_pages()
+add_action('admin_menu', 'consegne_ordini_pages');
+function consegne_ordini_pages()
 {
-	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'my-menu', function () {
+	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini-pages', function () {
 		$groups = get_posts([
 			'post_type' => 'delivery-group',
 			'post_status' => 'publish',
@@ -534,6 +605,248 @@ function my_menu_pages()
 
 		<?php
 	});
+
+
+	add_menu_page('Box Settimanali', 'Box Settimanali', 'manage_options', 'box-settimanali', function () {
+		$boxs = get_posts([
+			'post_type' => 'weekly-box',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		]);
+
+		$date = new DateTime();
+		$week = $date->format("W");
+
+
+		$products = get_posts(array(
+			'post_type' => 'product',
+			'numberposts' => -1,
+			'post_status' => 'publish',
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'product_cat',
+					'field' => 'slug',
+					'terms' => 'box',
+					'operator' => 'IN',
+				)
+			),
+		));
+
+		$taxonomy = 'product_cat';
+		$orderby = 'name';
+		$show_count = 0;      // 1 for yes, 0 for no
+		$pad_counts = 0;      // 1 for yes, 0 for no
+		$hierarchical = 1;      // 1 for yes, 0 for no
+		$title = '';
+		$empty = 0;
+
+		$args = array(
+			'taxonomy' => $taxonomy,
+			'orderby' => $orderby,
+			'show_count' => $show_count,
+			'pad_counts' => $pad_counts,
+			'hierarchical' => $hierarchical,
+			'title_li' => $title,
+			'hide_empty' => $empty
+		);
+		$all_categories = get_categories($args);
+
+		$jsonProducts = [];
+		foreach ($all_categories as $cat) {
+			if ($cat->category_parent == 0) {
+
+				$category_id = $cat->term_id;
+
+				$args2 = array(
+					'taxonomy' => $taxonomy,
+					'child_of' => 0,
+					'parent' => $category_id,
+					'orderby' => $orderby,
+					'show_count' => $show_count,
+					'pad_counts' => $pad_counts,
+					'hierarchical' => $hierarchical,
+					'title_li' => $title,
+					'hide_empty' => $empty
+				);
+				$sub_cats = get_categories($args2);
+				if ($sub_cats) {
+					foreach ($sub_cats as $sub_category) {
+						$categoryProducts = get_posts(array(
+							'post_type' => 'product',
+							'numberposts' => -1,
+							'post_status' => 'publish',
+							'tax_query' => array(
+								array(
+									'taxonomy' => 'product_cat',
+									'field' => 'slug',
+									'terms' => $sub_category->slug,
+									'operator' => 'IN',
+								)
+							),
+						));
+						$categories[$sub_category->term_id] =
+							[
+								'name' => $cat->name . ' > ' . $sub_category->name,
+								'products' => $categoryProducts
+							];
+
+						foreach ($categoryProducts as $categoryProduct) {
+							$jsonProducts[] = [
+								'id' => $categoryProduct->ID,
+								'name' => $categoryProduct->post_title
+							];
+						}
+					}
+				}
+			}
+		}
+
+		?>
+
+		<script>
+			let productIds = <?php echo json_encode($jsonProducts); ?>
+		</script>
+		<div id="wpbody-content">
+
+			<div class="wrap" id="box-app">
+
+
+				<h1 class="wp-heading-inline">
+					Box Settimanali</h1>
+
+				<hr class="wp-header-end">
+
+				<p v-text="message"></p>
+
+				<h5>Crea una box settimanale</h5>
+
+				<label>Settimana</label>
+				<input name="week" id="week" value="<?php echo $week; ?>" type="number" readonly>
+				<br>
+
+				<label>Box</label>
+				<select name="box_id" id="box_id" class="select2">
+					<option disabled selected>-- Scegli la box --</option>
+					<?php foreach ($products as $product): ?>
+						<option value="<?php echo $product->ID ?>"><?php echo $product->post_name; ?></option>
+					<?php endforeach; ?>
+				</select>
+
+				<br>
+
+				<label>Prodotto da inserire</label>
+				<select name="products_id" id="products_id" class="select2">
+					<option disabled selected>-- Scegli il prodotto --</option>
+					<?php foreach ($categories as $category): ?>
+						<optgroup label="<?php echo $category['name']; ?>">
+							<?php foreach ($category['products'] as $product): ?>
+								<option value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					<?php endforeach; ?>
+				</select><br>
+
+				<button class="button-primary add-product" @click="addProduct">Aggiungi alla box</button>
+				<br><br>
+
+				<div class="row" v-for="(product,index) of products">
+					<div class="product-box">
+						<a href="#" @click="deleteProduct(index)">Elimina</a>
+						<h4 v-html="product.name"></h4>
+						<label>Quantità</label>
+						<input type="number" v-model="product.quantity">
+					</div>
+				</div>
+				<br><br>
+
+				<button class="button-primary add-product" @click="createBox">Crea Box Settimanale</button>
+
+
+				<form id="comments-form" method="POST"
+					  action="" style="margin-top:100px">
+
+					<input type="hidden" name="generate_orders" value="1">
+					<table class="wp-list-table widefat fixed striped table-view-list comments">
+						<thead>
+						<tr>
+							<th scope="col" id="author" class="manage-column column-author sortable desc">
+								<span>Settimana</span></th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">Box
+							</th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">Prodotti
+							</th>
+						</tr>
+						</thead>
+
+						<tbody id="the-comment-list" data-wp-lists="list:comment">
+
+						<?php foreach ($boxs as $box):
+
+							$caps = get_post_meta($group->ID, 'cap', true);
+
+							$orders = wc_get_orders([
+								'limit' => -1,
+								'meta_key' => '_shipping_postcode',
+								'meta_value' => $caps,
+								'meta_compare' => 'IN',
+							]);
+
+							$orders = array_filter($orders, function ($order) {
+								return $order->get_status() == 'processing';
+							});
+
+							?>
+
+							<tr id="comment-1" class="comment even thread-even depth-1 approved">
+								<!--	<th scope="row" class="check-column"><label class="screen-reader-text"
+																			for="cb-select-1">Seleziona
+										un abbonamento</label>
+									<?php if (count($orders) == 0): ?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $group->ID; ?>">
+									<?php else: ?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $group->ID; ?>" disabled><br>
+									<?php endif; ?>
+								</th>-->
+								<td class="author column-author" data-colname="Autore">
+									<span><?php echo $group->post_name; ?></span>
+								</td>
+								<td class="comment column-comment has-row-actions column-primary"
+									data-colname="Commento">
+									<?php foreach ($orders as $order): ?>
+										<span>
+											#<?php echo $order->get_id(); ?> - <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?>
+									</span><br>
+									<?php endforeach; ?>
+								</td>
+
+								<td class="response column-response" data-colname="In risposta a">
+								<span>
+
+								</span>
+								</td>
+								<td>
+
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<br><br>
+
+					<!--<button type="submit" class="button-primary">Genera Ordini</button>-->
+				</form>
+			</div>
+
+			<div id="ajax-response"></div>
+
+			<div class="clear"></div>
+		</div>
+
+		<?php
+	});
+
 }
 
 

@@ -111,6 +111,6 @@
   },
   "dependencies": {
     "stylelint-scss": "^4.2.0",
-    "stylelint-selector-max-depth": "5"
+    "stylelint-selector-max-depth": "0.1.5"
   }
 }
