@@ -9,8 +9,27 @@ add_action('rest_api_init', function () {
 		'methods' => 'POST',
 		'callback' => function ($request) {
 
+			$body = $request->get_json_params();
 
-			$response = new WP_REST_Response([]);
+			$post_id = wp_insert_post(array(
+				'post_type' => 'weekly-box',
+				'post_title' => 'Box settimana ' . $body['week'] . ' - ' . $body['product_box_id'],
+				'post_content' => '',
+				'post_status' => 'publish',
+				'comment_status' => 'closed',   // if you prefer
+				'ping_status' => 'closed',      // if you prefer
+			));
+
+			if ($post_id) {
+				// insert post meta
+				add_post_meta($post_id, '_week', $body['week']);
+				add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
+				add_post_meta($post_id, '_products', $body['products']);
+			}
+
+			$response = new WP_REST_Response([
+				'id' => $post_id
+			]);
 			$response->set_status(201);
 
 			return $response;
@@ -25,18 +44,27 @@ function my_enqueue($hook)
 		return;
 	}
 
+
 	wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
 	wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+
 	wp_enqueue_style('select2css');
 	wp_enqueue_script('select2');
 
 
 	wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
 	wp_enqueue_script('axios');
+
 	wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
 	wp_enqueue_script('vuejs');
+
 	wp_enqueue_script('axios');
 
+	wp_register_style('datatable', '//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css', false, '1.0', 'all');
+	wp_enqueue_style('datatable');
+
+	wp_register_script('datatable-js', '//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', array(), null, true);
+	wp_enqueue_script('datatable-js');
 
 	wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
 	wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
@@ -608,6 +636,13 @@ function consegne_ordini_pages()
 
 
 	add_menu_page('Box Settimanali', 'Box Settimanali', 'manage_options', 'box-settimanali', function () {
+
+		if (isset($_GET['delete_box'])) {
+			delete_post_meta($_GET['delete_box']);
+			wp_delete_post($_GET['delete_box']);
+
+		}
+
 		$boxs = get_posts([
 			'post_type' => 'weekly-box',
 			'post_status' => 'publish',
@@ -749,8 +784,8 @@ function consegne_ordini_pages()
 				<button class="button-primary add-product" @click="addProduct">Aggiungi alla box</button>
 				<br><br>
 
-				<div class="row" v-for="(product,index) of products">
-					<div class="product-box">
+				<div class="row">
+					<div class="product-box" v-for="(product,index) of products">
 						<a href="#" @click="deleteProduct(index)">Elimina</a>
 						<h4 v-html="product.name"></h4>
 						<label>Quantità</label>
@@ -766,7 +801,7 @@ function consegne_ordini_pages()
 					  action="" style="margin-top:100px">
 
 					<input type="hidden" name="generate_orders" value="1">
-					<table class="wp-list-table widefat fixed striped table-view-list comments">
+					<table class="wp-list-table datatable">
 						<thead>
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable desc">
@@ -775,60 +810,61 @@ function consegne_ordini_pages()
 							</th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary">Prodotti
 							</th>
+							<th></th>
 						</tr>
 						</thead>
 
 						<tbody id="the-comment-list" data-wp-lists="list:comment">
 
 						<?php foreach ($boxs as $box):
+							$boxId = get_post_meta($box->ID, '_product_box_id', true);
 
-							$caps = get_post_meta($group->ID, 'cap', true);
+							$productBox = get_post($boxId);
 
-							$orders = wc_get_orders([
-								'limit' => -1,
-								'meta_key' => '_shipping_postcode',
-								'meta_value' => $caps,
-								'meta_compare' => 'IN',
-							]);
+							if (!$productBox) {
+								continue;
+							}
 
-							$orders = array_filter($orders, function ($order) {
-								return $order->get_status() == 'processing';
-							});
+							$week = get_post_meta($box->ID, '_week', true);
+							$products = get_post_meta($box->ID, '_products', true);
 
 							?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
-								<!--	<th scope="row" class="check-column"><label class="screen-reader-text"
-																			for="cb-select-1">Seleziona
-										un abbonamento</label>
-									<?php if (count($orders) == 0): ?>
-										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-											   value="<?php echo $group->ID; ?>">
-									<?php else: ?>
-										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-											   value="<?php echo $group->ID; ?>" disabled><br>
-									<?php endif; ?>
-								</th>-->
+
 								<td class="author column-author" data-colname="Autore">
-									<span><?php echo $group->post_name; ?></span>
+									<span><?php echo $week; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento">
-									<?php foreach ($orders as $order): ?>
-										<span>
-											#<?php echo $order->get_id(); ?> - <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?>
-									</span><br>
-									<?php endforeach; ?>
+									<span><?php echo $productBox->post_name; ?></span>
 								</td>
 
 								<td class="response column-response" data-colname="In risposta a">
-								<span>
-
+									<table>
+										<tbody>
+										<?php foreach ($products as $key => $product): ?>
+											<tr>
+												<td><?php echo $product['name']; ?></td>
+												<td><input value="<?php echo $product['quantity']; ?>" type="number"
+														   name="quantity[<?php echo $key; ?>][]">Kg
+												</td>
+												<td>
+													<a class="delete-product-box" data-index="<?php echo $key; ?>"
+													   href="#">Elimina</a>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+										</tbody>
+									</table>
+									<span>
 								</span>
 								</td>
 								<td>
-
+									<a href="/wp-admin/admin.php?page=box-settimanali&delete_box=<?php echo $box->ID; ?>">Elimina
+										box settimanale</a>
 								</td>
+
 							</tr>
 						<?php endforeach; ?>
 						</tbody>

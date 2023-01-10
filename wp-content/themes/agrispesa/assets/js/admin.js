@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
   $(".select2").select2()
+  $('.datatable').DataTable();
 })
 
 const {createApp} = Vue
@@ -20,7 +21,7 @@ createApp({
         products: $vm.products
       })
         .then((response) => {
-          console.log(response.data)
+          location.href = ''
         });
     },
     deleteProduct: function (index) {
