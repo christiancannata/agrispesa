@@ -649,7 +649,7 @@ function consegne_ordini_pages()
 		]);
 
 		$date = new DateTime();
-		$week = $date->format("W");
+		$currentWeek = $date->format("W");
 
 
 		$products = get_posts(array(
@@ -755,7 +755,7 @@ function consegne_ordini_pages()
 				<h5>Crea una box settimanale</h5>
 
 				<label>Settimana</label>
-				<input name="week" id="week" value="<?php echo $week; ?>" type="number" readonly>
+				<input name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" readonly>
 				<br>
 
 				<label>Box</label>
@@ -845,7 +845,9 @@ function consegne_ordini_pages()
 										<?php foreach ($products as $key => $product): ?>
 											<tr>
 												<td><?php echo $product['name']; ?></td>
-												<td><input value="<?php echo $product['quantity']; ?>" type="number"
+												<td><input value="<?php echo $product['quantity']; ?>"
+														   <?php if($week<$currentWeek): ?> disabled <?php endif; ?>
+														   type="number"
 														   name="quantity[<?php echo $key; ?>][]">Kg
 												</td>
 												<td>
