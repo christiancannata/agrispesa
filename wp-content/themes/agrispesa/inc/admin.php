@@ -7,6 +7,9 @@ function dd($vars)
 add_action('rest_api_init', function () {
 	register_rest_route('agrispesa/v1', 'weekly-box', array(
 		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
 		'callback' => function ($request) {
 
 			$body = $request->get_json_params();
@@ -35,12 +38,185 @@ add_action('rest_api_init', function () {
 			return $response;
 		}
 	));
+
+	register_rest_route('agrispesa/v1', 'shop-categories', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$taxonomy = 'product_cat';
+			$orderby = 'name';
+			$show_count = 0;      // 1 for yes, 0 for no
+			$pad_counts = 0;      // 1 for yes, 0 for no
+			$hierarchical = 1;      // 1 for yes, 0 for no
+			$title = '';
+			$empty = 0;
+
+			$args = array(
+				'taxonomy' => $taxonomy,
+				'orderby' => $orderby,
+				'show_count' => $show_count,
+				'pad_counts' => $pad_counts,
+				'hierarchical' => $hierarchical,
+				'title_li' => $title,
+				'hide_empty' => $empty
+			);
+			$all_categories = get_categories($args);
+
+			$categories = [];
+			foreach ($all_categories as $cat) {
+				if ($cat->category_parent == 0) {
+
+					$category_id = $cat->term_id;
+
+					$args2 = array(
+						'taxonomy' => $taxonomy,
+						'child_of' => 0,
+						'parent' => $category_id,
+						'orderby' => $orderby,
+						'show_count' => $show_count,
+						'pad_counts' => $pad_counts,
+						'hierarchical' => $hierarchical,
+						'title_li' => $title,
+						'hide_empty' => $empty
+					);
+					$sub_cats = get_categories($args2);
+					if ($sub_cats) {
+						foreach ($sub_cats as $sub_category) {
+							$categoryProducts = get_posts(array(
+								'post_type' => 'product',
+								'numberposts' => -1,
+								'post_status' => 'publish',
+								'tax_query' => array(
+									array(
+										'taxonomy' => 'product_cat',
+										'field' => 'slug',
+										'terms' => $sub_category->slug,
+										'operator' => 'IN',
+									)
+								),
+							));
+							$categories[] =
+								[
+									'id' => $sub_category->term_id,
+									'name' => $cat->name . ' > ' . $sub_category->name,
+									'products' => $categoryProducts
+								];
+
+						}
+					}
+				}
+			}
+
+			$response = new WP_REST_Response($categories);
+			$response->set_status(200);
+
+			return $response;
+		}
+	));
+
+
+	register_rest_route('agrispesa/v1', 'user-subscriptions', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
+
+			$json = [];
+
+			foreach ($subscriptions as $subscription) {
+				$products = $subscription->get_items();
+
+				$productsToAdd = get_products_to_add_from_subscription($subscription);
+
+				$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
+				if (empty($boxPreferences)) {
+					$boxPreferences = [];
+				}
+				$json[] = [
+					'name' => reset($products)->get_name(),
+					'id' => $subscription->get_id(),
+					'box_preferences' => $boxPreferences,
+					'products' => $productsToAdd
+				];
+			}
+
+			$response = new WP_REST_Response($json);
+			$response->set_status(200);
+
+			return $response;
+		}
+	));
+
+
+	register_rest_route('agrispesa/v1', 'subscription-preference', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			$body = $request->get_json_params();
+
+			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
+
+			if (empty($boxPreferences)) {
+				$boxPreferences = [];
+			}
+			$productToRemove = get_post($body['product_to_remove']);
+			$productToAdd = get_post($body['product_to_add']);
+
+			$boxPreferences[] = [
+				'product_to_remove' => [
+					'id' => $productToRemove->ID,
+					'name' => $productToRemove->post_title
+				],
+				'product_to_add' => [
+					'id' => $productToAdd->ID,
+					'name' => $productToAdd->post_title
+				]
+			];
+
+			update_post_meta($body['subscription_id'], '_box_preferences', $boxPreferences);
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(201);
+
+			return $response;
+		}
+	));
+
+
+	register_rest_route('agrispesa/v1', 'subscription-preference', array(
+		'methods' => 'PATCH',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			$body = $request->get_json_params();
+			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
+
+			unset($boxPreferences[$body['index']]);
+			update_post_meta($body['subscription_id'], '_box_preferences', $boxPreferences);
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+			return $response;
+		}
+	));
+
+
 });
 
 
 function my_enqueue($hook)
 {
-	if ('toplevel_page_box-settimanali' !== $hook) {
+
+	if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
 		return;
 	}
 
@@ -57,8 +233,6 @@ function my_enqueue($hook)
 
 	wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
 	wp_enqueue_script('vuejs');
-
-	wp_enqueue_script('axios');
 
 	wp_register_style('datatable', '//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css', false, '1.0', 'all');
 	wp_enqueue_style('datatable');
@@ -125,22 +299,26 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 	}
 }
 
-
-function create_order_from_subscription($id)
+function get_products_to_add_from_subscription($subscription, $week = null)
 {
-	$subscription = wcs_get_subscription($id);
+	$box = get_box_from_subscription($subscription, $week);
+	$productsToAdd = get_post_meta($box->ID, '_products', true);
+	return $productsToAdd;
+}
 
-	if (!$subscription) {
-		return false;
+function get_box_from_subscription($subscription, $week = null)
+{
+
+	if (!$week) {
+		$date = new DateTime();
+		$week = $date->format("W");
 	}
 
-	$date = new DateTime();
-	$week = $date->format("W");
 
 	$products = $subscription->get_items();
 	$product = reset($products)->get_product();
 	$productData = $product->get_data();
-	dd($productData);
+
 	//get product data box
 	$box = get_posts([
 		'post_type' => 'weekly-box',
@@ -155,11 +333,31 @@ function create_order_from_subscription($id)
 			],
 			[
 				'key' => '_product_box_id',
-				'value' => $product->ID,
+				'value' => $productData['parent_id'],
 				'compare' => '='
 			]
 		]
 	]);
+
+	if (empty($box)) {
+		return null;
+	}
+
+
+	return reset($box);
+}
+
+
+function create_order_from_subscription($id)
+{
+	$subscription = wcs_get_subscription($id);
+
+	if (!$subscription) {
+		return false;
+	}
+
+	$date = new DateTime();
+	$week = $date->format("W");
 
 
 	$weight = 0;
@@ -167,14 +365,31 @@ function create_order_from_subscription($id)
 		$weight = $productData['weight'];
 	}
 
+	$box = get_box_from_subscription($subscription);
+
+	if (!$box) {
+		return false;
+	}
+
+	$productsToAdd = get_products_to_add_from_subscription($subscription, $week);
+
 	$customerId = $subscription->get_user_id();
 
 	$order = wc_create_order();
 	$order->set_customer_id($customerId);
 
 
+	foreach ($productsToAdd as $productToAdd) {
+		$productObjToAdd = wc_get_product($productToAdd['id']);
+
+		if ($productToAdd['quantity'] > $productObjToAdd->get_stock_quantity()) {
+			//Non ho più disponibilità
+		}
+
+		$order->add_product($productObjToAdd, $productToAdd['quantity']);
+	}
+
 	// The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
-	//$order->add_product(get_product('275962'), 1);
 	$order->set_address([
 		'first_name' => $subscription->get_billing_first_name(),
 		'last_name' => $subscription->get_billing_last_name(),
@@ -248,6 +463,58 @@ function my_custom_submenu_page_callback()
 	$date = new DateTime();
 	$week = $date->format("W");
 
+	$allProductsNeed = [];
+
+	foreach ($subscriptions as $subscription) {
+		$args = [
+			'posts_per_page' => -1,
+			'post_type' => 'shop_order',
+			'post_status' => ['wc-processing', 'wc-completed'],
+			'meta_query' => [
+				'relation' => 'AND',
+				[
+					'key' => '_week',
+					'value' => $week,
+					'compare' => '='
+				],
+				[
+					'key' => '_subscription_id',
+					'value' => $subscription->get_id(),
+					'compare' => '='
+				]
+			]
+		];
+		$orders = new WP_Query($args);
+		$orders = $orders->get_posts();
+
+		if (count($orders) > 0) {
+			continue;
+		}
+
+		$productsToAdd = get_products_to_add_from_subscription($subscription, $week);
+
+		foreach ($productsToAdd as $productToAdd) {
+
+			if (!isset($allProductsNeed[$productToAdd['id']])) {
+				$allProductsNeed[$productToAdd['id']] = [
+					'name' => $productToAdd['name'],
+					'product_id' => $productToAdd['id'],
+					'quantity' => $productToAdd['quantity']
+				];
+			} else {
+				$allProductsNeed[$productToAdd['id']]['quantity'] += $productToAdd['quantity'];
+			}
+
+		}
+
+
+		foreach ($allProductsNeed as $key => $productNeed) {
+			$productObjToAdd = wc_get_product($productNeed['product_id']);
+			$allProductsNeed[$key]['current_availability'] = $productObjToAdd->get_stock_quantity();
+		}
+
+	}
+
 	?>
 
 	<div id="wpbody-content">
@@ -262,6 +529,25 @@ function my_custom_submenu_page_callback()
 			<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
 				alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 				prodotti che preferisci.</p>
+
+			<h3>Disponibilità prodotti</h3>
+
+			<table class="datatable">
+				<thead>
+				<th>Prodotto</th>
+				<th>Disponibilità</th>
+				<th>Quantità richiesta</th>
+				</thead>
+				<tbody>
+				<?php foreach ($allProductsNeed as $product): ?>
+					<tr>
+						<td><?php echo $product['name'] ?></td>
+						<td><?php echo $product['current_availability'] ?></td>
+						<td><?php echo $product['quantity'] ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
 
 			<form id="comments-form" method="POST"
 				  action="">
@@ -284,24 +570,23 @@ function my_custom_submenu_page_callback()
 					<br class="clear">
 				</div>
 				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
-				<table class="wp-list-table widefat fixed striped table-view-list comments">
+				<table class="datatable">
 					<thead>
-					<tr>
-						<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
-																						for="cb-select-all-1">Seleziona
-								tutto</label><input id="cb-select-all-1" type="checkbox"></td>
-						<th scope="col" id="author" class="manage-column column-author sortable desc">
-							<span>Utente</span></th>
-						<th scope="col" id="comment" class="manage-column column-comment column-primary">Abbonamento
-						</th>
-						<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da</th>
-						<th>
-							Ordine
-						</th>
-					</tr>
+
+					<th id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
+																					for="cb-select-all-1">Seleziona
+							tutto</label><input id="cb-select-all-1" type="checkbox"></th>
+					<th scope="col" id="author" class="manage-column column-author sortable desc">
+						<span>Utente</span></th>
+					<th scope="col" id="comment" class="manage-column column-comment column-primary">Abbonamento
+					</th>
+					<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da</th>
+					<th>
+						Ordine
+					</th>
 					</thead>
 
-					<tbody id="the-comment-list" data-wp-lists="list:comment">
+					<tbody>
 					<?php foreach ($subscriptions as $subscription):
 
 						$args = [
@@ -357,7 +642,8 @@ function my_custom_submenu_page_callback()
 							</td>
 							<td>
 								<?php if (count($orders) > 0): ?>
-									<a href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
+									<a target="_blank"
+									   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
 										all'ordine</a>
 								<?php endif; ?>
 							</td>
