@@ -1,0 +1,55 @@
+2023-01-11T17:27:44+00:00 CRITICAL Uncaught Error: Call to a member function get_stock_quantity() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:342
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 342
+
+2023-01-11T17:28:55+00:00 CRITICAL Uncaught Error: Call to a member function get_stock_quantity() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:342
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 342
+
+2023-01-11T17:58:44+00:00 CRITICAL Cannot redeclare my_enqueue() (previously declared in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:2) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 44
+
+2023-01-11T18:39:53+00:00 CRITICAL syntax error, unexpected '$response' (T_VARIABLE) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 183
+
+2023-01-11T18:40:37+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:170
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/s...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/s...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('pars in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 170
+
+2023-01-11T18:40:51+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:170
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/s...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/s...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('pars in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 170
+
+2023-01-11T18:41:10+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:173
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/s...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/s...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('pars in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 173
+
