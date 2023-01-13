@@ -7,9 +7,42 @@ get_header(); ?>
 <div class="wrapper" id="index-wrapper">
 
 
-	<?php get_template_part( 'global-elements/hero', 'page' ); ?>
+	<section class="sec-home sec-framed no-line">
+		<div class="container-pg">
+			<div class="sec-framed--intro">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/agrispesa-conosciamoci.jpg" class="sec-framed--img" alt=".." />
+				<h1 class="sec-home--title medium sec-framed--title">In questa foto sono insieme ai nonni,<br/> ai miei genitori, a mia sorella e al mio cane.<br/>
+					Era il 1988, avevo 5 anni.</h1>
+			</div>
+		</div>
+	</section>
 
-	<section class="sec-home sec-three bg-beige">
+	<section class="sec-home sec-wide bg-brown">
+
+	    <div class="container-pg">
+	      <div class="sec-wide--content">
+					<p class="sec-wide--text">
+						Mi chiamo Giovanna.
+					</p>
+	        <p class="sec-wide--text">
+	          <br/>La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
+	        </p>
+					<p class="sec-wide--text">
+						<br/>Mi occupo principalmente di curare ogni dettaglio legato al servizio che le famiglie ricevono da parte di Agrispesa e sento che questo è apprezzato, percepito e riconosciuto.
+					</p>
+					<p class="sec-wide--text">
+						<br/>Da mia mamma ho imparato a trattare le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.<br/>
+						Da mio papà a riconoscere la qualità dei prodotti e a tenerli tra le mie mani in modo delicato.
+					</p>
+
+
+
+	      </div>
+	    </div>
+
+	</section>
+
+	<section class="sec-home sec-three bg-panna">
 	  <div class="sec-three--flex">
 	    <div class="sec-three--sx">
 	      <div class="sec-home--image">
@@ -19,7 +52,11 @@ get_header(); ?>
 
 	    <div class="sec-three--center">
 	      <div class="sec-home--text">
-	        <h3 class="sec-home--title medium">Offriamo prodotti buoni, coltivati <br class="only-desktop" />con cura, pensando all’ambiente e alla salute delle persone;<br class="only-desktop" /> se di origine animale, sono ottenuti <br class="only-desktop" />in allevamenti <br class="only-desktop" />che ne rispettano <br class="only-desktop" />la vita e la socialità.</h3>
+						<?php $today = date('Y');
+									$born = 2003;
+									$years = $today - $born;?>
+						<h3 class="sec-home--title big">Da <em class="number"><?php echo $years; ?></em> anni<br class="only-desktop" /> al servizio della terra.</h3>
+						<p class="sec-home--subtitle">Portiamo nelle vostre case prodotti freschi e genuini. Sarà la stagione a decidere che cosa.</p>
 	      </div>
 	    </div>
 

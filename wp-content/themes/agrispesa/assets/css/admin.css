@@ -1,4 +1,6 @@
 .row {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -8,3 +10,4 @@
 	background: white;
 	border-radius: 15px;
 }
+/*# sourceMappingURL=admin.css.map */

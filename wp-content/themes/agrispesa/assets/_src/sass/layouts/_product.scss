@@ -218,6 +218,12 @@
 		display: flex;
 		justify-content: flex-start;
 	}
+	.reset_variations {
+		display: none !important;
+	}
+	.price {
+		display: none;
+	}
 
 	.woocommerce-variation-add-to-cart {
 		@include clearfix();

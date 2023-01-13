@@ -14,7 +14,7 @@ $_SESSION['havesearch'] = false;
     <div class="container-pg">
       <div class="sec-wide--content">
         <h2 class="sec-wide--text">
-          Agrispesa è una selezione di prodotti di agricoltura contadina — sotto forma di scatola. Così, semplice.<br/>
+          Agrispesa è una selezione di prodotti di agricoltura contadina — ogni settimana a casa tua. Semplice.<br/>
           Verdura, frutta, uova, latte, formaggi, pesce e carne<br class="only-desktop"/> che rispettano la terra e la vita degli animali.
         </h2>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary sec-wide--btn" title="">Crea la tua box</a>

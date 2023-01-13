@@ -57,18 +57,23 @@
 		position: absolute;
 		top: -80px;
 		z-index: 3;
+		@include breakpoint(mobile) {
+			height: 80px;
+			top: -40px;
+		}
 	}
 
 	&.line-white:before {
 		background: $white;
 	}
+
 	&.line-orange:before {
 		background: $orange;
 	}
 
 	&.bg-black {
 		background: $black;
-		color: $white;
+		color: $panna;
 	}
 
 	&.bg-green {
@@ -81,6 +86,11 @@
 
 	&.bg-brown {
 		background: $brown;
+		color: $panna;
+	}
+
+	&.bg-panna {
+		background: $panna;
 	}
 
 	&.bg-orange {
@@ -193,11 +203,20 @@
 		font-weight: 900;
 		line-height: 1.1;
 
+		.number {}
+
 		&.big {
 			@include font-size(45);
 			line-height: 1.1;
 			@include breakpoint(container) {
 				@include font-size(40);
+			}
+
+			.number {
+				@include font-size(55);
+				@include breakpoint(container) {
+					@include font-size(50);
+				}
 			}
 		}
 
@@ -207,12 +226,19 @@
 			@include breakpoint(container) {
 				@include font-size(32);
 			}
+
+			.number {
+				@include font-size(50);
+				@include breakpoint(container) {
+					@include font-size(42);
+				}
+			}
 		}
 	}
 
 	&--subtitle {
-		@include font-size(20);
-		line-height: 1.1;
+		@include font-size(22);
+		line-height: 1.2;
 		margin-top: 24px;
 	}
 
@@ -234,6 +260,23 @@
 	}
 }
 
+.sec-framed {
+	&--intro {
+		text-align: center;
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 40px 0 80px;
+		@include breakpoint(desktop) {
+
+			padding: 80px 0 140px;
+		}
+	}
+
+	&--title {
+		margin-top: 24px;
+	}
+}
+
 .sec-product-description {
 	padding: 220px 0;
 	@include breakpoint(container) {
@@ -248,12 +291,15 @@
 		font-weight: 900;
 		margin: 32px 0 24px;
 	}
+
 	h2 {
 		@include font-size(40);
 	}
+
 	h3 {
 		@include font-size(32);
 	}
+
 	h4 {
 		@include font-size(28);
 	}
@@ -269,15 +315,21 @@
 	@include breakpoint(container) {
 		padding: 220px 0;
 	}
+	@include breakpoint(mobile) {
+		padding: 80px 0;
+	}
 
 	&--content {
 		text-align: center;
 	}
 
 	&--text {
-		@include font-size(40);
+		@include font-size(30);
 		font-family: $font-title;
 		line-height: 1.2;
+		@include breakpoint(desktop) {
+			@include font-size(40);
+		}
 	}
 
 	&--btn {
@@ -319,12 +371,18 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		@include breakpoint(mobile) {
+			flex-wrap: wrap;
+		}
 
 		& > div {
 			max-width: 50%;
 			margin: 0 30px;
 			@include breakpoint(container) {
 				margin: 0 20px;
+			}
+			@include breakpoint(mobile) {
+				width: 100%;
 			}
 		}
 	}
@@ -342,9 +400,28 @@
 	&--flex {
 		display: flex;
 		align-items: center;
+		@include breakpoint(mobile) {
+			flex-wrap: wrap;
+		}
 
 		& > div {
 			width: 33.333%;
+			@include breakpoint(mobile) {
+				width: 100%;
+
+				&.sec-three--center {
+					padding: 24px 20px 90px;
+					order: 3;
+				}
+				&.sec-three--sx{
+					order: 1;
+					width: 50%;
+				}
+				&.sec-three--dx {
+					order: 2;
+					width: 50%;
+				}
+			}
 		}
 	}
 }

@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin.css"],"names":[],"mappings":"AAAA;CACC,oBAAa;CAAb,oBAAa;CAAb,aAAa;AACd;;AAEA;CACC,YAAY;CACZ,aAAa;CACb,iBAAiB;CACjB,mBAAmB;AACpB","file":"admin.css","sourcesContent":[".row {\n\tdisplay: flex;\n}\n\n.product-box {\n\twidth: 200px;\n\tpadding: 10px;\n\tbackground: white;\n\tborder-radius: 15px;\n}\n"]}
