@@ -285,7 +285,7 @@
 .ui-state-default,
 .ui-widget-content .ui-state-default {
 	@include font-size(14);
-	background: #fff;
+	background: $white;
 	border: none;
 	border-radius: 4px;
 	color: $black;
@@ -332,55 +332,4 @@
 
 .ui-datepicker .ui-datepicker-next span::before {
 	content: "\e904";
-}
-
-.double-page {
-	&--flex {
-		align-items: center;
-		display: flex;
-		@include breakpoint(mobile) {
-			flex-wrap: wrap;
-		}
-	}
-
-	&--item {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		min-height: 50vh;
-		padding: 80px 20px 20px;
-		text-align: center;
-		width: 100%;
-		@include breakpoint(desktop) {
-			align-items: flex-end;
-			height: 100vh;
-			padding: 150px 40px 60px;
-			width: 50%;
-		}
-	}
-
-	&--img {
-		margin: 0 auto 16px;
-		max-width: 80%;
-		@include breakpoint(desktop) {
-			margin: 0 auto 32px;
-		}
-	}
-
-	&--title {
-		@include font-size(28);
-		margin-bottom: 0;
-		@include breakpoint(desktop) {
-			@include font-size(32);
-		}
-	}
-
-	&--subtitle {
-		@include font-size(18);
-		margin-bottom: 16px;
-		@include breakpoint(desktop) {
-			@include font-size(22);
-			margin-bottom: 32px;
-		}
-	}
 }
