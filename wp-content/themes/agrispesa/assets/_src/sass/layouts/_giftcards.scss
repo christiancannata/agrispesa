@@ -1,0 +1,386 @@
+/* stylelint-disable */
+.product-type-gift-card {
+	.woocommerce-product-gallery {
+		display: none !important;
+	}
+
+	.summary {
+		width: 100% !important;
+		padding: 40px 20px 0;
+		float: none !important;
+		margin-bottom: 0;
+
+		.product_title,
+		.woocommerce-product-details__short-description {
+			display: none !important;
+		}
+	}
+}
+
+.gift-card-form {
+	&--heart {
+		@include transition(all 0.6s linear);
+		@include font-size(40);
+		color: $red;
+		position: absolute;
+		left: 50%;
+		top: 3px;
+		margin-left: -14px;
+		transform: translate(-50%, -50%);
+		animation: heartbeat 1.4s linear infinite;
+		opacity: 0;
+
+		&.show {
+			opacity: 1;
+		}
+	}
+}
+
+.gift-card-page {
+	min-height: 100vh;
+	height: auto;
+	overflow: hidden;
+	margin: 0;
+	padding-bottom: 40px;
+	@include breakpoint(desktop) {
+		height: 100vh;
+		overflow: auto;
+		display: flex;
+		align-items: center;
+		padding-top: 80px;
+		padding-bottom: 0;
+	}
+	@include breakpoint(mobile) {
+		.hero--title {
+			margin-top: 100px;
+		}
+
+		.posh-button {
+			@include font-size(14);
+		}
+	}
+
+	.hero--title {
+		@include breakpoint(desktop) {
+			@include font-size(50);
+		}
+	}
+
+	.hero--subtitle {
+		max-width: 500px;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+		}
+	}
+
+	&--image {
+		width: 400px;
+		margin-bottom: 32px;
+		@include breakpoint(desktop) {
+			margin-bottom: 0;
+		}
+	}
+
+	&--hero {
+		padding: 0 20px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			padding: 0 0 0 160px;
+			width: 48%;
+			text-align: left;
+		}
+	}
+
+	&--form {
+		@include breakpoint(desktop) {
+			width: 52%;
+			text-align: center;
+			position: relative;
+			display: flex;
+		}
+	}
+
+	&--flex {
+		width: 100%;
+		@include breakpoint(desktop) {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+}
+
+.gift_card_template_button {
+	margin-top: 16px!important;
+	margin-bottom: 8px;
+
+	.quantity {
+		display: none;
+	}
+
+	.button.gift_card_add_to_cart_button {
+		@include button();
+		@include buttonprimary();
+	}
+}
+
+.gift_card_template_button {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.git-form-row {
+	margin: 24px 0;
+}
+@keyframes heartbeat {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	25% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	30% {
+		transform: translate(-50%, -50%) scale(1.2);
+	}
+
+	50% {
+		transform: translate(-50%, -50%) scale(1.4);
+	}
+
+	70% {
+		transform: translate(-50%, -50%) scale(1.2);
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
+.gift-cards_form {
+	@include border-radius(16px);
+	background: #fff;
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.15);
+	margin: 0 20px;
+	padding: 16px 20px;
+	position: relative;
+	@include breakpoint(desktop) {
+		margin: 0 auto;
+		max-width: 80%;
+		padding: 30px 40px 16px;
+		width: 550px;
+	}
+
+	label {
+		@include label();
+		margin-top: 0 !important;
+		text-align: left;
+	}
+
+	& > h3 {
+		display: none;
+	}
+}
+
+.gift-card-content-editor {
+	&.step-content {
+		input::placeholder {
+			font-size: 12px;
+		}
+
+		input::placeholder,
+		textarea::placeholder {
+			color: transparent !important;
+		}
+
+		input {
+			@include input();
+			@include font-size(16);
+			float: none;
+			height: 60px;
+			padding-top: 14px;
+			width: 100%;
+		}
+
+		textarea {
+			@include input();
+			@include font-size(16);
+			float: none;
+			height: 80px;
+			line-height: 1.2;
+			padding: 25px 10px 10px;
+			resize: vertical;
+			width: 100%;
+		}
+	}
+
+	.ywgc-sender-info-title,
+	.ywgc_recipient_info_title,
+	h5 {
+		@include font-size(10);
+		color: #999;
+		font-weight: 300;
+		letter-spacing: 2px;
+		text-align: left;
+	}
+
+	.ywgc-message,
+	.ywgc-postdated,
+	.ywgc-recipient-email,
+	.ywgc-recipient-name,
+	.ywgc-sender-name {
+		position: relative;
+
+		label {
+			@include transition(all 0.2s linear);
+			@include vertical-align();
+			@include font-size(16);
+			color: #999;
+			left: 11px;
+			pointer-events: none;
+			position: absolute;
+			text-align: left;
+			z-index: 1;
+
+			&.move {
+				@include font-size(12);
+				color: #999;
+				top: 20px;
+			}
+		}
+	}
+}
+
+.ui-datepicker {
+	background: $blue;
+	border: 1px solid #fff;
+	box-shadow: 0 5px 5px 0 rgb(0,0,0,0.15);
+
+	.ui-datepicker-title {
+		@include font-size(14);
+		color: $black;
+		font-family: $font-body;
+		font-weight: 300;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
+
+	th {
+		@include font-size(12);
+		color: $black;
+		font-family: $font-body;
+		font-weight: 300;
+		text-transform: uppercase;
+	}
+}
+
+.ui-widget-header {
+	background: #fff;
+	border: none;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+	@include font-size(14);
+	background: #fff;
+	border: none;
+	border-radius: 4px;
+	color: $black;
+	font-family: $font-body;
+	font-weight: 300;
+	padding: 0.5em;
+
+	&.ui-state-active,
+	&.ui-state-hover {
+		background: $green;
+		color: #fff;
+	}
+}
+
+.ui-datepicker .ui-datepicker-next,
+.ui-datepicker .ui-datepicker-prev {
+	top: 0;
+
+	&.ui-state-hover {
+		background: #f1f1f1;
+		border: none;
+	}
+
+	span {
+		background: none;
+		background: none;
+		font-family: 'icomoon' !important;
+		/* Better Font Rendering =========== */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-style: normal;
+		font-variant: normal;
+		font-weight: normal;
+		line-height: 1;
+		speak: none;
+		text-indent: 0;
+		text-transform: none;
+	}
+}
+
+.ui-datepicker .ui-datepicker-prev span::before {
+	content: "\e903";
+}
+
+.ui-datepicker .ui-datepicker-next span::before {
+	content: "\e904";
+}
+
+.double-page {
+	&--flex {
+		align-items: center;
+		display: flex;
+		@include breakpoint(mobile) {
+			flex-wrap: wrap;
+		}
+	}
+
+	&--item {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		min-height: 50vh;
+		padding: 80px 20px 20px;
+		text-align: center;
+		width: 100%;
+		@include breakpoint(desktop) {
+			align-items: flex-end;
+			height: 100vh;
+			padding: 150px 40px 60px;
+			width: 50%;
+		}
+	}
+
+	&--img {
+		margin: 0 auto 16px;
+		max-width: 80%;
+		@include breakpoint(desktop) {
+			margin: 0 auto 32px;
+		}
+	}
+
+	&--title {
+		@include font-size(28);
+		margin-bottom: 0;
+		@include breakpoint(desktop) {
+			@include font-size(32);
+		}
+	}
+
+	&--subtitle {
+		@include font-size(18);
+		margin-bottom: 16px;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+			margin-bottom: 32px;
+		}
+	}
+}

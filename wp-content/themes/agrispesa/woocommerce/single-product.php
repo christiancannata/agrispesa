@@ -33,13 +33,15 @@ get_header(); ?>
 
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
-			
+
 			<?php global $post;
 				$terms = wp_get_post_terms( $post->ID, 'product_cat' );
 				foreach ( $terms as $term ) $categories[] = $term->slug;
 
 				if ( in_array( 'box', $categories ) ) {
 				  wc_get_template_part( 'content', 'single-product-box' );
+				} else if( in_array( 'gift-card', $categories ) ) {
+				  wc_get_template_part( 'content', 'single-product-giftcard' );
 				} else {
 				  wc_get_template_part( 'content', 'single-product' );
 				} ?>

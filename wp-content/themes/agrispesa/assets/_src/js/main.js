@@ -14,7 +14,29 @@ loginForms();
 showCoupon();
 closeNotices();
 relatedSlider();
+formGiftCard();
 
+
+function formGiftCard() {
+  
+    jQuery( '<h5>A CHI VUOI REGALARLO?</h5>' ).insertBefore( ".gift-card-phy .ywgc-recipient-name" );
+
+    jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
+        jQuery(this).parent().find('label').addClass('move');
+    })
+
+    jQuery('label[for = ywgc-delivery-date]').text('Data di consegna');
+    jQuery('label[for = ywgc-recipient-name]').text('Il suo nome');
+    jQuery('label[for = ywgc-recipient-email]').text('Il suo indirizzo email');
+    jQuery('label[for = ywgc-sender-name]').text('Il tuo nome');
+    jQuery('label[for = ywgc-edit-message]').text('Scrivi un messaggio');
+
+
+    if (jQuery("#ywgc-edit-message").length) {
+        jQuery("#ywgc-edit-message").attr('maxlength', '350')
+    }
+
+}
 
 function closeNotices() {
   jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function (e) {
