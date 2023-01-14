@@ -299,10 +299,50 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 	}
 }
 
-function get_products_to_add_from_subscription($subscription, $week = null)
+function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
 {
 	$box = get_box_from_subscription($subscription, $week);
 	$productsToAdd = get_post_meta($box->ID, '_products', true);
+
+
+	if ($overrideProducts) {
+		//check preferences
+		$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
+		if (empty($boxPreferences)) {
+			$boxPreferences = [];
+		}
+		foreach ($boxPreferences as $preference) {
+			$productSearched = array_filter(
+				$productsToAdd,
+				function ($product) use ($preference) {
+					return $product['id'] == $preference['product_to_remove']['id'];
+				}
+			);
+
+			if (!empty($productSearched)) {
+
+
+				$keys = array_keys($productSearched);
+
+				$productSearched = reset($keys);
+
+				$quantity = $productsToAdd[$productSearched]['quantity'];
+
+				unset($productsToAdd[$productSearched]);
+
+				$productsToAdd[] = [
+					'id' => $preference['product_to_add']['id'],
+					'name' => $preference['product_to_add']['name'],
+					'quantity' => $quantity
+				];
+
+			}
+
+		}
+
+	}
+
+
 	return $productsToAdd;
 }
 
@@ -371,7 +411,7 @@ function create_order_from_subscription($id)
 		return false;
 	}
 
-	$productsToAdd = get_products_to_add_from_subscription($subscription, $week);
+	$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 
 	$customerId = $subscription->get_user_id();
 
@@ -491,7 +531,7 @@ function my_custom_submenu_page_callback()
 			continue;
 		}
 
-		$productsToAdd = get_products_to_add_from_subscription($subscription, $week);
+		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 
 		foreach ($productsToAdd as $productToAdd) {
 
