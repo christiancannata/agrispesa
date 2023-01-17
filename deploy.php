@@ -3,6 +3,7 @@
 namespace Deployer;
 
 require 'recipe/common.php';
+require 'contrib/cloudflare.php';
 
 // Config
 
@@ -12,6 +13,11 @@ add('shared_files', ['wp-config.php']);
 add('shared_dirs', []);
 add('writable_dirs', ['wp-content/uploads']);
 
+add('cloudflare', [
+    'api_key' => '46a284e4975fed5c1f3c095e969c645b80f37',
+    'zone_id' => '6d39387e1c6d2d50e7c91de92c59deaf',
+    'email' => 'christiancannata@gmail.com'
+]);
 // Hosts
 
 host('46.101.145.102')
@@ -24,7 +30,7 @@ host('46.101.145.102')
 after('deploy:failed', 'deploy:unlock');
 
 after('deploy:publish', 'reload:php');
-
+after('deploy:publish', 'deploy:cloudflare');
 
 task('reload:php', function () {
     run('sudo /usr/sbin/service php8.2-fpm restart');
