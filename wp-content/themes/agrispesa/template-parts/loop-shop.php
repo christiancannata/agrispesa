@@ -24,9 +24,6 @@ $product_quantity = get_field('product_quantity');
       </div>
 
       <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo the_title(); ?>">Scopri di più</a>
-        <div class="categories-list">
-
-        </div>
     </div>
   </div>
 </article>

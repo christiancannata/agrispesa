@@ -18,7 +18,7 @@ formGiftCard();
 
 
 function formGiftCard() {
-  
+
     jQuery( '<h5>A CHI VUOI REGALARLO?</h5>' ).insertBefore( ".gift-card-phy .ywgc-recipient-name" );
 
     jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
@@ -115,32 +115,18 @@ function reviewsSlider() {
 
 function productsHome() {
 
-  let _carousel = jQuery(".products-home");
+  let _carousel = jQuery(".products-carousel");
 
   _carousel.slick({
     infinite: true,
     speed: 300,
-    slidesToShow: 5,
+    slidesToShow: 3,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
-      breakpoint: 1300,
-      settings: {
-        slidesToShow: 4,
-        arrows: false,
-        dots: true
-      }
-    }, {
-      breakpoint: 1140,
-      settings: {
-        slidesToShow: 3,
-        arrows: false,
-        dots: true
-      }
-    }, {
       breakpoint: 860,
       settings: {
         slidesToShow: 2,
@@ -165,28 +151,13 @@ function relatedSlider() {
   _carousel.slick({
     infinite: true,
     speed: 300,
-    slidesToShow: 5,
+    slidesToShow: 3,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
     dots: false,
-    centerMode: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
-      breakpoint: 1300,
-      settings: {
-        slidesToShow: 4,
-        arrows: false,
-        dots: true
-      }
-    }, {
-      breakpoint: 1140,
-      settings: {
-        slidesToShow: 3,
-        arrows: false,
-        dots: true
-      }
-    }, {
       breakpoint: 860,
       settings: {
         slidesToShow: 2,
@@ -332,13 +303,16 @@ function stickyHeader() {
       if (st > lastScrollTop) {
         //scroll down
         jQuery('.header').addClass("sticky-hide");
+        jQuery('.header').removeClass("sticky");
       } else {
         //scroll up
+        jQuery('.header').addClass("sticky");
         jQuery('.header').removeClass("sticky-hide");
       }
       lastScrollTop = st;
     } else {
       jQuery('.header').removeClass("sticky-hide");
+      jQuery('.header').removeClass("sticky");
 
     }
 

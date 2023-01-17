@@ -56,10 +56,11 @@ if ( in_array( 'box', $categories ) ): ?>
 <?php if ( $related_products ) : ?>
 
 
-	<section class="related products">
-
-		<?php //woocommerce_product_loop_start(); ?>
-		<div class="related--list">
+	<section class="products-carousel--container">
+	  <div class="products-carousel--intro">
+	    <h2 class="products-carousel--title">Potrebbero<br/> farti gola.</h2>
+	  </div>
+		<div class="products-carousel">
 			<?php $i = 1;
 					foreach ( $related_products as $related_product ) : ?>
 
@@ -67,28 +68,59 @@ if ( in_array( 'box', $categories ) ): ?>
 					$post_object = get_post( $related_product->get_id() );
 
 					setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
+					 ?>
 
-					if($i == 2): ?>
-
-					<article class="product-box text-box">
-						<h3 class="text-box--title">Potrebbero<br/>farti gola</h3>
-					</article>
 
 					<?php get_template_part( 'template-parts/loop', 'shop' ); ?>
 
-				<?php else: ?>
-						<?php get_template_part( 'template-parts/loop', 'shop' ); ?>
-					<?php endif;	?>
+
 
 			<?php $i++; endforeach; ?>
 
 		<?php //woocommerce_product_loop_end(); ?>
-		</div>
-
-	</section>
+	</div>
+</section>
 	<?php
 endif;
 endif;
 
 
-wp_reset_postdata();
+wp_reset_postdata(); ?>
+
+<section class="all-categories">
+  <?php
+  $orderby = 'ID';
+    $order = 'asc';
+    $hide_empty = false;
+
+    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+    $get_product_cat_ID = $getIDbyNAME->term_id;
+    $cat_args = array(
+        'orderby'    => $orderby,
+        'order'      => $order,
+        'hide_empty' => $hide_empty,
+        'parent' => $get_product_cat_ID,
+    );
+
+$product_categories = get_terms( 'product_cat', $cat_args );
+
+if( !empty($product_categories) ){
+    echo '
+
+<ul class="all-categories--list">';
+    foreach ($product_categories as $key => $category) {
+        echo '
+
+<li>';
+        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
+        echo get_template_part( 'global-elements/icon', $category->slug );
+        echo $category->name;
+        echo '</a>';
+        echo '</li>';
+    }
+    echo '</ul>
+
+
+';
+} ?>
+</section>

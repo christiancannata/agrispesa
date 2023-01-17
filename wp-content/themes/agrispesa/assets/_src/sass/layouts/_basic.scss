@@ -33,6 +33,10 @@ body {
 		@include font-size(18);
 		padding-top: 90px;
 	}
+
+	&.home {
+		padding-top: 0;
+	}
 }
 
 a {
@@ -114,7 +118,7 @@ h6 {
 }
 
 .container-xsmall {
-	max-width: 990px;
+	max-width: 890px;
 	margin: 0 auto;
 	padding: 0 20px;
 }
@@ -144,7 +148,7 @@ h6 {
 	&.coupon-box {
 		background: $white;
 		width: 100%;
-    max-width: 100%;
+		max-width: 100%;
 		box-shadow: none;
 	}
 }
@@ -153,8 +157,9 @@ h6 {
 	.woocommerce-info {
 		background: $panna;
 		width: 100%;
-    max-width: 100%;
+		max-width: 100%;
 		box-shadow: none;
+
 		.close-notice {
 			display: none;
 		}
@@ -183,8 +188,9 @@ h6 {
 	.button {
 		display: none !important;
 	}
+
 	.restore-item {
-		    display: inline-block;
+		display: inline-block;
 		@include breakpoint(desktop) {
 			color: $blue;
 
@@ -196,8 +202,10 @@ h6 {
 				height: 1px;
 				width: 0;
 			}
+
 			&:hover {
 				color: $blue;
+
 				&::after {
 					width: 100%;
 				}

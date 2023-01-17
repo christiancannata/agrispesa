@@ -9,95 +9,35 @@ get_header(); ?>
 
 	<?php get_template_part( 'global-elements/hero', 'page' ); ?>
 
-	<section class="prices-page">
-	  <div class="container-pg">
-			<div class="prices">
-				<div class="prices--flex">
-					<div class="prices--item">
-						<div class="prices--header">x-small</div>
-						<div class="prices--element">
-							Per 1 persona
-						</div>
-						<div class="prices--element">
-							Vegana, vegetariana,<br/> con pesce o carne
-						</div>
-						<div class="prices--element">
-							Arriva ogni settimana
-						</div>
-						<div class="prices--element">
-							Spedizione €5
-						</div>
-						<div class="prices--element price">
-							<span class="symbol">€</span>26
-						</div>
-						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
-						</div>
-					</div>
-					<div class="prices--item">
-						<div class="prices--header">small</div>
-						<div class="prices--element">
-							Per 2 persone
-						</div>
-						<div class="prices--element">
-							Vegana, vegetariana,<br/> con pesce o carne
-						</div>
-						<div class="prices--element">
-							Arriva ogni settimana
-						</div>
-						<div class="prices--element">
-							Spedizione €5
-						</div>
-						<div class="prices--element price">
-							<span class="symbol">€</span>38
-						</div>
-						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
-						</div>
-					</div>
-					<div class="prices--item">
-						<div class="prices--header">medium</div>
-						<div class="prices--element">
-							Per 3 o 4 persone
-						</div>
-						<div class="prices--element">
-							Vegana, vegetariana,<br/> con pesce o carne
-						</div>
-						<div class="prices--element">
-							Arriva ogni settimana
-						</div>
-						<div class="prices--element">
-							Spedizione €5
-						</div>
-						<div class="prices--element price">
-							<span class="symbol">€</span>55
-						</div>
-						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
-						</div>
-					</div>
-					<div class="prices--item">
-						<div class="prices--header">large</div>
-						<div class="prices--element">
-							Per 4 persone o più
-						</div>
-						<div class="prices--element">
-							Vegana, vegetariana,<br/> con pesce o carne
-						</div>
-						<div class="prices--element">
-							Arriva ogni settimana
-						</div>
-						<div class="prices--element">
-							Spedizione €5
-						</div>
-						<div class="prices--element price">
-							<span class="symbol">€</span>74
-						</div>
-						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
-						</div>
-					</div>
-				</div>
+	<section class="how-works-page">
+		<div class="how-works-page--item">
+			<div class="how-works-page--item--img">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/how/step-1.avif" alt="Scegli la tua box" />
+			</div>
+			<div class="how-works-page--item--text">
+				<h2 class="how-works-page--title">Scegli la tua box.</h2>
+				<p class="how-works-page--description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scopri le box">Scopri le box</a>
+			</div>
+		</div>
+		<div class="how-works-page--item">
+			<div class="how-works-page--item--text">
+				<h2 class="how-works-page--title">Facciamo noi.</h2>
+				<p class="how-works-page--description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Comincia subito</a>
+			</div>
+			<div class="how-works-page--item--img">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/how/step-1.avif" alt="Scegli la tua box" />
+			</div>
+		</div>
+		<div class="how-works-page--item">
+			<div class="how-works-page--item--img">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/how/step-1.avif" alt="Scegli la tua box" />
+			</div>
+			<div class="how-works-page--item--text">
+				<h2 class="how-works-page--title">Aspetta la spesa.</h2>
+				<p class="how-works-page--description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Non vedo l'ora!</a>
 			</div>
 		</div>
 	</section>

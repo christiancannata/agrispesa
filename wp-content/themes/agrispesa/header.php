@@ -105,16 +105,6 @@ global $woocommerce;
 			<div class="agr-menu--header">
 				<div class="header--flex">
 					<div class="header--sx">
-						<div class="header--logo">
-							<div class="main-logo">
-								<a href="<?php echo esc_url(home_url('/')); ?>" class="main-logo--link"
-								   title="<?php bloginfo('name'); ?>">
-										<span>
-											<?php bloginfo('name'); ?>
-										</span>
-								</a>
-							</div>
-						</div>
 						<div class="header--hamburger">
 							<span class="close-menu icon-close"></span>
 						</div>

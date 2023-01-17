@@ -67,8 +67,8 @@ if ( post_password_required() ) {
 
 <section class="product-bottom">
 
-	<div class="sec-home sec-full bg-black line-orange">
-		<div class="container-pg">
+	<div class="sec-home sec-full bg-panna line-orange">
+		<div class="container-xsmall">
 			<div class="sec-product-description">
 				<?php echo the_content(); ?>
 			</div>

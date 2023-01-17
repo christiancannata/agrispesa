@@ -1,79 +1,86 @@
 /* stylelint-disable */
 @mixin button() {
-  @include transition(all 0.3s ease);
-  @include border-radius(6px);
-  @include font-size(18);
-  @include line-height(52);
-  cursor: pointer;
-  display: inline-block;
-  min-width: 180px;
-  max-width: 100%;
-  font-weight: 400;
-  color: $white;
-  text-align: center;
-  border: none;
-  background-size: 300% 100%;
-  padding: 0 35px;
-  @media only screen and (max-width: 980px) {
-    @include font-size(20);
-    min-width: 0;
-    padding: 0 24px;
-  }
+	@include transition(all 0.3s ease);
+	@include border-radius(6px);
+	@include font-size(18);
+	@include line-height(52);
+	cursor: pointer;
+	display: inline-block;
+	min-width: 180px;
+	max-width: 100%;
+	font-weight: 400;
+	color: $white;
+	text-align: center;
+	border: none;
+	background-size: 300% 100%;
+	padding: 0 35px;
 
-  &:hover {
-    background-position: 100% 0;
-    color: $white;
-  }
+	&:hover {
+		background-position: 100% 0;
+		color: $white;
+	}
 
-  &:focus {
-    outline: none;
-  }
+	&:focus {
+		outline: none;
+	}
 }
-
 @mixin buttonprimary() {
-  color: $white;
-  border: none;
-  background-image: linear-gradient(to right, $blue, $blue, $green, $green);
-  box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+	color: $white;
+	border: none;
+	background-image: linear-gradient(to right, $blue, $blue, $green, $green);
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 
-
-  span {
-    @include font-size(24);
-    margin-right: 4px;
-  }
+	span {
+		@include font-size(24);
+		margin-right: 4px;
+	}
 }
-
 @mixin buttonsecondary() {
-  color: $blue;
-  border: none;
-  background-image: linear-gradient(to right, transparent, transparent, $blue, $blue);
+	color: $blue;
+	border: none;
+	background-image: linear-gradient(to right, transparent, transparent, $blue, $blue);
 	border: 2px solid $blue;
 
-  &:hover {
-    color: $white;
+	&:hover {
+		color: $white;
 		border: 2px solid transparent;
-  }
+	}
 }
-
 @mixin buttonsmall() {
 	@include font-size(16);
 	padding: 0 24px;
 	@include line-height(42);
-  min-width: 0;
+	min-width: 0;
+}
+@mixin buttonbig() {
+	@include font-size(20);
+	@include line-height(60);
+	@include breakpoint(desktop) {
+		@include border-radius(12px);
+		@include font-size(22);
+		min-width: 260px;
+		padding: 0 40px;
+	}
 }
 
 .btn {
-  @include button();
+	@include button();
 
-  &.btn-primary {
-    @include buttonprimary();
-  }
+	&.btn-primary {
+		@include buttonprimary();
+	}
+
 	&.btn-secondary {
-    @include buttonsecondary();
-  }
-  &.btn-small {
-    @include buttonsmall();
-  }
+		@include buttonsecondary();
+	}
+
+	&.btn-small {
+		@include buttonsmall();
+	}
+
+	&.btn-big {
+		@include buttonbig();
+	}
 }
 
 .arrow-link {
@@ -82,19 +89,20 @@
 	@include font-size(16);
 	color: $blue;
 	font-weight: 300;
-  position: relative;
+	position: relative;
 	display: inline-block;
-  cursor: pointer;
-  padding-right: 8px;
-  @include breakpoint(desktop) {
-    @include font-size(20);
-  }
+	cursor: pointer;
+	padding-right: 8px;
+	@include breakpoint(desktop) {
+		@include font-size(20);
+	}
 
 	&.small {
 		&:after {
 			content: none;
 		}
 	}
+
 	&:after {
 		@include transition(all 0.2s linear);
 		background: $blue;
@@ -114,7 +122,7 @@
 		display: inline-block;
 		position: relative;
 		top: 2px;
-    right: -8px;
+		right: -8px;
 	}
 
 	&:hover {
@@ -136,12 +144,13 @@
 	@include font-size(14);
 	color: $primary;
 	font-weight: normal;
-  position: relative;
+	position: relative;
 	display: inline-block;
-  cursor: pointer;
-  @include breakpoint(desktop) {
-    @include font-size(16);
-  }
+	cursor: pointer;
+	@include breakpoint(desktop) {
+		@include font-size(16);
+	}
+
 	&:after {
 		@include transition(all 0.2s linear);
 		background: $primary;
@@ -161,7 +170,7 @@
 		display: inline-block;
 		position: relative;
 		top: 6px;
-    left: -2px;
+		left: -2px;
 	}
 
 	&:hover {
@@ -179,21 +188,23 @@
 
 .loadmore {
 	text-align: center;
-  margin: 20px 0 60px;
+	margin: 20px 0 60px;
 }
+
 .loadmore--btn {
 	@include transition(all 0.2s linear);
 	@include clearfix();
 	@include font-size(14);
 	color: $primary;
 	font-weight: bold;
-  position: relative;
+	position: relative;
 	display: inline-block;
-  cursor: pointer;
-	padding: 20px 0 20px;
-  @include breakpoint(desktop) {
-    @include font-size(16);
-  }
+	cursor: pointer;
+	padding: 20px 0;
+	@include breakpoint(desktop) {
+		@include font-size(16);
+	}
+
 	&:after {
 		@include transition(all 0.2s linear);
 		background: $primary;
@@ -205,6 +216,7 @@
 		position: absolute;
 		width: 100%;
 	}
+
 	&:hover {
 		color: $primary;
 

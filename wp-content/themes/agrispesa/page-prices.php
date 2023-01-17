@@ -2,7 +2,7 @@
 /* Template Name: Prezzi */
 
 get_header(); ?>
- 
+
 
 <div class="wrapper" id="index-wrapper">
 
@@ -11,6 +11,9 @@ get_header(); ?>
 
 	<section class="prices-page">
 	  <div class="container-pg">
+			<div class="prices--top">
+        <h2 class="prices--title"></h2>
+      </div>
 			<div class="prices">
 				<div class="prices--flex">
 					<div class="prices--item">
@@ -105,6 +108,9 @@ get_header(); ?>
 			</div>
 		</div>
 	</section>
+
+
+
 
 
 

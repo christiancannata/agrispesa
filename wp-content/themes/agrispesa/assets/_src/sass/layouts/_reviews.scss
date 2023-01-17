@@ -119,15 +119,26 @@
 }
 
 .reviews-home {
-	background: $black;
-	padding: 260px 0;
+	background: $primary;
+	padding: 180px 0;
 	@include breakpoint(container) {
-		padding: 220px 0;
+		padding: 140px 0;
+	}
+	@include breakpoint(mobile) {
+		padding: 80px 0;
 	}
 
 	.slick-next-agr,
 	.slick-prev-agr {
-		color: $panna;
+		color: $black;
+	}
+
+	.sec-home--minititle {
+		margin: 0 0 50px;
+		padding: 0;
+		@include breakpoint(desktop) {
+			margin: 0 0 80px;
+		}
 	}
 }
 
@@ -144,7 +155,7 @@
 		max-width: 600px;
 		margin: 0 auto;
 		padding: 20px;
-		color: $panna;
+		color: $black;
 	}
 
 	&--title {
@@ -165,5 +176,33 @@
 		@include font-size(18);
 		margin-top: 24px;
 		font-style: italic;
+	}
+}
+
+.hero-stars {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 24px;
+
+	&--flex {
+		display: flex;
+		align-items: center;
+
+		span {
+			@include font-size(16);
+
+			&.value {
+				font-weight: 900;
+			}
+
+			&.points {
+				margin-right: 4px;
+			}
+		}
+	}
+
+	.review-page--stars {
+		margin-right: 8px;
 	}
 }

@@ -1,0 +1,162 @@
+/* stylelint-disable */
+.single-article {
+	&--flex {
+		display: flex;
+		justify-content: center;
+		@include breakpoint(desktop) {
+			padding: 0 20px;
+		}
+	}
+}
+
+.single {
+	&--header {
+		margin: 24px 0 32px;
+		@include breakpoint(desktop) {
+			margin: 38px 40px 28px;
+		}
+
+		h1 {
+			@include font-size(32);
+			font-weight: 900;
+			font-family: $font-title;
+			line-height: 1;
+			@include breakpoint(desktop) {
+				@include font-size(45);
+				line-height: 1.1;
+			}
+		}
+	}
+
+	&--content {
+		@include breakpoint(desktop) {
+			padding: 0 40px;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: bold;
+			line-height: 1.2;
+			margin: 32px 0 16px;
+			color: $brown;
+		}
+
+		h1 {
+			@include font-size(32);
+			line-height: 1.1;
+		}
+
+		h2 {
+			@include font-size(24);
+		}
+
+		h3 {
+			@include font-size(24);
+		}
+
+		h4 {
+			@include font-size(22);
+		}
+
+		h5 {
+			@include font-size(18);
+		}
+
+		h6 {
+			@include font-size(16);
+		}
+
+		p {
+			@include font-size(18);
+			line-height: 1.4;
+			margin: 16px 0;
+			font-family: $font-title;
+			@include breakpoint(desktop) {
+				@include font-size(22);
+				margin: 24px 0;
+			}
+
+			strong {
+				font-weight: 900;
+			}
+		}
+
+		figure,
+		img {
+			display: block;
+			margin: 24px 0;
+			@include breakpoint(desktop) {
+				margin: 40px 0;
+			}
+		}
+
+		ol,
+		ul {
+			margin: 24px 0;
+			padding-left: 24px;
+
+			li {
+				@include font-size(18);
+				line-height: 1.5;
+				position: relative;
+				padding-left: 16px;
+				margin: 8px 0;
+
+				&:before {
+					@include border-radius(50%);
+					background: $green;
+					content: '';
+					display: inline-block;
+					height: 8px;
+					width: 8px;
+					position: absolute;
+					top: 11px;
+					left: 0;
+				}
+			}
+		}
+	}
+}
+
+.sticky-post--thumb {
+	@include transition(all 0.8s ease);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: block;
+	height: 100%;
+	width: 100%;
+
+	&--link {
+		@include border-radius(32px);
+		display: block;
+		overflow: hidden;
+		position: relative;
+		width: 300px;
+		height: 640px;
+		box-shadow: 0 8px 8px rgba(0, 0, 0, 0.25);
+
+		&:before {
+			@include border-radius(0 0 24px 24px);
+			content: '';
+			display: block;
+			background: $white;
+			width: 180px;
+			height: 25px;
+			@include horizontal-align();
+			position: absolute;
+			top: 0;
+			z-index: 3;
+		}
+
+		&:hover {
+			.sticky-post--thumb {
+				@include transform(scale(1.06));
+			}
+		}
+	}
+}

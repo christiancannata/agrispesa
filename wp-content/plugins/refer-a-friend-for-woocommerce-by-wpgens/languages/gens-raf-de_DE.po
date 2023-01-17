@@ -1,0 +1,390 @@
+# Loco Gettext template
+msgid ""
+msgstr ""
+"Project-Id-Version: Refer A Friend for WooCommerce by WPGens\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-05 22:39+0200\n"
+"POT-Revision-Date: Wed Mar 22 2017 09:18:33 GMT+0100 (CET)\n"
+"PO-Revision-Date: 2018-08-06 00:29+0200\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: gens-raf.php\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"Last-Translator: \n"
+"Language: de\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: ../admin/class-gens-raf-admin.php:101
+msgid ""
+"Refer A Friend Plugin is enabled but not effective. It requires WooCommerce "
+"in order to work."
+msgstr ""
+"Refer A Friend Plugin ist aktiviert aber nicht nutzbar. Das Plugin benötigt "
+"WooCommerce, um zu funktionieren."
+
+#: ../admin/class-gens-raf-woo-integration.php:53
+msgid "Refer A Friend"
+msgstr "Weiterempfehlung"
+
+#: ../admin/class-gens-raf-woo-integration.php:70 ../admin/class-gens-raf-woo-
+#: integration.php:114 ../admin/class-gens-raf-woo-integration.php:201 ..
+#: /admin/class-gens-raf-woo-integration.php:231 integration.php:285
+msgid "General"
+msgstr "Allgemein"
+
+#: ../admin/class-gens-raf-woo-integration.php:71
+msgid "Email"
+msgstr "E-Mail"
+
+#: ../admin/class-gens-raf-woo-integration.php:72
+msgid "How to use RAF plugin"
+msgstr "Wie benutzt man das RAF-Plugin?"
+
+#: ../admin/class-gens-raf-woo-integration.php:73
+msgid "RAF PREMIUM version"
+msgstr "RAF PREMIUM Version"
+
+#: ../admin/class-gens-raf-woo-integration.php:92
+msgid "Email Settings"
+msgstr "E-Mail-Einstellungen"
+
+#: ../admin/class-gens-raf-woo-integration.php:94
+msgid ""
+"Setup the look of email that will be sent to the referal together with "
+"coupon."
+msgstr ""
+"Verändere die Darstellung der E-Mail, die gemeinsam mit dem Gutscheincode an "
+"den Empfehler verschickt wird."
+
+#: ../admin/class-gens-raf-woo-integration.php:99
+msgid "Email Subject"
+msgstr "E-Mail-Betreff"
+
+#: ../admin/class-gens-raf-woo-integration.php:101
+msgid ""
+"Enter the subject of email that will be sent when notifiying the user of "
+"their coupon code."
+msgstr ""
+"Gib den Betreff der E-Mail ein, die verschickt wird, um den Benutzer über "
+"den Gutschein zu informieren."
+
+#: ../admin/class-gens-raf-woo-integration.php:106
+msgid "Email Message"
+msgstr "Kundennachricht"
+
+#: ../admin/class-gens-raf-woo-integration.php:109
+msgid ""
+"Text that will appear in email that is sent to user once they get the code. "
+"Use {{code}} to add coupon code.HTML allowed."
+msgstr ""
+"Text, der in der E-Mail angezeigt wird, die an den Benutzer verschickt wird, "
+"wenn er den Gutscheincode erhält. Benutze {{code}}, um den Gutscheincode "
+"einzubinden. HTML ist erlaubt."
+
+#: ../admin/class-gens-raf-woo-integration.php:124
+msgid "Small tutorial to help you get started"
+msgstr "Ein kleines Tutorial, um Deinen Einstieg zu erleichtern."
+
+#: ../admin/class-gens-raf-woo-integration.php:126
+#, php-format
+msgid ""
+"Thanks for using Refer a Friend plugin. You can purchase premium version and "
+"support us on <a href=\"%s\" target=\"_blank\">this page</a><br/>\n"
+"\t\t\t\t\t\t\t<h3>SETUP GUIDE</h3>\n"
+"\t\t\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t\t\t<li>1. After installing plugin, go to Refer a friend "
+"settings (this page), and click on General tab inside Refer a friend tab. "
+"Then setup coupon options.</li>\n"
+"\t\t\t\t\t\t\t\t<li>2. Click on email tab and populate text that will be "
+"sent to user after he gets coupon.</li>\n"
+"\t\t\t\t\t\t\t\t<li>Thats it! Now every user will have referral link in "
+"their account page. After someone makes a purchase through their referral "
+"link, and after order is marked as complete. They will recieve coupon in "
+"their inbox. For every order that was done through referral, in a single "
+"order screen, just below customer you will see the name of the person who "
+"referred him. Like on this <a href=\"%s\" target=\"_blank\">screenshot.</a></"
+"li>\n"
+"\t\t\t\t\t\t\t</ul>\n"
+"\t\t\t\t\t\t\t"
+msgstr ""
+"Vielen Dank, dass Du das Refer a Friend Plugin nutzt. Du kannst die Premium "
+"Version kaufen und uns <a href=\"%s\" target=\"_blank\">hier</a> "
+"unterstützen<br/>\n"
+"\t\t\t\t\t\t\t<h3>ANLEITUNG</h3>\n"
+"\t\t\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t\t\t<li>1. Nachdem Du das Plugin installiert hast, gehe zu den "
+"WooCommerce Einstellungen und klicke auf den Reiter \"Refer A Friend\". "
+"Konfiguriere dann unter dem Reiter \"Allgemein\" die Gutschein-Optionen.</"
+"li>\n"
+"\t\t\t\t\t\t\t\t<li>2. Klicke auf den Reiter \"E-Mail\" und konfiguriere die "
+"E-Mail, die an den Benutzer verschickt wird, nachdem er den Gutschein "
+"erhalten hat..</li>\n"
+"\t\t\t\t\t\t\t\t<li>\n"
+"Das war's! Nun hat jeder Benutzer einen eigenen Empfehlungslink in seinem "
+"Account. Wenn jemand etwas durch den Empfehlungslink kauft und nachdem der "
+"Kauf als \"Abgeschlossen\" markiert wird, erhält der Benutzer einen "
+"Gutscheincode in seiner Posteingang. Für jede Bestellung, die durch den Link "
+"getätigt wurde, siehst Du in den Bestelldetails den Namen der Person, die "
+"den Neukunden empfohlen hat. Ein Beispiel siehst Du in diesem <a href=\"%s\" "
+"target=\"_blank\">Screenshot.</a></li>\n"
+"\t\t\t\t\t\t\t</ul>\n"
+"\t\t\t\t\t\t\t"
+
+#: ../admin/class-gens-raf-woo-integration.php:138 ../admin/class-gens-raf-woo-
+#: integration.php:157 ../admin/class-gens-raf-woo-integration.php:190
+msgid "Plugins"
+msgstr "Plugins"
+
+#: ../admin/class-gens-raf-woo-integration.php:148
+msgid "Check out all of our super cool plugins"
+msgstr "Sieh' Dir all unsere anderen supercoolen Plugins an."
+
+#: ../admin/class-gens-raf-woo-integration.php:150
+#, php-format
+msgid ""
+"Thanks for using Refer a Friend plugin. If you have any cool idea that we "
+"could add to plugin, be sure to contact us at <a target=\"_blank\" href=\"%s"
+"\">goran@wpgens.com</a>. \n"
+"\t\t\t\t\t\t<br/>Our plugins are coded with best practices in mind, they "
+"will not slow down your site or spam database. Guaranteed to work and always "
+"up to date.\n"
+"\t\t\t\t\t\tCheck out all of our plugins at: <a target=\"_blank\" href=\"%s"
+"\">this link.</a> Also use that link to signup to our newsletters and get "
+"notified when new plugin is out. No SPAM, promise."
+msgstr ""
+"Vielen Dank, dass Du das Refer a Friend Plugin nutzt. Wenn Du eine coole "
+"Idee hast, die wir in dieses Plugin integrieren können, kontaktiere uns über "
+"<a target=\"_blank\" href=\"%s\">goran@wpgens.com</a>. \n"
+"\t\t\t\t\t\t<br/>Unsere Plugins sind nach dem aktuellsten Stand "
+"programmiert. Sie werden Deine Seite weder verlangsamen noch Deine Datenbank "
+"vollspammen. Wir garantieren die Funktionalität und Aktualität.\n"
+"\t\t\t\t\t\tSieh Dir auch alle unsere anderen Plugins <a target=\"_blank\" "
+"href=\"%s\">hier</a> an. Über diesen Link kannst Du Dich auch zu unserem "
+"Newsletter anmelden und wirst benachrichtigt, wenn wir neue Plugins "
+"veröffentlichen. Kein Spam, versprochen."
+
+#: ../admin/class-gens-raf-woo-integration.php:167
+msgid "PREMIUM Version has additional features, such as shortcodes:"
+msgstr "Die PREMIUM Version hat weitere Funktionen, wie Shortcodes:"
+
+#: ../admin/class-gens-raf-woo-integration.php:169
+#, php-format
+msgid ""
+"In order to continue building free plugins, we need sustainable model, thats "
+"where premium version comes in. \n"
+"\t\t\t\t\t\t<br/>Besides of all the features that free version has, premium "
+"version also has:\n"
+"\t\t\t\t\t\t– Simple Shortcode <br/>\n"
+"\t\t\t\t\t\t- Advance Shortcode\n"
+"\t\t\t\t\t\t– Give coupon to person being referred as well (after his first "
+"purchase)\n"
+"\t\t\t\t\t\t– Refer a Friend Woocommerce Tab under each product, that comes "
+"with share icons that can directly share referral links (check a screenshot) "
+"or check example tab on twenty seventeen theme \n"
+"\t\t\t\t\t\t– Contact Form 7 shortcode\n"
+"\t\t\t\t\t\t– Minimum amount person needs to purchase in order for coupon to "
+"be generated\n"
+"\t\t\t\t\t\t– Each person has statistics how many people he refered, admin "
+"sees this for each person as well\n"
+"\t\t\t\t\t\t– Order details screen shows referral info if order was made "
+"through referral.\n"
+"\t\t\t\t\t\t– Referral statistics/info screen for admin.\n"
+"\t\t\t\t\t\t– Enable coupons for specific products only\n"
+"\t\t\t\t\t\t– Set Expiry date for each coupon\n"
+"\t\t\t\t\t\t– One year of support & free updates\n"
+"\t\t\t\t\t\t<br/>\n"
+"\t\t\t\t\t\tCheckout plugin <a target=\"_blank\" href=\"%s\">at this link.</"
+"a>\n"
+"\t\t\t\t\t\t"
+msgstr ""
+"Damit wir weiter kostenlose Plugins programmieren können, brauchen wir ein "
+"nachhaltiges Modell. Hier kommt die Premium Version ins Spiel.\n"
+"\t\t\t\t\t\t<br/>Neben all den Features der kostenlosen Version, bietet die "
+"PREMIUM Version außerdem: \n"
+"\t\t\t\t\t\t– Einfache Shortcodes<br/>\n"
+"\t\t\t\t\t\t- Fortgeschrittene Shortcodes\n"
+"\t\t\t\t\t\t– Gib den Gutschein auch an den empfohlenen Neukunden weiter "
+"(nach seinem ersten Einkauf)\n"
+"\t\t\t\t\t\t– Refer a Friend Woocommerce Reiter unter jedem Produkt, der mit "
+"Share Icons ausgestattet ist, um den Empfehlungslink direkt zu teilen (siehe "
+"Screenshots oder sieh Dir den Beispielreiter im twenty seventeem theme an.\n"
+"\t\t\t\t\t\t– Contact Form 7 Shortcode\n"
+"\t\t\t\t\t\t– Mindestbestellwert, die ein Kunde erreichen muss, damit der "
+"Gutschein erstellt wird.\n"
+"\t\t\t\t\t\t– Jeder Kunde hat Zugriff auf Statistiken, wie viele Personen er "
+"bereits geworben hat. Administratoren sehen diese Statistiken ebenfalls für "
+"jeden Kunden.\n"
+"\t\t\t\t\t\t– Bestelldetails zeigen, ob eine Bestellung mittels "
+"Empfehlungslink getätigt wurde. \n"
+"\t\t\t\t\t\t– Werbestatistiken / Infoscreen für Administratoren\n"
+"\t\t\t\t\t\t– Aktiviere Gutscheine nur für bestimmte Produkte\n"
+"\t\t\t\t\t\t– Setze ein Ablaufdatum für jeden Gutschein\n"
+"\t\t\t\t\t\t– Ein Jahr Support und kostenlose Updates\n"
+"\t\t\t\t\t\t<br/>\n"
+"\t\t\t\t\t\tSieh Dir mehr Infos zu diesem Plugin <a target=\"_blank\" href="
+"\"%s\">hier</a> an.\n"
+"\t\t\t\t\t\t"
+
+#: ../admin/class-gens-raf-woo-integration.php:203 ../admin/class-gens-raf-woo-
+#: integration.php:239
+msgid "General Options, setup plugin here first."
+msgstr "Allgemeine Einstellungen. Konfiguriere das Plugin zunächst hier."
+
+#: ../admin/class-gens-raf-woo-integration.php:208
+msgid "Disable"
+msgstr "Deaktivieren"
+
+#: ../admin/class-gens-raf-woo-integration.php:210
+msgid "Disable Coupons"
+msgstr "Gutscheine deaktivieren"
+
+#: ../admin/class-gens-raf-woo-integration.php:211
+msgid "Check to disable. Referal links wont work anymore."
+msgstr ""
+"Klicken, um die Gutscheine zu deaktivieren. Die Empfehlungslinks werden dann "
+"nicht mehr funktionieren."
+
+#: ../admin/class-gens-raf-woo-integration.php:216
+msgid "Cookie Time"
+msgstr "Cookie Ablaufzeit"
+
+#: ../admin/class-gens-raf-woo-integration.php:218
+msgid ""
+"As long as cookie is saved, user will recieve coupon after referal purchase "
+"product."
+msgstr ""
+"Solange der Cookie gespeichert wird, erhält der Benutzer einen "
+"Gutscheincode, sobald eine Bestellung über den Empfehlungslink getätigt wird."
+
+#: ../admin/class-gens-raf-woo-integration.php:219
+msgid "How long to keep cookies before it expires.(In days)"
+msgstr "Wie viele Tage soll der Cookie gespeichert werden, bevor er abläuft?"
+
+#: ../admin/class-gens-raf-woo-integration.php:223 ../admin/class-gens-raf-woo-
+#: integration.php:224
+msgid "Single Purchase"
+msgstr "Einmaliger Kauf"
+
+#: ../admin/class-gens-raf-woo-integration.php:226
+msgid ""
+"This means that coupon is sent only the first time referral makes a "
+"purchase, as referral cookie is deleted after it."
+msgstr ""
+"Der Gutscheincode wird nur beim ersten Einkauf des Empfohlenen verschickt, "
+"da der Empfehlungs-Cookie anschließend gelöscht wird."
+
+#: ../admin/class-gens-raf-woo-integration.php:227
+msgid "If checked, cookie will be deleted after customer makes a purchase."
+msgstr ""
+"Wenn aktivieriert, wird der Cookie gelöscht, nachdem der Kunde eingekauft "
+"hat."
+
+#: ../admin/class-gens-raf-woo-integration.php:237
+msgid "Coupon Settings"
+msgstr "Gutschein-Einstellungen"
+
+#: ../admin/class-gens-raf-woo-integration.php:244
+msgid "Coupon Type"
+msgstr "Art des Gutscheins"
+
+#: ../admin/class-gens-raf-woo-integration.php:256
+msgid "Coupon Amount"
+msgstr "Gutscheinsumme"
+
+#: ../admin/class-gens-raf-woo-integration.php:258
+msgid ""
+" Entered without the currency unit or a percent sign as these will be added "
+"automatically, e.g., ’10’ for 10£ or 10%."
+msgstr ""
+"Wird ohne Währungs- oder Prozentzeichen eingegeben, da diese automatisch "
+"hinzugefügt werden, z.B.: '10' für '10€' oder '10%'."
+
+#: ../admin/class-gens-raf-woo-integration.php:259
+msgid ""
+"Fixed value or percentage off depending on the discount type you choose."
+msgstr ""
+"Fixer Wert oder Prozentsatz, der abgezogen wird. Hängt von der gewählten Art "
+"des Gutscheins ab."
+
+#: ../admin/class-gens-raf-woo-integration.php:272
+msgid "Minimum Order"
+msgstr "Mindestbestellwert"
+
+#: ../admin/class-gens-raf-woo-integration.php:274
+msgid "Define minimum order subtotal in order for coupon to work."
+msgstr ""
+"Definiere einen Mindestbestellwert, damit der Gutscheincode angewendet wird."
+
+#: ../admin/class-gens-raf-woo-integration.php:278
+msgid "Individual Use"
+msgstr "Nur einzeln anwendbar"
+
+#: ../admin/class-gens-raf-woo-integration.php:280
+msgid ""
+"Check this box if the coupon cannot be used in conjunction with other "
+"coupons."
+msgstr ""
+"Aktivieren, wenn dieser Gutschein nicht zusammen mit anderen Gutscheinen "
+"verwendet werden darf."
+
+#. Plugin Name of the plugin/theme
+msgid "Refer A Friend for WooCommerce by WPGens"
+msgstr "Refer A Friend für WooCommerce von WPGens"
+
+#. URI of the plugin
+msgid "http://itsgoran.com/gens-raf"
+msgstr "http://itsgoran.com/gens-raf"
+
+#. Description of the plugin
+msgid ""
+"Simple yet powerful referral system for WooCommerce. Each customer has "
+"referral link that rewards them with a coupon after someone makes a purchase "
+"through their link. Check premium version for more features."
+msgstr ""
+"Einfaches, aber wirkungsvolles Empfehlungssystem für WooCommerce. Jeder "
+"Kunde erhält einen Empfehlungslink, der ihn nach jedem Empfehlungskauf mit "
+"einem Gutscheincode belohnt. Sieh' Dir die PREMIUM Version für weitere "
+"Funktionen an."
+
+#. Author of the plugin/theme
+msgid "Goran Jakovljevic"
+msgstr "Goran Jakovljevic"
+
+#. Author URI of the plugin/theme
+msgid "http://www.itsgoran.com"
+msgstr "http://www.itsgoran.com"
+
+#: ../public/class-gens-raf-public.php:270
+msgid "Your Referral URL:"
+msgstr "Dein persönlicher Empfehlungslink:"
+
+#: ../public/class-gens-raf-public.php:301
+msgid "Unused Refer a Friend Coupons"
+msgstr "Noch nicht benutzte Gutscheine"
+
+#: ../public/class-gens-raf-public.php:304
+msgid "Coupon code"
+msgstr "Gutscheincode"
+
+#: ../public/class-gens-raf-public.php:305
+msgid "Coupon discount"
+msgstr "Gutscheinwert"
+
+#: ../public/class-gens-raf-public.php:345
+msgid "Referral details:"
+msgstr "Empfehlungsdetails:"
+
+#: ../public/class-gens-raf-public.php:346
+msgid "Referred by user:"
+msgstr "Von diesem Benutzer empfohlen:"

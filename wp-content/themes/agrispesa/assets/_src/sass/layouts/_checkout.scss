@@ -189,6 +189,7 @@ body.woocommerce-cart {
 
 		img {
 			width: 100%;
+			margin: 0 auto !important;
 		}
 	}
 }
@@ -349,8 +350,8 @@ body.woocommerce-cart {
 	justify-content: flex-start;
 
 	.checkout--preview--image {
-		margin-right: 16px;
-		max-width: 90px;
+		margin-right: 12px;
+		max-width: 45px;
 	}
 }
 

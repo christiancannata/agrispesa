@@ -5,6 +5,7 @@ $post_id = $page->ID;
 if( have_rows('lista_recensioni' , $post_id) ):
   $i = 0;
   echo '<div class="reviews-home">';
+  echo '<div class="sec-home--minititle"><h3>Dicono di noi</h3></div>';
   echo '<div class="container-pg">';
   echo '<div class="reviews--slider">';
     while( have_rows('lista_recensioni' , $post_id) ) : the_row();

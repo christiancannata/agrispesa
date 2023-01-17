@@ -24,7 +24,7 @@ function misha_before_add_to_cart_btn(){
 add_action( 'woocommerce_no_products_found', 'shop_page_empty_layout' );
 
 function shop_page_empty_layout() {
-  $getIDbyNAME = get_term_by('name', 'shop', 'product_cat');
+  $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
   $get_product_cat_ID = $getIDbyNAME->term_id;
    $args = array(
       'hide_empty' => true,
@@ -32,7 +32,7 @@ function shop_page_empty_layout() {
       'hierarchical' => 1,
       'taxonomy' => 'product_cat',
       'parent' => $get_product_cat_ID,
-      'hide_empty' => 0,
+      'hide_empty' => true,
    );
    $categories = get_categories( $args );
    foreach ( $categories as $category_slug ) {
