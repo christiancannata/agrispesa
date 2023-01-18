@@ -19,22 +19,22 @@ formGiftCard();
 
 function formGiftCard() {
 
-    jQuery( '<h5>A CHI VUOI REGALARLO?</h5>' ).insertBefore( ".gift-card-phy .ywgc-recipient-name" );
+  jQuery('<h5>A CHI VUOI REGALARLO?</h5>').insertBefore(".gift-card-phy .ywgc-recipient-name");
 
-    jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
-        jQuery(this).parent().find('label').addClass('move');
-    })
+  jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
+    jQuery(this).parent().find('label').addClass('move');
+  })
 
-    jQuery('label[for = ywgc-delivery-date]').text('Data di consegna');
-    jQuery('label[for = ywgc-recipient-name]').text('Il suo nome');
-    jQuery('label[for = ywgc-recipient-email]').text('Il suo indirizzo email');
-    jQuery('label[for = ywgc-sender-name]').text('Il tuo nome');
-    jQuery('label[for = ywgc-edit-message]').text('Scrivi un messaggio');
+  jQuery('label[for = ywgc-delivery-date]').text('Data di consegna');
+  jQuery('label[for = ywgc-recipient-name]').text('Il suo nome');
+  jQuery('label[for = ywgc-recipient-email]').text('Il suo indirizzo email');
+  jQuery('label[for = ywgc-sender-name]').text('Il tuo nome');
+  jQuery('label[for = ywgc-edit-message]').text('Scrivi un messaggio');
 
 
-    if (jQuery("#ywgc-edit-message").length) {
-        jQuery("#ywgc-edit-message").attr('maxlength', '350')
-    }
+  if (jQuery("#ywgc-edit-message").length) {
+    jQuery("#ywgc-edit-message").attr('maxlength', '350')
+  }
 
 }
 
@@ -292,6 +292,7 @@ function clearSearch() {
 }
 
 function stickyHeader() {
+  alert("jjj")
   let header = jQuery('.header');
   let headerH = header.outerHeight();
   let lastScrollTop = 0;
