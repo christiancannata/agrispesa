@@ -15,42 +15,104 @@ input[type=number] {
 
 body.woocommerce-cart {
 	.page-header {
-		text-align: center;padding: 45px 0 32px;
+		text-align: center;
+		padding: 32px 0 24px;
 		margin: 0;
-		h1 {
+		@include breakpoint(desktop) {
+			padding: 45px 0 32px;
+		}
 
-			@include font-size(32);
+		h1 {
+			@include font-size(30);
 			color: $black !important;
 			font-family: $font-title;
-
-		}
-	}
-}
-
-.agr-cart{
-	width: 68%;
-
-	&--flex {
-		display: flex;
-		justify-content: space-between;
-		max-width: 1240px;
-		margin: 0 auto;
-		padding: 0 20px;
-		.cart-collaterals {
-			width: 30%;
-			.cart_totals {
-				width: 100%;
-				float: none;
+			@include breakpoint(desktop) {
+				@include font-size(32);
 			}
 		}
 	}
-
 }
+
+.agr-cart {
+	width: 100%;
+	@include breakpoint(desktop) {
+		width: 68%;
+	}
+
+	&--flex {
+		max-width: 1240px;
+		margin: 0 auto;
+		padding: 0 20px;
+		@include breakpoint(desktop) {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.cart-collaterals {
+			width: 100%;
+			@include breakpoint(desktop) {
+				width: 30%;
+			}
+
+			.cart_totals {
+				width: 100%;
+				float: none;
+
+				table.shop_table {
+					padding: 0 !important;
+					background: transparent;
+					th {
+						@include font-size(12);
+						font-weight: 300 !important;
+						letter-spacing: 2px;
+						text-transform: uppercase;
+					}
+
+					td,
+					td p {
+						@include font-size(14);
+						font-family: $font-body;
+						font-weight: 300 !important;
+						letter-spacing: 2px;
+						text-transform: uppercase;
+						margin: 0;
+
+						.first-payment-date {
+							text-transform: none;
+
+							small {
+								@include font-size(12);
+								color: $primary;
+								margin-top: 4px;
+								display: block;
+								letter-spacing: 0px;
+							}
+						}
+					}
+
+					tr.order-total {
+						td,
+						th {
+							@include font-size(14);
+							color: $black;
+							font-weight: 900 !important;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 .new-cart {
 	&--item {
 		background: $white;
 		position: relative;
 		margin: 4px 0;
+		@include breakpoint(mobile) {
+			padding: 8px 0;
+		}
+
 		&:first-of-type {
 			margin-top: 0;
 		}
@@ -63,25 +125,35 @@ body.woocommerce-cart {
 
 	&--remove {
 		position: absolute;
-		top: 15px;
-		right: 15px;
+		top: 9px;
+		right: 12px;
 		@include font-size(18);
 		color: $black;
 		z-index: 2;
+		@include breakpoint(desktop) {
+			top: 15px;
+		}
 
 		&:hover {
 			color: $red;
 		}
 	}
+
 	&--actions {
 		margin-top: 24px;
 	}
 
 	&--image {
-		padding: 16px;
+		padding: 0 16px 0 0;
+		@include breakpoint(desktop) {
+			padding: 16px;
+		}
 
 		a {
-			display: block;
+			display: none;
+			@include breakpoint(desktop) {
+				display: block;
+			}
 		}
 
 		img {
@@ -101,8 +173,11 @@ body.woocommerce-cart {
 	}
 
 	&--info {
-		width: calc(100% - 104px);
+		width: 100%;
 		padding: 0 16px 0 0;
+		@include breakpoint(desktop) {
+			width: calc(100% - 104px);
+		}
 	}
 
 	&--top {
