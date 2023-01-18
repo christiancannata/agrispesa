@@ -196,6 +196,7 @@ body.woocommerce-cart {
 
 .woocommerce form .form-row label {
 	line-height: normal !important;
+	font-family: $font-body;
 }
 
 .woocommerce-terms-and-conditions-wrapper {
@@ -253,6 +254,7 @@ body.woocommerce-cart {
 .woocommerce form .form-row input.input-text,
 .woocommerce form .form-row textarea {
 	margin: 8px 0 !important;
+	font-family: $font-body;
 }
 
 .woocommerce form .form-row .required {
