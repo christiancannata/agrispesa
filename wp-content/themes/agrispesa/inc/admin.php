@@ -324,7 +324,7 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 			$productSearched = array_filter(
 				$productsToAdd,
 				function ($product) use ($preference) {
-					return $product['id'] == $preference['product_to_remove']['id'];
+					return $product['id'] == $preference['id'];
 				}
 			);
 
@@ -339,11 +339,16 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 
 				unset($productsToAdd[$productSearched]);
 
-				$productsToAdd[] = [
-					'id' => $preference['product_to_add']['id'],
-					'name' => $preference['product_to_add']['name'],
-					'quantity' => $quantity
-				];
+				$productToAdd = null;
+
+				if($productToAdd){
+					$productsToAdd[] = [
+						'id' => $preference['product_to_add']['id'],
+						'name' => $preference['product_to_add']['name'],
+						'quantity' => $quantity
+					];
+				}
+
 
 			}
 

@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_preferences.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/cart/_cart.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/woocommerce/assets/js/frontend/cart.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/woocommerce/assets/js/frontend/cart.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/plugins/woocommerce/includes/wc-conditional-functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/woocommerce/includes/wc-conditional-functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/box.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/box.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/cart/_old_cart.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/cart/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/cart/cart.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +89,7 @@
       <workItem from="1673627614915" duration="275000" />
       <workItem from="1673637362146" duration="3806000" />
       <workItem from="1674038743770" duration="3501000" />
-      <workItem from="1674043326042" duration="11268000" />
+      <workItem from="1674043326042" duration="14850000" />
     </task>
     <servers />
   </component>

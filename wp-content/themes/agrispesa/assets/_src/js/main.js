@@ -17,13 +17,11 @@ relatedSlider();
 formGiftCard();
 
 
-
-
 function formGiftCard() {
 
-    if(jQuery('.gift-card-page').length) {
-      jQuery('.woocommerce-breadcrumb').hide();
-    }
+  if (jQuery('.gift-card-page').length) {
+    jQuery('.woocommerce-breadcrumb').hide();
+  }
 
   jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
     jQuery(this).parent().find('label').addClass('move');
@@ -238,6 +236,10 @@ function quantityInput() {
       numberInput.val(1);
       jQuery(this).closest('.product-quantity--change').find('.product-quantity--minus').removeClass('disabled');
     }
+
+    numberInput.trigger('change')
+    jQuery('.btn-cart-update').click()
+
   });
 
   jQuery(".product-quantity--minus").click(function (e) {
@@ -262,6 +264,11 @@ function quantityInput() {
       numberInput.val(1);
       jQuery(this).addClass('disabled');
     }
+
+    numberInput.trigger('change')
+
+    jQuery('.btn-cart-update').click()
+
   });
 }
 

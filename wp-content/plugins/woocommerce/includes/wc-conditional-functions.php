@@ -139,7 +139,6 @@ if ( ! function_exists( 'is_wc_endpoint_url' ) ) {
 		global $wp;
 
 		$wc_endpoints = WC()->query->get_query_vars();
-
 		if ( false !== $endpoint ) {
 			if ( ! isset( $wc_endpoints[ $endpoint ] ) ) {
 				return false;

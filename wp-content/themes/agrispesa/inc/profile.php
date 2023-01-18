@@ -1,20 +1,26 @@
 <?php
-function enqueue_box_js($hook)
+function enqueue_box_js()
 {
-	wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
-	wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+	global $wp_query;
 
-	wp_enqueue_style('select2css');
-	wp_enqueue_script('select2');
+	if (isset($wp_query->query_vars['settings-box'])) {
 
 
-	wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
-	wp_enqueue_script('axios');
+		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
+		wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
 
-	wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
-	wp_enqueue_script('vuejs');
+		wp_enqueue_style('select2css');
+		wp_enqueue_script('select2');
 
-	wp_enqueue_script('agrispesa-box-js', get_theme_file_uri('assets/js/box.js'), array('jquery', 'select2'), null, true);
+
+		wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
+		wp_enqueue_script('axios');
+
+		wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
+		wp_enqueue_script('vuejs');
+		wp_enqueue_script('agrispesa-box-js', get_theme_file_uri('assets/js/box.js'), array('jquery', 'select2'), null, true);
+
+	}
 }
 
 add_action('wp_enqueue_scripts', 'enqueue_box_js');
