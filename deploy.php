@@ -30,7 +30,7 @@ host('46.101.145.102')
 after('deploy:failed', 'deploy:unlock');
 
 after('deploy:publish', 'reload:php');
-after('deploy:publish', 'deploy:cloudflare');
+after('reload:php', 'deploy:cloudflare');
 
 task('reload:php', function () {
     run('sudo /usr/sbin/service php8.2-fpm restart');
