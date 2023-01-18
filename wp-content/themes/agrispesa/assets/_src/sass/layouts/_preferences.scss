@@ -1,0 +1,174 @@
+.box-name {
+	display: flex;
+	margin-bottom: 10px;
+	width: 100%;
+
+	.box-image {
+		height: 100px;
+		margin-bottom: 0;
+		margin-right: 10px;
+		margin-top: 0;
+		width: 100px;
+	}
+
+	.title {
+		margin-bottom: 5px;
+		margin-top: 0;
+	}
+}
+
+.container-flex-box {
+	display: flex;
+
+}
+
+.right-categories-box {
+	ul {
+		margin-bottom: 0;
+		margin-top: 0;
+		padding-left: 0;
+	}
+
+	ul li::before {
+		display: none;
+	}
+
+	ul li {
+		background: #F2F2EE;
+		border-radius: 30px;
+		padding: 5px;
+		width: 250px;
+	}
+
+	ul .active {
+		background: #4ec68a;
+	}
+
+}
+
+
+.products-box {
+	background: #F2F2EE;
+	border-radius: 15px;
+	margin-left: 8px;
+	padding: 10px;
+
+	ul {
+		margin-bottom: 0;
+		margin-top: 0;
+		padding-left: 0;
+	}
+
+	ul li {
+		padding-left: 0;
+		width: 220px;
+	}
+
+	ul li::before {
+		display: none;
+	}
+}
+
+
+.blacklist-box {
+	background: #343535;
+	border-radius: 15px;
+	margin-left: 8px;
+	padding: 10px;
+
+	ul {
+		margin-bottom: 0;
+		margin-top: 0;
+		padding-left: 0;
+	}
+
+	ul li {
+		padding-left: 0;
+	}
+
+	ul li::before {
+		display: none;
+	}
+}
+
+.blacklist-box {
+	h4 {
+		color: #fff;
+		margin-top: 0;
+
+	}
+}
+
+.blacklist-item {
+	display: flex;
+	width: 100%;
+
+	span {
+		color: #fff;
+
+	}
+
+}
+
+
+.container {
+	cursor: pointer;
+	display: block;
+	font-size: 22px;
+	margin-bottom: 12px;
+	padding-left: 35px;
+	position: relative;
+	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+	cursor: pointer;
+	height: 0;
+	opacity: 0;
+	position: absolute;
+	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	background-color: #fff;
+	height: 25px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 25px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+	background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+/*.container input:checked ~ .checkmark {
+	background-color: #2196F3;
+}*/
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark::after {
+	content: "";
+	display: none;
+	position: absolute;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark::after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark::after {
+	border: solid #4ec68a;
+	border-width: 0 2px 2px 0;
+	height: 15px;
+	left: 9px;
+	top: 4px;
+	transform: rotate(45deg);
+	width: 8px;
+}

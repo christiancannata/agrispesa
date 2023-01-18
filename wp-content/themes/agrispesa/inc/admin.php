@@ -167,18 +167,11 @@ add_action('rest_api_init', function () {
 			if (empty($boxPreferences)) {
 				$boxPreferences = [];
 			}
-			$productToRemove = get_post($body['product_to_remove']);
-			$productToAdd = get_post($body['product_to_add']);
+			$productToRemove = get_post($body['product_id']);
 
 			$boxPreferences[] = [
-				'product_to_remove' => [
-					'id' => $productToRemove->ID,
-					'name' => $productToRemove->post_title
-				],
-				'product_to_add' => [
-					'id' => $productToAdd->ID,
-					'name' => $productToAdd->post_title
-				]
+				'id' => $productToRemove->ID,
+				'name' => $productToRemove->post_title
 			];
 
 			update_post_meta($body['subscription_id'], '_box_preferences', $boxPreferences);
@@ -200,8 +193,24 @@ add_action('rest_api_init', function () {
 			$body = $request->get_json_params();
 			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
 
-			unset($boxPreferences[$body['index']]);
-			update_post_meta($body['subscription_id'], '_box_preferences', $boxPreferences);
+			$productId = $body['product_id'];
+			//find product
+			$index = array_filter($boxPreferences, function ($product) use ($productId) {
+				return $product['id'] == $productId;
+			});
+
+			if (!empty($index)) {
+				$index = array_keys($index);
+				$index = reset($index);
+				unset($boxPreferences[$index]);
+
+				$newBoxPreferences = [];
+				foreach ($boxPreferences as $preference) {
+					$newBoxPreferences[] = $preference;
+				}
+				update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
+			}
+
 
 			$response = new WP_REST_Response([]);
 			$response->set_status(204);

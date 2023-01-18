@@ -71,41 +71,51 @@ function settings_box_content()
 				id="box-app"
 				class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
 
-				<div v-for="subscription of subscriptions">
-					<h4 v-html="subscription.name"></h4>
-					<br>
-					<br>
+				<div v-for="subscription of subscriptions" class="subscription-box">
 
-
-					<h5>Voglio togliere</h5>
-
-					<select v-model="product_to_remove">
-						<option :value="product.id" v-for="product of subscription.products"
-								v-html="product.name"></option>
-					</select>
-					<br><br>
-
-					<h5>Voglio aggiungere</h5>
-
-					<select v-model="product_to_add">
-						<optgroup v-for="category of categories" :label="category.name">
-							<option :value="product.ID" v-for="product of category.products"
-									v-html="product.post_title"></option>
-						</optgroup>
-					</select>
-
-					<br>
-
-					<button @click="addPreference(subscription.id)" class="button-primary">Aggiungi</button>
-
-
-					<div v-for="(preference,index) of subscription.box_preferences">
-
-						<p v-html="preference.product_to_add.name"></p>al posto di
-						<p v-html="preference.product_to_remove.name"></p>
-
-						<a href="#" @click.prevent="deletePreference(subscription.id,index)">Elimina</a>
+					<div class="box-name">
+						<img src="https://picsum.photos/300/300" class="box-image">
+						<div>
+							<h4 class="title" v-html="subscription.name"></h4>
+							<span class="description">Lorem ipsum</span>
+						</div>
 					</div>
+
+
+					<div class="container-flex-box">
+
+						<div class="right-categories-box">
+							<ul v-if="categories.length > 0">
+								<li :class="{'active':currentCategory == category}" v-for="category of categories">
+									<a href="#" @click.prevent="currentCategory = category" v-html="category.name"></a>
+								</li>
+
+							</ul>
+						</div>
+
+						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
+							<ul>
+								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
+									<label @click.prevent="togglePreference(product,subscription)" class="container">
+										<span v-html="product.post_title"></span>
+										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
+										<span class="checkmark"></span>
+									</label>
+								</li>
+
+							</ul>
+						</div>
+
+						<div class="blacklist-box">
+							<h4>Blacklist</h4>
+							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
+								<a @click.prevent="deletePreference(subscription,preference)" href="#">Elimina</a>
+								<span v-html="preference.name"></span>
+							</div>
+						</div>
+					</div>
+
+
 				</div>
 
 			</div>
