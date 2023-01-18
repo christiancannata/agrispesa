@@ -237,8 +237,8 @@ function quantityInput() {
       jQuery(this).closest('.product-quantity--change').find('.product-quantity--minus').removeClass('disabled');
     }
 
-    numberInput.trigger('change')
-    jQuery('.btn-cart-update').click()
+    numberInput.trigger('change');
+    jQuery('.btn-cart-update').click();
 
   });
 
@@ -265,9 +265,9 @@ function quantityInput() {
       jQuery(this).addClass('disabled');
     }
 
-    numberInput.trigger('change')
+    numberInput.trigger('change');
 
-    jQuery('.btn-cart-update').click()
+    jQuery('.btn-cart-update').click();
 
   });
 }

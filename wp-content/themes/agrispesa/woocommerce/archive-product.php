@@ -30,53 +30,50 @@ do_action( 'woocommerce_before_main_content' );
 
 ?>
 
-<section class="all-categories">
-  <?php
-  $orderby = 'ID';
-    $order = 'asc';
-    $hide_empty = false;
 
-		$current_cat = get_queried_object();
-
-    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-    $get_product_cat_ID = $getIDbyNAME->term_id;
-    $cat_args = array(
-        'orderby'    => $orderby,
-        'order'      => $order,
-        'hide_empty' => $hide_empty,
-        'parent' => $get_product_cat_ID,
-    );
-
-$product_categories = get_terms( 'product_cat', $cat_args );
-
-if( !empty($product_categories) ){
-    echo '
-
-		<ul class="all-categories--list">';
-    foreach ($product_categories as $key => $category) {
-        echo '<li>';
-				if($current_cat->slug == $category->slug) {
-					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current">';
-				} else {
-	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
-				}
-        echo get_template_part( 'global-elements/icon', $category->slug );
-        echo $category->name;
-        echo '</a>';
-        echo '</li>';
-    }
-    echo '</ul>
-
-
-';
-} ?>
-</section>
 <header class="woocommerce-products-header">
 
 
 	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
 		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
 	<?php endif; ?>
+
+  <div class="all-categories">
+    <?php
+    $orderby = 'ID';
+      $order = 'asc';
+      $hide_empty = false;
+
+  		$current_cat = get_queried_object();
+
+      $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+      $get_product_cat_ID = $getIDbyNAME->term_id;
+      $cat_args = array(
+          'orderby'    => $orderby,
+          'order'      => $order,
+          'hide_empty' => $hide_empty,
+          'parent' => $get_product_cat_ID,
+      );
+
+  $product_categories = get_terms( 'product_cat', $cat_args );
+
+  if( !empty($product_categories) ){
+      echo '<ul class="all-categories--list">';
+      foreach ($product_categories as $key => $category) {
+          echo '<li>';
+  				if( !is_shop() && $current_cat->slug == $category->slug) {
+  					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current">';
+  				} else {
+  	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
+  				}
+          echo get_template_part( 'global-elements/icon', $category->slug );
+          echo $category->name;
+          echo '</a>';
+          echo '</li>';
+      }
+      echo '</ul>';
+  } ?>
+</div>
 
 	<?php
 	/**

@@ -46,7 +46,7 @@ get_header(); ?>
 	  <div class="sec-three--flex">
 	    <div class="sec-three--sx">
 	      <div class="sec-home--image">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/home-1.jpg" class="sec-home--img" alt=".." />
+	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/home-1.jpg" alt="Al servizio della terra" />
 	      </div>
 	    </div>
 
@@ -62,7 +62,7 @@ get_header(); ?>
 
 	    <div class="sec-three--dx">
 	      <div class="sec-home--image">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/home-2.jpg" class="sec-home--rounded--img" alt=".." />
+	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/home-2.jpg" alt="Al servizio della terra" />
 	      </div>
 	    </div>
 	  </div>
@@ -72,7 +72,8 @@ get_header(); ?>
 	  <div class="sec-half--flex">
 	    <div class="sec-half--sx">
 	      <div class="sec-home--rounded">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" class="sec-home--rounded--floating" alt=".." />
+	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/farmer-top.png" class="sec-home--rounded--floating" alt="Conosciamo da anni i contadini che ci forniscono i prodotti" />
+	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/farmer-bottom.png" class="sec-home--rounded--img" alt="Conosciamo da anni i contadini che ci forniscono i prodotti" />
 				</div>
 	    </div>
 

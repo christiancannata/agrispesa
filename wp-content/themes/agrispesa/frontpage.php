@@ -29,6 +29,39 @@ $_SESSION['havesearch'] = false;
 
 <div class="clearfix"></div>
 
+<?php get_template_part( 'global-elements/all', 'categories' ); ?>
+
+<section class="negozio-home">
+
+  <div class="negozio-home--flex">
+    <div class="negozio-home--sx">
+
+    </div>
+    <div class="negozio-home--dx">
+      <?php /* In evidenza */ ?>
+      <?php
+
+      $args = array(
+              'posts_per_page' => '1',
+              'product_cat' => 'negozio',
+              'post_type' => 'product',
+      				'orderby' => 'date',
+              'order' => 'ASC',
+              'meta_key'          => 'sticky_product',
+          );
+
+      $query = new WP_Query( $args );
+      if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
+
+      <?php get_template_part( 'template-parts/loop', 'sticky' ); ?>
+
+      <?php endwhile;
+      	wp_reset_postdata();
+      endif; ?>
+    </div>
+  </div>
+
+</section>
 
 <section class="products-carousel--container">
   <div class="products-carousel--intro">
@@ -36,7 +69,7 @@ $_SESSION['havesearch'] = false;
   </div>
   <div class="products-carousel">
 
-  <?php /* Box */ ?>
+  <?php /* Prodotti */ ?>
   <?php
 
   $args = array(
@@ -58,45 +91,6 @@ $_SESSION['havesearch'] = false;
 
   </div>
 </section>
-
-<section class="all-categories">
-  <?php
-  $orderby = 'ID';
-    $order = 'asc';
-    $hide_empty = false;
-
-    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-    $get_product_cat_ID = $getIDbyNAME->term_id;
-    $cat_args = array(
-        'orderby'    => $orderby,
-        'order'      => $order,
-        'hide_empty' => $hide_empty,
-        'parent' => $get_product_cat_ID,
-    );
-
-$product_categories = get_terms( 'product_cat', $cat_args );
-
-if( !empty($product_categories) ){
-    echo '
-
-<ul class="all-categories--list">';
-    foreach ($product_categories as $key => $category) {
-        echo '
-
-<li>';
-        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
-        echo get_template_part( 'global-elements/icon', $category->slug );
-        echo $category->name;
-        echo '</a>';
-        echo '</li>';
-    }
-    echo '</ul>
-
-
-';
-} ?>
-</section>
-
 
 <?php get_template_part( 'global-elements/reviews', 'home' ); ?>
 <?php get_template_part( 'global-elements/sospesa', 'home' ); ?>

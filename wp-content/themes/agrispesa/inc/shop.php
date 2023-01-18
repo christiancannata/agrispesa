@@ -44,3 +44,10 @@ function shop_page_empty_layout() {
       echo '</div>';
    }
 }
+
+//Cambio testo bollino sconti
+add_filter('woocommerce_sale_flash', 'woocommerce_custom_sale_text', 10, 3);
+function woocommerce_custom_sale_text($text, $post, $_product)
+{
+return '<span class="onsale"><span class="small">HEY,</span><span>COSTA</span><span>MENO!</span></span>';
+}

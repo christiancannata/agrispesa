@@ -29,11 +29,12 @@
 
 .woocommerce-products-header {
 	text-align: center;
-	margin-bottom: 32px;
 
 	&__title {
-		@include font-size(32);
+		@include font-size(80);
 		font-weight: 900;
+		font-family: $font-title;
+		margin-bottom: 24px;
 	}
 }
 
@@ -43,16 +44,27 @@
 	display: none !important;
 }
 
+body.tax-product_cat {
+	.woocommerce-no-products-found {
+		display: none;
+	}
+}
 .shop {
 	&--list {
 		max-width: 1024px;
-		margin: 0 auto;
+		margin: 0 auto 40px;
+		&:first-of-type {
+			.shop--minititle {
+				margin-top: 0;
+			}
+		}
 	}
 
 	&--minititle {
-		@include font-size(24);
+		@include font-size(32);
 		margin: 24px 0 8px;
 		font-weight: 800;
+		font-family: $font-title;
 	}
 }
 
@@ -119,14 +131,27 @@
 
 			.onsale {
 				@include font-size(10);
-				top: 13px;
+				top: 4px;
 				padding: 6px 8px;
-				left: 113px;
+				left: 4px;
 				right: auto;
 				line-height: 1;
 				min-height: 0;
 				display: block;
 				margin: 0;
+				width: 50px;
+				height: 50px;
+				padding-top: 13px;
+				span {
+					@include font-size(14);
+					display: block;
+					width: 100%;
+					line-height: 0.8;
+
+					&.small {
+						display: none;
+					}
+				}
 			}
 
 			a {
@@ -387,7 +412,7 @@
 			width: 50px !important;
 			border-top: 1px solid $muted;
 			border-bottom: 1px solid $muted;
-    	font-size: 18px !important;
+			font-size: 18px !important;
 		}
 	}
 
@@ -427,14 +452,30 @@
 }
 
 .woocommerce span.onsale {
-	@include border-radius(4px);
-	@include font-size(12);
-	padding: 0 24px;
-	letter-spacing: 2px;
+	@include border-radius(60px);
+	padding: 8px;
 	text-transform: uppercase;
-	left: 15px;
-	top: 15px;
-	background: $primary;
+	left: 30px;
+	top: -15px;
+	background: $orange;
+	width: 120px;
+	height: 120px;
+	font-family: $font-hand;
+	text-align: center;
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+	transform: rotate(-13deg);
+
+	span {
+		@include font-size(24);
+		display: block;
+		width: 100%;
+		line-height: 0.8;
+
+		&.small {
+			@include font-size(30);
+			margin-top: 20px;
+		}
+	}
 }
 
 .summary form.variations_form .variations,

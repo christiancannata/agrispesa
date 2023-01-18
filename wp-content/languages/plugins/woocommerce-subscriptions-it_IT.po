@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-01-18 10:05+0100\n"
+"PO-Revision-Date: 2023-01-18 18:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3059,7 +3059,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-extend-store-endpoint.php:287
 #: vendor/woocommerce/subscriptions-core/build/index.js:6
 msgid "Shipping"
-msgstr ""
+msgstr "Spedizione"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/meta-boxes/class-wcs-meta-box-subscription-data.php:243
 msgid "Load shipping address"
@@ -3380,7 +3380,7 @@ msgstr[1] ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:60
 msgid "%s week"
 msgid_plural "%s weeks"
-msgstr[0] "%s settimana"
+msgstr[0] ""
 msgstr[1] ""
 
 #. translators: placeholder is a number of months.
@@ -3388,8 +3388,8 @@ msgstr[1] ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:62
 msgid "%s month"
 msgid_plural "%s months"
-msgstr[0] "%s mese"
-msgstr[1] "%s mesi"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: placeholder is a number of years.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2390
@@ -6510,7 +6510,7 @@ msgstr ""
 #. translators: placeholder is a date
 #: vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:405
 msgid "First renewal: %s"
-msgstr "Primo rinnovo: %s"
+msgstr "Si rinnova il %s"
 
 #. translators: placeholder is either subscription key or a subscription id, or, failing that, empty (e.g. "145_21" or "145")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-deprecated-functions.php:180
@@ -6693,68 +6693,68 @@ msgstr ""
 msgctxt "Subscription billing period."
 msgid "day"
 msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "giorno"
+msgstr[1] "giorni"
 
 #. translators: placeholder is number of weeks. (e.g. "Bill this every week / 4 weeks")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:33
 msgctxt "Subscription billing period."
 msgid "week"
 msgid_plural "%s weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "settimana"
+msgstr[1] "settimane"
 
 #. translators: placeholder is number of months. (e.g. "Bill this every month / 4 months")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:35
 msgctxt "Subscription billing period."
 msgid "month"
 msgid_plural "%s months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mese"
+msgstr[1] "mesi"
 
 #. translators: placeholder is number of years. (e.g. "Bill this every year / 4 years")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:37
 msgctxt "Subscription billing period."
 msgid "year"
 msgid_plural "%s years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "anno"
+msgstr[1] "anni"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:88
 msgctxt "Subscription length"
 msgid "Never expire"
-msgstr ""
+msgstr "non scade mai"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:93
 msgctxt "Subscription lengths. e.g. \"For 1 day...\""
 msgid "1 day"
-msgstr ""
+msgstr "1 giorno"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:97
 msgctxt "Subscription lengths. e.g. \"For 1 week...\""
 msgid "1 week"
-msgstr ""
+msgstr "1 settimana"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:101
 msgctxt "Subscription lengths. e.g. \"For 1 month...\""
 msgid "1 month"
-msgstr ""
+msgstr "1 mese"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:105
 msgctxt "Subscription lengths. e.g. \"For 1 year...\""
 msgid "1 year"
-msgstr ""
+msgstr "1 anno"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:159
 msgctxt "period interval (eg \"$10 _every_ 2 weeks\")"
 msgid "every"
-msgstr ""
+msgstr "ogni"
 
 #. translators: period interval, placeholder is ordinal (eg "$10 every _2nd/3rd/4th_", etc)
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:163
 msgctxt "period interval with ordinal number (e.g. \"every 2nd\""
 msgid "every %s"
-msgstr ""
+msgstr "ogni %s"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:188
 msgctxt ""
@@ -6762,8 +6762,8 @@ msgctxt ""
 "plural, 1 will need singular."
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "giorno"
+msgstr[1] "giorni"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:189
 msgctxt ""
@@ -6771,8 +6771,8 @@ msgctxt ""
 "plural, 1 will need singular."
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "settimana"
+msgstr[1] "settimane"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:190
 msgctxt ""
@@ -6780,8 +6780,8 @@ msgctxt ""
 "plural, 1 will need singular."
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mese"
+msgstr[1] "mesi"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:191
 msgctxt ""
@@ -6789,54 +6789,54 @@ msgctxt ""
 "plural, 1 will need singular."
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "anno"
+msgstr[1] "anni"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:210
 msgctxt "no trial period"
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-user-functions.php:318
 #: vendor/woocommerce/subscriptions-core/templates/single-product/add-to-cart/subscription.php:30
 #: vendor/woocommerce/subscriptions-core/templates/single-product/add-to-cart/variable-subscription.php:28
 msgid "Resubscribe"
-msgstr ""
+msgstr "Riscriviti"
 
 #. translators: placeholder is a currency symbol / code
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:20
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:30
 msgid "Subscription Price (%s)"
-msgstr ""
+msgstr "Prezzo Abbonamento (%s)"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:46
 msgid "Subscription Periods"
-msgstr ""
+msgstr "Periodo Abbonamento"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:59
 msgctxt ""
 "Edit product screen, between the Billing Period and Subscription Length "
 "dropdowns"
 msgid "for"
-msgstr ""
+msgstr "per"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:69
 msgid "Subscription Length"
-msgstr ""
+msgstr "Durata Abbonamento"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:85
 msgid "Sign-up Fee (%s)"
-msgstr ""
+msgstr "Quota di iscrizione (%s)"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:97
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:104
 msgid "Free Trial"
-msgstr ""
+msgstr "Prova gratuita"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:105
 msgctxt "example number of days / weeks / months"
 msgid "e.g. 3"
-msgstr ""
+msgstr "es. 3"
 
 #. translators: placeholder is trial period validation message if passed an invalid value (e.g. "Trial period can not exceed 4 weeks")
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:118
@@ -6847,6 +6847,9 @@ msgid ""
 "payment. Any sign up fee will still be charged at the outset of the "
 "subscription. %s"
 msgstr ""
+"Un periodo di tempo facoltativo di attesa prima dell’addebito del primo "
+"pagamento ricorrente. Eventuali costi di iscrizione verranno comunque "
+"addebitati all’inizio dell’abbonamento. %s"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-synchronisation.php:30
 msgid "Synchronise Renewals"
@@ -6858,7 +6861,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/order-shipping-html.php:13
 msgid "Shipping Method"
-msgstr ""
+msgstr "Metodo di spedizione"
 
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/order-shipping-html.php:34
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/order-shipping-html.php:36
@@ -6917,10 +6920,14 @@ msgid ""
 "is in addition to any free trial or amount of time provided before a "
 "synchronised first renewal date."
 msgstr ""
+"Scade automaticamente l’abbonamento dopo questo periodo di tempo. Questa "
+"durata è in aggiunta a qualsiasi prova gratuita o periodo di tempo fornito "
+"prima di una prima data di rinnovo sincronizzata."
 
 #: vendor/woocommerce/subscriptions-core/templates/cart/cart-recurring-shipping.php:32
 msgid "Shipping costs will be calculated once you have provided your address."
 msgstr ""
+"Le spese di spedizione verranno calcolate una volta fornito l’indirizzo."
 
 #: vendor/woocommerce/subscriptions-core/templates/cart/cart-recurring-shipping.php:34
 msgid ""
@@ -6935,28 +6942,28 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-totals-table.php:21
 msgctxt "table headings in notification email"
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:21
 #: vendor/woocommerce/subscriptions-core/templates/emails/email-order-details.php:37
 msgctxt "table headings in notification email"
 msgid "Quantity"
-msgstr ""
+msgstr "Quantità"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:22
 msgctxt "table headings in notification email"
 msgid "Totals"
-msgstr ""
+msgstr "Totale"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:47
 msgctxt "text on button on checkout page"
 msgid "Change payment method"
-msgstr ""
+msgstr "Cambia metodo di pagamento"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:49
 msgctxt "text on button on checkout page"
 msgid "Add payment method"
-msgstr ""
+msgstr "Aggiungi metodo di pagamento"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:83
 msgid ""
@@ -6964,12 +6971,17 @@ msgid ""
 "method. Please contact us if you require assistance or to make alternate "
 "arrangements."
 msgstr ""
+"Spiacenti, sembra che nessun gateway di pagamento supporti la modifica del "
+"metodo di pagamento ricorrente. Vi preghiamo di contattarci se avete bisogno "
+"di assistenza o per prendere accordi alternativi."
 
 #. translators: $1: opening <strong> tag, $2: closing </strong> tag
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:92
 msgid ""
 "Update the payment method used for %1$sall%2$s of my current subscriptions"
 msgstr ""
+"Aggiorna il metodo di pagamento utilizzato per %1$sall%2$s dei miei attuali "
+"abbonamenti"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/recurring-subscription-totals.php:18
 #: vendor/woocommerce/subscriptions-core/templates/checkout/recurring-subscription-totals.php:19
@@ -6979,17 +6991,17 @@ msgstr "Totale"
 #: vendor/woocommerce/subscriptions-core/templates/checkout/recurring-subtotals.php:18
 #: vendor/woocommerce/subscriptions-core/templates/checkout/recurring-subtotals.php:19
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotale"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/recurring-totals.php:17
 msgid "Recurring totals"
-msgstr ""
+msgstr "Pagamenti ricorrenti"
 
 #. translators: placeholder is the subscription order number wrapped in <strong> tags
 #: vendor/woocommerce/subscriptions-core/templates/checkout/subscription-receipt.php:18
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/email-order-details.php:19
 msgid "Subscription Number: %s"
-msgstr ""
+msgstr "Abbonamento numero: %s"
 
 #. translators: placeholder is the subscription's next payment date (either human readable or normal date) wrapped in <strong> tags
 #: vendor/woocommerce/subscriptions-core/templates/checkout/subscription-receipt.php:24
@@ -6999,12 +7011,12 @@ msgstr "Prossimo pagamento: %s"
 #. translators: placeholder is the formatted total to be paid for the subscription wrapped in <strong> tags
 #: vendor/woocommerce/subscriptions-core/templates/checkout/subscription-receipt.php:30
 msgid "Total: %s"
-msgstr ""
+msgstr "Totale: %s"
 
 #. translators: placeholder is the display name of the payment method
 #: vendor/woocommerce/subscriptions-core/templates/checkout/subscription-receipt.php:37
 msgid "Payment Method: %s"
-msgstr ""
+msgstr "Metodo di pagamento: %s"
 
 #. translators: $1: customer's billing first name and last name
 #: vendor/woocommerce/subscriptions-core/templates/emails/admin-new-renewal-order.php:16
@@ -7014,6 +7026,8 @@ msgid ""
 "You have received a subscription renewal order from %1$s. Their order is as "
 "follows:"
 msgstr ""
+"Hai ricevuto un ordine di rinnovo dell’abbonamento da %1$s. L’ordine è il "
+"seguente:"
 
 #. translators: $1: customer's first name and last name, $2: how many subscriptions customer switched
 #: vendor/woocommerce/subscriptions-core/templates/emails/admin-new-switch-order.php:18
@@ -7026,7 +7040,11 @@ msgid_plural ""
 "Customer %1$s has switched %2$d of their subscriptions. The details of their "
 "new subscriptions are as follows:"
 msgstr[0] ""
+"Il cliente %1$s ha cambiato abbonamento. I dettagli del nuovo abbonamento "
+"sono i seguenti:"
 msgstr[1] ""
+"I clienti %1$s hanno cambiato abbonamento. I dettagli dei nuovi abbonamenti "
+"sono i seguenti:"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/admin-new-switch-order.php:20
 msgid "Switch Order Details"
@@ -7044,6 +7062,8 @@ msgid ""
 "The automatic recurring payment for order #%d from %s has failed. The "
 "payment will be retried %3$s."
 msgstr ""
+"Il pagamento ricorrente automatico per l’ordine #%d da %s non è andato a "
+"buon fine. Riproveremo il %3$s."
 
 #. translators: %1$s: an order number, %2$s: the customer's full name, %3$s: lowercase human time diff in the form returned by wcs_get_human_time_diff(), e.g. 'in 12 hours'
 #: vendor/woocommerce/subscriptions-core/templates/emails/admin-payment-retry.php:24
@@ -7065,12 +7085,12 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/on-hold-subscription.php:22
 msgctxt "table headings in notification email"
 msgid "Price"
-msgstr ""
+msgstr "Prezzo"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/cancelled-subscription.php:24
 msgctxt "table headings in notification email"
 msgid "End of Prepaid Term"
-msgstr ""
+msgstr "Fine del periodo prepagato"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/cancelled-subscription.php:41
 #: vendor/woocommerce/subscriptions-core/templates/emails/expired-subscription.php:41
@@ -7092,12 +7112,13 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-processing-renewal-order.php:16
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-renewal-invoice.php:16
 msgid "Hi %s,"
-msgstr ""
+msgstr "Ciao %s,"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/customer-completed-renewal-order.php:18
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-completed-renewal-order.php:17
 msgid "We have finished processing your subscription renewal order."
 msgstr ""
+"Abbiamo terminato l’elaborazione del tuo ordine di rinnovo dell’abbonamento."
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/customer-completed-switch-order.php:18
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-completed-switch-order.php:17
@@ -7150,7 +7171,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/customer-renewal-invoice.php:24
 #: vendor/woocommerce/subscriptions-core/templates/emails/customer-renewal-invoice.php:33
 msgid "Pay Now &raquo;"
-msgstr ""
+msgstr "Paga ora &raquo;"
 
 #. translators: %1$s: name of the blog, %2$s: link to checkout payment url, note: no full stop due to url at the end
 #: vendor/woocommerce/subscriptions-core/templates/emails/customer-renewal-invoice.php:31

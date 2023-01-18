@@ -152,3 +152,5 @@ Stack trace:
 
 2023-01-18T15:07:28+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 118
 
+2023-01-18T18:48:02+00:00 CRITICAL syntax error, unexpected end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 53
+
