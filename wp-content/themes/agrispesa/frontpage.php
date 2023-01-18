@@ -99,5 +99,6 @@ if( !empty($product_categories) ){
 
 
 <?php get_template_part( 'global-elements/reviews', 'home' ); ?>
+<?php get_template_part( 'global-elements/sospesa', 'home' ); ?>
 
 <?php get_footer();

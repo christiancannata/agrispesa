@@ -48,20 +48,8 @@ body.woocommerce-cart {
 	}
 }
 
-.woocommerce .quantity .qty {
-	@include font-size(14);
-	font-weight: 300;
-	padding: 0;
-	text-align: center;
-	width: 100px;
-}
 
-.woocommerce-page table.cart .quantity {
-	@include breakpoint(mobile) {
-		display: flex;
-		justify-content: flex-end;
-	}
-}
+
 
 .woocommerce-page table.cart img {
 	width: 100px;

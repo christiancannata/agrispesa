@@ -17,6 +17,8 @@ relatedSlider();
 formGiftCard();
 
 
+
+
 function formGiftCard() {
 
     if(jQuery('.gift-card-page').length) {
@@ -221,46 +223,43 @@ function variationToRadio() {
 
 function quantityInput() {
   jQuery('.product-quantity--plus').click(function (e) {
+    let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
     // Stop acting like a button
     e.preventDefault();
-    // Get the field name
-    let fieldName = jQuery(this).attr('field');
     // Get its current value
-    let currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
+    let currentVal = parseInt(numberInput.val());
     // If is not undefined
     if (!isNaN(currentVal)) {
       // Increment
-      jQuery('input[name=' + fieldName + ']').val(currentVal + 1);
-      jQuery('.product-quantity--minus').removeClass('disabled');
+      numberInput.val(currentVal + 1);
+      jQuery(this).closest('.product-quantity--change').find('.product-quantity--minus').removeClass('disabled');
     } else {
       // Otherwise put a 0 there
-      jQuery('input[name=' + fieldName + ']').val(1);
-      jQuery('.product-quantity--minus').removeClass('disabled');
+      numberInput.val(1);
+      jQuery(this).closest('.product-quantity--change').find('.product-quantity--minus').removeClass('disabled');
     }
   });
 
   jQuery(".product-quantity--minus").click(function (e) {
+    let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
     // Stop acting like a button
     e.preventDefault();
-    // Get the field name
-    let fieldName = jQuery(this).attr('field');
     // Get its current value
-    let currentVal = parseInt(jQuery('input[name=' + fieldName + ']').val());
+    let currentVal = numberInput.val();
     // If it isn't undefined or its greater than 0
 
-    console.log(currentVal);
     if (!isNaN(currentVal) && currentVal > 2) {
       // Decrement one
-      jQuery('input[name=' + fieldName + ']').val(currentVal - 1);
+      numberInput.val(currentVal - 1);
       jQuery(this).removeClass('disabled');
     } else if (!isNaN(currentVal) && currentVal > 1) {
       // Decrement one
-      jQuery('input[name=' + fieldName + ']').val(currentVal - 1);
+      numberInput.val(currentVal - 1);
       jQuery(this).addClass('disabled');
 
     } else {
       // Otherwise put a 0 there
-      jQuery('input[name=' + fieldName + ']').val(1);
+      numberInput.val(1);
       jQuery(this).addClass('disabled');
     }
   });
