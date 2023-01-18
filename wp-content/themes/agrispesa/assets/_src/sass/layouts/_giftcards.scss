@@ -17,49 +17,32 @@
 	}
 }
 
-.gift-card-form {
-	&--heart {
-		@include transition(all 0.6s linear);
-		@include font-size(40);
-		color: $red;
-		position: absolute;
-		left: 50%;
-		top: 3px;
-		margin-left: -14px;
-		transform: translate(-50%, -50%);
-		animation: heartbeat 1.4s linear infinite;
-		opacity: 0;
-
-		&.show {
-			opacity: 1;
-		}
-	}
-}
-
 .gift-card-page {
-	min-height: 100vh;
 	height: auto;
 	overflow: hidden;
 	margin: 0;
 	padding-bottom: 40px;
 	@include breakpoint(desktop) {
-		height: 100vh;
+		height:calc(100vh - 90px);
 		overflow: auto;
 		display: flex;
 		align-items: center;
-		padding-top: 80px;
 		padding-bottom: 0;
 	}
 	@include breakpoint(mobile) {
+		min-height: calc(100vh - 80px);
 		.hero--title {
-			margin-top: 100px;
+			margin-top: 50px;
+			@include font-size(38);
 		}
 
 		.posh-button {
 			@include font-size(14);
 		}
 	}
-
+	.all-categories {
+		display: none;
+	}
 	.hero--title {
 		@include breakpoint(desktop) {
 			@include font-size(50);
@@ -71,13 +54,21 @@
 		@include breakpoint(desktop) {
 			@include font-size(22);
 		}
+		@include breakpoint(mobile) {
+			@include font-size(20);
+			margin-bottom: 24px;
+		}
 	}
 
 	&--image {
-		width: 400px;
+		width: 450px;
 		margin-bottom: 32px;
+		margin-top: 32px;
+		display: none;
+
 		@include breakpoint(desktop) {
 			margin-bottom: 0;
+			display: block;
 		}
 	}
 
@@ -185,6 +176,47 @@
 	}
 }
 
+.gift-cards-list {
+	h3 {
+		@include label();
+		display: none;
+	}
+
+	button.ywgc-amount-buttons {
+		@include transition(all 0.3s ease);
+		@include border-radius(25px);
+		@include font-size(22);
+		background: $background;
+		border: none;
+		padding: 6px 16px;
+		width: 24%;
+		cursor: pointer;
+		margin-bottom: 0;
+
+		&.selected_button {
+			background: $primary;
+		}
+
+		&.selected_button,
+		&:hover {
+			@include transform(rotate(-2deg));
+			background: $primary;
+			color: $white;
+
+			svg {
+				fill: $white;
+			}
+		}
+
+		&:nth-child(even) {
+			&.selected_button,
+			&:hover {
+				@include transform(rotate(2deg));
+			}
+		}
+	}
+}
+
 .gift-card-content-editor {
 	&.step-content {
 		input::placeholder {
@@ -203,6 +235,7 @@
 			height: 60px;
 			padding-top: 14px;
 			width: 100%;
+			margin: 0;
 		}
 
 		textarea {
@@ -220,11 +253,8 @@
 	.ywgc-sender-info-title,
 	.ywgc_recipient_info_title,
 	h5 {
-		@include font-size(10);
-		color: #999;
-		font-weight: 300;
-		letter-spacing: 2px;
-		text-align: left;
+		@include label();
+		margin: 24px 0 8px !important;
 	}
 
 	.ywgc-message,

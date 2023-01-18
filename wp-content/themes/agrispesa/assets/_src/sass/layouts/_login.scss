@@ -144,6 +144,7 @@
 		@include font-size(16);
 		margin-top: 24px;
 		text-align: center;
+		font-family: $font-body !important;
 	}
 
 	.check-register-form,
@@ -156,7 +157,7 @@
 	}
 
 	&--title {
-		color: $black;
+		color: $black !important;
 		font-size: 36px !important;
 		font-weight: 900 !important;
 		text-align: left;
@@ -177,6 +178,7 @@
 		font-weight: 300;
 		margin: 8px 0 32px !important;
 		text-align: left;
+		font-family: $font-body !important;
 
 		a {
 			color: $blue;

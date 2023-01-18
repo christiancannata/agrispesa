@@ -1,7 +1,4 @@
 <?php
-session_start();
-$_SESSION['ishome'] = false;
-$_SESSION['havesearch'] = false;
 
 get_header(); ?>
 
@@ -25,9 +22,5 @@ get_header(); ?>
 </div>
 
 
-<?php
-if (  $wp_query->max_num_pages > 1 )
-  echo '<div class="loadmore"><span class="loadmore--btn misha_loadmore">Carica altri</span></div>'; // you can use <a> as well
-?>
 
 <?php get_footer();

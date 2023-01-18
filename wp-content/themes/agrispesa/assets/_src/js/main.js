@@ -19,7 +19,9 @@ formGiftCard();
 
 function formGiftCard() {
 
-  jQuery('<h5>A CHI VUOI REGALARLO?</h5>').insertBefore(".gift-card-phy .ywgc-recipient-name");
+    if(jQuery('.gift-card-page').length) {
+      jQuery('.woocommerce-breadcrumb').hide();
+    }
 
   jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
     jQuery(this).parent().find('label').addClass('move');

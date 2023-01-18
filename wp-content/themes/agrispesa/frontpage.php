@@ -32,7 +32,7 @@ $_SESSION['havesearch'] = false;
 
 <section class="products-carousel--container">
   <div class="products-carousel--intro">
-    <h2 class="products-carousel--title">Oppure componila come preferisci.</h2>
+    <h2 class="products-carousel--title">Oppure creala tu!</h2>
   </div>
   <div class="products-carousel">
 
