@@ -8,6 +8,22 @@
 	src: url("../fonts/icomoon/icomoon/icomoon.eot?xqo0h6#iefix") format('embedded-opentype'), url("../fonts/icomoon/icomoon.ttf?xqo0h6") format('truetype'), url("../fonts/icomoon/icomoon.woff?xqo0h6") format('woff'), url("../fonts/icomoon/icomoon.svg?xqo0h6#icomoon") format('svg');
 }
 
+@mixin icomoon() {
+		/* use !important to prevent issues with browser extensions that change fonts */
+		font-family: 'icomoon' !important;
+
+		/* Better Font Rendering =========== */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-style: normal;
+		font-variant: normal;
+		font-weight: normal;
+		line-height: 1;
+		speak: none;
+		text-transform: none;
+
+}
+
 [class^="icon-"], [class*=" icon-"] {
 	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;

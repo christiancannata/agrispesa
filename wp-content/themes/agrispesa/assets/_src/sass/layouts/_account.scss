@@ -253,9 +253,7 @@ body.woocommerce-account {
 	margin-top: 0;
 }
 
-.woocommerce table.shop_table {
-	padding-bottom: 70px !important;
-}
+
 
 body.woocommerce-view-order {
 	.woocommerce {
@@ -405,7 +403,6 @@ body.woocommerce-view-order {
 			@include font-size(15);
 			font-weight: 300;
 			padding: 10px 8px !important;
-			text-align: right;
 		}
 
 		.woocommerce-orders-table__cell-order-number {

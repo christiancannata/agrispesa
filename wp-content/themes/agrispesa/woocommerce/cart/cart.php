@@ -33,7 +33,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 				<th class="product-subtotal"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
 			</tr>
-		</thead>
+		</thead> 
 		<tbody>
 			<?php do_action( 'woocommerce_before_cart_contents' ); ?>
 

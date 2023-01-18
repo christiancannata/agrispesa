@@ -221,6 +221,8 @@ function variationToRadio() {
 
 function quantityInput() {
   jQuery('.product-quantity--plus').click(function (e) {
+
+    console.log('clic più');
     let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
     // Stop acting like a button
     e.preventDefault();
@@ -238,13 +240,14 @@ function quantityInput() {
     }
 
     numberInput.trigger('change');
-    jQuery('.btn-cart-update').click();
+    //jQuery('.btn-cart-update').click();
 
   });
 
   jQuery(".product-quantity--minus").click(function (e) {
     let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
     // Stop acting like a button
+    console.log('clic meno');
     e.preventDefault();
     // Get its current value
     let currentVal = numberInput.val();
@@ -267,7 +270,7 @@ function quantityInput() {
 
     numberInput.trigger('change');
 
-    jQuery('.btn-cart-update').click();
+    //jQuery('.btn-cart-update').click();
 
   });
 }

@@ -34,6 +34,7 @@
 		body.home & {
 			background: $white;
 
+			.top-user__login,
 			.top-user__name {
 				color: $black;
 			}
@@ -315,6 +316,21 @@
 		}
 	}
 
+	&__login {
+		span {
+			margin-right: 4px;
+			position: relative;
+			top: 1px;
+		}
+		@include breakpoint(mobile) {
+			margin-top: 8px;
+		}
+
+		body.home & {
+			color: $white;
+		}
+	}
+
 	&__link {
 		overflow: hidden;
 		display: flex;
@@ -493,11 +509,6 @@
 	left: -100%;
 	@include breakpoint(mobile) {
 		width: 80%;
-	}
-
-	body.woocommerce-cart &,
-	body.woocommerce-checkout & {
-		display: none;
 	}
 
 	.user-menu {
