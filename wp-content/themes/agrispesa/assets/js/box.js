@@ -9,8 +9,10 @@ createApp({
       message: '',
       categories: [],
       subscriptions: [],
+      currentCategory: null,
       product_to_remove: null,
-      product_to_add: null
+      product_to_add: null,
+      products_preferences_id: []
     }
   },
   mounted() {
@@ -18,6 +20,18 @@ createApp({
     this.getCategories()
   },
   methods: {
+    togglePreference: function (product, subscription) {
+      if (this.isBlacklisted(product, subscription)) {
+        this.deletePreference(product, subscription);
+      } else {
+        this.addPreference(subscription, product);
+      }
+    },
+    isBlacklisted: function (product, subscription) {
+      return subscription.box_preferences.some(function (field) {
+        return field.id === product.ID
+      })
+    },
     getSubscriptions: function () {
       const $vm = this
       axios.get('/wp-json/agrispesa/v1/user-subscriptions')
@@ -30,24 +44,24 @@ createApp({
       axios.get('/wp-json/agrispesa/v1/shop-categories')
         .then((response) => {
           $vm.categories = response.data
+          $vm.currentCategory = $vm.categories[0]
         });
     },
-    addPreference: function (subscription_id) {
+    addPreference: function (subscription, product) {
       const $vm = this
       axios.post('/wp-json/agrispesa/v1/subscription-preference', {
-        product_to_remove: $vm.product_to_remove,
-        product_to_add: $vm.product_to_add,
-        subscription_id: subscription_id
+        product_id: product.ID,
+        subscription_id: subscription.id
       })
         .then((response) => {
           $vm.getSubscriptions()
         });
     },
-    deletePreference: function (subscription_id, index) {
+    deletePreference: function (subscription, product) {
       const $vm = this
       axios.patch('/wp-json/agrispesa/v1/subscription-preference', {
-        index: index,
-        subscription_id: subscription_id
+        product_id: product.id,
+        subscription_id: subscription.id
       })
         .then((response) => {
           $vm.getSubscriptions()
