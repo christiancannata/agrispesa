@@ -40,7 +40,6 @@ function wcs_get_subscription_period_strings( $number = 1, $period = '' ) {
 	);
 	// phpcs:enable
 
-    dd($translated_periods);
 	return ( ! empty( $period ) ) ? $translated_periods[ $period ] : $translated_periods;
 }
 

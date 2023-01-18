@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/woocommerce-subscriptions/languages/woocommerce-subscriptions-it.mo" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/languages/plugins/woocommerce-subscriptions-it_IT.mo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/woocommerce-subscriptions/languages/woocommerce-subscriptions-it.po" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/languages/plugins/woocommerce-subscriptions-it_IT.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-includes/l10n.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-includes/l10n.php" afterDir="false" />
-    </list>
+    <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +75,7 @@
       <workItem from="1673627614915" duration="275000" />
       <workItem from="1673637362146" duration="3806000" />
       <workItem from="1674038743770" duration="3501000" />
-      <workItem from="1674043326042" duration="3506000" />
+      <workItem from="1674043326042" duration="3682000" />
     </task>
     <servers />
   </component>
