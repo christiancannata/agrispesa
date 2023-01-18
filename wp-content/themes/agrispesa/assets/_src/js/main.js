@@ -292,7 +292,6 @@ function clearSearch() {
 }
 
 function stickyHeader() {
-  alert("jjj")
   let header = jQuery('.header');
   let headerH = header.outerHeight();
   let lastScrollTop = 0;
