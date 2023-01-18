@@ -3380,7 +3380,7 @@ msgstr[1] ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:60
 msgid "%s week"
 msgid_plural "%s weeks"
-msgstr[0] ""
+msgstr[0] "%s settimana"
 msgstr[1] ""
 
 #. translators: placeholder is a number of months.
@@ -3388,8 +3388,8 @@ msgstr[1] ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:62
 msgid "%s month"
 msgid_plural "%s months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s mese"
+msgstr[1] "%s mesi"
 
 #. translators: placeholder is a number of years.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2390
