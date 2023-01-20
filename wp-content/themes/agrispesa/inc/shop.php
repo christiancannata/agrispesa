@@ -29,7 +29,6 @@ function shop_page_empty_layout() {
    $args = array(
       'hide_empty' => true,
       'fields' => 'slugs',
-      'hierarchical' => 1,
       'taxonomy' => 'product_cat',
       'parent' => $get_product_cat_ID,
       'hide_empty' => true,

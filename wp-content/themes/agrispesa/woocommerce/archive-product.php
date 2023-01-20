@@ -47,18 +47,13 @@ do_action( 'woocommerce_before_main_content' );
 
   <div class="all-categories">
     <?php
-    $orderby = 'ID';
-      $order = 'asc';
-      $hide_empty = false;
-
   		$current_cat = get_queried_object();
-
       $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
       $get_product_cat_ID = $getIDbyNAME->term_id;
       $cat_args = array(
-          'orderby'    => $orderby,
-          'order'      => $order,
-          'hide_empty' => $hide_empty,
+          'orderby'    => 'ID',
+          'order'      => 'asc',
+          'hide_empty' => false,
           'parent' => $get_product_cat_ID,
       );
 
@@ -114,6 +109,8 @@ if ( woocommerce_product_loop() ) {
 	       'fields' => 'slugs',
 	       'taxonomy' => 'product_cat',
 	       'parent' => $get_product_cat_ID,
+				 'orderby'    => 'ID',
+				 'order'      => 'asc',
 	    );
 		}  elseif( is_product_category() || is_product_tag() ) {
 
@@ -125,6 +122,8 @@ if ( woocommerce_product_loop() ) {
 	       'fields' => 'slugs',
 	       'taxonomy' => 'product_cat',
 	       'child_of' => $get_product_cat_ID,
+				 'orderby'    => 'ID',
+				 'order'      => 'asc',
 	    );
 		}
 
