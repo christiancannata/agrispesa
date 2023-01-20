@@ -104,7 +104,7 @@ body.tax-product_cat {
 		max-width: 1024px;
 		margin: 0 auto;
 		padding: 0 20px;
-		@include breakpoint(desktop) {
+		@include breakpoint(mobile) {
 			padding: 0;
 		}
 
@@ -608,6 +608,7 @@ body.tax-product_cat {
 	.btn-price,
 	.price {
 		color: $black;
+		display: block;
 
 		.woocommerce-Price {
 			&-amount {
@@ -630,7 +631,7 @@ body.tax-product_cat {
 
 .woocommerce-variation-add-to-cart {
 	text-align: right;
-	margin-top: -50px;
+	margin-top: -54px;
 }
 
 .shipping-info {
