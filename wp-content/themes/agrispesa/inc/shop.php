@@ -39,7 +39,10 @@ function shop_page_empty_layout() {
       $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
       $catID = $term_object->term_id ;
       echo '<div class="shop--list">';
+      echo '<div class="shop--list--header">';
       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
+			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
+			echo '</div>';
       echo do_shortcode( '[products limit="-1" columns="4" category="' . $category_slug . '"]' );
       echo '</div>';
    }

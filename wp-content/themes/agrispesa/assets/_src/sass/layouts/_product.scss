@@ -54,11 +54,26 @@ body.tax-product_cat {
 				margin-top: 0;
 			}
 		}
+
+		&--header {
+			display: flex;
+			align-items: center;
+			margin: 24px 0 8px;
+			@include breakpoint(mobile) {
+				justify-content: space-between;
+			}
+
+			.arrow-link {
+				@include breakpoint(desktop) {
+					margin-left: 24px;
+				}
+			}
+		}
 	}
 
 	&--minititle {
 		@include font-size(24);
-		margin: 24px 0 8px;
+		margin: 0;
 		font-weight: 800;
 		font-family: $font-title;
 		@include breakpoint(desktop) {
@@ -102,10 +117,7 @@ body.tax-product_cat {
 	ul.products {
 		max-width: 1024px;
 		margin: 0 auto;
-		padding: 0 20px;
-		@include breakpoint(mobile) {
-			padding: 0;
-		}
+		padding: 0;
 
 		li.product {
 			float: none !important;
