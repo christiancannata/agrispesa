@@ -245,7 +245,7 @@
 	&--rounded {
 		position: relative;
 		content: '';
-			width: 300px;
+		width: 300px;
 		margin: 0 auto;
 
 		&--floating {
@@ -448,54 +448,100 @@
 
 .all-categories {
 	padding-bottom: 80px;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 0 20px;
+	@include breakpoint(mobile) {
+		overflow: auto;
+		white-space: nowrap;
+		padding-bottom: 10px;
+		-ms-overflow-style: none;
+		/* IE and Edge */
+		scrollbar-width: none;
+		/* Firefox */
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 
 	&--list {
 		text-align: center;
 		list-style: none;
+		@include breakpoint(desktop) {
+			display: flex;
+			justify-content: space-between;
+		}
 
 		li {
 			display: inline-block;
-			margin: 4px;
+			margin: 3px 2px;
+			@include breakpoint(mobile) {
+				min-width: 100px;
+
+				&:last-of-type {
+					margin-right: 20px;
+				}
+			}
+			@include breakpoint(desktop) {
+				min-width: 11.5%;
+				margin: 2px;
+
+				&:first-of-type {
+					margin-left: 0;
+				}
+
+				&:last-of-type {
+					margin-right: 0;
+				}
+			}
 
 			a {
 				@include transition(all 0.3s ease);
-				@include font-size(18);
+				@include font-size(14);
 				@include border-radius(4px);
 				background: $white;
 				color: $orange;
-				padding: 6px 16px;
-				// display: flex;
-				// align-items: center;
+				padding: 6px 8px;
+				line-height: 1.1;
 				text-align: center;
 				display: block;
-				box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+				box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+				@include breakpoint(desktop) {
+					@include font-size(16);
+				}
 
 				svg {
 					@include transition(all 0.3s ease);
 					display: block;
-					width: 28px;
+					width: 30px;
 					fill: $orange;
-					margin: 0 auto;
+					margin: 0 auto 4px;
+					@include breakpoint(desktop) {
+						width: 36px;
+					}
 				}
 
 				&.current,
 				&:hover {
-					@include transform(rotate(-2deg));
 					background: $orange;
 					color: $white;
-					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+					@include breakpoint(desktop) {
+						@include transform(rotate(-2deg));
+					}
 
 					svg {
 						fill: $white;
 					}
 				}
 			}
-
-			&:nth-child(even) {
-				a {
-					&.current,
-					&:hover {
-						@include transform(rotate(2deg));
+			@include breakpoint(desktop) {
+				&:nth-child(even) {
+					a {
+						&.current,
+						&:hover {
+							@include transform(rotate(2deg));
+						}
 					}
 				}
 			}
@@ -505,6 +551,7 @@
 
 .sospesa {
 	padding: 80px 0;
+
 	&--images {
 		display: flex;
 		align-items: center;
@@ -563,6 +610,70 @@
 				padding: 24px 40px;
 				text-align: left;
 			}
+		}
+	}
+}
+
+.big-search {
+	max-width: 1240px;
+	padding: 0 20px;
+	margin: 16px auto;
+
+	&--content {
+		@include border-radius(6px);
+		background: $orange;
+		box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+		padding: 24px 16px;
+		text-align: left;
+		@include breakpoint(desktop) {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 32px;
+		}
+	}
+
+	&--text {
+		text-align: left;
+		@include breakpoint(desktop) {
+			width: calc(100% - 440px);
+			padding-right: 60px;
+		}
+	}
+
+	&--title {
+		@include font-size(32);
+		font-family: $font-title;
+		font-weight: 900;
+		color: $white;
+		line-height: 1.1;
+		@include breakpoint(mobile) {
+			margin-bottom: 16px;
+		}
+	}
+
+	&--h1 {
+		@include font-size(16);
+		font-weight: 400;
+		color: $white;
+		line-height: 1.1;
+		margin-bottom: 8px;
+		@include breakpoint(desktop) {
+			margin-bottom: 16px;
+		}
+	}
+
+	.search-form .input-search input[type=text] {
+		max-width: 100%;
+		@include font-size(18);
+		line-height: 50px;
+		height: 50px;
+		@include breakpoint(desktop) {
+			width: 500px;
+			max-width: 100%;
+			@include font-size(20);
+			line-height: 64px;
+			height: 64px;
 		}
 	}
 }

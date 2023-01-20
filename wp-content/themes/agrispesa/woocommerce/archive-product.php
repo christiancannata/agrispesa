@@ -33,10 +33,17 @@ do_action( 'woocommerce_before_main_content' );
 
 <header class="woocommerce-products-header">
 
+	<section class="big-search">
+	  <div class="big-search--content">
+	    <div class="big-search--text">
+				<h1 class="big-search--h1"><?php woocommerce_page_title(); ?></h1>
+	      <h3 class="big-search--title"><?php echo the_archive_description(); ?></h3>
+	    </div>
+	    <?php get_search_form() ?>
+	  </div>
+	</section>
 
-	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-	<?php endif; ?>
+
 
   <div class="all-categories">
     <?php
@@ -75,16 +82,8 @@ do_action( 'woocommerce_before_main_content' );
   } ?>
 </div>
 
-	<?php
-	/**
-	 * Hook: woocommerce_archive_description.
-	 *
-	 * @hooked woocommerce_taxonomy_archive_description - 10
-	 * @hooked woocommerce_product_archive_description - 10
-	 */
-	do_action( 'woocommerce_archive_description' );
-	?>
 </header>
+
 <?php
 if ( woocommerce_product_loop() ) {
 

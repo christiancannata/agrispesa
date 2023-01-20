@@ -51,3 +51,15 @@ function woocommerce_custom_sale_text($text, $post, $_product)
 {
 return '<span class="onsale"><span class="small">HEY,</span><span>COSTA</span><span>MENO!</span></span>';
 }
+
+//Limita la ricerca ai prodotti
+// Only show products in the front-end search results
+add_filter('pre_get_posts','lw_search_filter_pages');
+function lw_search_filter_pages($query) {
+    // Frontend search only
+    if ( ! is_admin() && $query->is_search() ) {
+        $query->set('post_type', 'product');
+        $query->set( 'wc_query', 'product_query' );
+    }
+    return $query;
+}

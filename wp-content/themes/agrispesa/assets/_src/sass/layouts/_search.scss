@@ -1,87 +1,100 @@
 /* stylelint-disable */
 .header--search {
-  @include transition(all 0.3s ease);
-  @include breakpoint(desktop) {
-    width: 0;
-    overflow: hidden;
-    &.showme {
-      width: 300px;
-    }
-  }
-  @include breakpoint(mobile) {
-    order: 1;
-    width: 100%;
-  }
+	@include transition(all 0.3s ease);
+	@include breakpoint(desktop) {
+		width: 0;
+		overflow: hidden;
+
+		&.showme {
+			width: 300px;
+		}
+	}
+	@include breakpoint(mobile) {
+		order: 1;
+		width: 100%;
+	}
 }
+
 .menu--search {
-  @include transition(all 0.3s ease);
-  width: 70px;
-  overflow: hidden;
-  &.hideme {
-    width: 0;
-  }
+	@include transition(all 0.3s ease);
+	width: 70px;
+	overflow: hidden;
+
+	&.hideme {
+		width: 0;
+	}
 }
+
 .search-results {
-  &--header {
-    .page-title {
-      margin-bottom: 16px;
-    }
-  }
-  &--found {
-    margin-top: 16px;
-  }
+	&--header {
+		.page-title {
+			margin-bottom: 16px;
+		}
+	}
+
+	&--found {
+		margin-top: 16px;
+	}
 }
 
 .search-form {
-  .input-search {
-    position: relative;
-    @include breakpoint(mobile) {
-      display: block;
-      width: 100%;
-    }
-    @include breakpoint(desktop) {
-      display: inline-block;
-    }
-    input[type=text] {
-      @include border-radius(25px);
-      @include font-size(14);
-      border: 1px solid $light-gray;
-      background: $white;
-      color: $black;
-      line-height: 42px;
-      padding: 0 42px;
-      width: 300px;
-      max-width: 100%;
-      @include breakpoint(mobile) {
-        width: 100%;
-      }
-    }
-    .delete-search,
-    .go-search {
-      @include transition(all 0.3s ease);
-      @include vertical-align();
-      @include font-size(24);
-      position: absolute;
-      color: $muted;
-      cursor: pointer;
-    }
-    .delete-search {
-      right: 12px;
-      &:hover {
-        color: $red;
-      }
-    }
-    .go-search {
-      left: 12px;
-      height: 24px;
-      display: flex;
-    }
-  }
+	.input-search {
+		position: relative;
+		@include breakpoint(mobile) {
+			display: block;
+			width: 100%;
+		}
+		@include breakpoint(desktop) {
+			display: inline-block;
+		}
+
+		input[type=text] {
+			@include border-radius(40px);
+			@include font-size(14);
+			border: 1px solid $panna;
+			background: $white;
+			color: $black;
+			line-height: 42px;
+			padding: 0 42px;
+			width: 300px;
+			max-width: 100%;
+			@include breakpoint(mobile) {
+				width: 100%;
+			}
+		}
+
+		.delete-search,
+		.go-search {
+			@include transition(all 0.3s ease);
+			@include vertical-align();
+			@include font-size(24);
+			position: absolute;
+			color: $muted;
+			cursor: pointer;
+		}
+
+		.delete-search {
+			right: 12px;
+			color: $muted;
+
+			&:hover {
+				color: $red;
+			}
+		}
+
+		.go-search {
+			left: 12px;
+			height: 24px;
+			display: flex;
+
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
 }
-
-
 @supports (-webkit-overflow-scrolling: touch) {
-   .search-form .input-search input[type=text] {
-     font-size: 16px;
-   }
+	.search-form .input-search input[type=text] {
+		font-size: 16px;
+	}
 }

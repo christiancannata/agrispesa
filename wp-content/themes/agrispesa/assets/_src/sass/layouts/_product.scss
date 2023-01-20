@@ -28,14 +28,7 @@
 }
 
 .woocommerce-products-header {
-	text-align: center;
-
-	&__title {
-		@include font-size(80);
-		font-weight: 900;
-		font-family: $font-title;
-		margin-bottom: 24px;
-	}
+	margin-bottom: 50px;
 }
 
 .added_to_cart,
@@ -49,10 +42,13 @@ body.tax-product_cat {
 		display: none;
 	}
 }
+
 .shop {
 	&--list {
 		max-width: 1024px;
 		margin: 0 auto 40px;
+		padding: 0 20px;
+
 		&:first-of-type {
 			.shop--minititle {
 				margin-top: 0;
@@ -61,10 +57,13 @@ body.tax-product_cat {
 	}
 
 	&--minititle {
-		@include font-size(32);
+		@include font-size(24);
 		margin: 24px 0 8px;
 		font-weight: 800;
 		font-family: $font-title;
+		@include breakpoint(desktop) {
+			@include font-size(32);
+		}
 	}
 }
 
@@ -142,6 +141,7 @@ body.tax-product_cat {
 				width: 50px;
 				height: 50px;
 				padding-top: 13px;
+
 				span {
 					@include font-size(14);
 					display: block;

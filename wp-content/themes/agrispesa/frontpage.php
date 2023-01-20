@@ -29,15 +29,12 @@ $_SESSION['havesearch'] = false;
 
 <div class="clearfix"></div>
 
-<?php get_template_part( 'global-elements/all', 'categories' ); ?>
+
 
 <section class="negozio-home">
 
-  <div class="negozio-home--flex">
-    <div class="negozio-home--sx">
-
-    </div>
-    <div class="negozio-home--dx">
+  <div class="negozio-home--container">
+    <div class="negozio-home--product">
       <?php /* In evidenza */ ?>
       <?php
 
@@ -62,6 +59,17 @@ $_SESSION['havesearch'] = false;
   </div>
 
 </section>
+
+<section class="big-search">
+  <div class="big-search--content">
+    <div class="big-search--text">
+      <h3 class="big-search--title">Cerca i tuoi prodotti preferiti.</h3>
+    </div>
+    <?php get_search_form() ?>
+  </div>
+</section>
+
+<?php get_template_part( 'global-elements/all', 'categories' ); ?>
 
 <section class="products-carousel--container">
   <div class="products-carousel--intro">
