@@ -91,7 +91,7 @@ if ( woocommerce_product_loop() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
 
-	woocommerce_product_loop_start();
+	//woocommerce_product_loop_start();
 
 	//Loop archivio
 	$page_id = get_queried_object_id();
@@ -135,7 +135,7 @@ if ( woocommerce_product_loop() ) {
       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 			echo '</div>';
-      echo do_shortcode( '[products limit="-1" columns="4" category="' . $category_slug . '"]' );
+      echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
       echo '</div>';
       wp_reset_postdata();
    }
@@ -147,9 +147,8 @@ if ( woocommerce_product_loop() ) {
 	echo '<div class="shop--list">';
 	echo '<div class="shop--list--header">';
 	echo '<h2 class="shop--minititle">' . $nomeCategoria->name . '</h2>';
-
 	echo '</div>';
-	echo do_shortcode( '[products limit="-1" columns="4" category="' . $idNegozio . '"]' );
+	echo do_shortcode( '[products limit="-1" columns="1" category="' . $idNegozio . '"]' );
 	echo '</div>';
 	wp_reset_postdata();
 }
@@ -157,7 +156,7 @@ if ( woocommerce_product_loop() ) {
 
 
 
-	woocommerce_product_loop_end();
+	//woocommerce_product_loop_end();
 
 	/**
 	 * Hook: woocommerce_after_shop_loop.

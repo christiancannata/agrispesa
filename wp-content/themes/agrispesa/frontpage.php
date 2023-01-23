@@ -26,12 +26,7 @@ $_SESSION['havesearch'] = false;
 
 </section>
 
-
 <div class="clearfix"></div>
-
-
-
-
 
 <section class="big-search">
   <div class="big-search--content">
@@ -104,5 +99,9 @@ $_SESSION['havesearch'] = false;
 
 <?php get_template_part( 'global-elements/reviews', 'home' ); ?>
 <?php get_template_part( 'global-elements/sospesa', 'home' ); ?>
+
+<?php get_template_part( 'global-elements/home', 'press' ); ?>
+<?php get_template_part( 'global-elements/home', 'newsletter' ); ?>
+<?php get_template_part( 'global-elements/home', 'popup' ); ?>
 
 <?php get_footer();

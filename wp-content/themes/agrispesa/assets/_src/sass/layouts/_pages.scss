@@ -65,21 +65,23 @@
 
 .not-found {
 	text-align: center;
-	margin: -40px 0 80px;
+	margin: 40px 0 80px;
 
 	&--image {
-		width: 332px;
+		width: 400px;
 		max-width: 100%;
 		display: block;
-		margin: 0 auto;
+		margin: 0 auto 16px;
 	}
 
 	&--title {
-		@include font-size(16);
-		font-weight: bold;
+		@include font-size(26);
+		font-weight: 900;
+		font-family: $font-title;
 	}
 
 	&--subtitle {
+		@include font-size(20);
 		margin: 4px 0 0;
 	}
 }

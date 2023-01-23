@@ -42,7 +42,7 @@ function shop_page_empty_layout() {
       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 			echo '</div>';
-      echo do_shortcode( '[products limit="-1" columns="4" category="' . $category_slug . '"]' );
+      echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
       echo '</div>';
    }
 }
