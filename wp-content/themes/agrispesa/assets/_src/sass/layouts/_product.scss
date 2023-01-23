@@ -153,6 +153,18 @@ body.tax-product_cat {
 				padding: 24px;
 			}
 
+			.yith-wcwl-add-to-wishlist {
+				margin: 0;
+				order: 3;
+
+				.add_to_wishlist,
+				.delete_item {
+					span {
+						//display: none;
+					}
+				}
+			}
+
 			.button {
 				@include button();
 				@include buttonprimary();
@@ -578,6 +590,9 @@ body.tax-product_cat {
 			&:checked {
 				+ .box {
 					background-color: $primary;
+					@include breakpoint(desktop) {
+						@include transform(rotate(-2deg));
+					}
 
 					span {
 						color: white;
@@ -586,7 +601,32 @@ body.tax-product_cat {
 			}
 		}
 
+		label {
+			&:nth-child(even) {
+				.box {
+					&:hover {
+						@include breakpoint(desktop) {
+							@include transform(rotate(2deg));
+						}
+					}
+				}
+
+				input[type="radio"] {
+					display: none;
+
+					&:checked {
+						+ .box {
+							@include breakpoint(desktop) {
+								@include transform(rotate(2deg));
+							}
+						}
+					}
+				}
+			}
+		}
+
 		.box {
+			@include transition(all 0.3s ease);
 			@include border-radius(24px);
 			width: 100%;
 			background-color: $white;
@@ -598,8 +638,13 @@ body.tax-product_cat {
 			font-weight: 300;
 			padding: 4px 16px;
 
+			&:hover {
+				@include transform(rotate(-2deg));
+			}
+
 			&:active {
-				transform: translateY(4px);
+				//transform: translateY(4px);
+				//@include transform(rotate(-2deg));
 			}
 
 			span {

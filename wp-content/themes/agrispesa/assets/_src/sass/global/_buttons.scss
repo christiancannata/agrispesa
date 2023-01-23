@@ -84,6 +84,24 @@
 	}
 }
 
+.btn-fake {
+	a.button {
+		@include button();
+		@include buttonprimary();
+		@include buttonsmall();
+		width: 100%;
+		&:hover {
+			background-image: linear-gradient(to right, $blue, $blue, $green, $green);
+		}
+		&.loading {
+			&:after {
+				@include font-size(15);
+				top: 0;
+			}
+		}
+	}
+}
+
 .arrow-link {
 	@include transition(all 0.2s linear);
 	@include clearfix();

@@ -33,6 +33,7 @@
 
 		&--subtitle {
 			@include font-size(20);
+			font-weight: 400;
 		}
 	}
 }
@@ -401,6 +402,7 @@
 			}
 			@include breakpoint(mobile) {
 				width: 100%;
+				max-width: 100%;
 			}
 		}
 	}
@@ -417,15 +419,24 @@
 .sec-three {
 	&--flex {
 		display: flex;
-		align-items: center;
 		@include breakpoint(mobile) {
 			flex-wrap: wrap;
 		}
 
 		& > div {
 			width: 33.333%;
+			direction: flex;
+			align-items: center;
+			background-repeat: no-repeat;
+			background-position: center;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			padding: 250px 0;
 			@include breakpoint(mobile) {
 				width: 100%;
+				padding: 0;
 
 				&.sec-three--center {
 					padding: 24px 20px 90px;
@@ -435,11 +446,13 @@
 				&.sec-three--sx {
 					order: 1;
 					width: 50%;
+					height: 300px;
 				}
 
 				&.sec-three--dx {
 					order: 2;
 					width: 50%;
+					height: 300px;
 				}
 			}
 		}
@@ -674,6 +687,72 @@
 			@include font-size(20);
 			line-height: 64px;
 			height: 64px;
+		}
+	}
+}
+
+.sec-cards {
+	padding: 80px 0;
+	@include breakpoint(desktop) {
+		padding: 120px 0;
+	}
+
+	&--flex {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&--item {
+		@include border-radius(4px);
+		margin: 8px 0;
+		padding: 16px;
+		background: $white;
+		box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+		width: 100%;
+		margin: 8px;
+		@include breakpoint(desktop) {
+			width: calc(33.333% - 16px);
+			margin: 8px;
+		}
+	}
+}
+
+.producer-box {
+	&--title {
+		font-family: $font-title;
+		@include font-size(22);
+		font-weight: 900;
+		line-height: 1.1;
+
+		a {
+			color: $black;
+
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+
+	&--city {
+		@include font-size(16);
+		color: $muted;
+		margin-top: 8px;
+	}
+
+	&--categories {
+		margin-top: 60px;
+
+		a {
+			@include font-size(14);
+			margin-right: 16px;
+			margin-top: 4px;
+			&:after {
+				bottom: -1px;
+			}
+
+			&:last-of-type {
+				margin-right: 0;
+			}
 		}
 	}
 }

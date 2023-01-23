@@ -42,6 +42,35 @@ formGiftCard();
 infoAgr();
 closePopup();
 pressSlider();
+scrollTo();
+hideGlossarioAlpha();
+
+
+function hideGlossarioAlpha() {
+  var glossarioElements = jQuery('.glossario--anchor');
+  glossarioElements.each(function( index ) {
+    var alphabet = jQuery('.glossario--link');
+    var target = jQuery(this).attr('data-alpha');
+
+    jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
+  });
+}
+
+
+function scrollTo() {
+
+  jQuery('.sliding-link').on('click', function(event) {
+    var target = jQuery(this.getAttribute('href'));
+    var scrollto = target.offset().top - 100
+
+    if (target.length) {
+      event.preventDefault();
+      jQuery('html, body').stop().animate({
+        scrollTop: scrollto
+      }, 800);
+    }
+  });
+}
 
 function pressSlider() {
 

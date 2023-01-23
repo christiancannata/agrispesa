@@ -44,11 +44,7 @@ get_header(); ?>
 
 	<section class="sec-home sec-three bg-panna">
 	  <div class="sec-three--flex">
-	    <div class="sec-three--sx">
-	      <div class="sec-home--image">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-2.jpg" alt="Al servizio della terra" />
-	      </div>
-	    </div>
+	    <div class="sec-three--sx" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-2.jpg);"></div>
 
 	    <div class="sec-three--center">
 	      <div class="sec-home--text">
@@ -60,11 +56,7 @@ get_header(); ?>
 	      </div>
 	    </div>
 
-	    <div class="sec-three--dx">
-	      <div class="sec-home--image">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-1.jpg" alt="Al servizio della terra" />
-	      </div>
-	    </div>
+	    <div class="sec-three--dx" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-1.jpg);"></div>
 	  </div>
 	</section>
 

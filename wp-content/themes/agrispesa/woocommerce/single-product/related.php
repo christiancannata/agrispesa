@@ -52,7 +52,7 @@ if ( in_array( 'box', $categories ) ): ?>
 </div>
 </section>
 
-<?php else: ?>
+<?php elseif ( !in_array( 'gift-card', $categories ) ): ?>
 
 	<section class="big-search">
 	  <div class="big-search--content">

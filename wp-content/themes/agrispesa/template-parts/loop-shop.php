@@ -20,7 +20,7 @@ $thumb_url = $thumb_url_array[0];
         </div>
       </div>
 
-      <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo the_title(); ?>">Scopri di più</a>
+      <?php echo do_shortcode('[add_to_cart id="'.get_the_ID().'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
     </div>
   </div>
 </article>
