@@ -41,7 +41,7 @@ createApp({
     },
     getCategories: function () {
       const $vm = this
-      axios.get('/wp-json/agrispesa/v1/shop-categories')
+      axios.get(window.baseurl + '/wp-json/agrispesa/v1/shop-categories')
         .then((response) => {
           $vm.categories = response.data
           $vm.currentCategory = $vm.categories[0]
@@ -49,7 +49,7 @@ createApp({
     },
     addPreference: function (subscription, product) {
       const $vm = this
-      axios.post('/wp-json/agrispesa/v1/subscription-preference', {
+      axios.post(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
         product_id: product.ID,
         subscription_id: subscription.id
       })
@@ -59,7 +59,7 @@ createApp({
     },
     deletePreference: function (subscription, product) {
       const $vm = this
-      axios.patch('/wp-json/agrispesa/v1/subscription-preference', {
+      axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
         product_id: product.id,
         subscription_id: subscription.id
       })

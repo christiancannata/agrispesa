@@ -1,3 +1,4 @@
+
 jQuery(document).ready(function ($) {
   $(".select2").select2()
   $('.datatable').DataTable();
@@ -15,7 +16,7 @@ createApp({
   methods: {
     createBox: function () {
       const $vm = this
-      axios.post('/wp-json/agrispesa/v1/weekly-box', {
+      axios.post(window.baseurl + '/wp-json/agrispesa/v1/weekly-box', {
         product_box_id: document.getElementById('box_id').value,
         week: document.getElementById('week').value,
         products: $vm.products
