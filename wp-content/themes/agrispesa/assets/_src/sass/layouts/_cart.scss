@@ -39,6 +39,7 @@ body.woocommerce-cart {
 		width: 68%;
 	}
 
+
 	&--flex {
 		max-width: 1240px;
 		margin: 0 auto;
@@ -46,6 +47,12 @@ body.woocommerce-cart {
 		@include breakpoint(desktop) {
 			display: flex;
 			justify-content: space-between;
+		}
+		.woocommerce-cart-form {
+			width: 100%;
+			@include breakpoint(desktop) {
+				width: 68%;
+			}
 		}
 
 		.cart-collaterals {
@@ -76,6 +83,7 @@ body.woocommerce-cart {
 						letter-spacing: 2px;
 						text-transform: uppercase;
 						margin: 0;
+						text-align: right;
 
 						.first-payment-date {
 							text-transform: none;
@@ -95,7 +103,11 @@ body.woocommerce-cart {
 						th {
 							@include font-size(14);
 							color: $black;
-							font-weight: 900 !important;
+							font-weight: 500 !important;
+							strong {
+
+								font-weight: 500 !important;
+							}
 						}
 					}
 				}

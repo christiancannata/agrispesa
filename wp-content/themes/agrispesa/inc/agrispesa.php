@@ -6,9 +6,45 @@ add_theme_support( 'woocommerce' );
 // Change add to cart text on product archives page
 add_filter( 'woocommerce_product_add_to_cart_text', 'woocommerce_add_to_cart_button_text_archives' );
 function woocommerce_add_to_cart_button_text_archives() {
-    return __( 'Aggiungi alla box', 'woocommerce' );
+    return __( 'Metti nella box', 'woocommerce' );
 }
 
+//Options page ACF
+add_action('acf/init', 'my_acf_op_init');
+function my_acf_op_init() {
+
+    // Check function exists.
+    if( function_exists('acf_add_options_page') ) {
+
+        // Add parent.
+        $parent = acf_add_options_page(array(
+            'page_title'  => __('Impostazioni generali Agrispesa'),
+            'menu_title'  => __('Agrispesa'),
+            'redirect'    => false,
+        ));
+
+        // Add sub page.
+        $child = acf_add_options_page(array(
+            'page_title'  => __('Impostazioni Newsletter'),
+            'menu_title'  => __('Newsletter'),
+            'parent_slug' => $parent['menu_slug'],
+        ));
+
+        // Add sub page.
+        $child = acf_add_options_page(array(
+            'page_title'  => __('Impostazioni Striscia informativa'),
+            'menu_title'  => __('Striscia informativa'),
+            'parent_slug' => $parent['menu_slug'],
+        ));
+
+        // Add sub page.
+        $child = acf_add_options_page(array(
+            'page_title'  => __('Impostazioni Press'),
+            'menu_title'  => __('Press'),
+            'parent_slug' => $parent['menu_slug'],
+        ));
+    }
+}
 
 // Lunghezza Riassunto
 function my_excerpt_length($length){

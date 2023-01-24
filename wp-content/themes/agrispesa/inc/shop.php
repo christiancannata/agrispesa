@@ -29,7 +29,6 @@ function shop_page_empty_layout() {
    $args = array(
       'hide_empty' => true,
       'fields' => 'slugs',
-      'hierarchical' => 1,
       'taxonomy' => 'product_cat',
       'parent' => $get_product_cat_ID,
       'hide_empty' => true,
@@ -39,8 +38,30 @@ function shop_page_empty_layout() {
       $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
       $catID = $term_object->term_id ;
       echo '<div class="shop--list">';
+      echo '<div class="shop--list--header">';
       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
-      echo do_shortcode( '[products limit="-1" columns="4" category="' . $category_slug . '"]' );
+			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
+			echo '</div>';
+      echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
       echo '</div>';
    }
+}
+
+//Cambio testo bollino sconti
+add_filter('woocommerce_sale_flash', 'woocommerce_custom_sale_text', 10, 3);
+function woocommerce_custom_sale_text($text, $post, $_product)
+{
+return '<span class="onsale"><span class="small">HEY,</span><span>COSTA</span><span>MENO!</span></span>';
+}
+
+//Limita la ricerca ai prodotti
+// Only show products in the front-end search results
+add_filter('pre_get_posts','lw_search_filter_pages');
+function lw_search_filter_pages($query) {
+    // Frontend search only
+    if ( ! is_admin() && $query->is_search() ) {
+        $query->set('post_type', 'product');
+        $query->set( 'wc_query', 'product_query' );
+    }
+    return $query;
 }

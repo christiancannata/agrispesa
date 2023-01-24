@@ -1,0 +1,38 @@
+/* stylelint-disable */
+.press {
+  text-align: center;
+  padding-bottom: 80px;
+
+  &--title {
+    @include font-size(18);
+    font-weight: 300;
+    margin-bottom: 24px;
+    @include breakpoint(desktop) {
+      @include font-size(24);
+    }
+  }
+
+  &--item {
+    text-align: center;
+    padding: 16px;
+  }
+
+  &--link {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      .press--logo {
+        filter: grayscale(0%);
+      }
+    }
+  }
+
+  &--logo {
+    @include transition(all 0.3s linear);
+    display: block;
+    margin: 0 auto;
+    filter: grayscale(100%);
+  }
+}

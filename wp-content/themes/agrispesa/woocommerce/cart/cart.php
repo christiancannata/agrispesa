@@ -19,8 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_cart' ); ?>
 
-<form class="woocommerce-cart-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
-	<?php do_action( 'woocommerce_before_cart_table' ); ?>
+	<form class="woocommerce-cart-form" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
+			<?php do_action('woocommerce_before_cart_table'); ?>
+
 
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
 		<thead>
@@ -32,7 +33,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 				<th class="product-subtotal"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
 			</tr>
-		</thead>
+		</thead> 
 		<tbody>
 			<?php do_action( 'woocommerce_before_cart_contents' ); ?>
 
@@ -196,6 +197,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 		 */
 		do_action( 'woocommerce_cart_collaterals' );
 	?>
+</div>
+
 </div>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>

@@ -1,0 +1,74 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "c217c2ebee811938bc21eb3a914a1573",
+    "packages": [
+        {
+            "name": "wpfactory/wpfactory-autoloader",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wpcodefactory/wpfactory-autoloader.git",
+                "reference": "89a0f13705b6d6fede0da5982f123ef880d5cdaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wpcodefactory/wpfactory-autoloader/zipball/89a0f13705b6d6fede0da5982f123ef880d5cdaf",
+                "reference": "89a0f13705b6d6fede0da5982f123ef880d5cdaf",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/php/"
+                ]
+            },
+            "support": {
+                "source": "https://github.com/wpcodefactory/wpfactory-autoloader/tree/v1.0.1",
+                "issues": "https://github.com/wpcodefactory/wpfactory-autoloader/issues"
+            },
+            "time": "2021-07-21T13:50:28+00:00"
+        },
+        {
+            "name": "wpfactory/wpfactory-promoting-notice",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wpcodefactory/wpfactory-promoting-notice.git",
+                "reference": "4d248f9ec4755fe6a8fc5ac0e67a098ac6e01f37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wpcodefactory/wpfactory-promoting-notice/zipball/4d248f9ec4755fe6a8fc5ac0e67a098ac6e01f37",
+                "reference": "4d248f9ec4755fe6a8fc5ac0e67a098ac6e01f37",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/php/"
+                ],
+                "files": [
+                    "src/php/functions.php"
+                ]
+            },
+            "support": {
+                "source": "https://github.com/wpcodefactory/wpfactory-promoting-notice/tree/1.0.5",
+                "issues": "https://github.com/wpcodefactory/wpfactory-promoting-notice/issues"
+            },
+            "time": "2021-06-07T20:53:39+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
+}

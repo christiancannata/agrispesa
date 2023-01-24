@@ -130,9 +130,28 @@ body.woocommerce-cart {
 }
 
 .checkout--title {
-	@include font-size(24);
+	@include clearfix();
+	@include font-size(28);
+	color: $black !important;
+	display: inline-block;
+	font-weight: 900;
+	margin: 0 0 32px;
+	position: relative;
 	font-family: $font-title;
-	margin: 24px 0;
+	@include breakpoint(desktop) {
+		@include font-size(32);
+	}
+
+	&::after {
+		background: $black;
+		bottom: -3px;
+		content: '';
+		display: block;
+		height: 1px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+	}
 }
 
 .coupon-form {

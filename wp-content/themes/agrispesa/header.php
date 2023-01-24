@@ -31,7 +31,8 @@ global $woocommerce;
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<?php $info_agr = get_field('info_agr', 'option'); ?>
+<body <?php body_class(); ?> <?php if($info_agr){ echo 'style="padding-bottom:100px;"';} ?>>
 <?php wp_body_open(); ?>
 
 
@@ -141,5 +142,13 @@ global $woocommerce;
 		</div>
 	</div>
 </div>
+
+<?php if($info_agr): ?>
+	<div class="info_agr">
+		<span class="info_agr--button"><span class="icon-arrow-down"></span></span>
+		<h4 class="info_agr--title"><?php echo the_field('info_agr_title', 'option'); ?></h4>
+		<p class="info_agr--subtitle"><?php echo the_field('info_agr_subtitle', 'option'); ?></p>
+	</div>
+	<?php endif;?>
 
 <main id="primary" class="site-main" role="main">

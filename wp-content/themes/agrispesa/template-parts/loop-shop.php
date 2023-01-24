@@ -3,9 +3,6 @@ $product = wc_get_product( get_the_ID() );
 $thumb_id = get_post_thumbnail_id();
 $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
 $thumb_url = $thumb_url_array[0];
-
-$product_quantity = get_field('product_quantity');
-
 ?>
 <article class="product-box">
   <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
@@ -23,7 +20,7 @@ $product_quantity = get_field('product_quantity');
         </div>
       </div>
 
-      <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo the_title(); ?>">Scopri di più</a>
+      <?php echo do_shortcode('[add_to_cart id="'.get_the_ID().'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
     </div>
   </div>
 </article>

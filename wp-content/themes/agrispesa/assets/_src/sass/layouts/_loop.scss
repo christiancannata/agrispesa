@@ -118,6 +118,10 @@
 		}
 	}
 
+	.btn-fake {
+		margin-top: 16px;
+	}
+
 	&--link {
 		display: block;
 		overflow: hidden;
@@ -194,7 +198,5 @@
 		}
 	}
 
-	&--button {
-		margin-top: 16px;
-	}
+
 }

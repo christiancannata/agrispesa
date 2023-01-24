@@ -30,64 +30,55 @@ do_action( 'woocommerce_before_main_content' );
 
 ?>
 
-<section class="all-categories">
-  <?php
-  $orderby = 'ID';
-    $order = 'asc';
-    $hide_empty = false;
 
-		$current_cat = get_queried_object();
-
-    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-    $get_product_cat_ID = $getIDbyNAME->term_id;
-    $cat_args = array(
-        'orderby'    => $orderby,
-        'order'      => $order,
-        'hide_empty' => $hide_empty,
-        'parent' => $get_product_cat_ID,
-    );
-
-$product_categories = get_terms( 'product_cat', $cat_args );
-
-if( !empty($product_categories) ){
-    echo '
-
-		<ul class="all-categories--list">';
-    foreach ($product_categories as $key => $category) {
-        echo '<li>';
-				if($current_cat->slug == $category->slug) {
-					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current">';
-				} else {
-	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
-				}
-        echo get_template_part( 'global-elements/icon', $category->slug );
-        echo $category->name;
-        echo '</a>';
-        echo '</li>';
-    }
-    echo '</ul>
-
-
-';
-} ?>
-</section>
 <header class="woocommerce-products-header">
 
+	<section class="big-search">
+	  <div class="big-search--content">
+	    <div class="big-search--text">
+				<h1 class="big-search--h1"><?php woocommerce_page_title(); ?></h1>
+	      <h3 class="big-search--title"><?php echo the_archive_description(); ?></h3>
+	    </div>
+	    <?php get_search_form() ?>
+	  </div>
+	</section>
 
-	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-	<?php endif; ?>
 
-	<?php
-	/**
-	 * Hook: woocommerce_archive_description.
-	 *
-	 * @hooked woocommerce_taxonomy_archive_description - 10
-	 * @hooked woocommerce_product_archive_description - 10
-	 */
-	do_action( 'woocommerce_archive_description' );
-	?>
+
+  <div class="all-categories">
+    <?php
+  		$current_cat = get_queried_object();
+      $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+      $get_product_cat_ID = $getIDbyNAME->term_id;
+      $cat_args = array(
+          'orderby'    => 'ID',
+          'order'      => 'asc',
+          'hide_empty' => false,
+          'parent' => $get_product_cat_ID,
+      );
+
+  $product_categories = get_terms( 'product_cat', $cat_args );
+
+  if( !empty($product_categories) ){
+      echo '<ul class="all-categories--list">';
+      foreach ($product_categories as $key => $category) {
+          echo '<li>';
+  				if( !is_shop() && $current_cat->slug == $category->slug) {
+  					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current">';
+  				} else {
+  	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
+  				}
+          echo get_template_part( 'global-elements/icon', $category->slug );
+          echo $category->name;
+          echo '</a>';
+          echo '</li>';
+      }
+      echo '</ul>';
+  } ?>
+</div>
+
 </header>
+
 <?php
 if ( woocommerce_product_loop() ) {
 
@@ -100,45 +91,72 @@ if ( woocommerce_product_loop() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
 
-	woocommerce_product_loop_start();
+	//woocommerce_product_loop_start();
 
 	//Loop archivio
-	// $page_id = get_queried_object_id();
-  // $get_product_cat_ID = $page_id;
+	$page_id = get_queried_object_id();
+  $idNegozio = get_the_category_by_ID( $page_id );
 
-	if ( is_shop() ) {
-		$getIDbyNAME = get_term_by('name', 'shop', 'product_cat');
-	  $get_product_cat_ID = $getIDbyNAME->term_id;
-		$args = array(
-       'hide_empty' => true,
-       'fields' => 'slugs',
-       'taxonomy' => 'product_cat',
-       'parent' => $get_product_cat_ID,
-    );
-	} elseif( is_product_category() || is_product_tag() ) {
-		$page_id = get_queried_object_id();
-	  $get_product_cat_ID = $page_id;
-		$args = array(
-       'hide_empty' => true,
-       'fields' => 'slugs',
-       'taxonomy' => 'product_cat',
-       'child_of' => $get_product_cat_ID,
-    );
-	}
+	$hasNoChildren = get_term_children( $page_id, 'product_cat' );
+
+	if ( !empty( $hasNoChildren ) && !is_wp_error( $hasNoChildren ) ){
+		//categorie che hanno sottocategorie
+		if ( is_shop() || $idNegozio === 'Negozio' ) {
+			$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+		  $get_product_cat_ID = $getIDbyNAME->term_id;
+			$args = array(
+	       'hide_empty' => true,
+	       'fields' => 'slugs',
+	       'taxonomy' => 'product_cat',
+	       'parent' => $get_product_cat_ID,
+				 'orderby'    => 'ID',
+				 'order'      => 'asc',
+	    );
+		}  elseif( is_product_category() || is_product_tag() ) {
+
+			$page_id = get_queried_object_id();
+		  $get_product_cat_ID = $page_id;
+
+			$args = array(
+	       'hide_empty' => true,
+	       'fields' => 'slugs',
+	       'taxonomy' => 'product_cat',
+	       'child_of' => $get_product_cat_ID,
+				 'orderby'    => 'ID',
+				 'order'      => 'asc',
+	    );
+		}
 
    $categories = get_terms( $args );
    foreach ( $categories as $category_slug ) {
       $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
       echo '<div class="shop--list">';
+      echo '<div class="shop--list--header">';
       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
-      echo do_shortcode( '[products limit="-1" columns="4" category="' . $category_slug . '"]' );
+			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
+			echo '</div>';
+      echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
       echo '</div>';
       wp_reset_postdata();
    }
 
+} else {
+	//Categorie senza sottocategorie
+	$nomeCategoria = get_term_by( 'id', $page_id, 'product_cat' );
+
+	echo '<div class="shop--list">';
+	echo '<div class="shop--list--header">';
+	echo '<h2 class="shop--minititle">' . $nomeCategoria->name . '</h2>';
+	echo '</div>';
+	echo do_shortcode( '[products limit="-1" columns="1" category="' . $idNegozio . '"]' );
+	echo '</div>';
+	wp_reset_postdata();
+}
 
 
-	woocommerce_product_loop_end();
+
+
+	//woocommerce_product_loop_end();
 
 	/**
 	 * Hook: woocommerce_after_shop_loop.

@@ -65,21 +65,23 @@
 
 .not-found {
 	text-align: center;
-	margin: -40px 0 80px;
+	margin: 40px 0 80px;
 
 	&--image {
-		width: 332px;
+		width: 400px;
 		max-width: 100%;
 		display: block;
-		margin: 0 auto;
+		margin: 0 auto 16px;
 	}
 
 	&--title {
-		@include font-size(16);
-		font-weight: bold;
+		@include font-size(26);
+		font-weight: 900;
+		font-family: $font-title;
 	}
 
 	&--subtitle {
+		@include font-size(20);
 		margin: 4px 0 0;
 	}
 }
@@ -252,4 +254,60 @@
 	.btn {
 		margin-top: 32px;
 	}
+}
+
+.glossario {
+	&--anchor {
+    @include font-size(24);
+    font-weight: bold;
+    color: $black;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    margin: 32px 0 8px 0;
+		padding: 0 8px;
+  }
+	&--index {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+		justify-content: center;
+    @include breakpoint(desktop) {
+      margin-bottom: 50px;
+    }
+    a {
+      @include font-size(24);
+      font-weight: bold;
+      margin-right: 8px;
+      color: $black;
+      cursor: pointer;
+      display: inline-block;
+      &.disabled {
+        color: $muted;
+        cursor: default;
+        &:after {
+          content: none !important;
+        }
+        &:hover {
+          color: $muted;
+        }
+      }
+      &::after {
+        @include transition(all 0.3s ease);
+        background: $blue;
+        content: '';
+        display: block;
+        height: 2px;
+        width: 0;
+      }
+
+      &:hover {
+        color: $blue;
+
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
 }

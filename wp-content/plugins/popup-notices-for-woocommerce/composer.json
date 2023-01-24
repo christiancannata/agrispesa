@@ -1,0 +1,37 @@
+{
+  "name": "thanks-to-it/popup-notices-for-woocommerce",
+  "description": "Turn your WooCommerce notices into popups",
+  "keywords": [
+    "wordpress",
+    "woocommerce",
+    "notice",
+    "notices",
+    "modal",
+    "popup"
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/wpcodefactory/wpfactory-promoting-notice"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/wpcodefactory/wpfactory-autoloader"
+    }
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pablo Pacheco",
+      "email": "pablo.sg.pacheco@gmail.com"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "require": {
+    "wpfactory/wpfactory-promoting-notice": "*",
+    "wpfactory/wpfactory-autoloader": "*"
+  }
+}

@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 		<div class="input-search">
 			<span class="icon-close delete-search"></span>
 			<input class="field form-control search-input-field" id="s" name="s" type="text"
-				placeholder="Cerca..." value="<?php the_search_query(); ?>">
+				placeholder="Cerca un prodotto..." value="<?php the_search_query(); ?>">
 				<button class="go-search" id="searchsubmit" name="submit" type="submit"><span class="icon-search"></span></button>
 		</div>
 	</div>

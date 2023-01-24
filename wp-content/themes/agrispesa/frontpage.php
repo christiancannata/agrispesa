@@ -26,9 +26,18 @@ $_SESSION['havesearch'] = false;
 
 </section>
 
-
 <div class="clearfix"></div>
 
+<section class="big-search">
+  <div class="big-search--content">
+    <div class="big-search--text">
+      <h3 class="big-search--title">Cerca i tuoi prodotti preferiti.</h3>
+    </div>
+    <?php get_search_form() ?>
+  </div>
+</section>
+
+<?php get_template_part( 'global-elements/all', 'categories' ); ?>
 
 <section class="products-carousel--container">
   <div class="products-carousel--intro">
@@ -36,7 +45,7 @@ $_SESSION['havesearch'] = false;
   </div>
   <div class="products-carousel">
 
-  <?php /* Box */ ?>
+  <?php /* Prodotti */ ?>
   <?php
 
   $args = array(
@@ -59,46 +68,40 @@ $_SESSION['havesearch'] = false;
   </div>
 </section>
 
-<section class="all-categories">
-  <?php
-  $orderby = 'ID';
-    $order = 'asc';
-    $hide_empty = false;
+<section class="negozio-home">
 
-    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-    $get_product_cat_ID = $getIDbyNAME->term_id;
-    $cat_args = array(
-        'orderby'    => $orderby,
-        'order'      => $order,
-        'hide_empty' => $hide_empty,
-        'parent' => $get_product_cat_ID,
-    );
+  <div class="negozio-home--container">
+    <div class="negozio-home--product">
+      <?php /* In evidenza */ ?>
+      <?php
 
-$product_categories = get_terms( 'product_cat', $cat_args );
+      $args = array(
+              'posts_per_page' => '1',
+              'product_cat' => 'negozio',
+              'post_type' => 'product',
+      				'orderby' => 'date',
+              'order' => 'ASC',
+              'meta_key'          => 'sticky_product',
+          );
 
-if( !empty($product_categories) ){
-    echo '
+      $query = new WP_Query( $args );
+      if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
 
-<ul class="all-categories--list">';
-    foreach ($product_categories as $key => $category) {
-        echo '
+      <?php get_template_part( 'template-parts/loop', 'sticky' ); ?>
 
-<li>';
-        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
-        echo get_template_part( 'global-elements/icon', $category->slug );
-        echo $category->name;
-        echo '</a>';
-        echo '</li>';
-    }
-    echo '</ul>
+      <?php endwhile;
+      	wp_reset_postdata();
+      endif; ?>
+    </div>
+  </div>
 
-
-';
-} ?>
 </section>
-
 
 <?php get_template_part( 'global-elements/reviews', 'home' ); ?>
 <?php get_template_part( 'global-elements/sospesa', 'home' ); ?>
+
+<?php get_template_part( 'global-elements/home', 'press' ); ?>
+<?php get_template_part( 'global-elements/home', 'newsletter' ); ?>
+<?php get_template_part( 'global-elements/home', 'popup' ); ?>
 
 <?php get_footer();
