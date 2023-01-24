@@ -34,7 +34,7 @@ createApp({
     },
     getSubscriptions: function () {
       const $vm = this
-      axios.get('/wp-json/agrispesa/v1/user-subscriptions')
+      axios.get(window.baseurl + '/wp-json/agrispesa/v1/user-subscriptions')
         .then((response) => {
           $vm.subscriptions = response.data
         });
