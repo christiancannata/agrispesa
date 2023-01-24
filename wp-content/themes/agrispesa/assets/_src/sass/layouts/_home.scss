@@ -332,7 +332,7 @@
 .sec-wide {
 	padding: 260px 150px;
 	@include breakpoint(container) {
-		padding: 220px 0 120px;
+		padding: 200px 0;
 	}
 	@include breakpoint(mobile) {
 		padding: 80px 0;
@@ -348,6 +348,24 @@
 		line-height: 1.2;
 		@include breakpoint(desktop) {
 			@include font-size(40);
+		}
+	}
+
+	&--title {
+		@include font-size(46);
+		font-family: $font-title;
+		line-height: 1;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(80);
+			margin-bottom: 40px;
+		}
+
+		.number {
+			@include font-size(50);
+			@include breakpoint(desktop) {
+				@include font-size(120);
+			}
 		}
 	}
 
@@ -746,6 +764,7 @@
 			@include font-size(14);
 			margin-right: 16px;
 			margin-top: 4px;
+
 			&:after {
 				bottom: -1px;
 			}

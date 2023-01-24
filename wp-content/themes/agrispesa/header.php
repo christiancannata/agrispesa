@@ -55,6 +55,16 @@ global $woocommerce;
 					</span>
 					</a>
 				</div>
+				<div class="mini-menu--header">
+					<?php wp_nav_menu(
+						array(
+							'theme_location' => 'mini_menu',
+							'container_class' => 'menu-container',
+							'container_id' => 'mini_menu',
+							'menu_class' => 'mini_menu',
+						)
+					); ?>
+				</div>
 
 			</div>
 

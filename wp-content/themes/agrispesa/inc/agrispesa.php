@@ -73,6 +73,7 @@ add_filter( 'get_the_archive_title', function ($title) {
 function footer_menu() {
 	register_nav_menus(
 		array(
+			'mini_menu' => __( 'Mini menu' ),
 			'footer_menu_one' => __( 'Footer Menu 1' ),
 			'footer_menu_two' => __( 'Footer Menu 2' ),
 			'footer_menu_three' => __( 'Footer Menu 3' ),

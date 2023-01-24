@@ -43,6 +43,10 @@
 				color: $primary;
 			}
 
+			.mini_menu li a {
+				color: $black;
+			}
+
 			.header--cart .cart--link .ag-logo-icon {
 				fill: $primary;
 			}
@@ -58,7 +62,7 @@
 
 	&--brand {
 		display: flex;
-		align-content: center;
+		align-items: center;
 		@include breakpoint(mobile) {
 			width: calc(100% - 80px);
 		}
@@ -104,7 +108,7 @@
 
 	span {
 		position: relative;
-		top: -5px;
+		top: -10px;
 		background: $primary;
 		color: #fff;
 		border-radius: 2px;
@@ -254,6 +258,7 @@
 		align-items: center;
 		color: $primary;
 		font-family: $font-title;
+		margin-top: -3px;
 
 		body.home & {
 			color: $white;
@@ -664,80 +669,129 @@
 }
 
 .info_agr {
-  -webkit-transition: all 0.3s linear;
-  -moz-transition: all 0.3s linear;
-  -ms-transition: all 0.3s linear;
-  -o-transition: all 0.3s linear;
-  transition: all 0.3s linear;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 30px 20px 16px;
-  z-index: 10;
-  height: 115px;
-  text-align: center;
-  background: #FCD757;
-  @include breakpoint(mobile) {
-    height: 175px;
-  }
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s linear;
+	-ms-transition: all 0.3s linear;
+	-o-transition: all 0.3s linear;
+	transition: all 0.3s linear;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 30px 20px 16px;
+	z-index: 10;
+	height: 115px;
+	text-align: center;
+	background: #FCD757;
+	@include breakpoint(mobile) {
+		height: 175px;
+	}
 
-  &.hide {
-    bottom: -115px;
-  }
+	&.hide {
+		bottom: -115px;
+	}
 
-  &--title {
-    font-size: 18px;
-    font-size: 2.25rem;
-    text-transform: uppercase;
-    font-weight: 900;
-    margin: 0;
-  }
+	&--title {
+		font-size: 18px;
+		font-size: 2.25rem;
+		text-transform: uppercase;
+		font-weight: 900;
+		margin: 0;
+	}
 
-  &--subtitle {
-    font-size: 16px;
-    font-size: 2rem;
-    font-weight: 300;
-    margin: 4px 0 0;
-    line-height: 1.2;
-  }
+	&--subtitle {
+		font-size: 16px;
+		font-size: 2rem;
+		font-weight: 300;
+		margin: 4px 0 0;
+		line-height: 1.2;
+	}
 
-  &--button {
-    font-size: 30px;
-    font-size: 3.75rem;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    background-clip: padding-box;
-    background: #FCD757;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    left: 50%;
-    margin-left: -30px;
-    top: -30px;
-    cursor: pointer;
+	&--button {
+		font-size: 30px;
+		font-size: 3.75rem;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		border-radius: 50%;
+		background-clip: padding-box;
+		background: #FCD757;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		left: 50%;
+		margin-left: -30px;
+		top: -30px;
+		cursor: pointer;
 
-    span {
-      -webkit-transition: all 0.3s linear;
-      -moz-transition: all 0.3s linear;
-      -ms-transition: all 0.3s linear;
-      -o-transition: all 0.3s linear;
-      transition: all 0.3s linear;
-      display: block;
-      position: relative;
-      top: -10px;
-    }
+		span {
+			-webkit-transition: all 0.3s linear;
+			-moz-transition: all 0.3s linear;
+			-ms-transition: all 0.3s linear;
+			-o-transition: all 0.3s linear;
+			transition: all 0.3s linear;
+			display: block;
+			position: relative;
+			top: -10px;
+		}
 
-    &.active span {
-      -webkit-transform: rotate(180deg);
-      -moz-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      -o-transform: rotate(180deg);
-      transform: rotate(180deg);
-    }
-  }
+		&.active span {
+			-webkit-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+			transform: rotate(180deg);
+		}
+	}
+}
+
+.mini_menu {
+	display: flex;
+	margin-left: 40px;
+	@include breakpoint(mobile) {
+		display: none;
+	}
+
+	li {
+		margin-right: 24px;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		a {
+			@include font-size(18);
+			color: $black;
+			font-weight: normal;
+			cursor: pointer;
+			font-weight: 300;
+			display: inline-block;
+
+			body.home & {
+				color: $white;
+			}
+			@include breakpoint(desktop) {
+				@include font-size(16);
+
+				&::after {
+					@include transition(all 0.3s ease);
+					background: $white;
+					content: '';
+					display: block;
+					height: 1px;
+					width: 0;
+				}
+
+				&:hover {
+					color: $white;
+
+					&::after {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
 }

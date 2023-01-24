@@ -17,26 +17,61 @@ get_header(); ?>
 		</div>
 	</section>
 
+	<section class="team">
+		<div class="team--item giovanna">
+			<div class="team--picture">
+				<img src="https://admin.illo.tv/storage/uploads/2020/06/11/5ee2612a8ebb8GiovannaCrise_01.jpg" alt="Giovanna Traversa" />
+			</div>
+			<div class="team--bio">
+				<p class="team--bio--text">
+					Mi chiamo Giovanna.
+				</p>
+				<p class="team--bio--text">
+					<br/>La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
+				</p>
+				<p class="team--bio--text">
+					<br/>Mi occupo principalmente di curare ogni dettaglio legato al servizio che le famiglie ricevono da parte di Agrispesa e sento che questo è apprezzato, percepito e riconosciuto.
+				</p>
+				<p class="team--bio--text">
+					<br/>Da mia mamma ho imparato a trattare le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.<br/>
+					Da mio papà a riconoscere la qualità dei prodotti e a tenerli tra le mie mani in modo delicato.
+				</p>
+			</div>
+		</div>
+		<div class="team--item elena">
+
+			<div class="team--bio">
+				<p class="team--bio--text">
+					La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
+				</p>
+				<p class="team--bio--text">
+					<br/>Mi occupo principalmente di curare ogni dettaglio legato al servizio che le famiglie ricevono da parte di Agrispesa e sento che questo è apprezzato, percepito e riconosciuto.
+				</p>
+				<p class="team--bio--text">
+					<br/>Da mia mamma ho imparato a trattare le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.<br/>
+					Da mio papà a riconoscere la qualità dei prodotti e a tenerli tra le mie mani in modo delicato.
+				</p>
+				<p class="team--bio--text">
+					<br/> Il mio nome è Elena.
+				</p>
+			</div>
+			<div class="team--picture">
+				<img src="https://admin.illo.tv/storage/uploads/2020/11/27/5fc0db722bf4fLiliana.jpg" alt="Giovanna Traversa" />
+			</div>
+		</div>
+	</section>
+
 	<section class="sec-home sec-wide bg-brown">
 
 	    <div class="container-pg">
 	      <div class="sec-wide--content">
-					<p class="sec-wide--text">
-						Mi chiamo Giovanna.
-					</p>
-	        <p class="sec-wide--text">
-	          <br/>La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
-	        </p>
-					<p class="sec-wide--text">
-						<br/>Mi occupo principalmente di curare ogni dettaglio legato al servizio che le famiglie ricevono da parte di Agrispesa e sento che questo è apprezzato, percepito e riconosciuto.
-					</p>
-					<p class="sec-wide--text">
-						<br/>Da mia mamma ho imparato a trattare le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.<br/>
-						Da mio papà a riconoscere la qualità dei prodotti e a tenerli tra le mie mani in modo delicato.
-					</p>
-
-
-
+					<?php $today = date('Y');
+								$born = 2003;
+								$years = $today - $born;?>
+					<h3 class="sec-wide--title">
+						Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.
+					</h3>
+					<p class="sec-home--subtitle">Siamo nati prima dei social,<br class="only-mobile" /> delle stories, dell’unboxing.<br/>Eppure siamo sempre freschissimi. </p>
 	      </div>
 	    </div>
 
@@ -48,9 +83,7 @@ get_header(); ?>
 
 	    <div class="sec-three--center">
 	      <div class="sec-home--text">
-						<?php $today = date('Y');
-									$born = 2003;
-									$years = $today - $born;?>
+
 						<h3 class="sec-home--title big">Da <em class="number"><?php echo $years; ?></em> anni<br class="only-desktop" /> al servizio della terra.</h3>
 						<p class="sec-home--subtitle">Portiamo nelle vostre case prodotti freschi e genuini. Sarà la stagione a decidere che cosa.</p>
 	      </div>

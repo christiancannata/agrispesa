@@ -99,7 +99,30 @@ if ( woocommerce_product_loop() ) {
 
 	$hasNoChildren = get_term_children( $page_id, 'product_cat' );
 
-	if ( !empty( $hasNoChildren ) && !is_wp_error( $hasNoChildren ) ){
+	if ( is_shop() ) {
+		$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+		$get_product_cat_ID = $getIDbyNAME->term_id;
+		$args = array(
+			 'hide_empty' => true,
+			 'fields' => 'slugs',
+			 'taxonomy' => 'product_cat',
+			 'parent' => $get_product_cat_ID,
+			 'orderby'    => 'ID',
+			 'order'      => 'asc',
+		);
+		$categories = get_terms( $args );
+    foreach ( $categories as $category_slug ) {
+       $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
+       echo '<div class="shop--list">';
+       echo '<div class="shop--list--header">';
+       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
+ 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
+ 			echo '</div>';
+       echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
+       echo '</div>';
+       wp_reset_postdata();
+    }
+	} elseif ( !empty( $hasNoChildren ) && !is_wp_error( $hasNoChildren ) ){
 		//categorie che hanno sottocategorie
 		if ( is_shop() || $idNegozio === 'Negozio' ) {
 			$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');

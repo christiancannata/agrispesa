@@ -258,56 +258,131 @@
 
 .glossario {
 	&--anchor {
-    @include font-size(24);
-    font-weight: bold;
-    color: $black;
-    cursor: pointer;
-    display: block;
-    text-align: left;
-    margin: 32px 0 8px 0;
+		@include font-size(24);
+		font-weight: bold;
+		color: $black;
+		cursor: pointer;
+		display: block;
+		text-align: left;
+		margin: 32px 0 8px;
 		padding: 0 8px;
-  }
+	}
+
 	&--index {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 32px;
 		justify-content: center;
-    @include breakpoint(desktop) {
-      margin-bottom: 50px;
-    }
-    a {
-      @include font-size(24);
-      font-weight: bold;
-      margin-right: 8px;
-      color: $black;
-      cursor: pointer;
-      display: inline-block;
-      &.disabled {
-        color: $muted;
-        cursor: default;
-        &:after {
-          content: none !important;
-        }
-        &:hover {
-          color: $muted;
-        }
-      }
-      &::after {
-        @include transition(all 0.3s ease);
-        background: $blue;
-        content: '';
-        display: block;
-        height: 2px;
-        width: 0;
-      }
+		@include breakpoint(desktop) {
+			margin-bottom: 50px;
+		}
 
-      &:hover {
-        color: $blue;
+		a {
+			@include font-size(24);
+			font-weight: bold;
+			margin-right: 8px;
+			color: $black;
+			cursor: pointer;
+			display: inline-block;
 
-        &::after {
-          width: 100%;
-        }
-      }
-    }
-  }
+			&.disabled {
+				color: $muted;
+				cursor: default;
+
+				&:after {
+					content: none !important;
+				}
+
+				&:hover {
+					color: $muted;
+				}
+			}
+
+			&::after {
+				@include transition(all 0.3s ease);
+				background: $blue;
+				content: '';
+				display: block;
+				height: 2px;
+				width: 0;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&::after {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+.team {
+	&--item {
+		display: flex;
+		align-items: center;
+		position: relative;
+		flex-wrap: wrap;
+
+		&.giovanna {
+			background: $brown;
+			color: $panna;
+
+			&:before {
+				content: '';
+				display: block;
+				width: 2px;
+				height: 160px;
+				background: $black;
+				@include horizontal-align();
+				position: absolute;
+				top: -80px;
+				z-index: 3;
+				@include breakpoint(mobile) {
+					height: 80px;
+					top: -40px;
+				}
+			}
+		}
+
+		&.elena {
+			background: $orange;
+			color: $panna;
+		}
+	}
+
+	&--picture {
+		width: 50%;
+		@include breakpoint(mobile) {
+			width: 100%;
+			order: 1;
+		}
+	}
+
+	&--bio {
+		width: 50%;
+		padding: 60px 120px;
+		@include breakpoint(container) {
+			padding: 50px 60px;
+		}
+		@include breakpoint(mobile) {
+			width: 100%;
+			order: 2;
+			padding: 40px 20px;
+
+			.elena & {
+				padding-bottom: 60px;
+			}
+		}
+
+		&--text {
+			@include font-size(26);
+			font-family: $font-title;
+			font-weight: 900;
+			@include breakpoint(container) {
+				@include font-size(24);
+			}
+		}
+	}
 }
