@@ -1,5 +1,5 @@
 // Set a Cookie
-window.baseurl = 'https://agrispesa.loc'
+window.baseurl = 'http://localhost:8888/agrispesa'
 function setCookie(cName, cValue, expDays) {
   let date = new Date();
   date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
