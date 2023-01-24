@@ -311,6 +311,11 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
 {
 	$box = get_box_from_subscription($subscription, $week);
+
+	if (!$box) {
+		return [];
+	}
+
 	$productsToAdd = get_post_meta($box->ID, '_products', true);
 
 
@@ -341,7 +346,7 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 
 				$productToAdd = null;
 
-				if($productToAdd){
+				if ($productToAdd) {
 					$productsToAdd[] = [
 						'id' => $preference['product_to_add']['id'],
 						'name' => $preference['product_to_add']['name'],
