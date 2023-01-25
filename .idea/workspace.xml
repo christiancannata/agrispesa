@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/admin-delivery-box.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
@@ -83,7 +82,7 @@
       <workItem from="1674038743770" duration="3501000" />
       <workItem from="1674043326042" duration="15459000" />
       <workItem from="1674552184665" duration="1620000" />
-      <workItem from="1674635463120" duration="4033000" />
+      <workItem from="1674635463120" duration="6336000" />
     </task>
     <servers />
   </component>

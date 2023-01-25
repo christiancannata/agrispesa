@@ -174,7 +174,7 @@ add_action('rest_api_init', function () {
 					'relation' => 'AND',
 					[
 						'key' => '_week',
-						'value' => $week,
+						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
 						'compare' => '='
 					],
 					[
@@ -330,6 +330,7 @@ function my_enqueue($hook)
 
 		wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
 		wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
+		wp_localize_script('agrispesa-admin-js', 'WPURL', array('siteurl' => get_option('siteurl')));
 
 	}
 }
