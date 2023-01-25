@@ -154,8 +154,10 @@ body.tax-product_cat {
 			}
 
 			.yith-wcwl-add-to-wishlist {
+				position: absolute;
+				right: 20px;
 				margin: 0;
-				order: 3;
+				padding: 0;
 
 				.add_to_wishlist,
 				.delete_item {
@@ -169,6 +171,7 @@ body.tax-product_cat {
 				@include button();
 				@include buttonprimary();
 				@include buttonsmall();
+				margin: 0 40px 0 0;
 			}
 
 			.onsale {

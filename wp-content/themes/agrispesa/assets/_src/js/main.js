@@ -1,4 +1,3 @@
-// Set a Cookie
 window.baseurl = WPURL.siteurl
 
 function setCookie(cName, cValue, expDays) {

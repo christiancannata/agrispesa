@@ -7,6 +7,10 @@ global $woocommerce;
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+	<!-- TrustBox script -->
+	<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+	<!-- End TrustBox script -->
+
 	<meta charset="<?php bloginfo('charset'); ?>"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -50,6 +54,16 @@ global $woocommerce;
 						<?php bloginfo('name'); ?>
 					</span>
 					</a>
+				</div>
+				<div class="mini-menu--header">
+					<?php wp_nav_menu(
+						array(
+							'theme_location' => 'mini_menu',
+							'container_class' => 'menu-container',
+							'container_id' => 'mini_menu',
+							'menu_class' => 'mini_menu',
+						)
+					); ?>
 				</div>
 
 			</div>

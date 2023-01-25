@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <defs>
+        <clipPath id="Satispay">
+            <path d="M0 0h24v24H0z" />
+        </clipPath>
+    </defs>
+    <g clip-path="url(#Satispay)">
+        <rect width="24" height="24" fill="#f94c43" data-name="Rectangle 13" rx="5" />
+        <path fill="#fff"
+            d="M16.774 4.226a.129.129 0 0 0 .028-.144A.127.127 0 0 0 16.68 4h-3.474l1.9 1.9Z"
+            data-name="Path 2" />
+        <path fill="#fff"
+            d="m11.42 14.431-2.426-2.426 2.426-2.426-2.522-2.523-4.856 4.855a.132.132 0 0 0 0 .188l4.856 4.854Z"
+            data-name="Path 3" />
+        <path fill="#fff" d="M15.103 18.112 13.219 20h3.456a.133.133 0 0 0 .093-.227Z"
+            data-name="Path 4" />
+        <path fill="#fff"
+            d="M12.087 4.039a.135.135 0 0 0-.09-.038H7.321a.127.127 0 0 0-.122.082.129.129 0 0 0 .028.144l7.78 7.78-7.773 7.767a.133.133 0 0 0 .093.227h4.672a.141.141 0 0 0 .1-.038l7.864-7.864a.135.135 0 0 0 0-.188Z"
+            data-name="Path 5" />
+    </g>
+</svg>

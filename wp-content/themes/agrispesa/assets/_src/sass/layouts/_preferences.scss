@@ -1,102 +1,150 @@
 /* stylelint-disable */
 .box-name {
 	display: flex;
-	margin-bottom: 10px;
+	margin-bottom: 40px;
 	width: 100%;
+	align-items: center;
 
 	.box-image {
 		height: 100px;
-		margin-bottom: 0;
-		margin-right: 10px;
-		margin-top: 0;
+		margin: 0 24px 0 0;
 		width: 100px;
 	}
 
 	.title {
-		margin-bottom: 5px;
-		margin-top: 0;
+		@include font-size(28);
+		font-family: $font-title;
+		font-weight: 900;
+		margin: 0 0 24px;
+		color: $black;
 	}
 }
 
-.container-flex-box {
-	display: flex;
-
+.subscription-box {
+	.container-flex-box {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
 }
 
 .right-categories-box {
+	width: 33.333%;
+	@include breakpoint(mobile) {
+		width: 100%;
+		margin: 0 0 8px;
+	}
+
 	ul {
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-left: 0;
-	}
 
-	ul li::before {
-		display: none;
-	}
+		li {
+			@include border-radius(16px);
+			background: $background;
+			padding: 8px 16px;
 
-	ul li {
-		background: #F2F2EE;
-		border-radius: 30px;
-		padding: 5px;
-		width: 250px;
-	}
+			&:first-child {
+				margin-top: 0;
+			}
 
-	ul .active {
-		background: #4ec68a;
-	}
+			a {
+				@include font-size(16);
+				font-weight: 400;
+				display: block;
+				position: relative;
+				padding-right: 26px;
+			}
 
+			&::before {
+				display: none;
+			}
+
+			&.active {
+				background: $primary;
+				color: $white;
+
+				a {
+					&:after {
+						@include icomoon();
+						content: "\e904";
+						@include font-size(24);
+						position: absolute;
+						top: 1px;
+						right: 0;
+					}
+				}
+			}
+		}
+	}
 }
-
 
 .products-box {
-	background: #F2F2EE;
-	border-radius: 15px;
+	@include border-radius(16px);
+	background: $background;
 	margin-left: 8px;
-	padding: 10px;
+	padding: 16px;
+	width: calc(33.333% - 16px);
+	@include breakpoint(mobile) {
+		width: 100%;
+		margin: 0;
+	}
 
 	ul {
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-left: 0;
-	}
 
-	ul li {
-		padding-left: 0;
-		width: 220px;
-	}
+		li {
+			padding-left: 0;
+			margin: 8px 0;
 
-	ul li::before {
-		display: none;
+			&::before {
+				display: none;
+			}
+
+			label {
+				span.label {
+					@include font-size(16);
+					font-weight: 400;
+				}
+			}
+		}
 	}
 }
 
-
 .blacklist-box {
-	background: #343535;
-	border-radius: 15px;
+	@include border-radius(16px);
+	background: $black;
 	margin-left: 8px;
-	padding: 10px;
-
-	ul {
-		margin-bottom: 0;
-		margin-top: 0;
-		padding-left: 0;
+	padding: 16px;
+	width: 33.333%;
+	@include breakpoint(mobile) {
+		width: 100%;
+		margin: 32px 0 0;
 	}
 
-	ul li {
-		padding-left: 0;
-	}
-
-	ul li::before {
-		display: none;
-	}
-}
-
-.blacklist-box {
 	h4 {
-		color: #fff;
+		@include font-size(26);
+		color: $white;
 		margin-top: 0;
+		font-family: $font-title;
+		font-weight: 900;
+	}
 
+	ul {
+		margin-bottom: 0;
+		margin-top: 0;
+		padding-left: 0;
+
+		li {
+			padding-left: 0;
+
+			&::before {
+				display: none;
+			}
+		}
 	}
 }
 
@@ -105,71 +153,69 @@
 	width: 100%;
 
 	span {
-		color: #fff;
-
+		@include font-size(16);
+		font-weight: 400;
+		color: $white;
 	}
 
+	.delete_item {
+		margin-right: 8px;
+
+		span {
+			@include font-size(24);
+			color: $red;
+		}
+	}
 }
 
-
-.container {
+.checkbox-container {
 	cursor: pointer;
 	display: block;
-	font-size: 22px;
-	margin-bottom: 12px;
-	padding-left: 35px;
+	margin: 0;
+	padding-left: 32px;
 	position: relative;
 	user-select: none;
-}
 
-/* Hide the browser's default checkbox */
-.container input {
-	cursor: pointer;
-	height: 0;
-	opacity: 0;
-	position: absolute;
-	width: 0;
-}
+	input {
+		cursor: pointer;
+		height: 0;
+		opacity: 0;
+		position: absolute;
+		width: 0;
 
-/* Create a custom checkbox */
-.checkmark {
-	background-color: #fff;
-	height: 25px;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 25px;
-}
+		&:checked ~ .checkmark::after {
+			display: block;
+		}
+	}
 
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-	background-color: #fff;
-}
+	.checkmark {
+		@include border-radius(4px);
+		background-color: #fff;
+		width: 24px;
+		height: 24px;
+		left: 0;
+		position: absolute;
+		top: 0;
+		border: 1px solid $panna;
 
-/* When the checkbox is checked, add a blue background */
-/*.container input:checked ~ .checkmark {
-	background-color: #2196F3;
-}*/
+		&::after {
+			content: "";
+			display: none;
+			position: absolute;
+		}
 
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark::after {
-	content: "";
-	display: none;
-	position: absolute;
-}
+		&::after {
+			@include icomoon();
+			content: "\e906";
+			color: $primary;
+			@include font-size(26);
+			position: relative;
+			top: -2px;
+			left: -2px;
+		}
+	}
 
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark::after {
-	display: block;
-}
-
-/* Style the checkmark/indicator */
-.container .checkmark::after {
-	border: solid #4ec68a;
-	border-width: 0 2px 2px 0;
-	height: 15px;
-	left: 9px;
-	top: 4px;
-	transform: rotate(45deg);
-	width: 8px;
+	&:hover input ~ .checkmark {
+		border: 1px solid $primary;
+	}
 }

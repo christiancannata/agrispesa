@@ -54,6 +54,37 @@ if ( in_array( 'box', $categories ) ): ?>
 
 <?php elseif ( !in_array( 'gift-card', $categories ) ): ?>
 
+	<?php if ( $related_products ) : ?>
+
+
+		<section class="products-carousel--container">
+		  <div class="products-carousel--intro">
+		    <h2 class="products-carousel--title">Potrebbero<br/> farti gola.</h2>
+		  </div>
+			<div class="products-carousel">
+				<?php $i = 1;
+						foreach ( $related_products as $related_product ) : ?>
+
+						<?php
+						$post_object = get_post( $related_product->get_id() );
+
+						setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
+						 ?>
+
+
+						<?php get_template_part( 'template-parts/loop', 'shop' ); ?>
+
+
+
+				<?php $i++; endforeach; ?>
+
+			<?php //woocommerce_product_loop_end(); ?>
+		</div>
+	</section>
+		<?php
+	endif; ?>
+	
+
 	<section class="big-search">
 	  <div class="big-search--content">
 	    <div class="big-search--text">
@@ -101,36 +132,8 @@ if ( in_array( 'box', $categories ) ): ?>
 	} ?>
 	</section>
 
-<?php if ( $related_products ) : ?>
 
-
-	<section class="products-carousel--container">
-	  <div class="products-carousel--intro">
-	    <h2 class="products-carousel--title">Potrebbero<br/> farti gola.</h2>
-	  </div>
-		<div class="products-carousel">
-			<?php $i = 1;
-					foreach ( $related_products as $related_product ) : ?>
-
-					<?php
-					$post_object = get_post( $related_product->get_id() );
-
-					setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-					 ?>
-
-
-					<?php get_template_part( 'template-parts/loop', 'shop' ); ?>
-
-
-
-			<?php $i++; endforeach; ?>
-
-		<?php //woocommerce_product_loop_end(); ?>
-	</div>
-</section>
-	<?php
-endif;
-endif;
+<?php endif;
 
 
 wp_reset_postdata(); ?>

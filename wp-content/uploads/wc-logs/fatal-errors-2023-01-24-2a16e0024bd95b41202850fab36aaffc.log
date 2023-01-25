@@ -1,0 +1,88 @@
+2023-01-24T17:19:24+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:21:40+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:21:47+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:22:40+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:99
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 99
+
+2023-01-24T17:23:06+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:152
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 152
+
+2023-01-24T17:23:15+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:152
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 152
+
+2023-01-24T17:23:44+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:23:47+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:23:58+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:24:34+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+
+2023-01-24T17:24:38+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 151
+

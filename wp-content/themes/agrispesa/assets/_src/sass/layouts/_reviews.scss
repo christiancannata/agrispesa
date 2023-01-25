@@ -179,6 +179,10 @@
 	}
 }
 
+.trustpilot-widget {
+	padding-top: 32px;
+}
+
 .hero-stars {
 	display: flex;
 	align-items: center;
@@ -191,6 +195,7 @@
 
 		span {
 			@include font-size(16);
+			font-weight: 900;
 
 			&.value {
 				font-weight: 900;

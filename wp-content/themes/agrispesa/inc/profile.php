@@ -51,7 +51,7 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 function settings_box_link_my_account($items)
 {
 
-	$items['settings-box'] = 'Preferenze Box';
+	$items['settings-box'] = 'Personalizza la box';
 
 	return $items;
 
@@ -70,7 +70,15 @@ function settings_box_content()
 	<div class="woocommerce-PreferenzeBox-content">
 
 		<div class="woocommerce-notices-wrapper"></div>
-		<h3 class="my-account--minititle address-title">Preferenze BOX</h3>
+		<h3 class="my-account--minititle">Personalizza la box</h3>
+
+		<div class="account-banner">
+			<div class="account-banner--text">
+				<h3 class="account-banner--title"><span class="icon-heart"></span>Solo vero amore.</h3>
+				<p class="account-banner--subtitle">Seleziona quali alimenti non vuoi trovare nella tua scatola.
+					<br/>Riceverai solo i prodotti che preferisci. E li amerai alla follia.</p>
+			</div>
+		</div>
 
 		<div class="table-shadow-relative">
 			<div
@@ -95,15 +103,14 @@ function settings_box_content()
 								<li :class="{'active':currentCategory == category}" v-for="category of categories">
 									<a href="#" @click.prevent="currentCategory = category" v-html="category.name"></a>
 								</li>
-
 							</ul>
 						</div>
 
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
 							<ul>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="togglePreference(product,subscription)" class="container">
-										<span v-html="product.post_title"></span>
+									<label @click.prevent="togglePreference(product,subscription)" class="checkbox-container">
+										<span class="label" v-html="product.post_title"></span>
 										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
@@ -115,7 +122,7 @@ function settings_box_content()
 						<div class="blacklist-box">
 							<h4>Blacklist</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
-								<a @click.prevent="deletePreference(subscription,preference)" href="#">Elimina</a>
+								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)" href="#"><span class="icon-close"></span></a>
 								<span v-html="preference.name"></span>
 							</div>
 						</div>
