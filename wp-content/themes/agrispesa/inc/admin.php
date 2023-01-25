@@ -497,6 +497,14 @@ function create_order_from_subscription($id)
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
 
+
+	$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
+	if (empty($boxPreferences)) {
+		$boxPreferences = [];
+	}
+
+	update_post_meta($order->get_id(), '_box_preferences', $boxPreferences);
+
 }
 
 function register_my_custom_submenu_page()
@@ -738,6 +746,7 @@ function custom_shop_order_column($columns)
 			// Inserting after "Status" column
 			$reordered_columns['my-column1'] = 'Tipo';
 			$reordered_columns['my-column2'] = 'Settimana';
+			$reordered_columns['my-column3'] = 'Preferenze';
 		}
 	}
 	return $reordered_columns;
@@ -760,12 +769,27 @@ function custom_orders_list_column_content($column, $post_id)
 			break;
 
 		case 'my-column2' :
+
 			// Get custom post meta data
 			$week = get_post_meta($post_id, '_week', true);
 			if (!empty($week))
 				echo $week;
 
 			break;
+
+		case 'my-column3' :
+			// Get custom post meta data
+			$orderType = get_post_meta($post_id, '_order_type', true);
+
+			if ($orderType == 'BOX') {
+				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
+				if (!empty($boxPreferences))
+					echo '✅';
+			}
+
+
+			break;
+
 	}
 }
 
