@@ -1,5 +1,6 @@
 // Set a Cookie
-window.baseurl = 'https://agrispesa.loc'
+window.baseurl = WPURL.siteurl
+
 function setCookie(cName, cValue, expDays) {
   let date = new Date();
   date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
@@ -49,7 +50,7 @@ hideGlossarioAlpha();
 
 function hideGlossarioAlpha() {
   var glossarioElements = jQuery('.glossario--anchor');
-  glossarioElements.each(function( index ) {
+  glossarioElements.each(function (index) {
     var alphabet = jQuery('.glossario--link');
     var target = jQuery(this).attr('data-alpha');
 
@@ -60,7 +61,7 @@ function hideGlossarioAlpha() {
 
 function scrollTo() {
 
-  jQuery('.sliding-link').on('click', function(event) {
+  jQuery('.sliding-link').on('click', function (event) {
     var target = jQuery(this.getAttribute('href'));
     var scrollto = target.offset().top - 100
 
@@ -87,22 +88,22 @@ function pressSlider() {
     centerMode: false,
     autoplay: false,
     responsive: [{
-        breakpoint: 1240,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          dots: true,
-          arrows: false
-        }
-      },{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          dots: true,
-          arrows: false
-        }
-      },
+      breakpoint: 1240,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        dots: true,
+        arrows: false
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        dots: true,
+        arrows: false
+      }
+    },
       {
         breakpoint: 600,
         settings: {
@@ -128,7 +129,7 @@ function pressSlider() {
 
 function closePopup() {
   // Close Popup
-  jQuery('[popup-close]').on('click', function() {
+  jQuery('[popup-close]').on('click', function () {
     var popup_name = jQuery(this).attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
@@ -136,17 +137,17 @@ function closePopup() {
 
 
   // Close Popup When Click Outside
-  jQuery('.popup').on('click', function() {
+  jQuery('.popup').on('click', function () {
     var popup_name = jQuery(this).find('[popup-close]').attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
-  }).children().click(function() {
+  }).children().click(function () {
     return false;
   });
 }
 
 function infoAgr() {
-  jQuery('.info_agr--button').on('click', function(e) {
+  jQuery('.info_agr--button').on('click', function (e) {
     e.preventDefault();
     jQuery(this).toggleClass('active');
     jQuery('.info_agr').toggleClass('hide');
@@ -159,7 +160,7 @@ function formGiftCard() {
     jQuery('.woocommerce-breadcrumb').hide();
   }
 
-  jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function() {
+  jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
     jQuery(this).parent().find('label').addClass('move');
   })
 
@@ -177,14 +178,14 @@ function formGiftCard() {
 }
 
 function closeNotices() {
-  jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function(e) {
+  jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function (e) {
     e.preventDefault();
     jQuery(this).closest('.woocommerce-notices-wrapper').remove();
   });
 }
 
 function showCoupon() {
-  jQuery('.show-coupon').on('click', function(e) {
+  jQuery('.show-coupon').on('click', function (e) {
     e.preventDefault();
     jQuery('.my-coupon').slideToggle();
   });
@@ -196,12 +197,12 @@ function loginForms() {
   let loginForm = jQuery('.check-login-form');
   let registerForm = jQuery('.check-register-form');
 
-  showLogin.on('click', function(e) {
+  showLogin.on('click', function (e) {
     e.preventDefault();
     loginForm.slideToggle();
     registerForm.slideToggle();
   });
-  showRegister.on('click', function(e) {
+  showRegister.on('click', function (e) {
     e.preventDefault();
     loginForm.slideToggle();
     registerForm.slideToggle();
@@ -220,7 +221,7 @@ function hideBreadcrum() {
 
 function footerMenu() {
   if (window.screen.width < 641) {
-    jQuery('.footer--menu--title').on('click', function() {
+    jQuery('.footer--menu--title').on('click', function () {
       jQuery(this).next('.footer--menu--list').slideToggle();
       jQuery(this).find('.footer--menu--title__icon').toggleClass('rotate');
       jQuery(this).closest('.footer-menu').siblings().find('.footer--menu--list').slideUp();
@@ -318,7 +319,7 @@ function faqs() {
 
   let faqTitle = jQuery('.faq__title');
 
-  faqTitle.on('click', function(e) {
+  faqTitle.on('click', function (e) {
     e.preventDefault();
     let description = jQuery(this).next('.faq__description');
     let others = jQuery(this).closest('.faq__item').siblings();
@@ -334,16 +335,16 @@ function faqs() {
 }
 
 function variationToRadio() {
-  jQuery(document).on('change', '.variation-radios input', function() {
-    jQuery('.variation-radios input:checked').each(function(index, element) {
+  jQuery(document).on('change', '.variation-radios input', function () {
+    jQuery('.variation-radios input:checked').each(function (index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');
       jQuery('select[name="' + thisName + '"]').val(thisVal).trigger('change');
     });
   });
-  jQuery(document).on('woocommerce_update_variation_values', function() {
-    jQuery('.variation-radios input').each(function(index, element) {
+  jQuery(document).on('woocommerce_update_variation_values', function () {
+    jQuery('.variation-radios input').each(function (index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');
@@ -356,7 +357,7 @@ function variationToRadio() {
 }
 
 function quantityInput() {
-  jQuery('.product-quantity--plus').click(function(e) {
+  jQuery('.product-quantity--plus').click(function (e) {
 
     console.log('clic più');
     let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
@@ -380,7 +381,7 @@ function quantityInput() {
 
   });
 
-  jQuery(".product-quantity--minus").click(function(e) {
+  jQuery(".product-quantity--minus").click(function (e) {
     let numberInput = jQuery(this).closest('.product-quantity--change').find('.quantity input[type=number]');
     // Stop acting like a button
     console.log('clic meno');
@@ -416,7 +417,7 @@ function openSubMenu() {
   let menu = jQuery('.top-user__menu');
 
   if (window.screen.width > 640) {
-    link.on('click', function(e) {
+    link.on('click', function (e) {
       e.preventDefault();
       jQuery(this).toggleClass('active');
       menu.toggleClass('active');
@@ -425,7 +426,7 @@ function openSubMenu() {
 }
 
 function openSearch() {
-  jQuery('.openSearch').on('click', function(e) {
+  jQuery('.openSearch').on('click', function (e) {
     e.preventDefault();
     jQuery('.header--search').addClass('showme');
     jQuery(this).closest('.menu--search').addClass('hideme');
@@ -433,7 +434,7 @@ function openSearch() {
 }
 
 function clearSearch() {
-  jQuery('.delete-search').on('click', function() {
+  jQuery('.delete-search').on('click', function () {
     jQuery('.search-input-field').val('');
   });
 }
@@ -443,7 +444,7 @@ function stickyHeader() {
   let headerH = header.outerHeight();
   let lastScrollTop = 0;
 
-  jQuery(window).on('scroll', function() {
+  jQuery(window).on('scroll', function () {
     let st = jQuery(this).scrollTop();
 
     if (jQuery(document).scrollTop() >= headerH) {
@@ -467,7 +468,7 @@ function stickyHeader() {
 }
 
 function openMenu() {
-  jQuery('.get-menu, .close-menu').on('click', function(e) {
+  jQuery('.get-menu, .close-menu').on('click', function (e) {
     e.preventDefault();
 
     let menu = jQuery('.agr-menu');

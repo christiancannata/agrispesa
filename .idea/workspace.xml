@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/functions.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +81,8 @@
       <workItem from="1673637362146" duration="3806000" />
       <workItem from="1674038743770" duration="3501000" />
       <workItem from="1674043326042" duration="15459000" />
-      <workItem from="1674552184665" duration="839000" />
+      <workItem from="1674552184665" duration="1620000" />
+      <workItem from="1674635463120" duration="167000" />
     </task>
     <servers />
   </component>
