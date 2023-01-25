@@ -51,7 +51,9 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 function settings_box_link_my_account($items)
 {
 
-	$items['settings-box'] = 'Personalizza la box';
+	array_splice($items, 4, 0, [
+		'settings-box' => 'Personalizza la box'
+	]);
 
 	return $items;
 
@@ -109,7 +111,8 @@ function settings_box_content()
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
 							<ul>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="togglePreference(product,subscription)" class="checkbox-container">
+									<label @click.prevent="togglePreference(product,subscription)"
+										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
 										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
 										<span class="checkmark"></span>
@@ -122,7 +125,8 @@ function settings_box_content()
 						<div class="blacklist-box">
 							<h4>Blacklist</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
-								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)" href="#"><span class="icon-close"></span></a>
+								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)"
+								   href="#"><span class="icon-close"></span></a>
 								<span v-html="preference.name"></span>
 							</div>
 						</div>

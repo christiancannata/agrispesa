@@ -5,42 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/satispay-sdk/init.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/satispay-sdk/lib/Api.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/satispay-sdk/lib/Consumer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/satispay-sdk/lib/Payment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/satispay-sdk/lib/Request.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/wc-satispay.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/woo-satispay.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/plugins/woo-satispay/woo-satispay.pot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/add-to-wishlist-button.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/add-to-wishlist-remove.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wp-content/uploads/wc-logs/fatal-errors-2023-01-24-2a16e0024bd95b41202850fab36aaffc.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_account.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_account.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_home.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_home.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_pages.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_pages.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_preferences.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_preferences.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_product.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_product.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_reviews.scss" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/sass/layouts/_reviews.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/main.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/global-elements/hero-agrispesa.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/global-elements/hero-agrispesa.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/agrispesa.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/agrispesa.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/page-about.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/page-about.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/page-reviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/page-reviews.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/add-to-wishlist.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/archive-product.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/archive-product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/single-product/related.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/single-product/related.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/woocommerce/wishlist.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +81,7 @@
       <workItem from="1674038743770" duration="3501000" />
       <workItem from="1674043326042" duration="15459000" />
       <workItem from="1674552184665" duration="1620000" />
-      <workItem from="1674635463120" duration="305000" />
+      <workItem from="1674635463120" duration="577000" />
     </task>
     <servers />
   </component>
