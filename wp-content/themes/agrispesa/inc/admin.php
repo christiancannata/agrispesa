@@ -208,20 +208,13 @@ add_action('rest_api_init', function () {
 
 			}
 
-			// open raw memory as file so no temp files needed, you might run out of memory though
 			$f = fopen('php://memory', 'w');
-			// loop over the input array
 			foreach ($csv as $line) {
-				// generate csv lines from the inner arrays
 				fputcsv($f, $line);
 			}
-			// reset the file pointer to the start of the file
 			fseek($f, 0);
-			// tell the browser it's going to be a csv file
 			header('Content-Type: text/csv');
-			// tell the browser we want to save it instead of displaying it
 			header('Content-Disposition: attachment; filename="PIEM Settimana ' . $week . ' da nav a map&guide.csv";');
-			// make php send the generated csv lines to the browser
 			fpassthru($f);
 			die();
 
@@ -1013,8 +1006,35 @@ function consegne_ordini_pages()
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
 
+				<form enctype="multipart/form-data" method="POST">
+					<input type="hidden" name="import_consegne" value="1">
+					<?php
+					$date = new DateTime();
+					$currentWeek = $date->format("W");
+					?>
+
+					<label>Settimana di consegna (<em>Settimana corrente: <?php echo $currentWeek; ?></em>)</label><br>
+					<select name="week" autocomplete="off">
+						<?php for ($i = 1; $i <= 52; $i++): ?>
+							<option
+								value="<?php echo $i; ?>"
+								<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
+							>Settimana <?php echo $i; ?></option>
+						<?php endfor; ?>
+					</select><br>
+					<br>
+					<label>CSV di Map&Guide</label><br>
+					<input type="file" name="file" required><br><br>
+					<button class="btn button-primary">
+						Importa CSV
+					</button>
+
+					<br>
+				</form>
+
+
 				<form id="comments-form" method="POST"
-					  action="">
+					  action="" style="margin-top:100px">
 
 					<input type="hidden" name="generate_orders" value="1">
 					<table class="wp-list-table widefat fixed striped table-view-list comments">
