@@ -4,6 +4,7 @@ function dd($vars)
 	die(var_dump($vars));
 }
 
+
 add_action('rest_api_init', function () {
 	register_rest_route('agrispesa/v1', 'weekly-box', array(
 		'methods' => 'POST',
@@ -154,6 +155,80 @@ add_action('rest_api_init', function () {
 	));
 
 
+	register_rest_route('agrispesa/v1', 'delivery-group-csv', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$week = $_GET['week'];
+
+			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
+
+			$args = [
+				'posts_per_page' => -1,
+				'post_type' => 'shop_order',
+				'post_status' => ['wc-processing', 'wc-completed'],
+				'meta_query' => [
+					'relation' => 'AND',
+					[
+						'key' => '_week',
+						'value' => $week,
+						'compare' => '='
+					],
+					[
+						'key' => '_shipping_postcode',
+						'value' => $caps,
+						'compare' => 'IN'
+					]
+				]
+			];
+			$orders = new WP_Query($args);
+			$orders = $orders->get_posts();
+
+			$csv = [];
+
+			foreach ($orders as $order) {
+				$order = wc_get_order($order->ID);
+
+				$csv[] = [
+					$order->get_shipping_postcode(),
+					$order->get_shipping_city(),
+					$order->get_shipping_address_1(),
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					'',
+					$order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name()
+				];
+
+			}
+
+			// open raw memory as file so no temp files needed, you might run out of memory though
+			$f = fopen('php://memory', 'w');
+			// loop over the input array
+			foreach ($csv as $line) {
+				// generate csv lines from the inner arrays
+				fputcsv($f, $line);
+			}
+			// reset the file pointer to the start of the file
+			fseek($f, 0);
+			// tell the browser it's going to be a csv file
+			header('Content-Type: text/csv');
+			// tell the browser we want to save it instead of displaying it
+			header('Content-Disposition: attachment; filename="PIEM Settimana ' . $week . ' da nav a map&guide.csv";');
+			// make php send the generated csv lines to the browser
+			fpassthru($f);
+			die();
+
+		}
+	));
+
+
 	register_rest_route('agrispesa/v1', 'subscription-preference', array(
 		'methods' => 'POST',
 		'permission_callback' => function () {
@@ -225,32 +300,38 @@ add_action('rest_api_init', function () {
 function my_enqueue($hook)
 {
 
-	if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
-		return;
+	if ($hook == 'edit.php') {
+		wp_enqueue_script('agrispesa-admin-delivery-box-js', get_theme_file_uri('assets/js/admin-delivery-box.js'), array('jquery', 'select2'), null, true);
+	} else {
+
+		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
+			return;
+		}
+
+
+		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
+		wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+
+		wp_enqueue_style('select2css');
+		wp_enqueue_script('select2');
+
+
+		wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
+		wp_enqueue_script('axios');
+
+		wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
+		wp_enqueue_script('vuejs');
+
+		wp_register_style('datatable', '//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css', false, '1.0', 'all');
+		wp_enqueue_style('datatable');
+
+		wp_register_script('datatable-js', '//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', array(), null, true);
+		wp_enqueue_script('datatable-js');
+
+		wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
+		wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
+
 	}
-
-
-	wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
-	wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
-
-	wp_enqueue_style('select2css');
-	wp_enqueue_script('select2');
-
-
-	wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
-	wp_enqueue_script('axios');
-
-	wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
-	wp_enqueue_script('vuejs');
-
-	wp_register_style('datatable', '//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css', false, '1.0', 'all');
-	wp_enqueue_style('datatable');
-
-	wp_register_script('datatable-js', '//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', array(), null, true);
-	wp_enqueue_script('datatable-js');
-
-	wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
-	wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
 }
 
 add_action('admin_enqueue_scripts', 'my_enqueue');
@@ -1399,3 +1480,34 @@ function woocommerce_wp_multi_select($field, $variation_id = 0)
 }
 
 
+add_filter('manage_delivery-group_posts_columns', function ($columns) {
+	$columns['week'] = 'CSV';
+	return $columns;
+});
+// Add the data to the custom columns for the book post type:
+add_action('manage_delivery-group_posts_custom_column', function ($column, $post_id) {
+	switch ($column) {
+
+		case 'week' :
+			$date = new DateTime();
+			$currentWeek = $date->format("W");
+			?>
+			<select name="week" autocomplete="off">
+				<?php for ($i = 1; $i <= 52; $i++): ?>
+					<option
+						value="<?php echo $i; ?>"
+						<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
+					>Settimana <?php echo $i; ?></option>
+				<?php endfor; ?>
+			</select>
+			<a class="btn button-primary generate-csv" data-delivery-group="<?php echo $post_id; ?>">
+				Genera CSV
+			</a>
+
+			<br>
+			<em>Settimana corrente: <?php echo $currentWeek; ?></em>
+			<?php
+			break;
+
+	}
+}, 10, 2);
