@@ -993,6 +993,64 @@ function consegne_ordini_pages()
 			'posts_per_page' => -1,
 		]);
 
+		if (isset($_POST['import_consegne'])) {
+
+			if (isset($_FILES["file"])) {
+
+				//if there was an error uploading the file
+				if ($_FILES["file"]["error"] > 0) {
+					echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+
+				} else {
+					$storagename = "csv.txt";
+					move_uploaded_file($_FILES["file"]["tmp_name"], get_temp_dir() . "/" . $storagename);
+
+					$file = fopen(get_temp_dir() . "/" . $storagename, "r");
+
+					$csv = [];
+					while (!feof($file)) {
+						$csv[] = fgetcsv($file, null, ';');
+					}
+
+					fclose($file);
+
+					$args = [
+						'posts_per_page' => -1,
+						'post_type' => 'shop_order',
+						'post_status' => ['wc-processing', 'wc-completed'],
+						'meta_query' => [
+							'relation' => 'AND',
+							[
+								'key' => '_week',
+								'value' => str_pad($_POST['week'], 2, 0, STR_PAD_LEFT),
+								'compare' => '='
+							]
+						]
+					];
+					$orders = new WP_Query($args);
+					$orders = $orders->get_posts();
+
+					foreach ($csv as $single) {
+
+						$order = array_filter($orders, function ($tmpOrder) use ($single) {
+							$address = get_post_meta($tmpOrder->ID, '_shipping_address_1', true);
+							return trim($address) == trim($single[4]);
+						});
+
+						if (!empty($order)) {
+							$order = reset($order);
+							update_post_meta($order->ID, '_numero_consegna', trim($single[0]));
+						}
+					}
+
+				}
+			} else {
+				echo "No file selected <br />";
+			}
+
+
+		}
+
 		?>
 		<div id="wpbody-content">
 
@@ -1006,7 +1064,7 @@ function consegne_ordini_pages()
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
 
-				<form enctype="multipart/form-data" method="POST">
+				<form enctype="multipart/form-data" method="POST" action="">
 					<input type="hidden" name="import_consegne" value="1">
 					<?php
 					$date = new DateTime();
