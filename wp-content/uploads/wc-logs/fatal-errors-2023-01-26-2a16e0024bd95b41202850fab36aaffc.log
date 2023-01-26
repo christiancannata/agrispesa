@@ -22,3 +22,13 @@ Stack trace:
 #7 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-blog.php alla riga 15
 
+2023-01-26T19:28:25+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/page-fogliospesa.php alla riga 189
+
+2023-01-26T19:28:26+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/page-fogliospesa.php alla riga 189
+
+2023-01-26T19:28:50+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/page-fogliospesa.php alla riga 179
+
+2023-01-26T19:29:05+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/page-fogliospesa.php alla riga 177
+
+2023-01-26T19:29:07+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/page-fogliospesa.php alla riga 177
+

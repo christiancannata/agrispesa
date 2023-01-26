@@ -82,6 +82,27 @@
 			strong {
 				font-weight: 600;
 			}
+			a {
+				color: $blue;
+				display: inline-block;
+
+				&::after {
+					@include transition(all 0.3s ease);
+					background: $blue;
+					content: '';
+					display: block;
+					height: 1px;
+					width: 0;
+				}
+
+				&:hover {
+					color: $blue;
+
+					&::after {
+						width: 100%;
+					}
+				}
+			}
 		}
 
 		figure,

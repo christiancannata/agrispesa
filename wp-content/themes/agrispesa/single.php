@@ -7,7 +7,7 @@
         <div class="single-article--flex">
 
         <div class="single-article">
-        <div class="container-xsmall">
+        <div class="container-pg">
 
         <div class="single--header">
           <div class="categories-list">

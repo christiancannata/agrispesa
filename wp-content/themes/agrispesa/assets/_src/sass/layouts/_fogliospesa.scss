@@ -1,0 +1,306 @@
+/* stylelint-disable */
+.fogliospesa {
+	&--hero {
+		margin-top: 200px;
+		@include breakpoint(container) {
+			margin-top: 120px;
+		}
+		@include breakpoint(mobile) {
+			margin-top: 60px;
+		}
+
+		&--title {
+			@include font-size(60);
+			line-height: 1;
+			font-family: $font-title;
+			@include breakpoint(desktop) {
+				@include font-size(90);
+			}
+
+			.what_week {
+				font-family: $font-body;
+				position: relative;
+				padding-left: 24px;
+				margin-left: 8px;
+				font-weight: 300;
+				@include breakpoint(desktop) {
+					@include font-size(100);
+				}
+
+				&:before {
+					content: '';
+					display: block;
+					width: 4px;
+					height: 90%;
+					position: absolute;
+					left: 0;
+					top: 5%;
+					background: $black;
+				}
+			}
+		}
+	}
+}
+
+.fogliospesa--sticky {
+	border-bottom: 1px solid $panna;
+	padding: 40px 0;
+	@include breakpoint(desktop) {
+		padding: 60px 0;
+	}
+
+	&--flex {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	&--dx {
+		width: 100%;
+		@include breakpoint(desktop) {
+			padding-left: 80px;
+			width: 43%;
+		}
+	}
+
+	&--sx {
+		width: 100%;
+		@include breakpoint(desktop) {
+			width: 57%;
+		}
+	}
+
+	&--text {
+		display: flex;
+		flex-wrap: wrap;
+		height: 100%;
+		width: 100%;
+	}
+
+	&--text--bottom {
+		align-items: flex-end;
+		align-self: flex-end;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 32px;
+		width: 100%;
+	}
+
+	&--title {
+		@include font-size(24);
+		font-family: $font-title;
+		font-weight: 900;
+		line-height: 1;
+		margin-bottom: 24px;
+		@include breakpoint(desktop) {
+			@include font-size(40);
+			margin-bottom: 40px;
+		}
+
+		&:hover {
+			color: $blue;
+		}
+	}
+
+	&--data {
+		@include font-size(12);
+		color: $muted;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+	}
+
+	&--thumb {
+		@include transition(all 0.6s ease);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		display: block;
+		width: 100%;
+		min-height: 250px;
+		margin-bottom: 16px;
+		@include breakpoint(desktop) {
+			min-height: 400px;
+			margin-bottom: 0;
+		}
+
+		&--link {
+			display: block;
+			overflow: hidden;
+			position: relative;
+
+			&:hover {
+				.sticky-post--thumb {
+					@include transform(scale(1.15));
+				}
+			}
+		}
+	}
+
+	&--label {
+		@include font-size(10);
+		color: $red;
+		font-weight: bold;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		margin: 32px 0 16px;
+		@include breakpoint(desktop) {
+			margin: 0 0 16px;
+		}
+
+		&::before {
+			@include border-radius(50%);
+			background: $red;
+			content: '';
+			display: inline-block;
+			height: 8px;
+			margin-right: 4px;
+			width: 8px;
+		}
+	}
+}
+
+.fogliospesa--magazine {
+	&--top {
+		display: block;
+		width: 100%;
+		border-bottom: 1px solid $panna;
+		padding: 40px 0;
+		@include breakpoint(desktop) {
+			padding: 60px 0;
+			margin-left: -24px;
+			margin-right: -24px;
+			width: calc(100% + 48px);
+
+			.magazine-post {
+				&--flex {
+					display: block;
+				}
+
+				&--link {
+					width: 100%;
+				}
+
+				&--text {
+					width: 100%;
+					padding: 16px 0 0;
+					min-height: 220px;
+				}
+
+				&--excerpt {
+					@include font-size(18);
+				}
+
+				&--title {
+					@include breakpoint(desktop) {
+						@include font-size(28);
+					}
+				}
+
+				&--text {
+					@include breakpoint(mobile) {
+						padding-right: 0;
+					}
+				}
+			}
+		}
+		@include breakpoint(container) {
+			margin-left: -20px;
+			margin-right: -20px;
+			width: calc(100% + 40px);
+		}
+	}
+
+	&--flex {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	&--dx {
+		width: 100%;
+		@include breakpoint(desktop) {
+			padding-left: 80px;
+			width: calc(33.333% + 48px);
+		}
+	}
+
+	&--sx {
+		width: 100%;
+		padding: 40px 0;
+		@include breakpoint(desktop) {
+			width: 57%;
+			padding: 60px 0;
+		}
+
+		.magazine-post {
+			width: 100%;
+			padding: 24px 0;
+
+			&:first-of-type {
+				padding-top: 0;
+			}
+
+			&--excerpt {
+				@include font-size(18);
+			}
+
+			&--title {
+				@include breakpoint(desktop) {
+					@include font-size(28);
+				}
+			}
+
+			&--text {
+				@include breakpoint(mobile) {
+					padding-right: 0;
+				}
+			}
+		}
+	}
+}
+
+.fogliospesa--ricette {
+	padding: 40px 0 0;
+	@include breakpoint(desktop) {
+		padding: 60px 0 0;
+	}
+	@include breakpoint(mobile) {
+		border-top: 1px solid $panna;
+		padding-bottom: 32px;
+	}
+
+	&--title {
+		@include font-size(24);
+		font-weight: 900;
+		font-family: $font-title;
+		line-height: 1;
+		margin-bottom: 16px;
+		@include breakpoint(desktop) {
+			@include font-size(28);
+			margin-bottom: 24px;
+		}
+	}
+
+	&--post {
+		padding: 16px 0;
+		border-bottom: 1px solid $panna;
+
+		&:last-of-type {
+			border-bottom: none;
+		}
+
+		&--title {
+			a {
+				@include font-size(18);
+				line-height: 1;
+				@include breakpoint(desktop) {
+					@include font-size(22);
+				}
+
+				&:hover {
+					color: $blue;
+				}
+			}
+		}
+	}
+}
