@@ -337,7 +337,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 	{
 		add_meta_box(
 			'box_preferences',
-			'Preferenze BOX ',
+			'Preferenze BOX',
 			'box_preferences_meta_box_callback',
 			'shop_order',
 			'advanced',
@@ -346,6 +346,15 @@ if (!function_exists('mv_add_meta_boxes')) {
 		);
 
 		add_meta_box('mv_other_fields', 'Informazioni BOX', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+
+
+		add_meta_box(
+			'box_preferences',
+			'Etichetta consegna',
+			'box_consegne_meta_box_callback',
+			'shop_order', 'side', 'core'
+		);
+
 	}
 
 	function box_preferences_meta_box_callback($order)
@@ -359,6 +368,20 @@ if (!function_exists('mv_add_meta_boxes')) {
 		<h4>Da Eliminare</h4><br>
 
 		<h4>Da Aggiungere</h4>
+		<?php
+
+	}
+
+	function box_consegne_meta_box_callback($order)
+	{
+		global $post;
+
+		$consegna = get_post_meta($post->ID, '_numero_consegna', true);
+
+		?>
+		<h4>Numero consegna</h4><br>
+
+		<?php echo $consegna; ?>
 		<?php
 
 	}
@@ -1030,6 +1053,7 @@ function consegne_ordini_pages()
 					$orders = new WP_Query($args);
 					$orders = $orders->get_posts();
 
+					$i = 0;
 					foreach ($csv as $single) {
 
 						$order = array_filter($orders, function ($tmpOrder) use ($single) {
@@ -1040,12 +1064,17 @@ function consegne_ordini_pages()
 						if (!empty($order)) {
 							$order = reset($order);
 							update_post_meta($order->ID, '_numero_consegna', trim($single[0]));
+							$i++;
 						}
 					}
 
+					?>
+					<span class="alert alert-success">Ordini aggiornati: <?php echo $i; ?></span>
+					<?php
+
 				}
 			} else {
-				echo "No file selected <br />";
+				echo "Nessun file inserito.<br />";
 			}
 
 
@@ -1105,11 +1134,7 @@ function consegne_ordini_pages()
 								<span>Gruppo</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary">Ordini
 							</th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da
-							</th>
-							<th>
-								Ordine
-							</th>
+
 						</tr>
 						</thead>
 
@@ -1148,21 +1173,27 @@ function consegne_ordini_pages()
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento">
-									<?php foreach ($orders as $order): ?>
-										<span>
-											#<?php echo $order->get_id(); ?> - <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?>
-									</span><br>
-									<?php endforeach; ?>
+									<table>
+
+										<tr>
+											<td><b>ID</b></td>
+											<td><b>Consegna</b></td>
+										</tr>
+
+										<?php foreach ($orders as $order): ?>
+											<?php
+											$consegna = get_post_meta($order->get_id(), '_numero_consegna', true);
+											?>
+											<tr>
+												<td>#<?php echo $order->get_id(); ?>
+													- <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?></td>
+												<td><?php echo $consegna; ?></td>
+											</tr>
+										<?php endforeach; ?>
+									</table>
 								</td>
 
-								<td class="response column-response" data-colname="In risposta a">
-								<span>
 
-								</span>
-								</td>
-								<td>
-
-								</td>
 							</tr>
 						<?php endforeach; ?>
 						</tbody>
