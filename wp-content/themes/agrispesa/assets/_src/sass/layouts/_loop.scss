@@ -1,6 +1,7 @@
 /* stylelint-disable */
 .categories-list {
 	margin-bottom: 16px;
+
 	a {
 		@include font-size(18);
 		color: $blue;
@@ -21,6 +22,21 @@
 			&::after {
 				width: 100%;
 			}
+		}
+	}
+}
+
+.archive-blog--flex {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 32px;
+
+	.magazine-post {
+		padding: 24px 0;
+		width: 48%;
+		@include breakpoint(mobile) {
+			width: 100%;
 		}
 	}
 }

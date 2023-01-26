@@ -152,16 +152,6 @@
 		}
 	}
 
-	&--quote {
-		@include font-size(80);
-		font-family: $font-hand;
-		font-weight: 900;
-		position: absolute;
-		left: -70px;
-    top: -10px;
-		color: $orange;
-	}
-
 	&--text {
 		max-width: 600px;
 		margin: 0 auto;

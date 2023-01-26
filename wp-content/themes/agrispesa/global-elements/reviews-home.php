@@ -23,7 +23,6 @@ if( have_rows('lista_recensioni' , $post_id) ):
 <div class="review--item">
 
   <div class="review--text">
-    <span class="review--quote">"</span>
     <div class="review-page--stars">
       <span class="icon-star <?php if($review_star == 1 || $review_star > 1 ) { echo 'yellow'; } ?>"></span>
       <span class="icon-star <?php if($review_star > 1) { echo 'yellow'; } ?>"></span>
