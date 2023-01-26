@@ -386,3 +386,38 @@
 		}
 	}
 }
+
+.section-hero {
+	padding: 200px 130px 0;
+	@include breakpoint(container) {
+		padding: 120px 80px 0;
+	}
+	@include breakpoint(mobile) {
+		padding: 60px 40px 0;
+	}
+
+	&--title {
+		@include font-size(24);
+		margin-bottom: 24px;
+		color: $primary;
+	}
+
+	&--subtitle {
+		@include font-size(60);
+		font-family: $font-title;
+		font-weight: 900;
+		line-height: 1;
+		@include breakpoint(container) {
+			@include font-size(50);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(36);
+		}
+
+		br {
+			@include breakpoint(container) {
+				display: none;
+			}
+		}
+	}
+}

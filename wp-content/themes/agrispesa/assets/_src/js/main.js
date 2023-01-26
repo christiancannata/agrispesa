@@ -45,6 +45,7 @@ closePopup();
 pressSlider();
 scrollTo();
 hideGlossarioAlpha();
+magazineSlider();
 
 
 function hideGlossarioAlpha() {
@@ -237,12 +238,13 @@ function reviewsSlider() {
     infinite: true,
     speed: 300,
     slidesToShow: 1,
+    slidesToScroll: 1,
     arrows: true,
     dots: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
-      breakpoint: 600,
+      breakpoint: 900,
       settings: {
         arrows: false,
         dots: true
@@ -258,21 +260,66 @@ function productsHome() {
   _carousel.slick({
     infinite: true,
     speed: 300,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    centerMode: false, 
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1400,
+      settings: {
+        slidesToShow: 4,
+      }
+    },{
+      breakpoint: 1100,
+      settings: {
+        slidesToShow: 3,
+      }
+    },{
+      breakpoint: 800,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        arrows: false,
+        dots: true
+      }
+    }, {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true
+      }
+    }]
+  });
+}
+
+function magazineSlider() {
+
+  let _carousel = jQuery(".magazine--slider");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
     dots: false,
+    centerMode: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
-      breakpoint: 860,
+      breakpoint: 1240,
       settings: {
         slidesToShow: 2,
         arrows: false,
         dots: true
       }
     }, {
-      breakpoint: 600,
+      breakpoint: 860,
       settings: {
         slidesToShow: 1,
         arrows: false,

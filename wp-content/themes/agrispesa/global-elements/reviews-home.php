@@ -21,14 +21,17 @@ if( have_rows('lista_recensioni' , $post_id) ):
     ?>
 
 <div class="review--item">
-  <div class="review-page--stars">
-    <span class="icon-star <?php if($review_star == 1 || $review_star > 1 ) { echo 'yellow'; } ?>"></span>
-    <span class="icon-star <?php if($review_star > 1) { echo 'yellow'; } ?>"></span>
-    <span class="icon-star <?php if($review_star > 2) { echo 'yellow'; } ?>"></span>
-    <span class="icon-star <?php if($review_star > 3) { echo 'yellow'; } ?>"></span>
-    <span class="icon-star <?php if($review_star > 4) { echo 'yellow'; } ?>"></span>
-  </div>
+
   <div class="review--text">
+    <span class="review--quote">"</span>
+    <div class="review-page--stars">
+      <span class="icon-star <?php if($review_star == 1 || $review_star > 1 ) { echo 'yellow'; } ?>"></span>
+      <span class="icon-star <?php if($review_star > 1) { echo 'yellow'; } ?>"></span>
+      <span class="icon-star <?php if($review_star > 2) { echo 'yellow'; } ?>"></span>
+      <span class="icon-star <?php if($review_star > 3) { echo 'yellow'; } ?>"></span>
+      <span class="icon-star <?php if($review_star > 4) { echo 'yellow'; } ?>"></span>
+    </div>
+
     <h2 class="review--title"><?php echo $review_title;?></h2>
     <div class="review--description"><p><?php echo $review_quote;?></p></div>
     <p class="review--name"><?php echo $review_name;?></p>

@@ -57,10 +57,14 @@ if ( in_array( 'box', $categories ) ): ?>
 	<?php if ( $related_products ) : ?>
 
 
+		<section class="section-hero">
+			<div class="section-hero--container">
+					<h4 class="section-hero--subtitle">
+						Potrebbero farti gola.
+					</h4>
+			</div>
+		</section>
 		<section class="products-carousel--container">
-		  <div class="products-carousel--intro">
-		    <h2 class="products-carousel--title">Potrebbero<br/> farti gola.</h2>
-		  </div>
 			<div class="products-carousel">
 				<?php $i = 1;
 						foreach ( $related_products as $related_product ) : ?>
@@ -83,7 +87,7 @@ if ( in_array( 'box', $categories ) ): ?>
 	</section>
 		<?php
 	endif; ?>
-	
+
 
 	<section class="big-search">
 	  <div class="big-search--content">

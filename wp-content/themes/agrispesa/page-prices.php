@@ -7,8 +7,14 @@ get_header(); ?>
 <div class="wrapper" id="index-wrapper">
 
 
-	<?php get_template_part( 'global-elements/hero', 'page' ); ?>
-
+	<section class="manifesto--hero">
+		<div class="manifesto--container">
+				<h1 class="manifesto--hero--title">Prezzi</h1>
+				<h2 class="manifesto--hero--subtitle">
+					Parlare di soldi non piace a nessuno. Crediamo, però,
+				</h2>
+		</div>
+	</section>
 	<section class="prices-page">
 	  <div class="container-pg">
 			<div class="prices--top">
@@ -35,7 +41,7 @@ get_header(); ?>
 							<span class="symbol">€</span>26
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
 						</div>
 					</div>
 					<div class="prices--item">
@@ -57,7 +63,7 @@ get_header(); ?>
 							<span class="symbol">€</span>38
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
 						</div>
 					</div>
 					<div class="prices--item">
@@ -79,7 +85,7 @@ get_header(); ?>
 							<span class="symbol">€</span>55
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
 						</div>
 					</div>
 					<div class="prices--item">
@@ -101,7 +107,7 @@ get_header(); ?>
 							<span class="symbol">€</span>74
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Crea la tua box">Crea la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
 						</div>
 					</div>
 				</div>

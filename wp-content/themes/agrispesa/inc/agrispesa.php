@@ -47,11 +47,15 @@ function my_acf_op_init() {
 }
 
 // Lunghezza Riassunto
-function my_excerpt_length($length){
-return 15;
+function mytheme_custom_excerpt_length( $length ) {
+    return 15;
 }
-add_filter('excerpt_length', 'my_excerpt_length');
+add_filter( 'excerpt_length', 'mytheme_custom_excerpt_length', 999 );
 
+function new_excerpt_more( $more ) {
+	return '...';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
 
 // Titoli pagine di categoria
 add_filter( 'get_the_archive_title', function ($title) {

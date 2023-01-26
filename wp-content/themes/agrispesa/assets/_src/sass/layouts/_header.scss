@@ -45,6 +45,17 @@
 
 			.mini_menu li a {
 				color: $black;
+				&:after {
+					background: $black;
+				}
+
+				&:hover {
+					color: $black;
+
+					&::after {
+						background: $black;
+					}
+				}
 			}
 
 			.header--cart .cart--link .ag-logo-icon {
@@ -762,33 +773,42 @@
 		}
 
 		a {
-			@include font-size(18);
+			@include font-size(16);
 			color: $black;
 			font-weight: normal;
 			cursor: pointer;
 			font-weight: 300;
 			display: inline-block;
 
-			body.home & {
-				color: $white;
+			&::after {
+				@include transition(all 0.3s ease);
+				background: $black;
+				content: '';
+				display: block;
+				height: 1px;
+				width: 0;
 			}
-			@include breakpoint(desktop) {
-				@include font-size(16);
+
+			&:hover {
+				color: $black;
 
 				&::after {
-					@include transition(all 0.3s ease);
+					width: 100%;
+				}
+			}
+
+			body.home & {
+				color: $white;
+
+				&:after {
 					background: $white;
-					content: '';
-					display: block;
-					height: 1px;
-					width: 0;
 				}
 
 				&:hover {
 					color: $white;
 
 					&::after {
-						width: 100%;
+						background: $white
 					}
 				}
 			}

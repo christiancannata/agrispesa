@@ -39,10 +39,15 @@ $_SESSION['havesearch'] = false;
 
 <?php get_template_part( 'global-elements/all', 'categories' ); ?>
 
-<section class="products-carousel--container">
-  <div class="products-carousel--intro">
-    <h2 class="products-carousel--title">Oppure creala tu!</h2>
+<section class="section-hero">
+  <div class="section-hero--container">
+      <h4 class="section-hero--subtitle">
+        I prodotti più amati.
+      </h4>
   </div>
+</section>
+
+<section class="products-carousel--container">
   <div class="products-carousel">
 
   <?php /* Prodotti */ ?>
@@ -53,7 +58,9 @@ $_SESSION['havesearch'] = false;
           'product_cat' => 'negozio',
           'post_type' => 'product',
   				'orderby' => 'date',
-          'order' => 'ASC'
+          'order' => 'ASC',
+          'meta_key' => 'total_sales',
+          'orderby' => 'meta_value_num',
       );
 
   $query = new WP_Query( $args );
