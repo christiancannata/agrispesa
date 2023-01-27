@@ -3,6 +3,7 @@
 
 <?php if ( have_posts() ) : ?>
   <div class="single-article">
+  <div class="container-xsmall">
     <header class="page-header">
       <?php
       the_title( '<h1 class="page-title">', '</h1>' );
@@ -15,6 +16,7 @@
       </div>
 
 		<?php endwhile ?>
+  </div>
   </div>
 <?php endif;?>
 
