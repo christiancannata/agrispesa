@@ -156,7 +156,7 @@
 	}
 
 	&--text {
-		max-width: 600px;
+		max-width: 840px;
 		margin: 0 auto;
 		color: $panna;
 		position: relative;
@@ -173,12 +173,12 @@
 		margin: 24px 0 0;
 
 		p {
-			@include font-size(26);
+			@include font-size(24);
 			font-weight: 900;
 			line-height: 1.1;
 			font-family: $font-title;
 			@include breakpoint(desktop) {
-				@include font-size(34);
+				@include font-size(30);
 			}
 		}
 	}
@@ -186,6 +186,9 @@
 	&--name {
 		@include font-size(18);
 		margin-top: 24px;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+		}
 	}
 }
 
