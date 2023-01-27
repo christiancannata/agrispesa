@@ -145,10 +145,13 @@
 .review {
 	&--item {
 		text-align: center;
-		padding: 0 60px;
+		padding: 0 0 24px;
+		@include breakpoint(desktop) {
+			padding: 0 60px;
+		}
 
 		.review-page--stars {
-			justify-content: flex-start;
+			justify-content: center;
 		}
 	}
 
@@ -156,7 +159,6 @@
 		max-width: 600px;
 		margin: 0 auto;
 		color: $panna;
-		text-align: left;
 		position: relative;
 	}
 
@@ -165,13 +167,19 @@
 		font-weight: 900;
 		line-height: 1.1;
 		margin: 16px 0;
-		font-family: $font-title;
 	}
 
 	&--description {
+		margin: 24px 0 0;
+
 		p {
-			@include font-size(20);
-			line-height: 1.3;
+			@include font-size(26);
+			font-weight: 900;
+			line-height: 1.1;
+			font-family: $font-title;
+			@include breakpoint(desktop) {
+				@include font-size(34);
+			}
 		}
 	}
 

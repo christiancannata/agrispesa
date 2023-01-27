@@ -31,7 +31,6 @@ if( have_rows('lista_recensioni' , $post_id) ):
       <span class="icon-star <?php if($review_star > 4) { echo 'yellow'; } ?>"></span>
     </div>
 
-    <h2 class="review--title"><?php echo $review_title;?></h2>
     <div class="review--description"><p><?php echo $review_quote;?></p></div>
     <p class="review--name"><?php echo $review_name;?></p>
   </div>

@@ -51,7 +51,6 @@ get_header(); ?>
 						</div>
 			    </div>
 					<div class="review-page__dx">
-						<h2 class="review-page__title"><?php echo $review_title;?></h2>
 						<div class="review-page__description"><p><?php echo $review_quote;?></p></div>
 					</div>
 				</div>
