@@ -140,6 +140,10 @@
 			margin: 0 0 40px;
 			display: inline-block;
 			position: relative;
+			@include breakpoint(mobile) {
+
+				margin: 16px 0 24px;
+			}
 
 			&:after {
 				content: '';
