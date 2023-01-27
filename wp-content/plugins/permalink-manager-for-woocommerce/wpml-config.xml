@@ -1,0 +1,9 @@
+<wpml-config>
+
+    <admin-texts>
+        <key name="wc_links">
+            <key name="prefix" />
+        </key>
+    </admin-texts>
+
+</wpml-config>
