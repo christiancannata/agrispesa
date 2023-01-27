@@ -7,7 +7,7 @@
         <div class="single-article--flex">
 
         <div class="single-article">
-        <div class="container-xsmall">
+        <div class="container-pg">
 
         <div class="single--header">
           <div class="categories-list">
@@ -33,10 +33,14 @@
 <?php $related_products = get_field('prodotti_correlati');
 
 if( $related_products ): ?>
-<section class="products-carousel--container">
-  <div class="products-carousel--intro">
-    <h2 class="products-carousel--title">Forse ti è venuta fame.</h2>
+<section class="section-hero">
+  <div class="section-hero--container">
+      <h4 class="section-hero--subtitle">
+        Forse ti è venuta fame.
+      </h4>
   </div>
+</section>
+<section class="products-carousel--container">
   <div class="products-carousel">
     <?php foreach( $related_products as $related_product ):
         setup_postdata(  $related_product );
@@ -77,5 +81,48 @@ if( $related_products ): ?>
 
 <?php endwhile ?>
 <?php endif; //end post?>
+
+<section class="section-hero">
+  <div class="section-hero--container">
+      <h4 class="section-hero--subtitle">
+        Storie di agricoltura.
+      </h4>
+  </div>
+</section>
+
+<section class="magazine">
+  <div class="magazine--slider">
+  <?php /* Blog */ ?>
+  <?php
+  $args = array(
+          'posts_per_page' => '3',
+          'category__in' => wp_get_post_categories($post->ID),
+          'post_type' => 'post',
+          'orderby' => 'date',
+          'order' => 'DESC'
+      );
+  $query = new WP_Query( $args );
+  if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
+
+  <?php get_template_part( 'template-parts/loop', 'blog' ); ?>
+
+  <?php endwhile;
+    wp_reset_postdata();
+  endif; ?>
+  </div>
+</section>
+
+<div class="clearfix"></div>
+
+<section class="big-search">
+  <div class="big-search--content">
+    <div class="big-search--text">
+      <h3 class="big-search--title">Cerca i tuoi prodotti preferiti.</h3>
+    </div>
+    <?php get_search_form() ?>
+  </div>
+</section>
+
+<?php get_template_part( 'global-elements/all', 'categories' ); ?>
 
 <?php get_footer();

@@ -28,7 +28,7 @@
 @mixin buttonprimary() {
 	color: $white;
 	border: none;
-	background-image: linear-gradient(to right, $blue, $blue, $green, $green);
+	background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 
 	span {
@@ -91,7 +91,7 @@
 		@include buttonsmall();
 		width: 100%;
 		&:hover {
-			background-image: linear-gradient(to right, $blue, $blue, $green, $green);
+			background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
 		}
 		&.loading {
 			&:after {

@@ -1,49 +1,59 @@
 /* stylelint-disable */
 .categories-list {
-	span {
-		@include transition(all 0.2s linear);
+	margin-bottom: 16px;
+
+	a {
 		@include font-size(18);
-		@include border-radius(0 16px 16px 16px);
-		background: $primary;
-		padding: 6px 16px;
 		color: $blue;
 		display: inline-block;
-		margin: 16px 8px 0 0;
 
-		&.first {
-			@include border-radius(16px 16px 16px 0);
-			margin-bottom: 24px;
-			margin-right: 0;
-		}
-	}
-
-	&.body-single-page {
-		span {
-			@include border-radius(16px 16px 16px 0);
-			margin-bottom: 24px;
+		&::after {
+			@include transition(all 0.3s ease);
 			background: $blue;
-			color: $primary;
-			@include breakpoint(mobile) {
-				margin: 4px 0;
+			content: '';
+			display: block;
+			height: 1px;
+			width: 0;
+		}
+
+		&:hover {
+			color: $blue;
+
+			&::after {
+				width: 100%;
 			}
 		}
 	}
 }
 
-.products-carousel {
+.archive-blog--flex {
 	display: flex;
-	width: 100%;
-	@include breakpoint(desktop) {
-		width: 60%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: 32px;
+
+	.magazine-post {
+		padding: 24px 0;
+		width: 48%;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
 	}
+}
+
+.products-carousel {
+	// display: flex;
+	width: 100%;
 
 	.slick-next-agr,
 	.slick-prev-agr {
 		top: -50px;
 	}
+
 	.slick-next-agr {
 		right: 0;
 		left: 60px;
+
 		&:hover {
 			right: auto;
 			left: 65px;
@@ -54,7 +64,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 120px 0 60px;
+		padding: 80px 0 60px;
 		@include breakpoint(mobile) {
 			flex-wrap: wrap;
 			padding: 40px 0;
@@ -79,7 +89,6 @@
 		@include breakpoint(mobile) {
 			@include font-size(32);
 			text-align: center;
-
 		}
 	}
 
@@ -133,7 +142,7 @@
 
 		&:hover {
 			img {
-				transform: scale(1.3);
+				transform: scale(1.2);
 			}
 		}
 	}
@@ -197,6 +206,133 @@
 			}
 		}
 	}
+}
 
+.magazine {
+	padding: 80px 0;
+}
 
+.magazine-post {
+	width: 33.333%;
+	padding: 24px;
+	@include breakpoint(container) {
+		padding: 16px 20px;
+	}
+
+	.categories-list {
+		margin-bottom: 8px;
+
+		a {
+			@include font-size(14);
+			color: $blue;
+			display: inline-block;
+
+			&::after {
+				@include transition(all 0.3s ease);
+				background: $blue;
+				content: '';
+				display: block;
+				height: 1px;
+				width: 0;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&::after {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	&--flex {
+		display: flex;
+	}
+
+	&--text {
+		width: 50%;
+		padding: 10px 24px 16px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		@include breakpoint(container) {
+			width: 58%;
+			padding: 0 24px;
+		}
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--link {
+		display: block;
+		overflow: hidden;
+		width: 50%;
+		@include breakpoint(container) {
+			width: 42%;
+		}
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+
+		span {
+			@include transition(all 0.8s ease);
+			content: '';
+			display: block;
+			width: 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+
+			&:after {
+				content: "";
+				display: block;
+				padding-bottom: 130%;
+			}
+		}
+
+		&:hover {
+			span {
+				transform: scale(1.2);
+			}
+		}
+	}
+
+	&--title {
+		@include font-size(28);
+		font-weight: 900;
+		font-family: $font-title;
+		line-height: 1;
+		margin-bottom: 16px;
+		@include breakpoint(container) {
+			@include font-size(24);
+		}
+
+		a {
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+
+	&--excerpt {
+		@include font-size(18);
+		@include breakpoint(container) {
+			@include font-size(16);
+		}
+		@include breakpoint(mobile) {
+			display: none;
+		}
+	}
+
+	&--data {
+		@include font-size(12);
+		color: $muted;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+	}
 }

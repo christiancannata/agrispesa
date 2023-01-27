@@ -45,11 +45,14 @@
 						?>
 						<?php if( $product_producers ): ?>
 
-
+						<section class="section-hero">
+							<div class="section-hero--container">
+									<h4 class="section-hero--subtitle">
+										Produce cose buone.
+									</h4>
+							</div>
+						</section>
 						<section class="products-carousel--container">
-						  <div class="products-carousel--intro">
-								<h2 class="products-carousel--title">Produce<br/>cose buone.</h2>
-						  </div>
 						  <div class="products-carousel">
 							<?php $i = 1; foreach( $product_producers as $producer ):
 								setup_postdata(  $producer );
@@ -64,7 +67,7 @@
 								  </a>
 								  <div class="product-box--text">
 								    <div class="product-box--text--top">
-								      <h2 class="product-box--title"><?php echo get_the_title($producer->ID); ?></h2>
+								      <h2 class="product-box--title"><?php echo $i; ?><?php echo get_the_title($producer->ID); ?></h2>
 											<div class="product-box--price--flex">
 												<?php if ( $product->has_weight($producer->ID) ) {
 								        	echo '<p class="product-box--description product-info--quantity">' .  $product->get_weight($producer->ID) . ' kg — </p>';

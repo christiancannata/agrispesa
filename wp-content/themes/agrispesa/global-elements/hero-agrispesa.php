@@ -15,7 +15,7 @@
           </div>
           <div class="hero-stars--flex">
             <a href="https://it.trustpilot.com/review/www.agrispesa.it" target="_blank" title="Leggi le nostre recensioni su Trustpilot">
-            <span class="value">4.5</span>
+            <span class="value">4.8</span>
             <span>su Trustpilot</span>
             </a>
           </div>

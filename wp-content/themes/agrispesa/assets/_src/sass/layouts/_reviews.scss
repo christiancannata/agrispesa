@@ -145,21 +145,23 @@
 .review {
 	&--item {
 		text-align: center;
+		padding: 0 60px;
 
 		.review-page--stars {
-			justify-content: center;
+			justify-content: flex-start;
 		}
 	}
 
 	&--text {
 		max-width: 600px;
 		margin: 0 auto;
-		padding: 20px;
-		color: $black;
+		color: $panna;
+		text-align: left;
+		position: relative;
 	}
 
 	&--title {
-		@include font-size(32);
+		@include font-size(34);
 		font-weight: 900;
 		line-height: 1.1;
 		margin: 16px 0;
@@ -168,14 +170,14 @@
 
 	&--description {
 		p {
-			@include font-size(22);
+			@include font-size(20);
+			line-height: 1.3;
 		}
 	}
 
 	&--name {
 		@include font-size(18);
 		margin-top: 24px;
-		font-style: italic;
 	}
 }
 
