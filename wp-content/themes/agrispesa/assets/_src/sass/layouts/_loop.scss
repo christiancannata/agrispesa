@@ -210,6 +210,12 @@
 
 .magazine {
 	padding: 80px 0;
+	@include breakpoint(mobile) {
+		padding: 40px 0;
+		&--slider {
+			padding-bottom: 24px;
+		}
+	}
 }
 
 .magazine-post {
@@ -219,7 +225,7 @@
 	background: $white;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
 	@include breakpoint(container) {
-		padding: 20px 20px;
+		padding: 20px;
 	}
 	@include breakpoint(mobile) {
 		margin: 0;
