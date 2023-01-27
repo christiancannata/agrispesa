@@ -1,11 +1,8 @@
 /* stylelint-disable */
 .fogliospesa {
 	&--hero {
-		margin-top: 200px;
+		margin-top: 60px;
 		margin-bottom: 40px;
-		@include breakpoint(container) {
-			margin-top: 120px;
-		}
 		@include breakpoint(mobile) {
 			margin-top: 40px;
 			margin-bottom: 24px;
@@ -54,10 +51,10 @@
 	padding: 20px;
 	background: $white;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
-  margin-top: 32px;
+	margin-top: 32px;
 	@include breakpoint(desktop) {
 		padding: 24px;
-    margin-top: 50px;
+		margin-top: 50px;
 	}
 
 	&--flex {
@@ -186,7 +183,6 @@
 			width: calc(100% + 16px);
 
 			.magazine-post {
-        
 				&--flex {
 					display: block;
 				}

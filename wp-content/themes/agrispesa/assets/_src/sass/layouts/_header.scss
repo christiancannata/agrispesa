@@ -4,12 +4,15 @@
 	@include clearfix();
 	background: transparent;
 	left: 0;
-	padding: 0;
+	padding: 0 20px;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 10;
 	background: $white;
+	@include breakpoint(desktop) {
+	padding: 0 40px;
+	}
 
 	body.home & {
 		background: transparent;
@@ -761,7 +764,7 @@
 .mini_menu {
 	display: flex;
 	margin-left: 40px;
-	@include breakpoint(mobile) {
+	@include breakpoint(tablet) {
 		display: none;
 	}
 

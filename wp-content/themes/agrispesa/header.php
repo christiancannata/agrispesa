@@ -41,7 +41,6 @@ global $woocommerce;
 
 
 <header class="header">
-	<div class="container-pg">
 		<div class="header--flex">
 			<div class="header--brand">
 				<div class="header--hamburger">
@@ -110,7 +109,7 @@ global $woocommerce;
 			</div>
 
 		</div>
-	</div>
+
 
 </header>
 
