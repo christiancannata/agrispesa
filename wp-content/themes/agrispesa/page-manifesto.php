@@ -56,7 +56,7 @@ get_header(); ?>
 
 	</section>
 
-	<section class="sec-home sec-full bg-orange line-white">
+	<section class="sec-home sec-full bg-green line-white">
 		<div class="container-pg">
 			<div class="sec-home--minititle">
 				<h3>Le caratteristiche dei prodotti di Agrispesa:</h3>

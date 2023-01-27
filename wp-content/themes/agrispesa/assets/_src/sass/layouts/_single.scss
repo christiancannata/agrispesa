@@ -6,14 +6,29 @@
 		@include breakpoint(desktop) {
 			padding: 0 20px;
 		}
+
+		.fogliospesa-bg {
+			background: $white;
+			box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+			margin-top: 32px;
+			padding-bottom: 32px;
+			@include breakpoint(desktop) {
+				margin-top: 50px;
+			}
+			@include breakpoint(mobile) {
+				margin: 0 -20px;
+				padding: 0 20px 24px;
+				border-top: 1px solid $panna;
+			}
+		}
 	}
 }
 
 .single {
 	&--header {
-		margin: 24px 0 32px;
+		padding: 24px 0 32px;
 		@include breakpoint(desktop) {
-			margin: 38px 40px 28px;
+			padding: 38px 40px 28px;
 		}
 
 		h1 {

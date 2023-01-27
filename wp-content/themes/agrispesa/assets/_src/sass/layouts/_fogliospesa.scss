@@ -1,22 +1,22 @@
 /* stylelint-disable */
 .fogliospesa {
 	&--hero {
-		margin-top: 60px;
-		margin-bottom: 40px;
+		padding: 20px 0 60px 0;
 		@include breakpoint(mobile) {
-			margin-top: 40px;
-			margin-bottom: 24px;
+			padding: 0 0 24px 0;
 		}
+
 
 		&--title {
 			@include font-size(60);
 			line-height: 1;
 			font-family: $font-title;
+			text-align: left;
 			@include breakpoint(desktop) {
 				@include font-size(90);
 			}
 			@include breakpoint(mobile) {
-				@include font-size(45);
+				@include font-size(40);
 			}
 
 			.what_week {
@@ -66,7 +66,7 @@
 	&--dx {
 		width: 100%;
 		@include breakpoint(desktop) {
-			padding-left: 50px;
+			padding-right: 50px;
 			width: 43%;
 		}
 	}

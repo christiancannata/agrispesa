@@ -211,7 +211,7 @@
 .magazine {
 	padding: 80px 0;
 	@include breakpoint(mobile) {
-		padding: 40px 0;
+		padding: 40px 20px;
 		&--slider {
 			padding-bottom: 24px;
 		}
@@ -229,6 +229,7 @@
 	}
 	@include breakpoint(mobile) {
 		margin: 0;
+		width: 100%;
 	}
 
 	.categories-list {
@@ -259,7 +260,10 @@
 	}
 
 	&--flex {
-		display: flex;
+		@include breakpoint(desktop) {
+			display: flex;
+
+		}
 	}
 
 	&--text {
@@ -274,7 +278,7 @@
 		}
 		@include breakpoint(mobile) {
 			width: 100%;
-			padding-right: 0;
+			padding: 16px 0 0;
 		}
 	}
 

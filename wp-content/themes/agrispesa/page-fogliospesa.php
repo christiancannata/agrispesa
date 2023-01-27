@@ -8,15 +8,7 @@ get_header(); ?>
 <div class="container-pg">
 
 
-	<section class="fogliospesa--hero">
-		<div class="fogliospesa--hero--container">
-			<?php $today = date('Y');
-						$what_week = date('W',strtotime($today));?>
-			<h1 class="fogliospesa--hero--title">
-				Fogliospesa <span class="what_week"><?php echo $what_week; ?></span>
-			</h1>
-		</div>
-	</section>
+
 
 
 	<?php /* Sticky post */ ?>
@@ -33,6 +25,16 @@ get_header(); ?>
 
 
 	<div class="fogliospesa--sticky">
+		<section class="fogliospesa--hero">
+			<div class="fogliospesa--hero--container">
+				<?php $today = date('Y');
+							$what_week = date('W',strtotime($today));?>
+				<h1 class="fogliospesa--hero--title">
+					Fogliospesa <span class="what_week"><?php echo $what_week; ?></span>
+				</h1>
+			</div>
+		</section>
+
 		<?php
 		$ids = array();
 		while($wp_query->have_posts()) : $wp_query->the_post();
@@ -44,13 +46,7 @@ get_header(); ?>
     $thumb_url = $thumb_url_array[0]; ?>
 
     <div class="fogliospesa--sticky--flex">
-		<div class="fogliospesa--sticky--sx">
-      <?php if ( has_post_thumbnail() ): ?>
-				<a href="<?php the_permalink(); ?>" class="fogliospesa--sticky--thumb--link" title="<?php echo the_title(); ?>">
-        <span class="fogliospesa--sticky--thumb" style="background-image: url(<?php the_post_thumbnail_url();?>);"></span>
-				</a>
-      <?php endif; ?>
-    </div>
+
     <div class="fogliospesa--sticky--dx">
       <div class="fogliospesa--sticky--text">
         <div class="fogliospesa--sticky--text--top">
@@ -72,6 +68,13 @@ get_header(); ?>
         </div>
       </div>
     </div>
+    </div>
+		<div class="fogliospesa--sticky--sx">
+      <?php if ( has_post_thumbnail() ): ?>
+				<a href="<?php the_permalink(); ?>" class="fogliospesa--sticky--thumb--link" title="<?php echo the_title(); ?>">
+        <span class="fogliospesa--sticky--thumb" style="background-image: url(<?php the_post_thumbnail_url();?>);"></span>
+				</a>
+      <?php endif; ?>
     </div>
 
     </div>

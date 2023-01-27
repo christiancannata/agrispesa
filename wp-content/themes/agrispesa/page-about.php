@@ -24,7 +24,7 @@ get_header(); ?>
 			</div>
 			<div class="team--bio">
 				<p class="team--bio--text">
-					Mi chiamo Giovanna.
+					Il mio nome è Giovanna.
 				</p>
 				<p class="team--bio--text">
 					<br/>La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
@@ -42,17 +42,16 @@ get_header(); ?>
 
 			<div class="team--bio">
 				<p class="team--bio--text">
-					La campagna, i nonni, gli animali: questo è stato il mio “imprinting”, direbbe Konrad Lorenz. L’amore per gli animali e per il mondo contadino mi hanno segnata.
+					La capacità di resistere, la volontà, la tenacia mi arrivano da mia madre Pierina, da Lina, da zia Rina, dalla balia Clarin, da Suor Angela Bologna: donne forti che hanno accompagnato la mia crescita, alle quali devo il senso della mia vita.
 				</p>
 				<p class="team--bio--text">
-					<br/>Mi occupo principalmente di curare ogni dettaglio legato al servizio che le famiglie ricevono da parte di Agrispesa e sento che questo è apprezzato, percepito e riconosciuto.
+					<br/>Sono nata il 25 luglio 1953. Mia madre Pierina, per qualche calcolo sbagliato, mi attese per undici mesi. Ad Alba la conoscevano tutti, l’anciuèra. Quattro giorni la settimana, per 40 anni, al mercato c’era lei, con tenacia, con le mani rotte dal freddo e dal sale.
 				</p>
 				<p class="team--bio--text">
-					<br/>Da mia mamma ho imparato a trattare le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.<br/>
-					Da mio papà a riconoscere la qualità dei prodotti e a tenerli tra le mie mani in modo delicato.
+					<br/>Il mio nome fu per tutti una sorpresa: avere una bimba era una speranza che la mamma non osava coltivare.
 				</p>
 				<p class="team--bio--text">
-					<br/> Il mio nome è Elena.
+					<br/>Mi chiamò Elena.
 				</p>
 			</div>
 			<div class="team--picture">
