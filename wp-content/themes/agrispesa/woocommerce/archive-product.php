@@ -27,6 +27,7 @@ get_header( 'shop' );
  * @hooked WC_Structured_Data::generate_website_data() - 30
  */
 do_action( 'woocommerce_before_main_content' );
+$description = get_the_archive_description();
 
 ?>
 
@@ -37,11 +38,12 @@ do_action( 'woocommerce_before_main_content' );
 	  <div class="big-search--content">
 	    <div class="big-search--text">
 				<h1 class="big-search--h1"><?php woocommerce_page_title(); ?></h1>
-				<?php if(the_archive_description()): ?>
-		      <h3 class="big-search--title"><?php echo the_archive_description(); ?></h3>
-				<?php else: ?>
-					<h3 class="big-search--title">Freschissimi, come sempre.</h3>
-				<?php endif; ?>
+					<?php if ( $description ) {
+						echo '<h3 class="big-search--title">'.$description.'</h3>';
+					} else {
+						echo '<h3 class="big-search--title">Il meglio dei nostri prodotti.</h3>';
+					} ?>
+
 	    </div>
 	    <?php get_search_form() ?>
 	  </div>
