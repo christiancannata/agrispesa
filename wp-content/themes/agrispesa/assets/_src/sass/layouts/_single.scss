@@ -1,8 +1,8 @@
 /* stylelint-disable */
 .single-article {
 	&--flex {
-		display: flex;
-		justify-content: center;
+		// display: flex;
+		// justify-content: center;
 		@include breakpoint(desktop) {
 			padding: 0 20px;
 		}
@@ -82,6 +82,7 @@
 			strong {
 				font-weight: 600;
 			}
+
 			a {
 				color: $blue;
 				display: inline-block;
@@ -101,6 +102,24 @@
 					&::after {
 						width: 100%;
 					}
+				}
+			}
+		}
+
+		blockquote {
+			padding: 32px 0 32px 24px;
+			@include breakpoint(desktop) {
+				padding: 40px 60px 40px 120px;
+			}
+
+			p {
+				@include font-size(28);
+				font-family: $font-title;
+				line-height: 1.1;
+				font-style: italic;
+				font-weight: 900;
+				@include breakpoint(desktop) {
+					@include font-size(32);
 				}
 			}
 		}
