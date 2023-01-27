@@ -1,8 +1,8 @@
 <?php
 if( have_rows('agr_press', 'option') ): ?>
 <section class="press" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-  <div class="container">
-    <h3 class="press--title">Dicono di noi</h3>
+  <div class="container-pg">
+    <h3 class="press--title">Parlano di noi</h3>
     <div class="press--slider">
       <?php
           while( have_rows('agr_press', 'option') ) : the_row();

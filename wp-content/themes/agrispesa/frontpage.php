@@ -39,7 +39,7 @@ $_SESSION['havesearch'] = false;
 
 <?php get_template_part( 'global-elements/all', 'categories' ); ?>
 
-<section class="section-hero">
+<section class="section-hero small">
   <div class="section-hero--container">
       <h4 class="section-hero--subtitle">
         I prodotti più amati.
@@ -75,34 +75,6 @@ $_SESSION['havesearch'] = false;
   </div>
 </section>
 
-<section class="negozio-home">
-
-  <div class="negozio-home--container">
-    <div class="negozio-home--product">
-      <?php /* In evidenza */ ?>
-      <?php
-
-      $args = array(
-              'posts_per_page' => '1',
-              'product_cat' => 'negozio',
-              'post_type' => 'product',
-      				'orderby' => 'date',
-              'order' => 'ASC',
-              'meta_key'          => 'sticky_product',
-          );
-
-      $query = new WP_Query( $args );
-      if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
-
-      <?php get_template_part( 'template-parts/loop', 'sticky' ); ?>
-
-      <?php endwhile;
-      	wp_reset_postdata();
-      endif; ?>
-    </div>
-  </div>
-
-</section>
 
 <?php get_template_part( 'global-elements/reviews', 'home' ); ?>
 <?php get_template_part( 'global-elements/sospesa', 'home' ); ?>

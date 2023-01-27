@@ -45,7 +45,7 @@
 						?>
 						<?php if( $product_producers ): ?>
 
-						<section class="section-hero">
+						<section class="section-hero small">
 							<div class="section-hero--container">
 									<h4 class="section-hero--subtitle">
 										Produce cose buone.

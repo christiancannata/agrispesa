@@ -34,7 +34,7 @@ faqs();
 reviewsSlider();
 footerMenu();
 hideBreadcrum();
-productsHome();
+productsCarousel();
 loginForms();
 showCoupon();
 closeNotices();
@@ -253,18 +253,19 @@ function reviewsSlider() {
   });
 }
 
-function productsHome() {
+
+function productsCarousel() {
 
   let _carousel = jQuery(".products-carousel");
 
   _carousel.slick({
     infinite: true,
     speed: 300,
-    slidesToShow: 6,
+    slidesToShow: 5,
     slidesToScroll: 1,
     arrows: true,
     dots: false,
-    centerMode: false, 
+    centerMode: false,
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{

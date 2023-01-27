@@ -1,15 +1,13 @@
 /* stylelint-disable */
 .press {
   text-align: center;
-  padding-bottom: 80px;
+  padding: 40px 0;
 
   &--title {
-    @include font-size(18);
-    font-weight: 300;
+    @include font-size(16);
+    text-transform: uppercase;
+    letter-spacing: 2px;
     margin-bottom: 24px;
-    @include breakpoint(desktop) {
-      @include font-size(24);
-    }
   }
 
   &--item {

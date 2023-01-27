@@ -552,7 +552,16 @@
 					}
 				}
 
-				&.current,
+				&.current {
+					background: $orange;
+					color: $white;
+					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+
+					svg {
+						fill: $white;
+					}
+				}
+
 				&:hover {
 					background: $orange;
 					color: $white;
@@ -569,7 +578,6 @@
 			@include breakpoint(desktop) {
 				&:nth-child(even) {
 					a {
-						&.current,
 						&:hover {
 							@include transform(rotate(2deg));
 						}

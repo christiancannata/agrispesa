@@ -57,9 +57,9 @@ if ( in_array( 'box', $categories ) ): ?>
 	<?php if ( $related_products ) : ?>
 
 
-		<section class="section-hero">
+		<section class="section-hero small">
 			<div class="section-hero--container">
-					<h4 class="section-hero--subtitle">
+					<h4 class="section-hero--subtitle ">
 						Potrebbero farti gola.
 					</h4>
 			</div>

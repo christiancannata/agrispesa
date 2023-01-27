@@ -65,6 +65,8 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 80px 0 60px;
+		max-width: 1240px;
+		margin: 0 auto;
 		@include breakpoint(mobile) {
 			flex-wrap: wrap;
 			padding: 40px 0;
@@ -98,10 +100,10 @@
 }
 
 .product-box {
-	padding: 32px;
+	padding: 20px;
 	background: $beige;
 	@include breakpoint(container) {
-		padding: 24px;
+		padding: 16px;
 	}
 
 	&.text-box {
@@ -212,6 +214,7 @@
 	padding: 80px 0;
 	@include breakpoint(mobile) {
 		padding: 40px 20px;
+
 		&--slider {
 			padding-bottom: 24px;
 		}
@@ -262,7 +265,6 @@
 	&--flex {
 		@include breakpoint(desktop) {
 			display: flex;
-
 		}
 	}
 
