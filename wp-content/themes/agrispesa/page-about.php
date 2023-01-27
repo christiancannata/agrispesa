@@ -76,38 +76,12 @@ get_header(); ?>
 
 	</section>
 
-	<section class="sec-home sec-three bg-panna">
-	  <div class="sec-three--flex">
-	    <div class="sec-three--sx" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-2.jpg);"></div>
-
-	    <div class="sec-three--center">
-	      <div class="sec-home--text">
-
-						<h3 class="sec-home--title big">Da <em class="number"><?php echo $years; ?></em> anni<br class="only-desktop" /> al servizio della terra.</h3>
-						<p class="sec-home--subtitle">Portiamo nelle vostre case prodotti freschi e genuini. Sarà la stagione a decidere che cosa.</p>
-	      </div>
-	    </div>
-
-	    <div class="sec-three--dx" style="background-image: url(<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-1.jpg);"></div>
-	  </div>
-	</section>
-
-	<section class="sec-home sec-half bg-orange">
-	  <div class="sec-half--flex">
-	    <div class="sec-half--sx">
-	      <div class="sec-home--rounded">
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-top.png" class="sec-home--rounded--floating" alt="Conosciamo da anni i contadini che ci forniscono i prodotti" />
-	        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/farmer-bottom.png" class="sec-home--rounded--img" alt="Conosciamo da anni i contadini che ci forniscono i prodotti" />
-				</div>
-	    </div>
-
-	    <div class="sec-half--dx">
-				<div class="sec-home--text">
- 				 <h3 class="sec-home--title big">Conosciamo <br class="only-desktop" />da anni i contadini che ci forniscono <br class="only-desktop" />i prodotti.</h3>
-				 <p class="sec-home--subtitle">Concordiamo con loro un programma di acquisto, in modo da integrare l’economia di vendita diretta delle loro aziende.</p>
- 			 </div>
-	    </div>
-	  </div>
+	<section class="manifesto--video">
+		<div class="videoWrapper">
+			<video width="320" height="240" autoplay loop muted>
+				<source src="<?php echo get_template_directory_uri(); ?>/assets/video/farmer-3.mp4" type="video/mp4">
+			</video>
+		</div>
 	</section>
 
 	<?php get_template_part( 'global-elements/home', 'press' ); ?>

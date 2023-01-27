@@ -42,6 +42,74 @@ $_SESSION['havesearch'] = false;
 <section class="section-hero small">
   <div class="section-hero--container">
       <h4 class="section-hero--subtitle">
+        Verdura di stagione.
+      </h4>
+  </div>
+</section>
+
+<section class="products-carousel--container">
+  <div class="products-carousel">
+
+  <?php /* Prodotti */ ?>
+  <?php
+
+  $args = array(
+          'posts_per_page' => '10',
+          'product_cat' => 'verdura',
+          'post_type' => 'product',
+  				'orderby' => 'date',
+          'order' => 'ASC'
+      );
+
+  $query = new WP_Query( $args );
+  if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
+
+  <?php get_template_part( 'template-parts/loop', 'shop' ); ?>
+
+  <?php endwhile;
+  	wp_reset_postdata();
+  endif; ?>
+
+  </div>
+</section>
+
+<section class="section-hero small">
+  <div class="section-hero--container">
+      <h4 class="section-hero--subtitle">
+        Dagli alberi, con amore.
+      </h4>
+  </div>
+</section>
+
+<section class="products-carousel--container">
+  <div class="products-carousel">
+
+  <?php /* Prodotti */ ?>
+  <?php
+
+  $args = array(
+          'posts_per_page' => '10',
+          'product_cat' => 'frutta',
+          'post_type' => 'product',
+  				'orderby' => 'date',
+          'order' => 'ASC',
+      );
+
+  $query = new WP_Query( $args );
+  if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
+
+  <?php get_template_part( 'template-parts/loop', 'shop' ); ?>
+
+  <?php endwhile;
+  	wp_reset_postdata();
+  endif; ?>
+
+  </div>
+</section>
+
+<section class="section-hero small">
+  <div class="section-hero--container">
+      <h4 class="section-hero--subtitle">
         I prodotti più amati.
       </h4>
   </div>
@@ -54,7 +122,7 @@ $_SESSION['havesearch'] = false;
   <?php
 
   $args = array(
-          'posts_per_page' => '8',
+          'posts_per_page' => '10',
           'product_cat' => 'negozio',
           'post_type' => 'product',
   				'orderby' => 'date',
