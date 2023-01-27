@@ -51,10 +51,13 @@
 }
 
 .fogliospesa--sticky {
-	border-bottom: 1px solid $panna;
-	padding: 24px 0 40px 0;
+	padding: 20px;
+	background: $white;
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+  margin-top: 32px;
 	@include breakpoint(desktop) {
-		padding: 60px 0;
+		padding: 24px;
+    margin-top: 50px;
 	}
 
 	&--flex {
@@ -66,7 +69,7 @@
 	&--dx {
 		width: 100%;
 		@include breakpoint(desktop) {
-			padding-left: 80px;
+			padding-left: 50px;
 			width: 43%;
 		}
 	}
@@ -173,13 +176,17 @@
 		width: 100%;
 		border-bottom: 1px solid $panna;
 		padding: 40px 0;
+		margin-top: 40px;
+		border-top: 1px solid $panna;
 		@include breakpoint(desktop) {
+			margin-top: 60px;
 			padding: 60px 0;
-			margin-left: -24px;
-			margin-right: -24px;
-			width: calc(100% + 48px);
+			margin-left: -8px;
+			margin-right: -8px;
+			width: calc(100% + 16px);
 
 			.magazine-post {
+        
 				&--flex {
 					display: block;
 				}
@@ -211,11 +218,11 @@
 				}
 			}
 		}
-		@include breakpoint(container) {
-			margin-left: -20px;
-			margin-right: -20px;
-			width: calc(100% + 40px);
-		}
+		// @include breakpoint(container) {
+		// 	margin-left: -20px;
+		// 	margin-right: -20px;
+		// 	width: calc(100% + 40px);
+		// }
 	}
 
 	&--flex {
@@ -242,10 +249,10 @@
 
 		.magazine-post {
 			width: 100%;
-			padding: 24px 0;
+			margin: 16px 0;
 
 			&:first-of-type {
-				padding-top: 0;
+				margin-top: 0;
 			}
 
 			&--excerpt {

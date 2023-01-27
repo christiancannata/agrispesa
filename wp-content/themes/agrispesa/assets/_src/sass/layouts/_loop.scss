@@ -215,8 +215,14 @@
 .magazine-post {
 	width: 33.333%;
 	padding: 24px;
+	margin: 0 8px;
+	background: $white;
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
 	@include breakpoint(container) {
-		padding: 16px 20px;
+		padding: 20px 20px;
+	}
+	@include breakpoint(mobile) {
+		margin: 0;
 	}
 
 	.categories-list {
@@ -262,6 +268,7 @@
 		}
 		@include breakpoint(mobile) {
 			width: 100%;
+			padding-right: 0;
 		}
 	}
 
