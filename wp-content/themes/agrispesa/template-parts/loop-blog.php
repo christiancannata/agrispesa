@@ -22,7 +22,6 @@ $thumb_url = $thumb_url_array[0];
             <?php echo the_title(); ?>
           </a>
         </h2>
-        <div class="magazine-post--excerpt"><?php echo the_excerpt(); ?></div>
       </div>
       <div class="magazine-post--text--bottom">
         <div class="magazine-post--data">
