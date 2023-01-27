@@ -1,11 +1,7 @@
-<?php
-/* Template Name: Manifesto */
-
-get_header(); ?>
+<?php get_header(); ?>
 
 
 <div class="wrapper" id="index-wrapper">
-
 
 	<section class="manifesto--hero">
 		<div class="manifesto--container">
@@ -110,11 +106,9 @@ get_header(); ?>
 		</div>
 	</section>
 
-
-
-
-
 </div>
 
-<?php
-get_footer();
+
+
+
+<?php get_footer(); ?>

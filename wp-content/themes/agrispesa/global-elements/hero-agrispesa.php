@@ -4,7 +4,7 @@
       <div class="hero--text">
         <h1 class="hero--title">Dall'orto<br/>al tuo frigo.</h1>
         <p class="hero--subtitle">Prodotti di agricoltura contadina direttamente a casa tua.</p>
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary btn-big hero--btn" alt="Scegli la tua box">Scegli la tua box</a>
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-big hero--btn" alt="Scegli la tua box">Scegli la tua box</a>
         <div class="hero-stars">
           <div class="review-page--stars">
             <span class="icon-star yellow"></span>
