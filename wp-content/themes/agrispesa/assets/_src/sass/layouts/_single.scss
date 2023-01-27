@@ -118,8 +118,23 @@
 				line-height: 1.1;
 				font-style: italic;
 				font-weight: 900;
+				position: relative;
 				@include breakpoint(desktop) {
 					@include font-size(32);
+				}
+
+				&:before {
+					@include font-size(50);
+					content: '"';
+					color: $orange;
+					position: absolute;
+					top: -20px;
+					left: -30px;
+					@include breakpoint(desktop) {
+						@include font-size(70);
+						top: -30px;
+						left: -50px;
+					}
 				}
 			}
 		}
