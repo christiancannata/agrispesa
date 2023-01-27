@@ -90,7 +90,7 @@
 		<section class="section-hero">
 			<div class="section-hero--container">
 					<h4 class="section-hero--subtitle">
-						Storie di agricoltura.
+						Storie di agricoltura contadina.
 					</h4>
 			</div>
 		</section>
