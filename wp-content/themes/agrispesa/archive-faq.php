@@ -5,7 +5,16 @@
 
 	<?php if ( have_posts() ) : ?>
 
-		<?php get_template_part( 'global-elements/hero', 'faq' ); ?>
+		
+		<section class="manifesto--hero">
+			<div class="manifesto--container">
+					<h1 class="manifesto--hero--title">FAQ</h1>
+					<h2 class="manifesto--hero--subtitle">
+						Abbiamo sempre tempo per te.<br/>
+						Non siamo mai troppo impegnati per rispondere alle tue domande.
+					</h2>
+			</div>
+		</section>
 
 		<section class="faq">
 			<div class="container-small">

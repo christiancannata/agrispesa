@@ -41,9 +41,91 @@
 	}
 }
 
+.products-carousel-home {
+	&--container {
+		display: flex;
+		width: 100%;
+		padding: 32px 0 60px;
+		max-width: 1240px;
+		margin: 0 auto;
+		align-items: center;
+		@include breakpoint(mobile) {
+			flex-wrap: wrap;
+		}
+
+		.slick-next-agr,
+		.slick-prev-agr {
+			top: -50px;
+		}
+
+		.slick-next-agr {
+			right: 0;
+			left: 60px;
+
+			&:hover {
+				right: auto;
+				left: 65px;
+			}
+		}
+
+		.product-box {
+			margin: 0 12px;
+		}
+	}
+
+	&--hero {
+		width: 100%;
+		margin-left: 12px;
+		margin-right: 40px;
+		@include breakpoint(desktop) {
+			width: 28%;
+		}
+		@include breakpoint(mobile) {
+			order: 1;
+		}
+
+		&.right {
+			margin-right: 12px;
+			margin-left: 40px;
+		}
+	}
+
+	&--slider {
+		width: 100%;
+		@include breakpoint(desktop) {
+			width: 72%;
+		}
+		@include breakpoint(mobile) {
+			order: 2;
+		}
+	}
+
+	&--video {
+		width: 100%;
+
+		video {
+			width: 100%;
+		}
+	}
+
+	&--title {
+		@include font-size(40);
+		font-weight: 900;
+		line-height: 1;
+		font-family: $font-title;
+		margin-bottom: 24px;
+	}
+
+	&--subtitle {
+		@include font-size(22);
+		line-height: 1.2;
+		margin-bottom: 32px;
+	}
+}
+
 .products-carousel {
-	// display: flex;
 	width: 100%;
+	position: relative;
 
 	.slick-next-agr,
 	.slick-prev-agr {
@@ -60,6 +142,53 @@
 		}
 	}
 
+	&--bubble {
+		position: absolute;
+		font-family: $font-hand;
+		@include font-size(36);
+		max-width: 200px;
+		text-transform: uppercase;
+		line-height: 0.8;
+		color: $primary;
+		text-align: center;
+		padding: 8px;
+
+		&:after {
+			content: '';
+			display: block;
+			width: 80px;
+			height: 80px;
+			background-size: 100% auto;
+			background-position: center;
+			background-repeat: no-repeat;
+			position: absolute;
+		}
+
+		&.top-left {
+			top: -60px;
+			left: -50px;
+			text-align: right;
+
+			&:after {
+				background-image: url("../images/elements/arrow-down.svg");
+				top: 0;
+				right: -80px;
+			}
+		}
+
+		&.top-right {
+			top: -60px;
+			right: -50px;
+			text-align: left;
+
+			&:after {
+				background-image: url("../images/elements/arrow-left.svg");
+				top: 0;
+				left: -80px;
+			}
+		}
+	}
+
 	&--container {
 		display: flex;
 		align-items: center;
@@ -67,6 +196,7 @@
 		padding: 80px 0 60px;
 		max-width: 1240px;
 		margin: 0 auto;
+		position: relative;
 		@include breakpoint(mobile) {
 			flex-wrap: wrap;
 			padding: 40px 0;
@@ -155,8 +285,8 @@
 	}
 
 	&--title {
-		@include font-size(24);
-		font-weight: 800;
+		@include font-size(22);
+		font-weight: 600;
 	}
 
 	&--price {

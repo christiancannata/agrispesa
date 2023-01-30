@@ -330,9 +330,9 @@
 }
 
 .sec-wide {
-	padding: 260px 150px;
+	padding: 200px 150px 80px;
 	@include breakpoint(container) {
-		padding: 200px 0;
+		padding: 200px 0 80px;
 	}
 	@include breakpoint(mobile) {
 		padding: 80px 0;

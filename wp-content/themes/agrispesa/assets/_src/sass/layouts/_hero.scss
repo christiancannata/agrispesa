@@ -57,10 +57,10 @@
 		position: relative;
 		z-index: 2;
 		width: 98%;
-		margin: 40px auto -60px;
+		margin: 20px auto -70px;
 		@include breakpoint(desktop) {
-			width: 990px;
-			margin: 60px auto -150px;
+			width: 1000px;
+			margin: 0 auto -180px;
 		}
 	}
 }

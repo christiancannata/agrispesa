@@ -56,11 +56,14 @@ $description = get_the_archive_description();
   		$current_cat = get_queried_object();
       $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
       $get_product_cat_ID = $getIDbyNAME->term_id;
+			$getAnimali = get_term_by('name', 'animali', 'product_cat');
+	    $animaliID = $getAnimali->term_id;
       $cat_args = array(
           'orderby'    => 'ID',
           'order'      => 'asc',
           'hide_empty' => false,
           'parent' => $get_product_cat_ID,
+					'exclude' => $animaliID
       );
 
   $product_categories = get_terms( 'product_cat', $cat_args );
@@ -108,6 +111,8 @@ if ( woocommerce_product_loop() ) {
 	if ( is_shop() ) {
 		$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
 		$get_product_cat_ID = $getIDbyNAME->term_id;
+		$getAnimali = get_term_by('name', 'animali', 'product_cat');
+		$animaliID = $getAnimali->term_id;
 		$args = array(
 			 'hide_empty' => true,
 			 'fields' => 'slugs',
@@ -115,6 +120,7 @@ if ( woocommerce_product_loop() ) {
 			 'parent' => $get_product_cat_ID,
 			 'orderby'    => 'ID',
 			 'order'      => 'asc',
+			 'exclude' => $animaliID
 		);
 		$categories = get_terms( $args );
     foreach ( $categories as $category_slug ) {
@@ -133,6 +139,8 @@ if ( woocommerce_product_loop() ) {
 		if ( is_shop() || $idNegozio === 'Negozio' ) {
 			$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
 		  $get_product_cat_ID = $getIDbyNAME->term_id;
+			$getAnimali = get_term_by('name', 'animali', 'product_cat');
+	    $animaliID = $getAnimali->term_id;
 			$args = array(
 	       'hide_empty' => true,
 	       'fields' => 'slugs',
@@ -140,6 +148,7 @@ if ( woocommerce_product_loop() ) {
 	       'parent' => $get_product_cat_ID,
 				 'orderby'    => 'ID',
 				 'order'      => 'asc',
+				 'exclude' => $animaliID
 	    );
 		}  elseif( is_product_category() || is_product_tag() ) {
 
