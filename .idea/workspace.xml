@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/images/box/box1_BZ.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-content/uploads/wc-logs/wc-image-regeneration-2022-12-30-61ca0fbf6f8614a498b8c63e70d08181.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/_src/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/assets/css/tailwind.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/global-elements/hero-agrispesa.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/global-elements/hero-agrispesa.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +89,7 @@
       <workItem from="1674739132188" duration="3621000" />
       <workItem from="1675069634990" duration="948000" />
       <workItem from="1675072204202" duration="87000" />
-      <workItem from="1675076923841" duration="856000" />
+      <workItem from="1675076923841" duration="2595000" />
     </task>
     <servers />
   </component>

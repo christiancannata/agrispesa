@@ -1,4 +1,6 @@
+/* global WPURL:readonly */
 window.baseurl = WPURL.siteurl
+
 
 function setCookie(cName, cValue, expDays) {
   let date = new Date();
@@ -273,12 +275,12 @@ function productsCarousel() {
       settings: {
         slidesToShow: 4,
       }
-    },{
+    }, {
       breakpoint: 1100,
       settings: {
         slidesToShow: 3,
       }
-    },{
+    }, {
       breakpoint: 800,
       settings: {
         slidesToShow: 2,
