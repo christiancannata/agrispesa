@@ -14,6 +14,10 @@ input[type=number] {
 }
 
 body.woocommerce-cart {
+	.woocommerce-cart-form__contents {
+		display: none !important;
+	}
+
 	.page-header {
 		text-align: center;
 		padding: 32px 0 24px;
@@ -35,19 +39,18 @@ body.woocommerce-cart {
 
 .agr-cart {
 	width: 100%;
-	@include breakpoint(desktop) {
-		width: 68%;
-	}
-
 
 	&--flex {
 		max-width: 1240px;
 		margin: 0 auto;
-		padding: 0 20px;
+		padding: 0;
 		@include breakpoint(desktop) {
+			padding: 0 20px;
 			display: flex;
 			justify-content: space-between;
+			align-items: flex-start;
 		}
+
 		.woocommerce-cart-form {
 			width: 100%;
 			@include breakpoint(desktop) {
@@ -57,8 +60,40 @@ body.woocommerce-cart {
 
 		.cart-collaterals {
 			width: 100%;
+			background: $panna;
+			margin: 16px 0 80px;
 			@include breakpoint(desktop) {
 				width: 30%;
+				margin: 0;
+			}
+			@include breakpoint(mobile) {
+				tr {
+					display: flex !important;
+				}
+			}
+
+			tr td,
+			tr th {
+				border-top: 1px solid $background !important;
+				vertical-align: middle !important;
+				background: transparent !important;
+				@include breakpoint(mobile) {
+					display: table-cell !important;
+					width: 100% !important;
+
+					&:before {
+						content: none !important;
+					}
+				}
+
+				tr {
+					&:first-child {
+						td,
+						th {
+							border-top: none !important;
+						}
+					}
+				}
 			}
 
 			.cart_totals {
@@ -68,6 +103,7 @@ body.woocommerce-cart {
 				table.shop_table {
 					padding: 0 !important;
 					background: transparent;
+
 					th {
 						@include font-size(12);
 						font-weight: 300 !important;
@@ -75,13 +111,21 @@ body.woocommerce-cart {
 						text-transform: uppercase;
 					}
 
+					.recurring-totals th {
+						@include font-size(18);
+						font-weight: 900 !important;
+						padding: 24px 8px 8px !important;
+						font-family: $font-title;
+						text-transform: none !important;
+						letter-spacing: 0 !important;
+					}
+
 					td,
 					td p {
 						@include font-size(14);
 						font-family: $font-body;
 						font-weight: 300 !important;
-						letter-spacing: 2px;
-						text-transform: uppercase;
+						letter-spacing: 0.5px;
 						margin: 0;
 						text-align: right;
 
@@ -93,7 +137,7 @@ body.woocommerce-cart {
 								color: $primary;
 								margin-top: 4px;
 								display: block;
-								letter-spacing: 0px;
+								letter-spacing: 0;
 							}
 						}
 					}
@@ -104,8 +148,9 @@ body.woocommerce-cart {
 							@include font-size(14);
 							color: $black;
 							font-weight: 500 !important;
-							strong {
+							vertical-align: top !important;
 
+							strong {
 								font-weight: 500 !important;
 							}
 						}
@@ -247,5 +292,25 @@ body.woocommerce-cart {
 				height: 26px;
 			}
 		}
+	}
+}
+
+.zig-zag-bottom {
+	background: $panna;
+	padding: 16px;
+	position: relative;
+
+	&:after {
+		background: linear-gradient(-45deg, transparent 16px, $panna 0), linear-gradient(45deg, transparent 16px, $panna 0);
+		background-repeat: repeat-x;
+		background-position: left bottom;
+		background-size: 22px 32px;
+		content: "";
+		display: block;
+		width: 100%;
+		height: 32px;
+		position: absolute;
+		bottom: -32px;
+		left: 0;
 	}
 }

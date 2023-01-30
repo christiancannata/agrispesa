@@ -1,9 +1,11 @@
-<?php get_header(); ?>
+<?php
+/* Template Name: Carrello */
+get_header(); ?>
 
 
 <?php if ( have_posts() ) : ?>
   <div class="single-article">
-  <div class="container-xsmall">
+  <div class="container-pg">
     <header class="page-header">
       <?php
       the_title( '<h1 class="page-title">', '</h1>' );
