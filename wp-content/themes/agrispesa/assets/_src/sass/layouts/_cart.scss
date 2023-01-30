@@ -222,6 +222,7 @@ body.woocommerce-cart {
 	&--name {
 		a {
 			@include font-size(18);
+			font-weight: 400;
 
 			&:hover {
 				color: $blue;
@@ -246,9 +247,9 @@ body.woocommerce-cart {
 		color: $muted;
 
 		.cart-product-var-var {
-			margin-right: 24px;
+			margin-right: 16px;
 
-			&:last-of-type {
+			&.last {
 				margin-right: 0;
 			}
 		}
@@ -263,9 +264,9 @@ body.woocommerce-cart {
 		color: $black;
 
 		.cart-product-var-var {
-			margin-right: 24px;
+			margin-right: 16px;
 
-			&:last-of-type {
+			&.last {
 				margin-right: 0;
 			}
 		}

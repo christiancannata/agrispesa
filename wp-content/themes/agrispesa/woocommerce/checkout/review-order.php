@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 global $woocommerce;
 
 ?>
-<div class="checkout--review-order woocommerce-checkout-review-order-table">
+<div class="checkout--review-order woocommerce-checkout-review-order-table zig-zag-bottom">
 
 	<div class="checkout--preview">
 		<?php
@@ -28,17 +28,8 @@ global $woocommerce;
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 			$thumbnail = $_product->get_image();
-			$hasTest = false;
 
-			if ( isset( $cart_item['test'] ) ) {
-				$hasTest = true;
 
-				$test       = $cart_item['test'];
-				$testName   = get_user_name_from_test( $test );
-				$poshNumber = $test['test_progressive_id'];
-				$poshMood = $test['mood'];
-				$poshColor = get_color_from_test( $test );
-			}
 
 
 			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
@@ -46,51 +37,33 @@ global $woocommerce;
 				<div class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
 
-					<?php if($woocommerce->cart->cart_contents_count == 1): ?>
+					<?php if($woocommerce->cart->cart_contents_count == 1 && $_product->is_type('variation')): ?>
 						<div class="checkout--preview--image">
-							<?php if($hasTest) {
-								echo '<img src="' . get_template_directory_uri() . '/img/quiz/posh-'.$poshColor.'.jpg"
-										 class="cart-color-posh" alt="Posh"/>';
-							} else {
-									echo $thumbnail; // PHPCS: XSS ok.
-							}
+							<?php echo $thumbnail; // PHPCS: XSS ok.
 							?>
 						</div>
 					<?php endif; ?>
-					<div class="sommair--totals--flex">
+					<div class="sommair--totals--flex <?php if ($_product->is_type('variation')) { echo 'flex-start'; }?>">
 						<div class="sommair--totals--sx">
 							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
 							<div class="multi-product-images">
 								<div class="checkout--preview--image">
-									<?php if($hasTest) {
-										echo '<img src="' . get_template_directory_uri() . '/img/quiz/posh-'.$poshColor.'.jpg"
-				                 class="cart-color-posh" alt="Posh"/>';
-									} else {
-											echo $thumbnail; // PHPCS: XSS ok.
-									}
-									?>
-
+									<?php echo $thumbnail; ?>
 								</div>
 							<?php endif; ?>
-
 								<span class="small">
-									<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
-									<?php if($hasTest) {
-												echo 'n°'.  $poshNumber;
-												echo '<br/><div class="test-meta-cart">';
-												echo '<span>' . $poshMood . '</span>';
-												echo '<span>' . $testName . '</span>';
-												echo '<span>' . $poshColor . '</span>';
-												echo '</div>';
-												echo '<div class="allergeni-lista">';
-												echo '<p class="allergeni-lista--label open-allerg">Allergeni <span class="icon-arrow-down"></span></p>';
-												echo '<div class="allergeni-lista--box">';
-												echo '<p class="allergeni-lista--disclaimer">Potrebbero essere presenti alcuni dei seguenti allergeni:</p>';
-												echo get_field('lista_allergeni', 'option');
-												echo '</div>';
-												echo '</div>';
+									<?php if ($_product->is_type('variation')) {
+										$titolo = $_product->get_parent_data();
+										$variazioni = $_product->get_attributes();
+										echo $titolo['title'];
+										echo '<div class="checkout-sommair--variations">';
+										echo '<span>' . $variazioni['pa_dimensione'] . '</span>';
+										echo '<span class="last">' . $variazioni['pa_tipologia'] . '</span>';
+										echo '</div>';
+									} else {
+										echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;';
+									} ?>
 
-											} ?>
 								</span>
 							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
 							</div>

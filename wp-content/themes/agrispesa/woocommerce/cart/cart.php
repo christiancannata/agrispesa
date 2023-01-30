@@ -109,8 +109,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 											<?php if ($prodotto->is_type('variation')) {
 												$variazioni = $prodotto->get_attributes();
 												echo '<div class="new-cart--variations">';
-												echo '<span class="cart-product-var-var">' . (isset($variazioni['pa_tipologia'])) ? $variazioni['pa_tipologia'] : '' . '</span>';
-												echo '<span class="cart-product-var-var">' . (isset($variazioni['pa_tipologia'])) ? $variazioni['pa_tipologia'] : '' . '</span>';
+												echo '<span class="cart-product-var-var">' . $variazioni['pa_dimensione'] . '</span>';
+												echo '<span class="cart-product-var-var last">' . $variazioni['pa_tipologia'] . '</span>';
 												echo '</div>';
 											} else {
 												if ($prodotto->get_weight() > 0) {

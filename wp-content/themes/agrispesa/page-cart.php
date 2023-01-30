@@ -1,10 +1,9 @@
 <?php
-/* Template Name: Carrello */
+/* Template Name: Layout Colonna */
 get_header(); ?>
 
 
 <?php if ( have_posts() ) : ?>
-  <div class="single-article">
   <div class="container-pg">
     <header class="page-header">
       <?php
@@ -18,7 +17,6 @@ get_header(); ?>
       </div>
 
 		<?php endwhile ?>
-  </div>
   </div>
 <?php endif;?>
 
