@@ -423,6 +423,7 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 		if (empty($boxPreferences)) {
 			$boxPreferences = [];
 		}
+
 		foreach ($boxPreferences as $preference) {
 			$productSearched = array_filter(
 				$productsToAdd,
@@ -433,24 +434,46 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 
 			if (!empty($productSearched)) {
 
-
 				$keys = array_keys($productSearched);
 
-				$productSearched = reset($keys);
+				$productSearched = reset($productSearched);
 
-				$quantity = $productsToAdd[$productSearched]['quantity'];
 
-				unset($productsToAdd[$productSearched]);
+				$productSearchedKey = reset($keys);
 
-				$productToAdd = null;
+				$quantity = $productsToAdd[$productSearchedKey]['quantity'];
+				unset($productsToAdd[$productSearchedKey]);
 
-				if ($productToAdd) {
-					$productsToAdd[] = [
-						'id' => $preference['product_to_add']['id'],
-						'name' => $preference['product_to_add']['name'],
-						'quantity' => $quantity
-					];
-				}
+				$categories = get_the_terms($productSearched['id'], 'product_cat');
+				$category = reset($categories);
+
+				$prod_categories = [$category->term_id];
+				$product_args = array(
+					'numberposts' => -1,
+					'post_status' => array('publish'),
+					'post_type' => array('product'),
+					'suppress_filters' => false,
+					'order' => 'ASC',
+					'offset' => 0
+				);
+
+				$product_args['tax_query'] = array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field' => 'id',
+						'terms' => $prod_categories,
+						'operator' => 'IN',
+					));
+
+				$productsByCategory = get_posts($product_args);
+
+				$productToAdd = reset($productsByCategory);
+
+				$productsToAdd[] = [
+					'id' => $productToAdd->ID,
+					'name' => $productToAdd->post_title,
+					'quantity' => $quantity
+				];
 
 
 			}

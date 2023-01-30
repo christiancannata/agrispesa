@@ -29,7 +29,7 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', 'root');
 
 /** Hostname del database */
-define('DB_HOST', 'localhost');
+define('DB_HOST', '127.0.0.1');
 
 /** Charset del Database da utilizzare nella creazione delle tabelle. */
 define('DB_CHARSET', 'utf8');
@@ -46,14 +46,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'Mettere la vostra frase unica qui');
-define('SECURE_AUTH_KEY',  'Mettere la vostra frase unica qui');
-define('LOGGED_IN_KEY',    'Mettere la vostra frase unica qui');
-define('NONCE_KEY',        'Mettere la vostra frase unica qui');
-define('AUTH_SALT',        'Mettere la vostra frase unica qui');
+define('AUTH_KEY', 'Mettere la vostra frase unica qui');
+define('SECURE_AUTH_KEY', 'Mettere la vostra frase unica qui');
+define('LOGGED_IN_KEY', 'Mettere la vostra frase unica qui');
+define('NONCE_KEY', 'Mettere la vostra frase unica qui');
+define('AUTH_SALT', 'Mettere la vostra frase unica qui');
 define('SECURE_AUTH_SALT', 'Mettere la vostra frase unica qui');
-define('LOGGED_IN_SALT',   'Mettere la vostra frase unica qui');
-define('NONCE_SALT',       'Mettere la vostra frase unica qui');
+define('LOGGED_IN_SALT', 'Mettere la vostra frase unica qui');
+define('NONCE_SALT', 'Mettere la vostra frase unica qui');
 
 /**#@-*/
 
@@ -84,8 +84,8 @@ define('WP_MEMORY_LIMIT', '3000M');
 /* Finito, interrompere le modifiche! Buon blogging. */
 
 /** Path assoluto alla directory di WordPress. */
-if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+if (!defined('ABSPATH'))
+    define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Imposta le variabili di WordPress ed include i file. */
 require_once(ABSPATH . 'wp-settings.php');
