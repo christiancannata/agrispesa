@@ -475,7 +475,6 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 					'quantity' => $quantity
 				];
 
-
 			}
 
 		}
