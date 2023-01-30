@@ -1,4 +1,5 @@
 <?php
+require_once get_template_directory() . '/libraries/dompdf/vendor/autoload.php';
 function dd($vars)
 {
 	die(var_dump($vars));

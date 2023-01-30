@@ -1,0 +1,12 @@
+2023-01-30T12:51:31+00:00 CRITICAL require_once(): Failed opening required '../libraries/dompdf/autoload.inc.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
+2023-01-30T12:53:05+00:00 CRITICAL require_once(): Failed opening required '../libraries/dompdf/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
+2023-01-30T12:53:27+00:00 CRITICAL require_once(): Failed opening required '../../libraries/dompdf/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
+2023-01-30T12:53:59+00:00 CRITICAL require_once(): Failed opening required 'https://agrispesa.loc/wp-content/themes/agrispesa/libraries/dompdf/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
+2023-01-30T12:54:17+00:00 CRITICAL require_once(): Failed opening required 'https://agrispesa.loc/wp-content/themes/agrispesa/libraries/dompdf/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
+2023-01-30T12:54:44+00:00 CRITICAL require_once(): Failed opening required '/shared/httpd/agrispesa/wp-content/themes/agrispesalibraries/dompdf/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2
+
