@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="hero--box">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/box.avif" alt="Prova Agrispesa" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/box1_BZ.png" alt="Prova Agrispesa" />
       </div>
     </div>
   </div>

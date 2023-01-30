@@ -1,4 +1,7 @@
+if (typeof WPURL !== 'undefined'){
 window.baseurl = WPURL.siteurl
+}
+
 
 function setCookie(cName, cValue, expDays) {
   let date = new Date();
