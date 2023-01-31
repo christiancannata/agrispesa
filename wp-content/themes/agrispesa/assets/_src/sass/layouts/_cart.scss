@@ -297,10 +297,10 @@ body.woocommerce-cart {
 }
 
 .wc-proceed-to-checkout {
-	.wcpay-payment-request-wrapper {
+	#wcpay-payment-request-wrapper {
 		padding-top: 16px !important;
 	}
-	.wcpay-payment-request-button-separator {
+	#wcpay-payment-request-button-separator {
 		@include font-size(12);
 		margin: 16px 0!important;
 	}

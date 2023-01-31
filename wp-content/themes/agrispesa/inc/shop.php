@@ -97,8 +97,8 @@ function bbloomer_remove_shipping_label( $label, $method ) {
 /**
  * Set a minimum order amount for checkout
  */
-add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
-add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
+// add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+// add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
 
 function wc_minimum_order_amount() {
     // $facciamoNoi = 50; //ID prodotto Facciamo noi
@@ -121,10 +121,13 @@ function wc_minimum_order_amount() {
 
         if( is_cart() ) {
 
+print_r($product_cart_id );
           if ( $in_cart ) {
 
              $notice = 'Product ID ' . $product_id . ' is in the Cart!';
              wc_print_notice( $notice, 'notice' );
+
+
 
           }
 
