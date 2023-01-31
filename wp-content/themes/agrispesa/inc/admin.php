@@ -1,5 +1,4 @@
 <?php
-require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
 function dd($vars)
 {
 	die(var_dump($vars));
@@ -155,6 +154,43 @@ add_action('rest_api_init', function () {
 		}
 	));
 
+
+	register_rest_route('agrispesa/v1', 'print-list-products', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
+
+			$week = $_GET['week'];
+
+			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
+
+			$args = [
+				'posts_per_page' => -1,
+				'post_type' => 'shop_order',
+				'post_status' => ['wc-processing', 'wc-completed'],
+				'meta_query' => [
+					'relation' => 'AND',
+					[
+						'key' => '_week',
+						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
+						'compare' => '='
+					],
+					[
+						'key' => '_shipping_postcode',
+						'value' => $caps,
+						'compare' => 'IN'
+					]
+				]
+			];
+			$orders = new WP_Query($args);
+			$orders = $orders->get_posts();
+
+
+		}
+	));
 
 	register_rest_route('agrispesa/v1', 'delivery-group-csv', array(
 		'methods' => 'GET',
