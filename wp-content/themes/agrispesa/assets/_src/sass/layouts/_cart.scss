@@ -297,6 +297,8 @@ body.woocommerce-cart {
 }
 
 .zig-zag-bottom {
+
+	@include border-radius(4px 4px 0 0);
 	background: $panna;
 	padding: 16px;
 	position: relative;

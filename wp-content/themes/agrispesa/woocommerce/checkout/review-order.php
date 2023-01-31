@@ -42,6 +42,9 @@ global $woocommerce;
 							<?php echo $thumbnail; // PHPCS: XSS ok.
 							?>
 						</div>
+					<?php else: ?>
+
+						quanti prodotti? <?php echo WC()->cart->get_cart_contents_count(); ?>
 					<?php endif; ?>
 					<div class="sommair--totals--flex <?php if ($_product->is_type('variation')) { echo 'flex-start'; }?>">
 						<div class="sommair--totals--sx">
