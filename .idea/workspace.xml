@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c5733b8-af9e-438f-9682-27e0062ccded" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/inc/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/libraries/dompdf" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/libraries/dompdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-content/themes/agrispesa/libraries/dompdf/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/wp-content/themes/agrispesa/libraries/dompdf/.gitignore" afterDir="false" />
     </list>
@@ -18,7 +17,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/wp-content/themes/agrispesa/libraries/dompdf" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -88,7 +87,7 @@
       <workItem from="1675069634990" duration="948000" />
       <workItem from="1675072204202" duration="87000" />
       <workItem from="1675076923841" duration="4239000" />
-      <workItem from="1675134726158" duration="243000" />
+      <workItem from="1675134726158" duration="314000" />
     </task>
     <servers />
   </component>
