@@ -462,7 +462,7 @@ function quantityInput() {
   jQuery(function($) {
     if (!String.prototype.getDecimals) {
       String.prototype.getDecimals = function() {
-        var num = this,
+        var num = jQuery(this),
           match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
         if (!match) {
           return 0;
@@ -505,7 +505,7 @@ function quantityInput() {
         jQuery("[name='update_cart']").removeAttr('disabled');
         jQuery("[name='update_cart']").trigger("click");
       }, 500);
-    
+
 
 
     });
