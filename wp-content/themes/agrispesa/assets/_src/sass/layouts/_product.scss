@@ -29,9 +29,9 @@
 
 .woocommerce-products-header {
 	margin-bottom: 24px;
-		@include breakpoint(desktop) {
-			margin-bottom: 50px;
-		}
+	@include breakpoint(desktop) {
+		margin-bottom: 50px;
+	}
 }
 
 .added_to_cart,
@@ -232,12 +232,13 @@ body.tax-product_cat {
 				@include font-size(18);
 				margin: 0 16px 0 0;
 				line-height: 1.1;
+				font-weight: 600;
 				@include breakpoint(desktop) {
 					@include font-size(20);
 					margin: 0 24px 0 0;
 				}
 				@include breakpoint(mobile) {
-					padding:0;
+					padding: 0;
 					margin-bottom: 8px;
 				}
 			}
@@ -337,6 +338,7 @@ body.tax-product_cat {
 		justify-content: space-between;
 		@include breakpoint(mobile) {
 			flex-wrap: wrap;
+
 			.btn {
 				width: 100%;
 				margin-top: 8px;
@@ -399,19 +401,34 @@ body.tax-product_cat {
 
 .woocommerce {
 	div.product {
+		.the-box-page {
+			div.images.woocommerce-product-gallery {
+				background: $panna;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				figure {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+.woocommerce {
+	div.product {
 		div.images.woocommerce-product-gallery {
 			width: 50%;
 			float: none !important;
-			padding-right: 80px;
+			margin-right: 80px;
 			margin-bottom: 0 !important;
 			@include breakpoint(container) {
 				width: 50%;
-				padding-right: 60px;
+				margin-right: 60px;
 			}
 			@include breakpoint(mobile) {
 				width: 100%;
-				padding: 0;
-				margin-top: 16px;
+				margin: 16px 0 0;
 			}
 		}
 
@@ -619,9 +636,6 @@ body.tax-product_cat {
 			&:checked {
 				+ .box {
 					background-color: $primary;
-					@include breakpoint(desktop) {
-						@include transform(rotate(-2deg));
-					}
 
 					span {
 						color: white;
@@ -642,14 +656,6 @@ body.tax-product_cat {
 
 				input[type="radio"] {
 					display: none;
-
-					&:checked {
-						+ .box {
-							@include breakpoint(desktop) {
-								@include transform(rotate(2deg));
-							}
-						}
-					}
 				}
 			}
 		}

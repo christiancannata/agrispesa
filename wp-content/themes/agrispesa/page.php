@@ -20,7 +20,5 @@
   </div>
 <?php endif;?>
 
-<?php get_template_part( 'global-elements/banner', 'aziende' ); ?>
-<?php get_template_part( 'global-elements/banner', 'professionisti' ); ?>
 
 <?php get_footer();

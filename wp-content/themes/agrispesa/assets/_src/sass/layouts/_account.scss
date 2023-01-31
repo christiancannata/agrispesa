@@ -332,8 +332,14 @@ body.woocommerce-view-order {
 
 	.cart_totals {
 		& > h2 {
-			display: none;
+			@include font-size(18);
+			font-weight: 900;
+			margin: 0 0 8px;
+			padding: 0 8px;
+			font-family: $font-title;
 		}
+
+
 
 		table.shop_table {
 			padding: 32px 24px 24px !important;
@@ -343,12 +349,32 @@ body.woocommerce-view-order {
 			}
 		}
 
+		.woocommerce-shipping-destination {
+			display: none;
+		}
+
 		.woocommerce-shipping-methods {
 			li {
 				padding: 0;
 
 				label {
-					@include font-size(18);
+					@include font-size(14);
+					font-weight: 300 !important;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					margin: 0;
+					text-align: right;
+					display: none;
+
+					.woocommerce-Price-amount.amount {
+						@include font-size(14);
+						font-weight: 300 !important;
+						letter-spacing: 2px;
+						text-transform: uppercase;
+						margin: 0;
+						text-align: right;
+						display: block;
+					}
 				}
 
 				&:before {
@@ -528,6 +554,7 @@ body.woocommerce-account {
 			@include breakpoint(desktop) {
 				@include font-size(32);
 			}
+
 			span {
 				position: relative;
 				top: 3px;

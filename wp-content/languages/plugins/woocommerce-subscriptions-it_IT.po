@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-01-18 18:16+0100\n"
+"PO-Revision-Date: 2023-01-30 22:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3353,7 +3353,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:493
 msgid "Initial Shipment"
-msgstr "Prima spedizione"
+msgstr "Spedizione"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:932
 msgid "Please enter a valid postcode/ZIP."
@@ -6486,7 +6486,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:98
 #: vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:104
 msgid "Shipping via %s"
-msgstr ""
+msgstr "Spedizione"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:237
 msgctxt "shipping method price"
@@ -6510,7 +6510,7 @@ msgstr ""
 #. translators: placeholder is a date
 #: vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:405
 msgid "First renewal: %s"
-msgstr "Si rinnova il %s"
+msgstr "Rinnovo: %s"
 
 #. translators: placeholder is either subscription key or a subscription id, or, failing that, empty (e.g. "145_21" or "145")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-deprecated-functions.php:180

@@ -6,12 +6,18 @@
 
     $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
     $get_product_cat_ID = $getIDbyNAME->term_id;
+
+    $getAnimali = get_term_by('name', 'animali', 'product_cat');
+    $animaliID = $getAnimali->term_id;
+
     $cat_args = array(
         'orderby'    => $orderby,
         'order'      => $order,
         'hide_empty' => $hide_empty,
         'parent' => $get_product_cat_ID,
+        'exclude' => $animaliID
     );
+
 
 $product_categories = get_terms( 'product_cat', $cat_args );
 
