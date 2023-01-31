@@ -1,9 +1,22 @@
 <?php
-//require_once get_template_directory() . '/libraries/dompdf/vendor/autoload.php';
 function dd($vars)
 {
 	die(var_dump($vars));
 }
+
+
+add_action('woocommerce_product_options_advanced', function () {
+	woocommerce_wp_text_input([
+		'id' => '_codice_confezionamento',
+		'label' => 'Codice Confezionamento',
+	]);
+
+	woocommerce_wp_checkbox([
+		'id' => '_is_magazzino',
+		'label' => "E' da Magazzino?",
+	]);
+
+});
 
 
 add_action('rest_api_init', function () {
@@ -155,6 +168,43 @@ add_action('rest_api_init', function () {
 		}
 	));
 
+
+	register_rest_route('agrispesa/v1', 'print-list-products', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
+
+			$week = $_GET['week'];
+
+			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
+
+			$args = [
+				'posts_per_page' => -1,
+				'post_type' => 'shop_order',
+				'post_status' => ['wc-processing', 'wc-completed'],
+				'meta_query' => [
+					'relation' => 'AND',
+					[
+						'key' => '_week',
+						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
+						'compare' => '='
+					],
+					[
+						'key' => '_shipping_postcode',
+						'value' => $caps,
+						'compare' => 'IN'
+					]
+				]
+			];
+			$orders = new WP_Query($args);
+			$orders = $orders->get_posts();
+
+
+		}
+	));
 
 	register_rest_route('agrispesa/v1', 'delivery-group-csv', array(
 		'methods' => 'GET',
@@ -349,13 +399,6 @@ if (!function_exists('mv_add_meta_boxes')) {
 		add_meta_box('mv_other_fields', 'Informazioni BOX', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 
 
-		add_meta_box(
-			'box_preferences',
-			'Etichetta consegna',
-			'box_consegne_meta_box_callback',
-			'shop_order', 'side', 'core'
-		);
-
 	}
 
 	function box_preferences_meta_box_callback($order)
@@ -368,25 +411,20 @@ if (!function_exists('mv_add_meta_boxes')) {
 		?>
 		<h4>Da Eliminare</h4><br>
 
-		<h4>Da Aggiungere</h4>
 		<?php
 
 	}
 
-	function box_consegne_meta_box_callback($order)
-	{
-		global $post;
+}
 
-		$consegna = get_post_meta($post->ID, '_numero_consegna', true);
+// if you don't add 3 as as 4th argument, this will not work as expected
+add_action('save_post', 'my_save_post_function', 10, 3);
 
-		?>
-		<h4>Numero consegna</h4><br>
-
-		<?php echo $consegna; ?>
-		<?php
-
+function my_save_post_function($post_ID, $post, $update)
+{
+	if ($post->post_type == 'shop_order') {
+		update_post_meta($post->ID, '_numero_consegna', $_POST['_numero_consegna']);
 	}
-
 }
 
 // Adding Meta field in the meta container admin shop_order pages
@@ -397,12 +435,16 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 
 		$weight = get_post_meta($post->ID, '_total_box_weight', true);
 		$week = get_post_meta($post->ID, '_week', true);
+		$numConsegna = get_post_meta($post->ID, '_numero_consegna', true);
 
 		if (empty($weight)) {
 			$weight = 0;
 		}
 		echo '<span>Peso della BOX: <strong>' . $weight . 'Kg</strong></span><br>';
-		echo '<span>Settimana: <strong>' . $week . '</strong></span>';
+		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
+		echo '<strong>Numero di consegna:</strong><br>
+		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna">
+';
 
 	}
 }
