@@ -91,3 +91,59 @@ function bbloomer_remove_shipping_label( $label, $method ) {
     $new_label = preg_replace( '/^.+:/', '', $label );
     return $new_label;
 }
+
+
+//Minimo ordine 43 euro
+/**
+ * Set a minimum order amount for checkout
+ */
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
+
+function wc_minimum_order_amount() {
+    // $facciamoNoi = 50; //ID prodotto Facciamo noi
+    // $facciamoNoiID = WC()->cart->generate_cart_id( $facciamoNoi );
+    // $box_in_cart = WC()->cart->find_product_in_cart( $facciamoNoiID );
+    //
+     $minimum = 43;
+    // if ( $box_in_cart ) {
+    //     $minimum = 35;
+    // }
+
+    $product_id = 50;
+
+   $product_cart_id = WC()->cart->generate_cart_id( $product_id );
+   $in_cart = WC()->cart->find_product_in_cart( $product_cart_id );
+
+
+
+    if ( WC()->cart->total < $minimum ) {
+
+        if( is_cart() ) {
+
+          if ( $in_cart ) {
+
+             $notice = 'Product ID ' . $product_id . ' is in the Cart!';
+             wc_print_notice( $notice, 'notice' );
+
+          }
+
+            wc_print_notice(
+                sprintf( 'Beh Your current order total is %s — you must have an order with a minimum of %s to place your order ' ,
+                    wc_price( WC()->cart->total ),
+                    wc_price( $minimum )
+                ), 'error'
+            );
+
+        } else {
+
+            wc_add_notice(
+                sprintf( 'Ehi Your current order total is %s — you must have an order with a minimum of %s to place your order' ,
+                    wc_price( WC()->cart->total ),
+                    wc_price( $minimum )
+                ), 'error'
+            );
+
+        }
+    }
+}
