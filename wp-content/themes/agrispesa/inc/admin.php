@@ -655,6 +655,22 @@ function create_order_from_subscription($id)
 
 	update_post_meta($order->get_id(), '_box_preferences', $boxPreferences);
 
+
+	$groups = get_posts([
+		'post_type' => 'delivery-group',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+	]);
+
+	foreach ($groups as $group) {
+
+		$caps = get_post_meta($group->ID, 'cap', true);
+
+		if (in_array($order->get_shipping_postcode(), $caps)) {
+			update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
+		}
+	}
+
 }
 
 function register_my_custom_submenu_page()
@@ -1533,11 +1549,10 @@ function consegne_ordini_pages()
 			return $cod['meta_value'];
 		}, $confezionamento);
 
-		if (isset($_GET['document_type'])) {
+		if (isset($_POST['document_type'])) {
 			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
-			require_once get_template_directory() . '/inc/pdf/' . $_GET['document_type'] . '.php';
+			require_once get_template_directory() . '/inc/pdf/' . $_POST['document_type'] . '.php';
 			die();
-
 		}
 
 		?>
@@ -1552,45 +1567,31 @@ function consegne_ordini_pages()
 				<hr class="wp-header-end">
 
 
-				<label>Data di consegna</label><br>
-				<input type="date" name="date" autocomplete="off"><br><br>
+				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
+					<label>Data di consegna</label><br>
+					<input type="date" name="data_consegna" autocomplete="off"><br><br>
 
-				<label>Codice di confezionamento</label><br>
-				<select class="select2" name="confezionameto">
-					<?php foreach ($confezionamento as $codice): ?>
-						<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-					<?php endforeach; ?>
-				</select>
-				<br><br>
-				<br><br>
+					<label>Codice di confezionamento</label><br>
+					<select class="select2" name="confezionamento">
+						<?php foreach ($confezionamento as $codice): ?>
+							<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+						<?php endforeach; ?>
+					</select><br><br>
+					<label>Cosa vuoi esportare?</label><br>
 
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=prelievi_magazzino_cliente"
-				   target="_blank">Lista prelievi magazzino per cliente</a>
-				<br><br>
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=prelievi_magazzino_articolo"
-				   target="_blank">Lista prelievi magazzino per articolo</a>
-				<br><br>
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=fabbisogno"
-				   target="_blank">Fabbisogno</a>
-
-				<br><br>
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=confezionamento"
-				   target="_blank">Stampa per confezionamento</a>
+					<select class="select2" name="document_type">
+						<option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
+						<option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
+						<option value="fabbisogno">Fabbisogno</option>
+						<option value="confezionamento">Stampa per confezionamento</option>
+						<option>Riepilogo di spedizione</option>
+						<option>Etichette</option>
+					</select>
 
 
-				<br><br>
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=riepilogo_spedizione"
-				   target="_blank">Riepilogo di spedizione</a>
+					<button type="submit" class="button-primary">Scarica PDF</button>
 
-				<br><br>
-				<a class="button-primary"
-				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=etichette"
-				   target="_blank">Etichette</a>
+				</form>
 
 
 			</div>

@@ -2,8 +2,8 @@
 
 use Dompdf\Dompdf;
 
-$dataConsegna = $_GET['data_consegna'];
-$confezionamento = $_GET['confezionamento'];
+$dataConsegna = $_POST['data_consegna'];
+$confezionamento = $_POST['confezionamento'];
 
 $args = [
 	'posts_per_page' => -1,
@@ -59,7 +59,9 @@ $dompdf = new Dompdf();
 
 ob_start();
 ?>
-
+	<h1>
+		Lista prelievi magazzino per cliente
+	</h1>
 	<table>
 		<thead>
 		<td></td>
