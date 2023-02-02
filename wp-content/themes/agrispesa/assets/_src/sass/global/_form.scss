@@ -1,7 +1,7 @@
 /* stylelint-disable */
 @mixin input() {
 	@include transition(all 0.3s ease);
-	@include border-radius(5px);
+	@include border-radius(8px);
 	@include font-size(16);
 	@include line-height(45);
 	display: block;
@@ -16,6 +16,10 @@
 	outline: none;
 	background: #fff;
 	color: $black;
+
+	body.woocommerce-checkout & {
+		background: $background;
+	}
 
 	&:-ms-input-placeholder,
 	&::-ms-input-placeholder,
@@ -115,6 +119,10 @@ input[type=text],
 select,
 select.form-control {
 	@include input();
+
+	body.woocommerce-checkout & {
+		background: $background;
+	}
 }
 
 .woocommerce form .form-row textarea {
@@ -140,6 +148,10 @@ select.form-control {
 		border: 1px solid #f1f1f1;
 		outline: none;
 		background: $white;
+
+		body.woocommerce-checkout & {
+			background: $background;
+		}
 
 		.select2-selection__rendered {
 			@include font-size(16);
@@ -228,12 +240,20 @@ textarea {
 			position: absolute;
 			left: 0;
 			border: 1px solid transparent;
+
+			body.woocommerce-checkout & {
+				background: $background;
+			}
 		}
 
 		&.perfect span:before,
 		input[type=checkbox]:checked + span:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat;
 			background-size: 85% auto;
+
+			body.woocommerce-checkout & {
+				background-color: $background;
+			}
 		}
 	}
 }
@@ -277,12 +297,20 @@ textarea {
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
+
+		body.woocommerce-checkout & {
+			background: $background;
+		}
 	}
 
 	&.perfect label:before,
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;
 		background-size: 85% auto;
+
+		body.woocommerce-checkout & {
+			background-color: $background;
+		}
 	}
 }
 

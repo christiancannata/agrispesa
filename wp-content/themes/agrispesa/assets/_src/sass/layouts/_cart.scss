@@ -60,7 +60,7 @@ body.woocommerce-cart {
 
 		.cart-collaterals {
 			width: 100%;
-			background: $panna;
+			background: $background;
 			margin: 16px 0 80px;
 			@include breakpoint(desktop) {
 				width: 30%;
@@ -74,7 +74,7 @@ body.woocommerce-cart {
 
 			tr td,
 			tr th {
-				border-top: 1px solid $background !important;
+				border-top: 1px solid $white !important;
 				vertical-align: middle !important;
 				background: transparent !important;
 				@include breakpoint(mobile) {
@@ -164,6 +164,8 @@ body.woocommerce-cart {
 .new-cart {
 	&--item {
 		background: $white;
+		@include border-radius(4px);
+		border: 1px solid #eaeae1;
 		position: relative;
 		margin: 4px 0;
 		@include breakpoint(mobile) {
@@ -222,7 +224,7 @@ body.woocommerce-cart {
 	&--name {
 		a {
 			@include font-size(18);
-			font-weight: 400;
+			font-weight: 600;
 
 			&:hover {
 				color: $blue;
@@ -300,30 +302,32 @@ body.woocommerce-cart {
 	#wcpay-payment-request-wrapper {
 		padding-top: 16px !important;
 	}
+
 	#wcpay-payment-request-button-separator {
 		@include font-size(12);
-		margin: 16px 0!important;
+		margin: 16px 0!important !important;
 	}
 }
 
 .zig-zag-bottom {
-
-	@include border-radius(4px 4px 0 0);
-	background: $panna;
-	padding: 16px;
+	@include border-radius(8px);
+	background: $background;
+	padding: 24px;
 	position: relative;
-
-	&:after {
-		background: linear-gradient(-45deg, transparent 16px, $panna 0), linear-gradient(45deg, transparent 16px, $panna 0);
-		background-repeat: repeat-x;
-		background-position: left bottom;
-		background-size: 22px 32px;
-		content: "";
-		display: block;
-		width: 100%;
-		height: 32px;
-		position: absolute;
-		bottom: -32px;
-		left: 0;
+	@include breakpoint(desktop) {
+		@include border-radius(16px);
 	}
+	// &:after {
+	// 	background: linear-gradient(-45deg, transparent 16px, $panna 0), linear-gradient(45deg, transparent 16px, $panna 0);
+	// 	background-repeat: repeat-x;
+	// 	background-position: left bottom;
+	// 	background-size: 22px 32px;
+	// 	content: "";
+	// 	display: block;
+	// 	width: 100%;
+	// 	height: 32px;
+	// 	position: absolute;
+	// 	bottom: -32px;
+	// 	left: 0;
+	// }
 }

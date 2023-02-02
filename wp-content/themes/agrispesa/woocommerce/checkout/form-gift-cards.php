@@ -21,6 +21,7 @@ $direct_display = get_option( 'ywgc_display_form', 'ywgc_display_form_hidden' ) 
 if ( 'yes' !== $direct_display ) :
 
 	?>
+	<div class="woocommerce-gift-card-section">
 	<div class="ywgc_have_code">
 		<?php
 		if ( get_option( 'ywgc_icon_text_before_gc_form', 'no' ) === 'yes' ) {
@@ -86,4 +87,5 @@ endif;
 
 
 
+</div>
 </div>

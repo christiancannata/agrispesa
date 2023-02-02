@@ -29,6 +29,10 @@ body {
 	width: 100%;
 	font-weight: 300;
 	padding-top: 80px;
+	&.woocommerce-cart,
+	&.woocommerce-checkout {
+		background: $white;
+	}
 	@include breakpoint(desktop) {
 		@include font-size(18);
 		padding-top: 90px;
@@ -151,6 +155,10 @@ h6 {
 		max-width: 100%;
 		box-shadow: none;
 		display: block !important;
+
+		body.woocommerce-checkout & {
+			background: $background;
+		}
 
 		.icon-star {
 			@include font-size(20);

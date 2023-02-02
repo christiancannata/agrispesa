@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-01-30 22:14+0100\n"
+"PO-Revision-Date: 2023-02-02 21:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -1077,7 +1077,7 @@ msgstr ""
 
 #: includes/class-wcs-auth.php:39
 msgid "View subscriptions"
-msgstr ""
+msgstr "Visualizza abbonamenti"
 
 #: includes/class-wcs-auth.php:42
 msgid "Create subscriptions"
@@ -2052,7 +2052,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:291
 msgctxt "table heading"
 msgid "Start Date"
-msgstr ""
+msgstr "Attivazione"
 
 #: tests/unit/scheduler/scheduler.php:66
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:292
@@ -2074,7 +2074,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:294
 msgctxt "table heading"
 msgid "Last Order Date"
-msgstr ""
+msgstr "Ultimo ordine"
 
 #: tests/unit/scheduler/scheduler.php:69
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:295
@@ -2599,7 +2599,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:78
 msgctxt "an action on a subscription"
 msgid "Cancel"
-msgstr ""
+msgstr "Elimina"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:338
 msgctxt "Used in order note. Reason why status changed."
@@ -2654,7 +2654,7 @@ msgstr "Totale"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:429
 msgid "Start Date"
-msgstr "Data di inizio"
+msgstr "Attivazione"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:430
 msgid "Trial End"
@@ -2666,7 +2666,7 @@ msgstr "Prossimo pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:432
 msgid "Last Order Date"
-msgstr "Data ultimo ordine"
+msgstr "Ultimo ordine"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:433
 msgid "End Date"
@@ -2675,7 +2675,7 @@ msgstr "Data di fine"
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:434
 msgctxt "number of orders linked to a subscription"
 msgid "Orders"
-msgstr ""
+msgstr "Ordine:"
 
 #. translators: placeholder is a subscription ID.
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:455
@@ -2703,7 +2703,7 @@ msgstr "Cestino"
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:501
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:519
 msgid "Delete Permanently"
-msgstr "Cancella definitivamente"
+msgstr "Elimina definitivamente"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:513
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-product.php:768
@@ -2725,7 +2725,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:525
 msgid "Cancel Now"
-msgstr ""
+msgstr "Elimina ora"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:553
 msgctxt "meaning billing address"
@@ -2833,7 +2833,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:2030
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-change-payment-method-admin.php:170
 msgid "Manual Renewal"
-msgstr ""
+msgstr "Rinnovo manuale"
 
 #. translators: 1: user display name 2: user ID 3: user email
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:1135
@@ -3172,7 +3172,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1226
 #: vendor/woocommerce/subscriptions-core/includes/wcs-formatting-functions.php:246
 msgid "%s ago"
-msgstr ""
+msgstr "%s fa"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1233
 msgid "Not yet ended"
@@ -3180,7 +3180,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1236
 msgid "Not cancelled"
-msgstr ""
+msgstr "Non eliminato"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1241
 msgctxt "original denotes there is no date to display"
@@ -3219,6 +3219,8 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1813
 msgid "Subscription Cancelled: maximum number of failed payments reached."
 msgstr ""
+"Abbonamento cancellato: hai raggiunto il numero massimo di tentativi di "
+"pagamento."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1923
 msgid ""
@@ -3365,86 +3367,86 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2219
 msgid "now"
-msgstr ""
+msgstr "Adesso"
 
 #. translators: placeholder is a number of days.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2378
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:58
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s giorno"
+msgstr[1] "%s giorni"
 
 #. translators: placeholder is a number of weeks.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2382
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:60
 msgid "%s week"
 msgid_plural "%s weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s settimana"
+msgstr[1] "%s settimane"
 
 #. translators: placeholder is a number of months.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2386
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:62
 msgid "%s month"
 msgid_plural "%s months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s mese"
+msgstr[1] "%s mesi"
 
 #. translators: placeholder is a number of years.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2390
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:64
 msgid "%s year"
 msgid_plural "%s years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s anno"
+msgstr[1] "%s anni"
 
 #. translators: 1$: day of the week (e.g. "every Wednesday").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2412
 msgid "every %1$s"
-msgstr ""
+msgstr "ogni %1$s"
 
 #. translators: 1$: period, 2$: day of the week (e.g. "every 2nd week on Wednesday").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2416
 msgid "every %1$s on %2$s"
-msgstr ""
+msgstr "ogni %1$s il %2$s"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2425
 msgid "on the last day of each month"
-msgstr ""
+msgstr "l’ultimo giorno di ogni mese"
 
 #. translators: 1$: day of the month (e.g. "23rd") (e.g. "every 23rd of each month").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2429
 msgid "on the %1$s of each month"
-msgstr ""
+msgstr "il %1$s di ogni mese"
 
 #. translators: 1$: interval (e.g. "3rd") (e.g. "on the last day of every 3rd month").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2437
 msgid "on the last day of every %1$s month"
-msgstr ""
+msgstr "l’ultimo giorno di ogni %1$s mese"
 
 #. translators: on the, 1$: <date> day of every, 2$: <interval> month (e.g. "on the 23rd day of every 2nd month").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2443
 msgid "on the %1$s day of every %2$s month"
-msgstr ""
+msgstr "il %1$s giorno di ogni %2$s mese"
 
 #. translators: on, 1$: <date>, 2$: <month> each year (e.g. "on March 15th each year").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2454
 msgid "on %1$s %2$s each year"
-msgstr ""
+msgstr "Il %1$s %2$s ogni anno"
 
 #. translators: 1$: month (e.g. "March"), 2$: day of the month (e.g. "23rd), 3$: interval year (r.g  March 23rd every 2nd year").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2461
 msgid "on %1$s %2$s every %3$s year"
-msgstr ""
+msgstr "Il %1$s %2$s ogni %3$s anno"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2493
 msgid "Sign up fee"
-msgstr ""
+msgstr "Quota di iscrizione"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2503
 msgid "Renews"
-msgstr ""
+msgstr "Rinnovi"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:160
 msgid ""
@@ -4050,7 +4052,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:223
 msgctxt "Subscription status"
 msgid "Cancelled"
-msgstr ""
+msgstr "Eliminato"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1068
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:225
@@ -4656,7 +4658,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-query.php:296
 msgid "View subscription"
-msgstr ""
+msgstr "Visualizza abbonamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-query.php:297
 msgid "Endpoint for the My Account &rarr; View Subscription page"
@@ -5576,7 +5578,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/privacy/class-wcs-privacy-exporters.php:79
 msgid "Recurring Total"
-msgstr ""
+msgstr "Totale ricorrente"
 
 #: vendor/woocommerce/subscriptions-core/includes/privacy/class-wcs-privacy-exporters.php:80
 msgid "Subscription Items"
@@ -7237,7 +7239,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/cancelled-subscription.php:32
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/expired-subscription.php:32
 msgid "Last Order Date: %s"
-msgstr ""
+msgstr "Ultimo ordine: %s"
 
 #. translators: placeholder is localised date string
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/cancelled-subscription.php:39
@@ -7249,17 +7251,17 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/on-hold-subscription.php:40
 msgctxt "in plain emails for subscription information"
 msgid "View Subscription: %s"
-msgstr ""
+msgstr "Visualizza abbonamento: %s"
 
 #. translators: placeholder is order's view url
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-completed-switch-order.php:24
 msgid "View your order: %s"
-msgstr ""
+msgstr "Visualizza il tuo ordine: %s"
 
 #. translators: placeholder is subscription's view url
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-completed-switch-order.php:35
 msgid "View your subscription: %s"
-msgstr ""
+msgstr "Visualizza il tuo abbonamento: %s"
 
 #. translators: %1$s: link to checkout payment url, note: no full stop due to url at the end
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/customer-payment-retry.php:21
@@ -7307,13 +7309,13 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:27
 msgctxt "in plain emails for subscription information"
 msgid "View subscription: %s"
-msgstr ""
+msgstr "Visualizza abbonamento: %s"
 
 #. translators: placeholder is localised start date
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:29
 msgctxt "in plain emails for subscription information"
 msgid "Start date: %s"
-msgstr ""
+msgstr "Attivazione: %s"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:31
 msgctxt "Used as end date for an indefinite subscription"
@@ -7358,7 +7360,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/subscription-info.php:26
 msgctxt "table heading"
 msgid "Start date"
-msgstr ""
+msgstr "Attivazione"
 
 #: vendor/woocommerce/subscriptions-core/templates/emails/subscription-info.php:27
 msgctxt "table heading"
@@ -7410,14 +7412,14 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-subscriptions.php:42
 msgctxt "Used in data attribute. Escaped"
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:50
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:84
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-subscriptions.php:46
 msgctxt "view a subscription"
 msgid "View"
-msgstr ""
+msgstr "Vedi"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:61
 msgid "Previous"
@@ -7441,7 +7443,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:15
 msgid "Related orders"
-msgstr ""
+msgstr "Ordini simili"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:22
 msgid "Order"
@@ -7466,12 +7468,12 @@ msgstr "Abbonamenti correlati"
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-details.php:24
 msgctxt "customer subscription table header"
 msgid "Start date"
-msgstr ""
+msgstr "Attivazione"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-details.php:25
 msgctxt "customer subscription table header"
 msgid "Last order date"
-msgstr ""
+msgstr "Ultimo ordine"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-details.php:26
 msgctxt "customer subscription table header"
@@ -7506,7 +7508,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-details.php:71
 msgid "Payment"
-msgstr ""
+msgstr "Pagamento"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-details.php:81
 msgid "Actions"
@@ -7572,7 +7574,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:222
 msgctxt "Subscription status"
 msgid "On hold"
-msgstr ""
+msgstr "In attesa"
 
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:226
 msgctxt "Subscription status"
