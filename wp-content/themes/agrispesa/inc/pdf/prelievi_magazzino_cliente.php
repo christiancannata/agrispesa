@@ -75,8 +75,8 @@ ob_start();
 			<?php
 			$order = wc_get_order($order->ID);
 
-			$numConsegna = get_post_meta($order->ID, '_numero_consegna', true);
-			$giroConsegna = get_post_meta($order->ID, '_giro_consegna', true);
+			$numConsegna = get_post_meta($order->get_id(), '_numero_consegna', true);
+			$giroConsegna = get_post_meta($order->get_id(), '_giro_consegna', true);
 			$items = $order->get_items();
 			?>
 			<tr>
