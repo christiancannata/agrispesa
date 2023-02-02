@@ -18,6 +18,17 @@ add_action('woocommerce_product_options_advanced', function () {
 
 });
 
+function woocommerce_product_custom_fields_save1($post_id)
+{
+	if (isset($_POST['_codice_confezionamento']))
+		update_post_meta($post_id, '_codice_confezionamento', esc_attr($_POST['_codice_confezionamento']));
+	if (isset($_POST['_is_magazzino']))
+		update_post_meta($post_id, '_is_magazzino', esc_attr($_POST['_is_magazzino']));
+
+}
+
+add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save1');
+
 
 add_action('rest_api_init', function () {
 	register_rest_route('agrispesa/v1', 'weekly-box', array(
@@ -41,6 +52,7 @@ add_action('rest_api_init', function () {
 			if ($post_id) {
 				// insert post meta
 				add_post_meta($post_id, '_week', $body['week']);
+				add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
 				add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
 				add_post_meta($post_id, '_products', $body['products']);
 			}
@@ -168,43 +180,6 @@ add_action('rest_api_init', function () {
 		}
 	));
 
-
-	register_rest_route('agrispesa/v1', 'print-list-products', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
-
-			$week = $_GET['week'];
-
-			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
-
-			$args = [
-				'posts_per_page' => -1,
-				'post_type' => 'shop_order',
-				'post_status' => ['wc-processing', 'wc-completed'],
-				'meta_query' => [
-					'relation' => 'AND',
-					[
-						'key' => '_week',
-						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
-						'compare' => '='
-					],
-					[
-						'key' => '_shipping_postcode',
-						'value' => $caps,
-						'compare' => 'IN'
-					]
-				]
-			];
-			$orders = new WP_Query($args);
-			$orders = $orders->get_posts();
-
-
-		}
-	));
 
 	register_rest_route('agrispesa/v1', 'delivery-group-csv', array(
 		'methods' => 'GET',
@@ -423,7 +398,13 @@ add_action('save_post', 'my_save_post_function', 10, 3);
 function my_save_post_function($post_ID, $post, $update)
 {
 	if ($post->post_type == 'shop_order') {
-		update_post_meta($post->ID, '_numero_consegna', $_POST['_numero_consegna']);
+		if (isset($_POST['_numero_consegna'])) {
+			update_post_meta($post->ID, '_numero_consegna', $_POST['_numero_consegna']);
+		}
+
+		if (isset($_POST['_data_consegna'])) {
+			update_post_meta($post->ID, '_data_consegna', $_POST['_data_consegna']);
+		}
 	}
 }
 
@@ -436,6 +417,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		$weight = get_post_meta($post->ID, '_total_box_weight', true);
 		$week = get_post_meta($post->ID, '_week', true);
 		$numConsegna = get_post_meta($post->ID, '_numero_consegna', true);
+		$consegna = get_post_meta($post->ID, '_data_consegna', true);
 
 		if (empty($weight)) {
 			$weight = 0;
@@ -443,8 +425,12 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		echo '<span>Peso della BOX: <strong>' . $weight . 'Kg</strong></span><br>';
 		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
 		echo '<strong>Numero di consegna:</strong><br>
-		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna">
+		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>
+
 ';
+
+		echo '<strong>Data di consegna:</strong><br>
+		<input autocomplete="off" type="date" value="' . $consegna . '" name="_data_consegna">';
 
 	}
 }
@@ -547,7 +533,7 @@ function get_box_from_subscription($subscription, $week = null)
 		'post_status' => 'publish',
 		'posts_per_page' => 1,
 		'meta_query' => [
-			'relation' => 'AND',
+			'relation' => 'and',
 			[
 				'key' => '_week',
 				'value' => $week,
@@ -578,10 +564,6 @@ function create_order_from_subscription($id)
 		return false;
 	}
 
-	$date = new DateTime();
-	$week = $date->format("W");
-
-
 	$weight = 0;
 	if (!empty($productData['weight'])) {
 		$weight = $productData['weight'];
@@ -592,6 +574,9 @@ function create_order_from_subscription($id)
 	if (!$box) {
 		return false;
 	}
+
+	$week = get_post_meta($box->ID, '_week', true);
+	$consegna = get_post_meta($box->ID, '_data_consegna', true);
 
 	$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 
@@ -655,8 +640,10 @@ function create_order_from_subscription($id)
 	$order->calculate_totals();
 	$order->update_status("processing", '', TRUE);
 
+
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
+	update_post_meta($order->get_id(), '_data_consegna', $consegna);
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
 
@@ -701,7 +688,7 @@ function my_custom_submenu_page_callback()
 			'post_type' => 'shop_order',
 			'post_status' => ['wc-processing', 'wc-completed'],
 			'meta_query' => [
-				'relation' => 'AND',
+				'relation' => 'and',
 				[
 					'key' => '_week',
 					'value' => $week,
@@ -1154,7 +1141,8 @@ function consegne_ordini_pages()
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
+				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in
+					base
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
 
@@ -1165,7 +1153,8 @@ function consegne_ordini_pages()
 					$currentWeek = $date->format("W");
 					?>
 
-					<label>Settimana di consegna (<em>Settimana corrente: <?php echo $currentWeek; ?></em>)</label><br>
+					<label>Settimana di consegna (<em>Settimana
+							corrente: <?php echo $currentWeek; ?></em>)</label><br>
 					<select name="week" autocomplete="off">
 						<?php for ($i = 1; $i <= 52; $i++): ?>
 							<option
@@ -1397,11 +1386,15 @@ function consegne_ordini_pages()
 
 				<h5>Crea una box settimanale</h5>
 
-				<label>Settimana</label>
+				<label>Settimana</label><br>
 				<input name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" readonly>
-				<br>
+				<br><br>
 
-				<label>Box</label>
+				<label>Data Consegna</label><br>
+				<input name="data_consegna" id="data_consegna" required type="date">
+				<br><br>
+
+				<label>Box</label><br>
 				<select name="box_id" id="box_id" class="select2">
 					<option disabled selected>-- Scegli la box --</option>
 					<?php foreach ($products as $product): ?>
@@ -1409,19 +1402,20 @@ function consegne_ordini_pages()
 					<?php endforeach; ?>
 				</select>
 
-				<br>
+				<br><br>
 
-				<label>Prodotto da inserire</label>
+				<label>Prodotto da inserire</label><br>
 				<select name="products_id" id="products_id" class="select2">
 					<option disabled selected>-- Scegli il prodotto --</option>
 					<?php foreach ($categories as $category): ?>
 						<optgroup label="<?php echo $category['name']; ?>">
 							<?php foreach ($category['products'] as $product): ?>
-								<option value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
+								<option
+									value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
-				</select><br>
+				</select><br><br>
 
 				<button class="button-primary add-product" @click="addProduct">Aggiungi alla box</button>
 				<br><br>
@@ -1450,7 +1444,8 @@ function consegne_ordini_pages()
 								<span>Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary">Box
 							</th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Prodotti
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">
+								Prodotti
 							</th>
 							<th></th>
 						</tr>
@@ -1520,6 +1515,85 @@ function consegne_ordini_pages()
 			</div>
 
 			<div id="ajax-response"></div>
+
+			<div class="clear"></div>
+		</div>
+
+		<?php
+	});
+
+
+	add_menu_page('Esporta Documenti', 'Esporta Documenti', 'manage_options', 'esporta-documenti', function () {
+		global $wpdb;
+
+		$sql = "SELECT meta_value from wp_postmeta where meta_key='_codice_confezionamento' group by meta_value";
+		$confezionamento = $wpdb->get_results($sql, ARRAY_A);
+
+		$confezionamento = array_map(function ($cod) {
+			return $cod['meta_value'];
+		}, $confezionamento);
+
+		if (isset($_GET['document_type'])) {
+			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
+			require_once get_template_directory() . '/inc/pdf/' . $_GET['document_type'] . '.php';
+			die();
+
+		}
+
+		?>
+		<div id="wpbody-content">
+
+			<div class="wrap" id="box-app">
+
+
+				<h1 class="wp-heading-inline">
+					Esporta Documenti</h1>
+
+				<hr class="wp-header-end">
+
+
+				<label>Data di consegna</label><br>
+				<input type="date" name="date" autocomplete="off"><br><br>
+
+				<label>Codice di confezionamento</label><br>
+				<select class="select2" name="confezionameto">
+					<?php foreach ($confezionamento as $codice): ?>
+						<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+					<?php endforeach; ?>
+				</select>
+				<br><br>
+				<br><br>
+
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=prelievi_magazzino_cliente"
+				   target="_blank">Lista prelievi magazzino per cliente</a>
+				<br><br>
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=prelievi_magazzino_articolo"
+				   target="_blank">Lista prelievi magazzino per articolo</a>
+				<br><br>
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=fabbisogno"
+				   target="_blank">Fabbisogno</a>
+
+				<br><br>
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=confezionamento"
+				   target="_blank">Stampa per confezionamento</a>
+
+
+				<br><br>
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=riepilogo_spedizione"
+				   target="_blank">Riepilogo di spedizione</a>
+
+				<br><br>
+				<a class="button-primary"
+				   href="/wp-admin/admin.php?noheader=1&page=esporta-documenti&document_type=etichette"
+				   target="_blank">Etichette</a>
+
+
+			</div>
 
 			<div class="clear"></div>
 		</div>

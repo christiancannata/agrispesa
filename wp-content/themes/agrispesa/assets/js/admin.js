@@ -22,6 +22,7 @@ createApp({
       axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box', {
         product_box_id: document.getElementById('box_id').value,
         week: document.getElementById('week').value,
+        data_consegna: document.getElementById('data_consegna').value,
         products: $vm.products
       })
         .then((response) => {

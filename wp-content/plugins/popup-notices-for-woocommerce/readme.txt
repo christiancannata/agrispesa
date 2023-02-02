@@ -1,9 +1,9 @@
 === Pop-up Notices for WooCommerce ===
-Contributors: karzin
+Contributors: wpcodefactory,karzin
 Tags: popup,notices,woocommerce,notice,modal
 Requires at least: 4.4
-Tested up to: 6.0
-Stable tag: 1.3.8
+Tested up to: 6.1
+Stable tag: 1.3.9
 Requires PHP: 5.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,7 +66,7 @@ Play any sound you want when the Pop-up opens or when it closes
 == Frequently Asked Questions ==
 
 = How can I contribute? Is there a github repository? =
-If you are interested in contributing - head over to the [Popup Notices for WooCommerce plugin GitHub Repository](https://github.com/thanks-to-it/popup-notices-for-woocommerce) to find out how you can pitch in.
+If you are interested in contributing - head over to the [Popup Notices for WooCommerce plugin GitHub Repository](https://github.com/wpcodefactory/popup-notices-for-woocommerce) to find out how you can pitch in.
 
 = Micromodal Credits =
 
@@ -98,6 +98,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 3. An example of a WooCommerce Notice info on the Popup
 
 == Changelog ==
+
+= 1.3.9 - 01/02/2023 =
+* Tested up to: 6.1.
+* WC tested up to: 7.3.
+* Move from Thanks to IT to WPFactory.
 
 = 1.3.8 - 05/10/2022 =
 * WC tested up to: 6.9.
