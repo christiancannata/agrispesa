@@ -12,6 +12,17 @@ $week = null;
 			.page-break {
 				page-break-before: always;
 			}
+
+			.card-container {
+				width: 100%;
+			}
+
+			.card {
+				width: 33%;
+				float: left;
+			}
+			@page { margin: 0px; }
+			body { margin: 0px; }
 		</style>
 	</head>
 	<body>
@@ -57,54 +68,18 @@ $week = null;
 		usort($orders, function ($a, $b) {
 			return strcmp($a->num_consegna, $b->num_consegna);
 		});
-
 		?>
-		<table>
-			<td><h5>Nr. Spedizione: </h5></td>
-			<td><h5>Data spedizione: <?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></h5></td>
-			<td><h5>Settimana: <?php echo $orders[0]->week; ?></h5></td>
-			<td><h5>Ubicazione: <?php echo $group->post_title; ?></h5></td>
-		</table>
-		<table>
-			<thead>
-			<td><b>Nr Colli</b></td>
-			<td><b>um cons</b></td>
-			<td><b>Spedire a</b></td>
-			<td><b>Indirizzo</b></td>
-			<td><b>Città</b></td>
-			<td><b>Telefono</b></td>
-			<td><b>Note consegna</b></td>
-			</thead>
-			<tbody>
-			<?php foreach ($orders as $order): ?>
-
-				<tr>
-					<td></td>
-					<td>
-						<?php
-						echo str_pad($order->num_consegna, 4, 0, STR_PAD_LEFT);
-						?></td>
-					<td>
-						<?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?>
-					</td>
-					<td>
-						<?php echo $order->get_shipping_address_1(); ?>
-					</td>
-					<td>
-						<?php echo $order->get_shipping_city(); ?> (<?php echo $order->get_shipping_state(); ?>)
-					</td>
-					<td>
-						<?php echo $order->get_shipping_phone(); ?><br>
-						<?php echo $order->secondary_phone; ?>
-					</td>
-					<td>
-						<?php echo $order->get_customer_note(); ?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
-		</table>
-
+		<?php foreach ($orders as $order): ?>
+			<div class="card">
+				<h2><?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?></h2>
+				<h3>
+					<?php echo $group->post_title; ?>
+				</h3>
+				<h4><?php
+					echo str_pad($order->num_consegna, 4, 0, STR_PAD_LEFT);
+					?></h4>
+			</div>
+		<?php endforeach; ?>
 		<div class="page-break"></div>
 	<?php endforeach; ?>
 	</body>
@@ -115,7 +90,7 @@ $content = ob_get_clean();
 $dompdf = new Dompdf();
 $dompdf->loadHtml($content);
 
-$dompdf->setPaper('A4', 'landscape');
+$dompdf->setPaper('A4', 'portrait');
 
 // Render the HTML as PDF
 $dompdf->render();
