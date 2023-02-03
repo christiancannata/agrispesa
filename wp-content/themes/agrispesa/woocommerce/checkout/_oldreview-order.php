@@ -22,17 +22,6 @@ global $woocommerce;
 <div class="checkout--review-order woocommerce-checkout-review-order-table zig-zag-bottom">
 
 	<div class="checkout--preview">
-
-		<div class="checkout--preview--header">
-			<div class="checkout--preview--items">
-				<span><?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?></span>
-			</div>
-			<div class="checkout--preview--cost">
-				<span><?php wc_cart_totals_order_total_html(); ?></span>
-			</div>
-
-		</div>
-
 		<?php
 		do_action( 'woocommerce_review_order_before_cart_contents' );
 
@@ -40,9 +29,58 @@ global $woocommerce;
 			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 			$thumbnail = $_product->get_image();
 
-}
 
 
+
+			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+				?>
+				<div class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+
+
+					<?php if($woocommerce->cart->cart_contents_count == 1 && $_product->is_type('variation')): ?>
+						<div class="checkout--preview--image">
+							<?php echo $thumbnail; // PHPCS: XSS ok.
+							?>
+						</div>
+					<?php else: ?>
+
+						quanti prodotti? <?php echo WC()->cart->get_cart_contents_count(); ?>
+					<?php endif; ?>
+					<div class="sommair--totals--flex <?php if ($_product->is_type('variation')) { echo 'flex-start'; }?>">
+						<div class="sommair--totals--sx">
+							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
+							<div class="multi-product-images">
+								<div class="checkout--preview--image">
+									<?php echo $thumbnail; ?>
+								</div>
+							<?php endif; ?>
+								<span class="small">
+									<?php if ($_product->is_type('variation')) {
+										$titolo = $_product->get_parent_data();
+										$variazioni = $_product->get_attributes();
+										echo $titolo['title'];
+										echo '<div class="checkout-sommair--variations">';
+										echo '<span>' . $variazioni['pa_dimensione'] . '</span>';
+										echo '<span class="last">' . $variazioni['pa_tipologia'] . '</span>';
+										echo '</div>';
+									} else {
+										echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;';
+									} ?>
+
+								</span>
+							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
+							</div>
+							<?php endif; ?>
+						</div>
+						<div class="sommair--totals--dx">
+							<span><?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</div>
+					</div>
+
+				</div>
+				<?php
+			}
+		}
 
 		do_action( 'woocommerce_review_order_after_cart_contents' );
 		?>
@@ -128,10 +166,5 @@ global $woocommerce;
 
 		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
 
-	</div>
-
-	<div class="checkout-payment-cards">
-		<span>Pagamenti sicuri</span>
-		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/credit-cards.png" alt="Pagamenti Sicuri" />
 	</div>
 </div>

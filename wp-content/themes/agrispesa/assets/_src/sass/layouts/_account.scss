@@ -65,6 +65,8 @@ body.woocommerce-account {
 		@include breakpoint(mobile) {
 			display: block;
 			width: 100%;
+			padding: 0;
+			margin: 24px auto 0;
 		}
 	}
 
@@ -85,11 +87,30 @@ body.woocommerce-account {
 	}
 }
 
+.subscription_details,
 .woocommerce-orders-table__cell-order-actions {
 	a.button {
 		@include button();
 		@include buttonprimary();
 		@include buttonsmall();
+		border: 2px solid $blue;
+
+		&:hover {
+			border: 2px solid #069460;
+			background-color: transparent;
+			background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
+		}
+
+		&.cancel,
+		&.reactivate {
+			margin-right: 4px;
+		}
+
+		&.cancel,
+		&.change_address {
+			@include buttonsecondary();
+			background-color: transparent;
+		}
 	}
 }
 
@@ -214,15 +235,14 @@ body.woocommerce-account {
 	.my-account {
 		&--minititle {
 			@include clearfix();
-			@include font-size(28);
+			@include font-size(20);
 			color: $black;
 			display: inline-block;
-			font-weight: 900;
+			font-weight: 600;
 			margin: 0 0 32px;
 			position: relative;
-			font-family: $font-title;
 			@include breakpoint(desktop) {
-				@include font-size(32);
+				@include font-size(22);
 			}
 
 			&::after {
@@ -315,11 +335,20 @@ body.woocommerce-view-order {
 	z-index: -1;
 }
 
+.woocommerce-columns--addresses,
 .woocommerce {
+	.woocommerce-column__title {
+		font-weight: bold;
+		margin-bottom: 24px;
+	}
 	address {
-		@include font-size(16);
+		@include font-size(18);
 		font-weight: 300;
 		line-height: 1.4;
+		font-style: normal;
+		background: #fff;
+		padding: 16px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 15%);
 	}
 
 	.woocommerce-customer-details {
@@ -338,8 +367,6 @@ body.woocommerce-view-order {
 			padding: 0 8px;
 			font-family: $font-title;
 		}
-
-
 
 		table.shop_table {
 			padding: 32px 24px 24px !important;
@@ -571,4 +598,27 @@ body.woocommerce-account {
 			line-height: 1.2;
 		}
 	}
+}
+
+.woocommerce-MyAccount-content {
+	margin-bottom: 32px;
+
+	.woocommerce-address-fields {
+		& > p:not(.form-buttons) {
+			@include border-radius(4px);
+			@include font-size(16);
+			background: $red;
+			color: $white;
+			padding: 10px !important;
+
+			&:before {
+				content: 'Nota: ';
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+.woocommerce-input-wrapper {
+
 }

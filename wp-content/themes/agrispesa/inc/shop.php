@@ -94,59 +94,45 @@ function bbloomer_remove_shipping_label( $label, $method ) {
 
 
 //Minimo ordine 43 euro
-/**
- * Set a minimum order amount for checkout
- */
-// add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
-// add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
+function action_woocommerce_check_cart_items() {
+    // Only run on the cart or checkout pages
+    if ( is_cart() || is_checkout() ) {
+        // Minimum
+        $minimum = 43;
 
-function wc_minimum_order_amount() {
-    // $facciamoNoi = 50; //ID prodotto Facciamo noi
-    // $facciamoNoiID = WC()->cart->generate_cart_id( $facciamoNoi );
-    // $box_in_cart = WC()->cart->find_product_in_cart( $facciamoNoiID );
-    //
-     $minimum = 43;
-    // if ( $box_in_cart ) {
-    //     $minimum = 35;
-    // }
+        // Category
+        $category = 'chilled';
+        $category_2 = 'bundles';
 
-    $product_id = 50;
+        // Initialize
+        $total = 0;
+        $flag = true;
 
-   $product_cart_id = WC()->cart->generate_cart_id( $product_id );
-   $in_cart = WC()->cart->find_product_in_cart( $product_cart_id );
+        // Loop through cart items
+        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+            // Product id
+            $product_id = $cart_item['product_id'];
 
+            // Has certain category
+            if ( has_term( $category, 'product_cat', $product_id ) ) {
+                // Add to total
+                $total += $cart_item['quantity'];
+            // Has other category
+            } elseif ( has_term( $category_2, 'product_cat', $product_id ) ) {
+                // Break loop
+                $flag = false;
+                break;
+            }
+        }
 
+        // When total is greater than 0 but less than the minimum & flag is still true
+        if ( ( $total > 0 && $total < $minimum ) && $flag ) {
+            // Notice
+            wc_add_notice( sprintf( __( 'A minimum of %s products are required from the %s category before checking out.', 'woocommerce' ), $minimum, $category ), 'error' );
 
-    if ( WC()->cart->total < $minimum ) {
-
-        if( is_cart() ) {
-
-print_r($product_cart_id );
-          if ( $in_cart ) {
-
-             $notice = 'Product ID ' . $product_id . ' is in the Cart!';
-             wc_print_notice( $notice, 'notice' );
-
-
-
-          }
-
-            wc_print_notice(
-                sprintf( 'Beh Your current order total is %s — you must have an order with a minimum of %s to place your order ' ,
-                    wc_price( WC()->cart->total ),
-                    wc_price( $minimum )
-                ), 'error'
-            );
-
-        } else {
-
-            wc_add_notice(
-                sprintf( 'Ehi Your current order total is %s — you must have an order with a minimum of %s to place your order' ,
-                    wc_price( WC()->cart->total ),
-                    wc_price( $minimum )
-                ), 'error'
-            );
-
+            // Optional: remove proceed to checkout button
+            remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
         }
     }
 }
+//add_action( 'woocommerce_check_cart_items' , 'action_woocommerce_check_cart_items', 10, 0 );

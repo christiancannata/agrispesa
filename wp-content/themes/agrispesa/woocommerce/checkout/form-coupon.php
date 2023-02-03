@@ -22,6 +22,7 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 }
 
 ?>
+<div class="woocommerce-coupons-section">
 <h3 class="checkout--title"><?php esc_html_e( 'Codice sconto', 'woocommerce' ); ?></h3>
 
 	<div class="woocommerce-info coupon-box">
@@ -38,3 +39,4 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 	</div>
 
 	<div class="clear"></div>
+</div>

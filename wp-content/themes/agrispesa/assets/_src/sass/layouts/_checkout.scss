@@ -34,7 +34,7 @@ body.woocommerce-checkout {
 	.checkout-page {
 		margin: 0 auto;
 		width: 1160px;
-		padding: 0 20px;
+		padding: 0;
 		max-width: 100%;
 		@include breakpoint(desktop) {
 			padding: 0 40px;
@@ -101,6 +101,10 @@ body.woocommerce-cart {
 		max-width: 100%;
 		box-shadow: none;
 
+		body.woocommerce-checkout & {
+			background: $background;
+		}
+
 		.close-notice {
 			display: none;
 		}
@@ -141,15 +145,14 @@ body.woocommerce-cart {
 
 .checkout--title {
 	@include clearfix();
-	@include font-size(28);
+	@include font-size(20);
 	color: $black !important;
 	display: inline-block;
-	font-weight: 900;
+	font-weight: 600;
 	margin: 0 0 32px;
 	position: relative;
-	font-family: $font-title;
 	@include breakpoint(desktop) {
-		@include font-size(32);
+		@include font-size(22);
 	}
 
 	&::after {
@@ -186,7 +189,7 @@ body.woocommerce-cart {
 		width: 100%;
 		@include breakpoint(desktop) {
 			order: 1;
-			padding: 40px;
+			padding: 24px;
 			width: 60%;
 		}
 	}
@@ -196,7 +199,7 @@ body.woocommerce-cart {
 		width: 100%;
 		@include breakpoint(desktop) {
 			order: 2;
-			padding: 40px;
+			padding: 24px;
 			width: 40%;
 		}
 	}
@@ -206,8 +209,35 @@ body.woocommerce-cart {
 			width: 100%;
 			margin: 0 auto !important;
 		}
+
+		&--header {}
+
+		&--cost {
+			.woocommerce-Price-amount {
+				@include font-size(40);
+				font-weight: 300;
+				@include breakpoint(desktop) {
+					@include font-size(50);
+				}
+
+				.woocommerce-Price-currencySymbol {
+					@include font-size(30);
+					@include breakpoint(desktop) {
+						@include font-size(40);
+					}
+				}
+			}
+		}
+
+		&--items {
+			@include font-size(16);
+			margin-bottom: -8px;
+			color: $muted;
+		}
 	}
 }
+
+.box-variations-checkout {}
 
 .woocommerce form .form-row label {
 	line-height: normal !important;
@@ -250,7 +280,8 @@ body.woocommerce-cart {
 			display: flex;
 			justify-content: space-between;
 			padding: 8px 0;
-			&.flex-start{
+
+			&.flex-start {
 				align-items: flex-start;
 			}
 
@@ -517,5 +548,48 @@ body.woocommerce-cart {
 	.ywgc_enter_code,
 	.ywgc_have_code {
 		display: none;
+	}
+}
+
+.woocommerce-billing-fields,
+.woocommerce-coupons-section,
+body.woocommerce-checkout .woocommerce-gift-card-section,
+.woocommerce-shipping-fields {
+	@include breakpoint(desktop) {
+		@include border-radius(16px);
+		border: 1px solid #eaeae1;
+		padding: 24px;
+		margin-bottom: 32px;
+	}
+
+	.shipping_address {
+		margin-top: 32px;
+	}
+}
+
+.woocommerce-coupons-section {
+	@include border-radius(16px 16px 0 0);
+	margin-bottom: 0;
+	padding-bottom: 8px;
+	border-bottom: none;
+}
+
+body.woocommerce-checkout .woocommerce-gift-card-section {
+	@include border-radius(0 0 16px 16px);
+	padding-top: 8px;
+	border-top: none;
+}
+
+.checkout-payment-cards {
+	span {
+		@include font-size(14);
+		text-align: center;
+		display: block;
+	}
+
+	img {
+		width: 100%;
+		display: block;
+		margin-top: 8px;
 	}
 }
