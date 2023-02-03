@@ -261,7 +261,7 @@ textarea {
 .checkbox-form,
 .form-row.mailchimp-newsletter,
 .woocommerce-SavedPaymentMethods-saveNew {
-	@include clearfix();
+	@include clearfix(); 
 	text-align: left;
 
 	input[type=checkbox] {

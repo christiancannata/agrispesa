@@ -394,8 +394,13 @@ body.woocommerce-cart {
 			input {
 				display: none;
 			}
+			.woocommerce-SavedPaymentMethods-saveNew {
+				label {
+					
+				}
+			}
 
-			label:not(['for=woocommerce-SavedPaymentMethods-saveNew']) {
+			label {
 				@include transition(all 0.2s linear);
 				@include border-radius(4px);
 				@include font-size(16);
