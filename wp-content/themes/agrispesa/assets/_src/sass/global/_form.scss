@@ -322,11 +322,17 @@ textarea {
 		&:before {
 			background: $white !important;
 			font-weight: 600;
+
 		}
 	}
 
 	input[type=checkbox]:checked + label {
 		background: transparent;
+		color: $black;
+		&:before {
+			background: #fff url("../images/elements/check.svg") center center no-repeat;
+			background-size: 85% auto;
+		}
 	}
 }
 
