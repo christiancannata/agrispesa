@@ -275,8 +275,17 @@ body.woocommerce-cart {
 					background: $red;
 				}
 			}
+
 			.credit-cards {
-				margin-top: 16px;
+				padding: 16px 0 0;
+				border-top: 1px solid $panna;
+				margin: 16px auto 0;
+
+				img {
+					display: block;
+					margin: 0 auto;
+					height: 26px;
+				}
 			}
 		}
 	}
@@ -315,10 +324,11 @@ body.woocommerce-cart {
 	}
 }
 
-.woocommerce-sommair-end,
-.woocommerce-after-sommair {
+.woocommerce-after-sommair,
+.woocommerce-sommair-end {
 	display: none !important;
 }
+
 .sommair {
 	&--totals {
 		padding: 0 0 24px;
@@ -328,9 +338,10 @@ body.woocommerce-cart {
 			border-top: 1px solid $panna;
 			display: flex;
 			justify-content: space-between;
-			padding: 8px 8px;
+			padding: 8px;
+
 			&.shipping {
-				padding: 8px 8px;
+				padding: 8px;
 			}
 
 			&.flex-start {
@@ -373,7 +384,7 @@ body.woocommerce-cart {
 
 .woocommerce-checkout #payment {
 	background: transparent !important;
-	border-radius: 0 !important;
+	border-radius: 16px !important;
 
 	ul.payment_methods {
 		border-bottom: none !important;
@@ -388,20 +399,48 @@ body.woocommerce-cart {
 				@include transition(all 0.2s linear);
 				@include border-radius(4px);
 				@include font-size(16);
-				background: #f1f1f1;
+				background: $background;
 				cursor: pointer;
 				margin: 4px 0;
 				padding: 10px;
 				width: 100%;
+				border: 1px solid $panna;
+				color: $black;
 			}
 
 			.payment_box {
 				@include font-size(12);
-				display: none !important;
+				//display: none !important;
 			}
 
 			input:checked ~ label {
-				background: $green;
+				background: $orange;
+				border-color: $orange;
+				color: $white;
+			}
+
+			&:not(.payment_method_woocommerce_payments) {
+				.payment_box {
+					display: none !important;
+				}
+			}
+
+			&.payment_method_woocommerce_payments,
+			&.payment_method_satispay {
+				label {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+
+					img {
+						display: none;
+
+						&.show-img {
+							display: block;
+							height: 32px;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -588,6 +627,7 @@ body.woocommerce-cart {
 }
 
 .woocommerce-billing-fields,
+.woocommerce-checkout-payment,
 .woocommerce-coupons-section,
 .woocommerce-shipping-fields,
 body.woocommerce-checkout .woocommerce-gift-card-section {
@@ -633,15 +673,16 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 .sommair--totals--flex .gift-car-number,
 .sommair--totals--flex .woocommerce-remove-coupon,
 .sommair--totals--flex .ywgc-remove-gift-card {
-  display: block;
-  font-size: 12px;
-  text-transform: none;
-  letter-spacing: 1px;
+	display: block;
+	font-size: 12px;
+	text-transform: none;
+	letter-spacing: 1px;
 }
+
 .sommair--totals--flex .gift-car-number {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 #shipping_method input[type=radio] {
-  display: none;
+	display: none;
 }

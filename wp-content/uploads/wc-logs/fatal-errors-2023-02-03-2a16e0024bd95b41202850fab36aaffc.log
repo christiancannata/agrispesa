@@ -327,3 +327,9 @@ Stack trace:
 #8 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
 
+2023-02-03T17:17:01+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+
+2023-02-03T17:17:06+00:00 CRITICAL syntax error, unexpected ';', expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+
+2023-02-03T17:17:09+00:00 CRITICAL syntax error, unexpected ';', expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+

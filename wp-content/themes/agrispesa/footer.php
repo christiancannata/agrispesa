@@ -84,9 +84,9 @@
 	<div class="footer--flex">
 		<div class="secure-payments">
 			<span>PAGAMENTI SICURI</span>
-			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/credit-cards.png" alt="Pagamenti Sicuri" />
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/payments-methods@2x.png" alt="Pagamenti Sicuri" />
 		</div>
-		<div class="secure-payments">
+		<div class="secure-payments bando">
 			<span>Progetto Agricoltura Contadina 2.0</span>
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/banner-footer.jpeg" alt="Regione Piemonte" />
 		</div>

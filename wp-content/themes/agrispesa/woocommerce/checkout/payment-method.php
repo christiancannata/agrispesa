@@ -20,10 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
-	<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
 
+	<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
 	<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 		<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
+		<?php if( esc_attr($gateway->id) == 'satispay'):?>
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/satispay@2x.png" class="show-img" alt="Paga con Satispay"/>
+		<?php elseif(esc_attr($gateway->id) == 'woocommerce_payments'):?>
+		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/credit-cards@2x.png" class="show-img" alt="Paga con Carta di credito"/>
+		<?php endif;?>
 	</label>
 	<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
 		<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" <?php if ( ! $gateway->chosen ) : /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
