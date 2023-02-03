@@ -395,7 +395,7 @@ body.woocommerce-cart {
 				display: none;
 			}
 
-			label {
+			label:not(['for=woocommerce-SavedPaymentMethods-saveNew']) {
 				@include transition(all 0.2s linear);
 				@include border-radius(4px);
 				@include font-size(16);
@@ -443,7 +443,7 @@ body.woocommerce-cart {
 			// }
 			&.payment_method_satispay,
 			&.payment_method_woocommerce_payments {
-				label:not(['for=woocommerce-SavedPaymentMethods-saveNew']) {
+				& > label {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
