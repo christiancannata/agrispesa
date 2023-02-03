@@ -50,7 +50,15 @@ scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
 minimumAmount();
+moveButtonsCheckout();
 //changeShippingLabel();
+
+function moveButtonsCheckout() {
+  if(jQuery('.wcpay-payment-request-wrapper').length) {
+    jQuery('.wcpay-payment-request-wrapper').appendTo('.place-order');
+    jQuery('#wcpay-payment-request-wrapper').show();
+  }
+}
 
 function minimumAmount() {
   if(jQuery('.minimum-amount-advice').length) {

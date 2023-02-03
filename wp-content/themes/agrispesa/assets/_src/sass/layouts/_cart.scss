@@ -305,17 +305,19 @@ body.woocommerce-checkout {
 	}
 }
 
-.wc-proceed-to-checkout {
-	#wcpay-payment-request-wrapper {
-		margin-bottom: 8px;
-    padding-top: 0 !important;
-	}
 
-	#wcpay-payment-request-button-separator {
-		@include font-size(12);
-		margin: 16px 0!important !important;
-		display: none;
-	}
+#wcpay-payment-request-wrapper {
+	display: none;
+}
+#wcpay-payment-request-wrapper {
+	margin-bottom: 8px;
+	padding-top: 0 !important;
+}
+
+#wcpay-payment-request-button-separator {
+	@include font-size(12);
+	margin: 16px 0!important !important;
+	display: none;
 }
 
 .zig-zag-bottom {
