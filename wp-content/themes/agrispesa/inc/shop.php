@@ -120,7 +120,6 @@ function wc_minimum_order_amount() {
       $addPrice = $minimum - $cartTotal;
 
         if( is_cart() ) {
-
             echo '<div class="minimum-amount-advice"><p>Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti; ti mancano ' .wc_price($addPrice) .'.</p></div>';
             // Remove proceed to checkout button
             remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );

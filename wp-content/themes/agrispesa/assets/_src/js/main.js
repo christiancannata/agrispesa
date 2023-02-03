@@ -49,7 +49,14 @@ pressSlider();
 scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
+removeCheckoutButton();
 //changeShippingLabel();
+
+function removeCheckoutButton() {
+  if(jQuery('.minimum-amount-advice').length) {
+    jQuery('.wc-proceed-to-checkout').hide();
+  }
+}
 
 function hideGlossarioAlpha() {
   var glossarioElements = jQuery('.glossario--anchor');
