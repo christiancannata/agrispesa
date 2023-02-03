@@ -22,10 +22,11 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 }
 
 ?>
-<h3 class="checkout--title"><?php esc_html_e( 'Codici sconti', 'woocommerce' ); ?></h3>
+<div class="woocommerce-coupons-section">
+<h3 class="checkout--title"><?php esc_html_e( 'Codice sconto', 'woocommerce' ); ?></h3>
 
-	<div class="woocommerce-info">
-		<span class="icon-star gift-card-icon-heart"></span>Hai un coupon? <a href="#" class="show-coupon">Usalo qui!</a>
+	<div class="woocommerce-info coupon-box">
+		<span class="icon-star"></span>Hai un codice sconto? <a href="#" class="show-coupon">Usalo qui!</a>
 	</div>
 
 	<div class="coupon-form my-coupon" style="display: none;">
@@ -33,8 +34,9 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 			<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
 		</div>
 		<div class="coupon-form--dx">
-			<button type="submit" class="posh-button posh-button-primary posh-button-small" name="apply_coupon" value="<?php esc_attr_e( 'Applica', 'woocommerce' ); ?>"><?php esc_html_e( 'Applica', 'woocommerce' ); ?></button>
+			<button type="submit" class="btn btn-primary btn-small" name="apply_coupon" value="<?php esc_attr_e( 'Applica', 'woocommerce' ); ?>"><?php esc_html_e( 'Applica', 'woocommerce' ); ?></button>
 		</div>
 	</div>
 
 	<div class="clear"></div>
+</div>

@@ -49,7 +49,8 @@ pressSlider();
 scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
-//minimumAmount();
+minimumAmount();
+//moveCouponCheckout();
 
 //changeShippingLabel();
 
@@ -59,11 +60,14 @@ setTimeout(function() {
 
 function moveButtonsCheckout() {
   if(jQuery('.wcpay-payment-request-wrapper').length) {
-    console.log('eccolo');
     jQuery('.wcpay-payment-request-wrapper').appendTo('.place-order');
     jQuery('#wcpay-payment-request-wrapper').show();
-  } else {
-    console.log('no');
+  }
+}
+function moveCouponCheckout() {
+  if(jQuery('.ywgc_have_code').length) {
+    jQuery('.ywgc_have_code').prependTo('.checkout--preview--coupons');
+    //jQuery('.ywgc_have_code').show();
   }
 }
 

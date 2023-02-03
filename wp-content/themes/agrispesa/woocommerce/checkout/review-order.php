@@ -65,7 +65,7 @@ global $woocommerce;
 						<span><?php echo $coupon->code; ?></span><br/>
 						<a class="woocommerce-remove-coupon" href="<?php echo WC()->cart->remove_coupon( $coupon->code ); ?>">[Elimina]</a>
 					<?php else:?>
-						<span><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
+						<span class="happy-price"><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
 					<?php endif;?>
 
 				</div>
@@ -139,7 +139,7 @@ global $woocommerce;
 							<span class="small"><?php echo wp_kses( $label, 'post' ); ?></span><br/>
 							<span class="gift-car-number"><?php echo wp_kses( $number, 'post' ); ?></span>
 						</div>
-						<div class="sommair--totals--dx">
+						<div class="sommair--totals--dx happy-price">
 							<span><?php echo wp_kses( $value, 'post' ); ?></span>
 						</div>
 					</div>

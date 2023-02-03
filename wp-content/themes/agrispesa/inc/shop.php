@@ -209,11 +209,6 @@ function coupon_free_shipping_customization( $rates, $package ) {
     return $rates;
 }
 
-//Remove payments from resume table
-remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
-//Add payments methods after shipping address
-add_action( 'woocommerce_checkout_payment_hook', 'woocommerce_checkout_payment', 10 );
-
 //Sposta bottoni di pagamento prima del bottone di default
 // add_action('init', 'change_payments_buttons_position', 11);
 // function change_payments_buttons_position() {
@@ -226,5 +221,15 @@ add_action( 'woocommerce_checkout_payment_hook', 'woocommerce_checkout_payment',
 // }
 
 //sposta coupon nel checkout
-// remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
-// add_action('woocommerce_checkout_after_customer_details', 'woocommerce_checkout_coupon_form', 5);
+remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
+add_action('woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form');
+
+
+//sposta gift card nel checkout
+if ( ! function_exists('ywgc_gift_card_code_form_checkout_hook' ) ){
+  function ywgc_gift_card_code_form_checkout_hook( $hook ){
+    $hook = 'woocommerce_review_order_before_payment';
+    return $hook;
+  }
+}
+add_filter( 'ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_checkout_hook', 10, 1 );
