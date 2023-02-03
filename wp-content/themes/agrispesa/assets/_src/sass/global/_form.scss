@@ -330,7 +330,7 @@ textarea {
 		background: transparent;
 		color: $black;
 		&:before {
-			background: #fff url("../images/elements/check.svg") center center no-repeat;
+			background: #fff url("../images/elements/check.svg") center center no-repeat !important;
 			background-size: 85% auto;
 		}
 	}
