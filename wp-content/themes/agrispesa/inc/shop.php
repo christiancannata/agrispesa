@@ -210,6 +210,6 @@ function coupon_free_shipping_customization( $rates, $package ) {
 }
 
 //Sposta bottoni di pagamento prima del bottone di default
-add_filter('display_payment_request_button_html', function() {
+add_filter('wcpay-payment-request-button', function() {
     return 'woocommerce_review_order_after_submit';
 });
