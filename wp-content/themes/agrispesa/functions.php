@@ -108,7 +108,7 @@ $ag_includes = array(
 	'/post-produttori.php',
 	'/post-faq.php',
 	'/box.php',
-	'/shop.php',
+	//'/shop.php',
 	'/profile.php',
 	'/admin.php',
 	'/checkout.php',

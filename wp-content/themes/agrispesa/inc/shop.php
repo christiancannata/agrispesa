@@ -157,7 +157,7 @@ function soChangeProductsTitle() {
 
 
 //Free shipping label
-add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
+//add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
 function add_free_shipping_label( $label, $method ) {
     if ( $method->cost == 0 ) {
         $label = 'Spedizione gratuita'; //not quite elegant hard coded string
@@ -166,7 +166,7 @@ function add_free_shipping_label( $label, $method ) {
 }
 
 //coupon con spedizione gratuita
-add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
+//add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
 function coupon_free_shipping_customization( $rates, $package ) {
     $has_free_shipping = false;
 
@@ -209,6 +209,11 @@ function coupon_free_shipping_customization( $rates, $package ) {
     return $rates;
 }
 
+//Remove payments from resume table
+remove_action( 'woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20 );
+//Add payments methods after shipping address
+add_action( 'woocommerce_checkout_payment_hook', 'woocommerce_checkout_payment', 10 );
+
 //Sposta bottoni di pagamento prima del bottone di default
 // add_action('init', 'change_payments_buttons_position', 11);
 // function change_payments_buttons_position() {
@@ -219,3 +224,7 @@ function coupon_free_shipping_customization( $rates, $package ) {
 // 	add_action('woocommerce_review_order_before_submit', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html'), 1);
 //
 // }
+
+//sposta coupon nel checkout
+// remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
+// add_action('woocommerce_checkout_after_customer_details', 'woocommerce_checkout_coupon_form', 5);

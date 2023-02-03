@@ -178,6 +178,21 @@ body.woocommerce-cart {
 	}
 }
 
+.woocommerce-checkout {
+	display: flex;
+	flex-wrap: wrap;
+	.col2-set {
+		.col-1,
+		.col-2 {
+			float: none;
+			width: 100%;
+		}
+	}
+	#order_review_heading {
+		display: none;
+	}
+}
+
 .checkout {
 	&--flex {
 		display: flex;

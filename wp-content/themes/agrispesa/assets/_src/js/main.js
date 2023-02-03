@@ -49,12 +49,12 @@ pressSlider();
 scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
-minimumAmount();
+//minimumAmount();
 
 //changeShippingLabel();
 
 setTimeout(function() {
-  moveButtonsCheckout();
+  //moveButtonsCheckout();
 }, 2000);
 
 function moveButtonsCheckout() {
