@@ -209,3 +209,25 @@ Stack trace:
 #6 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
 
+2023-02-03T16:18:29+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:18:30+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
