@@ -13,8 +13,8 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
-body.woocommerce-checkout,
-body.woocommerce-cart {
+body.woocommerce-cart,
+body.woocommerce-checkout {
 	.woocommerce-cart-form__contents {
 		display: none !important;
 	}
@@ -32,7 +32,6 @@ body.woocommerce-cart {
 			color: $black !important;
 			font-family: $font-body;
 			font-weight: 600;
-
 			@include breakpoint(desktop) {
 				@include font-size(24);
 			}
@@ -57,7 +56,8 @@ body.woocommerce-cart {
 		.woocommerce-cart-form {
 			width: 100%;
 			@include breakpoint(desktop) {
-				width: 68%;
+				width: 60%;
+				margin: 24px;
 			}
 		}
 
@@ -66,8 +66,8 @@ body.woocommerce-cart {
 			background: $background;
 			margin: 16px 0 80px;
 			@include breakpoint(desktop) {
-				width: 30%;
-				margin: 0;
+				width: 40%;
+				margin: 24px;
 			}
 			@include breakpoint(mobile) {
 				tr {
@@ -110,27 +110,27 @@ body.woocommerce-cart {
 					th {
 						@include font-size(16);
 						font-weight: 300 !important;
-
 					}
+
 					.recurring-total,
 					.recurring-totals {
 						display: none;
+
 						th {
-						@include font-size(18);
-						font-weight: 900 !important;
-						padding: 24px 8px 8px !important;
-						font-family: $font-title;
-						text-transform: none !important;
-						letter-spacing: 0 !important;
+							@include font-size(18);
+							font-weight: 900 !important;
+							padding: 24px 8px 8px !important;
+							font-family: $font-title;
+							text-transform: none !important;
+							letter-spacing: 0 !important;
+						}
 					}
-				}
 
 					td,
 					td p {
-						@include font-size(14);
+						@include font-size(16);
 						font-family: $font-body;
 						font-weight: 300 !important;
-						letter-spacing: 0.5px;
 						margin: 0;
 						text-align: right;
 
@@ -149,6 +149,7 @@ body.woocommerce-cart {
 
 					tr.order-total {
 						display: none;
+
 						td,
 						th {
 							@include font-size(14);
@@ -342,4 +343,11 @@ body.woocommerce-cart {
 
 .minimum-amount-advice {
 	display: none;
+}
+
+ul#shipping_method .shipping-mode-cart--label {
+	.woocommerce-Price-amount.amount {
+		font-weight: 300;
+		@include font-size(16);
+	}
 }

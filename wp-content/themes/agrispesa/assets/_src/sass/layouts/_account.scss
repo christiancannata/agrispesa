@@ -381,7 +381,7 @@ body.woocommerce-view-order {
 				padding: 0;
 
 				label {
-					@include font-size(14);
+					@include font-size(16);
 					font-weight: 300 !important;
 					letter-spacing: 2px;
 					text-transform: uppercase;
@@ -390,7 +390,7 @@ body.woocommerce-view-order {
 					display: none;
 
 					.woocommerce-Price-amount.amount {
-						@include font-size(14);
+						@include font-size(16);
 						font-weight: 300 !important;
 						letter-spacing: 2px;
 						text-transform: uppercase;

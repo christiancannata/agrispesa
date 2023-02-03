@@ -22,89 +22,16 @@ global $woocommerce;
 <div class="checkout--review-order woocommerce-checkout-review-order-table zig-zag-bottom">
 
 	<div class="checkout--preview">
+		<div class="checkout--preview--header">
+			<div class="checkout--preview--cost">
+				<span><?php wc_cart_totals_order_total_html(); ?></span>
+			</div>
+			<div class="checkout--preview--items product-number">
+				<span><?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?></span>
+			</div>
+		</div>
 		<?php
 		do_action( 'woocommerce_review_order_before_cart_contents' );
-
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-			$thumbnail = $_product->get_image();
-			$hasTest = false;
-
-			if ( isset( $cart_item['test'] ) ) {
-				$hasTest = true;
-
-				$test       = $cart_item['test'];
-				$testName   = get_user_name_from_test( $test );
-				$poshNumber = $test['test_progressive_id'];
-				$poshMood = $test['mood'];
-				$poshColor = get_color_from_test( $test );
-			}
-
-
-			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-				?>
-				<div class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-
-
-					<?php if($woocommerce->cart->cart_contents_count == 1): ?>
-						<div class="checkout--preview--image">
-							<?php if($hasTest) {
-								echo '<img src="' . get_template_directory_uri() . '/img/quiz/posh-'.$poshColor.'.jpg"
-										 class="cart-color-posh" alt="Posh"/>';
-							} else {
-									echo $thumbnail; // PHPCS: XSS ok.
-							}
-							?>
-						</div>
-					<?php endif; ?>
-					<div class="sommair--totals--flex">
-						<div class="sommair--totals--sx">
-							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
-							<div class="multi-product-images">
-								<div class="checkout--preview--image">
-									<?php if($hasTest) {
-										echo '<img src="' . get_template_directory_uri() . '/img/quiz/posh-'.$poshColor.'.jpg"
-				                 class="cart-color-posh" alt="Posh"/>';
-									} else {
-											echo $thumbnail; // PHPCS: XSS ok.
-									}
-									?>
-
-								</div>
-							<?php endif; ?>
-
-								<span class="small">
-									<?php echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ) . '&nbsp;'; ?>
-									<?php if($hasTest) {
-												echo 'n°'.  $poshNumber;
-												echo '<br/><div class="test-meta-cart">';
-												echo '<span>' . $poshMood . '</span>';
-												echo '<span>' . $testName . '</span>';
-												echo '<span>' . $poshColor . '</span>';
-												echo '</div>';
-												echo '<div class="allergeni-lista">';
-												echo '<p class="allergeni-lista--label open-allerg">Allergeni <span class="icon-arrow-down"></span></p>';
-												echo '<div class="allergeni-lista--box">';
-												echo '<p class="allergeni-lista--disclaimer">Potrebbero essere presenti alcuni dei seguenti allergeni:</p>';
-												echo get_field('lista_allergeni', 'option');
-												echo '</div>';
-												echo '</div>';
-
-											} ?>
-								</span>
-							<?php if($woocommerce->cart->cart_contents_count > 1): ?>
-							</div>
-							<?php endif; ?>
-						</div>
-						<div class="sommair--totals--dx">
-							<span><?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						</div>
-					</div>
-
-				</div>
-				<?php
-			}
-		}
 
 		do_action( 'woocommerce_review_order_after_cart_contents' );
 		?>
@@ -136,7 +63,6 @@ global $woocommerce;
 					<?php
 					 if($coupon->get_free_shipping()):?>
 						<span><?php echo $coupon->code; ?></span><br/>
-						<!-- AIUTO CHRISTIAN -->
 						<a class="woocommerce-remove-coupon" href="<?php echo WC()->cart->remove_coupon( $coupon->code ); ?>">[Elimina]</a>
 					<?php else:?>
 						<span><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
@@ -226,7 +152,7 @@ global $woocommerce;
 
 		<?php //do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
-			<div class="sommair--totals--flex">
+			<div class="sommair--totals--flex woocommerce-sommair-end">
 				<div class="sommair--totals--sx">
 					<span class="bold"><?php esc_html_e( 'Total', 'woocommerce' ); ?></span>
 				</div>
@@ -234,8 +160,20 @@ global $woocommerce;
 					<span><?php wc_cart_totals_order_total_html(); ?></span>
 				</div>
 			</div>
-
+		<div class="woocommerce-after-sommair">
 		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+		</div>
 
+	</div>
+	<div class="checkout--preview--bottom">
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Spedizione e consegna</span>
+			<span class="is-description">Ai nostri contadini diamo il tempo di raccogliere i prodotti che hai ordinato. Per questo non riceverai la scatola in 24 ore, ma lunedì o mercoledì prossimo; a seconda di dove vivi.</span>
+		</div>
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Pagamento e fattura</span>
+			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola. Garantiamo pagamenti sicuri.</span>
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/credit-cards.png" class="credit-cards" alt="Pagamenti Sicuri" />
+		</div>
 	</div>
 </div>

@@ -125,7 +125,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 		<div class="checkout--preview--items mg-t">
 			<span class="is-title"><span class="icon-check is-icon"></span>Pagamento e fattura</span>
-			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola.<br/>Garantiamo pagamenti sicuri.</span>
+			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola. Garantiamo pagamenti sicuri.</span>
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/credit-cards.png" class="credit-cards" alt="Pagamenti Sicuri" />
 		</div>
 	</div>
