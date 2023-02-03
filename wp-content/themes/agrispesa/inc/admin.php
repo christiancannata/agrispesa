@@ -1668,18 +1668,18 @@ function variation_settings_fields($loop, $variation_data, $variation)
 			}
 		}
 	}
+	/*
+		$categoriesVariation = get_post_meta($variation->ID, '_box_categories', true);
 
-	$categoriesVariation = get_post_meta($variation->ID, '_box_categories', true);
-
-	woocommerce_wp_multi_select(array(
-		'id' => "_box_categories{$loop}",
-		'name' => "_box_categories[{$loop}][]",
-		'wrapper_class' => 'form-row form-row-full',
-		'label' => 'Categorie compatibili',
-		'options' => $categoriesSelect,
-		'value' => $categoriesVariation
-	), $variation_data->ID);
-
+		woocommerce_wp_multi_select(array(
+			'id' => "_box_categories{$loop}",
+			'name' => "_box_categories[{$loop}][]",
+			'wrapper_class' => 'form-row form-row-full',
+			'label' => 'Categorie compatibili',
+			'options' => $categoriesSelect,
+			'value' => $categoriesVariation
+		), $variation_data->ID);
+	*/
 }
 
 function save_variation_settings_fields($variation_id, $loop)
