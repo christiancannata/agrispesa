@@ -210,7 +210,7 @@ body.woocommerce-cart {
 			margin: 0 auto !important;
 		}
 
-		&--header {}
+
 
 		&--cost {
 			.woocommerce-Price-amount {
@@ -233,6 +233,25 @@ body.woocommerce-cart {
 			@include font-size(16);
 			margin-bottom: -8px;
 			color: $muted;
+			&.mg-b {
+				margin-bottom: 24px;
+			}
+			.is-title {
+				color: $black;
+				display: block;
+				font-weight: 600;
+				margin-bottom: 8px;
+			}
+			.is-icon {
+				@include font-size(20);
+				@include border-radius(50%);
+				background: $green;
+				color: $white;
+				position: relative;
+				top: 2px;
+				margin-right: 4px;
+				padding: 1px;
+			}
 		}
 	}
 }

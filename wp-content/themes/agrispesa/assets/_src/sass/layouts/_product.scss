@@ -145,7 +145,22 @@ body.tax-product_cat {
 			padding: 16px;
 			background: $white;
 			position: relative;
-			@include breakpoint(desktop) {}
+
+			.uom {
+				display: none;
+			}
+
+			.product-loop-title-meta {
+				.woocommerce-loop-product__title {
+					margin-bottom: 0;
+					padding: 0;
+				}
+
+				.product-info--quantity {
+					@include font-size(16);
+					color: $muted;
+				}
+			}
 
 			&:first-of-type {
 				border-top-left-radius: 4px;
@@ -246,6 +261,9 @@ body.tax-product_cat {
 			.price {
 				margin: 0;
 				color: $black;
+				@include breakpoint(desktop) {
+					margin: 0 0 27px;
+				}
 
 				.woocommerce-Price {
 					&-amount {
@@ -346,6 +364,10 @@ body.tax-product_cat {
 		}
 
 		.btn-price {
+			.uom {
+				display: none;
+			}
+
 			.woocommerce-Price {
 				&-amount {
 					@include font-size(40);
@@ -407,6 +429,7 @@ body.tax-product_cat {
 				display: flex;
 				align-items: center;
 				justify-content: center;
+
 				figure {
 					width: 100%;
 				}

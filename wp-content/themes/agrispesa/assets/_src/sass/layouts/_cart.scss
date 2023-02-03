@@ -331,3 +331,12 @@ body.woocommerce-cart {
 	// 	left: 0;
 	// }
 }
+
+.minimum-amount-advice {
+	@include border-radius(8px);
+	background: $red;
+	padding: 16px;
+	color: $white;
+	margin: 0 20px 24px;
+	text-align: center;
+}

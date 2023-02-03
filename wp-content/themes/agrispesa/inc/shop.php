@@ -94,45 +94,65 @@ function bbloomer_remove_shipping_label( $label, $method ) {
 
 
 //Minimo ordine 43 euro
-function action_woocommerce_check_cart_items() {
-    // Only run on the cart or checkout pages
-    if ( is_cart() || is_checkout() ) {
-        // Minimum
-        $minimum = 43;
+/**
+ * Set a minimum order amount for checkout
+ */
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
 
-        // Category
-        $category = 'chilled';
-        $category_2 = 'bundles';
+function wc_minimum_order_amount() {
 
-        // Initialize
-        $total = 0;
-        $flag = true;
+  $minimum = 43;
+  $category = 'box';
 
-        // Loop through cart items
-        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-            // Product id
-            $product_id = $cart_item['product_id'];
+  // Loop through cart items
+  foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      // Product id
+      $product_id = $cart_item['product_id'];
+      // Has category box
+      if ( has_term( $category, 'product_cat', $product_id ) ) {
+          $minimum = 26;
+      }
+  }
 
-            // Has certain category
-            if ( has_term( $category, 'product_cat', $product_id ) ) {
-                // Add to total
-                $total += $cart_item['quantity'];
-            // Has other category
-            } elseif ( has_term( $category_2, 'product_cat', $product_id ) ) {
-                // Break loop
-                $flag = false;
-                break;
-            }
-        }
+    if ( WC()->cart->total < $minimum ) {
+      $cartTotal = WC()->cart->total;
+      $addPrice = $minimum - $cartTotal;
 
-        // When total is greater than 0 but less than the minimum & flag is still true
-        if ( ( $total > 0 && $total < $minimum ) && $flag ) {
-            // Notice
-            wc_add_notice( sprintf( __( 'A minimum of %s products are required from the %s category before checking out.', 'woocommerce' ), $minimum, $category ), 'error' );
+        if( is_cart() ) {
 
-            // Optional: remove proceed to checkout button
+            echo '<div class="minimum-amount-advice"><p>Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti; ti mancano ' .wc_price($addPrice) .'.</p></div>';
+            // Remove proceed to checkout button
             remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
+        } else {
+
+          echo '<div class="minimum-amount-advice"><p>Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti; ti mancano ' .wc_price($addPrice) .'.</p></div>';
+          // Remove proceed to checkout button
+          remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
         }
     }
 }
-//add_action( 'woocommerce_check_cart_items' , 'action_woocommerce_check_cart_items', 10, 0 );
+
+//Cambia h2 a lista prodotti e aggiungi peso
+remove_action( 'woocommerce_shop_loop_item_title','woocommerce_template_loop_product_title', 10 );
+add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10 );
+function soChangeProductsTitle() {
+  global $product;
+  $product_data = $product->get_meta('_woo_uom_input');
+
+  if ( $product->has_weight() ) {
+  	if($product_data) {
+      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span></div>';
+  	} else {
+      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' g</span></div>';
+  	}
+  } else {
+    echo '<h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  }
+
+
+}

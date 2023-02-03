@@ -3,6 +3,8 @@ $product = wc_get_product( get_the_ID() );
 $thumb_id = get_post_thumbnail_id();
 $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
 $thumb_url = $thumb_url_array[0];
+// unità di misura personalizzata
+$product_data = $product->get_meta('_woo_uom_input');
 ?>
 <article class="product-box">
   <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
@@ -13,8 +15,13 @@ $thumb_url = $thumb_url_array[0];
       <h2 class="product-box--title"><?php echo the_title(); ?></h2>
       <div class="product-box--price--flex">
         <?php if ( $product->has_weight() ) {
-        	echo '<p class="product-box--description product-info--quantity">' .  $product->get_weight() . ' kg — </p>';
+        	if($product_data) {
+        		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span>';
+        	} else {
+        		echo '<span class="product-info--quantity">' . $product->get_weight() . ' g</span>';
+        	}
         } ?>
+
         <div class="product-box--price">
           <?php echo $product->get_price_html(); ?>
         </div>

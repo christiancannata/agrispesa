@@ -113,8 +113,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 												echo '<span class="cart-product-var-var last">' . $variazioni['pa_tipologia'] . '</span>';
 												echo '</div>';
 											} else {
-												if ($prodotto->get_weight() > 0) {
-													echo $prodotto->get_weight() . ' kg';
+												// unità di misura personalizzata
+												$product_data = $prodotto->get_meta('_woo_uom_input');
+												if ( $prodotto->has_weight() ) {
+													if($product_data) {
+														echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' '.$product_data.'</span>';
+													} else {
+														echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' g</span>';
+													}
 												}
 
 											} ?>
