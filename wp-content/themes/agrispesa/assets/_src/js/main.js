@@ -49,12 +49,14 @@ pressSlider();
 scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
-removeCheckoutButton();
+minimumAmount();
 //changeShippingLabel();
 
-function removeCheckoutButton() {
+function minimumAmount() {
   if(jQuery('.minimum-amount-advice').length) {
     jQuery('.wc-proceed-to-checkout').hide();
+    jQuery('.minimum-amount-advice').prependTo('.checkout--preview--bottom');
+    jQuery('.minimum-amount-advice').show();
   }
 }
 

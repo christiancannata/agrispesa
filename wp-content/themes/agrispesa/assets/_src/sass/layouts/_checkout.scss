@@ -210,9 +210,9 @@ body.woocommerce-cart {
 			margin: 0 auto !important;
 		}
 
-
-
 		&--cost {
+			padding: 0 8px;
+
 			.woocommerce-Price-amount {
 				@include font-size(40);
 				font-weight: 300;
@@ -231,17 +231,32 @@ body.woocommerce-cart {
 
 		&--items {
 			@include font-size(16);
-			margin-bottom: -8px;
-			color: $muted;
-			&.mg-b {
-				margin-bottom: 24px;
+			color: $black;
+			padding: 0 8px;
+
+			&.product-number {
+				padding-bottom: 10px;
+				padding-top: 10px;
+				border-top: 1px solid $panna;
 			}
+
+			&.mg-t {
+				margin-top: 24px;
+			}
+
 			.is-title {
 				color: $black;
 				display: block;
 				font-weight: 600;
 				margin-bottom: 8px;
 			}
+
+			.is-description {
+				line-height: 1.2;
+				display: block;
+				color: $muted;
+			}
+
 			.is-icon {
 				@include font-size(20);
 				@include border-radius(50%);
@@ -251,6 +266,17 @@ body.woocommerce-cart {
 				top: 2px;
 				margin-right: 4px;
 				padding: 1px;
+				width: 22px;
+				height: 22px;
+				display: inline-block;
+				text-align: center;
+
+				&.red {
+					background: $red;
+				}
+			}
+			.credit-cards {
+				margin-top: 16px;
 			}
 		}
 	}
@@ -312,9 +338,7 @@ body.woocommerce-cart {
 				}
 
 				&.small {
-					@include font-size(12);
-					letter-spacing: 2px;
-					text-transform: uppercase;
+					@include font-size(16);
 				}
 			}
 		}
@@ -572,8 +596,8 @@ body.woocommerce-cart {
 
 .woocommerce-billing-fields,
 .woocommerce-coupons-section,
-body.woocommerce-checkout .woocommerce-gift-card-section,
-.woocommerce-shipping-fields {
+.woocommerce-shipping-fields,
+body.woocommerce-checkout .woocommerce-gift-card-section {
 	@include breakpoint(desktop) {
 		@include border-radius(16px);
 		border: 1px solid #eaeae1;

@@ -120,13 +120,14 @@ function wc_minimum_order_amount() {
       $addPrice = $minimum - $cartTotal;
 
         if( is_cart() ) {
-            echo '<div class="minimum-amount-advice"><p>Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti; ti mancano ' .wc_price($addPrice) .'.</p></div>';
+
+            echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti!<br/>Ti mancano ' .wc_price($addPrice) .'.</span></div></div>';
             // Remove proceed to checkout button
             remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
         } else {
 
-          echo '<div class="minimum-amount-advice"><p>Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti; ti mancano ' .wc_price($addPrice) .'.</p></div>';
+          echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti!<br/>Ti mancano ' .wc_price($addPrice) .'.</span></div></div>';
           // Remove proceed to checkout button
           remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
 
@@ -152,6 +153,58 @@ function soChangeProductsTitle() {
   } else {
     echo '<h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
   }
+}
 
 
+//Free shipping label
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
+function add_free_shipping_label( $label, $method ) {
+    if ( $method->cost == 0 ) {
+        $label = 'Spedizione gratuita'; //not quite elegant hard coded string
+    }
+    return $label;
+}
+
+//coupon con spedizione gratuita
+add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
+function coupon_free_shipping_customization( $rates, $package ) {
+    $has_free_shipping = false;
+
+    $applied_coupons = WC()->cart->get_applied_coupons();
+    foreach( $applied_coupons as $coupon_code ){
+        $coupon = new WC_Coupon($coupon_code);
+        if($coupon->get_free_shipping()){
+            $has_free_shipping = true;
+            break;
+        }
+    }
+
+    foreach( $rates as $rate_key => $rate ){
+        if( $has_free_shipping ){
+            // For "free shipping" method (enabled), remove it
+            if( $rate->method_id == 'free_shipping'){
+                unset($rates[$rate_key]);
+            }
+            // AIUTO CHRISTIAN: un altro if se è applicatanuna gift card
+
+
+            // For other shipping methods
+            else {
+                // Append rate label titles (free)
+                $rates[$rate_key]->label .= ' ' . __('(free)', 'woocommerce');
+
+                // Set rate cost
+                $rates[$rate_key]->cost = 0;
+
+                // Set taxes rate cost (if enabled)
+                $taxes = array();
+                foreach ($rates[$rate_key]->taxes as $key => $tax){
+                    if( $rates[$rate_key]->taxes[$key] > 0 )
+                        $taxes[$key] = 0;
+                }
+                $rates[$rate_key]->taxes = $taxes;
+            }
+        }
+    }
+    return $rates;
 }
