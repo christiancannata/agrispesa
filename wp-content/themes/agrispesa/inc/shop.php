@@ -210,5 +210,12 @@ function coupon_free_shipping_customization( $rates, $package ) {
 }
 
 //Sposta bottoni di pagamento prima del bottone di default
-remove_action( 'woocommerce_checkout_before_customer_details', [ WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ], 1 );
-add_action( 'woocommerce_review_order_before_submit', [ WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ], 1 );
+add_action('init', 'change_payments_buttons_position', 11);
+function change_payments_buttons_position() {
+	remove_action('woocommerce_proceed_to_checkout', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html'), 1);
+	remove_action('woocommerce_proceed_to_checkout', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html'), 2);
+
+	add_action('woocommerce_review_order_before_submit', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html'), 2);
+	add_action('woocommerce_review_order_before_submit', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html'), 1);
+
+}
