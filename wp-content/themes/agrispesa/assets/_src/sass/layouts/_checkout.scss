@@ -396,7 +396,7 @@ body.woocommerce-cart {
 			}
 			.woocommerce-SavedPaymentMethods-saveNew {
 				label {
-					
+
 				}
 			}
 
@@ -409,7 +409,6 @@ body.woocommerce-cart {
 				margin: 4px 0;
 				padding: 10px;
 				width: 100%;
-				border: 1px solid $panna;
 				color: $black;
 			}
 
@@ -441,11 +440,11 @@ body.woocommerce-cart {
 				border-color: $orange;
 				color: $white;
 			}
-			// &:not(.payment_method_woocommerce_payments) {
-			// 	.payment_box {
-			// 		display: none !important;
-			// 	}
-			// }
+			&:not(.payment_method_woocommerce_payments) {
+				.payment_box {
+					display: none !important;
+				}
+			}
 			&.payment_method_satispay,
 			&.payment_method_woocommerce_payments {
 				& > label {
