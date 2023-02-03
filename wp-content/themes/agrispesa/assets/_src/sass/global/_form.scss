@@ -320,9 +320,13 @@ textarea {
 		border: none;
 
 		&:before {
-			background: $white;
+			background: $white !important;
 			font-weight: 600;
 		}
+	}
+
+	input[type=checkbox]:checked + label {
+		background: transparent;
 	}
 }
 
