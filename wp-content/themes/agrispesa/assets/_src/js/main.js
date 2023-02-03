@@ -50,8 +50,12 @@ scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
 minimumAmount();
-moveButtonsCheckout();
+
 //changeShippingLabel();
+
+setTimeout(function() {
+  moveButtonsCheckout();
+}, 2000);
 
 function moveButtonsCheckout() {
   if(jQuery('.wcpay-payment-request-wrapper').length) {
