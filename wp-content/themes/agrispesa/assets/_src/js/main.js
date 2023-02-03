@@ -55,8 +55,11 @@ moveButtonsCheckout();
 
 function moveButtonsCheckout() {
   if(jQuery('.wcpay-payment-request-wrapper').length) {
+    console.log('eccolo');
     jQuery('.wcpay-payment-request-wrapper').appendTo('.place-order');
     jQuery('#wcpay-payment-request-wrapper').show();
+  } else {
+    console.log('no');
   }
 }
 
