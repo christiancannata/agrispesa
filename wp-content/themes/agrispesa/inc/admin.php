@@ -418,19 +418,21 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		$week = get_post_meta($post->ID, '_week', true);
 		$numConsegna = get_post_meta($post->ID, '_numero_consegna', true);
 		$consegna = get_post_meta($post->ID, '_data_consegna', true);
+		$gruppoConsegna = get_post_meta($post->ID, '_gruppo_consegna', true);
 
 		if (empty($weight)) {
 			$weight = 0;
 		}
 		echo '<span>Peso della BOX: <strong>' . $weight . 'Kg</strong></span><br>';
 		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
+		echo '<span>Gruppo di consegna: <strong>' . $gruppoConsegna . '</strong></span><br><br>';
 		echo '<strong>Numero di consegna:</strong><br>
 		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>
 
 ';
 
 		echo '<strong>Data di consegna:</strong><br>
-		<input autocomplete="off" type="date" value="' . $consegna . '" name="_data_consegna">';
+		<input autocomplete="off" type="date" value="' . $consegna . '" name="_data_consegna" readonly>';
 
 	}
 }
@@ -911,7 +913,7 @@ function custom_shop_order_column($columns)
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
 			$reordered_columns['my-column1'] = 'Tipo';
-			$reordered_columns['my-column2'] = 'Settimana';
+			$reordered_columns['my-column2'] = 'Data Consegna';
 			$reordered_columns['my-column3'] = 'Preferenze';
 		}
 	}
@@ -937,9 +939,9 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column2' :
 
 			// Get custom post meta data
-			$week = get_post_meta($post_id, '_week', true);
-			if (!empty($week))
-				echo $week;
+			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
+			if (!empty($dataConsegna))
+				echo (new \DateTime($dataConsegna))->format('d/m/Y');
 
 			break;
 
@@ -1460,6 +1462,9 @@ function consegne_ordini_pages()
 								<span>Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary">Box
 							</th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary">Data
+								consegna
+							</th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary">
 								Prodotti
 							</th>
@@ -1480,6 +1485,7 @@ function consegne_ordini_pages()
 
 							$week = get_post_meta($box->ID, '_week', true);
 							$products = get_post_meta($box->ID, '_products', true);
+							$dataConsegna = get_post_meta($box->ID, '_data_consegna', true);
 
 							?>
 
@@ -1492,7 +1498,10 @@ function consegne_ordini_pages()
 									data-colname="Commento">
 									<span><?php echo $productBox->post_title; ?></span>
 								</td>
-
+								<td class="comment column-comment has-row-actions column-primary"
+									data-colname="Commento">
+									<span><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
+								</td>
 								<td class="response column-response" data-colname="In risposta a">
 									<table>
 										<tbody>
@@ -1573,6 +1582,7 @@ function consegne_ordini_pages()
 
 					<label>Codice di confezionamento</label><br>
 					<select class="select2" name="confezionamento">
+						<option value="">-- Seleziona --</option>
 						<?php foreach ($confezionamento as $codice): ?>
 							<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
 						<?php endforeach; ?>
@@ -1584,8 +1594,8 @@ function consegne_ordini_pages()
 						<option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
 						<option value="fabbisogno">Fabbisogno</option>
 						<option value="confezionamento">Stampa per confezionamento</option>
-						<option>Riepilogo di spedizione</option>
-						<option>Etichette</option>
+						<option value="riepilogo_spedizione">Riepilogo di spedizione</option>
+						<option value="etichette">Etichette</option>
 					</select>
 
 

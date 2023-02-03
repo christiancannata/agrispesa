@@ -21,7 +21,6 @@ $args = [
 $orders = new WP_Query($args);
 $orders = $orders->get_posts();
 
-$products = [];
 
 /*
  *
@@ -43,10 +42,14 @@ $products = reset($products);
 $product = wc_get_product($products);
 
  */
+
+$products = [];
+
 foreach ($orders as $order) {
 	$order = wc_get_order($order->ID);
 	$items = $order->get_items();
 	foreach ($items as $item) {
+
 		$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
 
 		if (!isset($products[$product_id])) {
@@ -58,8 +61,13 @@ foreach ($orders as $order) {
 			$products[$product_id]['product'] = $product;
 		}
 
-		$products[$product_id]['orders'][] = $order;
+		$itemOrder = clone $order;
+
+		$itemOrder->product_quantity = $item->get_quantity();
+
+		$products[$product_id]['orders'][] = $itemOrder;
 		$products[$product_id]['quantity'] += $item->get_quantity();
+
 	}
 }
 
@@ -90,19 +98,62 @@ ob_start();
 					Tot ordinato: <?php echo $product['quantity']; ?>
 				</td>
 				<td>
+					<table>
 
+						<thead>
+						<th><b>Nr Documento</b></th>
+						<th><b>Tipo Spesa</b></th>
+						<th><b>Cliente</b></th>
+						<th><b>Cod ubicazione</b></th>
+						<th><b>Data Spedizione</b></th>
+						<th><b>U.M.</b></th>
+						<th><b>Quantità</b></th>
+						</thead>
+						<tbody>
+						<?php foreach ($product['orders'] as $order): ?>
+							<tr>
+								<td><?php echo $order->get_id(); ?></td>
+								<td><?php
+									$subscription = get_post_meta($order->get_id(), '_subscription_id', true);
+									if ($subscription) {
+										$subscription = wcs_get_subscription($subscription);
+										$subscription = $subscription->get_items();
+										$subscription = reset($subscription)->get_product();
+										if ($subscription) {
+											$productData = $subscription->get_data();
+											echo $productData['name'];
+										}
+									}
+									?></td>
+								<td><?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?></td>
+								<td>
+									<?php
+									$gruppo = get_post_meta($order->get_id(), '_gruppo_consegna', true);
+									echo $gruppo;
+									?>
+								</td>
+								<td>
+									<?php
+									$data = get_post_meta($order->get_id(), '_data_consegna', true);
+									echo (new \DateTime($data))->format("d/m/Y");
+									?>
+								</td>
+								<td>PZ</td>
+								<td>
+									<?php
+									echo $order->product_quantity;
+									?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						<tr>
+							<td colspan="6"></td>
+							<td><?php echo $product['quantity']; ?></td>
+						</tr>
+						</tbody>
+					</table>
 				</td>
-				<td>PZ</td>
-				<td>
 
-				</td>
-				<td>
-
-				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
