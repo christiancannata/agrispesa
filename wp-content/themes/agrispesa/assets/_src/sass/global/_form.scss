@@ -315,6 +315,14 @@ textarea {
 	}
 }
 
+.woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
+	&:before {
+		background: $white;
+		font-weight: 600;
+		border: none;
+	}
+}
+
 span.wpcf7-list-item {
 	display: inline-block;
 }
