@@ -4,6 +4,64 @@ function dd($vars)
 	die(var_dump($vars));
 }
 
+function get_order_delivery_date($id)
+{
+	$order = wc_get_order($id);
+	if (!$order) {
+		return null;
+	}
+
+	$deliveryDate = get_post_meta($id, '_delivery_date', true);
+
+	if ($deliveryDate) {
+		return DateTime::createFromFormat('Y-m-d', $deliveryDate)->format('d/m/Y');
+	}
+}
+
+function calculate_delivery_date_order($id)
+{
+
+	$order = new WC_Order($id);
+	if (!$order) {
+		return null;
+	}
+
+	$gruppoConsegna = get_post_meta($id, '_gruppo_consegna', true);
+
+	if (!$gruppoConsegna) {
+		return null;
+	}
+
+	global $wpdb;
+
+	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $gruppoConsegna . "' ");
+	$ids = reset($ids);
+
+	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
+
+	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+
+	$order_date = $order->get_date_created();
+
+	$dateCheck = clone $order_date;
+
+	$week = $order->get_date_created()->format("W");
+
+	if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+		$dateCheck->add(new DateInterval('P7D'));
+		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+
+		update_post_meta($order->get_id(), '_data_consegna', $dateCheck->format('Y-m-d'));
+	}
+
+	update_post_meta($order->get_id(), '_week', $week);
+
+	$deliveryDate = strtotime('next ' . $dowMap[$deliveryDay], $dateCheck->getTimestamp());
+	$deliveryDate = DateTime::createFromFormat('U', $deliveryDate);
+
+	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
+
+}
 
 add_action('woocommerce_product_options_advanced', function () {
 	woocommerce_wp_text_input([
@@ -419,6 +477,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		$numConsegna = get_post_meta($post->ID, '_numero_consegna', true);
 		$consegna = get_post_meta($post->ID, '_data_consegna', true);
 		$gruppoConsegna = get_post_meta($post->ID, '_gruppo_consegna', true);
+		$deliveryDay = get_order_delivery_date($post->ID);
 
 		if (empty($weight)) {
 			$weight = 0;
@@ -426,6 +485,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		echo '<span>Peso della BOX: <strong>' . $weight . 'Kg</strong></span><br>';
 		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
 		echo '<span>Gruppo di consegna: <strong>' . $gruppoConsegna . '</strong></span><br><br>';
+		echo '<span>Data di ricezione: <strong>' . $deliveryDay . '</strong></span><br><br>';
 		echo '<strong>Numero di consegna:</strong><br>
 		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>
 
@@ -649,6 +709,7 @@ function create_order_from_subscription($id)
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
 
+	calculate_delivery_date_order($order->get_id());
 
 	$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
 	if (empty($boxPreferences)) {

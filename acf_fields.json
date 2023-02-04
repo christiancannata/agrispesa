@@ -8120,6 +8120,37 @@
                 "placeholder": ""
             },
             {
+                "key": "field_63de442ed1773",
+                "label": "Giorno di consegna",
+                "name": "delivery_day",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "Domenica",
+                    "Lunedì",
+                    "Martedì",
+                    "Mercoledì",
+                    "Giovedì",
+                    "Venerdì",
+                    "Sabato"
+                ],
+                "default_value": 3,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            },
+            {
                 "key": "field_63d906d3862dc",
                 "label": "Stampa Attiva",
                 "name": "stampa_attiva",

@@ -150,3 +150,19 @@ Stack trace:
 [04-Feb-2023 11:21:10 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
 [04-Feb-2023 11:21:15 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3778 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
 [04-Feb-2023 11:21:15 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:38:14 UTC] PHP Fatal error:  Uncaught Error: Call to a member function format() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-order.php:46
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(151): wc_get_template('myaccount/view-...', Array)
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3227): WC_Shortcode_My_Account::view_order(285)
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_view_order('285')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(285, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3161): do_action('woocommerce_acc...', '285')
+#7 /shared/httpd/agrispesa/w in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-order.php on line 46
+[04-Feb-2023 11:48:10 UTC] PHP Parse error:  syntax error, unexpected 'add_action' (T_STRING), expecting '(' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 9
+[04-Feb-2023 11:48:10 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[04-Feb-2023 11:48:10 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[04-Feb-2023 11:48:18 UTC] PHP Parse error:  syntax error, unexpected 'add_action' (T_STRING), expecting '(' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 9
+[04-Feb-2023 12:13:51 UTC] PHP Notice:  La funzione order_date è stata richiamata <strong>in maniera scorretta</strong>. Order properties should not be accessed directly. Backtrace: require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging, calculate_delivery_date_order, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong Leggi <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[04-Feb-2023 12:19:08 UTC] PHP Notice:  Undefined variable: nextTuesday in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 54
