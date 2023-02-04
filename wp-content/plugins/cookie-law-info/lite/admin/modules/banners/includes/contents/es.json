@@ -1,0 +1,254 @@
+{
+    "gdpr": {
+        "notice": {
+            "elements": {
+                "title": "Valoramos tu privacidad",
+                "description": "<p>Usamos cookies para mejorar su experiencia de navegación, mostrarle anuncios o contenidos personalizados y analizar nuestro tráfico. Al hacer clic en “Aceptar todo” usted da su consentimiento a nuestro uso de las cookies.</p>",
+                "privacyLink": "",
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "reject": "Rechazar todo",
+                        "settings": "Personalizar",
+                        "readMore": "Lee mas",
+                        "donotSell": "No venda mi información personal"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "categoryPreview": {
+            "elements": {
+                "buttons": {
+                    "elements": {
+                        "save": "Guardar mis preferencias"
+                    }
+                }
+            }
+        },
+        "preferenceCenter": {
+            "elements": {
+                "title": "Personalizar las preferencias de consentimiento",
+                "description": "<p>Usamos cookies para ayudarle a navegar de manera eficiente y realizar ciertas funciones. Encontrará información detallada sobre cada una de las cookies bajo cada categoría de consentimiento a continuación.</p><p>Las cookies categorizadas como “Necesarias” se guardan en su navegador, ya que son esenciales para permitir las funcionalidades básicas del sitio web.</p><p>También utilizamos cookies de terceros que nos ayudan a analizar cómo usted utiliza este sitio web, guardar sus preferencias y aportar el contenido y la publicidad que le sean relevantes. Estas cookies solo se guardan en su navegador previo consentimiento por su parte.</p><p>Puede optar por activar o desactivar alguna o todas estas cookies, aunque la desactivación de algunas podría afectar a su experiencia de navegación.</p>",
+                "showMore": "Mostrar más",
+                "showLess": "Mostrar menos",
+                "category": {
+                    "elements": {
+                        "alwaysEnabled": "Siempre activas",
+                        "enable": "Permitir",
+                        "disable": "Desactivar"
+                    }
+                },
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "save": "Guardar mis preferencias",
+                        "reject": "Rechazar todo"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "optoutPopup": {
+            "elements": {
+                "confirmation": "¿Realmente desea darse de baja?",
+                "buttons": {
+                    "elements": {
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar"
+                    }
+                }
+            }
+        },
+        "revisitConsent": {
+            "elements": {
+                "title": "Configuración de cookies"
+            }
+        },
+        "auditTable": {
+            "elements": {
+                "headers": {
+                    "elements": {
+                        "id": "Cookie",
+                        "duration": "Duración",
+                        "description": "Descripción"
+                    }
+                },
+                "message": "No hay cookies para mostrar."
+            }
+        },
+        "videoPlaceholder": {
+            "elements": {
+                "title": "Por favor acepte el consentimiento de cookies"
+            }
+        }
+    },
+    "ccpa": {
+        "notice": {
+            "elements": {
+                "title": "Valoramos tu privacidad",
+                "description": "Este sitio web o sus herramientas de terceros procesan datos personales. Puede optar por no participar en la venta de su información personal haciendo clic en el enlace \"No vender mi información personal\".",
+                "privacyLink": "",
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "reject": "Rechazar todo",
+                        "settings": "Personalizar",
+                        "readMore": "Lee mas",
+                        "donotSell": "No venda mi información personal"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "categoryPreview": {
+            "elements": {
+                "buttons": {
+                    "elements": {
+                        "save": "Guardar mis preferencias"
+                    }
+                }
+            }
+        },
+        "preferenceCenter": {
+            "elements": {
+                "title": "Personalizar las preferencias de consentimiento",
+                "description": "<p>Usamos cookies para ayudarle a navegar de manera eficiente y realizar ciertas funciones. Encontrará información detallada sobre cada una de las cookies bajo cada categoría de consentimiento a continuación.</p><p>Las cookies categorizadas como “Necesarias” se guardan en su navegador, ya que son esenciales para permitir las funcionalidades básicas del sitio web.</p><p>También utilizamos cookies de terceros que nos ayudan a analizar cómo usted utiliza este sitio web, guardar sus preferencias y aportar el contenido y la publicidad que le sean relevantes. Estas cookies solo se guardan en su navegador previo consentimiento por su parte.</p><p>Puede optar por activar o desactivar alguna o todas estas cookies, aunque la desactivación de algunas podría afectar a su experiencia de navegación.</p>",
+                "showMore": "Mostrar más",
+                "showLess": "Mostrar menos",
+                "category": {
+                    "elements": {
+                        "alwaysEnabled": "Siempre activas",
+                        "enable": "Permitir",
+                        "disable": "Desactivar"
+                    }
+                },
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "save": "Guardar mis preferencias",
+                        "reject": "Rechazar todo"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "optoutPopup": {
+            "elements": {
+                "confirmation": "¿Realmente desea darse de baja?",
+                "buttons": {
+                    "elements": {
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar"
+                    }
+                }
+            }
+        },
+        "revisitConsent": {
+            "elements": {
+                "title": "Configuración de cookies"
+            }
+        },
+        "auditTable": {
+            "elements": {
+                "headers": {
+                    "elements": {
+                        "id": "Cookie",
+                        "duration": "Duración",
+                        "description": "Descripción"
+                    }
+                },
+                "message": "No hay cookies para mostrar."
+            }
+        },
+        "videoPlaceholder": {
+            "elements": {
+                "title": "Por favor acepte el consentimiento de cookies"
+            }
+        }
+    },
+    "info": {
+        "notice": {
+            "elements": {
+                "title": "Valoramos tu privacidad",
+                "description": "Usamos cookies para mejorar su experiencia de navegación, mostrarle anuncios o contenidos personalizados y analizar nuestro tráfico. Al hacer clic en “Aceptar todo” usted da su consentimiento a nuestro uso de las cookies.",
+                "privacyLink": "",
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "reject": "Rechazar todo",
+                        "settings": "Personalizar",
+                        "readMore": "Lee mas",
+                        "donotSell": "No venda mi información personal"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "categoryPreview": {
+            "elements": {
+                "buttons": {
+                    "elements": {
+                        "save": "Guardar mis preferencias"
+                    }
+                }
+            }
+        },
+        "preferenceCenter": {
+            "elements": {
+                "title": "Personalizar las preferencias de consentimiento",
+                "description": "<p>Usamos cookies para ayudarle a navegar de manera eficiente y realizar ciertas funciones. Encontrará información detallada sobre cada una de las cookies bajo cada categoría de consentimiento a continuación.</p><p>Las cookies categorizadas como “Necesarias” se guardan en su navegador, ya que son esenciales para permitir las funcionalidades básicas del sitio web.</p><p>También utilizamos cookies de terceros que nos ayudan a analizar cómo usted utiliza este sitio web, guardar sus preferencias y aportar el contenido y la publicidad que le sean relevantes. Estas cookies solo se guardan en su navegador previo consentimiento por su parte.</p><p>Puede optar por activar o desactivar alguna o todas estas cookies, aunque la desactivación de algunas podría afectar a su experiencia de navegación.</p>",
+                "showMore": "Mostrar más",
+                "showLess": "Mostrar menos",
+                "category": {
+                    "elements": {
+                        "alwaysEnabled": "Siempre activas",
+                        "enable": "Permitir",
+                        "disable": "Desactivar"
+                    }
+                },
+                "buttons": {
+                    "elements": {
+                        "accept": "Aceptar todo",
+                        "save": "Guardar mis preferencias",
+                        "reject": "Rechazar todo"
+                    }
+                },
+                "closeButton": "Cerca"
+            }
+        },
+        "optoutPopup": {
+            "elements": {
+                "confirmation": "¿Realmente desea darse de baja?",
+                "buttons": {
+                    "elements": {
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar"
+                    }
+                }
+            }
+        },
+        "revisitConsent": {
+            "elements": {
+                "title": "Configuración de cookies"
+            }
+        },
+        "auditTable": {
+            "elements": {
+                "headers": {
+                    "elements": {
+                        "id": "Cookie",
+                        "duration": "Duración",
+                        "description": "Descripción"
+                    }
+                },
+                "message": "No hay cookies para mostrar."
+            }
+        },
+        "videoPlaceholder": {
+            "elements": {
+                "title": "Por favor acepte el consentimiento de cookies"
+            }
+        }
+    }
+}

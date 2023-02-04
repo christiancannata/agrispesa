@@ -1,0 +1,84 @@
+{
+    "notice": {
+        "elements": {
+            "title": "",
+            "description": "",
+            "privacyLink": "",
+            "buttons": {
+                "elements": {
+                    "accept": "",
+                    "reject": "",
+                    "settings": "",
+                    "readMore": "",
+                    "donotSell": ""
+                }
+            },
+            "closeButton": ""
+        }
+    },
+    "categoryPreview": {
+        "elements": {
+            "buttons": {
+                "elements": {
+                    "save": ""
+                }
+            }
+        }
+    },
+    "preferenceCenter": {
+        "elements": {
+            "title": "",
+            "description": "",
+            "showMore": "",
+            "showLess": "",
+            "category": {
+                "elements": {
+                    "alwaysEnabled": "",
+                    "enable": "",
+                    "disable": ""
+                }
+            },
+            "buttons": {
+                "elements": {
+                    "accept": "",
+                    "save": "",
+                    "reject": ""
+                }
+            },
+            "closeButton": ""
+        }
+    },
+    "optoutPopup": {
+        "elements": {
+            "confirmation": "",
+            "buttons": {
+                "elements": {
+                    "confirm": "",
+                    "cancel": ""
+                }
+            }
+        }
+    },
+    "revisitConsent": {
+        "elements": {
+            "title": ""
+        }
+    },
+    "auditTable": {
+        "elements": {
+            "headers": {
+                "elements": {
+                    "id": "",
+                    "duration": "",
+                    "description": ""
+                }
+            },
+            "message": ""
+        }
+    },
+    "videoPlaceholder": {
+        "elements": {
+            "title": ""
+        }
+    }
+}
