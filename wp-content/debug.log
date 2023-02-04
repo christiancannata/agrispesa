@@ -133,3 +133,20 @@ Stack trace:
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/pdf/riepilogo_spedizione.php on line 172
 [03-Feb-2023 04:40:10 UTC] PHP Notice:  Undefined variable: products in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/pdf/riepilogo_spedizione.php on line 101
 [03-Feb-2023 04:40:10 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/pdf/riepilogo_spedizione.php on line 101
+[04-Feb-2023 11:02:10 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[04-Feb-2023 11:02:10 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[04-Feb-2023 11:02:16 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[04-Feb-2023 11:02:16 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[04-Feb-2023 11:03:48 UTC] PHP Notice:  Undefined index: pa_dimensione in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php on line 112
+[04-Feb-2023 11:21:04 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3841 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:04 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3785 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:04 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:04 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:05 UTC] PHP Notice:  Function is_embed was called <strong>incorrectly</strong>. Conditional query tags do not work before the query is run. Before then, they always return false. Please see <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[04-Feb-2023 11:21:05 UTC] PHP Notice:  Function is_search was called <strong>incorrectly</strong>. Conditional query tags do not work before the query is run. Before then, they always return false. Please see <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[04-Feb-2023 11:21:08 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3847 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:08 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:10 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3818 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:10 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:15 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3778 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[04-Feb-2023 11:21:15 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775

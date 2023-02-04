@@ -1,4 +1,14 @@
 <?php
+function array_insert_after(array $array, $key, array $new)
+{
+	$keys = array_keys($array);
+	$index = array_search($key, $keys);
+	$pos = false === $index ? count($array) : $index + 1;
+
+	return array_merge(array_slice($array, 0, $pos), $new, array_slice($array, $pos));
+}
+
+
 function enqueue_box_js()
 {
 	global $wp_query;
@@ -50,11 +60,9 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 
 function settings_box_link_my_account($items)
 {
-
-	array_splice($items, 4, 0, [
+	$items = array_insert_after($items, 'subscriptions', [
 		'settings-box' => 'Personalizza la box'
 	]);
-
 	return $items;
 
 }
