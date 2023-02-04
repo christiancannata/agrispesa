@@ -38,15 +38,13 @@ $orderType = get_post_meta($order->get_id(), '_order_type', true);
 </p>
 
 <?php if ($orderType == 'BOX'):
-	$shippingDate = get_post_meta($order->get_id(), '_shipping_date', true);
+	$shippingDate = get_post_meta($order->get_id(), '_delivery_date', true);
 	?>
 	<section class="woocommerce-order-details">
 
 		<h2 class="woocommerce-order-details__title">Data di consegna</h2>
-
-
 		<?php if ($shippingDate): ?>
-			<span>Il tuo ordine arriverà il <?php DateTime::createFromFormat('Y-m-d', $shippingDate)->format('d/m/Y') ?> <b></b></span>
+			<span>Il tuo ordine arriverà il <?php echo DateTime::createFromFormat('Y-m-d', $shippingDate)->format('d/m/Y') ?> <b></b></span>
 		<?php endif; ?>
 
 	</section>

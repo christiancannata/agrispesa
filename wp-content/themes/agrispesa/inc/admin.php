@@ -57,7 +57,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 
 	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
 
-	$deliveryDate = strtotime('next ' . $dowMap[$deliveryDay], $date->getTimestamp());
+	$deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());
 	$deliveryDate = DateTime::createFromFormat('U', $deliveryDate);
 
 	return $deliveryDate;
@@ -78,22 +78,18 @@ function calculate_delivery_date_order($id)
 	}
 
 
-	$order_date = $order->get_date_created();
+	$order_date = $order->get_date_paid();
 
-	$dateCheck = clone $order_date;
 
-	$week = $order->get_date_created()->format("W");
+	$week = $order->get_date_paid()->format("W");
 
 	if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
-		$dateCheck->add(new DateInterval('P7D'));
 		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-
-		update_post_meta($order->get_id(), '_data_consegna', $dateCheck->format('Y-m-d'));
 	}
 
 	update_post_meta($order->get_id(), '_week', $week);
 
-	$deliveryDate = get_order_delivery_date_from_date($dateCheck->format('d-m-Y'), $gruppoConsegna);
+	$deliveryDate = get_order_delivery_date_from_date($order->get_date_paid()->format('d-m-Y'), $gruppoConsegna);
 
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 
@@ -742,6 +738,11 @@ function create_order_from_subscription($id)
 
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
+
+	if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
+		$order->get_date_paid()->add(new DateInterval('P7D'));
+	}
+
 	update_post_meta($order->get_id(), '_data_consegna', $consegna);
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
