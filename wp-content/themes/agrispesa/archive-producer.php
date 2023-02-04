@@ -11,7 +11,7 @@
 			<div class="manifesto--container">
 					<h1 class="manifesto--hero--title">Produttori</h1>
 					<h2 class="manifesto--hero--subtitle">
-						Conosciamo da anni i contadini che ci forniscono <br />i prodotti. Sono persone per bene, per questo<br /> te le presentiamo.
+						Conosciamo da anni i contadini che ci forniscono <br />i prodotti: lavorano sentendosi parte della natura, con esperienza e coscienza, per questo te li presentiamo.
 					</h2>
 			</div>
 		</section>
@@ -90,7 +90,7 @@
 		<section class="section-hero">
 			<div class="section-hero--container">
 					<h4 class="section-hero--subtitle">
-						Storie di agricoltura contadina.
+						Storie di agricoltura contadina e di artigianato locale.
 					</h4>
 			</div>
 		</section>
