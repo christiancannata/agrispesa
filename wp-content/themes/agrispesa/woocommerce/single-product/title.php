@@ -23,11 +23,21 @@ global $product;
 $produttori = get_field('product_producer');
 $attributes = $product->get_attributes();
 
+// unità di misura personalizzata
+$product_data = $product->get_meta('_woo_uom_input');
+
 the_title( '<h1 class="product_title entry-title">', '</h1>' );
 echo '<div class="product-info">';
 if ( $product->has_weight() ) {
-	echo '<span class="product-info--quantity">' . $product->get_weight() . ' kg</span>';
+	if($product_data) {
+		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span>';
+	} else {
+		echo '<span class="product-info--quantity">' . $product->get_weight() . ' g</span>';
+	}
 }
+
+
+
 
 if($produttori) {
 	foreach( $produttori as $produttore ) {

@@ -20,9 +20,18 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
 
+	<div class="checkout--preview--header">
+		<div class="checkout--preview--cost">
+			<span><?php wc_cart_totals_order_total_html(); ?></span>
+		</div>
+		<div class="checkout--preview--items product-number">
+			<span><?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?></span>
+		</div>
+	</div>
+
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-	<h2>Il tuo scontrino</h2>
+	<h2 style="display:none;">Il tuo scontrino</h2>
 
 	<table cellspacing="0" class="shop_table shop_table_responsive">
 
@@ -108,5 +117,19 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 
 	<?php do_action( 'woocommerce_after_cart_totals' ); ?>
+
+	<div class="checkout--preview--bottom">
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Spedizione e consegna</span>
+			<span class="is-description">Ai nostri contadini diamo il tempo di raccogliere i prodotti che hai ordinato. Per questo non riceverai la scatola in 24 ore, ma lunedì o mercoledì prossimo; a seconda di dove vivi.</span>
+		</div>
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Pagamento e fattura</span>
+			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola. Garantiamo pagamenti sicuri.</span>
+			<div class="credit-cards">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/payments-methods@2x.png" alt="Pagamenti Sicuri" />
+			</div>
+		</div>
+	</div>
 
 </div>

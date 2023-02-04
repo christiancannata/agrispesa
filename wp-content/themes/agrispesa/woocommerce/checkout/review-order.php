@@ -22,27 +22,16 @@ global $woocommerce;
 <div class="checkout--review-order woocommerce-checkout-review-order-table zig-zag-bottom">
 
 	<div class="checkout--preview">
-
 		<div class="checkout--preview--header">
-			<div class="checkout--preview--items">
-				<span><?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?></span>
-			</div>
 			<div class="checkout--preview--cost">
 				<span><?php wc_cart_totals_order_total_html(); ?></span>
 			</div>
-
+			<div class="checkout--preview--items product-number">
+				<span><?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?></span>
+			</div>
 		</div>
-
 		<?php
 		do_action( 'woocommerce_review_order_before_cart_contents' );
-
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-			$thumbnail = $_product->get_image();
-
-}
-
-
 
 		do_action( 'woocommerce_review_order_after_cart_contents' );
 		?>
@@ -62,10 +51,23 @@ global $woocommerce;
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<div class="sommair--totals--flex cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
 				<div class="sommair--totals--sx">
-					<span class="small"><?php wc_cart_totals_coupon_label( $coupon ); ?></span>
+					<span class="small">Coupon</span>
+
+					<?php
+					 if(!$coupon->get_free_shipping()):?>
+					 <br/>
+					<span class="gift-car-number"><?php echo $coupon->code;?></span>
+					<?php endif;?>
 				</div>
 				<div class="sommair--totals--dx">
-					<span><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
+					<?php
+					 if($coupon->get_free_shipping()):?>
+						<span><?php echo $coupon->code; ?></span><br/>
+						<a class="woocommerce-remove-coupon" href="<?php echo WC()->cart->remove_coupon( $coupon->code ); ?>">[Elimina]</a>
+					<?php else:?>
+						<span class="happy-price"><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
+					<?php endif;?>
+
 				</div>
 			</div>
 		<?php endforeach; ?>
@@ -115,9 +117,42 @@ global $woocommerce;
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+		<?php if ( isset( WC()->cart->applied_gift_cards ) ) {
 
-			<div class="sommair--totals--flex">
+				foreach ( WC()->cart->applied_gift_cards as $code ) :
+
+					$label  = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( 'Gift card ', 'yith-woocommerce-gift-cards' ) ), $code );
+					$number = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( '', 'yith-woocommerce-gift-cards' ) . '' . $code ), $code );
+					$amount = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ? - WC()->cart->applied_gift_cards_amounts[ $code ] : 0;
+					$value  = wc_price( $amount ) . ' <a href="' . esc_url(
+						add_query_arg(
+							'remove_gift_card_code',
+							rawurlencode( $code ),
+							defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url()
+						)
+					) .
+							'" class="ywgc-remove-gift-card " data-gift-card-code="' . esc_attr( $code ) . '">' . apply_filters( 'ywgc_remove_gift_card_text', esc_html__( '[Remove]', 'yith-woocommerce-gift-cards' ) ) . '</a>';
+					?>
+
+					<div class="sommair--totals--flex">
+						<div class="sommair--totals--sx">
+							<span class="small"><?php echo wp_kses( $label, 'post' ); ?></span><br/>
+							<span class="gift-car-number"><?php echo wp_kses( $number, 'post' ); ?></span>
+						</div>
+						<div class="sommair--totals--dx happy-price">
+							<span><?php echo wp_kses( $value, 'post' ); ?></span>
+						</div>
+					</div>
+
+					<?php do_action( 'ywgc_gift_card_checkout_cart_table', $code, $amount ); ?>
+
+					<?php
+				endforeach;
+			}?>
+
+		<?php //do_action( 'woocommerce_review_order_before_order_total' ); ?>
+
+			<div class="sommair--totals--flex woocommerce-sommair-end">
 				<div class="sommair--totals--sx">
 					<span class="bold"><?php esc_html_e( 'Total', 'woocommerce' ); ?></span>
 				</div>
@@ -125,13 +160,19 @@ global $woocommerce;
 					<span><?php wc_cart_totals_order_total_html(); ?></span>
 				</div>
 			</div>
-
+		<div class="woocommerce-after-sommair">
 		<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+		</div>
 
 	</div>
-
-	<div class="checkout-payment-cards">
-		<span>Pagamenti sicuri</span>
-		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/credit-cards.png" alt="Pagamenti Sicuri" />
+	<div class="checkout--preview--bottom">
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Spedizione e consegna</span>
+			<span class="is-description">Ai nostri contadini diamo il tempo di raccogliere i prodotti che hai ordinato. Per questo non riceverai la scatola in 24 ore, ma lunedì o mercoledì prossimo; a seconda di dove vivi.</span>
+		</div>
+		<div class="checkout--preview--items mg-t">
+			<span class="is-title"><span class="icon-check is-icon"></span>Pagamento e fattura</span>
+			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola. Garantiamo pagamenti sicuri.</span>
+		</div>
 	</div>
 </div>

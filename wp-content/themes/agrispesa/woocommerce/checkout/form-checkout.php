@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-//do_action( 'woocommerce_before_checkout_form', $checkout );
+do_action( 'woocommerce_before_checkout_form', $checkout );
 
 // If checkout registration is disabled and not logged in, the user cannot checkout.
 if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
@@ -44,7 +44,6 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
                 <?php do_action( 'woocommerce_checkout_billing' ); ?>
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
-				<?php do_action( 'woocommerce_before_checkout_form', $checkout );?>
 				<?php do_action( 'woocommerce_checkout_payment_hook' ); ?>
                 </form>
 			</div>

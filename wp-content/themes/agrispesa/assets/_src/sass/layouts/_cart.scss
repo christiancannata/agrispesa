@@ -13,7 +13,8 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
-body.woocommerce-cart {
+body.woocommerce-cart,
+body.woocommerce-checkout {
 	.woocommerce-cart-form__contents {
 		display: none !important;
 	}
@@ -23,15 +24,16 @@ body.woocommerce-cart {
 		padding: 32px 0 24px;
 		margin: 0;
 		@include breakpoint(desktop) {
-			padding: 45px 0 32px;
+			padding: 45px 20px 24px;
 		}
 
 		h1 {
-			@include font-size(30);
+			@include font-size(22);
 			color: $black !important;
-			font-family: $font-title;
+			font-family: $font-body;
+			font-weight: 600;
 			@include breakpoint(desktop) {
-				@include font-size(32);
+				@include font-size(24);
 			}
 		}
 	}
@@ -54,7 +56,8 @@ body.woocommerce-cart {
 		.woocommerce-cart-form {
 			width: 100%;
 			@include breakpoint(desktop) {
-				width: 68%;
+				width: 60%;
+				margin: 24px;
 			}
 		}
 
@@ -63,8 +66,8 @@ body.woocommerce-cart {
 			background: $background;
 			margin: 16px 0 80px;
 			@include breakpoint(desktop) {
-				width: 30%;
-				margin: 0;
+				width: 40%;
+				margin: 24px;
 			}
 			@include breakpoint(mobile) {
 				tr {
@@ -74,7 +77,7 @@ body.woocommerce-cart {
 
 			tr td,
 			tr th {
-				border-top: 1px solid $white !important;
+				border-top: 1px solid $panna !important;
 				vertical-align: middle !important;
 				background: transparent !important;
 				@include breakpoint(mobile) {
@@ -105,27 +108,29 @@ body.woocommerce-cart {
 					background: transparent;
 
 					th {
-						@include font-size(12);
+						@include font-size(16);
 						font-weight: 300 !important;
-						letter-spacing: 2px;
-						text-transform: uppercase;
 					}
 
-					.recurring-totals th {
-						@include font-size(18);
-						font-weight: 900 !important;
-						padding: 24px 8px 8px !important;
-						font-family: $font-title;
-						text-transform: none !important;
-						letter-spacing: 0 !important;
+					.recurring-total,
+					.recurring-totals {
+						display: none;
+
+						th {
+							@include font-size(18);
+							font-weight: 900 !important;
+							padding: 24px 8px 8px !important;
+							font-family: $font-title;
+							text-transform: none !important;
+							letter-spacing: 0 !important;
+						}
 					}
 
 					td,
 					td p {
-						@include font-size(14);
+						@include font-size(16);
 						font-family: $font-body;
 						font-weight: 300 !important;
-						letter-spacing: 0.5px;
 						margin: 0;
 						text-align: right;
 
@@ -143,6 +148,8 @@ body.woocommerce-cart {
 					}
 
 					tr.order-total {
+						display: none;
+
 						td,
 						th {
 							@include font-size(14);
@@ -298,15 +305,19 @@ body.woocommerce-cart {
 	}
 }
 
-.wc-proceed-to-checkout {
-	#wcpay-payment-request-wrapper {
-		padding-top: 16px !important;
-	}
 
-	#wcpay-payment-request-button-separator {
-		@include font-size(12);
-		margin: 16px 0!important !important;
-	}
+#wcpay-payment-request-wrapper {
+	display: none;
+}
+#wcpay-payment-request-wrapper {
+	margin-bottom: 8px;
+	padding-top: 0 !important;
+}
+
+#wcpay-payment-request-button-separator {
+	@include font-size(12);
+	margin: 16px 0!important !important;
+	display: none;
 }
 
 .zig-zag-bottom {
@@ -314,8 +325,10 @@ body.woocommerce-cart {
 	background: $background;
 	padding: 24px;
 	position: relative;
+	margin-bottom: 24px !important;
 	@include breakpoint(desktop) {
 		@include border-radius(16px);
+		margin-bottom: 32px !important;
 	}
 	// &:after {
 	// 	background: linear-gradient(-45deg, transparent 16px, $panna 0), linear-gradient(45deg, transparent 16px, $panna 0);
@@ -330,4 +343,15 @@ body.woocommerce-cart {
 	// 	bottom: -32px;
 	// 	left: 0;
 	// }
+}
+
+.minimum-amount-advice {
+	display: none;
+}
+
+ul#shipping_method .shipping-mode-cart--label {
+	.woocommerce-Price-amount.amount {
+		font-weight: 300;
+		@include font-size(16);
+	}
 }

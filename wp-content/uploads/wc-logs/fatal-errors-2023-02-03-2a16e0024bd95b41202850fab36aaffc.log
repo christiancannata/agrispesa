@@ -1,0 +1,335 @@
+2023-02-03T09:58:04+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 130
+
+2023-02-03T13:12:43+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:118
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227): preg_ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 118
+
+2023-02-03T13:12:53+00:00 CRITICAL Uncaught Error: Call to a member function get_weight() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:122
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227): preg_ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 122
+
+2023-02-03T13:19:25+00:00 CRITICAL syntax error, unexpected '}', expecting end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 157
+
+2023-02-03T13:19:25+00:00 CRITICAL syntax error, unexpected '}', expecting end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 157
+
+2023-02-03T13:19:25+00:00 CRITICAL syntax error, unexpected '}', expecting end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 157
+
+2023-02-03T13:19:38+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:154
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_template_loop_product_title('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-product.php(49): do_action('woocommerce_sho...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(284): load_template('/Users/nathalie...', false)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 154
+
+2023-02-03T13:19:43+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:154
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_template_loop_product_title('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-product.php(49): do_action('woocommerce_sho...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(284): load_template('/Users/nathalie...', false)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 154
+
+2023-02-03T13:20:12+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:154
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_template_loop_product_title('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-product.php(49): do_action('woocommerce_sho...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(284): load_template('/Users/nathalie...', false)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 154
+
+2023-02-03T16:11:29+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:11:31+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:11:35+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:14:32+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/admin-ajax.php(22): require_once('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:14:35+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:14:41+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:14:43+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:14:45+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:08+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:10+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:21+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:23+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:25+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:15:30+00:00 CRITICAL Uncaught Error: Using $this when not in object context in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:18:29+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:18:30+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:18:49+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:19:03+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:213
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(118): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/admin-ajax.php(22): require_once('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 213
+
+2023-02-03T16:22:32+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:216
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): change_payments_buttons_position('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(617): do_action('init')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#7 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#8 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 216
+
+2023-02-03T16:22:35+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:216
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): change_payments_buttons_position('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(617): do_action('init')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#7 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#8 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 216
+
+2023-02-03T16:25:30+00:00 CRITICAL syntax error, unexpected 'WC_Payments_Account' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:25:33+00:00 CRITICAL syntax error, unexpected 'WC_Payments_Account' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:25:34+00:00 CRITICAL syntax error, unexpected 'WC_Payments_Account' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:26:11+00:00 CRITICAL syntax error, unexpected 'public' (T_PUBLIC) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:26:12+00:00 CRITICAL syntax error, unexpected 'public' (T_PUBLIC) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:27:50+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:215
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): change_payments_buttons_position('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(617): do_action('init')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#7 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#8 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:27:53+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:215
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): change_payments_buttons_position('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(617): do_action('init')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#7 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#8 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T16:29:41+00:00 CRITICAL Uncaught Error: Class 'WC_Stripe_Payment_Request' not found in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:215
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): change_payments_buttons_position('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(617): do_action('init')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#7 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#8 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 215
+
+2023-02-03T17:17:01+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+
+2023-02-03T17:17:06+00:00 CRITICAL syntax error, unexpected ';', expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+
+2023-02-03T17:17:09+00:00 CRITICAL syntax error, unexpected ';', expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 30
+

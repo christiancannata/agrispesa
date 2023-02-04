@@ -144,6 +144,7 @@ h6 {
 	background: aliceblue;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 	max-width: 450px;
+	display: block !important;
 
 	&::before {
 		content: none;
@@ -194,7 +195,7 @@ h6 {
 
 .woocommerce-NoticeGroup,
 .woocommerce-notices-wrapper {
-	display: none;
+	//display: none;
 
 	.button {
 		display: none !important;

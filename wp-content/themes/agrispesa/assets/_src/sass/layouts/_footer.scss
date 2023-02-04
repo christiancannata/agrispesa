@@ -301,10 +301,16 @@
 	}
 
 	img {
-		width: 250px;
+		height: 26px;
 		display: block;
 		@include breakpoint(mobile) {
 			margin: 0 auto;
+		}
+	}
+	&.bando {
+		img {
+			height: auto;
+			width: 200px;
 		}
 	}
 }

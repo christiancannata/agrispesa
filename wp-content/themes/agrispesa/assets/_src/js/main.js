@@ -49,7 +49,35 @@ pressSlider();
 scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
+minimumAmount();
+//moveCouponCheckout();
+
 //changeShippingLabel();
+
+setTimeout(function() {
+  //moveButtonsCheckout();
+}, 2000);
+
+function moveButtonsCheckout() {
+  if(jQuery('.wcpay-payment-request-wrapper').length) {
+    jQuery('.wcpay-payment-request-wrapper').appendTo('.place-order');
+    jQuery('#wcpay-payment-request-wrapper').show();
+  }
+}
+function moveCouponCheckout() {
+  if(jQuery('.ywgc_have_code').length) {
+    jQuery('.ywgc_have_code').prependTo('.checkout--preview--coupons');
+    //jQuery('.ywgc_have_code').show();
+  }
+}
+
+function minimumAmount() {
+  if(jQuery('.minimum-amount-advice').length) {
+    jQuery('.wc-proceed-to-checkout').hide();
+    jQuery('.minimum-amount-advice').prependTo('.checkout--preview--bottom');
+    jQuery('.minimum-amount-advice').show();
+  }
+}
 
 function hideGlossarioAlpha() {
   var glossarioElements = jQuery('.glossario--anchor');

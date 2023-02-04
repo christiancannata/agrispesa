@@ -94,45 +94,145 @@ function bbloomer_remove_shipping_label( $label, $method ) {
 
 
 //Minimo ordine 43 euro
-function action_woocommerce_check_cart_items() {
-    // Only run on the cart or checkout pages
-    if ( is_cart() || is_checkout() ) {
-        // Minimum
-        $minimum = 43;
+/**
+ * Set a minimum order amount for checkout
+ */
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_amount' );
+add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
 
-        // Category
-        $category = 'chilled';
-        $category_2 = 'bundles';
+function wc_minimum_order_amount() {
 
-        // Initialize
-        $total = 0;
-        $flag = true;
+  $minimum = 43;
+  $category = 'box';
 
-        // Loop through cart items
-        foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-            // Product id
-            $product_id = $cart_item['product_id'];
+  // Loop through cart items
+  foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      // Product id
+      $product_id = $cart_item['product_id'];
+      // Has category box
+      if ( has_term( $category, 'product_cat', $product_id ) ) {
+          $minimum = 26;
+      }
+  }
 
-            // Has certain category
-            if ( has_term( $category, 'product_cat', $product_id ) ) {
-                // Add to total
-                $total += $cart_item['quantity'];
-            // Has other category
-            } elseif ( has_term( $category_2, 'product_cat', $product_id ) ) {
-                // Break loop
-                $flag = false;
-                break;
-            }
-        }
+    if ( WC()->cart->total < $minimum ) {
+      $cartTotal = WC()->cart->total;
+      $addPrice = $minimum - $cartTotal;
 
-        // When total is greater than 0 but less than the minimum & flag is still true
-        if ( ( $total > 0 && $total < $minimum ) && $flag ) {
-            // Notice
-            wc_add_notice( sprintf( __( 'A minimum of %s products are required from the %s category before checking out.', 'woocommerce' ), $minimum, $category ), 'error' );
+        if( is_cart() ) {
 
-            // Optional: remove proceed to checkout button
+            echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti!<br/>Ti mancano ' .wc_price($addPrice) .'.</span></div></div>';
+            // Remove proceed to checkout button
             remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
+        } else {
+
+          echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' .wc_price($minimum) .'. Scegli altri prodotti!<br/>Ti mancano ' .wc_price($addPrice) .'.</span></div></div>';
+          // Remove proceed to checkout button
+          remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+
         }
     }
 }
-//add_action( 'woocommerce_check_cart_items' , 'action_woocommerce_check_cart_items', 10, 0 );
+
+//Cambia h2 a lista prodotti e aggiungi peso
+remove_action( 'woocommerce_shop_loop_item_title','woocommerce_template_loop_product_title', 10 );
+add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10 );
+function soChangeProductsTitle() {
+  global $product;
+  $product_data = $product->get_meta('_woo_uom_input');
+
+  if ( $product->has_weight() ) {
+  	if($product_data) {
+      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span></div>';
+  	} else {
+      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' g</span></div>';
+  	}
+  } else {
+    echo '<h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+  }
+}
+
+
+//Free shipping label
+//add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
+function add_free_shipping_label( $label, $method ) {
+    if ( $method->cost == 0 ) {
+        $label = 'Spedizione gratuita'; //not quite elegant hard coded string
+    }
+    return $label;
+}
+
+//coupon con spedizione gratuita
+//add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
+function coupon_free_shipping_customization( $rates, $package ) {
+    $has_free_shipping = false;
+
+    $applied_coupons = WC()->cart->get_applied_coupons();
+    foreach( $applied_coupons as $coupon_code ){
+        $coupon = new WC_Coupon($coupon_code);
+        if($coupon->get_free_shipping()){
+            $has_free_shipping = true;
+            break;
+        }
+    }
+
+    foreach( $rates as $rate_key => $rate ){
+        if( $has_free_shipping ){
+            // For "free shipping" method (enabled), remove it
+            if( $rate->method_id == 'free_shipping'){
+                unset($rates[$rate_key]);
+            }
+            // AIUTO CHRISTIAN: un altro if se è applicatanuna gift card
+
+
+            // For other shipping methods
+            else {
+                // Append rate label titles (free)
+                $rates[$rate_key]->label .= ' ' . __('(free)', 'woocommerce');
+
+                // Set rate cost
+                $rates[$rate_key]->cost = 0;
+
+                // Set taxes rate cost (if enabled)
+                $taxes = array();
+                foreach ($rates[$rate_key]->taxes as $key => $tax){
+                    if( $rates[$rate_key]->taxes[$key] > 0 )
+                        $taxes[$key] = 0;
+                }
+                $rates[$rate_key]->taxes = $taxes;
+            }
+        }
+    }
+    return $rates;
+}
+
+//Sposta bottoni di pagamento prima del bottone di default
+//add_action('init', 'change_payments_buttons_position', 11);
+// function change_payments_buttons_position() {
+//   $payementGateway = WC_Stripe_Payment_Request::instance();
+//
+//   if ($payementGateway) {
+//     remove_action('woocommerce_proceed_to_checkout', array($payementGateway, 'display_payment_request_button_html'), 1);
+//   	remove_action('woocommerce_proceed_to_checkout', array($payementGateway, 'display_payment_request_button_separator_html'), 2);
+//
+//   	add_action('woocommerce_review_order_before_submit', array($payementGateway, 'display_payment_request_button_html'), 2);
+//   	add_action('woocommerce_review_order_before_submit', array($payementGateway, 'display_payment_request_button_separator_html'), 1);
+//   }
+// }
+
+//sposta coupon nel checkout
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+add_action( 'woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form', 5 );
+
+
+//sposta gift card nel checkout
+if ( ! function_exists('ywgc_gift_card_code_form_checkout_hook' ) ){
+  function ywgc_gift_card_code_form_checkout_hook( $hook ){
+    $hook = 'woocommerce_review_order_before_payment';
+    return $hook;
+  }
+}
+add_filter( 'ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_checkout_hook', 10, 1 );
