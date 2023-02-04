@@ -18,6 +18,51 @@ function get_order_delivery_date($id)
 	}
 }
 
+function get_order_delivery_date_from_date($date = null, $group = null, $cap = null)
+{
+
+	if (!$group && $cap) {
+		$groups = get_posts([
+			'post_type' => 'delivery-group',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		]);
+
+		foreach ($groups as $singleGroup) {
+
+			$caps = get_post_meta($singleGroup->ID, 'cap', true);
+
+			if (in_array($cap, $caps)) {
+				$group = $group->post_title;
+			}
+		}
+	}
+
+	if (!$group) {
+		return null;
+	}
+
+	global $wpdb;
+
+	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' ");
+	$ids = reset($ids);
+
+	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+
+	$date = DateTime::createFromFormat('d-m-Y', $date);
+
+	if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+		$date->add(new DateInterval('P7D'));
+	}
+
+	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
+
+	$deliveryDate = strtotime('next ' . $dowMap[$deliveryDay], $date->getTimestamp());
+	$deliveryDate = DateTime::createFromFormat('U', $deliveryDate);
+
+	return $deliveryDate;
+}
+
 function calculate_delivery_date_order($id)
 {
 
@@ -32,14 +77,6 @@ function calculate_delivery_date_order($id)
 		return null;
 	}
 
-	global $wpdb;
-
-	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $gruppoConsegna . "' ");
-	$ids = reset($ids);
-
-	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
-
-	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
 
 	$order_date = $order->get_date_created();
 
@@ -56,8 +93,7 @@ function calculate_delivery_date_order($id)
 
 	update_post_meta($order->get_id(), '_week', $week);
 
-	$deliveryDate = strtotime('next ' . $dowMap[$deliveryDay], $dateCheck->getTimestamp());
-	$deliveryDate = DateTime::createFromFormat('U', $deliveryDate);
+	$deliveryDate = get_order_delivery_date_from_date($dateCheck->format('d-m-Y'), $gruppoConsegna);
 
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 
@@ -463,6 +499,7 @@ function my_save_post_function($post_ID, $post, $update)
 		if (isset($_POST['_data_consegna'])) {
 			update_post_meta($post->ID, '_data_consegna', $_POST['_data_consegna']);
 		}
+
 	}
 }
 
@@ -709,7 +746,6 @@ function create_order_from_subscription($id)
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
 
-	calculate_delivery_date_order($order->get_id());
 
 	$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
 	if (empty($boxPreferences)) {
@@ -733,6 +769,8 @@ function create_order_from_subscription($id)
 			update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
 		}
 	}
+
+	calculate_delivery_date_order($order->get_id());
 
 }
 
@@ -894,7 +932,7 @@ function my_custom_submenu_page_callback()
 								[
 									'key' => '_week',
 									'value' => $week,
-									'compare' => '='
+									'compare' => '>='
 								],
 								[
 									'key' => '_subscription_id',
