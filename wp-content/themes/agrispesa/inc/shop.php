@@ -210,18 +210,21 @@ function coupon_free_shipping_customization( $rates, $package ) {
 }
 
 //Sposta bottoni di pagamento prima del bottone di default
-// add_action('init', 'change_payments_buttons_position', 11);
-// function change_payments_buttons_position() {
-// 	remove_action('woocommerce_proceed_to_checkout', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html'), 1);
-// 	remove_action('woocommerce_proceed_to_checkout', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html'), 2);
-//
-// 	add_action('woocommerce_review_order_before_submit', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html'), 2);
-// 	add_action('woocommerce_review_order_before_submit', array(WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html'), 1);
-//
-// }
+add_action('init', 'change_payments_buttons_position', 11);
+function change_payments_buttons_position() {
+  $payementGateway = WC_Stripe_Payment_Request::instance();
+
+  if ($payementGateway) {
+    remove_action('woocommerce_proceed_to_checkout', array($payementGateway, 'display_payment_request_button_html'), 1);
+  	remove_action('woocommerce_proceed_to_checkout', array($payementGateway, 'display_payment_request_button_separator_html'), 2);
+
+  	add_action('woocommerce_review_order_before_submit', array($payementGateway, 'display_payment_request_button_html'), 2);
+  	add_action('woocommerce_review_order_before_submit', array($payementGateway, 'display_payment_request_button_separator_html'), 1);
+  }
+}
 
 //sposta coupon nel checkout
-//remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 add_action( 'woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form', 5 );
 
 
