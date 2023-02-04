@@ -198,7 +198,7 @@ ref._ckyRandomString = function (length, allChars = true) {
  */
 function _ckyRemoveBanner() {
     _ckyHideBanner();
-    if (_ckyStore._bannerConfig.settings.applicableLaw === "gdpr" && _ckyStore._bannerConfig.config.revisitConsent.status === true) {
+    if (_ckyStore._bannerConfig.config.revisitConsent.status === true) {
         _ckyShowRevisit();
     }
 }
@@ -231,13 +231,17 @@ function _ckyPreviewEnabled() {
 function _ckySetInitialState() {
     const activeLaw = _ckyGetLaw()
     ref._ckySetInStore("consent", "no");
+    const ccpaCheckBoxValue = _ckyFindCheckBoxValue();
     const responseCategories = { accepted: [], rejected: [] };
     let valueToSet = "yes";
     for (const category of _ckyStore._categories) {
         if (
-            activeLaw === "gdpr" &&
-            !category.isNecessary &&
-            !category.defaultConsent[activeLaw]
+            (activeLaw === "gdpr" &&
+                !category.isNecessary &&
+                !category.defaultConsent[activeLaw]) ||
+            (activeLaw === "ccpa" &&
+                ccpaCheckBoxValue &&
+                !category.defaultConsent.ccpa)
         ) {
             valueToSet = "no";
         }
@@ -337,6 +341,7 @@ function _ckyRegisterListeners() {
     _ckyAttachListener("=optout-confirm-button", _ckyAcceptReject());
     _ckyAttachListener("=detail-reject-button", _ckyAcceptReject("reject"));
     _ckyAttachListener("=revisit-consent", () => _revisitCkyConsent());
+    _ckyAttachListener("=optout-close", () => _ckyHidePreferenceCenter());
     _ckyAttachCategoryListeners();
 }
 
@@ -456,7 +461,6 @@ function _ckyGetPreferenceClass() {
     return _ckyGetType() === 'classic' ? 'cky-consent-bar-expand' : 'cky-modal-open';
 }
 function _ckyGetRevisit() {
-    if (_ckyGetLaw() === 'ccpa') return false;
     const revisit = _ckyGetElementByTag('revisit-consent');
     return revisit && revisit || false;
 }
@@ -602,15 +606,17 @@ function _ckySetCategoryPreview(element, category) {
         element.parentElement.parentElement.remove();
 }
 
-function _ckySetCheckBoxAriaLabel(boxElem, isChecked, formattedLabel) {
+function _ckySetCheckBoxAriaLabel(boxElem, isChecked, formattedLabel, isCCPA = false) {
+
     if (!boxElem) return;
-    const textCode = `cky_${isChecked ? "disable" : "enable"}_category_label`;
+    const keyName = isChecked ? "disable" : "enable";
+    const textCode = `cky_${keyName}_${isCCPA ? "optout" : "category"}_label`;
     const shortCodeData = _ckyStore._shortCodes.find(
         (code) => code.key === textCode
     );
     if (!shortCodeData) return;
     const labelText = formattedLabel
-        .replace(/{{status}}/g, isChecked ? "disable" : "enable")
+        .replace(/{{status}}/g, keyName)
         .replace(`[${textCode}]`, shortCodeData.content);
     boxElem.setAttribute("aria-label", labelText);
 }
@@ -628,6 +634,7 @@ function _ckyRenderBanner() {
     );
     _ckySetPreferenceCheckBoxStates();
     _ckyRegisterListeners();
+    _ckySetCCPAOptions();
     _ckySetPlaceHolder();
     _ckyAttachReadMore();
     _ckyRemoveStyles();
@@ -662,11 +669,13 @@ function _ckyActionClose() {
  */
 function _ckyAcceptCookies(choice = "all") {
     const activeLaw = _ckyGetLaw();
+    const ccpaCheckBoxValue = _ckyFindCheckBoxValue();
+
     ref._ckySetInStore("action", "yes");
     if (activeLaw === 'gdpr') {
         ref._ckySetInStore("consent", choice === "reject" ? "no" : "yes");
     } else {
-        ref._ckySetInStore("consent", "yes");
+        ref._ckySetInStore("consent", ccpaCheckBoxValue ? "yes" : "no");
     }
     const responseCategories = { accepted: [], rejected: [] };
     for (const category of _ckyStore._categories) {
@@ -679,7 +688,7 @@ function _ckyAcceptCookies(choice = "all") {
                     ? "no"
                     : "yes";
         } else {
-            valueToSet = !category.defaultConsent.ccpa ? "no" : "yes";
+            valueToSet = ccpaCheckBoxValue && !category.defaultConsent.ccpa ? "no" : "yes";
         }
         ref._ckySetInStore(`${category.slug}`, valueToSet);
         if (valueToSet === "no") {
@@ -690,7 +699,7 @@ function _ckyAcceptCookies(choice = "all") {
     _ckyUnblock();
 }
 function _ckySetShowMoreLess() {
-    if (_ckyGetLaw() !== "gdpr") return;
+    const activeLaw = _ckyGetLaw();
     const showCode = _ckyStore._shortCodes.find(
         (code) => code.key === "cky_show_desc"
     );
@@ -703,7 +712,9 @@ function _ckySetShowMoreLess() {
     const showButtonContent = showCode.content;
 
     const contentLimit = window.innerWidth < 376 ? 150 : 300;
-    const element = document.querySelector('[data-cky-tag="detail-description"]');
+    const element = document.querySelector(
+        `[data-cky-tag="${activeLaw === "gdpr" ? "detail" : "optout"}-description"]`
+    );
     const content = element.textContent;
     if (content.length < contentLimit) return;
     const contentHTML = element.innerHTML;
@@ -729,7 +740,6 @@ function _ckySetShowMoreLess() {
     }
     showLessHandler();
 }
-
 /**
  * Toggle show more or less on click event.
  * 
@@ -1022,9 +1032,11 @@ function _ckyAttachNoticeStyles() {
     );
 }
 
-function _ckyFindCheckBoxValue(id) {
-    return [`ckySwitch`, `ckyCategoryDirect`].some((key) => {
-
+function _ckyFindCheckBoxValue(id = "") {
+    const elemetsToCheck = id
+        ? [`ckySwitch`, `ckyCategoryDirect`]
+        : [`ckyCCPAOptOut`];
+    return elemetsToCheck.some((key) => {
         const checkBox = document.getElementById(`${key}${id}`);
         return checkBox && checkBox.checked;
     });
@@ -1110,7 +1122,6 @@ function _ckySetPoweredBy() {
             `[data-cky-tag="${key}"]`
         );
         if (!element) return;
-        if (key === 'optout-powered-by') position = 'center'
         element.style.display = "flex";
         element.style.justifyContent = position;
         element.style.alignItems = "center";
@@ -1135,4 +1146,55 @@ function _ckyRemoveAllDeadCookies() {
             _ckyRemoveDeadCookies(category);
     }
 }
+
+function _ckySetCCPAOptions() {
+    const toggle = _ckyStore._bannerConfig.config.optOption.toggle;
+    const activeColor = toggle.states.active.styles['background-color'];
+    const inactiveColor = toggle.states.inactive.styles['background-color'];
+    _ckyClassRemove("=optout-option", "cky-disabled", false);
+    const toggleDataCode = _ckyStore._shortCodes.find(
+        (code) => code.key === "cky_optout_toggle_label"
+    );
+    const optOutTitle = _ckyStore._shortCodes.find(
+        (code) => code.key === "cky_optout_option_title"
+    );
+    const formattedLabel = toggleDataCode.content.replace(
+        `[cky_optout_option_title]`,
+        optOutTitle.content
+    );
+    const checked = ref._ckyGetFromStore("consent") === "yes";
+    _ckySetCheckBoxInfo(
+        document.getElementById(`ckyCCPAOptOut`),
+        formattedLabel,
+        {
+            checked,
+            disabled: false,
+            addListeners: true,
+        },
+        { activeColor, inactiveColor },
+        true
+    );
+}
+function _ckySetCheckBoxInfo(
+    boxElem,
+    formattedLabel,
+    { checked, disabled, addListeners },
+    { activeColor, inactiveColor },
+    isCCPA = false
+) {
+    if (!boxElem) return;
+    if (isCCPA && addListeners)
+        _ckyAttachListener("=optout-option-title", () => boxElem.click());
+    boxElem.checked = checked;
+    boxElem.disabled = disabled;
+    boxElem.style.backgroundColor = checked ? activeColor : inactiveColor;
+    _ckySetCheckBoxAriaLabel(boxElem, checked, formattedLabel, isCCPA);
+    if (!addListeners) return;
+    boxElem.addEventListener("change", ({ currentTarget: elem }) => {
+        const isChecked = elem.checked;
+        elem.style.backgroundColor = isChecked ? activeColor : inactiveColor;
+        _ckySetCheckBoxAriaLabel(boxElem, isChecked, formattedLabel, isCCPA);
+    });
+}
+
 window.revisitCkyConsent = () => _revisitCkyConsent();

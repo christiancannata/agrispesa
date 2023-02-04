@@ -16,7 +16,7 @@
  * Plugin Name:       CookieYes | GDPR Cookie Consent
  * Plugin URI:        https://www.cookieyes.com/
  * Description:       A simple way to show your website complies with the EU Cookie Law / GDPR.
- * Version:           3.0.6
+ * Version:           3.0.8
  * Author:            CookieYes
  * Author URI:        https://www.cookieyes.com/
  * License:           GPLv3
@@ -46,7 +46,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'CLI_VERSION', '3.0.6' );
+define( 'CLI_VERSION', '3.0.8' );
 define( 'CLI_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'CLI_PLUGIN_BASEPATH', plugin_dir_path( __FILE__ ) );
 define( 'CLI_SETTINGS_FIELD', 'CookieLawInfo-0.9' );
@@ -55,7 +55,17 @@ define( 'CLI_ADMIN_OPTIONS_NAME', 'CookieLawInfo-0.8.3' );
 define( 'CLI_PLUGIN_FILENAME', __FILE__ );
 define( 'CLI_POST_TYPE', 'cookielawinfo' );
 define( 'CLI_DEFAULT_LANGUAGE', cky_set_default_language() );
-define( 'CKY_APP_URL', 'https://app.cookieyes.com' );
+
+/** CookieYes web app URL */
+if ( ! defined( 'CKY_APP_URL' ) ) {
+	define( 'CKY_APP_URL', 'https://app.cookieyes.com' );
+}
+
+/** CookieYes web app script cdn URL. */
+if ( ! defined( 'CKY_APP_CDN_URL' ) ) {
+	define( 'CKY_APP_CDN_URL', 'https://cdn-cookieyes.com' );
+}
+
 /**
  * Load and set default language of the site.
  *
@@ -131,7 +141,6 @@ function cky_is_legacy() {
 		return true;
 	}
 }
-
 
 if ( cky_is_legacy() ) {
 	require_once CLI_PLUGIN_BASEPATH . 'legacy/loader.php';

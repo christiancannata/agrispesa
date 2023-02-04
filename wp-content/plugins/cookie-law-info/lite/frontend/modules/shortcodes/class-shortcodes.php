@@ -82,6 +82,13 @@ class Shortcodes {
 	private $preview = false;
 
 	/**
+	 * Check if preview mode is active.
+	 *
+	 * @var boolean
+	 */
+	private $law = 'gdpr';
+
+	/**
 	 * Default constructor
 	 *
 	 * @param object  $banner Banner object.
@@ -95,6 +102,7 @@ class Shortcodes {
 		$this->language   = $banner->get_language();
 		$this->template   = $template;
 		$this->properties = $settings;
+		$this->law        = $banner->get_law();
 		$this->contents   = isset( $contents[ $this->language ] ) ? $contents[ $this->language ] : '';
 		$this->load_shortcodes();
 		$this->init();
@@ -500,7 +508,8 @@ class Shortcodes {
 	 * @return string
 	 */
 	public function cky_showmore_text() {
-		return isset( $this->contents['preferenceCenter']['elements']['showMore'] ) ? $this->contents['preferenceCenter']['elements']['showMore'] : '';
+		$key = 'ccpa' === $this->law ? 'optoutPopup' : 'preferenceCenter';
+		return isset( $this->contents[ $key ]['elements']['showMore'] ) ? $this->contents[ $key ]['elements']['showMore'] : '';
 	}
 
 	/**
@@ -509,7 +518,8 @@ class Shortcodes {
 	 * @return string
 	 */
 	public function cky_showless_text() {
-		return isset( $this->contents['preferenceCenter']['elements']['showLess'] ) ? $this->contents['preferenceCenter']['elements']['showLess'] : '';
+		$key = 'ccpa' === $this->law ? 'optoutPopup' : 'preferenceCenter';
+		return isset( $this->contents[ $key ]['elements']['showLess'] ) ? $this->contents[ $key ]['elements']['showLess'] : '';
 	}
 
 	/**
@@ -677,5 +687,32 @@ class Shortcodes {
 		$html        = $table_head . $table_body;
 		return $html;
 	}
+
+	public function cky_optout_title() {
+		return isset( $this->contents['optoutPopup']['elements']['title'] ) ? $this->contents['optoutPopup']['elements']['title'] : '';
+	}
+	public function cky_optout_description() {
+		return isset( $this->contents['optoutPopup']['elements']['description'] ) ? $this->contents['optoutPopup']['elements']['description'] : '';
+	}
+	public function cky_optout_option_title() {
+		return isset( $this->contents['optoutPopup']['elements']['optOption']['elements']['title'] ) ? $this->contents['optoutPopup']['elements']['optOption']['elements']['title'] : '';
+	}
+	public function cky_optout_gpc_description() {
+		return isset( $this->contents['optoutPopup']['elements']['gpcOption']['elements']['description'] ) ? $this->contents['optoutPopup']['elements']['gpcOption']['elements']['description'] : '';
+	}
+	public function cky_enable_optout_label() {
+		return isset( $this->contents['optoutPopup']['elements']['optOption']['elements']['enable'] ) ? $this->contents['optoutPopup']['elements']['optOption']['elements']['enable'] : '';
+	}
+	public function cky_disable_optout_label() {
+		return isset( $this->contents['optoutPopup']['elements']['optOption']['elements']['disable'] ) ? $this->contents['optoutPopup']['elements']['optOption']['elements']['disable'] : '';
+	}
+	public function cky_optout_toggle_label() {
+		$shortcode_data = cky_array_search( $this->shortcodes, 'uiTag', 'optout-option-toggle' );
+		return isset( $shortcode_data['content']['container'] ) ? $shortcode_data['content']['container'] : '';
+	}
+	public function cky_optout_close_label() {
+		return isset( $this->contents['optoutPopup']['elements']['closeButton'] ) ? $this->contents['optoutPopup']['elements']['closeButton'] : '';
+	}
+
 }
 

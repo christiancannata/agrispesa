@@ -25,22 +25,13 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Cookie_Law_Info_Shortcode {
 
-	public $version;
-
-	public $parent_obj; // instance of the class that includes this class
-
-	public $plugin_obj;
-
 	public $plugin_name;
 
 	public $cookie_options;
 
 	public function __construct( $parent_obj ) {
-		$this->version     = $parent_obj->version;
-		$this->parent_obj  = $parent_obj;
-		$this->plugin_obj  = $parent_obj->plugin_obj;
-		$this->plugin_name = $parent_obj->plugin_name;
-		// Shortcodes:
+		$this->plugin_name = 'cookie-law-info';
+		// Shortcodes.
 		add_shortcode( 'delete_cookies', array( $this, 'cookielawinfo_delete_cookies_shortcode' ) ); // a shortcode [delete_cookies (text="Delete Cookies")]
 		add_shortcode( 'cookie_audit', array( $this, 'cookielawinfo_table_shortcode' ) );           // a shortcode [cookie_audit style="winter"]
 		add_shortcode( 'cookie_accept', array( $this, 'cookielawinfo_shortcode_accept_button' ) );      // a shortcode [cookie_accept (colour="red")]

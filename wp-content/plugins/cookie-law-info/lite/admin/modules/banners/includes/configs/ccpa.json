@@ -56,6 +56,9 @@
             "pageScroll": {
                 "action": "acceptClose"
             }
+        },
+        "respectGPC": {
+            "status": false
         }
     },
     "config": {
@@ -330,15 +333,79 @@
             "type": "container",
             "styles": {
                 "color": "#212121",
-                "background-color": "#FFFFFF"
+                "background-color": "#FFFFFF",
+                "border-color": "#F4F4F4"
             },
             "elements": {
-                "confirmation": {
+                "title": {
                     "type": "text",
-                    "tag": "optout-confirmation",
+                    "tag": "optout-title",
                     "status": true,
                     "styles": {
                         "color": "#212121"
+                    }
+                },
+                "description": {
+                    "type": "text",
+                    "tag": "optout-description",
+                    "status": true,
+                    "styles": {
+                        "color": "#212121"
+                    }
+                },
+                "optOption": {
+                    "status": true,
+                    "tag": "optout-option",
+                    "type": "container",
+                    "elements": {
+                        "toggle": {
+                            "status": true,
+                            "tag": "optout-option-toggle",
+                            "type": "toggle",
+                            "states": {
+                                "active": {
+                                    "styles": {
+                                        "background-color": "#1863dc"
+                                    }
+                                },
+                                "inactive": {
+                                    "styles": {
+                                        "background-color": "#FFFFFF"
+                                    }
+                                }
+                            }
+                        },
+                        "title": {
+                            "type": "text",
+                            "tag": "optout-option-title",
+                            "status": true,
+                            "styles": {
+                                "color": "#212121"
+                            }
+                        }
+                    }
+                },
+                "gpcOption": {
+                    "type": "container",
+                    "tag": "optout-gpc-option",
+                    "status": false,
+                    "elements": {
+                        "description": {
+                            "type": "text",
+                            "tag": "optout-gpc-option-description",
+                            "status": true,
+                            "styles": {
+                                "color": "#212121"
+                            }
+                        }
+                    }
+                },
+                "poweredBy": {
+                    "status": true,
+                    "tag": "optout-powered-by",
+                    "styles": {
+                        "background-color": "#EDEDED",
+                        "color": "#293C5B"
                     }
                 },
                 "buttons": {
@@ -351,9 +418,9 @@
                             "tag": "optout-confirm-button",
                             "type": "button",
                             "styles": {
-                                "color": "#F4F4F4",
-                                "background-color": "#1863DC",
-                                "border-color": "#1863DC"
+                                "color": "#f4f4f4",
+                                "background-color": "#1863dc",
+                                "border-color": "#1863dc"
                             }
                         },
                         "cancel": {
@@ -363,18 +430,15 @@
                             "styles": {
                                 "color": "#858585",
                                 "background-color": "#FFFFFF",
-                                "border-color": "#DEDFE0"
+                                "border-color": "#dedfe0"
                             }
                         }
                     }
                 },
-                "poweredBy": {
+                "closeButton": {
                     "status": true,
-                    "tag": "optout-powered-by",
-                    "styles": {
-                        "background-color": "#EDEDED",
-                        "color": "#293C5B"
-                    }
+                    "tag": "optout-close",
+                    "type": "button"
                 }
             }
         },
@@ -396,7 +460,7 @@
             }
         },
         "revisitConsent": {
-            "status": false,
+            "status": true,
             "tag": "revisit-consent",
             "position": "bottom-left",
             "meta": {
@@ -417,7 +481,7 @@
             }
         },
         "videoPlaceholder": {
-            "status": false,
+            "status": true,
             "tag": "video-placeholder",
             "styles": {
                 "background-color": "#000000",

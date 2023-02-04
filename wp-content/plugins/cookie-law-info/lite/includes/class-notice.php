@@ -124,6 +124,7 @@ class Notice {
 				'dismissible' => true,
 				'type'        => 'default',
 				'expiration'  => 0, // Default 0 (no expiration).
+				'message'     => '',
 			)
 		);
 		if ( isset( $this->notices[ $notice ] ) ) {

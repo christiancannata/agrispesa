@@ -50,13 +50,29 @@
     },
     "optoutPopup": {
         "elements": {
-            "confirmation": "",
+            "title": "",
+            "description": "",
+            "optOption": {
+                "elements": {
+                    "title": "",
+                    "enable": "",
+                    "disable": ""
+                }
+            },
+            "gpcOption": {
+                "elements": {
+                    "description": ""
+                }
+            },
+            "showLess": "",
+            "showMore": "",
             "buttons": {
                 "elements": {
-                    "confirm": "",
-                    "cancel": ""
+                    "cancel": "",
+                    "confirm": ""
                 }
-            }
+            },
+            "closeButton": ""
         }
     },
     "revisitConsent": {

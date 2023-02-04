@@ -64,11 +64,12 @@ class Controller extends Cloud {
 	public function sync() {
 		$settings = new Settings();
 		$this->make_auth_request();
-		$data          = $this->prepare_data();
-		$response      = $this->post(
+		$data     = $this->prepare_data();
+		$response = $this->post(
 			'websites/' . $this->get_website_id() . '/sync',
 			wp_json_encode( $data )
 		);
+
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 !== $response_code ) {
 			return false;
@@ -341,7 +342,6 @@ class Controller extends Cloud {
 		);
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 === $response_code ) {
-
 			$response        = json_decode( wp_remote_retrieve_body( $response ), true );
 			$plan            = isset( $response['websiteplan'] ) ? $response['websiteplan'] : array();
 			$features        = isset( $plan['features'] ) ? $plan['features'] : array();
@@ -350,9 +350,14 @@ class Controller extends Cloud {
 			$time            = isset( $scan_timestamp ) && is_int( $scan_timestamp ) ? gmdate( 'H:i:s', $scan_timestamp ) : '';
 			$applicable_laws = isset( $response['applicableLaws'] ) ? $response['applicableLaws'] : array( 'gdpr' );
 			$applicable_laws = implode( ' & ', $applicable_laws );
-			$data            = array(
+
+			$grace_period      = isset( $response['grace_period_ends_at'] ) ? strtotime( sanitize_text_field( $response['grace_period_ends_at'] ) ) : false;
+			$grace_period_ends = isset( $grace_period ) && is_int( $grace_period ) ? gmdate( 'F d, Y', $grace_period ) : '';
+
+			$data = array(
 				'id'             => $this->get_website_id(),
 				'url'            => isset( $response['url'] ) ? esc_url_raw( $response['url'] ) : esc_url_raw( get_site_url() ),
+				'status'         => isset( $response['status'] ) ? sanitize_text_field( $response['status'] ) : '',
 				'plan'           => array(
 					'id'          => isset( $plan['id'] ) ? sanitize_text_field( $plan['id'] ) : '',
 					'slug'        => isset( $plan['slug'] ) ? sanitize_text_field( $plan['slug'] ) : '',
@@ -390,6 +395,18 @@ class Controller extends Cloud {
 					'default'  => isset( $response['settings_json']['defaultLanguage'] ) ? cky_sanitize_text( $response['settings_json']['defaultLanguage'] ) : 'en',
 				),
 				'tables_missing' => false,
+				'pageviews'      => array(
+					'count'    => isset( $response['pageviews']['views'] ) ? absint( $response['pageviews']['views'] ) : 0,
+					'limit'    => isset( $response['pageviews']['views_limit'] ) ? absint( $response['pageviews']['views_limit'] ) : 25000,
+					'exceeded' => isset( $response['pageviews']['limit_exceeded'] ) && 1 === absint( $response['pageviews']['limit_exceeded'] ),
+				),
+				'website'        => array(
+					'status'               => isset( $response['website_status'] ) ? sanitize_text_field( $response['website_status'] ) : 'active',
+					'is_trial'             => isset( $response['is_trial'] ) && true === $response['is_trial'],
+					'is_trial_with_card'   => isset( $response['trial_with_card'] ) && true === $response['trial_with_card'],
+					'grace_period_ends_at' => $grace_period_ends,
+					'payment_status'       => isset( $response['payment_status'] ) && true === $response['payment_status'],
+				),
 			);
 			return $data;
 		}

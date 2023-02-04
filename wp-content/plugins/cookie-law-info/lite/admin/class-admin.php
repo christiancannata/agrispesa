@@ -151,6 +151,7 @@ class Admin {
 			'cache',
 			'uninstall_feedback',
 			'review_feedback',
+			'upgrade',
 		);
 		return $modules;
 	}
@@ -261,32 +262,36 @@ class Admin {
 		wp_localize_script(
 			$global_script,
 			'ckyGlobals',
-			array(
-				'webApp'       => array(
-					'url'        => CKY_APP_URL,
-					'loginUrl'   => CKY_APP_URL . '/login',
-					'signUpUrl'  => CKY_APP_URL . '/signup',
-					'pricingUrl' => CKY_APP_URL . '/plans-list',
+			apply_filters(
+				'cky_admin_scripts_global',
+				array(
+					'webApp'       => array(
+						'url'        => CKY_APP_URL,
+						'loginUrl'   => CKY_APP_URL . '/login',
+						'signUpUrl'  => CKY_APP_URL . '/signup',
+						'pricingUrl' => CKY_APP_URL . '/plans-list',
+					),
+					'path'         => array(
+						'base'  => plugin_dir_path( __FILE__ ),
+						'admin' => $admin_url['path'],
+					),
+					'api'          => array(
+						'base'  => rest_url( 'cky/v1/' ),
+						'nonce' => wp_create_nonce( 'wp_rest' ),
+					),
+					'site'         => array(
+						'url'  => get_site_url(),
+						'name' => esc_attr( get_option( 'blogname' ) ),
+					),
+					'app'          => array(
+						'url' => $plugin_dir_url . 'admin/dist/',
+					),
+					'modules'      => self::$active_modules,
+					'nonce'        => wp_create_nonce( 'wp_rest' ),
+					'assetsURL'    => CKY_PLUGIN_URL . 'frontend/images/',
+					'multilingual' => cky_i18n_is_multilingual() && count( cky_selected_languages() ) > 0 ? true : false,
 				),
-				'path'         => array(
-					'base'  => plugin_dir_path( __FILE__ ),
-					'admin' => $admin_url['path'],
-				),
-				'api'          => array(
-					'base'  => rest_url( 'cky/v1/' ),
-					'nonce' => wp_create_nonce( 'wp_rest' ),
-				),
-				'site'         => array(
-					'url'  => get_site_url(),
-					'name' => esc_attr( get_option( 'blogname' ) ),
-				),
-				'app'          => array(
-					'url' => $plugin_dir_url . 'admin/dist/',
-				),
-				'modules'      => self::$active_modules,
-				'nonce'        => wp_create_nonce( 'wp_rest' ),
-				'assetsURL'    => CKY_PLUGIN_URL . 'frontend/images/',
-				'multilingual' => cky_i18n_is_multilingual() && count( cky_selected_languages() ) > 0 ? true : false,
+				$global_script
 			)
 		);
 		wp_localize_script(

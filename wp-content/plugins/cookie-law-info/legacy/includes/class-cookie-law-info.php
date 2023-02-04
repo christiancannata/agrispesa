@@ -73,7 +73,7 @@ class Cookie_Law_Info {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.0.6';
+			$this->version = '3.0.8';
 		}
 		$this->plugin_name = 'cookie-law-info';
 
@@ -82,7 +82,8 @@ class Cookie_Law_Info {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_thrid_party_hooks();
-
+		add_action( 'admin_init', array( $this, 'start_migration' ) );
+		add_action( 'admin_notices', array( $this, 'migration_notice' ) );
 	}
 
 	/**
@@ -146,8 +147,6 @@ class Cookie_Law_Info {
 		 * The class responsible for adding compatibility to third party plugins
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'third-party/class-cookie-law-info-third-party.php';
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-cookie-law-info-review-request.php';
 
 		$this->loader = new Cookie_Law_Info_Loader();
 
@@ -278,7 +277,7 @@ class Cookie_Law_Info {
 	 * Get current settings.
 	 */
 	public static function get_settings() {
-		 $settings            = self::get_default_settings();
+		$settings             = self::get_default_settings();
 		self::$stored_options = get_option( CLI_SETTINGS_FIELD );
 		if ( ! empty( self::$stored_options ) ) {
 			foreach ( self::$stored_options as $key => $option ) {
@@ -940,4 +939,54 @@ class Cookie_Law_Info {
 		return isset( $_GET['et_fb'] ) ? true : false;
 	}
 
+	/**
+	 * Start migration
+	 *
+	 * @return void
+	 */
+	public function start_migration() {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'migrate' ) || ! current_user_can( 'manage_options' )) {
+			return;
+		}
+		if ( isset( $_GET['migrate'] ) && 'start' === sanitize_text_field( wp_unslash( $_GET['migrate'] ) ) ) {
+			update_option( 'cky_cookie_consent_lite_db_version', '3.0' );
+			update_option( 'cky_plugin_migrate_status', 'initiated' );
+			$params      = array(
+				'migrate'  => 'process',
+				'_wpnonce' => wp_create_nonce( 'migrate' ),
+			);
+			$dismiss_url = add_query_arg( $params, admin_url( 'admin.php?page=cookie-law-info' ) );
+			wp_safe_redirect( $dismiss_url );
+		}
+
+	}
+
+	/**
+	 * Migration notice.
+	 *
+	 * @return void
+	 */
+	public function migration_notice() {
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		if ( isset( $_GET['migrate'] ) && 'true' === sanitize_text_field( wp_unslash( $_GET['migrate'] ) ) ) : // phpcs:ignore WordPress.Security.NonceVerification
+			?>
+		<div class="notice notice-success is-dismissible cky-migrate-notice">
+			<h3><?php echo esc_html__( 'Migrate to the new UI for an enhanced experience and advanced features', 'cookie-law-info' ); ?></h3>
+			<h4><?php echo esc_html__( 'By migrating to the new and improved user interface, you can:', 'cookie-law-info' ); ?></h4>
+			<ul>
+				<li><?php echo esc_html__( 'Display the new cookie consent banner (compliant with the WCAG guidelines) on your website', 'cookie-law-info' ); ?></li>
+				<li><?php echo esc_html__( 'Access new free features (set consent expiration period, enable/disable prior consent, show/hide categories on the banner, light/dark/custom color scheme, privacy policy generator, etc.)', 'cookie-law-info' ); ?></li>
+				<li><?php echo esc_html__( 'Use the live preview feature to customize your banner while you are looking at it.', 'cookie-law-info' ); ?></li>
+				<li><?php echo esc_html__( 'Get access to additional free features such as cookie scan, consent log, etc. by connecting to the CookieYes web app (Optional)', 'cookie-law-info' ); ?></li>
+			</ul>
+			<a href="<?php echo esc_attr( wp_nonce_url( add_query_arg( 'migrate', 'start', admin_url( 'edit.php?post_type=cookielawinfo&page=cookie-law-info' ) ), 'migrate', '_wpnonce' ) ); ?>" class="button button-primary" rel="noopener noreferrer">
+				<?php echo esc_html__( 'Start Migration', 'cookie-law-info' ); ?>
+			</a>
+		</div>
+		<style>.cky-migrate-notice { padding-bottom: 15px; } .cky-migrate-notice ul { list-style: disc; padding-left: 20px; }</style>
+			<?php
+		endif;
+	}
 }

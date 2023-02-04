@@ -326,6 +326,13 @@ class Template {
 				if ( empty( $tag ) ) {
 					continue;
 				}
+				if ( in_array( $tag, $this->image_tags(), true ) ) {
+					$img_tags = $element->getELementsByTagName( 'img' );
+					foreach ( $img_tags as $img ) {
+						$src = $this->get_assets_path( $img->getAttribute( 'src' ) );
+						$img->setAttribute( 'src', $src );
+					}
+				}
 				$config  = cky_array_search( $configs, 'tag', $tag );
 				$preview = $this->is_preview();
 				$enabled = isset( $config['status'] ) && false === $preview ? $config['status'] : true;
@@ -417,6 +424,32 @@ class Template {
 	 */
 	public function clear_template() {
 		update_option( 'cky_banner_template', '' );
+	}
+
+	/**
+	 * Return the asset path
+	 *
+	 * @param string $path Template path.
+	 * @return string
+	 */
+	public function get_assets_path( $path ) {
+		$base_name = wp_basename( $path );
+		return CKY_APP_ASSETS_URL . $base_name;
+	}
+	/**
+	 * Elements contain image tags
+	 *
+	 * @return array
+	 */
+	public function image_tags() {
+		return array(
+			'revisit-consent',
+			'close-button',
+			'detail-close',
+			'detail-powered-by',
+			'optout-close',
+			'optout-powered-by',
+		);
 	}
 }
 

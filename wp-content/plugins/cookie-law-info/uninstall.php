@@ -61,6 +61,7 @@ if ( defined( 'CKY_REMOVE_ALL_DATA' ) && true === CKY_REMOVE_ALL_DATA ) {
 			'CookieLawInfo-0.9',
 			'cky_cookie_consent_lite_db_version',
 			'cky_missing_tables',
+			'cky_migration_options',
 		);
 		foreach ( $options as $option_name ) {
 			delete_option( $option_name );

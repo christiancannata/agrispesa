@@ -168,7 +168,7 @@ class Banner extends Store {
 			$contents  = array();
 			$languages = cky_selected_languages();
 			foreach ( $languages as $lang ) {
-				$contents[ $lang ] = isset( $data[ $lang ] ) ? self::sanitize_contents( $data[ $lang ] ) : array();
+				$contents[ $lang ] = isset( $data[ $lang ] ) ? $this->sanitize_contents( $data[ $lang ], $this->get_translations( $lang ) ) : array();
 			}
 			$this->data[ $key ] = $contents;
 		}
@@ -290,18 +290,16 @@ class Banner extends Store {
 		$current   = $this->get_language();
 		$languages = cky_selected_languages( $current );
 		if ( array_key_exists( $key, $this->data ) ) {
-			$data            = $this->data[ $key ];
-			$default_content = isset( $data['en'] ) ? $data['en'] : $this->get_translations( 'en' );
+			$data = $this->data[ $key ];
 			foreach ( $languages as $lang ) {
 				$content           = isset( $data[ $lang ] ) ? $data[ $lang ] : array();
 				$content           = empty( self::array_empty_assoc( $content ) ) ? $this->get_translations( $lang ) : $content;
-				$content           = empty( $content ) && 'view' === $this->get_context() ? $default_content : $content;
 				$content           = is_string( $content ) ? json_decode( $content, true ) : $content;
-				$contents[ $lang ] = self::sanitize_contents( $content );
+				$contents[ $lang ] = $this->sanitize_contents( $content );
 			}
 		}
 		if ( '' !== $language ) {
-			return isset( $contents[ $lang ] ) ? $contents[ $lang ] : array();
+			return isset( $contents[ $language ] ) ? $contents[ $language ] : array();
 		}
 		return $contents;
 	}
@@ -342,18 +340,18 @@ class Banner extends Store {
 	 * @param array $defaults Default settings.
 	 * @return array
 	 */
-	public static function sanitize_contents( $contents, $defaults = false ) {
+	public function sanitize_contents( $contents, $defaults = false ) {
 		$result   = array();
-		$defaults = false === $defaults ? self::get_default_contents() : $defaults;
+		$defaults = false === $defaults ? $this->get_default_contents() : $defaults;
 		foreach ( $defaults as $key => $data ) {
 			$value    = isset( $contents[ $key ] ) ? $contents[ $key ] : $data;
 			$defaults = $data;
 
 			if ( is_array( $value ) ) {
-				$result[ $key ] = self::sanitize_contents( $value, $defaults );
+				$result[ $key ] = $this->sanitize_contents( $value, $defaults );
 			} else {
 				if ( is_string( $key ) ) {
-					$result[ $key ] = self::sanitize_content( $key, $value );
+					$result[ $key ] = $this->sanitize_content( $key, $value );
 				}
 			}
 		}
@@ -441,7 +439,7 @@ class Banner extends Store {
 	 * @param string $value  The unsanitised value.
 	 * @return string Sanitized value.
 	 */
-	public static function sanitize_content( $option, $value ) {
+	public function sanitize_content( $option, $value ) {
 		switch ( $option ) {
 			case 'description':
 				$value = cky_sanitize_content( $value );
@@ -479,6 +477,9 @@ class Banner extends Store {
 		$law      = $this->get_law();
 		if ( ! $contents ) {
 			$contents = cky_read_json_file( dirname( __FILE__ ) . '/contents/' . esc_html( $lang ) . '.json' );
+			if ( empty( $contents ) ) {
+				return $this->get_translations( 'en' );
+			}
 			wp_cache_set( 'cky_contents_' . $lang, $contents, 'cky_banner_contents', 12 * HOUR_IN_SECONDS );
 		}
 		return isset( $contents[ $law ] ) && is_array( $contents[ $law ] ) ? $contents[ $law ] : array();

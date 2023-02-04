@@ -242,7 +242,7 @@ class Settings extends Store {
 	 * @return string
 	 */
 	public function get_script_url() {
-		return 'https://cdn-cookieyes.com/client_data/' . $this->get_website_key() . '/script.js';
+		return CKY_APP_CDN_URL . '/client_data/' . $this->get_website_key() . '/script.js';
 	}
 
 	/**

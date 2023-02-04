@@ -1,19 +1,19 @@
 === CookieYes | GDPR Cookie Consent & Compliance Notice (CCPA Ready) ===
 Contributors: webtoffee, cookieyesdev
 Donate link: https://www.cookieyes.com/ 
-Tags: GDPR, CCPA, cookie notice, DSGVO, RGPD, LGPD, PIPEDA, POPIA, cookies , cookie law, cookie consent, Opt-in, cookie policy, privacy, compliance
+Tags: GDPR, CPRA, cookie notice, DSGVO, RGPD, LGPD, PIPEDA, POPIA, cookies , cookie law, cookie consent, Opt-in, cookie policy, privacy, compliance
 Requires at least: 5.0.0
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 3.0.6
+Stable tag: 3.0.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easily set up cookie notice, cookie policy and get GDPR cookie compliance. Supports GDPR (DSGVO, RGPD), LGPD, CCPA, CNIL, and POPIA.
+Easily set up cookie notice, cookie policy and get GDPR cookie compliance. Supports GDPR (DSGVO, RGPD), LGPD, CCPA/CPRA, CNIL, and POPIA.
 
 == Description ==
 
-The CookieYes GDPR Cookie Consent plugin will assist you in making your website GDPR (RGPD, DSVGO) compliant by adding a cookie banner to your site. Additionally, this GDPR WordPress plugin also supports cookie compliance with the LGPD of Brazil, CNIL of France, and the California Consumer Privacy Act (CCPA) which is a state statute intended to enhance privacy rights and consumer protection for residents of California.
+The CookieYes GDPR Cookie Consent plugin will assist you in making your website GDPR (RGPD, DSVGO) compliant by adding a cookie banner to your site. Additionally, this GDPR WordPress plugin also supports cookie compliance with the LGPD of Brazil, CNIL of France, and the California Consumer Privacy Act (CCPA/CPRA) which is a state statute intended to enhance privacy rights and consumer protection for residents of California.
 
 The plugin is one of the best WordPress GDPR cookie compliance plugins as it comes with a host of features some of which are listed below.
 
@@ -33,7 +33,7 @@ The plugin is one of the best WordPress GDPR cookie compliance plugins as it com
 
 - It also has a Cookie List module so you can easily show what cookies your site uses and display them neatly in a table on your Privacy & Cookies Policy page.
 
-- The plugin can be configured to have a CCPA 'Do Not Sell My Personal Information' control to the cookie notice.
+- The plugin can be configured to have a CCPA/CPRA 'Do Not Sell or Share My Personal Information' control to the cookie notice.
 
 - Helps in achieving cookie compliance under CNIL – A french administrative regulatory body
 
@@ -42,8 +42,8 @@ The plugin is one of the best WordPress GDPR cookie compliance plugins as it com
 
 == Additional Features == 
 
-* Opt-in consent banner for GDPR & opt-out banner for CCPA
-* Add the “Do Not Sell My Personal Information” link to your website footer using an HTML code.
+* Opt-in consent banner for GDPR & opt-out banner for CCPA/CPRA
+* Add the "Do Not Sell or Share My Personal Information" link to your website footer using an HTML code.
 * Scan and auto-block non-necessary cookies for GDPR cookie compliance
 * Preference center (second layer of the banner) with granular control/per-category consent (allows site visitors to opt-in or give consent to some or all cookie categories) over the cookies used by the website
 * Fully customizable to look just like your own website’s style: customize the content and colors
@@ -76,14 +76,14 @@ You can access the following features by connecting to a paid plan (Basic, Pro, 
 * Up to 8000 pages per scan
 * Advanced banner customization
 * Pop-up banner layout (with overlay)
-* Location-based targeting of cookie banners (GDPR banner - Worldwide/EU & UK/Other countries & CCPA banner - Worldwide/California/United States).
+* Location-based targeting of cookie banners (GDPR banner - Worldwide/EU & UK/Other countries & CCPA/CPRA banner - Worldwide/California/United States).
 * Auto-detect banner languages
 * Scan behind login
 * Scheduled scan
 * Add brand logo on banner
 * Custom CSS
 * Disable “Powered by” branding
-* Opt-in consent banner for GDPR & opt-out banner for CCPA
+* Opt-in consent banner for GDPR & opt-out banner for CCPA/CPRA
 * Automatic cookie blocking
 * Per-category consent
 * Option to withdraw consent (Revisit consent button)
@@ -160,6 +160,18 @@ For every update of the plugin, you will be notified of the installed plugins pa
 9. Privacy policy generator and cookie policy generator
 
 == Changelog ==
+
+= 3.0.8 = 
+
+[Enhancement] - Support for CPRA ( Do Not Sell or Share My Personal Information )
+[Enhancement] - Option to edit show more/less texts
+[Enhancement] - Compatibility with Bedrock WordPress boilerplate
+
+= 3.0.7 = 
+
+[Enhancement] - New CCPA Opt-out center
+[Fix] - Not able to change the Optout preference center text color
+[Fix] - Not able to disable the "Reject All" button from preference center
 
 = 3.0.6 = 
 
@@ -574,7 +586,8 @@ For every update of the plugin, you will be notified of the installed plugins pa
 
 == Upgrade Notice ==
 
-= 3.0.6 = 
+= 3.0.8 = 
 
-[Enhancement] - Clickable video placeholders
-[Fix] - Revisit consent button color is not reset on colour scheme changes
+[Enhancement] - Support for CPRA ( Do Not Sell or Share My Personal Information )
+[Enhancement] - Option to edit show more/less texts
+[Enhancement] - Compatibility with Bedrock WordPress boilerplate

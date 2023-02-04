@@ -72,6 +72,62 @@
         "uiTag": ""
     },
     {
+        "key": "cky_optout_title",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_optout_description",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_optout_option_title",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_enable_optout_label",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_disable_optout_label",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_optout_gpc_description",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
+        "key": "cky_optout_close_label",
+        "type": "text",
+        "content": {},
+        "attributes": {},
+        "customTag": "",
+        "uiTag": ""
+    },
+    {
         "key": "cky_preference_title",
         "type": "text",
         "content": {},
@@ -153,14 +209,6 @@
     },
     {
         "key": "cky_disable_category_label",
-        "type": "text",
-        "content": {},
-        "attributes": {},
-        "customTag": "",
-        "uiTag": ""
-    },
-    {
-        "key": "cky_optout_confirmation",
         "type": "text",
         "content": {},
         "attributes": {},
@@ -331,6 +379,16 @@
         "attributes": {},
         "customTag": "",
         "uiTag": "detail-category-toggle"
+    },
+    {
+        "key": "cky_optout_toggle_label",
+        "type": "data",
+        "content": {
+            "container": "[cky_{{status}}_optout_label] [cky_optout_option_title]"
+        },
+        "attributes": {},
+        "customTag": "",
+        "uiTag": "optout-option-toggle"
     },
     {
         "key": "cky_video_placeholder",
