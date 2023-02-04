@@ -686,6 +686,9 @@
 		font-weight: 900;
 		color: $white;
 		line-height: 1.1;
+		p {
+			line-height: 1;
+		}
 		@include breakpoint(mobile) {
 			margin-bottom: 16px;
 		}
