@@ -232,11 +232,11 @@ textarea {
 		}
 
 		span:before {
-			@include border-radius(3px);
+			@include border-radius(20px);
 			background: #fff;
 			content: "";
-			width: 18px;
-			height: 18px;
+			width: 20px;
+			height: 20px;
 			position: absolute;
 			left: 0;
 			border: 1px solid transparent;
@@ -249,7 +249,7 @@ textarea {
 		&.perfect span:before,
 		input[type=checkbox]:checked + span:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat;
-			background-size: 85% auto;
+			background-size: 70% auto;
 
 			body.woocommerce-checkout & {
 				background-color: $background;
@@ -290,11 +290,11 @@ textarea {
 	}
 
 	label:before {
-		@include border-radius(3px);
+		@include border-radius(20px);
 		background: #fff;
 		content: "";
-		width: 18px;
-		height: 18px;
+		width: 20px;
+		height: 20px;
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
@@ -307,7 +307,7 @@ textarea {
 	&.perfect label:before,
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;
-		background-size: 85% auto;
+		background-size: 70% auto;
 
 		body.woocommerce-checkout & {
 			background-color: $background;
@@ -331,7 +331,7 @@ textarea {
 		color: $black;
 		&:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat !important;
-			background-size: 85% auto;
+			background-size: 70% auto;
 		}
 	}
 }

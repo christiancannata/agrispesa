@@ -1,0 +1,71 @@
+/* stylelint-disable */
+.agr-contact-form {
+	margin-bottom: 32px;
+	@include breakpoint(desktop) {
+		margin-bottom: 50px;
+	}
+
+	&--row {
+		display: flex;
+		width: 100%;
+		margin: 8px 0;
+
+		&.wide {
+			p {
+				width: 100%;
+			}
+		}
+
+		&.object {
+			.wpcf7-form-control-wrap {
+				@include border-radius(8px);
+				background: $white;
+				display: block;
+				border: 1px solid #f1f1f1;
+				margin-top: 8px;
+			}
+		}
+
+		&.button {
+			margin-top: 24px;
+		}
+	}
+
+	&--column {
+		width: 50%;
+
+		&.first {
+			margin-right: 8px;
+		}
+
+		&.last {
+			margin-left: 8px;
+		}
+	}
+
+	textarea {
+		@include font-size(16);
+		margin-top: 8px;
+		margin-bottom: 6px;
+		padding: 16px 10px;
+	}
+
+	select {
+		@include font-size(16);
+		padding: 0 8px;
+		width: calc(100% - 10px);
+		border: none;
+	}
+}
+
+.wpcf7 form {
+	.wpcf7-response-output {
+		@include border-radius(8px);
+		@include font-size(16);
+		background: $red;
+		border: none !important;
+		color: $white;
+		text-align: center;
+		padding: 10px;
+	}
+}

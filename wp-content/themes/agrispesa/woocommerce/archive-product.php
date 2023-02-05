@@ -56,26 +56,58 @@ $description = get_the_archive_description();
   		$current_cat = get_queried_object();
       $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
       $get_product_cat_ID = $getIDbyNAME->term_id;
-			$getAnimali = get_term_by('name', 'animali', 'product_cat');
-	    $animaliID = $getAnimali->term_id;
+			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
+			$specialiID = $getSpeciali->term_id;
       $cat_args = array(
           'orderby'    => 'ID',
           'order'      => 'asc',
           'hide_empty' => false,
           'parent' => $get_product_cat_ID,
-					'exclude' => $animaliID
+					'exclude' => $specialiID
       );
 
   $product_categories = get_terms( 'product_cat', $cat_args );
 
+	$special_category = get_field('agr_special_category', 'option');
+	$special_icon = get_field('agr_special_icon', 'option');
+	$link = get_term_link( $special_category, 'product_cat' );
+	$special = get_term_by('term_id', $special_category, 'product_cat');
+	$special_name = $special->name;
+	$special_slug = $special->slug;
+
   if( !empty($product_categories) ){
+		$categoriesNumber = count($product_categories);
+	  if($special_category) {
+	    $allCategoriesNr = $categoriesNumber + 1;
+	  } else {
+	    $allCategoriesNr = $categoriesNumber;
+	  }
+		$fontSize ='small';
+		if($allCategoriesNr > 8) {
+			$fontSize = 'big';
+		}
+	  $calcWidth = 100 / $allCategoriesNr;
+
       echo '<ul class="all-categories--list">';
+			if($special_category) {
+	      echo '<li style="min-width:'.$calcWidth.'%;">';
+	      echo '<a href="'.$link.'" title="'.$special_name.'" class="'.$fontSize.'">';
+	      if($special_icon == 'heart') {
+	        echo get_template_part( 'global-elements/icon', 'heart' );
+	      } else {
+	        echo get_template_part( 'global-elements/icon', 'star' );
+	      }
+	      echo $special_name;
+	      echo '</a>';
+	      echo '</li>';
+	    }
+
       foreach ($product_categories as $key => $category) {
-          echo '<li>';
+          echo '<li style="min-width:'.$calcWidth.'%;">';
   				if( !is_shop() && $current_cat->slug == $category->slug) {
-  					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current">';
+  					echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="current '.$fontSize.'">';
   				} else {
-  	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'">';
+  	        echo '<a href="'.get_term_link($category).'" title="'.$category->name.'" class="'.$fontSize.'">';
   				}
           echo get_template_part( 'global-elements/icon', $category->slug );
           echo $category->name;
@@ -111,8 +143,8 @@ if ( woocommerce_product_loop() ) {
 	if ( is_shop() ) {
 		$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
 		$get_product_cat_ID = $getIDbyNAME->term_id;
-		$getAnimali = get_term_by('name', 'animali', 'product_cat');
-		$animaliID = $getAnimali->term_id;
+		$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
+		$specialiID = $getSpeciali->term_id;
 		$args = array(
 			 'hide_empty' => true,
 			 'fields' => 'slugs',
@@ -120,7 +152,7 @@ if ( woocommerce_product_loop() ) {
 			 'parent' => $get_product_cat_ID,
 			 'orderby'    => 'ID',
 			 'order'      => 'asc',
-			 'exclude' => $animaliID
+			 'exclude' => $specialiID
 		);
 		$categories = get_terms( $args );
     foreach ( $categories as $category_slug ) {
@@ -139,8 +171,8 @@ if ( woocommerce_product_loop() ) {
 		if ( is_shop() || $idNegozio === 'Negozio' ) {
 			$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
 		  $get_product_cat_ID = $getIDbyNAME->term_id;
-			$getAnimali = get_term_by('name', 'animali', 'product_cat');
-	    $animaliID = $getAnimali->term_id;
+			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
+			$specialiID = $getSpeciali->term_id;
 			$args = array(
 	       'hide_empty' => true,
 	       'fields' => 'slugs',
@@ -148,7 +180,7 @@ if ( woocommerce_product_loop() ) {
 	       'parent' => $get_product_cat_ID,
 				 'orderby'    => 'ID',
 				 'order'      => 'asc',
-				 'exclude' => $animaliID
+				 'exclude' => $specialiID
 	    );
 		}  elseif( is_product_category() || is_product_tag() ) {
 

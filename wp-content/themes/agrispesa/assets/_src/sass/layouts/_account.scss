@@ -261,6 +261,11 @@ body.woocommerce-account {
 
 .password-input {
 	width: 100%;
+
+	.show-password-input {
+		top: 22px !important;
+		right: 10px !important;
+	}
 }
 
 .woocommerce-Address-title {
@@ -331,12 +336,13 @@ body.woocommerce-view-order {
 	z-index: -1;
 }
 
-.woocommerce-columns--addresses,
-.woocommerce {
+.woocommerce,
+.woocommerce-columns--addresses {
 	.woocommerce-column__title {
 		font-weight: bold;
 		margin-bottom: 24px;
 	}
+
 	address {
 		@include font-size(18);
 		font-weight: 300;
@@ -344,7 +350,7 @@ body.woocommerce-view-order {
 		font-style: normal;
 		background: #fff;
 		padding: 16px;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 15%);
+		box-shadow: 0 2px 5px 0 rgb(0 0 0 / 15%);
 	}
 
 	.woocommerce-customer-details {
@@ -613,6 +619,4 @@ body.woocommerce-account {
 	}
 }
 
-.woocommerce-input-wrapper {
-
-}
+.woocommerce-input-wrapper {}

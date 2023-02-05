@@ -127,6 +127,14 @@
 	@include breakpoint(mobile) {
 		padding: 80px 0;
 	}
+	.icon-star  {
+		color: $white;
+		opacity: 0.5;
+		&.yellow {
+			color: $yellow;
+			opacity: 1;
+		}
+	}
 
 	.slick-next-agr,
 	.slick-prev-agr {

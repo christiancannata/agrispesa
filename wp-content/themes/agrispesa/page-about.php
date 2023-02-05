@@ -17,12 +17,14 @@ get_header(); ?>
 		</div>
 	</section>
 
-	<section class="team">
-		<div class="team--item giovanna">
-			<div class="team--picture">
-				<img src="https://admin.illo.tv/storage/uploads/2020/06/11/5ee2612a8ebb8GiovannaCrise_01.jpg" alt="Giovanna Traversa" />
+<div class="agr-section--container no-mg-top">
+	<section class="agr-section agr-section--right">
+		<div class="agr-section--flex">
+			<div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
+				<img src="https://admin.illo.tv/storage/uploads/2020/06/11/5ee2612a8ebb8GiovannaCrise_01.jpg" class="main-img" alt="Giovanna Traversa" />
 			</div>
-			<div class="team--bio">
+		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#765341; color:#e5d7c8;">
+			<div class="agr-section--text--content">
 				<p class="team--bio--text">
 					Il mio nome è Giovanna.
 				</p>
@@ -38,9 +40,13 @@ get_header(); ?>
 				</p>
 			</div>
 		</div>
-		<div class="team--item elena">
+		</div>
+	</section>
 
-			<div class="team--bio">
+	<section class="agr-section">
+		<div class="agr-section--flex">
+		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#e8532b; color:#e5d7c8;">
+			<div class="agr-section--text--content">
 				<p class="team--bio--text">
 					La capacità di resistere, la volontà, la tenacia mi arrivano da mia madre Pierina, da Lina, da zia Rina, dalla balia Clarin, da Suor Angela Bologna: donne forti che hanno accompagnato la mia crescita, alle quali devo il senso della mia vita.
 				</p>
@@ -54,27 +60,38 @@ get_header(); ?>
 					<br/>Mi chiamò Elena.
 				</p>
 			</div>
-			<div class="team--picture">
-				<img src="https://admin.illo.tv/storage/uploads/2020/11/27/5fc0db722bf4fLiliana.jpg" alt="Giovanna Traversa" />
-			</div>
+		</div>
+		<div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
+			<img src="https://admin.illo.tv/storage/uploads/2020/11/27/5fc0db722bf4fLiliana.jpg" class="main-img" alt="Elena Rovera" />
+		</div>
 		</div>
 	</section>
 
-	<section class="sec-home sec-wide bg-brown">
+	<section class="agr-section" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+		<div class="agr-section--wide" style="background-color:#069460; color:#e5d7c8;">
+		<div class="agr-section--wide--flex">
+			<div class="agr-section--image">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/da-20-anni-2.jpg" class="mini-img" alt="Da 20 anni al servizio della terra" />
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/da-20-anni.jpg" class="main-img" alt="Da 20 anni al servizio della terra" />
+			</div>
+		<div class="agr-section--text">
+			<div class="agr-section--text--content">
+				<?php $today = date('Y');
+							$born = 2003;
+							$years = $today - $born;?>
+				<h3 class="agr-section--title">Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.</h3>
+				<p class="agr-section--subtitle">
+					Ne abbiamo viste di tutti colori e di tutte le forme.<br/>Sì, abbiamo fatto la nostra prima consegna a domicilio nel 2003: prima dei social, delle stories, dell'unboxing.<br/>Eppure siamo sempre freschissimi. E con le idee chiare.
+				</p>
+				<a href="<?php echo esc_url(home_url('/')); ?>manifesto" class="btn btn-primary" title="Leggi il nostro manifesto">Leggi il nostro manifesto</a>
 
-	    <div class="container-pg">
-	      <div class="sec-wide--content">
-					<?php $today = date('Y');
-								$born = 2003;
-								$years = $today - $born;?>
-					<h3 class="sec-wide--title">
-						Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.
-					</h3>
-					<p class="sec-home--subtitle">Siamo nati prima dei social,<br class="only-mobile" /> delle stories, dell’unboxing.<br/>Eppure siamo sempre freschissimi. </p>
-	      </div>
-	    </div>
-
+			</div>
+		</div>
+		</div>
+		</div>
 	</section>
+
+</div>
 
 	<section class="manifesto--video">
 		<div class="videoWrapper">

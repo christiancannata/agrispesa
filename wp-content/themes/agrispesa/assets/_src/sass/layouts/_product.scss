@@ -48,9 +48,16 @@ body.tax-product_cat {
 
 .shop {
 	&--list {
-		max-width: 1240px;
 		margin: 0 auto 40px;
-		padding: 0 20px;
+		@include breakpoint(desktop) {
+			padding: 0 128px;
+		}
+		@include breakpoint(container) {
+			padding: 0 48px;
+		}
+		@include breakpoint(tablet) {
+			padding: 0 20px;
+		}
 
 		&.search-results {
 			margin-top: 16px;
@@ -128,7 +135,6 @@ body.tax-product_cat {
 	}
 
 	ul.products {
-		max-width: 1240px;
 		margin: 0 auto;
 		padding: 0;
 		display: block;

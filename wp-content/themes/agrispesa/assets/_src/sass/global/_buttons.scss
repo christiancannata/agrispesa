@@ -1,6 +1,6 @@
 /* stylelint-disable */
 @mixin button() {
-	@include transition(all 0.3s ease);
+	@include transition(all 0.6s ease);
 	@include border-radius(6px);
 	@include font-size(18);
 	@include line-height(52);
@@ -28,12 +28,27 @@
 @mixin buttonprimary() {
 	color: $white;
 	border: none;
-	background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
+	background-image: linear-gradient(to right, $blue, $blue, #5e0bdb, #5e0bdb);
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 
 	span {
 		@include font-size(24);
 		margin-right: 4px;
+	}
+}
+
+@mixin buttonwhite() {
+	color: $blue;
+	border: none;
+	background-image: linear-gradient(to right, $white, $white, #5e0bdb, #5e0bdb);
+	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+
+	span {
+		@include font-size(24);
+		margin-right: 4px;
+	}
+	&:hover {
+		color: $white;
 	}
 }
 @mixin buttonsecondary() {
@@ -82,6 +97,9 @@
 	&.btn-big {
 		@include buttonbig();
 	}
+	&.btn-white {
+		@include buttonwhite();
+	}
 }
 
 .btn-fake {
@@ -91,7 +109,7 @@
 		@include buttonsmall();
 		width: 100%;
 		&:hover {
-			background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
+			background-image: linear-gradient(to right, $blue, $blue, #5e0bdb, #5e0bdb);
 		}
 		&.loading {
 			&:after {
