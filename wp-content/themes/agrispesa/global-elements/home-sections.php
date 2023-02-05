@@ -24,6 +24,8 @@ if( have_rows('agr_sections') ):
       $text_color = '#e5d7c8';
     }
     if ($show_colors) {
+      $background = get_sub_field('agr_sections_background_custom');
+    } else {
       if($background_color == 'orange') {
         $background = "#e8532b";
         $text_color = "#e5d7c8";
@@ -40,8 +42,6 @@ if( have_rows('agr_sections') ):
         $background = "#e5d7c8";
         $text_color = "#343535";
       }
-    } else {
-      $background = get_sub_field('agr_sections_background_custom');
     }
     ?>
 <?php if($wide): ?>
