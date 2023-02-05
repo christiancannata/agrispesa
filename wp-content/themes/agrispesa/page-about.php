@@ -51,7 +51,7 @@ get_header(); ?>
 					La capacità di resistere, la volontà, la tenacia mi arrivano da mia madre Pierina, da Lina, da zia Rina, dalla balia Clarin, da Suor Angela Bologna: donne forti che hanno accompagnato la mia crescita, alle quali devo il senso della mia vita.
 				</p>
 				<p class="team--bio--text">
-					<br/>Sono nata il 25 luglio 1953. Mia madre Pierina, per qualche calcolo sbagliato, mi attese per undici mesi. Ad Alba la conoscevano tutti, l’anciuèra. Quattro giorni la settimana, per 40 anni, al mercato c’era lei, con tenacia, con le mani rotte dal freddo e dal sale.
+					<br/>Sono nata il 25 luglio 1953. Mia madre, per qualche calcolo sbagliato, mi attese per undici mesi. Ad Alba la conoscevano tutti, l’anciuèra. Quattro giorni la settimana, per 40 anni, al mercato c’era lei, con tenacia, con le mani rotte dal freddo e dal sale.
 				</p>
 				<p class="team--bio--text">
 					<br/>Il mio nome fu per tutti una sorpresa: avere una bimba era una speranza che la mamma non osava coltivare.
@@ -81,7 +81,7 @@ get_header(); ?>
 							$years = $today - $born;?>
 				<h3 class="agr-section--title">Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.</h3>
 				<p class="agr-section--subtitle">
-					Ne abbiamo viste di tutti colori e di tutte le forme.<br/>Sì, abbiamo fatto la nostra prima consegna a domicilio nel 2003: prima dei social, delle stories, dell'unboxing.<br/>Eppure siamo sempre freschissimi. E con le idee chiare.
+					Ne abbiamo viste di tutti colori e di tutte le forme.<br/>Sì, abbiamo fatto la nostra prima consegna a domicilio nel 2003: prima dei social, delle stories, dell'unboxing.<br/>Eppure abbiamo sempre idee freschissime.
 				</p>
 				<a href="<?php echo esc_url(home_url('/')); ?>manifesto" class="btn btn-primary" title="Leggi il nostro manifesto">Leggi il nostro manifesto</a>
 
