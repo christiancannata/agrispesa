@@ -41,36 +41,6 @@
 .sec-home {
 	position: relative;
 
-	&.no-line {
-		&:before {
-			content: none;
-		}
-	}
-
-	&:before {
-		content: '';
-		display: block;
-		width: 2px;
-		height: 160px;
-		background: $black;
-		@include horizontal-align();
-		position: absolute;
-		top: -80px;
-		z-index: 3;
-		@include breakpoint(mobile) {
-			height: 80px;
-			top: -40px;
-		}
-	}
-
-	&.line-white:before {
-		background: $white;
-	}
-
-	&.line-orange:before {
-		background: $orange;
-	}
-
 	&.bg-black {
 		background: $black;
 		color: $panna;

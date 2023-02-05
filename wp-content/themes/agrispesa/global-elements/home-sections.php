@@ -13,7 +13,8 @@ if( have_rows('agr_sections') ):
     $url_category = get_sub_field('agr_sections_url_category');
     $image = get_sub_field('agr_sections_image');
     $mini_image = get_sub_field('agr_sections_mini_image');
-    $background = get_sub_field('agr_sections_background');
+    $show_colors = get_sub_field('agr_sections_showcolors');
+    $background_color = get_sub_field('agr_sections_background');
     $color = get_sub_field('agr_sections_text_color');
     $btn_secondary = get_sub_field('agr_sections_btn_secondary');
     $link = get_term_link( $url_category, 'product_cat' );
@@ -21,6 +22,26 @@ if( have_rows('agr_sections') ):
       $text_color = '#343535';
     } else {
       $text_color = '#e5d7c8';
+    }
+    if ($show_colors) {
+      if($background_color == 'orange') {
+        $background = "#e8532b";
+        $text_color = "#e5d7c8";
+      } else if($background_color == 'green') {
+        $background = "#069460";
+        $text_color = "#e5d7c8";
+      } else if($background_color == 'blue') {
+        $background = "#3c21ff";
+        $text_color = "#e5d7c8";
+      } else if($background_color == 'brown') {
+        $background = "#765341";
+        $text_color = "#e5d7c8";
+      } else if($background_color == 'beige') {
+        $background = "#e5d7c8";
+        $text_color = "#343535";
+      }
+    } else {
+      $background = get_sub_field('agr_sections_background_custom');
     }
     ?>
 <?php if($wide): ?>
