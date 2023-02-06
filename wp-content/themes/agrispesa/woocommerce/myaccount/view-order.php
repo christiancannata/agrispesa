@@ -25,7 +25,7 @@ $orderType = get_post_meta($order->get_id(), '_order_type', true);
 
 <h3 class="my-account--minititle address-title">Ordine #<?php echo $order->get_order_number(); ?></h3>
 
-<p>
+<p class="my-account--description">
 	<?php
 	printf(
 	/* translators: 1: order number 2: order date 3: order status */
@@ -42,7 +42,7 @@ $orderType = get_post_meta($order->get_id(), '_order_type', true);
 	?>
 	<section class="woocommerce-order-details">
 
-		<h2 class="woocommerce-order-details__title">Data di consegna</h2>
+		<h2 class="my-account--minititle">Data di consegna</h2>
 		<?php if ($shippingDate): ?>
 			<span>Il tuo ordine arriverà il <?php echo DateTime::createFromFormat('Y-m-d', $shippingDate)->format('d/m/Y') ?> <b></b></span>
 		<?php endif; ?>
