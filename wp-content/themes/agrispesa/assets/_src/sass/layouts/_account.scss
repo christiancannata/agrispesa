@@ -95,7 +95,7 @@ body.woocommerce-account {
 		@include buttonprimary();
 		@include buttonxsmall();
 		border: 2px solid $blue;
-		margin: 2px 0;
+		margin: 2px;
 		@include breakpoint(mobile) {
 			margin: 8px 0 0 0;
 		}
