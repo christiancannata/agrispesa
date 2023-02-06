@@ -25,7 +25,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 <div class="login-beauty">
 
 <div class="login-beauty--image">
-	<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/login.jpg" class="login-beauty--image__img" alt="Registrati ad Agrispesa" />
+	<img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/newsletter.jpg" class="login-beauty--image__img" alt="Registrati ad Agrispesa" />
 </div>
 
 

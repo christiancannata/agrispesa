@@ -72,7 +72,6 @@ add_filter( 'get_the_archive_title', function ($title) {
 });
 
 
-
 //Custom menu
 function footer_menu() {
 	register_nav_menus(
@@ -89,9 +88,16 @@ function footer_menu() {
 add_action( 'init', 'footer_menu' );
 
 
-//Remove downloads from account
-function custom_my_account_menu_items( $items ) {
-    unset($items['downloads']);
-    return $items;
+//Rename account endpoints
+add_filter ( 'woocommerce_account_menu_items', 'misha_remove_my_account_links' );
+function misha_remove_my_account_links( $menu_links ){
+
+	unset( $menu_links['downloads'] ); // Disable Downloads
+
+  $menu_links['gift-cards'] = __('Carte Regalo', 'textdomain');
+  $menu_links['edit-address'] = __('Fatturazione', 'textdomain');
+  $menu_links['edit-account'] = __('Account', 'textdomain');
+  $menu_links['customer-logout'] = __('Esci', 'textdomain');
+
+	return $menu_links;
 }
-add_filter( 'woocommerce_account_menu_items', 'custom_my_account_menu_items' );

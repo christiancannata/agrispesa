@@ -17,6 +17,7 @@
 	background: #fff;
 	color: $black;
 
+	body.woocommerce-account &,
 	body.woocommerce-checkout & {
 		background: $background;
 	}
@@ -120,6 +121,7 @@ select,
 select.form-control {
 	@include input();
 
+	body.woocommerce-account &,
 	body.woocommerce-checkout & {
 		background: $background;
 	}
@@ -149,6 +151,7 @@ select.form-control {
 		outline: none;
 		background: $white;
 
+		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background: $background;
 		}
@@ -241,6 +244,7 @@ textarea {
 			left: 0;
 			border: 1px solid transparent;
 
+			body.woocommerce-account &,
 			body.woocommerce-checkout & {
 				background: $background;
 			}
@@ -250,14 +254,23 @@ textarea {
 		input[type=checkbox]:checked + span:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat;
 			background-size: 70% auto;
-
+			body.woocommerce-account &,
 			body.woocommerce-checkout & {
 				background-color: $background;
 			}
 		}
 	}
 }
+#update_all_subscriptions_addresses_field .woocommerce-input-wrapper {
+	@include clearfix();
+	text-align: left;
 
+	input[type=checkbox] {
+		display: inline-block;
+	}
+
+
+}
 .checkbox-form,
 .form-row.mailchimp-newsletter,
 .woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
@@ -298,7 +311,7 @@ textarea {
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
-
+		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background: $background;
 		}
@@ -308,7 +321,7 @@ textarea {
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;
 		background-size: 70% auto;
-
+		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background-color: $background;
 		}
@@ -316,19 +329,20 @@ textarea {
 }
 
 .woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
+
 	label {
 		border: none;
 
 		&:before {
 			background: $white !important;
 			font-weight: 600;
-
 		}
 	}
 
 	input[type=checkbox]:checked + label {
 		background: transparent;
 		color: $black;
+
 		&:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat !important;
 			background-size: 70% auto;

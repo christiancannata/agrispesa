@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: YITH WooCommerce Gift Cards 2.17.0\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
 "POT-Creation-Date: 2023-01-04 14:31:47+00:00\n"
-"PO-Revision-Date: 2023-02-04 20:06+0100\n"
+"PO-Revision-Date: 2023-02-06 21:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: YITH <info@yithemes.com>\n"
 "Language: it_IT\n"
@@ -311,7 +311,7 @@ msgstr ""
 
 #: includes/class-yith-woocommerce-gift-cards-privacy.php:614
 msgid "Gift Card"
-msgstr ""
+msgstr "Carta Regalo"
 
 #: includes/class-yith-woocommerce-gift-cards.php:175
 msgid "Create Gift Card Code"
@@ -631,7 +631,7 @@ msgstr ""
 
 #: includes/class-yith-ywgc-gift-card.php:858
 msgid "Valid"
-msgstr ""
+msgstr "Valido"
 
 #: includes/class-yith-ywgc-gift-card.php:861
 msgid "No longer valid, replaced by another code"
@@ -640,7 +640,7 @@ msgstr ""
 #: includes/class-yith-ywgc-gift-cards-table.php:80
 #: templates/myaccount/my-giftcards.php:15
 msgid "Code"
-msgstr ""
+msgstr "Codice"
 
 #: includes/class-yith-ywgc-gift-cards-table.php:97
 msgid "Purchase order"
@@ -649,7 +649,7 @@ msgstr ""
 #: includes/class-yith-ywgc-gift-cards-table.php:98
 #: templates/myaccount/my-giftcards.php:16
 msgid "Balance"
-msgstr ""
+msgstr "Credito"
 
 #: includes/class-yith-ywgc-gift-cards-table.php:99
 msgid "Used in orders"
@@ -682,7 +682,7 @@ msgstr ""
 #: includes/class-yith-ywgc-gift-cards-table.php:207
 #: templates/myaccount/my-giftcards.php:120
 msgid "The code has not been used yet"
-msgstr ""
+msgstr "Il codice non è ancora stato usato"
 
 #: includes/class-yith-ywgc-gift-cards-table.php:225
 msgid "Unlimited"
@@ -878,15 +878,15 @@ msgstr ""
 #: templates/emails/automatic-discount.php:13
 #: templates/emails/automatic-discount.php:19
 msgid "Apply your gift card code"
-msgstr ""
+msgstr "Applica il codice della tua carta regalo"
 
 #: templates/checkout/form-gift-cards.php:32
 msgid "Got a gift card from a loved one?"
-msgstr ""
+msgstr "Hai ricevuto una Carta regalo?"
 
 #: templates/checkout/form-gift-cards.php:32
 msgid "Use it here!"
-msgstr ""
+msgstr "Usala qui!"
 
 #: templates/checkout/form-gift-cards.php:62
 msgid "Apply the gift card code in the following field"
@@ -894,15 +894,15 @@ msgstr ""
 
 #: templates/checkout/form-gift-cards.php:74
 msgid "Apply Gift Card"
-msgstr ""
+msgstr "Applica Gift Card"
 
 #: templates/myaccount/my-giftcards.php:17
 msgid "Usage"
-msgstr ""
+msgstr "Utilizzo"
 
 #: templates/myaccount/my-giftcards.php:18
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 #. translators: %s: Order_id
 #: templates/myaccount/my-giftcards.php:113
@@ -1090,17 +1090,17 @@ msgstr ""
 #: includes/class-yith-woocommerce-gift-cards.php:171
 msgctxt "post type singular name"
 msgid "Gift Card"
-msgstr ""
+msgstr "Carta Regalo"
 
 #: includes/class-yith-woocommerce-gift-cards.php:172
 msgctxt "admin menu"
 msgid "Gift Cards"
-msgstr ""
+msgstr "Carte Regalo"
 
 #: includes/class-yith-woocommerce-gift-cards.php:173
 msgctxt "add new on admin bar"
 msgid "Gift Card"
-msgstr ""
+msgstr "Carta Regalo"
 
 #: includes/class-yith-woocommerce-gift-cards.php:174
 msgctxt "admin menu item"

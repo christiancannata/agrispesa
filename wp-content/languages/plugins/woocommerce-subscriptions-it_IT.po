@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-02-02 21:48+0100\n"
+"PO-Revision-Date: 2023-02-06 22:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -195,7 +195,7 @@ msgstr ""
 
 #: includes/admin/reports/class-wcs-report-subscription-by-customer.php:45
 msgid "Active Subscriptions"
-msgstr ""
+msgstr "Abbonamenti attivi"
 
 #: includes/admin/reports/class-wcs-report-subscription-by-customer.php:45
 msgid ""
@@ -234,7 +234,7 @@ msgstr ""
 #. translators: %s: help tip.
 #: includes/admin/reports/class-wcs-report-subscription-by-customer.php:99
 msgid "Active Subscriptions %s"
-msgstr ""
+msgstr "Abbonamenti attivi %s"
 
 #. translators: %s: help tip.
 #: includes/admin/reports/class-wcs-report-subscription-by-customer.php:99
@@ -500,7 +500,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:23
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:47
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: includes/admin/reports/class-wcs-report-subscription-events-by-date.php:780
 #: includes/admin/reports/class-wcs-report-subscription-payment-retry.php:199
@@ -1911,7 +1911,7 @@ msgstr ""
 #: includes/switching/class-wc-subscriptions-switcher.php:555
 #: includes/switching/class-wc-subscriptions-switcher.php:2623
 msgid "Upgrade or Downgrade"
-msgstr ""
+msgstr "Cambia abbonamento"
 
 #: includes/switching/class-wc-subscriptions-switcher.php:492
 msgid "Allow Switching"
@@ -2750,21 +2750,21 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:595
 msgid "Show more details"
-msgstr ""
+msgstr "Visualizza più dettagli"
 
 #. translators: %d: item count.
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:616
 msgid "%d item"
 msgid_plural "%d items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d prodotto"
+msgstr[1] "%d prodotti"
 
 #. translators: placeholder is the display name of a payment gateway a subscription was paid by
 #. translators: %s: payment method.
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:635
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:2048
 msgid "Via %s"
-msgstr ""
+msgstr "%s"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:677
 msgid "Y/m/d g:i:s A"
@@ -3096,7 +3096,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/admin/meta-boxes/views/html-related-orders-table.php:18
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:42
 msgid "Order Number"
-msgstr ""
+msgstr "Ordine"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/meta-boxes/views/html-related-orders-table.php:19
 msgid "Relationship"
@@ -3109,7 +3109,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/subscription-totals-table.php:22
 msgctxt "table heading"
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/meta-boxes/views/html-subscription-schedule.php:34
 #: vendor/woocommerce/subscriptions-core/templates/admin/deprecated/html-variation-price.php:57
@@ -3166,7 +3166,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1223
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:2303
 msgid "In %s"
-msgstr ""
+msgstr "Tra %s"
 
 #. translators: placeholder is human time diff (e.g. "3 weeks")
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:1226
@@ -3303,7 +3303,7 @@ msgstr ""
 msgid ""
 "Update the %1$s used for %2$sall%3$s future renewals of my active "
 "subscriptions"
-msgstr ""
+msgstr "Aggiorna anche per i futuri rinnovi del mio abbonamento"
 
 #. translators: %s: subscription ID.
 #. translators: %s: order number.
@@ -3634,8 +3634,8 @@ msgstr ""
 msgctxt "post status label including post count"
 msgid "Active <span class=\"count\">(%s)</span>"
 msgid_plural "Active <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Attivo <span class=“count”>(%s)</span>"
+msgstr[1] "Attivi <span class=“count”>(%s)</span>"
 
 #. translators: placeholder is a post count.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-core-plugin.php:425
@@ -4046,7 +4046,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:221
 msgctxt "Subscription status"
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1065
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:223
@@ -4058,23 +4058,23 @@ msgstr "Eliminato"
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:225
 msgctxt "Subscription status"
 msgid "Expired"
-msgstr ""
+msgstr "Scaduto"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1071
 #: vendor/woocommerce/subscriptions-core/wcs-functions.php:220
 msgctxt "Subscription status"
 msgid "Pending"
-msgstr ""
+msgstr "In attesa"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1074
 msgctxt "Subscription status"
 msgid "Failed"
-msgstr ""
+msgstr "Fallito"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1078
 msgctxt "Subscription status"
 msgid "On-hold"
-msgstr ""
+msgstr "In attesa"
 
 #. translators: 1$: month number (e.g. "01"), 2$: month abbreviation (e.g. "Jan")
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1830
@@ -4094,7 +4094,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:1852
 msgid "Change"
-msgstr ""
+msgstr "Cambia"
 
 #. translators: placeholder is subscription ID
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-manager.php:2185
@@ -4476,7 +4476,11 @@ msgid_plural ""
 "We couldn't find the original subscriptions for items in your cart. The "
 "items were removed."
 msgstr[0] ""
+"Non siamo riusciti a trovare l’abbonamento originale per un articolo nel tuo "
+"carrello. L’articolo è stato rimosso."
 msgstr[1] ""
+"Non siamo riusciti a trovare l’abbonamento originale per alcuni articoli nel "
+"tuo carrello. Gli articoli sono stati rimossi."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-cart-renewal.php:411
 msgid ""
@@ -4486,11 +4490,17 @@ msgid_plural ""
 "We couldn't find the original renewal orders for items in your cart. The "
 "items were removed."
 msgstr[0] ""
+"Non siamo riusciti a trovare l’ordine di rinnovo originale per un articolo "
+"nel tuo carrello. L’articolo è stato rimosso."
 msgstr[1] ""
+"Non siamo riusciti a trovare l’ordine di rinnovo originale per alcuni "
+"articoli nel tuo carrello. Gli articoli sono stati rimossi."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-cart-renewal.php:694
 msgid "All linked subscription items have been removed from the cart."
 msgstr ""
+"Tutti gli articoli dell’abbonamento collegati sono stati rimossi dal "
+"carrello."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-cart-renewal.php:723
 msgctxt ""
@@ -4756,11 +4766,11 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-staging.php:147
 msgid "Enable automatic payments"
-msgstr ""
+msgstr "Abilita i pagamenti automatici"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php:105
 msgid "My Account"
-msgstr ""
+msgstr "Il mio account"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-user-change-status-handler.php:57
 msgctxt "order note left on subscription after user action"
@@ -4770,13 +4780,15 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-user-change-status-handler.php:58
 msgctxt "Notice displayed to user confirming their action."
 msgid "Your subscription has been reactivated."
-msgstr ""
+msgstr "Il tuo abbonamento è stato riattivato."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-user-change-status-handler.php:61
 msgid ""
 "You can not reactivate that subscription until paying to renew it. Please "
 "contact us if you need assistance."
 msgstr ""
+"Non puoi riattivare questo abbonamento finché il pagamento non viene "
+"accettato. Ti preghiamo di contattarci se hai bisogno di assistenza."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wcs-user-change-status-handler.php:67
 msgctxt "order note left on subscription after user action"
@@ -5496,13 +5508,13 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/gateways/paypal/includes/class-wcs-paypal-standard-request.php:75
 msgctxt "item name sent to paypal"
 msgid "Subscription %1$s - %2$s"
-msgstr ""
+msgstr "Abbonamento %1$s - %2$s"
 
 #. translators: 1$: subscription ID, 2$: order ID, 3$: names of items, comma separated
 #: vendor/woocommerce/subscriptions-core/includes/gateways/paypal/includes/class-wcs-paypal-standard-request.php:78
 msgctxt "item name sent to paypal"
 msgid "Subscription %1$s (Order %2$s) - %3$s"
-msgstr ""
+msgstr "Abbonamento %1$s (Ordine %2$s) - %3$s"
 
 #: vendor/woocommerce/subscriptions-core/includes/gateways/paypal/includes/class-wcs-paypal-standard-switcher.php:271
 msgid ""
@@ -7423,23 +7435,23 @@ msgstr "Vedi"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:61
 msgid "Previous"
-msgstr ""
+msgstr "Precedente"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:65
 msgid "Next"
-msgstr ""
+msgstr "Prossimo"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:72
 msgid "You have reached the end of subscriptions. Go to the %sfirst page%s."
-msgstr ""
+msgstr "Hai raggiunto la fine degli abbonamenti. Vai alla %first page%s."
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:74
 msgid "You have no active subscriptions."
-msgstr ""
+msgstr "Non hai abbonamenti attivi."
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/my-subscriptions.php:77
 msgid "Browse products"
-msgstr ""
+msgstr "Sfoglia prodotti"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:15
 msgid "Related orders"
@@ -7447,19 +7459,19 @@ msgstr "Ordini simili"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:22
 msgid "Order"
-msgstr ""
+msgstr "Ordine"
 
 #. translators: $1: formatted order total for the order, $2: number of items bought
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:56
 msgid "%1$s for %2$d item"
 msgid_plural "%1$s for %2$d items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s per %2$d prodotto"
+msgstr[1] "%1$s per %2$d prodotti"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-orders.php:65
 msgctxt "pay for a subscription"
 msgid "Pay"
-msgstr ""
+msgstr "Paga"
 
 #: vendor/woocommerce/subscriptions-core/templates/myaccount/related-subscriptions.php:15
 msgid "Related subscriptions"

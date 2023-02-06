@@ -50,7 +50,7 @@ $ids = get_posts( $gift_cards_args );
 
 if ( $ids ) : ?>
 
-	<h3 class="my-account--minititle address-title">Le mie Gift Cards</h3>
+	<h3 class="my-account--minititle address-title">Le mie Carte Regalo</h3>
 
 	<table class="shop_table shop_table_responsive my_account_giftcards">
 		<thead>

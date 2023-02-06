@@ -68,6 +68,12 @@
 	@include line-height(42);
 	min-width: 0;
 }
+@mixin buttonxsmall() {
+	@include font-size(14);
+	padding: 0 10px;
+	@include line-height(32);
+	min-width: 0;
+}
 @mixin buttonbig() {
 	@include font-size(20);
 	@include line-height(60);
@@ -92,6 +98,10 @@
 
 	&.btn-small {
 		@include buttonsmall();
+	}
+
+	&.btn-xsmall {
+		@include buttonxsmall();
 	}
 
 	&.btn-big {

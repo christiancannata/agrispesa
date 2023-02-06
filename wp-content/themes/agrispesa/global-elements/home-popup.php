@@ -10,7 +10,7 @@ $newsletter_subtitle = get_field( 'newsletter_subtitle', 'option' );
 
         <div class="popup--flex">
             <div class="popup--image">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/login.jpg"
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/newsletter.jpg"
                      class="login-beauty--image__img" alt="Iscriviti alla newsletter"/>
             </div>
             <div class="popup--text">

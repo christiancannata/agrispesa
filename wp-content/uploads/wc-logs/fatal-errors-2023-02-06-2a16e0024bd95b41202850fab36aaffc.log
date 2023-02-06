@@ -1,0 +1,2 @@
+2023-02-06T21:10:56+00:00 CRITICAL Cannot redeclare wc_get_account_menu_items() (previously declared in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-account-functions.php:90) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/agrispesa.php alla riga 100
+
