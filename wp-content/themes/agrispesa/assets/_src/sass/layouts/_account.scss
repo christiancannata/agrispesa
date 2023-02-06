@@ -95,8 +95,9 @@ body.woocommerce-account {
 		@include buttonprimary();
 		@include buttonxsmall();
 		border: 2px solid $blue;
+		margin: 2px 0;
 		@include breakpoint(mobile) {
-			margin-top: 8px;
+			margin: 8px 0 0 0;
 		}
 
 		&:hover {
