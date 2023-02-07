@@ -150,7 +150,7 @@ global $woocommerce;
 				endforeach;
 			}?>
 
-		<?php //do_action( 'woocommerce_review_order_before_order_total' ); ?>
+		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
 			<div class="sommair--totals--flex woocommerce-sommair-end">
 				<div class="sommair--totals--sx">

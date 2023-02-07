@@ -235,3 +235,23 @@ if ( ! function_exists('ywgc_gift_card_code_form_checkout_hook' ) ){
   }
 }
 add_filter( 'ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_checkout_hook', 10, 1 );
+
+
+//Bottone minicart
+add_action( 'wp_footer', 'trigger_for_ajax_add_to_cart' );
+function trigger_for_ajax_add_to_cart() {
+    ?>
+        <script type="text/javascript">
+            (function($){
+                $('body').on( 'added_to_cart', function(){
+                    // Testing output on browser JS console
+                    console.log('added_to_cart');
+
+                    $('.cart--link').removeClass('is-empty-cart');
+                    $('.cart--link').addClass('is-full-cart');
+
+                });
+            })(jQuery);
+        </script>
+    <?php
+}

@@ -38,12 +38,14 @@
 		display: block;
 		margin: 32px auto;
 		animation-name: floating;
-		animation-duration: 3s;
+		animation-duration: 8s;
 		animation-iteration-count: infinite;
 		animation-timing-function: ease-in-out;
-		@include breakpoint(desktop) {
-			width: 140px;
+		width: 140px;
+		&.big {
+			width: 250px;
 		}
+		
 	}
 
 	&--title {

@@ -94,18 +94,18 @@ global $woocommerce;
 							class="icon-account"></span>Accedi</a>
 				<?php endif; ?>
 
-				<?php if ($woocommerce->cart->cart_contents_count > 0): ?>
+				<?php //if ($woocommerce->cart->cart_contents_count > 0): ?>
 					<div class="header--cart">
-						<a href="<?php echo wc_get_cart_url(); ?>" title="Visualizza il carrello" class="cart--link">
-							<?php if ($woocommerce->cart->cart_contents_count > 0): ?>
+						<a href="<?php echo wc_get_cart_url(); ?>" title="Visualizza il carrello" class="cart--link <?php if (WC()->cart->is_empty()){ echo 'is-empty-cart'; } else { echo 'is-full-cart'; } ?>">
 								<span class="cart--items">
 								<span class="icon-heart"></span>
+								<?php get_template_part('global-elements/logo', 'closed'); ?>
 								<?php get_template_part('global-elements/logo', 'open'); ?>
 							</span>
-							<?php endif; ?>
 						</a>
+						<div class="widget_shopping_cart_content"><?php woocommerce_mini_cart(); ?></div>
 					</div>
-				<?php endif; ?>
+				<?php //endif; ?>
 			</div>
 
 		</div>

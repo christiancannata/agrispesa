@@ -19,7 +19,7 @@ html {
 
 body {
 	@include font-size(16);
-	background: $background;
+	background: $white;
 	color: $black;
 	font-family: $font-body;
 	-webkit-font-smoothing: antialiased;
@@ -153,7 +153,7 @@ h6 {
 	background: aliceblue;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 	max-width: 450px;
-	display: block !important;
+	display: none;
 
 	&::before {
 		content: none;

@@ -30,6 +30,7 @@ openMenu();
 clearSearch();
 openSearch();
 openSubMenu();
+openminiCart();
 quantityInput();
 variationToRadio();
 faqs();
@@ -50,29 +51,56 @@ scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
 minimumAmount();
-//moveCouponCheckout();
+//giftCardCheckout();
 
 //changeShippingLabel();
 
-setTimeout(function() {
-  //moveButtonsCheckout();
-}, 2000);
 
-function moveButtonsCheckout() {
-  if(jQuery('.wcpay-payment-request-wrapper').length) {
-    jQuery('.wcpay-payment-request-wrapper').appendTo('.place-order');
-    jQuery('#wcpay-payment-request-wrapper').show();
-  }
-}
-function moveCouponCheckout() {
-  if(jQuery('.ywgc_have_code').length) {
-    jQuery('.ywgc_have_code').prependTo('.checkout--preview--coupons');
-    //jQuery('.ywgc_have_code').show();
-  }
-}
+
+// function giftCardCheckout() {
+//   jQuery('button[name="apply_coupon"]').click(function (e) {
+//         e.preventDefault();
+//         let $form = jQuery(this).closest('form');
+//
+//         if ($form.is('.processing')) {
+//             return false;
+//         }
+//
+//         $form.addClass('processing').block({
+//             message: null,
+//             overlayCSS: {
+//                 background: '#fff',
+//                 opacity: 0.6
+//             }
+//         });
+//
+//         let data = {
+//             security: wc_checkout_params.apply_coupon_nonce,
+//             coupon_code: $form.find('input[name="coupon_code"]').val()
+//         };
+//
+//         jQuery.ajax({
+//             type: 'POST',
+//             url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+//             data: data,
+//             success: function (code) {
+//                 jQuery('.woocommerce-error, .woocommerce-message').remove();
+//                 $form.removeClass('processing').unblock();
+//                 if (code) {
+//                     jQuery(".coupon-form").before(code)
+//                     // $('html,body').animate({ scrollTop: 0 }, 'slow');
+//                     jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+//                     jQuery(document.body).trigger('update_checkout', {update_shipping_method: false});
+//                 }
+//             },
+//             dataType: 'html'
+//         });
+//
+//     })
+// }
 
 function minimumAmount() {
-  if(jQuery('.minimum-amount-advice').length) {
+  if (jQuery('.minimum-amount-advice').length) {
     jQuery('.wc-proceed-to-checkout').hide();
     jQuery('.minimum-amount-advice').prependTo('.checkout--preview--bottom');
     jQuery('.minimum-amount-advice').show();
@@ -80,17 +108,17 @@ function minimumAmount() {
 }
 
 function hideGlossarioAlpha() {
-  var glossarioElements = jQuery('.glossario--anchor');
+  let glossarioElements = jQuery('.glossario--anchor');
   glossarioElements.each(function(index) {
-    var alphabet = jQuery('.glossario--link');
-    var target = jQuery(this).attr('data-alpha');
+    let alphabet = jQuery('.glossario--link');
+    let target = jQuery(this).attr('data-alpha');
 
     jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
   });
 }
 
 function changeShippingLabel() {
-  if(jQuery('.cart_totals').length) {
+  if (jQuery('.cart_totals').length) {
     let amount = jQuery('.cart_totals').find('.shipping .amount').html();
     jQuery('.woocommerce-shipping-totals td').html(amount);
   }
@@ -100,8 +128,8 @@ function changeShippingLabel() {
 function scrollTo() {
 
   jQuery('.sliding-link').on('click', function(event) {
-    var target = jQuery(this.getAttribute('href'));
-    var scrollto = target.offset().top - 100
+    let target = jQuery(this.getAttribute('href'));
+    let scrollto = target.offset().top - 100
 
     if (target.length) {
       event.preventDefault();
@@ -114,7 +142,7 @@ function scrollTo() {
 
 function pressSlider() {
 
-  var _carousel = jQuery(".press--slider");
+  let _carousel = jQuery(".press--slider");
 
   _carousel.slick({
     dots: true,
@@ -168,7 +196,7 @@ function pressSlider() {
 function closePopup() {
   // Close Popup
   jQuery('[popup-close]').on('click', function() {
-    var popup_name = jQuery(this).attr('popup-close');
+    let popup_name = jQuery(this).attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
   });
@@ -176,7 +204,7 @@ function closePopup() {
 
   // Close Popup When Click Outside
   jQuery('.popup').on('click', function() {
-    var popup_name = jQuery(this).find('[popup-close]').attr('popup-close');
+    let popup_name = jQuery(this).find('[popup-close]').attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
   }).children().click(function() {
@@ -490,7 +518,7 @@ function quantityInput() {
   jQuery(function($) {
     if (!String.prototype.getDecimals) {
       String.prototype.getDecimals = function() {
-        var num = jQuery(this),
+        let num = jQuery(this),
           match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
         if (!match) {
           return 0;
@@ -500,7 +528,7 @@ function quantityInput() {
     }
     // Quantity "plus" and "minus" buttons
     jQuery(document.body).on('click', '.product-quantity--plus, .product-quantity--minus', function() {
-      var $qty = jQuery(this).closest('.product-quantity--change').find('.quantity .qty'),
+      let $qty = jQuery(this).closest('.product-quantity--change').find('.quantity .qty'),
         currentVal = parseFloat($qty.val()),
         max = parseFloat($qty.attr('max')),
         min = parseFloat($qty.attr('min')),
@@ -551,6 +579,18 @@ function openSubMenu() {
       e.preventDefault();
       jQuery(this).toggleClass('active');
       menu.toggleClass('active');
+      jQuery(".widget_shopping_cart_content").removeClass('active');
+    });
+  }
+}
+
+function openminiCart() {
+  if (window.screen.width > 640) {
+    jQuery(".is-full-cart").on('click',function(e) {
+      e.preventDefault();
+      jQuery(".widget_shopping_cart_content").toggleClass('active');
+      jQuery('.get-user-menu').removeClass('active');
+      jQuery('.top-user__menu').removeClass('active');
     });
   }
 }
