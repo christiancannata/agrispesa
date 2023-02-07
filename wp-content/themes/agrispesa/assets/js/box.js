@@ -21,13 +21,25 @@ createApp({
   },
   methods: {
     togglePreference: function (product, subscription) {
-      if (this.isBlacklisted(product, subscription)) {
+      if (this.isPreference(product, subscription)) {
         this.deletePreference(product, subscription);
       } else {
         this.addPreference(subscription, product);
       }
     },
+    toggleBlacklist: function (product, subscription) {
+      if (this.isBlacklisted(product, subscription)) {
+        this.deleteBlacklist(product, subscription);
+      } else {
+        this.addBlacklist(subscription, product);
+      }
+    },
     isBlacklisted: function (product, subscription) {
+      return subscription.box_blacklist.some(function (field) {
+        return field.id === product.ID
+      })
+    },
+    isPreference: function (product, subscription) {
       return subscription.box_preferences.some(function (field) {
         return field.id === product.ID
       })
@@ -57,7 +69,27 @@ createApp({
           $vm.getSubscriptions()
         });
     },
+    addBlacklist: function (subscription, product) {
+      const $vm = this
+      axios.post(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
+        product_id: product.ID,
+        subscription_id: subscription.id
+      })
+        .then((response) => {
+          $vm.getSubscriptions()
+        });
+    },
     deletePreference: function (subscription, product) {
+      const $vm = this
+      axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
+        product_id: product.id,
+        subscription_id: subscription.id
+      })
+        .then((response) => {
+          $vm.getSubscriptions()
+        });
+    },
+    deleteBlacklist: function (subscription, product) {
       const $vm = this
       axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
         product_id: product.id,
