@@ -93,7 +93,7 @@ function bbloomer_remove_shipping_label( $label, $method ) {
 }
 
 
-//Minimo ordine 43 euro
+//Minimo ordine checkout
 /**
  * Set a minimum order amount for checkout
  */
@@ -102,8 +102,15 @@ add_action( 'woocommerce_before_cart' , 'wc_minimum_order_amount' );
 
 function wc_minimum_order_amount() {
 
-  $minimum = 43;
   $category = 'box';
+  $minimum = get_field('agr_minimun_amount', 'option');
+
+  $loggedUser = is_user_logged_in();
+  $allowedClients = get_field('agr_clients_no_limits', 'option');
+
+  if ( $loggedUser && in_array($loggedUser, $allowedClients) ) {
+    $minimum = 10;
+  }
 
   // Loop through cart items
   foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -111,7 +118,7 @@ function wc_minimum_order_amount() {
       $product_id = $cart_item['product_id'];
       // Has category box
       if ( has_term( $category, 'product_cat', $product_id ) ) {
-          $minimum = 26;
+          $minimum = 10;
       }
   }
 
