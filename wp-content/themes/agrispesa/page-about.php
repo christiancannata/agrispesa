@@ -18,12 +18,12 @@ get_header(); ?>
 	</section>
 
 <div class="agr-section--container no-mg-top">
-	<section class="agr-section agr-section--right">
+	<section class="agr-section agr-section--right" style="background-color:#765341; color:#e5d7c8;" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
 		<div class="agr-section--flex">
 			<div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
 				<img src="https://admin.illo.tv/storage/uploads/2020/06/11/5ee2612a8ebb8GiovannaCrise_01.jpg" class="main-img" alt="Giovanna Traversa" />
 			</div>
-		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#765341; color:#e5d7c8;">
+		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
 			<div class="agr-section--text--content">
 				<p class="team--bio--text">
 					Il mio nome è Giovanna.
@@ -43,9 +43,9 @@ get_header(); ?>
 		</div>
 	</section>
 
-	<section class="agr-section">
+	<section class="agr-section" style="background-color:#e8532b; color:#e5d7c8;" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
 		<div class="agr-section--flex">
-		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#e8532b; color:#e5d7c8;">
+		<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
 			<div class="agr-section--text--content">
 				<p class="team--bio--text">
 					La capacità di resistere, la volontà, la tenacia mi arrivano da mia madre Pierina, da Lina, da zia Rina, dalla balia Clarin, da Suor Angela Bologna: donne forti che hanno accompagnato la mia crescita, alle quali devo il senso della mia vita.
@@ -67,7 +67,7 @@ get_header(); ?>
 		</div>
 	</section>
 
-	<section class="agr-section" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+	<section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
 		<div class="agr-section--wide" style="background-color:#069460; color:#e5d7c8;">
 		<div class="agr-section--wide--flex">
 			<div class="agr-section--image">

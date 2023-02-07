@@ -46,7 +46,7 @@ if( have_rows('agr_sections') ):
     ?>
 <?php if($wide): ?>
 
-    <section class="agr-section" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+    <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
       <div class="agr-section--wide" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
       <div class="agr-section--wide--flex">
         <div class="agr-section--image">
@@ -74,12 +74,12 @@ if( have_rows('agr_sections') ):
 <?php else: ?>
 
     <?php if($align): ?>
-        <section class="agr-section agr-section--right">
+        <section class="agr-section agr-section--right" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
           <div class="agr-section--flex">
             <div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
               <img src="<?php echo $image; ?>" class="main-img" alt="<?php echo strip_tags($title); ?>" />
             </div>
-          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
+          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
             <div class="agr-section--text--content">
               <h3 class="agr-section--title"><?php echo $title; ?></h3>
               <p class="agr-section--subtitle"><?php echo $text; ?></p>
@@ -95,9 +95,9 @@ if( have_rows('agr_sections') ):
           </div>
         </section>
       <?php else: ?>
-        <section class="agr-section">
+        <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
           <div class="agr-section--flex">
-          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
+          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
             <div class="agr-section--text--content">
               <h3 class="agr-section--title"><?php echo $title; ?></h3>
               <p class="agr-section--subtitle"><?php echo $text; ?></p>

@@ -95,6 +95,7 @@
 			text-align: left;
 			padding: 140px 0;
 			text-align: center;
+			color: $panna;
 			@include breakpoint(container) {
 				padding: 120px 0;
 			}
@@ -451,6 +452,13 @@
 	margin: 0 auto;
 	max-width: 100%;
 	padding: 0 120px;
+	body.single-product &,
+	body.single-post & {
+		margin-bottom: 50px;
+		@include breakpoint(mobile) {
+			margin-bottom: 32px;
+		}
+	}
 	@include breakpoint(container) {
 		padding: 0 40px;
 	}
@@ -512,6 +520,7 @@
 				text-align: center;
 				display: block;
 				box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+				border: 1px solid #eaeae1;
 				@include breakpoint(desktop) {
 					@include font-size(16);
 
@@ -535,6 +544,7 @@
 					background: $orange;
 					color: $white;
 					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
+					border: 1px solid transparent;
 
 					svg {
 						fill: $white;
@@ -641,6 +651,7 @@
 	@include breakpoint(tablet) {
 		padding: 0 20px;
 	}
+
 
 	&--content {
 		@include border-radius(32px 32px 8px 8px);
@@ -775,25 +786,20 @@
 
 .agr-section {
 	&--container {
-		padding: 80px 120px;
-		@include breakpoint(container) {
-			padding: 80px 40px;
-		}
-		@include breakpoint(tablet) {
-			padding: 32px 20px;
-		}
+		// padding: 80px 120px;
+		// @include breakpoint(container) {
+		// 	padding: 80px 40px;
+		// }
+		// @include breakpoint(tablet) {
+		// 	padding: 32px 20px;
+		// }
 		&.no-mg-top {
 			padding-top: 0;
 		}
 	}
 
 	&--wide {
-		@include border-radius(32px);
-		width: calc(100% - 16px);
-		margin: 8px;
-		@include breakpoint(tablet) {
-			margin: 8px 0;
-		}
+		width: 100%;
 
 		&--flex {
 			display: flex;
@@ -872,19 +878,19 @@
 	&--image,
 	&--text {
 		width: 100%;
-		margin: 8px 0;
 		@include breakpoint(medium) {
-			@include border-radius(32px);
 			width: 50%;
-			margin: 8px;
 		}
 	}
 
 	&--image {
 		overflow: hidden;
+		// @include border-radius(50% 0 0 50%);
+		// .agr-section--right & {
+		// 	@include border-radius(0 50% 50% 0);
+		// }
 		@include breakpoint(tablet) {
 			order: 1;
-			@include border-radius(24px 24px 0 0);
 			margin-bottom: 0;
 		}
 
@@ -898,11 +904,9 @@
 		@include breakpoint(tablet) {
 			order: 2;
 			padding: 0 20px;
-			@include border-radius(0 0 24px 24px);
 			margin-top: 0;
 		}
 		@include breakpoint(medium) {
-			@include border-radius(32px);
 			text-align: left;
 			padding: 0 120px;
 			display: flex;

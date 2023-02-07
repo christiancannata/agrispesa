@@ -42,10 +42,10 @@
 		animation-iteration-count: infinite;
 		animation-timing-function: ease-in-out;
 		width: 140px;
+
 		&.big {
 			width: 250px;
 		}
-		
 	}
 
 	&--title {
@@ -102,20 +102,49 @@
 	}
 
 	&--item {
-		@include border-radius(4px);
+		@include border-radius(16px);
 		text-align: center;
 		margin: 16px 0;
-		background: #fff;
+		background: $white;
+		border: 1px solid $background;
+		position: relative;
 		box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
 		@include breakpoint(desktop) {
 			width: 25%;
 			margin: 0 8px;
 		}
+
+
+		.prices-badge {
+			@include horizontal-align();
+			@include border-radius(16px);
+			@include font-size(12);
+			position: absolute;
+			z-index: 2;
+			background: $orange;
+			text-transform: uppercase;
+			color: #fff;
+			letter-spacing: 1px;
+			font-weight: 600;
+			padding: 3px 14px;
+			top: -13px;
+			@include breakpoint(mobile) {
+				top: 24px;
+			}
+		}
+
+		&.favourite {
+			border-color: $orange;
+			@include breakpoint(mobile) {
+				padding-top: 45px;
+			}
+
+		}
 	}
 
 	&--element {
 		@include font-size(18);
-		border-bottom: 1px solid $background;
+		border-bottom: 1px solid $white;
 		padding: 16px;
 		line-height: 1.1;
 

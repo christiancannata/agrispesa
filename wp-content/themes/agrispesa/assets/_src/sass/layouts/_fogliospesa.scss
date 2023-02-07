@@ -49,8 +49,6 @@
 
 .fogliospesa--sticky {
 	padding: 20px;
-	background: $white;
-	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
 	margin-top: 32px;
 	@include breakpoint(desktop) {
 		padding: 24px;

@@ -360,6 +360,7 @@
 	margin: 0 8px;
 	background: $white;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
+	border: 1px solid #eaeae1;
 	@include breakpoint(container) {
 		padding: 20px;
 	}

@@ -4,7 +4,7 @@ $post_id = $page->ID;
 
 if( have_rows('lista_recensioni' , $post_id) ):
   $i = 0;
-  echo '<div class="reviews-home" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">';
+  echo '<div class="reviews-home" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">';
   echo '<div class="container-pg">';
   echo '<div class="reviews--slider">';
     while( have_rows('lista_recensioni' , $post_id) ) : the_row();

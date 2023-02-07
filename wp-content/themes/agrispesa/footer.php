@@ -88,7 +88,7 @@
 		</div>
 		<div class="secure-payments bando">
 			<span>Progetto Agricoltura Contadina 2.0</span>
-			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/banner-footer.jpeg" alt="Regione Piemonte" />
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/footer/banner-footer.png" alt="Regione Piemonte" />
 		</div>
 
 	</div>
