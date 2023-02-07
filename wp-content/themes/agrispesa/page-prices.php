@@ -82,7 +82,7 @@ get_header(); ?>
 							Arriva ogni settimana
 						</div>
 						<div class="prices--element">
-							Spedizione €5
+							Consegna €5
 							<span class="info-shipping">La prima consegna è gratuita!</span>
 						</div>
 						<div class="prices--element price">
@@ -104,7 +104,7 @@ get_header(); ?>
 							Arriva ogni settimana
 						</div>
 						<div class="prices--element">
-							Spedizione €5
+							Consegna €5
 							<span class="info-shipping">La prima consegna è gratuita!</span>
 						</div>
 						<div class="prices--element price">
@@ -126,7 +126,7 @@ get_header(); ?>
 							Arriva ogni settimana
 						</div>
 						<div class="prices--element">
-							Spedizione €5
+							Consegna €5
 							<span class="info-shipping">La prima consegna è gratuita!</span>
 						</div>
 						<div class="prices--element price">
@@ -148,7 +148,7 @@ get_header(); ?>
 							Arriva ogni settimana
 						</div>
 						<div class="prices--element">
-							Spedizione €5
+							Consegna €5
 							<span class="info-shipping">La prima consegna è gratuita!</span>
 						</div>
 						<div class="prices--element price">

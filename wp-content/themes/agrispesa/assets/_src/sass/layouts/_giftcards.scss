@@ -23,7 +23,7 @@
 	margin: 0;
 	padding-bottom: 40px;
 	@include breakpoint(desktop) {
-		height:calc(100vh - 90px);
+		height: calc(100vh - 90px);
 		overflow: auto;
 		display: flex;
 		align-items: center;
@@ -31,6 +31,7 @@
 	}
 	@include breakpoint(mobile) {
 		min-height: calc(100vh - 80px);
+
 		.hero--title {
 			margin-top: 50px;
 			@include font-size(38);
@@ -40,9 +41,11 @@
 			@include font-size(14);
 		}
 	}
+
 	.all-categories {
 		display: none;
 	}
+
 	.hero--title {
 		@include breakpoint(desktop) {
 			@include font-size(50);
@@ -65,7 +68,6 @@
 		margin-bottom: 32px;
 		margin-top: 32px;
 		display: none;
-
 		@include breakpoint(desktop) {
 			margin-bottom: 0;
 			display: block;
@@ -362,4 +364,8 @@
 
 .ui-datepicker .ui-datepicker-next span::before {
 	content: "\e904";
+}
+
+#ywgc-choose-design-preview {
+	display: none;
 }

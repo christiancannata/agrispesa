@@ -33,28 +33,29 @@ get_header(); ?>
 		</div>
 	</section>
 
+	<div class="agr-section--container no-mg-top">
 
-	<section class="manifesto--ritmi">
-		<div class="manifesto--ritmi--flex">
-			<div class="manifesto--ritmi--item bg-orange">
-				<h4 class="manifesto--ritmi--item--title">
-					Prima l'uomo.<br/>Poi il prodotto.
-				</h4>
-				<p class="manifesto--ritmi--item--text">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-				</p>
+	<section class="agr-section agr-section--right">
+		<div class="agr-section--flex">
+			<div class="agr-section--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50" style="background-color:#e8532b; color:#e5d7c8;">
+				<div class="agr-section--text--content">
+					<h3 class="agr-section--title">Prima l'uomo.<br/>Poi il prodotto.</h3>
+					<p class="agr-section--subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<a href="<?php echo esc_url(home_url('/')); ?>produttori" class="btn btn-primary" title="Conosci i nostri produttori">Conosci i nostri produttori</a>
+
+				</div>
 			</div>
-			<div class="manifesto--ritmi--item bg-brown">
-				<h4 class="manifesto--ritmi--item--title">
-					Il ciclo della natura <br/>e degli animali.
-				</h4>
-				<p class="manifesto--ritmi--item--text">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-				</p>
+			<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#765341; color:#e5d7c8;">
+				<div class="agr-section--text--content">
+					<h3 class="agr-section--title">Il ciclo della natura <br/>e degli animali.</h3>
+					<p class="agr-section--subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<a href="<?php echo esc_url(home_url('/')); ?>negozio" class="btn btn-primary" title="Scopri i prodotti">Scopri i prodotti</a>
+				</div>
 			</div>
 		</div>
-
 	</section>
+</div>
+
 
 	<section class="sec-home sec-full bg-green line-white">
 		<div class="container-pg">

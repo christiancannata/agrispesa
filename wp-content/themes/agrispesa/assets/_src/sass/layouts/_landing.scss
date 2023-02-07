@@ -1,0 +1,271 @@
+/* stylelint-disable */
+.hero-landing {
+	overflow: hidden;
+
+	&--item {
+		position: relative;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+
+	&--flex {
+		height: 100vh;
+		height: calc(var(--vh, 1vh) * 100);
+		overflow: hidden;
+		@include breakpoint(desktop) {
+			display: flex;
+			align-items: flex-start;
+			height: calc(100vh - 90px);
+			overflow: auto;
+		}
+	}
+
+	&--text {
+		padding: 0 20px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			width: 48%;
+			text-align: left;
+			max-width: 680px;
+			padding: 0 0 0 160px;
+			margin-top: 90px;
+		}
+
+		.dark-hero & {
+			color: #fff;
+		}
+	}
+
+	&--title {
+		@include font-size(38);
+		line-height: 1;
+		margin: 70px 0 0;
+		font-family: $font-title;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(50);
+			margin: 0;
+		}
+	}
+
+	&--subtitle {
+		@include font-size(20);
+		line-height: 1.2;
+		margin: 32px 0;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+			margin: 42px 0;
+		}
+	}
+
+	&--slider {
+		position: relative;
+
+		.slick-dots {
+			display: block;
+			position: absolute;
+			right: 40px;
+			bottom: 40px;
+
+			li {
+				margin: 8px 0;
+
+				&:before {
+					@include border-radius(2px);
+					width: 32px;
+					height: 4px;
+					cursor: pointer;
+				}
+
+				&.slick-active:before {
+					background: $black;
+				}
+			}
+		}
+	}
+}
+
+.landing-price {
+	@include font-size(40);
+	align-items: baseline;
+	display: flex;
+	font-weight: 300;
+	margin: -16px 0 32px;
+	@include breakpoint(mobile) {
+		@include font-size(30);
+		justify-content: center;
+	}
+
+	.info-price {
+		@include font-size(24);
+		margin-right: 8px;
+	}
+
+	.special-price {
+		color: $red;
+	}
+
+	.old-price {
+		@include font-size(24);
+		margin-left: 8px;
+		padding: 0 4px;
+		position: relative;
+		@include breakpoint(desktop) {
+			@include font-size(30);
+		}
+
+		&::before {
+			@include transform(rotate(-10deg));
+			background: $red;
+			content: '';
+			display: block;
+			height: 3px;
+			left: 0;
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			z-index: 2;
+		}
+	}
+}
+
+.landing-coupon {
+	margin: -32px 0 40px;
+
+	p {
+		@include font-size(14);
+		font-weight: 300;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+
+		strong {
+			font-weight: 600;
+		}
+	}
+}
+
+.landing--expire {
+	background: #fff;
+	box-shadow: 0 -5px 5px -5px rgba(0,0,0,0.3);
+	padding: 16px 20px;
+	@include breakpoint(desktop) {
+		bottom: 0;
+		left: 0;
+		padding: 24px 40px;
+		position: absolute;
+		width: 100%;
+		z-index: 3;
+	}
+
+	&--flex {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+	}
+
+	&__title {
+		margin-right: 24px;
+
+		span {
+			@include font-size(14);
+			font-weight: 300;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			@include breakpoint(desktop) {
+				@include font-size(18);
+			}
+		}
+	}
+
+	&__item {
+		margin: 0 8px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			margin: 0 16px;
+		}
+
+		span {
+			display: block;
+
+			&.time {
+				@include font-size(26);
+				@include breakpoint(desktop) {
+					@include font-size(30);
+				}
+			}
+
+			&.label {
+				@include font-size(12);
+				font-weight: 300;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				@include breakpoint(desktop) {
+					@include font-size(14);
+				}
+			}
+		}
+	}
+}
+
+.coming-soon {
+	&--newsletter {
+		max-width: 350px;
+		@include breakpoint(desktop) {
+			.mailchimp-form--buttons {
+				text-align: left;
+			}
+		}
+	}
+}
+
+body.page-template-page-password-php {
+	.top-user {
+		display: none !important;
+	}
+}
+
+.hello-press {
+	&--intro {
+		margin-top: 100px;
+		padding: 40px 20px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			margin: 200px auto 0;
+			max-width: 600px;
+		}
+	}
+
+	&--title {
+		@include font-size(34);
+		@include breakpoint(desktop) {
+			@include font-size(60);
+		}
+	}
+
+	&--subtitle {
+		@include font-size(18);
+		@include breakpoint(desktop) {
+			@include font-size(22);
+		}
+	}
+
+	&--form {
+		margin: 0 auto;
+		max-width: 80%;
+		width: 350px;
+	}
+
+	&--button {
+		margin-top: 16px;
+		width: 100%;
+	}
+
+	&--input {
+		font-size: 18px !important;
+		height: 50px !important;
+	}
+}

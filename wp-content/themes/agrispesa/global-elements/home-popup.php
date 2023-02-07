@@ -10,7 +10,7 @@ $newsletter_subtitle = get_field( 'newsletter_subtitle', 'option' );
 
         <div class="popup--flex">
             <div class="popup--image">
-                <img src="<?php echo get_template_directory_uri(); ?>/img/auth/register.gif"
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/newsletter.jpg"
                      class="login-beauty--image__img" alt="Iscriviti alla newsletter"/>
             </div>
             <div class="popup--text">
@@ -22,9 +22,6 @@ $newsletter_subtitle = get_field( 'newsletter_subtitle', 'option' );
 
                     <!-- Begin Mailchimp Signup Form -->
                     <div class="newsletter--form" id="mc_embed_signup">
-
-
-
 
                         <form action="https://agrispesa.us8.list-manage.com/subscribe/post?u=a601ffa5369b98db7030601ee&amp;id=cae80e4aed&amp;f_id=001468e0f0" onsubmit="return validateFormPopup()" method="post" id="mc-embedded-subscribe-form-popup" name="mc-embedded-subscribe-form-popup" class="validate" target="_blank" novalidate>
                     				<div id="mc_embed_signup_scroll-popup" class="signup">

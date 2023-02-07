@@ -1,7 +1,7 @@
 <section class="hero">
   <div class="hero--item">
     <div class="hero--content">
-      <div class="hero--text">
+      <div class="hero--text" data-aos="fade-in" data-aos-duration="600" data-aos-delay="0">
         <h1 class="hero--title">Dall'orto<br/>al tuo frigo.</h1>
         <p class="hero--subtitle">Prodotti di agricoltura contadina, a casa tua.</p>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-big hero--btn" alt="Scegli la tua box">Scegli la tua box</a>
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="hero--box">
+      <div class="hero--box" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/box1_BZ.png" alt="Prova Agrispesa" />
       </div>
     </div>

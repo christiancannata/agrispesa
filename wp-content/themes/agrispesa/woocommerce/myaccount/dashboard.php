@@ -112,9 +112,9 @@ $count = count( $customer_orders );
 				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
 			</div>
 			<div class="empty-states--text">
-				<h4 class="empty-states--title">Non ci sono porri, qui.</h4>
+				<h4 class="empty-states--title">C'è solo un porro, qui.</h4>
 				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>prodotto/box" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
 			</div>
 		</div>
 		<?php

@@ -54,13 +54,13 @@ body.woocommerce-account {
 	}
 }
 
-.woocommerce-account {
+body.woocommerce-account {
+	background: $white;
+
 	.woocommerce-flex {
 		align-items: flex-start;
 		display: flex;
 		justify-content: center;
-		max-width: 990px;
-		padding: 0 20px;
 		margin: 90px auto 0;
 		@include breakpoint(mobile) {
 			display: block;
@@ -76,6 +76,7 @@ body.woocommerce-account {
 		margin-top: -8px;
 		max-width: 100%;
 		width: 240px;
+		margin-bottom: 40px;
 	}
 
 	.woocommerce-MyAccount-content {
@@ -92,13 +93,17 @@ body.woocommerce-account {
 	a.button {
 		@include button();
 		@include buttonprimary();
-		@include buttonsmall();
+		@include buttonxsmall();
 		border: 2px solid $blue;
+		margin: 2px;
+		@include breakpoint(mobile) {
+			margin: 8px 0 0 0;
+		}
 
 		&:hover {
-			border: 2px solid #069460;
+			border: 2px solid #5e0bdb;
 			background-color: transparent;
-			background-image: linear-gradient(to right, $blue, $blue, #069460, #069460);
+			background-image: linear-gradient(to right, $blue, $blue, #5e0bdb, #5e0bdb);
 		}
 
 		&.cancel,
@@ -134,7 +139,7 @@ body.woocommerce-account {
 			a {
 				@include border-radius(4px);
 				@include font-size(16);
-				background: #ffff;
+				background: $background;
 				color: $gray;
 				display: block;
 				font-weight: 300;
@@ -231,15 +236,33 @@ body.woocommerce-account {
 	text-align: center;
 }
 
+.woocommerce .woocommerce-customer-details .woocommerce-customer-details--email,
+.woocommerce .woocommerce-customer-details .woocommerce-customer-details--phone {
+	padding-left: 0;
+	margin: 16px 0;
+	&:before {
+		content: none;
+	}
+}
+.woocommerce .woocommerce-customer-details {
+	margin-bottom: 0;
+}
 .woocommerce-account {
 	.my-account {
+		&--description {
+			@include font-size(14);
+			margin-bottom: 24px;
+			strong {
+				font-weight: 600;
+			}
+		}
 		&--minititle {
 			@include clearfix();
 			@include font-size(20);
 			color: $black;
 			display: inline-block;
 			font-weight: 600;
-			margin: 0 0 32px;
+			margin: 0 0 32px !important;
 			position: relative;
 			@include breakpoint(desktop) {
 				@include font-size(22);
@@ -261,6 +284,11 @@ body.woocommerce-account {
 
 .password-input {
 	width: 100%;
+
+	.show-password-input {
+		top: 22px !important;
+		right: 10px !important;
+	}
 }
 
 .woocommerce-Address-title {
@@ -273,78 +301,62 @@ body.woocommerce-account {
 	margin-top: 0;
 }
 
-body.woocommerce-view-order {
-	.woocommerce {
-		table.shop_table {
-			border: none !important;
-			border-radius: 0 !important;
-
-			thead {
-				th {
-					display: none !important;
-				}
-			}
-
-			td {
-				padding: 8px 0 !important;
-			}
-
-			tbody {
-				td {
-					@include font-size(16);
-					border-top: none;
-				}
-
-				.woocommerce-table__product-total {
-					text-align: right;
-				}
-			}
-
-			tfoot {
-				th {
-					@include font-size(16);
-					font-weight: 600;
-					padding: 8px 0 !important;
-				}
-
-				td {
-					text-align: right;
-				}
-			}
-		}
-	}
-}
 
 .table-shadow-relative {
 	position: relative;
 }
+//
+// .table-shadow {
+// 	@include border-radius(4px);
+// 	bottom: 20px;
+// 	box-shadow: 0 18px 5px 0 rgba(0, 0, 0, 0.15);
+// 	content: '';
+// 	display: block;
+// 	left: 0;
+// 	position: absolute;
+// 	top: -18px;
+// 	width: 100%;
+// 	z-index: -1;
+// }
 
-.table-shadow {
-	bottom: 20px;
-	box-shadow: 0 18px 5px 0 rgba(0, 0, 0, 0.15);
-	content: '';
-	display: block;
-	left: 0;
-	position: absolute;
-	top: -18px;
-	width: 100%;
-	z-index: -1;
+.account-borders {
+	padding: 24px 20px;
+	@include border-radius(4px);
+	border: 1px solid #eaeae1 !important;
+	margin-bottom: 32px;
+
+	&.last {
+		margin-bottom: 0;
+	}
 }
 
-.woocommerce-columns--addresses,
-.woocommerce {
+.woocommerce-customer-details {
+	@include breakpoint(mobile) {
+		margin-bottom: 0 !important;
+	}
+}
+.woocommerce,
+.woocommerce-columns--addresses {
+	@include breakpoint(mobile) {
+		.col-2 .woocommerce-column__title {
+			margin-top: 32px;
+		}
+	}
+
 	.woocommerce-column__title {
-		font-weight: bold;
+		font-weight: 600;
 		margin-bottom: 24px;
 	}
+
 	address {
 		@include font-size(18);
 		font-weight: 300;
 		line-height: 1.4;
 		font-style: normal;
 		background: #fff;
-		padding: 16px;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 15%);
+		padding: 24px 20px;
+		@include border-radius(4px);
+		border: 1px solid #eaeae1 !important;
 	}
 
 	.woocommerce-customer-details {
@@ -427,10 +439,11 @@ body.woocommerce-view-order {
 
 	table.shop_table {
 		background: #fff;
+		@include border-radius(4px);
+		border: 1px solid #eaeae1 !important;
 		border: none;
 		padding: 32px 16px;
 		position: relative;
-		border-radius: 0;
 
 		.product-name {
 			a {
@@ -438,16 +451,62 @@ body.woocommerce-view-order {
 			}
 		}
 
+		.wc-item-meta {
+			@include clearfix();
+
+			li {
+				display: flex;
+				align-items: center;
+			}
+
+			.wc-item-meta-label {
+				float: none;
+			}
+		}
+
+		.order_item {
+			.wcs-switch-link.button {
+				margin-top: 16px;
+				font-weight: 400;
+				margin-bottom: 6px;
+			}
+		}
+
+		.product-name {
+			a {
+				font-weight: 600;
+			}
+		}
+
 		th {
 			@include font-size(16);
-			font-weight: 900 !important;
+			font-weight: 600 !important;
 			padding: 10px 8px !important;
+		}
+
+		tr td {
+			&.order-actions {
+				text-align: right !important;
+
+				a {
+					width: 100%;
+				}
+			}
 		}
 
 		td {
 			@include font-size(15);
 			font-weight: 300;
 			padding: 10px 8px !important;
+			@include breakpoint(mobile) {
+				&:before {
+					font-weight: 600 !important;
+				}
+			}
+		}
+
+		tfoot td {
+			font-weight: 600 !important;
 		}
 
 		.woocommerce-orders-table__cell-order-number {
@@ -613,6 +672,4 @@ body.woocommerce-account {
 	}
 }
 
-.woocommerce-input-wrapper {
-
-}
+.woocommerce-input-wrapper {}

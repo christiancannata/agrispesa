@@ -242,6 +242,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 						</td>
 					</div>
 					</div>
+
 					</div><!-- end new-cart-item !-->
 					</tr>
 
@@ -251,6 +252,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 			?>
 
 			<?php do_action( 'woocommerce_cart_contents' ); ?>
+
 
 			</div> <!-- end new-cart !-->
 

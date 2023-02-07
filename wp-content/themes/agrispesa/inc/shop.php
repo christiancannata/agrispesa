@@ -227,7 +227,6 @@ function coupon_free_shipping_customization( $rates, $package ) {
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 add_action( 'woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form', 5 );
 
-
 //sposta gift card nel checkout
 if ( ! function_exists('ywgc_gift_card_code_form_checkout_hook' ) ){
   function ywgc_gift_card_code_form_checkout_hook( $hook ){

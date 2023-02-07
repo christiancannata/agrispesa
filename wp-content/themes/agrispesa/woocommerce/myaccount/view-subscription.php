@@ -30,8 +30,10 @@ do_action( 'woocommerce_subscription_details_table', $subscription );
 do_action( 'woocommerce_subscription_totals_table', $subscription );
 
 do_action( 'woocommerce_subscription_details_after_subscription_table', $subscription );
-
+echo '<h3 class="my-account--minititle address-title">Indirizzi</h3>';
+echo '<div class="account-borders last">';
 wc_get_template( 'order/order-details-customer.php', array( 'order' => $subscription ) );
+echo '</div>';
 ?>
 
 <div class="clear"></div>

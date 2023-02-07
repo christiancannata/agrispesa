@@ -44,7 +44,7 @@ $gift_card_bg = get_field('gift_card_bg');
 
 	<div class="gift-card-page--hero">
 		<div class="gift-card-page--hero-text">
-			<h2 class="hero--title">ehiii <?php echo $gift_card_title; ?></h2>
+			<h2 class="hero--title"><?php echo $gift_card_title; ?></h2>
 			<?php if($gift_card_text): ?>
 				<p class="hero--subtitle"><?php echo $gift_card_text; ?></p>
 			<?php endif; ?>
