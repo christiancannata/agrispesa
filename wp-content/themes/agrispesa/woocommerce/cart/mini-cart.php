@@ -102,9 +102,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		?>
 	</div>
 
-	<div class="minicart--total-products">
-		<span>Hai <?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?> nella tua scatola.</span>
-	</div>
+
 
 	<div class="minicart--subtotal">
 		<?php
@@ -117,9 +115,15 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		?>
 	</div>
 
+	<div class="minicart--total-products">
+		<span>Hai <?php echo WC()->cart->get_cart_contents_count(); ?> <?php if(WC()->cart->get_cart_contents_count() == 1) {echo 'prodotto';} else { echo ' prodotti';}?> nella tua scatola.</span>
+	</div>
+
 	<?php do_action( 'woocommerce_widget_shopping_cart_before_buttons' ); ?>
 
-	<div class="woocommerce-mini-cart__buttons buttons"><?php do_action( 'woocommerce_widget_shopping_cart_buttons' ); ?></div>
+	<div class="woocommerce-mini-cart__buttons buttons">
+		<a href="<?php echo wc_get_cart_url(); ?>" class="btn btn-primary btn-small minicart--go-to">Guarda la tua scatola</a>
+	</div>
 
 	<?php do_action( 'woocommerce_widget_shopping_cart_after_buttons' ); ?>
 
