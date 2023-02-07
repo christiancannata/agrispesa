@@ -168,3 +168,21 @@ Stack trace:
 [04-Feb-2023 12:19:08 UTC] PHP Notice:  Undefined variable: nextTuesday in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 54
 [04-Feb-2023 12:42:11 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 58
 [04-Feb-2023 12:42:13 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 58
+[06-Feb-2023 11:45:14 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:14 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:45:31 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:31 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:45:33 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:33 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:45:35 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:35 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:45:37 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:37 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:45:39 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 8
+[06-Feb-2023 11:45:39 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/all-categories.php on line 11
+[06-Feb-2023 11:50:19 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 378
+[06-Feb-2023 11:50:19 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 384
+[06-Feb-2023 11:50:27 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 378
+[06-Feb-2023 11:50:27 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 384
+[06-Feb-2023 11:50:48 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 378
+[06-Feb-2023 11:50:48 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 384

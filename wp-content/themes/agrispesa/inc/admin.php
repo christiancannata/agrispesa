@@ -255,10 +255,17 @@ add_action('rest_api_init', function () {
 				if (empty($boxPreferences)) {
 					$boxPreferences = [];
 				}
+
+				$boxBlacklist = get_post_meta($subscription->get_id(), '_box_blacklist', true);
+				if (empty($boxBlacklist)) {
+					$boxBlacklist = [];
+				}
+
 				$json[] = [
 					'name' => reset($products)->get_name(),
 					'id' => $subscription->get_id(),
 					'box_preferences' => $boxPreferences,
+					'box_blacklist' => $boxBlacklist,
 					'products' => $productsToAdd
 				];
 			}
@@ -367,6 +374,35 @@ add_action('rest_api_init', function () {
 		}
 	));
 
+	register_rest_route('agrispesa/v1', 'subscription-blacklist', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			$body = $request->get_json_params();
+
+			$boxPreferences = get_post_meta($body['subscription_id'], '_box_blacklist', true);
+
+			if (empty($boxPreferences)) {
+				$boxPreferences = [];
+			}
+			$productToRemove = get_post($body['product_id']);
+
+			$boxPreferences[] = [
+				'id' => $productToRemove->ID,
+				'name' => $productToRemove->post_title
+			];
+
+			update_post_meta($body['subscription_id'], '_box_blacklist', $boxPreferences);
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(201);
+
+			return $response;
+		}
+	));
+
 
 	register_rest_route('agrispesa/v1', 'subscription-preference', array(
 		'methods' => 'PATCH',
@@ -393,6 +429,40 @@ add_action('rest_api_init', function () {
 					$newBoxPreferences[] = $preference;
 				}
 				update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
+			}
+
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+			return $response;
+		}
+	));
+
+	register_rest_route('agrispesa/v1', 'subscription-blacklist', array(
+		'methods' => 'PATCH',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+			$body = $request->get_json_params();
+			$boxPreferences = get_post_meta($body['subscription_id'], '_box_blacklist', true);
+
+			$productId = $body['product_id'];
+			//find product
+			$index = array_filter($boxPreferences, function ($product) use ($productId) {
+				return $product['id'] == $productId;
+			});
+
+			if (!empty($index)) {
+				$index = array_keys($index);
+				$index = reset($index);
+				unset($boxPreferences[$index]);
+
+				$newBoxPreferences = [];
+				foreach ($boxPreferences as $preference) {
+					$newBoxPreferences[] = $preference;
+				}
+				update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
 			}
 
 

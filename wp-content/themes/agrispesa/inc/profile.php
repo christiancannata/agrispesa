@@ -77,7 +77,7 @@ function settings_box_content()
 {
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
 	?>
-	<div class="woocommerce-PreferenzeBox-content">
+	<div class="woocommerce-PreferenzeBox-content" id="box-app">
 
 		<div class="woocommerce-notices-wrapper"></div>
 		<h3 class="my-account--minititle">Personalizza la box</h3>
@@ -92,7 +92,7 @@ function settings_box_content()
 
 		<div class="table-shadow-relative">
 			<div
-				id="box-app"
+
 				class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
 
 				<div v-for="subscription of subscriptions" class="subscription-box">
@@ -105,6 +105,43 @@ function settings_box_content()
 						</div>
 					</div>
 
+
+					<h3>Titolo</h3>
+					<div class="container-flex-box">
+
+						<div class="right-categories-box">
+							<ul v-if="categories.length > 0">
+								<li :class="{'active':currentCategory == category}" v-for="category of categories">
+									<a href="#" @click.prevent="currentCategory = category" v-html="category.name"></a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
+							<ul>
+								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
+									<label @click.prevent="toggleBlacklist(product,subscription)"
+										   class="checkbox-container">
+										<span class="label" v-html="product.post_title"></span>
+										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
+										<span class="checkmark"></span>
+									</label>
+								</li>
+
+							</ul>
+						</div>
+
+						<div class="blacklist-box">
+							<h4>Blacklist</h4>
+							<div class="blacklist-item" v-for="(preference) of subscription.box_blacklist">
+								<a class="delete_item" @click.prevent="deleteBlacklist(subscription,preference)"
+								   href="#"><span class="icon-close"></span></a>
+								<span v-html="preference.name"></span>
+							</div>
+						</div>
+					</div>
+
+					<h3  style="margin-top:30px">Titolo</h3>
 
 					<div class="container-flex-box">
 
@@ -122,7 +159,7 @@ function settings_box_content()
 									<label @click.prevent="togglePreference(product,subscription)"
 										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
+										<input :checked="isPreference(product,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -130,14 +167,16 @@ function settings_box_content()
 							</ul>
 						</div>
 
-						<div class="blacklist-box">
-							<h4>Blacklist</h4>
+						<div class="preferences-box">
+							<h4>Preferiti</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
 								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)"
 								   href="#"><span class="icon-close"></span></a>
 								<span v-html="preference.name"></span>
 							</div>
 						</div>
+
+						<hr>
 					</div>
 
 
