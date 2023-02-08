@@ -97,7 +97,7 @@ body.woocommerce-account {
 		border: 2px solid $blue;
 		margin: 2px;
 		@include breakpoint(mobile) {
-			margin: 8px 0 0 0;
+			margin: 8px 0 0;
 		}
 
 		&:hover {
@@ -240,22 +240,27 @@ body.woocommerce-account {
 .woocommerce .woocommerce-customer-details .woocommerce-customer-details--phone {
 	padding-left: 0;
 	margin: 16px 0;
+
 	&:before {
 		content: none;
 	}
 }
+
 .woocommerce .woocommerce-customer-details {
 	margin-bottom: 0;
 }
+
 .woocommerce-account {
 	.my-account {
 		&--description {
 			@include font-size(14);
 			margin-bottom: 24px;
+
 			strong {
 				font-weight: 600;
 			}
 		}
+
 		&--minititle {
 			@include clearfix();
 			@include font-size(20);
@@ -266,6 +271,18 @@ body.woocommerce-account {
 			position: relative;
 			@include breakpoint(desktop) {
 				@include font-size(22);
+			}
+
+			&.small {
+				@include font-size(16);
+				margin-bottom: 16px !important;
+				@include breakpoint(desktop) {
+					@include font-size(18);
+				}
+			}
+
+			&.mg-top {
+				margin-top: 32px !important;
 			}
 
 			&::after {
@@ -301,7 +318,6 @@ body.woocommerce-account {
 	margin-top: 0;
 }
 
-
 .table-shadow-relative {
 	position: relative;
 }
@@ -335,6 +351,7 @@ body.woocommerce-account {
 		margin-bottom: 0 !important;
 	}
 }
+
 .woocommerce,
 .woocommerce-columns--addresses {
 	@include breakpoint(mobile) {
@@ -605,15 +622,14 @@ body.woocommerce-account {
 		margin-top: 24px;
 	}
 }
-
-.woocommerce div.shop_table {
-	background: #fff;
-	border: none;
-	padding: 32px 16px;
-	position: relative;
-	border-radius: 0;
-	margin-bottom: 24px;
-}
+// .woocommerce div.shop_table {
+// 	background: #fff;
+// 	border: none;
+// 	padding: 32px 16px;
+// 	position: relative;
+// 	border-radius: 0;
+// 	margin-bottom: 24px;
+// }
 
 body.woocommerce-account {
 	.account-banner {

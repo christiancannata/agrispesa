@@ -13,7 +13,7 @@ function enqueue_box_js()
 {
 	global $wp_query;
 
-	if (isset($wp_query->query_vars['settings-box'])) {
+	if (isset($wp_query->query_vars['personalizza-box'])) {
 
 
 		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
@@ -37,7 +37,7 @@ add_action('wp_enqueue_scripts', 'enqueue_box_js');
 
 function add_settings_box_endpoint()
 {
-	add_rewrite_endpoint('settings-box', EP_ROOT | EP_PAGES);
+	add_rewrite_endpoint('personalizza-box', EP_ROOT | EP_PAGES);
 }
 
 add_action('init', 'add_settings_box_endpoint');
@@ -46,7 +46,7 @@ add_action('init', 'add_settings_box_endpoint');
 function settings_box_query_vars($vars)
 {
 
-	$vars[] = 'settings-box';
+	$vars[] = 'personalizza-box';
 
 	return $vars;
 
@@ -61,7 +61,7 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 function settings_box_link_my_account($items)
 {
 	$items = array_insert_after($items, 'subscriptions', [
-		'settings-box' => 'Personalizza la box'
+		'personalizza-box' => 'Personalizza la box'
 	]);
 	return $items;
 
@@ -98,15 +98,14 @@ function settings_box_content()
 				<div v-for="subscription of subscriptions" class="subscription-box">
 
 					<div class="box-name">
-						<img src="https://picsum.photos/300/300" class="box-image">
 						<div>
-							<h4 class="title" v-html="subscription.name"></h4>
-							<span class="description">Lorem ipsum</span>
+							<h3 class="my-account--minititle" v-html="subscription.name"></h3>
 						</div>
 					</div>
 
 
-					<h3>Titolo</h3>
+					<h4 class="my-account--minititle small">Black list</h4>
+					<p class="subscription-preferences-description">Sei allergico a qualcosa? Non ami i broccoli?<br/>Nessun problema! Seleziona i prodotti che non voi mai ricevere con questo abbonamento.</p>
 					<div class="container-flex-box">
 
 						<div class="right-categories-box">
@@ -132,7 +131,7 @@ function settings_box_content()
 						</div>
 
 						<div class="blacklist-box">
-							<h4>Blacklist</h4>
+							<h4 class="my-account--minititle small">Prodotti che non ami</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_blacklist">
 								<a class="delete_item" @click.prevent="deleteBlacklist(subscription,preference)"
 								   href="#"><span class="icon-close"></span></a>
@@ -141,7 +140,9 @@ function settings_box_content()
 						</div>
 					</div>
 
-					<h3  style="margin-top:30px">Titolo</h3>
+					<h4 class="my-account--minititle small mg-top">Preferiti</h4>
+					<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui, faremo in modo di mandartelo più spesso.</p>
+
 
 					<div class="container-flex-box">
 
@@ -168,7 +169,7 @@ function settings_box_content()
 						</div>
 
 						<div class="preferences-box">
-							<h4>Preferiti</h4>
+							<h4 class="my-account--minititle small">I tuoi prodotti preferiti</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
 								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)"
 								   href="#"><span class="icon-close"></span></a>
@@ -192,4 +193,4 @@ function settings_box_content()
 	<?php
 }
 
-add_action('woocommerce_account_settings-box_endpoint', 'settings_box_content');
+add_action('woocommerce_account_personalizza-box_endpoint', 'settings_box_content');
