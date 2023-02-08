@@ -262,3 +262,24 @@ function trigger_for_ajax_add_to_cart() {
         </script>
     <?php
 }
+
+/**
+ * Redirect users after add to cart.
+ */
+function my_custom_add_to_cart_redirect( $url ) {
+
+	if ( ! isset( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
+		return $url;
+	}
+
+	$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
+
+	// Only redirect products that have the 'box' category
+	if ( has_term( 'box', 'product_cat', $product_id ) ) {
+		$url = WC()->cart->get_cart_url();
+	}
+
+	return $url;
+
+}
+add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
