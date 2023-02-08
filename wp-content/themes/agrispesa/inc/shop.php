@@ -234,6 +234,19 @@ function coupon_free_shipping_customization( $rates, $package ) {
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 add_action( 'woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form', 5 );
 
+
+/* YITH Gift Cards - hide the section for gift card code submission on cart page */
+if ( ! function_exists( 'yith_ywgc_hide_on_cart' ) ) {
+    function yith_ywgc_hide_on_cart( $show_field ) {
+        if ( is_cart() ) {
+            $show_field = false;
+        }
+
+        return $show_field;
+    }
+}
+add_filter( 'yith_gift_cards_show_field', 'yith_ywgc_hide_on_cart' );
+
 //sposta gift card nel checkout
 if ( ! function_exists('ywgc_gift_card_code_form_checkout_hook' ) ){
   function ywgc_gift_card_code_form_checkout_hook( $hook ){
