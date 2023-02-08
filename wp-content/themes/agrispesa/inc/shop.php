@@ -294,3 +294,12 @@ function my_custom_add_to_cart_redirect( $url ) {
 
 }
 add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
+
+add_filter( 'woocommerce_checkout_fields' , 'theme_override_checkout_notes_fields' );
+
+// Modifica label note di consegna
+function theme_override_checkout_notes_fields( $fields ) {
+     $fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa in più? Ad esempio richieste particolari per la consegna. Dicci tutto!';
+     $fields['order']['order_comments']['label'] = 'Note personali';
+     return $fields;
+}

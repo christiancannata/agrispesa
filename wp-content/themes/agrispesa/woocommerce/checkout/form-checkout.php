@@ -43,8 +43,11 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                 ?>
                 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
                 <?php do_action( 'woocommerce_checkout_billing' ); ?>
-				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
-				<?php do_action( 'woocommerce_checkout_payment_hook' ); ?>
+								<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+								<?php do_action( 'woocommerce_checkout_payment_hook' ); ?>
+
+								<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+
                 </form>
 			</div>
 
@@ -61,7 +64,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 			</div>
 		</div>
 
-		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+
 
 	<?php endif; ?>
 

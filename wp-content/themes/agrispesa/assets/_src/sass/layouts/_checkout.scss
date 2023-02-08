@@ -682,6 +682,37 @@ body.woocommerce-cart {
 	}
 }
 
+#order_comments_field {
+	label {
+		@include clearfix();
+		@include font-size(20);
+		color: $black;
+		display: inline-block;
+		font-weight: 600;
+		margin: 0 0 32px !important;
+		position: relative;
+		width: auto;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+		}
+
+		&::after {
+			background: $black;
+			bottom: -3px;
+			content: '';
+			display: block;
+			height: 1px;
+			left: 0;
+			position: absolute;
+			width: 100%;
+		}
+		.optional {
+			display: none;
+		}
+	}
+}
+
+.woocommerce-additional-fields,
 .woocommerce-account-fields,
 .woocommerce-billing-fields,
 .woocommerce-checkout-payment,
