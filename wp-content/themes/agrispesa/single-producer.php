@@ -12,8 +12,10 @@
 			</nav>
 		</div>
 		<?php $thumb_id = get_post_thumbnail_id();
-		$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'full', true);
-		$thumb_url = $thumb_url_array[0]; ?>
+					$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'full', true);
+					$thumb_url = $thumb_url_array[0];
+					$old_image = get_field('produttore_immagine');
+		?>
 
 		<div class="producer-hero">
 			<div class="container-pg">
@@ -23,7 +25,11 @@
 
 		<div class="producer-content">
 			<div class="container-xsmall">
-				<img src="<?php echo $thumb_url; ?>" alt="<?php echo the_title(); ?>" class="producer-hero--image" />
+				<?php if(has_post_thumbnail()): ?>
+						<img src="<?php echo $thumb_url; ?>" alt="<?php echo the_title(); ?>" class="producer-hero--image" />
+				<?php elseif($old_image): ?>
+						<img src="<?php echo get_template_directory_uri() . '/assets/images/produttori/' . $old_image; ?>" alt="<?php echo the_title(); ?>" class="producer-hero--image" />
+				<?php endif; ?>
 				<?php echo the_content(); ?>
 			</div>
 		</div>

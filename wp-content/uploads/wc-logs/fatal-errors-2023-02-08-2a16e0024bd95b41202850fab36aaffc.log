@@ -1,0 +1,12 @@
+2023-02-08T20:10:52+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 30
+
+2023-02-08T20:11:04+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 30
+
+2023-02-08T20:15:52+00:00 CRITICAL syntax error, unexpected 'endwhile' (T_ENDWHILE), expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 107
+
+2023-02-08T20:15:55+00:00 CRITICAL syntax error, unexpected 'endwhile' (T_ENDWHILE), expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 107
+
+2023-02-08T20:16:01+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 31
+
+2023-02-08T20:16:04+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 31
+
