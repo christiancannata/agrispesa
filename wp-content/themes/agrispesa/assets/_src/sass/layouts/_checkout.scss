@@ -94,7 +94,8 @@ body.woocommerce-cart {
 }
 
 body.woocommerce-checkout {
-	.woocommerce-info, .woocommerce-message{
+	.woocommerce-info,
+	.woocommerce-message {
 		display: none;
 	}
 }
@@ -119,10 +120,12 @@ body.woocommerce-checkout {
 
 .happy-price {
 	color: $red !important;
+
 	a {
 		color: $muted;
 	}
 }
+
 .ywgc_enter_code > div {
 	margin: 0;
 }
@@ -135,6 +138,7 @@ body.woocommerce-checkout {
 	margin: -30px 0 0;
 	padding: 24px 16px 8px;
 }
+
 .my-coupon {
 	padding: 24px 16px 8px;
 }
@@ -188,7 +192,6 @@ body.woocommerce-checkout {
 		width: 100%;
 	}
 }
-
 
 .checkout {
 	&--flex {
@@ -344,6 +347,7 @@ body.woocommerce-checkout {
 .woocommerce-sommair-end {
 	font-weight: 600;
 }
+
 .sommair {
 	&--totals {
 		padding: 0 0 24px;
@@ -409,10 +413,9 @@ body.woocommerce-checkout {
 			input {
 				display: none;
 			}
-			.woocommerce-SavedPaymentMethods-saveNew {
-				label {
 
-				}
+			.woocommerce-SavedPaymentMethods-saveNew {
+				label {}
 			}
 
 			label {
@@ -455,11 +458,13 @@ body.woocommerce-checkout {
 				border-color: $orange;
 				color: $white;
 			}
+
 			&:not(.payment_method_woocommerce_payments) {
 				.payment_box {
 					display: none !important;
 				}
 			}
+
 			&.payment_method_satispay,
 			&.payment_method_woocommerce_payments {
 				& > label {
@@ -591,8 +596,21 @@ body.woocommerce-checkout {
 	}
 }
 
+.woocommerce-gift-card-section,
+.woocommerce-coupons-section {
+	.close-notice,
+	.woocommerce-error {
+		display: none;
+	}
+}
+
 .woocommerce ul#shipping_method li {
 	margin: 0 !important;
+
+	label {
+		@include font-size(16);
+		font-weight: 300;
+	}
 }
 
 .woocommerce-shipping-calculator {

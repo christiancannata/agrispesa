@@ -51,7 +51,7 @@ global $woocommerce;
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<div class="sommair--totals--flex cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
 				<div class="sommair--totals--sx">
-					<span class="small">Coupon</span>
+					<span class="small">Codice sconto</span>
 
 					<?php
 					 if(!$coupon->get_free_shipping()):?>
@@ -144,7 +144,7 @@ global $woocommerce;
 						</div>
 					</div>
 
-					<?php do_action( 'ywgc_gift_card_checkout_cart_table', $code, $amount ); ?>
+					<?php //do_action( 'ywgc_gift_card_checkout_cart_table', $code, $amount ); ?>
 
 					<?php
 				endforeach;

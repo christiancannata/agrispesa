@@ -164,10 +164,10 @@ function soChangeProductsTitle() {
 
 
 //Free shipping label
-//add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2 );
 function add_free_shipping_label( $label, $method ) {
     if ( $method->cost == 0 ) {
-        $label = 'Spedizione gratuita'; //not quite elegant hard coded string
+        $label = 'Gratuita'; //not quite elegant hard coded string
     }
     return $label;
 }
@@ -182,6 +182,7 @@ function coupon_free_shipping_customization( $rates, $package ) {
         $coupon = new WC_Coupon($coupon_code);
         if($coupon->get_free_shipping()){
             $has_free_shipping = true;
+
             break;
         }
     }
@@ -196,7 +197,7 @@ function coupon_free_shipping_customization( $rates, $package ) {
             // For other shipping methods
             else {
                 // Append rate label titles (free)
-                $rates[$rate_key]->label .= ' ' . __('(free)', 'woocommerce');
+                $rates[$rate_key]->label .= ' ' . __('Gratuita', 'woocommerce');
 
                 // Set rate cost
                 $rates[$rate_key]->cost = 0;

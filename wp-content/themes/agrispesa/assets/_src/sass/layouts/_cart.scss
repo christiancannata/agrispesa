@@ -331,6 +331,9 @@ body.woocommerce-checkout {
 		@include border-radius(16px);
 		margin-bottom: 32px !important;
 	}
+	table.shop_table {
+		border: none !important;
+	}
 	// &:after {
 	// 	background: linear-gradient(-45deg, transparent 16px, $panna 0), linear-gradient(45deg, transparent 16px, $panna 0);
 	// 	background-repeat: repeat-x;
