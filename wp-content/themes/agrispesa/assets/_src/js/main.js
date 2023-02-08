@@ -51,53 +51,52 @@ scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
 minimumAmount();
-//giftCardCheckout();
+giftCardCheckout();
 
 //changeShippingLabel();
 
 
 
-// function giftCardCheckout() {
-//   jQuery('button[name="apply_coupon"]').click(function (e) {
-//         e.preventDefault();
-//         let $form = jQuery(this).closest('form');
-//
-//         if ($form.is('.processing')) {
-//             return false;
-//         }
-//
-//         $form.addClass('processing').block({
-//             message: null,
-//             overlayCSS: {
-//                 background: '#fff',
-//                 opacity: 0.6
-//             }
-//         });
-//
-//         let data = {
-//             security: wc_checkout_params.apply_coupon_nonce,
-//             coupon_code: $form.find('input[name="coupon_code"]').val()
-//         };
-//
-//         jQuery.ajax({
-//             type: 'POST',
-//             url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
-//             data: data,
-//             success: function (code) {
-//                 jQuery('.woocommerce-error, .woocommerce-message').remove();
-//                 $form.removeClass('processing').unblock();
-//                 if (code) {
-//                     jQuery(".coupon-form").before(code)
-//                     // $('html,body').animate({ scrollTop: 0 }, 'slow');
-//                     jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
-//                     jQuery(document.body).trigger('update_checkout', {update_shipping_method: false});
-//                 }
-//             },
-//             dataType: 'html'
-//         });
-//
-//     })
-// }
+function giftCardCheckout() {
+  jQuery('button[name="apply_coupon"]').click(function (e) {
+        e.preventDefault();
+        let $form = jQuery(this).closest('form');
+
+        if ($form.is('.processing')) {
+            return false;
+        }
+
+        $form.addClass('processing').block({
+            message: null,
+            overlayCSS: {
+                background: '#fff',
+                opacity: 0.6
+            }
+        });
+
+        let data = {
+            security: wc_checkout_params.apply_coupon_nonce,
+            coupon_code: $form.find('input[name="coupon_code"]').val()
+        };
+
+        jQuery.ajax({
+            type: 'POST',
+            url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+            data: data,
+            success: function (code) {
+                jQuery('.woocommerce-error, .woocommerce-message').remove();
+                $form.removeClass('processing').unblock();
+                if (code) {
+                    jQuery(".coupon-form").before(code)
+                    jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+                    jQuery(document.body).trigger('update_checkout', {update_shipping_method: false});
+                }
+            },
+            dataType: 'html'
+        });
+
+    })
+}
 
 function minimumAmount() {
   if (jQuery('.minimum-amount-advice').length) {
