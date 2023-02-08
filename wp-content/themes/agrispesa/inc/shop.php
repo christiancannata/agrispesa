@@ -173,7 +173,7 @@ function add_free_shipping_label( $label, $method ) {
 }
 
 //coupon con spedizione gratuita
-//add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
+add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
 function coupon_free_shipping_customization( $rates, $package ) {
     $has_free_shipping = false;
 
@@ -192,8 +192,6 @@ function coupon_free_shipping_customization( $rates, $package ) {
             if( $rate->method_id == 'free_shipping'){
                 unset($rates[$rate_key]);
             }
-            // AIUTO CHRISTIAN: un altro if se è applicatanuna gift card
-
 
             // For other shipping methods
             else {
