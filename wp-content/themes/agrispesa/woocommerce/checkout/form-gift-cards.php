@@ -29,7 +29,7 @@ if ( 'yes' !== $direct_display ) :
 		} else {
 			$icon = ''; }
 
-		wc_print_notice( $icon . get_option( 'ywgc_text_before_gc_form', esc_html__( '', 'yith-woocommerce-gift-cards' ) ) . '<span class="icon-heart gift-card-icon-heart"></span> Hai ricevuto una Gift Card? <a href="#" class="ywgc-show-giftcard">' . get_option( 'ywgc_link_text_before_gc_form', esc_html__( 'Inserisci il codice!', 'yith-woocommerce-gift-cards' ) ) . '</a>', 'notice' );
+		wc_print_notice( $icon . get_option( 'ywgc_text_before_gc_form', esc_html__( '', 'yith-woocommerce-gift-cards' ) ) . '<span class="icon-heart gift-card-icon-heart"></span> Hai ricevuto una Carta Regalo? <a href="#" class="ywgc-show-giftcard">' . get_option( 'ywgc_link_text_before_gc_form', esc_html__( 'Inserisci il codice!', 'yith-woocommerce-gift-cards' ) ) . '</a>', 'notice' );
 		?>
 
 	</div>
@@ -63,7 +63,7 @@ endif;
 
 		<div class="coupon-form--sx">
 			<input type="text" name="gift_card_code" class="input-text"
-				placeholder="<?php echo esc_attr( apply_filters( 'ywgc_checkout_box_placeholder', _x( 'Codice della Gift Card', 'Apply gift card', 'yith-woocommerce-gift-cards' ) ) ); ?>"
+				placeholder="<?php echo esc_attr( apply_filters( 'ywgc_checkout_box_placeholder', _x( 'Inserisci il codice della Carta Regalo', 'Apply gift card', 'yith-woocommerce-gift-cards' ) ) ); ?>"
 				id="giftcard_code" value="" />
 		</div>
 		<div class="coupon-form--dx">

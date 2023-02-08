@@ -1764,7 +1764,7 @@ function consegne_ordini_pages()
 						<option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
 						<option value="fabbisogno">Fabbisogno</option>
 						<option value="confezionamento">Stampa per confezionamento</option>
-						<option value="riepilogo_spedizione">Riepilogo di spedizione</option>
+						<option value="riepilogo_spedizione">Riepilogo di consegna</option>
 						<option value="etichette">Etichette</option>
 					</select>
 

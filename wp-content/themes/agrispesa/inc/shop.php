@@ -172,7 +172,7 @@ function add_free_shipping_label( $label, $method ) {
     return $label;
 }
 
-//coupon con spedizione gratuita
+//coupon con consegna gratuita
 add_filter( 'woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2 );
 function coupon_free_shipping_customization( $rates, $package ) {
     $has_free_shipping = false;
@@ -232,7 +232,6 @@ function coupon_free_shipping_customization( $rates, $package ) {
 //sposta coupon nel checkout
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 add_action( 'woocommerce_review_order_before_payment', 'woocommerce_checkout_coupon_form', 5 );
-
 
 /* YITH Gift Cards - hide the section for gift card code submission on cart page */
 if ( ! function_exists( 'yith_ywgc_hide_on_cart' ) ) {

@@ -29,7 +29,7 @@ $calculator_text          = '';
 
 	<div class="sommair--totals--flex shipping">
 		<div class="sommair--totals--sx">
-			<span class="small">Spedizione</span>
+			<span class="small">Consegna</span>
 		</div>
 		<div class="sommair--totals--dx">
 
@@ -37,27 +37,19 @@ $calculator_text          = '';
 			<ul id="shipping_method" class="woocommerce-shipping-methods shipping-mode-cart">
 				<?php foreach ( $available_methods as $method ) : ?>
 
-					<li <?php if($method->label == "Spedizione gratuita") { echo 'class="free-shipping-li"'; }?>>
+					<li <?php if($method->label == "Consegna gratuita") { echo 'class="free-shipping-li"'; }?>>
 						<?php
 						if ( 1 < count( $available_methods ) ) {
 							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 						}
-						if($method->label == "Spedizione gratuita") {
-							printf( '<label for="shipping_method_%1$s_%2$s">Spedizione</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+						if($method->label == "Consegna gratuita") {
+							printf( '<label for="shipping_method_%1$s_%2$s">Consegna</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<label for="shipping_method_%1$s_%2$s" class="shipping-mode-cart--label">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
 						}
 						do_action( 'woocommerce_after_shipping_rate', $method, $index );
-
-						// if($method->label == "Spedizione gratuita") {
-						//
-						// 	echo '<span class="amount discount-shipping">';
-						// 	echo '<span class="discount-shipping--old">€5</span>';
-						// 	echo '<span class="discount-shipping--free">GRATIS</span>';
-						// 	echo '</span>';
-						// }
 						?>
 					</li>
 

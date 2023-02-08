@@ -60,8 +60,8 @@ $week = null;
 
 		?>
 		<table>
-			<td><h5>Nr. Spedizione: </h5></td>
-			<td><h5>Data spedizione: <?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></h5></td>
+			<td><h5>Nr. Consegna: </h5></td>
+			<td><h5>Data consegna: <?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></h5></td>
 			<td><h5>Settimana: <?php echo $orders[0]->week; ?></h5></td>
 			<td><h5>Ubicazione: <?php echo $group->post_title; ?></h5></td>
 		</table>

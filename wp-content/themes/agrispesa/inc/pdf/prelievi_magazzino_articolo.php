@@ -105,7 +105,7 @@ ob_start();
 						<th><b>Tipo Spesa</b></th>
 						<th><b>Cliente</b></th>
 						<th><b>Cod ubicazione</b></th>
-						<th><b>Data Spedizione</b></th>
+						<th><b>Data Consegna</b></th>
 						<th><b>U.M.</b></th>
 						<th><b>Quantità</b></th>
 						</thead>

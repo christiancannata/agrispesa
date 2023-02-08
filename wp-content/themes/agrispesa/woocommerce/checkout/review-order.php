@@ -56,14 +56,14 @@ global $woocommerce;
 					<?php
 					 if(!$coupon->get_free_shipping()):?>
 					 <br/>
-					<span class="gift-car-number"><?php echo $coupon->code;?></span>
+					<span class="gift-car-number"><?php echo $coupon->get_code();?></span>
 					<?php endif;?>
 				</div>
 				<div class="sommair--totals--dx">
 					<?php
 					 if($coupon->get_free_shipping()):?>
-						<span><?php echo $coupon->code; ?></span><br/>
-						<a class="woocommerce-remove-coupon" href="<?php echo WC()->cart->remove_coupon( $coupon->code ); ?>">[Elimina]</a>
+						<span><?php echo $coupon->get_code(); ?></span><br/>
+						<a class="woocommerce-remove-coupon" href="<?php echo WC()->cart->remove_coupon( $coupon->get_code() ); ?>">[Elimina]</a>
 					<?php else:?>
 						<span class="happy-price"><?php wc_cart_totals_coupon_html( $coupon ); ?></span>
 					<?php endif;?>
@@ -71,6 +71,39 @@ global $woocommerce;
 				</div>
 			</div>
 		<?php endforeach; ?>
+
+		<?php if ( isset( WC()->cart->applied_gift_cards ) ) {
+
+				foreach ( WC()->cart->applied_gift_cards as $code ) :
+
+					$label  = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( 'Carta Regalo ', 'yith-woocommerce-gift-cards' ) ), $code );
+					$number = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( '', 'yith-woocommerce-gift-cards' ) . '' . $code ), $code );
+					$amount = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ? - WC()->cart->applied_gift_cards_amounts[ $code ] : 0;
+					$value  = wc_price( $amount ) . ' <a href="' . esc_url(
+						add_query_arg(
+							'remove_gift_card_code',
+							rawurlencode( $code ),
+							defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url()
+						)
+					) .
+							'" class="ywgc-remove-gift-card " data-gift-card-code="' . esc_attr( $code ) . '">' . apply_filters( 'ywgc_remove_gift_card_text', esc_html__( '[Elimina]', 'yith-woocommerce-gift-cards' ) ) . '</a>';
+					?>
+
+					<div class="sommair--totals--flex">
+						<div class="sommair--totals--sx">
+							<span class="small"><?php echo wp_kses( $label, 'post' ); ?></span><br/>
+							<span class="gift-car-number"><?php echo wp_kses( $number, 'post' ); ?></span>
+						</div>
+						<div class="sommair--totals--dx happy-price">
+							<span><?php echo wp_kses( $value, 'post' ); ?></span>
+						</div>
+					</div>
+
+					<?php //do_action( 'ywgc_gift_card_checkout_cart_table', $code, $amount ); ?>
+
+					<?php
+				endforeach;
+			}?>
 
 		<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
 
@@ -81,6 +114,7 @@ global $woocommerce;
 			<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
 
 		<?php endif; ?>
+
 
 		<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
 			<div class="sommair--totals--flex fee">
@@ -117,41 +151,9 @@ global $woocommerce;
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ( isset( WC()->cart->applied_gift_cards ) ) {
-
-				foreach ( WC()->cart->applied_gift_cards as $code ) :
-
-					$label  = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( 'Gift card ', 'yith-woocommerce-gift-cards' ) ), $code );
-					$number = apply_filters( 'yith_ywgc_cart_totals_gift_card_label', esc_html( __( '', 'yith-woocommerce-gift-cards' ) . '' . $code ), $code );
-					$amount = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ? - WC()->cart->applied_gift_cards_amounts[ $code ] : 0;
-					$value  = wc_price( $amount ) . ' <a href="' . esc_url(
-						add_query_arg(
-							'remove_gift_card_code',
-							rawurlencode( $code ),
-							defined( 'WOOCOMMERCE_CHECKOUT' ) ? wc_get_checkout_url() : wc_get_cart_url()
-						)
-					) .
-							'" class="ywgc-remove-gift-card " data-gift-card-code="' . esc_attr( $code ) . '">' . apply_filters( 'ywgc_remove_gift_card_text', esc_html__( '[Remove]', 'yith-woocommerce-gift-cards' ) ) . '</a>';
-					?>
-
-					<div class="sommair--totals--flex">
-						<div class="sommair--totals--sx">
-							<span class="small"><?php echo wp_kses( $label, 'post' ); ?></span><br/>
-							<span class="gift-car-number"><?php echo wp_kses( $number, 'post' ); ?></span>
-						</div>
-						<div class="sommair--totals--dx happy-price">
-							<span><?php echo wp_kses( $value, 'post' ); ?></span>
-						</div>
-					</div>
-
-					<?php //do_action( 'ywgc_gift_card_checkout_cart_table', $code, $amount ); ?>
-
-					<?php
-				endforeach;
-			}?>
-
-		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
-
+		<div class="hide-in-checkout">
+			<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+		</div>
 			<div class="sommair--totals--flex woocommerce-sommair-end">
 				<div class="sommair--totals--sx">
 					<span class="bold"><?php esc_html_e( 'Total', 'woocommerce' ); ?></span>
@@ -167,12 +169,8 @@ global $woocommerce;
 	</div>
 	<div class="checkout--preview--bottom">
 		<div class="checkout--preview--items mg-t">
-			<span class="is-title"><span class="icon-check is-icon"></span>Spedizione e consegna</span>
+			<span class="is-title"><span class="icon-check is-icon"></span>Consegna</span>
 			<span class="is-description">Ai nostri contadini diamo il tempo di raccogliere i prodotti che hai ordinato. Per questo non riceverai la scatola in 24 ore, ma lunedì o mercoledì prossimo; a seconda di dove vivi.</span>
-		</div>
-		<div class="checkout--preview--items mg-t">
-			<span class="is-title"><span class="icon-check is-icon"></span>Pagamento e fattura</span>
-			<span class="is-description">Oltre alla conferma d'ordine, provederemo a mandarti la fattura una volta confezionata la scatola. Garantiamo pagamenti sicuri.</span>
 		</div>
 	</div>
 </div>
