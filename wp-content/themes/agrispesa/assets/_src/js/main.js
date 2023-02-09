@@ -1,4 +1,6 @@
 /* global WPURL:readonly */
+/* global wc_checkout_params:readonly */
+
 window.baseurl = WPURL.siteurl
 
 
@@ -56,46 +58,45 @@ giftCardCheckout();
 //changeShippingLabel();
 
 
-
 function giftCardCheckout() {
   jQuery('button[name="apply_coupon"]').click(function (e) {
-        e.preventDefault();
-        let $form = jQuery(this).closest('form');
+    e.preventDefault();
+    let $form = jQuery(this).closest('form');
 
-        if ($form.is('.processing')) {
-            return false;
+    if ($form.is('.processing')) {
+      return false;
+    }
+
+    $form.addClass('processing').block({
+      message: null,
+      overlayCSS: {
+        background: '#fff',
+        opacity: 0.6
+      }
+    });
+
+    let data = {
+      security: wc_checkout_params.apply_coupon_nonce,
+      coupon_code: $form.find('input[name="coupon_code"]').val()
+    };
+
+    jQuery.ajax({
+      type: 'POST',
+      url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+      data: data,
+      success: function (code) {
+        jQuery('.woocommerce-error, .woocommerce-message').remove();
+        $form.removeClass('processing').unblock();
+        if (code) {
+          jQuery(".coupon-form").before(code)
+          jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+          jQuery(document.body).trigger('update_checkout', {update_shipping_method: false});
         }
+      },
+      dataType: 'html'
+    });
 
-        $form.addClass('processing').block({
-            message: null,
-            overlayCSS: {
-                background: '#fff',
-                opacity: 0.6
-            }
-        });
-
-        let data = {
-            security: wc_checkout_params.apply_coupon_nonce,
-            coupon_code: $form.find('input[name="coupon_code"]').val()
-        };
-
-        jQuery.ajax({
-            type: 'POST',
-            url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
-            data: data,
-            success: function (code) {
-                jQuery('.woocommerce-error, .woocommerce-message').remove();
-                $form.removeClass('processing').unblock();
-                if (code) {
-                    jQuery(".coupon-form").before(code)
-                    jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
-                    jQuery(document.body).trigger('update_checkout', {update_shipping_method: false});
-                }
-            },
-            dataType: 'html'
-        });
-
-    })
+  })
 }
 
 function minimumAmount() {
@@ -108,7 +109,7 @@ function minimumAmount() {
 
 function hideGlossarioAlpha() {
   let glossarioElements = jQuery('.glossario--anchor');
-  glossarioElements.each(function(index) {
+  glossarioElements.each(function (index) {
     let alphabet = jQuery('.glossario--link');
     let target = jQuery(this).attr('data-alpha');
 
@@ -126,7 +127,7 @@ function changeShippingLabel() {
 
 function scrollTo() {
 
-  jQuery('.sliding-link').on('click', function(event) {
+  jQuery('.sliding-link').on('click', function (event) {
     let target = jQuery(this.getAttribute('href'));
     let scrollto = target.offset().top - 100
 
@@ -153,22 +154,22 @@ function pressSlider() {
     centerMode: false,
     autoplay: false,
     responsive: [{
-        breakpoint: 1240,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          dots: true,
-          arrows: false
-        }
-      }, {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          dots: true,
-          arrows: false
-        }
-      },
+      breakpoint: 1240,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        dots: true,
+        arrows: false
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        dots: true,
+        arrows: false
+      }
+    },
       {
         breakpoint: 600,
         settings: {
@@ -194,7 +195,7 @@ function pressSlider() {
 
 function closePopup() {
   // Close Popup
-  jQuery('[popup-close]').on('click', function() {
+  jQuery('[popup-close]').on('click', function () {
     let popup_name = jQuery(this).attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
@@ -202,17 +203,17 @@ function closePopup() {
 
 
   // Close Popup When Click Outside
-  jQuery('.popup').on('click', function() {
+  jQuery('.popup').on('click', function () {
     let popup_name = jQuery(this).find('[popup-close]').attr('popup-close');
     jQuery('[popup-name="' + popup_name + '"]').fadeOut(300);
     setCookie('home_popup', 1, 14)
-  }).children().click(function() {
+  }).children().click(function () {
     return false;
   });
 }
 
 function infoAgr() {
-  jQuery('.info_agr--button').on('click', function(e) {
+  jQuery('.info_agr--button').on('click', function (e) {
     e.preventDefault();
     jQuery(this).toggleClass('active');
     jQuery('.info_agr').toggleClass('hide');
@@ -225,7 +226,7 @@ function formGiftCard() {
     jQuery('.woocommerce-breadcrumb').hide();
   }
 
-  jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function() {
+  jQuery('.gift-card-content-editor input,.gift-card-content-editor textarea').on('focus', function () {
     jQuery(this).parent().find('label').addClass('move');
   })
 
@@ -243,14 +244,14 @@ function formGiftCard() {
 }
 
 function closeNotices() {
-  jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function(e) {
+  jQuery('.woocommerce-notices-wrapper .close-notice').on('click', function (e) {
     e.preventDefault();
     jQuery(this).closest('.woocommerce-notices-wrapper').remove();
   });
 }
 
 function showCoupon() {
-  jQuery('.show-coupon').on('click', function(e) {
+  jQuery('.show-coupon').on('click', function (e) {
     e.preventDefault();
     jQuery('.my-coupon').slideToggle();
   });
@@ -262,12 +263,12 @@ function loginForms() {
   let loginForm = jQuery('.check-login-form');
   let registerForm = jQuery('.check-register-form');
 
-  showLogin.on('click', function(e) {
+  showLogin.on('click', function (e) {
     e.preventDefault();
     loginForm.slideToggle();
     registerForm.slideToggle();
   });
-  showRegister.on('click', function(e) {
+  showRegister.on('click', function (e) {
     e.preventDefault();
     loginForm.slideToggle();
     registerForm.slideToggle();
@@ -286,7 +287,7 @@ function hideBreadcrum() {
 
 function footerMenu() {
   if (window.screen.width < 641) {
-    jQuery('.footer--menu--title').on('click', function() {
+    jQuery('.footer--menu--title').on('click', function () {
       jQuery(this).next('.footer--menu--list').slideToggle();
       jQuery(this).find('.footer--menu--title__icon').toggleClass('rotate');
       jQuery(this).closest('.footer-menu').siblings().find('.footer--menu--list').slideUp();
@@ -475,7 +476,7 @@ function faqs() {
 
   let faqTitle = jQuery('.faq__title');
 
-  faqTitle.on('click', function(e) {
+  faqTitle.on('click', function (e) {
     e.preventDefault();
     let description = jQuery(this).next('.faq__description');
     let others = jQuery(this).closest('.faq__item').siblings();
@@ -491,16 +492,16 @@ function faqs() {
 }
 
 function variationToRadio() {
-  jQuery(document).on('change', '.variation-radios input', function() {
-    jQuery('.variation-radios input:checked').each(function(index, element) {
+  jQuery(document).on('change', '.variation-radios input', function () {
+    jQuery('.variation-radios input:checked').each(function (index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');
       jQuery('select[name="' + thisName + '"]').val(thisVal).trigger('change');
     });
   });
-  jQuery(document).on('woocommerce_update_variation_values', function() {
-    jQuery('.variation-radios input').each(function(index, element) {
+  jQuery(document).on('woocommerce_update_variation_values', function () {
+    jQuery('.variation-radios input').each(function (index, element) {
       let $el = jQuery(element);
       let thisName = $el.attr('name');
       let thisVal = $el.attr('value');
@@ -514,9 +515,9 @@ function variationToRadio() {
 
 function quantityInput() {
 
-  jQuery(function($) {
+  jQuery(function ($) {
     if (!String.prototype.getDecimals) {
-      String.prototype.getDecimals = function() {
+      String.prototype.getDecimals = function () {
         let num = jQuery(this),
           match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
         if (!match) {
@@ -526,7 +527,7 @@ function quantityInput() {
       }
     }
     // Quantity "plus" and "minus" buttons
-    jQuery(document.body).on('click', '.product-quantity--plus, .product-quantity--minus', function() {
+    jQuery(document.body).on('click', '.product-quantity--plus, .product-quantity--minus', function () {
       let $qty = jQuery(this).closest('.product-quantity--change').find('.quantity .qty'),
         currentVal = parseFloat($qty.val()),
         max = parseFloat($qty.attr('max')),
@@ -556,11 +557,10 @@ function quantityInput() {
       }
 
 
-      setTimeout(function() {
+      setTimeout(function () {
         jQuery("[name='update_cart']").removeAttr('disabled');
         jQuery("[name='update_cart']").trigger("click");
       }, 500);
-
 
 
     });
@@ -574,7 +574,7 @@ function openSubMenu() {
   let menu = jQuery('.top-user__menu');
 
   if (window.screen.width > 640) {
-    link.on('click', function(e) {
+    link.on('click', function (e) {
       e.preventDefault();
       jQuery(this).toggleClass('active');
       menu.toggleClass('active');
@@ -585,7 +585,7 @@ function openSubMenu() {
 
 function openminiCart() {
   if (window.screen.width > 640) {
-    jQuery(".is-full-cart").on('click',function(e) {
+    jQuery(".is-full-cart").on('click', function (e) {
       e.preventDefault();
       jQuery(".widget_shopping_cart_content").toggleClass('active');
       jQuery('.get-user-menu').removeClass('active');
@@ -595,7 +595,7 @@ function openminiCart() {
 }
 
 function openSearch() {
-  jQuery('.openSearch').on('click', function(e) {
+  jQuery('.openSearch').on('click', function (e) {
     e.preventDefault();
     jQuery('.header--search').addClass('showme');
     jQuery(this).closest('.menu--search').addClass('hideme');
@@ -603,7 +603,7 @@ function openSearch() {
 }
 
 function clearSearch() {
-  jQuery('.delete-search').on('click', function() {
+  jQuery('.delete-search').on('click', function () {
     jQuery('.search-input-field').val('');
   });
 }
@@ -613,7 +613,7 @@ function stickyHeader() {
   let headerH = header.outerHeight();
   let lastScrollTop = 0;
 
-  jQuery(window).on('scroll', function() {
+  jQuery(window).on('scroll', function () {
     let st = jQuery(this).scrollTop();
 
     if (jQuery(document).scrollTop() >= headerH) {
@@ -637,7 +637,7 @@ function stickyHeader() {
 }
 
 function openMenu() {
-  jQuery('.get-menu, .close-menu').on('click', function(e) {
+  jQuery('.get-menu, .close-menu').on('click', function (e) {
     e.preventDefault();
 
     let menu = jQuery('.agr-menu');

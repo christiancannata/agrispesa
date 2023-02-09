@@ -218,7 +218,7 @@ add_action('rest_api_init', function () {
 							$categories[] =
 								[
 									'id' => $sub_category->term_id,
-									'name' => $cat->name . ' > ' . $sub_category->name,
+									'name' => $sub_category->name,
 									'products' => $categoryProducts
 								];
 
@@ -418,6 +418,7 @@ add_action('rest_api_init', function () {
 			$index = array_filter($boxPreferences, function ($product) use ($productId) {
 				return $product['id'] == $productId;
 			});
+
 
 			if (!empty($index)) {
 				$index = array_keys($index);
