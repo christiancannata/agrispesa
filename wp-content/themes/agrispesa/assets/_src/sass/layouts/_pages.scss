@@ -247,7 +247,7 @@
 		&--img {
 			width: 100%;
 			@include breakpoint(desktop) {
-				width: 50%;
+				width: 60%;
 			}
 			@include breakpoint(mobile) {
 				order: 1;
