@@ -3,7 +3,7 @@
 /**
  * Trim zeros in price decimals
  **/
- add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
+ //add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
 
 
 // Change add to cart text on single product page
