@@ -785,14 +785,9 @@
 }
 
 .agr-section {
+	overflow: hidden;
 	&--container {
-		// padding: 80px 120px;
-		// @include breakpoint(container) {
-		// 	padding: 80px 40px;
-		// }
-		// @include breakpoint(tablet) {
-		// 	padding: 32px 20px;
-		// }
+	
 		&.no-mg-top {
 			padding-top: 0;
 		}
