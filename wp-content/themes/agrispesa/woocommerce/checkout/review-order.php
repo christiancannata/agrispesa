@@ -169,8 +169,12 @@ global $woocommerce;
 	</div>
 	<div class="checkout--preview--bottom">
 		<div class="checkout--preview--items mg-t">
-			<span class="is-title"><span class="icon-check is-icon"></span>Consegna</span>
-			<span class="is-description">Ai nostri contadini diamo il tempo di raccogliere i prodotti che hai ordinato. Per questo non riceverai la scatola in 24 ore, ma lunedì o mercoledì prossimo; a seconda di dove vivi.</span>
+			<span class="is-title"><span class="icon-check is-icon"></span>Consegna a domicilio</span>
+			<span class="is-description">
+				Diamo tempo ai contadini di preparare i prodotti che hai ordinato.
+				Per questo riceverai la scatola tra lunedì e mercoledì prossimo: te lo confermeremo in una mail.<br/>
+				In 24 ore l’agricoltura contadina non può lavorare, è facile da capire.
+			</span>
 		</div>
 	</div>
 </div>
