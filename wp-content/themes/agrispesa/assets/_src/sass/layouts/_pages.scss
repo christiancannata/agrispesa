@@ -114,7 +114,6 @@
 			margin: 0 8px;
 		}
 
-
 		.prices-badge {
 			@include horizontal-align();
 			@include border-radius(16px);
@@ -138,7 +137,6 @@
 			@include breakpoint(mobile) {
 				padding-top: 45px;
 			}
-
 		}
 	}
 
@@ -229,7 +227,14 @@
 		padding: 16px 20px;
 		flex-wrap: wrap;
 		@include breakpoint(desktop) {
+			overflow: hidden;
 			padding: 40px 20px;
+			max-width: 1240px;
+			margin: 0 auto;
+		}
+
+		.btn {
+			margin-top: 32px;
 		}
 
 		& > div {
@@ -251,6 +256,8 @@
 			img {
 				width: 100%;
 				display: block;
+				max-width: 500px;
+				margin: 0 auto;
 			}
 		}
 
@@ -266,27 +273,43 @@
 	}
 
 	&--title {
-		@include font-size(32);
-		line-height: 1.4;
-		font-family: $font-title;
-		font-weight: 900;
 		margin: 0 0 16px;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			@include font-size(32);
+			line-height: 1.4;
+			font-family: $font-title;
+			font-weight: 900;
+			@include breakpoint(desktop) {
+				@include font-size(40);
+				margin: 0 0 24px;
+			}
+		}
 		@include breakpoint(desktop) {
-			@include font-size(40);
 			margin: 0 0 24px;
 		}
 	}
 
 	&--description {
-		@include font-size(18);
-		line-height: 1.4;
-		@include breakpoint(desktop) {
-			@include font-size(22);
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			@include font-size(18);
+			line-height: 1.4;
+			@include breakpoint(desktop) {
+				@include font-size(22);
+			}
 		}
-	}
-
-	.btn {
-		margin-top: 32px;
 	}
 }
 

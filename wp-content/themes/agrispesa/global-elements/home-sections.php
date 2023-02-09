@@ -4,6 +4,7 @@ if( have_rows('agr_sections') ):
     while( have_rows('agr_sections') ) : the_row();
     $type = get_sub_field('agr_sections_wide');
     $align = get_sub_field('agr_sections_align'); //Allineamento griglia
+    $small_columns = get_sub_field('agr_sections_small_columns');
 
     $title = get_sub_field('agr_sections_title');
     $text = get_sub_field('agr_sections_text');
@@ -146,7 +147,52 @@ if( have_rows('agr_sections') ):
     <?php endif; ?>
 <?php elseif($type == 'columns'): ?>
 
-  <?php if($no_images):?>
+  <?php if($small_columns):?>
+    <?php if($align): ?>
+      <div class="how-works-page--item">
+  			<div class="how-works-page--item--img" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
+  				<img src="<?php echo $image; ?>" alt="<?php echo strip_tags($title); ?>" />
+  			</div>
+  			<div class="how-works-page--item--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
+  				<div class="how-works-page--title">
+            <?php echo $title; ?>
+          </div>
+  				<div class="how-works-page--description">
+            <?php echo $text; ?>
+          </div>
+          <?php if($show_buttons): ?>
+            <?php if($iscategory): ?>
+              <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+            <?php else: ?>
+              <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+            <?php endif;?>
+          <?php endif;?>
+  			</div>
+  		</div>
+    <?php else: ?>
+      <div class="how-works-page--item">
+  			<div class="how-works-page--item--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
+          <div class="how-works-page--title">
+            <?php echo $title; ?>
+          </div>
+  				<div class="how-works-page--description">
+            <?php echo $text; ?>
+          </div>
+          <?php if($show_buttons): ?>
+            <?php if($iscategory): ?>
+              <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+            <?php else: ?>
+              <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+            <?php endif;?>
+          <?php endif;?>
+  			</div>
+  			<div class="how-works-page--item--img" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
+  				<img src="<?php echo $image; ?>" alt="<?php echo strip_tags($title); ?>" />
+  			</div>
+  		</div>
+    <?php endif; ?>
+
+  <?php elseif($no_images):?>
     <section class="agr-section agr-section--right">
   		<div class="agr-section--flex">
   			<div class="agr-section--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
