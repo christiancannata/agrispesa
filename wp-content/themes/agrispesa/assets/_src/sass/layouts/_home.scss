@@ -452,8 +452,9 @@
 	margin: 0 auto;
 	max-width: 100%;
 	padding: 0 120px;
-	body.single-product &,
-	body.single-post & {
+
+	body.single-post &,
+	body.single-product & {
 		margin-bottom: 50px;
 		@include breakpoint(mobile) {
 			margin-bottom: 32px;
@@ -651,7 +652,6 @@
 	@include breakpoint(tablet) {
 		padding: 0 20px;
 	}
-
 
 	&--content {
 		@include border-radius(32px 32px 8px 8px);
@@ -854,7 +854,7 @@
 				}
 			}
 
-			.main-img {
+			.main-img.rounded {
 				@include border-radius(50%);
 				width: 500px;
 				@include breakpoint(container) {
@@ -929,31 +929,48 @@
 	}
 
 	&--title {
-		@include font-size(32);
-		line-height: 1;
 		margin: 0 0 24px;
 		position: relative;
-		font-weight: 900;
-		font-family: $font-title;
-		@include breakpoint(desktop) {
-			@include font-size(50);
-		}
-		@include breakpoint(container) {
-			@include font-size(45);
-		}
 		@include breakpoint(mobile) {
-			@include font-size(32);
 			margin: 0 0 16px;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			@include font-size(32);
+			line-height: 1;
+			font-weight: 900;
+			font-family: $font-title;
+			@include breakpoint(desktop) {
+				@include font-size(50);
+			}
+			@include breakpoint(container) {
+				@include font-size(45);
+			}
+			@include breakpoint(mobile) {
+				@include font-size(32);
+			}
 		}
 	}
 
 	&--subtitle {
-		@include font-size(18);
-		line-height: 1.3;
 		margin: 32px 0;
 		@include breakpoint(desktop) {
-			@include font-size(22);
 			margin: 42px 0;
+		}
+	}
+
+	&--subtitle,
+	&--subtitle p {
+		@include font-size(18);
+		line-height: 1.3;
+		@include breakpoint(desktop) {
+			@include font-size(22);
 		}
 	}
 }

@@ -2,8 +2,9 @@
 if( have_rows('agr_sections') ):
   echo '<div class="agr-section--container">';
     while( have_rows('agr_sections') ) : the_row();
-    $wide = get_sub_field('agr_sections_wide');
+    $type = get_sub_field('agr_sections_wide');
     $align = get_sub_field('agr_sections_align'); //Allineamento griglia
+
     $title = get_sub_field('agr_sections_title');
     $text = get_sub_field('agr_sections_text');
     $show_buttons = get_sub_field('agr_sections_show_buttons');
@@ -11,18 +12,41 @@ if( have_rows('agr_sections') ):
     $iscategory = get_sub_field('agr_sections_iscategory');
     $url = get_sub_field('agr_sections_url');
     $url_category = get_sub_field('agr_sections_url_category');
-    $image = get_sub_field('agr_sections_image');
-    $mini_image = get_sub_field('agr_sections_mini_image');
     $show_colors = get_sub_field('agr_sections_showcolors');
     $background_color = get_sub_field('agr_sections_background');
     $color = get_sub_field('agr_sections_text_color');
     $btn_secondary = get_sub_field('agr_sections_btn_secondary');
+
+    $title_second = get_sub_field('agr_sections_title_second');
+    $text_second = get_sub_field('agr_sections_text_second');
+    $show_buttons_second = get_sub_field('agr_sections_show_buttons_second');
+    $cta_second = get_sub_field('agr_sections_cta_second');
+    $iscategory_second = get_sub_field('agr_sections_iscategory_second');
+    $url_second = get_sub_field('agr_sections_url_second');
+    $url_category_second = get_sub_field('agr_sections_url_category_second');
+    $show_colors_second = get_sub_field('agr_sections_showcolors_second');
+    $background_color_second = get_sub_field('agr_sections_background_second');
+    $color_second = get_sub_field('agr_sections_text_color_second');
+    $btn_secondary_second = get_sub_field('agr_sections_btn_secondary_second');
+
+    $image = get_sub_field('agr_sections_image');
+    $mini_image = get_sub_field('agr_sections_mini_image');
+    $no_images = get_sub_field('agr_sections_noimages');
+    $video_file = get_sub_field('agr_sections_video_file');
     $link = get_term_link( $url_category, 'product_cat' );
-    if($color == 'nero') {
+
+    if($color == 'nero' ) {
       $text_color = '#343535';
     } else {
       $text_color = '#e5d7c8';
     }
+
+    if($color_second == 'nero' ) {
+      $text_color_second = '#343535';
+    } else {
+      $text_color_second = '#e5d7c8';
+    }
+
     if ($show_colors) {
       $background = get_sub_field('agr_sections_background_custom');
     } else {
@@ -43,8 +67,30 @@ if( have_rows('agr_sections') ):
         $text_color = "#343535";
       }
     }
+
+    if ($show_colors_second) {
+      $background_second = get_sub_field('agr_sections_background_custom_second');
+    } else {
+      if($background_color_second == 'orange') {
+        $background_second = "#e8532b";
+        $text_color_second = "#e5d7c8";
+      } else if($background_color_second == 'green') {
+        $background_second = "#069460";
+        $text_color_second = "#e5d7c8";
+      } else if($background_color_second == 'blue') {
+        $background_second = "#3c21ff";
+        $text_color_second = "#e5d7c8";
+      } else if($background_color_second == 'brown') {
+        $background_second = "#765341";
+        $text_color_second = "#e5d7c8";
+      } else if($background_color_second == 'beige') {
+        $background_second = "#e5d7c8";
+        $text_color_second = "#343535";
+      }
+    }
     ?>
-<?php if($wide): ?>
+<?php if($type == 'wide'): ?>
+    <?php if($align): ?>
 
     <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
       <div class="agr-section--wide" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
@@ -53,12 +99,12 @@ if( have_rows('agr_sections') ):
           <?php if($mini_image): ?>
             <img src="<?php echo $mini_image; ?>" class="mini-img" alt="<?php echo strip_tags($title); ?>" />
           <?php endif;?>
-          <img src="<?php echo $image; ?>" class="main-img" alt="<?php echo strip_tags($title); ?>" />
+          <img src="<?php echo $image; ?>" class="main-img rounded" alt="<?php echo strip_tags($title); ?>" />
         </div>
       <div class="agr-section--text">
         <div class="agr-section--text--content">
-          <h3 class="agr-section--title"><?php echo $title; ?></h3>
-          <p class="agr-section--subtitle"><?php echo $text; ?></p>
+          <div class="agr-section--title"><?php echo $title; ?></div>
+          <div class="agr-section--subtitle"><?php echo $text; ?></div>
           <?php if($show_buttons): ?>
             <?php if($iscategory): ?>
               <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
@@ -71,7 +117,68 @@ if( have_rows('agr_sections') ):
       </div>
       </div>
     </section>
-<?php else: ?>
+    <?php else: ?>
+      <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+        <div class="agr-section--wide" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
+        <div class="agr-section--wide--flex">
+          <div class="agr-section--text">
+            <div class="agr-section--text--content">
+              <div class="agr-section--title"><?php echo $title; ?></div>
+              <div class="agr-section--subtitle"><?php echo $text; ?></div>
+              <?php if($show_buttons): ?>
+                <?php if($iscategory): ?>
+                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                <?php else: ?>
+                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                <?php endif;?>
+              <?php endif;?>
+            </div>
+          </div>
+          <div class="agr-section--image">
+            <?php if($mini_image): ?>
+              <img src="<?php echo $mini_image; ?>" class="mini-img" alt="<?php echo strip_tags($title); ?>" />
+            <?php endif;?>
+            <img src="<?php echo $image; ?>" class="main-img rounded" alt="<?php echo strip_tags($title); ?>" />
+          </div>
+        </div>
+        </div>
+      </section>
+    <?php endif; ?>
+<?php elseif($type == 'columns'): ?>
+
+  <?php if($no_images):?>
+    <section class="agr-section agr-section--right">
+  		<div class="agr-section--flex">
+  			<div class="agr-section--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
+  				<div class="agr-section--text--content">
+            <div class="agr-section--title"><?php echo $title; ?></div>
+            <div class="agr-section--subtitle"><?php echo $text; ?></div>
+            <?php if($show_buttons): ?>
+              <?php if($iscategory): ?>
+                <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+              <?php else: ?>
+                <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+              <?php endif;?>
+            <?php endif;?>
+  				</div>
+  			</div>
+  			<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background_second;?>; color:<?php echo $text_color_second;?>">
+  				<div class="agr-section--text--content">
+            <div class="agr-section--title"><?php echo $title_second; ?></div>
+            <div class="agr-section--subtitle"><?php echo $text_second; ?></div>
+            <?php if($show_buttons_second): ?>
+              <?php if($iscategory_second): ?>
+                <a href="<?php echo $link_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta_second; ?>"><?php echo $cta_second; ?></a>
+              <?php else: ?>
+                <a href="<?php echo $url_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta_second; ?>"><?php echo $cta_second; ?></a>
+              <?php endif;?>
+            <?php endif;?>
+          </div>
+  			</div>
+  		</div>
+  	</section>
+  <?php else: ?>
+
 
     <?php if($align): ?>
         <section class="agr-section agr-section--right" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
@@ -81,8 +188,8 @@ if( have_rows('agr_sections') ):
             </div>
           <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
             <div class="agr-section--text--content">
-              <h3 class="agr-section--title"><?php echo $title; ?></h3>
-              <p class="agr-section--subtitle"><?php echo $text; ?></p>
+              <div class="agr-section--title"><?php echo $title; ?></div>
+              <div class="agr-section--subtitle"><?php echo $text; ?></div>
               <?php if($show_buttons): ?>
                 <?php if($iscategory): ?>
                   <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
@@ -99,8 +206,8 @@ if( have_rows('agr_sections') ):
           <div class="agr-section--flex">
           <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
             <div class="agr-section--text--content">
-              <h3 class="agr-section--title"><?php echo $title; ?></h3>
-              <p class="agr-section--subtitle"><?php echo $text; ?></p>
+              <div class="agr-section--title"><?php echo $title; ?></div>
+              <div class="agr-section--subtitle"><?php echo $text; ?></div>
               <?php if($show_buttons): ?>
                 <?php if($iscategory): ?>
                   <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
@@ -116,7 +223,35 @@ if( have_rows('agr_sections') ):
           </div>
         </section>
       <?php endif; ?>
+<?php endif; ?>
+      <?php elseif($type == 'manifesto'): ?>
 
+        <section class="manifesto--hero">
+      		<div class="manifesto--container">
+            <?php if($title): ?>
+              <div class="manifesto--hero--title">
+                <?php echo $title; ?>
+              </div>
+            <?php endif; ?>
+      				<div class="manifesto--hero--subtitle">
+                <?php echo $text; ?>
+      				</div>
+      		</div>
+      	</section>
+
+        <?php elseif($type == 'full_video'): ?>
+
+          <section class="manifesto--video">
+        		<div class="videoWrapper">
+        			<video width="320" height="240" autoplay loop muted>
+        				<source src="<?php echo $video_file; ?>" type="video/mp4">
+        			</video>
+        		</div>
+        	</section>
+
+        <?php elseif($type == 'full_photo'): ?>
+
+          <section class="manifesto--picture" style="background-image:url(<?php echo $image; ?>);"></section>
 
       <?php endif; ?>
 

@@ -16,15 +16,23 @@
 		}
 
 		&--subtitle {
-			@include font-size(60);
-			font-family: $font-title;
-			font-weight: 900;
-			line-height: 1;
-			@include breakpoint(container) {
-				@include font-size(50);
-			}
-			@include breakpoint(mobile) {
-				@include font-size(36);
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			p {
+				@include font-size(60);
+				font-family: $font-title;
+				font-weight: 900;
+				line-height: 1;
+				@include breakpoint(container) {
+					@include font-size(50);
+				}
+				@include breakpoint(mobile) {
+					@include font-size(36);
+				}
 			}
 
 			br {
@@ -35,7 +43,24 @@
 		}
 	}
 
+	&--picture {
+		content: '';
+		display: block;
+		height: 100vh;
+		width: 100%;
+		background-repeat: no-repeat;
+		background-position: center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		@include breakpoint(mobile) {
+			height: 60vh;
+		}
+	}
+
 	&--video {
+		margin-top: -40px;
 		margin-bottom: -40px;
 		position: relative;
 		z-index: -1;

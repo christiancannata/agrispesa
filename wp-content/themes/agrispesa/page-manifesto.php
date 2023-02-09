@@ -6,56 +6,8 @@ get_header(); ?>
 
 <div class="wrapper" id="index-wrapper">
 
-
-	<section class="manifesto--hero">
-		<div class="manifesto--container">
-				<h1 class="manifesto--hero--title">Manifesto</h1>
-				<h2 class="manifesto--hero--subtitle">
-					C’è ancora un’agricoltura contadina diffusa<br /> in tutte le regioni d’Italia.<br/>
-					Si fonda sul lavoro di donne e uomini che in prima persona coltivano la terra e allevano gli animali, rispettandone caratteristiche e tempi di crescita.
-				</h2>
-		</div>
-	</section>
-
-	<section class="manifesto--video">
-		<div class="videoWrapper">
-			<video width="320" height="240" autoplay loop muted>
-				<source src="<?php echo get_template_directory_uri(); ?>/assets/video/farmer-2.mp4" type="video/mp4">
-			</video>
-		</div>
-	</section>
-
-	<section class="manifesto--hero">
-		<div class="manifesto--container">
-				<h3 class="manifesto--hero--subtitle">
-					In un mondo che si muove veloce, in cui siamo abituati a ricevere qualsiasi prodotto in 24 ore, noi scegliamo di cambiare ritmo: un ritmo più naturale. Più umano.
-				</h3>
-		</div>
-	</section>
-
-	<div class="agr-section--container no-mg-top">
-
-	<section class="agr-section agr-section--right">
-		<div class="agr-section--flex">
-			<div class="agr-section--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50" style="background-color:#e8532b; color:#e5d7c8;">
-				<div class="agr-section--text--content">
-					<h3 class="agr-section--title">Prima l'uomo.<br/>Poi il prodotto.</h3>
-					<p class="agr-section--subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-					<a href="<?php echo esc_url(home_url('/')); ?>produttori" class="btn btn-primary" title="Conosci i nostri produttori">Conosci i nostri produttori</a>
-
-				</div>
-			</div>
-			<div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50" style="background-color:#765341; color:#e5d7c8;">
-				<div class="agr-section--text--content">
-					<h3 class="agr-section--title">Il ciclo della natura <br/>e degli animali.</h3>
-					<p class="agr-section--subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-					<a href="<?php echo esc_url(home_url('/')); ?>negozio" class="btn btn-primary" title="Scopri i prodotti">Scopri i prodotti</a>
-				</div>
-			</div>
-		</div>
-	</section>
-</div>
-
+	<?php get_template_part( 'global-elements/home', 'sections' ); ?>
+	
 
 	<section class="sec-home sec-full bg-green line-white">
 		<div class="container-pg">
