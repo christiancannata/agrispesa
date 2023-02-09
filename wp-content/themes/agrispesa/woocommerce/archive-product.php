@@ -41,7 +41,7 @@ $description = get_the_archive_description();
 					<?php if ( $description ) {
 						echo '<h3 class="big-search--title">'.$description.'</h3>';
 					} else {
-						echo '<h3 class="big-search--title">Il meglio dei nostri prodotti.</h3>';
+						echo '<h3 class="big-search--title">La biodiversità è il nostro futuro.</h3>';
 					} ?>
 
 	    </div>

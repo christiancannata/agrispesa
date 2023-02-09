@@ -51,10 +51,11 @@ get_header(); ?>
 					La capacità di resistere, la volontà, la tenacia mi arrivano da mia madre Pierina, da Lina, da zia Rina, dalla balia Clarin, da Suor Angela Bologna: donne forti che hanno accompagnato la mia crescita, alle quali devo il senso della mia vita.
 				</p>
 				<p class="team--bio--text">
-					<br/>Sono nata il 25 luglio 1953. Mia madre, per qualche calcolo sbagliato, mi attese per undici mesi. Ad Alba la conoscevano tutti, l’anciuèra. Quattro giorni la settimana, per 40 anni, al mercato c’era lei, con tenacia, con le mani rotte dal freddo e dal sale.
+					<br/>Sono nata il 25 luglio 1953. Mia madre, per qualche calcolo sbagliato, mi attese per undici mesi. Ad Alba la conoscevano tutti, l’anciuèra.
+					Quattro giorni la settimana, per 40 anni, al mercato c’era lei, con tenacia, ma soprattutto con un sorriso e un consiglio per ogni persona che dalle Langhe scendeva a far spesa al mercato di Alba. tutti apprezzavano la qualità dei prodotti e del lavoro dell’anciuèra.
 				</p>
 				<p class="team--bio--text">
-					<br/>Il mio nome fu per tutti una sorpresa: avere una bimba era una speranza che la mamma non osava coltivare.
+					<br/>Il mio nome fu per tutti una sorpresa: avere una bimba, in una famiglia che aveva generato tutti maschi, era una speranza che la mamma non osava coltivare.
 				</p>
 				<p class="team--bio--text">
 					<br/>Mi chiamò Elena.
@@ -72,17 +73,19 @@ get_header(); ?>
 		<div class="agr-section--wide--flex">
 			<div class="agr-section--image">
 				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/da-20-anni-2.jpg" class="mini-img" alt="Da 20 anni al servizio della terra" />
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/da-20-anni.jpg" class="main-img" alt="Da 20 anni al servizio della terra" />
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/about/da-20-anni.jpg" class="main-img rounded" alt="Da 20 anni al servizio della terra" />
 			</div>
 		<div class="agr-section--text">
 			<div class="agr-section--text--content">
 				<?php $today = date('Y');
 							$born = 2003;
 							$years = $today - $born;?>
-				<h3 class="agr-section--title">Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.</h3>
-				<p class="agr-section--subtitle">
-					Ne abbiamo viste di tutti colori e di tutte le forme.<br/>Sì, abbiamo fatto la nostra prima consegna a domicilio nel 2003: prima dei social, delle stories, dell'unboxing.<br/>Eppure abbiamo sempre idee freschissime.
-				</p>
+				<div class="agr-section--title">
+					<h3>Da <span class="number"><?php echo $years; ?></span> anni siamo<br class="only-desktop" /> al servizio della terra.</h3>
+				</div>
+				<div class="agr-section--subtitle">
+					<p>Ne abbiamo viste di tutti colori e di tutte le forme.<br/>Sì, abbiamo fatto la nostra prima consegna a domicilio nel 2003: prima dei social, delle stories, dell'unboxing.<br/>Eppure abbiamo sempre idee freschissime.</p>
+				</div>
 				<a href="<?php echo esc_url(home_url('/')); ?>manifesto" class="btn btn-primary" title="Leggi il nostro manifesto">Leggi il nostro manifesto</a>
 
 			</div>
