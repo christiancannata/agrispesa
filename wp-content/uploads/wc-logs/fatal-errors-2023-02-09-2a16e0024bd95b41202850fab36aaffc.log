@@ -6,3 +6,33 @@
 
 2023-02-09T09:38:35+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/global-elements/home-sections.php alla riga 74
 
+2023-02-09T12:50:45+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:50:45+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:50:45+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:50:53+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:51:06+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:51:11+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:51:45+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:53:46+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:54:05+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:55:47+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:56:09+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:56:18+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:56:39+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:56:57+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+
+2023-02-09T12:57:02+00:00 CRITICAL syntax error, unexpected 'function' (T_FUNCTION) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 310
+

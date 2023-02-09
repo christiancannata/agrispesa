@@ -303,3 +303,11 @@ function theme_override_checkout_notes_fields( $fields ) {
      $fields['order']['order_comments']['label'] = 'Note personali';
      return $fields;
 }
+
+
+//Cambia notifica codice sconto
+add_filter( 'wc_add_to_cart_message_html', 'quadlayers_custom_add_to_cart_message' );
+function quadlayers_custom_add_to_cart_message() {
+   $message = 'Questo prodotto è stato aggiunto alla tua scatola!' ;
+   return $message;
+}

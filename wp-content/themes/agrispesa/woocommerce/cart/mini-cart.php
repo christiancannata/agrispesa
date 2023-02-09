@@ -70,11 +70,12 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 						<?php if ($_product->is_type('variation')) {
 								$product_data = $cart_item['data'];
 								$titolo = $product_data->get_parent_data();
-								$variazioni = $_product->get_attributes();
+								$dimensione = get_term_by( 'name', $_product->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
+								$tipologia = get_term_by( 'name', $_product->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
 								echo '<h4 class="minicart-box--title"><a href="' . esc_url($product_permalink) . '" class="cart-product-var-title">' . $titolo['title'] . '</a></h4>';
 								echo '<div class="new-cart--variations">';
-								echo '<span class="cart-product-var-var">' . $variazioni['pa_dimensione'] . '</span>';
-								echo '<span class="cart-product-var-var last">' . $variazioni['pa_tipologia'] . '</span>';
+								echo '<span class="cart-product-var-var">' . $dimensione->name . '</span>';
+								echo '<span class="cart-product-var-var last">' . $tipologia->name . '</span>'; 
 								echo '</div>';
 							} else {
 								echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<h4 class="minicart-box--title"><a href="%s">%s</a></h4>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));

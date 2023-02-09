@@ -107,10 +107,12 @@ do_action( 'woocommerce_before_cart' ); ?>
 										</div>
 										<div class="new-cart--details">
 											<?php if ($prodotto->is_type('variation')) {
-												$variazioni = $prodotto->get_attributes();
+												$dimensione = get_term_by( 'name', $prodotto->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
+												$tipologia = get_term_by( 'name', $prodotto->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
+
 												echo '<div class="new-cart--variations">';
-												echo '<span class="cart-product-var-var">' . $variazioni['pa_dimensione'] . '</span>';
-												echo '<span class="cart-product-var-var last">' . $variazioni['pa_tipologia'] . '</span>';
+												echo '<span class="cart-product-var-var">' . $dimensione->name . '</span>';
+												echo '<span class="cart-product-var-var last">' . $tipologia->name . '</span>';
 												echo '</div>';
 											} else {
 												// unità di misura personalizzata
