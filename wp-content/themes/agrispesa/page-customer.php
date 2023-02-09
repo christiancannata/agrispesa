@@ -6,16 +6,15 @@ get_header(); ?>
 
 <div class="wrapper" id="index-wrapper">
 
-
 	<section class="manifesto--hero">
 		<div class="manifesto--container">
-				<h1 class="manifesto--hero--title">Servizio clienti</h1>
+				<div class="manifesto--hero--title"><h1>Servizio clienti</h1></div>
 				<h2 class="manifesto--hero--subtitle">
-					Crediamo nel valore della gentilezza e la pratichiamo.
+					<p>Crediamo nel valore della gentilezza e la pratichiamo.
 					<br/>
 					Accudiamo la relazione con tutte le persone, trattando le parole con serietà, come strumenti di conoscenza, di trasparenza e di dialogo.
 					<br/>
-					Quando commettiamo un errore ci scusiamo e, nel limite del possibile, rimediamo.
+					Quando commettiamo un errore ci scusiamo e, nel limite del possibile, rimediamo.</p>
 				</h2>
 		</div>
 	</section>

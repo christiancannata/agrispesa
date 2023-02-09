@@ -5,13 +5,13 @@
 
 	<?php if ( have_posts() ) : ?>
 
-		
+
 		<section class="manifesto--hero">
 			<div class="manifesto--container">
-					<h1 class="manifesto--hero--title">FAQ</h1>
+					<div class="manifesto--hero--title"><h1>FAQ</h1></div>
 					<h2 class="manifesto--hero--subtitle">
-						Abbiamo sempre tempo per te.<br/>
-						Non siamo mai troppo impegnati per rispondere alle tue domande.
+						<p>Abbiamo sempre tempo per te.<br/>
+						Non siamo mai troppo impegnati per rispondere alle tue domande.</p>
 					</h2>
 			</div>
 		</section>
