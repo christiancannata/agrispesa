@@ -7,7 +7,9 @@ get_header(); ?>
 <div class="wrapper" id="index-wrapper">
 
 
-	<?php get_template_part( 'global-elements/hero', 'page' ); ?>
+	<section class="how-works-page">
+		<?php get_template_part( 'global-elements/home', 'sections' ); ?>
+	</section>
 
 	<!-- TrustBox widget - Micro Review Count -->
 	<div class="trustpilot-widget" data-locale="it-IT" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="61ee37eca9b063488e95b01d" data-style-height="24px" data-style-width="100%" data-theme="light" data-min-review-count="10" data-style-alignment="center">
