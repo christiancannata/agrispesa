@@ -186,3 +186,80 @@ Stack trace:
 [06-Feb-2023 11:50:27 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 384
 [06-Feb-2023 11:50:48 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 378
 [06-Feb-2023 11:50:48 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 384
+[09-Feb-2023 16:14:58 UTC] PHP Notice:  Undefined index: gdpr-compliance-cookie-consent/gdpr-compliance-cookie-consent.php in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php on line 91
+[09-Feb-2023 16:14:58 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php on line 91
+[09-Feb-2023 16:15:07 UTC] PHP Notice:  tk_ai cookie cannot be set - headers already sent by /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php on line 91 in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php on line 1101
+[09-Feb-2023 16:15:07 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php:91) in /shared/httpd/agrispesa/wp-admin/includes/misc.php on line 1416
+[09-Feb-2023 16:15:07 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php:91) in /shared/httpd/agrispesa/wp-includes/functions.php on line 6865
+[09-Feb-2023 16:15:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php:91) in /shared/httpd/agrispesa/wp-admin/admin-header.php on line 9
+[09-Feb-2023 16:15:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php:91) in /shared/httpd/agrispesa/wp-includes/option.php on line 1138
+[09-Feb-2023 16:15:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/upgrades/class-wcs-upgrade-logger.php:91) in /shared/httpd/agrispesa/wp-includes/option.php on line 1139
+[09-Feb-2023 16:15:40 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:15:42 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:15:47 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:15:54 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:16:38 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:16:58 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:17:49 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:19:54 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:21:03 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:21:47 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:21:47 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:21:55 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:22:14 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:22:14 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:23:02 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:23:13 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:23:13 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:23:39 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:23:39 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:23:39 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:23:39 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:23:40 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:23:40 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:23:41 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:23:41 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:24:09 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:24:09 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:25:46 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:25:46 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:25:54 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:26:14 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:26:14 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:26:34 UTC] PHP Notice:  Undefined index: subscription_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 414
+[09-Feb-2023 16:26:34 UTC] PHP Warning:  array_filter() expects parameter 1 to be array, bool given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 420
+[09-Feb-2023 16:27:06 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:27:17 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:27:35 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:28:46 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:28:55 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 451
+[09-Feb-2023 16:29:50 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:30:00 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:30:40 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:30:51 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:30:53 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:30:54 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:00 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:31:11 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:31:20 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:24 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:25 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:25 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:25 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:25 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:36 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:31:51 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:31:55 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:32:36 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:32:51 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:33:11 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 416
+[09-Feb-2023 16:34:29 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[09-Feb-2023 16:34:36 UTC] PHP Notice:  Undefined index: product_id in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 451
+[09-Feb-2023 16:35:34 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[10-Feb-2023 03:17:59 UTC] PHP Notice:  Undefined index: week in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 288
+[10-Feb-2023 03:17:59 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:288) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 339
+[10-Feb-2023 03:17:59 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:288) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 340
+[10-Feb-2023 03:20:13 UTC] PHP Parse error:  syntax error, unexpected '?>' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1940
+[10-Feb-2023 03:20:13 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[10-Feb-2023 03:20:13 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[10-Feb-2023 03:21:35 UTC] WordPress database error Unknown column '_meta_key' in 'where clause' for query SELECT * FROM wp_postmeta WHERE _meta_key = 'data_consegna' group by _meta_key made by WP_List_Table->display, WP_List_Table->display_rows_or_placeholder, WP_Posts_List_Table->display_rows, WP_Posts_List_Table->_display_rows, WP_Posts_List_Table->single_row, WP_List_Table->single_row_columns, WP_Posts_List_Table->column_default, do_action('manage_delivery-group_posts_custom_column'), WP_Hook->do_action, WP_Hook->apply_filters, {closure}
