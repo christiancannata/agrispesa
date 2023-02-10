@@ -22,26 +22,26 @@ createApp({
   methods: {
     togglePreference: function (product, subscription) {
       if (this.isPreference(product, subscription)) {
-        this.deletePreference(product, subscription);
+        this.deletePreference(subscription, product);
       } else {
         this.addPreference(subscription, product);
       }
     },
     toggleBlacklist: function (product, subscription) {
       if (this.isBlacklisted(product, subscription)) {
-        this.deleteBlacklist(product, subscription);
+        this.deleteBlacklist(subscription, product);
       } else {
         this.addBlacklist(subscription, product);
       }
     },
     isBlacklisted: function (product, subscription) {
       return subscription.box_blacklist.some(function (field) {
-        return field.id === product.ID
+        return field.id === product
       })
     },
     isPreference: function (product, subscription) {
       return subscription.box_preferences.some(function (field) {
-        return field.id === product.ID
+        return field.id === product
       })
     },
     getSubscriptions: function () {
@@ -61,8 +61,9 @@ createApp({
     },
     addPreference: function (subscription, product) {
       const $vm = this
+      console.log(product)
       axios.post(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
-        product_id: product.ID,
+        product_id: product,
         subscription_id: subscription.id
       })
         .then((response) => {
@@ -71,8 +72,8 @@ createApp({
     },
     addBlacklist: function (subscription, product) {
       const $vm = this
-      axios.post(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
-        product_id: product.ID,
+      axios.post(window.baseurl + '/wp-json/agrispesa/v1/subscription-blacklist', {
+        product_id: product,
         subscription_id: subscription.id
       })
         .then((response) => {
@@ -82,7 +83,7 @@ createApp({
     deletePreference: function (subscription, product) {
       const $vm = this
       axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
-        product_id: product.id,
+        product_id: product,
         subscription_id: subscription.id
       })
         .then((response) => {
@@ -91,8 +92,8 @@ createApp({
     },
     deleteBlacklist: function (subscription, product) {
       const $vm = this
-      axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-preference', {
-        product_id: product.id,
+      axios.patch(window.baseurl + '/wp-json/agrispesa/v1/subscription-blacklist', {
+        product_id: product,
         subscription_id: subscription.id
       })
         .then((response) => {

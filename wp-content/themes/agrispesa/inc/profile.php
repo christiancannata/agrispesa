@@ -105,7 +105,8 @@ function settings_box_content()
 
 
 					<h4 class="my-account--minititle small">Black list</h4>
-					<p class="subscription-preferences-description">Sei allergico a qualcosa? Non ami i broccoli?<br/>Nessun problema! Seleziona i prodotti che non voi mai ricevere con questo abbonamento.</p>
+					<p class="subscription-preferences-description">Sei allergico a qualcosa? Non ami i broccoli?<br/>Nessun
+						problema! Seleziona i prodotti che non voi mai ricevere con questo abbonamento.</p>
 					<div class="container-flex-box">
 
 						<div class="right-categories-box">
@@ -119,10 +120,10 @@ function settings_box_content()
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
 							<ul>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="toggleBlacklist(product,subscription)"
+									<label @click.prevent="toggleBlacklist(product.ID,subscription)"
 										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isBlacklisted(product,subscription)" type="checkbox">
+										<input :checked="isBlacklisted(product.ID,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -133,7 +134,7 @@ function settings_box_content()
 						<div class="blacklist-box">
 							<h4 class="my-account--minititle small">Prodotti che non ami</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_blacklist">
-								<a class="delete_item" @click.prevent="deleteBlacklist(subscription,preference)"
+								<a class="delete_item" @click.prevent="deleteBlacklist(subscription,preference.id)"
 								   href="#"><span class="icon-close"></span></a>
 								<span v-html="preference.name"></span>
 							</div>
@@ -141,7 +142,8 @@ function settings_box_content()
 					</div>
 
 					<h4 class="my-account--minititle small mg-top">Preferiti</h4>
-					<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui, faremo in modo di mandartelo più spesso.</p>
+					<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui,
+						faremo in modo di mandartelo più spesso.</p>
 
 
 					<div class="container-flex-box">
@@ -157,10 +159,10 @@ function settings_box_content()
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
 							<ul>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="togglePreference(product,subscription)"
+									<label @click.prevent="togglePreference(product.ID,subscription)"
 										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isPreference(product,subscription)" type="checkbox">
+										<input :checked="isPreference(product.ID,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -171,7 +173,7 @@ function settings_box_content()
 						<div class="preferences-box">
 							<h4 class="my-account--minititle small">I tuoi prodotti preferiti</h4>
 							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
-								<a class="delete_item" @click.prevent="deletePreference(subscription,preference)"
+								<a class="delete_item" @click.prevent="deletePreference(subscription,preference.id)"
 								   href="#"><span class="icon-close"></span></a>
 								<span v-html="preference.name"></span>
 							</div>

@@ -218,7 +218,7 @@ add_action('rest_api_init', function () {
 							$categories[] =
 								[
 									'id' => $sub_category->term_id,
-									'name' => $cat->name . ' > ' . $sub_category->name,
+									'name' => $sub_category->name,
 									'products' => $categoryProducts
 								];
 
@@ -285,7 +285,7 @@ add_action('rest_api_init', function () {
 		},
 		'callback' => function ($request) {
 
-			$week = $_GET['week'];
+			$dataConsegna = $_GET['data_consegna'];
 
 			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
 
@@ -296,8 +296,8 @@ add_action('rest_api_init', function () {
 				'meta_query' => [
 					'relation' => 'AND',
 					[
-						'key' => '_week',
-						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
+						'key' => '_data_consegna',
+						'value' => $dataConsegna,
 						'compare' => '='
 					],
 					[
@@ -337,7 +337,7 @@ add_action('rest_api_init', function () {
 			}
 			fseek($f, 0);
 			header('Content-Type: text/csv');
-			header('Content-Disposition: attachment; filename="PIEM Settimana ' . $week . ' da nav a map&guide.csv";');
+			header('Content-Disposition: attachment; filename="PIEM ' . $dataConsegna . ' da nav a map&guide.csv";');
 			fpassthru($f);
 			die();
 
@@ -418,6 +418,7 @@ add_action('rest_api_init', function () {
 			$index = array_filter($boxPreferences, function ($product) use ($productId) {
 				return $product['id'] == $productId;
 			});
+
 
 			if (!empty($index)) {
 				$index = array_keys($index);
@@ -1218,16 +1219,16 @@ function cptui_register_my_cpts_delivery_group()
 		"label" => esc_html__("Box settimanale", "custom-post-type-ui"),
 		"labels" => $labels,
 		"description" => "",
-		"public" => true,
-		"publicly_queryable" => true,
-		"show_ui" => true,
+		"public" => false,
+		"publicly_queryable" => false,
+		"show_ui" => false,
 		"show_in_rest" => true,
 		"rest_base" => "",
 		"rest_controller_class" => "WP_REST_Posts_Controller",
 		"rest_namespace" => "wp/v2",
 		"has_archive" => false,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
+		"show_in_menu" => false,
+		"show_in_nav_menus" => false,
 		"delete_with_user" => false,
 		"exclude_from_search" => false,
 		"capability_type" => "post",
@@ -1540,20 +1541,31 @@ function consegne_ordini_pages()
 						));
 						$categories[$sub_category->term_id] =
 							[
-								'name' => $cat->name . ' > ' . $sub_category->name,
+								'name' => $sub_category->name,
 								'products' => $categoryProducts
 							];
 
 						foreach ($categoryProducts as $categoryProduct) {
+
+							$unitaMisura = 'gr';
+
+							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+
+							if (!empty($measureUnit)) {
+								$unitaMisura = $measureUnit;
+							}
+
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title
+								'name' => $categoryProduct->post_title,
+								'unit_measure' => $unitaMisura
 							];
 						}
 					}
 				}
 			}
 		}
+
 
 		?>
 
@@ -1611,14 +1623,17 @@ function consegne_ordini_pages()
 				<div class="row">
 					<div class="product-box" v-for="(product,index) of products">
 						<a href="#" @click="deleteProduct(index)">Elimina</a>
-						<h4 v-html="product.name"></h4>
-						<label>Quantità</label>
-						<input type="number" v-model="product.quantity">
+						<h3 v-html="product.name"></h3>
+						<label style="display: block">Quantità</label>
+						<input style="width:100px;float:left" type="number" v-model="product.quantity">
+						<span style="display: inline" v-html="product.unit_measure"></span>
 					</div>
 				</div>
 				<br><br>
 
-				<button class="button-primary add-product" @click="createBox">Crea Box Settimanale</button>
+				<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
+					Settimanale
+				</button>
 
 
 				<form id="comments-form" method="POST"
@@ -1734,6 +1749,8 @@ function consegne_ordini_pages()
 			die();
 		}
 
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+
 		?>
 		<div id="wpbody-content">
 
@@ -1748,7 +1765,20 @@ function consegne_ordini_pages()
 
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
 					<label>Data di consegna</label><br>
-					<input type="date" name="data_consegna" autocomplete="off"><br><br>
+
+					<?php if (count($allDataConsegna) == 0): ?>
+						<i>Nessun ordine con data consegna.</i>
+					<?php else: ?>
+						<select name="data_consegna" autocomplete="off">
+							<?php
+							foreach ($allDataConsegna as $dataConsegna): ?>
+								<option
+									value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+							<?php endforeach; ?>
+						</select>
+
+					<?php endif; ?>
+					<br><br>
 
 					<label>Codice di confezionamento</label><br>
 					<select class="select2" name="confezionamento">
@@ -1919,17 +1949,26 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 	switch ($column) {
 
 		case 'week' :
+			global $wpdb;
+			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
+
+
 			?>
-			<select name="week" autocomplete="off">
-				<?php for ($i = 1; $i <= 52; $i++): ?>
+			<?php if (count($allDataConsegna) == 0): ?>
+			<i>Nessun ordine con data consegna.</i>
+		<?php else: ?>
+			<select name="data_consegna" autocomplete="off">
+				<?php
+				foreach ($allDataConsegna as $dataConsegna): ?>
 					<option
-						value="<?php echo $i; ?>"
-						<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
-					>Settimana <?php echo $i; ?></option>
-				<?php endfor; ?>
+						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+				<?php endforeach; ?>
 			</select>
+
+		<?php endif; ?>
 			<a class="btn button-primary generate-csv" data-delivery-group="<?php echo $post_id; ?>">
 				Genera CSV
 			</a>
