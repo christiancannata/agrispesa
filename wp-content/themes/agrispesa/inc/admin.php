@@ -285,7 +285,7 @@ add_action('rest_api_init', function () {
 		},
 		'callback' => function ($request) {
 
-			$week = $_GET['week'];
+			$dataConsegna = $_GET['data_consegna'];
 
 			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
 
@@ -296,8 +296,8 @@ add_action('rest_api_init', function () {
 				'meta_query' => [
 					'relation' => 'AND',
 					[
-						'key' => '_week',
-						'value' => str_pad($week, 2, 0, STR_PAD_LEFT),
+						'key' => '_data_consegna',
+						'value' => $dataConsegna,
 						'compare' => '='
 					],
 					[
@@ -337,7 +337,7 @@ add_action('rest_api_init', function () {
 			}
 			fseek($f, 0);
 			header('Content-Type: text/csv');
-			header('Content-Disposition: attachment; filename="PIEM Settimana ' . $week . ' da nav a map&guide.csv";');
+			header('Content-Disposition: attachment; filename="PIEM ' . $dataConsegna . ' da nav a map&guide.csv";');
 			fpassthru($f);
 			die();
 
@@ -1934,16 +1934,18 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 	switch ($column) {
 
 		case 'week' :
+			global $wpdb;
+			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
+
 			?>
-			<select name="week" autocomplete="off">
-				<?php for ($i = 1; $i <= 52; $i++): ?>
+			<select name="data_consegna" autocomplete="off">
+				<?php foreach ($allDataConsegna as $dataConsegna): ?>
 					<option
-						value="<?php echo $i; ?>"
-						<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
-					>Settimana <?php echo $i; ?></option>
-				<?php endfor; ?>
+						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+				<?php endforeach; ?>
 			</select>
 			<a class="btn button-primary generate-csv" data-delivery-group="<?php echo $post_id; ?>">
 				Genera CSV
