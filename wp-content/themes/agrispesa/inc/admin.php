@@ -1541,20 +1541,31 @@ function consegne_ordini_pages()
 						));
 						$categories[$sub_category->term_id] =
 							[
-								'name' => $cat->name . ' > ' . $sub_category->name,
+								'name' => $sub_category->name,
 								'products' => $categoryProducts
 							];
 
 						foreach ($categoryProducts as $categoryProduct) {
+
+							$unitaMisura = 'gr';
+
+							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+
+							if (!empty($measureUnit)) {
+								$unitaMisura = $measureUnit;
+							}
+
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title
+								'name' => $categoryProduct->post_title,
+								'unit_measure' => $unitaMisura
 							];
 						}
 					}
 				}
 			}
 		}
+
 
 		?>
 
@@ -1612,14 +1623,17 @@ function consegne_ordini_pages()
 				<div class="row">
 					<div class="product-box" v-for="(product,index) of products">
 						<a href="#" @click="deleteProduct(index)">Elimina</a>
-						<h4 v-html="product.name"></h4>
-						<label>Quantità</label>
-						<input type="number" v-model="product.quantity">
+						<h3 v-html="product.name"></h3>
+						<label style="display: block">Quantità</label>
+						<input style="width:100px;float:left" type="number" v-model="product.quantity">
+						<span style="display: inline" v-html="product.unit_measure"></span>
 					</div>
 				</div>
 				<br><br>
 
-				<button class="button-primary add-product" @click="createBox">Crea Box Settimanale</button>
+				<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
+					Settimanale
+				</button>
 
 
 				<form id="comments-form" method="POST"
