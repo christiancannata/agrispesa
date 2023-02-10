@@ -1749,6 +1749,8 @@ function consegne_ordini_pages()
 			die();
 		}
 
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+
 		?>
 		<div id="wpbody-content">
 
@@ -1763,7 +1765,20 @@ function consegne_ordini_pages()
 
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
 					<label>Data di consegna</label><br>
-					<input type="date" name="data_consegna" autocomplete="off"><br><br>
+
+					<?php if (count($allDataConsegna) == 0): ?>
+						<i>Nessun ordine con data consegna.</i>
+					<?php else: ?>
+						<select name="data_consegna" autocomplete="off">
+							<?php
+							foreach ($allDataConsegna as $dataConsegna): ?>
+								<option
+									value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+							<?php endforeach; ?>
+						</select>
+
+					<?php endif; ?>
+					<br><br>
 
 					<label>Codice di confezionamento</label><br>
 					<select class="select2" name="confezionamento">
