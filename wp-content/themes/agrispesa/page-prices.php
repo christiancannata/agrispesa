@@ -36,7 +36,7 @@ get_header(); ?>
 							<span class="symbol">€</span>26
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
 						</div>
 					</div>
 					<div class="prices--item favourite">
@@ -59,7 +59,7 @@ get_header(); ?>
 							<span class="symbol">€</span>38
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
 						</div>
 					</div>
 					<div class="prices--item">
@@ -81,7 +81,7 @@ get_header(); ?>
 							<span class="symbol">€</span>55
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
 						</div>
 					</div>
 					<div class="prices--item">
@@ -103,7 +103,7 @@ get_header(); ?>
 							<span class="symbol">€</span>74
 						</div>
 						<div class="prices--element final">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Scegli la tua box">Scegli la tua box</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
 						</div>
 					</div>
 				</div>

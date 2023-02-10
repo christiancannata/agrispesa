@@ -40,4 +40,4 @@ if ( $additional_content ) {
 
 echo '<img src="https://staging.agrispesa.it/wp-content/themes/agrispesa/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
 
-do_action( 'woocommerce_email_footer', $email );
+do_action( 'woocommerce_email_footer', $email ); 
