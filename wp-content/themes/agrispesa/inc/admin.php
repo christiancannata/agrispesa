@@ -1940,13 +1940,20 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
 
+
 			?>
+			<?php if (count($allDataConsegna) == 0): ?>
+			<i>Nessun ordine con data consegna.</i>
+		<?php else: ?>
 			<select name="data_consegna" autocomplete="off">
-				<?php foreach ($allDataConsegna as $dataConsegna): ?>
+				<?php
+				foreach ($allDataConsegna as $dataConsegna): ?>
 					<option
 						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>
 			</select>
+
+		<?php endif; ?>
 			<a class="btn button-primary generate-csv" data-delivery-group="<?php echo $post_id; ?>">
 				Genera CSV
 			</a>
