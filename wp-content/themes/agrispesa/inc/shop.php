@@ -150,12 +150,17 @@ function soChangeProductsTitle() {
   $product_data = $product->get_meta('_woo_uom_input');
 
   if ( $product->has_weight() ) {
-  	if($product_data) {
-      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
-  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span></div>';
+  	if($product_data && $product_data != 'gr') {
+        echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+    		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span></div>';
   	} else {
-      echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
-  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' g</span></div>';
+      if($product->get_weight() == 1000) {
+        echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+    		echo '<span class="product-info--quantity">1 kg</span></div>';
+      } else {
+        echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';
+    		echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span></div>';
+      }
   	}
   } else {
     echo '<h6 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h6>';

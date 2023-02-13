@@ -73,11 +73,22 @@
 								  </a>
 								  <div class="product-box--text">
 								    <div class="product-box--text--top">
-								      <h2 class="product-box--title"><?php echo $i; ?><?php echo get_the_title($producer->ID); ?></h2>
+								      <h2 class="product-box--title"><?php echo get_the_title($producer->ID); ?></h2>
 											<div class="product-box--price--flex">
-												<?php if ( $product->has_weight($producer->ID) ) {
-								        	echo '<p class="product-box--description product-info--quantity">' .  $product->get_weight($producer->ID) . ' kg — </p>';
+												<?php $product_data = $product->get_meta('_woo_uom_input', $producer->ID);
+												if ( $product->has_weight($producer->ID) ) {
+								        	if($product_data && $product_data != 'gr') {
+								        		echo '<span class="product-info--quantity">' . $product->get_weight($producer->ID) . ' '.$product_data.'</span>';
+								        	} else {
+								            if($product->get_weight($producer->ID) == 1000) {
+								        			echo '<span class="product-info--quantity">1 kg</span>';
+								        		} else {
+								        			echo '<span class="product-info--quantity">' . $product->get_weight($producer->ID) . ' gr</span>';
+								        		}
+								        	}
 								        } ?>
+
+
 									      <div class="product-box--price">
 									        <?php echo $product->get_price_html($producer->ID); ?>
 									      </div>

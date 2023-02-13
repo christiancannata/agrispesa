@@ -118,10 +118,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 												// unità di misura personalizzata
 												$product_data = $prodotto->get_meta('_woo_uom_input');
 												if ( $prodotto->has_weight() ) {
-													if($product_data) {
-														echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' '.$product_data.'</span>';
-													} else {
-														echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' g</span>';
+													if($product_data && $product_data != 'gr') {
+															echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' '.$product_data.'</span>';
+												} else {
+														if($prodotto->get_weight() == 1000) {
+								        			echo '<span class="product-info--quantity">1 kg</span>';
+								        		} else {
+								        			echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' gr</span>';
+								        		}
 													}
 												}
 
