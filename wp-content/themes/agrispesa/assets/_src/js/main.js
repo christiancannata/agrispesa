@@ -49,14 +49,27 @@ formGiftCard();
 infoAgr();
 closePopup();
 pressSlider();
-scrollTo();
 hideGlossarioAlpha();
 magazineSlider();
 minimumAmount();
 giftCardCheckout();
+scrollTo();
 
 //changeShippingLabel();
 
+function scrollTo() {
+  jQuery('.scroll-to').on('click', function(event) {
+    let target = jQuery(this.getAttribute('href'));
+    let scrollto = target.offset().top
+
+    if (target.length) {
+      event.preventDefault();
+      jQuery('html, body').stop().animate({
+        scrollTop: scrollto
+      }, 900);
+    }
+  });
+}
 
 function giftCardCheckout() {
   jQuery('button[name="apply_coupon"]').click(function (e) {
@@ -124,21 +137,6 @@ function changeShippingLabel() {
   }
 }
 
-
-function scrollTo() {
-
-  jQuery('.sliding-link').on('click', function (event) {
-    let target = jQuery(this.getAttribute('href'));
-    let scrollto = target.offset().top - 100
-
-    if (target.length) {
-      event.preventDefault();
-      jQuery('html, body').stop().animate({
-        scrollTop: scrollto
-      }, 800);
-    }
-  });
-}
 
 function pressSlider() {
 

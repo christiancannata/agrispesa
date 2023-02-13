@@ -31,19 +31,35 @@
 		form {
 			display: flex;
 			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 0 !important;
 		}
 
 		.product-quantity--change {
-			margin-right: 16px;
+			margin-right: 8px;
 		}
 	}
 	@include breakpoint(mobile) {
 		.product-quantity--change {
 			padding-top: 0;
 		}
+
+		.product-box & {
+			form {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 0 !important;
+			}
+			.product-quantity--change {
+				padding-bottom: 0;
+			}
+		}
 	}
 }
-
+.product-description-button {
+padding-top: 16px;
+}
 .archive-blog--flex {
 	display: flex;
 	flex-wrap: wrap;

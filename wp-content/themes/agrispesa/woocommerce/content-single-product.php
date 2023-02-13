@@ -65,7 +65,7 @@ if ( post_password_required() ) {
 
 </div><!-- fine div.product-top in product-image.php -->
 
-<section class="product-bottom">
+<section id="read-description" class="product-bottom">
 
 	<div class="sec-home sec-full bg-panna line-orange">
 		<div class="container-xsmall">

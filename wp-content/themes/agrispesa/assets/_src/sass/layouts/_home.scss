@@ -261,10 +261,42 @@
 		padding: 50px 0;
 	}
 
+
 	strong {
 		font-weight: 600;
 	}
+	blockquote {
+		padding: 32px 0 32px 24px;
+		@include breakpoint(desktop) {
+			padding: 40px 60px 40px 120px;
+		}
 
+		p {
+			@include font-size(28);
+			font-family: $font-title;
+			line-height: 1.1;
+			font-style: italic;
+			font-weight: 900;
+			position: relative;
+			@include breakpoint(desktop) {
+				@include font-size(32);
+			}
+
+			&:before {
+				@include font-size(50);
+				content: '"';
+				color: $orange;
+				position: absolute;
+				top: -20px;
+				left: -30px;
+				@include breakpoint(desktop) {
+					@include font-size(70);
+					top: -30px;
+					left: -50px;
+				}
+			}
+		}
+	}
 	h2,
 	h3,
 	h4 {
