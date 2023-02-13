@@ -49,8 +49,6 @@ $description = get_the_archive_description();
 	  </div>
 	</section>
 
-
-
   <div class="all-categories">
     <?php
   		$current_cat = get_queried_object();
@@ -59,8 +57,8 @@ $description = get_the_archive_description();
 			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
 			$specialiID = $getSpeciali->term_id;
       $cat_args = array(
-          'orderby'    => 'ID',
-          'order'      => 'asc',
+          'orderby'    => 'id',
+          'order'      => 'ASC',
           'hide_empty' => false,
           'parent' => $get_product_cat_ID,
 					'exclude' => $specialiID
@@ -150,7 +148,7 @@ if ( woocommerce_product_loop() ) {
 			 'fields' => 'slugs',
 			 'taxonomy' => 'product_cat',
 			 'parent' => $get_product_cat_ID,
-			 'orderby'    => 'ID',
+			 'orderby'    => 'id',
 			 'order'      => 'asc',
 			 'exclude' => $specialiID
 		);
@@ -178,7 +176,7 @@ if ( woocommerce_product_loop() ) {
 	       'fields' => 'slugs',
 	       'taxonomy' => 'product_cat',
 	       'parent' => $get_product_cat_ID,
-				 'orderby'    => 'ID',
+				 'orderby'    => 'id',
 				 'order'      => 'asc',
 				 'exclude' => $specialiID
 	    );
@@ -192,7 +190,7 @@ if ( woocommerce_product_loop() ) {
 	       'fields' => 'slugs',
 	       'taxonomy' => 'product_cat',
 	       'child_of' => $get_product_cat_ID,
-				 'orderby'    => 'ID',
+				 'orderby'    => 'id',
 				 'order'      => 'asc',
 	    );
 		}

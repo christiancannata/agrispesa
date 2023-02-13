@@ -26,6 +26,24 @@
 	}
 }
 
+.shop-buttons-flex {
+	@include breakpoint(desktop) {
+		form {
+			display: flex;
+			align-items: center;
+		}
+
+		.product-quantity--change {
+			margin-right: 16px;
+		}
+	}
+	@include breakpoint(mobile) {
+		.product-quantity--change {
+			padding-top: 0;
+		}
+	}
+}
+
 .archive-blog--flex {
 	display: flex;
 	flex-wrap: wrap;
@@ -293,6 +311,7 @@
 		.uom {
 			display: none;
 		}
+
 		&--flex {
 			display: flex;
 			align-items: baseline;

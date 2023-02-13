@@ -537,7 +537,7 @@ function quantityInput() {
       // Format values
       if (!currentVal || currentVal === '' || currentVal === 'NaN') currentVal = 0;
       if (max === '' || max === 'NaN') max = '';
-      if (min === '' || min === 'NaN') min = 0;
+      if (min === '' || min === 'NaN') min = 1;
       if (step === 'any' || step === '' || step === undefined || parseFloat(step) === 'NaN') step = 1;
 
       // Change the value

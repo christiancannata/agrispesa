@@ -316,3 +316,18 @@ function quadlayers_custom_add_to_cart_message() {
    $message = 'Questo prodotto è stato aggiunto alla tua scatola!' ;
    return $message;
 }
+
+
+/**
+ * Override loop template and show quantities next to add to cart buttons
+ */
+add_filter( 'woocommerce_loop_add_to_cart_link', 'quantity_inputs_for_woocommerce_loop_add_to_cart_link', 10, 2 );
+function quantity_inputs_for_woocommerce_loop_add_to_cart_link( $html, $product ) {
+	if ( $product && $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() && ! $product->is_sold_individually() ) {
+		$html = '<div class="shop-buttons-flex"><form action="' . esc_url( $product->add_to_cart_url() ) . '" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button>';
+		$html .= woocommerce_quantity_input( array(), $product, false );
+		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" class="btn btn-primary btn-small">' . esc_html( $product->add_to_cart_text() ) . '</button>';
+		$html .= '</form></div>';
+	}
+	return $html;
+}
