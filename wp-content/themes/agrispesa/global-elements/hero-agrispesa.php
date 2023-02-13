@@ -2,8 +2,8 @@
   <div class="hero--item">
     <div class="hero--content">
       <div class="hero--text" data-aos="fade-in" data-aos-duration="600" data-aos-delay="0">
-        <h1 class="hero--title">Questa non è<br/>una semplice box.</h1>
-        <p class="hero--subtitle">Ma una vera scatola, con veri prodotti di agricoltura contadina<br class="only-desktop"/>Arriva ogni settimana a casa tua a poche ore dal raccolto.</p>
+        <h1 class="hero--title"><?php echo the_field('hero_title'); ?></h1>
+        <p class="hero--subtitle"><?php echo the_field('hero_subtitle'); ?></p>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-big hero--btn" alt="Abbonati alla spesa">Abbonati alla spesa</a>
         <div class="hero-stars">
           <div class="review-page--stars">
