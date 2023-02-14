@@ -30,8 +30,10 @@ $long_description = wp_trim_words( $post->post_content, 48, '...' );
 
 	<?php if ($short_description ) {
 		echo $short_description;
-	} else {
+	} elseif($long_description){
 		echo '<p>' . $long_description . '</p>';
 	}?>
-	<a href="#read-description" class="arrow-link product-description-button scroll-to">Scopri di più<span class="icon-arrow-down"></span></a>
+	<?php if($short_description || $long_description): ?>
+		<a href="#read-description" class="arrow-link product-description-button scroll-to">Scopri di più<span class="icon-arrow-down"></span></a>
+	<?php endif;?>
 </div>
