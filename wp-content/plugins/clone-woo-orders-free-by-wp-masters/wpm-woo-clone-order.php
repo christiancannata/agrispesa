@@ -161,8 +161,8 @@ function wpm_woocommerce_order_clone_action_link($post)
     if (current_user_can('edit_posts') || current_user_can('manage_woocommerce')) {
         echo ' <a href="' . wp_nonce_url('admin.php?action=wpm_woocommerce_order_clone&post=' . $post->get_id(),
                 basename(__FILE__),
-                'duplicate_nonce') . '" title="' . __('Clone this order',
-                WPM_WOOCOMMERCE_CLONE_ORDER_TEXT_DOMAIN) . '"><button type="button" class="button action">' . __('Clone',
+                'duplicate_nonce') . '" title="' . __('Duplica questo ordine',
+                WPM_WOOCOMMERCE_CLONE_ORDER_TEXT_DOMAIN) . '"><button type="button" class="button action">' . __('Duplica',
                 WPM_WOOCOMMERCE_CLONE_ORDER_TEXT_DOMAIN) . '</button></a>';
     }
 }
@@ -176,8 +176,8 @@ add_filter('woocommerce_admin_order_actions_end', 'wpm_woocommerce_order_clone_a
  */
 function wpm_add_clone_order_action( $actions )
 {
-	$actions['clone_order'] = __( 'Clone Order', 'woocommerce' );
-	$actions['clone_order_draft'] = __( 'Clone Order as Draft', 'woocommerce' );
+	$actions['clone_order'] = __( 'Duplica ordine', 'woocommerce' );
+	$actions['clone_order_draft'] = __( 'Duplica ordine come bozza', 'woocommerce' );
 
 	return $actions;
 }
