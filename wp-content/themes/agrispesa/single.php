@@ -56,7 +56,11 @@ if( $related_products ): ?>
 
         <article class="product-box">
           <a href="<?php the_permalink($related_product->ID); ?>" class="product-box--link" title="<?php echo esc_html( $title ); ?>">
-            <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+            <?php if($thumb_id):?>
+              <img src="<?php the_post_thumbnail_url($related_product->ID); ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+            <?php else: ?>
+              <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+            <?php endif;?>
           </a>
           <div class="product-box--text">
             <div class="product-box--text--top">
@@ -77,7 +81,7 @@ if( $related_products ): ?>
                   	}
                   } ?>
 
-                
+
                 <div class="product-box--price">
                   <?php echo $product->get_price_html($related_product->ID); ?>
                 </div>
