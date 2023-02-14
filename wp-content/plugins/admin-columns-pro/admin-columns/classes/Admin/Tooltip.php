@@ -21,9 +21,6 @@ class Tooltip {
 	/** @var string */
 	private $position = 'right';
 
-	/** @var string */
-	private $position_edge;
-
 	public function __construct( $id, array $args ) {
 		$this->id = $id;
 		$this->title = __( 'Notice', 'codepress-admin-columns' );
@@ -34,8 +31,6 @@ class Tooltip {
 
 	/**
 	 * @param array $args
-	 *
-	 * @return $this
 	 */
 	private function populate( $args ) {
 		foreach ( $args as $key => $value ) {
@@ -45,8 +40,6 @@ class Tooltip {
 				call_user_func( [ $this, $method ], $value );
 			}
 		}
-
-		return $this;
 	}
 
 	/**
@@ -105,25 +98,13 @@ class Tooltip {
 	}
 
 	/**
-	 * @param string $position
-	 *
-	 * @return Tooltip
-	 */
-	public function set_position_edge( $position_edge ) {
-		$this->position_edge = $position_edge;
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function get_label() {
 		$view = new View( [
-			'id'            => $this->id,
-			'position'      => $this->position,
-			'position_edge' => $this->position_edge,
-			'label'         => $this->link_label,
+			'id'       => $this->id,
+			'position' => $this->position,
+			'label'    => $this->link_label,
 		] );
 
 		$view->set_template( 'admin/tooltip-label' );

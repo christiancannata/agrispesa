@@ -7,10 +7,21 @@ use AC\View;
 
 class InlineMessage extends Message {
 
+	/**
+	 * @var string|null
+	 */
+	private $class;
+
+	public function __construct( $message, $type = null, $class = null ) {
+		parent::__construct( $message, $type );
+
+		$this->class = $class;
+	}
+
 	public function render() {
 		$view = new View( [
 			'message' => $this->message,
-			'type'    => $this->type,
+			'class'   => trim( $this->type . ' ' . $this->class ),
 		] );
 		$view->set_template( 'message/notice/inline' );
 

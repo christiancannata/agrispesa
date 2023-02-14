@@ -12,7 +12,7 @@ $product_data = $product->get_meta('_woo_uom_input');
   </a>
   <div class="product-box--text">
     <div class="product-box--text--top">
-      <h2 class="product-box--title"><?php echo the_title(); ?></h2>
+      <h2 class="product-box--title"><a href="<?php the_permalink(); ?>" title="<?php echo the_title(); ?>"><?php echo the_title(); ?></a></h2>
       <div class="product-box--price--flex">
         <?php if ( $product->has_weight() ) {
         	if($product_data && $product_data != 'gr') {

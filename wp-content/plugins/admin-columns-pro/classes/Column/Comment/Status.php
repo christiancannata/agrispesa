@@ -3,14 +3,17 @@
 namespace ACP\Column\Comment;
 
 use AC;
+use ACP\ConditionalFormat;
+use ACP\Editing;
 use ACP\Editing\Editable;
-use ACP\Editing\Model;
 
 class Status extends AC\Column\Comment\Status
-	implements Editable {
+	implements Editable, ConditionalFormat\Formattable {
+
+	use ConditionalFormat\ConditionalFormatTrait;
 
 	public function editing() {
-		return new Model\Comment\Status( $this );
+		return new Editing\Service\Comment\Status();
 	}
 
 }

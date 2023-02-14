@@ -2,33 +2,26 @@
 
 namespace ACP\Check;
 
+use AC\Admin\Page\Columns;
+use AC\Admin\Page\Settings;
 use AC\Ajax;
 use AC\Capabilities;
 use AC\Message;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Screen;
 use AC\Storage;
 use AC\Type\Url\Site;
 use AC\Type\Url\UtmTags;
-use ACP\Entity\License;
-use ACP\LicenseKeyRepository;
-use ACP\LicenseRepository;
+use ACP\Access\ActivationStorage;
+use ACP\ActivationTokenFactory;
+use ACP\Entity;
+use ACP\Type\Activation\ExpiryDate;
 use ACP\Type\SiteUrl;
 use DateTime;
 use Exception;
 
 class Renewal
-	implements Registrable {
-
-	/**
-	 * @var LicenseRepository
-	 */
-	private $license_repository;
-
-	/**
-	 * @var LicenseKeyRepository
-	 */
-	private $license_key_repository;
+	implements Registerable {
 
 	/**
 	 * @var string
@@ -36,21 +29,30 @@ class Renewal
 	private $plugin_basename;
 
 	/**
+	 * @var ActivationTokenFactory
+	 */
+	private $activation_token_factory;
+
+	/**
+	 * @var ActivationStorage
+	 */
+	private $activation_storage;
+
+	/**
+	 * @var array
+	 */
+	private $intervals = [ 1, 7, 21 ];
+
+	/**
 	 * @var SiteUrl
 	 */
 	private $site_url;
 
-	/**
-	 * @var int[] Intervals to check in ascending order with a max of 90 days
-	 */
-	protected $intervals;
-
-	public function __construct( LicenseRepository $license_repository, LicenseKeyRepository $license_key_repository, $plugin_basename, SiteUrl $site_url ) {
-		$this->license_repository = $license_repository;
-		$this->license_key_repository = $license_key_repository;
-		$this->plugin_basename = $plugin_basename;
+	public function __construct( $plugin_basename, ActivationTokenFactory $activation_token_factory, ActivationStorage $activation_storage, SiteUrl $site_url ) {
+		$this->plugin_basename = (string) $plugin_basename;
+		$this->activation_token_factory = $activation_token_factory;
+		$this->activation_storage = $activation_storage;
 		$this->site_url = $site_url;
-		$this->intervals = [ 1, 7, 21 ];
 	}
 
 	public function register() {
@@ -68,13 +70,13 @@ class Renewal
 		$interval = (int) filter_input( INPUT_POST, 'interval', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( ! array_key_exists( $interval, $this->intervals ) ) {
-			wp_die();
+			exit;
 		}
 
 		// 90 days
-		$result = $this->get_dismiss_option( $interval )->save( time() + ( MONTH_IN_SECONDS * 3 ) );
+		$this->get_dismiss_option( $interval )->save( time() + ( MONTH_IN_SECONDS * 3 ) );
 
-		wp_die( $result );
+		exit;
 	}
 
 	/**
@@ -100,13 +102,29 @@ class Renewal
 		);
 	}
 
+	private function get_activation() {
+		$token = $this->activation_token_factory->create();
+
+		return $token
+			? $this->activation_storage->find( $token )
+			: null;
+	}
+
+	private function is_activation_up_for_renewal( Entity\Activation $activation ) {
+		return ! $activation->is_auto_renewal()
+		       && ! $activation->is_expired()
+		       && ! $activation->is_cancelled()
+		       && ! $activation->is_lifetime()
+		       && $activation->get_expiry_date()->exists();
+	}
+
 	/**
 	 * @param Screen $screen
 	 *
 	 * @throws Exception
 	 */
 	public function display( Screen $screen ) {
-		if ( ! $screen->has_screen() || ! current_user_can( Capabilities::MANAGE ) ) {
+		if ( ! current_user_can( Capabilities::MANAGE ) ) {
 			return;
 		}
 
@@ -114,47 +132,57 @@ class Renewal
 			return;
 		}
 
-		$license_key = $this->license_key_repository->find();
+		switch ( true ) {
 
-		if ( ! $license_key ) {
-			return;
-		}
-
-		$license = $this->license_repository->find( $license_key );
-
-		if ( ! $license
-		     || $license->is_auto_renewal()
-		     || $license->is_expired()
-		     || $license->is_cancelled()
-		     || $license->is_lifetime()
-		     || ! $license->get_expiry_date()->exists()
-		) {
-			return;
-		}
-
-		$days_remaining = $license->get_expiry_date()->get_remaining_days();
-
-		$interval = $days_remaining > 0
-			? $this->get_current_interval( (int) floor( $days_remaining ) )
-			: null;
-
-		$notice = null;
-
-		if ( $screen->is_plugin_screen() && $license->get_expiry_date()->is_expiring_within_seconds( DAY_IN_SECONDS * 21 ) ) {
 			// Inline message on plugin page
-			$notice = new Message\Plugin( $this->get_message( $license ), $this->plugin_basename );
-		} else if ( $screen->is_admin_screen( 'settings' ) && $license->get_expiry_date()->is_expiring_within_seconds( DAY_IN_SECONDS * 21 ) ) {
-			// Permanent displayed on settings page
-			$notice = new Message\Notice( $this->get_message( $license ) );
-		} else if ( ( $screen->is_list_screen() || $screen->is_admin_screen( 'columns' ) ) && $interval && $this->get_dismiss_option( $interval )->is_expired() ) {
-			// Dismissible
-			$notice = new Message\Notice\Dismissible( $this->get_message( $license ), $this->get_ajax_handler_interval( $interval ) );
-		}
+			case $screen->is_plugin_screen():
+				$activation = $this->get_activation();
 
-		if ( $notice instanceof Message ) {
-			$notice
-				->set_type( $notice::WARNING )
-				->register();
+				if ( $activation && $this->is_activation_up_for_renewal( $activation ) && $activation->get_expiry_date()->is_expiring_within_seconds( DAY_IN_SECONDS * 21 ) ) {
+					$notice = new Message\Plugin(
+						$this->get_message( $activation->get_expiry_date() ),
+						$this->plugin_basename
+					);
+					$notice->register();
+				}
+
+				return;
+
+			// Permanent displayed on settings page
+			case $screen->is_admin_screen( Settings::NAME ):
+				$activation = $this->get_activation();
+
+				if ( $activation && $this->is_activation_up_for_renewal( $activation ) && $activation->get_expiry_date()->is_expiring_within_seconds( DAY_IN_SECONDS * 21 ) ) {
+					$notice = new Message\Notice( $this->get_message( $activation->get_expiry_date() ) );
+					$notice
+						->set_type( $notice::WARNING )
+						->register();
+				}
+
+				return;
+
+			// Dismissible
+			case ( $screen->is_list_screen() || $screen->is_admin_screen( Columns::NAME ) ):
+				$activation = $this->get_activation();
+
+				if ( ! $activation || ! $this->is_activation_up_for_renewal( $activation ) ) {
+					return;
+				}
+
+				$days_remaining = $activation->get_expiry_date()->get_remaining_days();
+
+				$interval = $days_remaining > 0
+					? $this->get_current_interval( (int) floor( $days_remaining ) )
+					: null;
+
+				if ( $interval && $this->get_dismiss_option( $interval )->is_expired() ) {
+					$notice = new Message\Notice\Dismissible( $this->get_message( $activation->get_expiry_date() ), $this->get_ajax_handler_interval( $interval ) );
+					$notice
+						->set_type( $notice::WARNING )
+						->register();
+				}
+
+				return;
 		}
 	}
 
@@ -189,50 +217,38 @@ class Renewal
 
 	/**
 	 * @param DateTime $date
-	 * @param string   $format
 	 *
 	 * @return string
 	 */
-	private function localize_date( DateTime $date, $format = null ) {
-		if ( null === $format ) {
-			$format = get_option( 'date_format' );
-		}
-
-		return ac_format_date( $format, $date->getTimestamp() );
+	private function localize_date( DateTime $date ) {
+		return (string) ac_format_date( get_option( 'date_format' ), $date->getTimestamp() );
 	}
 
 	/**
-	 * @param License $license
+	 * @param ExpiryDate $expiry_date
 	 *
 	 * @return string
 	 */
-	protected function get_message( License $license ) {
+	protected function get_message( ExpiryDate $expiry_date ) {
 		$url = new UtmTags( new Site( Site::PAGE_ACCOUNT_SUBSCRIPTIONS ), 'renewal' );
+		$activation_token = $this->activation_token_factory->create();
 
-		$url->add( [
-			'subscription_key' => $license->get_key()->get_value(),
-			'site_url'         => $this->site_url->get_url(),
-		] );
+		if ( $activation_token ) {
+			$url->add( [
+				$activation_token->get_type() => $activation_token->get_token(),
+				'site_url'                    => $this->site_url->get_url(),
+			] );
+		}
 
 		$renewal_link = sprintf( '<a href="%s">%s</a>', $url->get_url(), __( 'Renew your license', 'codepress-admin-columns' ) );
-		$remaining_time = sprintf( '<strong>%s</strong>', $license->get_expiry_date()->get_human_time_diff() );
-		$expiry_date = sprintf( '<strong>%s</strong>', $this->localize_date( $license->get_expiry_date()->get_value() ) );
-
-		if ( $license->get_renewal_discount()->get_value() ) {
-			return sprintf(
-				__( "Your Admin Columns Pro license will expire in %s. %s before %s to get a %d%% discount!", 'codepress-admin-columns' ),
-				$remaining_time,
-				$renewal_link,
-				$expiry_date,
-				$license->get_renewal_discount()->get_value()
-			);
-		}
+		$remaining_time = sprintf( '<strong>%s</strong>', $expiry_date->get_human_time_diff() );
+		$localize_date = sprintf( '<strong>%s</strong>', $this->localize_date( $expiry_date->get_value() ) );
 
 		return sprintf(
 			__( "Your Admin Columns Pro license will expire in %s. In order get access to new features and receive security updates, please %s before %s.", 'codepress-admin-columns' ),
 			$remaining_time,
 			strtolower( $renewal_link ),
-			$expiry_date
+			$localize_date
 		);
 	}
 

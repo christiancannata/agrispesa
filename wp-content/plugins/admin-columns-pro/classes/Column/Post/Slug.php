@@ -3,19 +3,22 @@
 namespace ACP\Column\Post;
 
 use AC;
+use ACP\ConditionalFormat;
 use ACP\Editing;
 use ACP\Search;
 use ACP\Sorting;
 
 class Slug extends AC\Column\Post\Slug
-	implements Sorting\Sortable, Editing\Editable, Search\Searchable {
+	implements Sorting\Sortable, Editing\Editable, Search\Searchable, ConditionalFormat\Formattable {
+
+	use ConditionalFormat\ConditionalFormatTrait;
 
 	public function sorting() {
 		return new Sorting\Model\Post\PostField( 'post_name' );
 	}
 
 	public function editing() {
-		return new Editing\Model\Post\Slug( $this );
+		return new Editing\Service\Post\Slug();
 	}
 
 	public function search() {

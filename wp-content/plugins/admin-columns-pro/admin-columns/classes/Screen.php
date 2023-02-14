@@ -2,9 +2,11 @@
 
 namespace AC;
 
+use AC\Admin\Page\Columns;
+use AC\Admin\RequestHandlerInterface;
 use WP_Screen;
 
-class Screen implements Registrable {
+class Screen implements Registerable {
 
 	/**
 	 * @var WP_Screen
@@ -127,7 +129,14 @@ class Screen implements Registrable {
 	 */
 	public function is_admin_screen( $slug = null ) {
 		if ( null !== $slug ) {
-			return $this->is_main_admin_screen() && $slug === filter_input( INPUT_GET, 'tab' );
+			$tabs = [ $slug ];
+
+			// When the column page is requested from the setting menu the 'tab' querystring is not set.
+			if ( Columns::NAME === $slug ) {
+				$tabs[] = null;
+			}
+
+			return $this->is_main_admin_screen() && in_array( filter_input( INPUT_GET, RequestHandlerInterface::PARAM_TAB ), $tabs, true );
 		}
 
 		return $this->is_main_admin_screen();
@@ -137,7 +146,7 @@ class Screen implements Registrable {
 	 * @return bool
 	 */
 	private function is_main_admin_screen() {
-		$id = 'settings_page_' . Admin::NAME;
+		$id = 'settings_page_' . Admin\Admin::NAME;
 
 		if ( $this->is_admin_network() ) {
 			$id .= '-network';

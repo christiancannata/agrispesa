@@ -2,12 +2,28 @@
 
 namespace ACP\Filtering;
 
+use AC;
+use AC\Request;
+use AC\Table\TableFormView;
 use ACP;
+use ACP\Bookmark\SegmentRepository;
+use ACP\Filtering\Bookmark\PreferredFilter;
+use ACP\Filtering\Markup\Dropdown;
 
-abstract class Model extends ACP\Model {
+abstract class Model {
 
 	/**
-	 * @var Strategy\Comment | Strategy\Post | Strategy\User;
+	 * @var AC\Column
+	 */
+	protected $column;
+
+	/**
+	 * @var string
+	 */
+	private $data_type = 'string';
+
+	/**
+	 * @var Strategy
 	 */
 	protected $strategy;
 
@@ -30,6 +46,39 @@ abstract class Model extends ACP\Model {
 	 * @return array
 	 */
 	abstract public function get_filtering_data();
+
+	public function __construct( AC\Column $column ) {
+		$this->column = $column;
+	}
+
+	/**
+	 * @return AC\Column
+	 */
+	public function get_column() {
+		return $this->column;
+	}
+
+	/**
+	 * @param string $data_type
+	 *
+	 * @return $this
+	 */
+	public function set_data_type( $data_type ) {
+		$data_type = strtolower( $data_type );
+
+		if ( in_array( $data_type, [ 'string', 'numeric', 'date' ] ) ) {
+			$this->data_type = $data_type;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_data_type() {
+		return $this->data_type;
+	}
 
 	/**
 	 * @param Strategy $strategy
@@ -169,6 +218,15 @@ abstract class Model extends ACP\Model {
 	}
 
 	/**
+	 * @param string $request_key
+	 *
+	 * @return array
+	 */
+	private function get_preferred_filters( $request_key ) {
+		return ( new PreferredFilter( new SegmentRepository() ) )->findFilters( $this->column->get_list_screen(), $request_key );
+	}
+
+	/**
 	 * Get a request var for all columns
 	 *
 	 * @param string $suffix
@@ -176,13 +234,20 @@ abstract class Model extends ACP\Model {
 	 * @return string|false
 	 */
 	public function get_request_var( $suffix = '' ) {
-		$key = 'acp_filter';
+		$request = new Request();
+
+		$request_key = Dropdown::OPTION_FILTER;
 
 		if ( $suffix ) {
-			$key .= '-' . ltrim( $suffix, '-' );
+			$request_key .= '-' . ltrim( $suffix, '-' );
 		}
 
-		$values = filter_input( INPUT_GET, $key, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		$values = $request->filter( $request_key, [], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+		// Ignore when switching to another segment or when the filter form is submitted.
+		if ( ! $values && ! $request->filter( 'ac-segment' ) && null === $request->get( TableFormView::PARAM_ACTION ) ) {
+			$values = $this->get_preferred_filters( $request_key );
+		}
 
 		if ( ! isset( $values[ $this->column->get_name() ] ) ) {
 			return false;
@@ -195,33 +260,6 @@ abstract class Model extends ACP\Model {
 		}
 
 		return $value;
-	}
-
-	/**
-	 * @param $format
-	 *
-	 * @return array|false
-	 * @deprecated 4.2
-	 */
-	protected function get_date_options_relative( $format ) {
-		_deprecated_function( __METHOD__, '4.2', 'ACP\Filtering\Helper::get_date_options_relative()' );
-
-		return ( new Helper() )->get_date_options_relative( $format );
-	}
-
-	/**
-	 * @param array  $dates
-	 * @param        $display
-	 * @param string $format
-	 * @param null   $key
-	 *
-	 * @return array
-	 * @deprecated 4.2
-	 */
-	protected function get_date_options( array $dates, $display, $format = 'Y-m-d', $key = null ) {
-		_deprecated_function( __METHOD__, '4.2', 'ACP\Filtering\Helper::get_date_options()' );
-
-		return ( new Helper() )->get_date_options( $dates, $display, $format, $key );
 	}
 
 }

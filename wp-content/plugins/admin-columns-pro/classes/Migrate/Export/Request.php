@@ -7,7 +7,7 @@ use AC\Capabilities;
 use AC\ListScreenRepository\Storage;
 use AC\Type\ListScreenId;
 
-final class Request implements AC\Registrable {
+final class Request implements AC\Registerable {
 
 	const ACTION = 'acp-export';
 	const NONCE_NAME = 'acp_export_nonce';
@@ -36,9 +36,9 @@ final class Request implements AC\Registrable {
 	 */
 	public function handle_request() {
 		$data = (object) filter_input_array( INPUT_POST, [
-			'action'          => FILTER_SANITIZE_STRING,
+			'action'          => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'list_screen_ids' => [
-				'filter' => FILTER_SANITIZE_STRING,
+				'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 				'flags'  => FILTER_REQUIRE_ARRAY,
 			],
 			self::NONCE_NAME  => FILTER_DEFAULT,
@@ -56,7 +56,7 @@ final class Request implements AC\Registrable {
 			return;
 		}
 
-		if( empty( $data->list_screen_ids ) ){
+		if ( empty( $data->list_screen_ids ) ) {
 			return;
 		}
 

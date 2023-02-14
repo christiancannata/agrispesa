@@ -2,26 +2,21 @@
 
 namespace ACP\Table;
 
-use AC\Asset;
 use AC\Form\Element\Select;
 use AC\ListScreen;
 use AC\ListScreenRepository\Filter;
 use AC\ListScreenRepository\Sort;
 use AC\ListScreenRepository\Storage;
 use AC\PermissionChecker;
-use AC\Registrable;
+use AC\Registerable;
 
-class Switcher implements Registrable {
+class Switcher implements Registerable {
 
 	/** @var Storage */
 	private $storage;
 
-	/** @var Asset\Location\Absolute */
-	private $location;
-
-	public function __construct( Storage $storage, Asset\Location\Absolute $location ) {
+	public function __construct( Storage $storage ) {
 		$this->storage = $storage;
-		$this->location = $location;
 	}
 
 	public function register() {
@@ -29,13 +24,13 @@ class Switcher implements Registrable {
 	}
 
 	private function add_filter_args_to_url( $link ) {
-		$post_status = filter_input( INPUT_GET, 'post_status', FILTER_SANITIZE_STRING );
+		$post_status = filter_input( INPUT_GET, 'post_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( $post_status ) {
 			$link = add_query_arg( [ 'post_status' => $post_status ], $link );
 		}
 
-		$author = filter_input( INPUT_GET, 'author', FILTER_SANITIZE_STRING );
+		$author = filter_input( INPUT_GET, 'author', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		if ( $author ) {
 			$link = add_query_arg( [ 'author' => $author ], $link );
@@ -44,19 +39,20 @@ class Switcher implements Registrable {
 		return $link;
 	}
 
-	/**
-	 * @param ListScreen $list_screen
-	 */
-	public function switcher( $list_screen ) {
-		if ( ! $list_screen ) {
-			return;
-		}
+	public function switcher( ListScreen $list_screen ) {
 
 		$list_screens = $this->storage->find_all( [
-			'key'    => $list_screen->get_key(),
-			'filter' => new Filter\Permission( new PermissionChecker() ),
-			'sort'   => new Sort\ManualOrder(),
+			Storage::KEY        => $list_screen->get_key(),
+			Storage::ARG_FILTER => [
+				new Filter\Permission( new PermissionChecker() ),
+			],
+			Storage::ARG_SORT   => new Sort\ManualOrder(),
 		] );
+
+		// When an admin visits the table for a hidden listscreen
+		if ( ! $list_screens->contains( $list_screen ) ) {
+			$list_screens->add( $list_screen );
+		}
 
 		if ( $list_screens->count() > 1 ) : ?>
 			<form class="layout-switcher">
@@ -69,9 +65,8 @@ class Switcher implements Registrable {
 
 				$options = [];
 
-				/** @var ListScreen $_list_screen */
 				foreach ( $list_screens as $_list_screen ) {
-					$options[ $this->add_filter_args_to_url( $_list_screen->get_screen_link() ) ] = $_list_screen->get_title() ? $_list_screen->get_title() : __( 'Original', 'codepress-admin-columns' );
+					$options[ $this->add_filter_args_to_url( $_list_screen->get_screen_link() ) ] = $_list_screen->get_title() ?: __( 'Original', 'codepress-admin-columns' );
 				}
 
 				$select = new Select( 'layout', $options );

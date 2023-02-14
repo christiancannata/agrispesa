@@ -2,19 +2,25 @@
 
 namespace ACP\Check;
 
+use AC\Admin\Page\Addons;
+use AC\Admin\Page\Columns;
+use AC\Admin\Page\Settings;
 use AC\Ajax;
 use AC\Capabilities;
 use AC\Message;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Screen;
 use AC\Storage;
-use AC\Type\Url\Site;
-use AC\Type\Url\UtmTags;
-use ACP\LicenseKeyRepository;
-use ACP\LicenseRepository;
+use AC\Type\Url;
+use ACP\Access\ActivationStorage;
+use ACP\Access\Permissions;
+use ACP\Access\PermissionsStorage;
+use ACP\ActivationTokenFactory;
+use ACP\Admin\Page\License;
+use ACP\Admin\Page\Tools;
 
 class Activation
-	implements Registrable {
+	implements Registerable {
 
 	/**
 	 * @var string
@@ -22,99 +28,43 @@ class Activation
 	private $plugin_basename;
 
 	/**
-	 * @var LicenseRepository
+	 * @var ActivationTokenFactory
 	 */
-	private $license_repository;
+	private $activation_token_factory;
 
 	/**
-	 * @var LicenseKeyRepository
+	 * @var ActivationStorage
 	 */
-	private $license_key_repository;
+	private $activation_storage;
 
-	public function __construct( $plugin_basename, LicenseRepository $license_repository, LicenseKeyRepository $license_key_repository ) {
-		$this->plugin_basename = $plugin_basename;
-		$this->license_repository = $license_repository;
-		$this->license_key_repository = $license_key_repository;
+	/**
+	 * @var PermissionsStorage
+	 */
+	private $permission_storage;
+
+	/**
+	 * @var bool
+	 */
+	private $is_network_active;
+
+	public function __construct(
+		$plugin_basename,
+		ActivationTokenFactory $activation_token_factory,
+		ActivationStorage $activation_storage,
+		PermissionsStorage $permission_storage,
+		$is_network_active
+	) {
+		$this->plugin_basename = (string) $plugin_basename;
+		$this->activation_token_factory = $activation_token_factory;
+		$this->activation_storage = $activation_storage;
+		$this->permission_storage = $permission_storage;
+		$this->is_network_active = (bool) $is_network_active;
 	}
 
 	public function register() {
 		add_action( 'ac/screen', [ $this, 'register_notice' ] );
 
 		$this->get_ajax_handler()->register();
-	}
-
-	/**
-	 * @return bool
-	 */
-	private function show_message() {
-		$license_key = $this->license_key_repository->find();
-
-		if ( ! $license_key ) {
-			return true;
-		}
-
-		$license = $this->license_repository->find( $license_key );
-
-		if ( ! $license ) {
-			return true;
-		}
-
-		// An expired license has it's own message
-		if ( $license->is_expired() ) {
-			return false;
-		}
-
-		return ! $license->is_active();
-	}
-
-	/**
-	 * @param Screen $screen
-	 */
-	public function register_notice( Screen $screen ) {
-		if ( ! $screen->has_screen() || ! current_user_can( Capabilities::MANAGE ) ) {
-			return;
-		}
-
-		if ( ! $this->show_message() ) {
-			return;
-		}
-
-		// Inline message on plugin page
-		if ( $screen->is_plugin_screen() ) {
-			$notice = new Message\Plugin( $this->get_message(), $this->plugin_basename );
-			$notice
-				->set_type( Message::INFO )
-				->register();
-		}
-
-		// Permanent message on admin page
-		if ( $screen->is_admin_screen() ) {
-			$notice = new Message\Notice( $this->get_message() );
-			$notice
-				->set_type( Message::INFO )
-				->register();
-		}
-
-		// Dismissible on list tables
-		if ( $screen->get_list_screen() && $this->get_dismiss_option()->is_expired() ) {
-			$notice = new Message\Notice\Dismissible( $this->get_message(), $this->get_ajax_handler() );
-			$notice
-				->set_type( Message::INFO )
-				->register();
-		}
-	}
-
-	/**
-	 * return string
-	 */
-	private function get_message() {
-		$message = sprintf(
-			__( "To enable automatic updates <a href='%s'>enter your license key</a>. If you don't have a license key, please see <a href='%s' target='_blank'>details & pricing</a>.", 'codepress_admin_columns' ),
-			acp_get_license_page_url(),
-			( new UtmTags( new Site( Site::PAGE_PRICING ), 'plugins' ) )->get_url()
-		);
-
-		return $message;
 	}
 
 	/**
@@ -130,6 +80,108 @@ class Activation
 	}
 
 	/**
+	 * @param Screen $screen
+	 */
+	public function register_notice( Screen $screen ) {
+		if ( ! $screen->has_screen() || ! current_user_can( Capabilities::MANAGE ) ) {
+			return;
+		}
+
+		switch ( true ) {
+			case $screen->is_plugin_screen() && $this->show_message() :
+				$notice = new Message\Plugin(
+					$this->get_message(),
+					$this->plugin_basename,
+					Message::INFO
+				);
+				$notice->register();
+				break;
+			case (
+				     $screen->is_admin_screen( Settings::NAME ) ||
+				     $screen->is_admin_screen( Columns::NAME ) ||
+				     $screen->is_admin_screen( Tools::NAME ) ||
+				     $screen->is_admin_screen( Addons::NAME ) ||
+				     $screen->is_admin_screen( License::NAME ) ) && $this->show_message() :
+				$notice = new Message\Notice( $this->get_message() );
+				$notice
+					->set_type( Message::INFO )
+					->register();
+				break;
+			case $screen->get_list_screen() && $this->get_dismiss_option()->is_expired() && $this->show_message() :
+
+				// Dismissible message on list table
+				$notice = new Message\Notice\Dismissible( $this->get_message(), $this->get_ajax_handler() );
+				$notice
+					->set_type( Message::INFO )
+					->register();
+				break;
+		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function show_message() {
+		// We send a different (locked) message when a use has no usage permissions
+		$has_usage = $this->permission_storage->retrieve()->has_permission( Permissions::USAGE );
+
+		if ( ! $has_usage ) {
+			return false;
+		}
+
+		$token = $this->activation_token_factory->create();
+		$activation = $token ? $this->activation_storage->find( $token ) : null;
+
+		if ( ! $activation ) {
+			return true;
+		}
+
+		// An expired license has its own message
+		if ( $activation->is_expired() ) {
+			return false;
+		}
+
+		return ! $activation->is_active();
+	}
+
+	/**
+	 * @return Url
+	 */
+	private function get_license_page_url() {
+		return $this->is_network_active
+			? new Url\EditorNetwork( 'license' )
+			: new Url\Editor( 'license' );
+	}
+
+	/**
+	 * @return Url
+	 */
+	private function get_account_url() {
+		return new Url\UtmTags( new Url\Site( Url\Site::PAGE_ACCOUNT_SUBSCRIPTIONS ), 'license-activation' );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_message() {
+		return sprintf(
+			'%s %s',
+			sprintf(
+				__( "To enable automatic updates for %s, <a href='%s'>enter your license key</a>.", 'codepress_admin_columns' ),
+				'Admin Columns Pro',
+				esc_url( $this->get_license_page_url()->get_url() )
+			), sprintf(
+				__( 'You can find your license key on your %s.', 'codepress-admin-columns' ),
+				sprintf(
+					'<a href="%s" target="_blank">%s</a>',
+					esc_url( $this->get_account_url()->get_url() ),
+					__( 'account page', 'codepress-admin-columns' )
+				)
+			)
+		);
+	}
+
+	/**
 	 * @return Storage\Timestamp
 	 */
 	private function get_dismiss_option() {
@@ -142,7 +194,7 @@ class Activation
 		$this->get_ajax_handler()->verify_request();
 		$this->get_dismiss_option()->save( time() + ( MONTH_IN_SECONDS * 2 ) );
 
-		wp_die( 1 );
+		exit;
 	}
 
 }

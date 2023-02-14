@@ -2,8 +2,9 @@
 
 namespace AC\ListScreen;
 
+use AC\Column;
 use AC\ListScreenPost;
-use ReflectionException;
+use AC\WpListTableFactory;
 use WP_Posts_List_Table;
 
 class Post extends ListScreenPost {
@@ -28,9 +29,7 @@ class Post extends ListScreenPost {
 	 * @return WP_Posts_List_Table
 	 */
 	protected function get_list_table() {
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-posts-list-table.php' );
-
-		return new WP_Posts_List_Table( [ 'screen' => $this->get_screen_id() ] );
+		return ( new WpListTableFactory() )->create_post_table( $this->get_screen_id() );
 	}
 
 	/**
@@ -64,13 +63,48 @@ class Post extends ListScreenPost {
 		echo $this->get_display_value_by_column_name( $column_name, $id );
 	}
 
-	/**
-	 * @throws ReflectionException
-	 */
 	protected function register_column_types() {
 		parent::register_column_types();
 
-		$this->register_column_types_from_dir( 'AC\Column\Post' );
+		$this->register_column_types_from_list( [
+			Column\Post\Attachment::class,
+			Column\Post\Author::class,
+			Column\Post\AuthorName::class,
+			Column\Post\BeforeMoreTag::class,
+			Column\Post\Categories::class,
+			Column\Post\CommentCount::class,
+			Column\Post\Comments::class,
+			Column\Post\CommentStatus::class,
+			Column\Post\Content::class,
+			Column\Post\Date::class,
+			Column\Post\DatePublished::class,
+			Column\Post\Depth::class,
+			Column\Post\EstimatedReadingTime::class,
+			Column\Post\Excerpt::class,
+			Column\Post\FeaturedImage::class,
+			Column\Post\Formats::class,
+			Column\Post\ID::class,
+			Column\Post\LastModifiedAuthor::class,
+			Column\Post\Menu::class,
+			Column\Post\Modified::class,
+			Column\Post\Order::class,
+			Column\Post\PageTemplate::class,
+			Column\Post\PasswordProtected::class,
+			Column\Post\Path::class,
+			Column\Post\Permalink::class,
+			Column\Post\PingStatus::class,
+			Column\Post\PostParent::class,
+			Column\Post\Shortcodes::class,
+			Column\Post\Shortlink::class,
+			Column\Post\Slug::class,
+			Column\Post\Status::class,
+			Column\Post\Sticky::class,
+			Column\Post\Tags::class,
+			Column\Post\Taxonomy::class,
+			Column\Post\Title::class,
+			Column\Post\TitleRaw::class,
+			Column\Post\WordCount::class,
+		] );
 	}
 
 }

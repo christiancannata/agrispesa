@@ -4,15 +4,14 @@ namespace ACP\Sorting;
 
 use AC;
 use AC\Asset\Location;
+use AC\Column;
+use AC\ColumnRepository;
 use AC\ListScreenRepository\Storage;
-use ACP\Sorting\Admin;
+use AC\Registerable;
+use ACP\Bookmark;
 use ACP\Sorting\Controller;
 
-/**
- * Sorting Addon class
- * @since 1.0
- */
-class Addon implements AC\Registrable {
+class Addon implements Registerable {
 
 	/**
 	 * @var Storage
@@ -25,14 +24,30 @@ class Addon implements AC\Registrable {
 	private $location;
 
 	/**
-	 * @var AC\Admin
+	 * @var NativeSortableFactory
 	 */
-	private $admin;
+	private $native_sortable_factory;
 
-	public function __construct( Storage $storage, Location\Absolute $location, AC\Admin $admin ) {
+	/**
+	 * @var ModelFactory
+	 */
+	private $model_factory;
+
+	/**
+	 * @var Bookmark\SegmentRepository
+	 */
+	private $segment_repository;
+
+	public function __construct(
+		Storage $storage,
+		Location\Absolute $location,
+		Bookmark\SegmentRepository $segment_repository
+	) {
 		$this->storage = $storage;
 		$this->location = $location;
-		$this->admin = $admin;
+		$this->segment_repository = $segment_repository;
+		$this->native_sortable_factory = new NativeSortableFactory();
+		$this->model_factory = new ModelFactory();
 	}
 
 	public function register() {
@@ -45,20 +60,10 @@ class Addon implements AC\Registrable {
 		];
 
 		foreach ( $services as $service ) {
-			if ( $service instanceof AC\Registrable ) {
+			if ( $service instanceof Registerable ) {
 				$service->register();
 			}
 		}
-
-		$this->register_admin_elements();
-	}
-
-	private function register_admin_elements() {
-		$this->admin->get_page( 'settings' )->add_section( new Admin\Section\ResetSorting() );
-
-		/** @var AC\Admin\Section\General $general */
-		$general = $this->admin->get_page( 'settings' )->get_section( 'general' );
-		$general->add_option( new Admin\ShowAllResults() );
 	}
 
 	/**
@@ -69,25 +74,34 @@ class Addon implements AC\Registrable {
 			return;
 		}
 
-		$table = new Table\Screen( $list_screen, $this->location, new NativeSortableRepository() );
+		$table = new Table\Screen(
+			$list_screen,
+			$this->location,
+			$this->native_sortable_factory->create( $list_screen ),
+			$this->model_factory,
+			new ColumnRepository( $list_screen ),
+			new Settings\ListScreen\PreferredSort( $list_screen ),
+			new Settings\ListScreen\PreferredSegmentSort( new Bookmark\Setting\PreferredSegment( $list_screen, $this->segment_repository ) )
+		);
+
 		$table->register();
 	}
 
 	/**
 	 * Register field settings for sorting
 	 *
-	 * @param AC\Column $column
+	 * @param Column $column
 	 */
 	public function register_column_settings( $column ) {
-		$model = ( new ModelFactory() )->create( $column );
+		$model = $this->model_factory->create( $column );
 
 		if ( $model ) {
 			$column->add_setting( new Settings( $column ) );
 		}
 
-		$native = new NativeSortableRepository();
+		$native_repository = $this->native_sortable_factory->create( $column->get_list_screen() );
 
-		if ( $native->is_column_sortable( $column->get_list_screen()->get_key(), $column->get_type() ) ) {
+		if ( $native_repository->find( $column->get_type() ) ) {
 
 			$setting = new Settings( $column );
 			$setting->set_default( 'on' );
@@ -103,9 +117,9 @@ class Addon implements AC\Registrable {
 	 * @deprecated 5.1
 	 */
 	public function show_all_results() {
-		_deprecated_function( __METHOD__, '5.1', 'acp_sorting_show_all_results()' );
+		_deprecated_function( __METHOD__, '5.1' );
 
-		return acp_sorting_show_all_results();
+		return false;
 	}
 
 }

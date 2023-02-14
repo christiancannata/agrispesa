@@ -3,23 +3,33 @@
 namespace AC\Check;
 
 use AC\Ajax;
+use AC\Asset\Location;
+use AC\Asset\Script;
 use AC\Capabilities;
 use AC\Message;
 use AC\Preferences;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Screen;
 use AC\Type\Url\Documentation;
-use AC\Type\Url\Site;
 use AC\Type\Url\UtmTags;
 use Exception;
 
 class Review
-	implements Registrable {
+	implements Registerable {
+
+	/**
+	 * @var Location\Absolute
+	 */
+	private $location;
 
 	/**
 	 * @var int Show message after x days
 	 */
 	protected $show_after = 30;
+
+	public function __construct( Location\Absolute $location ) {
+		$this->location = $location;
+	}
 
 	/**
 	 * @param int $show_after_days
@@ -61,7 +71,8 @@ class Review
 			return;
 		}
 
-		wp_enqueue_script( 'ac-notice-review', AC()->get_url() . 'assets/js/message-review.js', [ 'jquery' ], AC()->get_version() );
+		$script = new Script( 'ac-notice-review', $this->location->with_suffix( 'assets/js/message-review.js' ), [ 'jquery' ] );
+		$script->enqueue();
 
 		$notice = new Message\Notice\Dismissible( $this->get_message(), $this->get_ajax_handler() );
 		$notice
@@ -126,15 +137,6 @@ class Review
 	 *
 	 * @return string
 	 */
-	private function get_forum_url( $utm_medium ) {
-		return ( new UtmTags( new Site( Site::PAGE_FORUM ), $utm_medium ) )->get_url();
-	}
-
-	/**
-	 * @param string $utm_medium
-	 *
-	 * @return string
-	 */
 	private function get_documentation_url( $utm_medium ) {
 		return ( new UtmTags( new Documentation(), $utm_medium ) )->get_url();
 	}
@@ -143,9 +145,7 @@ class Review
 	 * @return string
 	 */
 	protected function get_message() {
-		$product = ac_is_pro_active()
-			? __( 'Admin Columns Pro', 'codepress-admin-columns' )
-			: __( 'Admin Columns', 'codepress-admin-columns' );
+		$product = __( 'Admin Columns', 'codepress-admin-columns' );
 
 		ob_start();
 
@@ -176,18 +176,11 @@ class Review
 					'<a href="' . esc_url( $this->get_documentation_url( 'review-notice' ) ) . '" target="_blank">' . __( 'documentation page', 'codepress-admin-columns' ) . '</a>'
 				);
 
-				if ( ac_is_pro_active() ) {
-					printf(
-						__( 'You can also use your admincolumns.com account to access support through %s!', 'codepress-admin-columns' ),
-						'<a href="' . esc_url( $this->get_forum_url( 'review-notice' ) ) . '" target="_blank">' . __( 'our forum', 'codepress-admin-columns' ) . '</a>'
-					);
-				} else {
-					printf(
-						__( 'You can also find help on the %s, and %s.', 'codepress-admin-columns' ),
-						'<a href="https://wordpress.org/support/plugin/codepress-admin-columns#postform" target="_blank">' . __( 'Admin Columns forum on WordPress.org', 'codepress-admin-columns' ) . '</a>',
-						'<a href="https://wordpress.org/plugins/codepress-admin-columns/faq/#plugin-info" target="_blank">' . __( 'find answers to frequently asked questions', 'codepress-admin-columns' ) . '</a>'
-					);
-				}
+				printf(
+					__( 'You can also find help on the %s, and %s.', 'codepress-admin-columns' ),
+					'<a href="https://wordpress.org/support/plugin/codepress-admin-columns#postform" target="_blank">' . __( 'Admin Columns forum on WordPress.org', 'codepress-admin-columns' ) . '</a>',
+					'<a href="https://wordpress.org/plugins/codepress-admin-columns/#faq" target="_blank">' . __( 'find answers to frequently asked questions', 'codepress-admin-columns' ) . '</a>'
+				);
 
 				?>
 			</p>

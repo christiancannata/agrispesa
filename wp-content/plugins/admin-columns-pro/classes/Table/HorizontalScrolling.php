@@ -8,15 +8,16 @@ use AC\ListScreen;
 use AC\ListScreenRepository\Storage;
 use AC\Type\ListScreenId;
 
-/**
- * @since 4.0
- */
-class HorizontalScrolling implements AC\Registrable {
+class HorizontalScrolling implements AC\Registerable {
 
-	/** @var Storage */
+	/**
+	 * @var Storage
+	 */
 	private $storage;
 
-	/** @var Asset\Location\Absolute */
+	/**
+	 * @var Asset\Location\Absolute
+	 */
 	private $location;
 
 	public function __construct( Storage $storage, Asset\Location\Absolute $location ) {
@@ -83,6 +84,12 @@ class HorizontalScrolling implements AC\Registrable {
 	 * @param AC\Table\Screen $table
 	 */
 	public function register_screen_option( $table ) {
+		$list_screen = $table->get_list_screen();
+
+		if ( ! $list_screen->get_settings() ) {
+			return;
+		}
+
 		$check_box = new AC\Form\Element\Checkbox( 'acp_overflow_list_screen_table' );
 
 		$label = __( 'Horizontal Scrolling', 'codepress-admin-columns' );

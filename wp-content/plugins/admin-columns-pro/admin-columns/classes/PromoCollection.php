@@ -10,8 +10,7 @@ class PromoCollection extends ArrayIterator {
 
 	public function __construct() {
 		parent::__construct( [
-			new BlackFriday( new DateRange( new DateTime( '2019-11-28' ), new DateTime( '2019-12-03' ) ) ),
-			new BlackFriday( new DateRange( new DateTime( '2020-11-26' ), new DateTime( '2020-11-31' ) ) ),
+			new BlackFriday( new DateRange( new DateTime( '2022-11-25' ), new DateTime( '2022-11-30' ) ), 'BlackFriday22' ),
 		] );
 	}
 
@@ -20,7 +19,9 @@ class PromoCollection extends ArrayIterator {
 	 * @return Promo|null
 	 */
 	public function find_active() {
-		/** @var Promo $promo */
+		/**
+		 * @var Promo $promo
+		 */
 		foreach ( $this->array as $promo ) {
 			if ( $promo->is_active() ) {
 				return $promo;

@@ -7,6 +7,11 @@ class Item {
 	/**
 	 * @var string
 	 */
+	private $slug;
+
+	/**
+	 * @var string
+	 */
 	private $url;
 
 	/**
@@ -15,14 +20,28 @@ class Item {
 	private $label;
 
 	/**
-	 * @var string|null
+	 * @var string
 	 */
 	private $class;
 
-	public function __construct( $url, $label, $class = null ) {
-		$this->url = $url;
-		$this->label = $label;
-		$this->class = $class;
+	/**
+	 * @var string
+	 */
+	private $target;
+
+	public function __construct( $slug, $url, $label, $class = '', $target = '' ) {
+		$this->slug = (string) $slug;
+		$this->url = (string) $url;
+		$this->label = (string) $label;
+		$this->class = (string) $class;
+		$this->target = (string) $target;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_slug() {
+		return $this->slug;
 	}
 
 	/**
@@ -40,10 +59,17 @@ class Item {
 	}
 
 	/**
-	 * @return string|null
+	 * @return string
 	 */
 	public function get_class() {
 		return $this->class;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_target() {
+		return $this->target;
 	}
 
 }

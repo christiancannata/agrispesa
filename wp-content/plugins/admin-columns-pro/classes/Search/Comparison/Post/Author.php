@@ -20,6 +20,7 @@ class Author extends PostField
 	public function __construct( $post_type ) {
 		$operators = new Operators( [
 			Operators::EQ,
+			Operators::CURRENT_USER,
 		] );
 
 		$this->post_type = $post_type;
@@ -27,9 +28,6 @@ class Author extends PostField
 		parent::__construct( $operators );
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected function get_field() {
 		return 'post_author';
 	}

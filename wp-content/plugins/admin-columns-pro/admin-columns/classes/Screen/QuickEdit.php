@@ -3,12 +3,12 @@
 namespace AC\Screen;
 
 use AC\ListScreenRepository\Storage;
-use AC\Registrable;
+use AC\Registerable;
 use AC\ScreenController;
-use AC\Table\Preference;
+use AC\Table\LayoutPreference;
 use AC\Type\ListScreenId;
 
-class QuickEdit implements Registrable {
+class QuickEdit implements Registerable {
 
 	/**
 	 * @var Storage
@@ -16,11 +16,11 @@ class QuickEdit implements Registrable {
 	private $storage;
 
 	/**
-	 * @var Preference
+	 * @var LayoutPreference
 	 */
 	private $preference;
 
-	public function __construct( Storage $storage, Preference $preference ) {
+	public function __construct( Storage $storage, LayoutPreference $preference ) {
 		$this->storage = $storage;
 		$this->preference = $preference;
 	}

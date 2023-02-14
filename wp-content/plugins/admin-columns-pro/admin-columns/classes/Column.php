@@ -130,7 +130,7 @@ class Column {
 	 * @return $this
 	 */
 	public function set_label( $label ) {
-		$this->label = $label;
+		$this->label = $label ? (string) $label : null;
 
 		return $this;
 	}
@@ -265,7 +265,7 @@ class Column {
 		 *
 		 * @since 3.0
 		 */
-		return apply_filters( 'ac/headings/label', $this->get_setting( 'label' )->get_value(), $this );
+		return (string) apply_filters( 'ac/headings/label', $this->get_setting( 'label' )->get_value(), $this );
 	}
 
 	/**
@@ -419,7 +419,7 @@ class Column {
 	 * @return string
 	 */
 	public function get_separator() {
-		return ', ';
+		return ( new ApplyFilter\ColumnSeparator( $this ) )->apply_filters( ', ' );
 	}
 
 	/**

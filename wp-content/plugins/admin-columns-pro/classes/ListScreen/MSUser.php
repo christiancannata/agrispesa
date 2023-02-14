@@ -2,6 +2,8 @@
 
 namespace ACP\ListScreen;
 
+use AC\Type\Url;
+use AC\WpListTableFactory;
 use ACP\ListScreen;
 use WP_MS_Users_List_Table;
 
@@ -22,10 +24,8 @@ class MSUser extends ListScreen\User {
 	/**
 	 * @return WP_MS_Users_List_Table
 	 */
-	public function get_list_table() {
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-ms-users-list-table.php' );
-
-		return new WP_MS_Users_List_Table( [ 'screen' => $this->get_screen_id() ] );
+	protected function get_list_table() {
+		return ( new WpListTableFactory() )->create_network_user_table( $this->get_screen_id() );
 	}
 
 	protected function get_admin_url() {
@@ -33,14 +33,17 @@ class MSUser extends ListScreen\User {
 	}
 
 	public function get_edit_link() {
-		return add_query_arg( [
+		$url = new Url\EditorNetwork( 'columns' );
+		$url->add( [
 			'list_screen' => $this->get_key(),
 			'layout_id'   => $this->get_layout_id(),
-		], ac_get_admin_network_url( 'columns' ) );
+		] );
+
+		return $url->get_url();
 	}
 
 	/**
-	 * @param $id
+	 * @param int $id
 	 *
 	 * @return string HTML
 	 * @since 4.0

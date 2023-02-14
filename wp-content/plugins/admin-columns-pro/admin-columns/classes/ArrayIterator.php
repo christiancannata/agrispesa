@@ -11,44 +11,31 @@ class ArrayIterator implements Iterator {
 	 */
 	protected $array;
 
-	/**
-	 * @param array $array
-	 */
-	public function __construct( array $array ) {
+	public function __construct( array $array = [] ) {
 		$this->array = $array;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return current( $this->array );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\ReturnTypeWillChange]
 	public function next() {
 		return next( $this->array );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return key( $this->array );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		return $this->key() !== null;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		return reset( $this->array );
 	}

@@ -3,7 +3,7 @@
 namespace ACP\QuickAdd\Table;
 
 use AC\Asset\Location;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Table;
 use ACP\QuickAdd\Admin\HideOnScreen;
 use ACP\QuickAdd\Filter;
@@ -11,7 +11,7 @@ use ACP\QuickAdd\Model;
 use ACP\QuickAdd\Table\Checkbox\ShowButton;
 use ACP\QuickAdd\Table\Preference;
 
-class Loader implements Registrable {
+class Loader implements Registerable {
 
 	/**
 	 * @var Location\Absolute
@@ -67,7 +67,7 @@ class Loader implements Registrable {
 
 		$table_screen->register_screen_option( new ShowButton( $this->preference->is_active( $list_screen->get_key() ) ? 1 : 0 ) );
 
-		$script = new Script\AddNewInline( __( 'Quick Add', 'codepress-admin-columns' ), 'aca-add-new-inline', $this->location->with_suffix( 'assets/add-new-inline/js/table.js' ) );
+		$script = new Script\AddNewInline( __( 'Add Row', 'codepress-admin-columns' ), 'aca-add-new-inline', $this->location->with_suffix( 'assets/add-new-inline/js/table.js' ) );
 		$script->enqueue();
 	}
 

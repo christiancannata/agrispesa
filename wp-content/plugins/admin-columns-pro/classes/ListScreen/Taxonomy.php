@@ -3,29 +3,26 @@
 namespace ACP\ListScreen;
 
 use AC;
+use AC\WpListTableFactory;
 use ACP\Column;
 use ACP\Editing;
+use ACP\Editing\BulkDelete\Deletable;
 use ACP\Export;
 use ACP\Filtering;
 use ACP\Sorting;
-use ReflectionException;
 use WP_Term;
 use WP_Terms_List_Table;
 
 class Taxonomy extends AC\ListScreenWP
-	implements Editing\ListScreen, Export\ListScreen, Filtering\ListScreen, Sorting\ListScreen {
+	implements Editing\ListScreen, Export\ListScreen, Filtering\ListScreen, Sorting\ListScreen, Editing\BulkDelete\ListScreen {
 
 	/**
-	 * @var string Taxonomy name
+	 * @var string
 	 */
 	private $taxonomy;
 
 	/**
-	 * Constructor
-	 *
-	 * @param $taxonomy
-	 *
-	 * @since 1.2.0
+	 * @param string $taxonomy
 	 */
 	public function __construct( $taxonomy ) {
 		$this->set_taxonomy( $taxonomy )
@@ -34,6 +31,10 @@ class Taxonomy extends AC\ListScreenWP
 		     ->set_screen_id( 'edit-' . $taxonomy )
 		     ->set_key( 'wp-taxonomy_' . $taxonomy )
 		     ->set_group( 'taxonomy' );
+	}
+
+	public function deletable() {
+		return new Deletable\Taxonomy( $this->get_taxonomy() );
 	}
 
 	/**
@@ -64,10 +65,8 @@ class Taxonomy extends AC\ListScreenWP
 	/**
 	 * @return WP_Terms_List_Table
 	 */
-	public function get_list_table() {
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-terms-list-table.php' );
-
-		return new WP_Terms_List_Table( [ 'screen' => $this->get_screen_id() ] );
+	protected function get_list_table() {
+		return ( new WpListTableFactory() )->create_taxonomy_table( $this->get_screen_id() );
 	}
 
 	/**
@@ -113,7 +112,7 @@ class Taxonomy extends AC\ListScreenWP
 		$post_type = null;
 
 		if ( $object_type = $this->get_taxonomy_var( 'object_type' ) ) {
-			if ( post_type_exists( $object_type[0] ) ) {
+			if ( post_type_exists( reset( $object_type ) ) ) {
 				$post_type = $object_type[0];
 			}
 		}
@@ -152,13 +151,23 @@ class Taxonomy extends AC\ListScreenWP
 		return $taxonomy && isset( $taxonomy->{$var} ) ? $taxonomy->{$var} : false;
 	}
 
-	/**
-	 * @throws ReflectionException
-	 */
 	protected function register_column_types() {
-		$this->register_column_type( new Column\CustomField );
-		$this->register_column_type( new Column\Actions );
-		$this->register_column_types_from_dir( 'ACP\Column\Taxonomy' );
+		$this->register_column_types_from_list( [
+			Column\CustomField::class,
+			Column\Actions::class,
+			Column\Taxonomy\Count::class,
+			Column\Taxonomy\CountForPostType::class,
+			Column\Taxonomy\CustomDescription::class,
+			Column\Taxonomy\Description::class,
+			Column\Taxonomy\Excerpt::class,
+			Column\Taxonomy\ID::class,
+			Column\Taxonomy\Links::class,
+			Column\Taxonomy\Menu::class,
+			Column\Taxonomy\Name::class,
+			Column\Taxonomy\Posts::class,
+			Column\Taxonomy\Slug::class,
+			Column\Taxonomy\TaxonomyParent::class,
+		] );
 	}
 
 	public function editing() {

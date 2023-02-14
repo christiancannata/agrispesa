@@ -13,7 +13,7 @@ use ACP\Sorting\Type\DataType;
 class CustomFieldFactory {
 
 	/**
-	 * @param string             $type
+	 * @param string|null             $type
 	 * @param string             $meta_type
 	 * @param string             $meta_key
 	 * @param Column\CustomField $column
@@ -21,14 +21,21 @@ class CustomFieldFactory {
 	 * @return AbstractModel
 	 */
 	public static function create( $type, $meta_type, $meta_key, Column\CustomField $column ) {
+		if( $type === null ){
+			return null;
+		}
 
 		switch ( $type ) {
 
 			case CustomFieldType::TYPE_ARRAY :
 				return new Disabled();
 			case CustomFieldType::TYPE_BOOLEAN :
-			case CustomFieldType::TYPE_NUMERIC :
 				return ( new MetaFactory() )->create( $meta_type, $meta_key, new DataType( DataType::NUMERIC ) );
+			case CustomFieldType::TYPE_NUMERIC :
+				// $numeric_type can be `numeric` or `decimal`
+				$numeric_type = apply_filters( 'acp/sorting/custom_field/numeric_type', DataType::NUMERIC, $column );
+
+				return ( new MetaFactory() )->create( $meta_type, $meta_key, new DataType( $numeric_type ) );
 			case CustomFieldType::TYPE_DATE :
 				// $date_type can be `string`, `numeric`, `date` or `datetime`
 				$date_type = apply_filters( 'acp/sorting/custom_field/date_type', DataType::DATETIME, $column );

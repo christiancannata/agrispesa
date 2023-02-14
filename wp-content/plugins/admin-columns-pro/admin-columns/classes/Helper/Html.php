@@ -43,7 +43,7 @@ class Html {
 	 */
 	public function link( $url, $label = null, $attributes = [] ) {
 		if ( false === $label ) {
-			return $label;
+			return false;
 		}
 
 		if ( ! $url ) {
@@ -152,20 +152,34 @@ class Html {
 	/**
 	 * Display a modal which trigger an ajax event on click. The ajax callback calls AC\Column::get_ajax_value.
 	 *
-	 * @param int    $item_id
-	 * @param string $label
-	 * @param string $column_name
+	 * @param string      $label
+	 * @param string|null $title
 	 *
 	 * @return string
 	 */
-	public function get_ajax_modal_link( $item_id, $label, $column_name ) {
-		return ac_helper()->html->link( '#', $label, [
-			'class'              => 'ac-modal-box-link',
-			'data-column'        => $column_name,
-			'data-item-id'       => $item_id,
-			'data-ajax-populate' => 1,
-			'data-label'         => $label,
-		] );
+	public function get_ajax_modal_link( $label, array $attributes = [] ) {
+		$attribute_markup = [];
+
+		if ( isset( $attributes['title'] ) && $attributes['title'] ) {
+			$attribute_markup[] = sprintf( 'data-modal-title="%s"', esc_attr( $attributes['title'] ) );
+		}
+		if ( isset( $attributes['edit_link'] ) && $attributes['edit_link'] ) {
+			$attribute_markup[] = sprintf( 'data-modal-edit-link="%s"', esc_url( $attributes['edit_link'] ) );
+		}
+		if ( isset( $attributes['download_link'] ) && $attributes['download_link'] ) {
+			$attribute_markup[] = sprintf( 'data-modal-download-link="%s"', esc_url( $attributes['download_link'] ) );
+		}
+		if ( isset( $attributes['class'] ) && $attributes['class'] ) {
+			$attribute_markup[] = sprintf( 'data-modal-class="%s"', esc_attr( $attributes['class'] ) );
+		}
+		if ( isset( $attributes['id'] ) && $attributes['id'] ) {
+			$attribute_markup[] = sprintf( 'data-modal-id="%s"', esc_attr( $attributes['id'] ) );
+		}
+
+		return sprintf( '<a data-modal-value %s>%s</a>',
+			implode( ' ', $attribute_markup ),
+			$label
+		);
 	}
 
 	/**
@@ -225,12 +239,17 @@ class Html {
 		$external_links = [];
 
 		$dom = new DOMDocument();
-		@$dom->loadHTML( $string );
+
+		libxml_use_internal_errors( true );
+		$dom->loadHTML( $string );
+		libxml_clear_errors();
 
 		$links = $dom->getElementsByTagName( 'a' );
 
 		foreach ( $links as $link ) {
-			/** @var DOMElement $link */
+			/**
+			 * @var DOMElement $link
+			 */
 			$href = $link->getAttribute( 'href' );
 
 			if ( 0 === strpos( $href, '#' ) ) {
@@ -267,7 +286,7 @@ class Html {
 	 * @return bool
 	 */
 	private function contains_html( $string ) {
-		return $string && is_string( $string ) ? $string !== strip_tags( $string ) : false;
+		return $string && is_string( $string ) && $string !== strip_tags( $string );
 	}
 
 	/**

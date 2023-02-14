@@ -3,15 +3,16 @@
 namespace AC\Ajax;
 
 use AC;
+use AC\Request;
 
-final class NumberFormat implements AC\Registrable {
+final class NumberFormat implements AC\Registerable {
 
 	/**
-	 * @var AC\Request
+	 * @var Request
 	 */
 	private $request;
 
-	public function __construct( $request ) {
+	public function __construct( Request $request ) {
 		$this->request = $request;
 	}
 
@@ -25,7 +26,7 @@ final class NumberFormat implements AC\Registrable {
 		$decimal_point = $this->request->get( 'decimal_point' ) ?: null;
 		$thousands_sep = $this->request->get( 'thousands_sep' ) ?: '';
 
-		wp_send_json_success( (string) number_format( $number, $decimals, $decimal_point, $thousands_sep ) );
+		wp_send_json_success( number_format( $number, $decimals, $decimal_point, $thousands_sep ) );
 	}
 
 }

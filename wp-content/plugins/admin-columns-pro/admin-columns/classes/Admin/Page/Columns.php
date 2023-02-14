@@ -4,9 +4,8 @@ namespace AC\Admin\Page;
 
 use AC\Admin;
 use AC\Admin\Banner;
-use AC\Admin\Helpable;
-use AC\Admin\HelpTab;
-use AC\Admin\Page;
+use AC\Admin\Preference;
+use AC\Admin\RenderableHead;
 use AC\Admin\ScreenOption;
 use AC\Admin\Section\Partial\Menu;
 use AC\Asset\Assets;
@@ -15,23 +14,24 @@ use AC\Asset\Location;
 use AC\Asset\Script;
 use AC\Asset\Style;
 use AC\Column;
-use AC\Controller\ListScreenRequest;
+use AC\Controller\Middleware;
 use AC\DefaultColumnsRepository;
 use AC\ListScreen;
-use AC\Message;
+use AC\ListScreenRepository\Storage;
+use AC\ListScreenTypes;
+use AC\Renderable;
+use AC\Request;
+use AC\Type\ListScreenId;
+use AC\Type\Url;
 use AC\Type\Url\Documentation;
 use AC\Type\Url\Site;
+use AC\Type\Url\Tweet;
 use AC\Type\Url\UtmTags;
 use AC\View;
 
-class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOptions {
+class Columns implements Enqueueables, Admin\ScreenOptions, Renderable, RenderableHead {
 
 	const NAME = 'columns';
-
-	/**
-	 * @var ListScreenRequest
-	 */
-	private $controller;
 
 	/**
 	 * @var Location\Absolute
@@ -48,34 +48,76 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 	 */
 	private $menu;
 
+	/**
+	 * @var Storage
+	 */
+	private $storage;
+
+	/**
+	 * @var Renderable
+	 */
+	private $head;
+
+	/**
+	 * @var Preference\ListScreen
+	 */
+	private $preference;
+
+	/**
+	 * @var bool
+	 */
+	private $is_acp_active;
+
+	/**
+	 * @var bool
+	 */
+	private $is_network;
+
 	public function __construct(
-		ListScreenRequest $controller,
 		Location\Absolute $location,
 		DefaultColumnsRepository $default_columns,
-		Menu $menu
+		Menu $menu,
+		Storage $storage,
+		Renderable $head,
+		Preference\ListScreen $preference,
+		bool $is_acp_active,
+		bool $is_network = false
 	) {
-		parent::__construct( self::NAME, __( 'Admin Columns', 'codepress-admin-columns' ) );
-
-		$this->controller = $controller;
 		$this->location = $location;
 		$this->default_columns = $default_columns;
 		$this->menu = $menu;
+		$this->storage = $storage;
+		$this->head = $head;
+		$this->preference = $preference;
+		$this->is_acp_active = $is_acp_active;
+		$this->is_network = $is_network;
 	}
 
-	public function show_read_only_notice( ListScreen $list_screen ) {
-		if ( $list_screen->is_read_only() ) {
-			$message = sprintf( __( 'The columns for %s are read only and can therefore not be edited.', 'codepress-admin-columns' ), '<strong>' . esc_html( $list_screen->get_title() ? $list_screen->get_title() : $list_screen->get_label() ) . '</strong>' );
-			$message = sprintf( '<p>%s</p>', apply_filters( 'ac/read_only_message', $message, $list_screen ) );
+	public function render_head() {
+		return $this->head;
+	}
 
-			$notice = new Message\InlineMessage( $message );
+	/**
+	 * @return ListScreen|null
+	 */
+	private function get_list_screen_from_request() {
+		$request = new Request();
+		$request->add_middleware( new Middleware\ListScreenAdmin( $this->storage, $this->preference, $this->is_network ) );
 
-			echo $notice->set_type( Message::INFO )
-			            ->render();
+		$list_key = $request->get( Middleware\ListScreenAdmin::PARAM_LIST_KEY );
+
+		if ( ! $list_key ) {
+			return null;
 		}
+
+		$list_id = $request->get( Middleware\ListScreenAdmin::PARAM_LIST_ID );
+
+		return $list_id && ListScreenId::is_valid_id( $list_id )
+			? $this->storage->find( new ListScreenId( $list_id ) )
+			: ListScreenTypes::instance()->get_list_screen_by_key( $list_key );
 	}
 
 	public function get_assets() {
-
 		return new Assets( [
 			new Style( 'jquery-ui-lightness', $this->location->with_suffix( 'assets/ui-theme/jquery-ui-1.8.18.custom.css' ) ),
 			new Script( 'jquery-ui-slider' ),
@@ -83,20 +125,12 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 				'ac-admin-page-columns',
 				$this->location->with_suffix( 'assets/js/admin-page-columns.js' ),
 				$this->default_columns,
-				$this->controller->get_list_screen()
+				$this->get_list_screen_from_request()
 			),
 			new Style( 'ac-admin-page-columns-css', $this->location->with_suffix( 'assets/css/admin-page-columns.css' ) ),
 			new Style( 'ac-select2' ),
 			new Script( 'ac-select2' ),
 		] );
-	}
-
-	public function get_help_tabs() {
-		return [
-			new HelpTab\Introduction(),
-			new HelpTab\Basics(),
-			new HelpTab\CustomField(),
-		];
 	}
 
 	private function get_column_id() {
@@ -124,8 +158,31 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 		];
 	}
 
+	private function set_preference_screen( ListScreen $list_screen ) {
+		$this->preference->set_last_visited_list_key( $list_screen->get_key() );
+
+		if ( $list_screen->has_id() ) {
+			$this->preference->set_list_id( $list_screen->get_key(), $list_screen->get_id()->get_id() );
+		}
+	}
+
+	private function get_tweet_url(): Url {
+		return new Tweet(
+			__( "I'm using Admin Columns for WordPress!", 'codepress-admin-columns' ),
+			new Url\WordpressPluginRepo(),
+			Tweet::TWITTER_HANDLE,
+			'admincolumns'
+		);
+	}
+
 	public function render() {
-		$list_screen = $this->controller->get_list_screen();
+		$list_screen = $this->get_list_screen_from_request();
+
+		if ( ! $list_screen ) {
+			return '';
+		}
+
+		$this->set_preference_screen( $list_screen );
 
 		if ( ! $this->default_columns->exists( $list_screen->get_key() ) ) {
 			$modal = new View( [
@@ -133,7 +190,7 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 			] );
 			$modal->set_template( 'admin/loading-message' );
 
-			return $this->menu->render( true ) . $modal->render();
+			return $this->menu->render( $list_screen, true ) . $modal->render();
 		}
 
 		$classes = [];
@@ -152,11 +209,11 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 
 		ob_start();
 		?>
-
+		<h1 class="screen-reader-text"><?= __( 'Columns', 'codepress-admin-columns' ); ?></h1>
 		<div class="ac-admin <?= esc_attr( implode( ' ', $classes ) ); ?>" data-type="<?= esc_attr( $list_screen->get_key() ); ?>">
 			<div class="ac-admin__header">
 
-				<?= $this->menu->render(); ?>
+				<?= $this->menu->render( $list_screen ); ?>
 
 				<?php do_action( 'ac/settings/after_title', $list_screen ); ?>
 
@@ -176,7 +233,7 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 
 						$delete_confirmation_message = false;
 
-						if ( (bool) apply_filters( 'ac/delete_confirmation', true ) ) {
+						if ( apply_filters( 'ac/delete_confirmation', true ) ) {
 							$delete_confirmation_message = sprintf( __( "Warning! The %s columns data will be deleted. This cannot be undone. 'OK' to delete, 'Cancel' to stop", 'codepress-admin-columns' ), "'" . $list_screen->get_title() . "'" );
 						}
 
@@ -196,13 +253,16 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 
 					<?php if ( apply_filters( 'ac/show_banner', true ) ) : ?>
 
-						<?= new Banner(); ?>
+						<?= new Banner() ?>
 
 						<?php
 						$view = new View( [
 							'documentation_url' => ( new UtmTags( new Documentation(), 'feedback-docs-button' ) )->get_url(),
 							'upgrade_url'       => ( new UtmTags( new Site( Site::PAGE_ABOUT_PRO ), 'feedback-purchase-button' ) )->get_url(),
+							'tweet_url'         => $this->get_tweet_url()->get_url(),
+							'review_url'        => ( new Url\WordpressPluginReview() )->get_url(),
 						] );
+
 						echo $view->set_template( 'admin/side-feedback' );
 						?>
 
@@ -219,7 +279,7 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 
 				<div class="ac-admin__main">
 
-					<?= $this->show_read_only_notice( $list_screen ); ?>
+					<?php do_action( 'ac/settings/notice', $list_screen ); ?>
 
 					<div id="listscreen_settings" data-form="listscreen" class="<?= $list_screen->is_read_only() ? '-disabled' : ''; ?>">
 						<?php
@@ -253,6 +313,10 @@ class Columns extends Page implements Enqueueables, Helpable, Admin\ScreenOption
 						echo $columns->set_template( 'admin/edit-columns' );
 
 						do_action( 'ac/settings/after_columns', $list_screen );
+
+						if ( ! $this->is_acp_active ) {
+							echo ( new View() )->set_template( 'admin/list-screen-settings-mockup' )->render();
+						}
 
 						?>
 					</div>

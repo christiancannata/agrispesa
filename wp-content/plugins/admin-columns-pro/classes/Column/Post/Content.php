@@ -3,20 +3,31 @@
 namespace ACP\Column\Post;
 
 use AC;
+use ACP\ConditionalFormat;
 use ACP\Editing;
+use ACP\Editing\Settings\EditableType;
 use ACP\Export;
 use ACP\Filtering;
 use ACP\Search;
 use ACP\Sorting;
 
-/**
- * @since 2.4
- */
 class Content extends AC\Column\Post\Content
-	implements Editing\Editable, Sorting\Sortable, Filtering\Filterable, Export\Exportable, Search\Searchable {
+	implements Editing\Editable, Sorting\Sortable, Filtering\Filterable, Export\Exportable, Search\Searchable, ConditionalFormat\Formattable {
+
+	use ConditionalFormat\ConditionalFormatTrait;
+
+	public function register_settings() {
+		parent::register_settings();
+
+		$this->add_setting( ( new Editing\Settings\Factory\EditableType( $this, Editing\Settings\Factory\EditableType::TYPE_CONTENT ) )->create() );
+	}
 
 	public function editing() {
-		return new Editing\Model\Post\Content( $this );
+		$view = EditableType\Content::TYPE_WYSIWYG === $this->get_inline_editable_type()
+			? new Editing\View\Wysiwyg()
+			: new Editing\View\TextArea();
+
+		return new Editing\Service\Post\Content( $view );
 	}
 
 	public function filtering() {
@@ -33,6 +44,20 @@ class Content extends AC\Column\Post\Content
 
 	public function search() {
 		return new Search\Comparison\Post\Content();
+	}
+
+	private function get_inline_editable_type() {
+		$setting = $this->get_setting( Editing\Settings::NAME );
+
+		if ( ! $setting instanceof Editing\Settings ) {
+			return null;
+		}
+
+		$section = $setting->get_section( EditableType\Content::NAME );
+
+		return $section instanceof EditableType\Content
+			? $section->get_editable_type()
+			: null;
 	}
 
 }

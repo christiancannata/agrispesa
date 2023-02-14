@@ -6,9 +6,11 @@ use AC;
 use AC\Asset\Location;
 use AC\ListScreenRepository\Storage;
 use ACP\QuickAdd\Admin\HideOnScreen;
+use ACP\QuickAdd\Model\Factory;
+use ACP\QuickAdd\Model\PostFactory;
 use ACP\QuickAdd\Table;
 
-class Addon implements AC\Registrable {
+class Addon implements AC\Registerable {
 
 	/**
 	 * @var Storage
@@ -35,6 +37,8 @@ class Addon implements AC\Registrable {
 		$preference = new Table\Preference\ShowButton();
 		$filter = new Filter();
 
+		Factory::add_factory( new PostFactory() );
+
 		$services = [
 			new Controller\AjaxNewItem( $this->storage, $this->request ),
 			new Controller\AjaxScreenOption( $this->storage, $preference ),
@@ -43,7 +47,7 @@ class Addon implements AC\Registrable {
 		];
 
 		foreach ( $services as $service ) {
-			if ( $service instanceof AC\Registrable ) {
+			if ( $service instanceof AC\Registerable ) {
 				$service->register();
 			}
 		}

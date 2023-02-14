@@ -2,19 +2,25 @@
 
 namespace ACP;
 
-use ACP\Type\License\Key;
+use AC\Storage\KeyValueFactory;
+use AC\Storage\KeyValuePair;
+use ACP\Type\Activation\Key;
+use ACP\Type\LicenseKey;
 
 class LicenseKeyRepository {
 
-	const OPTION_KEY = 'acp_subscription_key';
+	/**
+	 * @var KeyValuePair
+	 */
+	private $storage;
 
-	/** @var bool */
-	private $network_active;
-
-	public function __construct( $network_active = false ) {
-		$this->network_active = (bool) $network_active;
+	public function __construct( KeyValueFactory $storage_factory ) {
+		$this->storage = $storage_factory->create( 'acp_subscription_key' );
 	}
 
+	/**
+	 * @return LicenseKey|null
+	 */
 	public function find() {
 		$key = defined( 'ACP_LICENCE' ) && ACP_LICENCE
 			? ACP_LICENCE
@@ -24,25 +30,23 @@ class LicenseKeyRepository {
 			return null;
 		}
 
-		return new Key( $key );
+		$source = $this->is_defined()
+			? LicenseKey::SOURCE_CODE
+			: LicenseKey::SOURCE_DATABASE;
+
+		return new LicenseKey( $key, $source );
+	}
+
+	private function is_defined() {
+		return defined( 'ACP_LICENCE' ) && ACP_LICENCE;
 	}
 
 	private function get() {
-		return $this->network_active
-			? get_site_option( self::OPTION_KEY )
-			: get_option( self::OPTION_KEY );
-	}
-
-	public function save( Key $license_key ) {
-		$this->network_active
-			? update_site_option( self::OPTION_KEY, $license_key->get_value() )
-			: update_option( self::OPTION_KEY, $license_key->get_value(), false );
+		return $this->storage->get();
 	}
 
 	public function delete() {
-		$this->network_active
-			? delete_site_option( self::OPTION_KEY )
-			: delete_option( self::OPTION_KEY );
+		return $this->storage->delete();
 	}
 
 }

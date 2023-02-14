@@ -15,18 +15,14 @@ class Meta extends Model {
 	 */
 	private $serialized;
 
-	/**
-	 * @param AC\Column\Meta $column
-	 */
 	public function __construct( AC\Column\Meta $column, $serialized = null ) {
 		parent::__construct( $column );
 
-		$this->serialized = $serialized;
-
-		if ( null === $this->serialized ) {
-			$this->serialized = $column->is_serialized();
+		if ( null === $serialized ) {
+			$serialized = $column->is_serialized();
 		}
 
+		$this->serialized = (bool) $serialized;
 	}
 
 	/**
@@ -205,7 +201,7 @@ class Meta extends Model {
 
 		foreach ( $this->get_meta_values() as $value ) {
 			if ( is_serialized( $value ) ) {
-				$value = unserialize( $value );
+				$value = unserialize( $value, [ 'allowed_classes' => false ] );
 
 				if ( is_array( $value ) ) {
 					$values = array_merge( $values, $value );

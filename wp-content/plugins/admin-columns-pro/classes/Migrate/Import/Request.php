@@ -6,7 +6,7 @@ use AC\Capabilities;
 use AC\ListScreenCollection;
 use AC\ListScreenRepository\Storage;
 use AC\Message;
-use AC\Registrable;
+use AC\Registerable;
 use ACP\Exception\DecoderNotFoundException;
 use ACP\Migrate\MessageTrait;
 use ACP\Storage\ListScreen\DecoderFactory;
@@ -16,7 +16,7 @@ use ACP\Storage\ListScreen\SerializerTypes;
 use ACP\Storage\ListScreen\Unserializer;
 use Exception;
 
-final class Request implements Registrable {
+final class Request implements Registerable {
 
 	use MessageTrait;
 
@@ -53,7 +53,7 @@ final class Request implements Registrable {
 	 */
 	private function is_request() {
 		$data = filter_input_array( INPUT_POST, [
-			'action'         => FILTER_SANITIZE_STRING,
+			'action'         => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			self::NONCE_NAME => FILTER_DEFAULT,
 		] );
 

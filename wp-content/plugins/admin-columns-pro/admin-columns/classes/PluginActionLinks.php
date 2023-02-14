@@ -3,18 +3,25 @@
 namespace AC;
 
 use AC\Admin\Page\Columns;
+use AC\Type\Url\Editor;
 use AC\Type\Url\Site;
 use AC\Type\Url\UtmTags;
 
-class PluginActionLinks implements Registrable {
+class PluginActionLinks implements Registerable {
 
 	/**
 	 * @var string
 	 */
 	private $basename;
 
-	public function __construct( $basename ) {
+	/**
+	 * @var bool
+	 */
+	private $is_acp_active;
+
+	public function __construct( $basename, bool $is_acp_active ) {
 		$this->basename = $basename;
+		$this->is_acp_active = $is_acp_active;
 	}
 
 	public function register() {
@@ -37,12 +44,23 @@ class PluginActionLinks implements Registrable {
 			return $links;
 		}
 
-		array_unshift( $links, sprintf( '<a href="%s">%s</a>', esc_url( ac_get_admin_url( Columns::NAME ) ), __( 'Settings', 'codepress-admin-columns' ) ) );
+		$url = new Editor( Columns::NAME );
 
-		if ( ! ac_is_pro_active() ) {
+		array_unshift(
+			$links,
+			sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( $url->get_url() ),
+				__( 'Settings', 'codepress-admin-columns' )
+			)
+		);
+
+		$upgrade_page_url = new UtmTags( new Site( Site::PAGE_ABOUT_PRO ), 'upgrade' );
+
+		if ( ! $this->is_acp_active ) {
 			$links[] = sprintf(
 				'<a href="%s" target="_blank">%s</a>',
-				esc_url( ( new UtmTags( new Site( Site::PAGE_ABOUT_PRO ), 'upgrade' ) )->get_url() ),
+				esc_url( $upgrade_page_url->get_url() ),
 				sprintf(
 					'<span style="font-weight: bold;">%s</span>',
 					__( 'Go Pro', 'codepress-admin-columns' )

@@ -14,17 +14,29 @@ class Export extends AC\Admin\Table {
 	 */
 	private $storage;
 
-	public function __construct( Storage $storage ) {
+	/**
+	 * @var bool
+	 */
+	private $network_only;
+
+	public function __construct( Storage $storage, $network_only ) {
 		$this->storage = $storage;
+		$this->network_only = $network_only;
 	}
 
 	/**
 	 * @return ListScreenCollection
 	 */
 	public function get_rows() {
-		$rows = $this->storage->find_all( [
-			'sort' => new AC\ListScreenRepository\Sort\Label(),
-		] );
+		$args = [
+			Storage::ARG_SORT => new AC\ListScreenRepository\Sort\Label(),
+		];
+
+		if ( $this->network_only ) {
+			$args[ Storage::ARG_FILTER ][] = new AC\ListScreenRepository\Filter\Network();
+		}
+
+		$rows = $this->storage->find_all( $args );
 
 		if ( $rows->count() < 1 ) {
 			$this->message = __( 'No column settings available.', 'codepress-admin-columns' );
@@ -49,6 +61,40 @@ class Export extends AC\Admin\Table {
 				return sprintf( '<label for="export-%s"><strong>%s</strong></label>', $list_screen->get_layout_id(), $list_screen->get_label() );
 			case 'id' :
 				return sprintf( '<small>%s</small>', $list_screen->get_layout_id() );
+			case 'source' :
+				return $this->get_source( $list_screen );
+		}
+
+		return null;
+	}
+
+	private function get_repository_label( $repository_name ) {
+		$labels = [
+			'acp-database' => __( 'Database', 'codepress-admin-columns' ),
+			'acp-file'     => __( 'File', 'codepress-admin-columns' ),
+		];
+
+		return isset( $labels[ $repository_name ] )
+			? $labels[ $repository_name ]
+			: $repository_name;
+	}
+
+	private function get_source( ListScreen $list_screen ) {
+		foreach ( array_reverse( $this->storage->get_repositories() ) as $name => $repo ) {
+			if ( ! $repo->find( $list_screen->get_id() ) ) {
+				continue;
+			}
+
+			$label = $this->get_repository_label( $name );
+
+			if ( $repo->has_source( $list_screen->get_id() ) ) {
+				return sprintf( '<span data-ac-tip="%s">%s</span>',
+					sprintf( '%s: %s', __( 'Path', 'codepress-admin-columns' ), $repo->get_source( $list_screen->get_id() ) ),
+					$label
+				);
+			}
+
+			return $label;
 		}
 
 		return null;
@@ -56,9 +102,10 @@ class Export extends AC\Admin\Table {
 
 	public function get_headings() {
 		return [
-			'check-column' => sprintf( '<input type="checkbox" data-select-all>' ),
+			'check-column' => '<input type="checkbox" data-select-all>',
 			'list-table'   => __( 'List Table', 'codepress-admin-columns' ),
 			'name'         => __( 'Name', 'codepress-admin-columns' ),
+			'source'       => __( 'Source', 'codepress-admin-columns' ),
 			'id'           => __( 'ID', 'codepress-admin-columns' ),
 		];
 	}

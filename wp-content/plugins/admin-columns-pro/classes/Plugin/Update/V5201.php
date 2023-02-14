@@ -3,13 +3,14 @@
 namespace ACP\Plugin\Update;
 
 use AC\Plugin\Update;
+use AC\Plugin\Version;
 use ACP\Search\Middleware\Mapping;
 use ACP\Search\Middleware\Mapping\Rule;
 
 class V5201 extends Update {
 
-	protected function set_version() {
-		$this->version = '5.2.1';
+	public function __construct() {
+		parent::__construct( new Version( '5.2.1' ) );
 	}
 
 	public function apply_update() {
@@ -28,10 +29,10 @@ class V5201 extends Update {
 		}
 
 		foreach ( $preferences as $preference ) {
-			$segments = unserialize( $preference->meta_value );
+			$segments = unserialize( $preference->meta_value, [ 'allowed_classes' => false ] );
 
 			foreach ( $segments['segments'] as $k => $segment ) {
-				$data = unserialize( $segment['data'] );
+				$data = unserialize( $segment['data'], [ 'allowed_classes' => false ] );
 
 				$data['url_parameters'] = [];
 

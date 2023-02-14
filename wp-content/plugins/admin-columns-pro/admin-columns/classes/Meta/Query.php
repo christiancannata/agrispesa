@@ -123,10 +123,10 @@ class Query {
 	}
 
 	/**
-	 * @param        $field
-	 * @param null   $operator
-	 * @param null   $value
-	 * @param string $boolean
+	 * @param string           $field
+	 * @param string           $operator
+	 * @param string|int|array $value
+	 * @param string           $boolean
 	 *
 	 * @return $this
 	 * @see get_where_clause()
@@ -463,8 +463,6 @@ class Query {
 
 	/**
 	 * @param string $type
-	 *
-	 * @return bool
 	 */
 	private function set_query( $type ) {
 		global $wpdb;
@@ -492,13 +490,11 @@ class Query {
 				break;
 
 			default:
-				return false;
+				return;
 		}
 
 		$this->query = new WP_Meta_Query();
 		$this->query->get_sql( $type, $table, $id );
-
-		return true;
 	}
 
 }

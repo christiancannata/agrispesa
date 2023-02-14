@@ -24,33 +24,40 @@ class Arrays {
 	}
 
 	/**
-	 * @param array  $array
-	 * @param string $glue
+	 * @param array $keys
+	 * @param mixed $value
+	 * @param array $result
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function implode_associative( array $array, $glue ) {
-		$result = [];
+	public function add_nested_value( array $keys, $value, array $result = [] ) {
+		$key = array_shift( $keys );
 
-		foreach ( $array as $key => $item ) {
-			if ( is_array( $item ) ) {
-				$result[] = sprintf( '%s[ %s ]', $key, $this->implode_associative( $item, $glue ) );
-			} else if ( is_numeric( $key ) ) {
-				$result[] = $this->wrap_boolean_in_italic( $item );
-			} else {
-				$result[] = sprintf( '%s: %s', $key, $this->wrap_boolean_in_italic( $item ) );
-			}
+		if ( $keys ) {
+			$value = $this->add_nested_value( $keys, $value, is_array( $result[ $key ] ) ? $result[ $key ] : [] );
 		}
 
-		return implode( $glue, $result );
+		$result[ $key ] = $value;
+
+		return $result;
 	}
 
-	private function wrap_boolean_in_italic( $value ) {
-		if ( is_bool( $value ) ) {
-			$value = sprintf( '<em>%s</em>', $value ? 'true' : 'false' );
+	/**
+	 * @param array $array
+	 * @param array $keys
+	 *
+	 * @return mixed
+	 */
+	public function get_nested_value( array $array, array $keys ) {
+		foreach ( $keys as $key ) {
+			if ( ! isset( $array[ $key ] ) ) {
+				return null;
+			}
+
+			$array = $array[ $key ];
 		}
 
-		return $value;
+		return $array;
 	}
 
 	/**
@@ -118,7 +125,13 @@ class Arrays {
 	 * @return array Indented Array
 	 * @since 1.0
 	 */
-	public function indent( $array, $parentId = 0, $parentKey = 'post_parent', $selfKey = 'ID', $childrenKey = 'children' ) {
+	public function indent(
+		$array,
+		$parentId = 0,
+		$parentKey = 'post_parent',
+		$selfKey = 'ID',
+		$childrenKey = 'children'
+	) {
 		$indent = [];
 
 		$i = 0;
@@ -189,6 +202,18 @@ class Arrays {
 		$string = ac_helper()->array->implode_recursive( ',', $mixed );
 
 		return ac_helper()->string->string_to_array_integers( $string );
+	}
+
+	/**
+	 * @param array  $array
+	 * @param string $glue
+	 *
+	 * @return string
+	 */
+	public function implode_associative( array $array, $glue ) {
+		_deprecated_function( __METHOD__, '5.7.1' );
+
+		return '';
 	}
 
 }

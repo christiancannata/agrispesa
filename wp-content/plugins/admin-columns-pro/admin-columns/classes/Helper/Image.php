@@ -4,7 +4,6 @@ namespace AC\Helper;
 
 use DOMDocument;
 use DOMElement;
-use WP_Error;
 
 class Image {
 
@@ -19,9 +18,17 @@ class Image {
 	 * @param null|string $dest_path
 	 * @param int         $jpeg_quality
 	 *
-	 * @return bool|string|WP_Error
+	 * @return false|string
 	 */
-	public function resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 90 ) {
+	public function resize(
+		$file,
+		$max_w,
+		$max_h,
+		$crop = false,
+		$suffix = null,
+		$dest_path = null,
+		$jpeg_quality = 90
+	) {
 		$editor = wp_get_image_editor( $file );
 
 		if ( is_wp_error( $editor ) ) {
@@ -78,12 +85,19 @@ class Image {
 
 		// Is Image
 		if ( $attributes = wp_get_attachment_image_src( $id, $size ) ) {
-			$src = $attributes[0];
+			list( $src, $width, $height ) = $attributes;
 
 			if ( is_array( $size ) ) {
 				$image = $this->markup_cover( $src, $size[0], $size[1], $id );
 			} else {
-				$image = $this->markup( $src, $attributes[1], $attributes[2], $id );
+				// In case of SVG
+				if ( 1 === (int) $width && 1 === (int) $height ) {
+					$_size = $this->get_image_sizes_by_name( $size );
+					$width = $_size['width'];
+					$height = $_size['height'];
+				}
+
+				$image = $this->markup( $src, $width, $height, $id );
 			}
 		} // Is File, use icon
 		else if ( $attributes = wp_get_attachment_image_src( $id, $size, true ) ) {
@@ -133,7 +147,6 @@ class Image {
 
 				$image = $this->markup( $src, $dimensions[0], $dimensions[1] );
 			} else {
-
 				$image = $this->markup( $url, $dimensions[0], $dimensions[1] );
 			}
 		} // External image
@@ -234,25 +247,26 @@ class Image {
 
 	private function markup_cover( $src, $width, $height, $media_id = null ) {
 		ob_start(); ?>
-		<span class="ac-image cpac-cover" data-media-id="<?php echo esc_attr( $media_id ); ?>" style="width:<?php echo esc_attr( $width ); ?>px;height:<?php echo esc_attr( $height ); ?>px;background-size:cover;background-image:url('<?php echo esc_attr( $src ); ?>');background-position:center;"<?php echo $this->get_file_tooltip_attr( $media_id ); ?>></span>
+
+		<span class="ac-image -cover" data-media-id="<?= esc_attr( $media_id ); ?>">
+			<img style="width:<?= esc_attr( $width ); ?>px;height:<?= esc_attr( $height ); ?>px;" src="<?= esc_attr( $src ); ?>" alt="">
+		</span>
 
 		<?php
 		return ob_get_clean();
 	}
 
-	private function markup( $src, $width, $height, $media_id = null, $add_extension = false ) {
-		$class = false;
-
+	private function markup( $src, $width, $height, $media_id = null, $add_extension = false, $class = '' ) {
 		if ( $media_id && ! wp_attachment_is_image( $media_id ) ) {
 			$class = ' ac-icon';
 		}
 
 		ob_start(); ?>
-		<span class="ac-image<?php echo $class; ?>" data-media-id="<?php echo esc_attr( $media_id ); ?>"<?php echo $this->get_file_tooltip_attr( $media_id ); ?>>
-			<img style="max-width:<?php echo esc_attr( $width ); ?>px;max-height:<?php echo esc_attr( $height ); ?>px;" src="<?php echo esc_attr( $src ); ?>" alt="">
+		<span class="ac-image <?= esc_attr( $class ); ?>" data-media-id="<?= esc_attr( $media_id ); ?>" <?= $this->get_file_tooltip_attr( $media_id ); ?>>
+			<img style="max-width:<?= esc_attr( $width ); ?>px;max-height:<?= esc_attr( $height ); ?>px;" src="<?= esc_attr( $src ); ?>" alt="">
 
 			<?php if ( $add_extension ) : ?>
-				<span class="ac-extension"><?php echo esc_attr( $this->get_file_extension( $media_id ) ); ?></span>
+				<span class="ac-extension"><?= esc_attr( $this->get_file_extension( $media_id ) ); ?></span>
 			<?php endif; ?>
 
 		</span>
@@ -328,8 +342,11 @@ class Image {
 		}
 
 		$dom = new DOMDocument;
-		@$dom->loadHTML( $string );
+
+		libxml_use_internal_errors( true );
+		$dom->loadHTML( $string );
 		$dom->preserveWhiteSpace = false;
+		libxml_clear_errors();
 
 		$urls = [];
 

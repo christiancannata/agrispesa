@@ -4,11 +4,11 @@ namespace ACP\Sorting\Controller;
 
 use AC\Ajax;
 use AC\ListScreenRepository\Storage;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Type\ListScreenId;
-use ACP\Sorting\Table\Preference\SortedBy;
+use ACP\Sorting\UserPreference;
 
-class AjaxResetSorting implements Registrable {
+class AjaxResetSorting implements Registerable {
 
 	/**
 	 * @var Storage
@@ -34,14 +34,19 @@ class AjaxResetSorting implements Registrable {
 
 	public function handle_reset() {
 		$this->get_ajax_handler()->verify_request();
+		$storage_key = filter_input( INPUT_POST, 'list_screen' );
 
-		$list_screen = $this->storage->find( new ListScreenId( filter_input( INPUT_POST, 'layout' ) ) );
+		if ( filter_input( INPUT_POST, 'layout' ) ) {
+			$list_screen = $this->storage->find( new ListScreenId( filter_input( INPUT_POST, 'layout' ) ) );
 
-		if ( ! $list_screen ) {
-			wp_die();
+			if ( ! $list_screen ) {
+				exit;
+			}
+
+			$storage_key = $list_screen->get_storage_key();
 		}
 
-		$preference = new SortedBy( $list_screen->get_storage_key() );
+		$preference = new UserPreference\SortType( $storage_key );
 
 		wp_send_json_success( $preference->delete() );
 	}

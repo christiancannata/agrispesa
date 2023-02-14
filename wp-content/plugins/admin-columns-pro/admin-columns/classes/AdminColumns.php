@@ -2,25 +2,23 @@
 
 namespace AC;
 
-use AC\Admin\Page;
+use AC\Admin;
+use AC\Admin\AdminScripts;
+use AC\Admin\PageRequestHandler;
+use AC\Admin\PageRequestHandlers;
 use AC\Admin\Preference;
-use AC\Asset\Location\Absolute;
-use AC\Asset\Script;
-use AC\Asset\Style;
 use AC\Controller;
-use AC\Deprecated;
 use AC\ListScreenRepository\Database;
 use AC\ListScreenRepository\Storage;
+use AC\Plugin\SetupFactory;
+use AC\Plugin\Version;
 use AC\Screen\QuickEdit;
+use AC\Service;
+use AC\Settings\GeneralOption;
 use AC\Table;
 use AC\ThirdParty;
 
 class AdminColumns extends Plugin {
-
-	/**
-	 * @var Admin
-	 */
-	private $admin;
 
 	/**
 	 * @var Storage
@@ -28,7 +26,6 @@ class AdminColumns extends Plugin {
 	private $storage;
 
 	/**
-	 * @since 2.5
 	 * @var self
 	 */
 	private static $instance;
@@ -41,7 +38,13 @@ class AdminColumns extends Plugin {
 		return self::$instance;
 	}
 
-	private function __construct() {
+	protected function __construct() {
+		parent::__construct( AC_FILE, new Version( AC_VERSION ) );
+
+		$plugin_information = new PluginInformation( $this->get_basename() );
+		$is_network_active = $plugin_information->is_network_active();
+		$is_acp_active = $this->is_acp_active();
+
 		$this->storage = new Storage();
 		$this->storage->set_repositories( [
 			'acp-database' => new ListScreenRepository\Storage\ListScreenRepository(
@@ -50,49 +53,73 @@ class AdminColumns extends Plugin {
 			),
 		] );
 
-		$location = new Absolute(
-			$this->get_url(),
-			$this->get_dir()
-		);
+		$location = $this->get_location();
+		$menu_factory = new Admin\MenuFactory( admin_url( 'options-general.php' ), $location );
 
-		$this->admin = ( new AdminFactory( $this->storage, $location ) )->create();
+		$page_handler = new PageRequestHandler();
+		$page_handler->add( 'columns', new Admin\PageFactory\Columns( $this->storage, $location, $menu_factory, $is_acp_active ) )
+		             ->add( 'settings', new Admin\PageFactory\Settings( $location, $menu_factory, $is_acp_active ) )
+		             ->add( 'addons', new Admin\PageFactory\Addons( $location, new IntegrationRepository(), $menu_factory ) )
+		             ->add( 'help', new Admin\PageFactory\Help( $location, $menu_factory ) );
+
+		PageRequestHandlers::add_handler( $page_handler );
+
+		$color_repository = new Admin\Colors\ColorRepository( new Admin\Colors\Storage\OptionFactory() );
 
 		$services = [
-			$this->admin,
+			new Admin\Admin( new PageRequestHandlers(), $location, new AdminScripts( $location ) ),
+			new Admin\Notice\ReadOnlyListScreen(),
 			new Ajax\NumberFormat( new Request() ),
-			new Deprecated\Hooks,
 			new ListScreens(),
-			new Screen,
-			new Settings\General,
-			new ThirdParty\ACF,
-			new ThirdParty\NinjaForms,
-			new ThirdParty\WooCommerce,
-			new ThirdParty\WPML,
+			new Screen(),
+			new ThirdParty\ACF(),
+			new ThirdParty\NinjaForms(),
+			new ThirdParty\WooCommerce(),
+			new ThirdParty\WPML( $this->storage ),
 			new Controller\DefaultColumns( new Request(), new DefaultColumnsRepository() ),
-			new QuickEdit( $this->storage, new Table\Preference() ),
+			new QuickEdit( $this->storage, new Table\LayoutPreference() ),
 			new Capabilities\Manage(),
 			new Controller\AjaxColumnRequest( $this->storage, new Request() ),
+			new Controller\AjaxGeneralOptions( new GeneralOption() ),
 			new Controller\AjaxRequestCustomFieldKeys(),
+			new Controller\AjaxColumnModalValue( $this->storage ),
 			new Controller\AjaxColumnValue( $this->storage ),
 			new Controller\AjaxScreenOptions( new Preference\ScreenOptions() ),
 			new Controller\ListScreenRestoreColumns( $this->storage ),
-			new Controller\RedirectAddonStatus( ac_get_admin_url( Page\Addons::NAME ), new Integrations() ),
 			new Controller\RestoreSettingsRequest( $this->storage->get_repository( 'acp-database' ) ),
-			new PluginActionLinks( $this->get_basename() ),
-			new NoticeChecks(),
-			new TableLoader( $this->storage, new PermissionChecker(), $location, new Table\Preference() ),
+			new PluginActionLinks( $this->get_basename(), $is_acp_active ),
+			new Controller\TableListScreenSetter( $this->storage, new PermissionChecker(), $location, new Table\LayoutPreference() ),
+			new Admin\Scripts( $location ),
+			new Service\IntegrationColumns( new IntegrationRepository() ),
+			new Service\Colors(
+				new Admin\Colors\Shipped\ColorUpdater(
+					new Admin\Colors\Shipped\ColorParser( ABSPATH . 'wp-admin/css/common.css' ),
+					$color_repository,
+					new Admin\Colors\Storage\OptionFactory()
+				),
+				new Admin\Colors\StyleInjector( $color_repository )
+			),
 		];
 
-		foreach ( $services as $service ) {
-			if ( $service instanceof Registrable ) {
-				$service->register();
-			}
+		if ( ! $is_acp_active ) {
+			$services[] = new Service\NoticeChecks( $location );
 		}
 
-		$this->set_installer( new Plugin\Installer() );
+		$setup_factory = new SetupFactory\AdminColumns( 'ac_version', $this->get_version() );
 
-		add_action( 'init', [ $this, 'install' ], 1000 );
-		add_action( 'init', [ $this, 'register_global_scripts' ] );
+		$services[] = new Service\Setup( $setup_factory->create( SetupFactory::SITE ) );
+
+		if ( $is_network_active ) {
+			$services[] = new Service\Setup( $setup_factory->create( SetupFactory::NETWORK ) );
+		}
+
+		array_map( static function ( Registerable $service ) {
+			$service->register();
+		}, $services );
+	}
+
+	private function is_acp_active(): bool {
+		return defined( 'ACP_FILE' );
 	}
 
 	/**
@@ -102,139 +129,11 @@ class AdminColumns extends Plugin {
 		return $this->storage;
 	}
 
-	protected function get_file() {
-		return AC_FILE;
-	}
-
 	/**
-	 * @return string
+	 * @deprecated 4.3.1
 	 */
-	protected function get_version_key() {
-		return 'ac_version';
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_version() {
-		return AC_VERSION;
-	}
-
 	public function admin() {
-		return $this->admin;
-	}
-
-	private function get_location() {
-		return new Absolute( $this->get_url(), $this->get_dir() );
-	}
-
-	public function register_global_scripts() {
-		$assets = [
-			new Script( 'ac-select2-core', $this->get_location()->with_suffix( 'assets/js/select2.js' ) ),
-			new Script( 'ac-select2', $this->get_location()->with_suffix( 'assets/js/select2_conflict_fix.js' ), [ 'jquery', 'ac-select2-core' ] ),
-			new Style( 'ac-select2', $this->get_location()->with_suffix( 'assets/css/select2.css' ) ),
-			new Style( 'ac-jquery-ui', $this->get_location()->with_suffix( 'assets/css/ac-jquery-ui.css' ) ),
-		];
-
-		foreach ( $assets as $asset ) {
-			$asset->register();
-		}
-	}
-
-	/**
-	 * @param $file
-	 *
-	 * @since      3.0
-	 * @deprecated 3.1.5
-	 */
-	public function get_plugin_version( $file ) {
-		_deprecated_function( __METHOD__, '3.1.5' );
-	}
-
-	/**
-	 * @deprecated 3.1.5
-	 * @since      3.0
-	 */
-	public function get_default_list_screen() {
-		_deprecated_function( __METHOD__, '3.1.5' );
-	}
-
-	/**
-	 * @deprecated 3.1.5
-	 * @since      3.0
-	 */
-	public function minified() {
-		_deprecated_function( __METHOD__, '3.1.5' );
-	}
-
-	/**
-	 * @param string $key
-	 *
-	 * @return ListScreen|null
-	 * @since      3.0
-	 * @deprecated 3.2
-	 */
-	public function get_list_screen( $key ) {
-		_deprecated_function( __METHOD__, '3.2', 'ListScreenTypes::instance()->get_list_screen_by_key()' );
-
-		return ListScreenTypes::instance()->get_list_screen_by_key( $key );
-	}
-
-	/**
-	 * @param string $key
-	 *
-	 * @return bool
-	 * @deprecated 3.2
-	 */
-	public function list_screen_exists( $key ) {
-		_deprecated_function( __METHOD__, '3.2' );
-
-		return ListScreenTypes::instance()->get_list_screen_by_key( $key ) ? true : false;
-	}
-
-	/**
-	 * @return Groups
-	 * @deprecated 3.2
-	 */
-	public function list_screen_groups() {
-		_deprecated_function( __METHOD__, '3.1.5', 'ListScreenGroups::get_groups' );
-
-		return ListScreenGroups::get_groups();
-	}
-
-	/**
-	 * @return Groups
-	 * @deprecated 3.2
-	 */
-	public function column_groups() {
-		_deprecated_function( __METHOD__, '3.2' );
-
-		return new Groups();
-	}
-
-	/**
-	 * @return Helper
-	 * @deprecated 3.2
-	 * @since      3.0
-	 */
-	public function helper() {
-		_deprecated_function( __METHOD__, '3.2', 'ac_helper()' );
-
-		return new Helper();
-	}
-
-	/**
-	 * @deprecated 3.4
-	 */
-	public function table_screen() {
-		_deprecated_function( __METHOD__, '3.4' );
-	}
-
-	/**
-	 * @deprecated 3.4
-	 */
-	public function admin_columns_screen() {
-		_deprecated_function( __METHOD__, '3.4' );
+		_deprecated_function( __METHOD__, '4.3.1' );
 	}
 
 	/**
@@ -256,27 +155,6 @@ class AdminColumns extends Plugin {
 	}
 
 	/**
-	 * @return bool
-	 * @deprecated 4.1
-	 * @since      2.5
-	 */
-	public function use_delete_confirmation() {
-		_deprecated_function( __METHOD__, '4.1' );
-
-		return (bool) apply_filters( 'ac/delete_confirmation', true );
-	}
-
-	/**
-	 * @return bool
-	 * @deprecated 4.1
-	 */
-	public function is_doing_ajax() {
-		_deprecated_function( __METHOD__, '4.1', 'wp_doing_ajax()' );
-
-		return wp_doing_ajax();
-	}
-
-	/**
 	 * @return array
 	 * @since      1.0
 	 * @deprecated 4.1
@@ -294,7 +172,7 @@ class AdminColumns extends Plugin {
 	 * @deprecated 4.1
 	 */
 	public function register_list_screen( ListScreen $list_screen ) {
-		_deprecated_function( __METHOD__, '4.1', 'ListScreenTypes::register_list_screen()' );
+		_deprecated_function( __METHOD__, '4.1', 'ListScreenTypes::instance()->register_list_screen()' );
 
 		ListScreenTypes::instance()->register_list_screen( $list_screen );
 

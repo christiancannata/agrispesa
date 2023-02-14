@@ -43,23 +43,29 @@
 		.product-quantity--change {
 			padding-top: 0;
 		}
+	}
 
-		.product-box & {
-			form {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				margin-bottom: 0 !important;
-			}
-			.product-quantity--change {
-				padding-bottom: 0;
-			}
+	.product-box & {
+		form {
+			display: block;
+			margin-bottom: 0 !important;
+		}
+
+		.product-quantity--change {
+			padding-bottom: 8px;
+			width: 100%;
+			justify-content: center;
+		}
+		.btn {
+			width: 100%;
 		}
 	}
 }
+
 .product-description-button {
-padding-top: 16px;
+	padding-top: 16px;
 }
+
 .archive-blog--flex {
 	display: flex;
 	flex-wrap: wrap;
@@ -321,6 +327,12 @@ padding-top: 16px;
 	&--title {
 		@include font-size(22);
 		font-weight: 600;
+		a {
+			color: $black;
+			&:hover {
+				color: $blue;
+			}
+		}
 	}
 
 	&--price {

@@ -8,6 +8,8 @@ use ACP;
 
 class Column extends AC\Settings\Column implements AC\Settings\Header {
 
+	const NAME = 'export';
+
 	/**
 	 * @var string
 	 */
@@ -18,7 +20,7 @@ class Column extends AC\Settings\Column implements AC\Settings\Header {
 	 */
 	protected function define_options() {
 		return [
-			'export' => 'off',
+			'export' => 'on',
 		];
 	}
 
@@ -45,11 +47,8 @@ class Column extends AC\Settings\Column implements AC\Settings\Header {
 	 * @return View
 	 */
 	public function create_view() {
-		$setting = $this->create_element( 'radio', 'export' )
-		                ->set_options( [
-			                'on'  => __( 'Yes' ),
-			                'off' => __( 'No' ),
-		                ] );
+		$setting = new AC\Form\Element\Toggle( self::NAME, '', $this->get_value( self::NAME ) === 'on', 'on', 'off' );
+		$setting->add_class( 'ac-setting-input_' . self::NAME );
 
 		$view = new View();
 		$view->set( 'label', __( 'Export', 'codepress-admin-columns' ) )

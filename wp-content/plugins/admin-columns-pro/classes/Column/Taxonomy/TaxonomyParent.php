@@ -3,11 +3,14 @@
 namespace ACP\Column\Taxonomy;
 
 use AC;
+use ACP\ConditionalFormat;
 use ACP\Editing;
 use ACP\Filtering;
 
 class TaxonomyParent extends AC\Column
-	implements Editing\Editable, Filtering\Filterable {
+	implements Editing\Editable, Filtering\Filterable, ConditionalFormat\Formattable {
+
+	use ConditionalFormat\ConditionalFormatTrait;
 
 	public function __construct() {
 		$this->set_type( 'column-term_parent' );
@@ -41,7 +44,7 @@ class TaxonomyParent extends AC\Column
 	}
 
 	public function editing() {
-		return new Editing\Model\Taxonomy\TaxonomyParent( $this );
+		return new Editing\Service\Taxonomy\TaxonomyParent( $this->get_taxonomy() );
 	}
 
 	public function filtering() {

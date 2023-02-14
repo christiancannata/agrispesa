@@ -7,9 +7,13 @@ use AC\ListScreenCollection;
 use AC\ListScreenRepository;
 use AC\ListScreenRepositoryWritable;
 use AC\Type\ListScreenId;
+use InvalidArgumentException;
 use LogicException;
 
 final class Storage implements ListScreenRepositoryWritable {
+
+	const ARG_FILTER = 'filter';
+	const ARG_SORT = 'sort';
 
 	/**
 	 * @var Storage\ListScreenRepository[]
@@ -52,8 +56,8 @@ final class Storage implements ListScreenRepositoryWritable {
 	 */
 	public function find_all( array $args = [] ) {
 		$args = array_merge( [
-			'filter' => null,
-			'sort'   => null,
+			self::ARG_FILTER => [],
+			self::ARG_SORT   => null,
 		], $args );
 
 		$list_screens = new ListScreenCollection();
@@ -66,12 +70,16 @@ final class Storage implements ListScreenRepositoryWritable {
 			}
 		}
 
-		if ( $args['filter'] instanceof Filter ) {
-			$list_screens = $args['filter']->filter( $list_screens );
+		foreach ( $args[ self::ARG_FILTER ] as $filter ) {
+			if ( ! $filter instanceof Filter ) {
+				throw new InvalidArgumentException( 'Invalid filter supplied.' );
+			}
+
+			$list_screens = $filter->filter( $list_screens );
 		}
 
-		if ( $args['sort'] instanceof Sort ) {
-			$list_screens = $args['sort']->sort( $list_screens );
+		if ( $args[ self::ARG_SORT ] instanceof Sort ) {
+			$list_screens = $args[ self::ARG_SORT ]->sort( $list_screens );
 		}
 
 		return $list_screens;
@@ -110,14 +118,28 @@ final class Storage implements ListScreenRepositoryWritable {
 	}
 
 	public function save( ListScreen $list_screen ) {
-		$this->update( $list_screen, 'save' );
+		$repository = $this->get_writable_repositories( $list_screen );
+
+		if ( empty( $repository ) ) {
+			return;
+		}
+
+		// Only write in one repository
+		$repository[0]->save( $list_screen );
 	}
 
 	public function delete( ListScreen $list_screen ) {
-		$this->update( $list_screen, 'delete' );
+		foreach ( $this->get_writable_repositories( $list_screen ) as $repository ) {
+			if ( $repository->find( $list_screen->get_id() ) ) {
+				$repository->delete( $list_screen );
+				break;
+			}
+		}
 	}
 
-	private function update( ListScreen $list_screen, $action ) {
+	private function get_writable_repositories( ListScreen $list_screen ) {
+		$repositories = [];
+
 		foreach ( $this->repositories as $repository ) {
 			$match = true;
 
@@ -130,22 +152,11 @@ final class Storage implements ListScreenRepositoryWritable {
 			}
 
 			if ( $match && $repository->is_writable() ) {
-				switch ( $action ) {
-					case 'save':
-						$repository->save( $list_screen );
-
-						break;
-					case 'delete':
-						$repository->delete( $list_screen );
-
-						break;
-					default:
-						throw new LogicException( 'Invalid action for update call.' );
-				}
-
-				return;
+				$repositories[] = $repository;
 			}
 		}
+
+		return $repositories;
 	}
 
 }

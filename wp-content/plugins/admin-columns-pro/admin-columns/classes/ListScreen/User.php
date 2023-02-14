@@ -3,7 +3,8 @@
 namespace AC\ListScreen;
 
 use AC;
-use ReflectionException;
+use AC\Column;
+use AC\WpListTableFactory;
 use WP_User;
 use WP_Users_List_Table;
 
@@ -25,15 +26,6 @@ class User extends AC\ListScreenWP {
 	 */
 	public function set_manage_value_callback() {
 		add_filter( 'manage_users_custom_column', [ $this, 'manage_value' ], 100, 3 );
-	}
-
-	/**
-	 * @return WP_Users_List_Table
-	 */
-	public function get_list_table() {
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-users-list-table.php' );
-
-		return new WP_Users_List_Table( [ 'screen' => $this->get_screen_id() ] );
 	}
 
 	/**
@@ -77,14 +69,40 @@ class User extends AC\ListScreenWP {
 		return $this->get_list_table()->single_row( $this->get_object( $id ) );
 	}
 
-	/**
-	 * @throws ReflectionException
-	 */
 	protected function register_column_types() {
-		$this->register_column_type( new AC\Column\CustomField );
-		$this->register_column_type( new AC\Column\Actions );
+		$this->register_column_types_from_list( [
+			Column\CustomField::class,
+			Column\Actions::class,
+			Column\User\CommentCount::class,
+			Column\User\Description::class,
+			Column\User\DisplayName::class,
+			Column\User\Email::class,
+			Column\User\FirstName::class,
+			Column\User\FirstPost::class,
+			Column\User\FullName::class,
+			Column\User\ID::class,
+			Column\User\LastName::class,
+			Column\User\LastPost::class,
+			Column\User\Login::class,
+			Column\User\Name::class,
+			Column\User\Nicename::class,
+			Column\User\Nickname::class,
+			Column\User\PostCount::class,
+			Column\User\Posts::class,
+			Column\User\Registered::class,
+			Column\User\RichEditing::class,
+			Column\User\Role::class,
+			Column\User\ShowToolbar::class,
+			Column\User\Url::class,
+			Column\User\Username::class,
+		] );
+	}
 
-		$this->register_column_types_from_dir( 'AC\Column\User' );
+	/**
+	 * @return WP_Users_List_Table
+	 */
+	protected function get_list_table() {
+		return ( new WpListTableFactory() )->create_user_table( $this->get_screen_id() );
 	}
 
 }

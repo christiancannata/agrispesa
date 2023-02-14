@@ -53,7 +53,7 @@ final class Groups {
 	 * Sort the group by priority
 	 * If there are more groups with the same priority it will those groups by label
 	 *
-	 * @param $groups
+	 * @param array $groups
 	 *
 	 * @return array
 	 */
@@ -66,7 +66,7 @@ final class Groups {
 
 		ksort( $aggregated, SORT_NUMERIC );
 
-		foreach ( $aggregated as $priority => $_groups ) {
+		foreach ( $aggregated as $_groups ) {
 			$sorted = array_merge( $sorted, $this->sort_groups_by_string( $_groups, 'label' ) );
 		}
 

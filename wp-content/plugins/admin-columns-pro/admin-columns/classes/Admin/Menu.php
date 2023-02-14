@@ -2,32 +2,39 @@
 
 namespace AC\Admin;
 
-use AC\Admin\Menu\Item;
-use AC\Collection;
-use AC\Renderable;
-use AC\View;
-
-class Menu extends Collection implements Renderable {
+class Menu {
 
 	/**
-	 * @return Item[]
+	 * @var Menu\Item[]
 	 */
-	public function all() {
-		return parent::all();
+	private $items;
+
+	public function __construct( array $items = [] ) {
+		array_map( [ $this, 'add_item' ], $items );
 	}
 
-	public function add( Item $item ) {
-		$this->push( $item );
+	public function add_item( Menu\Item $item ) {
+		$this->items[ $item->get_slug() ] = $item;
 
 		return $this;
 	}
 
-	public function render() {
-		$view = new View( [
-			'menu_items' => $this->items,
-		] );
+	public function remove_item( $slug ) {
+		unset( $this->items[ (string) $slug ] );
 
-		return $view->set_template( 'admin/menu' )->render();
+		return $this;
+	}
+
+	public function get_items() {
+		return $this->items;
+	}
+
+	public function get_item_by_slug( $slug ) {
+		if ( isset( $this->items[ $slug ] ) ) {
+			return $this->items[ $slug ];
+		}
+
+		return null;
 	}
 
 }

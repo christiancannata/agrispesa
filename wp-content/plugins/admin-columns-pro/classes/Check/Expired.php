@@ -5,29 +5,19 @@ namespace ACP\Check;
 use AC\Ajax;
 use AC\Capabilities;
 use AC\Message;
-use AC\Registrable;
+use AC\Registerable;
 use AC\Screen;
 use AC\Storage;
 use AC\Type\Url\Site;
 use AC\Type\Url\UtmTags;
-use ACP\LicenseKeyRepository;
-use ACP\LicenseRepository;
-use ACP\Type\License\Key;
+use ACP\Access\ActivationStorage;
+use ACP\ActivationTokenFactory;
+use ACP\Entity;
 use ACP\Type\SiteUrl;
 use DateTime;
 use Exception;
 
-class Expired implements Registrable {
-
-	/**
-	 * @var LicenseRepository
-	 */
-	private $license_repository;
-
-	/**
-	 * @var LicenseKeyRepository
-	 */
-	private $license_key_repository;
+class Expired implements Registerable {
 
 	/**
 	 * @var string
@@ -35,14 +25,24 @@ class Expired implements Registrable {
 	private $plugin_basename;
 
 	/**
+	 * @var ActivationTokenFactory
+	 */
+	private $activation_token_factory;
+
+	/**
+	 * @var ActivationStorage
+	 */
+	private $activation_storage;
+
+	/**
 	 * @var SiteUrl
 	 */
 	private $site_url;
 
-	public function __construct( LicenseRepository $license_repository, LicenseKeyRepository $license_key_repository, $plugin_basename, SiteUrl $site_url ) {
-		$this->license_repository = $license_repository;
-		$this->license_key_repository = $license_key_repository;
-		$this->plugin_basename = $plugin_basename;
+	public function __construct( $plugin_basename, ActivationTokenFactory $activation_token_factory, ActivationStorage $activation_storage, SiteUrl $site_url ) {
+		$this->plugin_basename = (string) $plugin_basename;
+		$this->activation_token_factory = $activation_token_factory;
+		$this->activation_storage = $activation_storage;
 		$this->site_url = $site_url;
 	}
 
@@ -50,6 +50,28 @@ class Expired implements Registrable {
 		add_action( 'ac/screen', [ $this, 'display' ] );
 
 		$this->get_ajax_handler()->register();
+	}
+
+	private function is_activation_expired( Entity\Activation $activation ) {
+		if ( ! $activation->is_expired()
+		     || ! $activation->get_expiry_date()->exists() ) {
+			return false;
+		}
+
+		// Prevent overlap with auto renewal payments and message
+		if ( $activation->is_auto_renewal() && $activation->is_expired() && $activation->get_expiry_date()->get_expired_seconds() < ( 2 * DAY_IN_SECONDS ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private function get_activation() {
+		$token = $this->activation_token_factory->create();
+
+		return $token
+			? $this->activation_storage->find( $token )
+			: null;
 	}
 
 	/**
@@ -62,55 +84,77 @@ class Expired implements Registrable {
 			return;
 		}
 
-		$license_key = $this->license_key_repository->find();
+		switch ( true ) {
 
-		if ( ! $license_key ) {
-			return;
-		}
-
-		$license = $this->license_repository->find( $license_key );
-
-		if ( ! $license || ! $license->is_expired() || ! $license->get_expiry_date()->exists() ) {
-			return;
-		}
-
-		$message = $this->get_message( $license->get_expiry_date()->get_value(), $license->get_key() );
-
-		if ( $screen->is_plugin_screen() ) {
 			// Inline message on plugin page
-			$notice = new Message\Plugin( $message, $this->plugin_basename );
-		} else if ( $screen->is_admin_screen() ) {
-			// Permanent displayed on settings page
-			$notice = new Message\Notice( $message );
-		} else if ( $screen->is_list_screen() && $this->get_dismiss_option()->is_expired() ) {
-			// Dismissible on list table
-			$notice = new Message\Notice\Dismissible( $message, $this->get_ajax_handler() );
-		} else {
-			$notice = false;
-		}
+			case $screen->is_plugin_screen() :
+				$activation = $this->get_activation();
 
-		if ( $notice instanceof Message ) {
-			$notice
-				->set_type( Message::WARNING )
-				->register();
+				if ( $activation && $this->is_activation_expired( $activation ) ) {
+
+					$this->register_notice(
+						new Message\Plugin(
+							$this->get_message( $activation->get_expiry_date()->get_value() ),
+							$this->plugin_basename
+						)
+					);
+				}
+
+				return;
+
+			// Permanent displayed on settings page
+			case $screen->is_admin_screen() :
+				$activation = $this->get_activation();
+
+				if ( $activation && $this->is_activation_expired( $activation ) ) {
+
+					$this->register_notice(
+						new Message\Notice(
+							$this->get_message( $activation->get_expiry_date()->get_value() )
+						)
+					);
+				}
+
+				return;
+
+			// Dismissible on list table
+			case $screen->is_list_screen() && $this->get_dismiss_option()->is_expired() :
+				$activation = $this->get_activation();
+
+				if ( $activation && $this->is_activation_expired( $activation ) ) {
+
+					$this->register_notice(
+						new Message\Notice\Dismissible( $this->get_message( $activation->get_expiry_date()->get_value() ), $this->get_ajax_handler() )
+					);
+				}
+
+				return;
 		}
+	}
+
+	private function register_notice( Message $notice ) {
+		$notice
+			->set_type( Message::WARNING )
+			->register();
 	}
 
 	/**
 	 * @param DateTime $expiration_date
-	 * @param Key      $license_key
 	 *
 	 * @return string
 	 */
-	private function get_message( DateTime $expiration_date, Key $license_key ) {
+	private function get_message( DateTime $expiration_date ) {
 		$expired_on = ac_format_date( get_option( 'date_format' ), $expiration_date->getTimestamp() );
 
+		$activation_token = $this->activation_token_factory->create();
 		$url = new UtmTags( new Site( Site::PAGE_ACCOUNT_SUBSCRIPTIONS ), 'expired' );
 
-		$url->add( [
-			'subscription_key' => $license_key->get_value(),
-			'site_url'         => $this->site_url->get_url(),
-		] );
+		if ( $activation_token ) {
+			$url->add( [
+				$activation_token->get_type() => $activation_token->get_token(),
+				'site_url'                    => $this->site_url->get_url(),
+			] );
+		}
 
 		return sprintf(
 			__( 'Your Admin Columns Pro license has expired on %s. To receive updates, renew your license on the %s.', 'codepress-admin-columns' ),

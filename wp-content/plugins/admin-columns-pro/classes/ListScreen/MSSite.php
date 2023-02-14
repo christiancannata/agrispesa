@@ -3,9 +3,10 @@
 namespace ACP\ListScreen;
 
 use AC;
+use AC\Type\Url;
+use AC\WpListTableFactory;
 use ACP\Column;
 use ACP\Editing;
-use ReflectionException;
 use WP_MS_Sites_List_Table;
 use WP_Site;
 
@@ -37,10 +38,8 @@ class MSSite extends AC\ListScreenWP
 	/**
 	 * @return WP_MS_Sites_List_Table
 	 */
-	public function get_list_table() {
-		require_once( ABSPATH . 'wp-admin/includes/class-wp-ms-sites-list-table.php' );
-
-		return new WP_MS_Sites_List_Table( [ 'screen' => $this->get_screen_id() ] );
+	protected function get_list_table() {
+		return ( new WpListTableFactory() )->create_network_site_table( $this->get_screen_id() );
 	}
 
 	public function set_manage_value_callback() {
@@ -55,10 +54,13 @@ class MSSite extends AC\ListScreenWP
 	}
 
 	public function get_edit_link() {
-		return add_query_arg( [
+		$url = new Url\EditorNetwork( 'columns' );
+		$url->add( [
 			'list_screen' => $this->get_key(),
 			'layout_id'   => $this->get_layout_id(),
-		], ac_get_admin_network_url( 'columns' ) );
+		] );
+
+		return $url->get_url();
 	}
 
 	/**
@@ -68,20 +70,31 @@ class MSSite extends AC\ListScreenWP
 	 * @since 2.4.7
 	 */
 	public function manage_value( $column_name, $blog_id ) {
-		echo $this->get_display_value_by_column_name( $column_name, $blog_id, null );
+		echo $this->get_display_value_by_column_name( $column_name, $blog_id );
 	}
 
 	public function get_single_row( $site_id ) {
 		return false;
 	}
 
-	/**
-	 * Register custom columns
-	 * @throws ReflectionException
-	 */
 	protected function register_column_types() {
-		$this->register_column_type( new Column\Actions() );
-		$this->register_column_types_from_dir( 'ACP\Column\NetworkSite' );
+		$this->register_column_types_from_list( [
+			Column\Actions::class,
+			Column\NetworkSite\BlogID::class,
+			Column\NetworkSite\CommentCount::class,
+			Column\NetworkSite\Domain::class,
+			Column\NetworkSite\LastUpdated::class,
+			Column\NetworkSite\Name::class,
+			Column\NetworkSite\Options::class,
+			Column\NetworkSite\Path::class,
+			Column\NetworkSite\Plugins::class,
+			Column\NetworkSite\PostCount::class,
+			Column\NetworkSite\Registered::class,
+			Column\NetworkSite\SiteID::class,
+			Column\NetworkSite\Status::class,
+			Column\NetworkSite\Theme::class,
+			Column\NetworkSite\UploadSpace::class,
+		] );
 	}
 
 	public function editing() {

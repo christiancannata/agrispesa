@@ -3,6 +3,7 @@
 namespace ACP\Column\Post;
 
 use AC;
+use ACP\ConditionalFormat;
 use ACP\Editing;
 use ACP\Export;
 use ACP\Filtering;
@@ -11,26 +12,28 @@ use ACP\Settings;
 use ACP\Sorting;
 
 class AuthorName extends AC\Column\Post\AuthorName
-	implements Editing\Editable, Filtering\Filterable, Sorting\Sortable, Export\Exportable, Search\Searchable {
+	implements Editing\Editable, Filtering\Filterable, Sorting\Sortable, Export\Exportable, Search\Searchable, ConditionalFormat\Formattable {
+
+	use ConditionalFormat\ConditionalFormatTrait;
 
 	public function sorting() {
 		return ( new Sorting\Model\Post\AuthorFactory() )->create( $this->get_user_setting()->get_value(), $this );
 	}
 
 	public function editing() {
-		if ( 'custom_field' === $this->get_user_setting()->get_value() ) {
-			return new Editing\Model\Disabled( $this );
+		if ( Settings\Column\User::PROPERTY_META === $this->get_user_setting()->get_value() ) {
+			return false;
 		}
 
-		return new Editing\Model\Post\Author( $this );
+		return new Editing\Service\Post\Author();
 	}
 
 	public function filtering() {
-		if ( 'custom_field' === $this->get_user_setting()->get_value() ) {
+		if ( Settings\Column\User::PROPERTY_META === $this->get_user_setting()->get_value() ) {
 			return new Filtering\Model\Disabled( $this );
 		}
 
-		if ( 'roles' === $this->get_user_setting()->get_value() ) {
+		if ( Settings\Column\User::PROPERTY_ROLES === $this->get_user_setting()->get_value() ) {
 			return new Filtering\Model\Post\Roles( $this );
 		}
 

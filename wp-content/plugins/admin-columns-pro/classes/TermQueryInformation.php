@@ -2,10 +2,10 @@
 
 namespace ACP;
 
-use AC\Registrable;
+use AC\Registerable;
 use WP_Term_Query;
 
-final class TermQueryInformation implements Registrable {
+final class TermQueryInformation implements Registerable {
 
 	const KEY = 'ac_is_main_term_query';
 
@@ -33,6 +33,10 @@ final class TermQueryInformation implements Registrable {
 	 */
 	public function is_main_query( WP_Term_Query $query ) {
 		return isset( $query->query_vars[ self::KEY ] ) && $query->query_vars[ self::KEY ];
+	}
+
+	public function is_main_query_by_args( $args ) {
+		return isset( $args[ self::KEY ] ) && $args[ self::KEY ];
 	}
 
 }

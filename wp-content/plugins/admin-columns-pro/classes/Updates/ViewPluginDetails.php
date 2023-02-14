@@ -2,7 +2,7 @@
 
 namespace ACP\Updates;
 
-use AC\Registrable;
+use AC\Registerable;
 use ACP\API\Request;
 use ACP\RequestDispatcher;
 use WP_Error;
@@ -10,16 +10,20 @@ use WP_Error;
 /**
  * Show changelog when "click view details".
  */
-class ViewPluginDetails implements Registrable {
+class ViewPluginDetails implements Registerable {
 
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	private $slug;
 
-	/** @var RequestDispatcher */
+	/**
+	 * @var RequestDispatcher
+	 */
 	private $api;
 
 	public function __construct( $slug, RequestDispatcher $api ) {
-		$this->slug = $slug;
+		$this->slug = (string) $slug;
 		$this->api = $api;
 	}
 
