@@ -162,7 +162,7 @@ if ( woocommerce_product_loop() ) {
        echo '<h2 class="shop--minititle">CIAOOOO' . $term_object->name . '</h2>';
  			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
  			echo '</div>';
-       echo do_shortcode( '[products limit="8" columns="1" category="' . $category_slug . '"]' );
+       echo do_shortcode( '[products limit="5" columns="1" category="' . $category_slug . '"]' );
        echo '</div>';
        wp_reset_postdata();
 
@@ -193,7 +193,7 @@ if ( woocommerce_product_loop() ) {
 	       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
 	 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 	 			echo '</div>';
-	       echo do_shortcode( '[products limit="8" columns="1" category="' . $category_slug . '"]' );
+	       echo do_shortcode( '[products limit="5" columns="1" category="' . $category_slug . '"]' );
 	       echo '</div>';
 	       wp_reset_postdata();
 				 ;
