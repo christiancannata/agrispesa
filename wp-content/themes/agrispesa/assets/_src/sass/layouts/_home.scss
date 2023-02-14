@@ -263,10 +263,10 @@
 		padding: 50px 0;
 	}
 
-
 	strong {
 		font-weight: 600;
 	}
+
 	blockquote {
 		padding: 32px 0 32px 24px;
 		@include breakpoint(desktop) {
@@ -299,6 +299,7 @@
 			}
 		}
 	}
+
 	h2,
 	h3,
 	h4 {
@@ -824,8 +825,8 @@
 
 .agr-section {
 	overflow: hidden;
-	&--container {
 
+	&--container {
 		&.no-mg-top {
 			padding-top: 0;
 		}
@@ -863,6 +864,32 @@
 			justify-content: center;
 			position: relative;
 
+			.img-bg {
+				@include border-radius(50%);
+				content: '';
+				display: block;
+				background-repeat: no-repeat;
+				background-position: center;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+
+				&:after {
+					content: "";
+					display: block;
+					padding-bottom: 100%;
+				}
+				width: 500px;
+				@include breakpoint(container) {
+					width: 400px;
+				}
+				@include breakpoint(tablet) {
+					width: 60%;
+					margin-top: 40px;
+				}
+			}
+
 			.mini-img {
 				@include border-radius(50%);
 				width: 180px;
@@ -884,18 +911,6 @@
 					top: auto;
 					right: 30px;
 					bottom: 5%;
-				}
-			}
-
-			.main-img.rounded {
-				@include border-radius(50%);
-				width: 500px;
-				@include breakpoint(container) {
-					width: 400px;
-				}
-				@include breakpoint(tablet) {
-					width: 60%;
-					margin-top: 40px;
 				}
 			}
 		}

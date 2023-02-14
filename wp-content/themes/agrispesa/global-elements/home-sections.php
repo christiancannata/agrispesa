@@ -139,7 +139,7 @@ if( have_rows('agr_sections') ):
             <?php if($mini_image): ?>
               <img src="<?php echo $mini_image; ?>" class="mini-img" alt="<?php echo strip_tags($title); ?>" />
             <?php endif;?>
-            <img src="<?php echo $image; ?>" class="main-img rounded" alt="<?php echo strip_tags($title); ?>" />
+            <div class="img-bg" style="background-image:url(<?php echo $image; ?>);"></div>
           </div>
         </div>
         </div>
