@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-02-14 21:55+0100\n"
+"PO-Revision-Date: 2023-02-14 22:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -849,6 +849,7 @@ msgid ""
 "You can not add another product while your cart contains with wallet "
 "rechargeable product."
 msgstr ""
+"Continua l’acquisto del tuo credito prima di aggiungere altri prodotti."
 
 #. translators: wallet amount
 #: includes/class-woo-wallet-frontend.php:575
