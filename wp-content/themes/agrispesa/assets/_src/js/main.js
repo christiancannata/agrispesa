@@ -54,8 +54,16 @@ magazineSlider();
 minimumAmount();
 giftCardCheckout();
 scrollTo();
+showNameNewsletter();
 
 //changeShippingLabel();
+
+function showNameNewsletter() {
+
+  jQuery('.mailchimp-form input[type=email]').on("focus", function(){
+   jQuery('.mailchimp-form .show-name').fadeIn();
+});
+}
 
 function scrollTo() {
   jQuery('.scroll-to').on('click', function(event) {
