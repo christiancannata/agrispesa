@@ -61,7 +61,10 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 		public function __construct() {
 			if ( did_action( 'elementor/loaded' ) ) {
 				add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_yith_widget_category' ) );
-				add_action( 'elementor/widgets/widgets_registered', array( $this, 'elementor_init_widgets' ) );
+
+				$register_widget_hook = version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ? 'elementor/widgets/register' : 'elementor/widgets/widgets_registered';
+				// register widgets.
+				add_action( $register_widget_hook, array( $this, 'elementor_init_widgets' ) );
 			}
 
 		}
@@ -99,7 +102,12 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 			require_once YITH_YWGC_DIR . 'includes/compatibilities/elementor/class-ywgc-form-widget.php';
 
 			// Register widget.
-			\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \YWGC_Elementor_Form_Widget() );
+			$widgets_manager = \Elementor\Plugin::instance()->widgets_manager;
+			if ( is_callable( array( $widgets_manager, 'register' ) ) ) {
+				\Elementor\Plugin::instance()->widgets_manager->register( new \YWGC_Elementor_Form_Widget() );
+			} else {
+				\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \YWGC_Elementor_Form_Widget() );
+			}
 
 		}
 	}
