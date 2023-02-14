@@ -20,6 +20,48 @@
 	}
 }
 
+.woo-wallet-content {
+	.account-small-direction {
+		@include font-size(14);
+		margin-top: 16px;
+	}
+}
+
+.wallet-icon-add {
+	@include font-size(22);
+	color: $blue;
+	display: block;
+	@include transform(rotate(45deg));
+}
+
+.woo-wallet-my-wallet-container {
+	.woo-wallet-sidebar {
+		padding-top: 0 !important;
+	}
+	.woo-add-to-wallet {
+		width: 100%;
+	}
+	.woo-wallet-sidebar {
+		ul {
+			li.card {
+				box-shadow: none;
+				&:hover {
+					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+				}
+
+				a {
+					@include font-size(16);
+					border: 1px solid $blue;
+					color: $blue;
+					p {
+						margin-top: 8px;
+					}
+				}
+			}
+		}
+	}
+}
+
 body.woocommerce-account {
 	.entry-header,
 	.page-header {

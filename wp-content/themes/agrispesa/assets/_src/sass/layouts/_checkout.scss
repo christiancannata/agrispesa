@@ -10,6 +10,11 @@ body.woocommerce-checkout {
 .woocommerce-MyAccount-navigation {
 	ul li {
 		padding: 0 !important;
+		a {
+			&::before {
+				content: none !important;
+			}
+		}
 	}
 
 	ul li::before {

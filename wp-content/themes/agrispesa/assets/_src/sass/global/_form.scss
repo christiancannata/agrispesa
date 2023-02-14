@@ -113,6 +113,7 @@ textarea:-webkit-autofill:hover {
 	display: none;
 }
 
+input[type=number],
 input[type=email],
 input[type=password],
 input[type=tel],
@@ -134,6 +135,25 @@ select.form-control {
 	line-height: 1.2;
 	padding: 10px;
 	margin: 0;
+}
+.select2-container {
+	margin-top: 8px;
+}
+
+
+.euro_field {
+	position: relative;
+	&--symbol {
+		@include font-size(16);
+		position: absolute;
+		z-index: 2;
+		top: 10.5px;
+    left: 10px;
+    font-weight: 400;
+	}
+	input[type="number"] {
+		padding-left: 24px;
+	}
 }
 
 .selection {
@@ -191,6 +211,12 @@ select.form-control {
 		&--highlighted[data-selected] {
 			background: #f1f1f1;
 			color: $black;
+		}
+
+		&.loading-results,
+		&.select2-results__message {
+			@include font-size(14);
+			padding: 0 5px 8px;
 		}
 	}
 }
@@ -254,6 +280,7 @@ textarea {
 		input[type=checkbox]:checked + span:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat;
 			background-size: 70% auto;
+
 			body.woocommerce-account &,
 			body.woocommerce-checkout & {
 				background-color: $background;
@@ -261,6 +288,7 @@ textarea {
 		}
 	}
 }
+
 #update_all_subscriptions_addresses_field .woocommerce-input-wrapper {
 	@include clearfix();
 	text-align: left;
@@ -268,9 +296,8 @@ textarea {
 	input[type=checkbox] {
 		display: inline-block;
 	}
-
-
 }
+
 .checkbox-form,
 .newsletter .form-row.mailchimp-newsletter,
 .woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
@@ -311,6 +338,7 @@ textarea {
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
+
 		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background: $background;
@@ -321,6 +349,7 @@ textarea {
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;
 		background-size: 70% auto;
+
 		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background-color: $background;
@@ -328,7 +357,7 @@ textarea {
 	}
 }
 
-.popup.newsletter-popup{
+.popup.newsletter-popup {
 	@include clearfix();
 	text-align: left;
 
@@ -366,17 +395,15 @@ textarea {
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
-
 	}
 
 	input[type=checkbox]:checked + label:before {
 		background: $background url("../images/elements/check.svg") center center no-repeat;
 		background-size: 70% auto;
-
 	}
 }
-.woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
 
+.woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
 	label {
 		border: none;
 
