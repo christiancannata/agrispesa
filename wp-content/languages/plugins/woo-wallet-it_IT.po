@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-02-14 19:43+0100\n"
+"PO-Revision-Date: 2023-02-14 21:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -256,7 +256,7 @@ msgstr "Credito rimanente"
 #: includes/admin/class-woo-wallet-balance-details.php:44
 #: includes/class-woo-wallet-admin.php:281
 msgid "Actions"
-msgstr ""
+msgstr "Azioni"
 
 #: includes/admin/class-woo-wallet-balance-details.php:45
 #: includes/admin/class-woo-wallet-transaction-details.php:49
@@ -288,18 +288,18 @@ msgstr ""
 #: includes/class-woo-wallet-admin.php:535
 #: includes/class-woo-wallet-frontend.php:206
 msgid "Credit"
-msgstr ""
+msgstr "Credito"
 
 #: includes/admin/class-woo-wallet-balance-details.php:324
 #: includes/admin/class-woo-wallet-transaction-details.php:130
 #: includes/class-woo-wallet-admin.php:536
 #: includes/class-woo-wallet-frontend.php:211
 msgid "Debit"
-msgstr ""
+msgstr "Debito"
 
 #: includes/admin/class-woo-wallet-balance-details.php:325
 msgid "Delete Log"
-msgstr ""
+msgstr "Cancella Logo"
 
 #: includes/admin/class-woo-wallet-balance-details.php:345
 msgid ""
@@ -310,23 +310,23 @@ msgstr ""
 #: includes/class-woo-wallet-admin.php:529
 #: includes/export/class-terawallet-csv-exporter.php:42
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: includes/admin/class-woo-wallet-transaction-details.php:46
 #: includes/class-woo-wallet-frontend.php:216
 #: includes/export/class-terawallet-csv-exporter.php:45
 msgid "Details"
-msgstr ""
+msgstr "Dettagli"
 
 #: includes/admin/class-woo-wallet-transaction-details.php:47
 msgid "Created By"
-msgstr ""
+msgstr "Creata da"
 
 #: includes/admin/class-woo-wallet-transaction-details.php:48
 #: includes/class-woo-wallet-frontend.php:221
 #: includes/export/class-terawallet-csv-exporter.php:47
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: includes/admin/class-woo-wallet-transaction-details.php:83
 msgid "No transactions found."
@@ -336,7 +336,7 @@ msgstr "Nessuna transazione trovata"
 #: includes/api/Controllers/Version3/class-wc-rest-wallet-controller.php:101
 #: includes/api/Controllers/Version3/class-wc-rest-wallet-controller.php:123
 msgid "User email address"
-msgstr ""
+msgstr "Email utente"
 
 #: includes/api/Controllers/Version3/class-wc-rest-wallet-controller.php:68
 #: includes/api/class-wc-rest-woo-wallet-controller.php:70
@@ -737,17 +737,17 @@ msgstr ""
 
 #: includes/class-woo-wallet-frontend.php:232
 msgid "No transactions available"
-msgstr ""
+msgstr "Nessuna transazione disponibile."
 
 #. translators: menu length
 #: includes/class-woo-wallet-frontend.php:234
 msgid "Show %s entries"
-msgstr ""
+msgstr "Mostra %s transazioni"
 
 #. translators: 1.start 2.end 3.total
 #: includes/class-woo-wallet-frontend.php:236
 msgid "Showing %1$1s to %2$2s of %3$3s entries"
-msgstr ""
+msgstr "Mostra %1$1s - %2$2s / %3$3s transazioni"
 
 #. translators: max length
 #: includes/class-woo-wallet-frontend.php:238
@@ -756,23 +756,23 @@ msgstr ""
 
 #: includes/class-woo-wallet-frontend.php:239
 msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgstr "Mostra 0 / 0 transazioni"
 
 #: includes/class-woo-wallet-frontend.php:241
 msgid "First"
-msgstr ""
+msgstr "Prima"
 
 #: includes/class-woo-wallet-frontend.php:242
 msgid "Last"
-msgstr ""
+msgstr "Ultima"
 
 #: includes/class-woo-wallet-frontend.php:243
 msgid "Next"
-msgstr ""
+msgstr "Prossima"
 
 #: includes/class-woo-wallet-frontend.php:244
 msgid "Previous"
-msgstr ""
+msgstr "Precedente"
 
 #: includes/class-woo-wallet-frontend.php:246
 msgid "Please enter a valid email address"
@@ -927,7 +927,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-payment-method.php:108
 msgid " | Current Balance: <strong>%s</strong>"
-msgstr " | Bilancio: <strong>%s</strong>"
+msgstr " | Credito: <strong>%s</strong>"
 
 #: includes/class-woo-wallet-payment-method.php:130
 msgid "Payment error: "
@@ -1194,7 +1194,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-wallet.php:121
 msgid "Wallet credit through purchase #"
-msgstr ""
+msgstr "Credito acquistato con l’ordine #"
 
 #: includes/class-woo-wallet-wallet.php:140
 msgid "Wallet credit through cashback #"
@@ -1473,7 +1473,7 @@ msgstr ""
 #: templates/emails/low-wallet-balance.php:31
 #: templates/emails/plain/low-wallet-balance.php:29
 msgid "Current Balance: %s"
-msgstr ""
+msgstr "Credito: %s"
 
 #: templates/emails/low-wallet-balance.php:32
 #: templates/emails/plain/low-wallet-balance.php:31
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: templates/wc-endpoint-wallet-transactions.php:25
 msgid "Current balance :"
-msgstr "Bilancio:"
+msgstr "Credito:"
 
 #: templates/wc-endpoint-wallet.php:29
 msgid "Wallet topup"

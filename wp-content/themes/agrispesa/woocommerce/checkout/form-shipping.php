@@ -19,7 +19,9 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="woocommerce-shipping-fields">
+
 	<?php if ( true === WC()->cart->needs_shipping_address() ) : ?>
+		<div class="woocommerce-border-form">
 
 		<h3 id="ship-to-different-address">
 			<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
@@ -46,7 +48,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php do_action( 'woocommerce_after_checkout_shipping_form', $checkout ); ?>
 
 		</div>
-
+</div>
 	<?php endif; ?>
 </div>
 <div class="woocommerce-additional-fields">
@@ -54,17 +56,19 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
 
-		<?php if ( ! WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
+		<?php if ( WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
 
-			<h3><?php esc_html_e( 'Additional information', 'woocommerce' ); ?></h3>
+			<div class="woocommerce-border-form">
+			<div class="woocommerce-additional-fields__field-wrapper">
+				<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) : ?>
+					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+				<?php endforeach; ?>
+			</div>
+			</div>
 
 		<?php endif; ?>
 
-		<div class="woocommerce-additional-fields__field-wrapper">
-			<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) : ?>
-				<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-			<?php endforeach; ?>
-		</div>
+
 
 	<?php endif; ?>
 

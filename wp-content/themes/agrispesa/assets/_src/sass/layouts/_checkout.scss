@@ -717,12 +717,12 @@ body.woocommerce-cart {
 	}
 }
 
-.woocommerce-additional-fields,
+
 .woocommerce-account-fields,
 .woocommerce-billing-fields,
 .woocommerce-checkout-payment,
 .woocommerce-coupons-section,
-.woocommerce-shipping-fields,
+.woocommerce-border-form,
 body.woocommerce-checkout .woocommerce-gift-card-section {
 	@include breakpoint(desktop) {
 		@include border-radius(16px);
