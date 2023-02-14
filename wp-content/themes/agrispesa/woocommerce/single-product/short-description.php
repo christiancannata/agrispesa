@@ -33,7 +33,7 @@ $long_description = wp_trim_words( $post->post_content, 48, '...' );
 	} elseif($long_description){
 		echo '<p>' . $long_description . '</p>';
 	}?>
-	<?php if($short_description || $long_description): ?>
+	<?php if(($short_description || $long_description) && $post->post_title != 'Facciamo noi'): ?>
 		<a href="#read-description" class="arrow-link product-description-button scroll-to">Scopri di più<span class="icon-arrow-down"></span></a>
 	<?php endif;?>
 </div>

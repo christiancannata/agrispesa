@@ -19,7 +19,7 @@ $thumb_url = $thumb_url_array[0];
       <div class="product-box--price">
         <?php echo $product->get_price_html(); ?>
       </div>
-      <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo the_title(); ?>">Crea la tua box</a>
+      <a href="<?php the_permalink(); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo the_title(); ?>">Abbonati alla spesa</a>
         <div class="categories-list">
 
         </div>
