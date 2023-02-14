@@ -146,8 +146,8 @@ select.form-control {
 		label {
 			background: $white;
 		}
-		input:checked~label {}
 
+		input:checked~label {}
 	}
 
 	.euro_field {
@@ -367,7 +367,7 @@ select.form-control {
 			}
 		}
 	}
-
+	body.woocommerce-checkout .mailchimp-newsletter,
 	.popup.newsletter-popup {
 		@include clearfix();
 		text-align: left;
