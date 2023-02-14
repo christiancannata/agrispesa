@@ -151,7 +151,7 @@ if( have_rows('agr_sections') ):
     <?php if($align): ?>
       <div class="how-works-page--item">
   			<div class="how-works-page--item--img" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-  				<img src="<?php echo $image; ?>" alt="<?php echo strip_tags($title); ?>" />
+          <div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
   			</div>
   			<div class="how-works-page--item--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
   				<div class="how-works-page--title">
@@ -187,7 +187,7 @@ if( have_rows('agr_sections') ):
           <?php endif;?>
   			</div>
   			<div class="how-works-page--item--img" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
-  				<img src="<?php echo $image; ?>" alt="<?php echo strip_tags($title); ?>" />
+  				<div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
   			</div>
   		</div>
     <?php endif; ?>
@@ -230,7 +230,7 @@ if( have_rows('agr_sections') ):
         <section class="agr-section agr-section--right" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
           <div class="agr-section--flex">
             <div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-              <img src="<?php echo $image; ?>" class="main-img" alt="<?php echo strip_tags($title); ?>" />
+              <div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
             </div>
           <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
             <div class="agr-section--text--content">
@@ -264,7 +264,7 @@ if( have_rows('agr_sections') ):
             </div>
           </div>
           <div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-            <img src="<?php echo $image; ?>" class="main-img" alt="<?php echo strip_tags($title); ?>" />
+            <div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
           </div>
           </div>
         </section>
