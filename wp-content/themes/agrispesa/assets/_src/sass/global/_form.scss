@@ -141,12 +141,15 @@ select.form-control {
 	margin-top: 8px;
 }
 
+.woocommerce-checkout #payment div.payment_box .woocommerce-SavedPaymentMethods .woocommerce-SavedPaymentMethods-new,
 .woocommerce-checkout #payment div.payment_box .woocommerce-SavedPaymentMethods .woocommerce-SavedPaymentMethods-token {
 	label {
 		background: $white;
 	}
 
-	input:checked~label {}
+	input:checked~label {
+		background: $orange;
+	}
 }
 
 .euro_field {
