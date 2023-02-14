@@ -97,10 +97,11 @@ global $woocommerce;
 					<div class="header--cart">
 						<a href="<?php echo wc_get_cart_url(); ?>" title="Visualizza il carrello" class="cart--link <?php if (WC()->cart->is_empty()){ echo 'is-empty-cart'; } else { echo 'is-full-cart'; } ?>">
 								<span class="cart--items">
-								<span class="icon-heart"></span>
-								<?php get_template_part('global-elements/logo', 'closed'); ?>
-								<?php get_template_part('global-elements/logo', 'open'); ?>
-							</span>
+									<span class="cart-number-elements"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+									
+									<?php get_template_part('global-elements/logo', 'closed'); ?>
+									<?php get_template_part('global-elements/logo', 'open'); ?>
+								</span>
 						</a>
 						<div class="widget_shopping_cart_content"><?php woocommerce_mini_cart(); ?></div>
 					</div>

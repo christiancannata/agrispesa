@@ -106,7 +106,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 											?>
 										</div>
 										<div class="new-cart--details">
-											<?php if ($prodotto->is_type('variation')) {
+											<?php if($_product->get_name() != 'Acquista credito') {
+												if ($prodotto->is_type('variation')) {
 												$dimensione = get_term_by( 'name', $prodotto->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
 												$tipologia = get_term_by( 'name', $prodotto->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
 
@@ -129,7 +130,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 													}
 												}
 
-											} ?>
+											}} ?>
 										</div>
 									</div>
 
