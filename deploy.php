@@ -33,7 +33,7 @@ after('deploy:publish', 'reload:php');
 //after('deploy:publish', 'deploy:cloudflare');
 
 task('reload:php', function () {
-    run('sudo /usr/sbin/service php8.2-fpm restart');
+    run('sudo /usr/sbin/service php7.4-fpm restart');
 });
 
 
