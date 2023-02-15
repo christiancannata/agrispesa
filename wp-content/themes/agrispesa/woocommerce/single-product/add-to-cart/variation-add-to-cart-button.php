@@ -28,7 +28,7 @@ global $product;
 	// do_action( 'woocommerce_after_add_to_cart_quantity' );
 	?>
 
-	<button type="submit" class="single_add_to_cart_button btn btn-primary alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">Crea la tua box</button>
+	<button type="submit" class="single_add_to_cart_button btn btn-primary alt<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>">Abbonati alla spesa</button>
 
 	<?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
 
@@ -37,5 +37,5 @@ global $product;
 	<input type="hidden" name="variation_id" class="variation_id" value="0" />
 </div>
 <div class="shipping-info">
-	<p>Pssst — La prima consegna è gratuita. <span class="icon-heart"></span> 
+	<p>Pssst — La prima consegna è gratuita. <span class="icon-heart"></span>
 </div>

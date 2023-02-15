@@ -44,13 +44,16 @@ defined( 'ABSPATH' ) || exit;
 
 			<div class="thankyou">
 				<div class="thankyou--intro">
-					<h1 class="thankyou--title">Grazie, <?php echo $order->get_billing_first_name(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>!</h1>
-					<p class="thankyou--subtitle">Il tuo ordine è stato ricevuto. Controlla la tua email!</p>
+					<h1 class="thankyou--title">Grazie, <?php echo $order->get_billing_first_name(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>!<br/>Giusto il tempo di raccogliere,<br/> e siamo da te.</h1>
+					<p class="thankyou--subtitle">Abbiamo ricevuto il tuo ordine e ti faremo sapere presto.<br/>Controlla la tua email!</p>
 					<div class="thankyou--continue-shopping">
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn btn-primary">
 							Torna al sito
 						</a>
 					</div>
+				</div>
+				<div class="thankyou--image">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/thank-you.svg" />
 				</div>
 			</div>
 

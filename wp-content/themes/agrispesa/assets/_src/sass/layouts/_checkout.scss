@@ -10,6 +10,12 @@ body.woocommerce-checkout {
 .woocommerce-MyAccount-navigation {
 	ul li {
 		padding: 0 !important;
+
+		a {
+			&::before {
+				content: none !important;
+			}
+		}
 	}
 
 	ul li::before {
@@ -121,6 +127,7 @@ body.woocommerce-checkout {
 .hide-in-checkout {
 	display: none;
 }
+
 .happy-price {
 	color: $red !important;
 
@@ -417,8 +424,12 @@ body.woocommerce-checkout {
 				display: none;
 			}
 
-			.woocommerce-SavedPaymentMethods-saveNew {
-				label {}
+			.payment_method_wallet {
+				label {
+					strong {
+						font-weight: 400;
+					}
+				}
 			}
 
 			label {
@@ -599,8 +610,8 @@ body.woocommerce-checkout {
 	}
 }
 
-.woocommerce-gift-card-section,
-.woocommerce-coupons-section {
+.woocommerce-coupons-section,
+.woocommerce-gift-card-section {
 	.close-notice,
 	.woocommerce-error {
 		display: none;
@@ -706,18 +717,18 @@ body.woocommerce-cart {
 			position: absolute;
 			width: 100%;
 		}
+
 		.optional {
 			display: none;
 		}
 	}
 }
 
-.woocommerce-additional-fields,
 .woocommerce-account-fields,
 .woocommerce-billing-fields,
+.woocommerce-border-form,
 .woocommerce-checkout-payment,
 .woocommerce-coupons-section,
-.woocommerce-shipping-fields,
 body.woocommerce-checkout .woocommerce-gift-card-section {
 	@include breakpoint(desktop) {
 		@include border-radius(16px);

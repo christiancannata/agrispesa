@@ -136,6 +136,38 @@ select.form-control {
 	margin: 0;
 }
 
+.select2-container {
+	margin-top: 8px;
+}
+
+.woocommerce-checkout #payment div.payment_box .woocommerce-SavedPaymentMethods .woocommerce-SavedPaymentMethods-new,
+.woocommerce-checkout #payment div.payment_box .woocommerce-SavedPaymentMethods .woocommerce-SavedPaymentMethods-token {
+	label {
+		background: $white;
+	}
+
+	input:checked~label {
+		background: $orange;
+	}
+}
+
+.euro_field {
+	position: relative;
+
+	&--symbol {
+		@include font-size(16);
+		position: absolute;
+		z-index: 2;
+		top: 10.5px;
+		left: 10px;
+		font-weight: 400;
+	}
+
+	input[type="number"] {
+		padding-left: 24px;
+	}
+}
+
 .selection {
 	.select2-container--default,
 	.select2-selection--single {
@@ -191,6 +223,12 @@ select.form-control {
 		&--highlighted[data-selected] {
 			background: #f1f1f1;
 			color: $black;
+		}
+
+		&.loading-results,
+		&.select2-results__message {
+			@include font-size(14);
+			padding: 0 5px 8px;
 		}
 	}
 }
@@ -254,6 +292,7 @@ textarea {
 		input[type=checkbox]:checked + span:before {
 			background: #fff url("../images/elements/check.svg") center center no-repeat;
 			background-size: 70% auto;
+
 			body.woocommerce-account &,
 			body.woocommerce-checkout & {
 				background-color: $background;
@@ -261,6 +300,7 @@ textarea {
 		}
 	}
 }
+
 #update_all_subscriptions_addresses_field .woocommerce-input-wrapper {
 	@include clearfix();
 	text-align: left;
@@ -268,11 +308,10 @@ textarea {
 	input[type=checkbox] {
 		display: inline-block;
 	}
-
-
 }
+.mailchimp-newsletter,
 .checkbox-form,
-.newsletter .form-row.mailchimp-newsletter, 
+.newsletter .form-row.mailchimp-newsletter,
 .woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
 	@include clearfix();
 	text-align: left;
@@ -311,6 +350,7 @@ textarea {
 		position: absolute;
 		left: 0;
 		border: 1px solid transparent;
+
 		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background: $background;
@@ -321,6 +361,7 @@ textarea {
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;
 		background-size: 70% auto;
+
 		body.woocommerce-account &,
 		body.woocommerce-checkout & {
 			background-color: $background;
@@ -328,8 +369,54 @@ textarea {
 	}
 }
 
-.woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
+.popup.newsletter-popup,
+body.woocommerce-checkout .mailchimp-newsletter {
+	@include clearfix();
+	text-align: left;
 
+	input[type=checkbox] {
+		display: none;
+	}
+
+	&.not-valid label:before {
+		border: 1px solid $red;
+	}
+
+	label {
+		@include font-size(15);
+		@include line-height(20);
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
+		padding-left: 30px;
+		text-transform: none;
+		letter-spacing: 0;
+		font-weight: normal;
+
+		a {
+			color: $black;
+			text-decoration: underline;
+		}
+	}
+
+	label:before {
+		@include border-radius(20px);
+		background: $background;
+		content: "";
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		left: 0;
+		border: 1px solid transparent;
+	}
+
+	input[type=checkbox]:checked + label:before {
+		background: $background url("../images/elements/check.svg") center center no-repeat;
+		background-size: 70% auto;
+	}
+}
+
+.woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
 	label {
 		border: none;
 

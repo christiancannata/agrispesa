@@ -1,109 +1,116 @@
 /* stylelint-disable */
 .newsletter {
-  background: $panna;
-  padding: 120px 15px;
-  overflow: hidden;
-  @include breakpoint(mobile) {
-    padding: 80px 15px;
-  }
+	background: $panna;
+	padding: 120px 15px;
+	overflow: hidden;
+	@include breakpoint(mobile) {
+		padding: 80px 15px;
+	}
 
-  &--intro {
-    text-align: center;
-  }
+	&--intro {
+		text-align: center;
+	}
 
-  &--title {
-    @include font-size(40);
-    margin: 0 0 16px;
+	&--title {
+		@include font-size(40);
+		margin: 0 0 16px;
 		font-family: $font-title;
 		font-weight: 900;
 		line-height: 1.1;
+		@include breakpoint(mobile) {
+			@include font-size(32);
+		}
+	}
 
-    @include breakpoint(mobile) {
-      @include font-size(32);
-    }
-  }
-
-  &--subtitle {
-    @include font-size(22);
-    font-weight: 300;
-    @include breakpoint(tablet) {
-      @include font-size(20);
-    }
-    @include breakpoint(mobile) {
-      @include font-size(18);
-    }
-  }
+	&--subtitle {
+		@include font-size(22);
+		font-weight: 300;
+		@include breakpoint(tablet) {
+			@include font-size(20);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(18);
+		}
+	}
 }
 
 .mailchimp-form {
-  max-width: 450px;
-  margin: 50px auto 0;
+	max-width: 450px;
+	margin: 50px auto 0;
 
-  &--buttons {
-    text-align: center;
-    margin-top: 24px;
-  }
-  input[type=email] {
-    @include border-radius(40px);
-      @include font-size(20);
-    border: 2px solid $blue;
-    height: 70px;
-    line-height: 70px;
-    padding: 0 24px;
-  }
-  .content__gdpr {
-    margin-left: 24px;
-    margin-top: 16px;
-  }
+	&--buttons {
+		text-align: center;
+		margin-top: 24px;
+	}
+
+	input[type=email],
+	input[type=text] {
+		@include border-radius(40px);
+		@include font-size(20);
+		border: 2px solid $blue;
+		height: 70px;
+		line-height: 70px;
+		padding: 0 24px;
+    background: $white;
+	}
+
+	.show-name {
+		display: none;
+	}
+
+	.content__gdpr {
+		margin-left: 24px;
+		margin-top: 16px;
+	}
 }
 
-
-
 .popup {
-  &.newsletter-popup {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.3);
-  }
+	&.newsletter-popup {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255,255,255,0.3);
 
-  &--content {
-    @include center-align();
-    position: absolute;
-    background: #fff;
-    width: 800px;
-    max-width: 90%;
 
-    .close-button {
-      @include font-size(20);
-      position: absolute;
-      z-index: 10;
-      top: 20px;
-      right: 20px;
-      color: $black;
-    }
-  }
+	}
 
-  &--flex {
-    display: flex;
-    align-items: center;
-  }
+	&--content {
+		@include center-align();
+		position: absolute;
+		background: #fff;
+		width: 800px;
+		max-width: 90%;
 
-  &--image {
-    width: 50%;
-    @include breakpoint(mobile) {
-      display: none;
-    }
-  }
+		.close-button {
+			@include font-size(20);
+			position: absolute;
+			z-index: 10;
+			top: 20px;
+			right: 20px;
+			color: $black;
+		}
+	}
 
-  &--text {
-    padding: 40px;
-    @include breakpoint(desktop) {
-      width: 50%;
-    }
-  }
+	&--flex {
+		display: flex;
+		align-items: center;
+	}
+
+	&--image {
+		width: 50%;
+		@include breakpoint(mobile) {
+			display: none;
+		}
+	}
+
+	&--text {
+		padding: 40px;
+		@include breakpoint(desktop) {
+			width: 50%;
+		}
+	}
 }

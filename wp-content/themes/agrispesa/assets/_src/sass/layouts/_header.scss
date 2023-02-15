@@ -478,6 +478,7 @@
 		}
 
 		&.is-empty-cart {
+			.cart-number-elements,
 			.icon-heart {
 				display: none;
 			}
@@ -504,6 +505,7 @@
 		&:hover {
 			color: $primary;
 			@include breakpoint(desktop) {
+				.cart-number-elements,
 				.icon-heart {
 					top: 8px;
 				}
@@ -518,17 +520,26 @@
 	.cart--items {
 		position: relative;
 
-		.icon-heart {
+		.cart-number-elements {
+			@include border-radius(50%);
 			@include transition(all 0.4s linear);
-			@include font-size(14);
+			@include font-size(12);
 			position: absolute;
-			color: $red;
+			color: $white;
+			background: $red;
 			display: block;
 			font-weight: bold;
 			text-align: center;
 			left: 50%;
-			margin-left: -7px;
+			margin-left: -12px;
 			top: 11px;
+			width: 24px;
+			height: 24px;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 2;
 			@include breakpoint(mobile) {
 				top: 10px;
 			}
@@ -855,8 +866,6 @@
 		display: flex;
 		justify-content: space-between;
 		margin-top: 16px;
-
-
 	}
 }
 
@@ -864,6 +873,7 @@
 	&--go-to {
 		width: 100%;
 	}
+
 	&--layout {
 		@include transition(all 0.4s ease);
 		@include border-radius(0 0 4px 4px);

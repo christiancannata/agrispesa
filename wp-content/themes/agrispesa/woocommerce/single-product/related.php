@@ -101,7 +101,7 @@ if ( in_array( 'box', $categories ) ): ?>
 	<section class="all-categories">
 	  <?php
 	  $orderby = 'ID';
-	    $order = 'asc';
+	    $order = 'ASC';
 	    $hide_empty = false;
 
 	    $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
@@ -109,7 +109,8 @@ if ( in_array( 'box', $categories ) ): ?>
 			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
 	    $specialiID = $getSpeciali->term_id;
 	    $cat_args = array(
-	        'orderby'    => $orderby,
+					'orderby'  => 'meta_value',
+					'meta_key' => 'categories_order_agr',
 	        'order'      => $order,
 	        'hide_empty' => $hide_empty,
 	        'parent' => $get_product_cat_ID,

@@ -268,8 +268,6 @@ function trigger_for_ajax_add_to_cart() {
             (function($){
                 $('body').on( 'added_to_cart', function(){
                     // Testing output on browser JS console
-                    console.log('added_to_cart');
-
                     $('.cart--link').removeClass('is-empty-cart');
                     $('.cart--link').addClass('is-full-cart');
 
@@ -277,6 +275,17 @@ function trigger_for_ajax_add_to_cart() {
             })(jQuery);
         </script>
     <?php
+}
+
+//Aggiorna numero carrello
+add_filter( 'woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1 );
+
+function iconic_cart_count_fragments( $fragments ) {
+
+    $fragments['.cart-number-elements'] = '<span class="cart-number-elements">' . WC()->cart->get_cart_contents_count() . '</span>';
+
+    return $fragments;
+
 }
 
 /**
@@ -323,10 +332,11 @@ function quadlayers_custom_add_to_cart_message() {
  */
 add_filter( 'woocommerce_loop_add_to_cart_link', 'quantity_inputs_for_woocommerce_loop_add_to_cart_link', 10, 2 );
 function quantity_inputs_for_woocommerce_loop_add_to_cart_link( $html, $product ) {
+
 	if ( $product && $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() && ! $product->is_sold_individually() ) {
 		$html = '<div class="shop-buttons-flex"><form action="' . esc_url( $product->add_to_cart_url() ) . '" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button>';
 		$html .= woocommerce_quantity_input( array(), $product, false );
-		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" class="btn btn-primary btn-small">' . esc_html( $product->add_to_cart_text() ) . '</button>';
+		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="' .$product->get_id().'" data-quantity="1" data-tip="Ciao" data-product_sku="'. esc_attr($product->get_sku()).'" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">' . esc_html( $product->add_to_cart_text() ) . '</button>';
 		$html .= '</form></div>';
 	}
 	return $html;

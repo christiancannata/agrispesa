@@ -32,7 +32,7 @@ openMenu();
 clearSearch();
 openSearch();
 openSubMenu();
-openminiCart();
+//openminiCart();
 quantityInput();
 variationToRadio();
 faqs();
@@ -54,8 +54,16 @@ magazineSlider();
 minimumAmount();
 giftCardCheckout();
 scrollTo();
+showNameNewsletter();
 
 //changeShippingLabel();
+
+function showNameNewsletter() {
+
+  jQuery('.mailchimp-form input[type=email]').on("focus", function(){
+   jQuery('.mailchimp-form .show-name').fadeIn();
+});
+}
 
 function scrollTo() {
   jQuery('.scroll-to').on('click', function(event) {
@@ -532,6 +540,8 @@ function quantityInput() {
         min = parseFloat($qty.attr('min')),
         step = $qty.attr('step');
 
+        console.log('ehi');
+
       // Format values
       if (!currentVal || currentVal === '' || currentVal === 'NaN') currentVal = 0;
       if (max === '' || max === 'NaN') max = '';
@@ -541,16 +551,21 @@ function quantityInput() {
       // Change the value
       if (jQuery(this).is('.product-quantity--plus')) {
 
+
         if (max && (currentVal >= max)) {
           $qty.val(max);
+          jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', max);
         } else {
           $qty.val((currentVal + parseFloat(step)).toFixed(step.getDecimals()));
+          jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
         }
       } else {
         if (min && (currentVal <= min)) {
           $qty.val(min);
+          jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', min);
         } else if (currentVal > 0) {
           $qty.val((currentVal - parseFloat(step)).toFixed(step.getDecimals()));
+          jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal - parseFloat(step)).toFixed(step.getDecimals());
         }
       }
 

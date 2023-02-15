@@ -23,6 +23,8 @@
 			font-family: $font-title;
 			font-style: normal;
 			font-weight: 900;
+			line-height: 1;
+			margin-bottom: 16px;
 
 			span {
 				font-weight: 300;
@@ -261,10 +263,10 @@
 		padding: 50px 0;
 	}
 
-
 	strong {
 		font-weight: 600;
 	}
+
 	blockquote {
 		padding: 32px 0 32px 24px;
 		@include breakpoint(desktop) {
@@ -297,6 +299,7 @@
 			}
 		}
 	}
+
 	h2,
 	h3,
 	h4 {
@@ -822,12 +825,14 @@
 
 .agr-section {
 	overflow: hidden;
-	&--container {
 
+	&--container {
 		&.no-mg-top {
 			padding-top: 0;
 		}
 	}
+
+
 
 	&--wide {
 		width: 100%;
@@ -861,6 +866,32 @@
 			justify-content: center;
 			position: relative;
 
+			.img-bg {
+				@include border-radius(50%);
+				content: '';
+				display: block;
+				background-repeat: no-repeat;
+				background-position: center;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+
+				&:after {
+					content: "";
+					display: block;
+					padding-bottom: 100%;
+				}
+				width: 500px;
+				@include breakpoint(container) {
+					width: 400px;
+				}
+				@include breakpoint(tablet) {
+					width: 60%;
+					margin-top: 40px;
+				}
+			}
+
 			.mini-img {
 				@include border-radius(50%);
 				width: 180px;
@@ -884,18 +915,6 @@
 					bottom: 5%;
 				}
 			}
-
-			.main-img.rounded {
-				@include border-radius(50%);
-				width: 500px;
-				@include breakpoint(container) {
-					width: 400px;
-				}
-				@include breakpoint(tablet) {
-					width: 60%;
-					margin-top: 40px;
-				}
-			}
 		}
 	}
 
@@ -916,10 +935,6 @@
 
 	&--image {
 		overflow: hidden;
-		// @include border-radius(50% 0 0 50%);
-		// .agr-section--right & {
-		// 	@include border-radius(0 50% 50% 0);
-		// }
 		@include breakpoint(tablet) {
 			order: 1;
 			margin-bottom: 0;
@@ -927,6 +942,26 @@
 
 		.main-img {
 			display: block;
+		}
+		.img-bg-column {
+			content: '';
+			display: block;
+			width: 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+
+			&:after {
+				content: "";
+				display: block;
+				padding-bottom: 100%;
+			}
+
+
+
 		}
 	}
 
@@ -1001,7 +1036,7 @@
 		@include font-size(18);
 		line-height: 1.3;
 		@include breakpoint(desktop) {
-			@include font-size(22);
+			@include font-size(24);
 		}
 	}
 }

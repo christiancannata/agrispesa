@@ -146,8 +146,9 @@ body.woocommerce-checkout {
 							}
 						}
 					}
-					tr.ywgc-gift-card-applied,
-					tr.order-total {
+
+					tr.order-total,
+					tr.ywgc-gift-card-applied {
 						display: none;
 
 						td,
@@ -169,7 +170,6 @@ body.woocommerce-checkout {
 }
 
 .new-cart {
-
 	&--item {
 		background: $white;
 		@include border-radius(4px);
@@ -294,6 +294,10 @@ body.woocommerce-checkout {
 				font-size: 14px !important;
 				height: 26px;
 				width: 32px !important;
+				background: $white;
+				border-radius: 0;
+				border-left: none;
+				border-right: none;
 			}
 
 			.product-quantity--minus,
@@ -306,10 +310,10 @@ body.woocommerce-checkout {
 	}
 }
 
-
 #wcpay-payment-request-wrapper {
 	display: none;
 }
+
 #wcpay-payment-request-wrapper {
 	margin-bottom: 8px;
 	padding-top: 0 !important;
@@ -331,6 +335,7 @@ body.woocommerce-checkout {
 		@include border-radius(16px);
 		margin-bottom: 32px !important;
 	}
+
 	table.shop_table {
 		border: none !important;
 	}

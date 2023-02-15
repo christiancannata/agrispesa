@@ -20,6 +20,114 @@
 	}
 }
 
+.woo-wallet-content {
+	.account-small-direction {
+		@include font-size(14);
+		margin-top: 16px;
+	}
+}
+
+.wallet-icon-add {
+	@include font-size(22);
+	color: $blue;
+	display: block;
+	@include transform(rotate(45deg));
+}
+
+.wallet-credit-header {
+	border-bottom: 1px solid #eaeae1;
+	padding: 0 0 16px;
+	margin-bottom: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#wc-wallet-transaction-details_wrapper.dataTables_wrapper {
+	.dataTables_filter {
+		label {
+			display: flex;
+			align-items: center;
+		}
+
+		input {
+			@include input();
+			height: 35px;
+			width: 150px;
+			margin: 0 0 0 4px;
+		}
+	}
+
+	.dataTables_length {
+		label {
+			display: flex;
+			align-items: center;
+		}
+
+		select {
+			@include input();
+			margin: 0 4px;
+			height: 35px;
+		}
+	}
+}
+
+#wc-wallet-transaction-details {
+	padding-top: 20px;
+	thead {
+		th {
+			font-weight: 600;
+			@include font-size(16);
+		}
+	}
+}
+.woo-wallet-transactions-items {
+	li {
+	padding: 16px 0 0 0 !important;
+	}
+}
+.dataTables_info,
+.dataTables_paginate {
+
+	@include font-size(16);
+	color: $muted;
+}
+
+.woo-wallet-my-wallet-container {
+	@include border-radius(4px);
+	border: 1px solid #eaeae1 !important;
+
+	.woo-wallet-sidebar {
+		padding-top: 0 !important;
+	}
+
+	.woo-add-to-wallet {
+		width: 100%;
+	}
+
+	.woo-wallet-sidebar {
+		ul {
+			li.card {
+				box-shadow: none;
+
+				&:hover {
+					box-shadow: 0 5px 5px 0 rgb(0 0 0 / 15%);
+				}
+
+				a {
+					@include font-size(16);
+					border: 1px solid $blue;
+					color: $blue;
+
+					p {
+						margin-top: 8px;
+					}
+				}
+			}
+		}
+	}
+}
+
 body.woocommerce-account {
 	.entry-header,
 	.page-header {

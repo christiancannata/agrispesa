@@ -50,11 +50,9 @@ $newsletter_subtitle = get_field( 'newsletter_subtitle', 'option' );
                     <script>
                         function validateFormPopup() {
                             if (document.forms["mc-embedded-subscribe-form-popup"]["popupGdpr"].checked === true) {
-                                console.log('click');
                                 jQuery('#mc-embedded-subscribe-form-popup .form-agree').removeClass('not-valid');
                             } else {
                                 jQuery('#mc-embedded-subscribe-form-popup .form-agree').addClass('not-valid');
-                                console.log('no click');
                                 return false;
                             }
                         }

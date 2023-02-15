@@ -16,12 +16,17 @@ $newsletter_subtitle = get_field('newsletter_subtitle', 'option');
 		<!-- Begin Mailchimp Signup Form -->
 	<div class="newsletter--form" id="mc_embed_signup">
 
-		<form action="https://agrispesa.us8.list-manage.com/subscribe/post?u=a601ffa5369b98db7030601ee&amp;id=cae80e4aed&amp;f_id=001468e0f0" onsubmit="return validateForm()" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+		<form action="https://agrispesa.us8.list-manage.com/subscribe/post?u=a601ffa5369b98db7030601ee&amp;id=cae80e4aed&amp;f_id=001468e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self">
 				<div id="mc_embed_signup_scroll" class="signup">
 					<div class="mc-field-group">
 						<input type="email" value="" name="EMAIL" placeholder="Il tuo indirizzo email" class="input-text required email" id="mce-EMAIL">
-						<div id="mergeRow-gdpr" class="mergeRow gdpr-mergeRow content__gdprBlock mc-field-group">
+					</div>
+					<div class="mc-field-group">
+						<input type="text" value="" name="FNAME" class="input-text show-name" placeholder="Il tuo nome" id="mce-FNAME">
+						<span id="mce-FNAME-HELPERTEXT" class="helper_text"></span>
+					</div>
 
+						<div id="mergeRow-gdpr" class="mergeRow gdpr-mergeRow content__gdprBlock mc-field-group">
 								<div class="content__gdpr">
 									<div class="checkbox-form form-agree">
 										<input type="checkbox" id="gdpr_13" name="gdpr[13]" value="Y" class="av-checkbox">
@@ -29,7 +34,8 @@ $newsletter_subtitle = get_field('newsletter_subtitle', 'option');
 									</div>
 								 </div>
 						</div>
-					</div>
+
+
 					<div class="mailchimp-form--buttons">
 						<input type="submit" value="Iscriviti" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btb-small">
 					</div>

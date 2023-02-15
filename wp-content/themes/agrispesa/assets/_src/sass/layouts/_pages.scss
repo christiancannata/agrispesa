@@ -511,3 +511,71 @@
 		}
 	}
 }
+
+.thankyou {
+	padding: 40px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&--intro {
+		text-align: center;
+		@include breakpoint(desktop) {
+			width: 60%;
+			padding: 40px 0 40px 20px;
+			text-align: left;
+		}
+	}
+
+	&--image {
+		@include breakpoint(desktop) {
+			width: 40%;
+			padding-right: 40px;
+		}
+	}
+
+	&--title {
+		@include font-size(40);
+		margin-bottom: 24px;
+		font-family: $font-title;
+		line-height: 1;
+		font-weight: 900;
+	}
+
+	&--subtitle {
+		@include font-size(22);
+	}
+
+	&--continue-shopping {
+		margin-top: 40px;
+	}
+}
+
+.woocommerce-thankyou-order-details {
+	margin: 24px 0;
+	display: none;
+	@include breakpoint(desktop) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		li {
+			float: none !important;
+		}
+	}
+}
+
+body.woocommerce-order-received {
+	.page-header,
+	.woocommerce-customer-details,
+	.woocommerce-order-details {
+		display: none;
+	}
+
+	.woocommerce-order {
+		.account-borders,
+		.my-account--minititle {
+			display: none;
+		}
+	}
+}
