@@ -252,11 +252,24 @@
 				order: 1;
 			}
 
-			img {
-				width: 100%;
+			.img-bg-column {
+				content: '';
 				display: block;
+				width: 100%;
 				max-width: 600px;
 				margin: 0 auto;
+				background-repeat: no-repeat;
+				background-position: center;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+
+				&:after {
+					content: "";
+					display: block;
+					padding-bottom: 100%;
+				}
 			}
 		}
 
