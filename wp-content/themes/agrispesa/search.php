@@ -23,7 +23,8 @@ get_header('shop'); ?>
     $specialiID = $getSpeciali->term_id;
     $get_product_cat_ID = $getIDbyNAME->term_id;
     $cat_args = array(
-        'orderby'    => 'ID',
+      'orderby'  => 'meta_value',
+      'meta_key' => 'categories_order_agr',
         'order'      => 'asc',
         'hide_empty' => false,
         'parent' => $get_product_cat_ID,
