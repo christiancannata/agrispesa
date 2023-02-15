@@ -156,6 +156,76 @@ add_action('rest_api_init', function () {
 		}
 	));
 
+
+	register_rest_route('agrispesa/v1', 'weekly-box/duplicate', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$body = $request->get_json_params();
+
+			$lastWeek = $body['week'] - 1;
+
+			$lastWeekBox = get_posts([
+				'post_type' => 'weekly-box',
+				'post_status' => 'publish',
+				'posts_per_page' => 1,
+				'meta_query' => [
+					'relation' => 'and',
+					[
+						'key' => '_week',
+						'value' => str_pad($lastWeek, 2, 0, STR_PAD_LEFT),
+						'compare' => '='
+					],
+					[
+						'key' => '_product_box_id',
+						'value' => $body['product_box_id'],
+						'compare' => '='
+					]
+				]
+			]);
+
+			if (empty($lastWeekBox)) {
+				$response = new WP_REST_Response([
+				]);
+				$response->set_status(404);
+
+				return $response;
+			}
+
+			$lastWeekBox = reset($lastWeekBox);
+
+			$post_id = wp_insert_post(array(
+				'post_type' => 'weekly-box',
+				'post_title' => 'Box settimana ' . $body['week'] . ' - ' . $body['product_box_id'],
+				'post_content' => '',
+				'post_status' => 'publish',
+				'comment_status' => 'closed',   // if you prefer
+				'ping_status' => 'closed',      // if you prefer
+			));
+
+			if ($post_id) {
+				// insert post meta
+				add_post_meta($post_id, '_week', $body['week']);
+				add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
+				add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
+
+				$products = get_post_meta($lastWeekBox->ID, '_products', true);
+
+				add_post_meta($post_id, '_products', $products);
+			}
+
+			$response = new WP_REST_Response([
+				'id' => $post_id
+			]);
+			$response->set_status(201);
+
+			return $response;
+		}
+	));
+
 	register_rest_route('agrispesa/v1', 'shop-categories', array(
 		'methods' => 'GET',
 		'permission_callback' => function () {
@@ -1596,7 +1666,7 @@ function consegne_ordini_pages()
 
 				<label>Box</label><br>
 				<select name="box_id" id="box_id" class="select2">
-					<option disabled selected>-- Scegli la box --</option>
+					<option disabled selected value="">-- Scegli la box --</option>
 					<?php foreach ($products as $product): ?>
 						<option value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
 					<?php endforeach; ?>
@@ -1606,7 +1676,7 @@ function consegne_ordini_pages()
 
 				<label>Prodotto da inserire</label><br>
 				<select name="products_id" id="products_id" class="select2">
-					<option disabled selected>-- Scegli il prodotto --</option>
+					<option disabled selected value="">-- Scegli il prodotto --</option>
 					<?php foreach ($categories as $category): ?>
 						<optgroup label="<?php echo $category['name']; ?>">
 							<?php foreach ($category['products'] as $product): ?>
@@ -1617,7 +1687,17 @@ function consegne_ordini_pages()
 					<?php endforeach; ?>
 				</select><br><br>
 
-				<button class="button-primary add-product" @click="addProduct">Aggiungi alla box</button>
+				<div style="display: flex">
+					<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct">Aggiungi
+						alla
+						box
+					</button>
+
+					<button class="button-primary add-product" @click="copyFromLastWeek">Copia
+						dalla settimana passata
+					</button>
+				</div>
+
 				<br><br>
 
 				<div class="row">

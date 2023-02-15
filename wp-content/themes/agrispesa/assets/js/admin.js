@@ -33,11 +33,40 @@ createApp({
       this.products.splice(index, 1);
     },
     addProduct: function () {
+      if (document.getElementById('data_consegna').value == '') {
+        alert('Inserisci una data di consegna')
+        return false
+      }
+      if (document.getElementById('box_id').value == '') {
+        alert('Seleziona una box')
+        return false
+      }
+
       let productId = document.getElementById('products_id').value
       let product = this.productJson.filter(function (product) {
         return product['id'] == productId
       })
       this.products.push(product[0])
+    },
+    copyFromLastWeek: function () {
+      if (document.getElementById('data_consegna').value == '') {
+        alert('Inserisci una data di consegna')
+        return false
+      }
+      if (document.getElementById('box_id').value == '') {
+        alert('Seleziona una box')
+        return false
+      }
+
+      const $vm = this
+      axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box/duplicate', {
+        product_box_id: document.getElementById('box_id').value,
+        week: document.getElementById('week').value,
+        data_consegna: document.getElementById('data_consegna').value
+      })
+        .then((response) => {
+          location.href = ''
+        });
     }
   }
 }).mount('#box-app')
