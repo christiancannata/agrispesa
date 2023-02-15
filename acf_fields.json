@@ -1,5 +1,51 @@
 [
     {
+        "key": "group_63ec7400c7e58",
+        "title": "Categoria prodotti",
+        "fields": [
+            {
+                "key": "field_63ec74017c05f",
+                "label": "Ricarico percentuale",
+                "name": "ricarico_percentuale",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "min": "",
+                "max": "",
+                "placeholder": "",
+                "step": "",
+                "prepend": "",
+                "append": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "product_cat"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "seamless",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
         "key": "group_63b9907a7e49e",
         "title": "Gruppi di consegna",
         "fields": [
