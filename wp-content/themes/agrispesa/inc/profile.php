@@ -80,7 +80,7 @@ function settings_box_content()
 	<div class="woocommerce-PreferenzeBox-content" id="box-app">
 
 		<div class="woocommerce-notices-wrapper"></div>
-		<h3 class="my-account--minititle">Personalizza la box</h3>
+		<h3 class="my-account--minititle">Personalizza la scatola</h3>
 
 		<div class="account-banner">
 			<div class="account-banner--text">
