@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.43 9.52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 0.44px;
+      }
+    </style>
+  </defs>
+  <g id="Livello_2" data-name="Livello 2">
+    <g id="_ÎÓÈ_1" data-name="—ÎÓÈ_1">
+      <g>
+        <g>
+          <polyline class="cls-1" points="6.3 3.33 9.21 3.33 9.21 9.3 0.22 9.3 0.22 3.33 3.13 3.33"/>
+          <path class="cls-1" d="M5.94,6.15,9.12,9.24a0,0,0,0,1,0,.06H.33a0,0,0,0,1,0-.06L3.5,6.15"/>
+          <path class="cls-1" d="M6.3,3.33H9.1s.05,0,0,.06L4.72,7.18.31,3.39s0-.06,0-.06h2.8"/>
+        </g>
+        <polygon class="cls-1" points="4.72 0.44 3.49 2.56 4.05 2.56 4.05 4.87 5.38 4.87 5.38 2.56 5.94 2.56 4.72 0.44"/>
+      </g>
+    </g>
+  </g>
+</svg>
