@@ -249,6 +249,51 @@ add_action('rest_api_init', function () {
 	));
 
 
+	register_rest_route('agrispesa/v1', 'weekly-box/(?P<box_id>\d+)/products', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+
+			$products = get_post_meta($request['box_id'], '_products', true);
+
+			foreach ($request['product_ids'] as $key => $id) {
+				$unitaMisura = 'gr';
+
+				$measureUnit = get_post_meta($id, '_woo_uom_input', true);
+
+				if (!empty($measureUnit)) {
+					$unitaMisura = $measureUnit;
+				}
+
+				$products[] = [
+					'id' => $id,
+					'name' => $request['product_name'][$key],
+					'quantity' => $request['quantity'][$key],
+					'unit_measure' => $unitaMisura
+				];
+			}
+
+
+			$products = array_map("unserialize", array_unique(array_map("serialize", $products)));
+
+			$newProducts = [];
+			foreach ($products as $product) {
+				$newProducts[] = $product;
+			}
+
+			update_post_meta($request['box_id'], '_products', $newProducts);
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+
+			return $response;
+		}
+	));
+
+
 	register_rest_route('agrispesa/v1', 'shop-categories', array(
 		'methods' => 'GET',
 		'permission_callback' => function () {
@@ -1820,7 +1865,9 @@ function consegne_ordini_pages()
 							$week = get_post_meta($box->ID, '_week', true);
 							$products = get_post_meta($box->ID, '_products', true);
 							$dataConsegna = get_post_meta($box->ID, '_data_consegna', true);
-
+							$productsBoxIds = array_map(function ($p) {
+								return $p['id'];
+							}, $products);
 							?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
@@ -1873,7 +1920,7 @@ function consegne_ordini_pages()
 														<i><?php echo $codiceConfezionamento; ?></i>
 													<?php endif; ?>
 												</td>
-												<td><input value="<?php echo $product['quantity']; ?>"
+												<td><input readonly value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
@@ -1885,6 +1932,67 @@ function consegne_ordini_pages()
 												</td>
 											</tr>
 										<?php endforeach; ?>
+										<?php if ($week >= $currentWeek): ?>
+											<tr>
+												<td>
+													<select data-box-id="<?php echo $box->ID; ?>"
+															class="select2 new-product-box">
+														<option disabled selected value="">-- Scegli il prodotto --
+														</option>
+														<?php foreach ($categories as $category): ?>
+															<optgroup label="<?php echo $category['name']; ?>">
+
+																<?php
+																$category['products'] = array_filter($category['products'], function ($product) use ($productsBoxIds) {
+																	return !in_array($product->ID, $productsBoxIds);
+																});
+																?>
+																<?php foreach ($category['products'] as $product): ?>
+																	<?php
+
+																	$unitaMisura = 'gr';
+
+																	$measureUnit = get_post_meta($product->ID, '_woo_uom_input', true);
+
+																	if (!empty($measureUnit)) {
+																		$unitaMisura = $measureUnit;
+																	}
+
+																	$fornitore = get_post_meta($product->ID, 'product_producer', true);
+																	$fornitoreString = '';
+																	if (!empty($fornitore)) {
+																		$fornitore = reset($fornitore);
+																		$fornitore = get_post($fornitore);
+																		$fornitoreString = ' - ' . $fornitore->post_title;
+																	}
+
+																	$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+
+																	if ($codiceConfezionamento) {
+																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+																	}
+
+																	?>
+																	<option
+																		data-name="<?php echo $product->post_title; ?>"
+																		data-unit-measure="<?php echo $unitaMisura; ?>"
+																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
+																<?php endforeach; ?>
+															</optgroup>
+														<?php endforeach; ?>
+													</select>
+												</td>
+												<td><input
+														type="number"
+														name="quantity" class="new-quantity">
+													<div class="unit-measure"></div>
+												</td>
+												<td>
+													<a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
+													   href="#">Aggiungi</a>
+												</td>
+											</tr>
+										<?php endif; ?>
 										</tbody>
 									</table>
 									<span>
