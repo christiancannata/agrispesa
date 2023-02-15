@@ -108,12 +108,33 @@ add_action('woocommerce_product_options_advanced', function () {
 
 });
 
+add_action('woocommerce_product_options_general_product_data', function () {
+	woocommerce_wp_text_input([
+		'id' => '_prezzo_acquisto',
+		'label' => 'Prezzo di acquisto (€)',
+	]);
+	woocommerce_wp_text_input([
+		'id' => '_percentuale_ricarico',
+		'label' => 'Percentuale di ricarico (%)',
+	]);
+});
+
+
 function woocommerce_product_custom_fields_save1($post_id)
 {
 	if (isset($_POST['_codice_confezionamento']))
 		update_post_meta($post_id, '_codice_confezionamento', esc_attr($_POST['_codice_confezionamento']));
 	if (isset($_POST['_is_magazzino']))
 		update_post_meta($post_id, '_is_magazzino', esc_attr($_POST['_is_magazzino']));
+
+	if (isset($_POST['_prezzo_acquisto']))
+		update_post_meta($post_id, '_prezzo_acquisto', esc_attr($_POST['_prezzo_acquisto']));
+
+	if (isset($_POST['_percentuale_ricarico'])) {
+		update_post_meta($post_id, '_percentuale_ricarico', esc_attr($_POST['_percentuale_ricarico']));
+	} else {
+
+	}
 
 }
 
@@ -648,7 +669,7 @@ add_action('rest_api_init', function () {
 function my_enqueue($hook)
 {
 
-	if ($hook == 'edit.php') {
+	if ($hook == 'edit.php' || $hook == 'post.php') {
 		wp_enqueue_script('agrispesa-admin-delivery-box-js', get_theme_file_uri('assets/js/admin-delivery-box.js'), array('jquery', 'select2'), null, true);
 	} else {
 
