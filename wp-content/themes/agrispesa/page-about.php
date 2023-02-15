@@ -7,7 +7,7 @@ $intro_image = get_field('about_intro_image');
 $intro_text = get_field('about_intro_text');
 
 $giovanna_image = get_field('giovanna_image');
-$elena_image = get_field('giovanna_image');
+$elena_image = get_field('elena_image');
 
 $giovanna_text = get_field('giovanna_text');
 $elena_text = get_field('elena_text');

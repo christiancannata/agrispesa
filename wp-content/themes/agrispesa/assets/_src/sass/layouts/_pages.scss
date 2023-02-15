@@ -58,8 +58,7 @@
 		margin: 24px 0 32px;
 		line-height: 1.3;
 		@include breakpoint(desktop) {
-
-				@include font-size(22);
+			@include font-size(22);
 			margin: 8px 0 32px;
 		}
 	}
@@ -446,12 +445,13 @@
 
 .agr-section--text--content.team {
 	p {
-		@include font-size(26);
+		@include font-size(22);
 		font-family: $font-title;
 		font-weight: 900;
+		margin: 12px 0;
 		@include breakpoint(container) {
-			@include font-size(24);
-		} 
+			@include font-size(20);
+		}
 	}
 }
 
@@ -553,6 +553,7 @@
 			text-align: center;
 			padding: 0 24px;
 		}
+
 		p {
 			@include font-size(16);
 			color: $muted;
