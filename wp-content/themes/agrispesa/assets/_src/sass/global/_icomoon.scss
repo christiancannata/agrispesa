@@ -39,7 +39,24 @@
 	text-transform: none;
 }
 
-
+.icon-consegna:before {
+  content: "\e91f";
+}
+.icon-email:before {
+  content: "\e920";
+}
+.icon-indirizzo:before {
+  content: "\e921";
+}
+.icon-ordine:before {
+  content: "\e922";
+}
+.icon-prossimo-pagamento:before {
+  content: "\e923";
+}
+.icon-totale:before {
+  content: "\e924";
+}
 .icon-ics:before {
   content: "\e91e";
 }

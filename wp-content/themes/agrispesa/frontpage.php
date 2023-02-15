@@ -1,9 +1,4 @@
-<?php /* Template Name: Homepage */
-
-// Start the session
-session_start();
-$_SESSION['havesearch'] = false;
-?>
+<?php /* Template Name: Homepage */ ?>
 
 <?php get_header(); ?>
 

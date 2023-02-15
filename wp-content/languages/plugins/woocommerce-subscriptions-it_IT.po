@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-02-06 22:03+0100\n"
+"PO-Revision-Date: 2023-02-15 14:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -4120,15 +4120,16 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:334
 msgid "Your subscription will be activated when payment clears."
 msgid_plural "Your subscriptions will be activated when payment clears."
-msgstr[0] ""
+msgstr[0] "Il tuo abbonamento verrà attivato quando effettuerai il pagamento."
 msgstr[1] ""
+"I tuoi abbonamenti verranno attivati quando effettuerai il pagamento."
 
 #. translators: placeholders are opening and closing link tags
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:341
 msgid "View the status of your subscription in %1$syour account%2$s."
 msgid_plural "View the status of your subscriptions in %1$syour account%2$s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Visualizza lo stato del tuo abbonamento nella %1$stua bacheca%2$s."
+msgstr[1] "Visualizza lo stato dei tuoi abbonamenti nella %1$stua bacheca%2$s."
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:404
 msgid "Subscription Relationship"
