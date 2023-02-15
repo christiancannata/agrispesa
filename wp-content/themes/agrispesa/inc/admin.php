@@ -226,6 +226,29 @@ add_action('rest_api_init', function () {
 		}
 	));
 
+
+	register_rest_route('agrispesa/v1', 'weekly-box/(?P<box_id>\d+)/products/(?P<index>\d+)', array(
+		'methods' => 'DELETE',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+
+			$products = get_post_meta($request['box_id'], '_products', true);
+
+			unset($products[$request['index']]);
+
+			update_post_meta($request['box_id'], '_products', $products);
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+
+			return $response;
+		}
+	));
+
+
 	register_rest_route('agrispesa/v1', 'shop-categories', array(
 		'methods' => 'GET',
 		'permission_callback' => function () {
@@ -1809,7 +1832,7 @@ function consegne_ordini_pages()
 														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
 												</td>
 												<td>
-													<a class="delete-product-box" data-index="<?php echo $key; ?>"
+													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>" data-index="<?php echo $key; ?>"
 													   href="#">Elimina</a>
 												</td>
 											</tr>

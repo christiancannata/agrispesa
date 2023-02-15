@@ -5,6 +5,23 @@ jQuery(document).ready(function ($) {
     e.preventDefault()
 
   })
+
+  $(".delete-product-box").click(function (e) {
+    e.preventDefault()
+
+    if (confirm('Vuoi togliere il prodotto dalla box?')) {
+      let index = $(this).data('index')
+      let box_id = $(this).data('box-id')
+
+      $(this).closest('tr').remove()
+
+      axios.delete(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box/' + box_id + '/products/' + index)
+        .then((response) => {
+
+        });
+    }
+
+  })
 })
 
 const {createApp} = Vue
