@@ -109,14 +109,24 @@ add_action('woocommerce_product_options_advanced', function () {
 });
 
 add_action('woocommerce_product_options_general_product_data', function () {
+	global $post;
+
 	woocommerce_wp_text_input([
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
 	]);
+
+	woocommerce_wp_checkbox([
+		'id' => '_tipo_percentuale_ricarico',
+		'label' => 'Eredita percentuale ricarico dalla categoria'
+	]);
+
 	woocommerce_wp_text_input([
 		'id' => '_percentuale_ricarico',
 		'label' => 'Percentuale di ricarico (%)',
 	]);
+
+
 });
 
 
@@ -132,8 +142,6 @@ function woocommerce_product_custom_fields_save1($post_id)
 
 	if (isset($_POST['_percentuale_ricarico'])) {
 		update_post_meta($post_id, '_percentuale_ricarico', esc_attr($_POST['_percentuale_ricarico']));
-	} else {
-
 	}
 
 }
@@ -142,6 +150,28 @@ add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_field
 
 
 add_action('rest_api_init', function () {
+
+
+	register_rest_route('agrispesa/v1', 'products/(?P<product_id>\d+)/category', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$terms = get_the_terms($request['product_id'], 'product_cat');
+			$terms = end($terms);
+
+			$ricarico = get_term_meta($terms->term_id, 'ricarico_percentuale', true);
+			$terms->ricarico_percentuale = !empty($ricarico) ? $ricarico : 0;
+			$response = new WP_REST_Response($terms);
+			$response->set_status(200);
+
+			return $response;
+		}
+	));
+
+
 	register_rest_route('agrispesa/v1', 'weekly-box', array(
 		'methods' => 'POST',
 		'permission_callback' => function () {
@@ -671,6 +701,8 @@ function my_enqueue($hook)
 
 	if ($hook == 'edit.php' || $hook == 'post.php') {
 		wp_enqueue_script('agrispesa-admin-delivery-box-js', get_theme_file_uri('assets/js/admin-delivery-box.js'), array('jquery', 'select2'), null, true);
+		wp_localize_script('agrispesa-admin-delivery-box-js', 'WPURL', array('siteurl' => get_option('siteurl')));
+
 	} else {
 
 		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {

@@ -1,4 +1,26 @@
+/* global WPURL:readonly */
 jQuery(document).ready(function ($) {
+
+  $("#_tipo_percentuale_ricarico").change(function () {
+
+    if ($(this).is(':checked')) {
+
+      $("#_percentuale_ricarico").attr('readonly', true)
+
+      $.get(WPURL.siteurl + '/wp-json/agrispesa/v1/products/' + $("#post_ID").val() + '/category', function (data) {
+        $("#_percentuale_ricarico").val(data.ricarico_percentuale)
+        reloadPrice()
+      });
+
+
+    } else {
+
+      $("#_percentuale_ricarico").removeAttr('readonly')
+      reloadPrice()
+    }
+
+  })
+
   $("#_regular_price").attr('readonly', true)
 
   function reloadPrice() {
