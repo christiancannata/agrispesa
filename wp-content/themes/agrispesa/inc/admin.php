@@ -1711,9 +1711,16 @@ function consegne_ordini_pages()
 									$fornitore = get_post($fornitore);
 									$fornitoreString = ' - ' . $fornitore->post_title;
 								}
+
+								$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+
+								if ($codiceConfezionamento) {
+									$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+								}
+
 								?>
 								<option
-									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString; ?></option>
+									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -1812,6 +1819,12 @@ function consegne_ordini_pages()
 												$fornitoreString = $fornitore->post_title;
 											}
 
+											$codiceConfezionamento = get_post_meta($product['id'], '_codice_confezionamento', true);
+
+											if ($codiceConfezionamento) {
+												$codiceConfezionamento = $codiceConfezionamento;
+											}
+
 											$unitaMisura = 'gr';
 
 											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
@@ -1825,6 +1838,10 @@ function consegne_ordini_pages()
 												<td><?php echo $product['name']; ?>
 													<?php if ($fornitoreString): ?> <br>
 														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
+
+													<?php if ($codiceConfezionamento): ?><br>
+														<i><?php echo $codiceConfezionamento; ?></i>
+													<?php endif; ?>
 												</td>
 												<td><input value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
@@ -1832,7 +1849,8 @@ function consegne_ordini_pages()
 														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
 												</td>
 												<td>
-													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>" data-index="<?php echo $key; ?>"
+													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
+													   data-index="<?php echo $key; ?>"
 													   href="#">Elimina</a>
 												</td>
 											</tr>
