@@ -1828,15 +1828,17 @@ function consegne_ordini_pages()
 				<br><br>
 
 				<div style="display: flex;width:100%;margin-top:10px;margin-bottom: 10px">
-					<div>
-						Totale Box<br>
-						<b v-html="totalWeight"></b>
-					</div>
+					<table>
+						<tr>
+							<td>Prezzo Box</td>
+							<td>Totale €</td>
+						</tr>
+						<tr>
+							<td><b v-html="totalWeight"></b></td>
+							<td><b v-html="totalPrice"></b></td>
+						</tr>
+					</table>
 
-					<div>
-						Totale €<br>
-						<b v-html="totalPrice"></b>
-					</div>
 				</div>
 
 				<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
@@ -1897,11 +1899,19 @@ function consegne_ordini_pages()
 									data-colname="Commento">
 									<span><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
 								</td>
-								<td class="response column-response" data-colname="In risposta a">
+								<td class="response column-response">
 									<table>
 										<tbody>
+										<?php
+										$totalWeight = 0;
+										$totalPrice = 0;
+										?>
 										<?php foreach ($products as $key => $product): ?>
 											<?php
+
+											$totalWeight += $product['quantity'];
+											$totalPrice += ($product['price'] * $product['quantity']);
+
 											$fornitore = get_post_meta($product['id'], 'product_producer', true);
 											$fornitoreString = '';
 											if (!empty($fornitore)) {
@@ -1923,6 +1933,7 @@ function consegne_ordini_pages()
 											if (!empty($measureUnit)) {
 												$unitaMisura = $measureUnit;
 											}
+
 
 											?>
 											<tr>
@@ -2007,6 +2018,17 @@ function consegne_ordini_pages()
 												</td>
 											</tr>
 										<?php endif; ?>
+
+										<tr>
+											<td></td>
+											<td><strong>Peso Box</strong></td>
+											<td><strong>Totale</strong></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td><?php echo $totalWeight; ?>gr</td>
+											<td><?php echo $totalPrice; ?>€</td>
+										</tr>
 										</tbody>
 									</table>
 									<span>
