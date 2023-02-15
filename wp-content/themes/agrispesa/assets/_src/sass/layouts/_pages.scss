@@ -458,12 +458,12 @@
 
 .agr-section--text--content.team {
 	p {
-		@include font-size(22);
+		@include font-size(26);
 		font-family: $font-title;
 		font-weight: 900;
 		margin: 12px 0;
 		@include breakpoint(container) {
-			@include font-size(20);
+			@include font-size(22);
 		}
 	}
 }
