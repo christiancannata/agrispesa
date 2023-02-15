@@ -444,6 +444,17 @@
 	}
 }
 
+.agr-section--text--content.team {
+	p {
+		@include font-size(26);
+		font-family: $font-title;
+		font-weight: 900;
+		@include breakpoint(container) {
+			@include font-size(24);
+		} 
+	}
+}
+
 .section-hero {
 	padding: 200px 130px 0;
 	@include breakpoint(container) {
