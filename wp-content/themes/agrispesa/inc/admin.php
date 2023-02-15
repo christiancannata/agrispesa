@@ -1680,8 +1680,17 @@ function consegne_ordini_pages()
 					<?php foreach ($categories as $category): ?>
 						<optgroup label="<?php echo $category['name']; ?>">
 							<?php foreach ($category['products'] as $product): ?>
+								<?php
+								$fornitore = get_post_meta($product->ID, 'product_producer', true);
+								$fornitoreString = '';
+								if (!empty($fornitore)) {
+									$fornitore = reset($fornitore);
+									$fornitore = get_post($fornitore);
+									$fornitoreString = ' - ' . $fornitore->post_title;
+								}
+								?>
 								<option
-									value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
+									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString; ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -1771,12 +1780,33 @@ function consegne_ordini_pages()
 									<table>
 										<tbody>
 										<?php foreach ($products as $key => $product): ?>
+											<?php
+											$fornitore = get_post_meta($product['id'], 'product_producer', true);
+											$fornitoreString = '';
+											if (!empty($fornitore)) {
+												$fornitore = reset($fornitore);
+												$fornitore = get_post($fornitore);
+												$fornitoreString = $fornitore->post_title;
+											}
+
+											$unitaMisura = 'gr';
+
+											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
+
+											if (!empty($measureUnit)) {
+												$unitaMisura = $measureUnit;
+											}
+
+											?>
 											<tr>
-												<td><?php echo $product['name']; ?></td>
+												<td><?php echo $product['name']; ?>
+													<?php if ($fornitoreString): ?> <br>
+														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
+												</td>
 												<td><input value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
-														   name="quantity[<?php echo $key; ?>][]">Kg
+														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
 												</td>
 												<td>
 													<a class="delete-product-box" data-index="<?php echo $key; ?>"
