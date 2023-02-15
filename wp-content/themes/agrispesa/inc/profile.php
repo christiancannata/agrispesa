@@ -118,7 +118,16 @@ function settings_box_content()
 						</div>
 
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
+
 							<ul>
+								<li :key="'list_all'">
+									<label @click.prevent="toggleAllBlacklist(currentCategory,subscription)"
+										   class="checkbox-container">
+										<span class="label">Seleziona tutti</span>
+										<input :checked="currentCategory.is_all_blacklist_selected" type="checkbox">
+										<span class="checkmark"></span>
+									</label>
+								</li>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
 									<label @click.prevent="toggleBlacklist(product.ID,subscription)"
 										   class="checkbox-container">
@@ -158,6 +167,14 @@ function settings_box_content()
 
 						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
 							<ul>
+								<li :key="'list_all'">
+									<label @click.prevent="toggleAllWishlist(currentCategory,subscription)"
+										   class="checkbox-container">
+										<span class="label">Seleziona tutti</span>
+										<input :checked="currentCategory.is_all_wishlist_selected" type="checkbox">
+										<span class="checkmark"></span>
+									</label>
+								</li>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
 									<label @click.prevent="togglePreference(product.ID,subscription)"
 										   class="checkbox-container">

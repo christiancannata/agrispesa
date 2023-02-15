@@ -451,14 +451,23 @@ add_action('rest_api_init', function () {
 			if (empty($boxPreferences)) {
 				$boxPreferences = [];
 			}
-			$productToRemove = get_post($body['product_id']);
 
-			$boxPreferences[] = [
-				'id' => $productToRemove->ID,
-				'name' => $productToRemove->post_title
-			];
+			foreach ($body['product_ids'] as $productId) {
+				$productToAdd = get_post($productId);
+				$boxPreferences[] = [
+					'id' => $productToAdd->ID,
+					'name' => $productToAdd->post_title
+				];
+			}
 
-			update_post_meta($body['subscription_id'], '_box_preferences', $boxPreferences);
+			$boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
+
+			$newBoxPreferences = [];
+			foreach ($boxPreferences as $boxPreference) {
+				$newBoxPreferences[] = $boxPreference;
+			}
+
+			update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
 
 			$response = new WP_REST_Response([]);
 			$response->set_status(201);
@@ -480,14 +489,25 @@ add_action('rest_api_init', function () {
 			if (empty($boxPreferences)) {
 				$boxPreferences = [];
 			}
-			$productToRemove = get_post($body['product_id']);
 
-			$boxPreferences[] = [
-				'id' => $productToRemove->ID,
-				'name' => $productToRemove->post_title
-			];
 
-			update_post_meta($body['subscription_id'], '_box_blacklist', $boxPreferences);
+			foreach ($body['product_ids'] as $productId) {
+				$productToAdd = get_post($productId);
+				$boxPreferences[] = [
+					'id' => $productToAdd->ID,
+					'name' => $productToAdd->post_title
+				];
+			}
+
+			$boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
+
+			$newBoxPreferences = [];
+
+			foreach ($boxPreferences as $boxPreference) {
+				$newBoxPreferences[] = $boxPreference;
+			}
+
+			update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
 
 			$response = new WP_REST_Response([]);
 			$response->set_status(201);
@@ -498,7 +518,7 @@ add_action('rest_api_init', function () {
 
 
 	register_rest_route('agrispesa/v1', 'subscription-preference', array(
-		'methods' => 'PATCH',
+		'methods' => 'DELETE',
 		'permission_callback' => function () {
 			return true;
 		},
@@ -506,24 +526,30 @@ add_action('rest_api_init', function () {
 			$body = $request->get_json_params();
 			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
 
-			$productId = $body['product_id'];
-			//find product
-			$index = array_filter($boxPreferences, function ($product) use ($productId) {
-				return $product['id'] == $productId;
-			});
 
+			$productIds = $body['product_ids'];
+			$newBoxPreferences = [];
 
-			if (!empty($index)) {
-				$index = array_keys($index);
-				$index = reset($index);
-				unset($boxPreferences[$index]);
+			foreach ($productIds as $productId) {
+				//find product
+				$index = array_filter($boxPreferences, function ($product) use ($productId) {
+					return $product['id'] == $productId;
+				});
 
-				$newBoxPreferences = [];
-				foreach ($boxPreferences as $preference) {
-					$newBoxPreferences[] = $preference;
+				if (!empty($index)) {
+					$index = array_keys($index);
+					$index = reset($index);
+					unset($boxPreferences[$index]);
 				}
-				update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
+
 			}
+
+			foreach ($boxPreferences as $preference) {
+				$newBoxPreferences[] = $preference;
+			}
+
+
+			update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
 
 
 			$response = new WP_REST_Response([]);
@@ -533,7 +559,7 @@ add_action('rest_api_init', function () {
 	));
 
 	register_rest_route('agrispesa/v1', 'subscription-blacklist', array(
-		'methods' => 'PATCH',
+		'methods' => 'DELETE',
 		'permission_callback' => function () {
 			return true;
 		},
@@ -541,24 +567,28 @@ add_action('rest_api_init', function () {
 			$body = $request->get_json_params();
 			$boxPreferences = get_post_meta($body['subscription_id'], '_box_blacklist', true);
 
-			$productId = $body['product_id'];
-			//find product
-			$index = array_filter($boxPreferences, function ($product) use ($productId) {
-				return $product['id'] == $productId;
-			});
+			$productIds = $body['product_ids'];
+			$newBoxPreferences = [];
 
-			if (!empty($index)) {
-				$index = array_keys($index);
-				$index = reset($index);
-				unset($boxPreferences[$index]);
+			foreach ($productIds as $productId) {
+				//find product
+				$index = array_filter($boxPreferences, function ($product) use ($productId) {
+					return $product['id'] == $productId;
+				});
 
-				$newBoxPreferences = [];
-				foreach ($boxPreferences as $preference) {
-					$newBoxPreferences[] = $preference;
+				if (!empty($index)) {
+					$index = array_keys($index);
+					$index = reset($index);
+					unset($boxPreferences[$index]);
 				}
-				update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
+
 			}
 
+			foreach ($boxPreferences as $preference) {
+				$newBoxPreferences[] = $preference;
+			}
+
+			update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
 
 			$response = new WP_REST_Response([]);
 			$response->set_status(204);
