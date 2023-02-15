@@ -118,12 +118,12 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 <?php else: ?>
 	<div class="empty-states">
 		<div class="empty-states--image">
-			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/ops.svg" />
 		</div>
 		<div class="empty-states--text">
-			<h4 class="empty-states--title">C'è solo un porro, qui.</h4>
+			<h4 class="empty-states--title">Niente di nuovo, qui.</h4>
 			<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Provala subito!" class="empty-states--subtitle">Provala subito!</a>
 		</div>
 	</div>
 <?php endif; ?>

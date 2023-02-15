@@ -47,10 +47,10 @@ $ids = get_posts( $gift_cards_args );
 
 
 
-
+echo '<h3 class="my-account--minititle address-title">Le tue Carte Regalo</h3>';
 if ( $ids ) : ?>
 
-	<h3 class="my-account--minititle address-title">Le mie Carte Regalo</h3>
+
 
 	<table class="shop_table shop_table_responsive my_account_giftcards">
 		<thead>
@@ -141,12 +141,12 @@ if ( $ids ) : ?>
 
 	<div class="empty-states">
 		<div class="empty-states--image">
-			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
+			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/ops.svg" />
 		</div>
 		<div class="empty-states--text">
-			<h4 class="empty-states--title">C'è solo un porro, qui.</h4>
+			<h4 class="empty-states--title">Niente di nuovo, qui.</h4>
 			<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Provala subito!" class="empty-states--subtitle">Provala subito!</a>
 		</div>
 	</div>
 

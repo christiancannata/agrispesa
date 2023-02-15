@@ -13,7 +13,7 @@ function enqueue_box_js()
 {
 	global $wp_query;
 
-	if (isset($wp_query->query_vars['personalizza-box'])) {
+	if (isset($wp_query->query_vars['personalizza-scatola'])) {
 
 
 		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
@@ -37,7 +37,7 @@ add_action('wp_enqueue_scripts', 'enqueue_box_js');
 
 function add_settings_box_endpoint()
 {
-	add_rewrite_endpoint('personalizza-box', EP_ROOT | EP_PAGES);
+	add_rewrite_endpoint('personalizza-scatola', EP_ROOT | EP_PAGES);
 }
 
 add_action('init', 'add_settings_box_endpoint');
@@ -46,7 +46,7 @@ add_action('init', 'add_settings_box_endpoint');
 function settings_box_query_vars($vars)
 {
 
-	$vars[] = 'personalizza-box';
+	$vars[] = 'personalizza-scatola';
 
 	return $vars;
 
@@ -61,7 +61,7 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 function settings_box_link_my_account($items)
 {
 	$items = array_insert_after($items, 'subscriptions', [
-		'personalizza-box' => 'Personalizza la box'
+		'personalizza-scatola' => 'Personalizza la scatola'
 	]);
 	return $items;
 
@@ -212,4 +212,4 @@ function settings_box_content()
 	<?php
 }
 
-add_action('woocommerce_account_personalizza-box_endpoint', 'settings_box_content');
+add_action('woocommerce_account_personalizza-scatola_endpoint', 'settings_box_content');

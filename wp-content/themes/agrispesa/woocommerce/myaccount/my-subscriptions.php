@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="woocommerce_account_subscriptions">
-	<h3 class="my-account--minititle">I miei abbonamenti</h3>
+	<h3 class="my-account--minititle">I tuoi abbonamenti</h3>
 
 	<?php if ( ! empty( $subscriptions ) ) : ?>
 	<table class="my_account_subscriptions my_account_orders woocommerce-orders-table woocommerce-MyAccount-subscriptions shop_table shop_table_responsive woocommerce-orders-table--subscriptions">
@@ -70,12 +70,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php else : ?>
 		<div class="empty-states">
 			<div class="empty-states--image">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/ops.svg" />
 			</div>
 			<div class="empty-states--text">
-				<h4 class="empty-states--title">C'è solo un porro, qui.</h4>
+				<h4 class="empty-states--title">Niente di nuovo, qui.</h4>
 				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Provala subito!" class="empty-states--subtitle">Provala subito!</a>
 			</div>
 		</div>
 

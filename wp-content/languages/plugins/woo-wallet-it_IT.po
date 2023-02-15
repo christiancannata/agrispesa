@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-02-14 22:10+0100\n"
+"PO-Revision-Date: 2023-02-15 22:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -643,7 +643,7 @@ msgstr ""
 #: includes/class-woo-wallet-frontend.php:287
 #: templates/wc-endpoint-wallet.php:50
 msgid "My Wallet"
-msgstr "Il mio credito"
+msgstr "Il tuo credito"
 
 #: includes/class-woo-wallet-admin.php:899
 msgid "Endpoint for the \"My account &rarr; My Wallet\" page."
