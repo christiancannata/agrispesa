@@ -628,3 +628,5 @@ Stack trace:
 #5 [internal function]: do_shortcode_tag(Array)
 #6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.p in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 64
 
+2023-02-15T18:47:28+00:00 CRITICAL syntax error, unexpected '<', expecting end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 64
+

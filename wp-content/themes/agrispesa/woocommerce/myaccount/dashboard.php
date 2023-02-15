@@ -27,6 +27,9 @@ $allowed_html = array(
 	),
 );
 
+//Get User info
+//$current_user = wp_get_current_user();
+
 
 // Set limit
 $limit = 3;
@@ -41,6 +44,9 @@ $customer_orders = wc_get_orders( array(
 $count = count( $customer_orders );
 
 ?>
+
+
+
 
 
 <?php if ( $count >= 1 ) {
@@ -107,14 +113,21 @@ $count = count( $customer_orders );
 		<?php
 } else {
 		?>
-		<div class="empty-states">
-			<div class="empty-states--image">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/porro.png" />
-			</div>
-			<div class="empty-states--text">
-				<h4 class="empty-states--title">C'è solo un porro, qui.</h4>
-				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Scegli la box" class="empty-states--subtitle">Scegli la box</a>
+		<div class="agr-memo">
+
+			<div class="agr-memo--flex">
+				<div class="agr-memo--text">
+					<h4 class="agr-memo--title">Facciamo noi o scegli tu?</h4>
+					<p class="agr-memo--subtitle">
+						Può capitare di avere fretta.<br/>
+						Per questo prepariamo noi la tua spesa, scegliendo tra i prodotti di stagione più freschi che arriveranno a casa tua in una scatola su misura per te.
+						<br/><br/>Proviamo?
+					</p>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary agr-memo--button" title="Abbonati alla spesa" class="empty-states--subtitle">Sì, fate voi!</a>
+				</div>
+				<div class="agr-memo--image">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/banner-box.jpg" alt="Facciamo noi o scegli tu?" />
+				</div>
 			</div>
 		</div>
 		<?php

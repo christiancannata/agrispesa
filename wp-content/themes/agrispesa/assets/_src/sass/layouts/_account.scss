@@ -1,25 +1,4 @@
 /* stylelint-disable */
-.user-profile {
-	&--name {
-		@include font-size(28);
-		color: $black;
-		line-height: 1.1;
-		margin: 24px 0 16px;
-		@include breakpoint(desktop) {
-			@include font-size(42);
-		}
-	}
-
-	&--bio {
-		@include font-size(16);
-		color: $gray;
-
-		.title {
-			font-weight: 900;
-		}
-	}
-}
-
 .woo-wallet-content {
 	.account-small-direction {
 		@include font-size(14);
@@ -74,6 +53,7 @@
 
 #wc-wallet-transaction-details {
 	padding-top: 20px;
+
 	thead {
 		th {
 			font-weight: 600;
@@ -81,14 +61,15 @@
 		}
 	}
 }
+
 .woo-wallet-transactions-items {
 	li {
-	padding: 16px 0 0 0 !important;
+		padding: 16px 0 0 0 !important;
 	}
 }
+
 .dataTables_info,
 .dataTables_paginate {
-
 	@include font-size(16);
 	color: $muted;
 }
@@ -149,16 +130,115 @@ body.woocommerce-account {
 	}
 }
 
-.author-header {
+.client-header {
 	@include clearfix();
 	border-bottom: 1px solid #ddd;
-	margin: 160px 0 50px;
-	padding-bottom: 30px;
+	margin: 90px 0 0;
+	padding-bottom: 40px;
 	width: 100%;
 	@include breakpoint(mobile) {
-		margin: 100px 0 10px;
-		padding-bottom: 10px;
+		margin: 0 0 24px;
+		padding-bottom: 24px;
 		text-align: center;
+	}
+}
+
+.user-profile {
+	&--header {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	&--name {
+		@include font-size(28);
+		color: $black;
+		line-height: 1.1;
+		margin: 24px 0 16px;
+		font-family: $font-title;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(42);
+		}
+
+	}
+
+	&--registered {
+		@include font-size(20);
+		color: $muted;
+
+		@include breakpoint(mobile) {
+			@include font-size(16);
+			margin-bottom: 24px;
+		}
+	}
+
+	&--user {
+		width: 50%;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--details {
+		display: flex;
+		width: 50%;
+		justify-content: flex-end;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+
+		&--item {
+			@include border-radius(8px);
+			width: 33.333%;
+			padding: 16px 24px;
+			margin-left: 8px;
+			text-align: center;
+			background: $background;
+			@include breakpoint(mobile) {
+				padding: 16px 16px;
+				text-align: left;
+			}
+
+			&:first-of-type {
+				border-left: none;
+				margin-left: 0;
+			}
+
+			&.next-box {
+				background: rgba($primary, 0.15);
+			}
+
+			&.subscriptions {
+				.user-profile--details--number {
+					display: none;
+
+					&:last-of-type {
+						display: block;
+					}
+				}
+			}
+		}
+
+		&--title {
+			@include font-size(16);
+			font-weight: 600;
+			line-height: 1;
+			margin-bottom: 8px;
+			@include breakpoint(mobile) {
+				@include font-size(14);
+				margin-bottom: 4px;
+			}
+		}
+
+		&--number {
+			@include font-size(70);
+			font-weight: 300;
+			color: $primary;
+			@include breakpoint(mobile) {
+				@include font-size(40);
+			}
+		}
 	}
 }
 
@@ -169,7 +249,7 @@ body.woocommerce-account {
 		align-items: flex-start;
 		display: flex;
 		justify-content: center;
-		margin: 90px auto 0;
+		margin: 40px auto 0;
 		@include breakpoint(mobile) {
 			display: block;
 			width: 100%;
@@ -796,4 +876,43 @@ body.woocommerce-account {
 	}
 }
 
-.woocommerce-input-wrapper {}
+.agr-memo {
+	background: $panna;
+	padding: 0;
+
+	&--flex {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	&--text {
+		padding: 40px 32px 32px;
+		@include breakpoint(desktop) {
+			width: 60%;
+		}
+	}
+
+	&--image {
+		@include breakpoint(desktop) {
+			width: 40%;
+		}
+	}
+
+	&--title {
+		@include font-size(32);
+		font-family: $font-title;
+		font-weight: 900;
+		line-height: 1;
+		margin-bottom: 16px;
+	}
+
+	&--subtitle {
+		@include font-size(18);
+	}
+
+	&--button {
+		margin-top: 24px;
+	}
+}
