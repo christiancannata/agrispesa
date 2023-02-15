@@ -101,3 +101,14 @@ function misha_remove_my_account_links( $menu_links ){
 
 	return $menu_links;
 }
+
+//CSS Admin area
+add_action('admin_head', 'my_custom_fonts');
+
+function my_custom_fonts() {
+  echo '<style>
+  body.wp-admin .wp-list-table td.price .uom {
+    display: none;  
+  }
+  </style>';
+}

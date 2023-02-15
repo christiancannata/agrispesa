@@ -364,3 +364,106 @@ ul#shipping_method .shipping-mode-cart--label {
 		@include font-size(16);
 	}
 }
+
+.emptycart {
+	padding: 32px 0;
+
+	@include breakpoint(desktop) {
+		padding: 40px 0;display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&--top {
+		padding: 0 12px;
+		margin-bottom: 75px;
+	}
+
+	&--intro {
+		text-align: center;
+		@include breakpoint(desktop) {
+			width: 60%;
+			padding: 40px 0;
+			text-align: left;
+		}
+	}
+
+	&--image {
+		display: none;
+		@include breakpoint(desktop) {
+			width: 40%;
+			display: block;
+		}
+	}
+
+	&--details {
+		margin-top: 24px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		@include breakpoint(desktop) {
+			margin-top: 50px;
+		}
+
+		&--text {
+			margin-left: 16px;
+		}
+
+		&--item {
+			width: 100%;
+			display: flex;
+			padding: 20px 0;
+			text-align: left;
+			border-top: 1px solid $background;
+
+			&:first-of-type,
+			&:last-of-type {
+				border-top: none;
+			}
+			@include breakpoint(desktop) {
+				width: 46%;
+				border-top: none;
+			}
+
+			&.buttons {
+				.btn {
+					width: 100%;
+				}
+			}
+
+			& > span {
+				@include border-radius(50%);
+				@include font-size(36);
+				width: 50px;
+				height: 50px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background: rgba($primary, 0.2);
+				color: $primary;
+			}
+		}
+
+		&--title {
+			font-weight: 600;
+		}
+	}
+
+	&--title {
+		@include font-size(32);
+		font-family: $font-title;
+		line-height: 1;
+		font-weight: 900;
+		margin: 0 0 24px;
+		@include breakpoint(desktop) {
+			@include font-size(45);
+		}
+	}
+
+	&--subtitle {
+		@include font-size(20);
+		@include breakpoint(desktop) {
+			@include font-size(22);
+		}
+	}
+}

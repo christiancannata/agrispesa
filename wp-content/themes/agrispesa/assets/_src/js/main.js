@@ -55,6 +55,7 @@ minimumAmount();
 giftCardCheckout();
 scrollTo();
 showNameNewsletter();
+emptyCartSlider();
 
 //changeShippingLabel();
 
@@ -399,6 +400,53 @@ function productsCarousel() {
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
+        arrows: false,
+        dots: true
+      }
+    }, {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true
+      }
+    }]
+  });
+}
+function emptyCartSlider() {
+
+  if(jQuery('body.woocommerce-cart .emptycart').length) {
+    jQuery('.page-header').hide();
+  }
+
+  let _carousel = jQuery(".emptycart--loop");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1400,
+      settings: {
+        slidesToShow: 2,
+      }
+    }, {
+      breakpoint: 1100,
+      settings: {
+        slidesToShow: 2,
+      }
+    }, {
+      breakpoint: 800,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
         arrows: false,
         dots: true
       }

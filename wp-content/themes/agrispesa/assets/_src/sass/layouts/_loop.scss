@@ -56,6 +56,7 @@
 			width: 100%;
 			justify-content: center;
 		}
+
 		.btn {
 			width: 100%;
 		}
@@ -182,53 +183,6 @@
 		}
 	}
 
-	&--bubble {
-		position: absolute;
-		font-family: $font-hand;
-		@include font-size(36);
-		max-width: 200px;
-		text-transform: uppercase;
-		line-height: 0.8;
-		color: $primary;
-		text-align: center;
-		padding: 8px;
-
-		&:after {
-			content: '';
-			display: block;
-			width: 80px;
-			height: 80px;
-			background-size: 100% auto;
-			background-position: center;
-			background-repeat: no-repeat;
-			position: absolute;
-		}
-
-		&.top-left {
-			top: -60px;
-			left: -50px;
-			text-align: right;
-
-			&:after {
-				background-image: url("../images/elements/arrow-down.svg");
-				top: 0;
-				right: -80px;
-			}
-		}
-
-		&.top-right {
-			top: -60px;
-			right: -50px;
-			text-align: left;
-
-			&:after {
-				background-image: url("../images/elements/arrow-left.svg");
-				top: 0;
-				left: -80px;
-			}
-		}
-	}
-
 	&--container {
 		display: flex;
 		align-items: center;
@@ -261,6 +215,39 @@
 		@include breakpoint(mobile) {
 			@include font-size(32);
 			text-align: center;
+		}
+	}
+
+	.product-box {
+		margin: 0 12px;
+	}
+}
+
+.emptycart--loop {
+	margin-top: 24px;
+	@include breakpoint(container) {
+		margin-top: 32px;
+	}
+
+	.slick-next-agr,
+	.slick-prev-agr {
+		top: -40px;
+	}
+
+	.slick-prev-agr {
+		left: 6px;
+		&:hover {
+			left: 3px;
+		}
+	}
+
+	.slick-next-agr {
+		right: 0;
+		    left: 35px;
+
+		&:hover {
+			right: auto;
+			left: 38px;
 		}
 	}
 
@@ -328,8 +315,10 @@
 		@include font-size(22);
 		font-weight: 600;
 		line-height: 1;
+
 		a {
 			color: $black;
+
 			&:hover {
 				color: $blue;
 			}

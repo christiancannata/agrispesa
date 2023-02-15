@@ -194,3 +194,437 @@ Stack trace:
 
 2023-02-15T12:51:27+00:00 CRITICAL syntax error, unexpected ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/thankyou.php alla riga 106
 
+2023-02-15T14:11:34+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:11:40+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:11:44+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:12:22+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:12:25+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:12:55+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 56
+
+2023-02-15T14:13:09+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:13:18+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(54): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:13:39+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:13:47+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:14:02+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:14:03+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:14:45+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:14:47+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:14:49+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:15:56+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:16:56+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php(53): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#6 /Users/nathalie/Sites/localhost/agri in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-02-15T14:17:11+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:17:17+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:18+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:36+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:39+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:43+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:46+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:48+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:53+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:54+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:19:57+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:58
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227 in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 58
+
+2023-02-15T14:24:49+00:00 CRITICAL Uncaught Error: Call to a member function get_price_html() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:76
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.p in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 76
+
+2023-02-15T14:26:48+00:00 CRITICAL Uncaught Error: Call to a member function get_price_html() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:76
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.p in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 76
+
+2023-02-15T14:53:53+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:53:55+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:08+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:10+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:24+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:26+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:46+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:48+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:50+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:54:55+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:54
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-incl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 54
+
+2023-02-15T14:56:46+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:55
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 55
+
+2023-02-15T14:56:59+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:55
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 55
+
+2023-02-15T14:58:23+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_post_thumbnail_url() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:64
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-inc in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 64
+
+2023-02-15T15:07:35+00:00 CRITICAL syntax error, unexpected ''" show_price="false" class="b' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 90
+
+2023-02-15T15:21:24+00:00 CRITICAL Uncaught Error: Call to undefined function the_post_thumbnail_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php:64
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(97): wc_get_template('cart/cart-empty...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.p in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart-empty.php alla riga 64
+
