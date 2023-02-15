@@ -1975,6 +1975,7 @@ function consegne_ordini_pages()
 																<?php foreach ($category['products'] as $product): ?>
 																	<?php
 
+																	$price = get_post_meta($product->ID, '_price', true);
 																	$unitaMisura = 'gr';
 
 																	$measureUnit = get_post_meta($product->ID, '_woo_uom_input', true);
@@ -1999,6 +2000,7 @@ function consegne_ordini_pages()
 
 																	?>
 																	<option
+																		data-price="<?php echo $price; ?>"
 																		data-name="<?php echo $product->post_title; ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
 																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
@@ -2007,7 +2009,8 @@ function consegne_ordini_pages()
 														<?php endforeach; ?>
 													</select>
 												</td>
-												<td><input
+												<td style="display: flex"><input
+														style="width:80px"
 														type="number"
 														name="quantity" class="new-quantity">
 													<div class="unit-measure"></div>

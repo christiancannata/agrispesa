@@ -33,18 +33,17 @@ jQuery(document).ready(function ($) {
       let index = $(this).data('index')
       let box_id = $(this).data('box-id')
 
-      $(this).closest('tr').remove()
 
       axios.delete(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box/' + box_id + '/products/' + index)
         .then((response) => {
-
+          location.href = ''
         });
     }
 
   })
 
   $(".new-product-box").change(function () {
-    console.log($(this).val())
+    $(this).closest('tr').find('.unit-measure').html($(this).find('option:selected').data('unit-measure'))
   })
 })
 
