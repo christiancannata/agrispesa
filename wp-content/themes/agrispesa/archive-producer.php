@@ -9,10 +9,13 @@
 
 		<section class="manifesto--hero">
 			<div class="manifesto--container">
-					<h1 class="manifesto--hero--title">Produttori</h1>
-					<h2 class="manifesto--hero--subtitle">
-						Conosciamo da anni i contadini che ci forniscono <br />i prodotti: lavorano sentendosi parte della natura, con esperienza e coscienza, per questo te li presentiamo.
-					</h2>
+				<div class="manifesto--hero--title">
+					<h1>Produttori</h1>
+				</div>
+					<div class="manifesto--hero--subtitle">
+						<h2>Conosciamo da anni i contadini che ci forniscono <br />i prodotti: lavorano sentendosi parte della natura, con esperienza e coscienza, per questo te li presentiamo.</h2>
+					</div>
+
 			</div>
 		</section>
 
@@ -99,7 +102,7 @@
 		<?php endif; ?>
 
 
-		<section class="section-hero">
+		<section class="section-hero small">
 			<div class="section-hero--container">
 					<h4 class="section-hero--subtitle">
 						Storie di agricoltura contadina e di artigianato locale.
