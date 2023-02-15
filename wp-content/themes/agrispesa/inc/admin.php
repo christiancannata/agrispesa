@@ -1718,6 +1718,7 @@ function consegne_ordini_pages()
 							$unitaMisura = 'gr';
 
 							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+							$price = get_post_meta($categoryProduct->ID, '_price', true);
 
 							if (!empty($measureUnit)) {
 								$unitaMisura = $measureUnit;
@@ -1726,7 +1727,8 @@ function consegne_ordini_pages()
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
 								'name' => $categoryProduct->post_title,
-								'unit_measure' => $unitaMisura
+								'unit_measure' => $unitaMisura,
+								'price' => floatval($price)
 							];
 						}
 					}
@@ -1824,6 +1826,18 @@ function consegne_ordini_pages()
 					</div>
 				</div>
 				<br><br>
+
+				<div style="display: flex;width:100%;margin-top:10px;margin-bottom: 10px">
+					<div>
+						Totale Box<br>
+						<b v-html="totalWeight"></b>
+					</div>
+
+					<div>
+						Totale €<br>
+						<b v-html="totalPrice"></b>
+					</div>
+				</div>
 
 				<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
 					Settimanale

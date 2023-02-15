@@ -57,6 +57,22 @@ createApp({
       productJson: productIds
     }
   },
+  computed: {
+    totalWeight() {
+      let weight = 0;
+      this.products.forEach(function (product) {
+        weight += product.quantity
+      })
+      return weight + ' gr'
+    },
+    totalPrice() {
+      let price = 0;
+      this.products.forEach(function (product) {
+        price += product.price * product.quantity
+      })
+      return price + ' €'
+    }
+  },
   methods: {
     createBox: function () {
       const $vm = this
