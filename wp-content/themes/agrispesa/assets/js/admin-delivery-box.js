@@ -1,6 +1,16 @@
 /* global WPURL:readonly */
 jQuery(document).ready(function ($) {
 
+  $('#woocommerce-order-items').on('click', 'button.add_order_item_meta', function () {
+    let $this = $(this)
+    setTimeout(
+      function () {
+        $this.closest('table').find('input[type="text"]').val('note')
+        $this.closest('table').find('input[type="text"]').attr('readonly', true)
+
+      }, 250);
+  })
+
   $("#_tipo_percentuale_ricarico").change(function () {
 
     if ($(this).is(':checked')) {
