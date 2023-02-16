@@ -104,7 +104,7 @@ if($next_week_month === '01') {
 							<div class="thankyou--details--text">
 								<h3 class="thankyou--details--title">Consegniamo la tua scatola</h3>
 								<p class="thankyou--details--info">Mercoledì, 22 febbraio 2023
-									<?php echo get_order_delivery_date_from_date(new \DateTime(),null, $order->get_shipping_postcode()); ?>
+									<?php //echo get_order_delivery_date_from_date(new \DateTime(),null, $order->get_shipping_postcode()); ?>
 								</p>
 							</div>
 						</div>
