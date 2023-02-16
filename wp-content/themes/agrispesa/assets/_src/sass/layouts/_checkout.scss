@@ -236,6 +236,9 @@ body.woocommerce-checkout {
 
 		&--cost {
 			padding: 0 8px;
+			.includes_tax {
+				display: none;
+			}
 
 			.woocommerce-Price-amount {
 				@include font-size(40);
