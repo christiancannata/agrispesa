@@ -13,7 +13,12 @@ class Title extends Field
 
         if($basicInformationData['itemTitle'] == 'productTitle') {
             if($this->entry->post_type == 'product_variation' && $basicInformationData['useParentTitleForVariableProducts']) {
-                $value = get_post($this->entry->post_parent)->post_title;
+                $parent = get_post($this->entry->post_parent);
+                if(is_object($parent)) {
+                    $value = $parent->post_title;
+                } else {
+                    $value = '';
+                }
             } else {
                 $value = $this->entry->post_title;
             }

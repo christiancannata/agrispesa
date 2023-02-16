@@ -35,7 +35,7 @@ final class XmlExportCpt
 					'post_id' => $entry->ID,
 					'import_id' => $exportOptions['import_id'],
 					'unique_key' => $entry->ID,
-					'product_key' => $entry->ID						
+					'product_key' => ''
 				))->save();
 			}
 			unset($postRecord);
@@ -421,7 +421,8 @@ final class XmlExportCpt
                                         }
                                     }
 
-                                    if (!$field_value) {
+									// Explicitly allow a value of 0 regardless if it's int or string.
+                                    if (!$field_value && 0 !== $field_value && '0' !== $field_value) {
                                         if (XmlExportEngine::get_addons_service()->isAcfAddonActive()) {
                                             $field_value = XmlExportACF::get_acf_block_value($entry, $field_options['name']);
                                         }
@@ -689,67 +690,68 @@ final class XmlExportCpt
 
 		$implode_delimiter = XmlExportEngine::$implode;
 
+        $field_tpl_key = (preg_match('/^[0-9]/', $element_name)) ? 'el_' . $element_name : $element_name;
 		switch ($element_type) 
 		{
 			case 'id':
-                if ($element_name == 'ID' && !$ID && $exportOptions['export_to'] == 'csv' && $exportOptions['export_to_sheet'] != 'csv'){
-                    $element_name = 'id';
+                if ($field_tpl_key == 'ID' && !$ID && $exportOptions['export_to'] == 'csv' && $exportOptions['export_to_sheet'] != 'csv'){
+                    $field_tpl_key = 'id';
                 }
-				$templateOptions['unique_key'] = '{'. $element_name .'[1]}';										
-				$templateOptions['tmp_unique_key'] = '{'. $element_name .'[1]}';	
-				$templateOptions['single_product_id'] = '{'. $element_name .'[1]}';
+				$templateOptions['unique_key'] = '{'. $field_tpl_key .'[1]}';
+				$templateOptions['tmp_unique_key'] = '{'. $field_tpl_key .'[1]}';
+				$templateOptions['single_product_id'] = '{'. $field_tpl_key .'[1]}';
 				break;
 			case 'title':
-                $templateOptions[$element_type] = '{'. $element_name .'[1]}';
+                $templateOptions[$element_type] = '{'. $field_tpl_key .'[1]}';
                 $templateOptions['is_update_' . $options['cc_type'][$ID]] = 1;
-                $templateOptions['single_product_id_first_is_variation'] = '{'. $element_name .'[1]}';
+                $templateOptions['single_product_id_first_is_variation'] = '{'. $field_tpl_key .'[1]}';
                 break;
             case 'content':
 			case 'author':
-                $templateOptions[$element_type] = '{'. $element_name .'[1]}';
+                $templateOptions[$element_type] = '{'. $field_tpl_key .'[1]}';
                 $templateOptions['is_update_' . $options['cc_type'][$ID]] = 1;
 			    break;
 			case 'slug':
-				$templateOptions['post_slug'] = '{'. $element_name .'[1]}';
+				$templateOptions['post_slug'] = '{'. $field_tpl_key .'[1]}';
 				$templateOptions['is_update_' . $options['cc_type'][$ID]] = 1;
 				break;
             case 'parent_slug':
                 $templateOptions['is_multiple_page_parent'] = 'no';
-                $templateOptions['single_page_parent'] = '{' . $element_name . '[1]}';
+                $templateOptions['single_page_parent'] = '{' . $field_tpl_key . '[1]}';
                 $templateOptions['is_update_parent'] = 1;
                 break;
 			case 'parent':
-                $templateOptions['single_product_parent_id'] = '{' . $element_name . '[1]}';
-                $templateOptions['single_product_id_first_is_parent_id'] = '{' . $element_name . '[1]}';
+                $templateOptions['single_product_parent_id'] = '{' . $field_tpl_key . '[1]}';
+                $templateOptions['single_product_id_first_is_parent_id'] = '{' . $field_tpl_key . '[1]}';
 				break;
 			case 'excerpt':
-				$templateOptions['post_excerpt'] = '{'. $element_name .'[1]}';										
+				$templateOptions['post_excerpt'] = '{'. $field_tpl_key .'[1]}';
 				$templateOptions['is_update_' . $options['cc_type'][$ID]] = 1;
 				break;
 			case 'status':
-				$templateOptions['status_xpath'] = '{'. $element_name .'[1]}';
+				$templateOptions['status_xpath'] = '{'. $field_tpl_key .'[1]}';
 				$templateOptions['is_update_status'] = 1;
 				break;
 			case 'date':
-				$templateOptions[$element_type] = '{'. $element_name .'[1]}';										
+				$templateOptions[$element_type] = '{'. $field_tpl_key .'[1]}';
 				$templateOptions['is_update_dates'] = 1;
 				break;
             case 'order':
-                $templateOptions[$element_type] = '{'. $element_name .'[1]}';
+                $templateOptions[$element_type] = '{'. $field_tpl_key .'[1]}';
                 $templateOptions['is_update_menu_order'] = 1;
-                $templateOptions['single_product_menu_order'] = '{'. $element_name .'[1]}';
+                $templateOptions['single_product_menu_order'] = '{'. $field_tpl_key .'[1]}';
                 break;
 			case 'comment_status':
 				$templateOptions['is_update_comment_status'] = 1;
 				$templateOptions['is_product_enable_reviews'] = 'xpath';
-				$templateOptions['single_product_enable_reviews'] = '[str_replace("open","yes",{' . $element_name . '[1]})]';
+				$templateOptions['single_product_enable_reviews'] = '[str_replace("open","yes",{' . $field_tpl_key . '[1]})]';
 				break;
 			case 'post_type':
 
 				if ( empty($options['cpt']) )
 				{
 					$templateOptions['is_override_post_type'] = 1;	
-					$templateOptions['post_type_xpath'] = '{'. $element_name .'[1]}';
+					$templateOptions['post_type_xpath'] = '{'. $field_tpl_key .'[1]}';
 				}
 				break;
 
@@ -762,7 +764,7 @@ final class XmlExportCpt
 					if (strpos($options['cc_value'][$ID], 'attribute_') === 0 and ! in_array($options['cc_value'][$ID], $attr_list))
 					{
 						$templateOptions['attribute_name'][] = str_replace('attribute_', '', $options['cc_value'][$ID]);
-						$templateOptions['attribute_value'][] = '{'. $element_name .'[1]}';
+						$templateOptions['attribute_value'][] = '{'. $field_tpl_key .'[1]}';
 						$templateOptions['in_variations'][] = "1";
 						$templateOptions['is_visible'][] = "1";
 						$templateOptions['is_taxonomy'][] = "0";
@@ -774,7 +776,7 @@ final class XmlExportCpt
 						$cf_list[] = $options['cc_value'][$ID];
 						
 						$templateOptions['custom_name'][] = $options['cc_value'][$ID];								
-						$templateOptions['custom_value'][] = '{'. $element_name .'[1]}';		
+						$templateOptions['custom_value'][] = '{'. $field_tpl_key .'[1]}';
 						$templateOptions['custom_format'][] = 0;
 					} 						
 				}
@@ -786,7 +788,7 @@ final class XmlExportCpt
 				if ( ! empty($options['cc_value'][$ID]) and ! in_array($options['cc_value'][$ID], $attr_list) ) 
 				{
 					$templateOptions['attribute_name'][] = str_replace('pa_', '', $options['cc_value'][$ID]);
-					$templateOptions['attribute_value'][] = '{'. $element_name .'[1]}';
+					$templateOptions['attribute_value'][] = '{'. $field_tpl_key .'[1]}';
 					$templateOptions['in_variations'][] = "1";
 					$templateOptions['is_visible'][] = "1";
 					$templateOptions['is_taxonomy'][] = "1";
@@ -802,11 +804,11 @@ final class XmlExportCpt
 					{
 						case 'product_type':
 							$templateOptions['is_multiple_product_type'] = 'no';
-							$templateOptions['single_product_type'] = '{'. $element_name .'[1]}';
+							$templateOptions['single_product_type'] = '{'. $field_tpl_key .'[1]}';
 							break;
 						case 'product_shipping_class':
 							$templateOptions['is_multiple_product_shipping_class'] = 'no';
-							$templateOptions['single_product_shipping_class'] = '{'. $element_name .'[1]}';
+							$templateOptions['single_product_shipping_class'] = '{'. $field_tpl_key .'[1]}';
 							break;
 						default:
 							$taxonomy = $options['cc_value'][$ID];											
@@ -820,12 +822,12 @@ final class XmlExportCpt
 								$templateOptions['tax_hierarchical_delim'][$taxonomy] = '>';
 								$templateOptions['is_tax_hierarchical_group_delim'][$taxonomy] = 1;
 								$templateOptions['tax_hierarchical_group_delim'][$taxonomy] = $is_xml_template ? '|' : $implode_delimiter;
-								$templateOptions['tax_hierarchical_xpath'][$taxonomy] = array('{'. $element_name .'[1]}');								
+								$templateOptions['tax_hierarchical_xpath'][$taxonomy] = array('{'. $field_tpl_key .'[1]}');
 							}
 							else{
 								$templateOptions['tax_logic'][$taxonomy] = 'multiple';
 								$templateOptions['multiple_term_assing'][$taxonomy] = 1;
-								$templateOptions['tax_multiple_xpath'][$taxonomy] = '{'. $element_name .'[1]}';
+								$templateOptions['tax_multiple_xpath'][$taxonomy] = '{'. $field_tpl_key .'[1]}';
 								$templateOptions['tax_multiple_delim'][$taxonomy] = $is_xml_template ? '|' : $implode_delimiter;
 							}
 							$taxs_list[] = $taxonomy;										

@@ -7,4 +7,4 @@
   <p class="error-404--subtitle">Meglio un uovo oggi che una pagina non trovata domani.<br/>C’è stato un errore, che ne dici di tornare al negozio?</p>
   <a href="<?php echo esc_url( home_url( '/' ) ); ?>negozio" title="Fai la spesa" class="btn btn-primary">Fai la spesa!</a>
 </div>
-<?php get_footer();
+<?php get_footer(); 

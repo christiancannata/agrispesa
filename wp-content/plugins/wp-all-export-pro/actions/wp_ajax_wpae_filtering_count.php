@@ -181,6 +181,11 @@ function pmxe_wp_ajax_wpae_filtering_count(){
 			global $wpdb;
 			$exportQuery->request = $wpdb->remove_placeholder_escape($exportQuery->request);
 
+            // We need to remove the placeholders from these values as well.
+			foreach( $exportQuery->query_vars['search_orderby_title'] as $key => $value ){
+				$exportQuery->query_vars['search_orderby_title'][$key] = $wpdb->remove_placeholder_escape($value);
+			}
+
 			if ( ! empty($exportQuery->found_posts)){				
 				$foundRecords = $exportQuery->found_posts;
 			}

@@ -240,7 +240,7 @@ final class PMXE_Wpallimport
 					'convert_decimal_separator' => 1,
 					'grouping_indicator' => 'xpath',				
 					'is_update_product_type' => 1,
-					'make_simple_product' => 1,
+					'make_simple_product' => 0,
 					'single_product_regular_price_adjust_type' => '%',
 					'single_product_sale_price_adjust_type' => '%',					
 					'is_variation_product_manage_stock' => 'no',

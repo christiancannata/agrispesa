@@ -57,7 +57,7 @@
                 };
             };
 
-            $('#weekly li').click(function () {
+            $('#weekly li').on('click', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                 } else {
@@ -75,12 +75,12 @@
 
             });
 
-            $('#monthly li').click(function () {
+            $('#monthly li').on('click', function () {
                 $(this).parent().parent().find('.days-of-week li').removeClass('selected');
                 $(this).addClass('selected');
             });
 
-            $('input[name="scheduling_run_on"]').change(function () {
+            $('input[name="scheduling_run_on"]').on('change', function () {
                 var val = $('input[name="scheduling_run_on"]:checked').val();
                 if (val == "weekly") {
 

@@ -9,6 +9,17 @@ if (class_exists('GF_Export_Add_On')) {
     $addon = GF_Export_Add_On::get_instance();
 }
 
+function is_real_time_exports($item) {
+    return isset($item['options']['enable_real_time_exports']) && $item['options']['enable_real_time_exports'];
+}
+
+function is_real_time_exports_running($item) {
+    return isset($item['options']['enable_real_time_exports_running']) && $item['options']['enable_real_time_exports_running'];
+}
+
+function is_broken($item) {
+    return is_null($item['options']) || !$item['options'];
+}
 ?>
 
 <h2></h2> <!-- Do not remove -->
@@ -17,7 +28,7 @@ if (class_exists('GF_Export_Add_On')) {
     (function ($, ajaxurl, wp_all_export_security) {
 
         $(document).ready(function () {
-            $('.open_cron_scheduling').click(function () {
+            $('.open_cron_scheduling').on('click', function () {
 
                 var itemId = $(this).data('itemid');
                 openSchedulingDialog(itemId, $(this), '<?php echo esc_js(PMXE_ROOT_URL); ?>/static/img/preloader.gif');
@@ -69,7 +80,6 @@ if (!current_user_can(PMXE_Plugin::$capabilities)) {
 }
 
 $columns = apply_filters('pmxe_manage_imports_columns', $columns);
-
 ?>
 
 <form method="post" id="import-list" action="<?php echo esc_attr(remove_query_arg('pmxe_nt')); ?>">
@@ -119,8 +129,9 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
             foreach ($columns as $column_id => $column_display_name) {
                 $column_link = "<a href='";
                 $order2 = 'ASC';
-                if ($order_by == $column_id)
+                if ($order_by == $column_id) {
                     $order2 = ($order == 'DESC') ? 'ASC' : 'DESC';
+                }
 
                 $column_link .= esc_url(add_query_arg(array('order' => $order2, 'order_by' => $column_id), $this->baseUrl));
                 $column_link .= "'>{$column_display_name}</a>";
@@ -153,9 +164,9 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
             $class = '';
             ?>
             <?php foreach ($list as $item):
-                if (is_array($item['options']['cpt']) && isset($item['options']['cpt'][0])) {
+                if (isset($item['options']['cpt']) && is_array($item['options']['cpt']) && isset($item['options']['cpt'][0])) {
                     $cpt = $item['options']['cpt'][0];
-                } else if (!empty($item['options']['cpt'])) {
+                } else if (isset($item['options']['cpt']) && !empty($item['options']['cpt'])) {
                     $cpt = $item['options']['cpt'];
                 } else {
                     $cpt = '';
@@ -168,6 +179,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                     $is_rapid_addon_export = false;
                 }
                 ?>
+
 
                 <?php $class = ('alternate' == $class) ? '' : 'alternate'; ?>
                 <tr class="<?php echo $class; ?> wpae-export-row-<?php echo $item['id']; ?> wpae-export-row"
@@ -248,7 +260,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                             case 'info':
                                 ?>
                                 <td style="min-width: 180px;max-width: 180px;">
-                                    <?php if (current_user_can(PMXE_Plugin::$capabilities) && !$item['options']['enable_real_time_exports']) { ?>
+                                    <?php if (current_user_can(PMXE_Plugin::$capabilities) && !is_real_time_exports($item)) { ?>
                                         <a
                                             <?php
                                             // Ensure arrays exist that are required for further processing.
@@ -316,7 +328,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                     ?>
                                     <?php
 
-                                    if (!$item['options']['enable_real_time_exports']) {
+                                    if (!is_real_time_exports($item)) {
 
                                         if ($item['options']['export_to'] == 'csv'
                                             || (empty($item['options']['xml_template_type'])
@@ -343,11 +355,11 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                     ?>
                                     <?php if (current_user_can(PMXE_Plugin::$capabilities && $item['client_mode_enabled'])) { ?>
                                         <span>Client mode enabled</span>
-                                        <?php if ($item['options']['enable_real_time_exports']) { ?>
+                                        <?php if (is_real_time_exports($item)) { ?>
                                             <br/>
                                         <?php } ?>
                                     <?php } ?>
-                                    <?php if ($item['options']['enable_real_time_exports']) { ?>
+                                    <?php if (is_real_time_exports($item)) { ?>
 
 
                                         <?php
@@ -389,11 +401,11 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
 
 
 
-                                            <span <?php if (!$item['options']['enable_real_time_exports_running']) { ?> style="display: none;" <?php } ?> class="wpallexport-real-time-export-configured-text wpae-rte-enabled">This export will run every time a new <?php echo $display_cpt_name; ?>
+                                            <span <?php if (!is_real_time_exports_running($item)) { ?> style="display: none;" <?php } ?> class="wpallexport-real-time-export-configured-text wpae-rte-enabled">This export will run every time a new <?php echo $display_cpt_name; ?>
                                                 is <?php echo $display_verb; ?>.</span>
 
 
-                                            <span <?php if ($item['options']['enable_real_time_exports_running']) { ?> style="display: none;" <?php } ?> class="wpallexport-real-time-export-configured-text wpae-rte-disabled">This export is currently disabled.</br>
+                                            <span <?php if (is_real_time_exports_running($item)) { ?> style="display: none;" <?php } ?> class="wpallexport-real-time-export-configured-text wpae-rte-disabled">This export is currently disabled.</br>
                                                 Enable it to run every time a new <?php echo $display_cpt_name; ?>
                                                 is <?php echo $display_verb; ?>.</span>
 
@@ -405,6 +417,13 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                             case 'data':
                                 ?>
                                 <td>
+                                    <?php
+                                    if(is_broken($item)) {
+                                        ?>
+                                        <strong>Broken:</strong> please delete
+                                        <?php
+                                    }
+                                    ?>
                                     <?php
                                     if (!empty($item['options']['cpt'])) {
 
@@ -494,7 +513,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                         printf(esc_html__('Last run: %s', 'wp_all_export_plugin'), ($item['registered_on'] == '0000-00-00 00:00:00') ? __('never', 'wp_all_export_plugin') : get_date_from_gmt($item['registered_on'], "m/d/Y g:i a"));
                                         echo '<br/>';
 
-                                        if ($item['options']['enable_real_time_exports']) {
+                                        if (is_real_time_exports($item)) {
                                             printf(esc_html__('%d Records Exported since', 'wp_all_export_plugin'), $item['exported']);
                                             echo "<br/>";
 
@@ -526,7 +545,8 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                             case 'actions':
                                 ?>
                                 <td style="min-width: 200px;">
-                                    <?php if (!$item['options']['enable_real_time_exports']) : ?>
+                                    <?php if (!is_broken($item)) {
+                                     if (!is_real_time_exports($item)) : ?>
                                         <?php if (!$item['processing'] and !$item['executing']): ?>
                                             <h2 style="float:left;"><a class="add-new-h2"
                                                                        href="<?php echo esc_url_raw(add_query_arg(array('id' => $item['id'], 'action' => 'update'), $this->baseUrl)); ?>"><?php esc_html_e('Run Export', 'wp_all_export_plugin'); ?></a>
@@ -541,7 +561,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                             </h2>
                                         <?php endif; ?>
                                     <?php else: ?>
-                                        <?php if ($item['options']['enable_real_time_exports_running']) : ?>
+                                        <?php if (is_real_time_exports_running($item)) : ?>
                                             <h2 style="float:left;"><a class="add-new-h2 wpae-switch-real-time"
                                                                        data-item-id="<?php echo $item['id']; ?>"
                                                                        href="#"><?php esc_html_e('Disable Export', 'wp_all_export_plugin'); ?></a>
@@ -553,7 +573,9 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                             </h2>
                                         <?php endif; ?>
                                     <?php endif; ?>
-
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                                 <?php
                                 break;

@@ -5,6 +5,7 @@ function pmxe_admin_init()
     wp_enqueue_script('pmxe-script', PMXE_ROOT_URL . '/static/js/pmxe.js', array('jquery'), PMXE_VERSION);
 
     $custom_types = get_post_types(array('_builtin' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => false), 'objects');
+
     foreach ($custom_types as $key => $ct) {
         if (in_array($key, array('attachment', 'revision', 'nav_menu_item', 'import_users', 'shop_webhook', 'acf-field', 'acf-field-group'))) unset($custom_types[$key]);
     }
@@ -21,7 +22,7 @@ function pmxe_admin_init()
 
                 $post = get_post($post_id);
 
-                if ($post->post_type === 'shop_order') {
+                if ($post->post_type === 'shop_order' || ($post->post_type === 'property' && class_exists('Easy_Real_Estate'))) {
                     return;
                 }
 

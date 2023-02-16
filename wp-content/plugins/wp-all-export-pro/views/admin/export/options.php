@@ -118,8 +118,8 @@ $l10n = array(
                         ?>
                         <script type="text/javascript">
                             jQuery(document).ready(function(){
-                                jQuery('.wpae-save-button').click(function (e) {
-                                    jQuery('#wpae-options-form').submit();
+                                jQuery('.wpae-save-button').on('click', function (e) {
+                                    jQuery('#wpae-options-form').trigger('submit');
                                 });
                             });
                         </script>

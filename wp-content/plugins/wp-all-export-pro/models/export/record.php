@@ -95,7 +95,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
                 $exportQuery = eval('return new WP_User_Query(array(' . $this->options['wp_query'] . ', \'offset\' => ' . $this->exported . ', \'number\' => ' . $this->options['records_per_iteration'] . '));');
                 remove_action('pre_user_query', 'wp_all_export_pre_user_query');
             }
-            elseif (XmlExportEngine::$is_comment_export)
+            elseif (XmlExportEngine::$is_comment_export || XmlExportEngine::$is_woo_review_export )
             {
                 add_action('comments_clauses', 'wp_all_export_comments_clauses', 10, 1);
                 $exportQuery = eval('return new WP_Comment_Query(array(' . $this->options['wp_query'] . ', \'offset\' => ' . $this->exported . ', \'number\' => ' . $this->options['records_per_iteration'] . '));');
@@ -174,7 +174,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
                         $exportQuery = new WP_Comment_Query( array( 'comment__in' => [$post_id],'orderby' => 'comment_ID', 'order' => 'ASC' ));
 
                     } else {
-                        $exportQuery = new WP_Comment_Query( array( 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => $this->options['records_per_iteration'], 'offset' => $this->exported));
+                        $exportQuery = new WP_Comment_Query( array('post_type' => 'product', 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => $this->options['records_per_iteration'], 'offset' => $this->exported));
                     }
                 }
                 else
@@ -183,7 +183,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
                         $exportQuery = get_comments( array( 'comment__in' => [$post_id],'orderby' => 'comment_ID', 'order' => 'ASC' ));
 
                     } else {
-                        $exportQuery = get_comments( array( 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => $this->options['records_per_iteration'], 'offset' => $this->exported));
+                        $exportQuery = get_comments( array('post_type' => 'product', 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => $this->options['records_per_iteration'], 'offset' => $this->exported));
                     }                }
 
                 remove_action('comments_clauses', 'wp_all_export_comments_clauses');
@@ -359,11 +359,16 @@ class PMXE_Export_Record extends PMXE_Model_Record {
         {
             global $wp_version;
 
+            $products = new WP_Query( array (
+                'post_type' => 'product',
+                'fields' => 'ids'
+            ));
+
             if ( version_compare($wp_version, '4.2.0', '>=') )
             {
                 $postCount  = count($exportQuery->get_comments());
                 add_action('comments_clauses', 'wp_all_export_comments_clauses', 10, 1);
-                $result = new WP_Comment_Query( array( 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
+                $result = new WP_Comment_Query( array('post__not_in' => $products->posts, 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
                 $foundPosts = $result->get_comments();
                 remove_action('comments_clauses', 'wp_all_export_comments_clauses');
             }
@@ -371,7 +376,23 @@ class PMXE_Export_Record extends PMXE_Model_Record {
             {
                 $postCount  = count($exportQuery);
                 add_action('comments_clauses', 'wp_all_export_comments_clauses', 10, 1);
-                $foundPosts = get_comments( array( 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
+                $foundPosts = get_comments( array('post__not_in' => $products->posts, 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
+                remove_action('comments_clauses', 'wp_all_export_comments_clauses');
+            }
+        }
+        elseif (XmlExportEngine::$is_woo_review_export) {
+            global $wp_version;
+
+            if (version_compare($wp_version, '4.2.0', '>=')) {
+                $postCount = count($exportQuery->get_comments());
+                add_action('comments_clauses', 'wp_all_export_comments_clauses', 10, 1);
+                $result = new WP_Comment_Query(array('post_type' => 'product', 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
+                $foundPosts = $result->get_comments();
+                remove_action('comments_clauses', 'wp_all_export_comments_clauses');
+            } else {
+                $postCount = count($exportQuery);
+                add_action('comments_clauses', 'wp_all_export_comments_clauses', 10, 1);
+                $foundPosts = get_comments(array('post_type' => 'product', 'orderby' => 'comment_ID', 'order' => 'ASC', 'number' => 10, 'count' => true));
                 remove_action('comments_clauses', 'wp_all_export_comments_clauses');
             }
         }
@@ -383,8 +404,34 @@ class PMXE_Export_Record extends PMXE_Model_Record {
         }
         else
         {
-            $foundPosts = ( ! XmlExportEngine::$is_user_export && ! XmlExportEngine::$is_woo_customer_export ) ? $exportQuery->found_posts : $exportQuery->get_total();
-            $postCount  = ( ! XmlExportEngine::$is_user_export && ! XmlExportEngine::$is_woo_customer_export ) ? $exportQuery->post_count : count($exportQuery->get_results());
+            $exportOptions = $this->options;
+            if(strpos($exportOptions['cpt'][0], 'custom_') === 0) {
+
+                $addon = GF_Export_Add_On::get_instance();
+
+                $filter_args = array(
+                    'filter_rules_hierarhy' => empty($exportOptions['filter_rules_hierarhy']) ? array() : $exportOptions['filter_rules_hierarhy'],
+                    'product_matching_mode' => empty($exportOptions['product_matching_mode']) ? 'strict' : $exportOptions['product_matching_mode'],
+                    'taxonomy_to_export' => empty($exportOptions['taxonomy_to_export']) ? '' : $exportOptions['taxonomy_to_export'],
+                    'sub_post_type_to_export' => empty($exportOptions['sub_post_type_to_export']) ? '' : $exportOptions['sub_post_type_to_export']
+                );
+
+                $totalQuery = $addon->add_on->get_query( 0, 0, $filter_args);
+                $exportQuery = $addon->add_on->get_query($this->exported, $exportOptions['records_per_iteration'] , $filter_args );
+                $foundPosts = count($totalQuery->results);
+                $postCount = count($exportQuery->results);
+
+                XmlExportEngine::$exportQuery = $exportQuery;
+
+            } else {
+                if (XmlExportEngine::$is_user_export || XmlExportEngine::$is_woo_customer_export) {
+                    $foundPosts = $exportQuery->get_total();
+                    $postCount = count($exportQuery->get_results());
+                } else {
+                    $foundPosts = $exportQuery->found_posts;
+                    $postCount = $exportQuery->post_count;
+                }
+            }
         }
         // [ \get total found records ]
 
@@ -411,6 +458,17 @@ class PMXE_Export_Record extends PMXE_Model_Record {
                     $googleMerchantsService = $googleMerchantsServiceFactory->createService();
                     $googleMerchantsService->export($cron, $file_path, $this->exported);
                 } else {
+
+                    $main_xml_tag = apply_filters('wp_all_export_main_xml_tag', $this->options['main_xml_tag'], $this->id);
+
+                    if($post_id) {
+                        // Add an opening tag also if the file is empty
+                        $content = file_get_contents($file_path);
+                        if (strpos($content, $main_xml_tag) === false) {
+                            file_put_contents($file_path, '<' . $main_xml_tag . '>', FILE_APPEND);
+                        }
+                    }
+
                     XmlCsvExport::export_xml( false, $cron, $file_path, $this->exported );
                 }
 
@@ -436,7 +494,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
             'processing' => 0
         ))->save();
 
-        if ( empty($foundPosts) ) {
+        if ( empty($foundPosts)) {
             $this->set(array(
                 'processing' => 0,
                 'triggered' => 0,
@@ -447,7 +505,6 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 
             if ($this->options['export_to'] == XmlExportEngine::EXPORT_TYPE_XML)
             {
-
                 if (!in_array(XmlExportEngine::$exportOptions['xml_template_type'], array('custom', 'XmlGoogleMerchants'))) {
                     $main_xml_tag = apply_filters('wp_all_export_main_xml_tag', $this->options['main_xml_tag'], $this->id);
 
@@ -657,6 +714,11 @@ class PMXE_Export_Record extends PMXE_Model_Record {
         return $bundle_path;
     }
 
+    public function isRte()
+    {
+        return (isset($this->options['enable_real_time_exports']) && $this->options['enable_real_time_exports']);
+    }
+
     public function fix_template_options()
     {
         // migrate media options since @version 1.2.4
@@ -859,6 +921,13 @@ class PMXE_Export_Record extends PMXE_Model_Record {
      * @see parent::delete()
      */
     public function delete() {
+
+		// This must process first or WP All Import can delete the export file and prevent the file check from working.
+	    $export_file_path = wp_all_export_get_absolute_path($this->options['filepath']);
+	    if ( is_file($export_file_path) && @file_exists($export_file_path) ){
+		    wp_all_export_remove_source($export_file_path);
+	    }
+
         $this->deletePosts()->deleteChildren();
         if ( ! empty($this->options['import_id']) and wp_all_export_is_compatible()){
             $import = new PMXI_Import_Record();
@@ -866,10 +935,6 @@ class PMXE_Export_Record extends PMXE_Model_Record {
             if ( ! $import->isEmpty() and $import->parent_import_id == 99999 ){
                 $import->delete();
             }
-        }
-        $export_file_path = wp_all_export_get_absolute_path($this->options['filepath']);
-        if ( @file_exists($export_file_path) ){
-            wp_all_export_remove_source($export_file_path);
         }
         if ( ! empty($this->attch_id) ){
             wp_delete_attachment($this->attch_id, true);

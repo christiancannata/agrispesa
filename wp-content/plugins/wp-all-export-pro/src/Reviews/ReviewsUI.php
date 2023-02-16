@@ -124,7 +124,7 @@ class ReviewsUI
             </style>
             <script type="text/javascript">
                 jQuery(document).ready(function () {
-                    jQuery('.wpae-review-buttons button').click(function (e) {
+                    jQuery('.wpae-review-buttons button').on('click', function (e) {
 
                         e.preventDefault();
                         var val = jQuery(this).data('review');
@@ -142,7 +142,7 @@ class ReviewsUI
                         return false;
                     });
 
-                    jQuery('.wpae-reviews-notice .notice-dismiss').click(function(e){
+                    jQuery('.wpae-reviews-notice .notice-dismiss').on('click', function(e){
 
                         e.preventDefault();
                         e.stopImmediatePropagation();
@@ -163,7 +163,7 @@ class ReviewsUI
                         jQuery('.wpae-reviews-notice').slideUp();
                     });
 
-                    jQuery('.review-link').click(function(){
+                    jQuery('.review-link').on('click', function(){
 
                         var request = {
                             action: 'dismiss_review_modal',
@@ -183,7 +183,7 @@ class ReviewsUI
 
                     });
 
-                    jQuery('.wpae-submit-feedback button').click(function(){
+                    jQuery('.wpae-submit-feedback button').on('click', function(){
 
                         jQuery(this).prop("disabled", true);
 

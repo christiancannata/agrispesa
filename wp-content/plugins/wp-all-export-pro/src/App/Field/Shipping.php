@@ -14,9 +14,9 @@ class Shipping extends Field
         if (isset($shippingData['includeAttributes']) && $shippingData['includeAttributes'] == 'include') {
 
             $shippingAttributes = [
-                $this->replaceSnippetsInValue($shippingData['shippingCountry'], $snippetData),
-                $this->replaceSnippetsInValue($shippingData['shippingDeliveryArea'], $snippetData),
-                $this->replaceSnippetsInValue($shippingData['shippingService'], $snippetData),
+                $this->replaceSnippetsInValue(isset($shippingData['shippingCountry']) ? $shippingData['shippingCountry'] : '', $snippetData),
+                $this->replaceSnippetsInValue(isset($shippingData['shippingDeliveryArea']) ? $shippingData['shippingDeliveryArea'] : '', $snippetData),
+                $this->replaceSnippetsInValue(isset($shippingData['shippingService']) ? $shippingData['shippingService'] : '', $snippetData),
                 $this->shippingPrice($snippetData, $shippingData)
             ];
 
@@ -45,13 +45,28 @@ class Shipping extends Field
      */
     private function shippingPrice($snippetData, $shippingData)
     {
-        $price = $this->replaceSnippetsInValue($shippingData['shippingPrice'], $snippetData);
-        $adjustShippingPriceValue = $this->replaceSnippetsInValue($shippingData['adjustShippingPriceValue'], $snippetData);
+        if(!isset($shippingData['shippingPrice'])) {
+            $shippingData['shippingPrice'] = '';
+        }
 
-        if ($shippingData['adjustShippingPrice'] && $shippingData['adjustPriceType'] == '%') {
-            $price = $price * $adjustShippingPriceValue / 100;
-        } else if ($shippingData['adjustShippingPrice'] && $shippingData['adjustPriceType'] == 'USD') {
-            $price = $price + $adjustShippingPriceValue;
+        if(!isset($shippingData['adjustShippingPriceValue'])) {
+            $shippingData['adjustShippingPriceValue'] = '';
+        }
+
+        if(!isset($shippingData['adjustShippingPrice'])) {
+            $shippingData['adjustShippingPrice'] = false;
+        }
+
+        $price = $this->replaceSnippetsInValue($shippingData['shippingPrice'], $snippetData);
+
+        if(isset($shippingData['adjustShippingPriceValue'])) {
+            $adjustShippingPriceValue = $this->replaceSnippetsInValue($shippingData['adjustShippingPriceValue'], $snippetData);
+
+            if ($shippingData['adjustShippingPrice'] && $shippingData['adjustPriceType'] == '%') {
+                $price = $price * $adjustShippingPriceValue / 100;
+            } else if ($shippingData['adjustShippingPrice'] && $shippingData['adjustPriceType'] == 'USD') {
+                $price = $price + $adjustShippingPriceValue;
+            }
         }
 
         if (is_numeric($price)) {

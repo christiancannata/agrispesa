@@ -23,7 +23,7 @@ class PMXE_Admin_Settings extends PMXE_Controller_Admin
 
     public function index_action()
     {
-        global $wp_roles;
+        global $wp_roles, $wpdb;
 
         $this->data['post'] = $post = $this->input->post(PMXE_Plugin::getInstance()->getOption());
 
@@ -54,10 +54,26 @@ class PMXE_Admin_Settings extends PMXE_Controller_Admin
             $this->data['is_license_active'] = true;
         }
 
+
         $this->data['is_scheduling_license_active'] = false;
         if (!empty($post['scheduling_license_status']) && $post['scheduling_license_status'] == 'valid') {
             $this->data['is_scheduling_license_active'] = true;
         }
+
+        $this->data['exportList'] = [];
+
+        $table_prefix = PMXE_Plugin::getInstance()->getTablePrefix();
+        $exports = $wpdb->get_results("SELECT * FROM {$table_prefix}exports ORDER BY `registered_on` DESC");
+
+        foreach($exports as $exportPost) {
+            $this->data['exportList'][] = [
+                'id' => $exportPost->id,
+                'name' => $exportPost->friendly_name
+            ];
+        }
+
+        $this->data['triggerTestData'] = get_option('wpae_trigger_test_data', 1);
+        $this->data['zapierSpecificExport'] = get_option('wpae_zapier_specific_export', 0);
 
         if ($this->input->post('is_templates_submitted')) { // delete templates form
 

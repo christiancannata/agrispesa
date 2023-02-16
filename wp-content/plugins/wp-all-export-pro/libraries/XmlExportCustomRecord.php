@@ -55,7 +55,8 @@ if (!class_exists('XmlExportCustomRecord')) {
                     $postRecord->set(array(
                         'post_id' => $record->id,
                         'import_id' => $exportOptions['import_id'],
-                        'unique_key' => $record->id
+                        'unique_key' => $record->id,
+                        'product_key' => ''
                     ))->save();
                 }
                 unset($postRecord);

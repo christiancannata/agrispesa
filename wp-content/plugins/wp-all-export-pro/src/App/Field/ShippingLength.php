@@ -11,18 +11,18 @@ class ShippingLength extends Field
     {
         $shippingData = $this->feed->getSectionFeedData(self::SECTION);
 
-        if($shippingData['dimensions'] == 'useWooCommerceProductValues') {
+        if ($shippingData['dimensions'] == 'useWooCommerceProductValues') {
 
             $currentUnit = get_option('woocommerce_dimension_unit');
             $toUnit = $shippingData['convertTo'];
 
             $product = $_product = wc_get_product($this->entry->ID);
 
-            if($currentUnit !== $toUnit) {
+            if ($currentUnit !== $toUnit) {
 
                 $shippingLength = $product->get_length();
 
-                if(is_numeric($shippingLength)) {
+                if (is_numeric($shippingLength)) {
                     $length = wc_get_dimension($shippingLength, $toUnit, $currentUnit);
                 } else {
                     $length = $shippingLength;
@@ -31,9 +31,18 @@ class ShippingLength extends Field
                 $length = $product->get_length();
             }
 
-            return $length . ' '.$toUnit;
+            if ($length) {
+                return $length . ' ' . $toUnit;
+            } else {
+                return '';
+            }
         } else {
-            return $this->replaceSnippetsInValue($shippingData['dimensionsCV'], $snippetData);
+            if (isset($shippingData['dimensionsCV'])) {
+                return $this->replaceSnippetsInValue($shippingData['dimensionsCV'], $snippetData);
+            } else {
+                return '';
+            }
+
         }
     }
 

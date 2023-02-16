@@ -647,8 +647,7 @@ final Class XmlCsvExport
                 $xml = (!$exported_by_cron) ? PMXE_XMLWriter::preprocess_xml($xml_header) . $xmlWriter->wpae_flush() : $xmlWriter->wpae_flush();
             }
 
-
-            if (!$exported_by_cron) {
+            if (!$exported_by_cron || self::isRteExport(XmlExportEngine::$exportOptions)) {
                 if (!$is_custom_xml) $xml = substr($xml, 0, (strlen(self::$main_xml_tag) + 4) * (-1));
 
                 // The BOM will help some programs like Microsoft Excel read your export file if it includes non-English characters.
@@ -1111,4 +1110,7 @@ final Class XmlCsvExport
         return self::$csvWriter;
     }
 
+    private static function isRteExport($item) {
+        return isset($item['enable_real_time_exports']) && $item['enable_real_time_exports'];
+    }
 }

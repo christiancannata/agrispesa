@@ -2,94 +2,220 @@
 
 function pmxe_wp_loaded() {
 
-	$scheduledExport = new \Wpae\Scheduling\Export();
+    $scheduledExport = new \Wpae\Scheduling\Export();
 
-	if ( ! empty($_GET['zapier_subscribe']) and ! empty($_GET['api_key']) )
-	{
-	    pmxe_set_max_execution_time();
-		$zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
 
-		if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
-		{
-			$subscriptions = get_option('zapier_subscribe', array());
-
-			$body = json_decode(file_get_contents("php://input"), true);
-
-			if ( ! empty($body))
-			{
-				$subscriptions[basename($body['target_url'])] = $body;
-			}
-
-			update_option('zapier_subscribe', $subscriptions);
-
-			exit(json_encode(array('status' => 200)));
-		}
-		else
-		{
-			http_response_code(401);
-			exit(json_encode(array('status' => 'error')));
-		}
-	}
-
-	if ( ! empty($_GET['zapier_unsubscribe']) and ! empty($_GET['api_key']) )
-	{
-	    pmxe_set_max_execution_time();
-		$zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
-
-		if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
-		{
-			$subscriptions = get_option('zapier_subscribe', array());
-
-			$body = json_decode(file_get_contents("php://input"), true);
-
-			if ( ! empty($subscriptions[basename($body['target_url'])]) ) unset($subscriptions[basename($body['target_url'])]);
-
-			update_option('zapier_subscribe', $subscriptions);
-
-			exit(json_encode(array('status' => 200)));
-		}
-		else
-		{
-			http_response_code(401);
-			exit(json_encode(array('status' => 'error')));
-		}
-	}
-
-	if ( ! empty($_GET['export_completed']) and ! empty($_GET['api_key']))
-	{
+    if ( ! empty($_GET['get_exports']) and ! empty($_GET['api_key'])) {
         pmxe_set_max_execution_time();
-		$zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
 
-		if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
-		{
+        $response = [];
+        if (!empty($zapier_api_key) and $zapier_api_key == $_GET['api_key']) {
 
-			global $wpdb;
+            global $wpdb;
+            $table_prefix = PMXE_Plugin::getInstance()->getTablePrefix();
 
-			$table_prefix = PMXE_Plugin::getInstance()->getTablePrefix();
+            $query = "SELECT * FROM {$table_prefix}exports ORDER BY `created_at` DESC";
+            $exports = $wpdb->get_results($query);
 
-			$export = $wpdb->get_row("SELECT * FROM {$table_prefix}exports ORDER BY `registered_on` DESC LIMIT 1");
+            foreach($exports as $export) {
 
-			if ( ! empty($export) and ! is_wp_error($export) )
-			{
-				$child_export = new PMXE_Export_Record();
-				$child_export->getById( $export->id );
+                if(is_serialized($export->options)) {
+                    $export->options = unserialize($export->options);
+                }
 
-				if ( ! $child_export->isEmpty())
-				{
-					$wp_uploads = wp_upload_dir();
+                if(isset($export->options['enable_real_time_exports']) && $export->options['enable_real_time_exports']) {
+                    $response[] = [
+                        'id'=> $export->id,
+                        'name'=> $export->friendly_name
+                    ];
+                }
+            }
 
-					$is_secure_import = PMXE_Plugin::getInstance()->getOption('secure');
+            pmxe_send_json($response);
+        }
+    }
 
-					if ( ! $is_secure_import)
-					{
-						$filepath = get_attached_file($child_export->attch_id);
-					}
-					else
-					{
-						$filepath = wp_all_export_get_absolute_path($child_export->options['filepath']);
-					}
 
-					$fileurl = str_replace($wp_uploads['basedir'], $wp_uploads['baseurl'], $filepath);
+    if ( ! empty($_GET['zapier_subscribe']) and ! empty($_GET['api_key']) )
+    {
+        pmxe_set_max_execution_time();
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
+            $subscriptions = get_option('zapier_subscribe', array());
+
+            $body = json_decode(file_get_contents("php://input"), true);
+
+            if ( ! empty($body))
+            {
+                $subscriptions[basename($body['target_url'])] = $body;
+            } else {
+                $subscriptions[basename($_GET['target_url'])] = ['target_url' => $_GET['target_url']];
+            }
+
+            update_option('zapier_subscribe', $subscriptions);
+
+            exit(json_encode(array('status' => 200)));
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
+
+    if ( ! empty($_GET['zapier_unsubscribe']) and ! empty($_GET['api_key']) )
+    {
+        pmxe_set_max_execution_time();
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
+            $subscriptions = get_option('zapier_subscribe', array());
+
+            $body = json_decode(file_get_contents("php://input"), true);
+
+            if ( ! empty($subscriptions[basename($body['target_url'])]) ) unset($subscriptions[basename($body['target_url'])]);
+
+            update_option('zapier_subscribe', $subscriptions);
+
+            exit(json_encode(array('status' => 200)));
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
+
+
+    if ( ! empty($_GET['rte_zapier_subscribe']) and ! empty($_GET['api_key']) )
+    {
+
+        pmxe_set_max_execution_time();
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
+            $subscriptions = get_option('rte_zapier_subscribe', array());
+
+            $exportId = intval($_GET['export_id']);
+
+            $subscriptions[$exportId][] = ['target_url' => $_GET['target_url']];
+
+            update_option('rte_zapier_subscribe', $subscriptions);
+
+            exit(json_encode(array('status' => 200)));
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
+
+    if ( ! empty($_GET['zapier_unsubscribe']) and ! empty($_GET['api_key']) )
+    {
+        pmxe_set_max_execution_time();
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
+            $subscriptions = get_option('rte_zapier_subscribe', array());
+
+            $exportId = intval($_GET['export_id']);
+
+            $targetUrl = $_GET['target_url'];
+
+            foreach($subscriptions as $subscriptionExportId => $subscription) {
+                if($exportId == $subscriptionExportId) {
+                    foreach($subscription as &$subscriptionTargetUrl) {
+                        if($targetUrl === $subscriptionTargetUrl) {
+                            unset($subscriptionTargetUrl);
+                        }
+                    }
+                }
+            }
+            update_option('zapier_subscribe', $subscriptions);
+
+            exit(json_encode(array('status' => 200)));
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
+
+
+    if ( ! empty($_GET['export_completed']) and ! empty($_GET['api_key']))
+    {
+        pmxe_set_max_execution_time();
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
+
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
+
+            global $wpdb;
+
+            $table_prefix = PMXE_Plugin::getInstance()->getTablePrefix();
+
+            $query = "SELECT * FROM {$table_prefix}exports ORDER BY `registered_on` DESC";
+
+            $exports = $wpdb->get_results($query);
+
+            if ( ! empty($exports) and ! is_wp_error($export) )
+            {
+                $exportFound = false;
+                foreach( $exports as $export ){
+                    if(is_serialized($export->options)) {
+                        $export->options = unserialize($export->options);
+                    }
+
+                    if(!isset($export->options['enable_real_time_exports']) || (isset($export->options['enable_real_time_exports']) && !$export->options['enable_real_time_exports'])) {
+                        $exportFound = true;
+                        break;
+                    }
+                }
+
+                if(!$exportFound) {
+                    $response['status'] = 404;
+                    $response['message'] = 'No Export Found';
+                    $response = apply_filters('wp_all_export_zapier_response', $response);
+
+                    wp_send_json(array($response));
+                }
+                $child_export = new PMXE_Export_Record();
+                $child_export->getById( $export->id );
+
+                if($child_export->isRte()) {
+                    $response['export_file_url'] = '';
+                    $response['status'] = 300;
+                    $response['message'] = 'Export is set to Real-Time Export, please choose the RTE Completed hook';
+
+                    $response = apply_filters('wp_all_export_zapier_response', $response);
+
+                    pmxe_send_json(array($response));
+                }
+
+                if ( ! $child_export->isEmpty())
+                {
+                    $wp_uploads = wp_upload_dir();
+
+                    $is_secure_import = PMXE_Plugin::getInstance()->getOption('secure');
+
+                    if ( ! $is_secure_import)
+                    {
+                        $filepath = get_attached_file($child_export->attch_id);
+                    }
+                    else
+                    {
+                        $filepath = wp_all_export_get_absolute_path($child_export->options['filepath']);
+                    }
+
+                    $fileurl = str_replace($wp_uploads['basedir'], $wp_uploads['baseurl'], $filepath);
 
 					$response = array(
 						'website_url' => home_url(),
@@ -97,7 +223,7 @@ function pmxe_wp_loaded() {
 						'export_name' => $child_export->friendly_name,
 						'file_name' => basename($filepath),
 						'file_type' => $child_export->options['export_to'],
-						'post_types_exported' => empty($child_export->options['cpt']) ? $child_export->options['wp_query'] : implode(',', $child_export->options['cpt']),
+						'post_types_exported' => empty($child_export->options['cpt']) ? str_replace('"', "'", $child_export->options['wp_query']) : implode(',', $child_export->options['cpt']),
 						'export_created_date' => $child_export->registered_on,
 						'export_last_run_date' => date('Y-m-d H:i:s'),
 						'export_trigger_type' => 'manual',
@@ -105,62 +231,149 @@ function pmxe_wp_loaded() {
 						'export_file' => ''
 					);
 
-					if (file_exists($filepath))
-					{
-						$response['export_file_url'] = $fileurl;
-						$response['status'] = 200;
-						$response['message'] = 'OK';
-					}
-					else
-					{
-						$response['export_file_url'] = '';
-						$response['status'] = 300;
-						$response['message'] = 'File doesn\'t exist';
-					}
+                    if (file_exists($filepath))
+                    {
+                        $response['export_file_url'] = $fileurl;
+                        $response['status'] = 200;
+                        $response['message'] = 'OK';
+                    }
+                    else
+                    {
+                        $response['export_file_url'] = '';
+                        $response['status'] = 300;
+                        $response['message'] = 'File doesn\'t exist';
+                    }
 
-					$response = apply_filters('wp_all_export_zapier_response', $response);
+                    $response = apply_filters('wp_all_export_zapier_response', $response);
 
-					pmxe_send_json(array($response));
-				}
-			}
+                    pmxe_send_json(array($response));
+                }
+            }
 
-		}
-		else
-		{
-			http_response_code(401);
-			exit(json_encode(array('status' => 'error')));
-		}
-	}
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
 
-	/* Check if cron is manualy, then execute export */
-	$cron_job_key = PMXE_Plugin::getInstance()->getOption('cron_job_key');
-
-	if ( ! empty($cron_job_key) and ! empty($_GET['export_id']) and ! empty($_GET['export_key']) and $_GET['export_key'] == $cron_job_key and !empty($_GET['action']) and in_array($_GET['action'], array('processing', 'trigger'))) {
+    if ( ! empty($_GET['rte_completed']) and ! empty($_GET['api_key']))
+    {
         pmxe_set_max_execution_time();
-		$logger = function($m) {
-		    echo "<p>$m</p>\\n";
-		};
+        $zapier_api_key = PMXE_Plugin::getInstance()->getOption('zapier_api_key');
 
-		$export = new PMXE_Export_Record();
+        if ( ! empty($zapier_api_key) and $zapier_api_key == $_GET['api_key'] )
+        {
 
-		$ids = explode(',', $_GET['export_id']);
+            global $wpdb;
 
-		$queue_exports = empty($export->parent_id) ? get_option( 'wp_all_export_queue_' . esc_sql(strip_tags($_GET['export_id']))) : false;
+            $exportId = intval($_GET['export_id']);
+            $table_prefix = PMXE_Plugin::getInstance()->getTablePrefix();
 
-		if ( ! empty($queue_exports) and is_array($queue_exports))
-		{
-			$ids = array_merge($ids, $queue_exports);
-		}
+            $query = "SELECT * FROM {$table_prefix}exports WHERE id = $exportId LIMIT 1";
 
-		if ( ! empty($ids) and is_array($ids) )
-		{
-			foreach ($ids as $id) { if (empty($id)) continue;
+            $export = $wpdb->get_row($query);
 
-				$export->getById($id);
+            if ( ! empty($export) and ! is_wp_error($exports) )
+            {
+                $child_export = new PMXE_Export_Record();
+                $child_export->getById( $export->id );
 
-				$cpt = $export->options['cpt'];
-				if(!is_array($cpt)) {
-				    $cpt = array($cpt);
+                if ( ! $child_export->isEmpty())
+                {
+
+                    $is_secure_import = PMXE_Plugin::getInstance()->getOption('secure');
+
+                    if ( ! $is_secure_import)
+                    {
+                        $filepath = get_attached_file($child_export->attch_id);
+                    }
+                    else
+                    {
+                        $filepath = wp_all_export_get_absolute_path($child_export->options['filepath']);
+                    }
+
+                    $wp_uploads = wp_upload_dir();
+                    $fileurl = str_replace($wp_uploads['basedir'], $wp_uploads['baseurl'], $filepath);
+
+                    $file_data = json_decode($export->rte_last_row, true);
+                    if(!is_array($file_data)) {
+                        $file_data = [];
+                    }
+
+                    $exportData = array(
+                        'website_url' => home_url(),
+                        'export_id' => $child_export->id,
+                        'export_name' => $child_export->friendly_name,
+                        'file_name' => basename($filepath),
+                        'export_file_url' => $fileurl
+                    );
+
+                    $response = array_merge($file_data, $exportData);
+
+
+                    if (file_exists($filepath))
+                    {
+                        $response['status'] = 200;
+                        $response['message'] = 'OK';
+                    }
+                    else
+                    {
+                        $response['status'] = 300;
+                        $response['message'] = 'File doesn\'t exist';
+                    }
+
+                    $response = apply_filters('wp_all_export_zapier_response', $response);
+
+                    wp_send_json(array($response));
+                }
+            } else {
+                $response['status'] = 404;
+                $response['message'] = 'Export Not Found';
+
+                $response = apply_filters('wp_all_export_zapier_response', $response);
+
+                wp_send_json(array($response));
+            }
+
+        }
+        else
+        {
+            http_response_code(401);
+            exit(json_encode(array('status' => 'error')));
+        }
+    }
+
+    /* Check if cron is manualy, then execute export */
+    $cron_job_key = PMXE_Plugin::getInstance()->getOption('cron_job_key');
+
+    if ( ! empty($cron_job_key) and ! empty($_GET['export_id']) and ! empty($_GET['export_key']) and $_GET['export_key'] == $cron_job_key and !empty($_GET['action']) and in_array($_GET['action'], array('processing', 'trigger'))) {
+        pmxe_set_max_execution_time();
+        $logger = function($m) {
+            echo "<p>$m</p>\\n";
+        };
+
+        $export = new PMXE_Export_Record();
+
+        $ids = explode(',', $_GET['export_id']);
+
+        $queue_exports = empty($export->parent_id) ? get_option( 'wp_all_export_queue_' . esc_sql(strip_tags($_GET['export_id']))) : false;
+
+        if ( ! empty($queue_exports) and is_array($queue_exports))
+        {
+            $ids = array_merge($ids, $queue_exports);
+        }
+
+        if ( ! empty($ids) and is_array($ids) )
+        {
+            foreach ($ids as $id) { if (empty($id)) continue;
+
+                $export->getById($id);
+
+                $cpt = $export->options['cpt'];
+                if(!is_array($cpt)) {
+                    $cpt = array($cpt);
                 }
 
                 $addons = new \Wpae\App\Service\Addons\AddonService();
@@ -178,27 +391,27 @@ function pmxe_wp_loaded() {
                     (!$addons->isWooCommerceAddonActive() && strpos($export->options['wp_query'], 'shop_coupon') !== false)
 
                 ) {
-                    die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
+                    die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this expor t. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
                 }
 
                 if (((in_array('product', $cpt) && in_array('product_variation', $cpt) ) ||
-                     (in_array('shop_order', $cpt) && !$addons->isWooCommerceOrderAddonActive()) ||
-                     in_array('shop_coupon', $cpt) ||
-                     in_array('shop_review', $cpt) ) &&
+                        (in_array('shop_order', $cpt) && !$addons->isWooCommerceOrderAddonActive()) ||
+                        in_array('shop_coupon', $cpt) ||
+                        in_array('shop_review', $cpt) ) &&
                     !$addons->isWooCommerceAddonActive()) {
-					die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
-				}
+                    die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
+                }
 
                 // Block Google Merchant Exports if the supporting add-on isn't active.
-				if(isset($export->options['xml_template_type']) && $export->options['xml_template_type'] == \XmlExportEngine::EXPORT_TYPE_GOOLE_MERCHANTS && !$addons->isWooCommerceAddonActive()) {
+                if(isset($export->options['xml_template_type']) && $export->options['xml_template_type'] == \XmlExportEngine::EXPORT_TYPE_GOOLE_MERCHANTS && !$addons->isWooCommerceAddonActive()) {
 
-					die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
+                    die(wp_kses_post(\__('The WooCommerce Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
 
-				}
+                }
 
                 if((in_array('acf', $export->options['cc_type']) || $export->options['xml_template_type'] == 'custom' && in_array('acf', $export->options['custom_xml_template_options']['cc_type'])) && !$addons->isAcfAddonActive()) {
-					die(wp_kses_post(\__('The ACF Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
-				}
+                    die(wp_kses_post(\__('The ACF Export Add-On Pro is required to run this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>', \PMXE_Plugin::LANGUAGE_DOMAIN)));
+                }
 
                 $cpt_string = reset($cpt);
 
@@ -206,120 +419,113 @@ function pmxe_wp_loaded() {
                     die('The Gravity Forms Export Add-On Pro is required for this export. If you already own it, you can download the add-on here: <a href="https://www.wpallimport.com/portal/downloads" target="_blank">https://www.wpallimport.com/portal/downloads</a>');
                 }
 
-                if(isset($export->options['enable_real_time_exports']) && $export->options['enable_real_time_exports'] ) {
-                    wp_send_json(array(
-                        'status'     => 403,
-                        'message'    => sprintf(esc_html__('This export is configured to run as records are created and cannot be run via this method.', 'wp_all_export_plugin'), $id)
-                    ));
-                }
+                if ( ! $export->isEmpty() ){
 
-				if ( ! $export->isEmpty() ){
+                    switch ($_GET['action']) {
 
-					switch ($_GET['action']) {
+                        case 'trigger':
 
-						case 'trigger':
-
-							if ( (int) $export->executing )
-							{
-								pmxe_send_json(array(
-									'status'     => 403,
-									'message'    => sprintf(esc_html__('Export #%s is currently in manually process. Request skipped.', 'wp_all_export_plugin'), $id)
-								));
-							}
-							elseif ( ! $export->processing and ! $export->triggered )
-							{
+                            if ( (int) $export->executing )
+                            {
+                                wp_send_json(array(
+                                    'status'     => 403,
+                                    'message'    => sprintf(esc_html__('Export #%s is currently in manually process. Request skipped.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
+                            elseif ( ! $export->processing and ! $export->triggered )
+                            {
                                 $scheduledExport->trigger($export);
 
-								pmxe_send_json(array(
-									'status'     => 200,
-									'message'    => sprintf(esc_html__('#%s Cron job triggered.', 'wp_all_export_plugin'), $id)
-								));
-							}
-							elseif( $export->processing and ! $export->triggered)
-							{
-								pmxe_send_json(array(
-									'status'     => 403,
-									'message'    => sprintf(esc_html__('Export #%s currently in process. Request skipped.', 'wp_all_export_plugin'), $id)
-								));
-							}
-							elseif( ! $export->processing and $export->triggered)
-							{
-								pmxe_send_json(array(
-									'status'     => 403,
-									'message'    => sprintf(esc_html__('Export #%s already triggered. Request skipped.', 'wp_all_export_plugin'), $id)
-								));
-							}
+                                wp_send_json(array(
+                                    'status'     => 200,
+                                    'message'    => sprintf(esc_html__('#%s Cron job triggered.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
+                            elseif( $export->processing and ! $export->triggered)
+                            {
+                                wp_send_json(array(
+                                    'status'     => 403,
+                                    'message'    => sprintf(esc_html__('Export #%s currently in process. Request skipped.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
+                            elseif( ! $export->processing and $export->triggered)
+                            {
+                                wp_send_json(array(
+                                    'status'     => 403,
+                                    'message'    => sprintf(esc_html__('Export #%s already triggered. Request skipped.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
 
-							break;
+                            break;
 
-						case 'processing':
+                        case 'processing':
 
-							if ( $export->processing == 1 and (time() - strtotime($export->registered_on)) > 120){ // it means processor crashed, so it will reset processing to false, and terminate. Then next run it will work normally.
-								$export->set(array(
-									'processing' => 0
-								))->update();
-							}
+                            if ( $export->processing == 1 and (time() - strtotime($export->registered_on)) > 120){ // it means processor crashed, so it will reset processing to false, and terminate. Then next run it will work normally.
+                                $export->set(array(
+                                    'processing' => 0
+                                ))->update();
+                            }
 
-							// start execution imports that is in the cron process												
-							if ( ! (int) $export->triggered )
-							{
-								if ( ! empty($export->parent_id) or empty($queue_exports))
-								{
-									pmxe_send_json(array(
-										'status'     => 403,
-										'message'    => sprintf(esc_html__('Export #%s is not triggered. Request skipped.', 'wp_all_export_plugin'), $id)
-									));
-								}
-							}
-							elseif ( (int) $export->executing )
-							{
-								pmxe_send_json(array(
-									'status'     => 403,
-									'message'    => sprintf(esc_html__('Export #%s is currently in manually process. Request skipped.', 'wp_all_export_plugin'), $id)
-								));
-							}
-							elseif ( (int) $export->triggered and ! (int) $export->processing )
-							{
-							    try {
+                            // start execution imports that is in the cron process
+                            if ( ! (int) $export->triggered )
+                            {
+                                if ( ! empty($export->parent_id) or empty($queue_exports))
+                                {
+                                    wp_send_json(array(
+                                        'status'     => 403,
+                                        'message'    => sprintf(esc_html__('Export #%s is not triggered. Request skipped.', 'wp_all_export_plugin'), $id)
+                                    ));
+                                }
+                            }
+                            elseif ( (int) $export->executing )
+                            {
+                                wp_send_json(array(
+                                    'status'     => 403,
+                                    'message'    => sprintf(esc_html__('Export #%s is currently in manually process. Request skipped.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
+                            elseif ( (int) $export->triggered and ! (int) $export->processing )
+                            {
+                                try {
                                     $export->set(array('canceled' => 0))->execute($logger, true);
                                 } catch (\Wpae\App\Service\Addons\AddonNotFoundException $e) {
-							        die($e->getMessage());
+                                    die($e->getMessage());
                                 }
-								if ( ! (int) $export->triggered and ! (int) $export->processing )
-								{
+                                if ( ! (int) $export->triggered and ! (int) $export->processing )
+                                {
                                     $scheduledExport->process($export);
 
-                                    pmxe_send_json(array(
-										'status'     => 200,
-										'message'    => sprintf(esc_html__('Export #%s complete', 'wp_all_export_plugin'), $export->id)
-									));
-								}
-								else
-								{
-									pmxe_send_json(array(
-										'status'     => 200,
-										'message'    => sprintf(esc_html__('Records Processed %s.', 'wp_all_export_plugin'), (int) $export->exported)
-									));
-								}
+                                    wp_send_json(array(
+                                        'status'     => 200,
+                                        'message'    => sprintf(esc_html__('Export #%s complete', 'wp_all_export_plugin'), $export->id)
+                                    ));
+                                }
+                                else
+                                {
+                                    wp_send_json(array(
+                                        'status'     => 200,
+                                        'message'    => sprintf(esc_html__('Records Processed %s.', 'wp_all_export_plugin'), (int) $export->exported)
+                                    ));
+                                }
 
-							}
-							else
-							{
-								pmxe_send_json(array(
-									'status'     => 403,
-									'message'    => sprintf(esc_html__('Export #%s already processing. Request skipped.', 'wp_all_export_plugin'), $id)
-								));
-							}
+                            }
+                            else
+                            {
+                                wp_send_json(array(
+                                    'status'     => 403,
+                                    'message'    => sprintf(esc_html__('Export #%s already processing. Request skipped.', 'wp_all_export_plugin'), $id)
+                                ));
+                            }
 
-							break;
-					}
-				}
-			}
-		}
-	}
+                            break;
+                    }
+                }
+            }
+        }
+    }
 
-	if ( ! empty($_GET['action']) && ! empty($_GET['export_id']) && (!empty($_GET['export_hash']) || !empty($_GET['security_token']) || !empty($_GET['security_key'])))
-	{
+    if ( ! empty($_GET['action']) && ! empty($_GET['export_id']) && (!empty($_GET['export_hash']) || !empty($_GET['security_token']) || !empty($_GET['security_key'])))
+    {
         pmxe_set_max_execution_time();
 
         if(isset($_GET['security_key'])) {
@@ -328,72 +534,72 @@ function pmxe_wp_loaded() {
             $export->getById(intval($_GET['export_id']));
         }
 
-		if ( (isset($_GET['security_token']) && $_GET['security_token'] == substr(md5($cron_job_key . $_GET['export_id']), 0, 16)) || (isset($_GET['security_key']) && $_GET['security_key'] === $export->options['security_token']) )
-		{
-			$export = new PMXE_Export_Record();
+        if ( (isset($_GET['security_token']) && $_GET['security_token'] == substr(md5($cron_job_key . $_GET['export_id']), 0, 16)) || (isset($_GET['security_key']) && $_GET['security_key'] === $export->options['security_token']) )
+        {
+            $export = new PMXE_Export_Record();
 
-			$export->getById($_GET['export_id']);
+            $export->getById($_GET['export_id']);
 
-			if ( ! $export->isEmpty())
-			{
-				switch ($_GET['action'])
-				{
-					case 'get_data':
+            if ( ! $export->isEmpty())
+            {
+                switch ($_GET['action'])
+                {
+                    case 'get_data':
 
-						if ( ! empty($export->options['current_filepath']) and @file_exists($export->options['current_filepath']))
-						{
-							$filepath = $export->options['current_filepath'];
-						}
-						else
-						{
-							$is_secure_import = PMXE_Plugin::getInstance()->getOption('secure');
+                        if ( ! empty($export->options['current_filepath']) and @file_exists($export->options['current_filepath']))
+                        {
+                            $filepath = $export->options['current_filepath'];
+                        }
+                        else
+                        {
+                            $is_secure_import = PMXE_Plugin::getInstance()->getOption('secure');
 
-							if ( ! $is_secure_import)
-							{
-								$filepath = get_attached_file($export->attch_id);
-							}
-							else
-							{
-								$filepath = wp_all_export_get_absolute_path($export->options['filepath']);
-							}
-						}
+                            if ( ! $is_secure_import)
+                            {
+                                $filepath = get_attached_file($export->attch_id);
+                            }
+                            else
+                            {
+                                $filepath = wp_all_export_get_absolute_path($export->options['filepath']);
+                            }
+                        }
 
-						if ( ! empty($_GET['part']) and is_numeric($_GET['part'])) $filepath = str_replace(basename($filepath), str_replace('.' . $export->options['export_to'], '', basename($filepath)) . '-' . $_GET['part'] . '.' . $export->options['export_to'], $filepath);
+                        if ( ! empty($_GET['part']) and is_numeric($_GET['part'])) $filepath = str_replace(basename($filepath), str_replace('.' . $export->options['export_to'], '', basename($filepath)) . '-' . $_GET['part'] . '.' . $export->options['export_to'], $filepath);
 
-						break;
+                        break;
 
-					case 'get_bundle':
+                    case 'get_bundle':
 
-						$filepath = wp_all_export_get_absolute_path($export->options['bundlepath']);
+                        $filepath = wp_all_export_get_absolute_path($export->options['bundlepath']);
 
-						break;
+                        break;
 
-					default:
-						# code...
-						break;
-				}
+                    default:
+                        # code...
+                        break;
+                }
 
-				if (file_exists($filepath))
-				{
-					$uploads  = wp_upload_dir();
-					$fileurl = $uploads['baseurl'] . str_replace($uploads['basedir'], '', str_replace(basename($filepath), rawurlencode(basename($filepath)), $filepath));
+                if (file_exists($filepath))
+                {
+                    $uploads  = wp_upload_dir();
+                    $fileurl = $uploads['baseurl'] . str_replace($uploads['basedir'], '', str_replace(basename($filepath), rawurlencode(basename($filepath)), $filepath));
 
-					if($export['options']['export_to'] == XmlExportEngine::EXPORT_TYPE_XML && $export['options']['xml_template_type'] == XmlExportEngine::EXPORT_TYPE_GOOLE_MERCHANTS) {
+                    if($export['options']['export_to'] == XmlExportEngine::EXPORT_TYPE_XML && $export['options']['xml_template_type'] == XmlExportEngine::EXPORT_TYPE_GOOLE_MERCHANTS) {
 
-						// If we are doing a google merchants export, send the file as a download.
-						header("Content-type: text/plain");
-						header("Content-Disposition: attachment; filename=".basename($filepath));
-						header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-						header("Cache-Control: post-check=0, pre-check=0", false);
-						header("Pragma: no-cache");
-						if ( ob_get_length() !== false ) {
-							ob_end_clean();
-						}
-						readfile($filepath);
+                        // If we are doing a google merchants export, send the file as a download.
+                        header("Content-type: text/plain");
+                        header("Content-Disposition: attachment; filename=".basename($filepath));
+                        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+                        header("Cache-Control: post-check=0, pre-check=0", false);
+                        header("Pragma: no-cache");
+                        if ( ob_get_length() !== false ) {
+                            ob_end_clean();
+                        }
+                        readfile($filepath);
 
-						die;
-					}
-					if(apply_filters('wp_all_export_no_cache', false)) {
+                        die;
+                    }
+                    if(apply_filters('wp_all_export_no_cache', false)) {
 
                         // If we are doing a google merchants export, send the file as a download.
                         header("Content-type: " . mime_content_type($filepath));
@@ -409,35 +615,35 @@ function pmxe_wp_loaded() {
 
                     $fileurl = str_replace("\\", "/", $fileurl);
 
-					// Add random parameter to avoid caching
-					if( strpos( $fileurl, '?' ) !== false ){
-						$fileurl .= '&wpae_nocache=' . mt_rand();
-					}else{
-						$fileurl .= '?wpae_nocache=' . mt_rand();
-				    }
+                    // Add random parameter to avoid caching
+                    if( strpos( $fileurl, '?' ) !== false ){
+                        $fileurl .= '&wpae_nocache=' . mt_rand();
+                    }else{
+                        $fileurl .= '?wpae_nocache=' . mt_rand();
+                    }
 
                     wp_redirect($fileurl);
-				}
-				else
-				{
-					pmxe_send_json(array(
-						'status'     => 403,
-						'message'    => esc_html__('File doesn\'t exist', 'wp_all_export_plugin')
-					));
-				}
-			}
-		}
-		else
-		{
-			pmxe_send_json(array(
-				'status'     => 403,
-				'message'    => esc_html__('Export hash is not valid.', 'wp_all_export_plugin')
-			));
-		}
-	}
+                }
+                else
+                {
+                    wp_send_json(array(
+                        'status'     => 403,
+                        'message'    => esc_html__('File doesn\'t exist', 'wp_all_export_plugin')
+                    ));
+                }
+            }
+        }
+        else
+        {
+            wp_send_json(array(
+                'status'     => 403,
+                'message'    => esc_html__('Export hash is not valid.', 'wp_all_export_plugin')
+            ));
+        }
+    }
 
     if(isset($_GET['action']) && $_GET['action'] == 'wpae_public_api') {
-	    pmxe_set_max_execution_time();
+        pmxe_set_max_execution_time();
         $router = new \Wpae\Http\Router();
         $router->route($_GET['q'], false);
     }
@@ -456,28 +662,28 @@ function pmxe_set_max_execution_time()
 }
 
 function pmxe_send_json($response, $status_code = null, $options = 0){
-	header("Content-Type: application/json; charset=" . get_option( 'blog_charset' ));
-	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
-	header("CDN-Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
-	header("Cloudflare-CDN-Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
-	header("Cache-Control: post-check=0, pre-check=0", false);
-	header("Pragma: no-cache");
+    header("Content-Type: application/json; charset=" . get_option( 'blog_charset' ));
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
+    header("CDN-Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
+    header("Cloudflare-CDN-Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, no-transform");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
 
-	if ( null !== $status_code ) {
-		status_header( $status_code );
-	}
-	
-	echo wp_json_encode($response, $options);
+    if ( null !== $status_code ) {
+        status_header( $status_code );
+    }
 
-	if ( wp_doing_ajax() ) {
-		wp_die(
-			'',
-			'',
-			array(
-				'response' => null,
-			)
-		);
-	} else {
-		die;
-	}
+    echo wp_json_encode($response, $options);
+
+    if ( wp_doing_ajax() ) {
+        wp_die(
+            '',
+            '',
+            array(
+                'response' => null,
+            )
+        );
+    } else {
+        die;
+    }
 }

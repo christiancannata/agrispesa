@@ -8,7 +8,7 @@ if(!defined('ABSPATH')) {
         $(function () {
 
             // Main accordion logic
-            $('input[name="scheduling_enable"]').change(function () {
+            $('input[name="scheduling_enable"]').on('change', function () {
                 if ($('input[name="scheduling_enable"]:checked').val() == 1) {
                     $('#automatic-scheduling').slideDown();
                     $('.manual-scheduling').slideUp();
