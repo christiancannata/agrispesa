@@ -60,9 +60,16 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 
 function settings_box_link_my_account($items)
 {
-	$items = array_insert_after($items, 'subscriptions', [
-		'personalizza-scatola' => 'Personalizza la scatola'
-	]);
+
+	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
+
+	if (count($subscriptions) > 0) {
+
+		$items = array_insert_after($items, 'subscriptions', [
+			'personalizza-scatola' => 'Personalizza la scatola'
+		]);
+	}
+
 	return $items;
 
 }
@@ -75,7 +82,6 @@ add_filter('woocommerce_account_menu_items', 'settings_box_link_my_account');
 
 function settings_box_content()
 {
-	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
 	?>
 	<div class="woocommerce-PreferenzeBox-content" id="box-app">
 
