@@ -20,3 +20,35 @@
 
 2023-02-16T11:47:08+00:00 CRITICAL syntax error, unexpected 'echo' (T_ECHO) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/thankyou.php alla riga 107
 
+2023-02-16T18:49:13+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php:101
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 101
+
+2023-02-16T18:49:17+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php:101
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 101
+
+2023-02-16T18:49:58+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php:101
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 101
+
+2023-02-16T18:50:00+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php:101
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/single-producer.php alla riga 101
+
