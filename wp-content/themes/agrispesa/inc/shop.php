@@ -362,9 +362,6 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 }
 
 
-add_action('woocommerce_after_order_notes', 'my_custom_checkout_field');
-
-
 add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
 
 
@@ -413,4 +410,44 @@ function custom_woocommerce_shipping_fields($fields)
 	);
 
 	return $fields;
+}
+
+
+add_action('woocommerce_after_order_notes', 'my_custom_checkout_field');
+
+function my_custom_checkout_field($checkout)
+{
+
+	woocommerce_form_field('compleanno', array(
+		'type' => 'date',
+		'class' => 'input-text ',
+		'label' => __('Compleanno'),
+		'required' => false,
+		'placeholder' => '',
+	), $checkout->get_value('compleanno'));
+
+}
+
+
+/**
+ * Update the order meta with field value
+ **/
+add_action('woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta');
+
+function my_custom_checkout_field_update_order_meta($order_id)
+{
+	if ($_POST['compleanno']) update_post_meta($order_id, 'compleanno', esc_attr($_POST['compleanno']));
+
+}
+
+/**
+ * Add the field to order emails
+ *
+ * */
+add_filter('woocommerce_email_order_meta_keys', 'my_custom_checkout_field_order_meta_keys');
+
+function my_custom_checkout_field_order_meta_keys($keys)
+{
+	$keys[] = 'compleanno';
+	return $keys;
 }
