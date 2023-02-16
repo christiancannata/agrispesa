@@ -355,3 +355,30 @@ Stack trace:
 [15-Feb-2023 09:45:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:163) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1752
 [15-Feb-2023 09:46:56 UTC] PHP Parse error:  syntax error, unexpected '$response' (T_VARIABLE) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 167
 [15-Feb-2023 09:46:59 UTC] PHP Parse error:  syntax error, unexpected '$response' (T_VARIABLE) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 167
+[16-Feb-2023 10:48:19 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:48:28 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 56
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 58
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 74
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 75
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 144
+[16-Feb-2023 10:48:30 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 146
+[16-Feb-2023 10:48:43 UTC] PHP Deprecated:  La funzione WC_Cart::get_cart_url è <strong>deprecata</strong> dalla versione 2.5! Utilizza al suo posto wc_get_cart_url. in /shared/httpd/agrispesa/wp-includes/functions.php on line 5383
+[16-Feb-2023 10:48:43 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/functions.php:5383) in /shared/httpd/agrispesa/wp-includes/pluggable.php on line 1416
+[16-Feb-2023 10:48:43 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/functions.php:5383) in /shared/httpd/agrispesa/wp-includes/pluggable.php on line 1419
+[16-Feb-2023 10:49:12 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:49:37 UTC] PHP Deprecated:  La funzione WC_Cart::get_cart_url è <strong>deprecata</strong> dalla versione 2.5! Utilizza al suo posto wc_get_cart_url. in /shared/httpd/agrispesa/wp-includes/functions.php on line 5383
+[16-Feb-2023 10:49:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/functions.php:5383) in /shared/httpd/agrispesa/wp-includes/pluggable.php on line 1416
+[16-Feb-2023 10:49:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/functions.php:5383) in /shared/httpd/agrispesa/wp-includes/pluggable.php on line 1419
+[16-Feb-2023 10:49:42 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:49:52 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 56
+[16-Feb-2023 10:49:52 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 58
+[16-Feb-2023 10:49:52 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 74
+[16-Feb-2023 10:49:52 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 75
+[16-Feb-2023 10:49:55 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:50:00 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[16-Feb-2023 10:50:03 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 111
+[16-Feb-2023 10:50:03 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php on line 115
+[16-Feb-2023 10:57:23 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[16-Feb-2023 10:58:34 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[16-Feb-2023 10:59:12 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
