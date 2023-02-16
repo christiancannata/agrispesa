@@ -14,7 +14,7 @@ if(!defined('ABSPATH')) {
                 $('.sub-options-' + exportVariations).css('display', 'block');
             }
 
-            $('.export_variations').change(function () {
+            $('.export_variations').on('change', function () {
 
                 var inputName = $(this).attr('name');
                 $('.sub-options').slideUp('fast');
@@ -28,7 +28,7 @@ if(!defined('ABSPATH')) {
                 }
             });
             
-            $('.export_variations_title').change(function(event){
+            $('.export_variations_title').on('change', function(event){
 
                 var inputName = $(this).attr('name');
                 var value = $('input[name='+inputName +']:checked').val();

@@ -229,6 +229,7 @@ if(!defined('ABSPATH')) {
                 </p>
             </td>
         </tr>
+
         </tbody>
     </table>
 </form>

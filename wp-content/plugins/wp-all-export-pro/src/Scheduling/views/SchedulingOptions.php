@@ -298,7 +298,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
 
 
 
-                $('#weekly li').click(function () {
+                $('#weekly li').on('click', function () {
 
                     $('#weekly li').removeClass('error');
 
@@ -319,7 +319,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
 
                 });
 
-                $('#monthly li').click(function () {
+                $('#monthly li').on('click', function () {
 
                     $('#monthly li').removeClass('error');
                     $(this).parent().parent().find('.days-of-week li').removeClass('selected');
@@ -328,7 +328,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                     $('#monthly_days').val($(this).data('day'));
                 });
 
-                $('input[name="scheduling_run_on"]').change(function () {
+                $('input[name="scheduling_run_on"]').on('change', function () {
                     var val = $('input[name="scheduling_run_on"]:checked').val();
                     if (val == "weekly") {
 
@@ -374,7 +374,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                 $('#timezone').chosen({width: '320px'});
 
 
-                $('.wpae-save-button').click(function (e) {
+                $('.wpae-save-button').on('click', function (e) {
 
                     var initialValue = $(this).find('.save-text').html();
                     var schedulingEnable = $('input[name="scheduling_enable"]:checked').val() == 1;
@@ -439,7 +439,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                     });
                 });
 
-                $('.wp_all_export_confirm_and_run').click(function(e){
+                $('.wp_all_export_confirm_and_run').on('click', function(e){
 
                     e.preventDefault();
 
@@ -543,7 +543,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
 
                 var saveSubscription = false;
 
-                $('#add-subscription').click(function(){
+                $('#add-subscription').on('click', function(){
 
                     $('#add-subscription-field').show();
                     $('#add-subscription-field').animate({width:'400px'}, 225);
@@ -561,7 +561,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                     return false;
                 });
 
-                $('#subscribe-button').click(function(){
+                $('#subscribe-button').on('click', function(){
 
                     if(saveSubscription) {
                         $('#subscribe-button .easing-spinner').show();
@@ -621,7 +621,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                 });
             });
             // help scheduling template
-            $('.help_scheduling').click(function(){
+            $('.help_scheduling').on('click', function(){
 
                 $('.wp-all-export-scheduling-help').css('left', ($( document ).width()/2) - 255 ).show();
                 $('#wp-all-export-scheduling-help-inner').css('max-height', $( window ).height()-150).show();
@@ -629,7 +629,7 @@ $options = \PMXE_Plugin::getInstance()->getOption();
                 return false;
             });
 
-            $('.wp_all_export_scheduling_help').find('h3').click(function(){
+            $('.wp_all_export_scheduling_help').find('h3').on('click', function(){
                 var $action = $(this).find('span').html();
                 $('.wp_all_export_scheduling_help').find('h3').each(function(){
                     $(this).find('span').html("+");

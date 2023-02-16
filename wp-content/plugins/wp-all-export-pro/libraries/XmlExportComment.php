@@ -284,7 +284,8 @@ if (!class_exists('XmlExportComment')) {
                     $postRecord->set(array(
                         'post_id' => $comment->comment_ID,
                         'import_id' => $exportOptions['import_id'],
-                        'unique_key' => $comment->comment_ID
+                        'unique_key' => $comment->comment_ID,
+                        'product_key' => ''
                     ))->save();
                 }
                 unset($postRecord);

@@ -217,7 +217,7 @@ if(!defined('ABSPATH')) {
 
                     $preview.parent('.wp-pointer-content').removeClass('wp-pointer-content').addClass('wpallexport-pointer-content');
 
-                    $preview.find('.navigation a').unbind('click');
+                    $preview.find('.navigation a').off('click');
                     $preview.on('click', '.navigation a', function () {
 
                         tagno += '#prev' == $(this).attr('href') ? -1 : 1;
@@ -270,11 +270,11 @@ if(!defined('ABSPATH')) {
         $(function () {
 
             var $addAnotherForm = $('fieldset.wp-all-export-edit-column');
-            $addAnotherForm.click(function () {
+            $addAnotherForm.on('click', function () {
                 var rel = $addAnotherForm.attr('rel');
             });
 
-            $('select[name="column_value_type"]').change(function(){
+            $('select[name="column_value_type"]').on('change', function(){
                 $('.column_name').val($(this).find('option:selected').text());
             });
 
@@ -284,7 +284,7 @@ if(!defined('ABSPATH')) {
                 }
             });
 
-            $('.preview_action').unbind('click').click(function (event) {
+            $('.preview_action').off('click').on('click', function (event) {
                 if($('.column_name').val() == '') {
                     $('.column_name').addClass('error');
                     event.stopPropagation();
@@ -298,7 +298,7 @@ if(!defined('ABSPATH')) {
 
             });
 
-            $('input[name="combine_multiple_fields"]').change(function () {
+            $('input[name="combine_multiple_fields"]').on('change', function () {
                 if ($(this).val() == '1') {
                     $('#combine_multiple_fields_value_container').slideDown();
                     $('#combine_multiple_fields_data').slideDown();

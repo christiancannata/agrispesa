@@ -44,7 +44,7 @@ if (current_user_can(PMXE_Plugin::$capabilities)) {
 
             <script type="text/javascript">
                 jQuery(document).ready(function () {
-                    jQuery('.success-tabs .tab').click(function () {
+                    jQuery('.success-tabs .tab').on('click', function () {
                         jQuery('.success-tabs .tab').removeClass('selected');
                         jQuery(this).addClass('selected');
                         var rel = jQuery(this).attr('rel');
@@ -164,7 +164,7 @@ if (current_user_can(PMXE_Plugin::$capabilities)) {
                         <a href="https://zapier.com/zapbook/wp-all-export-pro/"
                            target="_blank"><?php esc_html_e("Click here to read more about WP All Export's Zapier Integration.", 'wp_all_export_plugin'); ?></a>
                     </p>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/6tBacBmiHsQ" frameborder="0"
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/seLOdVaYPx8" frameborder="0"
                             allowfullscreen></iframe>
                 </div>
                 <?php if ($isImportAllowedSpecification->isSatisfied($update_previous)): ?>

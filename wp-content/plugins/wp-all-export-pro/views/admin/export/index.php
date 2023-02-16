@@ -56,14 +56,15 @@ do_action('pmxe_addons_html');
 							<div class="wpallexport-file-type-options">
 								
 								<?php
-									$custom_types = get_post_types(array('_builtin' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => false), 'objects'); 
+									$custom_types = get_post_types(array('_builtin' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => false), 'objects');
+
 									foreach ($custom_types as $key => $ct) {
 										if (in_array($key, array('attachment', 'revision', 'nav_menu_item', 'import_users', 'shop_webhook', 'acf-field', 'acf-field-group'))) unset($custom_types[$key]);
 									}
 									$custom_types = apply_filters( 'wpallexport_custom_types', $custom_types );
 									global $wp_version;
 									$sorted_cpt = array();
-									foreach ($custom_types as $key => $cpt){
+									foreach ($custom_types as $key => $cpt) {
 
 										$sorted_cpt[$key] = $cpt;
 
@@ -214,17 +215,21 @@ do_action('pmxe_addons_html');
 
                         <div class="wpallexport-free-edition-notice wpallexport-product-export-notice" >
                             <p>
-                                <?php esc_html_e('The WooCommerce Export Add-On Pro is required to Export WooCommerce Products', PMXE_Plugin::LANGUAGE_DOMAIN); ?>
+                                <?php esc_html_e('The Product Export Add-On is required to Export WooCommerce Products', PMXE_Plugin::LANGUAGE_DOMAIN);
+
+                                ?>
                             </p>
-                            <a href="http://www.wpallimport.com/portal/discounts/?utm_source=export-plugin-pro&utm_medium=upgrade-notice&utm_campaign=export-products" target="_blank" class="upgrade_link"><?php esc_html_e('Click here to purchase the WooCommerce Export Add-On', PMXE_Plugin::LANGUAGE_DOMAIN);?></a>
+                            <a href="https://wordpress.org/plugins/product-export-for-woocommerce/" target="_blank" class="upgrade_link"><?php esc_html_e('Click here to download the Product Export Add-On', PMXE_Plugin::LANGUAGE_DOMAIN);?></a>?>
                         </div>
 
                         <div class="wpallexport-free-edition-notice wpallexport-order-export-notice" >
                             <p>
-                                <?php esc_html_e('The WooCommerce Export Add-On Pro is required to Export WooCommerce Orders', PMXE_Plugin::LANGUAGE_DOMAIN); ?>
+                                <?php esc_html_e('The Order Export Add-On is required to Export WooCommerce Orders', PMXE_Plugin::LANGUAGE_DOMAIN);
+
+                                ?>
                             </p>
 
-                                <a href="http://www.wpallimport.com/portal/discounts/?utm_source=export-plugin-pro&utm_medium=upgrade-notice&utm_campaign=export-orders" target="_blank" class="upgrade_link"><?php esc_html_e('Click here to purchase the WooCommerce Export Add-On', PMXE_Plugin::LANGUAGE_DOMAIN);?></a>
+                                <a href="https://wordpress.org/plugins/order-export-for-woocommerce/" target="_blank" class="upgrade_link"><?php esc_html_e('Click here to download the Order Export Add-On', PMXE_Plugin::LANGUAGE_DOMAIN);?></a>
 
                         </div>
 

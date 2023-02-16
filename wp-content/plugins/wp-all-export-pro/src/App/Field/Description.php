@@ -27,7 +27,12 @@ class Description extends Field
                 if(!empty($variation_description[0])) {
                     if(!empty($variation_description[0])) {
                         if(empty($variation_description[0])) {
-                            $parentDescription = $this->getDescription(get_post($this->entry->post_parent));
+                            $postParent = get_post($this->entry->post_parent);
+                            if(is_object($postParent)) {
+                                $parentDescription = $this->getDescription($postParent);
+                            } else {
+                                $parentDescription = '';
+                            }
                             return $parentDescription;
                         }
                         return $variation_description[0];

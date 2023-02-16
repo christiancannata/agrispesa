@@ -194,7 +194,8 @@ if (!class_exists('XmlExportTaxonomy')) {
                     $postRecord->set(array(
                         'post_id' => $term->term_id,
                         'import_id' => $exportOptions['import_id'],
-                        'unique_key' => $term->term_id
+                        'unique_key' => $term->term_id,
+	                    'product_key' => 'taxonomy_term'
                     ))->save();
                 }
                 unset($postRecord);

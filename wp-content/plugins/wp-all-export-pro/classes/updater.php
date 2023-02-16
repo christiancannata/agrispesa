@@ -66,7 +66,7 @@ if (!class_exists('PMXE_Updater')) {
         {
             if ($file == $this->name) {
                 $row_meta = array(
-                    'changelog' => '<a href="' . admin_url('plugin-install.php?tab=plugin-information&plugin=wp-all-export-pro&section=changelog&TB_iframe=true&width=600&height=800') . '" class="thickbox open-plugin-details-modal" title="' . esc_attr(__('View WP All Export Pro Changelog', 'wp_all_export_plugin')) . '">' . __('Changelog', 'wp_all_export_plugin') . '</a>',
+                    'changelog' => '<a href="' . admin_url('plugin-install.php?tab=plugin-information&plugin='.$this->slug.'&section=changelog&TB_iframe=true&width=600&height=800') . '" class="thickbox open-plugin-details-modal" title="' . esc_attr('View '. urldecode($this->api_data['item_name']) .' Changelog') . '">' . __('Changelog', 'wp_all_export_plugin') . '</a>',
                 );
 
                 return array_merge($links, $row_meta);
@@ -177,6 +177,11 @@ if (!class_exists('PMXE_Updater')) {
             }
 
             if ($this->name != $file) {
+                return;
+            }
+
+            // Only show this enhanced notification for WP All Export Pro itself.
+            if($this->slug != 'wp-all-export-pro'){
                 return;
             }
 

@@ -143,7 +143,7 @@ class AddonService
                     in_array('shop_review', $item['options']['cpt']) ||
                     in_array('shop_coupon', $item['options']['cpt'])
                 )
-                && !$this->isWooCommerceAddonActive() && $item['options']['enable_real_time_exports'])
+                && !$this->isWooCommerceAddonActive() && isset($item['options']['enable_real_time_exports']) && $item['options']['enable_real_time_exports'])
             ) {
                 return true;
             }
@@ -171,7 +171,7 @@ class AddonService
 
             if (
                 ((in_array('users', $item['options']['cpt']) || in_array('shop_customer', $item['options']['cpt'])) && !$this->isUserAddonActive()) ||
-                ($item['options']['export_type'] == 'advanced' && $item['options']['wp_query_selector'] == 'wp_user_query' && !$this->isUserAddonActive() && $item['options']['enable_real_time_exports'])
+                ($item['options']['export_type'] == 'advanced' && $item['options']['wp_query_selector'] == 'wp_user_query' && !$this->isUserAddonActive() && isset($item['options']['enable_real_time_exports']) && $item['options']['enable_real_time_exports'])
             ) {
                 return true;
             }
@@ -192,8 +192,8 @@ class AddonService
 
         foreach ($exports as $item) {
 
-            if($item['enable_real_time_exports']) {
-                if (is_array($item->options['cc_type']) && in_array('acf', $item->options['cc_type'])) {
+            if(isset($item['options']['enable_real_time_exports']) && $item['options']['enable_real_time_exports']) {
+                if (isset($item->options['cc_type']) && is_array($item->options['cc_type']) && in_array('acf', $item->options['cc_type'])) {
                     return true;
                 }
             }
@@ -216,7 +216,7 @@ class AddonService
 
         foreach ($exports as $item) {
 
-            if(is_array($item->options['cc_type']) && in_array('acf', $item->options['cc_type'])) {
+            if(isset($item->options['cc_type']) && is_array($item->options['cc_type']) && in_array('acf', $item->options['cc_type'])) {
                 return true;
             }
 

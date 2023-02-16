@@ -2,6 +2,12 @@
 
 function pmxe_wpallexport_custom_types($custom_types)
 {
+    foreach($custom_types as $k => $custom_type) {
+
+        $custom_types[$k] = clone $custom_type;
+        $custom_types[$k]->labels = clone $custom_type->labels;
+    }
+
 	if (class_exists('WooCommerce'))
 	{
 		if ( ! empty($custom_types['product'])) $custom_types['product']->labels->name = esc_html__('WooCommerce Products','wp_all_export_plugin');

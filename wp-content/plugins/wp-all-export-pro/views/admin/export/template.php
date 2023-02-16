@@ -433,7 +433,7 @@ if($is_rapid_addon_export) {
 											<div class="input">
 												<select name="xml_template_type" class="xml_template_type">
 													<option value="simple" <?php if ($post['xml_template_type'] == 'simple') echo 'selected="selected"';?>><?php esc_html_e('Simple XML Feed', 'wp_all_export_plugin'); ?></option>
-													<option value="custom" <?php if ($post['xml_template_type'] == 'custom') echo 'selected="selected"';?>><?php esc_html_e('Custom XML Feed', 'wp_all_export_plugin'); ?></option>
+													<option value="custom" <?php if ($post['export_to'] === 'xml' && $post['xml_template_type'] == 'custom') echo 'selected="selected"';?>><?php esc_html_e('Custom XML Feed', 'wp_all_export_plugin'); ?></option>
 													<?php
 													if(in_array('product', $post['cpt'])) {
 														?>

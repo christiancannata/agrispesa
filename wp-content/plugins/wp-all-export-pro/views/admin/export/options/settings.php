@@ -70,20 +70,7 @@ if (!defined('ABSPATH')) {
                                                name="enable_real_time_exports"
                                                value="1" <?php echo $post['enable_real_time_exports'] ? 'checked="checked"' : '' ?> />
                                         <label for="enable_real_time_exports"><?php esc_html_e('Export each ' . esc_html($display_cpt_name) . ' in real time as they are ' . esc_html($display_verb), 'wp_all_export_plugin') ?></label>
-                                        <span>
-                                            <a href="#help" class="wpallexport-help"
-                                                <?php
-                                                if (isset($post['xml_template_type']) && $post['xml_template_type'] == XmlExportEngine::EXPORT_TYPE_GOOLE_MERCHANTS) { ?>
-                                                    title="<?php esc_html_e('This feature it not available for Google Merchants Exports.', 'wp_all_export_plugin'); ?>"
-                                                <?php } else if ($cpt_name === 'shop_customer')
-                                                {
-                                                    ?>
 
-                                                    title="<?php esc_html_e('This feature it not available for Customer Exports.', 'wp_all_export_plugin'); ?>"
-                                                <?php } else { ?>
-                                               title="<?php esc_html_e('This will export ' . esc_html(strtolower($tooltip_cpt_name)) . ' one by one, in real time, as they are ' . esc_html($display_verb) . '.'); ?>">
-							                <?php } ?>>?</a>
-                                                   </span>
                                     </div>
 
                                     <div class="input wpallexport_realtime_show_bom <?php if (!$post['enable_real_time_exports']) { ?> wpae-hidden <?php } ?>" >

@@ -85,11 +85,11 @@ class PMXE_Config implements IteratorAggregate {
 	 * Return all config options as array
 	 * @return array
 	 */
-	public function toArray($section = NULL) {
+	public function toArray($section = NULL): array {
 		return ! is_null($section) ? $this->config[$section]->toArray() : $this->config;
 	}
 	
-	public function getIterator() {
+	public function getIterator(): \Traversable {
 		return new ArrayIterator($this->config);
 	}
 	

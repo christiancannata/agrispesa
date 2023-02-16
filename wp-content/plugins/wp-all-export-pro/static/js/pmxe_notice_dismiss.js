@@ -4,7 +4,7 @@
 (function($){$(function () {
 
 	// dismiss export template warnings
-    $('.wpae-general-notice-dismiss').click(function(){
+    $('.wpae-general-notice-dismiss').on('click', function(){
 
         var $parent = $(this).parent();
         var noticeId = $(this).attr('data-noticeId');

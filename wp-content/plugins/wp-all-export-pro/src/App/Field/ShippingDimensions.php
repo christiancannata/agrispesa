@@ -26,9 +26,17 @@ class ShippingDimensions extends Field
                 $width = '';
             }
 
-            return $width . ' '.$toUnit;
+            if($width) {
+                return $width . ' ' . $toUnit;
+            } else {
+                return '';
+            }
         } else {
-            return $this->replaceSnippetsInValue($shippingData['dimensionsCV'], $snippetData);
+            if(isset($shippingData['dimensionsCV'])) {
+                return $this->replaceSnippetsInValue($shippingData['dimensionsCV'], $snippetData);
+            } else {
+                return '';
+            }
         }
     }
 
