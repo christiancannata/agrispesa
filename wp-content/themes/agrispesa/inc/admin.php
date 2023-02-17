@@ -2391,11 +2391,12 @@ function my_saved_post($post_id, $json, $is_update)
 	update_post_meta($post_id, '_prezzo_acquisto', number_format($json['costounitario'], 2));
 	update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 
-	/*$product->set_manage_stock(true);
+	$product->set_manage_stock(true);
 	$product->set_stock_quantity($json['scorte']);
-	$product->set_stock_status('instock');*/
+	$product->set_stock_status();
 	$product->set_regular_price($price);
 	$product->save();
+	wc_delete_product_transients($product->get_id());
 	// Do something.
 }
 
