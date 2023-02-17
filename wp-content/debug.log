@@ -382,3 +382,8 @@ Stack trace:
 [16-Feb-2023 10:57:23 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
 [16-Feb-2023 10:58:34 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
 [16-Feb-2023 10:59:12 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'my_custom_checkout_field' not found or invalid function name in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[17-Feb-2023 02:42:39 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 02:42:55 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 56
+[17-Feb-2023 02:42:55 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 58
+[17-Feb-2023 02:42:55 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 74
+[17-Feb-2023 02:42:55 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 75
