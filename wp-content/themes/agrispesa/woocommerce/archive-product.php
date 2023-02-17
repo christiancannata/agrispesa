@@ -29,6 +29,12 @@ get_header( 'shop' );
 do_action( 'woocommerce_before_main_content' );
 $description = get_the_archive_description();
 
+$current_cat = get_queried_object();
+$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+$get_product_cat_ID = $getIDbyNAME->term_id;
+$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
+$specialiID = $getSpeciali->term_id;
+
 ?>
 
 
@@ -51,11 +57,7 @@ $description = get_the_archive_description();
 
   <div class="all-categories">
     <?php
-  		$current_cat = get_queried_object();
-      $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-      $get_product_cat_ID = $getIDbyNAME->term_id;
-			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
-			$specialiID = $getSpeciali->term_id;
+
       $cat_args = array(
 					'orderby'  => 'meta_value',
 					'meta_key' => 'categories_order_agr',
@@ -90,7 +92,11 @@ $description = get_the_archive_description();
       echo '<ul class="all-categories--list">';
 			if($special_category) {
 	      echo '<li style="min-width:'.$calcWidth.'%;">';
-	      echo '<a href="'.$link.'" title="'.$special_name.'" class="'.$fontSize.'">';
+				if( !is_shop() && $current_cat->slug == $special->slug) {
+		      echo '<a href="'.$link.'" title="'.$special_name.'" class="current '.$fontSize.'">';
+				} else {
+					echo '<a href="'.$link.'" title="'.$special_name.'" class="'.$fontSize.'">';
+				}
 	      if($special_icon == 'heart') {
 	        echo get_template_part( 'global-elements/icon', 'heart' );
 	      } else {
@@ -119,9 +125,30 @@ $description = get_the_archive_description();
 
 </header>
 
-<?php
-if ( woocommerce_product_loop() ) {
 
+
+
+
+
+
+<?php
+echo '<div class="negozio--flex">';
+echo '<div class="negozio-sidebar">';
+echo '<ul class="negozio-sidebar--list">';
+$sidebar = array(
+		 'taxonomy'     => 'product_cat',
+		 'orderby'      => 'name',
+		 'show_count'   => 0,
+		 'hierarchical' => 1,
+		 'title_li'     => '',
+		 'hide_empty'   => 1,
+		 'child_of' => $get_product_cat_ID
+	);
+	wp_list_categories($sidebar);
+	echo '</ul>';
+echo '</div>';
+
+if ( woocommerce_product_loop() ) {
 	/**
 	 * Hook: woocommerce_before_shop_loop.
 	 *
@@ -140,10 +167,10 @@ if ( woocommerce_product_loop() ) {
 	$hasNoChildren = get_term_children( $page_id, 'product_cat' );
 
 	if ( is_shop() ) {
-		$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-		$get_product_cat_ID = $getIDbyNAME->term_id;
-		$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
-		$specialiID = $getSpeciali->term_id;
+
+
+		echo '<div class="products-list-agr">';
+
 		$args = array(
 			 'hide_empty' => true,
 			 'fields' => 'slugs',
@@ -159,21 +186,22 @@ if ( woocommerce_product_loop() ) {
        $term_object = get_term_by( 'slug', $category_slug , 'product_cat' );
        echo '<div class="shop--list">';
        echo '<div class="shop--list--header">';
-       echo '<h2 class="shop--minititle">CIAOOOO' . $term_object->name . '</h2>';
+       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
  			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
  			echo '</div>';
-       echo do_shortcode( '[products limit="5" columns="1" category="' . $category_slug . '"]' );
+       echo do_shortcode( '[products limit="4" columns="1" category="' . $category_slug . '"]' );
        echo '</div>';
        wp_reset_postdata();
 
     }
+		echo '</div>'; //end products-list-agr
+
 	} elseif ( !empty( $hasNoChildren ) && !is_wp_error( $hasNoChildren ) ){
 		//categorie che hanno sottocategorie
 		if ( is_shop() || $idNegozio === 'Negozio' ) {
-			$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-		  $get_product_cat_ID = $getIDbyNAME->term_id;
-			$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
-			$specialiID = $getSpeciali->term_id;
+
+			echo '<div class="products-list-agr">';
+
 			$args = array(
 	       'hide_empty' => true,
 	       'fields' => 'slugs',
@@ -193,12 +221,16 @@ if ( woocommerce_product_loop() ) {
 	       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
 	 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 	 			echo '</div>';
-	       echo do_shortcode( '[products limit="5" columns="1" category="' . $category_slug . '"]' );
+	       echo do_shortcode( '[products limit="4" columns="1" category="' . $category_slug . '"]' );
 	       echo '</div>';
 	       wp_reset_postdata();
 				 ;
 	    }
+			echo '</div>'; //end products-list-agr
+
 		}  elseif( is_product_category() || is_product_tag() ) {
+
+			echo '<div class="products-list-agr">';
 
 			$page_id = get_queried_object_id();
 		  $get_product_cat_ID = $page_id;
@@ -220,10 +252,12 @@ if ( woocommerce_product_loop() ) {
 	       echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
 	 			echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 	 			echo '</div>';
-	       echo do_shortcode( '[products limit="-1" columns="1" category="' . $category_slug . '"]' );
+	       echo do_shortcode( '[products limit="4" columns="1" category="' . $category_slug . '"]' );
 	       echo '</div>';
 	       wp_reset_postdata();
 	    }
+			echo '</div>'; //end products-list-agr
+
 		}
 
 
@@ -232,6 +266,8 @@ if ( woocommerce_product_loop() ) {
 	//Categorie senza sottocategorie
 	$nomeCategoria = get_term_by( 'id', $page_id, 'product_cat' );
 
+	echo '<div class="products-list-agr">';
+
 	echo '<div class="shop--list">';
 	echo '<div class="shop--list--header">';
 	echo '<h2 class="shop--minititle">' . $nomeCategoria->name . '</h2>';
@@ -239,6 +275,8 @@ if ( woocommerce_product_loop() ) {
 	echo do_shortcode( '[products limit="-1" columns="1" category="' . $idNegozio . '"]' );
 	echo '</div>';
 	wp_reset_postdata();
+	echo '</div>'; //end products-list-agr
+
 }
 
 
@@ -252,6 +290,10 @@ if ( woocommerce_product_loop() ) {
 	 * @hooked woocommerce_pagination - 10
 	 */
 	do_action( 'woocommerce_after_shop_loop' );
+
+
+
+
 } else {
 	/**
 	 * Hook: woocommerce_no_products_found.
@@ -260,6 +302,10 @@ if ( woocommerce_product_loop() ) {
 	 */
 	do_action( 'woocommerce_no_products_found' );
 }
+
+echo '</div>'; //end negozio-flex
+
+
 
 /**
  * Hook: woocommerce_after_main_content.

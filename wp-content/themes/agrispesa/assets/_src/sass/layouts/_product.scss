@@ -28,6 +28,129 @@
 	}
 }
 
+.negozio--flex {
+	display: flex;
+	align-items: flex-start;
+	margin: 0 auto 40px;
+	@include breakpoint(desktop) {
+		padding: 0 128px;
+	}
+	@include breakpoint(container) {
+		padding: 0 48px;
+	}
+	@include breakpoint(tablet) {
+		padding: 0 20px;
+	}
+
+	.products-list-agr {
+		order: 2;
+		width: 100%;
+		@include breakpoint(desktop) {
+			width: 75%;
+		}
+	}
+
+	.negozio-sidebar {
+		order: 1;
+		@include breakpoint(desktop) {
+			width: 20%;
+			margin-right: 80px;
+		}
+	}
+}
+
+.negozio-sidebar {
+	margin: 24px 0 0;
+	@include border-radius(8px);
+	background: $background;
+	padding: 24px;
+	position: sticky;
+	top: 90px;
+	@include breakpoint(mobile) {
+		display: none;
+	}
+
+	&--list {
+		li {
+			&.current-cat,
+			&.current-cat-ancestor,
+			&.current-cat-parent {
+				& > a {
+					font-weight: 600;
+				}
+
+				& > ul.children {
+					display: block;
+				}
+
+				& > a.i-have-kids {
+					&:after {
+						@include transform(rotate(180deg));
+					}
+				}
+			}
+		}
+
+		a {
+			@include font-size(16);
+			display: inline-block;
+			padding: 4px 0;
+			position: relative;
+
+			&.i-have-kids {
+				&:after {
+					@include transition(all 0.6s ease);
+					@include icomoon();
+					content: "\e903";
+					@include font-size(22);
+					position: relative;
+					display: inline-block;
+					top: 4px;
+					right: -4px;
+					margin-left: 4px;
+				}
+			}
+
+			&::before {
+				@include transition(all 0.3s ease);
+				background: $blue;
+				content: '';
+				display: block;
+				height: 1px;
+				width: 0;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&::before {
+					width: 100%;
+				}
+			}
+		}
+
+		& > li {
+			display: block;
+			border-bottom: 1px solid $background;
+
+			& > a {
+				font-weight: 600;
+			}
+
+			ul.children {
+				border-top: 2px solid #f2f2ee;
+				margin-top: 4px;
+				padding-top: 4px;
+				display: none;
+				padding-left: 8px;
+			}
+		}
+	}
+}
+
 .woocommerce-products-header {
 	margin-bottom: 24px;
 	@include breakpoint(desktop) {
@@ -49,17 +172,6 @@ body.tax-product_cat {
 
 .shop {
 	&--list {
-		margin: 0 auto 40px;
-		@include breakpoint(desktop) {
-			padding: 0 128px;
-		}
-		@include breakpoint(container) {
-			padding: 0 48px;
-		}
-		@include breakpoint(tablet) {
-			padding: 0 20px;
-		}
-
 		&.search-results {
 			margin-top: 16px;
 			@include breakpoint(desktop) {
@@ -76,7 +188,8 @@ body.tax-product_cat {
 		&--header {
 			display: flex;
 			align-items: center;
-			margin: 24px 0 8px;
+			margin: 24px 0;
+			justify-content: space-between;
 			@include breakpoint(mobile) {
 				justify-content: space-between;
 			}
@@ -90,12 +203,25 @@ body.tax-product_cat {
 	}
 
 	&--minititle {
-		@include font-size(24);
-		margin: 0;
-		font-weight: 800;
-		font-family: $font-title;
+		@include clearfix();
+		@include font-size(20);
+		color: $black;
+		display: inline-block;
+		font-weight: 600;
+		position: relative;
 		@include breakpoint(desktop) {
-			@include font-size(32);
+			@include font-size(22);
+		}
+
+		&::after {
+			background: $black;
+			bottom: -3px;
+			content: '';
+			display: block;
+			height: 1px;
+			left: 0;
+			position: absolute;
+			width: 100%;
 		}
 	}
 }
@@ -480,6 +606,7 @@ body.tax-product_cat {
 			.qty {
 				background: #fff;
 			}
+
 			.stock {
 				display: none;
 			}
@@ -490,6 +617,7 @@ body.tax-product_cat {
 .product-info {
 	margin-top: 16px;
 	@include font-size(20);
+
 	&--quantity {
 		margin-right: 5px;
 	}

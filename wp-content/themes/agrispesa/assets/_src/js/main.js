@@ -56,8 +56,17 @@ giftCardCheckout();
 scrollTo();
 showNameNewsletter();
 emptyCartSlider();
+listCategories();
 
 //changeShippingLabel();
+
+
+function listCategories() {
+  if(jQuery('.negozio-sidebar--list').length) {
+    jQuery('.negozio-sidebar--list li.cat-item:has(ul.children) > a').addClass('i-have-kids');
+  }
+
+}
 
 function showNameNewsletter() {
 
@@ -136,6 +145,18 @@ function hideGlossarioAlpha() {
     let target = jQuery(this).attr('data-alpha');
 
     jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
+  });
+
+  jQuery('.sliding-link').on('click', function(event) {
+    var target = jQuery(this.getAttribute('href'));
+    var scrollto = target.offset().top - 35
+
+    if (target.length) {
+      event.preventDefault();
+      jQuery('html, body').stop().animate({
+        scrollTop: scrollto
+      }, 800);
+    }
   });
 }
 

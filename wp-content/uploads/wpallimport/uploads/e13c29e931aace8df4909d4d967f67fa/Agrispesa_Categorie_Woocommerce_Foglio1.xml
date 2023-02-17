@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<node>
+		<termid><![CDATA[20]]></termid>
+		<categoria><![CDATA[Box]]></categoria>
+		<parent><![CDATA[]]></parent>
+		<slug><![CDATA[box]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[30]]></termid>
+		<categoria><![CDATA[Negozio]]></categoria>
+		<parent><![CDATA[]]></parent>
+		<slug><![CDATA[negozio]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[La biodiversità è il nostro futuro.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[46]]></termid>
+		<categoria><![CDATA[Gift Card]]></categoria>
+		<parent><![CDATA[]]></parent>
+		<slug><![CDATA[gift-card]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[36]]></termid>
+		<categoria><![CDATA[Verdura]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[verdura]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[1]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[Ortaggi di stagione, erbe spontanee e fiori per la tua cucina.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[38]]></termid>
+		<categoria><![CDATA[Frutta]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[frutta]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[2]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[Varietà locali per la tua energia.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[48]]></termid>
+		<categoria><![CDATA[Carne e Pesce]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[carne-pesce]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[4]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Di razze rustiche, alimentate con prodotti dell’azienda.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[49]]></termid>
+		<categoria><![CDATA[Pane e Cereali]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[pane-cereali]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[5]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Da farine italiane, da semi autoprodotti e lievitazioni con pasta madre.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[50]]></termid>
+		<categoria><![CDATA[Dolci e Bevande]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[dolci-bevande]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[7]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Produzioni artigianali, con materia prima di agricoltura contadina.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[51]]></termid>
+		<categoria><![CDATA[Salse e Olio]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[salse-olio]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[6]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Per condire con la certezza della materia prima e della sua origine.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[52]]></termid>
+		<categoria><![CDATA[Uova e Latticini]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[latticini]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[3]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Il pascolo, buon cibo a valenza ecologica.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Piatti preparati]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[piatti-preparati]]></slug>
+		<_ricarico_percentuale><![CDATA[40]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[8]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Buoni, preparati con amore.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[53]]></termid>
+		<categoria><![CDATA[Casa e Persona]]></categoria>
+		<parent><![CDATA[Negozio]]></parent>
+		<slug><![CDATA[casa-persona]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[9]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[Da estratti e olii di origine vegetale.]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Aceto]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Affettati e salumi]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[affettati-salumi]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Aglio, cipolle e porri]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[aglio-cipolle-porri]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Anatra]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Agnello]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Agretti]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Agrumi]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Arachidi, mandorle, nocciole e noci]]></categoria>
+		<parent><![CDATA[Frutta]]></parent>
+		<slug><![CDATA[arachidi-mandorle-nocciole-noci]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Aromatiche fresche]]></categoria>
+		<parent><![CDATA[Piante aromatiche]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Aromatiche secche]]></categoria>
+		<parent><![CDATA[Piante aromatiche]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Aromatiche sotto sale]]></categoria>
+		<parent><![CDATA[Piante aromatiche]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Banane]]></categoria>
+		<parent><![CDATA[Frutta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Barbabietola, radici e rape]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Bibite e sciroppi]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Birra artigianale]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Biscotti]]></categoria>
+		<parent><![CDATA[Dolci]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Broccoli, cavolfiori e cavoli]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Budini]]></categoria>
+		<parent><![CDATA[Dolci]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Caffè e cereali tostati]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Caprini semistagionati]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Carciofi e cardi]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[carciofi-cardi]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Carne]]></categoria>
+		<parent><![CDATA[Carne e Pesce]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Carote e patate]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[carote-patate]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cereali]]></categoria>
+		<parent><![CDATA[Pane e Cereali]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cereali in fiocchi]]></categoria>
+		<parent><![CDATA[Cereali]]></parent>
+		<slug><![CDATA[cereali-fiocchi]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cereali in grani]]></categoria>
+		<parent><![CDATA[Cereali]]></parent>
+		<slug><![CDATA[cereali-grani]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cioccolato]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Composte per carne, pesce e formaggio]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[composte]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Condimenti per minestre]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[condimenti-minestre]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Condimenti per primi piatti]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[condimenti-primi-piatti]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Coniglio]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Coniglio con osso]]></categoria>
+		<parent><![CDATA[Coniglio]]></parent>
+		<slug><![CDATA[coniglio-osso]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Coniglio disossato]]></categoria>
+		<parent><![CDATA[Coniglio]]></parent>
+		<slug><![CDATA[coniglio-senza-osso]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Creme spalmabili]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cura donna]]></categoria>
+		<parent><![CDATA[Per il benessere]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Cura uomo]]></categoria>
+		<parent><![CDATA[Per il benessere]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Dado e soffritto]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[dado-soffritto]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Dolci]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Dolci di Carnevale]]></categoria>
+		<parent><![CDATA[Dolci]]></parent>
+		<slug><![CDATA[dolci-carnevale]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Estratti di frutta e verdura]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[estratti]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Farine]]></categoria>
+		<parent><![CDATA[Pane e Cereali]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Farine di grano]]></categoria>
+		<parent><![CDATA[Farine]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Farine varie]]></categoria>
+		<parent><![CDATA[Farine]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Fermentati]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Finocchi e sedani]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[finicchi-sedani]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Foglie da cottura]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[foglie-cottura]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Formaggi]]></categoria>
+		<parent><![CDATA[Uova e Latticini]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Frutta secca]]></categoria>
+		<parent><![CDATA[Frutta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Giochi in legno]]></categoria>
+		<parent><![CDATA[Per i bambini]]></parent>
+		<slug><![CDATA[giochi-legno]]></slug>
+		<_ricarico_percentuale><![CDATA[45]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Igiene]]></categoria>
+		<parent><![CDATA[Casa e persona]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Infusi e té]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Insalate]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Kiwi e pere]]></categoria>
+		<parent><![CDATA[Frutta]]></parent>
+		<slug><![CDATA[kiwi-pere]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Latte, yogurt e burro]]></categoria>
+		<parent><![CDATA[Uova e Latticini]]></parent>
+		<slug><![CDATA[latte-yogurt-burro]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Erbe e fiori di campo]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Legumi]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Legumi freschi]]></categoria>
+		<parent><![CDATA[Legumi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Legumi secchi e preparati]]></categoria>
+		<parent><![CDATA[Legumi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Liquori]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Maiale]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Marmellate]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Marmellate con zucchero]]></categoria>
+		<parent><![CDATA[Marmellate]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Miele]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Ovini semistagionati]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pane, grissini e pangrattato]]></categoria>
+		<parent><![CDATA[Pane e Cereali]]></parent>
+		<slug><![CDATA[pane]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pasta]]></categoria>
+		<parent><![CDATA[Pane e Cereali]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pasta corta]]></categoria>
+		<parent><![CDATA[Pasta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pasta fresca]]></categoria>
+		<parent><![CDATA[Pasta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pasta lunga]]></categoria>
+		<parent><![CDATA[Pasta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pasta per minestre]]></categoria>
+		<parent><![CDATA[Pasta]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Per i bambini]]></categoria>
+		<parent><![CDATA[Casa e persona]]></parent>
+		<slug><![CDATA[per-bambini]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Per il benessere]]></categoria>
+		<parent><![CDATA[Casa e persona]]></parent>
+		<slug><![CDATA[benessere]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Per la casa]]></categoria>
+		<parent><![CDATA[Casa e persona]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pesce]]></categoria>
+		<parent><![CDATA[Carne e Pesce]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[120]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pesce conservato]]></categoria>
+		<parent><![CDATA[Pesce]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[120]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pesce fresco]]></categoria>
+		<parent><![CDATA[Pesce]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[120]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Piante aromatiche]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Piatti preparati di carne]]></categoria>
+		<parent><![CDATA[Piatti preparati]]></parent>
+		<slug><![CDATA[piatti-preparati-carne]]></slug>
+		<_ricarico_percentuale><![CDATA[40]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Piatti preparati di pesce]]></categoria>
+		<parent><![CDATA[Piatti preparati]]></parent>
+		<slug><![CDATA[piatti-preparati-pesce]]></slug>
+		<_ricarico_percentuale><![CDATA[40]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Piatti preparati vegetariani]]></categoria>
+		<parent><![CDATA[Piatti preparati]]></parent>
+		<slug><![CDATA[piatti-preparati-vegetariani]]></slug>
+		<_ricarico_percentuale><![CDATA[40]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pollo]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pollo con osso]]></categoria>
+		<parent><![CDATA[Pollo]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pollo disossato]]></categoria>
+		<parent><![CDATA[Pollo]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Pomodori]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Riso]]></categoria>
+		<parent><![CDATA[Pane e Cereali]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Olio]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Sale]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Salse]]></categoria>
+		<parent><![CDATA[Salse e Olio]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Saponi]]></categoria>
+		<parent><![CDATA[Casa e persona]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Semi]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Manzo]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Senza sale o senza caglio]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Sott'olii e antipasti di verdure]]></categoria>
+		<parent><![CDATA[Piatti preparati]]></parent>
+		<slug><![CDATA[sottoli]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Spuntini]]></categoria>
+		<parent><![CDATA[Piatti preparati]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Spuntini e dolci di frutta]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Succhi di frutta con zucchero]]></categoria>
+		<parent><![CDATA[Bibite e sciroppi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Succhi di frutta senza zucchero]]></categoria>
+		<parent><![CDATA[Bibite e sciroppi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Tacchino]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Torte]]></categoria>
+		<parent><![CDATA[Dolci]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Uova]]></categoria>
+		<parent><![CDATA[Uova e Latticini]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[98]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[1]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vaccini freschi]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vaccini semistagionati]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vaccini stagionati]]></categoria>
+		<parent><![CDATA[Formaggi]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vino]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vino bianco secco]]></categoria>
+		<parent><![CDATA[Vino]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vino naturalmente dolce]]></categoria>
+		<parent><![CDATA[Vino]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vino rosso]]></categoria>
+		<parent><![CDATA[Vino]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitello]]></categoria>
+		<parent><![CDATA[Carne]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone per arrosti]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone per bistecche, grigliate]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone per bolliti]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone per cruda]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone per sugo]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Vitellone tagli particolari]]></categoria>
+		<parent><![CDATA[Vitello]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[100]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Zucche]]></categoria>
+		<parent><![CDATA[Verdura]]></parent>
+		<slug><![CDATA[]]></slug>
+		<_ricarico_percentuale><![CDATA[125]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+	<node>
+		<termid><![CDATA[]]></termid>
+		<categoria><![CDATA[Zucchero, dolcificanti]]></categoria>
+		<parent><![CDATA[Dolci e Bevande]]></parent>
+		<slug><![CDATA[zucchero]]></slug>
+		<_ricarico_percentuale><![CDATA[88]]></_ricarico_percentuale>
+		<_categories_order_agr><![CDATA[]]></_categories_order_agr>
+		<_categories_in_box><![CDATA[]]></_categories_in_box>
+		<descrizione><![CDATA[]]></descrizione>
+	</node>
+</data>
