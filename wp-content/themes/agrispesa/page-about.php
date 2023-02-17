@@ -23,7 +23,7 @@ $elena_text = get_field('elena_text');
 		<div class="container-pg">
 			<div class="sec-framed--intro">
 				<img src="<?php echo $intro_image;?>" class="sec-framed--img" alt="<?php echo strip_tags($intro_text);?>" />
-				<h1 class="sec-home--title medium sec-framed--title"><?php echo strip_tags($intro_text);?></h1>
+				<h1 class="sec-home--title medium sec-framed--title"><?php echo $intro_text;?></h1>
 			</div>
 		</div>
 	</section>
