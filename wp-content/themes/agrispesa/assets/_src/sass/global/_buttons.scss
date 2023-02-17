@@ -36,7 +36,6 @@
 		margin-right: 4px;
 	}
 }
-
 @mixin buttonwhite() {
 	color: $blue;
 	border: none;
@@ -47,6 +46,7 @@
 		@include font-size(24);
 		margin-right: 4px;
 	}
+
 	&:hover {
 		color: $white;
 	}
@@ -107,6 +107,7 @@
 	&.btn-big {
 		@include buttonbig();
 	}
+
 	&.btn-white {
 		@include buttonwhite();
 	}
@@ -118,9 +119,11 @@
 		@include buttonprimary();
 		@include buttonsmall();
 		width: 100%;
+
 		&:hover {
 			background-image: linear-gradient(to right, $blue, $blue, #5e0bdb, #5e0bdb);
 		}
+
 		&.loading {
 			&:after {
 				@include font-size(15);
@@ -272,6 +275,35 @@
 
 		&::after {
 			width: 0;
+		}
+	}
+}
+
+.ajax_add_to_cart {
+	position: relative;
+	padding-left: 30px !important;
+
+	&:before {
+		@include transition(all 0.6s ease);
+		@include icomoon();
+		content: "\e908";
+		@include font-size(24);
+		position: absolute;
+		left: 6px;
+		top: 9px;
+		@include opacity(0);
+	}
+
+	&.loading {
+		&:before {
+			@include opacity(0.2);
+		}
+	}
+
+	&.added,
+	&.loading {
+		&:before {
+			@include opacity(1);
 		}
 	}
 }

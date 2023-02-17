@@ -279,8 +279,7 @@ function trigger_for_ajax_add_to_cart()
 {
 	?>
 	<div class="notify-product-cart-added" style="display: none">
-		<span>Il prodotto è stato aggiunto al tuo carrello.</span>
-		<a href="/carrello/" title="Visualizza carrello">Visualizza carrello</a>
+		<span>Questo prodotto è stato aggiunto alla tua scatola!</span>
 	</div>
 	<script type="text/javascript">
 		(function ($) {
