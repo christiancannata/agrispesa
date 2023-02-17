@@ -377,6 +377,11 @@ add_action('rest_api_init', function () {
 
 					$category_id = $cat->term_id;
 
+					$isVisible = get_term_meta($category_id, 'in_preferenze_utente', true);
+					if (empty($isVisible)) {
+						continue;
+					}
+
 					$args2 = array(
 						'taxonomy' => $taxonomy,
 						'child_of' => 0,
@@ -391,6 +396,12 @@ add_action('rest_api_init', function () {
 					$sub_cats = get_categories($args2);
 					if ($sub_cats) {
 						foreach ($sub_cats as $sub_category) {
+							$isVisible = get_term_meta($sub_category->term_id, 'in_preferenze_utente', true);
+							if (empty($isVisible)) {
+								continue;
+							}
+
+
 							$categoryProducts = get_posts(array(
 								'post_type' => 'product',
 								'numberposts' => -1,
