@@ -279,7 +279,7 @@ if ( woocommerce_product_loop() ) {
 
 }
 
-
+echo '</div>'; //end negozio-flex
 
 
 	//woocommerce_product_loop_end();
@@ -303,7 +303,7 @@ if ( woocommerce_product_loop() ) {
 	do_action( 'woocommerce_no_products_found' );
 }
 
-echo '</div>'; //end negozio-flex
+
 
 
 
