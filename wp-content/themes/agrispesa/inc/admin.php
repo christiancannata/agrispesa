@@ -2383,6 +2383,11 @@ function my_saved_post($post_id, $json, $is_update)
 	$record = json_decode(json_encode(( array )$json), 1);
 
 	$price = number_format($record['costounitario'], 2);
+
+	if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
+		$record['_ricarico_percentuale'] = 0;
+	}
+
 	$price *= (1 + $record['_ricarico_percentuale'] / 100);
 	$price = number_format(floatval($price), 2);
 

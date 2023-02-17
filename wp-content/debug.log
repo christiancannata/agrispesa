@@ -515,3 +515,29 @@ Stack trace:
 #5 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('all-import_page...')
 #6 {main}
   thrown in /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/models/model/record.php on line 151
+[17-Feb-2023 11:50:34 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/home-sections.php:241
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/template.php(785): require()
+#1 /shared/httpd/agrispesa/wp-includes/template.php(718): load_template('/shared/httpd/a...', false, Array)
+#2 /shared/httpd/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /shared/httpd/agrispesa/wp-content/themes/agrispesa/frontpage.php(41): get_template_part('global-elements...', 'sections')
+#4 /shared/httpd/agrispesa/wp-includes/template-loader.php(106): include('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-blog-header.php(19): require_once('/shared/httpd/a...')
+#6 /shared/httpd/agrispesa/index.php(17): require('/shared/httpd/a...')
+#7 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/home-sections.php on line 241
+[17-Feb-2023 11:50:40 UTC] PHP Fatal error:  Uncaught Error: Object of class WP_Error could not be converted to string in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/home-sections.php:241
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/template.php(785): require()
+#1 /shared/httpd/agrispesa/wp-includes/template.php(718): load_template('/shared/httpd/a...', false, Array)
+#2 /shared/httpd/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /shared/httpd/agrispesa/wp-content/themes/agrispesa/frontpage.php(41): get_template_part('global-elements...', 'sections')
+#4 /shared/httpd/agrispesa/wp-includes/template-loader.php(106): include('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-blog-header.php(19): require_once('/shared/httpd/a...')
+#6 /shared/httpd/agrispesa/index.php(17): require('/shared/httpd/a...')
+#7 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/home-sections.php on line 241
+[17-Feb-2023 12:13:38 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3843 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[17-Feb-2023 12:13:38 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[17-Feb-2023 12:14:21 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3830 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[17-Feb-2023 12:14:21 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
