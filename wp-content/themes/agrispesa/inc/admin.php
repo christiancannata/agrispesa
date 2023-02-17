@@ -756,7 +756,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 	{
 		add_meta_box(
 			'box_preferences',
-			'Preferenze BOX',
+			'Preferenze Facciamo noi',
 			'box_preferences_meta_box_callback',
 			'shop_order',
 			'advanced',
@@ -764,7 +764,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 			[]
 		);
 
-		add_meta_box('mv_other_fields', 'Info Facciamo noi', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+		add_meta_box('mv_other_fields', 'Facciamo noi - INFO', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 
 
 	}
@@ -1562,7 +1562,7 @@ function consegne_ordini_pages()
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in
+				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi' attive, in
 					base
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
