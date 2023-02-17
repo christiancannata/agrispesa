@@ -764,7 +764,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 			[]
 		);
 
-		add_meta_box('mv_other_fields', 'Informazioni BOX', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+		add_meta_box('mv_other_fields', 'Info Facciamo noi', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 
 
 	}
@@ -818,7 +818,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		if (empty($weight)) {
 			$weight = 0;
 		}
-		echo '<span>Peso della BOX: <strong>' . $weight . 'Kg</strong></span><br>';
+		echo '<span>Peso della scatola: <strong>' . $weight . ' kg</strong></span><br>';
 		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
 		echo '<span>Gruppo di consegna: <strong>' . $gruppoConsegna . '</strong></span><br><br>';
 		echo '<span>Data di ricezione: <strong>' . $deliveryDay . '</strong></span><br><br>';
@@ -2401,4 +2401,3 @@ function my_saved_post($post_id, $json, $is_update)
 }
 
 add_action('pmxi_saved_post', 'my_saved_post', 10, 3);
-

@@ -32,7 +32,7 @@
 							<br/><br/>
 							<strong><?php echo date('Y'); ?> © Tutti i diritti riservati.</strong></span>
 						<span class="footer--info--flex">
-							<a href="#" target="_blank" title="Privacy Policy">Privacy Policy</a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>privacy-policy" target="_blank" title="Privacy Policy">Privacy Policy</a>
 						</span>
 					</div>
 
