@@ -2396,6 +2396,7 @@ function my_saved_post($post_id, $json, $is_update)
 	$product->set_stock_status();
 	$product->set_regular_price($price);
 	$product->save();
+	wc_delete_product_transients($product->get_id());
 	// Do something.
 }
 
