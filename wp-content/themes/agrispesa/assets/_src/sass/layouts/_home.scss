@@ -1022,6 +1022,10 @@
 		}
 	}
 
+	.btn {
+		margin-top: 32px;
+	}
+
 	&--subtitle {
 		margin: 32px 0;
 		@include breakpoint(desktop) {
