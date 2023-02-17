@@ -480,6 +480,9 @@ body.tax-product_cat {
 			.qty {
 				background: #fff;
 			}
+			.stock {
+				display: none;
+			}
 		}
 	}
 }
@@ -532,6 +535,7 @@ body.tax-product_cat {
 			border-top: 1px solid $muted;
 			border-bottom: 1px solid $muted;
 			font-size: 18px !important;
+			text-align: center;
 		}
 	}
 

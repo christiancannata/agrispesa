@@ -68,8 +68,13 @@
 								?>
 
 								<article class="product-box">
-								  <a href="<?php the_permalink($producer->ID); ?>" class="product-box--link" title="<?php echo get_the_title($producer->ID); ?>">
-								    <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo get_the_title($producer->ID); ?>" />
+								  <a href="<?php the_permalink($producer->ID); ?>" class="product-box--link" title="<?php echo esc_html( get_the_title($producer->ID) ); ?>">
+										<?php if($thumb_id):?>
+								      <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( get_the_title($producer->ID) ); ?>" />
+								    <?php else: ?>
+								      <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( get_the_title($producer->ID) ); ?>" />
+								    <?php endif;?>
+
 								  </a>
 								  <div class="product-box--text">
 								    <div class="product-box--text--top">
@@ -93,7 +98,7 @@
 									        <?php echo $product->get_price_html($producer->ID); ?>
 									      </div>
 								      </div>
-								      <a href="<?php the_permalink($producer->ID); ?>" class="btn btn-primary btn-small product-box--button" title="<?php echo get_the_title($producer->ID); ?>">Scopri di più</a>
+								      <?php echo do_shortcode('[add_to_cart id="'.$product->get_id($producer->ID).'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
 								    </div>
 								  </div>
 								</article>

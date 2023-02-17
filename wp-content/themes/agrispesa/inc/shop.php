@@ -277,6 +277,10 @@ add_action('wp_footer', 'trigger_for_ajax_add_to_cart');
 function trigger_for_ajax_add_to_cart()
 {
 	?>
+	<div class="notify-product-cart-added" style="display: none">
+		<span>Il prodotto è stato aggiunto al tuo carrello.</span>
+		<a href="/cart/" title="Visualizza carrello">Visualizza carrello</a>
+	</div>
 	<script type="text/javascript">
 		(function ($) {
 			$('body').on('added_to_cart', function () {
@@ -284,6 +288,11 @@ function trigger_for_ajax_add_to_cart()
 				$('.cart--link').removeClass('is-empty-cart');
 				$('.cart--link').addClass('is-full-cart');
 
+				$(".notify-product-cart-added").fadeIn()
+
+				setTimeout(function () {
+					$(".notify-product-cart-added").fadeOut()
+				}, 3000);
 			});
 		})(jQuery);
 	</script>
