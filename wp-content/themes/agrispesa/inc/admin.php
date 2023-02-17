@@ -2376,6 +2376,8 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 
 function my_saved_post($post_id, $json, $is_update)
 {
+
+	$product = wc_get_product($post_id);
 	// Retrieve the import ID.
 	// Convert SimpleXml object to array for easier use.
 	$record = json_decode(json_encode(( array )$json), 1);
@@ -2384,13 +2386,13 @@ function my_saved_post($post_id, $json, $is_update)
 	$price *= (1 + $json['_ricarico_percentuale'] / 100);
 	$price = number_format(floatval($price), 2);
 
-	update_post_meta($post_id, '_price', $price);
-	update_post_meta($post_id, '_regular_price', $price, 2);
 
 	update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
 	update_post_meta($post_id, '_prezzo_acquisto', number_format($json['costounitario'], 2));
 	update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 
+	$product->set_regular_price($price);
+	$product->save();
 	// Do something.
 }
 
