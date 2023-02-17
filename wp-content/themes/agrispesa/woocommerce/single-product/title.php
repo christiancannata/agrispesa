@@ -15,7 +15,7 @@
  * @version    1.6.4
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
@@ -25,14 +25,14 @@ $attributes = $product->get_attributes();
 
 // unità di misura personalizzata
 $product_data = $product->get_meta('_woo_uom_input');
-
-the_title( '<h1 class="product_title entry-title">', '</h1>' );
+wc_print_notices();
+the_title('<h1 class="product_title entry-title">', '</h1>');
 echo '<div class="product-info">';
-if ( $product->has_weight() ) {
-	if($product_data && $product_data != 'gr') {
-		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span>';
+if ($product->has_weight()) {
+	if ($product_data && $product_data != 'gr') {
+		echo '<span class="product-info--quantity">' . $product->get_weight() . ' ' . $product_data . '</span>';
 	} else {
-		if($product->get_weight() == 1000) {
+		if ($product->get_weight() == 1000) {
 			echo '<span class="product-info--quantity">1 kg</span>';
 		} else {
 			echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span>';
@@ -42,11 +42,9 @@ if ( $product->has_weight() ) {
 }
 
 
-
-
-if($produttori) {
-	foreach( $produttori as $produttore ) {
-		echo '<span class="product-info--producer">/ <a href="'.get_permalink( $produttore->ID ).'">'.get_the_title( $produttore->ID ).'</a></span>';
+if ($produttori) {
+	foreach ($produttori as $produttore) {
+		echo '<span class="product-info--producer">/ <a href="' . get_permalink($produttore->ID) . '">' . get_the_title($produttore->ID) . '</a></span>';
 	}
 }
 

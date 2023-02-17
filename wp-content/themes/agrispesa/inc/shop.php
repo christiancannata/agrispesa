@@ -117,7 +117,8 @@ function wc_minimum_order_amount()
 	$loggedUser = is_user_logged_in();
 	$allowedClients = get_field('agr_clients_no_limits', 'option');
 
-	if ($loggedUser && in_array($loggedUser, $allowedClients)) {
+
+	if ($loggedUser && $allowedClients && in_array($loggedUser, $allowedClients)) {
 		$minimum = 10;
 	}
 
@@ -279,7 +280,7 @@ function trigger_for_ajax_add_to_cart()
 	?>
 	<div class="notify-product-cart-added" style="display: none">
 		<span>Il prodotto è stato aggiunto al tuo carrello.</span>
-		<a href="/cart/" title="Visualizza carrello">Visualizza carrello</a>
+		<a href="/carrello/" title="Visualizza carrello">Visualizza carrello</a>
 	</div>
 	<script type="text/javascript">
 		(function ($) {

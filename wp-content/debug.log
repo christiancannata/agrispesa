@@ -439,3 +439,36 @@ Stack trace:
 [17-Feb-2023 03:01:38 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 75
 [17-Feb-2023 03:01:46 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
 [17-Feb-2023 03:01:47 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:02:57 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 108
+[17-Feb-2023 03:02:57 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 110
+[17-Feb-2023 03:02:57 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 126
+[17-Feb-2023 03:02:57 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 127
+[17-Feb-2023 03:03:22 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:03:24 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:03:52 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 108
+[17-Feb-2023 03:03:52 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 110
+[17-Feb-2023 03:03:53 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 126
+[17-Feb-2023 03:03:53 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 127
+[17-Feb-2023 03:03:56 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 108
+[17-Feb-2023 03:03:56 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 110
+[17-Feb-2023 03:03:56 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 126
+[17-Feb-2023 03:03:56 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 127
+[17-Feb-2023 03:03:58 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:03:59 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:04:38 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 108
+[17-Feb-2023 03:04:38 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 110
+[17-Feb-2023 03:04:38 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 126
+[17-Feb-2023 03:04:38 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product/related.php on line 127
+[17-Feb-2023 03:04:40 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:04:42 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/mini-cart.php on line 77
+[17-Feb-2023 03:09:28 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
+[17-Feb-2023 03:09:28 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php on line 115
+[17-Feb-2023 03:09:34 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
+[17-Feb-2023 03:09:39 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
+[17-Feb-2023 03:09:43 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
+[17-Feb-2023 03:09:47 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
+[17-Feb-2023 03:09:56 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 56
+[17-Feb-2023 03:09:56 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 58
+[17-Feb-2023 03:09:56 UTC] PHP Notice:  Trying to get property 'name' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 74
+[17-Feb-2023 03:09:56 UTC] PHP Notice:  Trying to get property 'slug' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 75
+[17-Feb-2023 03:10:31 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 120
