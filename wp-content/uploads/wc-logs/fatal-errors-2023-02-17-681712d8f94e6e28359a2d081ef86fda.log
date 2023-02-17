@@ -1,0 +1,11 @@
+2023-02-17T04:13:32+00:00 CRITICAL Uncaught Exception: Undefined field 'name' requested by: [ process in /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/wp-all-import-pro.php line 831 ] in /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/models/model/record.php:151
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/controllers/admin/import.php(2515): PMXI_Model_Record->__get('name')
+#1 /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/wp-all-import-pro.php(831): PMXI_Admin_Import->process()
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): PMXI_Plugin->adminDispatcher('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('all-import_page...')
+#6 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/wp-all-import-pro/models/model/record.php alla riga 151
+
