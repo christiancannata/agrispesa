@@ -2382,17 +2382,17 @@ function my_saved_post($post_id, $json, $is_update)
 	// Convert SimpleXml object to array for easier use.
 	$record = json_decode(json_encode(( array )$json), 1);
 
-	$price = number_format($json['costounitario'], 2);
-	$price *= (1 + $json['_ricarico_percentuale'] / 100);
+	$price = number_format($record['costounitario'], 2);
+	$price *= (1 + $record['_ricarico_percentuale'] / 100);
 	$price = number_format(floatval($price), 2);
 
 
 	update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-	update_post_meta($post_id, '_prezzo_acquisto', number_format($json['costounitario'], 2));
+	update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
 	update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 
 	$product->set_manage_stock(true);
-	$product->set_stock_quantity($json['scorte']);
+	$product->set_stock_quantity($record['scorte']);
 	$product->set_stock_status();
 	$product->set_regular_price($price);
 	$product->save();
