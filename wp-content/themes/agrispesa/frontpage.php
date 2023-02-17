@@ -27,9 +27,9 @@
       <?php endif; ?>
 
       <div class="sec-wide--content" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-        <h2 class="sec-wide--text">
+        <h4 class="sec-wide--text">
           <?php echo the_field('home_intro'); ?>
-        </h2>
+        </h4>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-big sec-wide--btn" title="Abbonati alla spesa">Abbonati alla spesa</a>
       </div>
     </div>

@@ -1,0 +1,295 @@
+# Translation of Plugins - WooCommerce Fattureincloud - Development (trunk) in Italian
+# This file is distributed under the same license as the Plugins - WooCommerce Fattureincloud - Development (trunk) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2019-01-31 02:29+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.11\n"
+"Project-Id-Version: Plugins - WooCommerce Fattureincloud - Development "
+"(trunk)\n"
+"POT-Creation-Date: \n"
+"Language-Team: \n"
+"Last-Translator: \n"
+"Language: es\n"
+
+#: inc/vat_number.php:53 inc/vat_number.php:92
+msgid "Recipient Code"
+msgstr "código del destinatario"
+
+#: inc/vat_number.php:43 inc/vat_number.php:86
+msgid "PEC"
+msgstr "Email PEC"
+
+#: inc/vat_number.php:35 inc/vat_number.php:80
+msgid "Vat Number"
+msgstr "Código de Identificación Fiscal"
+
+#: inc/vat_number.php:27 inc/vat_number.php:74
+msgid "Fiscal Code"
+msgstr "Número de Identificación Fiscal"
+
+#: inc/vat_number.php:44 inc/vat_number.php:54
+msgid "For Electronic Billing"
+msgstr "para facturación electrónica"
+
+#: inc/vat_number.php:77
+msgid "I request an invoice"
+msgstr "Pido una factura"
+
+#: inc/vat_number.php:36
+msgid "Vat Number Here"
+msgstr "aquí Código de Identificación Fiscal"
+
+#: inc/vat_number.php:28
+msgid "Here Fiscal Code"
+msgstr "aquí Número de Identificación Fiscal"
+
+#: inc/ordine.php:238
+msgid "Billing Note"
+msgstr ""
+
+#: inc/ordine.php:237
+msgid "Payment Method code"
+msgstr ""
+
+#: inc/ordine.php:317
+msgid "Vat Number Code"
+msgstr ""
+
+#: inc/impostazioni.php:284
+msgid ""
+"Attiva le voci nel checkout di <b>Partita Iva</b>, \n"
+"            <b>Codice Fiscale</b> (Solo se l'indirizzo è italiano),<br> \n"
+"            <b>PEC</b> (per Fattura Elettronica), <b>Codice Destinatario</b> "
+"(per Fattura Elettronica)"
+msgstr ""
+
+#: inc/impostazioni.php:189
+msgid ""
+"*FATTURA ELETTRONICA e *RICEVUTA<br>automatica solo nella <b>Versione "
+"Premium</b>"
+msgstr ""
+
+#: inc/impostazioni.php:182
+msgid "NULLA"
+msgstr ""
+
+#: inc/impostazioni.php:145
+msgid "RICEVUTA *"
+msgstr ""
+
+#: inc/impostazioni.php:127
+msgid "FATTURA ELETTRONICA *"
+msgstr ""
+
+#: inc/impostazioni.php:109
+msgid ""
+"Quando l'ordine è <b>Completato</b> abilita la creazione in <b>Automatico</"
+"b> su Fattureincloud di <br>"
+msgstr ""
+
+#: inc/impostazioni.php:96
+msgid ""
+"La finalizzazione della <b>Fattura Elettronica</b> <br>si esegue su "
+"Fattureincloud.it<br>"
+msgstr ""
+
+#: inc/impostazioni.php:88 inc/impostazioni.php:162
+msgid "FATTURA"
+msgstr ""
+
+#: inc/impostazioni.php:71
+msgid "FATTURA ELETTRONICA"
+msgstr ""
+
+#: inc/impostazioni.php:54
+msgid "Abilita la creazione <b>manuale</b> di"
+msgstr ""
+
+#: inc/ordine.php:231
+msgid "Codice Destinatario"
+msgstr ""
+
+#: inc/ordine.php:230
+msgid "Email PEC"
+msgstr ""
+
+#: inc/setup-file.php:68
+msgid "WooCommerce Fattureincloud "
+msgstr ""
+
+#: inc/impostazioni.php:256
+msgid "show in the invoice <b>short description</b> product"
+msgstr ""
+
+#: inc/setup-file.php:41
+msgid ""
+"To send <b>automatically</b> invoices must be activated <b>paid invoice</b>"
+msgstr ""
+
+#: inc/ordine.php:236
+msgid "Billing Method"
+msgstr ""
+
+#: inc/ordine.php:233
+msgid "Country"
+msgstr ""
+
+#: inc/ordine.php:232
+msgid "Phone number"
+msgstr ""
+
+#: inc/ordine.php:228
+msgid "Postal Code"
+msgstr ""
+
+#: inc/ordine.php:227
+msgid "State"
+msgstr ""
+
+#: inc/ordine.php:226
+msgid "City"
+msgstr ""
+
+#: inc/ordine.php:225
+msgid "Address"
+msgstr ""
+
+#: inc/ordine.php:224
+msgid "Company"
+msgstr ""
+
+#: inc/ordine.php:223
+msgid "Name"
+msgstr ""
+
+#: inc/impostazioni.php:227
+msgid ""
+"Update the customer registry with the <b>personal data of the invoice</b>"
+msgstr ""
+
+#: inc/ordine.php:406 inc/ordine.php:432
+msgid "Data di Scadenza"
+msgstr ""
+
+#: inc/ordine.php:315
+msgid "Description"
+msgstr ""
+
+#: inc/ordine.php:313
+msgid "Price"
+msgstr ""
+
+#: inc/ordine.php:309
+msgid "SKU"
+msgstr ""
+
+#: inc/impostazioni.php:202
+msgid "Enable the creation of a <b>paid invoice</ b>"
+msgstr ""
+
+#: woo-fattureincloud-premium.php:173
+msgid ""
+"<b>WooCommerce Fattureincloud</b> has been deactivated:\n"
+"            this plugin require <b>WooCommerce</b>!\n"
+"            <br><a href=\"/wp-admin/plugins.php\">BACK TO ADMIN PAGE</a>"
+msgstr ""
+
+#: inc/impostazioni.php:332
+msgid "Save Settings"
+msgstr ""
+
+#: inc/ordine.php:379
+msgid "Tasse Spedizione"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://woofatture.com/"
+msgstr ""
+
+#: inc/ordine.php:229 inc/menu_setup.php:26
+msgid "Email"
+msgstr ""
+
+#: inc/menu_setup.php:25
+msgid "Fatture"
+msgstr ""
+
+#: inc/menu_setup.php:24
+msgid "Impostazioni"
+msgstr ""
+
+#: inc/menu_setup.php:23
+msgid "Ordine"
+msgstr ""
+
+#: inc/ordine.php:377
+msgid "Numero Ordine"
+msgstr ""
+
+#: inc/vat_number.php:27 inc/vat_number.php:74
+msgid "Fiscal Code Number"
+msgstr ""
+
+#: inc/ordine.php:234
+msgid "Partita Iva"
+msgstr ""
+
+#: inc/ordine.php:314
+msgid "Recipient Code Number"
+msgstr ""
+
+#: inc/setup_page_display.php:79
+msgid "Segnalazione errore rimossa"
+msgstr ""
+
+#: inc/setup_page_display.php:88
+msgid "Valore Aggiornato"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://zanca.it"
+msgstr ""
+
+#. Author of the plugin
+msgid "Cristiano Zanca"
+msgstr ""
+
+#. Description of the plugin
+msgid "WooCommerce Fattureincloud integration"
+msgstr ""
+
+#: inc/ordine.php:382
+msgid "Totale"
+msgstr ""
+
+#: inc/ordine.php:381
+msgid "Imposte"
+msgstr ""
+
+#: inc/ordine.php:380
+msgid "Totale iva esclusa"
+msgstr ""
+
+#: inc/ordine.php:378
+msgid "Costo Spedizione"
+msgstr ""
+
+#: inc/ordine.php:318
+msgid "Sub Total"
+msgstr ""
+
+#: inc/ordine.php:317
+msgid "Quantity"
+msgstr ""
+
+#: inc/ordine.php:303
+msgid "Nome Prodotto"
+msgstr ""
+
+#. Plugin Name of the plugin
+msgid "WooCommerce Fattureincloud"
+msgstr ""
