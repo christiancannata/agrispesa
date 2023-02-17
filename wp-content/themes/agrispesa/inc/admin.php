@@ -33,7 +33,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 			$caps = get_post_meta($singleGroup->ID, 'cap', true);
 
 			if (in_array($cap, $caps)) {
-				$group = $group->post_title;
+				$group = $singleGroup->post_title;
 			}
 		}
 	}
