@@ -1,0 +1,75 @@
+#woo_fattureincloud header {
+    display: block;
+    background: url(../image/woo_fattureincloud.png) no-repeat #FFFFFF;
+    background-position: -20px center;
+    padding: 46px;
+}
+
+#fatture-elenco {
+    float: right;
+    width: 100%;
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-left: 15px;
+    background-color: #FFFFFF;
+}
+
+#ricevute-elenco {
+    float: right;
+    width: 100%;
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-left: 15px;
+    background-color: #FFFFFE;
+}
+
+#email-elenco {
+    float: right;
+    width: 100%;
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-left: 15px;
+    background-color: #FFFFFF;
+}
+
+#zero_rate_settings {
+
+    display: block;
+    background: url(../image/zero_rate_settings.png) no-repeat #FFFFFF;
+    background-position: 0px center;
+    padding: 35px;
+    vertical-align: top;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 238px;
+
+}
+
+#cella_numero_imp {
+
+    background-color: #c1c1c1;
+    vertical-align: center;
+    text-align: center;
+    padding: 3px;
+    
+
+}
+
+.woo_fic_select_order select {
+    background: #FFF !important;
+    width: 200px !important;
+    /*font-size: 16px !important;*/
+    border: 1px solid #CCC !important;
+    height: 34px !important;
+  }
+
+  .select2-container {
+    width: 200px !important;
+    /*font-size: 16px !important;*/
+    border: 1px solid #CCC !important;
+    height: 34px !important;
+  }
+
+
+

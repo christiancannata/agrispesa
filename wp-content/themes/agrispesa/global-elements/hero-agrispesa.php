@@ -3,7 +3,7 @@
     <div class="hero--content">
       <div class="hero--text" data-aos="fade-in" data-aos-duration="600" data-aos-delay="0">
         <h1 class="hero--title"><?php echo the_field('hero_title'); ?></h1>
-        <p class="hero--subtitle"><?php echo the_field('hero_subtitle'); ?></p>
+        <h2 class="hero--subtitle"><?php echo the_field('hero_subtitle'); ?></h2>
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-big hero--btn" alt="Abbonati alla spesa">Abbonati alla spesa</a>
         <div class="hero-stars">
           <div class="review-page--stars">
