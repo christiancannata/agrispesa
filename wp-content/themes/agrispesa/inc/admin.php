@@ -2378,31 +2378,35 @@ function my_saved_post($post_id, $json, $is_update)
 {
 
 	$product = wc_get_product($post_id);
-	// Retrieve the import ID.
-	// Convert SimpleXml object to array for easier use.
-	$record = json_decode(json_encode(( array )$json), 1);
 
-	$price = number_format($record['costounitario'], 2);
+	if($product){
+		// Retrieve the import ID.
+		// Convert SimpleXml object to array for easier use.
+		$record = json_decode(json_encode(( array )$json), 1);
 
-	if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
-		$record['_ricarico_percentuale'] = 0;
+		$price = number_format($record['costounitario'], 2);
+
+		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
+			$record['_ricarico_percentuale'] = 0;
+		}
+
+		$price *= (1 + $record['_ricarico_percentuale'] / 100);
+		$price = number_format(floatval($price), 2);
+
+
+		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
+		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
+		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
+
+		$product->set_manage_stock(true);
+		$product->set_stock_quantity($record['scorte']);
+		$product->set_stock_status();
+		$product->set_regular_price($price);
+		$product->save();
+		wc_delete_product_transients($product->get_id());
+		// Do something.
 	}
 
-	$price *= (1 + $record['_ricarico_percentuale'] / 100);
-	$price = number_format(floatval($price), 2);
-
-
-	update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-	update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
-	update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
-
-	$product->set_manage_stock(true);
-	$product->set_stock_quantity($record['scorte']);
-	$product->set_stock_status();
-	$product->set_regular_price($price);
-	$product->save();
-	wc_delete_product_transients($product->get_id());
-	// Do something.
 }
 
 add_action('pmxi_saved_post', 'my_saved_post', 10, 3);
