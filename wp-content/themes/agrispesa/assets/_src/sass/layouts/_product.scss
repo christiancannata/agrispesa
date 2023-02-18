@@ -120,6 +120,10 @@ body.tax-product_cat.archive {
 			display: block;
 			border-bottom: 1px solid $white;
 
+			&:last-child {
+				border-bottom: none;
+			}
+
 			& > a {
 				font-weight: 600;
 			}
@@ -954,10 +958,13 @@ body.tax-product_cat {
 
 .woocommerce-pagination {
 	.page-numbers {
+		border: none !important;
 
-			border: none !important;
 		li {
 			border: none !important;
+			margin: 2px 0;
+			padding: 8px 12px !important;
+
 			a,
 			span {
 				@include border-radius(4px);
@@ -966,7 +973,10 @@ body.tax-product_cat {
 				color: $blue !important;
 
 				&.current {
-					background: rgba($blue, 0.2) !important;
+					background: $background;
+				}
+				&.next {
+					background: transparent !important;
 				}
 			}
 		}
