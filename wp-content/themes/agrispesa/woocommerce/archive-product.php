@@ -179,27 +179,7 @@ if ( woocommerce_product_loop() ) {
 
 	woocommerce_product_loop_end();
 
-	echo '</div>';
-	echo '<div class="negozio-sidebar">';
-	echo '<ul class="negozio-sidebar--list">';
-	$sidebar = array(
-			 'taxonomy'     => 'product_cat',
-			 // 'orderby'  => 'meta_value',
-			 'orderby'  => 'name',
-			 //'meta_key' => 'categories_order_agr',
-			 'order'      => 'ASC',
-			 'show_count'   => 0,
-			 'hierarchical' => 1,
-			 'title_li'     => '',
-			 'hide_empty'   => 1,
-			 'child_of' => $get_product_cat_ID,
-			 'exclude' => $specialiID
-		);
-		wp_list_categories($sidebar);
-		echo '</ul>';
-	echo '</div>';
 
-	echo '</div>';
 
 	/**
 	 * Hook: woocommerce_after_shop_loop.
@@ -207,6 +187,27 @@ if ( woocommerce_product_loop() ) {
 	 * @hooked woocommerce_pagination - 10
 	 */
 	do_action( 'woocommerce_after_shop_loop' );
+
+	echo '</div>';
+	echo '<div class="negozio-sidebar">';
+	echo '<ul class="negozio-sidebar--list">';
+	$sidebar = array(
+			 'taxonomy'     => 'product_cat',
+			 'orderby'  => 'meta_value',
+			 'meta_key' => 'categories_order_agr',
+			 'order'      => 'ASC',
+			 'show_count'   => 0,
+			 'hierarchical' => 1,
+			 'hide_empty'   => 1,
+			 'title_li'     => '',
+			 'exclude' => $specialiID,
+			 'child_of' => $get_product_cat_ID,
+		);
+		wp_list_categories($sidebar);
+		echo '</ul>';
+	echo '</div>';
+
+	echo '</div>';
 } else {
 	/**
 	 * Hook: woocommerce_no_products_found.

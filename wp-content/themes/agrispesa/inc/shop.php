@@ -29,6 +29,8 @@ function shop_page_empty_layout()
 {
 	$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
 	$get_product_cat_ID = $getIDbyNAME->term_id;
+	$getSpeciali = get_term_by('name', 'speciali', 'product_cat');
+	$specialiID = $getSpeciali->term_id;
 	$args = array(
 		'hide_empty' => true,
 		'fields' => 'slugs',
@@ -62,12 +64,14 @@ function shop_page_empty_layout()
 	echo '<ul class="negozio-sidebar--list">';
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
-			 'orderby'      => 'name',
+			 'orderby'  => 'meta_value',
+			 'meta_key' => 'categories_order_agr',
 			 'show_count'   => 0,
 			 'hierarchical' => 1,
 			 'title_li'     => '',
 			 'hide_empty'   => 1,
-			 'child_of' => $get_product_cat_ID
+			 'child_of' => $get_product_cat_ID,
+			 'exclude' => $specialiID,
 		);
 		wp_list_categories($sidebar);
 		echo '</ul>';
@@ -277,8 +281,7 @@ add_action('woocommerce_review_order_before_payment', 'woocommerce_checkout_coup
 
 /* YITH Gift Cards - hide the section for gift card code submission on cart page */
 if (!function_exists('yith_ywgc_hide_on_cart')) {
-	function yith_ywgc_hide_on_cart($show_field)
-	{
+	function yith_ywgc_hide_on_cart($show_field){
 		if (is_cart()) {
 			$show_field = false;
 		}
@@ -290,8 +293,7 @@ add_filter('yith_gift_cards_show_field', 'yith_ywgc_hide_on_cart');
 
 //sposta gift card nel checkout
 if (!function_exists('ywgc_gift_card_code_form_checkout_hook')) {
-	function ywgc_gift_card_code_form_checkout_hook($hook)
-	{
+	function ywgc_gift_card_code_form_checkout_hook($hook){
 		$hook = 'woocommerce_review_order_before_payment';
 		return $hook;
 	}
@@ -301,8 +303,7 @@ add_filter('ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_c
 
 //Bottone minicart
 add_action('wp_footer', 'trigger_for_ajax_add_to_cart');
-function trigger_for_ajax_add_to_cart()
-{
+function trigger_for_ajax_add_to_cart(){
 	?>
 	<div class="notify-product-cart-added" style="display: none">
 		<span>Questo prodotto è stato aggiunto alla tua scatola!</span>
@@ -328,43 +329,30 @@ function trigger_for_ajax_add_to_cart()
 //Aggiorna numero carrello
 add_filter('woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1);
 
-function iconic_cart_count_fragments($fragments)
-{
-
+function iconic_cart_count_fragments($fragments){
 	$fragments['.cart-number-elements'] = '<span class="cart-number-elements">' . WC()->cart->get_cart_contents_count() . '</span>';
-
 	return $fragments;
-
 }
 
-/**
- * Redirect users after add to cart.
- */
-function my_custom_add_to_cart_redirect($url)
-{
-
+/** Redirect users after add to cart. */
+function my_custom_add_to_cart_redirect($url){
 	if (!isset($_REQUEST['add-to-cart']) || !is_numeric($_REQUEST['add-to-cart'])) {
 		return $url;
 	}
-
 	$product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($_REQUEST['add-to-cart']));
 
 	// Only redirect products that have the 'box' category
 	if (has_term('box', 'product_cat', $product_id)) {
 		$url = WC()->cart->get_cart_url();
 	}
-
 	return $url;
-
 }
 
 add_filter('woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect');
-
 add_filter('woocommerce_checkout_fields', 'theme_override_checkout_notes_fields');
 
 // Modifica label note di consegna
-function theme_override_checkout_notes_fields($fields)
-{
+function theme_override_checkout_notes_fields($fields){
 	$fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa in più? Ad esempio richieste particolari per la consegna. Dicci tutto!';
 	$fields['order']['order_comments']['label'] = 'Note sulle consegna';
 	return $fields;
@@ -373,8 +361,7 @@ function theme_override_checkout_notes_fields($fields)
 
 //Cambia notifica codice sconto
 add_filter('wc_add_to_cart_message_html', 'quadlayers_custom_add_to_cart_message');
-function quadlayers_custom_add_to_cart_message()
-{
+function quadlayers_custom_add_to_cart_message(){
 	$message = 'Questo prodotto è stato aggiunto alla tua scatola!';
 	return $message;
 }
@@ -514,97 +501,4 @@ add_filter('woocommerce_email_order_meta_keys', 'piano_checkout_field_order_meta
 function piano_checkout_field_order_meta_keys($keys) {
 	$keys[] = 'piano';
 	return $keys;
-}
-
-
-
-//Class to wp categories
-class My_Walker_Category extends Walker_Category {
-
-/**
-* @see Walker::start_el()
-* @since 2.1.0
-*
-* @param string $output Passed by reference. Used to append additional content.
-* @param object $category Category data object.
-* @param int $depth Depth of category in reference to parents.
-* @param array $args
-*/
-function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
-
-  global $wp_query;
-extract($args);
-
-$cat_name = esc_attr( $category->name );
-$cat_name = apply_filters( 'list_cats', $cat_name, $category );
-$link = '<a href="' . esc_url( get_term_link($category) ) . '" ';
-		if ( $use_desc_for_title == 0 || empty($category->description) )
-			$link .= 'title="' . esc_attr( sprintf(__( 'View all posts filed under %s' ), $cat_name) ) . '"';
-		else
-			$link .= 'title="' . esc_attr( strip_tags( apply_filters( 'category_description', $category->description, $category ) ) ) . '"';
-		$link .= '>';
-		$link .= $cat_name . '</a>';
-
-		if ( !empty($feed_image) || !empty($feed) ) {
-			$link .= ' ';
-
-			if ( empty($feed_image) )
-				$link .= '(';
-
-			$link .= '<a href="' . esc_url( get_term_feed_link( $category->term_id, $category->taxonomy, $feed_type ) ) . '"';
-
-			if ( empty($feed) ) {
-				$alt = ' alt="' . sprintf(__( 'Feed for all posts filed under %s' ), $cat_name ) . '"';
-			} else {
-				$title = ' title="' . $feed . '"';
-				$alt = ' alt="' . $feed . '"';
-				$name = $feed;
-				$link .= $title;
-			}
-
-			$link .= '>';
-
-			if ( empty($feed_image) )
-				$link .= $name;
-			else
-				$link .= "<img src='$feed_image'$alt$title" . ' />';
-
-			$link .= '</a>';
-
-			if ( empty($feed_image) )
-				$link .= ')';
-		}
-
-		if ( !empty($show_count) )
-			$link .= ' (' . intval($category->count) . ')';
-
-		if ( 'list' == $args['style'] ) {
-			$output .= "\t<li";
-
-			$class = 'cat-item cat-item-' . $category->term_id;
-
-			/** If the current category is a top level element and it has children, add a parent class */
-			if($category->category_parent == 0 && $category->hasChildren == true )
-				$class .= ' parent-item';
-			if ( !empty($current_category) ) {
-				$_current_category = get_term( $current_category, $category->taxonomy );
-				if ( $category->term_id == $current_category )
-					$class .=  ' current-cat';
-				elseif ( $category->term_id == $_current_category->parent )
-					$class .=  ' current-cat-parent';
-			}
-			$output .=  ' class="' . $class . '"';
-			$output .= ">$link\n";
-		} else {
-			$output .= "\t$link<br />\n";
-		}
-	}
-
-	function display_element ($element, &$children_elements, $max_depth, $depth = 0, $args, &$output)
-	{
-		// check, whether there are children for the given ID and append it to the element with a (new) ID
-		$element->hasChildren =  !empty($children_elements[$element->term_id]);
-
-		return parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
-	}
 }

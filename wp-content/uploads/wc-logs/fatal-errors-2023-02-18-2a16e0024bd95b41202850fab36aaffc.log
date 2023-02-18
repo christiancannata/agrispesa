@@ -82,3 +82,30 @@ Stack trace:
 
 2023-02-18T19:24:33+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
 
+2023-02-18T22:18:04+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function get_the_terms(), 1 passed in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php on line 200 and exactly 2 expected in /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php:1287
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php(200): get_the_terms(Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/templates/taxonomy-product-cat.php(22): wc_get_template('archive-product...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(1 in /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php alla riga 1287
+
+2023-02-18T22:19:22+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:19:25+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:19:40+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:19:42+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:19:55+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:19:58+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:20:02+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 229
+
+2023-02-18T22:23:00+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 200
+
+2023-02-18T23:13:45+00:00 CRITICAL syntax error, unexpected '=' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 531
+
