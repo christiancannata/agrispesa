@@ -58,7 +58,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
 
-			<div class="woocommerce-border-form">
+			<div class="woocommerce-border-form w-top">
 			<div class="woocommerce-additional-fields__field-wrapper">
 				<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) : ?>
 					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>

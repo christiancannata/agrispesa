@@ -340,7 +340,7 @@ add_filter('woocommerce_checkout_fields', 'theme_override_checkout_notes_fields'
 function theme_override_checkout_notes_fields($fields)
 {
 	$fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa in più? Ad esempio richieste particolari per la consegna. Dicci tutto!';
-	$fields['order']['order_comments']['label'] = 'Note personali';
+	$fields['order']['order_comments']['label'] = 'Note sulle consegna';
 	return $fields;
 }
 
@@ -370,10 +370,11 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 	return $html;
 }
 
+//Sposta login al checkout
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
+//add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_login_form' );
 
-add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
-
-
+//add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
 function custom_woocommerce_billing_fields($fields)
 {
 
@@ -423,41 +424,69 @@ function custom_woocommerce_shipping_fields($fields)
 
 
 add_action('woocommerce_after_order_notes', 'my_custom_checkout_field');
-
 function my_custom_checkout_field($checkout)
 {
-
+	echo '<div class="woocommerce-border-form">';
+	echo '<h3 class="checkout--title">Su di te <span class="ec ec-sparkles"></span></h3>';
 	woocommerce_form_field('compleanno', array(
 		'type' => 'date',
 		'class' => 'input-text ',
-		'label' => __('Compleanno'),
+		'label' => __('Data di nascita'),
 		'required' => false,
-		'placeholder' => '',
+		'placeholder' => 'Sarà un buon motivo per festeggiare!',
 	), $checkout->get_value('compleanno'));
+	echo '</div>';
+}
 
+add_action('woocommerce_before_order_notes', 'scala_checkout_field');
+function scala_checkout_field($checkout)
+{
+	echo '<div class="woocommerce-border-form w-bottom">';
+	echo '<h3 class="checkout--title">Consegna a domicilio</h3>';
+	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
+	woocommerce_form_field('scala', array(
+		'type' => 'text',
+		'class' => 'input-text ',
+		'label' => __('Scala'),
+		'required' => false,
+		'placeholder' => 'In quale scala abiti?',
+	), $checkout->get_value('scala'));
+
+	woocommerce_form_field('piano', array(
+		'type' => 'text',
+		'class' => 'input-text ',
+		'label' => __('Piano'),
+		'required' => true,
+		'placeholder' => 'A che piano vivi?',
+	), $checkout->get_value('piano'));
+	echo '</div>';
 }
 
 
-/**
- * Update the order meta with field value
- **/
+/*** Update the order meta with field value ***/
 add_action('woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta');
-
-function my_custom_checkout_field_update_order_meta($order_id)
-{
+function my_custom_checkout_field_update_order_meta($order_id) {
 	if ($_POST['compleanno']) update_post_meta($order_id, 'compleanno', esc_attr($_POST['compleanno']));
-
+	if ($_POST['scala']) update_post_meta($order_id, 'scala', esc_attr($_POST['scala']));
+	if ($_POST['piano']) update_post_meta($order_id, 'piano', esc_attr($_POST['piano']));
 }
 
-/**
- * Add the field to order emails
- *
- * */
+/*** Add the field to order emails ***/
 add_filter('woocommerce_email_order_meta_keys', 'my_custom_checkout_field_order_meta_keys');
-
-function my_custom_checkout_field_order_meta_keys($keys)
-{
+function my_custom_checkout_field_order_meta_keys($keys) {
 	$keys[] = 'compleanno';
+	return $keys;
+}
+
+add_filter('woocommerce_email_order_meta_keys', 'scala_checkout_field_order_meta_keys');
+function scala_checkout_field_order_meta_keys($keys) {
+	$keys[] = 'scala';
+	return $keys;
+}
+
+add_filter('woocommerce_email_order_meta_keys', 'piano_checkout_field_order_meta_keys');
+function piano_checkout_field_order_meta_keys($keys) {
+	$keys[] = 'piano';
 	return $keys;
 }
 

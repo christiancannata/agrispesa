@@ -113,6 +113,7 @@ textarea:-webkit-autofill:hover {
 	display: none;
 }
 
+input[type=date],
 input[type=email],
 input[type=password],
 input[type=tel],
@@ -124,6 +125,16 @@ select.form-control {
 	body.woocommerce-account &,
 	body.woocommerce-checkout & {
 		background: $background;
+	}
+}
+
+span.optional {
+	font-size: 0 !important;
+
+	&:after {
+		@include font-size(14);
+		content: '— facoltativo';
+		color: $muted;
 	}
 }
 
@@ -309,8 +320,12 @@ textarea {
 		display: inline-block;
 	}
 }
-.mailchimp-newsletter,
+
+.woocommerce-form-login__rememberme {
+	display: none !important;
+}
 .checkbox-form,
+.mailchimp-newsletter,
 .newsletter .form-row.mailchimp-newsletter,
 .woocommerce-checkout #payment ul.payment_methods li .payment_box .wc-credit-card-form .woocommerce-SavedPaymentMethods-saveNew {
 	@include clearfix();
@@ -368,6 +383,7 @@ textarea {
 		}
 	}
 }
+
 
 .popup.newsletter-popup,
 body.woocommerce-checkout .mailchimp-newsletter {

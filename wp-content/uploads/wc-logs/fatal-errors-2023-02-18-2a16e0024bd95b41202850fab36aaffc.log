@@ -1,0 +1,50 @@
+2023-02-18T17:26:26+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:380
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_woocommerce_billing_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
+
+2023-02-18T17:26:33+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:380
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_woocommerce_billing_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
+
+2023-02-18T17:26:40+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:380
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_woocommerce_billing_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
+
+2023-02-18T17:26:42+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:380
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_woocommerce_billing_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
+
+2023-02-18T17:26:57+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:380
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_woocommerce_billing_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
+
