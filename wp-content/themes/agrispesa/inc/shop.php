@@ -40,7 +40,7 @@ function shop_page_empty_layout()
 		echo '<div class="negozio--flex">';
 		echo '<div class="products-list-agr">';
 
-		echo '<div class="products-navigation">';
+		echo '<div class="products-navigation" style="display:block;">';
 		echo "<span class='products-navigation--title alert'><span class='ec ec-pensive'></span> Non abbiamo trovato niente. Prova a dare un'occhiata a questi prodotti.</span>";
 
 		echo '</div>';
