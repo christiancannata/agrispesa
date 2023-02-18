@@ -48,3 +48,15 @@ Stack trace:
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
 #6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 380
 
+2023-02-18T19:10:36+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+
+2023-02-18T19:10:43+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+
+2023-02-18T19:10:46+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+
+2023-02-18T19:10:47+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+
+2023-02-18T19:10:51+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+
+2023-02-18T19:11:01+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
+

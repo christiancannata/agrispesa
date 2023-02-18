@@ -28,39 +28,40 @@
 	}
 }
 
-.negozio--flex {
-	display: flex;
-	align-items: flex-start;
-	margin: 0 auto 40px;
-	@include breakpoint(desktop) {
-		padding: 0 128px;
-	}
-	@include breakpoint(container) {
-		padding: 0 48px;
-	}
-	@include breakpoint(tablet) {
-		padding: 0 20px;
-	}
-
-	.products-list-agr {
-		order: 2;
-		width: 100%;
+body.tax-product_cat.archive {
+	.negozio--flex {
+		display: flex;
+		align-items: flex-start;
+		margin: 0 auto 40px;
 		@include breakpoint(desktop) {
-			width: 75%;
+			padding: 0 128px;
 		}
-	}
+		@include breakpoint(container) {
+			padding: 0 48px;
+		}
+		@include breakpoint(tablet) {
+			padding: 0 20px;
+		}
 
-	.negozio-sidebar {
-		order: 1;
-		@include breakpoint(desktop) {
-			width: 20%;
-			margin-right: 80px;
+		.products-list-agr {
+			order: 2;
+			width: 100%;
+			@include breakpoint(desktop) {
+				width: 75%;
+			}
+		}
+
+		.negozio-sidebar {
+			order: 1;
+			@include breakpoint(desktop) {
+				width: 20%;
+				margin-right: 80px;
+			}
 		}
 	}
 }
 
 .negozio-sidebar {
-	margin: 24px 0 0;
 	@include border-radius(8px);
 	background: $background;
 	padding: 24px;
@@ -84,7 +85,7 @@
 				}
 
 				& > a.i-have-kids {
-					&:after {
+					&:before {
 						@include transform(rotate(180deg));
 					}
 				}
@@ -93,60 +94,75 @@
 
 		a {
 			@include font-size(16);
-			display: inline-block;
-			padding: 4px 0;
+			display: block;
+			padding: 4px 0 4px 20px;
 			position: relative;
 
 			&.i-have-kids {
-				&:after {
+				&:before {
 					@include transition(all 0.6s ease);
 					@include icomoon();
 					content: "\e903";
 					@include font-size(22);
-					position: relative;
+					position: absolute;
 					display: inline-block;
 					top: 4px;
-					right: -4px;
-					margin-left: 4px;
+					left: -4px;
 				}
-			}
-
-			&::before {
-				@include transition(all 0.3s ease);
-				background: $blue;
-				content: '';
-				display: block;
-				height: 1px;
-				width: 0;
-				position: absolute;
-				bottom: 0;
-				left: 0;
 			}
 
 			&:hover {
 				color: $blue;
-
-				&::before {
-					width: 100%;
-				}
 			}
 		}
 
 		& > li {
 			display: block;
-			border-bottom: 1px solid $background;
+			border-bottom: 1px solid $white;
 
 			& > a {
 				font-weight: 600;
 			}
 
 			ul.children {
-				border-top: 2px solid #f2f2ee;
+				//border-top: 2px solid $white;
 				margin-top: 4px;
 				padding-top: 4px;
 				display: none;
-				padding-left: 8px;
+				margin-bottom: 4px;
+				padding-bottom: 4px;
 			}
+		}
+	}
+}
+
+.products-navigation {
+	margin-bottom: 24px;
+
+	li {
+		display: inline-block;
+		margin: 0 4px 4px 0;
+	}
+
+	&--title {
+		@include border-radius(6px);
+		@include font-size(16);
+		padding: 4px 12px;
+		color: $muted;
+		background: $background;
+		font-weight: 600;
+	}
+
+	&--link {
+		@include border-radius(6px);
+		@include font-size(16);
+		padding: 4px 12px;
+		color: $blue;
+		background: rgba($blue, 0.1);
+		cursor: pointer;
+
+		&:hover {
+			background: rgba($blue, 0.2);
 		}
 	}
 }
@@ -362,7 +378,7 @@ body.tax-product_cat {
 			a {
 				@include breakpoint(desktop) {
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
 				}
 
 				img {
@@ -382,9 +398,10 @@ body.tax-product_cat {
 				margin: 0 16px 0 0;
 				line-height: 1.1;
 				font-weight: 600;
+				padding-top: 0;
 				@include breakpoint(desktop) {
 					@include font-size(20);
-					margin: 0 24px 0 0;
+					margin: 4px 24px 0 0;
 				}
 				@include breakpoint(mobile) {
 					padding: 0;
@@ -922,6 +939,24 @@ body.tax-product_cat {
 
 		span {
 			color: $red;
+		}
+	}
+}
+
+.woocommerce-pagination {
+	.page-numbers {
+		li {
+			    border: none;
+					span {
+						@include border-radius(4px);
+						@include font-size(14);
+						background: rgba($blue, 0.1);
+						color: $blue;
+						&.current {
+
+								background: rgba($blue, 0.2);
+						}
+					}
 		}
 	}
 }
