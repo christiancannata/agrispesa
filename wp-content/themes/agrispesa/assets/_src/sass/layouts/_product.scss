@@ -64,7 +64,7 @@ body.tax-product_cat.archive {
 .negozio-sidebar {
 	@include border-radius(8px);
 	background: $background;
-	padding: 24px;
+	padding:18px;
 	position: sticky;
 	top: 90px;
 	@include breakpoint(mobile) {
@@ -73,6 +73,13 @@ body.tax-product_cat.archive {
 
 	&--list {
 		li {
+			&.current-cat {
+
+				& > a {
+					color: $blue;
+				}
+			}
+
 			&.current-cat,
 			&.current-cat-ancestor,
 			&.current-cat-parent {
@@ -118,8 +125,10 @@ body.tax-product_cat.archive {
 		}
 
 		& > li {
+			@include border-radius(4px);
 			display: block;
 			border-bottom: 1px solid $white;
+			padding: 10px;
 
 			&:last-child {
 				border-bottom: none;

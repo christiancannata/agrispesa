@@ -231,11 +231,11 @@ function categoriesSlider() {
     infinite: false,
     variableWidth: true,
     speed: 300,
-    slidesToShow: ,
+    slidesToShow: 1,
     slidesToScroll: 7,
     centerMode: false,
     autoplay: false,
-    
+
   });
 
 }

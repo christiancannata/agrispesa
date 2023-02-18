@@ -184,8 +184,9 @@ if ( woocommerce_product_loop() ) {
 	echo '<ul class="negozio-sidebar--list">';
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
-			 'orderby'  => 'meta_value',
-			 'meta_key' => 'categories_order_agr',
+			 // 'orderby'  => 'meta_value',
+			 'orderby'  => 'name',
+			 //'meta_key' => 'categories_order_agr',
 			 'order'      => 'ASC',
 			 'show_count'   => 0,
 			 'hierarchical' => 1,
