@@ -33,6 +33,7 @@
 							<strong><?php echo date('Y'); ?> © Tutti i diritti riservati.</strong></span>
 						<span class="footer--info--flex">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>privacy-policy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+							<br/><a href="<?php echo esc_url( home_url( '/' ) ); ?>termini-condizioni" target="_blank" title="Termini e Condizioni">Termini e Condizioni</a>
 						</span>
 					</div>
 

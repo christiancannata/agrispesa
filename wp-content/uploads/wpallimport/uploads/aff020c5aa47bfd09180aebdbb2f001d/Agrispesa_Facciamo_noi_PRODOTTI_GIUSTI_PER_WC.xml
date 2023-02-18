@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<node>
+		<attivi><![CDATA[ATTIVO = IN VENDITA]]></attivi>
+		<id><![CDATA[FACCIAMONOI]]></id>
+		<descrizione><![CDATA[Facciamo noi]]></descrizione>
+		<descrizione2><![CDATA[]]></descrizione2>
+		<categoria><![CDATA[Box]]></categoria>
+		<_ricarico_percentuale><![CDATA[0]]></_ricarico_percentuale>
+		<costounitario><![CDATA[4.19]]></costounitario>
+		<iva><![CDATA[10]]></iva>
+		<prezzounitario><![CDATA[9.06]]></prezzounitario>
+		<nomefornitore><![CDATA[Chiri Marco]]></nomefornitore>
+		<peso_intero><![CDATA[ml 250]]></peso_intero>
+		<peso><![CDATA[250]]></peso>
+		<unitdimisura><![CDATA[ml]]></unitdimisura>
+		<codicecategoriaconfezionamento><![CDATA[2004]]></codicecategoriaconfezionamento>
+		<magazzi0><![CDATA[1]]></magazzi0>
+		<scorte><![CDATA[1000]]></scorte>
+		<descrizione_2><![CDATA[Una parte del nostro miele viene impiegato per la produzione dell’aceto di miele: è probabilmente l'aceto più antico al mondo in quanto veniva usato già nell'antico Egitto, ancora prima della selezione della vite. 
+  
+  L’aceto di miele trae la sua origine dal nettare e dalla melata di una moltitudine di essenze vegetali, nonché dagli enzimi delle api, attraverso una fermentazione naturale sviluppata da batteri acetici senza l’uso di conservanti né di altri additivi. L’eventualità di trovare tracce di solfiti è dovuta unicamente al loro sviluppo naturale nel processo di fermentazione. 
+  
+  L’aceto di miele non viene pastorizzato, pertanto gli enzimi e i batteri rimangono vivi, conferendogli una notevole digeribilità. È ricco di sali minerali, vitamine e oligoelementi. È ideale per condire qualsiasi tipo di insalata e ortaggi, insaporire arrosti, riso, pesce.
+  Eventuali sedimenti sul fondo della bottiglia sono conseguenza naturale dell’acetificazione, a cui si può ovviare tramite filtrazione.
+  
+  Per la realizzazione ci avvaliamo della collaborazione di un'aceteria locale che addiziona il nostro prodotto da apicoltura biodinamica esclusivamente con acqua e madre acetica. 
+  Rimane ad invecchiare per un periodo che varia da 8 a 48 mesi in botti di rovere secondo il metodo di affinazione orleanese.]]></descrizione_2>
+	</node>
+</data>
