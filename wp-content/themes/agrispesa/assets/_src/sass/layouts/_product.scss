@@ -145,6 +145,14 @@ body.tax-product_cat.archive {
 	overflow: auto;
 	white-space: nowrap;
 	padding-bottom: 12px;
+	display: flex;
+	align-items: flex-start;
+
+	&--slider {
+		.slick-slide {
+			padding: 3px 4px;
+		}
+	}
 
 	li {
 		display: inline-block;
@@ -158,6 +166,8 @@ body.tax-product_cat.archive {
 		color: $muted;
 		background: $background;
 		font-weight: 600;
+		margin-right: 4px;
+		margin-top: 1px;
 
 		&.alert {
 			font-weight: 400;
@@ -169,7 +179,7 @@ body.tax-product_cat.archive {
 	&--link {
 		@include border-radius(6px);
 		@include font-size(16);
-		padding: 4px 12px;
+		padding: 6px 12px;
 		color: $blue;
 		background: rgba($blue, 0.1);
 		cursor: pointer;
@@ -975,6 +985,7 @@ body.tax-product_cat {
 				&.current {
 					background: $background;
 				}
+
 				&.next {
 					background: transparent !important;
 				}

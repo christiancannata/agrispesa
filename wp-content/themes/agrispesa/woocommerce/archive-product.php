@@ -152,12 +152,14 @@ if ( woocommerce_product_loop() ) {
 	$count = $queried_object->count;
 	$termchildren = get_terms( $taxonomy_name, array( 'parent' => $term_id, 'hide_empty' => true ) );
 
-	echo '<ul class="products-navigation">';
-	echo '<li><span class="products-navigation--title">'. 	$name.'</span></li>';
+	echo '<div class="products-navigation">';
+	echo '<span class="products-navigation--title">'. 	$name.'</span>';
+	echo '<div class="products-navigation--slider">';
 	   foreach ( $termchildren as $child ) {
-	       echo '<li><a class="products-navigation--link" href="' . get_term_link( $child, $taxonomy_name ) . '" title="Visualizza tutto ' . $child->name . '">' . $child->name . '</a></li>';
+	       echo '<span><a class="products-navigation--link" href="' . get_term_link( $child, $taxonomy_name ) . '" title="Visualizza tutto ' . $child->name . '">' . $child->name . '</a></span>';
 	   }
-	echo '</ul>';
+	echo '</div>';
+	echo '</div>';
 
 
 	woocommerce_product_loop_start();
@@ -189,7 +191,8 @@ if ( woocommerce_product_loop() ) {
 			 'hierarchical' => 1,
 			 'title_li'     => '',
 			 'hide_empty'   => 1,
-			 'child_of' => $get_product_cat_ID
+			 'child_of' => $get_product_cat_ID,
+			 'exclude' => $specialiID
 		);
 		wp_list_categories($sidebar);
 		echo '</ul>';

@@ -40,10 +40,10 @@ function shop_page_empty_layout()
 		echo '<div class="negozio--flex">';
 		echo '<div class="products-list-agr">';
 
-		echo '<ul class="products-navigation">';
-		echo "<li><span class='products-navigation--title alert'><span class='ec ec-pensive'></span> Non abbiamo trovato niente. Prova a dare un'occhiata a questi prodotti.</span></li>";
+		echo '<div class="products-navigation">';
+		echo "<span class='products-navigation--title alert'><span class='ec ec-pensive'></span> Non abbiamo trovato niente. Prova a dare un'occhiata a questi prodotti.</span>";
 
-		echo '</ul>';
+		echo '</div>';
 
 	foreach ($categories as $category_slug) {
 		$term_object = get_term_by('slug', $category_slug, 'product_cat');
