@@ -231,38 +231,11 @@ function categoriesSlider() {
     infinite: false,
     variableWidth: true,
     speed: 300,
-    slidesToShow: 2,
-    slidesToScroll: 1,
+    slidesToShow: ,
+    slidesToScroll: 7,
     centerMode: false,
     autoplay: false,
-    responsive: [{
-      breakpoint: 1240,
-      settings: {
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        dots: true,
-        arrows: false
-      }
-    }, 
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          dots: true,
-          arrows: false
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          dots: true,
-          arrows: false
-        }
-      }
-    ]
+    
   });
 
 }

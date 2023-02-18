@@ -95,8 +95,9 @@ body.tax-product_cat.archive {
 		a {
 			@include font-size(16);
 			display: block;
-			padding: 4px 0 4px 20px;
+			padding: 6px 0 6px 20px;
 			position: relative;
+			line-height: 1.1;
 
 			&.i-have-kids {
 				&:before {
