@@ -137,7 +137,10 @@ body.tax-product_cat.archive {
 }
 
 .products-navigation {
-	margin-bottom: 24px;
+	margin-bottom: 12px;
+	overflow: auto;
+	white-space: nowrap;
+	padding-bottom: 12px;
 
 	li {
 		display: inline-block;
@@ -151,6 +154,7 @@ body.tax-product_cat.archive {
 		color: $muted;
 		background: $background;
 		font-weight: 600;
+
 		&.alert {
 			font-weight: 400;
 			background: $red;
@@ -950,18 +954,21 @@ body.tax-product_cat {
 
 .woocommerce-pagination {
 	.page-numbers {
-		li {
-			    border: none;
-					span {
-						@include border-radius(4px);
-						@include font-size(14);
-						background: rgba($blue, 0.1);
-						color: $blue;
-						&.current {
 
-								background: rgba($blue, 0.2);
-						}
-					}
+			border: none !important;
+		li {
+			border: none !important;
+			a,
+			span {
+				@include border-radius(4px);
+				font-size: 14px !important;
+				background: rgba($blue, 0.1) !important;
+				color: $blue !important;
+
+				&.current {
+					background: rgba($blue, 0.2) !important;
+				}
+			}
 		}
 	}
 }
