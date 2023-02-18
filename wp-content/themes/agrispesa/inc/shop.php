@@ -37,17 +37,43 @@ function shop_page_empty_layout()
 		'hide_empty' => true,
 	);
 	$categories = get_categories($args);
+		echo '<div class="negozio--flex">';
+		echo '<div class="products-list-agr">';
+
+		echo '<ul class="products-navigation">';
+		echo "<li><span class='products-navigation--title alert'><span class='ec ec-pensive'></span> Non abbiamo trovato niente. Prova a dare un'occhiata a questi prodotti.</span></li>";
+
+		echo '</ul>';
+
 	foreach ($categories as $category_slug) {
 		$term_object = get_term_by('slug', $category_slug, 'product_cat');
 		$catID = $term_object->term_id;
+		$url = get_term_link( $catID );
 		echo '<div class="shop--list">';
 		echo '<div class="shop--list--header">';
 		echo '<h2 class="shop--minititle">' . $term_object->name . '</h2>';
-		echo '<a href="' . $term_object->slug . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
+		echo '<a href="' . $url . '" title="Vedi tutto ' . $term_object->name . '" class="arrow-link">Vedi tutto<span class="icon-arrow-right"></span></a>';
 		echo '</div>';
-		echo do_shortcode('[products limit="-1" columns="1" category="' . $category_slug . '"]');
+		echo do_shortcode('[products limit="3" columns="1" category="' . $category_slug . '"]');
 		echo '</div>';
 	}
+	echo '</div>';
+	echo '<div class="negozio-sidebar">';
+	echo '<ul class="negozio-sidebar--list">';
+	$sidebar = array(
+			 'taxonomy'     => 'product_cat',
+			 'orderby'      => 'name',
+			 'show_count'   => 0,
+			 'hierarchical' => 1,
+			 'title_li'     => '',
+			 'hide_empty'   => 1,
+			 'child_of' => $get_product_cat_ID
+		);
+		wp_list_categories($sidebar);
+		echo '</ul>';
+	echo '</div>';
+
+	echo '</div>';
 }
 
 //Cambio testo bollino sconti

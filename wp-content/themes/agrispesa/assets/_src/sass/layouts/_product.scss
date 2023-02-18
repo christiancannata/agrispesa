@@ -151,6 +151,11 @@ body.tax-product_cat.archive {
 		color: $muted;
 		background: $background;
 		font-weight: 600;
+		&.alert {
+			font-weight: 400;
+			background: $red;
+			color: $white;
+		}
 	}
 
 	&--link {

@@ -60,3 +60,25 @@ Stack trace:
 
 2023-02-18T19:11:01+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 126
 
+2023-02-18T19:23:38+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:07+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:07+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:09+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:22+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:22+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:24+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:27+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:29+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:32+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+
+2023-02-18T19:24:33+00:00 CRITICAL syntax error, unexpected 'products' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 44
+

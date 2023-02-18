@@ -144,7 +144,6 @@ if ( woocommerce_product_loop() ) {
 	do_action( 'woocommerce_before_shop_loop' );
 	echo '<div class="negozio--flex">';
 	echo '<div class="products-list-agr">';
-	//echo '<h2 class="products-list-agr--title">'. woocommerce_page_title() .'</h1>';
 
 	$taxonomy_name = 'product_cat';
 	$queried_object = get_queried_object();
