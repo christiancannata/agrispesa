@@ -148,3 +148,5 @@ Stack trace:
 
 2023-02-19T10:16:41+00:00 CRITICAL syntax error, unexpected 'class' (T_CLASS), expecting function (T_FUNCTION) or const (T_CONST) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 512
 
+2023-02-19T15:29:46+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-producer.php alla riga 109
+

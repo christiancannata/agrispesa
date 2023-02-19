@@ -21,11 +21,19 @@
 
 		<?php
 		$args = array(
-		    'post_type' => 'producer',
-				'orderby' => 'post_title',
-	      'order' => 'ASC',
-		    'posts_per_page' => -1
+		  'post_type' => 'producer',
+		  'posts_per_page' => -1,
+			'orderby' => 'post_title',
+		  'order' => 'ASC',
+		  'meta_query' => array(
+		    array(
+		      'key' => 'producer_active',
+		      'value' => '1',
+		      'compare' => '==' // not really needed, this is the default
+		    )
+		  )
 		);
+
 		$the_query = new WP_Query( $args ); ?>
 
 		<?php if ( $the_query->have_posts() ) : ?>
