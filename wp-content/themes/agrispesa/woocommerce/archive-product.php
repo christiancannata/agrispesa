@@ -194,6 +194,13 @@ if ( woocommerce_product_loop() ) {
 
 $my_walker= new Walker_Category_Custom();
 
+$excludeSpecial = '';
+if($special_category) {
+	$excludeSpecial = '';
+} else {
+	$excludeSpecial = $specialiID;
+}
+
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
 			 'orderby'  => 'meta_value',
@@ -204,7 +211,7 @@ $my_walker= new Walker_Category_Custom();
 			 'hide_empty'   => 1,
 			 'title_li'     => '',
 			 'walker' => $my_walker,
-			 'exclude' => $specialiID,
+			 'exclude' => $excludeSpecial,
 			 'child_of' => $get_product_cat_ID,
 		);
 		wp_list_categories($sidebar);

@@ -64,6 +64,12 @@ function shop_page_empty_layout()
 	echo '<ul class="negozio-sidebar--list">';
 
 	$my_walker= new Walker_Category_Custom();
+	$excludeSpecial = '';
+	if($special_category) {
+		$excludeSpecial = '';
+	} else {
+		$excludeSpecial = $specialiID;
+	}
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
 			 'orderby'  => 'meta_value',
@@ -74,7 +80,7 @@ function shop_page_empty_layout()
 			 'hide_empty'   => 1,
 			 'walker' => $my_walker,
 			 'child_of' => $get_product_cat_ID,
-			 'exclude' => $specialiID,
+			 'exclude' => $excludeSpecial,
 		);
 		wp_list_categories($sidebar);
 		echo '</ul>';
