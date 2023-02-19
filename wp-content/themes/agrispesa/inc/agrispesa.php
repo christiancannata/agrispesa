@@ -110,5 +110,17 @@ function my_custom_fonts() {
   body.wp-admin .wp-list-table td.price .uom {
     display: none;
   }
+  body.wp-admin .menu-top ame-unclickable-menu-item {
+    font-weight: bold;
+    border-top: 1px solid #fff;
+    padding: 12px 0 6px;
+    cursor: default;
+  }
+  body.wp-admin .menu-top ame-unclickable-menu-item .wp-menu-image {
+    display: none;
+  }
+  body.wp-admin .menu-top ame-unclickable-menu-item .wp-menu-name {
+    padding-left: 10px;
+  }
   </style>';
 }
