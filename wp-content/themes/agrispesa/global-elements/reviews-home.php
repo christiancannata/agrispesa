@@ -14,7 +14,7 @@ if( have_rows('lista_recensioni' , $post_id) ):
     $review_star = get_sub_field('review_stars' , $post_id); //Valore immagine
 
     $i++;
-    if( $i > 4 ) {
+    if( $i > 8 ) {
 		    break;
 		}
     ?>
@@ -38,6 +38,7 @@ if( have_rows('lista_recensioni' , $post_id) ):
 
 <?php endwhile;
     echo '</div>';
+    echo '<a href="'.esc_url( home_url( '/' ) ).'recensioni" class="btn btn-primary reviews-home--button" title="Leggi tutte le recensioni">Scoprile tutte</a>';
     echo '</div>';
     echo '</div>';
 endif; ?>
