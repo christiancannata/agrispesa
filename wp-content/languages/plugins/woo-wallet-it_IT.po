@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-02-15 23:01+0100\n"
+"PO-Revision-Date: 2023-02-19 23:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -330,7 +330,7 @@ msgstr "Data"
 
 #: includes/admin/class-woo-wallet-transaction-details.php:83
 msgid "No transactions found."
-msgstr "Nessuna transazione trovata"
+msgstr "Nessuna transazione trovata."
 
 #: includes/api/Controllers/Version3/class-wc-rest-wallet-controller.php:60
 #: includes/api/Controllers/Version3/class-wc-rest-wallet-controller.php:101
@@ -414,7 +414,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-admin.php:152
 msgid "Wallet Management"
-msgstr ""
+msgstr "Gestione Credito"
 
 #: includes/class-woo-wallet-admin.php:155
 #: includes/class-woo-wallet-frontend.php:847 templates/mini-wallet.php:23
@@ -423,17 +423,17 @@ msgstr "Bilancio"
 
 #: includes/class-woo-wallet-admin.php:163
 msgid "Lock / Unlock"
-msgstr ""
+msgstr "Blocca / Sblocca"
 
 #: includes/class-woo-wallet-admin.php:168
 #: includes/class-woo-wallet-ajax.php:74
 msgid "Unlock"
-msgstr ""
+msgstr "Sblocca"
 
 #: includes/class-woo-wallet-admin.php:170
 #: includes/class-woo-wallet-ajax.php:85
 msgid "Lock"
-msgstr ""
+msgstr "Blocca"
 
 #. translators: %s: wallet top-up
 #: includes/class-woo-wallet-admin.php:205
@@ -451,7 +451,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-admin.php:320
 msgid "Save changes"
-msgstr ""
+msgstr "Salva modifiche"
 
 #: includes/class-woo-wallet-admin.php:333
 msgid "Wallet actions"
@@ -532,7 +532,7 @@ msgstr ""
 #: includes/class-woo-wallet-admin.php:514
 #: includes/class-woo-wallet-admin.php:581
 msgid "Current wallet balance: "
-msgstr "Bilancio"
+msgstr "Bilancio "
 
 #: includes/class-woo-wallet-admin.php:525
 msgid "Enter Amount"
