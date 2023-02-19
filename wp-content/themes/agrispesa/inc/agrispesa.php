@@ -113,14 +113,20 @@ function my_custom_fonts() {
   body.wp-admin .menu-top.ame-unclickable-menu-item {
     font-weight: bold;
     border-top: 1px solid #fff;
-    padding: 12px 0 6px;
-    cursor: default;
+    padding: 12px 0 6px !important;
+    cursor: default !important;
+  }
+  body.wp-admin .menu-top.ame-unclickable-menu-item:hover {
+    color: #fff !important;
+    box-shadow: none !important;
   }
   body.wp-admin .menu-top.ame-unclickable-menu-item .wp-menu-image {
     display: none;
   }
   body.wp-admin .menu-top.ame-unclickable-menu-item .wp-menu-name {
-    padding-left: 10px;
+    padding-left: 10px !important;
+    font-weight: bold;
+    font-size: 16px;
   }
   </style>';
 }
