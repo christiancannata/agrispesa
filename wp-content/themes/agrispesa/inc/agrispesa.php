@@ -112,39 +112,3 @@ function my_custom_fonts() {
   }
   </style>';
 }
-
-
-// ADDING A CUSTOM COLUMN TITLE TO ADMIN PRODUCTS LIST
-add_filter( 'manage_edit-product_columns', 'custom_product_column',8);
-function custom_product_column($columns){
-   //add columns
-   $columns['weight'] = __( 'Peso','woocommerce'); // title
-   return $columns;
-}
-
-// ADDING THE DATA FOR EACH PRODUCTS BY COLUMN (EXAMPLE)
-add_action( 'manage_product_posts_custom_column' , 'custom_product_list_column_content', 10, 2 );
-function custom_product_list_column_content( $column, $product_id ){
-    global $post;
-
-    // HERE get the data from your custom field (set the correct meta key below)
-    $product_unit = get_post_meta( $product_id, '_woo_uom_input', true );
-    $product_weight = get_post_meta( $product_id, '_weight', true );
-    if( $product_weight) {
-      $product_weight = $product_weight;
-    } else {
-      $product_weight = '-';
-    }
-    if( $product_unit) {
-      $product_unit = $product_unit;
-    } else {
-      $product_unit = 'gr';
-    }
-
-    switch ( $column )
-    {
-        case 'weight' :
-            echo $product_weight . ' ' .$product_unit; // display the data
-            break;
-    }
-}
