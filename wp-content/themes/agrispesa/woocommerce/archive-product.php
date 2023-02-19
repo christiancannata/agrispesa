@@ -196,9 +196,8 @@ $my_walker= new Walker_Category_Custom();
 
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
-			 'orderby'  => 'name',
-			 // 'orderby'  => 'meta_value',
-			 // 'meta_key' => 'categories_order_agr',
+			 'orderby'  => 'meta_value',
+			 'meta_key' => 'categories_order_agr',
 			 'order'      => 'ASC',
 			 'show_count'   => 0,
 			 'hierarchical' => 1,

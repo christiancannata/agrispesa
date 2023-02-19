@@ -61,20 +61,22 @@ function shop_page_empty_layout()
 	}
 	echo '</div>';
 	echo '<div class="negozio-sidebar">';
-	echo '<ul class="negozio-sidebar--list">ciaoo';
-	get_the_category_list();
-	// $sidebar = array(
-	// 		 'taxonomy'     => 'product_cat',
-	// 		 'orderby'  => 'meta_value',
-	// 		 'meta_key' => 'categories_order_agr',
-	// 		 'show_count'   => 0,
-	// 		 'hierarchical' => 1,
-	// 		 'title_li'     => '',
-	// 		 'hide_empty'   => 1,
-	// 		 'child_of' => $get_product_cat_ID,
-	// 		 'exclude' => $specialiID,
-	// 	);
-	// 	wp_list_categories($sidebar);
+	echo '<ul class="negozio-sidebar--list">';
+
+	$my_walker= new Walker_Category_Custom();
+	$sidebar = array(
+			 'taxonomy'     => 'product_cat',
+			 'orderby'  => 'meta_value',
+			 'meta_key' => 'categories_order_agr',
+			 'show_count'   => 0,
+			 'hierarchical' => 1,
+			 'title_li'     => '',
+			 'hide_empty'   => 1,
+			 'walker' => $my_walker,
+			 'child_of' => $get_product_cat_ID,
+			 'exclude' => $specialiID,
+		);
+		wp_list_categories($sidebar);
 		echo '</ul>';
 	echo '</div>';
 
