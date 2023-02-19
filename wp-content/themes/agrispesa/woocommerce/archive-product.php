@@ -191,15 +191,20 @@ if ( woocommerce_product_loop() ) {
 	echo '</div>';
 	echo '<div class="negozio-sidebar">';
 	echo '<ul class="negozio-sidebar--list">';
+
+$my_walker= new Walker_Category_Custom();
+
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
-			 'orderby'  => 'meta_value',
-			 'meta_key' => 'categories_order_agr',
+			 'orderby'  => 'name',
+			 // 'orderby'  => 'meta_value',
+			 // 'meta_key' => 'categories_order_agr',
 			 'order'      => 'ASC',
 			 'show_count'   => 0,
 			 'hierarchical' => 1,
 			 'hide_empty'   => 1,
 			 'title_li'     => '',
+			 'walker' => $my_walker,
 			 'exclude' => $specialiID,
 			 'child_of' => $get_product_cat_ID,
 		);
