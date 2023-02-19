@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Admin Columns Pro\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-19 18:15+0100\n"
+"PO-Revision-Date: 2023-02-19 22:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/codepress/admin-"
 "columns-pro/language/it_IT/)\n"
@@ -1828,48 +1828,48 @@ msgstr ""
 
 #: admin-columns-pro/classes/Search/Asset/Script/Table.php:44
 msgid "Add Filter"
-msgstr ""
+msgstr "Aggiungi filtro"
 
 #: admin-columns-pro/classes/Search/Asset/Script/Table.php:45
 msgid "days ago"
-msgstr ""
+msgstr "Giorni fa"
 
 #: admin-columns-pro/classes/Search/Asset/Script/Table.php:46
 msgid "days"
-msgstr ""
+msgstr "Giorni"
 
 #: admin-columns-pro/classes/Search/Asset/Script/Table.php:48
 msgid "Clear filters"
-msgstr ""
+msgstr "Pulisci filtri"
 
 #: admin-columns-pro/classes/Search/Comparison/Media/UsedAsFeaturedImage.php:47
 msgid "In use"
-msgstr ""
+msgstr "In uso"
 
 #: admin-columns-pro/classes/Search/Comparison/Media/UsedAsFeaturedImage.php:48
 msgid "Not used"
-msgstr ""
+msgstr "Non in uso"
 
 #: admin-columns-pro/classes/Search/Settings/HideOnScreen/SavedFilters.php:10
 msgid "Saved Filters"
-msgstr ""
+msgstr "Filtri salvati"
 
 #: admin-columns-pro/classes/Search/Settings/HideOnScreen/SmartFilters.php:12
 msgid "Smart Filters"
-msgstr ""
+msgstr "Filtri Smart"
 
 #: admin-columns-pro/classes/Settings/Column/NetworkSite/Options.php:17
 msgid "Option"
-msgstr ""
+msgstr "Opzione"
 
 #: admin-columns-pro/classes/Settings/Column/NetworkSite/Plugins.php20,
 #: ac-addon-woocommerce/classes/Settings/ShopOrder/Notes.php:32
 msgid "Count"
-msgstr ""
+msgstr "Conta"
 
 #: admin-columns-pro/classes/Settings/Column/NetworkSite/Plugins.php:21
 msgid "List"
-msgstr ""
+msgstr "Lista"
 
 #: admin-columns-pro/classes/Settings/Column/NetworkSite/PluginsInclude.php:23
 msgid "Include network plugins"
@@ -2335,8 +2335,8 @@ msgstr ""
 #: ac-addon-woocommerce/classes/Column/ShopOrder/Purchased.php:36
 msgid "%d item"
 msgid_plural "%d items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d prodotto"
+msgstr[1] "%d prodotti"
 
 #: ac-addon-woocommerce/classes/Column/ShopOrder/Totals.php:24
 msgid "Totals"
@@ -2365,7 +2365,7 @@ msgstr ""
 
 #: ac-addon-woocommerce/classes/Column/User/Orders.php:80
 msgid "items"
-msgstr ""
+msgstr "Prodotti"
 
 #: ac-addon-woocommerce/classes/Column/User/Products.php:21
 msgid "Products"
