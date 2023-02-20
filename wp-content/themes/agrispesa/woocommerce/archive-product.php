@@ -142,44 +142,81 @@ if ( woocommerce_product_loop() ) {
 	 * @hooked woocommerce_catalog_ordering - 30
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
+
 	echo '<div class="negozio--flex">';
 	echo '<div class="products-list-agr">';
 
-	$taxonomy_name = 'product_cat';
-	$queried_object = get_queried_object();
-	$term_id = $queried_object->term_id;
-	$name = $queried_object->name;
-	$count = $queried_object->count;
-	$termchildren = get_terms( $taxonomy_name, array( 'parent' => $term_id, 'hide_empty' => true ) );
+	/* Category - SubCategory START */
+	$term 			= get_queried_object();
+	$term_id = $term->term_id;
+	$parent_id 		= empty( $term->term_id ) ? 0 : $term->term_id;
 
-	echo '<div class="products-navigation">';
-	echo '<span class="products-navigation--title">'. 	$name.'</span>';
-	echo '<div class="products-navigation--slider">';
-	   foreach ( $termchildren as $child ) {
-	       echo '<span><a class="products-navigation--link" href="' . get_term_link( $child, $taxonomy_name ) . '" title="Visualizza tutto ' . $child->name . '">' . $child->name . '</a></span>';
-	   }
-	echo '</div>';
-	echo '</div>';
+	$loop_categories = get_categories( array( 'taxonomy' => 'product_cat','hide_empty' => 1, 'child_of' => $parent_id) );
 
+	if(empty($loop_categories)) {
+		woocommerce_product_loop_start();
+		if ( wc_get_loop_prop( 'total' ) ) {
+			while ( have_posts() ) {
+				the_post();
 
-	woocommerce_product_loop_start();
+				/**
+				 * Hook: woocommerce_shop_loop.
+				 *
+				 * @hooked WC_Structured_Data::generate_product_data() - 10
+				 */
+				do_action( 'woocommerce_shop_loop' );
 
-	if ( wc_get_loop_prop( 'total' ) ) {
-		while ( have_posts() ) {
-			the_post();
-
-			/**
-			 * Hook: woocommerce_shop_loop.
-			 */
-			do_action( 'woocommerce_shop_loop' );
-
-			wc_get_template_part( 'content', 'product' );
+				wc_get_template_part( 'content', 'product' );
+			}
 		}
+		woocommerce_product_loop_end();
+
+	} else {
+
+		$i = 1;
+		foreach ($loop_categories as $loop_category) {
+			
+			if($loop_category->category_count != 0) {
+				echo '<h3 class="products-list--title">'.$loop_category->name.'</h3>';
+				woocommerce_product_loop_start(); //open ul
+			}
+			$args = array(
+				'posts_per_page' => -1,
+				'tax_query' => array(
+				'relation' => 'AND',
+				'hide_empty' => 1,
+					array(
+						'taxonomy' => 'product_cat',
+						'field' => 'slug',
+						'terms' => $loop_category->slug
+					),
+				),
+				'post_type' => 'product',
+				'orderby' => 'menu_order',
+				'order' => 'asc',
+				'meta_query' => array (
+        array(
+            'key' => '_stock_status',
+            'value' => 'instock'
+		        ),
+		    )
+			);
+			$cat_query = new WP_Query( $args );
+
+			while ( $cat_query->have_posts() ) : $cat_query->the_post();
+
+				wc_get_template_part( 'content', 'product' );
+			endwhile; // end of the loop.
+			wp_reset_postdata();
+			if($loop_category->category_count != 0) {
+				woocommerce_product_loop_end(); //close ul
+			}
+			if ( $i < count($loop_categories) && $loop_category->category_count != 0)
+				echo '<div class="products-list--separator"></div>';
+			$i++;
+		}//foreach
 	}
-
-	woocommerce_product_loop_end();
-
-
+	/* Category - SubCategory END */
 
 	/**
 	 * Hook: woocommerce_after_shop_loop.

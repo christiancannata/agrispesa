@@ -57,7 +57,7 @@ scrollTo();
 showNameNewsletter();
 emptyCartSlider();
 listCategories();
-categoriesSlider();
+
 
 //changeShippingLabel();
 
@@ -218,24 +218,6 @@ function pressSlider() {
         }
       }
     ]
-  });
-
-}
-function categoriesSlider() {
-
-  let _carousel = jQuery(".products-navigation--slider");
-
-  _carousel.slick({
-    dots: true,
-    arrows: false,
-    infinite: false,
-    variableWidth: true,
-    speed: 300,
-    slidesToShow: 1,
-    slidesToScroll: 7,
-    centerMode: false,
-    autoplay: false,
-
   });
 
 }

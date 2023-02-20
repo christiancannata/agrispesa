@@ -28,6 +28,22 @@
 	}
 }
 
+.products-list {
+	&--title {
+		@include font-size(22);
+		font-weight: 600;
+		margin: 0 0 16px;
+	}
+	&--separator {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 1px;
+		background: $background;
+		margin: 32px 0;
+	}
+}
+
 body.tax-product_cat.archive {
 	.negozio--flex {
 		display: flex;
@@ -64,7 +80,7 @@ body.tax-product_cat.archive {
 .negozio-sidebar {
 	@include border-radius(8px);
 	background: $background;
-	padding:18px;
+	padding: 18px;
 	position: sticky;
 	top: 90px;
 	@include breakpoint(mobile) {
@@ -76,8 +92,8 @@ body.tax-product_cat.archive {
 			&.cat-empty {
 				display: none !important;
 			}
-			&.current-cat {
 
+			&.current-cat {
 				& > a {
 					color: $blue;
 				}
