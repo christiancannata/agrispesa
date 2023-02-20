@@ -999,17 +999,18 @@ body.tax-product_cat {
 		li {
 			border: none !important;
 			margin: 2px 0;
-			padding: 8px 12px !important;
+			padding: 8px 2px !important;
 
 			a,
 			span {
 				@include border-radius(4px);
 				font-size: 14px !important;
-				background: rgba($blue, 0.1) !important;
+				background: $background !important;
 				color: $blue !important;
+				padding: 10px 14px !important;
 
 				&.current {
-					background: $background;
+					background: rgba($blue, 0.1) !important;
 				}
 
 				&.next {
