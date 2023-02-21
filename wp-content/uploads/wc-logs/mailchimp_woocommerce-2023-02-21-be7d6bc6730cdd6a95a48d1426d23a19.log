@@ -6,3 +6,5 @@
 )
 
 2023-02-21T08:06:37+00:00 NOTICE order_process :: Order #22436 skipped, user #1 user role is not in the list
+2023-02-21T08:30:13+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 21363
+2023-02-21T08:30:26+00:00 NOTICE product_submit.success :: updateStoreProduct :: #21363
