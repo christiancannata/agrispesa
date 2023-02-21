@@ -201,6 +201,7 @@ if (woocommerce_product_loop()) {
 				'tax_query' => array(
 					'relation' => 'AND',
 					'hide_empty' => 1,
+					'paged' => false,
 					array(
 						'taxonomy' => 'product_cat',
 						'field' => 'slug',
