@@ -32,7 +32,7 @@ $description = get_the_archive_description();
 
 $current_cat = get_queried_object();
 $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-$get_product_cat_ID = $getIDbyNAME->term_id;
+$negozioID = $getIDbyNAME->term_id;
 $getSpeciali = get_term_by('name', 'speciali', 'product_cat');
 $specialiID = $getSpeciali->term_id;
 
@@ -61,7 +61,7 @@ $specialiID = $getSpeciali->term_id;
 				'meta_key' => 'categories_order_agr',
 				'order' => 'ASC',
 				'hide_empty' => false,
-				'parent' => $get_product_cat_ID,
+				'parent' => $negozioID,
 				'exclude' => $specialiID
 			);
 
@@ -151,12 +151,20 @@ if (woocommerce_product_loop()) {
 	$term_id = $term->term_id;
 	$parent_id = empty($term->term_id) ? 0 : $term->term_id;
 
+	if($negozioID == $term_id) {
+		$orderby = 'meta_value';
+		$meta_key = 'categories_order_agr';
+	} else {
+		$orderby = 'name';
+		$meta_key = '';
+	}
+
 
 	$loop_categories = get_categories(
 		array(
 			'taxonomy' => 'product_cat',
-			'orderby' => 'meta_value',
-			'meta_key' => 'categories_order_agr',
+			'orderby' => $orderby,
+			'meta_key' => $meta_key,
 			'hide_empty' => 1,
 			'parent' => $parent_id,
 		)
@@ -283,7 +291,7 @@ if (woocommerce_product_loop()) {
 		'title_li'     => '',
 		'walker' => $my_walker,
 		'exclude' => $excludeSpecial,
-		'child_of' => $get_product_cat_ID,
+		'child_of' => $negozioID,
 		);
 		wp_list_categories($sidebar);
 		echo '</ul>';
