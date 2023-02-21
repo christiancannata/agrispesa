@@ -6567,3 +6567,86 @@ Stack trace:
 [21-Feb-2023 08:50:11 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2096
 [21-Feb-2023 08:50:11 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2096
 [21-Feb-2023 08:51:26 UTC] PHP Notice:  Undefined index: price in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1996
+[21-Feb-2023 10:03:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WP_Post::get_type() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1848
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_b...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1848
+[21-Feb-2023 10:03:09 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[21-Feb-2023 10:03:09 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[21-Feb-2023 10:07:57 UTC] The Automattic\WooCommerce\Admin\API\Options::get_options function is deprecated since version 3.1.
+[21-Feb-2023 10:07:57 UTC] The Automattic\WooCommerce\Admin\API\Options::get_options function is deprecated since version 3.1.
+[21-Feb-2023 10:16:14 UTC] PHP Notice:  La funzione ID è stata richiamata <strong>in maniera scorretta</strong>. Non puoi accedere direttamente alle proprietà del prodotto. Backtrace: do_action('toplevel_page_box-settimanali'), WP_Hook->do_action, WP_Hook->apply_filters, {closure}, WC_Abstract_Legacy_Product->__get, wc_doing_it_wrong Leggi <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[21-Feb-2023 10:16:14 UTC] PHP Notice:  La funzione post_title è stata richiamata <strong>in maniera scorretta</strong>. Non puoi accedere direttamente alle proprietà del prodotto. Backtrace: do_action('toplevel_page_box-settimanali'), WP_Hook->do_action, WP_Hook->apply_filters, {closure}, WC_Abstract_Legacy_Product->__get, wc_doing_it_wrong Leggi <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[21-Feb-2023 10:18:21 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on int in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1858
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_b...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1858
+[21-Feb-2023 10:29:45 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WC_Order_Item_Product::get_attributes() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1283
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1283
+[21-Feb-2023 10:37:53 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3841 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:53 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3805 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3815 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3820 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:37:55 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:28 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3823 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:28 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:28 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3822 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:28 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3834 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3806 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3828 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:29 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:33 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3826 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:33 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:46 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3846 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:46 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:56 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3831 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:38:56 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[21-Feb-2023 10:49:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method WP_Post::get_children() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1111
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1309): get_single_box_from_attributes('vegana', 'xsmall')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1111
+[21-Feb-2023 10:50:09 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on int in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1114
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1310): get_single_box_from_attributes('vegana', 'xsmall')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1114
+[21-Feb-2023 10:55:25 UTC] PHP Notice:  Undefined variable: productFound in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1141
+[21-Feb-2023 11:01:02 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function get_single_box_from_attributes(), 0 passed in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 856 and exactly 2 expected in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1107
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(856): get_single_box_from_attributes()
+#1 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1198): get_products_to_add_from_subscription(Object(WC_Subscription), '08', true)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#6 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1107
