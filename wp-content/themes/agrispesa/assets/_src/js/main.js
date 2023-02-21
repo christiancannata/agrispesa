@@ -76,10 +76,10 @@ function listCategories() {
   }
   if(jQuery('.negozio-sidebar--list .current-cat').length) {
     jQuery('.negozio-sidebar--list').addClass('its-category');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > a').addClass('opened');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children').addClass('show-items');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children').show();
-    jQuery('.negozio-sidebar--list .current-cat-ancestor').siblings().hide();
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > a, .negozio-sidebar--list .current-cat > a').addClass('opened');
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').addClass('show-items');
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').show();
+    jQuery('.negozio-sidebar--list .current-cat-ancestor, .negozio-sidebar--list .current-cat').siblings().hide();
   }
 
   jQuery('.negozio-sidebar--list .i-have-kids').on('click', function(e){
