@@ -38,7 +38,7 @@ get_header(); ?>
 				$terms = wp_get_post_terms( $post->ID, 'product_cat' );
 				foreach ( $terms as $term ) $categories[] = $term->slug;
 
-				if ( in_array( 'box', $categories ) ) {
+				if ( in_array( 'box', $categories ) || in_array( 'box-singola', $categories ) ) {
 				  wc_get_template_part( 'content', 'single-product-box' );
 				} else if( in_array( 'gift-card', $categories ) ) {
 				  wc_get_template_part( 'content', 'single-product-giftcard' );
