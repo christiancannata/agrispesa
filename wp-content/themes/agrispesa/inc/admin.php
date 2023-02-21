@@ -974,9 +974,9 @@ function create_order_from_subscription($id)
 	}
 
 	$weight = 0;
-	if (!empty($productData['weight'])) {
-		$weight = $productData['weight'];
-	}
+	/*	if (!empty($productData['weight'])) {
+			$weight = $productData['weight'];
+		}*/
 
 	$box = get_box_from_subscription($subscription);
 
@@ -1867,6 +1867,13 @@ function consegne_ordini_pages()
 
 								$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
 
+								if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+									$codiceConfezionamento = '';
+								}
+
+								if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+									$codiceConfezionamento = reset($codiceConfezionamento);
+								}
 								if ($codiceConfezionamento) {
 									$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 								}
@@ -1985,6 +1992,10 @@ function consegne_ordini_pages()
 										<?php foreach ($products as $key => $product): ?>
 											<?php
 
+											if (!isset($product['price'])) {
+												$product['price'] = 0;
+											}
+
 											$totalWeight += $product['quantity'];
 											$totalPrice += ($product['price'] * $product['quantity']);
 
@@ -1998,8 +2009,15 @@ function consegne_ordini_pages()
 
 											$codiceConfezionamento = get_post_meta($product['id'], '_codice_confezionamento', true);
 
+											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+												$codiceConfezionamento = '';
+											}
+
+											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+												$codiceConfezionamento = reset($codiceConfezionamento);
+											}
 											if ($codiceConfezionamento) {
-												$codiceConfezionamento = $codiceConfezionamento;
+												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 											}
 
 											$unitaMisura = 'gr';
@@ -2025,6 +2043,10 @@ function consegne_ordini_pages()
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
+												</td>
+												<td>
+													<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
+													€
 												</td>
 												<td>
 													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
@@ -2070,6 +2092,14 @@ function consegne_ordini_pages()
 
 																	$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
 
+
+																	if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+																		$codiceConfezionamento = '';
+																	}
+
+																	if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+																		$codiceConfezionamento = reset($codiceConfezionamento);
+																	}
 																	if ($codiceConfezionamento) {
 																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 																	}
@@ -2077,7 +2107,7 @@ function consegne_ordini_pages()
 																	?>
 																	<option
 																		data-price="<?php echo $price; ?>"
-																		data-name="<?php echo $product->post_title; ?>"
+																		data-name="<?php echo str_replace('"', '', $product->post_title); ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
 																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
 																<?php endforeach; ?>
@@ -2085,7 +2115,7 @@ function consegne_ordini_pages()
 														<?php endforeach; ?>
 													</select>
 												</td>
-												<td style="display: flex"><input
+												<td colspan="2" style="display: flex"><input
 														style="width:80px"
 														type="number"
 														name="quantity" class="new-quantity">
