@@ -44,12 +44,14 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 
 	global $wpdb;
 
-	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' ");
+	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' AND post_status = 'publish'");
 	$ids = reset($ids);
 
 	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
 
-	$date = DateTime::createFromFormat('d-m-Y', $date);
+	if (get_class($date) != DateTime::class) {
+		$date = DateTime::createFromFormat('d-m-Y', $date);
+	}
 
 	if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
 		$date->add(new DateInterval('P7D'));
@@ -160,11 +162,20 @@ add_action('rest_api_init', function () {
 		'callback' => function ($request) {
 
 			$terms = get_the_terms($request['product_id'], 'product_cat');
-			$terms = end($terms);
 
-			$ricarico = get_term_meta($terms->term_id, 'ricarico_percentuale', true);
-			$terms->ricarico_percentuale = !empty($ricarico) ? $ricarico : 0;
-			$response = new WP_REST_Response($terms);
+			$terms = array_reverse($terms);
+
+			$selectedTerm = null;
+			foreach ($terms as $term) {
+				$ricarico = get_term_meta($term->term_id, 'ricarico_percentuale', true);
+				if (!empty($ricarico)) {
+					$selectedTerm = $term;
+					$selectedTerm->ricarico_percentuale = !empty($ricarico) ? floatval($ricarico) : 0;
+				}
+			}
+
+
+			$response = new WP_REST_Response($selectedTerm);
 			$response->set_status(200);
 
 			return $response;
@@ -843,7 +854,6 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 
 	$productsToAdd = get_post_meta($box->ID, '_products', true);
 
-
 	if ($overrideProducts) {
 		//check preferences
 		$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
@@ -922,8 +932,16 @@ function get_box_from_subscription($subscription, $week = null)
 
 
 	$products = $subscription->get_items();
-	$product = reset($products)->get_product();
-	$productData = $product->get_data();
+	$box = reset($products)->get_product();
+
+	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
+	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
+
+	$productBox = get_single_box_from_attributes($tipologia, $dimensione);
+
+	if (empty($productBox)) {
+		return null;
+	}
 
 	//get product data box
 	$box = get_posts([
@@ -939,7 +957,7 @@ function get_box_from_subscription($subscription, $week = null)
 			],
 			[
 				'key' => '_product_box_id',
-				'value' => $productData['parent_id'],
+				'value' => $productBox->get_id(),
 				'compare' => '='
 			]
 		]
@@ -963,9 +981,9 @@ function create_order_from_subscription($id)
 	}
 
 	$weight = 0;
-	if (!empty($productData['weight'])) {
-		$weight = $productData['weight'];
-	}
+	/*	if (!empty($productData['weight'])) {
+			$weight = $productData['weight'];
+		}*/
 
 	$box = get_box_from_subscription($subscription);
 
@@ -1075,6 +1093,46 @@ function create_order_from_subscription($id)
 	}
 
 	calculate_delivery_date_order($order->get_id());
+
+}
+
+function get_single_box_from_attributes($tipologia, $dimensione)
+{
+	$products = get_posts(array(
+		'post_type' => 'product',
+		'numberposts' => -1,
+		'post_status' => 'publish',
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field' => 'slug',
+				'terms' => 'box singola',
+				'operator' => 'IN',
+			)
+		),
+	));
+
+	$productFound = false;
+
+	foreach ($products as $product) {
+		$product = wc_get_product($product->ID);
+		$children = $product->get_children();
+		foreach ($children as $variation) {
+			$tipologiaVariation = get_post_meta($variation, 'attribute_pa_tipologia', true);
+			$dimensioneVariation = get_post_meta($variation, 'attribute_pa_dimensione', true);
+
+			if ($tipologia == $tipologiaVariation && $dimensioneVariation == $dimensione) {
+				$productFound = $variation;
+			}
+		}
+	}
+
+	if ($productFound) {
+		$productFound = wc_get_product($productFound);
+		return $productFound;
+	}
+
+	return $productFound;
 
 }
 
@@ -1203,7 +1261,7 @@ function my_custom_submenu_page_callback()
 					</div>
 
 					<div class="tablenav-pages one-page">
-						<span class="displaying-num">2 abbonamenti attivi</span>
+						<span class="displaying-num"> abbonamenti attivi</span>
 					</div>
 					<br class="clear">
 				</div>
@@ -1247,27 +1305,41 @@ function my_custom_submenu_page_callback()
 						];
 						$orders = new WP_Query($args);
 						$orders = $orders->get_posts();
+						$products = $subscription->get_items();
+						$boxProduct = reset($products);
+
+						$variationProduct = $boxProduct->get_product();
+						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
+						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
+
 
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
 							<th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Seleziona
 									un abbonamento</label>
 
-								<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-									   value="<?php echo $subscription->get_id(); ?>"
-									<?php if (count($orders) > 0): ?>
-										disabled
-									<?php endif; ?>
-								><br>
+								<?php
+								if (!get_single_box_from_attributes($tipologia, $dimensione)) {
+									echo "Box Singola Non disponibile";
+								} else {
+									?>
+									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+										   value="<?php echo $subscription->get_id(); ?>"
+										<?php if (count($orders) > 0): ?>
+											disabled
+										<?php endif; ?>
+									><br>
+								<?php } ?>
+
 							</th>
 							<td class="author column-author" data-colname="Autore">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary" data-colname="Commento">
-								<span><?php $products = $subscription->get_items();
-									foreach ($products as $product) {
-										echo $product->get_name();
-									}
+								<span><?php
+
+									echo $boxProduct->get_name();
+
 									?>
 									</span>
 							</td>
@@ -1562,7 +1634,8 @@ function consegne_ordini_pages()
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi' attive, in
+				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi'
+					attive, in
 					base
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
@@ -1713,7 +1786,7 @@ function consegne_ordini_pages()
 				array(
 					'taxonomy' => 'product_cat',
 					'field' => 'slug',
-					'terms' => 'box',
+					'terms' => 'box singola',
 					'operator' => 'IN',
 				)
 			),
@@ -1832,7 +1905,23 @@ function consegne_ordini_pages()
 				<select name="box_id" id="box_id" class="select2">
 					<option disabled selected value="">-- Scegli la box --</option>
 					<?php foreach ($products as $product): ?>
-						<option value="<?php echo $product->ID ?>"><?php echo $product->post_title; ?></option>
+						<?php
+						$product = wc_get_product($product->ID);
+						if ($product->get_type() == 'variable-subscription') {
+							continue;
+						}
+
+						$children = $product->get_children();
+						?>
+						<optgroup label="<?php echo $product->get_name(); ?>">
+							<?php foreach ($children as $child): ?>
+								<?php
+								$child = wc_get_product($child);
+								?>
+								<option
+									value="<?php echo $child->get_id() ?>"><?php echo $child->get_name(); ?></option>
+							<?php endforeach; ?>
+						</optgroup>
 					<?php endforeach; ?>
 				</select>
 
@@ -1855,6 +1944,13 @@ function consegne_ordini_pages()
 
 								$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
 
+								if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+									$codiceConfezionamento = '';
+								}
+
+								if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+									$codiceConfezionamento = reset($codiceConfezionamento);
+								}
 								if ($codiceConfezionamento) {
 									$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 								}
@@ -1973,6 +2069,10 @@ function consegne_ordini_pages()
 										<?php foreach ($products as $key => $product): ?>
 											<?php
 
+											if (!isset($product['price'])) {
+												$product['price'] = 0;
+											}
+
 											$totalWeight += $product['quantity'];
 											$totalPrice += ($product['price'] * $product['quantity']);
 
@@ -1986,8 +2086,15 @@ function consegne_ordini_pages()
 
 											$codiceConfezionamento = get_post_meta($product['id'], '_codice_confezionamento', true);
 
+											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+												$codiceConfezionamento = '';
+											}
+
+											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+												$codiceConfezionamento = reset($codiceConfezionamento);
+											}
 											if ($codiceConfezionamento) {
-												$codiceConfezionamento = $codiceConfezionamento;
+												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 											}
 
 											$unitaMisura = 'gr';
@@ -2013,6 +2120,10 @@ function consegne_ordini_pages()
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
+												</td>
+												<td>
+													<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
+													€
 												</td>
 												<td>
 													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
@@ -2058,6 +2169,14 @@ function consegne_ordini_pages()
 
 																	$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
 
+
+																	if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+																		$codiceConfezionamento = '';
+																	}
+
+																	if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+																		$codiceConfezionamento = reset($codiceConfezionamento);
+																	}
 																	if ($codiceConfezionamento) {
 																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 																	}
@@ -2065,7 +2184,7 @@ function consegne_ordini_pages()
 																	?>
 																	<option
 																		data-price="<?php echo $price; ?>"
-																		data-name="<?php echo $product->post_title; ?>"
+																		data-name="<?php echo str_replace('"', '', $product->post_title); ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
 																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
 																<?php endforeach; ?>
@@ -2073,7 +2192,7 @@ function consegne_ordini_pages()
 														<?php endforeach; ?>
 													</select>
 												</td>
-												<td style="display: flex"><input
+												<td colspan="2" style="display: flex"><input
 														style="width:80px"
 														type="number"
 														name="quantity" class="new-quantity">
@@ -2379,7 +2498,7 @@ function my_saved_post($post_id, $json, $is_update)
 
 	$product = wc_get_product($post_id);
 
-	if($product){
+	if ($product) {
 		// Retrieve the import ID.
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);

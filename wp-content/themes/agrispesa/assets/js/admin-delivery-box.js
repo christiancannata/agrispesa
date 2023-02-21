@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
 
   function reloadPrice() {
     let total = parseFloat($("#_prezzo_acquisto").val()) + parseFloat(($("#_prezzo_acquisto").val() / 100) * $("#_percentuale_ricarico").val())
-    $("#_regular_price").val(total)
+    $("#_regular_price").val(total.toFixed(2))
   }
 
   function getPercentualeRicarico() {
