@@ -10,66 +10,101 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates\Emails
- * @version 7.4.0
+ * @see 	    https://docs.woocommerce.com/document/template-structure/
+ * @author 		WooThemes
+ * @package 	WooCommerce/Templates/Emails
+ * @version 3.7.0
  */
 
-defined( 'ABSPATH' ) || exit;
+/** 
+ * EDIT NOTES FOR KADENCE WOOMAIL DESIGNER
+ *
+ * Add option tp Move footer out of template container so background can be fullwidth.
+ * Change width="600" to width 100% for tables
+ * Add subtitle option.
+ * Add Header image container
+ * Add Order Style Class
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+$footer_placement = Kadence_Woomail_Customizer::opt( 'footer_background_placement' );
+$responsive_check = Kadence_Woomail_Customizer::opt( 'responsive_mode' );
+if ( empty( $footer_placement ) ) {
+	$footer_placement = 'inside';
+}
+$content_width = Kadence_Woomail_Customizer::opt( 'content_width' );
+if ( empty( $content_width ) ) {
+	$content_width = '600';
+}
+$content_width = str_replace( 'px', '', $content_width );
+if ( $responsive_check ) {
+	$content_width = '360';
+}
+
 ?>
-																		</div>
-																	</td>
-																</tr>
-															</table>
-															<!-- End Content -->
+															</div>
 														</td>
 													</tr>
 												</table>
-												<!-- End Body -->
+												<!-- End Content -->
 											</td>
 										</tr>
 									</table>
+									<!-- End Body -->
 								</td>
 							</tr>
 							<tr>
 								<td align="center" valign="top">
-									<!-- Footer -->
-									<table border="0" cellpadding="10" cellspacing="0" width="100%" id="template_footer">
-										<tr>
-											<td valign="top">
-												<table border="0" cellpadding="10" cellspacing="0" width="100%">
-													<tr>
-														<td colspan="2" valign="middle" id="credit">
-															<?php
-															echo wp_kses_post(
-																wpautop(
-																	wptexturize(
-																		/**
-																		 * Provides control over the email footer text used for most order emails.
-																		 *
-																		 * @since 4.0.0
-																		 *
-																		 * @param string $email_footer_text
-																		 */
-																		apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) )
-																	)
-																)
-															);
-															?>
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-									<!-- End Footer -->
+									<?php
+									if ( 'inside' == $footer_placement ) {
+										do_action( 'kadence_woomail_designer_email_footer' );
+										?>
+										<table class="gmail-app-fix" width="100%" border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td>
+													<table cellpadding="0" cellspacing="0" border="0" align="center" width="<?php echo esc_attr( $content_width ); ?>">
+														<tr>
+															<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+															</td>
+															<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+															</td>
+															<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									<?php } ?>
 								</td>
 							</tr>
-						</table>
-					</div>
-				</td>
-				<td><!-- Deliberately empty to support consistent sizing and layout across multiple email clients. --></td>
-			</tr>
-		</table>
+						</table> <!-- End template container -->
+						<?php
+						if ( 'outside' == $footer_placement ) {
+							do_action( 'kadence_woomail_designer_email_footer' );
+							?>
+							<table class="gmail-app-fix" width="100%" border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<table cellpadding="0" cellspacing="0" border="0" align="center" width="<?php echo esc_attr( $content_width ); ?>">
+											<tr>
+												<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+												</td>
+												<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+												</td>
+												<td cellpadding="0" cellspacing="0" border="0" height="1"; style="line-height: 1px; min-width: <?php echo esc_attr( floor( $content_width / 3 ) ); ?>px;">
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						<?php } ?>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</body>
 </html>

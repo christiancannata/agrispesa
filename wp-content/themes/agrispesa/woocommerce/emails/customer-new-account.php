@@ -10,29 +10,56 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates\Emails
+ * @see 	    https://docs.woocommerce.com/document/template-structure/
+ * @author 		WooThemes
+ * @package 	WooCommerce/Templates/Emails
  * @version 6.0.0
  */
 
-defined( 'ABSPATH' ) || exit;
+/**
+ * NOTES ABOUT TEMPLATE EDIT FOR KADENCE WOOMAIL DESIGNER, 
+ * 1. add hook 'kadence_woomail_designer_email_text' to pull in main text
+ * 2. Remove static main text area.
+ */
 
-do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-<?php /* translators: %s: Customer username */ ?>
-<p><?php printf( esc_html__( 'Gentile %s,', 'woocommerce' ), esc_html( $user_login ) ); ?></p>
-<?php /* translators: %1$s: Site title, %2$s: Username, %3$s: My account link */ ?>
-<p><?php printf( esc_html__( 'Thanks for creating an account on %1$s. Your username is %2$s. You can access your account area to view orders, change your password, and more at: %3$s', 'woocommerce' ), esc_html( $blogname ), '<strong>' . esc_html( $user_login ) . '</strong>', make_clickable( esc_url( wc_get_page_permalink( 'myaccount' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-<?php if ( 'yes' === get_option( 'woocommerce_registration_generate_password' ) && $password_generated && $set_password_url ) : ?>
-	<?php // If the password has not been set by the user during the sign up process, send them a link to set a new password ?>
-	<p><a href="<?php echo esc_attr( $set_password_url ); ?>"><?php printf( esc_html__( 'Click here to set your new password.', 'woocommerce' ) ); ?></a></p>
-<?php endif; ?>
+do_action( 'woocommerce_email_header', $email_heading, $email );
+
+$button_check    = Kadence_Woomail_Customizer::opt( 'customer_new_account_btn_switch' );
+$account_section = Kadence_Woomail_Customizer::opt( 'customer_new_account_account_section' );
+
+/**
+ * @hooked Kadence_Woomail_Designer::email_main_text_area_no_order
+ */
+do_action( 'kadence_woomail_designer_email_text', $email ); ?>
+
+<?php if ( 'yes' === get_option( 'woocommerce_registration_generate_password' ) && $password_generated ) : ?>
+
+	<?php if ($set_password_url) { /** $set_password_url was introduced in WooCommerce 6.0 */ ?>
+		<p><a href="<?php echo esc_attr( $set_password_url ); ?>"><?php echo esc_html__( 'Click here to set your new password.', 'kadence-woocommerce-email-designer' ); ?></a></p>
+	<?php } else { ?>
+		<p><?php printf( __( 'Your password has been automatically generated: %s', 'kadence-woocommerce-email-designer' ), '<strong>' . esc_html( $user_pass ) . '</strong>' ); ?></p>
+	<?php } ?>
 
 <?php
+endif;
+if ( true == $account_section ) {
+	if ( true == $button_check ) {
+		echo '<p>' . esc_html__( 'You can access your account area to view your orders and change your password.', 'kadence-woocommerce-email-designer' ) . '</p>';
+		echo '<p class="btn-container"><a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" class="btn">' . esc_html__( 'View Account', 'kadence-woocommerce-email-designer' ) . '</a></p>';
+	} else {
+	?>
+	<p><?php printf( __( 'You can access your account area to view your orders and change your password here: %s.', 'kadence-woocommerce-email-designer' ), make_clickable( esc_url( wc_get_page_permalink( 'myaccount' ) ) ) ); ?></p>
+	<?php
+	}
+}
 /**
- * Show user-defined additional content - this is set in each email's settings.
+ * Show user-defined additonal content - this is set in each email's settings.
  */
-if ( $additional_content ) {
+if ( isset( $additional_content ) && ! empty( $additional_content ) ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 
