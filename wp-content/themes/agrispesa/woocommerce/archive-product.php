@@ -219,11 +219,17 @@ if (woocommerce_product_loop()) {
 				woocommerce_product_loop_end(); //close ul
 				echo '<div class="products-list--footer">';
 
+				if($loop_category->category_count == 1) {
+					$labelprodotti = ' prodotto';
+				} else {
+					$labelprodotti = ' prodotti';
+				}
+
 				if($loop_category->category_count > 5) {
-					echo '<span>5 di ' . $loop_category->category_count . ' prodotti</span>';
+					echo '<span>5 di ' . $loop_category->category_count . $labelprodotti .'</span>';
 					echo '<a href="'.get_term_link($loop_category->term_id).'" title="Visualizza tutto '.$loop_category->name.'" class="arrow-link">Vedi tutto <span class="icon-arrow-right"></span></a>';
 				} else {
-					echo '<span>' . $loop_category->category_count . ' prodotti</span>';
+					echo '<span>' . $loop_category->category_count . $labelprodotti .'</span>';
 				}
 
 				echo '</div>';
