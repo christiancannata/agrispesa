@@ -152,7 +152,15 @@ if (woocommerce_product_loop()) {
 	$parent_id = empty($term->term_id) ? 0 : $term->term_id;
 
 
-	$loop_categories = get_categories(array('taxonomy' => 'product_cat', 'hide_empty' => 1, 'parent' => $parent_id));
+	$loop_categories = get_categories(
+		array(
+			'taxonomy' => 'product_cat',
+			'orderby' => 'meta_value',
+			'meta_key' => 'categories_order_agr',
+			'hide_empty' => 1,
+			'parent' => $parent_id,
+		)
+	);
 
 	if (empty($loop_categories)) {
 		echo '<div class="products-list--header">';
