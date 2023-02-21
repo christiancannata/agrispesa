@@ -25,15 +25,19 @@ defined( 'ABSPATH' ) || exit;
 
  $current_user = wp_get_current_user();
 
+
  global $current_user;
 
  $user_id = $current_user->ID;
+ //$postcode = get_user_meta( $current_user->ID, 'shipping_postcode', true );
  $registration = $current_user->user_registered;
 
  $reg_day = date( 'd', strtotime( $current_user->user_registered ));
  $reg_month = date( 'm', strtotime( $current_user->user_registered ));
  $reg_year = date( 'Y', strtotime( $current_user->user_registered ));
 
+// $shipping_date = get_order_delivery_date_from_date(new \DateTime(), null, $postcode);
+// echo $shipping_date;
 
  if( $reg_month === '01') {
  	$reg_month = 'Gennaio';
@@ -73,16 +77,19 @@ defined( 'ABSPATH' ) || exit;
     </div>
     <div class="user-profile--details">
 
-      <div class="user-profile--details--item next-box">
+
         <?php
         $has_sub = wcs_user_has_subscription($user_id, '', 'active');
         $subscriptions = wcs_get_users_subscriptions($user_id, $has_sub);
           if($has_sub){
+            echo '<div class="user-profile--details--item next-box">';
             echo '<p class="user-profile--details--number">7</p>';
             echo '<h3 class="user-profile--details--title">Giorni<br/> alla prossima consegna</h3>';
+            echo '</div>';
           }
-          ?>
-    	 </div>
+        ?>
+
+
 
       <div class="user-profile--details--item subscriptions">
         <?php

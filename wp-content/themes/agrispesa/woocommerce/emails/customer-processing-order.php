@@ -27,8 +27,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
 <?php /* translators: %s: Order number */ ?>
-<p><?php printf( esc_html__( 'Il tuo ordine #%s è stato ricevuto, lo stiamo elaborando e a breve riceverai la
-conferma. Qui di seguito troverai tutti i dettagli del tuo acquisto.', 'woocommerce' ), esc_html( $order->get_order_number() ) ); ?></p>
+<p><?php printf( esc_html__( 'Just to let you know &mdash; we\'ve received your order #%s, and it is now being processed:', 'woocommerce' ), esc_html( $order->get_order_number() ) ); ?></p>
 
 <?php
 
@@ -43,12 +42,15 @@ do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_tex
 /*
  * @hooked WC_Emails::order_meta() Shows order meta data.
  */
+
+
 do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
 /*
  * @hooked WC_Emails::customer_details() Shows customer details
  * @hooked WC_Emails::email_address() Shows email address
  */
+
 do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
@@ -58,7 +60,7 @@ if ( $additional_content ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 
-echo '<img src="https://staging.agrispesa.it/wp-content/themes/agrispesa/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
+
 /*
  * @hooked WC_Emails::email_footer() Output the email footer
  */

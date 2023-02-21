@@ -1,8 +1,8 @@
 <?php
 /**
- * Customer on-hold order email
+ * Customer completed order email
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/emails/customer-on-hold-order.php.
+ * This template can be overridden by copying it to yourtheme/woocommerce/emails/customer-completed-order.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -12,10 +12,12 @@
  *
  * @see https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates\Emails
- * @version 7.3.0
+ * @version 3.7.0
  */
 
-defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*
  * @hooked WC_Emails::email_header() Output the email header
@@ -24,8 +26,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-<p><?php esc_html_e( 'Thanks for your order. It’s on-hold until we confirm that payment has been received.', 'woocommerce' ); ?></p>
-
+<p><?php esc_html_e( 'Il tuo ordine è stato completato. Qui di seguito troverai tutti i dettagli del tuo acquisto.', 'woocommerce' ); ?></p>
 <?php
 
 /*
@@ -54,6 +55,7 @@ if ( $additional_content ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 
+echo '<img src="https://staging.agrispesa.it/wp-content/themes/agrispesa/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
 /*
  * @hooked WC_Emails::email_footer() Output the email footer
  */

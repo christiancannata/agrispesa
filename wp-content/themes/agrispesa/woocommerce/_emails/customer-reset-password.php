@@ -26,13 +26,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php /* translators: %s: Customer username */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $user_login ) ); ?></p>
 <?php /* translators: %s: Store name */ ?>
-<p><?php printf( esc_html__( 'Someone has requested a new password for the following account on %s:', 'woocommerce' ), esc_html( wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ) ) ); ?></p>
+<p><?php printf( esc_html__( 'Siamo qui perché hai chiesto una nuova password per il tuo account %s.', 'woocommerce' ), esc_html( wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ) ) ); ?></p>
 <?php /* translators: %s: Customer username */ ?>
 <p><?php printf( esc_html__( 'Username: %s', 'woocommerce' ), esc_html( $user_login ) ); ?></p>
-<p><?php esc_html_e( 'If you didn\'t make this request, just ignore this email. If you\'d like to proceed:', 'woocommerce' ); ?></p>
+<p>Se non sei tu o non vuoi creare una nuova password, ignora questa email.</p>
+<p><?php esc_html_e( 'Per creare una nuova password clicca sul link che troverai di seguito:', 'woocommerce' ); ?></p>
 <p>
 	<a class="link" href="<?php echo esc_url( add_query_arg( array( 'key' => $reset_key, 'id' => $user_id ), wc_get_endpoint_url( 'lost-password', '', wc_get_page_permalink( 'myaccount' ) ) ) ); ?>"><?php // phpcs:ignore ?>
-		<?php esc_html_e( 'Click here to reset your password', 'woocommerce' ); ?>
+		<?php esc_html_e( 'Clicca qui per reimpostare la tua password', 'woocommerce' ); ?>
 	</a>
 </p>
 
@@ -43,5 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( $additional_content ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
+
+echo '<img src="https://staging.agrispesa.it/wp-content/themes/agrispesa/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
 
 do_action( 'woocommerce_email_footer', $email );

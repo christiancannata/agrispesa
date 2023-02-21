@@ -130,3 +130,6 @@ function my_custom_fonts() {
   }
   </style>';
 }
+
+//Aggiungi indirizzo di consegna alle mail
+add_filter( 'woocommerce_order_needs_shipping_address', '__return_true' );

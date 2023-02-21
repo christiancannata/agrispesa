@@ -468,6 +468,9 @@ body.tax-product_cat {
 				@include breakpoint(desktop) {
 					display: flex;
 					align-items: flex-start;
+					.product-loop-title-meta {
+						width: 65%;
+					}
 				}
 
 				img {
