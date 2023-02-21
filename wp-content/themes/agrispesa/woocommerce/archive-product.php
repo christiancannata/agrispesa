@@ -175,7 +175,7 @@ if ( woocommerce_product_loop() ) {
 
 		$i = 1;
 		foreach ($loop_categories as $loop_category) {
-			
+
 			if($loop_category->category_count != 0) {
 				echo '<h3 class="products-list--title">'.$loop_category->name.'</h3>';
 				woocommerce_product_loop_start(); //open ul
@@ -240,8 +240,9 @@ if($special_category) {
 
 	$sidebar = array(
 			 'taxonomy'     => 'product_cat',
-			 'orderby'  => 'meta_value',
-			 'meta_key' => 'categories_order_agr',
+			 'orderby'  => 'name',
+			 // 'orderby'  => 'meta_value',
+			 // 'meta_key' => 'categories_order_agr',
 			 'order'      => 'ASC',
 			 'show_count'   => 0,
 			 'hierarchical' => 1,

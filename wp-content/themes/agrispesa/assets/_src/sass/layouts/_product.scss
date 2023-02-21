@@ -34,6 +34,7 @@
 		font-weight: 600;
 		margin: 0 0 16px;
 	}
+
 	&--separator {
 		content: '';
 		display: block;
@@ -70,8 +71,8 @@ body.tax-product_cat.archive {
 		.negozio-sidebar {
 			order: 1;
 			@include breakpoint(desktop) {
-				width: 20%;
-				margin-right: 80px;
+				width: 25%;
+				margin-right: 40px;
 			}
 		}
 	}
@@ -89,6 +90,7 @@ body.tax-product_cat.archive {
 
 	&--list {
 		li {
+
 			&.cat-empty {
 				display: none !important;
 			}
@@ -99,42 +101,46 @@ body.tax-product_cat.archive {
 				}
 			}
 
-			&.current-cat,
-			&.current-cat-ancestor,
-			&.current-cat-parent {
-				& > a {
-					font-weight: 600;
-				}
-
-				& > ul.children {
-					display: block;
-				}
-
-				& > a.i-have-kids {
-					&:before {
-						@include transform(rotate(180deg));
-					}
-				}
-			}
+			// &.current-cat,
+			// &.current-cat-ancestor,
+			// &.current-cat-parent {
+			// 	& > a {
+			// 		font-weight: 600;
+			// 	}
+			//
+			// 	& > ul.children {
+			// 		display: block;
+			// 		.cat-item {
+			// 			display: block;
+			// 		}
+			// 	}
+			//
+			// 	& > a.i-have-kids {
+			// 		&:before {
+			// 			@include transform(rotate(180deg));
+			// 		}
+			// 	}
+			// }
 		}
 
 		a {
 			@include font-size(16);
 			display: block;
-			padding: 6px 0 6px 20px;
 			position: relative;
 			line-height: 1.1;
+			border-top: 1px solid $white;
+			padding: 8px 20px 8px 8px;
 
 			&.i-have-kids {
 				&:before {
 					@include transition(all 0.6s ease);
 					@include icomoon();
 					content: "\e903";
-					@include font-size(22);
+					@include font-size(26);
 					position: absolute;
 					display: inline-block;
 					top: 4px;
-					left: -4px;
+					right: -4px;
 				}
 			}
 
@@ -145,24 +151,43 @@ body.tax-product_cat.archive {
 
 		& > li {
 			display: block;
-			border-bottom: 1px solid $white;
-			padding: 10px;
 
-			&:last-child {
-				border-bottom: none;
+			&:first-child {
+				& > a {
+					border-top: none;
+				}
 			}
 
-			& > a {
+
+			& > a,
+			a.opened {
+				@include font-size(20);
 				font-weight: 600;
+				padding-top: 12px;
+				padding-bottom: 12px;
+
+			}
+
+			a.opened {
+				&:before {
+					@include transform(rotate(180deg));
+					top: 8px;
+				}
+			}
+			a.first-item {
+			padding-top: 12px;
+			padding-bottom: 12px;
+				&:before {
+					top: 8px;
+				}
+			}
+
+			a.opened.first-item{
+				border-top: none !important;
 			}
 
 			ul.children {
-				//border-top: 2px solid $white;
-				margin-top: 4px;
-				padding-top: 4px;
-				display: none;
-				margin-bottom: 4px;
-				padding-bottom: 4px;
+			display: none;
 			}
 		}
 	}
