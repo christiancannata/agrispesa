@@ -162,11 +162,20 @@ add_action('rest_api_init', function () {
 		'callback' => function ($request) {
 
 			$terms = get_the_terms($request['product_id'], 'product_cat');
-			$terms = end($terms);
 
-			$ricarico = get_term_meta($terms->term_id, 'ricarico_percentuale', true);
-			$terms->ricarico_percentuale = !empty($ricarico) ? $ricarico : 0;
-			$response = new WP_REST_Response($terms);
+			$terms = array_reverse($terms);
+
+			$selectedTerm = null;
+			foreach ($terms as $term) {
+				$ricarico = get_term_meta($term->term_id, 'ricarico_percentuale', true);
+				if (!empty($ricarico)) {
+					$selectedTerm = $term;
+					$selectedTerm->ricarico_percentuale = !empty($ricarico) ? floatval($ricarico) : 0;
+				}
+			}
+
+
+			$response = new WP_REST_Response($selectedTerm);
 			$response->set_status(200);
 
 			return $response;

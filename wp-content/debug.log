@@ -587,3 +587,8 @@ Stack trace:
 #4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(95): WC_Shortcodes::shortcode_wrapper(Array, '')
 #5 /shared/httpd/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::checkout('', '', 'woocommerce_che...')
 #6 [internal function]: do_shortco in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/thankyou.php on line 109
+[21-Feb-2023 08:25:54 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 170
+[21-Feb-2023 08:25:54 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 170
+[21-Feb-2023 08:25:54 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 170
+[21-Feb-2023 08:25:54 UTC] PHP Notice:  Trying to get property 'term_id' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 170
+[21-Feb-2023 08:25:54 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:170) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1752
