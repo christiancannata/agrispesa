@@ -239,40 +239,20 @@ if (woocommerce_product_loop()) {
 	}
 
 	$sidebar = array(
-<<<<<<< HEAD
-			 'taxonomy'     => 'product_cat',
-			 'orderby'  => 'name',
-			 // 'orderby'  => 'meta_value',
-			 // 'meta_key' => 'categories_order_agr',
-			 'order'      => 'ASC',
-			 'show_count'   => 0,
-			 'hierarchical' => 1,
-			 'hide_empty'   => 1,
-			 'title_li'     => '',
-			 'walker' => $my_walker,
-			 'exclude' => $excludeSpecial,
-			 'child_of' => $get_product_cat_ID,
-		);
-		wp_list_categories($sidebar);
-		echo '</ul>';
-=======
-		'taxonomy' => 'product_cat',
-		'orderby' => 'meta_value',
+		'taxonomy'     => 'product_cat',
+		'orderby'  => 'meta_value',
 		'meta_key' => 'categories_order_agr',
-		'order' => 'ASC',
-		'show_count' => 0,
+		'order'      => 'ASC',
+		'show_count'   => 0,
 		'hierarchical' => 1,
-		'hide_empty' => 1,
-		'title_li' => '',
+		'hide_empty'   => 1,
+		'title_li'     => '',
 		'walker' => $my_walker,
 		'exclude' => $excludeSpecial,
 		'child_of' => $get_product_cat_ID,
-	);
-	wp_list_categories($sidebar);
-	echo '</ul>';
->>>>>>> 6d260a69805ea022b60dbe83f3a19b1f83b39161
-	echo '</div>';
-
+		);
+		wp_list_categories($sidebar);
+		echo '</ul>';
 	echo '</div>';
 } else {
 	/**

@@ -62,3 +62,13 @@ Stack trace:
 #4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php(1120): Walker->walk(Array, 0, Array)
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-templat in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 325
 
+2023-02-21T12:27:21+00:00 CRITICAL syntax error, unexpected '<<' (T_SL), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 242
+
+2023-02-21T12:27:43+00:00 CRITICAL syntax error, unexpected '<<' (T_SL), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 242
+
+2023-02-21T12:28:32+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
+2023-02-21T12:28:35+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
+2023-02-21T12:28:37+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
