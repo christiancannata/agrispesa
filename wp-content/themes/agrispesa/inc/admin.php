@@ -44,12 +44,14 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 
 	global $wpdb;
 
-	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' ");
+	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' AND post_status = 'publish'");
 	$ids = reset($ids);
 
 	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
 
-	$date = DateTime::createFromFormat('d-m-Y', $date);
+	if (get_class($date) != DateTime::class) {
+		$date = DateTime::createFromFormat('d-m-Y', $date);
+	}
 
 	if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
 		$date->add(new DateInterval('P7D'));
@@ -1562,7 +1564,8 @@ function consegne_ordini_pages()
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi' attive, in
+				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi'
+					attive, in
 					base
 					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
 					prodotti che preferisci.</p>
@@ -2379,7 +2382,7 @@ function my_saved_post($post_id, $json, $is_update)
 
 	$product = wc_get_product($post_id);
 
-	if($product){
+	if ($product) {
 		// Retrieve the import ID.
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
