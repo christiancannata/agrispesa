@@ -54,3 +54,5 @@ Stack trace:
 #3 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
 
+2023-02-22T08:55:21+00:00 CRITICAL Cannot use empty array elements in arrays in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 28
+

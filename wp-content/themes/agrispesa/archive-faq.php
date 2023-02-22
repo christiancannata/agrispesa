@@ -25,6 +25,7 @@ $f = 1; foreach ( $categories as $category ):
 
     $faqs = new WP_Query(
         array(
+					'orderby' => 'term_id',
             'post_type' => 'faq',
             'showposts' => -1,
             'tax_query' => array(
