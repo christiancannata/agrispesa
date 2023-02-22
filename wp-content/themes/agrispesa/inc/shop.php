@@ -281,7 +281,7 @@ class Walker_Category_Custom extends Walker_Category {
 					array(
 						'taxonomy'   => $category->taxonomy,
 						'include'    => $args['current_category'],
-						'hide_empty' => false,
+						'hide_empty' => true
 					)
 				);
 
@@ -311,15 +311,42 @@ class Walker_Category_Custom extends Walker_Category {
 		} else {
 			$output .= "\t$link<br />\n";
 		}
+
 	}
 	public function end_el( &$output, $data_object, $depth = 0, $args = array() ) {
+		$category = $data_object;
+
 		if ( 'list' !== $args['style'] ) {
 			return;
 		}
-
 		$output .= "</li>\n";
+
+
+		if($category->count > 0 && category_has_children( $category->term_id )) {
+
+			$output .= "<li class='cat-item view-all'><a href='".get_term_link( $category->term_id )."' title='Tutto " . $category->name . "' class='view-all--link'>Tutto " . $category->name . "</a></li>";
+
+		}
+
 	}
+}
 
+function category_has_children( $term_id = 0, $taxonomy = 'product_cat' ) {
+    $children = get_categories( array(
+        'child_of'      => $term_id,
+        'taxonomy'      => $taxonomy,
+        'hide_empty'    => false,
+        'fields'        => 'ids',
+    ) );
+    return ( $children );
+}
 
+/*** Change number of products that are displayed per page (shop page)*/
+add_filter( 'loop_shop_per_page', 'new_loop_shop_per_page', 20 );
 
+function new_loop_shop_per_page( $cols ) {
+  // $cols contains the current number of products per page based on the value stored on Options –> Reading
+  // Return the number of products you wanna show per page.
+  $cols = 20;
+  return $cols;
 }

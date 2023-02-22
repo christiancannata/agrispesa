@@ -32,7 +32,6 @@ openMenu();
 clearSearch();
 openSearch();
 openSubMenu();
-//openminiCart();
 quantityInput();
 variationToRadio();
 faqs();
@@ -65,7 +64,70 @@ listCategories();
 function listCategories() {
   if(jQuery('.negozio-sidebar--list').length) {
     jQuery('.negozio-sidebar--list li.cat-item:has(ul.children) > a').addClass('i-have-kids');
+    jQuery('.negozio-sidebar--list > li.cat-item:has(ul.children) > a').addClass('first-item');
+
+    let _viewall = jQuery('.negozio-sidebar--list li.cat-item.view-all');
+    _viewall.each(function () {
+      let _children = jQuery(this).prev('.cat-item').find('ul.children').first();
+      jQuery(this).addClass('test');
+      jQuery(this).prependTo( _children );
+      console.log(_viewall);
+    });
   }
+  if(jQuery('.negozio-sidebar--list .current-cat').length) {
+    jQuery('.negozio-sidebar--list').addClass('its-category');
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > a, .negozio-sidebar--list .current-cat > a').addClass('opened');
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').addClass('show-items');
+    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').show();
+    jQuery('.negozio-sidebar--list .current-cat-ancestor, .negozio-sidebar--list .current-cat').siblings().hide();
+  }
+
+  jQuery('.negozio-sidebar--list .i-have-kids').on('click', function(e){
+    e.preventDefault();
+    let _this = jQuery(this);
+
+    if(_this.hasClass('first-item')) {
+      if(_this.hasClass('opened')) {
+        _this.removeClass('opened');
+        _this.closest('.cat-item').find('ul.children.show-items').hide();
+        _this.next('ul.children').removeClass('show-items');
+        _this.closest('.cat-item').find('.i-have-kids').removeClass('opened');
+
+        _this.closest('.cat-item').siblings().slideDown();
+      } else {
+        _this.addClass('opened');
+        _this.next('ul.children').slideDown();
+        _this.next('ul.children').addClass('show-items');
+        _this.next('ul.children').find('.cat-item').show();
+        _this.closest('.cat-item').siblings().slideUp();
+      }
+    } else if(_this.hasClass('opened')) {
+        _this.removeClass('opened');
+        _this.closest('.cat-item').siblings().slideDown();
+        _this.next('ul.children').slideUp();
+        _this.next('ul.children').removeClass('show-items');
+        _this.closest('.cat-item').find('.i-have-kids').removeClass('opened');
+
+
+    } else {
+      _this.addClass('opened');
+      _this.next('ul.children').find('.cat-item').show();
+      _this.next('ul.children').slideDown();
+      _this.next('ul.children').addClass('show-items');
+      _this.closest('.cat-item').siblings().slideUp();
+    }
+  });
+
+  // jQuery('.negozio-sidebar--list .opened').on('click', function(e){
+  //   e.preventDefault();
+  //   console.log('cchiudi');
+  //   jQuery(this).removeClass('opened');
+  //   jQuery(this).addClass('closed');
+  //   //jQuery(this).next('ul.children').slideToggle();
+  //
+  //   jQuery(this).closest('.cat-item').siblings().slideDown();
+  // });
+
 
 }
 
@@ -141,16 +203,17 @@ function minimumAmount() {
 
 function hideGlossarioAlpha() {
   let glossarioElements = jQuery('.glossario--anchor');
-  glossarioElements.each(function (index) {
-    let alphabet = jQuery('.glossario--link');
-    let target = jQuery(this).attr('data-alpha');
+  if(glossarioElements.length) {
+    glossarioElements.each(function () {
+      let target = jQuery(this).attr('data-alpha');
 
-    jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
-  });
+      jQuery('.glossario--link[data-alpha="' + target + '"]').removeClass('disabled');
+    });
+  }
 
   jQuery('.sliding-link').on('click', function(event) {
-    var target = jQuery(this.getAttribute('href'));
-    var scrollto = target.offset().top - 35
+    let target = jQuery(this.getAttribute('href'));
+    let scrollto = target.offset().top - 35
 
     if (target.length) {
       event.preventDefault();
@@ -161,12 +224,12 @@ function hideGlossarioAlpha() {
   });
 }
 
-function changeShippingLabel() {
-  if (jQuery('.cart_totals').length) {
-    let amount = jQuery('.cart_totals').find('.shipping .amount').html();
-    jQuery('.woocommerce-shipping-totals td').html(amount);
-  }
-}
+// function changeShippingLabel() {
+//   if (jQuery('.cart_totals').length) {
+//     let amount = jQuery('.cart_totals').find('.shipping .amount').html();
+//     jQuery('.woocommerce-shipping-totals td').html(amount);
+//   }
+// }
 
 
 function pressSlider() {
@@ -591,7 +654,7 @@ function variationToRadio() {
 
 function quantityInput() {
 
-  jQuery(function ($) {
+  jQuery(function () {
     if (!String.prototype.getDecimals) {
       String.prototype.getDecimals = function () {
         let num = jQuery(this),
@@ -671,16 +734,7 @@ function openSubMenu() {
   }
 }
 
-function openminiCart() {
-  if (window.screen.width > 640) {
-    jQuery(".is-full-cart").on('click', function (e) {
-      e.preventDefault();
-      jQuery(".widget_shopping_cart_content").toggleClass('active');
-      jQuery('.get-user-menu').removeClass('active');
-      jQuery('.top-user__menu').removeClass('active');
-    });
-  }
-}
+
 
 function openSearch() {
   jQuery('.openSearch').on('click', function (e) {

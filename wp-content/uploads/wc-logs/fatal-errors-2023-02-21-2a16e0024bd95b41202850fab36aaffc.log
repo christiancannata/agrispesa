@@ -1,0 +1,258 @@
+2023-02-21T08:12:10+00:00 CRITICAL syntax error, unexpected '=' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 217
+
+2023-02-21T08:35:31+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:320
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(170): Walker_Category_Custom->end_el('\t<li class="cat...', Object(WP_Term), 2, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 2, Array, '\t<li class="cat...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 1, Array, '\t<li class="cat...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(247): Walker->display_element(Object(WP_Term), Array, 0, 0, Array, '\t<li class="cat...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php(1120): Walker->walk(Array, 0, Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category- in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 320
+
+2023-02-21T08:35:42+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:320
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(170): Walker_Category_Custom->end_el('\t<li class="cat...', Object(WP_Term), 2, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 2, Array, '\t<li class="cat...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 1, Array, '\t<li class="cat...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(247): Walker->display_element(Object(WP_Term), Array, 0, 0, Array, '\t<li class="cat...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php(1120): Walker->walk(Array, 0, Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category- in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 320
+
+2023-02-21T08:35:45+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:320
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(170): Walker_Category_Custom->end_el('\t<li class="cat...', Object(WP_Term), 2, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 2, Array, '\t<li class="cat...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 1, Array, '\t<li class="cat...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(247): Walker->display_element(Object(WP_Term), Array, 0, 0, Array, '\t<li class="cat...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php(1120): Walker->walk(Array, 0, Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category- in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 320
+
+2023-02-21T09:04:09+00:00 CRITICAL syntax error, unexpected 'print_r' (T_STRING), expecting function (T_FUNCTION) or const (T_CONST) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 206
+
+2023-02-21T09:04:21+00:00 CRITICAL syntax error, unexpected 'print_r' (T_STRING), expecting function (T_FUNCTION) or const (T_CONST) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 206
+
+2023-02-21T10:39:49+00:00 CRITICAL Uncaught Error: Call to a member function get_results() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:251
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/templates/taxonomy-product-cat.php(22): wc_get_template('archive-product...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 251
+
+2023-02-21T10:39:53+00:00 CRITICAL Uncaught Error: Call to a member function get_results() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:251
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/templates/taxonomy-product-cat.php(22): wc_get_template('archive-product...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 251
+
+2023-02-21T11:29:36+00:00 CRITICAL syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 325
+
+2023-02-21T11:29:45+00:00 CRITICAL Uncaught Error: Call to undefined function category_has_children() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:325
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(170): Walker_Category_Custom->end_el('\t<li class="cat...', Object(WP_Term), 2, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 2, Array, '\t<li class="cat...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(159): Walker->display_element(Object(WP_Term), Array, 0, 1, Array, '\t<li class="cat...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-walker.php(247): Walker->display_element(Object(WP_Term), Array, 0, 0, Array, '\t<li class="cat...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-template.php(1120): Walker->walk(Array, 0, Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/category-templat in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 325
+
+2023-02-21T12:27:21+00:00 CRITICAL syntax error, unexpected '<<' (T_SL), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 242
+
+2023-02-21T12:27:43+00:00 CRITICAL syntax error, unexpected '<<' (T_SL), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 242
+
+2023-02-21T12:28:32+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
+2023-02-21T12:28:35+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
+2023-02-21T12:28:37+00:00 CRITICAL syntax error, unexpected ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 257
+
+2023-02-21T13:12:02+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:171
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/templates/taxonomy-product-cat.php(22): wc_get_template('archive-product...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 171
+
+2023-02-21T13:12:42+00:00 CRITICAL Uncaught Error: Object of class WP_Error could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php:171
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/templates/taxonomy-product-cat.php(22): wc_get_template('archive-product...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#5 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 171
+
+2023-02-21T13:59:56+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 157
+
+2023-02-21T14:00:08+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/archive-product.php alla riga 160
+
+2023-02-21T15:29:00+00:00 CRITICAL syntax error, unexpected ';' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/thankyou.php alla riga 159
+
+2023-02-21T15:36:08+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:87
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 87
+
+2023-02-21T16:19:37+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 39
+
+2023-02-21T16:19:47+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 39
+
+2023-02-21T16:20:01+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 39
+
+2023-02-21T16:20:10+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 39
+
+2023-02-21T16:20:19+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:39
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-i in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 39
+
+2023-02-21T16:20:28+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:31+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:42+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:48+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:49+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:56+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:20:59+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:21:22+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:21:30+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:21:35+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:21:54+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:22:02+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:22:07+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:22:10+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(123): wc_get_template('myaccount/my-ac...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-my-account.php(72): WC_Shortcode_My_Account::my_account('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_My_Account::output('')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(115): WC_Shortcodes::shortcode_wrapper(Array, '')
+#5 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php alla riga 40
+
+2023-02-21T16:54:54+00:00 CRITICAL syntax error, unexpected 'do_action' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/emails/customer-processing-order.php alla riga 67
+
+2023-02-21T16:55:58+00:00 CRITICAL syntax error, unexpected 'do_action' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/emails/customer-processing-order.php alla riga 67
+
+2023-02-21T16:56:22+00:00 CRITICAL syntax error, unexpected 'do_action' (T_STRING), expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/emails/customer-processing-order.php alla riga 67
+
