@@ -18,21 +18,51 @@
 
 		<section class="faq">
 			<div class="container-small">
+<?php
+$categories = get_terms( 'faq_cats' );
 
-			<?php /* Start the Loop */ ?>
-			<?php $i = 1; while ( have_posts() ) : the_post(); ?>
+$f = 1; foreach ( $categories as $category ):
+
+    $faqs = new WP_Query(
+        array(
+            'post_type' => 'faq',
+            'showposts' => -1,
+            'tax_query' => array(
+                array(
+                    'taxonomy'  => 'faq_cats',
+                    'terms'     => array( $category->slug ),
+                    'field'     => 'slug'
+                )
+            )
+        )
+    );
+?>
+
+<h3 class="faq-category--title"><?php echo $category->name; ?></h3>
+<ul>
+<?php $i = 1; while ($faqs->have_posts()) : $faqs->the_post(); ?>
+	<article id="post-<?php the_ID(); ?>" class="faq__item <?php echo 'faq-'.$f.$i; ?>" data-aos-duration="600" data-aos-delay="100" data-aos-offset="-100">
+
+		<header class="faq__content">
+			<h2 class="faq__title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="faq__link"><span class="faq__icon icon-arrow-down"></span><?php the_title(); ?></a></h2>
+			<div class="faq__description"><?php the_content(); ?></div>
+		</header>
+
+	</article>
+<?php $i++; endwhile; ?>
+</ul>
+
+<?php
+    // Reset things, for good measure
+    $faqs = null;
+    wp_reset_postdata();
+
+// end the loop
+$f++; endforeach;
+
+				?>
 
 
-				<article id="post-<?php the_ID(); ?>" class="faq__item <?php echo 'faq-'.$i; ?>" data-aos-duration="600" data-aos-delay="100" data-aos-offset="-100">
-
-					<header class="faq__content">
-						<h2 class="faq__title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="faq__link"><span class="faq__icon icon-arrow-down"></span><?php the_title(); ?></a></h2>
-						<div class="faq__description"><?php the_content(); ?></div>
-					</header>
-
-				</article>
-
-			<?php $i++; endwhile; ?>
 
 		</div>
 	</section>

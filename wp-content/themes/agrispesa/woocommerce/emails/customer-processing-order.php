@@ -60,7 +60,7 @@ do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_
 // 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 // }
 
-echo '<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
+echo '<img src="'.get_template_directory_uri(). '/assets/images/elements/firma-email.png" style="width:300px;display:block;margin:24px auto;" />';
 
 echo '<p style="margin:24px 0;font-size: 11px;color:#999;line-height: 1.2;">';
 echo "Pssst — Ricorda che questa mail e il documento che troverai all'interno della tua scatola non sono la Fattura, ma la Conferma d'ordine. Potrai quindi riscontrare differenze tra gli importi previsti dalla Conferma d'ordine e quelli della Fattura.<br/>
