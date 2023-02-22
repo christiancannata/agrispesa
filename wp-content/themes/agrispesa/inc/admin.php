@@ -1230,13 +1230,11 @@ function my_custom_submenu_page_callback()
 		];
 		$orders = new WP_Query($args);
 		$orders = $orders->get_posts();
-
 		if (count($orders) > 0) {
-			continue;
+		//	continue;
 		}
 
 		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
-
 		foreach ($productsToAdd as $productToAdd) {
 
 			if (!isset($allProductsNeed[$productToAdd['id']])) {
