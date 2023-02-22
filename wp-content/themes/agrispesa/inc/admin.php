@@ -984,6 +984,7 @@ function get_box_from_subscription($subscription, $week = null)
 	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
 
+
 	$productBox = get_single_box_from_attributes($tipologia, $dimensione);
 
 	if (empty($productBox)) {
@@ -991,6 +992,13 @@ function get_box_from_subscription($subscription, $week = null)
 	}
 
 	//get product data box
+	$box = get_weekly_box_from_box($productBox->get_id(), $week);
+	return $box;
+}
+
+
+function get_weekly_box_from_box($id, $week)
+{
 	$box = get_posts([
 		'post_type' => 'weekly-box',
 		'post_status' => 'publish',
@@ -1004,7 +1012,7 @@ function get_box_from_subscription($subscription, $week = null)
 			],
 			[
 				'key' => '_product_box_id',
-				'value' => $productBox->get_id(),
+				'value' => $id,
 				'compare' => '='
 			]
 		]
@@ -1017,7 +1025,6 @@ function get_box_from_subscription($subscription, $week = null)
 
 	return reset($box);
 }
-
 
 function create_order_from_subscription($id)
 {
@@ -1358,7 +1365,6 @@ function my_custom_submenu_page_callback()
 						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
 						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
 
-
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
 							<th scope="row" class="check-column"><label class="screen-reader-text"
@@ -1366,21 +1372,30 @@ function my_custom_submenu_page_callback()
 									un abbonamento</label>
 
 								<?php
-								if (!get_single_box_from_attributes($tipologia, $dimensione)) {
+
+
+								if (!$box = get_single_box_from_attributes($tipologia, $dimensione)) {
 									echo "Box Singola Non disponibile";
 								} else {
-									?>
-									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-										   value="<?php echo $subscription->get_id(); ?>"
-										<?php if (count($orders) > 0): ?>
-											disabled
-										<?php endif; ?>
-									><br>
+									//check if exist weekly box
+									$weekBox = get_weekly_box_from_box($box->get_id(), $week);
+
+									if ($weekBox):
+										?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $subscription->get_id(); ?>"
+											<?php if (count($orders) > 0): ?>
+												disabled
+											<?php endif; ?>
+										><br>
+									<?php else: ?>
+										Nessuna Box Settimanale
+									<?php endif; ?>
 								<?php } ?>
 
 							</th>
 							<td class="author column-author" data-colname="Autore">
-								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
+								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary"
 								data-colname="Commento">
@@ -2181,7 +2196,8 @@ function consegne_ordini_pages()
 													<br>
 													<b><?php echo $weight . $unitaMisura; ?></b>
 													<?php if ($codiceConfezionamento): ?><br>
-														<i>Cod. Confezionamento: <?php echo $codiceConfezionamento; ?></i>
+														<i>Cod.
+															Confezionamento: <?php echo $codiceConfezionamento; ?></i>
 													<?php endif; ?>
 												</td>
 												<td style="display:flex;">
