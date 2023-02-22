@@ -6704,3 +6704,6 @@ Stack trace:
 [22-Feb-2023 03:02:13 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-includes/functions.php on line 6865
 [22-Feb-2023 03:02:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-admin/admin-header.php on line 9
 [22-Feb-2023 03:07:54 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140

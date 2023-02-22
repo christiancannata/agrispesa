@@ -2137,12 +2137,13 @@ function consegne_ordini_pages()
 										?>
 										<?php foreach ($products as $key => $product): ?>
 											<?php
+											$weight = get_post_meta($product['id'], '_weight', true);
 
 											if (!isset($product['price'])) {
 												$product['price'] = 0;
 											}
 
-											$totalWeight += $product['quantity'];
+											$totalWeight += ($product['quantity'] * $weight);
 											$totalPrice += ($product['price'] * $product['quantity']);
 
 											$fornitore = get_post_meta($product['id'], 'product_producer', true);
@@ -2162,9 +2163,7 @@ function consegne_ordini_pages()
 											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
 												$codiceConfezionamento = reset($codiceConfezionamento);
 											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+
 
 											$unitaMisura = 'gr';
 
@@ -2181,14 +2180,18 @@ function consegne_ordini_pages()
 													<?php if ($fornitoreString): ?> <br>
 														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
 
+													<br>
+													<b><?php echo $weight . $unitaMisura; ?></b>
 													<?php if ($codiceConfezionamento): ?><br>
-														<i><?php echo $codiceConfezionamento; ?></i>
+														<i>Cod. Confezionamento: <?php echo $codiceConfezionamento; ?></i>
 													<?php endif; ?>
 												</td>
-												<td><input readonly value="<?php echo $product['quantity']; ?>"
+												<td style="display:flex;">
+													<span>X</span><input readonly
+																		 value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
-														   type="number"
-														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
+																		 type="number"
+																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
 													<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
