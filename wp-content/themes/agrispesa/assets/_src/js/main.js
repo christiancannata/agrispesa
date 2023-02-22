@@ -626,7 +626,7 @@ function faqs() {
     description.slideToggle();
   });
   if (window.screen.width > 640) {
-    jQuery('.faq-1 .faq__title').trigger("click");
+    jQuery('.faq-11 .faq__title').trigger("click");
   }
 }
 

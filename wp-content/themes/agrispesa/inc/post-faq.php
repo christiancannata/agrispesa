@@ -30,8 +30,32 @@ function faq_posts_init() {
        'menu_position' => null,
        'supports' => array( 'title', 'editor' ),
        'menu_position'=>4,
-       //'taxonomies'=>array('category')
+       'taxonomies' => ['faq_cats']
    );
 
    register_post_type( 'faq', $args );
 }
+
+add_action('init', function() {
+	register_taxonomy('faq_cats', ['faq'], [
+		'label' => __('Categorie', 'txtdomain'),
+		'hierarchical' => false,
+		'rewrite' => ['slug' => 'supporto'],
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'labels' => [
+			'singular_name' => __('Categoria', 'txtdomain'),
+			'all_items' => __('Tutte le Categorie', 'txtdomain'),
+			'edit_item' => __('Modifica Categoria', 'txtdomain'),
+			'view_item' => __('Visualizza Categoria', 'txtdomain'),
+			'update_item' => __('Aggiorna Categoria', 'txtdomain'),
+			'add_new_item' => __('Aggiungi nuova Categoria', 'txtdomain'),
+			'new_item_name' => __('Nuova Categoria', 'txtdomain'),
+			'search_items' => __('Cerca Categorie', 'txtdomain'),
+			'popular_items' => __('Categorie popolari', 'txtdomain'),
+			'separate_items_with_commas' => __('Separa le Categorie con una virgola', 'txtdomain'),
+			'choose_from_most_used' => __('Scegli tra le Categorie più usate', 'txtdomain'),
+			'not_found' => __('Nessuna categoria trovata', 'txtdomain'),
+		]
+	]);
+});

@@ -1,0 +1,58 @@
+2023-02-22T08:16:28+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:16:41+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:16:43+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:16:58+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:17:10+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:17:14+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:17:26+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 24
+
+2023-02-22T08:55:21+00:00 CRITICAL Cannot use empty array elements in arrays in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 28
+
