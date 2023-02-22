@@ -2311,7 +2311,6 @@ function consegne_ordini_pages()
 		}
 
 		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
-
 		?>
 		<div id="wpbody-content">
 
@@ -2322,8 +2321,6 @@ function consegne_ordini_pages()
 					Esporta Documenti</h1>
 
 				<hr class="wp-header-end">
-
-
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
 					<label>Data di consegna</label><br>
 
