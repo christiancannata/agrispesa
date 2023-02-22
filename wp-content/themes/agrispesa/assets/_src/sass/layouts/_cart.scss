@@ -63,7 +63,7 @@ body.woocommerce-checkout {
 
 		.cart-collaterals {
 			width: 100%;
-			background: $background;
+			background: $panna;
 			margin: 16px 0 80px;
 			@include breakpoint(desktop) {
 				width: 40%;
@@ -77,7 +77,7 @@ body.woocommerce-checkout {
 
 			tr td,
 			tr th {
-				border-top: 1px solid $panna !important;
+				border-top: 1px solid $white !important;
 				vertical-align: middle !important;
 				background: transparent !important;
 				@include breakpoint(mobile) {
@@ -172,17 +172,25 @@ body.woocommerce-checkout {
 .new-cart {
 	&--item {
 		background: $white;
-		@include border-radius(4px);
-		border: 1px solid #eaeae1;
+		//border: 1px solid #eaeae1;
 		position: relative;
 		margin: 4px 0;
+		box-shadow: 0 3px 3px 0 rgb(0 0 0 / 3%);
 		@include breakpoint(mobile) {
 			padding: 8px 0;
 		}
-
 		&:first-of-type {
 			margin-top: 0;
+			border-top-left-radius: 16px;
+			border-top-right-radius: 16px;
 		}
+
+		&:last-of-type {
+			border-bottom-left-radius: 16px;
+			border-bottom-right-radius: 16px;
+		}
+
+
 	}
 
 	&--flex {
@@ -327,7 +335,7 @@ body.woocommerce-checkout {
 
 .zig-zag-bottom {
 	@include border-radius(8px);
-	background: $background;
+	background: $panna;
 	padding: 24px;
 	position: relative;
 	margin-bottom: 24px !important;
@@ -414,7 +422,7 @@ ul#shipping_method .shipping-mode-cart--label {
 			display: flex;
 			padding: 20px 0;
 			text-align: left;
-			border-top: 1px solid $background;
+			border-top: 1px solid $white;
 
 			&:first-of-type,
 			&:last-of-type {

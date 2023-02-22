@@ -258,10 +258,12 @@
 }
 
 .product-box {
-	padding: 20px;
-	background: $beige;
-	@include breakpoint(container) {
-		padding: 16px;
+	@include border-radius(16px 16px 4px 4px);
+	background: $white;
+	box-shadow: 0 3px 3px 0 rgb(0 0 0 / 3%);
+	padding: 0;
+	@include breakpoint(desktop) {
+		@include border-radius(50px 50px 4px 4px);
 	}
 
 	&.text-box {
@@ -292,6 +294,10 @@
 	}
 
 	&--link {
+		@include border-radius(16px 16px 0 0);
+		@include breakpoint(desktop) {
+			@include border-radius(50px 50px 0 0);
+		}
 		display: block;
 		overflow: hidden;
 
@@ -309,11 +315,14 @@
 
 	&--text {
 		text-align: center;
-		padding-top: 16px;
+		padding: 24px 20px;
+		@include breakpoint(desktop) {
+			padding: 24px;
+		}
 	}
 
 	&--title {
-		@include font-size(22);
+		@include font-size(18);
 		font-weight: 600;
 		line-height: 1;
 		margin-bottom: 8px;
@@ -328,6 +337,8 @@
 	}
 
 	&--price {
+		font-weight: 400;
+
 		.uom {
 			display: none;
 		}
@@ -339,6 +350,7 @@
 			margin-top: -8px;
 
 			.product-info--quantity {
+				font-weight: 400;
 				margin-right: 8px;
 			}
 		}
@@ -372,11 +384,11 @@
 
 		.woocommerce-Price {
 			&-amount {
-				@include font-size(24);
+				//@include font-size(24);
 			}
 
 			&-currencySymbol {
-				@include font-size(18);
+				@include font-size(14);
 			}
 		}
 	}
@@ -399,7 +411,7 @@
 	margin: 0 8px;
 	background: $white;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
-	border: 1px solid #eaeae1;
+	//border: 1px solid #eaeae1;
 	@include breakpoint(container) {
 		padding: 20px;
 	}

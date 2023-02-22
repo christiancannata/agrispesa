@@ -1,5 +1,5 @@
 /* stylelint-disable */
-@import url('https://fonts.googleapis.com/css2?family=Alice&family=Barlow:wght@300;400;500;600;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Lato:wght@300;400;700;900&display=swap');
 
 @font-face {
     font-family: 'Bubble';
@@ -10,7 +10,7 @@
 }
 
 //Font
-$font-body: 'Barlow', sans-serif;
+$font-body: 'Lato', sans-serif;
 $font-title: 'Alice', serif;
 $font-hand: 'Bubble';
 
@@ -19,7 +19,8 @@ $light-gray: #DEE4E6;
 $gray: #697478;
 $muted: #8c9da3;
 $black: #343535;
-$background: #f2f2ee;
+//$background: #f2f2ee;
+$background: #f8f5f1;
 //$primary: #479461;
 $primary: #069460;
 $red: #EC5157;

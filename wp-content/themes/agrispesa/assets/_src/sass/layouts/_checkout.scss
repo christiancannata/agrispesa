@@ -314,7 +314,7 @@ body.woocommerce-checkout {
 			&.product-number {
 				padding-bottom: 10px;
 				padding-top: 10px;
-				border-top: 1px solid $panna;
+				border-top: 1px solid $white;
 			}
 
 			&.mg-t {
@@ -331,7 +331,7 @@ body.woocommerce-checkout {
 			.is-description {
 				line-height: 1.2;
 				display: block;
-				color: $muted;
+				color: $black;
 			}
 
 			.is-icon {
@@ -416,7 +416,7 @@ body.woocommerce-checkout {
 
 		&--flex {
 			align-items: center;
-			border-top: 1px solid $panna;
+			border-top: 1px solid $white;
 			display: flex;
 			justify-content: space-between;
 			padding: 8px;
@@ -464,7 +464,7 @@ body.woocommerce-checkout {
 }
 
 .woocommerce-checkout #payment {
-	background: transparent !important;
+	background: $white !important;
 	border-radius: 16px !important;
 
 	ul.payment_methods {
@@ -753,7 +753,7 @@ body.woocommerce-cart {
 body.woocommerce-checkout .woocommerce-gift-card-section {
 	@include breakpoint(desktop) {
 		@include border-radius(16px);
-		border: 1px solid #eaeae1;
+		background: $white;
 		padding: 24px;
 		margin-bottom: 32px;
 	}

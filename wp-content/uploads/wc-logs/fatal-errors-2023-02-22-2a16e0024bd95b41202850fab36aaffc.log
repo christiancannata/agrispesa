@@ -56,3 +56,68 @@ Stack trace:
 
 2023-02-22T08:55:21+00:00 CRITICAL Cannot use empty array elements in arrays in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-faq.php alla riga 28
 
+2023-02-22T09:38:13+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:38:30+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:38:33+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:38:59+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:39:01+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:39:30+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 24
+
+2023-02-22T09:47:07+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 30
+
+2023-02-22T09:47:39+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 30
+
+2023-02-22T09:48:57+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 30
+
+2023-02-22T10:01:15+00:00 CRITICAL Uncaught Error: Object of class WP_Term could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php:561
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php(561): array_unique(Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php(395): WP_Tax_Query->clean_query(Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php(325): WP_Tax_Query->get_sql_for_clause(Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php(275): WP_Tax_Query->get_sql_for_query(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php(251): WP_Tax_Query->get_sql_clauses()
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-query.php(2197): WP_Tax_Query->get_sql('wp_posts', 'ID')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-query.php(3749): WP_Query->get_posts()
+#7 /Users/nathalie/Sites/ in /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-tax-query.php alla riga 561
+

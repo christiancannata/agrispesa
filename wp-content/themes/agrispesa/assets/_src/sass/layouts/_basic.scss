@@ -19,7 +19,7 @@ html {
 
 body {
 	@include font-size(16);
-	background: $white;
+	background: $background;
 	color: $black;
 	font-family: $font-body;
 	-webkit-font-smoothing: antialiased;
@@ -29,10 +29,10 @@ body {
 	width: 100%;
 	font-weight: 300;
 	padding-top: 80px;
-	&.woocommerce-cart,
-	&.woocommerce-checkout {
-		background: $white;
-	}
+	// &.woocommerce-cart,
+	// &.woocommerce-checkout {
+	// 	background: $white;
+	// }
 	@include breakpoint(desktop) {
 		@include font-size(18);
 		padding-top: 90px;

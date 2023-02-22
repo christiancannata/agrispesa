@@ -1,9 +1,3 @@
-<?php
-//custom fields
-$posh_intro = get_field('posh_intro');
-
-?>
-
 <section class="faq">
   <div class="container-small">
     <h3 class="faq--title">Ci chiedono spesso.</h3>

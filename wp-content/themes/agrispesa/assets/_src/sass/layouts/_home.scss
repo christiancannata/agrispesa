@@ -560,8 +560,8 @@
 				line-height: 1.1;
 				text-align: center;
 				display: block;
-				box-shadow: 0 5px 5px 0 rgb(0 0 0 / 3%);
-				border: 1px solid #eaeae1;
+				box-shadow: 0 3px 3px 0 rgb(0 0 0 / 3%);
+				
 				@include breakpoint(desktop) {
 					@include font-size(16);
 

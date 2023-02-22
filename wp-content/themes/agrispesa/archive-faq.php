@@ -41,8 +41,9 @@ $f = 1; foreach ( $categories as $category ):
 
 <h3 class="faq-category--title"><?php echo $category->name; ?></h3>
 <ul>
-<?php $i = 1; while ($faqs->have_posts()) : $faqs->the_post(); ?>
-	<article id="post-<?php the_ID(); ?>" class="faq__item <?php echo 'faq-'.$f.$i; ?>" data-aos-duration="600" data-aos-delay="100" data-aos-offset="-100">
+<?php $i = 1; while ($faqs->have_posts()) : $faqs->the_post();
+$delay = 50 * $i;?>
+	<article id="post-<?php the_ID(); ?>" class="faq__item <?php echo 'faq-'.$f.$i; ?>"  data-aos="fade-up" data-aos-duration="600" data-aos-delay="<?php echo $delay; ?>">
 
 		<header class="faq__content">
 			<h2 class="faq__title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="faq__link"><span class="faq__icon icon-arrow-down"></span><?php the_title(); ?></a></h2>

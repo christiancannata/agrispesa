@@ -1,6 +1,6 @@
 <section class="all-categories">
   <?php
-  $orderby = 'ID';
+    $orderby = 'ID';
     $order = 'asc';
     $hide_empty = false;
 
@@ -11,9 +11,10 @@
     $specialiID = $getSpeciali->term_id;
 
     $cat_args = array(
-        'orderby'    => $orderby,
-        'order'      => $order,
-        'hide_empty' => $hide_empty,
+      'orderby' => 'meta_value',
+      'meta_key' => 'categories_order_agr',
+      'order' => 'ASC',
+      'hide_empty' => false,
         'parent' => $get_product_cat_ID,
         'exclude' => $specialiID
     );
@@ -62,7 +63,7 @@ if( !empty($product_categories) ){
         echo '</a>';
         echo '</li>';
     }
-    
+
     echo '</ul>';
 }
 

@@ -1,8 +1,8 @@
 /* stylelint-disable */
 .faq {
-	padding: 60px 0;
+	padding: 40px 0;
 	@include breakpoint(desktop) {
-		padding: 160px 0 80px;
+		padding: 100px 0 60px;
 	}
 
 	body.archive & {
@@ -15,13 +15,12 @@
 	&--title {
 		@include font-size(24);
 		line-height: 1;
-		margin-bottom: 42px;
+		margin-bottom: 40px;
 		font-family: $font-title;
 		font-weight: 900;
 		text-align: center;
 		@include breakpoint(desktop) {
 			@include font-size(40);
-			margin-bottom: 80px;
 		}
 	}
 
