@@ -274,3 +274,48 @@ Stack trace:
 #4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
 
+2023-02-22T22:02:25+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(846, Object(WC_Subscription))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 846, Object(WC_Subscription))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
+
+2023-02-22T22:02:42+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(848, Object(WC_Subscription))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 848, Object(WC_Subscription))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
+
+2023-02-22T22:05:40+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(850, Object(WC_Subscription))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 850, Object(WC_Subscription))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
+
+2023-02-22T22:10:45+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(852, Object(WC_Subscription))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 852, Object(WC_Subscription))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
+
+2023-02-22T22:15:32+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(854, Object(WC_Subscription))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 854, Object(WC_Subscription))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
+
