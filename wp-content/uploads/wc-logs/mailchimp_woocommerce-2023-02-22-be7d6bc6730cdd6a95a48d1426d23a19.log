@@ -29,3 +29,82 @@
 2023-02-22T02:26:46+00:00 NOTICE order_process :: Order #22451 skipped, user #1 user role is not in the list
 2023-02-22T02:27:27+00:00 NOTICE order_process :: Order #22452 skipped, user #1 user role is not in the list
 2023-02-22T02:43:53+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22452
+2023-02-22T02:46:20+00:00 NOTICE order_process :: Order #22452 skipped, user #1 user role is not in the list
+2023-02-22T02:48:12+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22453
+2023-02-22T02:48:17+00:00 NOTICE debug :: Order ID 22453 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=22452&action=edit&message=1
+        )
+
+)
+
+2023-02-22T02:50:20+00:00 NOTICE order_process :: Order #22453 skipped, user #1 user role is not in the list
+2023-02-22T02:53:56+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22455
+2023-02-22T02:54:00+00:00 NOTICE debug :: Order ID 22455 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=22453&action=edit
+        )
+
+)
+
+2023-02-22T02:56:35+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22456
+2023-02-22T02:56:35+00:00 NOTICE order_process :: Order #22455 skipped, user #1 user role is not in the list
+2023-02-22T02:56:39+00:00 NOTICE debug :: Order ID 22456 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/edit.php?post_type=shop_order&paged=1
+        )
+
+)
+
+2023-02-22T02:58:18+00:00 NOTICE order_process :: Order #22456 skipped, user #1 user role is not in the list
+2023-02-22T02:58:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22457
+2023-02-22T02:58:50+00:00 NOTICE debug :: Order ID 22457 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/edit.php?post_type=shop_order&paged=1
+        )
+
+)
+
+2023-02-22T03:00:32+00:00 NOTICE order_process :: Order #22457 skipped, user #1 user role is not in the list
+2023-02-22T03:03:27+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22458
+2023-02-22T03:03:32+00:00 NOTICE debug :: Order ID 22458 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=22457&action=edit
+        )
+
+)
+
+2023-02-22T03:05:19+00:00 NOTICE order_process :: Order #22458 skipped, user #1 user role is not in the list
+2023-02-22T03:07:49+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22459
+2023-02-22T03:07:53+00:00 NOTICE debug :: Order ID 22459 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/admin.php?page=my-custom-submenu-page
+        )
+
+)
+
+2023-02-22T03:09:26+00:00 NOTICE order_process :: Order #22459 skipped, user #1 user role is not in the list

@@ -68,7 +68,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 function calculate_delivery_date_order($id)
 {
 
-	$order = new WC_Order($id);
+	$order = wc_get_order($id);
 	if (!$order) {
 		return null;
 	}
@@ -85,14 +85,18 @@ function calculate_delivery_date_order($id)
 
 	$week = $order_date->format("W");
 
-	//if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
-	$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-	//}
+	if ($order->get_created_via() == 'checkout') {
+		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+	} else {
+		if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+			$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+		}
+	}
+
 
 	update_post_meta($order->get_id(), '_week', $week);
 
 	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
-
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 
 }
@@ -859,6 +863,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		$gruppoConsegna = get_post_meta($post->ID, '_gruppo_consegna', true);
 		$deliveryDay = get_order_delivery_date($post->ID);
 
+
 		if (empty($weight)) {
 			$weight = 0;
 		}
@@ -872,8 +877,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 ';
 
 		global $wpdb;
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
-
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 		?>
 		<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
@@ -1106,6 +1110,7 @@ function create_order_from_subscription($id)
 	if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
 		$order->get_date_paid()->add(new DateInterval('P7D'));
 	}
+
 
 	update_post_meta($order->get_id(), '_data_consegna', $consegna);
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
@@ -2305,7 +2310,7 @@ function consegne_ordini_pages()
 			die();
 		}
 
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 
 		?>
 		<div id="wpbody-content">
