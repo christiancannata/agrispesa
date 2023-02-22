@@ -1902,27 +1902,38 @@ function consegne_ordini_pages()
 
 						foreach ($categoryProducts as $categoryProduct) {
 
-							$unitaMisura = 'gr';
 
-							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							$price = get_post_meta($categoryProduct->ID, '_price', true);
+							$weight = get_post_meta($categoryProduct->ID, '_weight', true);
 
+							$unitaMisura = 'gr';
+							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							if (!empty($measureUnit)) {
 								$unitaMisura = $measureUnit;
 							}
 
+							$fornitore = get_post_meta($categoryProduct->ID, 'product_producer', true);
+							$fornitoreString = '';
+							if (!empty($fornitore)) {
+								$fornitore = reset($fornitore);
+								$fornitore = get_post($fornitore);
+								$fornitoreString = $fornitore->post_title;
+							}
+
+
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title,
+								'name' => $categoryProduct->post_title . ' (' . $weight . $unitaMisura . ')',
+								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
-								'price' => floatval($price)
+								'price' => floatval($price),
+								'weight' => $weight
 							];
 						}
 					}
 				}
 			}
 		}
-
 
 		?>
 
@@ -1985,6 +1996,13 @@ function consegne_ordini_pages()
 							<?php foreach ($category['products'] as $product): ?>
 								<?php
 								$fornitore = get_post_meta($product->ID, 'product_producer', true);
+								$weight = get_post_meta($product->ID, '_weight', true);
+								$unitaMisura = 'gr';
+								$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+								if (!empty($measureUnit)) {
+									$unitaMisura = $measureUnit;
+								}
+
 								$fornitoreString = '';
 								if (!empty($fornitore)) {
 									$fornitore = reset($fornitore);
@@ -2007,7 +2025,7 @@ function consegne_ordini_pages()
 
 								?>
 								<option
-									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
+									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -2030,9 +2048,10 @@ function consegne_ordini_pages()
 					<div class="product-box" v-for="(product,index) of products">
 						<a href="#" @click="deleteProduct(index)">Elimina</a>
 						<h3 v-html="product.name"></h3>
+						<i v-html="product.fornitore"></i>
+						<br><br>
 						<label style="display: block">Quantità</label>
 						<input style="width:100px;float:left" type="number" v-model="product.quantity">
-						<span style="display: inline" v-html="product.unit_measure"></span>
 					</div>
 				</div>
 				<br><br>
@@ -2040,7 +2059,7 @@ function consegne_ordini_pages()
 				<div style="display: flex;width:100%;margin-top:10px;margin-bottom: 10px">
 					<table>
 						<tr>
-							<td>Prezzo Box</td>
+							<td>Peso Box</td>
 							<td>Totale €</td>
 						</tr>
 						<tr>

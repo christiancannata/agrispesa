@@ -62,7 +62,7 @@ createApp({
     totalWeight() {
       let weight = 0;
       this.products.forEach(function (product) {
-        weight += product.quantity
+        weight += (product.quantity * parseInt(product.weight))
       })
       return weight + ' gr'
     },
@@ -104,7 +104,9 @@ createApp({
       let product = this.productJson.filter(function (product) {
         return product['id'] == productId
       })
-      this.products.push(product[0])
+      let productToAdd = product[0]
+      productToAdd.quantity = 1
+      this.products.push(productToAdd)
     },
     copyFromLastWeek: function () {
       if (document.getElementById('data_consegna').value == '') {
