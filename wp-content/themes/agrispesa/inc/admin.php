@@ -53,9 +53,9 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 		$date = DateTime::createFromFormat('d-m-Y', $date);
 	}
 
-	if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
-		$date->add(new DateInterval('P7D'));
-	}
+	//if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+	$date->add(new DateInterval('P7D'));
+	//}
 
 	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
 
@@ -68,7 +68,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 function calculate_delivery_date_order($id)
 {
 
-	$order = new WC_Order($id);
+	$order = wc_get_order($id);
 	if (!$order) {
 		return null;
 	}
@@ -83,19 +83,56 @@ function calculate_delivery_date_order($id)
 	$order_date = $order->get_date_paid();
 
 
-	$week = $order->get_date_paid()->format("W");
+	$week = $order_date->format("W");
 
-	if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+	if ($order->get_created_via() == 'checkout') {
 		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+	} else {
+		if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+			$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+		}
 	}
+
 
 	update_post_meta($order->get_id(), '_week', $week);
 
-	$deliveryDate = get_order_delivery_date_from_date($order->get_date_paid()->format('d-m-Y'), $gruppoConsegna);
-
+	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 
 }
+
+
+add_action('woocommerce_new_order', function ($order_id, $order) {
+	if ($order->get_created_via() == 'checkout') {
+
+		$groups = get_posts([
+			'post_type' => 'delivery-group',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		]);
+
+		foreach ($groups as $group) {
+
+			$caps = get_post_meta($group->ID, 'cap', true);
+
+			if (in_array($order->get_shipping_postcode(), $caps)) {
+				update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
+			}
+		}
+
+		$gruppoConsegna = get_post_meta($order_id, '_gruppo_consegna', true);
+
+		$order_date = $order->get_date_created();
+
+		$week = $order_date->format("W");
+		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+		update_post_meta($order->get_id(), '_week', $week);
+
+		$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
+
+		update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
+	}
+}, 10, 2);
 
 add_action('woocommerce_product_options_advanced', function () {
 	woocommerce_wp_text_input([
@@ -826,6 +863,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		$gruppoConsegna = get_post_meta($post->ID, '_gruppo_consegna', true);
 		$deliveryDay = get_order_delivery_date($post->ID);
 
+
 		if (empty($weight)) {
 			$weight = 0;
 		}
@@ -838,12 +876,21 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 
 ';
 
-		echo '<strong>Data di consegna:</strong><br>
-		<input autocomplete="off" type="date" value="' . $consegna . '" name="_data_consegna" readonly>';
-
+		global $wpdb;
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+		?>
+		<strong>Data di consegna:</strong><br>
+		<select autocomplete="off" name="_data_consegna">
+			<option <?php if (!$consegna): ?> selected <?php endif; ?> >Nessuna data di consegna</option>
+			<?php foreach ($allDataConsegna as $dataConsegna): ?>
+				<option
+					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
+					value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format("d/m/Y"); ?></option>
+			<?php endforeach; ?>
+		</select>
+		<?php
 	}
 }
-
 function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
 {
 	$box = get_box_from_subscription($subscription, $week);
@@ -981,9 +1028,9 @@ function create_order_from_subscription($id)
 	}
 
 	$weight = 0;
-	/*	if (!empty($productData['weight'])) {
-			$weight = $productData['weight'];
-		}*/
+	/*    if (!empty($productData['weight'])) {
+	$weight = $productData['weight'];
+	}*/
 
 	$box = get_box_from_subscription($subscription);
 
@@ -1045,12 +1092,12 @@ function create_order_from_subscription($id)
 	/*$items = $subscription->get_items();
 	foreach ($items as $item) {
 
-		$order->add_product(, 1);
+	$order->add_product(, 1);
 	}
 
 	foreach ($order->get_items() as $item) {
-		$item->set_name($item->get_name() . ' - Settimana ' . $week);
-		$item->save();
+	$item->set_name($item->get_name() . ' - Settimana ' . $week);
+	$item->save();
 	}*/
 
 	$order->calculate_totals();
@@ -1063,6 +1110,7 @@ function create_order_from_subscription($id)
 	if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
 		$order->get_date_paid()->add(new DateInterval('P7D'));
 	}
+
 
 	update_post_meta($order->get_id(), '_data_consegna', $consegna);
 	update_post_meta($order->get_id(), '_order_type', 'BOX');
@@ -1153,7 +1201,7 @@ function my_custom_submenu_page_callback()
 
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => 'active']);
 	/*$subscriptions = array_filter($subscriptions, function ($subscription) {
-		return $subscription->has_status('active');
+	return $subscription->has_status('active');
 	});*/
 
 	$date = new DateTime();
@@ -1315,7 +1363,8 @@ function my_custom_submenu_page_callback()
 
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Seleziona
+							<th scope="row" class="check-column"><label class="screen-reader-text"
+																		for="cb-select-1">Seleziona
 									un abbonamento</label>
 
 								<?php
@@ -1335,7 +1384,8 @@ function my_custom_submenu_page_callback()
 							<td class="author column-author" data-colname="Autore">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
 							</td>
-							<td class="comment column-comment has-row-actions column-primary" data-colname="Commento">
+							<td class="comment column-comment has-row-actions column-primary"
+								data-colname="Commento">
 								<span><?php
 
 									echo $boxProduct->get_name();
@@ -2260,8 +2310,7 @@ function consegne_ordini_pages()
 			die();
 		}
 
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
-
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 		?>
 		<div id="wpbody-content">
 
@@ -2272,8 +2321,6 @@ function consegne_ordini_pages()
 					Esporta Documenti</h1>
 
 				<hr class="wp-header-end">
-
-
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
 					<label>Data di consegna</label><br>
 

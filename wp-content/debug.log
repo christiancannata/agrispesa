@@ -6650,3 +6650,57 @@ Stack trace:
 #5 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
 #6 {main}
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1107
+[22-Feb-2023 02:24:22 UTC] PHP Fatal error:  Uncaught Error: Call to a member function format() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:123
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(22450, Object(WC_Order))
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 22450, Object(WC_Order))
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-data-store.php(186): WC_Order_Data_Store_CPT->create(Object(WC_Order))
+#5 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/abstracts/abstract-wc-order.php(201): WC_Data_Store->create(Object(WC_Order))
+#6 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-order.php(244): WC_Abstract_Order->save()
+#7 /shared/htt in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 123
+[22-Feb-2023 02:25:00 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 02:25:30 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 02:35:31 UTC] PHP Notice:  Undefined variable: wpdb in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 879
+[22-Feb-2023 02:35:31 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_results() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:879
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#1 /shared/httpd/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#2 /shared/httpd/agrispesa/wp-admin/post.php(206): require('/shared/httpd/a...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 879
+[22-Feb-2023 02:40:08 UTC] PHP Parse error:  syntax error, unexpected 'endfor' (T_ENDFOR) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 882
+[22-Feb-2023 02:40:17 UTC] PHP Parse error:  syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 885
+[22-Feb-2023 02:40:30 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 881
+[22-Feb-2023 02:40:30 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 881
+[22-Feb-2023 02:49:39 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-includes/formatting.php on line 1098
+[22-Feb-2023 03:01:07 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3842 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:07 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:07 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3764 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:07 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:08 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3773 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:08 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:10 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3860 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:10 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3825 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3847 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3844 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3848 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3854 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3852 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3857 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3770 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:11 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 03:01:59 UTC] WordPress database error Deadlock found when trying to get lock; try restarting transaction for query DELETE FROM `wp_options` WHERE `option_name` = '_transient_jetpack_idc_local' made by require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('plugins_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, wcpay_jetpack_init, wcpay_get_jetpack_idc_custom_content, Automattic\Jetpack\Identity_Crisis::get_mismatched_urls, Automattic\Jetpack\Identity_Crisis::has_identity_crisis, Automattic\Jetpack\Identity_Crisis::check_identity_crisis, Automattic\Jetpack\Identity_Crisis::validate_sync_error_idc_option, Automattic\Jetpack\Identity_Crisis::get_sync_error_idc_option, get_transient, delete_option
+[22-Feb-2023 03:02:13 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-admin/includes/misc.php on line 1416
+[22-Feb-2023 03:02:13 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-includes/functions.php on line 6865
+[22-Feb-2023 03:02:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-admin/admin-header.php on line 9
+[22-Feb-2023 03:07:54 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
