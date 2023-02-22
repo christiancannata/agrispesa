@@ -1,0 +1,1450 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Checkout Fields & Fees\n"
+"POT-Creation-Date: 2022-12-29 08:32+0100\n"
+"PO-Revision-Date: 2022-12-29 08:32+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: woocommerce-conditional-checkout-fields.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: classes/admin/WCCCF_ActivationPage.php:52
+#: classes/admin/WCCCF_ActivationPage.php:53
+#: classes/admin/WCCCF_ActivationPage.php:112
+msgid " Activator"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:93
+msgid "Purchase code is invalid!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:94
+msgid "Buyer name is invalid!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:95
+msgid "Item id is invalid!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:96
+msgid ""
+"Max number of domains reached! You have to purchase a new license. The "
+"current license has been activated in the following domains: "
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:97
+#: classes/admin/WCCCF_ActivationPage.php:175
+msgid "Verifing, please wait..."
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:98
+msgid ""
+"There was an error while verifing the code. Please retry in few minutes!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:99
+msgid "Activation successfully completed!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:100
+msgid "Buyer and Purchase code fields must be filled!"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:141
+msgid "Activation"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:158
+msgid ""
+"The plugin can be activate in only <strong>two</strong> domains and they "
+"cannot be unregistered. For each activated domain, you can reactivate "
+"<strong>unlimited</strong> times (including <strong>subdomains</strong> and "
+"<strong>subfolders</strong>). The \"localhost\" domain will not consume "
+"activations. Please enter the following data and hit the activation button"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:164
+msgid "Buyer"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:165
+msgid "Insert the Envato username used to purchase the plugin."
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:166
+msgid "Example: vanquish"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:169
+msgid "Purchase code"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:170
+msgid ""
+"Insert the purchase code. It can be downloaded from your CodeCanyon "
+"\"Downloads\" profile page."
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:171
+msgid "Example: 7d7c3rt8-f512-227c-8c98-fc53c3b212fe"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:173
+msgid "Activate"
+msgstr ""
+
+#: classes/admin/WCCCF_ActivationPage.php:178
+msgid "The plugin has been successfully activated!"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:13
+msgid "Custom JS & CSS"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:43
+msgid "WooCommerce Checkout Custom JS & CSS"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:76
+msgid "Javascript & CSS code - Checkout page"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:84
+#: classes/admin/WCCCF_CustomCodePage.php:112
+#: classes/admin/WCCCF_DisplayManagerPage.php:256
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:144
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:142
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:163
+#: classes/admin/WCCCF_OptionPage.php:85 classes/admin/WCCCF_OptionPage.php:234
+msgid "Save"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:98
+msgid ""
+"Javscript - The following custom code will be included in the Checkout page"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:99
+msgid ""
+"<strong><i>NOTE:</i></strong> You can also copy in the <strong>wp-content/"
+"wcccf_custom_code/js</strong> directory (create it if not existing) all the "
+"JavaScript files you need. Those will be automatically loaded in the "
+"Checkout page."
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:103
+msgid "CSS - The following custom code will be included in the Checkout page"
+msgstr ""
+
+#: classes/admin/WCCCF_CustomCodePage.php:104
+msgid ""
+"<strong><i>NOTE:</i></strong> You can also copy in the <strong>wp-content/"
+"wcccf_custom_code/css</strong> directory (create it if not existing) all the "
+"CSS files you need. Those will be automatically loaded in the Checkout page."
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:13
+msgid "Sort & hide"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:56
+msgid "Sort & Hide Checkout Fields"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:90
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:94
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:108
+msgid "Billing fields"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:97
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:100
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:114
+msgid "Shipping fields"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:104
+msgid "Additional options"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:111
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:117
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:106
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:120
+msgid "Save fields"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:240
+msgid "Restore field default sorting?"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:244
+msgid "Disable checkout sort & hide feature"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:246
+#: classes/admin/WCCCF_OrderDetailsPage.php:20 classes/com/WCCCF_Field.php:38
+#: templates/conditional_options/category.php:81
+#: templates/conditional_options/product.php:81
+#: templates/conditional_options/tag.php:81
+#: templates/field_option_boxes/common.php:50
+#: templates/field_option_boxes/common.php:58
+#: templates/field_option_boxes/common.php:65
+#: templates/field_option_boxes/country.php:13
+#: templates/field_option_boxes/fee.php:43
+#: templates/field_option_boxes/fee.php:51
+#: templates/field_option_boxes/fee.php:59
+#: templates/field_option_boxes/heading.php:43
+#: templates/field_option_boxes/heading.php:50
+#: templates/field_option_boxes/select.php:4
+#: templates/field_option_boxes/time.php:27
+msgid "No"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:247
+#: classes/admin/WCCCF_OrderDetailsPage.php:20 classes/com/WCCCF_Field.php:38
+#: templates/conditional_options/category.php:82
+#: templates/conditional_options/product.php:82
+#: templates/conditional_options/tag.php:82
+#: templates/field_option_boxes/common.php:51
+#: templates/field_option_boxes/common.php:57
+#: templates/field_option_boxes/common.php:64
+#: templates/field_option_boxes/country.php:14
+#: templates/field_option_boxes/fee.php:44
+#: templates/field_option_boxes/fee.php:52
+#: templates/field_option_boxes/fee.php:58
+#: templates/field_option_boxes/heading.php:42
+#: templates/field_option_boxes/heading.php:49
+#: templates/field_option_boxes/select.php:5
+#: templates/field_option_boxes/time.php:26
+msgid "Yes"
+msgstr ""
+
+#: classes/admin/WCCCF_DisplayManagerPage.php:249
+msgid ""
+"This option will completely disable Sort & Hide feature. Enable if you are "
+"experiencing any issue with 3rd party plugin that are managing checkout "
+"process."
+msgstr ""
+
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:12
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:110
+msgid "Fees"
+msgstr ""
+
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:50
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:54
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:49
+msgid ""
+"The last saved version of the field will be the one that will be duplicated. "
+"So make sure you have saved it before proceding.\\n\\nAt the end of the "
+"operation the page will be reloaded, Make sure you have saved you progress."
+"\\nProceed?"
+msgstr ""
+
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:76
+msgid "WooCommerce Checkout Fees Configurator"
+msgstr ""
+
+#: classes/admin/WCCCF_FeeConfiguratorPage.php:135
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:138
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:153
+msgid "Add new"
+msgstr ""
+
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:11
+msgid "Core Fields"
+msgstr ""
+
+#: classes/admin/WCCCF_FieldCoreConfiguratorPage.php:60
+msgid "Core Fields Configurator"
+msgstr ""
+
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:11
+msgid "Custom Fields"
+msgstr ""
+
+#: classes/admin/WCCCF_FieldCustomConfiguratorPage.php:75
+msgid "Custom Fields Configurator"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:13 classes/admin/WCCCF_OptionPage.php:43
+#: templates/field_option_boxes/common.php:1
+#: templates/field_option_boxes/fee.php:1
+msgid "Options"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:76
+msgid "Date & Time"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:99 classes/admin/WCCCF_OptionPage.php:167
+msgid "Date format"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:100
+msgid ""
+"The date format displayed on checkout form can be customized. The following "
+"table explains which format can be used. <strong>Make sure to be using a "
+"valid format</strong>."
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:104
+msgid "Rule"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:105
+#: templates/field_option_boxes/common.php:19
+msgid "Description"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:106
+msgid "Result"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:112
+msgid "Date of the month"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:117
+msgid "Date of the month with a leading zero"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:122
+msgid "Day of the week in short form"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:123
+msgid "Sun – Sat"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:127
+msgid "Day of the week in full form"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:128
+msgid "Sunday – Saturday"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:134
+msgid "Month of the year"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:139
+msgid "Month of the year with a leading zero"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:144
+msgid "Month name in short form"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:149
+msgid "Month name in full form"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:150
+msgid "January – December"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:168
+msgid "Default value: yyyy-mm-dd"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:171
+#: classes/admin/WCCCF_OptionPage.php:225
+msgid "Time format"
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:172
+msgid ""
+"The time format displayed on checkout form can be customized. The following "
+"table explains which format can be used. <strong>Make sure to be using a "
+"valid format</strong>."
+msgstr ""
+
+#: classes/admin/WCCCF_OptionPage.php:226
+msgid "Default value: HH:i"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:23
+msgid "Customer type"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:26
+msgid "Invoice requested"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:29
+msgid "To modify these values: edit the <strong>Billing Details</strong>"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:140
+msgid "Are you sure?"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:141
+msgid "Deleted!"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:149 classes/com/WCCCF_Field.php:369
+msgid "deleting"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:150 classes/com/WCCCF_Field.php:370
+msgid "File too big. Max allowed size (MB): "
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:151 classes/com/WCCCF_Field.php:371
+msgid "Please upload all the required files"
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:174
+msgid ""
+"After the file has been uploaded, Save the order in order changes to take "
+"effect."
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:182
+msgid "To replace a file: first delete and then reload the page."
+msgstr ""
+
+#: classes/admin/WCCCF_OrderDetailsPage.php:184 classes/com/WCCCF_Field.php:155
+msgid "Delete"
+msgstr ""
+
+#: classes/com/WCCCF_Country.php:31
+#: templates/conditional_options/billing_country_state.php:11
+#: templates/conditional_options/shipping_country_state.php:11
+msgid "Any"
+msgstr ""
+
+#: classes/com/WCCCF_Country.php:42
+msgid ""
+"Leave empty to apply to all or type the name of the state/county/province."
+msgstr ""
+
+#: classes/com/WCCCF_Country.php:90 classes/com/WCCCF_Country.php:153
+msgid "Select one"
+msgstr ""
+
+#: classes/com/WCCCF_Country.php:100 classes/com/WCCCF_Country.php:116
+msgid "State / County"
+msgstr ""
+
+#: classes/com/WCCCF_Fee.php:57 classes/com/WCCCF_Fee.php:60
+#: classes/com/WCCCF_Field.php:713
+msgid "(Copy)"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:133
+#, php-format
+msgid "( Max size: %s MB)"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:150
+msgid "Upload"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:610
+msgid "State/Province/County"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:876
+msgid "Accepted"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:876
+msgid "Not accepted"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:880
+msgid "The one selected"
+msgstr ""
+
+#: classes/com/WCCCF_Field.php:880 classes/com/WCCCF_Field.php:884
+#: classes/com/WCCCF_Order.php:73
+msgid "N/A"
+msgstr ""
+
+#: classes/com/WCCCF_File.php:220
+msgid "Download"
+msgstr ""
+
+#: classes/com/WCCCF_Html.php:29
+msgid "Hide"
+msgstr ""
+
+#: classes/com/WCCCF_Product.php:85
+msgid "Variation"
+msgstr ""
+
+#: classes/com/WCCCF_Product.php:375 classes/frontend/WCCCF_CheckoutPage.php:93
+#: classes/frontend/WCCCF_CheckoutPage.php:94
+msgid "Persons"
+msgstr ""
+
+#: classes/frontend/WCCCF_CheckoutPage.php:35
+#, php-format
+msgid "<strong>%s</strong> has an invalid format."
+msgstr ""
+
+#: classes/frontend/WCCCF_CheckoutPage.php:104
+#, php-format
+msgid ""
+"Field <strong>%s</strong> for product <strong>%s</strong> cannot be empty"
+msgstr ""
+
+#: classes/frontend/WCCCF_FieldDisplayManagment.php:52
+msgid "Billing"
+msgstr ""
+
+#: classes/frontend/WCCCF_FieldDisplayManagment.php:52
+#: templates/conditional_options/cart.php:10
+msgid "Shipping"
+msgstr ""
+
+#: templates/admin_conditional_item.php:4
+msgid "Select an option"
+msgstr ""
+
+#: templates/admin_conditional_item.php:9
+msgid "Product"
+msgstr ""
+
+#: templates/admin_conditional_item.php:10
+msgid "Category"
+msgstr ""
+
+#: templates/admin_conditional_item.php:11
+#: templates/field_option_boxes/heading.php:2
+msgid "Tag"
+msgstr ""
+
+#: templates/admin_conditional_item.php:12
+msgid "Cart"
+msgstr ""
+
+#: templates/admin_conditional_item.php:13
+msgid "User role"
+msgstr ""
+
+#: templates/admin_conditional_item.php:14
+msgid "Customer"
+msgstr ""
+
+#: templates/admin_conditional_item.php:16
+msgid "Payment method"
+msgstr ""
+
+#: templates/admin_conditional_item.php:17
+msgid "Shipping method"
+msgstr ""
+
+#: templates/admin_conditional_item.php:18
+msgid "Billing country & state"
+msgstr ""
+
+#: templates/admin_conditional_item.php:19
+msgid "Billing postcode / ZIP"
+msgstr ""
+
+#: templates/admin_conditional_item.php:20
+msgid "Billing Town / City"
+msgstr ""
+
+#: templates/admin_conditional_item.php:21
+msgid "Shipping country & state"
+msgstr ""
+
+#: templates/admin_conditional_item.php:22
+msgid "Shipping postcode / ZIP"
+msgstr ""
+
+#: templates/admin_conditional_item.php:23
+msgid "Shipping Town / City"
+msgstr ""
+
+#: templates/admin_conditional_item.php:40
+msgid "And"
+msgstr ""
+
+#: templates/admin_conditional_item.php:41
+msgid "Remove"
+msgstr ""
+
+#: templates/admin_conditional_options_box.php:1
+msgid "Conditional logic"
+msgstr ""
+
+#: templates/admin_conditional_options_box.php:1
+msgid "Collapse / Expand"
+msgstr ""
+
+#: templates/admin_conditional_options_box.php:10
+msgid "Add new group (Or relationship)"
+msgstr ""
+
+#: templates/admin_field_core_configuration_box.php:11
+#: templates/admin_field_custom_configuration_box.php:22
+msgid "Field label"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:29
+#: templates/conditional_options/cart.php:2
+#: templates/conditional_options/category.php:18
+#: templates/conditional_options/product.php:18
+#: templates/conditional_options/tag.php:18
+#: templates/field_option_boxes/fee.php:28
+msgid "Type"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:35
+msgid "Text"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:36
+msgid "Text area"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:37
+msgid "Number"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:38
+msgid "Telephone"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:39
+msgid "Email"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:40
+msgid "Password"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:41
+msgid "File"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:42
+msgid "Select/Multiselect"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:43
+msgid "Checkbox"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:44
+msgid "Date"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:45
+msgid "Time"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:46
+msgid "Country"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:47
+msgid "State"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:48
+msgid "Heading"
+msgstr ""
+
+#: templates/admin_field_custom_configuration_box.php:50
+msgid "Fee"
+msgstr ""
+
+#: templates/conditional_options/billing_country_state.php:2
+#: templates/conditional_options/shipping_country_state.php:2
+msgid "Select country"
+msgstr ""
+
+#: templates/conditional_options/billing_country_state.php:21
+#: templates/conditional_options/shipping_country_state.php:21
+msgid "Select state"
+msgstr ""
+
+#: templates/conditional_options/cart.php:4
+msgid "Sub total"
+msgstr ""
+
+#: templates/conditional_options/cart.php:5
+msgid "Sub total excluding taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:6
+msgid "Sub total taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:7
+msgid "Total"
+msgstr ""
+
+#: templates/conditional_options/cart.php:8
+msgid "Total excluding taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:9
+msgid "Total taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:11
+msgid "Shipping excluding taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:12
+msgid "Shipping taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:13
+msgid "Discount"
+msgstr ""
+
+#: templates/conditional_options/cart.php:14
+msgid "Discount excluding taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:15
+msgid "Discount taxes"
+msgstr ""
+
+#: templates/conditional_options/cart.php:16
+msgid "Sum of item quantities"
+msgstr ""
+
+#: templates/conditional_options/cart.php:17
+msgid "Number of distinct items"
+msgstr ""
+
+#: templates/conditional_options/cart.php:18
+#: templates/conditional_options/category.php:25
+#: templates/conditional_options/product.php:25
+#: templates/conditional_options/tag.php:25
+msgid "Weight"
+msgstr ""
+
+#: templates/conditional_options/cart.php:19
+#: templates/conditional_options/category.php:29
+#: templates/conditional_options/product.php:29
+#: templates/conditional_options/tag.php:29
+msgid "Volume"
+msgstr ""
+
+#: templates/conditional_options/cart.php:23
+#: templates/conditional_options/category.php:36
+#: templates/conditional_options/checkout_generic_input_numeric.php:2
+#: templates/conditional_options/checkout_generic_input_text.php:2
+#: templates/conditional_options/product.php:36
+#: templates/conditional_options/tag.php:36
+msgid "Value"
+msgstr ""
+
+#: templates/conditional_options/cart.php:30
+#: templates/conditional_options/category.php:46
+#: templates/conditional_options/checkout_generic_input_numeric.php:10
+#: templates/conditional_options/checkout_generic_input_text.php:10
+#: templates/conditional_options/payment_method.php:14
+#: templates/conditional_options/product.php:46
+#: templates/conditional_options/shipping_method.php:65
+#: templates/conditional_options/tag.php:46
+msgid "Operator"
+msgstr ""
+
+#: templates/conditional_options/cart.php:32
+#: templates/conditional_options/category.php:49
+#: templates/conditional_options/checkout_generic_input_numeric.php:15
+#: templates/conditional_options/product.php:49
+#: templates/conditional_options/tag.php:49
+msgid "Lesser or equal"
+msgstr ""
+
+#: templates/conditional_options/cart.php:33
+#: templates/conditional_options/category.php:48
+#: templates/conditional_options/checkout_generic_input_numeric.php:14
+#: templates/conditional_options/product.php:48
+#: templates/conditional_options/tag.php:48
+msgid "Greater or equal"
+msgstr ""
+
+#: templates/conditional_options/category.php:2
+msgid "Select categories"
+msgstr ""
+
+#: templates/conditional_options/category.php:20
+#: templates/conditional_options/product.php:20
+#: templates/conditional_options/tag.php:20
+msgid "Cart quantity"
+msgstr ""
+
+#: templates/conditional_options/category.php:21
+#: templates/conditional_options/product.php:21
+#: templates/conditional_options/tag.php:21
+msgid "Amount spent"
+msgstr ""
+
+#: templates/conditional_options/category.php:22
+#: templates/conditional_options/product.php:22
+#: templates/conditional_options/tag.php:22
+msgid "Amount spent excluding taxes"
+msgstr ""
+
+#: templates/conditional_options/category.php:23
+#: templates/conditional_options/product.php:23
+#: templates/conditional_options/tag.php:23
+msgid "Stock quantity"
+msgstr ""
+
+#: templates/conditional_options/category.php:24
+#: templates/conditional_options/product.php:24
+#: templates/conditional_options/tag.php:24
+msgid "Stock status (values: instock, outofstock)"
+msgstr ""
+
+#: templates/conditional_options/category.php:26
+#: templates/conditional_options/product.php:26
+#: templates/conditional_options/tag.php:26
+msgid "Height"
+msgstr ""
+
+#: templates/conditional_options/category.php:27
+#: templates/conditional_options/product.php:27
+#: templates/conditional_options/tag.php:27
+msgid "Lenght"
+msgstr ""
+
+#: templates/conditional_options/category.php:28
+#: templates/conditional_options/product.php:28
+#: templates/conditional_options/tag.php:28
+msgid "Width"
+msgstr ""
+
+#: templates/conditional_options/category.php:31
+#: templates/conditional_options/product.php:31
+#: templates/conditional_options/tag.php:31
+msgid "Booking - Person"
+msgstr ""
+
+#: templates/conditional_options/category.php:53
+#: templates/conditional_options/product.php:53
+#: templates/conditional_options/tag.php:53
+msgid "Value has to be considered as"
+msgstr ""
+
+#: templates/conditional_options/category.php:55
+#: templates/conditional_options/product.php:55
+#: templates/conditional_options/tag.php:55
+msgid "Each product value"
+msgstr ""
+
+#: templates/conditional_options/category.php:56
+#: templates/conditional_options/product.php:56
+#: templates/conditional_options/tag.php:56
+msgid "The sum of product values"
+msgstr ""
+
+#: templates/conditional_options/category.php:57
+#: templates/conditional_options/product.php:57
+#: templates/conditional_options/tag.php:57
+msgid "Max value of the selected products"
+msgstr ""
+
+#: templates/conditional_options/category.php:58
+#: templates/conditional_options/product.php:58
+#: templates/conditional_options/tag.php:58
+msgid "Min value of the selecte products"
+msgstr ""
+
+#: templates/conditional_options/category.php:59
+#: templates/conditional_options/product.php:59
+#: templates/conditional_options/tag.php:59
+msgid "At least one product"
+msgstr ""
+
+#: templates/conditional_options/category.php:63
+#: templates/conditional_options/product.php:63
+#: templates/conditional_options/tag.php:63
+msgid "Cart presence policy. The field is showed if"
+msgstr ""
+
+#: templates/conditional_options/category.php:65
+msgid "Any product belonging to any of the selected categories is in cart"
+msgstr ""
+
+#: templates/conditional_options/category.php:66
+msgid "At least one product per each selected category is in cart"
+msgstr ""
+
+#: templates/conditional_options/category.php:70
+#: templates/conditional_options/product.php:70
+#: templates/conditional_options/tag.php:70
+msgid "Apply the fee"
+msgstr ""
+
+#: templates/conditional_options/category.php:72
+#: templates/conditional_options/product.php:72
+#: templates/conditional_options/tag.php:72
+msgid "Only once"
+msgstr ""
+
+#: templates/conditional_options/category.php:73
+#: templates/conditional_options/product.php:73
+#: templates/conditional_options/tag.php:73
+msgid "For each detected item"
+msgstr ""
+
+#: templates/conditional_options/category.php:78
+#: templates/conditional_options/tag.php:78
+msgid "Display one field for each person"
+msgstr ""
+
+#: templates/conditional_options/category.php:79
+#: templates/conditional_options/tag.php:79
+msgid ""
+"For each Bookable product, the plugin will show N fields where N is the "
+"number of the persons the user selected. For other product type the field "
+"will not be showed. The field value will be lately always showed on both "
+"Order page and Emails (ignoring the <i>Show in emails</i> and <i>Show in "
+"order details page</i> settings). <strong>NOTE:</strong> note this option is "
+"unavailable for Contry and State fields."
+msgstr ""
+
+#: templates/conditional_options/checkout_generic_input_numeric.php:12
+#: templates/conditional_options/checkout_generic_input_text.php:12
+#: templates/conditional_options/payment_method.php:16
+#: templates/conditional_options/shipping_method.php:67
+msgid "Equal"
+msgstr ""
+
+#: templates/conditional_options/checkout_generic_input_numeric.php:13
+#: templates/conditional_options/checkout_generic_input_text.php:13
+#: templates/conditional_options/payment_method.php:17
+#: templates/conditional_options/shipping_method.php:68
+msgid "Not equal"
+msgstr ""
+
+#: templates/conditional_options/customer.php:2
+msgid "Select customers"
+msgstr ""
+
+#: templates/conditional_options/customer.php:19
+#: templates/conditional_options/user.php:13
+msgid "Belonging policy"
+msgstr ""
+
+#: templates/conditional_options/customer.php:21
+msgid "Is one of the selected"
+msgstr ""
+
+#: templates/conditional_options/customer.php:22
+msgid "Is none of the selected"
+msgstr ""
+
+#: templates/conditional_options/payment_method.php:6
+#: templates/conditional_options/shipping_method.php:8
+msgid "Method"
+msgstr ""
+
+#: templates/conditional_options/product.php:2
+msgid "Select products"
+msgstr ""
+
+#: templates/conditional_options/product.php:65
+msgid "All the selected products are be on cart"
+msgstr ""
+
+#: templates/conditional_options/product.php:66
+msgid "Just one of the selected products are in cart"
+msgstr ""
+
+#: templates/conditional_options/product.php:78
+msgid "WooCommerce Bookings - Display the field for each person"
+msgstr ""
+
+#: templates/conditional_options/product.php:79
+msgid ""
+"For each <strong>Bookable</strong> product, the plugin will show N fields "
+"where N is the number of the persons the user selected. For other product "
+"type the field will not be showed. The field value will be lately always "
+"showed on both Order page and Emails (ignoring the <i>Show in emails</i> and "
+"<i>Show in order details page</i> settings). <strong>NOTE:</strong> note "
+"this option is unavailable for Contry & State and Heading fields."
+msgstr ""
+
+#: templates/conditional_options/tag.php:2
+msgid "Select tags"
+msgstr ""
+
+#: templates/conditional_options/tag.php:65
+msgid "Any product belonging to any of the selected tags is in cart"
+msgstr ""
+
+#: templates/conditional_options/tag.php:66
+msgid "At least one product per each selected tag is in cart"
+msgstr ""
+
+#: templates/conditional_options/user.php:2
+msgid "Select roles"
+msgstr ""
+
+#: templates/conditional_options/user.php:4
+msgid "Not logged"
+msgstr ""
+
+#: templates/conditional_options/user.php:15
+msgid "User has one of the selected roles"
+msgstr ""
+
+#: templates/conditional_options/user.php:16
+msgid "User has all the selected roles"
+msgstr ""
+
+#: templates/conditional_options/user.php:17
+msgid "User has none of the selected roles"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:3
+msgid "Placeholder"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:13
+msgid "Placeholder text"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:29
+msgid "Description text"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:34
+msgid "CSS row classes"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:41
+msgid "CSS input classes"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:48
+msgid "Required"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:55
+#: templates/field_option_boxes/heading.php:40
+msgid "Show in emails"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:62
+#: templates/field_option_boxes/heading.php:47
+msgid "Show in order details page"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:69
+msgid "Row width"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:71
+#: templates/field_option_boxes/country.php:20
+msgid "Full width"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:72
+#: templates/field_option_boxes/country.php:21
+msgid "Half left"
+msgstr ""
+
+#: templates/field_option_boxes/common.php:73
+#: templates/field_option_boxes/country.php:22
+msgid "Half right"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:2
+msgid "Which countries show"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:3
+msgid ""
+"<strong>Note:</strong> if the All option is selected, state/provinces "
+"dropdown selector will be properly showed only for the allowed selling "
+"location configured in the WooCommerce -> Settings -> General menu."
+msgstr ""
+
+#: templates/field_option_boxes/country.php:5
+msgid "All"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:6
+msgid "Selling location"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:7
+msgid "Shipping location"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:11
+msgid "Hide states/province/county selection"
+msgstr ""
+
+#: templates/field_option_boxes/country.php:18
+msgid "States/province/county selector width"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:8
+msgid "Min date type"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:10
+#: templates/field_option_boxes/date.php:44
+#: templates/field_option_boxes/time.php:10
+#: templates/field_option_boxes/time.php:49
+msgid "Absolute"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:11
+#: templates/field_option_boxes/date.php:45
+#: templates/field_option_boxes/time.php:11
+#: templates/field_option_boxes/time.php:50
+msgid "Relative"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:16
+#: templates/field_option_boxes/date.php:20
+#: templates/field_option_boxes/date.php:31
+msgid "Min date"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:22
+msgid "Leave <strong>empty</strong> for no limit"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:26
+msgid "Min relative date from now"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:34
+#: templates/field_option_boxes/date.php:68
+msgid "Day"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:35
+#: templates/field_option_boxes/date.php:69
+msgid "Month"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:36
+#: templates/field_option_boxes/date.php:70
+msgid "Year"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:38
+msgid ""
+"Leave <strong>empty</strong> to set today as min date and <strong>0</strong> "
+"for no limit."
+msgstr ""
+
+#: templates/field_option_boxes/date.php:42
+msgid "Max date type"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:50
+#: templates/field_option_boxes/date.php:54
+#: templates/field_option_boxes/date.php:65
+msgid "Max date"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:56
+msgid "Leave <strong>empty</strong> for no limit."
+msgstr ""
+
+#: templates/field_option_boxes/date.php:60
+msgid "Max relative date from now"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:72
+msgid ""
+"Leave <strong>empty</strong> to set today as max date and <strong>0</strong> "
+"for no limit."
+msgstr ""
+
+#: templates/field_option_boxes/date.php:77
+msgid "Days of the week to disable"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:81
+msgid "Monday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:85
+msgid "Tuesday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:89
+msgid "Wednesday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:94
+msgid "Thursday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:99
+msgid "Friday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:104
+msgid "Saturday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:109
+msgid "Sunday"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:113
+msgid "Specifc dates to exclude"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:114
+msgid ""
+"Enter each date on a new line.<br>Each line rapresent a date and must be "
+"expessed in the following format <i>d:m</i>, where <i>d</i> is the day "
+"number (1-31) and <i>m</i> is the month number (1-12). Example: "
+"<br><br>24:12<br>1:3<br>15:2"
+msgstr ""
+
+#: templates/field_option_boxes/date.php:116
+msgid ""
+"<br><br>Where the first is the 24th of December, the second is the 1st of "
+"March and the last is the 15th of February. <strong>NOTE: </strong>This "
+"options overrides the previous \"Days of the week to disable\" option. "
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:3
+#: templates/field_option_boxes/fee.php:13
+msgid "Cart label"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:20
+msgid "Amount/Percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:29
+msgid ""
+"<strong>Note on Cart total:</strong> Total it is computed as sum of product "
+"totals and shipping costs and any eventual discount is not considered. "
+"Discounts will be applied by woocommerce only to the final total."
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:31
+msgid "Fixed amount"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:32
+msgid "Cart total percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:33
+msgid "Cart total (excluding taxes) percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:34
+msgid "Cart subtotal percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:35
+msgid "Cart subtotal (excluding taxes) percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:36
+msgid "Shipping total percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:37
+msgid "Shipping total (excluding taxes) percentage"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:41
+msgid "Taxable"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:49
+msgid "Apply free shipping"
+msgstr ""
+
+#: templates/field_option_boxes/fee.php:56
+msgid "Apply even if other fees have been applied"
+msgstr ""
+
+#: templates/field_option_boxes/file.php:2
+msgid "Max size (MB)"
+msgstr ""
+
+#: templates/field_option_boxes/file.php:9
+msgid "Leave 0 for no limit"
+msgstr ""
+
+#: templates/field_option_boxes/file.php:13
+msgid "File type(s) accepted"
+msgstr ""
+
+#: templates/field_option_boxes/file.php:17
+msgid ".xlsx,.doc,.mp3"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:4
+msgid "H3"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:5
+msgid "H1"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:6
+msgid "H2"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:7
+msgid "H4"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:8
+msgid "H5"
+msgstr ""
+
+#: templates/field_option_boxes/heading.php:33
+msgid "CSS head classes"
+msgstr ""
+
+#: templates/field_option_boxes/number.php:2
+msgid "Min value"
+msgstr ""
+
+#: templates/field_option_boxes/number.php:5
+#: templates/field_option_boxes/number.php:12
+msgid "leave empty for no limit"
+msgstr ""
+
+#: templates/field_option_boxes/number.php:9
+msgid "Max value"
+msgstr ""
+
+#: templates/field_option_boxes/select.php:2
+msgid "Multiple value selection"
+msgstr ""
+
+#: templates/field_option_boxes/select.php:9
+msgid "Labels and values"
+msgstr ""
+
+#: templates/field_option_boxes/select.php:10
+msgid ""
+"Enter each choice on a new line.<br>For more control, you may specify both a "
+"value and label like this:<br><br>red : Red<br>blue : Blue<br>green : Green."
+msgstr ""
+
+#: templates/field_option_boxes/select.php:12
+msgid ""
+"<br><br><strong>Note: </strong> you can use different labels for each "
+"language but you <strong>must use</strong> same values. For example:  \" "
+"value_1 : Green\" for English and \"value_1 : Verde\" for Italian."
+msgstr ""
+
+#: templates/field_option_boxes/state.php:5
+msgid "Select which country states/provinces have to be showed"
+msgstr ""
+
+#: templates/field_option_boxes/state.php:6
+msgid ""
+"Can be selected only the states/provinces for the allowed sell countries "
+"configured in the WooCommerce -> Settings -> General menu."
+msgstr ""
+
+#: templates/field_option_boxes/time.php:8
+msgid "Min time type"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:16
+msgid "Min time"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:20
+#: templates/field_option_boxes/time.php:37
+msgid "Leave empty for no min time"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:24
+msgid "Min time can be earlier than \"now\"?"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:32
+msgid "Min relative time from now"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:40
+#: templates/field_option_boxes/time.php:72
+msgid "Second"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:41
+#: templates/field_option_boxes/time.php:73
+msgid "Minute"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:42
+#: templates/field_option_boxes/time.php:74
+msgid "Hour"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:47
+msgid "Max time type"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:55
+msgid "Max time"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:59
+#: templates/field_option_boxes/time.php:69
+msgid "Leave empty for no max time"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:64
+msgid "Max relative time from now"
+msgstr ""
+
+#: templates/field_option_boxes/time.php:79
+msgid "Choose the minutes interval between each time in the list"
+msgstr ""
+
+#: woocommerce-conditional-checkout-fields.php:46
+#, php-format
+msgid ""
+"To complete the <span style=\"color:#96588a; font-weight:bold;\">%s</span> "
+"plugin activation, you must verify your purchase license. Click <a "
+"href=\"%s\">here</a> to verify it."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: woocommerce-conditional-checkout-fields.php:199
+msgid "WooCommerce Checkout Fields & Fees"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Checkout fields showed according to conditional logic."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Lagudi Domenico"
+msgstr ""

@@ -1,0 +1,13 @@
+.wcccf_option_container {
+	border: 1px #d3d3d3 solid;
+	padding: 10px;
+}
+.wcccf_option_container label
+{
+	font-weight:bold;
+}
+.wcccf_option_container small
+{
+	display:block;
+	margin-top: 5px;
+}

@@ -1,0 +1,246 @@
+<!doctype html>  
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	
+	<title>WooCommerce Checkout Fields</title>
+	
+	<meta name="description" content="">
+	<meta name="author" content="Lagudi Domenico">
+	<meta name="copyright" content="Lagudi Domenico">
+	<meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+	<meta name="date" content="2017-02-18T00:00:00+02:00">
+	
+	<link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+	
+	
+	
+	<script src="assets/js/jquery.js"></script>
+	
+	<script src="assets/js/jquery.scrollTo.js"></script>
+	<script src="assets/js/jquery.easing.js"></script>
+	
+	<script>document.createElement('section');var duration='500',easing='swing';</script>
+	<script src="assets/js/script.js"></script>
+	
+	<style>
+		html{background-color:#FFFFFF;color:#383838;}
+		::-moz-selection{background:#444444;color:#DDDDDD;}
+		::selection{background:#444444;color:#DDDDDD;}
+		#documenter_sidebar #documenter_logo{background-image:url();}
+		a{color:#0000FF;}
+		.btn {
+			border-radius:3px;
+		}
+		.btn-primary {
+			  background-image: -moz-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -ms-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -webkit-gradient(linear, 0 0, 0 0088CC%, from(#DDDDDD), to(#0044CC));
+			  background-image: -webkit-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: -o-linear-gradient(top, #0088CC, #0044CC);
+			  background-image: linear-gradient(top, #0088CC, #0044CC);
+			  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088CC', endColorstr='#0044CC', GradientType=0);
+			  border-color: #0044CC #0044CC #bfbfbf;
+			  color:#FFFFFF;
+		}
+		.btn-primary:hover,
+		.btn-primary:active,
+		.btn-primary.active,
+		.btn-primary.disabled,
+		.btn-primary[disabled] {
+		  border-color: #0088CC #0088CC #bfbfbf;
+		  background-color: #0044CC;
+		}
+		hr{border-top:1px solid #EBEBEB;border-bottom:1px solid #FFFFFF;}
+		#documenter_sidebar, #documenter_sidebar ul a{background-color:#DDDDDD;color:#222222;}
+		#documenter_sidebar ul a{-webkit-text-shadow:1px 1px 0px #EEEEEE;-moz-text-shadow:1px 1px 0px #EEEEEE;text-shadow:1px 1px 0px #EEEEEE;}
+		#documenter_sidebar ul{border-top:1px solid #AAAAAA;}
+		#documenter_sidebar ul a{border-top:1px solid #EEEEEE;border-bottom:1px solid #AAAAAA;color:#444444;}
+		#documenter_sidebar ul a:hover{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_sidebar ul a.current{background:#444444;color:#DDDDDD;border-top:1px solid #444444;}
+		#documenter_copyright{display:block !important;visibility:visible !important;}
+	</style>
+	
+</head>
+<body class="documenter-project">
+	<div id="documenter_sidebar">
+		<a href="#documenter_cover" id="documenter_logo"></a>
+		<ul id="documenter_nav">
+			<li><a class="current" href="#documenter_cover">Start</a></li>
+				
+			<li><a href="#installation" title="Installation">Installation</a></li>
+			<li><a href="#configuration" title="Configuration">Configuration</a></li>
+			<li><a href="#frontend" title="Frontend">Frontend integration</a></li>
+			<li><a href="#admin_order_details_page" title="Admin order details page">Admin order details page</a></li>
+		
+			
+
+		</ul>
+		<div id="documenter_copyright">Copyright Lagudi Domenico 2017<br/><br/>
+		 Special thanks to:<br/>Brian "Łpaggio" O'Pagg
+		</div>
+	</div>
+	<div id="documenter_content">
+	<section id="documenter_cover">
+	<h1>WooCommerce Checkout Fields</h1>
+	
+	<div id="documenter_buttons">
+		
+	</div>
+	<hr>
+	<ul>
+	<li>created: 20/09/2017</li>
+	<li>latest update: 20/09/2017</li>
+	<li>by: Lagudi Domenico</li>
+	</ul>
+	<p></p>
+	</section>
+	
+	<section id="installation">
+	<div class="page-header"><h3>Installation</h3><hr class="notop"></div>
+		<div>
+			First download the plugin file zip file, then there are two ways for installing:</div>
+		<div>
+			&nbsp;</div>
+		<div>
+			1) The best way to install is via the Plugins &gt; Add New Plugins section in the Wordpress Backend.</div>
+		<div>
+			&nbsp;</div>
+		<div>
+			2) You can also manually bu unzipping plugin file in /wp-content/plugins directory</div>
+		<div>
+			&nbsp;</div>
+		<div>
+			Once the plugin is installed please activate.</div>
+		<div>
+			It will add a new menu voice <strong>WooCommerce Checkout Fields</strong> menu by which you can add the fields and the visibility conditions by which the additional fields will be showed on checkout page.</div>
+	</section>
+	
+	
+	<section id="configuration">
+		<div class="page-header"><h3>Configuration</h3><hr class="notop"></div>
+		
+		<p>
+			By accessing to the <strong>WooCommerce Checkout Fields</strong> menu you can add the new billing/shipping fields that will be lately displayed during the checkout process after the default WooCommerce form fields. Each
+			field can be have its own <i>visibility conditions</i>. Fields will be showed on checkout page only if the configured condition (if any) will be satisfied.
+		</p>
+		
+		<h4>Field types</h4>
+		<p>
+		 You can create the following field types:
+		 <ol>
+		 <li>Text</li>
+		 <li>Text area</li>
+		 <li>Number</li>
+		 <li>Telephone</li>
+		 <li>Email</li>
+		 <li>Password</li>
+		 <li>Select/Multiselect</li>
+		 <li>Date</li>
+		 <li>Time</li>
+		 <li>Country</li>
+		 <li>State</li>
+		 </ol>
+		</p>
+		<p>&nbsp;</p>
+		For each field you can configure its own option like CSS classes to assign to the input field, placeholder text, show on emails, show on order details page, etc.
+		<p><img alt="" src="assets/images/image_1.jpg" ></p>
+		<p>&nbsp;</p>
+		
+		<h4>Select/Multiselect field note</h4>
+		<p>To secify values and labels use the following format:</p>
+		<p>value1 : value 1<br>
+		  value2 : value 2</p>
+		<p>
+		In which each line has a value and label separated by the <i>:</i> character.
+		</p>
+		
+		<p>
+		<strong>Note for WPML users:</strong> you can use different labels for each language but you <strong>must use</strong> same values.<br>
+		For example:  " value_1 : Green" for English and "value_1 : Verde" for Italian.
+		</p>
+
+		<h4>State field note</h4>
+		<p>Can be selected only the states/provinces for the allowed sell countries configured in the WooCommerce -> Settings -> General menu.</p>
+		
+		
+		<h4>WPML compability note</h4>
+		<p>If WPML is detected, the plugin will automatically show multilanguage input fields for labeles, placehonders, etc. In this way you can enter different texts for each language.
+		</p>
+		
+		<h4>Field visibility condition</h4>
+		<p>
+		 For each field can be bounded several and/or conditional rules that will make the field visible only if satisfied. A condition can be have 4 typologies:
+		 <ol>
+			 <li>Product</li>
+			 <li>Category</li>
+			 <li>Cart</li>
+			 <li>User</li>
+		 </ol>
+		</p>
+		<p><img alt="" src="assets/images/image_2.jpg" ></p>
+		<p>&nbsp;</p>
+		<h5>Product/Category</h5>
+		<p>
+		Allows you to make the field visible according the followin options:
+		<ol>
+			<li>Cart/Stock quantity</li>
+			<li>Stock status</li>
+			<li>Lenght</li>
+			<li>Height</li>
+			<li>Width</li>
+			<li>Weight</li>
+			<li>Volume</li>
+		</ol>
+		In case of multiple product selections, selected values can be considered for each item or as sum of items values. You can also optionally configure the rule 
+		in order to be satisfied if all the selected product are in cart or to apply just only to the product that actually are in cart.
+		</p>
+		
+		<h5>Cart</h5>
+		<p>
+		Allows you to make the field visible according the followin options:
+		<ol>
+			<li>Sub total, Total, Shippings or Discount (with or without taxes applied) </li>
+			<li>Subtotal, Total, Shipping or Discount taxes</li>
+			<li>Sum of item quantities, weights or volumes</li>
+			<li>Number of distinct item on cart</li>
+		</ol>
+		</p>
+		
+		<h5>User</h5>
+		<p>
+		 Field will be visible if the current user has or hasn't one of the selected roles
+		</p>
+	</section>
+	
+	
+
+	
+	<section id="frontend">
+		<div class="page-header"><h3>Frontend integration</h3><hr class="notop"></div>
+		<p>Additional fields will be seamlessly integrated into the Billing/Shipping form if the conditional rules will be satisfied </p>
+		<p><img alt="" src="assets/images/image_4.jpg" ></p>
+		<p>&nbsp;</p>
+		<p>And optionally reported into the user oder details page and notification emails</p>
+		<p><img alt="" src="assets/images/image_8.jpg" ></p>
+		<p>&nbsp;</p>
+		
+	</section>
+	
+	<section id="admin_order_details_page">
+		<div class="page-header">
+			<h3>Backend integration</h3><hr class="notop">
+		</div>
+		<p>dditional fields will be seamlessly integrated into the order details page</p>
+		<p><img alt="" src="assets/images/image_9.jpg" ></p>
+		<p>&nbsp;</p>
+		
+	</section>
+
+	</div>
+</body>
+</html>

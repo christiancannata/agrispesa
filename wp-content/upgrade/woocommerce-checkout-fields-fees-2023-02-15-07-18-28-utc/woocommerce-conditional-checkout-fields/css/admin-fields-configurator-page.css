@@ -1,0 +1,256 @@
+/* .column{
+	width:49%;
+	margin-right:.5%;
+	min-height:300px;
+	background:#fff;
+	float:left;
+} */
+/*.column*/ .dragbox{
+	margin:5px 2px  20px;
+	background:#fff;
+	position:relative;
+	border:1px solid #ddd;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+/*.column*/ .dragbox h2{
+	margin:0;
+	font-size:12px;
+	padding:5px;
+	background:#f0f0f0;
+	color:#000;
+	border-bottom:1px solid #eee;
+	font-family:Verdana;
+	cursor:move;  /* on field configurator page, fields are no longer sortable */
+}
+.dragbox-content{
+	background:#fff;
+	min-height:100px; 
+	margin:5px;
+	display:none;
+}
+.wcccf_type_select_fee, .wcccf_label_type_select_fee
+{
+	display:none;
+}
+/*.column*/  .placeholder{
+	background: #f0f0f0;
+	border:1px dashed #ddd;
+}
+.dragbox h2.collapse{
+	/* background:#f0f0f0 url('collapse.png') no-repeat top right; */
+}
+.dragbox h2 .configure{
+	font-size:11px; font-weight:normal;
+	margin-right:30px; float:right;
+}
+.configure a
+{
+	text-decoration: none;
+}
+.inside
+{
+	overflow: hidden;
+}
+.remove-field
+{
+	color: #e60000;
+}
+.remove-field:hover
+{
+	color: red;
+}
+.wcccf_loader 
+{
+	background: url('../img/wpspin_light.gif') no-repeat;
+	background-size: 16px 16px;
+	display: none;
+	float: left;
+	/*opacity: .7;
+	filter: alpha(opacity=70);*/
+	width: 16px;
+	height: 16px;
+	margin: 5px 5px 0;
+}
+.add_new_field_button
+{
+	
+}
+.add_new_field_button_container
+{
+	display:block;
+	margin-top: 25px;
+	float:right;
+}
+label
+{
+	font-weight: bold;
+	display:block;
+	clear:both;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+.field_options_box 
+{
+	display: block;
+	margin-top: 20px;
+	padding: 5px 10px 10px 10px;
+	border: 1px #dedede solid;
+	margin: 20px 10px 20px 0px;
+}
+.field_conditional_options_box 
+{
+	background: #f9f9f9;
+	display: block;
+	margin-top: 20px;
+	padding: 5px 10px 10px 10px;
+	margin: 20px 10px 20px 0px;
+	border: 1px #d6d6d6 solid;
+	overflow: hidden;
+}
+.conditional_options_box_content
+{
+	display:block;
+	margin-bottom: 20px;
+}
+.wcccf_fee_type_container
+{
+	max-width:400px;
+}
+input:required {
+  border: 1px solid red;
+}
+.wcccf_option_box_container 
+{
+	display: inline-block;
+	min-height: 80px;
+	margin-right: 5px;
+	overflow: hidden;
+	vertical-align: middle;
+	margin-bottom: 10px;
+	border: 1px dashed #dedede;
+	padding: 20px;
+}
+.wcccf_display_as_block
+{
+	display:block;
+	overflow: hidden;
+}
+.wcccf_float_left
+{
+	float:left;
+	display: block;
+}
+.wccf_right_bottom_10
+{
+	margin-right: 10px;
+}
+.wccf_margin_bottom_10
+{
+	margin-bottom: 10px;
+}
+.wccf_margin_top_10
+{
+	margin-bottom: 10px;
+}
+.condition_sub_options_box
+{
+	display: inline-block;
+}
+.conditional_row
+{
+	display: block;
+	margin-bottom: 25px;
+	border: 1px #bbbbbb dashed;
+	padding: 25px;
+}
+.conditional_group_item_select
+{
+	margin-right: 15px;
+}
+input[type="number"]
+{
+	min-width:200px;
+	height: 35px;
+}
+.wp-admin select, input[type="text"]
+{
+	height: 35px;
+}
+input.wcccf_bigger_input
+{
+	/* min-width: 250px; */
+}
+.button-secondary.delete 
+{
+    color: white;
+    background: red;
+    border: 1px red solid;
+}
+.button-secondary.delete:hover
+{
+    color: white;
+    background: #D90000;
+    border: 1px #D90000 solid;
+}
+.wcccf_conditional_option_item 
+{
+	border: 1px #dedede dashed;
+	padding: 10px;
+	overflow:hidden;
+}
+.wcccf_login_operator_container
+{
+	overflow:hidden;
+}
+.page-title-action
+{
+	vertical-align:middle;
+}
+.wcccuf_conditional_box_expandible
+{
+	/* display:none; */
+}
+.wcccf_min_time_value, .wcccf_max_time_value
+{
+	width:200px;
+}
+.wcccf_min_date_value, .wcccf_max_date_value, .wcccf_absolute_min_date_value, .wcccf_absolute_max_date_value
+{
+	width:200px;
+}
+.wcccf_date_description
+{
+	max-width: 200px;
+}
+.wcccf_required_label
+{
+	font-weight:bold;
+	color:red;
+}
+.wcccf_logic_operator_container
+{
+	margin-top: 10px;
+}
+.wcccf_hide
+{
+	display: none;
+}
+.wcccf_show_inline
+{
+	display: inline-block;
+}
+.wccc_datetime_offset_type
+{
+	top: -3px;
+	position: relative;
+}
+.wcccf_state_description
+{
+	display: block;
+}
+.wcccf_id_label {
+	font-weight: bold;
+	margin-top: 10px;
+	display: block;
+}

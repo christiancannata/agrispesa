@@ -1,0 +1,40 @@
+.button.wcccf_delete_button
+{
+	background: #FF2626;
+	border-color: #FF2626;
+	color: #fff;
+	margin-left: 5px
+}
+.button.wcccf_delete_button:hover
+{
+	background: #FF7373;
+	border-color: #FF7373;
+	color: #fff;
+}
+/*Uploader*/
+.wcccf_file_uploader_container 
+{
+	/* border: 1px solid #dedede;
+	padding: 20px; */
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+
+}
+.wcccf_upload_progressbar
+{
+	background-color: grey;
+    display: block;
+    height: 10px;
+    width: 0%;
+}
+.wcccf_upload_progress_status_container
+{
+	display:none;
+	margin-top: 5px;
+}
+button.button.wcccf_file_upload_button, button.button.wcccf_file_tmp_delete_button
+{
+	display:none;
+}
+/* end uploader */

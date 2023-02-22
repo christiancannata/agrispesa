@@ -1,0 +1,38 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.order-actions li.order_navigation {
+	margin: 5px 0;
+}
+
+li.order_navigation > ul > li:first-child {
+	border-bottom: none;
+	text-align: left;
+	padding: 6px 5px 6px 10px;
+}
+
+#poststuff #woocommerce-order-actions .inside ul.order_actions li.order_navigation > ul > li:first-child {
+	padding: 6px 5px 6px 0;
+}
+
+#poststuff #woocommerce-order-actions .inside ul.order_actions li.order_navigation > ul > li {
+	padding: 6px 0 6px 5px;
+}
+
+.wp-core-ui li.order_navigation > ul > li > a {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.clearfix:before, .clearfix:after {
+	content: "";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}

@@ -112,6 +112,7 @@ $ag_includes = array(
 	'/profile.php',
 	'/admin.php',
 	'/checkout.php',
+	'/admin-css.php',
 );
 
 foreach ($ag_includes as $file) {

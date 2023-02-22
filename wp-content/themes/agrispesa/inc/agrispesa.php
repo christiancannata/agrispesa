@@ -102,34 +102,5 @@ function misha_remove_my_account_links( $menu_links ){
 	return $menu_links;
 }
 
-//CSS Admin area
-add_action('admin_head', 'my_custom_fonts');
-
-function my_custom_fonts() {
-  echo '<style>
-  body.wp-admin .wp-list-table td.price .uom {
-    display: none;
-  }
-  body.wp-admin .menu-top.ame-unclickable-menu-item {
-    font-weight: bold;
-    border-top: 1px solid #fff;
-    padding: 12px 0 6px !important;
-    cursor: default !important;
-  }
-  body.wp-admin .menu-top.ame-unclickable-menu-item:hover {
-    color: #fff !important;
-    box-shadow: none !important;
-  }
-  body.wp-admin .menu-top.ame-unclickable-menu-item .wp-menu-image {
-    display: none;
-  }
-  body.wp-admin .menu-top.ame-unclickable-menu-item .wp-menu-name {
-    padding-left: 10px !important;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  </style>';
-}
-
 //Aggiungi indirizzo di consegna alle mail
 add_filter( 'woocommerce_order_needs_shipping_address', '__return_true' );

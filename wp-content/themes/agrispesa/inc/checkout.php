@@ -167,55 +167,11 @@ function quadlayers_custom_add_to_cart_message(){
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 //add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_login_form' );
 
-//add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
-function custom_woocommerce_billing_fields($fields){
-
-	$fields['_billing_scala'] = array(
-		'type' => 'text',
-		'class' => array('my-field-class orm-row-wide'),
-		'label' => __('Scala'),
-		'required' => true,
-		'placeholder' => '',
-	);
-
-	$fields['_billing_piano'] = array(
-		'type' => 'text',
-		'class' => array('my-field-class orm-row-wide'),
-		'label' => __('Piano'),
-		'required' => true,
-		'placeholder' => '',
-	);
-
-	return $fields;
-}
-
-add_filter('woocommerce_shipping_fields', 'custom_woocommerce_shipping_fields');
-
-function custom_woocommerce_shipping_fields($fields){
-
-	$fields['_shipping_scala'] = array(
-		'type' => 'text',
-		'class' => array('my-field-class orm-row-wide'),
-		'label' => __('Scala'),
-		'required' => true,
-		'placeholder' => '',
-	);
-
-	$fields['_shipping_piano'] = array(
-		'type' => 'text',
-		'class' => array('my-field-class orm-row-wide'),
-		'label' => __('Piano'),
-		'required' => true,
-		'placeholder' => '',
-	);
-
-	return $fields;
-}
 
 
 //Campi checkout
-add_action('woocommerce_after_order_notes', 'my_custom_checkout_field');
-function my_custom_checkout_field($checkout){
+add_action('woocommerce_after_order_notes', 'personal_checkout_field');
+function personal_checkout_field($checkout){
 	echo '<div class="woocommerce-border-form">';
 	echo '<h3 class="checkout--title">Su di te <span class="ec ec-sparkles"></span></h3>';
 	woocommerce_form_field('compleanno', array(
@@ -228,8 +184,8 @@ function my_custom_checkout_field($checkout){
 	echo '</div>';
 }
 
-add_action('woocommerce_before_order_notes', 'scala_checkout_field');
-function scala_checkout_field($checkout){
+add_action('woocommerce_before_order_notes', 'delivery_checkout_field');
+function delivery_checkout_field($checkout){
 	echo '<div class="woocommerce-border-form w-bottom">';
 	echo '<h3 class="checkout--title">Consegna a domicilio</h3>';
 	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
@@ -253,26 +209,35 @@ function scala_checkout_field($checkout){
 
 
 /*** Update the order meta with field value ***/
-add_action('woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta');
-function my_custom_checkout_field_update_order_meta($order_id) {
+add_action('woocommerce_checkout_update_order_meta', 'custom_checkout_field_update_order_meta');
+function custom_checkout_field_update_order_meta($order_id) {
 	if ($_POST['compleanno']) update_post_meta($order_id, 'compleanno', esc_attr($_POST['compleanno']));
 	if ($_POST['scala']) update_post_meta($order_id, 'scala', esc_attr($_POST['scala']));
 	if ($_POST['piano']) update_post_meta($order_id, 'piano', esc_attr($_POST['piano']));
 }
 
+/** Display field value on the order edit page */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'scala_checkout_field_display_admin_order_meta', 10, 1 );
+function scala_checkout_field_display_admin_order_meta($order_id){
+    echo '<p><strong>'.__('Scala').':</strong> ' . get_post_meta( $order_id, 'scala', true ) . '</p>';
+}
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'piano_checkout_field_display_admin_order_meta', 10, 1 );
+function piano_checkout_field_display_admin_order_meta($order_id){
+    echo '<p><strong>'.__('Piano').':</strong> ' . get_post_meta( $order_id, 'piano', true ) . '</p>';
+}
+
+
 /*** Add the field to order emails ***/
-add_filter('woocommerce_email_order_meta_keys', 'my_custom_checkout_field_order_meta_keys');
-function my_custom_checkout_field_order_meta_keys($keys) {
+add_filter('woocommerce_email_order_meta_keys', 'birthday_checkout_field_order_meta_keys');
+function birthday_checkout_field_order_meta_keys($keys) {
 	$keys[] = 'compleanno';
 	return $keys;
 }
-
 add_filter('woocommerce_email_order_meta_keys', 'scala_checkout_field_order_meta_keys');
 function scala_checkout_field_order_meta_keys($keys) {
 	$keys[] = 'scala';
 	return $keys;
 }
-
 add_filter('woocommerce_email_order_meta_keys', 'piano_checkout_field_order_meta_keys');
 function piano_checkout_field_order_meta_keys($keys) {
 	$keys[] = 'piano';
