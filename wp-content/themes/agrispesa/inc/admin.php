@@ -984,6 +984,7 @@ function get_box_from_subscription($subscription, $week = null)
 	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
 
+
 	$productBox = get_single_box_from_attributes($tipologia, $dimensione);
 
 	if (empty($productBox)) {
@@ -991,6 +992,13 @@ function get_box_from_subscription($subscription, $week = null)
 	}
 
 	//get product data box
+	$box = get_weekly_box_from_box($productBox->get_id(), $week);
+	return $box;
+}
+
+
+function get_weekly_box_from_box($id, $week)
+{
 	$box = get_posts([
 		'post_type' => 'weekly-box',
 		'post_status' => 'publish',
@@ -1004,7 +1012,7 @@ function get_box_from_subscription($subscription, $week = null)
 			],
 			[
 				'key' => '_product_box_id',
-				'value' => $productBox->get_id(),
+				'value' => $id,
 				'compare' => '='
 			]
 		]
@@ -1017,7 +1025,6 @@ function get_box_from_subscription($subscription, $week = null)
 
 	return reset($box);
 }
-
 
 function create_order_from_subscription($id)
 {
@@ -1230,13 +1237,11 @@ function my_custom_submenu_page_callback()
 		];
 		$orders = new WP_Query($args);
 		$orders = $orders->get_posts();
-
 		if (count($orders) > 0) {
 			continue;
 		}
 
 		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
-
 		foreach ($productsToAdd as $productToAdd) {
 
 			if (!isset($allProductsNeed[$productToAdd['id']])) {
@@ -1360,7 +1365,6 @@ function my_custom_submenu_page_callback()
 						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
 						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
 
-
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
 							<th scope="row" class="check-column"><label class="screen-reader-text"
@@ -1368,21 +1372,30 @@ function my_custom_submenu_page_callback()
 									un abbonamento</label>
 
 								<?php
-								if (!get_single_box_from_attributes($tipologia, $dimensione)) {
+
+
+								if (!$box = get_single_box_from_attributes($tipologia, $dimensione)) {
 									echo "Box Singola Non disponibile";
 								} else {
-									?>
-									<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-										   value="<?php echo $subscription->get_id(); ?>"
-										<?php if (count($orders) > 0): ?>
-											disabled
-										<?php endif; ?>
-									><br>
+									//check if exist weekly box
+									$weekBox = get_weekly_box_from_box($box->get_id(), $week);
+
+									if ($weekBox):
+										?>
+										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+											   value="<?php echo $subscription->get_id(); ?>"
+											<?php if (count($orders) > 0): ?>
+												disabled
+											<?php endif; ?>
+										><br>
+									<?php else: ?>
+										Nessuna Box Settimanale
+									<?php endif; ?>
 								<?php } ?>
 
 							</th>
 							<td class="author column-author" data-colname="Autore">
-								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
+								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary"
 								data-colname="Commento">
@@ -1902,27 +1915,38 @@ function consegne_ordini_pages()
 
 						foreach ($categoryProducts as $categoryProduct) {
 
-							$unitaMisura = 'gr';
 
-							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							$price = get_post_meta($categoryProduct->ID, '_price', true);
+							$weight = get_post_meta($categoryProduct->ID, '_weight', true);
 
+							$unitaMisura = 'gr';
+							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							if (!empty($measureUnit)) {
 								$unitaMisura = $measureUnit;
 							}
 
+							$fornitore = get_post_meta($categoryProduct->ID, 'product_producer', true);
+							$fornitoreString = '';
+							if (!empty($fornitore)) {
+								$fornitore = reset($fornitore);
+								$fornitore = get_post($fornitore);
+								$fornitoreString = $fornitore->post_title;
+							}
+
+
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title,
+								'name' => $categoryProduct->post_title . ' (' . $weight . $unitaMisura . ')',
+								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
-								'price' => floatval($price)
+								'price' => floatval($price),
+								'weight' => $weight
 							];
 						}
 					}
 				}
 			}
 		}
-
 
 		?>
 
@@ -1985,6 +2009,13 @@ function consegne_ordini_pages()
 							<?php foreach ($category['products'] as $product): ?>
 								<?php
 								$fornitore = get_post_meta($product->ID, 'product_producer', true);
+								$weight = get_post_meta($product->ID, '_weight', true);
+								$unitaMisura = 'gr';
+								$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+								if (!empty($measureUnit)) {
+									$unitaMisura = $measureUnit;
+								}
+
 								$fornitoreString = '';
 								if (!empty($fornitore)) {
 									$fornitore = reset($fornitore);
@@ -2007,7 +2038,7 @@ function consegne_ordini_pages()
 
 								?>
 								<option
-									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
+									value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -2030,9 +2061,10 @@ function consegne_ordini_pages()
 					<div class="product-box" v-for="(product,index) of products">
 						<a href="#" @click="deleteProduct(index)">Elimina</a>
 						<h3 v-html="product.name"></h3>
+						<i v-html="product.fornitore"></i>
+						<br><br>
 						<label style="display: block">Quantità</label>
 						<input style="width:100px;float:left" type="number" v-model="product.quantity">
-						<span style="display: inline" v-html="product.unit_measure"></span>
 					</div>
 				</div>
 				<br><br>
@@ -2040,7 +2072,7 @@ function consegne_ordini_pages()
 				<div style="display: flex;width:100%;margin-top:10px;margin-bottom: 10px">
 					<table>
 						<tr>
-							<td>Prezzo Box</td>
+							<td>Peso Box</td>
 							<td>Totale €</td>
 						</tr>
 						<tr>
@@ -2118,12 +2150,13 @@ function consegne_ordini_pages()
 										?>
 										<?php foreach ($products as $key => $product): ?>
 											<?php
+											$weight = get_post_meta($product['id'], '_weight', true);
 
 											if (!isset($product['price'])) {
 												$product['price'] = 0;
 											}
 
-											$totalWeight += $product['quantity'];
+											$totalWeight += ($product['quantity'] * $weight);
 											$totalPrice += ($product['price'] * $product['quantity']);
 
 											$fornitore = get_post_meta($product['id'], 'product_producer', true);
@@ -2143,9 +2176,7 @@ function consegne_ordini_pages()
 											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
 												$codiceConfezionamento = reset($codiceConfezionamento);
 											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+
 
 											$unitaMisura = 'gr';
 
@@ -2162,14 +2193,19 @@ function consegne_ordini_pages()
 													<?php if ($fornitoreString): ?> <br>
 														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
 
+													<br>
+													<b><?php echo $weight . $unitaMisura; ?></b>
 													<?php if ($codiceConfezionamento): ?><br>
-														<i><?php echo $codiceConfezionamento; ?></i>
+														<i>Cod.
+															Confezionamento: <?php echo $codiceConfezionamento; ?></i>
 													<?php endif; ?>
 												</td>
-												<td><input readonly value="<?php echo $product['quantity']; ?>"
+												<td style="display:flex;">
+													<span>X</span><input readonly
+																		 value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
-														   type="number"
-														   name="quantity[<?php echo $key; ?>][]"><?php echo $unitaMisura; ?>
+																		 type="number"
+																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
 													<?php echo number_format($product['price'] * $product['quantity'], 2); ?>

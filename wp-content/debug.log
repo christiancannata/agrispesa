@@ -6704,3 +6704,29 @@ Stack trace:
 [22-Feb-2023 03:02:13 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-includes/functions.php on line 6865
 [22-Feb-2023 03:02:14 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-includes/class-wpdb.php:1634) in /shared/httpd/agrispesa/wp-admin/admin-header.php on line 9
 [22-Feb-2023 03:07:54 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140
+[22-Feb-2023 09:41:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2140
+[22-Feb-2023 10:20:23 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3848 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 10:20:23 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 10:20:24 UTC] PHP Notice:  La funzione wpdb è stata richiamata <strong>in maniera scorretta</strong>. wpdb deve impostare una connessione ad un database da utilizzare per l'escaping. Leggi <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.6.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[22-Feb-2023 10:20:24 UTC] PHP Notice:  La funzione wpdb è stata richiamata <strong>in maniera scorretta</strong>. wpdb deve impostare una connessione ad un database da utilizzare per l'escaping. Leggi <a href="https://wordpress.org/support/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.6.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5835
+[22-Feb-2023 10:20:28 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3848 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 10:20:28 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[22-Feb-2023 10:21:37 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[22-Feb-2023 10:21:37 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_full_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[22-Feb-2023 10:30:28 UTC] PHP Notice:  Undefined variable: week in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1010
+[22-Feb-2023 10:30:28 UTC] PHP Notice:  Undefined variable: productBox in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1015
+[22-Feb-2023 10:30:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1015
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(995): get_weekly_box_from_box(22445)
+#1 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(896): get_box_from_subscription(Object(WC_Subscription), '08')
+#2 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1244): get_products_to_add_from_subscription(Object(WC_Subscription), '08', true)
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woocommerce_pag...')
+#7 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1015
+[22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
