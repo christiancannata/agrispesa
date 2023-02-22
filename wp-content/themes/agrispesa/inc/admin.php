@@ -83,19 +83,52 @@ function calculate_delivery_date_order($id)
 	$order_date = $order->get_date_paid();
 
 
-	$week = $order->get_date_paid()->format("W");
+	$week = $order_date->format("W");
 
-	if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
-		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-	}
+	//if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+	$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+	//}
 
 	update_post_meta($order->get_id(), '_week', $week);
 
-	$deliveryDate = get_order_delivery_date_from_date($order->get_date_paid()->format('d-m-Y'), $gruppoConsegna);
+	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
 
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 
 }
+
+
+add_action('woocommerce_new_order', function ($order_id, $order) {
+	if ($order->get_created_via() == 'checkout') {
+
+		$groups = get_posts([
+			'post_type' => 'delivery-group',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+		]);
+
+		foreach ($groups as $group) {
+
+			$caps = get_post_meta($group->ID, 'cap', true);
+
+			if (in_array($order->get_shipping_postcode(), $caps)) {
+				update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
+			}
+		}
+
+		$gruppoConsegna = get_post_meta($order_id, '_gruppo_consegna', true);
+
+		$order_date = $order->get_date_created();
+
+		$week = $order_date->format("W");
+		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+		update_post_meta($order->get_id(), '_week', $week);
+
+		$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
+
+		update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
+	}
+}, 10, 2);
 
 add_action('woocommerce_product_options_advanced', function () {
 	woocommerce_wp_text_input([

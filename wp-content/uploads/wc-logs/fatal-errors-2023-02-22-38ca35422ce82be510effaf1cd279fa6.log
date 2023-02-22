@@ -1,0 +1,11 @@
+2023-02-22T02:24:22+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:123
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}(22450, Object(WC_Order))
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/data-stores/class-wc-order-data-store-cpt.php(103): do_action('woocommerce_new...', 22450, Object(WC_Order))
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-data-store.php(186): WC_Order_Data_Store_CPT->create(Object(WC_Order))
+#5 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/abstracts/abstract-wc-order.php(201): WC_Data_Store->create(Object(WC_Order))
+#6 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-order.php(244): WC_Abstract_Order->save()
+#7 /shared/htt in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 123
+
