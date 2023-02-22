@@ -6661,3 +6661,16 @@ Stack trace:
 #6 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-order.php(244): WC_Abstract_Order->save()
 #7 /shared/htt in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 123
 [22-Feb-2023 02:25:00 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 02:25:30 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52
+[22-Feb-2023 02:35:31 UTC] PHP Notice:  Undefined variable: wpdb in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 879
+[22-Feb-2023 02:35:31 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_results() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:879
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#1 /shared/httpd/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#2 /shared/httpd/agrispesa/wp-admin/post.php(206): require('/shared/httpd/a...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 879
+[22-Feb-2023 02:40:08 UTC] PHP Parse error:  syntax error, unexpected 'endfor' (T_ENDFOR) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 882
+[22-Feb-2023 02:40:17 UTC] PHP Parse error:  syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 885
+[22-Feb-2023 02:40:30 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 881
+[22-Feb-2023 02:40:30 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 881

@@ -871,12 +871,22 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 
 ';
 
-		echo '<strong>Data di consegna:</strong><br>
-		<input autocomplete="off" type="date" value="' . $consegna . '" name="_data_consegna" readonly>';
+		global $wpdb;
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
 
+		?>
+		<strong>Data di consegna:</strong><br>
+		<select autocomplete="off" name="_data_consegna">
+			<option <?php if (!$consegna): ?> selected <?php endif; ?> >Nessuna data di consegna</option>
+			<?php foreach ($allDataConsegna as $dataConsegna): ?>
+				<option
+					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
+					value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format("d/m/Y"); ?></option>
+			<?php endforeach; ?>
+		</select>
+		<?php
 	}
 }
-
 function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
 {
 	$box = get_box_from_subscription($subscription, $week);
@@ -1014,9 +1024,9 @@ function create_order_from_subscription($id)
 	}
 
 	$weight = 0;
-	/*	if (!empty($productData['weight'])) {
-			$weight = $productData['weight'];
-		}*/
+	/*    if (!empty($productData['weight'])) {
+	$weight = $productData['weight'];
+	}*/
 
 	$box = get_box_from_subscription($subscription);
 
@@ -1078,12 +1088,12 @@ function create_order_from_subscription($id)
 	/*$items = $subscription->get_items();
 	foreach ($items as $item) {
 
-		$order->add_product(, 1);
+	$order->add_product(, 1);
 	}
 
 	foreach ($order->get_items() as $item) {
-		$item->set_name($item->get_name() . ' - Settimana ' . $week);
-		$item->save();
+	$item->set_name($item->get_name() . ' - Settimana ' . $week);
+	$item->save();
 	}*/
 
 	$order->calculate_totals();
@@ -1186,7 +1196,7 @@ function my_custom_submenu_page_callback()
 
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => 'active']);
 	/*$subscriptions = array_filter($subscriptions, function ($subscription) {
-		return $subscription->has_status('active');
+	return $subscription->has_status('active');
 	});*/
 
 	$date = new DateTime();
@@ -1348,7 +1358,8 @@ function my_custom_submenu_page_callback()
 
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Seleziona
+							<th scope="row" class="check-column"><label class="screen-reader-text"
+																		for="cb-select-1">Seleziona
 									un abbonamento</label>
 
 								<?php
@@ -1368,7 +1379,8 @@ function my_custom_submenu_page_callback()
 							<td class="author column-author" data-colname="Autore">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_first_name(); ?></span>
 							</td>
-							<td class="comment column-comment has-row-actions column-primary" data-colname="Commento">
+							<td class="comment column-comment has-row-actions column-primary"
+								data-colname="Commento">
 								<span><?php
 
 									echo $boxProduct->get_name();

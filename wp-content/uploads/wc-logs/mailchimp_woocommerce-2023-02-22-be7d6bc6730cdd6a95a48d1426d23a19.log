@@ -16,3 +16,16 @@
 2023-02-22T02:24:07+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22449
 2023-02-22T02:24:22+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22450
 2023-02-22T02:24:59+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22451
+2023-02-22T02:25:29+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22452
+2023-02-22T02:25:31+00:00 NOTICE order_process :: Order #22448 skipped, user #1 user role is not in the list
+2023-02-22T02:25:33+00:00 NOTICE debug :: Order ID 22452 was pending and is now on-hold :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-02-22T02:25:45+00:00 NOTICE order_process :: Order #22449 skipped, user #1 user role is not in the list
+2023-02-22T02:26:15+00:00 NOTICE order_process :: Order #22450 skipped, user #1 user role is not in the list
+2023-02-22T02:26:46+00:00 NOTICE order_process :: Order #22451 skipped, user #1 user role is not in the list
+2023-02-22T02:27:27+00:00 NOTICE order_process :: Order #22452 skipped, user #1 user role is not in the list
+2023-02-22T02:43:53+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 22452
