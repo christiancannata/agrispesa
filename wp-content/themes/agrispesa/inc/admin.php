@@ -53,9 +53,9 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 		$date = DateTime::createFromFormat('d-m-Y', $date);
 	}
 
-	if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
-		$date->add(new DateInterval('P7D'));
-	}
+	//if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+	$date->add(new DateInterval('P7D'));
+	//}
 
 	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
 
