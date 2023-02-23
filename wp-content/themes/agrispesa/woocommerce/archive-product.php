@@ -221,12 +221,12 @@ if (woocommerce_product_loop()) {
 	        )
 				),
 
-				'meta_query' => array(
-					array(
-						'key' => '_stock_status',
-						'value' => 'instock'
-					),
-				)
+				// 'meta_query' => array(
+				// 	array(
+				// 		'key' => '_stock_status',
+				// 		'value' => 'instock'
+				// 	),
+				// )
 			);
 			$cat_query = new WP_Query($args);
 

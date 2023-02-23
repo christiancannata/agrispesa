@@ -384,35 +384,3 @@ function custom_products_widget_query_arg( $query_args ) {
         $query_args['meta_query'] = custom_meta_query( $query_args['meta_query'] );
     return $query_args;
 }
-
-//Modifica loop negozio per avere solo prodotti con check _stock_status
-function stock_meta_query( $meta_query ){
-    $meta_query[] = array(
-			'key' => '_stock_status',
-			'value' => 'instock'
-    );
-    return $meta_query;
-}
-
-// The main shop and archives meta query
-add_filter( 'woocommerce_product_query_meta_query', 'stock_product_query_meta_query', 10, 2 );
-function stock_product_query_meta_query( $meta_query, $query ) {
-    //if( ! is_admin() )
-        return stock_meta_query( $meta_query );
-}
-
-// The shortcode products query
-add_filter( 'woocommerce_shortcode_products_query', 'stock_shortcode_products_query', 10, 3 );
-function stock_shortcode_products_query( $query_args, $atts, $loop_name ) {
-    //if( ! is_admin() )
-        $query_args['meta_query'] = stock_meta_query( $query_args['meta_query'] );
-    return $query_args;
-}
-
-// The widget products query
-add_filter( 'woocommerce_products_widget_query_args', 'stock_products_widget_query_arg', 10, 1 );
-function stock_products_widget_query_arg( $query_args ) {
-    //if( ! is_admin() )
-        $query_args['meta_query'] = stock_meta_query( $query_args['meta_query'] );
-    return $query_args;
-}
