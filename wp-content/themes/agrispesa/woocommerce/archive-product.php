@@ -215,8 +215,9 @@ if (woocommerce_product_loop()) {
 				'order' => 'asc',
 				'meta_query'     => array(
 					array(
-            'key'        => '_is_active_shop',
-            'value'      => 'yes'
+            'key'        => '_is_product_active',
+						'value' => '1',
+			      'compare' => '=='
 	        )
 				),
 

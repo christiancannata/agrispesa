@@ -88,11 +88,17 @@ if( !empty($product_categories) ){
       $search_posts = new WP_Query( $args );
       if ( $search_posts->have_posts() ) : ?>
 
+      <div class="negozio--flex">
+      <div class="products-list-agr">
+
+        <div class="products-list--header">
+    		    <h3 class="products-list--title">Abbiamo trovato questi!</h3>
+    		</div>
+
+
+
       <div class="shop--list search-results">
-      <div class="shop--list--header">
-        <h2 class="shop--minititle">Abbiamo trovato questi!</h2>
-      </div>
-      <div class="woocommerce">
+
         <ul class="products">
 
 
@@ -116,8 +122,49 @@ if( !empty($product_categories) ){
         wp_reset_postdata();?>
 
       </ul>
-      </div>
-      </div>
+
+
+      <div class="products-list--footer">
+        <?php if($allsearch ->found_posts == 1) {
+					     $labelprodotti = ' prodotto';
+  				} else {
+  					$labelprodotti = ' prodotti';
+  				}
+					echo '<span>' . $allsearch ->found_posts . $labelprodotti .'</span>';
+				 ?>
+			</div>
+
+			</div>
+
+      <div class="negozio-sidebar">
+    	<ul class="negozio-sidebar--list">
+        <?php $my_walker = new Walker_Category_Custom();
+
+      	$excludeSpecial = '';
+      	if ($special_category) {
+      		$excludeSpecial = '';
+      	} else {
+      		$excludeSpecial = $specialiID;
+      	}
+
+      	$sidebar = array(
+      		'taxonomy'     => 'product_cat',
+      		// 'orderby'  => 'name',
+      		'orderby'  => 'meta_value',
+      		'meta_key' => 'categories_order_agr',
+      		'order'      => 'ASC',
+      		'show_count'   => 0,
+      		'hierarchical' => 1,
+      		'hide_empty'   => 1,
+      		'title_li'     => '',
+      		'walker' => $my_walker,
+      		'exclude' => $excludeSpecial,
+      		'child_of' => $negozioID,
+      		);
+      		wp_list_categories($sidebar); ?>
+      	</ul>
+      	</div>
+
 
 
       <?php else : ?>
