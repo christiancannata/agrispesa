@@ -168,8 +168,8 @@ add_action('woocommerce_product_options_general_product_data', function () {
 	woocommerce_wp_text_input([
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
-		'placeholder' => '€0,00',
-		'description' => __( 'I valori decimali sono separati con un punto.<br/>Es. €2.30', 'woocommerce' ),
+		'placeholder' => '0.00',
+		'description' => __( 'I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce' ),
 	]);
 
 	woocommerce_wp_checkbox([
@@ -180,8 +180,8 @@ add_action('woocommerce_product_options_general_product_data', function () {
 
 	woocommerce_wp_text_input([
 		'id' => '_percentuale_ricarico',
-		'label' => 'Ricarico',
-		'placeholder' => '€0,00',
+		'label' => 'Ricarico %',
+		'placeholder' => '0',
 		'description' => __( 'Valore della percentuale.', 'woocommerce' ),
 	]);
 
@@ -842,7 +842,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 			[]
 		);
 
-		add_meta_box('mv_other_fields', 'Facciamo noi - INFO', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+		add_meta_box('mv_other_fields', 'INFORMAZIONI CONSEGNA', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 
 
 	}

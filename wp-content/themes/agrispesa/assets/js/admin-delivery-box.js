@@ -37,9 +37,22 @@ jQuery(document).ready(function ($) {
 
   function reloadPrice() {
     let total = parseFloat($("#_prezzo_acquisto").val()) + parseFloat(($("#_prezzo_acquisto").val() / 100) * $("#_percentuale_ricarico").val());
-    let get_taxes = parseFloat($("#_tax_class").val());
-    let new_price = parseFloat(((total * get_taxes) / 100)+total);
-    $("#_regular_price").val(new_price.toFixed(2).replace(".", ","))
+    let tax = $("#_tax_class").val();
+
+    if(tax === undefined || tax === null || tax === '' || tax === 'tasse' || tax === 'nessuna-tariffa') {
+      let get_taxes = '';
+      let new_price = parseFloat(total);
+      $("#_regular_price").val(new_price.toFixed(2).replace(".", ","))
+    } else {
+      let get_taxes = parseFloat($("#_tax_class").val());
+      let new_price = parseFloat(((total * get_taxes) / 100)+total);
+      $("#_regular_price").val(new_price.toFixed(2).replace(".", ","))
+    }
+
+
+
+
+
   }
 
   function getPercentualeRicarico() {

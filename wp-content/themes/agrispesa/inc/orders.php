@@ -23,12 +23,10 @@ add_filter('woocommerce_stock_amount', 'floatval');
 // Add custom column headers here
 add_action('woocommerce_admin_order_item_headers', 'my_woocommerce_admin_order_item_headers');
 function my_woocommerce_admin_order_item_headers() {
-    echo '<th style="width:80px;" class="item_weight sortable" data-sort="float">Peso</th>';
-    echo '<th style="width:120px;" class="item_producer sortable">Produttore</th>';
+    echo '<th style="width:80px;" class="item_weight sortable">Peso</th>';
+    echo '<th style="width:120px;" class="item_producer sortable" data-sort="string-ins">Produttore</th>';
     echo '<th class="item_measure sortable">PZ</th>';
     echo '<th class="item_conf sortable">Cod. Conf.</th>';
-    echo '<th class="item_producer sortable">Note</th>';
-    echo '<th class="item_sconto sortable">% Sconto</th>';
 }
 
 // Add custom column values here
@@ -40,6 +38,8 @@ function my_woocommerce_admin_order_item_values($_product, $item, $item_id = nul
     $weight = get_post_meta($_product->get_id(), '_weight', 1);
     $uom = get_post_meta($_product->get_id(), '_woo_uom_input', 1);
     $conf = get_post_meta($_product->get_id(), '_codice_confezionamento', 1);
+    $uom_acq = get_post_meta($_product->get_id(), '_uom_acquisto', 1);
+    $qty_acq = get_post_meta($_product->get_id(), '_qty_acquisto', 1);
 
     $producer = get_post_meta($_product->get_id(), 'product_producer', true);
     $producerString = '';
@@ -72,13 +72,16 @@ function my_woocommerce_admin_order_item_values($_product, $item, $item_id = nul
     } else {
       $conf ='-';
     }
+    if($uom_acq) {
+      $uom_acq = $uom_acq;
+    } else {
+      $uom_acq ='-';
+    }
 
     // display the value
     echo '<td>' . $weight . '</td>';
     echo '<td>' . $producer . '</td>';
-    echo '<td>PZ</td>';
+    echo '<td>' . $uom_acq . '</td>';
     echo '<td>' . $conf . '</td>';
-    echo '<td>note</td>';
-    echo '<td>sconto</td>';
 
 }
