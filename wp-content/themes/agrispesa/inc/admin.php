@@ -146,7 +146,11 @@ add_action('woocommerce_product_options_advanced', function () {
 
 	woocommerce_wp_checkbox([
 		'id' => '_is_magazzino',
-		'label' => "E' da Magazzino?",
+		'label' => "È da Magazzino?",
+	]);
+	woocommerce_wp_text_input([
+		'id' => '_uom_acquisto',
+		'label' => 'Unità di misura (Acquisto)',
 	]);
 
 });
@@ -185,6 +189,10 @@ function woocommerce_product_custom_fields_save1($post_id)
 
 	if (isset($_POST['_percentuale_ricarico'])) {
 		update_post_meta($post_id, '_percentuale_ricarico', esc_attr($_POST['_percentuale_ricarico']));
+	}
+
+	if (isset($_POST['_uom_acquisto'])) {
+		update_post_meta($post_id, '_uom_acquisto', esc_attr($_POST['_uom_acquisto']));
 	}
 
 }
@@ -2603,6 +2611,7 @@ function my_saved_post($post_id, $json, $is_update)
 		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
 		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
+		update_post_meta($post_id, '_uom_acquisto', $record['codicecategoriaconfezionamento']);
 
 		$product->set_manage_stock(true);
 		$product->set_stock_quantity($record['scorte']);
