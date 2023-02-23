@@ -152,7 +152,10 @@ add_action('woocommerce_product_options_advanced', function () {
 		'id' => '_uom_acquisto',
 		'label' => 'Unità di misura (Acquisto)',
 	]);
-
+	woocommerce_wp_checkbox([
+		'id' => '_is_active_shop',
+		'label' => "Attivo (= In vendita?)",
+	]);
 });
 
 add_action('woocommerce_product_options_general_product_data', function () {
@@ -183,6 +186,9 @@ function woocommerce_product_custom_fields_save1($post_id)
 		update_post_meta($post_id, '_codice_confezionamento', esc_attr($_POST['_codice_confezionamento']));
 	if (isset($_POST['_is_magazzino']))
 		update_post_meta($post_id, '_is_magazzino', esc_attr($_POST['_is_magazzino']));
+
+	if (isset($_POST['_is_active_shop']))
+		update_post_meta($post_id, '_is_active_shop', esc_attr($_POST['_is_active_shop']));
 
 	if (isset($_POST['_prezzo_acquisto']))
 		update_post_meta($post_id, '_prezzo_acquisto', esc_attr($_POST['_prezzo_acquisto']));
@@ -2611,7 +2617,7 @@ function my_saved_post($post_id, $json, $is_update)
 		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
 		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
-		update_post_meta($post_id, '_uom_acquisto', $record['codicecategoriaconfezionamento']);
+		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
 
 		$product->set_manage_stock(true);
 		$product->set_stock_quantity($record['scorte']);
