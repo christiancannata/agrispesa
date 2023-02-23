@@ -128,9 +128,13 @@ add_action('woocommerce_new_order', function ($order_id, $order) {
 		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
 		update_post_meta($order->get_id(), '_week', $week);
 
-		$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
+		if ($gruppoConsegna) {
+			$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
+			if ($deliveryDate) {
+				update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
+			}
+		}
 
-		update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
 	}
 }, 10, 2);
 
