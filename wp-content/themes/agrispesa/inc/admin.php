@@ -2288,7 +2288,7 @@ function consegne_ordini_pages()
 																	if ($codiceConfezionamento) {
 																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 																	}
-																	$weight = get_post_meta($product['id'], '_weight', true);
+																	$weight = get_post_meta($product->ID, '_weight', true);
 
 																	?>
 																	<option
