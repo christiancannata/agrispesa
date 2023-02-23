@@ -319,3 +319,214 @@ Stack trace:
 #4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-subscription-data-store-cpt.php(112): WC_Order_Data_Store_CPT->create(Object(WC_Subscription))
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocom in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 133
 
+2023-02-22T22:35:37+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:35:59+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:36:19+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:36:26+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:36:32+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:36:36+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_weight() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:41
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): action_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-con in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 41
+
+2023-02-22T22:41:42+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plu in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:41:51+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plu in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:41:57+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plu in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:42:38+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::get_the_ID() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-item.php(48): do_action('woocommerce_adm...', Object(WC_Product_Simple), Object(WC_Order_Item_Product), 93)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(73): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plu in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:42:52+00:00 CRITICAL Uncaught Error: Call to a member function get_ID() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:44:19+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:44:21+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:44:37+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-ajax.php(1306): in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:44:59+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:45:04+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-ajax.php(1306): in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:45:07+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:45:11+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:46:06+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:49:19+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:49:21+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:17
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 17
+
+2023-02-22T22:49:37+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 29
+
+2023-02-22T22:49:38+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 29
+
+2023-02-22T22:49:57+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:13
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/class-w in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 13
+
+2023-02-22T22:50:19+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php:13
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): my_woocommerce_admin_order_item_values(NULL, Object(WC_Order_Item_Shipping), 99)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-shipping.php(58): do_action('woocommerce_adm...', NULL, Object(WC_Order_Item_Shipping), 99)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/admin/meta-boxes/views/html-order-items.php(92): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-ajax.php(1306): in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/orders.php alla riga 13
+

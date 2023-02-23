@@ -51,5 +51,8 @@ function my_custom_fonts() {
   body.wp-admin .select2-results__option .fornitore {
     display: block;
   }
+  body.wp-admin #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items th.line_tax {
+    display: none !important;
+  }
   </style>';
 }

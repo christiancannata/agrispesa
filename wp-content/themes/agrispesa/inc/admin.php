@@ -146,9 +146,16 @@ add_action('woocommerce_product_options_advanced', function () {
 
 	woocommerce_wp_checkbox([
 		'id' => '_is_magazzino',
-		'label' => "E' da Magazzino?",
+		'label' => "È da Magazzino?",
 	]);
-
+	woocommerce_wp_text_input([
+		'id' => '_qty_acquisto',
+		'label' => 'Quantità (Acquisto)',
+	]);
+	woocommerce_wp_text_input([
+		'id' => '_uom_acquisto',
+		'label' => 'Cod. Unità di misura',
+	]);
 });
 
 add_action('woocommerce_product_options_general_product_data', function () {
@@ -157,16 +164,21 @@ add_action('woocommerce_product_options_general_product_data', function () {
 	woocommerce_wp_text_input([
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
+		'placeholder' => '0.00',
+		'description' => __( 'I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce' ),
 	]);
 
 	woocommerce_wp_checkbox([
 		'id' => '_tipo_percentuale_ricarico',
-		'label' => 'Eredita percentuale ricarico dalla categoria'
+		'label' => 'Eredita percentuale ricarico dalla categoria',
+
 	]);
 
 	woocommerce_wp_text_input([
 		'id' => '_percentuale_ricarico',
-		'label' => 'Percentuale di ricarico (%)',
+		'label' => 'Ricarico %',
+		'placeholder' => '0',
+		'description' => __( 'Valore della percentuale.', 'woocommerce' ),
 	]);
 
 
@@ -185,6 +197,13 @@ function woocommerce_product_custom_fields_save1($post_id)
 
 	if (isset($_POST['_percentuale_ricarico'])) {
 		update_post_meta($post_id, '_percentuale_ricarico', esc_attr($_POST['_percentuale_ricarico']));
+	}
+
+	if (isset($_POST['_uom_acquisto'])) {
+		update_post_meta($post_id, '_uom_acquisto', esc_attr($_POST['_uom_acquisto']));
+	}
+	if (isset($_POST['_qty_acquisto'])) {
+		update_post_meta($post_id, '_qty_acquisto', esc_attr($_POST['_qty_acquisto']));
 	}
 
 }
@@ -816,7 +835,7 @@ if (!function_exists('mv_add_meta_boxes')) {
 			[]
 		);
 
-		add_meta_box('mv_other_fields', 'Facciamo noi - INFO', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+		add_meta_box('mv_other_fields', 'INFORMAZIONI CONSEGNA', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
 
 
 	}
@@ -2211,7 +2230,7 @@ function consegne_ordini_pages()
 																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
-													<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
+													<?php echo number_format($product['price'] * $product['quantity'], 2,',' ); ?>
 													€
 												</td>
 												<td>
@@ -2589,19 +2608,25 @@ function my_saved_post($post_id, $json, $is_update)
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
 
-		$price = number_format($record['costounitario'], 2);
+		$price = number_format($record['costounitario'], 2, ',' );
 
 		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
 			$record['_ricarico_percentuale'] = 0;
 		}
 
 		$price *= (1 + $record['_ricarico_percentuale'] / 100);
-		$price = number_format(floatval($price), 2);
+
+
+
+		$price = number_format(floatval($price), 2, ',' );
 
 
 		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
+		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2, ',' ));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
+		update_post_meta($post_id, '_is_magazzino', $record['_is_magazzino']);
+		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
+		update_post_meta($post_id, '_qty_acquisto', $record['_qty_acquisto']);
 
 		$product->set_manage_stock(true);
 		$product->set_stock_quantity($record['scorte']);

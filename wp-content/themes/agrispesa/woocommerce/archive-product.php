@@ -57,7 +57,7 @@ $specialiID = $getSpeciali->term_id;
 			<?php
 
 			$cat_args = array(
-				'orderby' => 'meta_value', 
+				'orderby' => 'meta_value',
 				'meta_key' => 'categories_order_agr',
 				'order' => 'ASC',
 				'hide_empty' => false,
@@ -198,12 +198,6 @@ if (woocommerce_product_loop()) {
 		$i = 1;
 		foreach ($loop_categories as $loop_category) {
 
-			if ($loop_category->category_count != 0) {
-				echo '<div class="products-list--header">';
-				echo '<h3 class="products-list--title">' . $loop_category->name . '</h3>';
-				echo '</div>';
-				woocommerce_product_loop_start(); //open ul
-			}
 			$args = array(
 				'posts_per_page' => 5,
 				'tax_query' => array(
@@ -219,6 +213,13 @@ if (woocommerce_product_loop()) {
 				'post_type' => 'product',
 				'orderby' => 'menu_order',
 				'order' => 'asc',
+				'meta_query'     => array(
+					array(
+            'key'        => '_is_active_shop',
+            'value'      => 'yes'
+	        )
+				),
+
 				'meta_query' => array(
 					array(
 						'key' => '_stock_status',
@@ -228,31 +229,45 @@ if (woocommerce_product_loop()) {
 			);
 			$cat_query = new WP_Query($args);
 
+			$count_posts = new WP_Query($args);
+			$posts_per_cat = $count_posts->found_posts;
+
+
+			if ($posts_per_cat != 0) {
+				echo '<div class="products-list--header">';
+				echo '<h3 class="products-list--title">' . $loop_category->name . '</h3>';
+				echo '</div>';
+				woocommerce_product_loop_start(); //open ul
+			}
+
+
 			while ($cat_query->have_posts()) : $cat_query->the_post();
 
 				wc_get_template_part('content', 'product');
 			endwhile; // end of the loop.
 			wp_reset_postdata();
-			if ($loop_category->category_count != 0) {
+			if ($posts_per_cat != 0) {
 				woocommerce_product_loop_end(); //close ul
+
 				echo '<div class="products-list--footer">';
 
-				if($loop_category->category_count == 1) {
+				if($posts_per_cat == 1) {
 					$labelprodotti = ' prodotto';
 				} else {
 					$labelprodotti = ' prodotti';
 				}
 
-				if($loop_category->category_count > 5) {
-					echo '<span>5 di ' . $loop_category->category_count . $labelprodotti .'</span>';
+				if($posts_per_cat > 5) {
+					echo '<span>5 di ' . $posts_per_cat . $labelprodotti .'</span>';
 					echo '<a href="'.get_term_link($loop_category->term_id).'" title="Visualizza tutto '.$loop_category->name.'" class="arrow-link">Vedi tutto <span class="icon-arrow-right"></span></a>';
 				} else {
-					echo '<span>' . $loop_category->category_count . $labelprodotti .'</span>';
+					echo '<span>' . $posts_per_cat . $labelprodotti .'</span>';
 				}
+
 
 				echo '</div>';
 			}
-			if ($i < count($loop_categories) && $loop_category->category_count != 0)
+			if ($i < count($loop_categories) && $posts_per_cat != 0)
 				echo '<div class="products-list--separator"></div>';
 			$i++;
 		}//foreach

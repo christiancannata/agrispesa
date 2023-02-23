@@ -2,14 +2,17 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-12-14 06:28:48+0000\n"
+"Project-Id-Version: Plugins - WooCommerce - Stable (latest release)\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2023-02-23 00:05+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.3\n"
-"Language: it\n"
-"Project-Id-Version: Plugins - WooCommerce - Stable (latest release)\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: packages/woocommerce-blocks/assets/js/blocks/rating-filter/block.json
 #: packages/woocommerce-blocks/build/rating-filter/block.json
@@ -30785,7 +30788,7 @@ msgstr "Qta"
 #: includes/shipping/legacy-flat-rate/includes/settings-flat-rate.php:63
 #: includes/shipping/local-pickup/class-wc-shipping-local-pickup.php:97
 msgid "Cost"
-msgstr "Costo"
+msgstr "Prezzo"
 
 #. translators: %s: Item name.
 #: includes/admin/meta-boxes/views/html-order-items.php:40

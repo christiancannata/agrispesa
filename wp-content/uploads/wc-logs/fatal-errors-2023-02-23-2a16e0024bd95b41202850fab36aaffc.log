@@ -1,0 +1,72 @@
+2023-02-23T15:17:04+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:918
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(918): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 918
+
+2023-02-23T15:17:04+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:918
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(918): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 918
+
+2023-02-23T15:17:19+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:918
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(918): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 918
+
+2023-02-23T15:17:24+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1512
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1512): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 717)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 717)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Tabl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1512
+
+2023-02-23T15:17:25+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1512
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1512): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 717)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 717)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Tabl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1512
+
+2023-02-23T15:18:04+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1512
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1512): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 717)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 717)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Tabl in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1512
+
+2023-02-23T15:18:11+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:918
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(918): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 918
+
+2023-02-23T15:18:21+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (Nessuna data di consegna) at position 0 (N): The timezone could not be found in the database in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:918
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(918): DateTime->__construct('Nessuna data di...')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 918
+

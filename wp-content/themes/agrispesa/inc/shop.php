@@ -55,6 +55,7 @@ function shop_page_empty_layout(){
 	echo '<ul class="negozio-sidebar--list">';
 
 	$my_walker= new Walker_Category_Custom();
+	$special_category = get_field('agr_special_category', 'option');
 	$excludeSpecial = '';
 	if($special_category) {
 		$excludeSpecial = '';
@@ -349,4 +350,36 @@ function new_loop_shop_per_page( $cols ) {
   // Return the number of products you wanna show per page.
   $cols = 20;
   return $cols;
+}
+
+//Modifica loop negozio per avere solo prodotti con check _is_active_shop
+function custom_meta_query( $meta_query ){
+    $meta_query[] = array(
+			'key'     => '_is_active_shop',
+			'value' => 'yes'
+    );
+    return $meta_query;
+}
+
+// The main shop and archives meta query
+add_filter( 'woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2 );
+function custom_product_query_meta_query( $meta_query, $query ) {
+    if( ! is_admin() )
+        return custom_meta_query( $meta_query );
+}
+
+// The shortcode products query
+add_filter( 'woocommerce_shortcode_products_query', 'custom__shortcode_products_query', 10, 3 );
+function custom__shortcode_products_query( $query_args, $atts, $loop_name ) {
+    if( ! is_admin() )
+        $query_args['meta_query'] = custom_meta_query( $query_args['meta_query'] );
+    return $query_args;
+}
+
+// The widget products query
+add_filter( 'woocommerce_products_widget_query_args', 'custom_products_widget_query_arg', 10, 1 );
+function custom_products_widget_query_arg( $query_args ) {
+    if( ! is_admin() )
+        $query_args['meta_query'] = custom_meta_query( $query_args['meta_query'] );
+    return $query_args;
 }
