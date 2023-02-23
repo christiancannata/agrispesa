@@ -2198,7 +2198,6 @@ function consegne_ordini_pages()
 														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
 
 													<br>
-													<b><?php echo $weight . $unitaMisura; ?></b>
 													<?php if ($codiceConfezionamento): ?><br>
 														<i>Cod.
 															Confezionamento: <?php echo $codiceConfezionamento; ?></i>
