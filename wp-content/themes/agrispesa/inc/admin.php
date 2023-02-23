@@ -165,7 +165,7 @@ add_action('woocommerce_product_options_general_product_data', function () {
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
 		'placeholder' => '0.00',
-		'description' => __( 'I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce' ),
+		'description' => __('I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce'),
 	]);
 
 	woocommerce_wp_checkbox([
@@ -178,7 +178,7 @@ add_action('woocommerce_product_options_general_product_data', function () {
 		'id' => '_percentuale_ricarico',
 		'label' => 'Ricarico %',
 		'placeholder' => '0',
-		'description' => __( 'Valore della percentuale.', 'woocommerce' ),
+		'description' => __('Valore della percentuale.', 'woocommerce'),
 	]);
 
 
@@ -2217,7 +2217,6 @@ function consegne_ordini_pages()
 														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
 
 													<br>
-													<b><?php echo $weight . $unitaMisura; ?></b>
 													<?php if ($codiceConfezionamento): ?><br>
 														<i>Cod.
 															Confezionamento: <?php echo $codiceConfezionamento; ?></i>
@@ -2231,8 +2230,8 @@ function consegne_ordini_pages()
 																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
-													<?php echo number_format($product['price'] * $product['quantity'], 2 ); ?>
-													€
+													€<?php echo number_format($product['price'] * $product['quantity'], 2 ); ?>
+
 												</td>
 												<td>
 													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
@@ -2289,13 +2288,14 @@ function consegne_ordini_pages()
 																	if ($codiceConfezionamento) {
 																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 																	}
+																	$weight = get_post_meta($product->ID, '_weight', true);
 
 																	?>
 																	<option
 																		data-price="<?php echo $price; ?>"
 																		data-name="<?php echo str_replace('"', '', $product->post_title); ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
-																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
+																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . '(' . $weight . $measureUnit . ') ' . $fornitoreString . $codiceConfezionamento; ?></option>
 																<?php endforeach; ?>
 															</optgroup>
 														<?php endforeach; ?>

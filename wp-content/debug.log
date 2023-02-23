@@ -6730,3 +6730,16 @@ Stack trace:
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1015
 [22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
 [22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[23-Feb-2023 16:45:21 UTC] PHP Parse error:  syntax error, unexpected '') '' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2298
+[23-Feb-2023 16:56:46 UTC] The Automattic\WooCommerce\Admin\API\Options::get_options function is deprecated since version 3.1.
+[23-Feb-2023 16:56:46 UTC] The Automattic\WooCommerce\Admin\API\Options::get_options function is deprecated since version 3.1.
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3858 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3763 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3855 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3860 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:19 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:20 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3767 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
+[23-Feb-2023 16:58:20 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 1775
