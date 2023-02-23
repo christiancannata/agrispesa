@@ -2618,6 +2618,7 @@ function my_saved_post($post_id, $json, $is_update)
 		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
+		update_post_meta($post_id, '_is_active_shop', $record['_is_active_shop']);
 
 		$product->set_manage_stock(true);
 		$product->set_stock_quantity($record['scorte']);
