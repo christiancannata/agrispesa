@@ -165,7 +165,7 @@ add_action('woocommerce_product_options_general_product_data', function () {
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
 		'placeholder' => '0.00',
-		'description' => __( 'I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce' ),
+		'description' => __('I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce'),
 	]);
 
 	woocommerce_wp_checkbox([
@@ -178,7 +178,7 @@ add_action('woocommerce_product_options_general_product_data', function () {
 		'id' => '_percentuale_ricarico',
 		'label' => 'Ricarico %',
 		'placeholder' => '0',
-		'description' => __( 'Valore della percentuale.', 'woocommerce' ),
+		'description' => __('Valore della percentuale.', 'woocommerce'),
 	]);
 
 
@@ -2230,7 +2230,7 @@ function consegne_ordini_pages()
 																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
-													<?php echo number_format($product['price'] * $product['quantity'], 2,',' ); ?>
+													<?php echo number_format($product['price'] * $product['quantity'], 2, ','); ?>
 													€
 												</td>
 												<td>
@@ -2288,13 +2288,14 @@ function consegne_ordini_pages()
 																	if ($codiceConfezionamento) {
 																		$codiceConfezionamento = ' - ' . $codiceConfezionamento;
 																	}
+																	$weight = get_post_meta($product['id'], '_weight', true);
 
 																	?>
 																	<option
 																		data-price="<?php echo $price; ?>"
 																		data-name="<?php echo str_replace('"', '', $product->post_title); ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
-																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento; ?></option>
+																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . '(' . $weight . $measureUnit') ' . $fornitoreString . $codiceConfezionamento; ?></option>
 																<?php endforeach; ?>
 															</optgroup>
 														<?php endforeach; ?>
@@ -2608,7 +2609,7 @@ function my_saved_post($post_id, $json, $is_update)
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
 
-		$price = number_format($record['costounitario'], 2, ',' );
+		$price = number_format($record['costounitario'], 2, ',');
 
 		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
 			$record['_ricarico_percentuale'] = 0;
@@ -2617,12 +2618,11 @@ function my_saved_post($post_id, $json, $is_update)
 		$price *= (1 + $record['_ricarico_percentuale'] / 100);
 
 
-
-		$price = number_format(floatval($price), 2, ',' );
+		$price = number_format(floatval($price), 2, ',');
 
 
 		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2, ',' ));
+		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2, ','));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 		update_post_meta($post_id, '_is_magazzino', $record['_is_magazzino']);
 		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
