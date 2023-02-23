@@ -55,6 +55,7 @@ function shop_page_empty_layout(){
 	echo '<ul class="negozio-sidebar--list">';
 
 	$my_walker= new Walker_Category_Custom();
+	$special_category = get_field('agr_special_category', 'option');
 	$excludeSpecial = '';
 	if($special_category) {
 		$excludeSpecial = '';
