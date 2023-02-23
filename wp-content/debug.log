@@ -6730,3 +6730,4 @@ Stack trace:
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1015
 [22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
 [22-Feb-2023 10:30:28 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[23-Feb-2023 16:45:21 UTC] PHP Parse error:  syntax error, unexpected '') '' (T_CONSTANT_ENCAPSED_STRING), expecting ';' or ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2298

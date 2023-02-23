@@ -2295,7 +2295,7 @@ function consegne_ordini_pages()
 																		data-price="<?php echo $price; ?>"
 																		data-name="<?php echo str_replace('"', '', $product->post_title); ?>"
 																		data-unit-measure="<?php echo $unitaMisura; ?>"
-																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . '(' . $weight . $measureUnit') ' . $fornitoreString . $codiceConfezionamento; ?></option>
+																		value="<?php echo $product->ID ?>"><?php echo $product->post_title . '(' . $weight . $measureUnit . ') ' . $fornitoreString . $codiceConfezionamento; ?></option>
 																<?php endforeach; ?>
 															</optgroup>
 														<?php endforeach; ?>
