@@ -2640,46 +2640,44 @@ function my_saved_post($post_id, $json, $is_update)
 	if ($product) {
 		// Retrieve the import ID.
 		// Convert SimpleXml object to array for easier use.
-		$record = json_decode(json_encode(( array )$json), 1);
 
-
-		if (isset($record['_percentuale_ricarico'])) {
-			update_post_meta($post_id, '_percentuale_ricarico', $record['_percentuale_ricarico']);
+		if (isset($json->_percentuale_ricarico)) {
+			update_post_meta($post_id, '_percentuale_ricarico', $json->_percentuale_ricarico);
 		}
-		if (isset($record['costounitario'])) {
-			update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
+		if (isset($json->costounitario)) {
+			update_post_meta($post_id, '_prezzo_acquisto', number_format($json->costounitario, 2));
 		}
-		if (isset($record['codicecategoriaconfezionamento'])) {
-			update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
+		if (isset($json->codicecategoriaconfezionamento)) {
+			update_post_meta($post_id, '_codice_confezionamento', $json->codicecategoriaconfezionamento);
 		}
-		if (isset($record['_is_magazzino'])) {
-			update_post_meta($post_id, '_is_magazzino', $record['_is_magazzino']);
+		if (isset($json->_is_magazzino)) {
+			update_post_meta($post_id, '_is_magazzino', $json->_is_magazzino);
 		}
-		if (isset($record['_uom_acquisto'])) {
-			update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
+		if (isset($json->_uom_acquisto)) {
+			update_post_meta($post_id, '_uom_acquisto', $json->_uom_acquisto);
 		}
-		if (isset($record['_qty_acquisto'])) {
-			update_post_meta($post_id, '_qty_acquisto', $record['_qty_acquisto']);
+		if (isset($json->_qty_acquisto)) {
+			update_post_meta($post_id, '_qty_acquisto', $json->_qty_acquisto);
 		}
 
 		$product->set_manage_stock(true);
-		if (isset($record['scorte'])) {
-			$product->set_stock_quantity($record['scorte']);
+		if (isset($json->scorte)) {
+			$product->set_stock_quantity($json->scorte);
 		}
 		$product->set_stock_status();
 
-		$record['costounitario'] = str_replace(",", '.', $record['costounitario']);
+		$json->costounitario = str_replace(",", '.', $json->costounitario);
 
 
-		$price = number_format($record['costounitario'], 2);
+		$price = number_format($json->costounitario, 2);
 
-		if (!isset($record['_percentuale_ricarico']) || empty($record['_percentuale_ricarico'])) {
-			$record['_percentuale_ricarico'] = 0;
+		if (!isset($json->_percentuale_ricarico) || empty($json->_percentuale_ricarico)) {
+			$json->_percentuale_ricarico = 0;
 		}
-		$record['_percentuale_ricarico'] = str_replace(",", '.', $record['_percentuale_ricarico']);
+		$json->_percentuale_ricarico = str_replace(",", '.', $json->_percentuale_ricarico);
 
 
-		$price *= (1 + $record['_percentuale_ricarico'] / 100);
+		$price *= (1 + $json->_percentuale_ricarico / 100);
 
 
 		$price = number_format($price, 2);
