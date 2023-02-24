@@ -2674,6 +2674,11 @@ function my_saved_post($post_id, $json, $is_update)
 		if (!isset($json->_percentuale_ricarico) || empty($json->_percentuale_ricarico)) {
 			$json->_percentuale_ricarico = 0;
 		}
+
+		if (is_array($json->_percentuale_ricarico)) {
+			$json->_percentuale_ricarico = $json->_percentuale_ricarico[0];
+		}
+
 		$json->_percentuale_ricarico = str_replace(",", '.', $json->_percentuale_ricarico);
 
 
