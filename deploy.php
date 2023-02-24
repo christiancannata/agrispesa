@@ -10,7 +10,7 @@ set('keep_releases', 1);
 
 set('repository', 'git@github.com:christiancannata/agrispesa.git');
 
-add('shared_files', ['wp-config.php']);
+add('shared_files', ['wp-config.php', 'wp-content/debug.log']);
 add('shared_dirs', ['wp-content/uploads']);
 add('writable_dirs', ['wp-content/uploads']);
 

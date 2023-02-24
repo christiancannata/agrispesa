@@ -1963,8 +1963,7 @@ function consegne_ordini_pages()
 								'weight' => $weight . $unitaMisura, //	qui nathi
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
-								'price' => floatval($price),
-								'weight' => $weight
+								'price' => floatval($price)
 							];
 						}
 					}
@@ -2037,7 +2036,7 @@ function consegne_ordini_pages()
 								$unitaMisura = ' gr';
 								$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 								if (!empty($measureUnit)) {
-									$unitaMisura = ' '. $measureUnit;
+									$unitaMisura = ' ' . $measureUnit;
 								}
 
 								$fornitoreString = '';
@@ -2184,11 +2183,13 @@ function consegne_ordini_pages()
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
-									<span class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
+									<span
+										class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
-									<span class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
+									<span
+										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
 								</td>
 								<td class="response column-response">
 									<table style="border-collapse: collapse">
@@ -2240,7 +2241,7 @@ function consegne_ordini_pages()
 											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
 
 											if (!empty($measureUnit)) {
-												$unitaMisura = ' '. $measureUnit;
+												$unitaMisura = ' ' . $measureUnit;
 											}
 
 
@@ -2261,22 +2262,24 @@ function consegne_ordini_pages()
 													<?php endif; ?>
 												</td>
 												<td class="create-box-table--price">
-													€<?php echo number_format($product['price'] * $product['quantity'], 2 ); ?>
+													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
 												</td>
 												<td class="create-box-table--quantity" style="display:flex;">
 													<input style="width:70px;" readonly
-																		 value="<?php echo $product['quantity']; ?>"
+														   value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
-																		 type="number"
-																		 name="quantity[<?php echo $key; ?>][]">
+														   type="number"
+														   name="quantity[<?php echo $key; ?>][]">
 												</td>
+												<td>
+													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
 
 												<td class="create-box-table--conf">
 													<?php if ($codiceConfezionamento): ?>
 														<?php echo $codiceConfezionamento; ?>
-														<?php else: ?>
-															<?php echo '-'; ?>
-														<?php endif; ?>
+													<?php else: ?>
+														<?php echo '-'; ?>
+													<?php endif; ?>
 												</td>
 												<td class="create-box-table--actions">
 													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
@@ -2287,7 +2290,8 @@ function consegne_ordini_pages()
 										<?php endforeach; ?>
 										<?php if ($week >= $currentWeek): ?>
 											<tr class="create-box-table--add-product-row">
-												<td class="create-box-table--add-product-item" style="border-bottom:none;">
+												<td class="create-box-table--add-product-item"
+													style="border-bottom:none;">
 													<select data-box-id="<?php echo $box->ID; ?>"
 															class="select2 new-product-box">
 														<option disabled selected value="">-- Scegli il prodotto --
@@ -2349,14 +2353,16 @@ function consegne_ordini_pages()
 												<td style="border-bottom:none;"></td>
 												<td style="border-bottom:none;"></td>
 												<td style="border-bottom:none;"></td>
-												<td class="create-box-table--add-product-qty" colspan="2" style="display: flex;align-items: center;border-bottom:none;">
+												<td class="create-box-table--add-product-qty" colspan="2"
+													style="display: flex;align-items: center;border-bottom:none;">
 													<input
 														style="width:70px"
 														type="number"
 														name="quantity" class="new-quantity">
 												</td>
 												<td style="border-bottom:none;"></td>
-												<td class="create-box-table--add-product-actions" style="border-bottom:none;">
+												<td class="create-box-table--add-product-actions"
+													style="border-bottom:none;">
 													<a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
 													   href="#">Aggiungi</a>
 												</td>
@@ -2658,32 +2664,63 @@ function my_saved_post($post_id, $json, $is_update)
 	if ($product) {
 		// Retrieve the import ID.
 		// Convert SimpleXml object to array for easier use.
-		$record = json_decode(json_encode(( array )$json), 1);
 
-		$price = number_format($record['costounitario'], 2 );
-
-		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
-			$record['_ricarico_percentuale'] = 0;
+		if (isset($json->_percentuale_ricarico)) {
+			update_post_meta($post_id, '_percentuale_ricarico', (string)$json->_percentuale_ricarico);
+		}
+		if (isset($json->costounitario)) {
+			update_post_meta($post_id, '_prezzo_acquisto', number_format((string)$json->costounitario, 2));
+		}
+		if (isset($json->codicecategoriaconfezionamento)) {
+			update_post_meta($post_id, '_codice_confezionamento', (string)$json->codicecategoriaconfezionamento);
+		}
+		if (isset($json->_is_magazzino)) {
+			update_post_meta($post_id, '_is_magazzino', (string)$json->_is_magazzino);
+		}
+		if (isset($json->_uom_acquisto)) {
+			update_post_meta($post_id, '_uom_acquisto', (string)$json->_uom_acquisto);
+		}
+		if (isset($json->_qty_acquisto)) {
+			update_post_meta($post_id, '_qty_acquisto', (string)$json->_qty_acquisto);
 		}
 
-		$price *= (1 + $record['_ricarico_percentuale'] / 100);
-
-
-
-		$price = number_format(floatval($price), 2 );
-
-
-		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2 ));
-		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
-		update_post_meta($post_id, '_is_magazzino', $record['_is_magazzino']);
-		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
-		update_post_meta($post_id, '_qty_acquisto', $record['_qty_acquisto']);
-
 		$product->set_manage_stock(true);
-		$product->set_stock_quantity($record['scorte']);
+		if (isset($json->scorte)) {
+			$product->set_stock_quantity((string)$json->scorte);
+		}
 		$product->set_stock_status();
+
+		$json->costounitario = str_replace(",", '.', (string)$json->costounitario);
+
+
+		$price = number_format((string)$json->costounitario, 2);
+
+		if (!isset($json->_percentuale_ricarico) || empty($json->_percentuale_ricarico)) {
+			$json->_percentuale_ricarico = 0;
+		}
+
+		if (is_array($json->_percentuale_ricarico)) {
+			$json->_percentuale_ricarico = (string)$json->_percentuale_ricarico[0];
+		}
+
+		$json->_percentuale_ricarico = str_replace(",", '.', (string)$json->_percentuale_ricarico);
+
+
+		$price *= (1 + (string)$json->_percentuale_ricarico / 100);
+		$price = number_format($price, 2);
+
+		$iva = (string)$json->iva;
+
+		if (empty(trim($iva))) {
+			$iva = 0;
+		}
+
+		if ($iva > 0) {
+			$price = (1 + ($iva / 100) * $price);
+		}
+
 		$product->set_regular_price($price);
+		$product->set_price($price);
 		$product->save();
 		wc_delete_product_transients($product->get_id());
 		// Do something.
