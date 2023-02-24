@@ -1,0 +1,23 @@
+{
+  "name":"wpserveur/wps-cleaner",
+  "description":"WPS Cleaner allows you to completely clean your WordPress site. You have 2 methods for this: Cleaning with one click or cleaning on a case by case basis.",
+  "keywords":[
+    "database",
+    "cleanup"
+  ],
+  "homepage":"https://www.wpserveur.net/",
+  "authors":[
+    {
+      "name":"WPServeur",
+      "email":"nicolas@wpserveur.net",
+      "homepage":"https://www.wpserveur.net/",
+      "role": "Lead Developer"
+    }
+  ],
+  "type":"wordpress-plugin",
+  "minimum-stability":"stable",
+  "license":"GPL-3.0+",
+  "require":{
+    "php":">=5.6.0"
+  }
+}

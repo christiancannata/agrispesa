@@ -1,0 +1,1151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPS Cleaner\n"
+"POT-Creation-Date: 2020-06-18 09:36+0200\n"
+"PO-Revision-Date: 2020-06-18 09:37+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wps-cleaner.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: blocks/alert.php:11
+msgid "To read imperatively"
+msgstr "À lire impérativement"
+
+#: blocks/alert.php:15
+msgid ""
+"This tool offers many cleaning options for your WordPress site, it is safe, "
+"however you must be aware that any cleaning operation is <strong>definitive</"
+"strong>!"
+msgstr ""
+"Cet outil vous propose de nombreuses options de nettoyage pour votre site "
+"WordPress, il est sans risque, cependant vous devez être conscient que toute "
+"opération de nettoyage est <strong>définitive</strong> !"
+
+#: blocks/alert.php:16
+msgid ""
+"So, to avoid any worries, check that you have a backup of your site before "
+"using this tool."
+msgstr ""
+"Ainsi, afin d'éviter tout soucis, vérifiez que vous possédez bien une "
+"sauvegarde de votre site avant d'utiliser cet outil."
+
+#: blocks/alert.php:18
+msgid "If you are hosted at WPServeur your site is backed up daily."
+msgstr ""
+"Si vous êtes hébergé chez WPServeur votre site est sauvegardé chaque jour."
+
+#: blocks/alert.php:23
+msgid "OK it's noted !"
+msgstr "Ok, c'est noté !"
+
+#: blocks/menu.php:10 blocks/settings.php:24
+msgid "Posts"
+msgstr "Posts"
+
+#: blocks/menu.php:15 blocks/settings_comment.php:16
+msgid "Comments"
+msgstr "Commentaires"
+
+#: blocks/menu.php:20 blocks/settings_term.php:17
+msgid "Terms"
+msgstr "Terms"
+
+#: blocks/menu.php:25 blocks/settings_user.php:13
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: blocks/menu.php:30 blocks/settings_option.php:10
+msgid "Options"
+msgstr "Options"
+
+#: blocks/menu.php:35 blocks/settings_plugin.php:19
+msgid "Plugins"
+msgstr "Extensions"
+
+#: blocks/menu.php:35 blocks/settings_plugin.php:199
+msgid "Themes"
+msgstr "Thèmes"
+
+#: blocks/menu.php:40 blocks/settings_database.php:11
+msgid "Database"
+msgstr "Base de données"
+
+#: blocks/menu.php:45 blocks/settings_media.php:732
+msgid "Medias"
+msgstr "Médias"
+
+#: blocks/menu.php:50 blocks/settings_files.php:74
+msgid "Files"
+msgstr "Fichiers"
+
+#: blocks/pub-wpserveur.php:25
+msgid "Install Migrate Guru"
+msgstr "Installer Migrate Guru"
+
+#: blocks/pub-wpserveur.php:37
+msgid "Enable Migrate Guru"
+msgstr "Activer Migrate Guru"
+
+#: blocks/pub-wpserveur.php:62
+msgid "Discover the specialized WordPress hosting with WPServeur!"
+msgstr "Découvrez l'hébergement spécialisé WordPress avec WPServeur !"
+
+#: blocks/pub-wpserveur.php:63
+msgid "For fast, secure and efficient hosting."
+msgstr "Pour un hébergement rapide, sécurisé et performant."
+
+#: blocks/pub-wpserveur.php:64
+msgid "We only do WordPress but we do it well!"
+msgstr "Nous ne faisons que du WordPress mais nous le faisons bien !"
+
+#: blocks/pub-wpserveur.php:65
+#, php-format
+msgid ""
+"(-10% discount on your subscription with the promo code <strong>WPSC&T</"
+"strong>)"
+msgstr ""
+"(-10% de remise à vie sur votre abonnement avec le code promo "
+"<strong>WPSC&T</strong>)"
+
+#: blocks/pub-wpserveur.php:69
+msgid "Subscribe to WPServeur"
+msgstr "S'abonner à WPServeur"
+
+#: blocks/pub-wpserveur.php:73 blocks/pub.php:71
+#, php-format
+msgid "More about %s"
+msgstr "Plus d’infos sur %s"
+
+#: blocks/pub.php:33
+msgid "Install"
+msgstr "Installer"
+
+#: blocks/pub.php:45
+msgid "Enable"
+msgstr "Activer"
+
+#: blocks/settings.php:26
+msgid "Posts: are articles, pages, and all types of content."
+msgstr "Posts : sont les articles, pages et tous les types de contenu."
+
+#: blocks/settings.php:27
+msgid "Metadata: Additional data related to a post."
+msgstr "Métadonnée : Données additionnelles liées à un post."
+
+#: blocks/settings.php:28
+msgid "oEmbed: Function to integrate HTML from another site."
+msgstr ""
+"oEmbed : Fonction permettant d'intégrer du HTML à partir d'un autre site."
+
+#: blocks/settings.php:30
+msgid "This will clean up the posts in the database."
+msgstr "Cela va permettre de nettoyer les posts de la base de données."
+
+#: blocks/settings.php:35
+#, php-format
+msgid "Total found: %s Posts and %s Post Meta."
+msgstr "Total trouvé :  %s posts et %s Métadonnées"
+
+#: blocks/settings.php:41
+msgid "Revisions"
+msgstr "Révisions"
+
+#: blocks/settings.php:44
+msgid "This tool will clean up ALL revisions from WordPress."
+msgstr "Cet outil va nettoyer TOUTES les révisions de WordPress."
+
+#: blocks/settings.php:50
+msgid "Clear revisions"
+msgstr "Effacer les révisions"
+
+#: blocks/settings.php:56
+msgid "Auto draft"
+msgstr "Brouillon automatique"
+
+#: blocks/settings.php:59
+msgid "This tool will clean up ALL auto drafts from WordPress."
+msgstr "Cet outil va nettoyer TOUS les brouillons de WordPress."
+
+#: blocks/settings.php:65
+msgid "Clear auto drafts"
+msgstr "Effacer les brouillons automatiques"
+
+#: blocks/settings.php:71
+msgid "Deleted posts"
+msgstr "Posts supprimés"
+
+#: blocks/settings.php:74
+msgid "This tool will clean up ALL deleted posts from WordPress."
+msgstr "Cet outil va nettoyer TOUS les posts supprimés de WordPress."
+
+#: blocks/settings.php:80
+msgid "Clear deleted posts"
+msgstr "Effacer les posts supprimés"
+
+#: blocks/settings.php:86
+msgid "Orphaned Post Meta"
+msgstr "Métadonnées orphelines des posts"
+
+#: blocks/settings.php:89
+msgid "This tool will clean up ALL Orphaned Post Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES métadonnées des posts orphelines de WordPress."
+
+#: blocks/settings.php:95
+msgid "Clear Orphaned Post Meta"
+msgstr "Effacer les métadonnées orphelines des posts"
+
+#: blocks/settings.php:101
+msgid "Duplicated Post Meta"
+msgstr "Métadonnées des posts dupliquées"
+
+#: blocks/settings.php:104
+msgid "This tool will clean up ALL Duplicated Post Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les métadonnées des posts dupliquées de "
+"WordPress."
+
+#: blocks/settings.php:110
+msgid "Clear Duplicated Post Meta"
+msgstr "Effacer les métadonnées des posts dupliquées"
+
+#: blocks/settings.php:116
+msgid "oEmbed Caches In Post Meta"
+msgstr "Caches oEmbed dans les métadonnées des posts"
+
+#: blocks/settings.php:119
+msgid "This tool will clean up ALL oEmbed Caches In Post Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUS les caches oEmbed dans les métadonnées des posts."
+
+#: blocks/settings.php:125
+msgid "Clear oEmbed Caches In Post Meta"
+msgstr "Effacer les caches oEmbed dans les métadonnées des posts"
+
+#: blocks/settings_comment.php:18
+msgid "Metadata: Additional data related to a comment."
+msgstr "Métadonnée : Données additionnelles liées à un commentaire."
+
+#: blocks/settings_comment.php:20
+msgid "This will clean up the comments from the database."
+msgstr "Cela va permettre de nettoyer les commentaires de la base de données."
+
+#: blocks/settings_comment.php:25
+#, php-format
+msgid "Total found: %s Comments and %s Comment Meta."
+msgstr "Total trouvé : %s commentaires et %s métadonnées de commentaire."
+
+#: blocks/settings_comment.php:31
+msgid "Unapproved Comments"
+msgstr "Commentaires en attente de modération"
+
+#: blocks/settings_comment.php:33
+msgid "This tool will clean up ALL Unapproved Comments from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUS les commentaires non approuvées de WordPress."
+
+#: blocks/settings_comment.php:37
+msgid "Clear Unapproved Comments"
+msgstr "Effacer les commentaires en attente d'approbation"
+
+#: blocks/settings_comment.php:43
+msgid "Spammed Comments"
+msgstr "Commentaires indésirables"
+
+#: blocks/settings_comment.php:45
+msgid "This tool will clean up ALL Spammed Comments from WordPress."
+msgstr "Cet outil va nettoyer TOUS les commentaires indésirables de WordPress."
+
+#: blocks/settings_comment.php:49
+msgid "Clear Spammed Comments"
+msgstr "Effacer les commentaires indésirables"
+
+#: blocks/settings_comment.php:55
+msgid "Deleted Comments"
+msgstr "Commentaires supprimés"
+
+#: blocks/settings_comment.php:57
+msgid "This tool will clean up ALL Deleted Comments from WordPress."
+msgstr "Cet outil va nettoyer TOUS les commentaires supprimés de WordPress."
+
+#: blocks/settings_comment.php:61
+msgid "Clear Deleted Comments"
+msgstr "Effacer les commentaires supprimés"
+
+#: blocks/settings_comment.php:67
+msgid "Orphaned Comment Meta"
+msgstr "Métadonnées de commentaire orphelines"
+
+#: blocks/settings_comment.php:69
+msgid "This tool will clean up ALL Orphaned Comment Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les métadonnées de commentaire orphelines de "
+"WordPress."
+
+#: blocks/settings_comment.php:73
+msgid "Clear Orphaned Comment Meta"
+msgstr "Effacer les métadonnées de commentaire orphelines"
+
+#: blocks/settings_comment.php:79
+msgid "Duplicated Comment Meta"
+msgstr "Métadonnées de commentaire dupliquées"
+
+#: blocks/settings_comment.php:81
+msgid "This tool will clean up ALL Duplicated Comment Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les métadonnées de commentaire dupliquées de "
+"WordPress."
+
+#: blocks/settings_comment.php:85
+msgid "Clear Duplicated Comment Meta"
+msgstr "Effacer les métadonnées de commentaire dupliquées"
+
+#: blocks/settings_database.php:13
+msgid "Database name"
+msgstr "Nom de la base de données"
+
+#: blocks/settings_database.php:19
+msgid "Table"
+msgstr "Table"
+
+#: blocks/settings_database.php:20
+msgid "Records"
+msgstr "Enregistrement"
+
+#: blocks/settings_database.php:21 blocks/settings_files.php:145
+msgid "Weight"
+msgstr "Poids"
+
+#: blocks/settings_database.php:22 blocks/settings_files.php:143
+msgid "Type"
+msgstr "Type"
+
+#: blocks/settings_database.php:40
+msgid "Total"
+msgstr "Total"
+
+#: blocks/settings_database.php:49
+#, php-format
+msgid "Total size of database: %s mb"
+msgstr "Taille totale de la base de données : %s mo"
+
+#: blocks/settings_files.php:77
+msgid "The files we recommend deleting are not used for site management."
+msgstr ""
+"Nous analysons les fichiers situés à la racine de votre WordPress et nous "
+"les comparons avec les fichiers natifs de la version WordPress courante."
+
+#: blocks/settings_files.php:79
+msgid ""
+"This tab represents <strong>recommendations</strong> and not an obligation."
+msgstr ""
+"Attention, il s'agit simplement ici de recommandations. Vous pouvez "
+"supprimer ces fichiers et votre WordPress fonctionnera toujours ;) Il est "
+"toutefois recommandé de les sauvegarder avant de les supprimer."
+
+#: blocks/settings_files.php:80
+msgid ""
+"We strongly recommend that you scan these files, as these may be files that "
+"are of great value to you. Deleting files commits the <strong>permanent "
+"deletion</strong> of your files on your server."
+msgstr ""
+"Nous vous recommandons de bien analyser ces fichiers avant de les supprimer, "
+"car ceux-ci sont peut être des fichiers qui peuvent être utiles (extensions, "
+"Google Analytics...). La suppression des fichiers engage la suppression "
+"définitive de vos fichiers sur le serveur."
+
+#: blocks/settings_files.php:95
+#, php-format
+msgid "Old WordPress files %s"
+msgstr "Ancien fichiers WordPress %s"
+
+#: blocks/settings_files.php:101
+msgid "Your WordPress installation contains old WordPress files"
+msgstr ""
+"Votre installation WordPress contient des anciens fichiers de WordPress"
+
+#: blocks/settings_files.php:109
+msgid "Delete old files"
+msgstr "Supprimer les anciens fichiers"
+
+#: blocks/settings_files.php:134
+#, php-format
+msgid ""
+"You can download a zip of %s no natif files WordPress on the site, before "
+"permanently deleting them."
+msgstr ""
+"Vous devriez télécharger le zip des %s fichiers \"non natifs WordPress\" de "
+"votre site, avant de les supprimer définitivement."
+
+#: blocks/settings_files.php:136
+msgid "Download the zip of non native files WordPress"
+msgstr "Télécharger le zip des fichiers non natifs WordPress"
+
+#: blocks/settings_files.php:144
+msgid "Folder / File"
+msgstr "Dossier / Fichier"
+
+#: blocks/settings_files.php:146
+msgid "Information"
+msgstr "Information"
+
+#: blocks/settings_files.php:147 blocks/settings_plugin.php:54
+#: blocks/settings_plugin.php:102 blocks/settings_plugin.php:159
+msgid "Action"
+msgstr "Action"
+
+#: blocks/settings_files.php:156
+msgid "Useful dir for smooth operation"
+msgstr "Dossier utile pour le bon fonctionnement"
+
+#: blocks/settings_files.php:158 blocks/settings_files.php:179
+msgid "Not native in WordPress"
+msgstr "Non natif dans WordPress"
+
+#: blocks/settings_files.php:161 blocks/settings_files.php:182
+#: blocks/settings_files.php:192 blocks/settings_media.php:58
+#: blocks/settings_media.php:329 blocks/settings_media.php:481
+#: blocks/settings_media.php:629
+msgid "Delete"
+msgstr "Supprimer"
+
+#: blocks/settings_files.php:164 blocks/settings_files.php:189
+msgid "Native in WordPress"
+msgstr "Natif dans WordPress"
+
+#: blocks/settings_files.php:177
+msgid "Useful file for smooth operation"
+msgstr "Fichier utile pour le bon fonctionnement"
+
+#: blocks/settings_files.php:187
+msgid "(useless file)"
+msgstr "(fichier inutile)"
+
+#: blocks/settings_media.php:57 blocks/settings_media.php:215
+msgid "Exclusion"
+msgstr ""
+
+#: blocks/settings_media.php:59
+msgid "Download"
+msgstr "Télécharger"
+
+#: blocks/settings_media.php:212 blocks/settings_media.php:544
+msgctxt "column name"
+msgid "File"
+msgstr "Fichier"
+
+#: blocks/settings_media.php:213 blocks/settings_media.php:545
+msgid "Author"
+msgstr "Auteur"
+
+#: blocks/settings_media.php:214 blocks/settings_media.php:546
+msgid "Date"
+msgstr "Date"
+
+#: blocks/settings_media.php:301 blocks/settings_media.php:601
+msgid "Unpublished"
+msgstr "Non publiée"
+
+#: blocks/settings_media.php:307 blocks/settings_media.php:607
+#, php-format
+msgid "%s from now"
+msgstr "%s à partir de maintenant"
+
+#: blocks/settings_media.php:309 blocks/settings_media.php:609
+#, php-format
+msgid "%s ago"
+msgstr "il y a %s"
+
+#: blocks/settings_media.php:312 blocks/settings_media.php:612
+msgid "Y/m/d"
+msgstr "d/m/Y"
+
+#: blocks/settings_media.php:347 blocks/settings_media.php:647
+#, php-format
+msgid "&#8220;%s&#8221; (Edit)"
+msgstr "&#8220;%s&#8221; (Modifier)"
+
+#: blocks/settings_media.php:365 blocks/settings_media.php:665
+msgid "File name:"
+msgstr "Nom du fichier :"
+
+#: blocks/settings_media.php:385
+msgid "I think my media is used"
+msgstr "Je pense que mon média est utilisé"
+
+#: blocks/settings_media.php:385
+msgid "Exclude from this list"
+msgstr "Exclure de cette liste"
+
+#: blocks/settings_media.php:741
+#, php-format
+msgid "Total found: %s Medias."
+msgstr "Total trouvé : %s Médias."
+
+#: blocks/settings_media.php:742
+#, php-format
+msgid "Total Size: %s"
+msgstr "Poids total : %s"
+
+#: blocks/settings_media.php:747
+msgid "Content of a post"
+msgstr "Contenu dans un article, page et tous les types de contenu"
+
+#: blocks/settings_media.php:748
+msgid "Featured thumbnail"
+msgstr "Image mis en avant"
+
+#: blocks/settings_media.php:749
+msgid "Website icon"
+msgstr "Icône du site"
+
+#: blocks/settings_media.php:750
+msgid "Image Widget and Gallery"
+msgstr "Widget Image et Galerie"
+
+#: blocks/settings_media.php:751
+msgid "Woocommerce"
+msgstr ""
+
+#: blocks/settings_media.php:752
+msgid "DIVI Builder"
+msgstr "Constructeur de page DIVI"
+
+#: blocks/settings_media.php:753
+msgid "Logo DIVI"
+msgstr "Logo DIVI"
+
+#: blocks/settings_media.php:754
+msgid "Beaver Builder"
+msgstr ""
+
+#: blocks/settings_media.php:755
+msgid "Elementor"
+msgstr "Elementor"
+
+#: blocks/settings_media.php:756
+msgid "Visual Composer"
+msgstr ""
+
+#: blocks/settings_media.php:760
+msgid "ACF Field"
+msgstr "Champ ACF"
+
+#: blocks/settings_media.php:765
+msgid ""
+"Here is the list of media that appear to be <strong>unused</strong>, they "
+"are <strong>not</strong> used in the following cases:"
+msgstr ""
+"Voici la liste des médias qui semblent être <strong>inutilisés</strong>, ils "
+"ne sont <strong>pas</strong> utilisés dans les cas de figures suivants :"
+
+#: blocks/settings_media.php:767
+msgid ""
+"You can, however, exclude from the list the media of your choice (if they "
+"seem useful to you for your WordPress site) by placing them on an exclusion "
+"list (click in front of each image on \"Exclude from this The list will not "
+"be available for deletion."
+msgstr ""
+"Vous pouvez cependant, exclure de la liste les médias de votre choix (si "
+"elles vous semblent utiles pour votre site WordPress) en les plaçant sur une "
+"liste d'exclusion (cliquez en face de chaque image sur \"Exclure de cette "
+"liste\"). Ces dernières ne seront donc plus proposées à la suppression."
+
+#: blocks/settings_media.php:770
+msgid ""
+"Warning, the plugin doesn't detect images used elsewhere than in the list "
+"above."
+msgstr ""
+"Attention, le plugin ne détecte pas les médias utilisés ailleurs que dans la "
+"liste ci-dessus."
+
+#: blocks/settings_media.php:780
+msgid "Content analysis in progress"
+msgstr "En cours d'analyse de votre contenu"
+
+#: blocks/settings_media.php:780
+msgid "Reload Page"
+msgstr "Rafraîchir la page"
+
+#: blocks/settings_media.php:805
+#, php-format
+msgid ""
+"You can download a zip of %s \"unused\" images on the site, before "
+"permanently deleting them."
+msgstr ""
+"Vous devriez télécharger le zip des %s médias \"non utilisés\" de votre site "
+"WordPress, avant de les supprimer définitivement."
+
+#: blocks/settings_media.php:806
+msgid ""
+"Be careful, if you have too many \"unused\" media, the zip may not download."
+msgstr ""
+"Attention, si vous avez trop de médias \"non utilisés\", le zip peut ne pas "
+"se télécharger."
+
+#: blocks/settings_media.php:809
+msgid "Download the zip of \"unused\" images"
+msgstr "Télécharger le zip des images \"non utilisées\""
+
+#: blocks/settings_media.php:817
+#, php-format
+msgid "You have %s media in the exclusion list"
+msgstr "Vous avez %s medias dans la liste d'exclusion"
+
+#: blocks/settings_media.php:818
+msgid "Empty the list"
+msgstr "Vider la liste"
+
+#: blocks/settings_media.php:819 classes/plugin.php:1021
+msgid "See the list"
+msgstr "Voir la liste"
+
+#: blocks/settings_option.php:12
+msgid "This will clean up the options in the database."
+msgstr "Cela va permettre de nettoyer les options de la base de données."
+
+#: blocks/settings_option.php:17
+#, php-format
+msgid "Total found: %s Options"
+msgstr "Total trouvé : %s Options"
+
+#: blocks/settings_option.php:23
+msgid "Transient Options"
+msgstr "Options de transient"
+
+#: blocks/settings_option.php:26
+#, php-format
+msgid ""
+"This tool will clean up ALL <a href=\"%s\" target=\"_blank\">transients</a> "
+"Options from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les options de <a href=\"%s\" target=\"_blank"
+"\">transient</a> de WordPress."
+
+#: blocks/settings_option.php:32
+msgid "Clear Transient Options"
+msgstr "Effacer les options de transient"
+
+#: blocks/settings_option.php:38
+msgid "Schedule Options"
+msgstr "Options de cron"
+
+#: blocks/settings_option.php:41
+#, php-format
+msgid ""
+"This tool will clean up ALL <a href=\"%s\" target=\"_blank\">scheduled</a> "
+"Options from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les options de <a href=\"%s\" target=\"_blank"
+"\">cron</a> de WordPress."
+
+#: blocks/settings_option.php:47
+msgid "Clear Schedule Options"
+msgstr "Effacer les options de cron"
+
+#: blocks/settings_plugin.php:24
+#, php-format
+msgid "Total found: %s plugins"
+msgstr "Total trouvé : %s extensions"
+
+#: blocks/settings_plugin.php:30
+msgid "Plugins unuse"
+msgstr "Extensions inutilisées"
+
+#: blocks/settings_plugin.php:33
+msgid "This tool will clean up ALL plugins unuse from WordPress."
+msgstr "Cet outil va nettoyer TOUTES les extensions inutilisées de WordPress."
+
+#: blocks/settings_plugin.php:37
+msgid "Delete plugins unuse"
+msgstr "Effacer les extensions inutilisées"
+
+#: blocks/settings_plugin.php:53 blocks/settings_plugin.php:101
+#: blocks/settings_plugin.php:158
+#, php-format
+msgid "The %s plugin is present"
+msgstr "L’extension %s est présente"
+
+#: blocks/settings_plugin.php:59 blocks/settings_plugin.php:164
+msgid "Logs"
+msgstr "Logs"
+
+#: blocks/settings_plugin.php:62 blocks/settings_plugin.php:167
+#, php-format
+msgid "This tool will clean up ALL logs from %s plugin."
+msgstr "Cet outil va nettoyer TOUS les logs de l'extension %s."
+
+#: blocks/settings_plugin.php:66 blocks/settings_plugin.php:171
+msgid "Delete logs"
+msgstr "Effacer les logs"
+
+#: blocks/settings_plugin.php:72
+msgid "404 log"
+msgstr "Logs de 404"
+
+#: blocks/settings_plugin.php:75
+msgid "This tool will clean up ALL 404 logs from redirection plugin."
+msgstr "Cet outil va nettoyer TOUS les logs de 404 de l'extension Redirection."
+
+#: blocks/settings_plugin.php:79
+msgid "Delete 404 logs"
+msgstr "Effacer les logs de 404"
+
+#: blocks/settings_plugin.php:107
+msgid "Woocommerce Transient"
+msgstr "Transient Woocommerce"
+
+#: blocks/settings_plugin.php:110
+msgid "This tool will clean up ALL transients from woocommerce plugin."
+msgstr "Cet outil va nettoyer TOUS les transients de l'extension WooCommerce."
+
+#: blocks/settings_plugin.php:114
+msgid "Delete transients"
+msgstr "Effacer les transients"
+
+#: blocks/settings_plugin.php:120
+msgid "Orphan variations"
+msgstr "Variations orphelines"
+
+#: blocks/settings_plugin.php:123
+msgid ""
+"This tool will remove all variations without parent from the woocommerce "
+"plugin."
+msgstr ""
+"Cet outil va nettoyer TOUTES les variations orphelines de l'extension "
+"WooCommerce."
+
+#: blocks/settings_plugin.php:127
+msgid "Delete orphaned variations"
+msgstr "Effacer les variations orphelines"
+
+#: blocks/settings_plugin.php:133
+msgid "Delete client sessions"
+msgstr "Effacer les sessions clients"
+
+#: blocks/settings_plugin.php:136
+msgid ""
+"This tool will destroy all client session data in the database, including "
+"the current baskets of the woocommerce plugin."
+msgstr ""
+"Cet outil va nettoyer TOUTES les données de session client de la base de "
+"données, incluant les paniers en cours du plugin WooCommerce."
+
+#: blocks/settings_plugin.php:140
+msgid "Delete all sessions"
+msgstr "Effacer toutes les sessions"
+
+#: blocks/settings_plugin.php:204
+#, php-format
+msgid "Total found: %s themes"
+msgstr "Total trouvé : %s thèmes"
+
+#: blocks/settings_plugin.php:210
+msgid "Themes unuse"
+msgstr "Thèmes unitilisés"
+
+#: blocks/settings_plugin.php:213
+msgid "This tool will clean up ALL themes unuse from WordPress."
+msgstr "Cet outil va nettoyer TOUS les thèmes inutilisés de WordPress."
+
+#: blocks/settings_plugin.php:217
+msgid "Delete themes unuse"
+msgstr "Effacer les thèmes non utilisés"
+
+#: blocks/settings_term.php:19
+msgid "Taxonomy: how to group posts (ex: Category)."
+msgstr "Taxonomie : manière de regrouper les posts (ex : Catégorie)."
+
+#: blocks/settings_term.php:20
+msgid "Terms: group of a taxonomy (ex: Not classified)."
+msgstr "Terms : groupe d'une taxonomie (ex: Non classé)."
+
+#: blocks/settings_term.php:22
+msgid "This will clean up the terms of the database."
+msgstr "Cela va permettre de nettoyer les terms de la base de données."
+
+#: blocks/settings_term.php:27
+#, php-format
+msgid ""
+"Total found: %s Terms, %s Term Meta, %s Term Taxonomy and %s Term "
+"Relationships."
+msgstr ""
+"Total trouvé : %s Terms, %s Métadonnées de terms, %s Taxonomies de terms, %s "
+"Relations de terms"
+
+#: blocks/settings_term.php:33
+msgid "Orphaned Term Meta"
+msgstr "Métadonnées de terms orphelines"
+
+#: blocks/settings_term.php:35
+msgid "This tool will clean up ALL Orphaned Term Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES métadonnées de terms orphelines de WordPress."
+
+#: blocks/settings_term.php:39
+msgid "Clear Orphaned Term Meta"
+msgstr "Effacer les métadonnées de terms orphelines"
+
+#: blocks/settings_term.php:45
+msgid "Unused term"
+msgstr "Term inutilisé"
+
+#: blocks/settings_term.php:47
+msgid "This tool will clean up ALL Unused terms from WordPress."
+msgstr "Cet outil va nettoyer TOUS les terms inutilisés de WordPress."
+
+#: blocks/settings_term.php:51
+msgid "Clear Unused terms"
+msgstr "Effacer les terms inutilisés"
+
+#: blocks/settings_term.php:57
+msgid "Duplicated Term Meta"
+msgstr "Métadonnées de terms dupliquées"
+
+#: blocks/settings_term.php:59
+msgid "This tool will clean up ALL Duplicated Term Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES métadonnées de terms dupliquées de WordPress."
+
+#: blocks/settings_term.php:63
+msgid "Clear Duplicated Term Meta"
+msgstr "Effacer les métadonnées de terms dupliquées"
+
+#: blocks/settings_term.php:69
+msgid "Orphaned Term Relationship"
+msgstr "Relations de terms orphelines"
+
+#: blocks/settings_term.php:71
+msgid "This tool will clean up ALL Orphaned Term Relationship from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les relations de terms orphelines de WordPress."
+
+#: blocks/settings_term.php:75
+msgid "Clear Orphaned Term Relationship"
+msgstr "Effacer les relations de terms orphelines"
+
+#: blocks/settings_user.php:15
+msgid "Metadata: Additional data related to a use."
+msgstr "Métadonnée : Données additionnelles liées à un utiliser."
+
+#: blocks/settings_user.php:17
+msgid "This will clean up the users of the database."
+msgstr "Cela va permettre de nettoyer les utilisateurs de la base de données."
+
+#: blocks/settings_user.php:22
+#, php-format
+msgid "Total found: %s Users and %s User Meta."
+msgstr "Total trouvé : %s utilisateurs et %s métadonnées d'utilisateur."
+
+#: blocks/settings_user.php:28
+msgid "Orphaned User Meta"
+msgstr "Métadonnées d'utilisateur orphelines"
+
+#: blocks/settings_user.php:30
+msgid "This tool will clean up ALL Orphaned User Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les métadonnées d'utilisateurs orphelines de "
+"WordPress."
+
+#: blocks/settings_user.php:34
+msgid "Clear Orphaned User Meta"
+msgstr "Effacer les métadonnées d'utilisateurs orphelines"
+
+#: blocks/settings_user.php:40
+msgid "Duplicated User Meta"
+msgstr "Métadonnées d'utilisateur dupliquées"
+
+#: blocks/settings_user.php:42
+msgid "This tool will clean up ALL Duplicated User Meta from WordPress."
+msgstr ""
+"Cet outil va nettoyer TOUTES les métadonnées d'utilisateurs dupliquées de "
+"WordPress."
+
+#: blocks/settings_user.php:46
+msgid "Clear Duplicated User Meta"
+msgstr "Effacer les métadonnées d'utilisateur dupliquées"
+
+#: blocks/sweep-all.php:7
+msgid ""
+"One-click cleanup: This will clean everything except plugins / themes / "
+"media / files."
+msgstr ""
+"Nettoyage en un clic : Cela va tout nettoyer à l’exception des extensions / "
+"thèmes / médias / fichiers."
+
+#: blocks/sweep-all.php:8
+msgid "For these, please go to each corresponding tab."
+msgstr ""
+"Pour ces derniers, veuillez vous rendre dans chaque onglet correspondant."
+
+#: blocks/sweep-all.php:9
+msgid "Sweep all"
+msgstr "Tout nettoyer"
+
+#: blocks/title.php:12
+msgid "WPS Cleaner cleans your WordPress site as well as your database."
+msgstr ""
+"WPS Cleaner vous permet de nettoyer intégralement votre site WordPress."
+
+#: classes/helpers.php:851
+#, php-format
+msgid "%s other"
+msgid_plural "%s others"
+msgstr[0] "%s autre"
+msgstr[1] "%s autres"
+
+#: classes/plugin.php:113
+msgid "Every 1 Minute"
+msgstr "Toute les minutes"
+
+#. Plugin Name of the plugin/theme
+#: classes/plugin.php:180 classes/plugin.php:181 classes/plugin.php:1249
+#: classes/plugin.php:1396
+msgid "WPS Cleaner"
+msgstr "WPS Cleaner"
+
+#: classes/plugin.php:1017
+msgid "Cleaning in progress .."
+msgstr "Nettoyage en cours .."
+
+#: classes/plugin.php:1018
+msgid "Removing .."
+msgstr "Supression .."
+
+#: classes/plugin.php:1019
+msgid "Downloading .."
+msgstr "Téléchargement en cours .."
+
+#: classes/plugin.php:1020
+msgid "Analysis completed"
+msgstr "Analyse terminée"
+
+#: classes/plugin.php:1022
+msgid "Hide the list"
+msgstr "Cacher la liste"
+
+#: classes/plugin.php:1248
+#, php-format
+msgid ""
+"If you like %1$s please leave us a %2$s rating. A huge thanks in advance!"
+msgstr ""
+"Si vous aimez %1$s, n&rsquo;hésitez pas à nous laisser une note de %2$s. Un "
+"grand merci par avance&nbsp;!"
+
+#: classes/plugin.php:1250
+msgid "Thanks :)"
+msgstr "Merci :-)"
+
+#: classes/plugin.php:1281
+msgid "Tools"
+msgstr "Outils"
+
+#: classes/plugin.php:1397
+#, php-format
+msgid ""
+"If you want to completely clean your WordPress site use <a href=\"%s\">WPS "
+"Cleaner</a>."
+msgstr ""
+"Si vous voulez nettoyer intégralement votre site WordPress utilisez <a href="
+"\"%s\">WPS Cleaner</a>."
+
+#: vendor/NicolasKulka/wp-review-me/review.php:112
+msgid ""
+"Hey! It&#039;s been a little while that you&#039;ve been using this product. "
+"You might not realize it, but user reviews are such a great help to us. We "
+"would be so grateful if you could take a minute to leave a review on "
+"WordPress.org. Many thanks in advance :)"
+msgstr ""
+
+#: vendor/NicolasKulka/wp-review-me/review.php:113
+msgid "Click here to leave your review"
+msgstr ""
+
+#: vendor/NicolasKulka/wp-review-me/review.php:167
+#, php-format
+msgid "Dependencies are missing. Please run a %s."
+msgstr ""
+
+#: vendor/NicolasKulka/wp-review-me/review.php:228
+msgid "WP Review Me Error:"
+msgstr ""
+
+#: vendor/julien731/wp-dismissible-notices-handler/handler.php:97
+#, php-format
+msgid ""
+"The library can not be used because your version of WordPress is too old. "
+"You need version %s at least."
+msgstr ""
+
+#: vendor/julien731/wp-dismissible-notices-handler/handler.php:110
+#, php-format
+msgid ""
+"The library can not be used because your version of PHP is too old. You need "
+"version %s at least."
+msgstr ""
+
+#: vendor/julien731/wp-dismissible-notices-handler/handler.php:230
+msgid "Dismissible Notices Handler Error:"
+msgstr ""
+
+#: vendor/julien731/wp-dismissible-notices-handler/handler.php:317
+#, php-format
+msgid "A notice with the ID %s has already been registered."
+msgstr ""
+
+#: wps-cleaner.php:49
+msgid ""
+"Do you like plugin WPS Cleaner? <br> Thank you for taking a few seconds to "
+"note us on"
+msgstr ""
+"Aimez-vous le plugin WPS Cleaner? <br> Merci de prendre quelques secondes "
+"pour nous noter sur"
+
+#. Description of the plugin/theme
+msgid "WPS Cleaner permet de nettoyer la base de données et le WordPress."
+msgstr "WPS Cleaner permet de nettoyer la base de données et le WordPress."
+
+#. Author of the plugin/theme
+#, fuzzy
+#| msgid "WPServeur, NicolasKulka, benoitgeek,"
+msgid "WPServeur, NicolasKulka"
+msgstr "WPServeur, NicolasKulka, benoitgeek,"
+
+#. Author URI of the plugin/theme
+msgid "https://wpserveur.net"
+msgstr "https://wpserveur.net"
+
+#~ msgid "Install WPS Hide Login"
+#~ msgstr "Installer WPS Hide Login"
+
+#~ msgid "Enable WPS Hide login"
+#~ msgstr "Activer WPS Hide login"
+
+#~ msgid "Secure access to your WordPress administration"
+#~ msgstr "Sécuriser l'accès à votre administration WordPress"
+
+#~ msgid "More about WPS Hide Login"
+#~ msgstr "Plus d’infos sur WPS Hide Login"
+
+#~ msgid "Install WPS Limit Login"
+#~ msgstr "Installer WPS Limit Login"
+
+#~ msgid "Enable WPS Limit login"
+#~ msgstr "Activer WPS Limit Login"
+
+#~ msgid "Secure the WordPress authentication page"
+#~ msgstr "Sécuriser la page d'authentification WordPress"
+
+#~ msgid "More about WPS Limit Login"
+#~ msgstr "Plus d’infos sur WPS Limit Login"
+
+#~ msgid "Install WPS Bidouille"
+#~ msgstr "Installer WPS Bidouille"
+
+#~ msgid "Enable WPS Bidouille"
+#~ msgstr "Activer WPS Bidouille"
+
+#~ msgid ""
+#~ "WPS Bidouille provides information about your WordPress and contains "
+#~ "optimization tools."
+#~ msgstr ""
+#~ "WPS Bidouille fournit des informations sur votre WordPress et contient "
+#~ "des outils d'optimisation."
+
+#~ msgid "More about WPS Bidouille"
+#~ msgstr "Plus d’infos sur WPS Bidouille"
+
+#~ msgid "More about Migrate guru"
+#~ msgstr "Plus d'infos sur Migrate Guru"
+
+#~ msgid "Media indexing in progress ..."
+#~ msgstr "Indexations des médias en cours ..."
+
+#~ msgid "Total found: %d Medias."
+#~ msgstr "Total trouvé : %d Médias."
+
+#~ msgid "Total found: %d Users and %d User Meta."
+#~ msgstr "Total trouvé : %d utilisateurs et %d métadonnées d'utilisateur."
+
+#~ msgid "Total found: %d Posts and %d Post Meta."
+#~ msgstr "Total trouvé :  %d posts et %d Métadonnées"
+
+#~ msgid "Total found: %d Comments and %d Comment Meta."
+#~ msgstr "Total trouvé : %d commentaires et %d métadonnées de commentaire."
+
+#~ msgid "Total found: %d Options"
+#~ msgstr "Total trouvé : %d Options"
+
+#~ msgid ""
+#~ "Total found: %d Terms, %d Term Meta, %d Term Taxonomy and %d Term "
+#~ "Relationships."
+#~ msgstr ""
+#~ "Total trouvé : %d Terms, %d Métadonnées de terms, %d Taxonomies de terms, "
+#~ "%d Relations de terms"
+
+#~ msgid ""
+#~ "Before any cleanup, verify that you have a backup of the site, and that "
+#~ "you can perform a restore if needed."
+#~ msgstr ""
+#~ "Avant toute opération de nettoyage, vérifiez que vous possédez une "
+#~ "sauvegarde du site, et que vous pourrez effectuer une restauration en cas "
+#~ "de besoin."
+
+#~ msgid "Your WordPress installation contains %s old WordPress files"
+#~ msgstr ""
+#~ "Votre installation WordPress contient %s anciens fichiers de WordPress"
+
+#~ msgid "This tool will clean up ALL logs from redirection plugin."
+#~ msgstr "Cet outil va nettoyer TOUS les logs de l'extension Redirection."
+
+#~ msgid "Variations orphelines"
+#~ msgstr "Variations orphelines"
+
+#~ msgid ""
+#~ "Cet outil va supprimer toutes les variations sans parent du plugin "
+#~ "woocommerce."
+#~ msgstr ""
+#~ "Cet outil va nettoyer TOUTES les variations orphelines de l'extension "
+#~ "WooCommerce."
+
+#~ msgid "Effacer les sessions clients"
+#~ msgstr "Effacer les sessions clients"
+
+#~ msgid ""
+#~ "Cet outil détruira toutes les données de session client de la base de "
+#~ "données, incluant les paniers en cours du plugin woocommerce."
+#~ msgstr ""
+#~ "Cet outil va nettoyer TOUTES les données de session client de la base de "
+#~ "données, incluant les paniers en cours du plugin WooCommerce."
+
+#~ msgid "The %d plugin is present"
+#~ msgstr "L’extension %d est présente"
+
+#~ msgid ""
+#~ "WPS Cleaner permet de nettoyer votre site WordPress ainsi que votre base "
+#~ "de données."
+#~ msgstr ""
+#~ "WPS Cleaner permet de nettoyer votre site WordPress ainsi que votre base "
+#~ "de données."
+
+#~ msgid "Le plugin Woocommerce est activé"
+#~ msgstr "L'extension WooCommerce est activée"
+
+#~ msgid "Le plugin Redirection est activé"
+#~ msgstr "L'extension Redirection est activée"
+
+#~ msgid "This tool will clean up ALL Transient Options from WordPress."
+#~ msgstr "Cet outil va nettoyer TOUTES les options de transient de WordPress."

@@ -1772,7 +1772,7 @@ function consegne_ordini_pages()
 						</tr>
 						</thead>
 
-						<tbody id="the-comment-list" data-wp-lists="list:comment">
+						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 						<?php foreach ($groups as $group):
 
 							$caps = get_post_meta($group->ID, 'cap', true);
@@ -1942,10 +1942,10 @@ function consegne_ordini_pages()
 							$price = get_post_meta($categoryProduct->ID, '_price', true);
 							$weight = get_post_meta($categoryProduct->ID, '_weight', true);
 
-							$unitaMisura = 'gr';
+							$unitaMisura = ' gr';
 							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							if (!empty($measureUnit)) {
-								$unitaMisura = $measureUnit;
+								$unitaMisura = ' ' . $measureUnit;
 							}
 
 							$fornitore = get_post_meta($categoryProduct->ID, 'product_producer', true);
@@ -1959,11 +1959,11 @@ function consegne_ordini_pages()
 
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title . ' (' . $weight . $unitaMisura . ')',
+								'name' => $categoryProduct->post_title,
+								'weight' => $weight . $unitaMisura, //	qui nathi
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
-								'price' => floatval($price),
-								'weight' => $weight
+								'price' => floatval($price)
 							];
 						}
 					}
@@ -2033,10 +2033,10 @@ function consegne_ordini_pages()
 								<?php
 								$fornitore = get_post_meta($product->ID, 'product_producer', true);
 								$weight = get_post_meta($product->ID, '_weight', true);
-								$unitaMisura = 'gr';
+								$unitaMisura = ' gr';
 								$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 								if (!empty($measureUnit)) {
-									$unitaMisura = $measureUnit;
+									$unitaMisura = ' '. $measureUnit;
 								}
 
 								$fornitoreString = '';
@@ -2087,7 +2087,7 @@ function consegne_ordini_pages()
 						<i v-html="product.fornitore"></i>
 						<br><br>
 						<label style="display: block">Quantità</label>
-						<input style="width:100px;float:left" type="number" v-model="product.quantity">
+						<input style="width:70px;float:left" type="number" v-model="product.quantity">
 					</div>
 				</div>
 				<br><br>
@@ -2132,7 +2132,7 @@ function consegne_ordini_pages()
 						</tr>
 						</thead>
 
-						<tbody id="the-comment-list" data-wp-lists="list:comment">
+						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 
 						<?php foreach ($boxs as $box):
 							$boxId = get_post_meta($box->ID, '_product_box_id', true);
@@ -2154,18 +2154,27 @@ function consegne_ordini_pages()
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
 
 								<td class="author column-author" data-colname="Autore">
-									<span><?php echo $week; ?></span>
+									<span class="create-box-table--span-item week"><?php echo $week; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento">
-									<span><?php echo $productBox->post_title; ?></span>
+									<span class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento">
-									<span><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
+									<span class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
 								</td>
 								<td class="response column-response">
-									<table>
+									<table style="border-collapse: collapse">
+										<thead>
+											<th>Descrizione</th>
+											<th>Peso</th>
+											<th>Fornitore</th>
+											<th>Prezzo</th>
+											<th>Quantità</th>
+											<th>Cod. Conf.</th>
+											<th>Azioni</th>
+										</thead>
 										<tbody>
 										<?php
 										$totalWeight = 0;
@@ -2200,30 +2209,36 @@ function consegne_ordini_pages()
 												$codiceConfezionamento = reset($codiceConfezionamento);
 											}
 
-
-											$unitaMisura = 'gr';
+											$unitaMisura = ' gr';
 
 											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
 
 											if (!empty($measureUnit)) {
-												$unitaMisura = $measureUnit;
+												$unitaMisura = ' '. $measureUnit;
 											}
 
 
 											?>
-											<tr>
-												<td><?php echo $product['name']; ?>
-													<?php if ($fornitoreString): ?> <br>
-														<i><?php echo $fornitoreString; ?></i><?php endif; ?>
 
-													<br>
-													<?php if ($codiceConfezionamento): ?><br>
-														<i>Cod.
-															Confezionamento: <?php echo $codiceConfezionamento; ?></i>
+											<tr class="create-box-table--row">
+												<td class="create-box-table--name">
+													<?php echo $product['name']; ?>
+												</td>
+												<td class="create-box-table--weight">
+													<?php echo $product['weight'] . $unitaMisura; ?>
+												</td>
+												<td class="create-box-table--producer">
+													<?php if ($fornitoreString): ?>
+														<?php echo $fornitoreString; ?>
+													<?php else: ?>
+														<?php echo '-'; ?>
 													<?php endif; ?>
 												</td>
-												<td style="display:flex;">
-													<span>X</span><input readonly
+												<td class="create-box-table--price">
+													€<?php echo number_format($product['price'] * $product['quantity'], 2 ); ?>
+												</td>
+												<td class="create-box-table--quantity" style="display:flex;">
+													<input style="width:70px;" readonly
 																		 value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 																		 type="number"
@@ -2232,8 +2247,14 @@ function consegne_ordini_pages()
 												<td>
 													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
 
+												<td class="create-box-table--conf">
+													<?php if ($codiceConfezionamento): ?>
+														<?php echo $codiceConfezionamento; ?>
+														<?php else: ?>
+															<?php echo '-'; ?>
+														<?php endif; ?>
 												</td>
-												<td>
+												<td class="create-box-table--actions">
 													<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
 													   data-index="<?php echo $key; ?>"
 													   href="#">Elimina</a>
@@ -2241,8 +2262,8 @@ function consegne_ordini_pages()
 											</tr>
 										<?php endforeach; ?>
 										<?php if ($week >= $currentWeek): ?>
-											<tr>
-												<td>
+											<tr class="create-box-table--add-product-row">
+												<td class="create-box-table--add-product-item" style="border-bottom:none;">
 													<select data-box-id="<?php echo $box->ID; ?>"
 															class="select2 new-product-box">
 														<option disabled selected value="">-- Scegli il prodotto --
@@ -2301,28 +2322,35 @@ function consegne_ordini_pages()
 														<?php endforeach; ?>
 													</select>
 												</td>
-												<td colspan="2" style="display: flex"><input
-														style="width:80px"
+												<td style="border-bottom:none;"></td>
+												<td style="border-bottom:none;"></td>
+												<td style="border-bottom:none;"></td>
+												<td class="create-box-table--add-product-qty" colspan="2" style="display: flex;align-items: center;border-bottom:none;">
+													<input
+														style="width:70px"
 														type="number"
 														name="quantity" class="new-quantity">
 													<div class="unit-measure"></div>
 												</td>
-												<td>
+												<td style="border-bottom:none;"></td>
+												<td class="create-box-table--add-product-actions" style="border-bottom:none;">
 													<a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
 													   href="#">Aggiungi</a>
 												</td>
 											</tr>
 										<?php endif; ?>
 
-										<tr>
-											<td></td>
+										<tr class="create-box-table--totals">
+											<td class="no-border"></td>
 											<td><strong>Peso Box</strong></td>
+											<td class="no-border"></td>
 											<td><strong>Totale</strong></td>
 										</tr>
 										<tr>
-											<td></td>
-											<td><?php echo $totalWeight; ?>gr</td>
-											<td><?php echo $totalPrice; ?>€</td>
+											<td class="no-border"></td>
+											<td><?php echo $totalWeight; ?> gr</td>
+											<td class="no-border"></td>
+											<td>€<?php echo $totalPrice; ?></td>
 										</tr>
 										</tbody>
 									</table>
