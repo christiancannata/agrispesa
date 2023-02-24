@@ -2270,10 +2270,7 @@ function consegne_ordini_pages()
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]">
-												</td>
-												<td>
-													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
-
+												</td>												
 												<td class="create-box-table--conf">
 													<?php if ($codiceConfezionamento): ?>
 														<?php echo $codiceConfezionamento; ?>
@@ -2386,7 +2383,7 @@ function consegne_ordini_pages()
 									<span>
 								</span>
 								</td>
-								<td style="padding:25px 10px 10px;"> 
+								<td style="padding:25px 10px 10px;">
 									<a href="/wp-admin/admin.php?page=box-settimanali&delete_box=<?php echo $box->ID; ?>">Elimina
 										box settimanale</a>
 								</td>
