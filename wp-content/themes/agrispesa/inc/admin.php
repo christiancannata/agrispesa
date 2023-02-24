@@ -2642,6 +2642,7 @@ function my_saved_post($post_id, $json, $is_update)
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
 
+		dd($record);
 		$record['costounitario'] = str_replace(",", '.', $record['costounitario']);
 		$record['_ricarico_percentuale'] = str_replace(",", '.', $record['_ricarico_percentuale']);
 
