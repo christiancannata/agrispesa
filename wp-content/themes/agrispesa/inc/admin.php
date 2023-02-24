@@ -2642,25 +2642,25 @@ function my_saved_post($post_id, $json, $is_update)
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
 
-		dd($record);
 		$record['costounitario'] = str_replace(",", '.', $record['costounitario']);
-		$record['_ricarico_percentuale'] = str_replace(",", '.', $record['_ricarico_percentuale']);
 
 
 		$price = number_format($record['costounitario'], 2);
 
-		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
-			$record['_ricarico_percentuale'] = 0;
+		if (!isset($record['_percentuale_ricarico']) || empty($record['_percentuale_ricarico'])) {
+			$record['_percentuale_ricarico'] = 0;
 		}
+		$record['_percentuale_ricarico'] = str_replace(",", '.', $record['_percentuale_ricarico']);
 
-		$price *= (1 + $record['_ricarico_percentuale'] / 100);
+
+		$price *= (1 + $record['_percentuale_ricarico'] / 100);
 
 
 		$price = number_format(floatval($price), 2);
 
 
-		if (isset($record['_ricarico_percentuale'])) {
-			update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
+		if (isset($record['_percentuale_ricarico'])) {
+			update_post_meta($post_id, '_percentuale_ricarico', $record['_percentuale_ricarico']);
 		}
 		if (isset($record['costounitario'])) {
 			update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
