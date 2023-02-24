@@ -2386,7 +2386,7 @@ function consegne_ordini_pages()
 									<span>
 								</span>
 								</td>
-								<td>
+								<td style="padding:25px 10px 10px;"> 
 									<a href="/wp-admin/admin.php?page=box-settimanali&delete_box=<?php echo $box->ID; ?>">Elimina
 										box settimanale</a>
 								</td>
