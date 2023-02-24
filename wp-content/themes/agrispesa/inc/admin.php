@@ -1988,7 +1988,7 @@ function consegne_ordini_pages()
 
 				<p v-text="message"></p>
 
-				<h5>Crea una box settimanale</h5>
+				<p>Qui puoi preparare le offerte della settimana.</p>
 
 				<label>Settimana</label><br>
 				<input name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" readonly>
