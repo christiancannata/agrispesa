@@ -2083,6 +2083,7 @@ function consegne_ordini_pages()
 						<th style="width: 70px;">Peso</th>
 						<th>Fornitore</th>
 						<th>Prezzo</th>
+						<th>Un. Misura</th>
 						<th>Quantità</th>
 						<th>Cod. Conf.</th>
 						<th>Azioni</th>
@@ -2101,6 +2102,9 @@ function consegne_ordini_pages()
 							</td>
 							<td>
 								€<span v-html="product.price"></span>
+							</td>
+							<td>
+								PZ
 							</td>
 							<td>
 								<input style="width:70px;float:left" type="number" v-model="product.quantity">
@@ -2198,6 +2202,7 @@ function consegne_ordini_pages()
 											<th style="width: 70px;">Peso</th>
 											<th>Fornitore</th>
 											<th>Prezzo</th>
+											<th>Un. Misura</th>
 											<th>Quantità</th>
 											<th>Cod. Conf.</th>
 											<th>Azioni</th>
@@ -2244,6 +2249,12 @@ function consegne_ordini_pages()
 												$unitaMisura = ' ' . $measureUnit;
 											}
 
+											if($product['_uom_acquisto']) {
+												$misura_acquisto = $product['_uom_acquisto'];
+											} else {
+												$misura_acquisto = '-';
+											}
+
 
 											?>
 
@@ -2264,13 +2275,16 @@ function consegne_ordini_pages()
 												<td class="create-box-table--price">
 													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
 												</td>
+												<td class="create-box-table--misura">
+													<?php echo $misura_acquisto; ?>
+												</td>
 												<td class="create-box-table--quantity" style="display:flex;">
 													<input style="width:70px;" readonly
 														   value="<?php echo $product['quantity']; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]">
-												</td>												
+												</td>
 												<td class="create-box-table--conf">
 													<?php if ($codiceConfezionamento): ?>
 														<?php echo $codiceConfezionamento; ?>
