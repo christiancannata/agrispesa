@@ -215,17 +215,18 @@ if (woocommerce_product_loop()) {
 				'order' => 'asc',
 				'meta_query'     => array(
 					array(
-            'key'        => '_is_active_shop',
-            'value'      => 'yes'
+            'key'        => '_is_product_active',
+						'value' => '1',
+			      'compare' => '=='
 	        )
 				),
 
-				'meta_query' => array(
-					array(
-						'key' => '_stock_status',
-						'value' => 'instock'
-					),
-				)
+				// 'meta_query' => array(
+				// 	array(
+				// 		'key' => '_stock_status',
+				// 		'value' => 'instock'
+				// 	),
+				// )
 			);
 			$cat_query = new WP_Query($args);
 

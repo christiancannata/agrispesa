@@ -1,6 +1,10 @@
 <?php
-get_header('shop'); ?>
+get_header('shop');
+$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+$negozioID = $getIDbyNAME->term_id;
+?>
 
+<div class="woocommerce-products-header">
 <section class="big-search">
   <div class="big-search--content">
     <div class="big-search--text">
@@ -13,6 +17,7 @@ get_header('shop'); ?>
     <?php get_search_form() ?>
   </div>
 </section>
+
 
 <div class="all-categories">
   <?php
@@ -74,7 +79,7 @@ if( !empty($product_categories) ){
     echo '</ul>';
 } ?>
 </div>
-
+</div>
 
 
 <?php
@@ -83,16 +88,33 @@ if( !empty($product_categories) ){
           's'              => $search_string,
           'orderby'        => 'date',
           'order'          => 'DESC',
+          'meta_query'     => array(
+  					array(
+              'key'        => '_is_product_active',
+  						'value' => '1',
+  			      'compare' => '=='
+  	        )
+  				),
       );
 
       $search_posts = new WP_Query( $args );
-      if ( $search_posts->have_posts() ) : ?>
+      if ( $search_posts->have_posts() ) :
 
-      <div class="shop--list search-results">
-      <div class="shop--list--header">
-        <h2 class="shop--minititle">Abbiamo trovato questi!</h2>
-      </div>
+        $count_posts = new WP_Query($args);
+  			$posts_per_cat = $count_posts->found_posts;?>
+
+      <div class="negozio--flex">
+      <div class="products-list-agr">
+
+        <div class="products-list--header">
+    		    <h3 class="products-list--title">Abbiamo trovato questi!</h3>
+    		</div>
+
+
+
       <div class="woocommerce">
+      <div class="shop--list">
+
         <ul class="products">
 
 
@@ -116,9 +138,53 @@ if( !empty($product_categories) ){
         wp_reset_postdata();?>
 
       </ul>
+
+
+
+      <div class="products-list--footer">
+        <?php if($posts_per_cat == 1) {
+					     $labelprodotti = ' prodotto';
+  				} else {
+  					$labelprodotti = ' prodotti';
+  				}
+					echo '<span>' . $posts_per_cat . $labelprodotti .'</span>';
+				 ?>
+			</div>
       </div>
+			</div>
       </div>
 
+      <div class="negozio-sidebar">
+    	<ul class="negozio-sidebar--list">
+        <?php $my_walker = new Walker_Category_Custom();
+
+      	$excludeSpecial = '';
+      	if ($special_category) {
+      		$excludeSpecial = '';
+      	} else {
+      		$excludeSpecial = $specialiID;
+      	}
+
+      	$sidebar = array(
+      		'taxonomy'     => 'product_cat',
+      		// 'orderby'  => 'name',
+      		'orderby'  => 'meta_value',
+      		'meta_key' => 'categories_order_agr',
+      		'order'      => 'ASC',
+      		'show_count'   => 0,
+      		'hierarchical' => 1,
+      		'hide_empty'   => 1,
+      		'title_li'     => '',
+      		'walker' => $my_walker,
+      		'exclude' => $excludeSpecial,
+      		'child_of' => $negozioID,
+      		);
+      		wp_list_categories($sidebar); ?>
+      	</ul>
+      	</div>
+
+
+</div>
 
       <?php else : ?>
 
@@ -127,13 +193,6 @@ if( !empty($product_categories) ){
           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/empty/no-products.svg" class="not-found--image" alt="Nessun risultato" />
           <h2 class="not-found--title">Continua a scavare.</h2>
           <p class="not-found--subtitle">Ci dispiace, non abbiamo trovato niente.<br class="only-desktop" /> Prova a cambiare la tua ricerca.</p>
-        </div>
-
-        <div class="shop--list search-results">
-          <div class="shop--list--header">
-            <h2 class="shop--minititle">Potrebbero piacerti</h2>
-    			</div>
-          <?php echo do_shortcode('[products limit="6" columns="1" best_selling="true" category="negozio" ]'); ?>
         </div>
 
 
