@@ -6,6 +6,7 @@ require 'recipe/common.php';
 require 'contrib/cloudflare.php';
 
 // Config
+set('keep_releases', 1);
 
 set('repository', 'git@github.com:christiancannata/agrispesa.git');
 
