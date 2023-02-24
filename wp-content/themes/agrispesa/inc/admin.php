@@ -2716,7 +2716,8 @@ function my_saved_post($post_id, $json, $is_update)
 		}
 
 		if ($iva > 0) {
-			$price = (1 + ($iva / 100) * $price);
+			$price = $price + ($iva * ($price / 100));
+			$price = round($price, 2);
 		}
 
 		$product->set_regular_price($price);
