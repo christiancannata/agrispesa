@@ -355,7 +355,7 @@ function new_loop_shop_per_page( $cols ) {
 //Modifica loop negozio per avere solo prodotti con check _is_product_active
 function custom_meta_query( $meta_query ){
     $meta_query[] = array(
-			'key'     => '_is_product_active',
+			'key'     => '_is_active_shop',
 			'value' => '1',
 			'compare' => '=='
     );
