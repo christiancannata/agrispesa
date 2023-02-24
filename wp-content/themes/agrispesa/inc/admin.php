@@ -2683,9 +2683,17 @@ function my_saved_post($post_id, $json, $is_update)
 
 
 		$price *= (1 + (string)$json->_percentuale_ricarico / 100);
-
-
 		$price = number_format($price, 2);
+
+		$iva = (string)$json->iva;
+
+		if (empty(trim($iva))) {
+			$iva = 0;
+		}
+
+		if ($iva > 0) {
+			$price = (1 + ($iva / 100) * $price);
+		}
 
 		$product->set_regular_price($price);
 		$product->set_price($price);
