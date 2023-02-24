@@ -69,9 +69,9 @@ function my_custom_fonts() {
   }
   .create-box-table--span-item {
     border-radius: 4px;
-    background: rgba(60,33,255,.1);
     padding: 4px 6px;
-        margin:0 8px 0 0;
+    margin:0 8px 0 0;
+    display:block;
   }
   .create-box-table--totals {
 
@@ -79,10 +79,13 @@ function my_custom_fonts() {
   .create-box-table--totals td {
         border-top: 1px solid #000;
   }
+  #new-products td,
+  #new-products th,
   #the-comment-list td,
   #the-comment-list th {
     box-shadow: none;
     border-bottom: 1px solid #ddd;
+        text-align: left;
   }
   .create-box-table--add-product-row td {
       box-shadow: none;
@@ -92,6 +95,16 @@ function my_custom_fonts() {
   td.no-border {
     box-shadow: none;
     border-bottom: none;
+  }
+  .agr-create-new-boxes {
+    background: #fff;
+    padding: 24px;
+  }
+  .dataTables_length {
+    margin-bottom: 24px;
+  }
+  .dataTables_length select {
+    width: 70px;
   }
 
   </style>';

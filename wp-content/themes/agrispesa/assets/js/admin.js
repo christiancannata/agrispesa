@@ -63,6 +63,8 @@ createApp({
       let weight = 0;
       this.products.forEach(function (product) {
         weight += (product.quantity * parseInt(product.weight))
+
+        console.log(product)
       })
       return weight + ' gr'
     },
@@ -71,7 +73,7 @@ createApp({
       this.products.forEach(function (product) {
         price += product.price * product.quantity
       })
-      return price + ' €'
+      return '€' + price
     }
   },
   methods: {
@@ -130,4 +132,3 @@ createApp({
     }
   }
 }).mount('#box-app')
-

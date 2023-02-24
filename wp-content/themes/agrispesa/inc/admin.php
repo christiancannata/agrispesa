@@ -1981,7 +1981,7 @@ function consegne_ordini_pages()
 
 			<div class="wrap" id="box-app">
 
-
+				<div class="agr-create-new-boxes">
 				<h1 class="wp-heading-inline">
 					Box Settimanali</h1>
 
@@ -2069,67 +2069,92 @@ function consegne_ordini_pages()
 				</select><br><br>
 
 				<div style="display: flex">
-					<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct">Aggiungi
-						alla
-						box
+					<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct">Aggiungi alla box
 					</button>
 
-					<button class="button-primary add-product" @click="copyFromLastWeek">Copia
-						dalla settimana passata
+					<button class="button-primary add-product" @click="copyFromLastWeek">Copia dalla settimana passata
 					</button>
 				</div>
 
 				<br><br>
 
-				<div class="row">
-					<div class="product-box" v-for="(product,index) of products">
-						<a href="#" @click="deleteProduct(index)">Elimina</a>
-						<h3 v-html="product.name"></h3>
-						<i v-html="product.fornitore"></i>
-						<br><br>
-						<label style="display: block">Quantità</label>
-						<input style="width:70px;float:left" type="number" v-model="product.quantity">
-					</div>
-				</div>
-				<br><br>
-
-				<div style="display: flex;width:100%;margin-top:10px;margin-bottom: 10px">
-					<table>
-						<tr>
-							<td>Peso Box</td>
-							<td>Totale €</td>
+				<table id="new-products" class="dataTable" style="border-collapse: collapse; width: 100%;">
+					<thead>
+						<th>Descrizione</th>
+						<th style="width: 70px;">Peso</th>
+						<th>Fornitore</th>
+						<th>Prezzo</th>
+						<th>Quantità</th>
+						<th>Cod. Conf.</th>
+						<th>Azioni</th>
+					</thead>
+					<tbody>
+						<tr v-for="(product,index) of products">
+							<td>
+								<span v-html="product.name"></span>
+							</td>
+							<td style="width: 70px;">
+								<span v-html="product.weight"></span>
+								<span v-html="product.unit_measure"></span>
+							</td>
+							<td>
+								<span v-html="product.fornitore"></span>
+							</td>
+							<td>
+								€<span v-html="product.price"></span>
+							</td>
+							<td>
+								<input style="width:70px;float:left" type="number" v-model="product.quantity">
+							</td>
+							<td>
+								<span v-html="product.codiceConfezionamento"></span>
+							</td>
+							<td>
+								<a href="#" @click="deleteProduct(index)">Elimina</a>
+							</td>
 						</tr>
+					</tbody>
+					<tfoot>
 						<tr>
-							<td><b v-html="totalWeight"></b></td>
-							<td><b v-html="totalPrice"></b></td>
+							<td colspan="2" style="text-align: right;width: 70px;border-top: 2px solid #000; border-bottom:none;"><b>Peso Totale</b><br/><b v-html="totalWeight"></b></td>
+							<td colspan="2" style="text-align: right;border-top: 2px solid #000; border-bottom:none;"><b>Totale</b><br/><b v-html="totalPrice"></b></td>
+							<td colspan="3" style="text-align: right; border-top: 2px solid #000; border-bottom:none;"></td>
 						</tr>
+					</tfoot>
 					</table>
 
-				</div>
+
+
+
+
+
 
 				<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
 					Settimanale
 				</button>
 
+				</div>
+
 
 				<form id="comments-form" method="POST"
 					  action="" style="margin-top:100px">
-
 					<input type="hidden" name="generate_orders" value="1">
+
 					<table class="wp-list-table datatable">
 						<thead>
 						<tr>
-							<th scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Settimana</span></th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Box
+							<th scope="col" id="author" class="manage-column column-author sortable desc" style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								<span style="padding-right:16px;">Settimana</span></th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								<span style="padding-right:16px;">Box</span>
 							</th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Data
-								consegna
+							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								<span style="padding-right:16px;">Data consegna</span>
 							</th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">
-								Prodotti
+							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								<span style="padding-right:16px;">Prodotti</span>
 							</th>
-							<th></th>
+							<th style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;"><span style="padding-right:16px;">Azioni</span></th>
 						</tr>
 						</thead>
 
@@ -2154,22 +2179,22 @@ function consegne_ordini_pages()
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
 
-								<td class="author column-author" data-colname="Autore">
-									<span class="create-box-table--span-item week"><?php echo $week; ?></span>
+								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
+									<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
-									data-colname="Commento">
+									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
-									data-colname="Commento">
+									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
 								</td>
 								<td class="response column-response">
 									<table style="border-collapse: collapse">
 										<thead>
 											<th>Descrizione</th>
-											<th>Peso</th>
+											<th style="width: 70px;">Peso</th>
 											<th>Fornitore</th>
 											<th>Prezzo</th>
 											<th>Quantità</th>
@@ -2225,7 +2250,7 @@ function consegne_ordini_pages()
 												<td class="create-box-table--name">
 													<?php echo $product['name']; ?>
 												</td>
-												<td class="create-box-table--weight">
+												<td class="create-box-table--weight" style="width: 70px;">
 													<?php echo $product['weight'] . $unitaMisura; ?>
 												</td>
 												<td class="create-box-table--producer">
@@ -2329,7 +2354,6 @@ function consegne_ordini_pages()
 														style="width:70px"
 														type="number"
 														name="quantity" class="new-quantity">
-													<div class="unit-measure"></div>
 												</td>
 												<td style="border-bottom:none;"></td>
 												<td class="create-box-table--add-product-actions" style="border-bottom:none;">
