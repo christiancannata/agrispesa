@@ -2183,13 +2183,13 @@ function consegne_ordini_pages()
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
-									<span
-										class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
+									<span class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
+									<span class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
 									<span
-										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
+										class="create-box-table--span-item the-product" style="padding:25px 10px 10px;"><?php echo $productBox->post_title; ?></span>
 								</td>
 								<td class="response column-response">
 									<table style="border-collapse: collapse">
