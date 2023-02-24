@@ -2230,7 +2230,7 @@ function consegne_ordini_pages()
 																		 name="quantity[<?php echo $key; ?>][]">
 												</td>
 												<td>
-													€<?php echo number_format($product['price'] * $product['quantity'], 2 ); ?>
+													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
 
 												</td>
 												<td>
@@ -2609,7 +2609,11 @@ function my_saved_post($post_id, $json, $is_update)
 		// Convert SimpleXml object to array for easier use.
 		$record = json_decode(json_encode(( array )$json), 1);
 
-		$price = number_format($record['costounitario'], 2 );
+		$record['costounitario'] = str_replace(",", '.', $record['costounitario']);
+		$record['_ricarico_percentuale'] = str_replace(",", '.', $record['_ricarico_percentuale']);
+
+
+		$price = number_format($record['costounitario'], 2);
 
 		if (!isset($record['_ricarico_percentuale']) || empty($record['_ricarico_percentuale'])) {
 			$record['_ricarico_percentuale'] = 0;
@@ -2618,12 +2622,11 @@ function my_saved_post($post_id, $json, $is_update)
 		$price *= (1 + $record['_ricarico_percentuale'] / 100);
 
 
-
-		$price = number_format(floatval($price), 2 );
+		$price = number_format(floatval($price), 2);
 
 
 		update_post_meta($post_id, '_ricarico_percentuale', $record['_ricarico_percentuale']);
-		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2 ));
+		update_post_meta($post_id, '_prezzo_acquisto', number_format($record['costounitario'], 2));
 		update_post_meta($post_id, '_codice_confezionamento', $record['codicecategoriaconfezionamento']);
 		update_post_meta($post_id, '_is_magazzino', $record['_is_magazzino']);
 		update_post_meta($post_id, '_uom_acquisto', $record['_uom_acquisto']);
@@ -2633,6 +2636,7 @@ function my_saved_post($post_id, $json, $is_update)
 		$product->set_stock_quantity($record['scorte']);
 		$product->set_stock_status();
 		$product->set_regular_price($price);
+		$product->set_price($price);
 		$product->save();
 		wc_delete_product_transients($product->get_id());
 		// Do something.
