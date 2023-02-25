@@ -1,17 +1,17 @@
 <?php
 
 
-// Add min value to the quantity field (default = 1)
-add_filter('woocommerce_quantity_input_min', 'min_decimal');
-function min_decimal($val) {
-    return 0.1;
-}
-
-// Add step value to the quantity field (default = 1)
-add_filter('woocommerce_quantity_input_step', 'nsk_allow_decimal');
-function nsk_allow_decimal($val) {
-    return 0.1;
-}
+// // Add min value to the quantity field (default = 1)
+// add_filter('woocommerce_quantity_input_min', 'min_decimal');
+// function min_decimal($val) {
+//     return 0.1;
+// }
+//
+// // Add step value to the quantity field (default = 1)
+// add_filter('woocommerce_quantity_input_step', 'nsk_allow_decimal');
+// function nsk_allow_decimal($val) {
+//     return 0.1;
+// }
 
 // Removes the WooCommerce filter, that is validating the quantity to be an int
 remove_filter('woocommerce_stock_amount', 'intval');

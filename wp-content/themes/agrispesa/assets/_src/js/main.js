@@ -691,7 +691,7 @@ function quantityInput() {
           $qty.val((currentVal + parseFloat(step)).toFixed(step.getDecimals()));
           if(jQuery('.shop-buttons-flex').length) {
             jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
-          }
+          } 
         }
       } else {
         if (min && (currentVal <= min)) {
