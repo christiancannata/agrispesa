@@ -20,9 +20,16 @@ $week = null;
 			.card {
 				width: 33%;
 				float: left;
+				margin-bottom: 30px;
 			}
-			@page { margin: 0px; }
-			body { margin: 0px; }
+
+			@page {
+				margin: 0px;
+			}
+
+			body {
+				margin: 0px;
+			}
 		</style>
 	</head>
 	<body>
@@ -69,6 +76,7 @@ $week = null;
 			return strcmp($a->num_consegna, $b->num_consegna);
 		});
 		?>
+		<h3><?php echo $group->post_title; ?></h3><br>
 		<?php foreach ($orders as $order): ?>
 			<div class="card">
 				<h2><?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?></h2>

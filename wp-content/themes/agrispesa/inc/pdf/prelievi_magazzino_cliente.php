@@ -19,8 +19,10 @@ $args = [
 
 $products = new WP_Query($args);
 $products = wp_list_pluck($products->posts, 'ID');
-$products = reset($products);
-$product = wc_get_product($products);
+
+foreach ($products as $key => $product) {
+	$products[$key] = wc_get_product($product);
+}
 
 $args = [
 	'posts_per_page' => -1,
@@ -38,14 +40,19 @@ $args = [
 $orders = new WP_Query($args);
 $orders = $orders->get_posts();
 
-$orders = array_filter($orders, function ($order) use ($product) {
+$orders = array_filter($orders, function ($order) use ($products) {
 	$order = wc_get_order($order->ID);
 	$items = $order->get_items();
 
 	$hasProduct = false;
 	foreach ($items as $item_id => $item) {
 		$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
-		if ($product_id == $product->get_id()) {
+
+		$hasProducts = array_filter($products, function ($product) use ($product_id) {
+			return $product_id == $product->get_id();
+		});
+
+		if (!empty($hasProducts)) {
 			$hasProduct = true;
 		}
 	}
@@ -54,37 +61,58 @@ $orders = array_filter($orders, function ($order) use ($product) {
 
 });
 
-
 $dompdf = new Dompdf();
 
 ob_start();
 ?>
+	<html>
+	<head>
+		<style>
+			.page-break {
+				page-break-before: always;
+			}
+
+			.table {
+				width: 100%;
+
+			}
+
+			.border {
+				border: 1px solid;
+				border-collapse: collapse;
+			}
+
+			.border td {
+				border: 1px solid;
+				border-collapse: collapse;
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+
 	<h1>
 		Lista prelievi magazzino per cliente
 	</h1>
-	<table>
-		<thead>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		</thead>
-		<tbody>
+	<table class="table border">
+
 		<?php foreach ($orders as $order): ?>
 			<?php
 			$order = wc_get_order($order->ID);
-
+			$dataConsegna = get_post_meta($order->get_id(), '_data_consegna', true);
 			$numConsegna = get_post_meta($order->get_id(), '_numero_consegna', true);
-			$giroConsegna = get_post_meta($order->get_id(), '_giro_consegna', true);
+			$gruppoConsegna = get_post_meta($order->get_id(), '_gruppo_consegna', true);
+			$subscriptionId = get_post_meta($order->get_id(), '_subscription_id', true);
+			$subscription = wcs_get_subscription($subscriptionId);
+			$productSubscription = $subscription->get_items();
+			$productSubscription = reset($productSubscription);
+
 			$items = $order->get_items();
 			?>
 			<tr>
 				<td>
 					Nr.Cons.: <strong><?php echo $numConsegna; ?></strong><br>
-					Ubicaz.: <strong><?php echo $giroConsegna; ?></strong><br><br>
+					Ubicaz.: <strong><?php echo $gruppoConsegna; ?></strong><br><br>
 
 					Cliente: <strong><?php echo $order->get_customer_id(); ?></strong><br>
 					<strong><?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?></strong><br>
@@ -92,41 +120,77 @@ ob_start();
 					<span><?php echo $order->get_shipping_postcode() . " " . $order->get_shipping_city(); ?> (<?php echo $order->get_shipping_state(); ?>)</span>
 				</td>
 				<td>
-					<?php
-					foreach ($items as $item_id => $item) {
-						$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
-						if ($product_id == $product->get_id()) {
+					<table class="table">
+						<thead>
+						<th>Articolo/Produttore</th>
+						<th>U.M.</th>
+						<th>Quantità</th>
+						<th>Nr. Ordine</th>
+						<th>Tipo Spesa</th>
+						<th>Cod Ubicazione</th>
+						<th>Data Spedizione</th>
+						</thead>
+						<tbody>
+						<?php
+						foreach ($items as $item_id => $item) {
+							$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
+							$product = array_filter($products, function ($product) use ($product_id) {
+								return $product_id == $product->get_id() ? $product : null;
+							});
+
+							if (!$product) {
+								continue;
+							}
+
+							$product = reset($product);
+
+							$unitaMisura = 'gr';
+							$measureUnit = get_post_meta($product->get_id(), '_woo_uom_input', true);
+							if (!empty($measureUnit)) {
+								$unitaMisura = $measureUnit;
+							}
+
 							?>
-							<strong><?php echo $product->get_name(); ?></strong>
+							<tr>
+
+								<td>
+									<strong><?php echo $product->get_name(); ?></strong>
+								</td>
+								<td><strong><?php echo $unitaMisura; ?></strong></td>
+
+								<td>
+									<strong><?php echo $item->get_quantity(); ?></strong>
+								</td>
+								<td>
+									<strong><?php echo $order->get_id(); ?></strong>
+
+								</td>
+								<td>
+									<strong><?php echo $productSubscription->get_name(); ?></strong>
+								</td>
+								<td>
+									<strong><?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></strong>
+								</td>
+								<td>
+									<strong><?php echo $gruppoConsegna; ?></strong>
+								</td>
+
+							</tr>
 							<?php
+
 						}
-					}
-					?>
+						?>
+						</tbody>
+					</table>
+
 				</td>
-				<td>PZ</td>
-				<td>
-					<?php
-					foreach ($items as $item_id => $item) {
-						$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
-						if ($product_id == $product->get_id()) {
-							?>
-							<strong><?php echo $item->get_quantity(); ?></strong>
-							<?php
-						}
-					}
-					?>
-				</td>
-				<td>
-					<strong><?php echo $order->get_id(); ?></strong>
-				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
+	</body>
+	</html>
 <?php
 $content = ob_get_clean();
 $dompdf->loadHtml($content);
