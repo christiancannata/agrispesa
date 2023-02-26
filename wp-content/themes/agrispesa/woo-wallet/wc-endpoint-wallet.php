@@ -45,11 +45,11 @@ $menu_items                = apply_filters(
 );
 ?>
 
-<h3 class="my-account--minititle">Il mio credito</h3>
+<h3 class="my-account--minititle">Il mio saldo</h3>
 
 <div class="woo-wallet-my-wallet-container">
 	<div class="woo-wallet-sidebar">
-		
+
 		<ul>
 			<?php foreach ( $menu_items as $item => $menu_item ) : ?>
 				<?php if ( apply_filters( 'woo_wallet_is_enable_' . $item, true ) ) : ?>
@@ -119,6 +119,7 @@ $menu_items                = apply_filters(
 					<?php foreach ( $transactions as $transaction ) : ?>
 						<li>
 							<div>
+								<?php print_r($transaction);?>
 								<p><?php echo esc_html( $transaction->details ); ?></p>
 								<small><?php echo wc_string_to_datetime( $transaction->date )->date_i18n( wc_date_format() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></small>
 							</div>
