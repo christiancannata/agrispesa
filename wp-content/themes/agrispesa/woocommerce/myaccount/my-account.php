@@ -73,7 +73,7 @@ if ($reg_month === '01') {
 	<div class="user-profile--header">
 		<div class="user-profile--user">
 			<h2 class="user-profile--name">
-				Ciao<?php if ($current_user->first_name): ?>, <?php echo esc_html($current_user->first_name); ?><?php endif; ?>
+				Ciao<?php if ($current_user->first_name): ?>, <span style="text-transform: capitalize;"><?php echo esc_html($current_user->first_name); ?></span><?php endif; ?>
 				.</h2>
 			<p class="user-profile--registered">Fai parte di Agrispesa
 				dal <?php echo $reg_day . ' ' . $reg_month . ' ' . $reg_year; ?> <span class="ec ec-green-heart"></span>
@@ -109,12 +109,9 @@ if ($reg_month === '01') {
 						],
 					]);
 
-					echo '<div class="user-profile--details--item next-box">';
 
-					if (count($orders) == 0) {
-						echo '<p class="user-profile--details--number">In Preparazione</p>';
 
-					} else {
+					if (count($orders) > 0) {
 
 						foreach ($orders as $order) {
 							$dataConsegna = get_post_meta($order->ID, '_data_consegna', true);
@@ -122,20 +119,16 @@ if ($reg_month === '01') {
 								$origin = new DateTimeImmutable();
 								$target = new DateTimeImmutable($dataConsegna);
 								$interval = $origin->diff($target);
+								echo '<div class="user-profile--details--item next-box">';
 								echo '<p class="user-profile--details--number">' . $interval->format('%a') . '</p>';
-
-							} else {
-								echo '<p class="user-profile--details--number">In Preparazione</p>';
-
+								echo '<h3 class="user-profile--details--title">Consegna a<br/>'. $order->first_name . $order->last_name .'</h3>';
+								echo '</div>';
 							}
-
-
 						}
 
-
 					}
-					echo '<h3 class="user-profile--details--title">Giorni<br/> alla prossima consegna</h3>';
-					echo '</div>';
+
+
 				}
 
 			}
@@ -160,7 +153,7 @@ if ($reg_month === '01') {
 
 				} else {
 					echo '<p class="user-profile--details--number">0</p>';
-					echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attive</h3>';
+					echo '<h3 class="user-profile--details--title">Facciamo noi</h3>';
 				}
 				?>
 			</div>

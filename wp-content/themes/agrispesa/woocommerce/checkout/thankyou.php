@@ -146,8 +146,7 @@ if ($shipping_date_month === '01') {
 		<div class="thankyou">
 			<div class="thankyou--intro">
 				<h1 class="thankyou--title">
-					Grazie, <?php echo $order->get_billing_first_name(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					!
+					Grazie, <span style="text-transform: capitalize;"><?php echo $order->get_billing_first_name();?></span>!
 					<br/>Il tempo di raccogliere,<br class="only-desktop"/> e siamo da te.</h1>
 				<p class="thankyou--subtitle">Riceverai presto una mail con i dettagli del tuo ordine.</p>
 				<div class="thankyou--details">

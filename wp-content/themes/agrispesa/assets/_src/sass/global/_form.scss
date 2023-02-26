@@ -175,6 +175,7 @@ span.optional {
 	}
 
 	input[type="number"] {
+		@include input();
 		padding-left: 24px;
 	}
 }
