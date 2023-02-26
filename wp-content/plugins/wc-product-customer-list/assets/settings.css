@@ -1,0 +1,5 @@
+/* Settings */
+
+#wpcl_order_status_select, #wpcl_custom_fields, #wpcl_rightpress_custom_fields, #wpcl_user_meta {
+    height: 200px;
+}

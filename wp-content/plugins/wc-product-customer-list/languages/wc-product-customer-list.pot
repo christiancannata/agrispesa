@@ -1,0 +1,778 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Product Customer List for WooCommerce (Premium)\n"
+"POT-Creation-Date: 2021-09-28 18:16-0400\n"
+"PO-Revision-Date: 2016-02-18 11:26-0500\n"
+"Last-Translator: \n"
+"Language-Team: Kokomo <thierry@kokomoweb.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wc-product-customer-list.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: functions.php:25
+msgid ""
+"Woocommerce Product Customer List is enabled but not effective. It requires "
+"WooCommerce 2.2+ in order to work."
+msgstr ""
+
+#: lib/Wpcl_Admin.php:16
+msgid "Customers"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:88
+msgid "Reset column order"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:89
+msgid "All"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:90
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:91
+msgid "Copy"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:92
+msgid "Print"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:93
+msgid "Search"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:94 lib/Wpcl_Display.php:70 lib/Wpcl_Shortcode.php:129
+msgid "This product currently has no customers"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:95
+msgid "No orders match your search"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:96
+msgid "Showing _START_ to _END_ out of _TOTAL_ orders"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:97
+msgid "Show _MENU_ orders"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:98
+msgid "Copy to clipboard"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:99
+#, php-format
+msgid "Copied %d rows"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:100
+msgid "Copied 1 row"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:101
+msgid "First"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:102
+msgid "Previous"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:103
+msgid "Next"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:104
+msgid "Last"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:105
+msgid "Processing Orders: "
+msgstr ""
+
+#: lib/Wpcl_Assets.php:106
+msgid "There was an AJAX error"
+msgstr ""
+
+#: lib/Wpcl_Assets.php:107 lib/Wpcl_Display.php:116 lib/Wpcl_Display.php:250
+msgid "Email all customers"
+msgstr ""
+
+#: lib/Wpcl_Data_Compilation.php:35 lib/Wpcl_Data_Compilation.php:46
+msgid "You do not have the permissions to access this information"
+msgstr ""
+
+#: lib/Wpcl_Data_Compilation.php:64
+msgid "Invalid order IDs"
+msgstr ""
+
+#: lib/Wpcl_Data_Formatters.php:1247
+msgid "Variation Name"
+msgstr ""
+
+#: lib/Wpcl_Data_Formatters.php:1821
+msgid "User "
+msgstr ""
+
+#: lib/Wpcl_Data_Formatters.php:1823
+msgid "Name: "
+msgstr ""
+
+#: lib/Wpcl_Data_Formatters.php:1827
+msgid "Email: "
+msgstr ""
+
+#: lib/Wpcl_Display.php:16
+msgid "Customers who bought this product"
+msgstr ""
+
+#: lib/Wpcl_Display.php:108
+msgid "Total quantity sold"
+msgstr ""
+
+#: lib/Wpcl_Display.php:121 lib/Wpcl_Display.php:255
+msgid "Email selected customers"
+msgstr ""
+
+#: lib/Wpcl_Options.php:28
+msgid "Index"
+msgstr ""
+
+#: lib/Wpcl_Options.php:35
+msgid "Add an Index column?"
+msgstr ""
+
+#: lib/Wpcl_Options.php:36
+msgid "This will simply add a numbered column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:53
+msgid "Add shortcut under WooCommerce Menu"
+msgstr ""
+
+#: lib/Wpcl_Options.php:58
+msgid "This link would let you jump directly to the settings tab"
+msgstr ""
+
+#: lib/Wpcl_Options.php:75
+msgid "Order number"
+msgstr ""
+
+#: lib/Wpcl_Options.php:82
+msgid "Order number column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:87
+msgid "Enable order number column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:94
+msgid "Date"
+msgstr ""
+
+#: lib/Wpcl_Options.php:102
+msgid "Order date column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:107
+msgid "Enable order date column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:115 lib/Wpcl_Options.php:123
+msgid "Product ID"
+msgstr ""
+
+#: lib/Wpcl_Options.php:128
+msgid "Enable product ID column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:136 lib/Wpcl_Options.php:144
+msgid "Product SKU"
+msgstr ""
+
+#: lib/Wpcl_Options.php:149
+msgid "Enable product SKU column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:165
+msgid "Billing First name"
+msgstr ""
+
+#: lib/Wpcl_Options.php:173
+msgid "Billing first name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:178
+msgid "Enable billing first name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:186
+msgid "Billing Last name"
+msgstr ""
+
+#: lib/Wpcl_Options.php:194
+msgid "Billing last name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:199
+msgid "Enable billing last name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:207
+msgid "Billing Company"
+msgstr ""
+
+#: lib/Wpcl_Options.php:215
+msgid "Billing company column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:220
+msgid "Enable billing company column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:228
+msgid "Billing E-mail"
+msgstr ""
+
+#: lib/Wpcl_Options.php:236
+msgid "Billing e-mail column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:241
+msgid "Enable billing e-mail column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:249
+msgid "Billing Phone"
+msgstr ""
+
+#: lib/Wpcl_Options.php:257
+msgid "Billing phone column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:262
+msgid "Enable billing phone column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:270
+msgid "Billing Address 1"
+msgstr ""
+
+#: lib/Wpcl_Options.php:278
+msgid "Billing address 1 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:283
+msgid "Enable billing address 1 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:291
+msgid "Billing Address 2"
+msgstr ""
+
+#: lib/Wpcl_Options.php:299
+msgid "Billing address 2 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:304
+msgid "Enable billing address 2 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:312
+msgid "Billing City"
+msgstr ""
+
+#: lib/Wpcl_Options.php:320
+msgid "Billing city column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:325
+msgid "Enable billing city column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:333
+msgid "Billing State"
+msgstr ""
+
+#: lib/Wpcl_Options.php:341
+msgid "Billing state column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:346
+msgid "Enable billing state column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:354
+msgid "Billing Postal Code / Zip"
+msgstr ""
+
+#: lib/Wpcl_Options.php:362
+msgid "Billing Postal Code / Zip column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:367
+msgid "Enable billing postal code / Zip column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:375
+msgid "Billing Country"
+msgstr ""
+
+#: lib/Wpcl_Options.php:383
+msgid "Billing country column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:388
+msgid "Enable billing country column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:404
+msgid "Shipping First name"
+msgstr ""
+
+#: lib/Wpcl_Options.php:412
+msgid "Shipping first name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:417
+msgid "Enable shipping first name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:425
+msgid "Shipping Last name"
+msgstr ""
+
+#: lib/Wpcl_Options.php:433
+msgid "Shipping last name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:438
+msgid "Enable shipping last name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:447
+msgid "Shipping Company"
+msgstr ""
+
+#: lib/Wpcl_Options.php:455
+msgid "Shipping company column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:460
+msgid "Enable shipping company column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:468
+msgid "Shipping Address 1"
+msgstr ""
+
+#: lib/Wpcl_Options.php:476
+msgid "Shipping address 1 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:481
+msgid "Enable shipping address 1 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:489
+msgid "Shipping Address 2"
+msgstr ""
+
+#: lib/Wpcl_Options.php:497
+msgid "Shipping address 2 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:502
+msgid "Enable shipping address 2 column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:510
+msgid "Shipping City"
+msgstr ""
+
+#: lib/Wpcl_Options.php:518
+msgid "Shipping city column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:523
+msgid "Enable shipping city column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:531
+msgid "Shipping State"
+msgstr ""
+
+#: lib/Wpcl_Options.php:539
+msgid "Shipping state column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:544
+msgid "Enable shipping state column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:552
+msgid "Shipping Postal Code / Zip"
+msgstr ""
+
+#: lib/Wpcl_Options.php:560
+msgid "Shipping Postal Code / Zip column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:565
+msgid "Enable shipping postal code / Zip column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:573
+msgid "Shipping Country"
+msgstr ""
+
+#: lib/Wpcl_Options.php:581
+msgid "Shipping country column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:586
+msgid "Enable shipping country column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:602
+msgid "Customer Message"
+msgstr ""
+
+#: lib/Wpcl_Options.php:610
+msgid "Customer message column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:615
+msgid "Enable customer message column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:622 lib/Wpcl_Options.php:630
+msgid "Customer ID"
+msgstr ""
+
+#: lib/Wpcl_Options.php:635
+msgid "Enable customer ID column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:642 lib/Wpcl_Options.php:650
+msgid "Customer username"
+msgstr ""
+
+#: lib/Wpcl_Options.php:655
+msgid "Enable customer username column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:662
+msgid "Customer username link"
+msgstr ""
+
+#: lib/Wpcl_Options.php:671 lib/Wpcl_Options.php:679
+msgid "Customer display name"
+msgstr ""
+
+#: lib/Wpcl_Options.php:684
+msgid "Enable customer display name column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:708 lib/Wpcl_Options.php:728
+msgid "Order Status"
+msgstr ""
+
+#: lib/Wpcl_Options.php:715
+msgid "Order status column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:720
+msgid "Enable order status column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:736
+msgid "Order status"
+msgstr ""
+
+#: lib/Wpcl_Options.php:737
+msgid ""
+"Select one or multiple order statuses for which you will display the "
+"customers."
+msgstr ""
+
+#: lib/Wpcl_Options.php:751
+msgid "Payment method"
+msgstr ""
+
+#: lib/Wpcl_Options.php:759
+msgid "Payment method column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:764
+msgid "Enable payment method column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:771
+msgid "Shipping method"
+msgstr ""
+
+#: lib/Wpcl_Options.php:779
+msgid "Shipping method column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:784
+msgid "Enable shipping method column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:791
+msgid "Coupons used"
+msgstr ""
+
+#: lib/Wpcl_Options.php:799
+msgid "Coupons used column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:804
+msgid "Enable coupons used column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:811
+msgid "Variation"
+msgstr ""
+
+#: lib/Wpcl_Options.php:819
+msgid "Variations column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:824
+msgid "Enable variations column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:831
+msgid "Order total"
+msgstr ""
+
+#: lib/Wpcl_Options.php:839
+msgid "Order total column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:844
+msgid "Enable order total column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:853 lib/Wpcl_Options.php:874
+msgid "Order Qty Total"
+msgstr ""
+
+#: lib/Wpcl_Options.php:860
+msgid "Order quantity column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:865
+msgid "Enable order quantity column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:915
+msgid "Partial refunds"
+msgstr ""
+
+#: lib/Wpcl_Options.php:920
+msgid "Hide partially refunded orders"
+msgstr ""
+
+#: lib/Wpcl_Options.php:960
+msgid "Checkout custom fields"
+msgstr ""
+
+#: lib/Wpcl_Options.php:961 lib/Wpcl_Options.php:1031
+#: lib/Wpcl_Options.php:1323 lib/Wpcl_Options.php:1345
+#: lib/Wpcl_Options.php:1368
+msgid "Select one or multiple custom fields to display in the table."
+msgstr ""
+
+#: lib/Wpcl_Options.php:983
+msgid "User meta keys"
+msgstr ""
+
+#: lib/Wpcl_Options.php:984
+msgid "Select one or multiple user meta keys to display in the table."
+msgstr ""
+
+#: lib/Wpcl_Options.php:1008
+msgid "Index of column for default order"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1009
+msgid ""
+"Select which column index the data should be sorted by (Numbers only, 0 = "
+"first column)"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1030
+msgid "Direction of default order"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1037
+msgid "Ascending"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1038
+msgid "Descending"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1072
+msgid "State save"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1077
+msgid "Enable state save"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1221
+msgid "PDF page size"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1227
+msgid "US Letter"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1228
+msgid "US Legal"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1229
+msgid "A3"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1230
+msgid "A4"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1231
+msgid "A5"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1248
+msgid "PDF orientation"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1254
+msgid "Portrait"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1255
+msgid "Landscape"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1272
+msgid "Add SKU to PDF title"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1277
+msgid "Enable SKU in PDF title"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1293
+msgid "Split rows by quantity"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1298
+msgid "One row per product"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1322
+msgid "Product fields (Rightpress)"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1344
+msgid "Checkout fields (Rightpress)"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1367
+msgid "Order fields (Rightpress)"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1389
+msgid "Consolidate columns with the same label"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1394
+msgid ""
+"Even if they are different fields, if they are labelled the same, they will "
+"be in the same column"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1588 lib/Wpcl_Options.php:1589
+#, php-format
+msgid "Invalid product ID [%1$s]"
+msgstr ""
+
+#: lib/Wpcl_Options.php:1797
+msgid "Attendee information"
+msgstr ""
+
+#: lib/Wpcl_Settings.php:17 lib/Wpcl_Settings.php:32
+msgid "Product Customer List"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: lib/Wpcl_Settings.php:71
+msgid "Product Customer List for WooCommerce"
+msgstr ""
+
+#: lib/Wpcl_Settings.php:73
+msgid ""
+"The following options are used to configure Product Customer List for "
+"WooCommerce"
+msgstr ""
+
+#: lib/Wpcl_Settings.php:438
+msgid "Product Customer List for WooCommerce Premium"
+msgstr ""
+
+#: lib/Wpcl_Settings.php:476
+msgid "Looking for other options?"
+msgstr ""
+
+#: lib/Wpcl_Settings.php:480
+#, php-format
+msgid ""
+"For more options, please upgrade to the <a href=\"$1%s\" target=\"_blank"
+"\">premium version</a>."
+msgstr ""
+
+#: lib/Wpcl_Shortcode.php:55
+msgid ""
+"Please add the <code>product</code> shortcode attribute when not displaying "
+"on a Product's page"
+msgstr ""
+
+#: lib/Wpcl_Shortcode.php:85
+#, php-format
+msgid "There does not seem to be a product with the ID %1$s"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org/plugins/wc-product-customer-list/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Displays a list of customers that bought a product on the edit page."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kokomo"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.kokomoweb.com/"
+msgstr ""

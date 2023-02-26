@@ -186,7 +186,6 @@ remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_f
 
 add_action( 'woocommerce_before_order_notes', 'delivery_checkout_field' );
 function delivery_checkout_field( $checkout ) {
-
 	echo '<div class="woocommerce-border-form w-bottom">';
 	echo '<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>';
 	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
@@ -199,7 +198,7 @@ function delivery_checkout_field( $checkout ) {
 			), $checkout->get_value( 'scala' ));
 
 			woocommerce_form_field( 'piano', array(
-	        'type'          => 'text',
+	        'type'          => 'number',
 	        'class'         => array('my-field-class form-row-wide'),
 	        'label'         => __('Scala'),
 	        'placeholder'   => __('A che piano vivi?'),
@@ -234,3 +233,23 @@ function delivery_checkout_field_display_admin_order_meta($order){
     echo '<p><strong>'.__('Scala').':</strong> ' . get_post_meta( $order->get_id(), 'scala', true ) . '</p>';
     echo '<p><strong>'.__('Piano').':</strong> ' . get_post_meta( $order->get_id(), 'piano', true ) . '</p>';
 }
+
+//Rimuovi linea indirizzo 2
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+function custom_override_checkout_fields( $fields ) {
+    unset($fields['billing_address_2']);
+		unset($fields['shipping_address_2']);
+    return $fields;
+}
+
+function my_custom_checkout_fields( $fields ) {
+$fields['billing']['billing_phone'] = array(
+'label' => __('Phone', 'woocommerce'),
+'placeholder' => _x('Phone', 'placeholder', 'woocommerce'),
+'required' => false,
+'class' => array('form-row-wide'),
+);
+// Add these class names to the field's input tag class attribute (You can change them as per your requirement) These classes will be applied after WooCommerce default classes (which are mentioned above) );
+return $fields;
+}
+add_filter( 'woocommerce_checkout_fields' , 'my_custom_checkout_fields' ); // Hook in
