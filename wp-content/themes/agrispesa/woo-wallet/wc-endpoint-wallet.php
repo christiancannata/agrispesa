@@ -119,7 +119,6 @@ $menu_items                = apply_filters(
 					<?php foreach ( $transactions as $transaction ) : ?>
 						<li>
 							<div>
-								<?php print_r($transaction);?>
 								<p><?php echo esc_html( $transaction->details ); ?></p>
 								<small><?php echo wc_string_to_datetime( $transaction->date )->date_i18n( wc_date_format() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></small>
 							</div>
