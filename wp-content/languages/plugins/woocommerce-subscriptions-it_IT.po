@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-02-15 14:40+0100\n"
+"PO-Revision-Date: 2023-02-26 12:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -2675,7 +2675,7 @@ msgstr "Data di fine"
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:434
 msgctxt "number of orders linked to a subscription"
 msgid "Orders"
-msgstr "Ordine:"
+msgstr "Ordine"
 
 #. translators: placeholder is a subscription ID.
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:455
@@ -3482,7 +3482,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:256
 msgctxt "label on button, imperative"
 msgid "Change payment"
-msgstr ""
+msgstr "Cambia pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:258
 msgctxt "label on button, imperative"
