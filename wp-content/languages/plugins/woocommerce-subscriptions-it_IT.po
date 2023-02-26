@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-02-26 12:41+0100\n"
+"PO-Revision-Date: 2023-02-26 12:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3487,7 +3487,7 @@ msgstr "Cambia pagamento"
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:258
 msgctxt "label on button, imperative"
 msgid "Add payment"
-msgstr ""
+msgstr "Aggiungi pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:319
 msgid "Payment method updated."
@@ -3521,12 +3521,12 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:760
 msgctxt "the page title of the change payment method form"
 msgid "Change payment method"
-msgstr ""
+msgstr "Cambia metodo di pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:762
 msgctxt "the page title of the add payment method form"
 msgid "Add payment method"
-msgstr ""
+msgstr "Aggiungi un metodo di pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-change-payment-gateway.php:804
 msgid ""
