@@ -90,7 +90,7 @@ if( !empty($product_categories) ){
           'order'          => 'DESC',
           'meta_query'     => array(
   					array(
-              'key'        => '_is_product_active',
+              'key'        => '_is_active_shop', 
   						'value' => '1',
   			      'compare' => '=='
   	        )
