@@ -12,7 +12,7 @@ $product_data = $product->get_meta('_woo_uom_input');
       <img src="<?php the_post_thumbnail_url(); ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
     <?php else: ?>
       <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
-    <?php endif;?>
+    <?php endif;?> 
   </a>
   <div class="product-box--text">
     <div class="product-box--text--top">

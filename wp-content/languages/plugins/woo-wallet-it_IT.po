@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-02-19 23:18+0100\n"
+"PO-Revision-Date: 2023-02-26 11:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: includes/abstracts/abstract-woo-wallet-actions.php:80
 msgid "Your settings have been saved."
-msgstr ""
+msgstr "Le tue impostazioni sono state salvate."
 
 #: includes/abstracts/abstract-woo-wallet-actions.php:82
 #: includes/class-woo-wallet-frontend.php:396
@@ -251,7 +251,7 @@ msgstr ""
 
 #: includes/admin/class-woo-wallet-balance-details.php:43
 msgid "Remaining balance"
-msgstr "Credito rimanente"
+msgstr "Saldo rimanente"
 
 #: includes/admin/class-woo-wallet-balance-details.php:44
 #: includes/class-woo-wallet-admin.php:281
@@ -288,7 +288,7 @@ msgstr ""
 #: includes/class-woo-wallet-admin.php:535
 #: includes/class-woo-wallet-frontend.php:206
 msgid "Credit"
-msgstr "Credito"
+msgstr "Saldo"
 
 #: includes/admin/class-woo-wallet-balance-details.php:324
 #: includes/admin/class-woo-wallet-transaction-details.php:130
@@ -414,7 +414,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-admin.php:152
 msgid "Wallet Management"
-msgstr "Gestione Credito"
+msgstr "Gestione Saldo"
 
 #: includes/class-woo-wallet-admin.php:155
 #: includes/class-woo-wallet-frontend.php:847 templates/mini-wallet.php:23
@@ -522,7 +522,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-admin.php:481
 msgid "Search Users"
-msgstr ""
+msgstr "Cerca utenti"
 
 #. translators: user display name and email
 #: includes/class-woo-wallet-admin.php:511
@@ -540,15 +540,15 @@ msgstr "Importo"
 
 #: includes/class-woo-wallet-admin.php:548
 msgid "Select payment type"
-msgstr ""
+msgstr "Seleziona tipo di pagamento"
 
 #: includes/class-woo-wallet-admin.php:556
 msgid "Enter Description"
-msgstr ""
+msgstr "Inserisci una descrizione"
 
 #: includes/class-woo-wallet-admin.php:578
 msgid "Transaction details"
-msgstr ""
+msgstr "Dettagli transazione"
 
 #: includes/class-woo-wallet-admin.php:630
 msgid ""
@@ -643,7 +643,7 @@ msgstr ""
 #: includes/class-woo-wallet-frontend.php:287
 #: templates/wc-endpoint-wallet.php:50
 msgid "My Wallet"
-msgstr "Il tuo credito"
+msgstr "Saldo"
 
 #: includes/class-woo-wallet-admin.php:899
 msgid "Endpoint for the \"My account &rarr; My Wallet\" page."
@@ -737,7 +737,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-frontend.php:232
 msgid "No transactions available"
-msgstr "Nessuna transazione disponibile."
+msgstr "Nessuna transazione disponibile"
 
 #. translators: menu length
 #: includes/class-woo-wallet-frontend.php:234
@@ -865,12 +865,12 @@ msgstr ""
 
 #: includes/class-woo-wallet-frontend.php:610
 msgid "Via wallet"
-msgstr "Credito"
+msgstr "Saldo"
 
 #: includes/class-woo-wallet-frontend.php:695
 #: includes/class-woo-wallet-frontend.php:720
 msgid " Cashback"
-msgstr ""
+msgstr "Cashback"
 
 #: includes/class-woo-wallet-frontend.php:739
 msgid "Coupon code applied successfully as cashback."
@@ -879,7 +879,7 @@ msgstr ""
 #. translators: coupon code
 #: includes/class-woo-wallet-frontend.php:756
 msgid "Cashback: %s"
-msgstr ""
+msgstr "Cashback : %s"
 
 #: includes/class-woo-wallet-payment-method.php:49
 #: includes/marketplace/dokan/class-woo-wallet-dokan.php:88
@@ -907,7 +907,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-payment-method.php:70
 msgid "Wallet payment"
-msgstr "Usa il tuo credito"
+msgstr "Usa il tuo saldo"
 
 #: includes/class-woo-wallet-payment-method.php:76
 msgid "Payment method description that the customer will see on your checkout."
@@ -916,11 +916,11 @@ msgstr ""
 #: includes/class-woo-wallet-payment-method.php:77
 #: includes/class-woo-wallet-payment-method.php:84
 msgid "Pay with wallet."
-msgstr ""
+msgstr "Paga con il saldo."
 
 #: includes/class-woo-wallet-payment-method.php:81
 msgid "Instructions"
-msgstr ""
+msgstr "Istruzioni"
 
 #: includes/class-woo-wallet-payment-method.php:83
 msgid "Instructions that will be added to the thank you page."
@@ -928,7 +928,7 @@ msgstr ""
 
 #: includes/class-woo-wallet-payment-method.php:108
 msgid " | Current Balance: <strong>%s</strong>"
-msgstr " | Credito: <strong>%s</strong>"
+msgstr " | Saldo: <strong>%s</strong>"
 
 #: includes/class-woo-wallet-payment-method.php:130
 msgid "Payment error: "
@@ -938,8 +938,7 @@ msgstr "Errore di pagamento: "
 msgid ""
 "Your wallet balance is low. Please add %s to proceed with this transaction."
 msgstr ""
-"Il tuo credito è troppo basso. Per favore, aggiungi %s per concludere "
-"l’ordine."
+"Il tuo saldo è troppo basso. Per favore, aggiungi %s per concludere l’ordine."
 
 #: includes/class-woo-wallet-payment-method.php:159
 #: includes/class-woo-wallet-wallet.php:170
@@ -952,30 +951,30 @@ msgstr "Qualcosa è andato storto durante il pagamento. Per favore riprova."
 
 #: includes/class-woo-wallet-payment-method.php:168
 msgid "Insufficient wallet balance"
-msgstr "Credito insufficiente"
+msgstr "Saldo insufficiente"
 
 #: includes/class-woo-wallet-settings-api.php:405
 #: includes/class-woo-wallet-settings-api.php:423
 msgid "Choose File"
-msgstr ""
+msgstr "Scegli file"
 
 #: includes/class-woo-wallet-settings-api.php:424
 #: includes/class-woo-wallet-settings-api.php:425
 msgid "Select"
-msgstr ""
+msgstr "Seleziona"
 
 #: includes/class-woo-wallet-settings.php:31
 #: includes/class-woo-wallet-settings.php:315 includes/class-woo-wallet.php:228
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #: includes/class-woo-wallet-settings.php:85
 msgid "General"
-msgstr ""
+msgstr "Generale"
 
 #: includes/class-woo-wallet-settings.php:90
 msgid "Credit Options"
-msgstr ""
+msgstr "Opzioni saldo"
 
 #: includes/class-woo-wallet-settings.php:108
 msgid "Rechargeable Product Title"
@@ -1210,7 +1209,7 @@ msgstr ""
 #. translators: wallet amount
 #: includes/class-woo-wallet-wallet.php:173
 msgid "%s paid through wallet"
-msgstr ""
+msgstr "%s pagato con il saldo"
 
 #. translators: Order number
 #: includes/class-woo-wallet-wallet.php:192

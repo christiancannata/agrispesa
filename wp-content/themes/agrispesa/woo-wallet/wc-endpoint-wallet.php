@@ -45,11 +45,11 @@ $menu_items                = apply_filters(
 );
 ?>
 
-<h3 class="my-account--minititle">Il mio credito</h3>
+<h3 class="my-account--minititle">Il mio saldo</h3>
 
 <div class="woo-wallet-my-wallet-container">
 	<div class="woo-wallet-sidebar">
-		
+
 		<ul>
 			<?php foreach ( $menu_items as $item => $menu_item ) : ?>
 				<?php if ( apply_filters( 'woo_wallet_is_enable_' . $item, true ) ) : ?>
@@ -61,7 +61,7 @@ $menu_items                = apply_filters(
 	</div>
 	<div class="woo-wallet-content">
 		<div class="woo-wallet-content-heading">
-			<h3 class="woo-wallet-content-h3"><?php esc_html_e( 'Credito', 'woo-wallet' ); ?></h3>
+			<h3 class="woo-wallet-content-h3"><?php esc_html_e( 'Saldo', 'woo-wallet' ); ?></h3>
 			<p class="woo-wallet-price"><?php echo woo_wallet()->wallet->get_wallet_balance( get_current_user_id() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 		</div>
 		<div style="clear: both"></div>

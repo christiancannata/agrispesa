@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#: woocommerce-better-cus-list.php:157
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: BUG-EMAIL-ADDR <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: yyyy-mm-dd hh:mm+0000\n"
+"PO-Revision-Date: 2019-06-20 11:20+0\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Eazy Po 0.9.5.3\n"
+
+#: woocommerce-better-cus-list.php:27
+msgid ""
+"This plugin requires <a href=\"http://wordpress.org/extend/plugins/"
+"woocommerce/\">WooCommerce</a> plugin to be active!"
+msgstr ""
+
+#: woocommerce-better-cus-list.php:51
+msgid "Settings"
+msgstr ""
+
+#: woocommerce-better-cus-list.php:93
+msgid "Better Customer List"
+msgstr ""
+
+#: woocommerce-better-cus-list.php:108
+msgid "General Settings"
+msgstr ""
+
+#: woocommerce-better-cus-list.php:114
+msgid "Customer Activity Period (Days)"
+msgstr ""
+
+#: woocommerce-better-cus-list.php:116
+msgid ""
+"This is the period for which the customer is assumed Active and becomes "
+"Inactive thereafter. Defaults to 31 days if left blank."
+msgstr ""
+
+#: woocommerce-better-cus-list.php:147 woocommerce-better-cus-list.php:160
+msgid "Error: No User ID"
+msgstr ""
+
+#: includes/class-better-cus-list.php:34 pages/list-customers-admin.php:187
+msgid "Active"
+msgstr ""
+
+#: includes/class-better-cus-list.php:36 pages/list-customers-admin.php:188
+#: pages/list-customers-admin.php:296
+msgid "Inactive"
+msgstr ""
+
+#: includes/class-better-cus-list.php:55
+msgid "Every "
+msgstr ""
+
+#: includes/class-better-cus-list.php:58
+msgid "No Average"
+msgstr ""
+
+#: pages/list-customers-admin.php:27 pages/list-customers-admin.php:181
+msgid "Customers"
+msgstr ""
+
+#: pages/list-customers-admin.php:171
+msgid "Search Customers"
+msgstr ""
+
+#: pages/list-customers-admin.php:173
+msgid "Search Users"
+msgstr ""
+
+#: pages/list-customers-admin.php:176
+msgid "results"
+msgstr ""
+
+#: pages/list-customers-admin.php:184
+msgid "Filter by Customer Status"
+msgstr ""
+
+#: pages/list-customers-admin.php:186
+msgid "Active/Inactive"
+msgstr ""
+
+#: pages/list-customers-admin.php:190
+msgid "Filter by if Average Set"
+msgstr ""
+
+#: pages/list-customers-admin.php:192
+msgid "Average Set/Not Set"
+msgstr ""
+
+#: pages/list-customers-admin.php:193
+msgid "Average Set"
+msgstr ""
+
+#: pages/list-customers-admin.php:194
+msgid "Average Not Set"
+msgstr ""
+
+#: pages/list-customers-admin.php:196
+msgid "Filter by if have Ordered"
+msgstr ""
+
+#: pages/list-customers-admin.php:198
+msgid "Ordered/Not Ordered"
+msgstr ""
+
+#: pages/list-customers-admin.php:199
+msgid "Ordered"
+msgstr ""
+
+#: pages/list-customers-admin.php:200
+msgid "Not Ordered"
+msgstr ""
+
+#: pages/list-customers-admin.php:202
+msgid "Filter"
+msgstr ""
+
+#: pages/list-customers-admin.php:203
+msgid "Reset"
+msgstr ""
+
+#: pages/list-customers-admin.php:227 pages/list-customers-admin.php:380
+msgid "Full Name"
+msgstr ""
+
+#: pages/list-customers-admin.php:231 pages/list-customers-admin.php:381
+msgid "Customer Status"
+msgstr ""
+
+#: pages/list-customers-admin.php:232 pages/list-customers-admin.php:382
+msgid "Email"
+msgstr ""
+
+#: pages/list-customers-admin.php:235 pages/list-customers-admin.php:383
+msgid "Avg Order Rate"
+msgstr ""
+
+#: pages/list-customers-admin.php:239 pages/list-customers-admin.php:384
+msgid "Last Order"
+msgstr ""
+
+#: pages/list-customers-admin.php:242 pages/list-customers-admin.php:385
+msgid "Total Orders"
+msgstr ""
+
+#: pages/list-customers-admin.php:248 pages/list-customers-admin.php:386
+msgid "Total Spend"
+msgstr ""
+
+#: pages/list-customers-admin.php:259
+msgid "No customers"
+msgstr ""
+
+#: pages/list-customers-admin.php:323
+msgid "No Orders"
+msgstr ""
+
+#: pages/list-customers-admin.php:334 pages/list-customers-admin.php:346
+msgid "Calculating"
+msgstr ""
+
+#: pages/list-customers-admin.php:390
+msgid ""
+"Thank you for using Better Customer List for WooCommerce - If you find the "
+"plugin useful be sure to leave us a <a href=\"https://wordpress.org/support/"
+"plugin/woo-better-customer-list/reviews/#new-post\" target=\"_blank\">review "
+"here</a>."
+msgstr ""

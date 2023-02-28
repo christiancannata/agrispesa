@@ -90,7 +90,7 @@ if( !empty($product_categories) ){
           'order'          => 'DESC',
           'meta_query'     => array(
   					array(
-              'key'        => '_is_product_active',
+              'key'        => '_is_active_shop',
   						'value' => '1',
   			      'compare' => '=='
   	        )
@@ -125,9 +125,15 @@ if( !empty($product_categories) ){
           $thumb_url = $thumb_url_array[0];
           ?>
 
+
             <li class="product type-product post-43 status-publish first instock product_cat-latte-formaggio product_cat-negozio has-post-thumbnail featured shipping-taxable purchasable product-type-simple">
             	<a href="<?php the_permalink(); ?>" title="<?php echo the_title(); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                <img width="300" height="300" src="<?php the_post_thumbnail_url(); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?php echo the_title(); ?>" decoding="async" loading="lazy" />
+                <?php if($thumb_id):?>
+                  <img width="300" height="300" src="<?php the_post_thumbnail_url(); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?php echo the_title(); ?>" decoding="async" loading="lazy" />
+                <?php else: ?>
+                  <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+                <?php endif;?>
+
                 <h2 class="woocommerce-loop-product__title"><?php echo the_title(); ?></h2>
               	<span class="price"><?php echo $product->get_price_html(); ?></span>
               </a>
