@@ -106,6 +106,10 @@ function my_custom_fonts() {
   .dataTables_length select {
     width: 70px;
   }
+  table.dataTable thead .sorting_desc,
+  table.dataTable thead .sorting_asc {
+    background-image: none !important;
+  }
 
   </style>';
 }

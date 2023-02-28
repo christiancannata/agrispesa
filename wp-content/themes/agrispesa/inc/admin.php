@@ -904,18 +904,21 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		?>
 		<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
-			<option <?php if (!$consegna): ?> selected <?php endif; ?> >Nessuna data di consegna</option>
-			<?php foreach ($allDataConsegna as $dataConsegna):
-				// get raw date
-				$fixdate = $dataConsegna['meta_value'];
-				// make date object
-				$fixdate = new DateTime($date);
-				//echo $date->format('M');
 
-				?>
-				<option
+			<?php foreach ($allDataConsegna as $dataConsegna):
+				//fix nathi per errore data di consegna
+				if($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
+					<option <?php if (!$consegna): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
+				<?php else:
+					$fixshippingdate = $dataConsegna['meta_value'];
+					$fixshippingdate = strtotime($fixshippingdate);
+					$fixshippingdate = date("d/m/Y",$fixshippingdate);
+					?>
+					<option
 					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
-					value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format("d/m/Y"); ?></option>
+					value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
+					<?php endif; ?>
+
 			<?php endforeach; ?>
 		</select>
 		<?php
@@ -1440,7 +1443,10 @@ function my_custom_submenu_page_callback()
 							<td class="response column-response" data-colname="In risposta a">
 								<span>
 								<?php
-								echo (new DateTime($subscription->get_date_created()))->format("d-m-Y H:i"); ?>
+								// fix nathi per errore data di consegna
+								$fixdate = $subscription->get_date_created();
+								$fixdate = new DateTime($fixdate);
+								echo $fixdate->format("d-m-Y H:i"); ?>
 								</span>
 							</td>
 							<td>
@@ -1508,8 +1514,13 @@ function custom_orders_list_column_content($column, $post_id)
 
 			// Get custom post meta data
 			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
-			if (!empty($dataConsegna))
-				echo (new \DateTime($dataConsegna))->format('d/m/Y');
+
+			if($dataConsegna === "Nessuna data di consegna") {
+				echo '-';
+			} else {
+				$fixshippingdate = new DateTime($dataConsegna);
+				echo $fixshippingdate->format('d/m/Y');
+			}
 
 			break;
 
@@ -2155,21 +2166,21 @@ function consegne_ordini_pages()
 						<thead>
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable desc"
-								style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
-								style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Box</span>
 							</th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
-								style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Data consegna</span>
 							</th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
-								style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Prodotti</span>
 							</th>
-							<th style="border:1px solid #f1f1f1;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+							<th style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Azioni</span></th>
 						</tr>
 						</thead>
@@ -2191,6 +2202,9 @@ function consegne_ordini_pages()
 							$productsBoxIds = array_map(function ($p) {
 								return $p['id'];
 							}, $products);
+
+							// fix nathi per errore data di consegna
+							$fixdate = new DateTime($dataConsegna);
 							?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
@@ -2206,7 +2220,7 @@ function consegne_ordini_pages()
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span
-										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? (new \DateTime($dataConsegna))->format("d/m/Y") : '-'; ?></span>
+										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? $fixdate->format("d/m/Y") : '-'; ?></span>
 									<span
 										class="create-box-table--span-item the-product"
 										style="padding:25px 10px 10px;"><?php echo $productBox->post_title; ?></span>
@@ -2472,10 +2486,14 @@ function consegne_ordini_pages()
 					<?php else: ?>
 						<select name="data_consegna" autocomplete="off">
 							<?php
-							foreach ($allDataConsegna as $dataConsegna): ?>
+							foreach ($allDataConsegna as $dataConsegna):
+								// fix nathi per errore data di consegna
+								$fixdate = $dataConsegna['meta_value'];
+								$fixdate = new DateTime($fixdate);
+								?>
 								<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
 								<option
-									value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+									value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 							<?php endforeach; ?>
 						</select>
 
@@ -2664,9 +2682,12 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 		<?php else: ?>
 			<select name="data_consegna" autocomplete="off">
 				<?php
-				foreach ($allDataConsegna as $dataConsegna): ?>
+				foreach ($allDataConsegna as $dataConsegna):
+					// fix nathi per errore data di consegna
+					$fixdate = $dataConsegna['meta_value'];
+					$fixdate = new DateTime($fixdate);?>
 					<option
-						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format('d/m/Y'); ?></option>
+						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>
 			</select>
 
