@@ -905,10 +905,17 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
 			<option <?php if (!$consegna): ?> selected <?php endif; ?> >Nessuna data di consegna</option>
-			<?php foreach ($allDataConsegna as $dataConsegna): ?>
+			<?php foreach ($allDataConsegna as $dataConsegna):
+				// get raw date
+				$fixdate = $dataConsegna['meta_value'];
+				// make date object
+				$fixdate = new DateTime($date);
+				//echo $date->format('M');
+
+				?>
 				<option
 					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
-					value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo (new \DateTime($dataConsegna['meta_value']))->format("d/m/Y"); ?></option>
+					value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format("d/m/Y"); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
