@@ -1402,6 +1402,12 @@ function my_custom_submenu_page_callback()
 						$boxProduct = reset($products);
 
 						$variationProduct = $boxProduct->get_product();
+
+						if (!$variationProduct) {
+							continue;
+						}
+
+
 						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
 						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
 
