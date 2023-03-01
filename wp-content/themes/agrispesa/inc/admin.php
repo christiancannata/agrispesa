@@ -1810,7 +1810,7 @@ function consegne_ordini_pages()
 
 
 				<form id="comments-form" method="POST"
-					  action="" style="margin-top:100px;width:100%;">
+					  action="" style="margin-top:40px;width:100%;">
 
 					<input type="hidden" name="generate_orders" value="1">
 					<table class="wp-list-table widefat fixed striped table-view-list comments" style="background:transparent;border:none;">
