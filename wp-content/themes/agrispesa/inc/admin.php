@@ -1999,6 +1999,7 @@ function consegne_ordini_pages()
 								'weight' => $weight,
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
+								'unit_measure_print' => get_post_meta($id, '_uom_acquisto', true),
 								'price' => floatval($price)
 							];
 						}
@@ -2301,11 +2302,12 @@ function consegne_ordini_pages()
 						<tfoot>
 						<tr>
 							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-							<td	style="width: 80px;border-top: 2px solid #000; border-bottom:none;">
+							<td style="width: 80px;border-top: 2px solid #000; border-bottom:none;">
 								<b>Peso Totale</b><br/><b v-html="totalWeight"></b>
 							</td>
 							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-							<td style="border-top: 2px solid #000; border-bottom:none;" style="border-top: 2px solid #000; border-bottom:none;">
+							<td style="border-top: 2px solid #000; border-bottom:none;"
+								style="border-top: 2px solid #000; border-bottom:none;">
 								<b>Totale</b><br/><b v-html="totalPrice"></b>
 							</td>
 							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
