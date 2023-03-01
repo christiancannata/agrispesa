@@ -48,9 +48,17 @@ jQuery(document).ready(function ($) {
     $(this).closest('tr').find('.unit-measure').html($(this).find('option:selected').data('unit-measure'))
   })
 
-  $(".changeweek").on("change paste keyup", function() {
-       
-       console.log($(this).val());
+  $(".change_week").on("change paste keyup", function() {
+        const y = new Date().getFullYear();
+        const jan1 = new Date(y, 0, 1);
+        const jan1Day = jan1.getDay();
+        const daysToMonday =  jan1Day === 1? 0 : jan1Day === 0? 1 :  8 - jan1Day
+
+        const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
+        //console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('YYYY-MM-DD'));
+
+        $('.change_shipping_date').val( moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('YYYY-MM-DD') );
+
     });
 })
 
