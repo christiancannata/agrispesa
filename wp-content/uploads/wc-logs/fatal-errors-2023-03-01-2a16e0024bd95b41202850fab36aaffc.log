@@ -180,3 +180,15 @@ Stack trace:
 #5 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2649
 
+2023-03-01T18:10:10+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE), expecting case (T_CASE) or default (T_DEFAULT) or '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1525
+
+2023-03-01T18:12:19+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1537
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1537): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1537
+

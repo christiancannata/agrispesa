@@ -1502,9 +1502,9 @@ function custom_shop_order_column($columns)
 		$reordered_columns[$key] = $column;
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
-			$reordered_columns['my-column1'] = 'Tipo';
-			$reordered_columns['my-column2'] = 'Data Consegna';
-			$reordered_columns['my-column3'] = 'Preferenze';
+			// $reordered_columns['my-column1'] = 'Tipo';
+			// $reordered_columns['my-column2'] = 'Data Consegna';
+			// $reordered_columns['my-column3'] = 'Preferenze';
 		}
 	}
 	return $reordered_columns;
@@ -1519,10 +1519,10 @@ function custom_orders_list_column_content($column, $post_id)
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
 			if (!empty($orderType))
-				echo $orderType;
+				echo 'FN';
 			// Testing (to be removed) - Empty value case
 			else
-				echo '';
+				echo 'ST';
 
 			break;
 
@@ -1543,6 +1543,7 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column3' :
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
+
 
 			if ($orderType == 'BOX') {
 				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
