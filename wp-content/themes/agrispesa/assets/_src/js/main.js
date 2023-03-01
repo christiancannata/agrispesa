@@ -626,7 +626,12 @@ function faqs() {
     description.slideToggle();
   });
   if (window.screen.width > 640) {
-    jQuery('.faq-11 .faq__title').trigger("click");
+    if(jQuery('.faq-1').length){
+      jQuery('.faq-1 .faq__title').trigger("click");
+    } else {
+      jQuery('.faq-11 .faq__title').trigger("click");
+    }
+
   }
 }
 
@@ -691,7 +696,7 @@ function quantityInput() {
           $qty.val((currentVal + parseFloat(step)).toFixed(step.getDecimals()));
           if(jQuery('.shop-buttons-flex').length) {
             jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
-          } 
+          }
         }
       } else {
         if (min && (currentVal <= min)) {
