@@ -2355,7 +2355,7 @@ function consegne_ordini_pages()
 												$unitaMisura = ' ' . $measureUnit;
 											}
 
-											if ($product['_uom_acquisto']) {
+											if (isset($product['_uom_acquisto']) && !empty($product['_uom_acquisto'])) {
 												$misura_acquisto = $product['_uom_acquisto'];
 											} else {
 												$misura_acquisto = '-';
