@@ -1974,10 +1974,12 @@ function consegne_ordini_pages()
 							$price = get_post_meta($categoryProduct->ID, '_price', true);
 							$weight = get_post_meta($categoryProduct->ID, '_weight', true);
 
-							$unitaMisura = ' gr';
+							$unitaMisura = ''; //tabella prodotti selezionati
 							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
 							if (!empty($measureUnit)) {
 								$unitaMisura = ' ' . $measureUnit;
+							} else {
+								$unitaMisura = ' gr';
 							}
 
 							$fornitore = get_post_meta($categoryProduct->ID, 'product_producer', true);
@@ -1992,7 +1994,7 @@ function consegne_ordini_pages()
 							$jsonProducts[] = [
 								'id' => $categoryProduct->ID,
 								'name' => $categoryProduct->post_title,
-								'weight' => $weight . $unitaMisura, //	qui nathi
+								'weight' => $weight,
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
 								'price' => floatval($price)
@@ -2037,7 +2039,7 @@ function consegne_ordini_pages()
 					<br><br>
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-					<div style="width:40%;">
+					<div style="margin-right:24px;">
 
 					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona la Facciamo Noi</label>
 					<select name="box_id" id="box_id" class="select2">
@@ -2057,7 +2059,7 @@ function consegne_ordini_pages()
 									$child = wc_get_product($child);
 									?>
 									<option
-										value="<?php echo $child->get_id() ?>"><?php echo $child->get_name(); ?></option>
+										value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute( 'pa_tipologia' ) . ' - '. $child->get_attribute( 'pa_dimensione' ); ?></option>
 								<?php endforeach; ?>
 							</optgroup>
 						<?php endforeach; ?>
@@ -2119,10 +2121,12 @@ function consegne_ordini_pages()
 									$productID = get_the_ID();
 									$weight = get_post_meta($productID, '_weight', true);
 									$fornitore = get_post_meta($productID, 'product_producer', true);
-									$unitaMisura = ' gr';
+
 									$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
 									if (!empty($measureUnit)) {
 										$unitaMisura = ' ' . $measureUnit;
+									} else {
+										$unitaMisura = ' gr'; //select prodotti
 									}
 									$fornitoreString = '';
 									if (!empty($fornitore)) {
@@ -2362,15 +2366,13 @@ function consegne_ordini_pages()
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span
-										class="create-box-table--span-item the-product"><?php echo $productBox->post_title; ?></span>
+										class="create-box-table--span-item the-product"><?php echo $productBox->post_excerpt;?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span
 										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? $fixdate->format("d/m/Y") : '-'; ?></span>
-									<span
-										class="create-box-table--span-item the-product"
-										style="padding:25px 10px 10px;"><?php echo $productBox->post_title; ?></span>
+
 								</td>
 								<td class="response column-response">
 									<table style="border-collapse: collapse">
@@ -2418,20 +2420,21 @@ function consegne_ordini_pages()
 												$codiceConfezionamento = reset($codiceConfezionamento);
 											}
 
-											$unitaMisura = ' gr';
-
+											$unitaMisura = ' gr'; //tabella riepilogo box
 											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
 
 											if (!empty($measureUnit)) {
 												$unitaMisura = ' ' . $measureUnit;
 											}
-
-											if (isset($product['_uom_acquisto']) && !empty($product['_uom_acquisto'])) {
-												$misura_acquisto = $product['_uom_acquisto'];
-											} else {
-												$misura_acquisto = '-';
+											if (!empty($measureUnit)) {
+												$unitaMisura = ' ' . $measureUnit;
 											}
 
+											$measureAcquisto = get_post_meta($product['id'], '_uom_acquisto', true);
+											$misura_acquisto = '-';
+											if (!empty($measureAcquisto)) {
+												$misura_acquisto = get_post_meta($product['id'], '_uom_acquisto', true);
+											}
 
 											?>
 
