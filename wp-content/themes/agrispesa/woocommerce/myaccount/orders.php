@@ -86,7 +86,7 @@ do_action('woocommerce_before_account_orders', $has_orders); ?>
 								if (!$isSubscription) {
 									echo wp_kses_post(sprintf(_n('%1$s', '%1$s', $item_count, 'woocommerce'), $order->get_formatted_order_total(), $item_count));
 								} else {
-									echo "-";
+									echo "In Abbonamento";
 								}
 								?>
 

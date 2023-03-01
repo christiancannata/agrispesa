@@ -1419,7 +1419,6 @@ function my_custom_submenu_page_callback()
 
 								<?php
 
-
 								if (!$box = get_single_box_from_attributes($tipologia, $dimensione)) {
 									echo "Box Singola Non disponibile";
 								} else {

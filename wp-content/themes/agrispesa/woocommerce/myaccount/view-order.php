@@ -21,6 +21,7 @@ defined('ABSPATH') || exit;
 
 $notes = $order->get_customer_order_notes();
 $orderType = get_post_meta($order->get_id(), '_order_type', true);
+
 ?>
 
 <h3 class="my-account--minititle address-title">Ordine #<?php echo $order->get_order_number(); ?></h3>
