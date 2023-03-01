@@ -2022,72 +2022,80 @@ function consegne_ordini_pages()
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="margin-right:24px;">
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana n°</label>
-							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" style="width:150px;">
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
+								n°</label>
+							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
+								   type="number" style="width:150px;">
 						</div>
 						<div>
-							<?php function getStartAndEndDate($week, $year) {
-									  $dto = new DateTime();
-									  $dto->setISODate($year, $week);
-									  //$ret['week_start'] = $dto->format('d/m/Y');
-									  $dto->modify('+2 days');
-									  $ret['week_end'] = $dto->format('d/m/Y');
-									  return $ret;
-									}
-									$week_array = getStartAndEndDate(9,2023);
-									//print_r($week_array);
-									?>
+							<?php function getStartAndEndDate($week, $year)
+							{
+								$dto = new DateTime();
+								$dto->setISODate($year, $week);
+								//$ret['week_start'] = $dto->format('d/m/Y');
+								$dto->modify('+2 days');
+								$ret['week_end'] = $dto->format('d/m/Y');
+								return $ret;
+							}
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data Consegna</label>
-							<?php $wednesday = date( 'Y-m-d', strtotime( 'wednesday this week' ) );?>
-							<input class="change_shipping_date" name="data_consegna" id="data_consegna" value="<?php echo $wednesday;?>" required type="date" style="width:150px;">
+							$week_array = getStartAndEndDate(9, 2023);
+							//print_r($week_array);
+							?>
+
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data
+								Consegna</label>
+							<?php $wednesday = date('Y-m-d', strtotime('wednesday this week')); ?>
+							<input class="change_shipping_date" name="data_consegna" id="data_consegna"
+								   value="<?php echo $wednesday; ?>" required type="date" style="width:150px;">
 						</div>
 					</div>
 					<br><br>
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-					<div style="width:40%;">
+						<div style="width:40%;">
 
-					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona la Facciamo Noi</label>
-					<select name="box_id" id="box_id" class="select2">
-						<option disabled selected value="">-- Scegli la box --</option>
-						<?php foreach ($products as $product): ?>
-							<?php
-							$product = wc_get_product($product->ID);
-							if ($product->get_type() == 'variable-subscription') {
-								continue;
-							}
-
-							$children = $product->get_children();
-							?>
-							<optgroup label="<?php echo $product->get_name(); ?>">
-								<?php foreach ($children as $child): ?>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona
+								la Facciamo Noi</label>
+							<select name="box_id" id="box_id" class="select2">
+								<option disabled selected value="">-- Scegli la box --</option>
+								<?php foreach ($products as $product): ?>
 									<?php
-									$child = wc_get_product($child);
+									$product = wc_get_product($product->ID);
+									if ($product->get_type() == 'variable-subscription') {
+										continue;
+									}
+
+									$children = $product->get_children();
 									?>
-									<option
-										value="<?php echo $child->get_id() ?>"><?php echo $child->get_name(); ?></option>
+									<optgroup label="<?php echo $product->get_name(); ?>">
+										<?php foreach ($children as $child): ?>
+											<?php
+											$child = wc_get_product($child);
+											?>
+											<option
+												value="<?php echo $child->get_id() ?>"><?php echo $child->get_name(); ?></option>
+										<?php endforeach; ?>
+									</optgroup>
 								<?php endforeach; ?>
-							</optgroup>
-						<?php endforeach; ?>
-					</select>
+							</select>
 
-				</div>
-				<div style="width:40%; padding-top: 24px;">
-					<button class="button-secondary add-product" @click="copyFromLastWeek">Copia dalla settimana
-						passata
-					</button>
-				</div>
+						</div>
+						<div style="width:40%; padding-top: 24px;">
+							<button class="button-secondary add-product" @click="copyFromLastWeek">Copia dalla settimana
+								passata
+							</button>
+						</div>
 
-			</div>
+					</div>
 
 					<br><br>
 
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-					<div style="width:40%;">
+						<div style="width:40%;">
 
-					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti in negozio</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
+								in negozio</label>
 
 							<select name="products_id" id="products_id" class="select2">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
@@ -2142,7 +2150,8 @@ function consegne_ordini_pages()
 						</div>
 						<div style="width:40%;margin-left:40px;">
 
-						<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti non in negozio</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
+								non in negozio</label>
 							<select name="products_id" id="products_id_unavailable" class="select2">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category): ?>
@@ -2189,7 +2198,8 @@ function consegne_ordini_pages()
 								<?php endforeach; ?>
 							</select>
 							<div style="display:block;width:100%;margin-top:16px;">
-								<button class="button-primary add-product" @click="addProduct('products_id_unavailable')">
+								<button class="button-primary add-product"
+										@click="addProduct('products_id_unavailable')">
 									Aggiungi alla box
 								</button>
 							</div>
@@ -2374,13 +2384,23 @@ function consegne_ordini_pages()
 											$unitaMisura = ' gr';
 
 											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
+											$measureUnitToPrint = get_post_meta($product['id'], '_uom_acquisto', true);
+
+											if (!$measureUnitToPrint) {
+												$measureUnitToPrint = $measureUnit;
+											}
+
+											if (!$measureUnitToPrint) {
+												$measureUnitToPrint = '-';
+											}
+
+											$misura_acquisto = $measureUnitToPrint;
 
 											if (!empty($measureUnit)) {
 												$unitaMisura = ' ' . $measureUnit;
 											}
 
 											if (isset($product['_uom_acquisto']) && !empty($product['_uom_acquisto'])) {
-												$misura_acquisto = $product['_uom_acquisto'];
 											} else {
 												$misura_acquisto = '-';
 											}
