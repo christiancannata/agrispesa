@@ -46,7 +46,7 @@ function my_custom_fonts() {
     color: #999;
   }
   body.wp-admin .select2-results__option .conf {
-    color: #999;
+    opacity:0.6;
   }
   body.wp-admin .select2-results__option .fornitore {
     display: block;
@@ -130,7 +130,7 @@ function my_custom_fonts() {
     font-style: italic;
     display:block;
     margin-top: 8px;
-    color: #999;
+    opacity:0.6;
   }
   .select2-results__group {
     display: inline-block;
@@ -138,6 +138,16 @@ function my_custom_fonts() {
     border-top: 1px solid #000;
     border-bottom: 1px solid #f1f1f1;
     padding: 16px 0;
+  }
+  .select2-container--default .select2-results__option .select2-results__option:nth-child(odd) {
+    background: #f1f1f1;
+  }
+  .select2-container--default .select2-results__option .select2-results__option:nth-child(even) {
+    background: #fff;
+  }
+  .select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[data-selected] {
+    background: #0073aa !important;
+    color: #fff !important;
   }
 
   </style>';
