@@ -1,0 +1,234 @@
+#yith-ywrac-table-list{
+    width:100%;
+}
+
+#yith-ywrac-table-list thead th{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+#yith-ywrac-table-list thead{
+    margin-bottom: 10px;
+}
+#yith-ywrac-table-list img{
+    max-width: 50px;
+    height: auto;
+}
+
+
+#yith-ywrac-table-list td{
+    text-align: center;
+    padding: 5px;
+}
+
+#yith-ywrac-table-list td.product-name,
+#yith-ywrac-table-list td.product-name a{
+    width: 100%;
+    text-align: left;
+    display: block;
+}
+span.abandoned{
+    background-color: red;
+    padding: 3px 10px;
+    color: white;
+    text-transform: uppercase;
+}
+span.opened{
+    background-color: green;
+    padding: 3px 10px;
+    color: white;
+    text-transform: uppercase;
+}
+
+#_ywrac_email_to_send-container .yith-plugin-fw-send-email-template-container .ywrac-button-sent-email {
+    padding: 5px 15px;
+}
+
+.yith-ywrac-info-cart td,
+.yith-ywrac-info-cart th{
+    text-align: left;
+}
+
+.the-metabox.simple-text .label{
+    width: 200px;
+    font-weight: bolder;
+    display: inline-block;
+}
+
+.yit-plugins_page_yith_woocommerce_recover_abandoned_cart #poststuff #post-body.columns-2{
+    margin-right: 0px;
+}
+
+.yith-plugin-ui .yith-plugin-fw-wp-page-wrapper .wrap {
+    margin-top: 0;
+}
+
+
+.widefat .column-status .ywrac-email-status{
+    display: block;
+    text-indent: -9999px;
+    position: relative;
+    height: 1em;
+    width: 1em;
+    background: 0 0;
+    font-size: 1.4em;
+}
+
+
+.widefat .column-status .ywrac-email-status.active:after,
+.widefat .column-status .ywrac-email-status.deactive:after{
+    font-family: WooCommerce;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    text-indent: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.widefat .column-status .ywrac-email-status.deactive:after{
+    content: "\e013";
+    color: #a00000;
+}
+
+.widefat .column-status .ywrac-email-status.active:after{
+    content: "\e015";
+    color: #44CC2E;
+}
+
+.ywrac-reports-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ywrac-report-box {
+    display: inline-block;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 150px;
+    border-radius: 3px;
+    margin: 20px 30px 20px 10px;
+    padding: 30px;
+    background-color: #f1f1f1;
+    color: #303030;
+}
+
+.ywrac-report-box .featured {
+    color: #aca200;
+}
+
+.ywrac-report-box .report-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #646464;
+}
+
+.ywrac-report-box .report-title .report-title-text {
+    display: inline-block;
+}
+
+.ywrac-report-box .ywrac-report-icon {
+    width: 25px;
+    height: 20px;
+    float: right;
+}
+
+.ywrac-report-box .ywrac-report-main-data {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin: 20px 0;
+    line-height: normal;
+}
+
+.ywrac-report-box .details {
+    line-height: 30px;
+}
+
+.ywrac-report-box .detail-line .ywrac-report-data {
+    float: right;
+}
+
+.ywrac-reports-recovered .ywrac-report-box {
+    background-color: #f1f9de;
+}
+
+.ywrac-reports-recovered .report-title .text {
+    color: #7e8000;
+}
+
+.ywrac-reports-recovered .ywrac-report-main-data {
+    color: #aca200;
+}
+
+@media screen and (max-width: 560px) {
+    .ywrac-report-box {
+        width: auto;
+    }
+    .ywrac-report-box .report-title .report-title-text {
+        width: 200px;
+    }
+}
+
+.woocommerce table.form-table .yith-plugin-fw-inline-fields-field-wrapper #ywrac_cron_config .select2-container,
+.woocommerce table.form-table .yith-plugin-fw-inline-fields-field-wrapper #ywrac_delete_cart_config .select2-container,
+.woocommerce table.form-table .yith-plugin-fw-inline-fields-field-wrapper #ywrac_pending_order_delete_config .select2-container,
+.woocommerce table.form-table .yith-plugin-fw-inline-fields-field-wrapper #ywrac_cut_off_time_config .select2-container {
+    min-width: 90px!important;
+}
+
+    /* tinymce */
+i.mce-i-ywrac-icon {
+    background-image: url(../images/yithemes-icon.png) ;
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-left: -2px;
+    padding-right: 2px
+}
+
+#_ywrac_email_to_send-container input{
+    width: 100%;
+}
+
+.yith-ywrac-info-cart .ywrac_send_email{
+    margin-top: 10px;
+}
+.ywrac-history-table{
+    width: 100%;
+}
+.ywrac-history-table td{
+    border-bottom: 1px solid #eee;
+}
+
+.ywrac-admin-no-posts {
+    padding: 50px;
+}
+
+.ywrac-admin-no-posts-container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.ywrac-admin-no-posts-logo {
+    width: 100px;
+    margin: 30px auto;
+}
+
+.ywrac-admin-no-posts-text {
+    width: 530px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+}

@@ -1,0 +1,17 @@
+<wpml-config>
+    <admin-texts>
+      <key name="ywrac_guest_privacy" />
+    </admin-texts>
+    <custom-types>
+        <custom-type translate="1">ywrac_email</custom-type>
+    </custom-types>
+    <custom-fields>
+        <custom-field action="translate">_ywrac_email_subject</custom-field>
+        <custom-field action="copy">_ywrac_email_auto</custom-field>
+        <custom-field action="copy">_ywrac_email_time</custom-field>
+        <custom-field action="copy">_ywrac_coupon_enabled</custom-field>
+        <custom-field action="copy">_ywrac_coupon_value</custom-field>
+        <custom-field action="copy">_ywrac_coupon_validity</custom-field>
+        <custom-field action="copy">_ywrac_email_to_send</custom-field>
+    </custom-fields>
+</wpml-config>

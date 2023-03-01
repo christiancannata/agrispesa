@@ -1237,7 +1237,7 @@ function get_single_box_from_attributes($tipologia, $dimensione)
 
 function register_my_custom_submenu_page()
 {
-	add_submenu_page('woocommerce', 'Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
+	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
 }
 
 function my_custom_submenu_page_callback()
@@ -1342,7 +1342,7 @@ function my_custom_submenu_page_callback()
 				</tbody>
 			</table>
 
-			<form id="comments-form" method="POST"
+			<form id="comments-form"  method="POST"
 				  action="">
 
 				<input type="hidden" name="generate_orders" value="1">
@@ -1790,7 +1790,7 @@ function consegne_ordini_pages()
 
 
 				<form id="comments-form" method="POST"
-					  action="" style="margin-top:100px">
+					  action="" style="margin-top:100px;width:100%;">
 
 					<input type="hidden" name="generate_orders" value="1">
 					<table class="wp-list-table widefat fixed striped table-view-list comments">
@@ -2331,14 +2331,14 @@ function consegne_ordini_pages()
 
 
 				<form id="comments-form" method="POST"
-					  action="" style="margin-top:100px">
+					  action="" style="margin-top:100px;width:100%;">
 					<input type="hidden" name="generate_orders" value="1">
 
-					<table class="wp-list-table datatable">
+					<table style="max-width: 100%;" class="wp-list-table datatable">
 						<thead>
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable desc"
-								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
 								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
@@ -2396,7 +2396,7 @@ function consegne_ordini_pages()
 
 								</td>
 								<td class="response column-response">
-									<table style="border-collapse: collapse">
+									<table style="max-width: 100%;border-collapse: collapse">
 										<thead>
 										<th>Descrizione</th>
 										<th style="width: 70px;">Peso</th>
@@ -2583,16 +2583,24 @@ function consegne_ordini_pages()
 										<?php endif; ?>
 
 										<tr class="create-box-table--totals">
-											<td class="no-border"></td>
-											<td><strong>Peso Box</strong></td>
-											<td class="no-border"></td>
-											<td><strong>Totale</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso Box</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Totale</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 										</tr>
 										<tr>
-											<td class="no-border"></td>
-											<td><?php echo $totalWeight; ?> gr</td>
-											<td class="no-border"></td>
-											<td>€<?php echo $totalPrice; ?></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"><?php echo $totalWeight; ?> gr</td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;">€<?php echo $totalPrice; ?></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
 										</tr>
 										</tbody>
 									</table>

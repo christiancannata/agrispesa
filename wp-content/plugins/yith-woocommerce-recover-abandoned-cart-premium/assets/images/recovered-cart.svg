@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82.5 60.72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #505050;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2.5px;
+      }
+    </style>
+  </defs>
+  <g id="Livello_2" data-name="Livello 2">
+    <g id="Layer_1" data-name="Layer 1">
+      <path class="cls-1" d="M26.69,13.19H79.28a2,2,0,0,1,1.89,2.53L73,43.05H35.65L23.38,2.64a2,2,0,0,0-1.87-1.39h-12"/>
+      <circle class="cls-1" cx="37.89" cy="54.24" r="5.22"/>
+      <path class="cls-1" d="M75.21,54.24A5.23,5.23,0,1,1,70,49,5.23,5.23,0,0,1,75.21,54.24Z"/>
+      <line class="cls-1" x1="47.97" y1="50.51" x2="59.91" y2="50.51"/>
+      <path class="cls-1" d="M48.05,43.05V26.49H41.44a1.36,1.36,0,0,0-1.36,1.36v15.2"/>
+      <path class="cls-1" d="M48.05,32.25H66.62A1.36,1.36,0,0,1,68,33.61v9.44"/>
+      <path class="cls-1" d="M48.05,26.49V22.54a1.36,1.36,0,0,1,1.36-1.36H60a1.35,1.35,0,0,1,1.36,1.36v9.71"/>
+      <line class="cls-1" x1="1.25" y1="23.83" x2="20.15" y2="23.83"/>
+      <line class="cls-1" x1="10.55" y1="35.79" x2="24.14" y2="35.79"/>
+    </g>
+  </g>
+</svg>

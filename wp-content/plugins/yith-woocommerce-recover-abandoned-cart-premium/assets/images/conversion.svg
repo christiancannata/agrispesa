@@ -1,0 +1,24 @@
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.1 9.33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #988f01;
+        stroke-miterlimit: 10;
+        stroke-width: 0.44px;
+      }
+    </style>
+  </defs>
+  <g id="Livello_2" data-name="Livello 2">
+    <g id="_ÎÓÈ_1" data-name=" ÎÓÈ 1">
+      <g>
+        <rect class="cls-1" x="0.95" y="0.89" width="8.22" height="5.71"/>
+        <path class="cls-1" d="M6.47,3.91A1.57,1.57,0,1,1,4.9,2.34h0" transform="translate(0 0)"/>
+        <path class="cls-1" d="M7,3.53H5.42V2A1.56,1.56,0,0,1,7,3.53Z" transform="translate(0 0)"/>
+        <line class="cls-1" x1="5.06" y1="6.59" x2="5.06" y2="8.18"/>
+        <path class="cls-1" d="M9.56.89h-9A.34.34,0,0,1,.22.55h0A.33.33,0,0,1,.55.22h9a.33.33,0,0,1,.33.33h0A.34.34,0,0,1,9.56.89Z" transform="translate(0 0)"/>
+        <path class="cls-1" d="M5.53,8.64a.47.47,0,1,1-.47-.47.47.47,0,0,1,.47.47Z" transform="translate(0 0)"/>
+      </g>
+    </g>
+  </g>
+</svg>
