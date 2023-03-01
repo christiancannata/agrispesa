@@ -905,17 +905,17 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 
 			<?php foreach ($allDataConsegna as $dataConsegna):
 				//fix nathi per errore data di consegna
-				if($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
+				if ($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
 					<option <?php if (!$consegna): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
 				<?php else:
 					$fixshippingdate = $dataConsegna['meta_value'];
 					$fixshippingdate = strtotime($fixshippingdate);
-					$fixshippingdate = date("d/m/Y",$fixshippingdate);
+					$fixshippingdate = date("d/m/Y", $fixshippingdate);
 					?>
 					<option
-					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
-					value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
-					<?php endif; ?>
+						<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
+						value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
+				<?php endif; ?>
 
 			<?php endforeach; ?>
 		</select>
@@ -1010,7 +1010,16 @@ function get_box_from_subscription($subscription, $week = null)
 
 
 	$products = $subscription->get_items();
+
+	if (empty($products)) {
+		return null;
+	}
+
 	$box = reset($products)->get_product();
+
+	if (!$box) {
+		return null;
+	}
 
 	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
@@ -1513,7 +1522,7 @@ function custom_orders_list_column_content($column, $post_id)
 			// Get custom post meta data
 			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
 
-			if($dataConsegna === "Nessuna data di consegna") {
+			if ($dataConsegna === "Nessuna data di consegna") {
 				echo '-';
 			} else {
 				$fixshippingdate = new DateTime($dataConsegna);
@@ -2683,7 +2692,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 				foreach ($allDataConsegna as $dataConsegna):
 					// fix nathi per errore data di consegna
 					$fixdate = $dataConsegna['meta_value'];
-					$fixdate = new DateTime($fixdate);?>
+					$fixdate = new DateTime($fixdate); ?>
 					<option
 						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>
