@@ -2113,10 +2113,10 @@ function consegne_ordini_pages()
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="width:40%;">
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
-								in negozio</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+								Prodotti in negozio</label>
 
-							<select name="products_id" id="products_id" class="select2">
+							<select name="products_id" id="products_id" class="select2 agr-select" style="width: 100%">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category) {
 									$args = array(
@@ -2153,6 +2153,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
+										$price = get_post_meta( $productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 
@@ -2166,7 +2167,7 @@ function consegne_ordini_pages()
 										if (!empty($fornitore)) {
 											$fornitore = reset($fornitore);
 											$fornitore = get_post($fornitore);
-											$fornitoreString = ' - ' . $fornitore->post_title;
+											$fornitoreString = $fornitore->post_title;
 										}
 
 										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
@@ -2179,11 +2180,11 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = reset($codiceConfezionamento);
 										}
 										if ($codiceConfezionamento) {
-											$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
 										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '">' . get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2199,9 +2200,9 @@ function consegne_ordini_pages()
 						</div>
 						<div style="width:40%;margin-left:40px;">
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
-								non in negozio</label>
-							<select name="products_id" id="products_id_unavailable" class="select2">
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+								Prodotti non in negozio</label>
+							<select name="products_id" id="products_id_unavailable" class="select2 agr-select" style="width:100%;">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category) {
 									$args = array(
@@ -2238,6 +2239,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
+										$price = get_post_meta( $productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 										$unitaMisura = ' gr';
@@ -2249,7 +2251,7 @@ function consegne_ordini_pages()
 										if (!empty($fornitore)) {
 											$fornitore = reset($fornitore);
 											$fornitore = get_post($fornitore);
-											$fornitoreString = ' - ' . $fornitore->post_title;
+											$fornitoreString = $fornitore->post_title;
 										}
 
 										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
@@ -2262,11 +2264,10 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = reset($codiceConfezionamento);
 										}
 										if ($codiceConfezionamento) {
-											$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
-										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '">' . get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 

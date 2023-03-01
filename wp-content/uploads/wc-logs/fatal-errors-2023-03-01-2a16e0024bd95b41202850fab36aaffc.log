@@ -192,3 +192,5 @@ Stack trace:
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
  in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1537
 
+2023-03-01T21:42:38+00:00 CRITICAL syntax error, unexpected '.' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2183
+

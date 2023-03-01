@@ -117,6 +117,28 @@ function my_custom_fonts() {
   table.dataTable thead .sorting_asc {
     background-image: none !important;
   }
+  .agr-select--flex {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .agr-select.title {
+    font-weight: bold;
+  }
+  .agr-select.producer {
+    font-style: italic;
+    display:block;
+    margin-top: 8px;
+    color: #999;
+  }
+  .select2-results__group {
+    display: inline-block;
+    font-size: 15px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 16px 0;
+  }
 
   </style>';
 }
