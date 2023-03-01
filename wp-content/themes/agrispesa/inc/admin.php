@@ -1999,6 +1999,7 @@ function consegne_ordini_pages()
 								'weight' => $weight,
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
+								'codice_confezionamento' => get_post_meta($categoryProduct->ID, '_codice_confezionamento', true),
 								'unit_measure_print' => get_post_meta($categoryProduct->ID, '_uom_acquisto', true),
 								'price' => floatval($price)
 							];
@@ -2292,7 +2293,7 @@ function consegne_ordini_pages()
 								<input style="width:70px;float:left" type="number" v-model="product.quantity">
 							</td>
 							<td>
-								<span v-html="product.codiceConfezionamento"></span>
+								<span v-html="product.codice_confezionamento"></span>
 							</td>
 							<td>
 								<a href="#" @click="deleteProduct(index)">Elimina</a>
