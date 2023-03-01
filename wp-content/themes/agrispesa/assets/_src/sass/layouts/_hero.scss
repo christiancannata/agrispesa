@@ -1,7 +1,7 @@
 /* stylelint-disable */
 .hero {
 	&--item {
-		height: 80vh;
+		min-height: 80vh;
 		position: relative;
 		display: flex;
 		align-items: flex-end;
@@ -9,7 +9,7 @@
 		background: $panna;
 		background: linear-gradient(0deg, rgba(232,226,218,1) 0%, rgba(118,83,65,1) 100%);
 		@include breakpoint(desktop) {
-			height: 100vh;
+			min-height: 100vh;
 		}
 
 		body.home & {
