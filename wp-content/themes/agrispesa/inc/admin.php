@@ -1999,7 +1999,7 @@ function consegne_ordini_pages()
 								'weight' => $weight,
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
-								'unit_measure_print' => get_post_meta($id, '_uom_acquisto', true),
+								'unit_measure_print' => get_post_meta($categoryProduct->ID, '_uom_acquisto', true),
 								'price' => floatval($price)
 							];
 						}
