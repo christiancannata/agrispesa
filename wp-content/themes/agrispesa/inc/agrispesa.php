@@ -105,10 +105,10 @@ function misha_remove_my_account_links( $menu_links ){
 //Aggiungi indirizzo di consegna alle mail
 add_filter( 'woocommerce_order_needs_shipping_address', '__return_true' );
 
-//Nasconti toolbar per tutti gli utenti
+//Nascondi toolbar per tutti gli utenti
 add_action('after_setup_theme', 'remove_admin_bar');
 function remove_admin_bar() {
-if (!current_user_can('administrator') && !is_admin()) {
-  show_admin_bar(false);
-}
+  if (!current_user_can('administrator') && !is_admin()) {
+    show_admin_bar(false);
+  }
 }

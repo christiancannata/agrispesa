@@ -192,15 +192,15 @@ function delivery_checkout_field( $checkout ) {
 
     woocommerce_form_field( 'scala', array(
         'type'          => 'text',
-        'class'         => array('my-field-class form-row-wide'),
+        'class'         => array('form-row-wide'),
         'label'         => __('Scala'),
         'placeholder'   => __('In quale scala abiti?'),
 			), $checkout->get_value( 'scala' ));
 
 			woocommerce_form_field( 'piano', array(
 	        'type'          => 'number',
-	        'class'         => array('my-field-class form-row-wide'),
-	        'label'         => __('Scala'),
+	        'class'         => array('form-row-wide'),
+	        'label'         => __('Piano'),
 	        'placeholder'   => __('A che piano vivi?'),
 					'required' => true,
 				), $checkout->get_value( 'piano' ));
@@ -223,7 +223,7 @@ function my_custom_checkout_field_update_order_meta( $order_id ) {
         update_post_meta( $order_id, 'Piano', sanitize_text_field( $_POST['piano'] ) );
     }
 		if ( ! empty( $_POST['scala'] ) ) {
-        update_post_meta( $order_id, 'Piano', sanitize_text_field( $_POST['scala'] ) );
+        update_post_meta( $order_id, 'Scala', sanitize_text_field( $_POST['scala'] ) );
     }
 }
 
@@ -235,21 +235,9 @@ function delivery_checkout_field_display_admin_order_meta($order){
 }
 
 //Rimuovi linea indirizzo 2
-add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
-function custom_override_checkout_fields( $fields ) {
-    unset($fields['billing_address_2']);
-		unset($fields['shipping_address_2']);
-    return $fields;
-}
-
-function my_custom_checkout_fields( $fields ) {
-$fields['billing']['billing_phone'] = array(
-'label' => __('Phone', 'woocommerce'),
-'placeholder' => _x('Phone', 'placeholder', 'woocommerce'),
-'required' => false,
-'class' => array('form-row-wide'),
-);
-// Add these class names to the field's input tag class attribute (You can change them as per your requirement) These classes will be applied after WooCommerce default classes (which are mentioned above) );
-return $fields;
-}
-add_filter( 'woocommerce_checkout_fields' , 'my_custom_checkout_fields' ); // Hook in
+// add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+// function custom_override_checkout_fields( $fields ) {
+//     unset($fields['billing_address_2']);
+// 		unset($fields['shipping_address_2']);
+//     return $fields;
+// }

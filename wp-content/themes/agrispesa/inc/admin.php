@@ -895,9 +895,7 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		echo '<span>Gruppo di consegna: <strong>' . $gruppoConsegna . '</strong></span><br><br>';
 		echo '<span>Data di ricezione: <strong>' . $deliveryDay . '</strong></span><br><br>';
 		echo '<strong>Numero di consegna:</strong><br>
-		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>
-
-';
+		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
 
 		global $wpdb;
 		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
