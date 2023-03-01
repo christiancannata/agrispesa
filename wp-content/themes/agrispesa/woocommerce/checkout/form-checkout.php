@@ -42,8 +42,9 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
                 echo woocommerce_checkout_login_form();
                 ?>
                 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-                <?php do_action( 'woocommerce_checkout_shipping' ); ?>
-								<?php do_action( 'woocommerce_checkout_billing' ); ?>
+                <?php do_action( 'woocommerce_checkout_billing' ); ?>
+								<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+
 
 								<?php do_action( 'woocommerce_checkout_payment_hook' ); ?>
 

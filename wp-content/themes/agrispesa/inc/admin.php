@@ -1528,7 +1528,7 @@ function custom_orders_list_column_content($column, $post_id)
 
 		case 'my-column2' :
 
-			// Get custom post meta data
+			// Get custom post meta data NATHI QUIIII
 			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
 
 			if ($dataConsegna === "Nessuna data di consegna") {
