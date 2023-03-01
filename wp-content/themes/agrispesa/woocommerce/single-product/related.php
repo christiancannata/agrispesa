@@ -33,7 +33,7 @@ if ( in_array( 'box', $categories ) ): ?>
 		$args = array(
 		'post_type' => 'faq',
 		'post_status' => 'publish',
-		'posts_per_page' => 5,
+		'posts_per_page' => -1,
 		'order' => 'ASC',
 		'tax_query' => array(
 				array(
