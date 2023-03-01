@@ -79,6 +79,8 @@ function my_custom_fonts() {
   .create-box-table--totals td {
         border-top: 1px solid #000;
   }
+  .styled-table td,
+  .styled-table th,
   #new-products td,
   #new-products th,
   #the-comment-list td,
@@ -96,9 +98,14 @@ function my_custom_fonts() {
     box-shadow: none;
     border-bottom: none;
   }
+  .agr-create-new-orders,
   .agr-create-new-boxes {
     background: #fff;
     padding: 24px;
+  }
+  .agr-create-new-orders .wp-heading-inline,
+  .agr-create-new-boxes .wp-heading-inline {
+    font-weight: 700;
   }
   .dataTables_length {
     margin-bottom: 24px;

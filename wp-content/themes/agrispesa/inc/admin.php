@@ -1313,15 +1313,19 @@ function my_custom_submenu_page_callback()
 	<div id="wpbody-content">
 
 		<div class="wrap">
+			<div class="agr-create-new-orders">
+
 			<h1 class="wp-heading-inline">
 				Genera Ordini BOX</h1>
 
-			<h2>Settimana <?php echo $week; ?> di 52</h2>
+			<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
+				alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
+				prodotti che preferisci.</p>
+
+			<span style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
 			<hr class="wp-header-end">
 
-			<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
-				alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
-				prodotti che preferisci.</p>
+
 
 			<h3>Disponibilità prodotti</h3>
 
@@ -1341,6 +1345,8 @@ function my_custom_submenu_page_callback()
 				<?php endforeach; ?>
 				</tbody>
 			</table>
+
+			</div>
 
 			<form id="comments-form"  method="POST"
 				  action="">
@@ -1363,19 +1369,30 @@ function my_custom_submenu_page_callback()
 					<br class="clear">
 				</div>
 				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
-				<table class="datatable">
+
+
+				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 
-					<th id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
-																					for="cb-select-all-1">Seleziona
-							tutto</label><input id="cb-select-all-1" type="checkbox"></th>
-					<th scope="col" id="author" class="manage-column column-author sortable desc">
-						<span>Utente</span></th>
-					<th scope="col" id="comment" class="manage-column column-comment column-primary">Abbonamento
+					<th id="cb" class="manage-column column-cb check-column" style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+						<span style="display:flex;align-items:center;">
+							<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+							<label for="cb-select-all-1" style="font-size:16px;">
+								Seleziona tutti
+							</label>
+						</span>
 					</th>
-					<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da</th>
-					<th>
-						Ordine
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="author" class="manage-column column-author sortable desc">
+						<span>Cliente</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+						<span>Abbonamento</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+						<span>Attivo dal</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+						<span>Ordine</span>
 					</th>
 					</thead>
 
@@ -1417,9 +1434,8 @@ function my_custom_submenu_page_callback()
 
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column"><label class="screen-reader-text"
-																		for="cb-select-1">Seleziona
-									un abbonamento</label>
+							<th scope="row" class="check-column" style="padding: 16px;">
+								<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
 
 								<?php
 
@@ -1443,11 +1459,11 @@ function my_custom_submenu_page_callback()
 								<?php } ?>
 
 							</th>
-							<td class="author column-author" data-colname="Autore">
+							<td class="author column-author" data-colname="Autore"  style="padding: 16px;">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary"
-								data-colname="Commento">
+								data-colname="Commento"  style="padding: 16px;">
 								<span><?php
 
 									echo $boxProduct->get_name();
@@ -1456,16 +1472,16 @@ function my_custom_submenu_page_callback()
 									</span>
 							</td>
 
-							<td class="response column-response" data-colname="In risposta a">
+							<td class="response column-response" data-colname="In risposta a"  style="padding: 16px;">
 								<span>
 								<?php
 								// fix nathi per errore data di consegna
 								$fixdate = $subscription->get_date_created();
 								$fixdate = new DateTime($fixdate);
-								echo $fixdate->format("d-m-Y H:i"); ?>
+								echo $fixdate->format("d/m/Y"); ?>
 								</span>
 							</td>
-							<td>
+							<td style="padding: 16px;">
 								<?php if (count($orders) > 0): ?>
 									<a target="_blank"
 									   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
