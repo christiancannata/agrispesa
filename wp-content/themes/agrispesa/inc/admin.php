@@ -2054,54 +2054,117 @@ function consegne_ordini_pages()
 					</select>
 
 					<br><br>
+					<h5>Inserisci il prodotto nella box</h5>
+					<div style="display: flex">
+						<div>
+							<label>Prodotti presenti nel negozio</label><br>
+							<select name="products_id" id="products_id" class="select2">
+								<option disabled selected value="">-- Scegli il prodotto --</option>
+								<?php foreach ($categories as $category): ?>
+									<optgroup label="<?php echo $category['name']; ?>">
+										<?php foreach ($category['products'] as $product): ?>
+											<?php
+											$isActive = get_post_meta($product->ID, 'is_product_active', true);
+											if (!$isActive) {
+												continue;
+											}
+											$fornitore = get_post_meta($product->ID, 'product_producer', true);
+											$weight = get_post_meta($product->ID, '_weight', true);
+											$unitaMisura = ' gr';
+											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+											if (!empty($measureUnit)) {
+												$unitaMisura = ' ' . $measureUnit;
+											}
 
-					<label>Prodotto da inserire</label><br>
-					<select name="products_id" id="products_id" class="select2">
-						<option disabled selected value="">-- Scegli il prodotto --</option>
-						<?php foreach ($categories as $category): ?>
-							<optgroup label="<?php echo $category['name']; ?>">
-								<?php foreach ($category['products'] as $product): ?>
-									<?php
-									$fornitore = get_post_meta($product->ID, 'product_producer', true);
-									$weight = get_post_meta($product->ID, '_weight', true);
-									$unitaMisura = ' gr';
-									$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-									if (!empty($measureUnit)) {
-										$unitaMisura = ' ' . $measureUnit;
-									}
+											$fornitoreString = '';
+											if (!empty($fornitore)) {
+												$fornitore = reset($fornitore);
+												$fornitore = get_post($fornitore);
+												$fornitoreString = ' - ' . $fornitore->post_title;
+											}
 
-									$fornitoreString = '';
-									if (!empty($fornitore)) {
-										$fornitore = reset($fornitore);
-										$fornitore = get_post($fornitore);
-										$fornitoreString = ' - ' . $fornitore->post_title;
-									}
+											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
 
-									$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+												$codiceConfezionamento = '';
+											}
 
-									if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-										$codiceConfezionamento = '';
-									}
+											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+												$codiceConfezionamento = reset($codiceConfezionamento);
+											}
+											if ($codiceConfezionamento) {
+												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											}
 
-									if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-										$codiceConfezionamento = reset($codiceConfezionamento);
-									}
-									if ($codiceConfezionamento) {
-										$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-									}
-
-									?>
-									<option
-										value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
+											?>
+											<option
+												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
+										<?php endforeach; ?>
+									</optgroup>
 								<?php endforeach; ?>
-							</optgroup>
-						<?php endforeach; ?>
-					</select><br><br>
+							</select>
+
+							<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct('products_id')">
+								Aggiungi alla box
+							</button>
+						</div>
+						<div>
+							<label>Prodotti NON presenti nel negozio</label><br>
+							<select name="products_id" id="products_id_unavailable" class="select2">
+								<option disabled selected value="">-- Scegli il prodotto --</option>
+								<?php foreach ($categories as $category): ?>
+									<optgroup label="<?php echo $category['name']; ?>">
+										<?php foreach ($category['products'] as $product): ?>
+											<?php
+											$isActive = get_post_meta($product->ID, 'is_product_active', true);
+											if ($isActive) {
+												continue;
+											}
+											$fornitore = get_post_meta($product->ID, 'product_producer', true);
+											$weight = get_post_meta($product->ID, '_weight', true);
+											$unitaMisura = ' gr';
+											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
+											if (!empty($measureUnit)) {
+												$unitaMisura = ' ' . $measureUnit;
+											}
+
+											$fornitoreString = '';
+											if (!empty($fornitore)) {
+												$fornitore = reset($fornitore);
+												$fornitore = get_post($fornitore);
+												$fornitoreString = ' - ' . $fornitore->post_title;
+											}
+
+											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+
+											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+												$codiceConfezionamento = '';
+											}
+
+											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+												$codiceConfezionamento = reset($codiceConfezionamento);
+											}
+											if ($codiceConfezionamento) {
+												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											}
+
+											?>
+											<option
+												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
+										<?php endforeach; ?>
+									</optgroup>
+								<?php endforeach; ?>
+							</select>
+
+							<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct('products_id_unavailable')">
+								Aggiungi alla box
+							</button>
+						</div>
+					</div>
+					<br><br>
 
 					<div style="display: flex">
-						<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct">
-							Aggiungi alla box
-						</button>
+
 
 						<button class="button-primary add-product" @click="copyFromLastWeek">Copia dalla settimana
 							passata

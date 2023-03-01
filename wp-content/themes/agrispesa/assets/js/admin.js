@@ -92,7 +92,7 @@ createApp({
     deleteProduct: function (index) {
       this.products.splice(index, 1);
     },
-    addProduct: function () {
+    addProduct: function (div) {
       if (document.getElementById('data_consegna').value == '') {
         alert('Inserisci una data di consegna')
         return false
@@ -102,7 +102,8 @@ createApp({
         return false
       }
 
-      let productId = document.getElementById('products_id').value
+      let productId = document.getElementById(div).value
+
       let product = this.productJson.filter(function (product) {
         return product['id'] == productId
       })
