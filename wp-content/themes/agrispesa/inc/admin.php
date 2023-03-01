@@ -1318,7 +1318,7 @@ function my_custom_submenu_page_callback()
 			<h1 class="wp-heading-inline">
 				Genera Ordini BOX</h1>
 
-			<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
+			<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle "Facciamo noi" attivi, in base
 				alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
 				prodotti che preferisci.</p>
 
@@ -1326,25 +1326,26 @@ function my_custom_submenu_page_callback()
 			<hr class="wp-header-end">
 
 
-
+			<br>
 			<h3>Disponibilità prodotti</h3>
 
-			<table class="datatable">
+			<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 				<thead>
-				<th>Prodotto</th>
-				<th>Disponibilità</th>
-				<th>Quantità richiesta</th>
+				<th style="padding: 8px 10px;">Prodotto</th>
+				<th style="padding: 8px 10px;">Disponibilità</th>
+				<th style="padding: 8px 10px;">Quantità richiesta</th>
 				</thead>
 				<tbody>
 				<?php foreach ($allProductsNeed as $product): ?>
 					<tr>
-						<td><?php echo $product['name'] ?></td>
-						<td><?php echo $product['current_availability'] ?></td>
-						<td><?php echo $product['quantity'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
+			<br/>
 
 			</div>
 
@@ -1364,7 +1365,7 @@ function my_custom_submenu_page_callback()
 					</div>
 
 					<div class="tablenav-pages one-page">
-						<span class="displaying-num"> abbonamenti attivi</span>
+						<span class="displaying-num">Abbonamenti attivi</span>
 					</div>
 					<br class="clear">
 				</div>
