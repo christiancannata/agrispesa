@@ -2274,7 +2274,7 @@ function consegne_ordini_pages()
 							<td>
 								<span v-html="product.name"></span>
 							</td>
-							<td style="width: 70px;">
+							<td style="width: 80px;">
 								<span v-html="product.weight"></span>
 								<span v-html="product.unit_measure"></span>
 							</td>
@@ -2300,18 +2300,25 @@ function consegne_ordini_pages()
 						</tbody>
 						<tfoot>
 						<tr>
-							<td colspan="2"
-								style="text-align: right;width: 70px;border-top: 2px solid #000; border-bottom:none;">
-								<b>Peso Totale</b><br/><b v-html="totalWeight"></b></td>
-							<td colspan="2" style="text-align: right;border-top: 2px solid #000; border-bottom:none;">
-								<b>Totale</b><br/><b v-html="totalPrice"></b></td>
-							<td colspan="3"
-								style="text-align: right; border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td	style="width: 80px;border-top: 2px solid #000; border-bottom:none;">
+								<b>Peso Totale</b><br/><b v-html="totalWeight"></b>
+							</td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;" style="border-top: 2px solid #000; border-bottom:none;">
+								<b>Totale</b><br/><b v-html="totalPrice"></b>
+							</td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
+
 						</tr>
 						</tfoot>
 					</table>
 
-
+					<br/><br/>
 					<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
 						Settimanale
 					</button>
