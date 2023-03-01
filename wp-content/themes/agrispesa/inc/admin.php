@@ -2440,7 +2440,7 @@ function consegne_ordini_pages()
 
 											<tr class="create-box-table--row">
 												<td class="create-box-table--name">
-													<?php echo $product['name']; ?>
+													<a target="_blank" href="<?php echo esc_url(home_url()). '/wp-admin/post.php?post='.$product['id'].'&action=edit';?>"><?php echo $product['name']; ?></a>
 												</td>
 												<td class="create-box-table--weight" style="width: 70px;">
 													<?php echo $product['weight'] . $unitaMisura; ?>
