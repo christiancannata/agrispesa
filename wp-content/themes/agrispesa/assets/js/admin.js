@@ -47,6 +47,11 @@ jQuery(document).ready(function ($) {
   $(".new-product-box").change(function () {
     $(this).closest('tr').find('.unit-measure').html($(this).find('option:selected').data('unit-measure'))
   })
+
+  $(".changeweek").on("change paste keyup", function() {
+       
+       console.log($(this).val());
+    });
 })
 
 const {createApp} = Vue

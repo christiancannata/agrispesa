@@ -241,3 +241,28 @@ function delivery_checkout_field_display_admin_order_meta($order){
 // 		unset($fields['shipping_address_2']);
 //     return $fields;
 // }
+
+//Metti in sospeso l'ordine di default
+add_action( 'woocommerce_payment_complete', 'webappick_set_completed_for_paid_orders' );
+function webappick_set_completed_for_paid_orders( $order_id ) {
+	$order = wc_get_order( $order_id );
+	$order->update_status( 'on_hold' );
+}
+
+//Cambia label stato ordini nella lista e dettaglio
+add_filter( 'wc_order_statuses', 'rename_order_statuses', 20, 1 );
+function rename_order_statuses( $order_statuses ) {
+    //$order_statuses['wc-completed']  = _x( 'Order Received', 'Order status', 'woocommerce' );
+    //$order_statuses['wc-processing'] = _x( 'Paid', 'Order status', 'woocommerce' );
+    $order_statuses['wc-on-hold']    = _x( 'Confezionamento', 'Order status', 'woocommerce' );
+    //$order_statuses['wc-pending']    = _x( 'Waiting', 'Order status', 'woocommerce' );
+    return $order_statuses;
+}
+//Cambia label stato ordini nel bulk
+add_filter( 'bulk_actions-edit-shop_order', 'custom_dropdown_bulk_actions_shop_order', 20, 1 );
+function custom_dropdown_bulk_actions_shop_order( $actions ) {
+    //$actions['mark_processing'] = __( 'Mark paid', 'woocommerce' );
+    $actions['mark_on-hold']    = __( 'Modifica lo stato in "Confezionamento"', 'woocommerce' );
+    //$actions['mark_completed']  = __( 'Mark order received', 'woocommerce' );
+    return $actions;
+}

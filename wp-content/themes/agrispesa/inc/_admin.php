@@ -905,17 +905,17 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 
 			<?php foreach ($allDataConsegna as $dataConsegna):
 				//fix nathi per errore data di consegna
-				if ($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
+				if($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
 					<option <?php if (!$consegna): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
 				<?php else:
 					$fixshippingdate = $dataConsegna['meta_value'];
 					$fixshippingdate = strtotime($fixshippingdate);
-					$fixshippingdate = date("d/m/Y", $fixshippingdate);
+					$fixshippingdate = date("d/m/Y",$fixshippingdate);
 					?>
 					<option
-						<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
-						value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
-				<?php endif; ?>
+					<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
+					value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
+					<?php endif; ?>
 
 			<?php endforeach; ?>
 		</select>
@@ -1010,16 +1010,7 @@ function get_box_from_subscription($subscription, $week = null)
 
 
 	$products = $subscription->get_items();
-
-	if (empty($products)) {
-		return null;
-	}
-
 	$box = reset($products)->get_product();
-
-	if (!$box) {
-		return null;
-	}
 
 	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
@@ -1402,12 +1393,6 @@ function my_custom_submenu_page_callback()
 						$boxProduct = reset($products);
 
 						$variationProduct = $boxProduct->get_product();
-
-						if (!$variationProduct) {
-							continue;
-						}
-
-
 						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
 						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
 
@@ -1418,6 +1403,7 @@ function my_custom_submenu_page_callback()
 									un abbonamento</label>
 
 								<?php
+
 
 								if (!$box = get_single_box_from_attributes($tipologia, $dimensione)) {
 									echo "Box Singola Non disponibile";
@@ -1527,7 +1513,7 @@ function custom_orders_list_column_content($column, $post_id)
 			// Get custom post meta data
 			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
 
-			if ($dataConsegna === "Nessuna data di consegna") {
+			if($dataConsegna === "Nessuna data di consegna") {
 				echo '-';
 			} else {
 				$fixshippingdate = new DateTime($dataConsegna);
@@ -1914,7 +1900,7 @@ function consegne_ordini_pages()
 		$pad_counts = 0;      // 1 for yes, 0 for no
 		$hierarchical = 1;      // 1 for yes, 0 for no
 		$title = '';
-		$empty = 0;
+		$empty = 1;
 
 		$args = array(
 			'taxonomy' => $taxonomy,
@@ -2020,29 +2006,13 @@ function consegne_ordini_pages()
 
 					<p style="font-size:16px;margin-bottom:24px;">Qui puoi preparare le offerte della settimana.</p>
 
-					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-						<div style="margin-right:24px;">
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana n°</label>
-							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" style="width:150px;">
-						</div>
-						<div>
-							<?php function getStartAndEndDate($week, $year) {
-									  $dto = new DateTime();
-									  $dto->setISODate($year, $week);
-									  //$ret['week_start'] = $dto->format('d/m/Y');
-									  $dto->modify('+2 days');
-									  $ret['week_end'] = $dto->format('d/m/Y');
-									  return $ret;
-									}
-									$week_array = getStartAndEndDate(9,2023);
-									//print_r($week_array);
-									?>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana n°</label>
+					<input name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" readonly>
+					<br><br>
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data Consegna</label>
-							<?php $wednesday = date( 'Y-m-d', strtotime( 'wednesday this week' ) );?>
-							<input class="change_shipping_date" name="data_consegna" id="data_consegna" value="<?php echo $wednesday;?>" required type="date" style="width:150px;">
-						</div>
-					</div>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data di consegna</label>
+					<?php $wednesday = date( 'Y-m-d', strtotime( 'wednesday this week' ) );?>
+					<input name="data_consegna" id="data_consegna" value="<?php echo $wednesday;?>" required type="date">
 					<br><br>
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
@@ -2050,7 +2020,7 @@ function consegne_ordini_pages()
 
 					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona la Facciamo Noi</label>
 					<select name="box_id" id="box_id" class="select2">
-						<option disabled selected value="">-- Scegli la box --</option>
+						<option disabled selected value="">-- Scegli la scatola --</option>
 						<?php foreach ($products as $product): ?>
 							<?php
 							$product = wc_get_product($product->ID);
@@ -2071,130 +2041,189 @@ function consegne_ordini_pages()
 							</optgroup>
 						<?php endforeach; ?>
 					</select>
+					</div>
+					<div style="width:40%; padding-top: 24px;">
+						<button class="button-primary add-product" @click="copyFromLastWeek">Copia dalla settimana
+							passata
+						</button>
+					</div>
 
 				</div>
-				<div style="width:40%; padding-top: 24px;">
-					<button class="button-secondary add-product" @click="copyFromLastWeek">Copia dalla settimana
-						passata
-					</button>
-				</div>
-
-			</div>
 
 					<br><br>
-
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 					<div style="width:40%;">
 
 					<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti in negozio</label>
+					<select name="products_id" id="products_id" class="select2">
+					<option disabled selected value="">-- Scegli il prodotto --</option>
+					<?php foreach ($categories as $category){
+						$args = array(
+							'posts_per_page' => -1,
+							'tax_query' => array(
+								'relation' => 'AND',
+								'hide_empty' => 1,
+								'paged' => false,
+								array(
+									'taxonomy' => 'product_cat',
+									'field' => 'slug',
+									'terms' => $category['name']
+								),
+							),
+							'post_type' => 'product',
+							'orderby' => 'menu_order',
+							'order' => 'asc',
+							'meta_query'     => array(
+								array(
+			            'key'        => '_is_active_shop',
+									'value' => '1',
+						      'compare' => '=='
+				        )
+							),
+						);
+						$cat_query = new WP_Query($args);
+						$count_posts = new WP_Query($args);
+						$posts_per_cat = $count_posts->found_posts;
 
-							<select name="products_id" id="products_id" class="select2">
-								<option disabled selected value="">-- Scegli il prodotto --</option>
-								<?php foreach ($categories as $category): ?>
-									<optgroup label="<?php echo $category['name']; ?>">
-										<?php foreach ($category['products'] as $product): ?>
-											<?php
-											$isActive = get_post_meta($product->ID, '_is_active_shop', true);
-											if (!$isActive) {
-												continue;
-											}
-											$fornitore = get_post_meta($product->ID, 'product_producer', true);
-											$weight = get_post_meta($product->ID, '_weight', true);
-											$unitaMisura = ' gr';
-											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
+						if ($posts_per_cat != 0) {
+							echo '<optgroup label="'.$category['name'].'">';
+						}
 
-											$fornitoreString = '';
-											if (!empty($fornitore)) {
-												$fornitore = reset($fornitore);
-												$fornitore = get_post($fornitore);
-												$fornitoreString = ' - ' . $fornitore->post_title;
-											}
+						while ($cat_query->have_posts()) : $cat_query->the_post();
+						//Valori prodotto
+						$productID = get_the_ID();
+						$weight = get_post_meta($productID, '_weight', true);
+						$fornitore = get_post_meta($productID, 'product_producer', true);
+						$unitaMisura = ' gr';
+						$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
+						if (!empty($measureUnit)) {
+							$unitaMisura = ' ' . $measureUnit;
+						}
+						$fornitoreString = '';
+						if (!empty($fornitore)) {
+							$fornitore = reset($fornitore);
+							$fornitore = get_post($fornitore);
+							$fornitoreString = ' - ' . $fornitore->post_title;
+						}
 
-											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+						$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
 
-											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-												$codiceConfezionamento = '';
-											}
+						if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+							$codiceConfezionamento = '';
+						}
 
-											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-												$codiceConfezionamento = reset($codiceConfezionamento);
-											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+						if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+							$codiceConfezionamento = reset($codiceConfezionamento);
+						}
+						if ($codiceConfezionamento) {
+							$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+						}
 
-											?>
-											<option
-												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
-										<?php endforeach; ?>
-									</optgroup>
-								<?php endforeach; ?>
-							</select>
-							<div style="display:block;width:100%;margin-top:16px;">
-								<button class="button-primary add-product" @click="addProduct('products_id')">
-									Aggiungi alla box
-								</button>
-							</div>
-						</div>
-						<div style="width:40%;margin-left:40px;">
+						//echo the_title() . ' '. $weight. ' <br>';
+						echo '<option value="'.$productID.'">'. get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+						endwhile; // end of the loop.
+						wp_reset_postdata();
 
-						<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti non in negozio</label>
-							<select name="products_id" id="products_id_unavailable" class="select2">
-								<option disabled selected value="">-- Scegli il prodotto --</option>
-								<?php foreach ($categories as $category): ?>
-									<optgroup label="<?php echo $category['name']; ?>">
-										<?php foreach ($category['products'] as $product): ?>
-											<?php
-											$isActive = get_post_meta($product->ID, '_is_active_shop', true);
-											if ($isActive) {
-												continue;
-											}
-											$fornitore = get_post_meta($product->ID, 'product_producer', true);
-											$weight = get_post_meta($product->ID, '_weight', true);
-											$unitaMisura = ' gr';
-											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
+					echo '</optgroup>';
+					} //endforeach category
+					?>
+					</select>
 
-											$fornitoreString = '';
-											if (!empty($fornitore)) {
-												$fornitore = reset($fornitore);
-												$fornitore = get_post($fornitore);
-												$fornitoreString = ' - ' . $fornitore->post_title;
-											}
+				</div>
+				<div style="width:40%;margin-left:40px;">
 
-											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+				<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti non in negozio</label>
+				<select name="products_id" id="products_id" class="select2">
+				<option disabled selected value="">-- Scegli il prodotto --</option>
+				<?php foreach ($categories as $category){
+					$args = array(
+						'posts_per_page' => -1,
+						'tax_query' => array(
+							'relation' => 'AND',
+							'hide_empty' => 1,
+							'paged' => false,
+							array(
+								'taxonomy' => 'product_cat',
+								'field' => 'slug',
+								'terms' => $category['name']
+							),
+						),
+						'post_type' => 'product',
+						'orderby' => 'menu_order',
+						'order' => 'asc',
+						'meta_query'     => array(
+							array(
+								'key'        => '_is_active_shop',
+								'value' => '1',
+								'compare' => '!='
+							)
+						),
+					);
+					$cat_query = new WP_Query($args);
+					$count_posts = new WP_Query($args);
+					$posts_per_cat = $count_posts->found_posts;
 
-											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-												$codiceConfezionamento = '';
-											}
+					if ($posts_per_cat != 0) {
+						echo '<optgroup label="'.$category['name'].'">';
+					}
 
-											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-												$codiceConfezionamento = reset($codiceConfezionamento);
-											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+					while ($cat_query->have_posts()) : $cat_query->the_post();
+					//Valori prodotto
+					$productID = get_the_ID();
+					$weight = get_post_meta($productID, '_weight', true);
+					$fornitore = get_post_meta($productID, 'product_producer', true);
+					$unitaMisura = ' gr';
+					$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
+					if (!empty($measureUnit)) {
+						$unitaMisura = ' ' . $measureUnit;
+					}
+					$fornitoreString = '';
+					if (!empty($fornitore)) {
+						$fornitore = reset($fornitore);
+						$fornitore = get_post($fornitore);
+						$fornitoreString = ' - ' . $fornitore->post_title;
+					}
 
-											?>
-											<option
-												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
-										<?php endforeach; ?>
-									</optgroup>
-								<?php endforeach; ?>
-							</select>
-							<div style="display:block;width:100%;margin-top:16px;">
-								<button class="button-primary add-product" @click="addProduct('products_id_unavailable')">
-									Aggiungi alla box
-								</button>
-							</div>
-						</div>
+					$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
+
+					if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+						$codiceConfezionamento = '';
+					}
+
+					if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+						$codiceConfezionamento = reset($codiceConfezionamento);
+					}
+					if ($codiceConfezionamento) {
+						$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+					}
+
+					//echo the_title() . ' '. $weight. ' <br>';
+					echo '<option value="'.$productID.'">'. get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+					endwhile; // end of the loop.
+					wp_reset_postdata();
+
+				echo '</optgroup>';
+				} //endforeach category
+				?>
+				</select>
+
+			</div>
+				</div>
+
+
+
+
+
+					<div style="display: flex">
+						<button style="margin-right:5px;" class="button-primary add-product" @click="addProduct">
+							Aggiungi alla box
+						</button>
+
+
+
 					</div>
+
 					<br><br>
 
 					<table id="new-products" class="dataTable" style="border-collapse: collapse; width: 100%;">
@@ -2379,7 +2408,7 @@ function consegne_ordini_pages()
 												$unitaMisura = ' ' . $measureUnit;
 											}
 
-											if (isset($product['_uom_acquisto']) && !empty($product['_uom_acquisto'])) {
+											if ($product['_uom_acquisto']) {
 												$misura_acquisto = $product['_uom_acquisto'];
 											} else {
 												$misura_acquisto = '-';
@@ -2785,7 +2814,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 				foreach ($allDataConsegna as $dataConsegna):
 					// fix nathi per errore data di consegna
 					$fixdate = $dataConsegna['meta_value'];
-					$fixdate = new DateTime($fixdate); ?>
+					$fixdate = new DateTime($fixdate);?>
 					<option
 						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>

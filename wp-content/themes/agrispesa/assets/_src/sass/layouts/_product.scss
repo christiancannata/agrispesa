@@ -949,7 +949,7 @@ body.tax-product_cat {
 			@include transition(all 0.3s ease);
 			@include border-radius(24px);
 			width: 100%;
-			background-color: $background;
+			background-color: $white;
 			transition: all 250ms ease;
 			display: inline-block;
 			text-align: center;
