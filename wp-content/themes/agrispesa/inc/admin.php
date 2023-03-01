@@ -798,6 +798,8 @@ function my_enqueue($hook)
 		wp_enqueue_style('select2css');
 		wp_enqueue_script('select2');
 
+		wp_enqueue_script('moment', get_template_directory_uri() . '/assets/js/moment.min.js', ['jquery'], null, true);
+
 
 		wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
 		wp_enqueue_script('axios');
@@ -2026,17 +2028,6 @@ function consegne_ordini_pages()
 							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>" type="number" style="width:150px;">
 						</div>
 						<div>
-							<?php function getStartAndEndDate($week, $year) {
-									  $dto = new DateTime();
-									  $dto->setISODate($year, $week);
-									  //$ret['week_start'] = $dto->format('d/m/Y');
-									  $dto->modify('+2 days');
-									  $ret['week_end'] = $dto->format('d/m/Y');
-									  return $ret;
-									}
-									$week_array = getStartAndEndDate(9,2023);
-									//print_r($week_array);
-									?>
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data Consegna</label>
 							<?php $wednesday = date( 'Y-m-d', strtotime( 'wednesday this week' ) );?>
@@ -2091,48 +2082,76 @@ function consegne_ordini_pages()
 
 							<select name="products_id" id="products_id" class="select2">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
-								<?php foreach ($categories as $category): ?>
-									<optgroup label="<?php echo $category['name']; ?>">
-										<?php foreach ($category['products'] as $product): ?>
-											<?php
-											$isActive = get_post_meta($product->ID, '_is_active_shop', true);
-											if (!$isActive) {
-												continue;
-											}
-											$fornitore = get_post_meta($product->ID, 'product_producer', true);
-											$weight = get_post_meta($product->ID, '_weight', true);
-											$unitaMisura = ' gr';
-											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
+								<?php foreach ($categories as $category){
+									$args = array(
+										'posts_per_page' => -1,
+										'tax_query' => array(
+											'relation' => 'AND',
+											'hide_empty' => 1,
+											'paged' => false,
+											array(
+												'taxonomy' => 'product_cat',
+												'field' => 'slug',
+												'terms' => $category['name']
+											),
+										),
+										'post_type' => 'product',
+										'orderby' => 'menu_order',
+										'order' => 'asc',
+										'meta_query'     => array(
+											array(
+						            'key'        => '_is_active_shop',
+												'value' => '1',
+									      'compare' => '=='
+							        )
+										),
+									);
+									$cat_query = new WP_Query($args);
+									$count_posts = new WP_Query($args);
+									$posts_per_cat = $count_posts->found_posts;
 
-											$fornitoreString = '';
-											if (!empty($fornitore)) {
-												$fornitore = reset($fornitore);
-												$fornitore = get_post($fornitore);
-												$fornitoreString = ' - ' . $fornitore->post_title;
-											}
+									if ($posts_per_cat != 0) {
+										echo '<optgroup label="'.$category['name'].'">';
+									}
 
-											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+									while ($cat_query->have_posts()) : $cat_query->the_post();
+									//Valori prodotto
+									$productID = get_the_ID();
+									$weight = get_post_meta($productID, '_weight', true);
+									$fornitore = get_post_meta($productID, 'product_producer', true);
+									$unitaMisura = ' gr';
+									$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
+									if (!empty($measureUnit)) {
+										$unitaMisura = ' ' . $measureUnit;
+									}
+									$fornitoreString = '';
+									if (!empty($fornitore)) {
+										$fornitore = reset($fornitore);
+										$fornitore = get_post($fornitore);
+										$fornitoreString = ' - ' . $fornitore->post_title;
+									}
 
-											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-												$codiceConfezionamento = '';
-											}
+									$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
 
-											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-												$codiceConfezionamento = reset($codiceConfezionamento);
-											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+									if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+										$codiceConfezionamento = '';
+									}
 
-											?>
-											<option
-												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
-										<?php endforeach; ?>
-									</optgroup>
-								<?php endforeach; ?>
+									if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+										$codiceConfezionamento = reset($codiceConfezionamento);
+									}
+									if ($codiceConfezionamento) {
+										$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+									}
+
+									//echo the_title() . ' '. $weight. ' <br>';
+									echo '<option value="'.$productID.'">'. get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+									endwhile; // end of the loop.
+									wp_reset_postdata();
+
+								echo '</optgroup>';
+								} //endforeach category
+								?>
 							</select>
 							<div style="display:block;width:100%;margin-top:16px;">
 								<button class="button-primary add-product" @click="addProduct('products_id')">
@@ -2145,48 +2164,76 @@ function consegne_ordini_pages()
 						<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti non in negozio</label>
 							<select name="products_id" id="products_id_unavailable" class="select2">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
-								<?php foreach ($categories as $category): ?>
-									<optgroup label="<?php echo $category['name']; ?>">
-										<?php foreach ($category['products'] as $product): ?>
-											<?php
-											$isActive = get_post_meta($product->ID, '_is_active_shop', true);
-											if ($isActive) {
-												continue;
-											}
-											$fornitore = get_post_meta($product->ID, 'product_producer', true);
-											$weight = get_post_meta($product->ID, '_weight', true);
-											$unitaMisura = ' gr';
-											$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
+								<?php foreach ($categories as $category){
+									$args = array(
+										'posts_per_page' => -1,
+										'tax_query' => array(
+											'relation' => 'AND',
+											'hide_empty' => 1,
+											'paged' => false,
+											array(
+												'taxonomy' => 'product_cat',
+												'field' => 'slug',
+												'terms' => $category['name']
+											),
+										),
+										'post_type' => 'product',
+										'orderby' => 'menu_order',
+										'order' => 'asc',
+										'meta_query'     => array(
+											array(
+												'key'        => '_is_active_shop',
+												'value' => '1',
+												'compare' => '!='
+											)
+										),
+									);
+									$cat_query = new WP_Query($args);
+									$count_posts = new WP_Query($args);
+									$posts_per_cat = $count_posts->found_posts;
 
-											$fornitoreString = '';
-											if (!empty($fornitore)) {
-												$fornitore = reset($fornitore);
-												$fornitore = get_post($fornitore);
-												$fornitoreString = ' - ' . $fornitore->post_title;
-											}
+									if ($posts_per_cat != 0) {
+										echo '<optgroup label="'.$category['name'].'">';
+									}
 
-											$codiceConfezionamento = get_post_meta($product->ID, '_codice_confezionamento', true);
+									while ($cat_query->have_posts()) : $cat_query->the_post();
+									//Valori prodotto
+									$productID = get_the_ID();
+									$weight = get_post_meta($productID, '_weight', true);
+									$fornitore = get_post_meta($productID, 'product_producer', true);
+									$unitaMisura = ' gr';
+									$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
+									if (!empty($measureUnit)) {
+										$unitaMisura = ' ' . $measureUnit;
+									}
+									$fornitoreString = '';
+									if (!empty($fornitore)) {
+										$fornitore = reset($fornitore);
+										$fornitore = get_post($fornitore);
+										$fornitoreString = ' - ' . $fornitore->post_title;
+									}
 
-											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-												$codiceConfezionamento = '';
-											}
+									$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
 
-											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-												$codiceConfezionamento = reset($codiceConfezionamento);
-											}
-											if ($codiceConfezionamento) {
-												$codiceConfezionamento = ' - ' . $codiceConfezionamento;
-											}
+									if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+										$codiceConfezionamento = '';
+									}
 
-											?>
-											<option
-												value="<?php echo $product->ID ?>"><?php echo $product->post_title . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')'; ?></option>
-										<?php endforeach; ?>
-									</optgroup>
-								<?php endforeach; ?>
+									if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+										$codiceConfezionamento = reset($codiceConfezionamento);
+									}
+									if ($codiceConfezionamento) {
+										$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+									}
+
+									//echo the_title() . ' '. $weight. ' <br>';
+									echo '<option value="'.$productID.'">'. get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+									endwhile; // end of the loop.
+									wp_reset_postdata();
+
+								echo '</optgroup>';
+								} //endforeach category
+								?>
 							</select>
 							<div style="display:block;width:100%;margin-top:16px;">
 								<button class="button-primary add-product" @click="addProduct('products_id_unavailable')">
