@@ -2400,12 +2400,6 @@ function consegne_ordini_pages()
 												$unitaMisura = ' ' . $measureUnit;
 											}
 
-											if (isset($product['_uom_acquisto']) && !empty($product['_uom_acquisto'])) {
-											} else {
-												$misura_acquisto = '-';
-											}
-
-
 											?>
 
 											<tr class="create-box-table--row">
