@@ -35,6 +35,14 @@ if ( in_array( 'box', $categories ) ): ?>
 		'post_status' => 'publish',
 		'posts_per_page' => 5,
 		'order' => 'ASC',
+		'tax_query' => array(
+				array(
+						'taxonomy'  => 'faq_cats',
+						'terms'     =>  'petfood',
+						'field'     => 'slug',
+						'operator' => 'NOT IN'
+				)
+		)
 		);
 
 		$loop = new WP_Query( $args );
