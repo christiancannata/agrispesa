@@ -1751,12 +1751,12 @@ function consegne_ordini_pages()
 					}
 
 					?>
-					<span class="alert alert-success">Ordini aggiornati: <?php echo $i; ?></span>
+					<span class="custom-alert alert-success" style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
 					<?php
 
 				}
 			} else {
-				echo "Nessun file inserito.<br />";
+				echo "<span style='font-size: 14px;padding: 16px;background: orangered; color:#fff;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;'>Nessun file inserito.</span>";
 			}
 
 
@@ -1766,16 +1766,14 @@ function consegne_ordini_pages()
 		<div id="wpbody-content">
 
 			<div class="wrap">
+			<div class="agr-create-new-boxes">
 				<h1 class="wp-heading-inline">
 					Consegne Ordini</h1>
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi'
-					attive, in
-					base
-					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
-					prodotti che preferisci.</p>
+				<p style="font-size: 16px; margin-bottom: 24px;">
+					In questa pagina puoi caricare il file di Map&Guide.</p>
 
 				<form enctype="multipart/form-data" method="POST" action="">
 					<input type="hidden" name="import_consegne" value="1">
@@ -1784,18 +1782,22 @@ function consegne_ordini_pages()
 					$currentWeek = $date->format("W");
 					?>
 
-					<label>Settimana di consegna (<em>Settimana
-							corrente: <?php echo $currentWeek; ?></em>)</label><br>
-					<select name="week" autocomplete="off">
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">
+						Settimana di consegna
+						</label>
+					<select name="week" autocomplete="off" style="width:250px;">
 						<?php for ($i = 1; $i <= 52; $i++): ?>
 							<option
 								value="<?php echo $i; ?>"
 								<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
 							>Settimana <?php echo $i; ?></option>
 						<?php endfor; ?>
-					</select><br>
+					</select>
+					<p style="font-style:italic;font-size:14px;">
+						Settimana corrente: <?php echo $currentWeek; ?>
+					</p>
 					<br>
-					<label>CSV di Map&Guide</label><br>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di Map&Guide</label>
 					<input type="file" name="file" required><br><br>
 					<button class="btn button-primary">
 						Importa CSV
@@ -1804,20 +1806,24 @@ function consegne_ordini_pages()
 					<br>
 				</form>
 
+			</div>
+
 
 				<form id="comments-form" method="POST"
 					  action="" style="margin-top:100px;width:100%;">
 
 					<input type="hidden" name="generate_orders" value="1">
-					<table class="wp-list-table widefat fixed striped table-view-list comments">
+					<table class="wp-list-table widefat fixed striped table-view-list comments" style="background:transparent;border:none;">
 						<thead>
 						<tr>
 							<!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
 																							for="cb-select-all-1">Seleziona
 									tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
-							<th scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Gruppo</span></th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Ordini
+							<th scope="col" id="author" class="manage-column column-author sortable desc" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+								<span>Gruppo</span>
+							</th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+								<span>Ordini</span>
 							</th>
 
 						</tr>
@@ -1853,12 +1859,12 @@ function consegne_ordini_pages()
 											   value="<?php echo $group->ID; ?>" disabled><br>
 									<?php endif; ?>
 								</th>-->
-								<td class="author column-author" data-colname="Autore">
+								<td class="author column-author" data-colname="Autore" style="padding: 16px;">
 									<span><?php echo $group->post_name; ?></span>
 								</td>
-								<td class="comment column-comment has-row-actions column-primary"
+								<td class="comment column-comment has-row-actions column-primary" style="padding: 16px;"
 									data-colname="Commento">
-									<table>
+									<table style="width:100%;border-collapse: collapse;">
 
 										<tr>
 											<td><b>ID</b></td>
