@@ -2908,7 +2908,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 
 		case 'week' :
 			global $wpdb;
-			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna'", ARRAY_A);
 
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
