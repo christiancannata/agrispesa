@@ -1332,16 +1332,69 @@ function my_custom_submenu_page_callback()
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
-					<th style="padding: 8px 10px;">Prodotto</th>
-					<th style="padding: 8px 10px;">Disponibilità</th>
-					<th style="padding: 8px 10px;">Quantità richiesta</th>
+						<tr>
+							<th style="padding: 8px 10px;">Descrizione</th>
+							<th style="padding: 8px 10px;">Peso</th>
+							<th style="padding: 8px 10px;">Fornitore</th>
+							<th style="padding: 8px 10px;">Prezzo</th>
+							<th style="padding: 8px 10px;">Un. Misura</th>
+							<th style="padding: 8px 10px;">Cod. Conf</th>
+							<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
+							<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
+							<th style="padding: 8px 10px;">Azioni</th>
+						</tr>
 					</thead>
 					<tbody>
-					<?php foreach ($allProductsNeed as $product): ?>
+					<?php foreach ($allProductsNeed as $product):
+
+						$weight = get_post_meta($product['product_id'], '_weight', true);
+						$price = get_post_meta($product['product_id'], '_regular_price', true);
+
+						$fornitore = get_post_meta($product['product_id'], 'product_producer', true);
+						$fornitoreString = '';
+						if (!empty($fornitore)) {
+							$fornitore = reset($fornitore);
+							$fornitore = get_post($fornitore);
+							$fornitoreString = $fornitore->post_title;
+						}
+						$codiceConfezionamento = get_post_meta($product['product_id'], '_codice_confezionamento', true);
+						if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+							$codiceConfezionamento = '';
+						}
+						if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+							$codiceConfezionamento = reset($codiceConfezionamento);
+						}
+
+						$unitaMisura = ' gr'; //tabella riepilogo box
+						$measureUnit = get_post_meta($product['product_id'], '_woo_uom_input', true);
+
+						if (!empty($measureUnit)) {
+							$unitaMisura = ' ' . $measureUnit;
+						}
+						if (!empty($measureUnit)) {
+							$unitaMisura = ' ' . $measureUnit;
+						}
+
+						$measureAcquisto = get_post_meta($product['product_id'], '_uom_acquisto', true);
+						$misura_acquisto = '-';
+						if (!empty($measureAcquisto)) {
+							$misura_acquisto = get_post_meta($product['product_id'], '_uom_acquisto', true);
+						}
+						?>
+
 						<tr>
 							<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
+
+							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
+							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
+							<td style="padding: 8px 10px;"><?php echo '€'. $price;?></td>
+							<td style="padding: 8px 10px;"><?php echo $misura_acquisto; ?></td>
+							<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento;?></td>
+
 							<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
 							<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
+
+							<td style="padding: 8px 10px;">(da fare)</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -1373,7 +1426,7 @@ function my_custom_submenu_page_callback()
 				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
 
 
-				<table class="datatable sortable styled-table" style="width:100%;border-collapse: collapse;">
+				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 
 					<th id="cb" class="manage-column column-cb check-column"
