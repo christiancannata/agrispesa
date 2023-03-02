@@ -22,10 +22,7 @@ jQuery(document).ready(function ($) {
   });
 
   $('.datatable').DataTable();
-  $(".generate-csv").click(function (e) {
-    e.preventDefault()
 
-  })
 
   $(".add-product-box").click(function (e) {
     e.preventDefault()

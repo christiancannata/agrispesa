@@ -2937,7 +2937,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			</select>
 
 		<?php endif; ?>
-			<a class="btn button-primary generate-csv" data-delivery-group="<?php echo $post_id; ?>">
+			<a class="btn button-primary generate-csv" href="#" data-delivery-group="<?php echo $post_id; ?>">
 				Genera CSV
 			</a>
 
