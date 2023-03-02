@@ -2725,7 +2725,7 @@ function consegne_ordini_pages()
 								?>
 								<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
 								<option
-									value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+									value="<?php echo $fixdate->format('Y-m-d'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 							<?php endforeach; ?>
 						</select>
 
