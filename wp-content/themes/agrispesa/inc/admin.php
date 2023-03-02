@@ -1316,41 +1316,43 @@ function my_custom_submenu_page_callback()
 		<div class="wrap">
 			<div class="agr-create-new-orders">
 
-			<h1 class="wp-heading-inline">
-				Genera Ordini BOX</h1>
+				<h1 class="wp-heading-inline">
+					Genera Ordini BOX</h1>
 
-			<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle "Facciamo noi" attivi, in base
-				alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
-				prodotti che preferisci.</p>
+				<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
+					per gli abbonamenti delle "Facciamo noi" attivi, in base
+					alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
+					prodotti che preferisci.</p>
 
-			<span style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
-			<hr class="wp-header-end">
+				<span
+					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
+				<hr class="wp-header-end">
 
 
-			<br>
-			<h3>Disponibilità prodotti</h3>
+				<br>
+				<h3>Disponibilità prodotti</h3>
 
-			<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-				<thead>
-				<th style="padding: 8px 10px;">Prodotto</th>
-				<th style="padding: 8px 10px;">Disponibilità</th>
-				<th style="padding: 8px 10px;">Quantità richiesta</th>
-				</thead>
-				<tbody>
-				<?php foreach ($allProductsNeed as $product): ?>
-					<tr>
-						<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
-						<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
-						<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
-					</tr>
-				<?php endforeach; ?>
-				</tbody>
-			</table>
-			<br/>
+				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+					<thead>
+					<th style="padding: 8px 10px;">Prodotto</th>
+					<th style="padding: 8px 10px;">Disponibilità</th>
+					<th style="padding: 8px 10px;">Quantità richiesta</th>
+					</thead>
+					<tbody>
+					<?php foreach ($allProductsNeed as $product): ?>
+						<tr>
+							<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
+							<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
+							<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+				<br/>
 
 			</div>
 
-			<form id="comments-form"  method="POST"
+			<form id="comments-form" method="POST"
 				  action="">
 
 				<input type="hidden" name="generate_orders" value="1">
@@ -1376,7 +1378,8 @@ function my_custom_submenu_page_callback()
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 
-					<th id="cb" class="manage-column column-cb check-column" style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+					<th id="cb" class="manage-column column-cb check-column"
+						style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
 						<span style="display:flex;align-items:center;">
 							<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
 							<label for="cb-select-all-1" style="font-size:16px;">
@@ -1384,13 +1387,16 @@ function my_custom_submenu_page_callback()
 							</label>
 						</span>
 					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="author" class="manage-column column-author sortable desc">
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+						scope="col" id="author" class="manage-column column-author sortable desc">
 						<span>Cliente</span>
 					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+						scope="col" id="comment" class="manage-column column-comment column-primary">
 						<span>Abbonamento</span>
 					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+						scope="col" id="comment" class="manage-column column-comment column-primary">
 						<span>Attivo dal</span>
 					</th>
 					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
@@ -1461,11 +1467,11 @@ function my_custom_submenu_page_callback()
 								<?php } ?>
 
 							</th>
-							<td class="author column-author" data-colname="Autore"  style="padding: 16px;">
+							<td class="author column-author" data-colname="Autore" style="padding: 16px;">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary"
-								data-colname="Commento"  style="padding: 16px;">
+								data-colname="Commento" style="padding: 16px;">
 								<span><?php
 
 									echo $boxProduct->get_name();
@@ -1474,7 +1480,7 @@ function my_custom_submenu_page_callback()
 									</span>
 							</td>
 
-							<td class="response column-response" data-colname="In risposta a"  style="padding: 16px;">
+							<td class="response column-response" data-colname="In risposta a" style="padding: 16px;">
 								<span>
 								<?php
 								// fix nathi per errore data di consegna
@@ -1753,7 +1759,8 @@ function consegne_ordini_pages()
 					}
 
 					?>
-					<span class="custom-alert alert-success" style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
+					<span class="custom-alert alert-success"
+						  style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
 					<?php
 
 				}
@@ -1768,63 +1775,67 @@ function consegne_ordini_pages()
 		<div id="wpbody-content">
 
 			<div class="wrap">
-			<div class="agr-create-new-boxes">
-				<h1 class="wp-heading-inline">
-					Consegne Ordini</h1>
+				<div class="agr-create-new-boxes">
+					<h1 class="wp-heading-inline">
+						Consegne Ordini</h1>
 
-				<hr class="wp-header-end">
+					<hr class="wp-header-end">
 
-				<p style="font-size: 16px; margin-bottom: 24px;">
-					In questa pagina puoi caricare il file di Map&Guide.</p>
+					<p style="font-size: 16px; margin-bottom: 24px;">
+						In questa pagina puoi caricare il file di Map&Guide.</p>
 
-				<form enctype="multipart/form-data" method="POST" action="">
-					<input type="hidden" name="import_consegne" value="1">
-					<?php
-					$date = new DateTime();
-					$currentWeek = $date->format("W");
-					?>
+					<form enctype="multipart/form-data" method="POST" action="">
+						<input type="hidden" name="import_consegne" value="1">
+						<?php
+						$date = new DateTime();
+						$currentWeek = $date->format("W");
+						?>
 
-					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">
-						Settimana di consegna
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">
+							Settimana di consegna
 						</label>
-					<select name="week" autocomplete="off" style="width:250px;">
-						<?php for ($i = 1; $i <= 52; $i++): ?>
-							<option
-								value="<?php echo $i; ?>"
-								<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
-							>Settimana <?php echo $i; ?></option>
-						<?php endfor; ?>
-					</select>
-					<p style="font-style:italic;font-size:14px;">
-						Settimana corrente: <?php echo $currentWeek; ?>
-					</p>
-					<br>
-					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di Map&Guide</label>
-					<input type="file" name="file" required><br><br>
-					<button class="btn button-primary">
-						Importa CSV
-					</button>
+						<select name="week" autocomplete="off" style="width:250px;">
+							<?php for ($i = 1; $i <= 52; $i++): ?>
+								<option
+									value="<?php echo $i; ?>"
+									<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
+								>Settimana <?php echo $i; ?></option>
+							<?php endfor; ?>
+						</select>
+						<p style="font-style:italic;font-size:14px;">
+							Settimana corrente: <?php echo $currentWeek; ?>
+						</p>
+						<br>
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di
+							Map&Guide</label>
+						<input type="file" name="file" required><br><br>
+						<button class="btn button-primary">
+							Importa CSV
+						</button>
 
-					<br>
-				</form>
+						<br>
+					</form>
 
-			</div>
+				</div>
 
 
 				<form id="comments-form" method="POST"
 					  action="" style="margin-top:40px;width:100%;">
 
 					<input type="hidden" name="generate_orders" value="1">
-					<table class="wp-list-table widefat fixed striped table-view-list comments" style="background:transparent;border:none;">
+					<table class="wp-list-table widefat fixed striped table-view-list comments"
+						   style="background:transparent;border:none;">
 						<thead>
 						<tr>
 							<!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
 																							for="cb-select-all-1">Seleziona
 									tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
-							<th scope="col" id="author" class="manage-column column-author sortable desc" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+							<th scope="col" id="author" class="manage-column column-author sortable desc"
+								style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
 								<span>Gruppo</span>
 							</th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+							<th scope="col" id="comment" class="manage-column column-comment column-primary"
+								style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
 								<span>Ordini</span>
 							</th>
 
@@ -2154,7 +2165,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
-										$price = get_post_meta( $productID, '_regular_price', true);
+										$price = get_post_meta($productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 
@@ -2185,7 +2196,7 @@ function consegne_ordini_pages()
 										}
 
 										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2203,7 +2214,8 @@ function consegne_ordini_pages()
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 								Prodotti non in negozio</label>
-							<select name="products_id" id="products_id_unavailable" class="select2 agr-select" style="width:100%;">
+							<select name="products_id" id="products_id_unavailable" class="select2 agr-select"
+									style="width:100%;">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category) {
 									$args = array(
@@ -2240,7 +2252,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
-										$price = get_post_meta( $productID, '_regular_price', true);
+										$price = get_post_meta($productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 										$unitaMisura = ' gr';
@@ -2268,7 +2280,7 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
-										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2609,9 +2621,11 @@ function consegne_ordini_pages()
 
 										<tr class="create-box-table--totals">
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
-											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso Box</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso
+													Box</strong></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
-											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Totale</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;">
+												<strong>Totale</strong></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
@@ -2659,6 +2673,13 @@ function consegne_ordini_pages()
 	add_menu_page('Esporta Documenti', 'Esporta Documenti', 'manage_options', 'esporta-documenti', function () {
 		global $wpdb;
 
+		if (isset($_POST['document_type'])) {
+			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
+			require_once get_template_directory() . '/inc/pdf/' . $_POST['document_type'] . '.php';
+			die();
+		}
+
+
 		$sql = "SELECT meta_value from wp_postmeta where meta_key='_codice_confezionamento' group by meta_value";
 		$confezionamento = $wpdb->get_results($sql, ARRAY_A);
 
@@ -2666,11 +2687,6 @@ function consegne_ordini_pages()
 			return $cod['meta_value'];
 		}, $confezionamento);
 
-		if (isset($_POST['document_type'])) {
-			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
-			require_once get_template_directory() . '/inc/pdf/' . $_POST['document_type'] . '.php';
-			die();
-		}
 
 		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 		?>
@@ -2705,13 +2721,30 @@ function consegne_ordini_pages()
 					<?php endif; ?>
 					<br><br>
 
-					<label>Codice di confezionamento</label><br>
-					<select class="select2" name="confezionamento">
-						<option value="">-- Seleziona --</option>
-						<?php foreach ($confezionamento as $codice): ?>
-							<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-						<?php endforeach; ?>
-					</select><br><br>
+					<h4>Codice di confezionamento</h4><br>
+					<div style="display: flex">
+						<div>
+							<label>Dal</label><br>
+							<select class="select2" name="confezionamento_dal">
+								<option value="">-- Seleziona --</option>
+								<?php foreach ($confezionamento as $codice): ?>
+									<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div>
+							<label>Al</label><br>
+							<select class="select2" name="confezionamento_al">
+								<option value="">-- Seleziona --</option>
+								<?php foreach ($confezionamento as $codice): ?>
+									<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+
+
+					<br><br>
 					<label>Cosa vuoi esportare?</label><br>
 
 					<select class="select2" name="document_type">

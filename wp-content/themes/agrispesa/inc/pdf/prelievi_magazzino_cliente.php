@@ -3,7 +3,14 @@
 use Dompdf\Dompdf;
 
 $dataConsegna = $_POST['data_consegna'];
-$confezionamento = $_POST['confezionamento'];
+$confezionamentoDal = $_POST['confezionamento_dal'];
+$confezionamentoAl = $_POST['confezionamento_al'];
+
+$codiciConfezionamento = [];
+
+for ($i = $confezionamentoDal; $i <= $confezionamentoAl; $i++) {
+	$codiciConfezionamento[] = $i;
+}
 
 $args = [
 	'posts_per_page' => -1,
@@ -12,7 +19,8 @@ $args = [
 		'relation' => 'AND',
 		[
 			'key' => '_codice_confezionamento',
-			'value' => $confezionamento,
+			'value' => $codiciConfezionamento,
+			'compare' => 'IN'
 		]
 	]
 ];
