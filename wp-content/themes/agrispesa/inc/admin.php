@@ -2408,7 +2408,7 @@ function consegne_ordini_pages()
 							$week = get_post_meta($box->ID, '_week', true);
 							$products = get_post_meta($box->ID, '_products', true);
 							$dataConsegna = get_post_meta($box->ID, '_data_consegna', true);
-							$productsBoxIds = array_map(function ($p) {
+							$productsAlreadyInBox = array_map(function ($p) {
 								return $p['id'];
 							}, $products);
 
@@ -2550,8 +2550,8 @@ function consegne_ordini_pages()
 															<optgroup label="<?php echo $category['name']; ?>">
 
 																<?php
-																$category['products'] = array_filter($category['products'], function ($product) use ($productsBoxIds) {
-																	return !in_array($product->ID, $productsBoxIds);
+																$category['products'] = array_filter($category['products'], function ($product) use ($productsAlreadyInBox) {
+																	return !in_array($product->ID, $productsAlreadyInBox);
 																});
 																?>
 																<?php foreach ($category['products'] as $product): ?>
@@ -2908,7 +2908,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 
 		case 'week' :
 			global $wpdb;
-			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_key", ARRAY_A);
+			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
