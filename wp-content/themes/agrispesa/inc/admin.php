@@ -915,7 +915,18 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 				<?php else:
 					$fixshippingdate = $dataConsegna['meta_value'];
 					$fixshippingdate = strtotime($fixshippingdate);
-					$fixshippingdate = date("d/m/Y", $fixshippingdate);
+
+					try {
+						$fixshippingdate = date("d/m/Y", $fixshippingdate);
+
+					} catch (\Exception $e) {
+						continue;
+
+					}
+
+					if (!$fixshippingdate) {
+						continue;
+					}
 					?>
 					<option
 						<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
