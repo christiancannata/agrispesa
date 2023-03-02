@@ -2686,6 +2686,7 @@ function consegne_ordini_pages()
 		}, $confezionamento);
 
 
+		$confezionamento = array_unique($confezionamento);
 		sort($confezionamento);
 
 		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
