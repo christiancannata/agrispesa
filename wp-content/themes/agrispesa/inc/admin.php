@@ -2502,7 +2502,7 @@ function consegne_ordini_pages()
 													   href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $product['id'] . '&action=edit'; ?>"><?php echo $product['name']; ?></a>
 												</td>
 												<td class="create-box-table--weight" style="width: 70px;">
-													<?php echo $product['weight'] . $unitaMisura; ?>
+													<?php echo $weight . $unitaMisura; ?>
 												</td>
 												<td class="create-box-table--producer">
 													<?php if ($fornitoreString): ?>
