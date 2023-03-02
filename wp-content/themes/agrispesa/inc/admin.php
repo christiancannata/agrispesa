@@ -2921,9 +2921,15 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			<select name="data_consegna" autocomplete="off">
 				<?php
 				foreach ($allDataConsegna as $dataConsegna):
+
 					// fix nathi per errore data di consegna
 					$fixdate = $dataConsegna['meta_value'];
-					$fixdate = new DateTime($fixdate); ?>
+					try {
+						$fixdate = new DateTime($fixdate);
+					} catch (\Exception $e) {
+						continue;
+					}
+					?>
 					<option
 						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>
