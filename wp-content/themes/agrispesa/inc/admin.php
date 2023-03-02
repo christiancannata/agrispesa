@@ -311,6 +311,7 @@ add_action('rest_api_init', function () {
 
 			if (empty($lastWeekBox)) {
 				$response = new WP_REST_Response([
+					'message' => 'Nessuna Box Settimana trovata per la settimana ' . $lastWeek
 				]);
 				$response->set_status(404);
 

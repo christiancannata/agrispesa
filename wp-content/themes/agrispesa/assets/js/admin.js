@@ -48,18 +48,18 @@ jQuery(document).ready(function ($) {
     $(this).closest('tr').find('.unit-measure').html($(this).find('option:selected').data('unit-measure'))
   })
 
-  $(".change_week").on("change paste keyup", function() {
-        const y = new Date().getFullYear();
-        const jan1 = new Date(y, 0, 1);
-        const jan1Day = jan1.getDay();
-        const daysToMonday =  jan1Day === 1? 0 : jan1Day === 0? 1 :  8 - jan1Day
+  $(".change_week").on("change paste keyup", function () {
+    const y = new Date().getFullYear();
+    const jan1 = new Date(y, 0, 1);
+    const jan1Day = jan1.getDay();
+    const daysToMonday = jan1Day === 1 ? 0 : jan1Day === 0 ? 1 : 8 - jan1Day
 
-        const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
-        //console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('YYYY-MM-DD'));
+    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
+    //console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('YYYY-MM-DD'));
 
-        $('.change_shipping_date').val( moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('YYYY-MM-DD') );
+    $('.change_shipping_date').val(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('YYYY-MM-DD'));
 
-    });
+  });
 })
 
 const {createApp} = Vue
@@ -141,8 +141,17 @@ createApp({
         data_consegna: document.getElementById('data_consegna').value
       })
         .then((response) => {
-          location.href = ''
-        });
+          alert("Box Settimanale duplicata con successo");
+          location.href = '';
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            alert(error.response.data.message)
+            return false
+          }
+          console.log(error)
+        })
+      ;
     }
   }
 }).mount('#box-app')
