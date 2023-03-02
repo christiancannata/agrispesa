@@ -2911,10 +2911,15 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			global $wpdb;
 			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna'", ARRAY_A);
 
+			$allDataConsegna = array_map(function ($val) {
+				return $val['meta_value'];
+			}, $allDataConsegna);
+
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
 
-
+			array_unique($allDataConsegna);
+			sort($allDataConsegna);
 			?>
 			<?php if (count($allDataConsegna) == 0): ?>
 			<i>Nessun ordine con data consegna.</i>
@@ -2924,7 +2929,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 				foreach ($allDataConsegna as $dataConsegna):
 
 					// fix nathi per errore data di consegna
-					$fixdate = $dataConsegna['meta_value'];
+					$fixdate = $dataConsegna;
 					try {
 						$fixdate = new DateTime($fixdate);
 					} catch (\Exception $e) {
@@ -2932,7 +2937,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 					}
 					?>
 					<option
-						value="<?php echo $dataConsegna['meta_value']; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+						value="<?php echo $dataConsegna; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
 				<?php endforeach; ?>
 			</select>
 
