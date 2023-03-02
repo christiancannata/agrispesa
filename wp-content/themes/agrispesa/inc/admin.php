@@ -909,28 +909,15 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		<select autocomplete="off" name="_data_consegna">
 
 			<?php foreach ($allDataConsegna as $dataConsegna):
+				$dataConsegna = new DateTime($dataConsegna['meta_value']);
 				//fix nathi per errore data di consegna
-				if ($dataConsegna['meta_value'] === "Nessuna data di consegna"):?>
+				if (!$dataConsegna):?>
 					<option <?php if (!$consegna): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
 				<?php else:
-					$fixshippingdate = $dataConsegna['meta_value'];
-					$fixshippingdate = strtotime($fixshippingdate);
-
-					try {
-						$fixshippingdate = date("d/m/Y", $fixshippingdate);
-
-					} catch (\Exception $e) {
-						continue;
-
-					}
-
-					if (!$fixshippingdate) {
-						continue;
-					}
 					?>
 					<option
-						<?php if ($consegna && $dataConsegna['meta_value'] == $consegna): ?> selected <?php endif; ?>
-						value="<?php echo $fixshippingdate; ?>"><?php echo $fixshippingdate; ?></option>
+						<?php if ($consegna && $dataConsegna->format("Y-m-d") == $consegna): ?> selected <?php endif; ?>
+						value="<?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
 				<?php endif; ?>
 
 			<?php endforeach; ?>
@@ -2698,6 +2685,8 @@ function consegne_ordini_pages()
 			return $cod['meta_value'];
 		}, $confezionamento);
 
+
+		sort($confezionamento);
 
 		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 		?>

@@ -7285,3 +7285,20 @@ Stack trace:
 [02-Mar-2023 08:03:43 UTC] PHP Notice:  Undefined index: weight in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2505
 [02-Mar-2023 08:03:43 UTC] PHP Notice:  Undefined index: weight in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2505
 [02-Mar-2023 08:03:43 UTC] PHP Notice:  Undefined index: weight in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2505
+[02-Mar-2023 09:45:03 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[02-Mar-2023 09:45:03 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_full_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:48:41 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2471
+[02-Mar-2023 09:54:16 UTC] PHP Warning:  get_class() expects parameter 1 to be object, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 52

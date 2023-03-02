@@ -1,0 +1,15 @@
+2023-03-02T09:54:13+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 24887
+2023-03-02T09:54:16+00:00 NOTICE debug :: Order ID 24887 was pending and is now processing :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/
+        )
+
+)
+
+2023-03-02T09:56:28+00:00 NOTICE order_process :: Order #24887 skipped, user #2 user role is not in the list
+2023-03-02T10:00:09+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 24887
+2023-03-02T10:02:08+00:00 NOTICE order_process :: Order #24887 skipped, user #2 user role is not in the list
