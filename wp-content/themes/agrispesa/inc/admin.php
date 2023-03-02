@@ -1383,7 +1383,9 @@ function my_custom_submenu_page_callback()
 						?>
 
 						<tr>
-							<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
+							<td style="padding: 8px 10px;">
+								<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $product['product_id'] . '&action=edit'; ?>"><?php echo $product['name'] ?></a>
+							</td>
 
 							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
