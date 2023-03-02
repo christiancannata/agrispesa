@@ -2918,7 +2918,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			$date = new DateTime();
 			$currentWeek = $date->format("W");
 
-			array_unique($allDataConsegna);
+			$allDataConsegna = array_unique($allDataConsegna);
 			sort($allDataConsegna);
 			?>
 			<?php if (count($allDataConsegna) == 0): ?>
