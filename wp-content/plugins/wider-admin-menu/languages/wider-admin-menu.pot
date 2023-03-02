@@ -1,0 +1,133 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Wider Admin Menu\n"
+"POT-Creation-Date: 2019-09-12 07:56+0300\n"
+"PO-Revision-Date: 2019-09-12 07:56+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wider-admin-menu.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/settings-alternate.php:8
+#, php-format
+msgid "Find the %s stylesheet."
+msgstr ""
+
+#: includes/settings-alternate.php:9
+msgid "Then either copy its contents to your theme&apos;s stylesheet"
+msgstr ""
+
+#: includes/settings-alternate.php:10
+msgid "OR"
+msgstr ""
+
+#: includes/settings-alternate.php:11
+msgid ""
+"copy the file to your theme folder and add this to your theme&apos;s "
+"<code>functions.php</code> to load it:"
+msgstr ""
+
+#: includes/settings-alternate.php:23
+msgid "That stylesheet covers WordPress version 5."
+msgstr ""
+
+#: includes/settings-alternate.php:24
+#, php-format
+msgid "For WordPress %s, substitute %s."
+msgstr ""
+
+#: includes/settings-alternate.php:25 includes/settings-alternate.php:26
+#: includes/settings-alternate.php:27
+#, php-format
+msgid "For WordPress %s to %s, substitute %s."
+msgstr ""
+
+#: includes/settings-alternate.php:28
+msgid "Then you can deactivate this plugin."
+msgstr ""
+
+#: includes/settings-form.php:30
+msgid "New"
+msgstr ""
+
+#: includes/settings-form.php:43
+msgid "Current"
+msgstr ""
+
+#: includes/settings-form.php:46
+msgid "revert to the current width"
+msgstr ""
+
+#: includes/settings-form.php:50
+msgid "Default"
+msgstr ""
+
+#: includes/settings-form.php:53
+msgid "restore default width"
+msgstr ""
+
+#: includes/settings-form.php:61 wider-admin-menu.php:127
+msgid "Leave No Trace"
+msgstr ""
+
+#: includes/settings-form.php:67
+msgid "Yes - Deleting this plugin will also delete these settings."
+msgstr ""
+
+#: includes/settings-form.php:70
+msgid "No - These settings will remain after deleting this plugin."
+msgstr ""
+
+#: includes/settings-form.php:75
+msgid "Deactivating this plugin will not delete anything."
+msgstr ""
+
+#: wider-admin-menu.php:108 wider-admin-menu.php:215
+msgid "Settings"
+msgstr ""
+
+#: wider-admin-menu.php:203
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: wider-admin-menu.php:209
+msgid "Wider Admin Menu"
+msgstr ""
+
+#: wider-admin-menu.php:210
+msgid "Adjust the width of the admin menu to accomodate longer menu items."
+msgstr ""
+
+#: wider-admin-menu.php:217
+msgid "Alternate Method"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://strongplugins.com/plugins/wider-admin-menu"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Let your admin menu breathe."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "MachoThemes"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.machothemes.com/"
+msgstr ""

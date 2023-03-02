@@ -113,8 +113,7 @@ function remove_admin_bar() {
   }
 }
 
-
-//Menu admin
+//Menu admin shortcuts
 add_action('admin_menu', 'shortcut_admin_menu_page');
 function shortcut_admin_menu_page() {
 	add_menu_page('Carrelli abbandonati', 'Carrelli abbandonati', 'manage_options', esc_url(home_url('/')).'wp-admin/admin.php?page=yith_woocommerce_recover_abandoned_cart');

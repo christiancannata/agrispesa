@@ -1,0 +1,121 @@
+/*
+ * Wider Admin Menu > Options page
+ */
+
+.wpmwam {
+	margin: 20px 0;
+}
+
+p.help {
+	margin: 0.5em 0.3em;
+}
+
+#wpcontent, #wpfooter .wp-admin #footer {
+	/* margin-left: 320px; */ /* to lock content at widest point */
+	transition: margin 0.3s ease;
+}
+
+#adminmenuback, #adminmenuwrap, #adminmenu, #adminmenu .wp-submenu {
+	transition: width 0.3s ease;
+}
+
+pre {
+	background: #FFF;
+	padding: 5px;
+}
+pre.lt38 {
+	background: #EAEAEA;
+}
+
+/* for WP 3.3 - 3.7.1 */
+.wp-menu-arrow {
+	transition: transform 0.3s ease;
+}
+
+.form-table.wpmwam td {
+	padding: 10px;
+	text-align: right;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+	.form-table.wpmwam td.lefted {
+		text-align: left;
+	}
+
+	.form-table.wpmwam td.wrapped {
+		white-space: normal;
+	}
+
+	.form-table.wpmwam td.slider {
+		padding: 0;
+	}
+
+#nouislider-wrap {
+	border-radius: 10px;
+	display: inline-block;
+	padding: 10px 20px;
+	margin-bottom: -7px;
+	width: 300px;
+}
+
+#wpmwam_width {
+	width: 4em;
+	text-align: right;
+}
+
+/* match input style */
+
+.box.pre-ver38 {
+	background: #eee;
+	border-radius: 3px;
+	color: #333;
+	display: inline-block;
+	margin: 1px;
+	padding: 2px 5px;
+	width: 3em;
+}
+
+.box.ver38 {
+	border: 1px solid #ddd;
+	border-radius: 0;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
+	color: #333;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 15px;
+	margin: 1px;
+	padding: 5px;
+	width: 3em;
+}
+
+/* for WP 3.3 - 3.7.1 { */
+.undo {
+  background: url("../../../../wp-admin/images/imgedit-icons.png") no-repeat scroll -188px -35px rgba(0, 0, 0, 0);
+	width: 24px;
+	height: 24px;
+	margin-bottom: -4px;
+	display: inline-block;
+}
+
+	.undo:hover {
+		background-position: -188px -5px;
+	}
+/* } */
+
+/* for WP 3.8+ { */
+.wpmwam a.dashicons {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+	.wpmwam a.dashicons:focus {
+		outline: none;
+	}
+
+	.wpmwam a.dashicons:hover {
+		background: #fff;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.07) inset;
+	}
+/* } */

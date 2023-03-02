@@ -3,7 +3,7 @@ Contributors: satispay
 Tags: woocommerce, satispay, payment method
 Requires at least: 4.6
 Tested up to: 6.1
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -18,8 +18,8 @@ The plugin allows you to accept digital payments from Satispay users in a really
 In order to activate the service, you must complete the signup for Satispay Business at https://business.satispay.com/signup. Joining is free as there are no activation costs, monthly fees or deactivation charges.
 
 The only fee is a commission of:
-- **1%** on payments less than €10
-- **1% + 0.20€** for payments equal to or above €10
+- **1,5%** on payments less than €10
+- **1,5% + 0.20€** for payments equal to or above €10
 
 For more information, visit our pricing page at https://www.satispay.com/en/pricing.
 
@@ -36,6 +36,9 @@ Manage all of your refund requests directly with the Refund function integrated 
 As soon as the customer confirms the payment, the transaction is completed, thus eliminating the possibility of chargeback.
 
 == Changelog ==
+= 2.1.5 =
+* Updated the Online fees on the Changelog 
+
 = 2.1.4 =
 * Updated the Online fees on the Changelog
 

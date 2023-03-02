@@ -85,6 +85,15 @@ trait WC_Payment_Gateway_WCPay_Subscriptions_Trait {
 	private static $payment_method_meta_key = 'token';
 
 	/**
+	 * Stores a flag to indicate if the subscription integration hooks have been attached.
+	 *
+	 * The callbacks attached as part of maybe_init_subscriptions() only need to be attached once to avoid duplication.
+	 *
+	 * @var bool False by default, true once the callbacks have been attached.
+	 */
+	private static $has_attached_integration_hooks = false;
+
+	/**
 	 * Initialize subscription support and hooks.
 	 */
 	public function maybe_init_subscriptions() {
@@ -94,7 +103,7 @@ trait WC_Payment_Gateway_WCPay_Subscriptions_Trait {
 
 		/*
 		 * Base set of subscription features to add.
-		 * The WCPay payment gateway supports these feautres
+		 * The WCPay payment gateway supports these features
 		 * for both WCPay Subscriptions and WooCommerce Subscriptions.
 		 */
 		$payment_gateway_features = [
@@ -129,6 +138,19 @@ trait WC_Payment_Gateway_WCPay_Subscriptions_Trait {
 		}
 
 		$this->supports = array_merge( $this->supports, $payment_gateway_features );
+
+		/**
+		 * The following callbacks are only attached once to avoid duplication.
+		 * The callbacks are also only intended to be attached for the WCPay core payment gateway ($this->id = 'woocommerce_payments').
+		 *
+		 * If new payment method IDs (eg 'sepa_debit') are added to this condition in the future, care should be taken to ensure duplication,
+		 * including double renewal charging, isn't introduced.
+		 */
+		if ( self::$has_attached_integration_hooks || 'woocommerce_payments' !== $this->id ) {
+			return;
+		}
+
+		self::$has_attached_integration_hooks = true;
 
 		add_filter( 'woocommerce_email_classes', [ $this, 'add_emails' ], 20 );
 		add_filter( 'woocommerce_available_payment_gateways', [ $this, 'prepare_order_pay_page' ] );
@@ -222,7 +244,7 @@ trait WC_Payment_Gateway_WCPay_Subscriptions_Trait {
 		$js_config                     = WC_Payments::get_wc_payments_checkout()->get_payment_fields_js_config();
 		$js_config['intentSecret']     = WC_Payments_Utils::encrypt_client_secret( $intent->get_stripe_account_id(), $intent->get_client_secret() );
 		$js_config['updateOrderNonce'] = wp_create_nonce( 'wcpay_update_order_status_nonce' );
-		wp_localize_script( 'WCPAY_CHECKOUT', 'wcpay_config', $js_config );
+		wp_localize_script( 'WCPAY_CHECKOUT', 'wcpayConfig', $js_config );
 		wp_enqueue_script( 'WCPAY_CHECKOUT' );
 		return true;
 	}
