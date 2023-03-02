@@ -1,0 +1,39 @@
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.1 9.33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #988f01;
+        stroke-miterlimit: 10;
+        stroke-width: 0.44px;
+      }
+    </style>
+  </defs>
+  <g id="Livello_2" data-name="Livello 2">
+    <g id="_ÎÓÈ_1" data-name=" ÎÓÈ 1">
+      <g>
+        <rect class="cls-1" x="0.95" y="0.89" width="8.22" height="5.71"/>
+        <line class="cls-1" x1="5.06" y1="6.59" x2="5.06" y2="8.18"/>
+        <path class="cls-1" d="M9.56.89h-9A.34.34,0,0,1,.22.55h0A.33.33,0,0,1,.55.22h9a.33.33,0,0,1,.33.33h0A.34.34,0,0,1,9.56.89Z" transform="translate(0 0)"/>
+        <circle class="cls-1" cx="5.06" cy="8.64" r="0.47"/>
+        <g>
+          <path class="cls-1" d="M6.29,2.38c0,.26-.55.46-1.23.46s-1.23-.2-1.23-.46.55-.45,1.23-.45S6.29,2.13,6.29,2.38Z" transform="translate(0 0)"/>
+          <path class="cls-1" d="M6.29,3.14c0,.15-.21.29-.54.38h0a3.23,3.23,0,0,1-.69.07,3.26,3.26,0,0,1-.7-.07h0c-.32-.09-.54-.23-.54-.38" transform="translate(0 0)"/>
+          <line class="cls-1" x1="5.75" y1="3.52" x2="5.75" y2="3.52"/>
+          <line class="cls-1" x1="4.36" y1="3.52" x2="4.36" y2="3.52"/>
+          <path class="cls-1" d="M3.82,3.89c0,.16.22.3.54.38a5.56,5.56,0,0,0,.7.08,3.25,3.25,0,0,0,.69-.08h0c.33-.08.54-.22.54-.38" transform="translate(0 0)"/>
+          <path class="cls-1" d="M3.82,4.64c0,.19.29.34.71.42h0a4.69,4.69,0,0,0,.53,0,4.69,4.69,0,0,0,.53,0h0c.41-.08.7-.23.7-.42" transform="translate(0 0)"/>
+          <line class="cls-1" x1="5.75" y1="4.27" x2="5.75" y2="4.27"/>
+          <path class="cls-1" d="M5.59,5.06h0" transform="translate(0 0)"/>
+          <path class="cls-1" d="M4.53,5.06h0" transform="translate(0 0)"/>
+          <path class="cls-1" d="M3.82,5.47c0,.25.56.45,1.24.45s1.23-.2,1.23-.45" transform="translate(0 0)"/>
+          <line class="cls-1" x1="3.83" y1="2.38" x2="3.83" y2="5.47"/>
+          <line class="cls-1" x1="6.29" y1="2.38" x2="6.29" y2="5.47"/>
+        </g>
+        <line class="cls-1" x1="6.76" y1="2.35" x2="7.65" y2="1.62"/>
+        <line class="cls-1" x1="2.45" y1="5.88" x2="3.05" y2="5.38"/>
+        <polyline class="cls-1" points="6.76 1.58 7.64 1.62 7.59 2.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

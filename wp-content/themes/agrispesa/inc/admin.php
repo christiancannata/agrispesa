@@ -1238,7 +1238,7 @@ function get_single_box_from_attributes($tipologia, $dimensione)
 
 function register_my_custom_submenu_page()
 {
-	add_submenu_page('woocommerce', 'Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
+	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
 }
 
 function my_custom_submenu_page_callback()
@@ -1314,36 +1314,43 @@ function my_custom_submenu_page_callback()
 	<div id="wpbody-content">
 
 		<div class="wrap">
+			<div class="agr-create-new-orders">
+
 			<h1 class="wp-heading-inline">
 				Genera Ordini BOX</h1>
 
-			<h2>Settimana <?php echo $week; ?> di 52</h2>
-			<hr class="wp-header-end">
-
-			<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle BOX attivi, in base
-				alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
+			<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle "Facciamo noi" attivi, in base
+				alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
 				prodotti che preferisci.</p>
 
+			<span style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
+			<hr class="wp-header-end">
+
+
+			<br>
 			<h3>Disponibilità prodotti</h3>
 
-			<table class="datatable">
+			<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 				<thead>
-				<th>Prodotto</th>
-				<th>Disponibilità</th>
-				<th>Quantità richiesta</th>
+				<th style="padding: 8px 10px;">Prodotto</th>
+				<th style="padding: 8px 10px;">Disponibilità</th>
+				<th style="padding: 8px 10px;">Quantità richiesta</th>
 				</thead>
 				<tbody>
 				<?php foreach ($allProductsNeed as $product): ?>
 					<tr>
-						<td><?php echo $product['name'] ?></td>
-						<td><?php echo $product['current_availability'] ?></td>
-						<td><?php echo $product['quantity'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['name'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
+						<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
+			<br/>
 
-			<form id="comments-form" method="POST"
+			</div>
+
+			<form id="comments-form"  method="POST"
 				  action="">
 
 				<input type="hidden" name="generate_orders" value="1">
@@ -1359,24 +1366,35 @@ function my_custom_submenu_page_callback()
 					</div>
 
 					<div class="tablenav-pages one-page">
-						<span class="displaying-num"> abbonamenti attivi</span>
+						<span class="displaying-num">Abbonamenti attivi</span>
 					</div>
 					<br class="clear">
 				</div>
 				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
-				<table class="datatable">
+
+
+				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 
-					<th id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
-																					for="cb-select-all-1">Seleziona
-							tutto</label><input id="cb-select-all-1" type="checkbox"></th>
-					<th scope="col" id="author" class="manage-column column-author sortable desc">
-						<span>Utente</span></th>
-					<th scope="col" id="comment" class="manage-column column-comment column-primary">Abbonamento
+					<th id="cb" class="manage-column column-cb check-column" style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+						<span style="display:flex;align-items:center;">
+							<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+							<label for="cb-select-all-1" style="font-size:16px;">
+								Seleziona tutti
+							</label>
+						</span>
 					</th>
-					<th scope="col" id="comment" class="manage-column column-comment column-primary">Attivo da</th>
-					<th>
-						Ordine
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="author" class="manage-column column-author sortable desc">
+						<span>Cliente</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+						<span>Abbonamento</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;" scope="col" id="comment" class="manage-column column-comment column-primary">
+						<span>Attivo dal</span>
+					</th>
+					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+						<span>Ordine</span>
 					</th>
 					</thead>
 
@@ -1418,9 +1436,8 @@ function my_custom_submenu_page_callback()
 
 						?>
 						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column"><label class="screen-reader-text"
-																		for="cb-select-1">Seleziona
-									un abbonamento</label>
+							<th scope="row" class="check-column" style="padding: 16px;">
+								<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
 
 								<?php
 
@@ -1444,11 +1461,11 @@ function my_custom_submenu_page_callback()
 								<?php } ?>
 
 							</th>
-							<td class="author column-author" data-colname="Autore">
+							<td class="author column-author" data-colname="Autore"  style="padding: 16px;">
 								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
 							</td>
 							<td class="comment column-comment has-row-actions column-primary"
-								data-colname="Commento">
+								data-colname="Commento"  style="padding: 16px;">
 								<span><?php
 
 									echo $boxProduct->get_name();
@@ -1457,16 +1474,16 @@ function my_custom_submenu_page_callback()
 									</span>
 							</td>
 
-							<td class="response column-response" data-colname="In risposta a">
+							<td class="response column-response" data-colname="In risposta a"  style="padding: 16px;">
 								<span>
 								<?php
 								// fix nathi per errore data di consegna
 								$fixdate = $subscription->get_date_created();
 								$fixdate = new DateTime($fixdate);
-								echo $fixdate->format("d-m-Y H:i"); ?>
+								echo $fixdate->format("d/m/Y"); ?>
 								</span>
 							</td>
-							<td>
+							<td style="padding: 16px;">
 								<?php if (count($orders) > 0): ?>
 									<a target="_blank"
 									   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
@@ -1503,9 +1520,9 @@ function custom_shop_order_column($columns)
 		$reordered_columns[$key] = $column;
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
-			$reordered_columns['my-column1'] = 'Tipo';
-			$reordered_columns['my-column2'] = 'Data Consegna';
-			$reordered_columns['my-column3'] = 'Preferenze';
+			// $reordered_columns['my-column1'] = 'Tipo';
+			// $reordered_columns['my-column2'] = 'Data Consegna';
+			// $reordered_columns['my-column3'] = 'Preferenze';
 		}
 	}
 	return $reordered_columns;
@@ -1520,16 +1537,16 @@ function custom_orders_list_column_content($column, $post_id)
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
 			if (!empty($orderType))
-				echo $orderType;
+				echo 'FN';
 			// Testing (to be removed) - Empty value case
 			else
-				echo '';
+				echo 'ST';
 
 			break;
 
 		case 'my-column2' :
 
-			// Get custom post meta data
+			// Get custom post meta data NATHI QUIIII
 			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
 
 			if ($dataConsegna === "Nessuna data di consegna") {
@@ -1544,6 +1561,7 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column3' :
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
+
 
 			if ($orderType == 'BOX') {
 				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
@@ -1735,12 +1753,12 @@ function consegne_ordini_pages()
 					}
 
 					?>
-					<span class="alert alert-success">Ordini aggiornati: <?php echo $i; ?></span>
+					<span class="custom-alert alert-success" style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
 					<?php
 
 				}
 			} else {
-				echo "Nessun file inserito.<br />";
+				echo "<span style='font-size: 14px;padding: 16px;background: orangered; color:#fff;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;'>Nessun file inserito.</span>";
 			}
 
 
@@ -1750,16 +1768,14 @@ function consegne_ordini_pages()
 		<div id="wpbody-content">
 
 			<div class="wrap">
+			<div class="agr-create-new-boxes">
 				<h1 class="wp-heading-inline">
 					Consegne Ordini</h1>
 
 				<hr class="wp-header-end">
 
-				<p>In questa pagina puoi generare in automatico gli ordini per gli abbonamenti delle 'Facciamo noi'
-					attive, in
-					base
-					alle loro preferenze espresse. Potrai modificare successivamente il singolo ordine modificando i
-					prodotti che preferisci.</p>
+				<p style="font-size: 16px; margin-bottom: 24px;">
+					In questa pagina puoi caricare il file di Map&Guide.</p>
 
 				<form enctype="multipart/form-data" method="POST" action="">
 					<input type="hidden" name="import_consegne" value="1">
@@ -1768,18 +1784,22 @@ function consegne_ordini_pages()
 					$currentWeek = $date->format("W");
 					?>
 
-					<label>Settimana di consegna (<em>Settimana
-							corrente: <?php echo $currentWeek; ?></em>)</label><br>
-					<select name="week" autocomplete="off">
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">
+						Settimana di consegna
+						</label>
+					<select name="week" autocomplete="off" style="width:250px;">
 						<?php for ($i = 1; $i <= 52; $i++): ?>
 							<option
 								value="<?php echo $i; ?>"
 								<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
 							>Settimana <?php echo $i; ?></option>
 						<?php endfor; ?>
-					</select><br>
+					</select>
+					<p style="font-style:italic;font-size:14px;">
+						Settimana corrente: <?php echo $currentWeek; ?>
+					</p>
 					<br>
-					<label>CSV di Map&Guide</label><br>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di Map&Guide</label>
 					<input type="file" name="file" required><br><br>
 					<button class="btn button-primary">
 						Importa CSV
@@ -1788,20 +1808,24 @@ function consegne_ordini_pages()
 					<br>
 				</form>
 
+			</div>
+
 
 				<form id="comments-form" method="POST"
-					  action="" style="margin-top:100px">
+					  action="" style="margin-top:40px;width:100%;">
 
 					<input type="hidden" name="generate_orders" value="1">
-					<table class="wp-list-table widefat fixed striped table-view-list comments">
+					<table class="wp-list-table widefat fixed striped table-view-list comments" style="background:transparent;border:none;">
 						<thead>
 						<tr>
 							<!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
 																							for="cb-select-all-1">Seleziona
 									tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
-							<th scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Gruppo</span></th>
-							<th scope="col" id="comment" class="manage-column column-comment column-primary">Ordini
+							<th scope="col" id="author" class="manage-column column-author sortable desc" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+								<span>Gruppo</span>
+							</th>
+							<th scope="col" id="comment" class="manage-column column-comment column-primary" style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+								<span>Ordini</span>
 							</th>
 
 						</tr>
@@ -1837,12 +1861,12 @@ function consegne_ordini_pages()
 											   value="<?php echo $group->ID; ?>" disabled><br>
 									<?php endif; ?>
 								</th>-->
-								<td class="author column-author" data-colname="Autore">
+								<td class="author column-author" data-colname="Autore" style="padding: 16px;">
 									<span><?php echo $group->post_name; ?></span>
 								</td>
-								<td class="comment column-comment has-row-actions column-primary"
+								<td class="comment column-comment has-row-actions column-primary" style="padding: 16px;"
 									data-colname="Commento">
-									<table>
+									<table style="width:100%;border-collapse: collapse;">
 
 										<tr>
 											<td><b>ID</b></td>
@@ -2090,10 +2114,10 @@ function consegne_ordini_pages()
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="width:40%;">
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
-								in negozio</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+								Prodotti in negozio</label>
 
-							<select name="products_id" id="products_id" class="select2">
+							<select name="products_id" id="products_id" class="select2 agr-select" style="width: 100%">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category) {
 									$args = array(
@@ -2130,6 +2154,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
+										$price = get_post_meta( $productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 
@@ -2143,7 +2168,7 @@ function consegne_ordini_pages()
 										if (!empty($fornitore)) {
 											$fornitore = reset($fornitore);
 											$fornitore = get_post($fornitore);
-											$fornitoreString = ' - ' . $fornitore->post_title;
+											$fornitoreString = $fornitore->post_title;
 										}
 
 										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
@@ -2156,11 +2181,11 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = reset($codiceConfezionamento);
 										}
 										if ($codiceConfezionamento) {
-											$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
 										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '">' . get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2176,9 +2201,9 @@ function consegne_ordini_pages()
 						</div>
 						<div style="width:40%;margin-left:40px;">
 
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Prodotti
-								non in negozio</label>
-							<select name="products_id" id="products_id_unavailable" class="select2">
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+								Prodotti non in negozio</label>
+							<select name="products_id" id="products_id_unavailable" class="select2 agr-select" style="width:100%;">
 								<option disabled selected value="">-- Scegli il prodotto --</option>
 								<?php foreach ($categories as $category) {
 									$args = array(
@@ -2215,6 +2240,7 @@ function consegne_ordini_pages()
 									while ($cat_query->have_posts()) : $cat_query->the_post();
 										//Valori prodotto
 										$productID = get_the_ID();
+										$price = get_post_meta( $productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 										$unitaMisura = ' gr';
@@ -2226,7 +2252,7 @@ function consegne_ordini_pages()
 										if (!empty($fornitore)) {
 											$fornitore = reset($fornitore);
 											$fornitore = get_post($fornitore);
-											$fornitoreString = ' - ' . $fornitore->post_title;
+											$fornitoreString = $fornitore->post_title;
 										}
 
 										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
@@ -2239,11 +2265,10 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = reset($codiceConfezionamento);
 										}
 										if ($codiceConfezionamento) {
-											$codiceConfezionamento = ' - ' . $codiceConfezionamento;
+											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
-										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '">' . get_the_title() . $fornitoreString . $codiceConfezionamento . ' (' . $weight . $unitaMisura . ')</option>';
+										echo '<option value="' . $productID . '" data-producer="'.$fornitoreString.'" data-conf="'. $codiceConfezionamento .'" data-weight="'. $weight . $unitaMisura .'" data-price="'.$price .'">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2331,14 +2356,14 @@ function consegne_ordini_pages()
 
 
 				<form id="comments-form" method="POST"
-					  action="" style="margin-top:100px">
+					  action="" style="margin-top:100px;width:100%;">
 					<input type="hidden" name="generate_orders" value="1">
 
-					<table class="wp-list-table datatable">
+					<table style="max-width: 100%;" class="wp-list-table datatable">
 						<thead>
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable desc"
-								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
 								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
@@ -2396,7 +2421,7 @@ function consegne_ordini_pages()
 
 								</td>
 								<td class="response column-response">
-									<table style="border-collapse: collapse">
+									<table style="max-width: 100%;border-collapse: collapse">
 										<thead>
 										<th>Descrizione</th>
 										<th style="width: 70px;">Peso</th>
@@ -2583,16 +2608,24 @@ function consegne_ordini_pages()
 										<?php endif; ?>
 
 										<tr class="create-box-table--totals">
-											<td class="no-border"></td>
-											<td><strong>Peso Box</strong></td>
-											<td class="no-border"></td>
-											<td><strong>Totale</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso Box</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Totale</strong></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 										</tr>
 										<tr>
-											<td class="no-border"></td>
-											<td><?php echo $totalWeight; ?> gr</td>
-											<td class="no-border"></td>
-											<td>€<?php echo $totalPrice; ?></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"><?php echo $totalWeight; ?> gr</td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;">€<?php echo $totalPrice; ?></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
+											<td style="border-bottom:none;"></td>
 										</tr>
 										</tbody>
 									</table>

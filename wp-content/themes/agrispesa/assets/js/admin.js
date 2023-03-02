@@ -1,7 +1,26 @@
 jQuery(document).ready(function ($) {
 
+  function formatState (state) {
+    if (!state.id) {
+      return state.text;
+    }
+    var producer = $(state.element).data('producer');
+    var price = $(state.element).data('price');
+    var weight = $(state.element).data('weight');
+    var conf = $(state.element).data('conf');
 
-  $(".select2").select2()
+    var $state = $(
+      '<div class="agr-select agr-select--flex"><div><span class="agr-select title">' + state.text + '</span></div><div><span class="agr-select price">€' + price + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select weight">' + weight + '</span></div><div><span class="agr-select conf">Cod. Conf: ' + conf + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select producer">' + producer + '</span></div></div>'
+      );
+    return $state;
+  };
+
+
+  $(".select2").select2();
+  $(".agr-select").select2({
+    templateResult: formatState
+  });
+
   $('.datatable').DataTable();
   $(".generate-csv").click(function (e) {
     e.preventDefault()
