@@ -1163,7 +1163,7 @@ function create_order_from_subscription($id)
 
 
 	update_post_meta($order->get_id(), '_data_consegna', $consegna);
-	update_post_meta($order->get_id(), '_order_type', 'BOX');
+	update_post_meta($order->get_id(), '_order_type', 'FN');
 	update_post_meta($order->get_id(), '_subscription_id', $id);
 
 
@@ -1581,7 +1581,7 @@ function custom_shop_order_column($columns)
 		$reordered_columns[$key] = $column;
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
-			// $reordered_columns['my-column1'] = 'Tipo';
+			//$reordered_columns['my-column1'] = 'Tipo';
 			// $reordered_columns['my-column2'] = 'Data Consegna';
 			// $reordered_columns['my-column3'] = 'Preferenze';
 		}
@@ -1624,7 +1624,7 @@ function custom_orders_list_column_content($column, $post_id)
 			$orderType = get_post_meta($post_id, '_order_type', true);
 
 
-			if ($orderType == 'BOX') {
+			if ($orderType == 'FN') {
 				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
 				if (!empty($boxPreferences))
 					echo '✅';
