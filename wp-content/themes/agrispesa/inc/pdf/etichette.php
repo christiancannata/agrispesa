@@ -104,4 +104,4 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+$dompdf->stream('etichette.pdf');

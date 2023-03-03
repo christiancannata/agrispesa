@@ -256,4 +256,4 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+$dompdf->stream('fabbisogno.pdf');

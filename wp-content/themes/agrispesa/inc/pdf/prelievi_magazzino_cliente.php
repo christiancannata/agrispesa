@@ -70,7 +70,6 @@ $orders = array_filter($orders, function ($order) use ($products) {
 });
 
 $dompdf = new Dompdf();
-
 ob_start();
 ?>
 	<html>
@@ -209,4 +208,4 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+$dompdf->stream('prelievi_magazzino_cliente.pdf');

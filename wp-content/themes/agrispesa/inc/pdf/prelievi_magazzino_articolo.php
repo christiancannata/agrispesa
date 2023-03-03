@@ -3,7 +3,16 @@
 use Dompdf\Dompdf;
 
 $dataConsegna = $_POST['data_consegna'];
-$confezionamento = $_POST['confezionamento'];
+$confezionamentoDal = $_POST['confezionamento_dal'];
+$confezionamentoAl = $_POST['confezionamento_al'];
+
+
+$codiciConfezionamento = [];
+
+for ($i = $confezionamentoDal; $i <= $confezionamentoAl; $i++) {
+	$codiciConfezionamento[] = $i;
+}
+
 
 $args = [
 	'posts_per_page' => -1,
@@ -75,19 +84,36 @@ $dompdf = new Dompdf();
 
 ob_start();
 ?>
+	<html>
+	<head>
+		<style>
+			.page-break {
+				page-break-before: always;
+			}
+
+			.table {
+				width: 100%;
+
+			}
+
+			.border {
+				border: 1px solid;
+				border-collapse: collapse;
+			}
+
+			.border td {
+				border: 1px solid;
+				border-collapse: collapse;
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+
 	<h1>
 		Lista prelievi magazzino per articolo
 	</h1>
-	<table>
-		<thead>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		</thead>
+	<table  class="table border">
 		<tbody>
 		<?php foreach ($products as $product): ?>
 			<tr>
@@ -158,6 +184,8 @@ ob_start();
 		<?php endforeach; ?>
 		</tbody>
 	</table>
+	</body>
+	</html>
 <?php
 $content = ob_get_clean();
 $dompdf->loadHtml($content);
@@ -168,4 +196,4 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+$dompdf->stream('prelievi_magazzino_articolo.pdf');
