@@ -115,6 +115,7 @@ ob_start();
 			$productSubscription = reset($productSubscription);
 
 			$items = $order->get_items();
+
 			?>
 			<tr>
 				<td>
@@ -124,7 +125,8 @@ ob_start();
 					Cliente: <strong><?php echo $order->get_customer_id(); ?></strong><br>
 					<strong><?php echo $order->get_shipping_first_name() . " " . $order->get_shipping_last_name(); ?></strong><br>
 					<span><?php echo $order->get_shipping_address_1() ?></span><br>
-					<span><?php echo $order->get_shipping_postcode() . " " . $order->get_shipping_city(); ?> (<?php echo $order->get_shipping_state(); ?>)</span>
+					<span><?php echo $order->get_shipping_postcode() . " " . $order->get_shipping_city(); ?> (<?php echo $order->get_shipping_state(); ?>)</span><br>
+					Abbonamento cliente: <span><?php echo $productSubscription->get_name(); ?></span>
 				</td>
 				<td>
 					<table class="table">
@@ -176,11 +178,12 @@ ob_start();
 									<strong><?php echo $productSubscription->get_name(); ?></strong>
 								</td>
 								<td>
-									<strong><?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></strong>
-								</td>
-								<td>
 									<strong><?php echo $gruppoConsegna; ?></strong>
 								</td>
+								<td>
+									<strong><?php echo (new \DateTime($dataConsegna))->format("d/m/Y"); ?></strong>
+								</td>
+
 
 							</tr>
 							<?php
