@@ -69,7 +69,7 @@ $dataConsegna = $_POST['data_consegna'];
 
 		$orders = array_map(function ($order) {
 			$order = wc_get_order($order);
-			$order->num_consegna = get_post_meta($order->get_id(), '_num_consegna', true);
+			$order->_numero_consegna = get_post_meta($order->get_id(), '_numero_consegna', true);
 			$order->secondary_phone = get_post_meta($order->get_id(), '_secondary_phone', true);
 			$order->week = get_post_meta($order->get_id(), '_week', true);
 			return $order;
@@ -82,7 +82,7 @@ $dataConsegna = $_POST['data_consegna'];
 		}
 
 		usort($orders, function ($a, $b) {
-			return strcmp($a->num_consegna, $b->num_consegna);
+			return strcmp($a->_numero_consegna, $b->_numero_consegna);
 		});
 
 		if ($ordinamento == 'DECRESCENTE') {
@@ -98,7 +98,7 @@ $dataConsegna = $_POST['data_consegna'];
 					<?php echo $group->post_title; ?>
 				</h3>
 				<h4><?php
-					echo str_pad($order->num_consegna, 4, 0, STR_PAD_LEFT);
+					echo str_pad($order->_numero_consegna, 4, 0, STR_PAD_LEFT);
 					?></h4>
 			</div>
 		<?php endforeach; ?>
