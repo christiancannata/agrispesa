@@ -3,8 +3,6 @@
 use Dompdf\Dompdf;
 
 $dataConsegna = $_POST['data_consegna'];
-$confezionamento = $_POST['confezionamento'];
-$week = null;
 ?>
 	<html>
 	<head>
@@ -64,6 +62,11 @@ $week = null;
 		];
 		$orders = new WP_Query($args);
 		$orders = wp_list_pluck($orders->posts, 'ID');
+
+		if (empty($orders)) {
+			continue;
+		}
+
 		$orders = array_map(function ($order) {
 			$order = wc_get_order($order);
 			$order->num_consegna = get_post_meta($order->get_id(), '_num_consegna', true);
@@ -72,9 +75,20 @@ $week = null;
 			return $order;
 		}, $orders);
 
+		$ordinamento = get_post_meta($group->ID, 'ordinamento_numero_consegna', true);
+
+		if (!$ordinamento) {
+			$ordinamento = 'CRESCENTE';
+		}
+
 		usort($orders, function ($a, $b) {
 			return strcmp($a->num_consegna, $b->num_consegna);
 		});
+
+		if ($ordinamento == 'DECRESCENTE') {
+			$orders = array_reverse($orders);
+		}
+
 		?>
 		<h3><?php echo $group->post_title; ?></h3><br>
 		<?php foreach ($orders as $order): ?>
