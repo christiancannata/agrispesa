@@ -49,7 +49,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 
 	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
 
-	if (get_class($date) != DateTime::class) {
+	if (is_object($date) && get_class($date) != DateTime::class) {
 		$date = DateTime::createFromFormat('d-m-Y', $date);
 	}
 
@@ -611,7 +611,7 @@ add_action('rest_api_init', function () {
 			}
 			fseek($f, 0);
 			header('Content-Type: text/csv');
-			header('Content-Disposition: attachment; filename="PIEM ' . $dataConsegna . ' da nav a map&guide.csv";');
+			header('Content-Disposition: attachment; filename="PIEM ' . (new \DateTime($dataConsegna))->format("d-m-Y") . ' da nav a map&guide.csv";');
 			fpassthru($f);
 			die();
 
@@ -1337,17 +1337,17 @@ function my_custom_submenu_page_callback()
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
-						<tr>
-							<th style="padding: 8px 10px;">Descrizione</th>
-							<th style="padding: 8px 10px;">Peso</th>
-							<th style="padding: 8px 10px;">Fornitore</th>
-							<th style="padding: 8px 10px;">Prezzo</th>
-							<th style="padding: 8px 10px;">Un. Misura</th>
-							<th style="padding: 8px 10px;">Cod. Conf</th>
-							<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
-							<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
-							<th style="padding: 8px 10px;">Azioni</th>
-						</tr>
+					<tr>
+						<th style="padding: 8px 10px;">Descrizione</th>
+						<th style="padding: 8px 10px;">Peso</th>
+						<th style="padding: 8px 10px;">Fornitore</th>
+						<th style="padding: 8px 10px;">Prezzo</th>
+						<th style="padding: 8px 10px;">Un. Misura</th>
+						<th style="padding: 8px 10px;">Cod. Conf</th>
+						<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
+						<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
+						<th style="padding: 8px 10px;">Azioni</th>
+					</tr>
 					</thead>
 					<tbody>
 					<?php foreach ($allProductsNeed as $product):
@@ -1394,9 +1394,9 @@ function my_custom_submenu_page_callback()
 
 							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
-							<td style="padding: 8px 10px;"><?php echo '€'. $price;?></td>
+							<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $misura_acquisto; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento;?></td>
+							<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
 
 							<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
 							<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
@@ -1794,8 +1794,8 @@ function consegne_ordini_pages()
 						'meta_query' => [
 							'relation' => 'AND',
 							[
-								'key' => '_week',
-								'value' => str_pad($_POST['week'], 2, 0, STR_PAD_LEFT),
+								'key' => '_data_consegna',
+								'value' => $_POST['_data_consegna'],
 								'compare' => '='
 							]
 						]
@@ -1808,7 +1808,8 @@ function consegne_ordini_pages()
 
 						$order = array_filter($orders, function ($tmpOrder) use ($single) {
 							$address = get_post_meta($tmpOrder->ID, '_shipping_address_1', true);
-							return trim($address) == trim($single[4]);
+							$town = get_post_meta($tmpOrder->ID, '_shipping_city', true);
+							return trim($address) == trim($single[4]) && trim($town) == trim($single[3]);
 						});
 
 						if (!empty($order)) {
@@ -1849,18 +1850,19 @@ function consegne_ordini_pages()
 						<?php
 						$date = new DateTime();
 						$currentWeek = $date->format("W");
+						global $wpdb;
+						$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 						?>
+						<strong>Data di consegna:</strong><br>
+						<select autocomplete="off" name="_data_consegna">
 
-						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">
-							Settimana di consegna
-						</label>
-						<select name="week" autocomplete="off" style="width:250px;">
-							<?php for ($i = 1; $i <= 52; $i++): ?>
+							<?php foreach ($allDataConsegna as $dataConsegna):
+								$dataConsegna = new DateTime($dataConsegna['meta_value']);
+								?>
 								<option
-									value="<?php echo $i; ?>"
-									<?php if ($i == $currentWeek): ?> selected <?php endif; ?>
-								>Settimana <?php echo $i; ?></option>
-							<?php endfor; ?>
+
+									value="<?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
+							<?php endforeach; ?>
 						</select>
 						<p style="font-style:italic;font-size:14px;">
 							Settimana corrente: <?php echo $currentWeek; ?>
@@ -1909,9 +1911,9 @@ function consegne_ordini_pages()
 
 							$orders = wc_get_orders([
 								'limit' => -1,
-								'meta_key' => '_shipping_postcode',
-								'meta_value' => $caps,
-								'meta_compare' => 'IN',
+								'meta_key' => '_gruppo_consegna',
+								'meta_value' => $group->post_title,
+								'meta_compare' => '=',
 							]);
 
 							$orders = array_filter($orders, function ($order) {
@@ -2606,11 +2608,13 @@ function consegne_ordini_pages()
 											<tr class="create-box-table--add-product-row">
 												<td colspan="4" class="create-box-table--add-product-item"
 													style="border-left: 2px solid #000;border-top: 2px solid #000;">
-													<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+													<label
+														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 														Aggiungi un prodotto in negozio</label>
 													<select data-box-id="<?php echo $box->ID; ?>"
 															class="agr-select new-product-box" style="width:100%;">
-														<option disabled selected value="">Seleziona un prodotto</option>
+														<option disabled selected value="">Seleziona un prodotto
+														</option>
 														<?php foreach ($categories as $category) {
 															$args = array(
 																'posts_per_page' => -1,
@@ -2677,7 +2681,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="'.get_the_title().'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -2689,8 +2693,10 @@ function consegne_ordini_pages()
 
 												</td>
 												<td style="border-top: 2px solid #000;"></td>
-												<td colspan="2" class="create-box-table--add-product-qty" style="border-top: 2px solid #000;">
-													<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+												<td colspan="2" class="create-box-table--add-product-qty"
+													style="border-top: 2px solid #000;">
+													<label
+														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 														Quantità</label>
 													<input
 														style="width:70px"
@@ -2700,13 +2706,14 @@ function consegne_ordini_pages()
 												<td class="create-box-table--add-product-actions"
 													style="border-right: 2px solid #000;border-top: 2px solid #000;">
 													<br><a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
-													   href="#">Aggiungi</a>
+														   href="#">Aggiungi</a>
 												</td>
 											</tr>
 											<tr class="create-box-table--add-product-row">
 												<td colspan="4" class="create-box-table--add-product-item"
 													style="border-bottom:none;border-left: 2px solid #000;">
-													<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+													<label
+														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 														Aggiungi un prodotto non in negozio</label>
 													<select data-box-id="<?php echo $box->ID; ?>"
 															class="agr-select new-product-box" style="width:100%;">
@@ -2777,7 +2784,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="'.get_the_title().'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -2790,7 +2797,8 @@ function consegne_ordini_pages()
 												</td>
 												<td style="border-bottom:none;"></td>
 												<td colspan="2" class="create-box-table--add-product-qty">
-													<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
+													<label
+														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 														Quantità</label>
 													<input
 														style="width:70px"
