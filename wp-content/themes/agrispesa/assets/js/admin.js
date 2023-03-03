@@ -1,6 +1,5 @@
 jQuery(document).ready(function ($) {
-
-  function formatState (state) {
+  function formatState(state) {
     if (!state.id) {
       return state.text;
     }
@@ -11,9 +10,9 @@ jQuery(document).ready(function ($) {
 
     var $state = $(
       '<div class="agr-select agr-select--flex"><div><span class="agr-select title">' + state.text + '</span></div><div><span class="agr-select price">€' + price + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select weight">' + weight + '</span></div><div><span class="agr-select conf">Cod. Conf: ' + conf + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select producer">' + producer + '</span></div></div>'
-      );
+    );
     return $state;
-  };
+  }
 
 
   $(".select2").select2();

@@ -790,6 +790,12 @@ function my_enqueue($hook)
 
 	} else {
 
+		if ('toplevel_page_esporta-documenti' == $hook) {
+			wp_enqueue_script('agrispesa-export-js', get_theme_file_uri('assets/js/export.js'), array('jquery'), null, true);
+
+			return;
+		}
+
 		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
 			return;
 		}
@@ -815,7 +821,6 @@ function my_enqueue($hook)
 
 		wp_register_script('datatable-js', '//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', array(), null, true);
 		wp_enqueue_script('datatable-js');
-
 		wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
 		wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
 		wp_localize_script('agrispesa-admin-js', 'WPURL', array('siteurl' => get_option('siteurl')));
@@ -2722,33 +2727,34 @@ function consegne_ordini_pages()
 					<?php endif; ?>
 					<br><br>
 
-					<h4>Codice di confezionamento</h4><br>
-					<div style="display: flex">
-						<div>
-							<label>Dal</label><br>
-							<select class="select2" name="confezionamento_dal">
-								<option value="">-- Seleziona --</option>
-								<?php foreach ($confezionamento as $codice): ?>
-									<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</div>
-						<div>
-							<label>Al</label><br>
-							<select class="select2" name="confezionamento_al">
-								<option value="">-- Seleziona --</option>
-								<?php foreach ($confezionamento as $codice): ?>
-									<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-								<?php endforeach; ?>
-							</select>
+					<div id="codice_confezionamento_container">
+						<h4>Codice di confezionamento</h4>
+						<div style="display: flex">
+							<div>
+								<label>Dal</label><br>
+								<select autocomplete="off" name="confezionamento_dal">
+									<option value="">-- Seleziona --</option>
+									<?php foreach ($confezionamento as $codice): ?>
+										<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div>
+								<label>Al</label><br>
+								<select class="select2" name="confezionamento_al">
+									<option value="">-- Seleziona --</option>
+									<?php foreach ($confezionamento as $codice): ?>
+										<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
 						</div>
 					</div>
-
 
 					<br><br>
 					<label>Cosa vuoi esportare?</label><br>
 
-					<select class="select2" name="document_type">
+					<select id="document_type" name="document_type" autocomplete="off">
 						<option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
 						<option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
 						<option value="fabbisogno">Fabbisogno</option>
