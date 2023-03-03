@@ -28,6 +28,11 @@ $dataConsegna = $_POST['data_consegna'];
 			body {
 				margin: 0px;
 			}
+
+			h2, h3, h4 {
+				margin-bottom: 0px;
+				margin-top: 0px;
+			}
 		</style>
 	</head>
 	<body>
