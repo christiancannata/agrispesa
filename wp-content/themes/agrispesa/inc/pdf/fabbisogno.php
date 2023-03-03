@@ -3,8 +3,6 @@
 use Dompdf\Dompdf;
 
 $dataConsegna = $_POST['data_consegna'];
-$confezionamento = $_POST['confezionamento'];
-
 
 $groups = get_posts([
 	'post_type' => 'delivery-group',
@@ -70,46 +68,6 @@ foreach ($totalOrders as $order) {
 		$totalProducts[$product_id]['product_orders'][] = $item;
 
 
-		/*$productProducers = get_post_meta($product_id, 'product_producer', true);
-
-		if (empty($productProducers)) {
-			continue;
-		}
-
-		foreach ($productProducers as $productProducer) {
-
-			if (!isset($producers[$productProducer])) {
-
-				$producerObj = get_post($productProducer);
-
-				$producers[$productProducer] = [];
-				$producers[$productProducer]['producer'] = $producerObj;
-				$producers[$productProducer]['groups'] = [];
-			}
-
-			if (!isset($producers[$productProducer]['groups'][$gruppo])) {
-				$producers[$productProducer]['groups'][$gruppo] = [
-					'products' => [],
-					'total' => []
-				];
-			}
-
-			$producers[$productProducer]['groups'][$gruppo]['products'][] = $item;
-
-			if (!isset($producers[$productProducer]['groups'][$gruppo]['total_quantity'][$product_id])) {
-				$producers[$productProducer]['groups'][$gruppo]['total_quantity'][$product_id] = 0;
-			}
-
-			if (!isset($producers[$productProducer]['groups'][$gruppo]['total_orders'][$product_id])) {
-				$producers[$productProducer]['groups'][$gruppo]['total_orders'][$product_id] = 0;
-			}
-
-			$producers[$productProducer]['groups'][$gruppo]['total_quantity'][$product_id] += $item->get_quantity();
-			$producers[$productProducer]['groups'][$gruppo]['total_orders'][$product_id] += 1;
-
-
-		}*/
-
 	}
 
 }
@@ -133,7 +91,6 @@ foreach ($totalProducts as $key => $product) {
 		$totalProducts[$key]['product_groups'][] = $groupOrders;
 	}
 }
-
 
 $dompdf = new Dompdf();
 
@@ -195,12 +152,14 @@ ob_start();
 
 				<?php
 
+				if (empty($group['items'])) {
+					continue;
+				}
 				$totalGroupQuantity = 0;
 				foreach ($group['items'] as $item) {
 					$totalGroupQuantity += $item->get_quantity();
 					$totalOrder += $item->get_quantity();
 				}
-
 
 
 				$unitaMisura = 'gr';
@@ -211,23 +170,26 @@ ob_start();
 				}
 
 				?>
+
+				<tr>
+					<td><?php echo $productObj->get_sku(); ?></td>
+					<td><?php echo $productObj->get_name(); ?></td>
+					<td><?php echo $totalGroupQuantity ?></td>
+					<td><?php echo $unitaMisura; ?></td>
+					<td><?php echo $totalGroupQuantity ?></td>
+					<td><?php echo $group['group_name']; ?></td>
+					<td></td>
+				</tr>
+				<!--
 				<?php foreach ($group['items'] as $item) : ?>
 					<?php
 					/*$totalQuantity += $groupProducts['total_quantity'][$product->get_id()];
 					$totalOrder += $groupProducts['total_orders'][$product->get_id()];
 */
 					?>
-					<tr>
-						<td><?php echo $productObj->get_sku(); ?></td>
-						<td><?php echo $productObj->get_name(); ?></td>
-						<td><?php echo $totalGroupQuantity ?></td>
-						<td><?php echo $unitaMisura; ?></td>
-						<td><?php echo $totalGroupQuantity ?></td>
-						<td><?php echo $group['group_name']; ?></td>
-						<td></td>
-					</tr>
-				<?php endforeach; ?>
 
+				<?php endforeach; ?>
+-->
 			<?php endforeach; ?>
 
 			</tbody>
@@ -240,7 +202,7 @@ ob_start();
 
 			<th><?php echo $totalQuantity; ?></th>
 			<th></th>
-			<th><?php echo $productObj->get_stock_quantity(); ?></th>
+			<th><?php echo $productObj->get_stock_quantity() + $totalOrder; ?></th>
 			</tfoot>
 		</table>
 	<?php endforeach; ?>
