@@ -108,8 +108,8 @@ body.woocommerce-checkout {
 					background: transparent;
 
 					th {
-						@include font-size(16);
-						font-weight: 300 !important;
+						@include font-size(12);
+						font-weight: 400 !important;
 					}
 
 					.recurring-total,
