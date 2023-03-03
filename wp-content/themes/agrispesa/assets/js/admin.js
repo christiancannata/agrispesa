@@ -22,6 +22,13 @@ jQuery(document).ready(function ($) {
 
   $('.datatable').DataTable();
 
+  $('.box-table').DataTable({
+    order: [[0, 'desc']],
+    orderClasses: false,
+  });
+
+
+
 
   $(".add-product-box").click(function (e) {
     e.preventDefault()

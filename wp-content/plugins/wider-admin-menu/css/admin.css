@@ -1,0 +1,21 @@
+/*
+ * Wider Admin Menu > Plugins page
+ */
+
+.lnt {
+	color: #868686;
+}
+.lnt .dashicons {
+	background-color: #2FCCFF;
+	border-radius: 5px;
+	color: #FFF;
+	font-weight: 700;
+	font-size: 16px;
+	height: 16px;
+	width: 16px;
+	margin-right: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	position: relative;
+		top: 2px;
+}
