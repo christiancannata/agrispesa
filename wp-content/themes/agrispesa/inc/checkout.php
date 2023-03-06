@@ -162,85 +162,36 @@ function quadlayers_custom_add_to_cart_message(){
 	return $message;
 }
 
-
 //Sposta login al checkout
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 //add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_login_form' );
 
 
-//Campi checkout
-// add_action('woocommerce_after_order_notes', 'personal_checkout_field');
-// function personal_checkout_field($checkout){
-// 	echo '<div class="woocommerce-border-form">';
-// 	echo '<h3 class="checkout--title">Su di te <span class="ec ec-sparkles"></span></h3>';
-// 	woocommerce_form_field('compleanno', array(
-// 		'type' => 'date',
-// 		'class' => 'input-text ',
-// 		'label' => __('Data di nascita'),
-// 		'required' => false,
-// 		'placeholder' => 'Sarà un buon motivo per festeggiare!',
-// 	), $checkout->get_value('compleanno'));
-// 	echo '</div>';
+// add_action( 'woocommerce_before_order_notes', 'delivery_checkout_field' );
+// function delivery_checkout_field( $checkout ) {
+// 	echo '<div class="woocommerce-border-form w-bottom">';
+// 	echo '<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>';
+// 	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
+//
+//     woocommerce_form_field( 'scala', array(
+//         'type'          => 'text',
+//         'class'         => array('form-row-wide'),
+//         'label'         => __('Scala'),
+//         'placeholder'   => __('In quale scala abiti?'),
+// 			), $checkout->get_value( 'scala' ));
+//
+// 			woocommerce_form_field( 'piano', array(
+// 	        'type'          => 'number',
+// 	        'class'         => array('form-row-wide'),
+// 	        'label'         => __('Piano'),
+// 	        'placeholder'   => __('A che piano vivi?'),
+// 					'required' => true,
+// 				), $checkout->get_value( 'piano' ));
+//
+//     echo '</div>';
 // }
 
 
-add_action( 'woocommerce_before_order_notes', 'delivery_checkout_field' );
-function delivery_checkout_field( $checkout ) {
-	echo '<div class="woocommerce-border-form w-bottom">';
-	echo '<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>';
-	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
-
-    woocommerce_form_field( 'scala', array(
-        'type'          => 'text',
-        'class'         => array('form-row-wide'),
-        'label'         => __('Scala'),
-        'placeholder'   => __('In quale scala abiti?'),
-			), $checkout->get_value( 'scala' ));
-
-			woocommerce_form_field( 'piano', array(
-	        'type'          => 'number',
-	        'class'         => array('form-row-wide'),
-	        'label'         => __('Piano'),
-	        'placeholder'   => __('A che piano vivi?'),
-					'required' => true,
-				), $checkout->get_value( 'piano' ));
-
-    echo '</div>';
-}
-
-/*** Process the checkout*/
-add_action('woocommerce_checkout_process', 'personal_checkout_field_process');
-function personal_checkout_field_process() {
-    // Check if set, if its not set add an error.
-    if ( ! $_POST['piano'] )
-        wc_add_notice( __( 'Per favore, facci sapere a che piano sei.' ), 'error' );
-}
-
-/*** Update the order meta with field value */
-add_action( 'woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta' );
-function my_custom_checkout_field_update_order_meta( $order_id ) {
-    if ( ! empty( $_POST['piano'] ) ) {
-        update_post_meta( $order_id, 'Piano', sanitize_text_field( $_POST['piano'] ) );
-    }
-		if ( ! empty( $_POST['scala'] ) ) {
-        update_post_meta( $order_id, 'Scala', sanitize_text_field( $_POST['scala'] ) );
-    }
-}
-
-/*** Display field value on the order edit page */
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'delivery_checkout_field_display_admin_order_meta', 10, 1 );
-function delivery_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('Scala').':</strong> ' . get_post_meta( $order->get_id(), 'scala', true ) . '</p>';
-    echo '<p><strong>'.__('Piano').':</strong> ' . get_post_meta( $order->get_id(), 'piano', true ) . '</p>';
-}
-
-//Rimuovi linea indirizzo 2
-// add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
-// function custom_override_checkout_fields( $fields ) {
-//     unset($fields['billing_address_2']);
-// 		unset($fields['shipping_address_2']);
-//     return $fields;
-// }
 
 //Metti in sospeso l'ordine di default
 add_action( 'woocommerce_payment_complete', 'webappick_set_completed_for_paid_orders' );
@@ -266,3 +217,72 @@ function custom_dropdown_bulk_actions_shop_order( $actions ) {
     //$actions['mark_completed']  = __( 'Mark order received', 'woocommerce' );
     return $actions;
 }
+
+
+//Add custom fields to checkout
+function cloudways_custom_checkout_fields($fields){
+    $fields['cloudways_extra_fields'] = array(
+      	'cloudways_scala_field' => array(
+          'type' => 'text',
+          'required'      => true,
+					'label'         => __('Scala'),
+					'placeholder'   => __('In quale scala abiti?'),
+        ),
+				'cloudways_piano_field' => array(
+          'type' => 'text',
+          'required'      => true,
+					'label'         => __('Piano'),
+					'placeholder'   => __('A che piano vivi?'),
+        ),
+    );
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
+function cloudways_extra_checkout_fields(){
+    $checkout = WC()->checkout(); ?>
+		<div id="shipping-custom-fields" class="woocommerce-border-form w-bottom">
+			<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>
+			<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
+	    <?php
+	       foreach ( $checkout->checkout_fields['cloudways_extra_fields'] as $key => $field ) : ?>
+	            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+	        <?php endforeach; ?>
+	    </div>
+<?php }
+add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
+
+//Save data of WooCommerce Custom Checkout Fields
+function cloudways_save_extra_checkout_fields( $order_id, $posted ){
+    // don't forget appropriate sanitization if you are using a different field type
+    if( isset( $posted['cloudways_scala_field'] ) ) {
+        update_post_meta( $order_id, '_cloudways_scala_field', sanitize_text_field( $posted['cloudways_scala_field'] ) );
+    }
+    if( isset( $posted['cloudways_piano_field'] ) ) {
+        update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
+    }
+
+}
+add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_checkout_fields', 10, 2 );
+
+//Display WooCommerce Admin Custom Order Fields
+function cloudways_display_order_data_in_admin( $order ){  ?>
+    <div class="order_data_column">
+        <h4><?php _e( 'Informazioni per la consegna', 'woocommerce' ); ?><a href="#" class="edit_address"><?php _e( 'Edit', 'woocommerce' ); ?></a></h4>
+        <div class="address">
+        <?php
+            echo '<p><strong>' . __( 'Scala' ) . ':</strong>' . get_post_meta( $order->id, '_cloudways_scala_field', true ) . '</p>';
+            echo '<p><strong>' . __( 'Piano' ) . ':</strong>' . get_post_meta( $order->id, '_cloudways_piano_field', true ) . '</p>'; ?>
+        </div>
+        <div class="edit_address">
+          <?php woocommerce_wp_text_input( array( 'id' => '_cloudways_scala_field', 'label' => __( 'Scala' ), 'wrapper_class' => '_billing_company_field' ) ); ?>
+          <?php woocommerce_wp_text_input( array( 'id' => '_cloudways_piano_field', 'label' => __( 'Piano' ), 'wrapper_class' => '_billing_company_field' ) ); ?>
+        </div>
+    </div>
+<?php }
+add_action( 'woocommerce_admin_order_data_after_order_details', 'cloudways_display_order_data_in_admin' );
+
+function cloudways_save_extra_details( $post_id, $post ){
+    update_post_meta( $post_id, '_cloudways_text_field', wc_clean( $_POST[ '_cloudways_text_field' ] ) );
+    update_post_meta( $post_id, '_cloudways_dropdown', wc_clean( $_POST[ '_cloudways_dropdown' ] ) );
+}
+add_action( 'woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2 );

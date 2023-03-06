@@ -56,9 +56,17 @@ scrollTo();
 showNameNewsletter();
 emptyCartSlider();
 listCategories();
+moveCustomFieldsCheckout();
 
 
 //changeShippingLabel();
+
+
+function moveCustomFieldsCheckout() {
+  if(jQuery('#shipping-custom-fields').length) {
+    jQuery('#shipping-custom-fields').prependTo('.woocommerce-additional-fields');
+  }
+}
 
 
 function listCategories() {

@@ -105,3 +105,90 @@ Stack trace:
 #4 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2326
 
+2023-03-06T20:01:55+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:02:22+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:11:34+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:12:01+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:12:05+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:12:28+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Checkout as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:224
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): cloudways_custom_checkout_fields(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-shipping.php(55): do_action('woocommerce_bef...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(342): wc_get_template('checkout/form-s...', Array)
+#6 /Users/nathalie/Sites/localhos in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 224
+
+2023-03-06T20:21:01+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T20:21:09+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T20:21:14+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
