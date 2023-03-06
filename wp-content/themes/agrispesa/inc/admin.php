@@ -54,6 +54,10 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 	}
 
 	//if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+	if (is_string($date)) {
+		$date = new DateTime($date);
+	}
+
 	$date->add(new DateInterval('P7D'));
 	//}
 
