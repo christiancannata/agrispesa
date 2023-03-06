@@ -2190,12 +2190,25 @@ function consegne_ordini_pages()
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="width:40%;">
 
+
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
 								Prodotti in negozio</label>
-
 							<select name="products_id" id="products_id" class="select2 agr-select" style="width: 100%">
 								<option disabled selected value="">Scegli un prodotto</option>
-								<?php foreach ($categories as $category) {
+								<?php
+								$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+								$negozioID = $getIDbyNAME->term_id;
+
+								$loop_categories = get_categories(
+									array(
+										'taxonomy' => 'product_cat',
+										'hide_empty' => 1,
+										'parent' => $negozioID,
+									)
+								);
+
+								foreach ($loop_categories as $loop_category) {
+
 									$args = array(
 										'posts_per_page' => -1,
 										'tax_query' => array(
@@ -2205,7 +2218,7 @@ function consegne_ordini_pages()
 											array(
 												'taxonomy' => 'product_cat',
 												'field' => 'slug',
-												'terms' => $category['name']
+												'terms' => $loop_category->slug
 											),
 										),
 										'post_type' => 'product',
@@ -2224,7 +2237,7 @@ function consegne_ordini_pages()
 									$posts_per_cat = $count_posts->found_posts;
 
 									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $category['name'] . '">';
+										echo '<optgroup label="' . $loop_category->name . '">';
 									}
 
 									while ($cat_query->have_posts()) : $cat_query->the_post();
@@ -2232,6 +2245,7 @@ function consegne_ordini_pages()
 										$productID = get_the_ID();
 										$price = get_post_meta($productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
+										$sku = get_post_meta($productID, '_sku', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 
 										$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
@@ -2261,7 +2275,7 @@ function consegne_ordini_pages()
 										}
 
 										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-sku="'.$sku.'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2282,7 +2296,22 @@ function consegne_ordini_pages()
 							<select name="products_id" id="products_id_unavailable" class="select2 agr-select"
 									style="width:100%;">
 								<option disabled selected value="">Scegli un prodotto</option>
-								<?php foreach ($categories as $category) {
+								<?php
+								$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+								$negozioID = $getIDbyNAME->term_id;
+
+								$loop_categories = get_categories(
+									array(
+										'taxonomy' => 'product_cat',
+										// 'orderby' => $orderby,
+										// 'meta_key' => $meta_key,
+										'hide_empty' => 1,
+										'parent' => $negozioID,
+									)
+								);
+
+								foreach ($loop_categories as $loop_category) {
+
 									$args = array(
 										'posts_per_page' => -1,
 										'tax_query' => array(
@@ -2292,7 +2321,7 @@ function consegne_ordini_pages()
 											array(
 												'taxonomy' => 'product_cat',
 												'field' => 'slug',
-												'terms' => $category['name']
+												'terms' => $loop_category->slug
 											),
 										),
 										'post_type' => 'product',
@@ -2311,7 +2340,7 @@ function consegne_ordini_pages()
 									$posts_per_cat = $count_posts->found_posts;
 
 									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $category['name'] . '">';
+										echo '<optgroup label="' . $loop_category->slug . '">';
 									}
 
 									while ($cat_query->have_posts()) : $cat_query->the_post();
@@ -2319,6 +2348,7 @@ function consegne_ordini_pages()
 										$productID = get_the_ID();
 										$price = get_post_meta($productID, '_regular_price', true);
 										$weight = get_post_meta($productID, '_weight', true);
+										$sku = get_post_meta($productID, '_sku', true);
 										$fornitore = get_post_meta($productID, 'product_producer', true);
 										$unitaMisura = ' gr';
 										$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
@@ -2345,7 +2375,7 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
-										echo '<option value="' . $productID . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-sku="'.$sku.'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2366,6 +2396,7 @@ function consegne_ordini_pages()
 					<table id="new-products" class="dataTable" style="border-collapse: collapse; width: 100%;">
 						<thead>
 						<th>Descrizione</th>
+						<th>Codice</th>
 						<th style="width: 70px;">Peso</th>
 						<th>Fornitore</th>
 						<th>Prezzo</th>
@@ -2378,6 +2409,9 @@ function consegne_ordini_pages()
 						<tr v-for="(product,index) of products">
 							<td>
 								<span v-html="product.name"></span>
+							</td>
+							<td>
+								<span>SKU</span>
 							</td>
 							<td style="width: 80px;">
 								<span v-html="product.weight"></span>
@@ -2405,6 +2439,7 @@ function consegne_ordini_pages()
 						</tbody>
 						<tfoot>
 						<tr>
+							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
 							<td style="border-top: 2px solid #000; border-bottom:none;"></td>
 							<td style="width: 80px;border-top: 2px solid #000; border-bottom:none;">
 								<b>Peso Totale</b><br/><b v-html="totalWeight"></b>
@@ -2441,6 +2476,9 @@ function consegne_ordini_pages()
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
 								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+								<span style="padding-right:16px;">Box n°</span></th>
+							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
+								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
 							<th scope="col" id="comment" class="manage-column column-comment column-primary"
 								style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
@@ -2461,7 +2499,12 @@ function consegne_ordini_pages()
 
 						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 
-						<?php foreach ($boxs as $box):
+						<?php
+							$i = 1;
+							foreach ($boxs as $box):
+								if($i < 10) {
+									$i = '0'.$i;
+								}
 							$boxId = get_post_meta($box->ID, '_product_box_id', true);
 
 							$productBox = get_post($boxId);
@@ -2484,6 +2527,9 @@ function consegne_ordini_pages()
 							<tr id="comment-1" class="comment even thread-even depth-1 approved ">
 
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
+									<span class="create-box-table--span-item week">Box n° <?php echo $i; ?></span>
+								</td>
+								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
@@ -2501,6 +2547,7 @@ function consegne_ordini_pages()
 									<table style="max-width: 100%;border-collapse: collapse">
 										<thead>
 										<th>Descrizione</th>
+										<th>Codice</th>
 										<th style="width: 70px;">Peso</th>
 										<th>Fornitore</th>
 										<th>Prezzo</th>
@@ -2516,6 +2563,7 @@ function consegne_ordini_pages()
 										?>
 										<?php foreach ($products as $key => $product): ?>
 											<?php
+											$sku = get_post_meta($product['id'], '_sku', true);
 											$weight = get_post_meta($product['id'], '_weight', true);
 
 											if (!isset($product['price'])) {
@@ -2566,6 +2614,9 @@ function consegne_ordini_pages()
 													<a target="_blank"
 													   href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $product['id'] . '&action=edit'; ?>"><?php echo $product['name']; ?></a>
 												</td>
+												<td>
+													<?php echo $sku; ?>
+												</td>
 												<td class="create-box-table--weight" style="width: 70px;">
 													<?php echo $weight . $unitaMisura; ?>
 												</td>
@@ -2615,7 +2666,22 @@ function consegne_ordini_pages()
 															class="agr-select new-product-box" style="width:100%;">
 														<option disabled selected value="">Seleziona un prodotto
 														</option>
-														<?php foreach ($categories as $category) {
+														<?php
+														$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+														$negozioID = $getIDbyNAME->term_id;
+
+														$loop_categories = get_categories(
+															array(
+																'taxonomy' => 'product_cat',
+																// 'orderby' => $orderby,
+																// 'meta_key' => $meta_key,
+																'hide_empty' => 1,
+																'parent' => $negozioID,
+															)
+														);
+
+														foreach ($loop_categories as $loop_category) {
+
 															$args = array(
 																'posts_per_page' => -1,
 																'tax_query' => array(
@@ -2625,7 +2691,7 @@ function consegne_ordini_pages()
 																	array(
 																		'taxonomy' => 'product_cat',
 																		'field' => 'slug',
-																		'terms' => $category['name']
+																		'terms' => $loop_category->slug
 																	),
 																),
 																'post_type' => 'product',
@@ -2644,13 +2710,14 @@ function consegne_ordini_pages()
 															$posts_per_cat = $count_posts->found_posts;
 
 															if ($posts_per_cat != 0) {
-																echo '<optgroup label="' . $category['name'] . '">';
+																echo '<optgroup label="' . $loop_category->name . '">';
 															}
 
 															while ($cat_query->have_posts()) : $cat_query->the_post();
 																//Valori prodotto
 																$productID = get_the_ID();
 																$price = get_post_meta($productID, '_regular_price', true);
+																$sku = get_post_meta($productID, '_sku', true);
 																$weight = get_post_meta($productID, '_weight', true);
 																$fornitore = get_post_meta($productID, 'product_producer', true);
 
@@ -2681,7 +2748,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-sku="'. $sku .'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -2692,6 +2759,7 @@ function consegne_ordini_pages()
 													</select>
 
 												</td>
+												<td style="border-top: 2px solid #000;"></td>
 												<td style="border-top: 2px solid #000;"></td>
 												<td colspan="2" class="create-box-table--add-product-qty"
 													style="border-top: 2px solid #000;">
@@ -2718,7 +2786,21 @@ function consegne_ordini_pages()
 													<select data-box-id="<?php echo $box->ID; ?>"
 															class="agr-select new-product-box" style="width:100%;">
 														<option disabled selected value="">Scegli un prodotto</option>
-														<?php foreach ($categories as $category) {
+														<?php
+														$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+														$negozioID = $getIDbyNAME->term_id;
+
+														$loop_categories = get_categories(
+															array(
+																'taxonomy' => 'product_cat',
+																// 'orderby' => $orderby,
+																// 'meta_key' => $meta_key,
+																'hide_empty' => 1,
+																'parent' => $negozioID,
+															)
+														);
+
+														foreach ($loop_categories as $loop_category) {
 															$args = array(
 																'posts_per_page' => -1,
 																'tax_query' => array(
@@ -2728,7 +2810,7 @@ function consegne_ordini_pages()
 																	array(
 																		'taxonomy' => 'product_cat',
 																		'field' => 'slug',
-																		'terms' => $category['name']
+																		'terms' => $loop_category->slug
 																	),
 																),
 																'post_type' => 'product',
@@ -2747,13 +2829,14 @@ function consegne_ordini_pages()
 															$posts_per_cat = $count_posts->found_posts;
 
 															if ($posts_per_cat != 0) {
-																echo '<optgroup label="' . $category['name'] . '">';
+																echo '<optgroup label="' . $loop_category->name . '">';
 															}
 
 															while ($cat_query->have_posts()) : $cat_query->the_post();
 																//Valori prodotto
 																$productID = get_the_ID();
 																$price = get_post_meta($productID, '_regular_price', true);
+																$sku = get_post_meta($productID, '_sku', true);
 																$weight = get_post_meta($productID, '_weight', true);
 																$fornitore = get_post_meta($productID, 'product_producer', true);
 
@@ -2784,7 +2867,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-sku="'. $sku .'" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -2795,6 +2878,7 @@ function consegne_ordini_pages()
 
 													</select>
 												</td>
+												<td style="border-bottom:none;"></td>
 												<td style="border-bottom:none;"></td>
 												<td colspan="2" class="create-box-table--add-product-qty">
 													<label
@@ -2848,7 +2932,7 @@ function consegne_ordini_pages()
 								</td>
 
 							</tr>
-						<?php endforeach; ?>
+						<?php $i++; endforeach; ?>
 						</tbody>
 					</table>
 					<br><br>

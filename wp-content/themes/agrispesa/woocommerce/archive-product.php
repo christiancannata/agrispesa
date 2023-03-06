@@ -170,6 +170,8 @@ if (woocommerce_product_loop()) {
 		)
 	);
 
+
+
 	if (empty($loop_categories)) {
 		echo '<div class="products-list--header">';
 		echo '<h3 class="products-list--title">' . $term->name . '</h3>';

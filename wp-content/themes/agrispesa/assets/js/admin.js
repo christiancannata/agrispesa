@@ -4,12 +4,13 @@ jQuery(document).ready(function ($) {
       return state.text;
     }
     var producer = $(state.element).data('producer');
+    var sku = $(state.element).data('sku');
     var price = $(state.element).data('price');
     var weight = $(state.element).data('weight');
     var conf = $(state.element).data('conf');
 
     var $state = $(
-      '<div class="agr-select agr-select--flex"><div><span class="agr-select title">' + state.text + '</span></div><div><span class="agr-select price">€' + price + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select weight">' + weight + '</span></div><div><span class="agr-select conf">Cod. Conf: ' + conf + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select producer">' + producer + '</span></div></div>'
+      '<div class="agr-select agr-select--flex"><div><div><span class="agr-select title">' + state.text + '</span><span class="agr-select weight">' + weight + '</span></div></div><div><span class="agr-select price">€' + price + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select sku">' + sku + '</span></div><div><span class="agr-select conf">Cod. Conf: ' + conf + '</span></div></div><div class="agr-select agr-select--flex"><div><span class="agr-select producer">' + producer + '</span></div></div>'
     );
     return $state;
   }
@@ -23,7 +24,7 @@ jQuery(document).ready(function ($) {
   $('.datatable').DataTable();
 
   $('.box-table').DataTable({
-    order: [[0, 'desc']],
+    order: [[0, 'asc']],
     orderClasses: false,
   });
 
@@ -36,13 +37,20 @@ jQuery(document).ready(function ($) {
     let product_id = $(this).closest('tr').find('.new-product-box').val()
     let quantity = $(this).closest('tr').find('.new-quantity').val()
     let product_name = $(this).closest('tr').find('.new-product-box option:selected').data('name')
+    let product_price = $(this).closest('tr').find('.new-product-box option:selected').data('price')
+
+    console.log(product_id);
+    console.log(quantity);
+    console.log(product_name);
+    console.log(product_price);
 
     let box_id = $(this).data('box-id')
 
     axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box/' + box_id + '/products', {
       product_ids: [product_id],
       quantity: [quantity],
-      product_name: [product_name]
+      product_name: [product_name],
+      product_price: [product_price],
     })
       .then((response) => {
         location.href = ''
