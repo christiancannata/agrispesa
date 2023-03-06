@@ -265,21 +265,18 @@ function cloudways_save_extra_checkout_fields( $order_id, $posted ){
 add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_checkout_fields', 10, 2 );
 
 //Display WooCommerce Admin Custom Order Fields
-function cloudways_display_order_data_in_admin( $order ){  ?>
-    <div class="order_data_column">
-        <h4><?php _e( 'Informazioni per la consegna', 'woocommerce' ); ?><a href="#" class="edit_address"><?php _e( 'Edit', 'woocommerce' ); ?></a></h4>
-        <div class="address">
-        <?php
-            echo '<p><strong>' . __( 'Scala' ) . ':</strong>' . get_post_meta( $order->id, '_cloudways_scala_field', true ) . '</p>';
-            echo '<p><strong>' . __( 'Piano' ) . ':</strong>' . get_post_meta( $order->id, '_cloudways_piano_field', true ) . '</p>'; ?>
-        </div>
-        <div class="edit_address">
-          <?php woocommerce_wp_text_input( array( 'id' => '_cloudways_scala_field', 'label' => __( 'Scala' ), 'wrapper_class' => '_billing_company_field' ) ); ?>
-          <?php woocommerce_wp_text_input( array( 'id' => '_cloudways_piano_field', 'label' => __( 'Piano' ), 'wrapper_class' => '_billing_company_field' ) ); ?>
-        </div>
-    </div>
-<?php }
-add_action( 'woocommerce_admin_order_data_after_order_details', 'cloudways_display_order_data_in_admin' );
+
+
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'admin_order_after_billing_address_callback', 10, 1 );
+function admin_order_after_billing_address_callback( $order ){
+    if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
+        echo '<p>'. __("Scala") . ': ' . $tiva1 . '</p>';
+    }
+    if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
+        echo '<p>'. __("Piano") . ': ' . $tfcarr . '</p>';
+    }
+}
+
 
 function cloudways_save_extra_details( $post_id, $post ){
     update_post_meta( $post_id, '_cloudways_text_field', wc_clean( $_POST[ '_cloudways_text_field' ] ) );
