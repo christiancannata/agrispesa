@@ -166,33 +166,6 @@ function quadlayers_custom_add_to_cart_message(){
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 //add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_login_form' );
 
-
-// add_action( 'woocommerce_before_order_notes', 'delivery_checkout_field' );
-// function delivery_checkout_field( $checkout ) {
-// 	echo '<div class="woocommerce-border-form w-bottom">';
-// 	echo '<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>';
-// 	echo '<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>';
-//
-//     woocommerce_form_field( 'scala', array(
-//         'type'          => 'text',
-//         'class'         => array('form-row-wide'),
-//         'label'         => __('Scala'),
-//         'placeholder'   => __('In quale scala abiti?'),
-// 			), $checkout->get_value( 'scala' ));
-//
-// 			woocommerce_form_field( 'piano', array(
-// 	        'type'          => 'number',
-// 	        'class'         => array('form-row-wide'),
-// 	        'label'         => __('Piano'),
-// 	        'placeholder'   => __('A che piano vivi?'),
-// 					'required' => true,
-// 				), $checkout->get_value( 'piano' ));
-//
-//     echo '</div>';
-// }
-
-
-
 //Metti in sospeso l'ordine di default
 add_action( 'woocommerce_payment_complete', 'webappick_set_completed_for_paid_orders' );
 function webappick_set_completed_for_paid_orders( $order_id ) {
@@ -267,7 +240,7 @@ add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_chec
 //Display WooCommerce Admin Custom Order Fields
 
 
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'admin_order_after_shipping_address_callback', 10, 1 );
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
 function admin_order_after_billing_address_callback( $order ){
     if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
         echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
