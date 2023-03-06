@@ -1420,6 +1420,21 @@ function my_custom_submenu_page_callback()
 
 	}
 
+
+	$fabbisognoList = new WP_Query([
+		'posts_per_page' => -1,
+		'post_type' => 'fabbisogno',
+		'meta_query' => [
+			'relation' => 'and',
+			[
+				'key' => 'settimana',
+				'value' => $week,
+				'compare' => '='
+			]
+		]
+	]);
+
+	$fabbisognoList = $fabbisognoList->get_posts();
 	?>
 
 	<div id="wpbody-content">
@@ -1463,19 +1478,24 @@ function my_custom_submenu_page_callback()
 					</tr>
 					</thead>
 					<tbody>
-					<?php foreach ($allProductsNeed as $product):
+					<?php foreach ($fabbisognoList as $fabbisogno):
 
-						$weight = get_post_meta($product['product_id'], '_weight', true);
-						$price = get_post_meta($product['product_id'], '_regular_price', true);
+						$product = wc_get_product($prodottoId);
+						$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
+						$prodottoId = reset($prodottoId);
 
-						$fornitore = get_post_meta($product['product_id'], 'product_producer', true);
+						$weight = get_post_meta($fabbisogno->ID, 'weight', true);
+						$price = get_post_meta($prodottoId, '_regular_price', true);
+
+						$fornitore = get_post_meta($prodottoId, 'product_producer', true);
 						$fornitoreString = '';
 						if (!empty($fornitore)) {
 							$fornitore = reset($fornitore);
 							$fornitore = get_post($fornitore);
 							$fornitoreString = $fornitore->post_title;
 						}
-						$codiceConfezionamento = get_post_meta($product['product_id'], '_codice_confezionamento', true);
+
+						$codiceConfezionamento = get_post_meta($prodottoId, '_codice_confezionamento', true);
 						if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
 							$codiceConfezionamento = '';
 						}
@@ -1483,33 +1503,25 @@ function my_custom_submenu_page_callback()
 							$codiceConfezionamento = reset($codiceConfezionamento);
 						}
 
-						$unitaMisura = ' gr'; //tabella riepilogo box
-						$measureUnit = get_post_meta($product['product_id'], '_woo_uom_input', true);
+						$unitaMisura = ' ' . get_post_meta($fabbisogno->ID, 'weight_type', true);; //tabella riepilogo box
+						$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
 
-						if (!empty($measureUnit)) {
-							$unitaMisura = ' ' . $measureUnit;
-						}
-
-						$measureAcquisto = get_post_meta($product['product_id'], '_uom_acquisto', true);
-						$misura_acquisto = '-';
-						if (!empty($measureAcquisto)) {
-							$misura_acquisto = get_post_meta($product['product_id'], '_uom_acquisto', true);
-						}
+						$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
 						?>
 
 						<tr>
 							<td style="padding: 8px 10px;">
-								<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $product['product_id'] . '&action=edit'; ?>"><?php echo $product['name'] ?></a>
+								<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
 							</td>
 
 							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
 							<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $misura_acquisto; ?></td>
+							<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
 
-							<td style="padding: 8px 10px;"><?php echo $product['current_availability'] ?></td>
-							<td style="padding: 8px 10px;"><?php echo $product['quantity'] ?></td>
+							<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
+							<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
 
 							<td style="padding: 8px 10px;">(da fare)</td>
 						</tr>
@@ -2418,7 +2430,7 @@ function consegne_ordini_pages()
 										}
 
 										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '" data-sku="'.$sku.'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2518,7 +2530,7 @@ function consegne_ordini_pages()
 											$codiceConfezionamento = $codiceConfezionamento;
 										}
 
-										echo '<option value="' . $productID . '" data-sku="'.$sku.'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+										echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 									endwhile; // end of the loop.
 									wp_reset_postdata();
 
@@ -2643,11 +2655,11 @@ function consegne_ordini_pages()
 						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 
 						<?php
-							$i = 1;
-							foreach ($boxs as $box):
-								if($i < 10) {
-									$i = '0'.$i;
-								}
+						$i = 1;
+						foreach ($boxs as $box):
+							if ($i < 10) {
+								$i = '0' . $i;
+							}
 							$boxId = get_post_meta($box->ID, '_product_box_id', true);
 
 							$productBox = get_post($boxId);
@@ -2891,7 +2903,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-sku="'. $sku .'" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -3010,7 +3022,7 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-sku="'. $sku .'" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -3075,7 +3087,7 @@ function consegne_ordini_pages()
 								</td>
 
 							</tr>
-						<?php $i++; endforeach; ?>
+							<?php $i++; endforeach; ?>
 						</tbody>
 					</table>
 					<br><br>
