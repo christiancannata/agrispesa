@@ -267,13 +267,13 @@ add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_chec
 //Display WooCommerce Admin Custom Order Fields
 
 
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'admin_order_after_billing_address_callback', 10, 1 );
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'admin_order_after_shipping_address_callback', 10, 1 );
 function admin_order_after_billing_address_callback( $order ){
     if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
-        echo '<p>'. __("Scala") . ': ' . $tiva1 . '</p>';
+        echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
     }
     if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
-        echo '<p>'. __("Piano") . ': ' . $tfcarr . '</p>';
+        echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
     }
 }
 
