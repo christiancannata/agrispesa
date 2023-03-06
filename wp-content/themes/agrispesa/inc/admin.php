@@ -1074,6 +1074,110 @@ function get_weekly_box_from_box($id, $week)
 	return reset($box);
 }
 
+function generate_fabbisogno()
+{
+	$date = new DateTime();
+	$week = $date->format("W");
+	//dd($week);
+
+	//get all pending orders
+
+	$args = [
+		'posts_per_page' => -1,
+		'post_type' => 'shop_order',
+		'post_status' => ['wc-processing', 'wc-on-hold'],
+		/*'meta_query' => [
+			'relation' => 'and',
+			[
+				'key' => '_week',
+				'value' => $week,
+				'compare' => '='
+			]
+		]*/
+	];
+	$orders = new WP_Query($args);
+	$orders = $orders->get_posts();
+
+	$fabbisogni = [];
+
+	foreach ($orders as $order) {
+		$order = wc_get_order($order->ID);
+
+		foreach ($order->get_items() as $item) {
+			$quantity = $item->get_quantity();
+			$product = $item->get_product();
+
+
+			if (!isset($fabbisogni[$product->get_id()])) {
+				$weight = get_post_meta($product->get_id(), '_weight', true);
+
+				$measureUnit = get_post_meta($product->get_id(), '_woo_uom_input', true);
+				if (!$measureUnit) {
+					$measureUnit = 'gr';
+				}
+
+				$measureAcquisto = get_post_meta($product->get_id(), '_uom_acquisto', true);
+				if (empty($measureAcquisto)) {
+					$measureAcquisto = 'pz';
+				}
+
+				$tmpFabbisogno = [
+					'fabbisogno' => $quantity,
+					'weight' => $weight,
+					'quantity_type' => $measureAcquisto,
+					'weight_type' => $measureUnit
+				];
+
+				$fabbisogni[$product->get_id()] = $tmpFabbisogno;
+
+			} else {
+				$fabbisogni[$product->get_id()]['fabbisogno'] += $quantity;
+			}
+
+
+		}
+	}
+
+	global $wpdb;
+
+	$wpdb->query("DELETE p, pm
+  FROM {$wpdb->prefix}posts p
+ INNER
+  JOIN {$wpdb->prefix}postmeta pm
+    ON pm.post_id = p.ID
+ WHERE p.post_type = 'fabbisogno' AND
+       pm.meta_key = 'settimana'
+   AND pm.meta_value = '" . $week . "';");
+
+	$wpdb->query("
+	DELETE pm
+FROM {$wpdb->prefix}postmeta pm
+LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
+WHERE wp.ID IS NULL
+	");
+
+	foreach ($fabbisogni as $productId => $product) {
+		$post_id = wp_insert_post(array(
+			'post_type' => 'fabbisogno',
+			'post_title' => 'Prodotto ' . $productId . ' - Settimana ' . $week,
+			'post_content' => '',
+			'post_status' => 'publish',
+			'comment_status' => 'closed',   // if you prefer
+			'ping_status' => 'closed',      // if you prefer
+		));
+
+		add_post_meta($post_id, 'settimana', $week);
+		add_post_meta($post_id, 'prodotto', [$productId]);
+
+		foreach ($product as $key => $value) {
+			add_post_meta($post_id, $key, $value);
+		}
+
+	}
+
+
+}
+
 function create_order_from_subscription($id)
 {
 	$subscription = wcs_get_subscription($id);
@@ -1254,6 +1358,10 @@ function my_custom_submenu_page_callback()
 		}
 	}
 
+	if (isset($_GET['generate_fabbisogno'])) {
+		generate_fabbisogno();
+	}
+
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => 'active']);
 	/*$subscriptions = array_filter($subscriptions, function ($subscription) {
 	return $subscription->has_status('active');
@@ -1335,6 +1443,11 @@ function my_custom_submenu_page_callback()
 				<br>
 				<h3>Disponibilità prodotti</h3>
 
+
+				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">Genera
+					Fabbisogno</a>
+
+
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 					<tr>
@@ -1373,9 +1486,6 @@ function my_custom_submenu_page_callback()
 						$unitaMisura = ' gr'; //tabella riepilogo box
 						$measureUnit = get_post_meta($product['product_id'], '_woo_uom_input', true);
 
-						if (!empty($measureUnit)) {
-							$unitaMisura = ' ' . $measureUnit;
-						}
 						if (!empty($measureUnit)) {
 							$unitaMisura = ' ' . $measureUnit;
 						}
@@ -1751,6 +1861,39 @@ function cptui_register_my_cpts_delivery_group()
 	];
 
 	register_post_type("weekly-box", $args);
+
+
+	$labels = [
+		"name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+		"singular_name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+	];
+
+	$args = [
+		"label" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => ["slug" => "fabbisogno", "with_front" => true],
+		"query_var" => true,
+		"supports" => ["title", "editor"],
+		"show_in_graphql" => false,
+	];
+	register_post_type("fabbisogno", $args);
+
 }
 
 add_action('init', 'cptui_register_my_cpts_delivery_group');

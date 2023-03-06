@@ -174,9 +174,9 @@ ob_start();
 				<tr>
 					<td><?php echo $productObj->get_sku(); ?></td>
 					<td><?php echo $productObj->get_name(); ?></td>
-					<td><?php echo $totalGroupQuantity ?></td>
+					<td><?php echo $totalGroupQuantity; ?></td>
 					<td><?php echo $unitaMisura; ?></td>
-					<td><?php echo $totalGroupQuantity ?></td>
+					<td><?php echo $totalGroupQuantity; ?></td>
 					<td><?php echo $group['group_name']; ?></td>
 					<td></td>
 				</tr>
