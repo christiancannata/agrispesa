@@ -1086,14 +1086,14 @@ function generate_fabbisogno()
 		'posts_per_page' => -1,
 		'post_type' => 'shop_order',
 		'post_status' => ['wc-processing', 'wc-on-hold'],
-		/*'meta_query' => [
+		'meta_query' => [
 			'relation' => 'and',
 			[
 				'key' => '_week',
 				'value' => $week,
 				'compare' => '='
 			]
-		]*/
+		]
 	];
 	$orders = new WP_Query($args);
 	$orders = $orders->get_posts();
@@ -1106,8 +1106,9 @@ function generate_fabbisogno()
 		foreach ($order->get_items() as $item) {
 			$quantity = $item->get_quantity();
 			$product = $item->get_product();
-
-
+			if (!$product->is_type('simple')) {
+				continue;
+			}
 			if (!isset($fabbisogni[$product->get_id()])) {
 				$weight = get_post_meta($product->get_id(), '_weight', true);
 
