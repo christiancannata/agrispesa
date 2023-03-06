@@ -1480,9 +1480,9 @@ function my_custom_submenu_page_callback()
 					<tbody>
 					<?php foreach ($fabbisognoList as $fabbisogno):
 
-						$product = wc_get_product($prodottoId);
 						$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
 						$prodottoId = reset($prodottoId);
+						$product = wc_get_product($prodottoId);
 
 						$weight = get_post_meta($fabbisogno->ID, 'weight', true);
 						$price = get_post_meta($prodottoId, '_regular_price', true);
