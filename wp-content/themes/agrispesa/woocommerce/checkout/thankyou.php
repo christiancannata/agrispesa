@@ -25,62 +25,64 @@ $next_week_year = date("Y", strtotime("+1 week"));
 
 $box_in_order = false;
 $items = $order->get_items();
-foreach ( $items as $item ) {
-    $product_id = $item->get_product_id();
-    if ( has_term( 'box', 'product_cat', $product_id ) || has_term( 'negozio', 'product_cat', $product_id ) ) {
-       $box_in_order = true;
-       break;
-    }
- }
- if ( $box_in_order ) {
-//$shipping_date = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("l d M Y");
-$shipping_date_weekday = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("l");
-$shipping_date_year = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("Y");
-$shipping_date_month = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("m");
-$shipping_date_day = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("d");
+foreach ($items as $item) {
+	$product_id = $item->get_product_id();
+	if (has_term('box', 'product_cat', $product_id) || has_term('negozio', 'product_cat', $product_id)) {
+		$box_in_order = true;
+		break;
+	}
+}
+if ($box_in_order) {
 
-$shipping_month_it = '';
-if ($shipping_date_month === '01') {
-	$shipping_month_it = 'Gennaio';
-} else if ($shipping_date_month === '02') {
-	$shipping_month_it = 'Febbraio';
-} else if ($shipping_date_month === '03') {
-	$shipping_month_it = 'Marzo';
-} else if ($shipping_date_month === '04') {
-	$shipping_month_it = 'Aprile';
-} else if ($shipping_date_month === '05') {
-	$shipping_month_it = 'Maggio';
-} else if ($shipping_date_month === '06') {
-	$shipping_month_it = 'Giugno';
-} else if ($shipping_date_month === '07') {
-	$shipping_month_it = 'Luglio';
-} else if ($shipping_date_month === '08') {
-	$shipping_month_it = 'Agosto';
-} else if ($shipping_date_month === '09') {
-	$shipping_month_it = 'Settembre';
-} else if ($shipping_date_month === '10') {
-	$shipping_month_it = 'Ottobre';
-} else if ($shipping_date_month === '11') {
-	$shipping_month_it = 'Novembre';
-} else if ($shipping_date_month === '12') {
-	$shipping_month_it = 'Dicembre';
-}
-$shipping_weekday_it = '';
-if ($shipping_date_weekday === 'Monday') {
-	$shipping_weekday_it = 'Lunedì';
-} else if ($shipping_date_weekday === 'Tuesday') {
-	$shipping_weekday_it = 'Martedì';
-} else if ($shipping_date_weekday === 'Wednesday') {
-	$weekday_it = 'Mercoledì';
-} else if ($shipping_date_weekday === 'Thursday') {
-	$shipping_weekday_it = 'Giovedì';
-} else if ($shipping_date_weekday === 'Friday') {
-	$shipping_weekday_it = 'Venerdì';
-} else if ($shipping_date_weekday === 'Saturday') {
-	$shipping_weekday_it = 'Sabato';
-} else if ($shipping_date_weekday === 'Sunday') {
-	$shipping_weekday_it = 'Domenica';
-}
+	$deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode());
+//$shipping_date = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("l d M Y");
+	$shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
+	$shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
+	$shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
+	$shipping_date_day = ($deliveryDate) ? $deliveryDate->format("d") : '';
+
+	$shipping_month_it = '';
+	if ($shipping_date_month === '01') {
+		$shipping_month_it = 'Gennaio';
+	} else if ($shipping_date_month === '02') {
+		$shipping_month_it = 'Febbraio';
+	} else if ($shipping_date_month === '03') {
+		$shipping_month_it = 'Marzo';
+	} else if ($shipping_date_month === '04') {
+		$shipping_month_it = 'Aprile';
+	} else if ($shipping_date_month === '05') {
+		$shipping_month_it = 'Maggio';
+	} else if ($shipping_date_month === '06') {
+		$shipping_month_it = 'Giugno';
+	} else if ($shipping_date_month === '07') {
+		$shipping_month_it = 'Luglio';
+	} else if ($shipping_date_month === '08') {
+		$shipping_month_it = 'Agosto';
+	} else if ($shipping_date_month === '09') {
+		$shipping_month_it = 'Settembre';
+	} else if ($shipping_date_month === '10') {
+		$shipping_month_it = 'Ottobre';
+	} else if ($shipping_date_month === '11') {
+		$shipping_month_it = 'Novembre';
+	} else if ($shipping_date_month === '12') {
+		$shipping_month_it = 'Dicembre';
+	}
+	$shipping_weekday_it = '';
+	if ($shipping_date_weekday === 'Monday') {
+		$shipping_weekday_it = 'Lunedì';
+	} else if ($shipping_date_weekday === 'Tuesday') {
+		$shipping_weekday_it = 'Martedì';
+	} else if ($shipping_date_weekday === 'Wednesday') {
+		$weekday_it = 'Mercoledì';
+	} else if ($shipping_date_weekday === 'Thursday') {
+		$shipping_weekday_it = 'Giovedì';
+	} else if ($shipping_date_weekday === 'Friday') {
+		$shipping_weekday_it = 'Venerdì';
+	} else if ($shipping_date_weekday === 'Saturday') {
+		$shipping_weekday_it = 'Sabato';
+	} else if ($shipping_date_weekday === 'Sunday') {
+		$shipping_weekday_it = 'Domenica';
+	}
 }
 //Giorni
 $weekday_it = '';
@@ -158,21 +160,22 @@ if ($next_week_month === '01') {
 		<div class="thankyou">
 			<div class="thankyou--intro">
 				<h1 class="thankyou--title">
-					Grazie, <span style="text-transform: capitalize;"><?php echo $order->get_billing_first_name();?></span>!
+					Grazie, <span
+						style="text-transform: capitalize;"><?php echo $order->get_billing_first_name(); ?></span>!
 					<br/>Il tempo di raccogliere,<br class="only-desktop"/> e siamo da te.</h1>
 				<p class="thankyou--subtitle">Riceverai presto una mail con i dettagli del tuo ordine.</p>
 				<div class="thankyou--details">
-					<?php if ( $box_in_order ): ?>
+					<?php if ($box_in_order): ?>
 						<div class="thankyou--details--item">
 							<span class="icon-consegna"></span>
 							<div class="thankyou--details--text">
 								<h3 class="thankyou--details--title">Consegniamo la tua scatola</h3>
 								<p class="thankyou--details--info">
-									<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year ; ?>
+									<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>
 								</p>
 							</div>
 						</div>
-					<?php endif;?>
+					<?php endif; ?>
 					<div class="thankyou--details--item">
 						<span class="icon-ordine"></span>
 						<div class="thankyou--details--text">
@@ -181,7 +184,7 @@ if ($next_week_month === '01') {
 								— grazie!</p>
 						</div>
 					</div>
-					<?php if ( $box_in_order ): ?>
+					<?php if ($box_in_order): ?>
 						<div class="thankyou--details--item">
 							<span class="icon-indirizzo"></span>
 							<div class="thankyou--details--text">
@@ -189,7 +192,7 @@ if ($next_week_month === '01') {
 								<p class="thankyou--details--info"><?php echo $order->get_shipping_address_1() . '<br/>' . $order->get_shipping_postcode() . ' ' . $order->get_shipping_city(); ?></p>
 							</div>
 						</div>
-					<?php endif;?>
+					<?php endif; ?>
 					<div class="thankyou--details--item">
 						<span class="icon-totale"></span>
 						<div class="thankyou--details--text">
@@ -203,7 +206,7 @@ if ($next_week_month === '01') {
 					</div>
 					<div class="thankyou--details--item">
 
-						<?php if ( $box_in_order ) {
+						<?php if ($box_in_order) {
 							echo '<span class="icon-prossimo-pagamento"></span>';
 							echo '<div class="thankyou--details--text">';
 							echo '<h3 class="thankyou--details--title">Prossimo pagamento</h3>';
