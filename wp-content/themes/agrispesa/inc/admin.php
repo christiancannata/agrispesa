@@ -127,8 +127,12 @@ add_action('woocommerce_new_order', function ($order_id, $order) {
 		$gruppoConsegna = get_post_meta($order_id, '_gruppo_consegna', true);
 
 		$order_date = $order->get_date_created();
-
+		//nathi
+		$order_date->modify('+1 week');
 		$week = $order_date->format("W");
+
+
+
 		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
 		update_post_meta($order->get_id(), '_week', $week);
 
@@ -1388,6 +1392,7 @@ function my_custom_submenu_page_callback()
 	});*/
 
 	$date = new DateTime();
+	$date->modify('+1 week');
 	$week = $date->format("W");
 
 	$allProductsNeed = [];
@@ -1479,8 +1484,9 @@ function my_custom_submenu_page_callback()
 				<h3>Disponibilità prodotti</h3>
 
 
-				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">Genera
-					Fabbisogno</a>
+				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
+					Genera Fabbisogno
+				</a>
 
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
@@ -2307,8 +2313,14 @@ function consegne_ordini_pages()
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="margin-right:24px;">
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
-								n°</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana n°</label>
+							<?php
+							//new current week (= next week)
+							$date = new DateTime();
+							$date->modify('+1 week');
+							$currentWeek = $date->format("W");
+							?>
+
 							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
 								   type="number" style="width:150px;">
 						</div>
@@ -2316,7 +2328,7 @@ function consegne_ordini_pages()
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data
 								Consegna</label>
-							<?php $wednesday = date('Y-m-d', strtotime('wednesday this week')); ?>
+							<?php $wednesday = date('Y-m-d', strtotime('wednesday next week')); ?>
 							<input class="change_shipping_date" name="data_consegna" id="data_consegna"
 								   value="<?php echo $wednesday; ?>" required type="date" style="width:150px;">
 						</div>
@@ -2924,7 +2936,8 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-name="' . get_the_title() . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '"
+																data-name="' . get_the_title() . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -3043,7 +3056,8 @@ function consegne_ordini_pages()
 																}
 
 																//echo the_title() . ' '. $weight. ' <br>';
-																echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
+																echo '<option value="' . $productID . '"
+																data-sku="' . $sku . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
 															endwhile; // end of the loop.
 															wp_reset_postdata();
 
@@ -3375,7 +3389,26 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			}, $allDataConsegna);
 
 			$date = new DateTime();
+			$date->modify('+1 week');
 			$currentWeek = $date->format("W");
+
+			// $dt = new DateTime();
+			// // create DateTime object with current time
+			//
+			// $dt->setISODate($dt->format('o'), $dt->format('W') + 1);
+			// // set object to Monday on next week
+			//
+			// $periods = new DatePeriod($dt, new DateInterval('P1D'), 6);
+			// // get all 1day periods from Monday to +6 days
+			//
+			// $days = iterator_to_array($periods);
+			// // convert DatePeriod object to array
+			//
+			// //print_r($days);
+			// $currentWeek = $days[0]->format("W");
+
+			// echo '<br/>Mon:' . $days[0]->format('Y-m-d');
+			// echo '<br/>Sun:' . $days[6]->format('Y-m-d');
 
 			$allDataConsegna = array_unique($allDataConsegna);
 			sort($allDataConsegna);
