@@ -1477,6 +1477,9 @@ function my_custom_submenu_page_callback()
 
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
+					<?php $wednesday = date('d/m/Y', strtotime('wednesday next week')); ?>
+					<span
+						style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
 				<hr class="wp-header-end">
 
 				<br>
