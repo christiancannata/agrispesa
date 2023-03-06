@@ -242,10 +242,14 @@ add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_
 function admin_order_after_billing_address_callback( $order ){
     if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
         echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
-    }
+    } else {
+			  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
+		}
     if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
         echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
-    }
+    } else {
+			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
+		}
 }
 
 function cloudways_save_extra_details( $post_id, $post ){
