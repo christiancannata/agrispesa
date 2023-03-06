@@ -126,6 +126,13 @@ function my_custom_fonts() {
   .agr-select.title {
     font-weight: bold;
   }
+  .agr-select.weight {
+    margin-left: 8px;
+    opacity:0.6;
+  }
+  .agr-select.sku {
+    opacity:0.6;
+  }
   .agr-select.producer {
     font-style: italic;
     display:block;
