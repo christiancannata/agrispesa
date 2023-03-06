@@ -1479,20 +1479,14 @@ function my_custom_submenu_page_callback()
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
 				<hr class="wp-header-end">
 
-
 				<br>
 				<h3>Disponibilità prodotti</h3>
-
-
-				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
-					Genera Fabbisogno
-				</a>
-
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 					<tr>
 						<th style="padding: 8px 10px;">Descrizione</th>
+						<th style="padding: 8px 10px;">Codice</th>
 						<th style="padding: 8px 10px;">Peso</th>
 						<th style="padding: 8px 10px;">Fornitore</th>
 						<th style="padding: 8px 10px;">Prezzo</th>
@@ -1500,7 +1494,6 @@ function my_custom_submenu_page_callback()
 						<th style="padding: 8px 10px;">Cod. Conf</th>
 						<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
 						<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
-						<th style="padding: 8px 10px;">Azioni</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -1512,6 +1505,7 @@ function my_custom_submenu_page_callback()
 
 						$weight = get_post_meta($fabbisogno->ID, 'weight', true);
 						$price = get_post_meta($prodottoId, '_regular_price', true);
+						$sku = get_post_meta($prodottoId, '_sku', true);
 
 						$fornitore = get_post_meta($prodottoId, 'product_producer', true);
 						$fornitoreString = '';
@@ -1540,6 +1534,7 @@ function my_custom_submenu_page_callback()
 								<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
 							</td>
 
+							<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
 							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
 							<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
@@ -1549,11 +1544,14 @@ function my_custom_submenu_page_callback()
 							<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
 							<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
 
-							<td style="padding: 8px 10px;">(da fare)</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
 				</table>
+				<br/>
+				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
+					Genera Fabbisogno
+				</a>
 				<br/>
 
 			</div>
