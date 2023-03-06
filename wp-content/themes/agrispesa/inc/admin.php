@@ -1126,12 +1126,22 @@ function generate_fabbisogno()
 					$measureAcquisto = 'pz';
 				}
 
+				$fornitore = get_post_meta($product->get_id(), 'product_producer', true);
+				$fornitoreString = '';
+				if (!empty($fornitore)) {
+					$fornitore = reset($fornitore);
+					$fornitore = get_post($fornitore);
+					$fornitoreString = $fornitore->post_title;
+				}
+
 				$tmpFabbisogno = [
 					'fabbisogno' => $quantity,
 					'weight' => $weight,
 					'product_name' => $product->get_name(),
 					'quantity_type' => $measureAcquisto,
-					'weight_type' => $measureUnit
+					'weight_type' => $measureUnit,
+					'sku' => $product->get_sku(),
+					'produttore' => $fornitoreString
 				];
 
 				$fabbisogni[$product->get_id()] = $tmpFabbisogno;
