@@ -537,3 +537,21 @@ Stack trace:
 #4 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
 
+2023-03-06T22:51:18+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T22:51:26+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+

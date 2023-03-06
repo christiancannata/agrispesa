@@ -5,7 +5,7 @@ jQuery(document).ready(function ($) {
     let $this = $(this)
     setTimeout(
       function () {
-        $this.closest('table').find('input[type="text"]').val('note')
+        $this.closest('table').find('input[type="text"]').val('NOTE')
         $this.closest('table').find('input[type="text"]').attr('readonly', true)
 
       }, 250);

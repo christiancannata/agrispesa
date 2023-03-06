@@ -1847,15 +1847,16 @@ function shop_order_column_meta_field_value( $column ) {
 
     if ( ! is_a( $the_order, 'WC_Order' ) ) {
         $the_order = wc_get_order( $post->ID );
-
     }
 
     if ( $column == 'type_notes' ) {
 			$order = wc_get_order( $the_order );
 			$items = $order->get_items();
+
 			foreach ( $items as $item ) {
-				$notes = get_post_meta($the_order, '_note', true);
-				echo $notes;
+				$meta_data = $item->get_formatted_meta_data();
+		    $meta_value = $item->get_meta("note");
+				echo '<span style="line-height:1.2;display:inline-block;">' . $meta_value . '</span>';
 			}
 		}
 
@@ -1888,36 +1889,16 @@ function shop_order_column_meta_field_value( $column ) {
 }
 
 // Make custom column sortable
-add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' );
-function shop_order_column_meta_field_sortable( $columns )
-{
-    $meta_key = '_shipping_postcode';
-    return wp_parse_args( array('postcode' => $meta_key), $columns );
-}
+// add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' );
+// function shop_order_column_meta_field_sortable( $columns )
+// {
+//     $meta_key = 'name';
+//     return wp_parse_args( array('type_notes' => $meta_key), $columns );
+//     return wp_parse_args( array('type_shopping' => $meta_key), $columns );
+// }
 
-// Make sorting work properly (by numerical values)
-add_action('pre_get_posts', 'shop_order_column_meta_field_sortable_orderby' );
-function shop_order_column_meta_field_sortable_orderby( $query ) {
-    global $pagenow;
 
-    if ( 'edit.php' === $pagenow && isset($_GET['post_type']) && 'shop_order' === $_GET['post_type'] ){
 
-        $orderby  = $query->get( 'orderby');
-        $meta_key = '_shipping_postcode';
-
-        if ('_shipping_postcode' === $orderby){
-          $query->set('meta_key', $meta_key);
-          $query->set('orderby', 'meta_value_num');
-        }
-    }
-}
-
-// Make metakey searchable in the shop orders list
-add_filter( 'woocommerce_shop_order_search_fields', 'shipping_postcode_searchable_field' );
-function shipping_postcode_searchable_field( $meta_keys ){
-    $meta_keys[] = '_shipping_postcode';
-    return $meta_keys;
-}
 
 
 function cptui_register_my_cpts_delivery_group()
