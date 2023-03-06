@@ -1726,7 +1726,7 @@ function my_custom_submenu_page_callback()
 add_action('admin_menu', 'register_my_custom_submenu_page', 99);
 
 
-add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
+//add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
 function custom_shop_order_column($columns)
 {
 	$reordered_columns = array();
@@ -1745,7 +1745,7 @@ function custom_shop_order_column($columns)
 }
 
 // Adding custom fields meta data for each new column (example)
-add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
+//add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
 function custom_orders_list_column_content($column, $post_id)
 {
 	switch ($column) {
@@ -1822,6 +1822,101 @@ function custom_orders_list_column_content($column, $post_id)
 			break;
 
 	}
+}
+
+// Add a custom column
+add_filter( 'manage_edit-shop_order_columns', 'add_custom_shop_order_column' );
+function add_custom_shop_order_column( $columns ) {
+    $order_actions = $columns['order_actions'];
+    unset($columns[ 'order_actions' ]);
+
+    // add custom column
+    $columns['type_shopping'] = __('Spesa', 'woocommerce');
+    $columns['type_notes'] = __('Note', 'woocommerce');
+
+    // Insert back 'order_actions' column
+    $columns['order_actions'] = $order_actions;
+
+    return $columns;
+}
+
+// Custom column content
+add_action( 'manage_shop_order_posts_custom_column', 'shop_order_column_meta_field_value' );
+function shop_order_column_meta_field_value( $column ) {
+    global $post, $the_order;
+
+    if ( ! is_a( $the_order, 'WC_Order' ) ) {
+        $the_order = wc_get_order( $post->ID );
+
+    }
+
+    if ( $column == 'type_notes' ) {
+			$order = wc_get_order( $the_order );
+			$items = $order->get_items();
+			foreach ( $items as $item ) {
+				$notes = get_post_meta($the_order, '_note', true);
+				echo $notes;
+			}
+		}
+
+    if ( $column == 'type_shopping' ) {
+			$order = wc_get_order( $the_order );
+
+		 $box_in_order = false;
+		 $not_a_box = false;
+		 $items = $order->get_items();
+
+		 foreach ( $items as $item ) {
+				$product_id = $item->get_product_id();
+					if ( has_term( 'box', 'product_cat', $product_id ) ) {
+						 $box_in_order = true;
+						 break;
+					}
+					if ( !has_term( 'box', 'product_cat', $product_id ) ) {
+						 $not_a_box = true;
+						 break;
+					}
+			 }
+			 if ( $box_in_order == true && $not_a_box == false ) {
+					echo 'FN';
+			 } else if( $box_in_order == false && $not_a_box == true ){
+				 echo 'ST';
+			 } else {
+				 echo 'FN + ST';
+			 }
+    }
+}
+
+// Make custom column sortable
+add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' );
+function shop_order_column_meta_field_sortable( $columns )
+{
+    $meta_key = '_shipping_postcode';
+    return wp_parse_args( array('postcode' => $meta_key), $columns );
+}
+
+// Make sorting work properly (by numerical values)
+add_action('pre_get_posts', 'shop_order_column_meta_field_sortable_orderby' );
+function shop_order_column_meta_field_sortable_orderby( $query ) {
+    global $pagenow;
+
+    if ( 'edit.php' === $pagenow && isset($_GET['post_type']) && 'shop_order' === $_GET['post_type'] ){
+
+        $orderby  = $query->get( 'orderby');
+        $meta_key = '_shipping_postcode';
+
+        if ('_shipping_postcode' === $orderby){
+          $query->set('meta_key', $meta_key);
+          $query->set('orderby', 'meta_value_num');
+        }
+    }
+}
+
+// Make metakey searchable in the shop orders list
+add_filter( 'woocommerce_shop_order_search_fields', 'shipping_postcode_searchable_field' );
+function shipping_postcode_searchable_field( $meta_keys ){
+    $meta_keys[] = '_shipping_postcode';
+    return $meta_keys;
 }
 
 

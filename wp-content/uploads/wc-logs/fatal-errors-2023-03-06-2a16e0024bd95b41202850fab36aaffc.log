@@ -448,3 +448,92 @@ Stack trace:
 #4 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
 
+2023-03-06T22:40:42+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:11+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:25+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:32+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:34+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:37+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:39+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:41:41+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1856
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(310): shop_order_column_meta_field_value('type_shopping')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'type_shopping', 909)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'type_shopping')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agr in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1856
+
+2023-03-06T22:42:54+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
