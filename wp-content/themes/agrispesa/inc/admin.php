@@ -1857,9 +1857,9 @@ function shop_order_column_meta_field_value( $column ) {
 				$meta_data = $item->get_formatted_meta_data();
 		    $meta_value = $item->get_meta("note");
 				if($i == 1) {
-					echo '<span style="line-height:1.2;display:inline-block;border-bottom: 1px solid #999;">' .  $meta_value . '</span>';
+					echo '<span style="line-height:1.2;display:inline-block;">' .  $meta_value . '</span>';
 				} else {
-					echo '<span style="line-height:1.2;display:inline-block;border-bottom: 1px solid #999;margin-top:5px;">' . $meta_value . '</span>';
+					echo '<span style="line-height:1.2;display:inline-block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' . $meta_value . '</span>';
 				}
 
 				$i++;
