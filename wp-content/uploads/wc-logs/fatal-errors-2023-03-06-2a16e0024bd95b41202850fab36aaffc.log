@@ -210,3 +210,241 @@ Stack trace:
 #4 {main}
   thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
 
+2023-03-06T21:00:54+00:00 CRITICAL Cannot redeclare custom_shop_order_column() (previously declared in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1730) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 261
+
+2023-03-06T21:00:55+00:00 CRITICAL Cannot redeclare custom_shop_order_column() (previously declared in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1730) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 261
+
+2023-03-06T21:22:21+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:11+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:26+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:30+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:33+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:40+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:42+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:45+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:49+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:53+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:23:59+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:24:08+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1771
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(1771): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column2', 890)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column2', 890)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column2')
+ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1771
+
+2023-03-06T21:27:43+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T21:27:47+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T21:27:51+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T21:27:55+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T21:30:32+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:31:02+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:31:09+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:31:15+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:31:29+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:31:32+00:00 CRITICAL Uncaught Error: Call to undefined function get_order_type() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1755
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_orders_list_column_content('my-column1', 896)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1363): do_action('manage_shop_ord...', 'my-column1', 896)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-list-table.php(1532): WP_Posts_List_Table->column_default(Object(WP_Post), 'my-column1')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/class-wp-posts-list-table.php(1397): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 /Users/nathalie/Sites/localhost/agrispesa/ in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1755
+
+2023-03-06T21:34:23+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+
+2023-03-06T22:01:30+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (13/02/2023) at position 0 (1): Unexpected character in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php:929
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php(929): DateTime->__construct('13/02/2023')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/includes/template.php(1409): mv_add_other_fields_for_packaging(Object(WP_Post), Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/edit-form-advanced.php(681): do_meta_boxes(Object(WP_Screen), 'side', Object(WP_Post))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-admin/post.php(206): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 929
+

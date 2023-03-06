@@ -1736,7 +1736,7 @@ function custom_shop_order_column($columns)
 		$reordered_columns[$key] = $column;
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
-			//$reordered_columns['my-column1'] = 'Tipo';
+		$reordered_columns['my-column1'] = 'Spesa';
 			// $reordered_columns['my-column2'] = 'Data Consegna';
 			// $reordered_columns['my-column3'] = 'Preferenze';
 		}
@@ -1752,11 +1752,31 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column1' :
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
-			if (!empty($orderType))
-				echo 'FN';
-			// Testing (to be removed) - Empty value case
-			else
-				echo 'ST';
+
+		   $order = wc_get_order( $post_id );
+
+		   $box_in_order = false;
+		   $not_a_box = false;
+			 $items = $order->get_items();
+
+		   foreach ( $items as $item ) {
+		      $product_id = $item->get_product_id();
+		      if ( has_term( 'box', 'product_cat', $product_id ) ) {
+		         $box_in_order = true;
+		         break;
+		      }
+					if ( !has_term( 'box', 'product_cat', $product_id ) ) {
+		         $not_a_box = true;
+		         break;
+		      }
+		   }
+		   if ( $box_in_order == true && $not_a_box == false ) {
+		      echo 'FN';
+		   } else if( $box_in_order == false && $not_a_box == true ){
+				 echo 'ST';
+			 } else {
+				 echo 'FN + ST';
+			 }
 
 			break;
 
@@ -1777,13 +1797,26 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column3' :
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
+			$order = wc_get_order( $post_id );
 
+			$box_in_order = false;
+			$items = $order->get_items();
 
-			if ($orderType == 'FN') {
-				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
-				if (!empty($boxPreferences))
-					echo '✅';
+			foreach ( $items as $item ) {
+				 $product_id = $item->get_product_id();
+				 if ( has_term( 'box', 'product_cat', $product_id ) ) {
+						$box_in_order = true;
+						break;
+				 }
 			}
+			if ( $box_in_order ) {
+				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
+			 if (!empty($boxPreferences)) {
+				 echo '✅';
+			 } else {
+ 				echo '-';
+ 			}
+		}
 
 
 			break;

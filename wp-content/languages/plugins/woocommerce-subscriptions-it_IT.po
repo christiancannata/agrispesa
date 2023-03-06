@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-02-26 12:47+0100\n"
+"PO-Revision-Date: 2023-03-06 22:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -1146,7 +1146,7 @@ msgstr ""
 #: includes/class-wcs-customer-suspension-manager.php:110
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:498
 msgid "Suspend"
-msgstr ""
+msgstr "Sospendi"
 
 #: includes/class-wcs-drip-downloads-manager.php:64
 #: vendor/woocommerce/subscriptions-core/includes/upgrades/templates/wcs-about-2-0.php:108
@@ -2345,7 +2345,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wc-subscriptions-admin.php:1000
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-core-plugin.php:359
 msgid "Search Subscriptions"
-msgstr ""
+msgstr "Cerca abbonamenti"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wc-subscriptions-admin.php:1226
 msgctxt "options section heading"
@@ -2580,17 +2580,17 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:214
 msgid "Search for a product&hellip;"
-msgstr ""
+msgstr "Cerca un prodotto&hellip;"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:258
 msgctxt "an action on a subscription"
 msgid "Activate"
-msgstr ""
+msgstr "Attiva"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:259
 msgctxt "an action on a subscription"
 msgid "Put on-hold"
-msgstr ""
+msgstr "Metti in sospeso"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:260
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:499
@@ -2730,7 +2730,7 @@ msgstr "Elimina ora"
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:553
 msgctxt "meaning billing address"
 msgid "Billing:"
-msgstr ""
+msgstr "Fatturazione:"
 
 #. translators: placeholder is customer's billing email
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:558
@@ -2823,11 +2823,11 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:982
 msgid "Any Payment Method"
-msgstr ""
+msgstr "Tutti i metodi di pagamento"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:983
 msgid "None"
-msgstr ""
+msgstr "Nessuno"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:989
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:2030
@@ -2843,7 +2843,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:1142
 #: vendor/woocommerce/subscriptions-core/includes/admin/meta-boxes/class-wcs-meta-box-subscription-data.php:90
 msgid "Search for a customer&hellip;"
-msgstr ""
+msgstr "Cerca un cliente&hellip;"
 
 #: vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-product-import-export-manager.php:32
 msgid "Subscription variations"
@@ -4153,37 +4153,37 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:713
 msgid "All orders types"
-msgstr ""
+msgstr "Tutte le spese"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:716
 msgctxt "An order type"
 msgid "Original"
-msgstr ""
+msgstr "Originali"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:717
 msgctxt "An order type"
 msgid "Subscription Parent"
-msgstr ""
+msgstr "FN Nuova attivazione"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:718
 msgctxt "An order type"
 msgid "Subscription Renewal"
-msgstr ""
+msgstr "FN Rinnovo"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:719
 msgctxt "An order type"
 msgid "Subscription Resubscribe"
-msgstr ""
+msgstr "FN Re-iscrizione"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:720
 msgctxt "An order type"
 msgid "Subscription Switch"
-msgstr ""
+msgstr "FN Switch"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:721
 msgctxt "An order type"
 msgid "Non-subscription"
-msgstr ""
+msgstr "ST"
 
 #. translators: $1: opening link tag, $2: order number, $3: closing link tag
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-order.php:1024

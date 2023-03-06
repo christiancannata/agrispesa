@@ -119,4 +119,5 @@ function shortcut_admin_menu_page() {
 	add_menu_page('Carrelli abbandonati', 'Carrelli abbandonati', 'manage_options', esc_url(home_url('/')).'wp-admin/admin.php?page=yith_woocommerce_recover_abandoned_cart');
 	add_menu_page('Analytics clienti', 'Analytics clienti', 'manage_options', esc_url(home_url('/')).'wp-admin/admin.php?page=wc-admin&path=%2Fcustomers');
 	add_menu_page('Visualizza Ordini', 'Visualizza Ordini', 'manage_options', esc_url(home_url('/')).'wp-admin/edit.php?post_type=shop_order');
+	add_menu_page('Visualizza Abbonamenti', 'Visualizza Ordini', 'manage_options', esc_url(home_url('/')).'wp-admin/edit.php?post_type=shop_subscription');
 }
