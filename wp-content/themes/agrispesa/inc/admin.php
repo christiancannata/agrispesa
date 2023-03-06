@@ -1859,7 +1859,7 @@ function shop_order_column_meta_field_value( $column ) {
 				if($i == 1) {
 					echo '<span style="line-height:1.2;display:inline-block;border-bottom: 1px solid #999;">' .  $meta_value . '</span>';
 				} else {
-					echo '<span style="line-height:1.2;display:inline-block;border-bottom: 1px solid #999;margin-top:5px;">' . $i . $meta_value . '</span>';
+					echo '<span style="line-height:1.2;display:inline-block;border-bottom: 1px solid #999;margin-top:5px;">' . $meta_value . '</span>';
 				}
 
 				$i++;
