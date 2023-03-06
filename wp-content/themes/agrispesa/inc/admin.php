@@ -383,9 +383,12 @@ add_action('rest_api_init', function () {
 			$products = get_post_meta($request['box_id'], '_products', true);
 
 			foreach ($request['product_ids'] as $key => $id) {
+
+				$product = wc_get_product($id);
 				$unitaMisura = 'gr';
 
 				$measureUnit = get_post_meta($id, '_woo_uom_input', true);
+				$price = get_post_meta($id, '_price', true);
 
 				if (!empty($measureUnit)) {
 					$unitaMisura = $measureUnit;
@@ -394,8 +397,9 @@ add_action('rest_api_init', function () {
 
 				$products[] = [
 					'id' => $id,
-					'name' => $request['product_name'][$key],
+					'name' => $product->get_name(),
 					'quantity' => $request['quantity'][$key],
+					'price' => $product->get_price(),
 					'unit_measure' => $unitaMisura,
 					'unit_measure_print' => get_post_meta($id, '_uom_acquisto', true)
 				];
@@ -1125,6 +1129,7 @@ function generate_fabbisogno()
 				$tmpFabbisogno = [
 					'fabbisogno' => $quantity,
 					'weight' => $weight,
+					'product_name' => $product->get_name(),
 					'quantity_type' => $measureAcquisto,
 					'weight_type' => $measureUnit
 				];
@@ -1160,7 +1165,7 @@ WHERE wp.ID IS NULL
 	foreach ($fabbisogni as $productId => $product) {
 		$post_id = wp_insert_post(array(
 			'post_type' => 'fabbisogno',
-			'post_title' => 'Prodotto ' . $productId . ' - Settimana ' . $week,
+			'post_title' => $product['product_name'],
 			'post_content' => '',
 			'post_status' => 'publish',
 			'comment_status' => 'closed',   // if you prefer
@@ -2254,6 +2259,7 @@ function consegne_ordini_pages()
 								'id' => $categoryProduct->ID,
 								'name' => $categoryProduct->post_title,
 								'weight' => $weight,
+								'sku' => get_post_meta($categoryProduct->ID, '_sku', true),
 								'fornitore' => $fornitoreString,
 								'unit_measure' => $unitaMisura,
 								'codice_confezionamento' => get_post_meta($categoryProduct->ID, '_codice_confezionamento', true),
@@ -2567,7 +2573,7 @@ function consegne_ordini_pages()
 								<span v-html="product.name"></span>
 							</td>
 							<td>
-								<span>SKU</span>
+								<span v-html="product.sku"></span>
 							</td>
 							<td style="width: 80px;">
 								<span v-html="product.weight"></span>

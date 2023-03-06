@@ -29,8 +29,6 @@ jQuery(document).ready(function ($) {
   });
 
 
-
-
   $(".add-product-box").click(function (e) {
     e.preventDefault()
 
@@ -39,18 +37,11 @@ jQuery(document).ready(function ($) {
     let product_name = $(this).closest('tr').find('.new-product-box option:selected').data('name')
     let product_price = $(this).closest('tr').find('.new-product-box option:selected').data('price')
 
-    console.log(product_id);
-    console.log(quantity);
-    console.log(product_name);
-    console.log(product_price);
-
     let box_id = $(this).data('box-id')
 
     axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/weekly-box/' + box_id + '/products', {
       product_ids: [product_id],
-      quantity: [quantity],
-      product_name: [product_name],
-      product_price: [product_price],
+      quantity: [quantity]
     })
       .then((response) => {
         location.href = ''
