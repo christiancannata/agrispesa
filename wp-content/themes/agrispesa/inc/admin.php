@@ -1089,6 +1089,7 @@ function get_weekly_box_from_box($id, $week)
 function generate_fabbisogno()
 {
 	$date = new DateTime();
+	$date->modify('+1 week');
 	$week = $date->format("W");
 	//dd($week);
 
