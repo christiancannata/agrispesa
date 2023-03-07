@@ -3412,8 +3412,8 @@ function consegne_ordini_pages()
 
 									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
-									$fixdate = new DateTime($fixdate);
-									$fixdate = $fixdate->format('d-m-Y');
+									// $fixdate = new DateTime($fixdate);
+									// $fixdate = $fixdate->format('d-m-Y');
 
 									$wednesday = date('d-m-Y', strtotime('wednesday next week'));
 									//print_r($wednesday);
@@ -3435,8 +3435,9 @@ function consegne_ordini_pages()
 
 							    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
 							    console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('DD-MM-YYYY'));
+									console.log($(this).val());
 
-							    $('.get_date_shipping[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
+							    $('.get_date_shipping option[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
 
 							  });
 							})
