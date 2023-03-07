@@ -1127,6 +1127,8 @@ function generate_fabbisogno()
 	foreach ($orders as $order) {
 		$order = wc_get_order($order->ID);
 
+		$gruppoConsegna = get_post_meta($order->ID, '_gruppo_consegna', true);
+
 		foreach ($order->get_items() as $item) {
 			$quantity = $item->get_quantity();
 			$product = $item->get_product();
@@ -1161,13 +1163,14 @@ function generate_fabbisogno()
 					'quantity_type' => $measureAcquisto,
 					'weight_type' => $measureUnit,
 					'sku' => $product->get_sku(),
-					'produttore' => $fornitoreString
+					'produttore' => $fornitoreString,
+					'gruppo_consegna' => $gruppoConsegna
 				];
 
-				$fabbisogni[$product->get_id()] = $tmpFabbisogno;
+				$fabbisogni[$product->get_id() . '_' . $gruppoConsegna] = $tmpFabbisogno;
 
 			} else {
-				$fabbisogni[$product->get_id()]['fabbisogno'] += $quantity;
+				$fabbisogni[$product->get_id() . '_' . $gruppoConsegna]['fabbisogno'] += $quantity;
 			}
 
 
@@ -1192,10 +1195,15 @@ LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
 WHERE wp.ID IS NULL
 	");
 
-	foreach ($fabbisogni as $productId => $product) {
+	foreach ($fabbisogni as $key => $product) {
+
+		$key = explode("_", $key);
+		$productId = $key[0];
+		$gruppoConsegna = $key[1];
+
 		$post_id = wp_insert_post(array(
 			'post_type' => 'fabbisogno',
-			'post_title' => $product['product_name'],
+			'post_title' => $product['product_name'] . ' - ' . $gruppoConsegna,
 			'post_content' => '',
 			'post_status' => 'publish',
 			'comment_status' => 'closed',   // if you prefer
