@@ -3380,41 +3380,68 @@ function consegne_ordini_pages()
 			<div class="wrap" id="box-app">
 
 
+				<div class="agr-create-new-boxes">
 				<h1 class="wp-heading-inline">
 					Esporta Documenti</h1>
 
+					<br/>
+					<br/>
+					<br/>
 				<hr class="wp-header-end">
 
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
-
+					<div style="display:flex;">
+					<div style="margin-right: 8px;">
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana n°</label>
+						<?php $date = new DateTime();
+						$date->modify('+1 week');
+						$currentWeek = $date->format("W");?>
+						<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
+								 type="number" style="width:150px;">
+					</div>
 					<div id="data_consegna_div">
-						<label>Data di consegna</label><br>
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Data di consegna</label>
 
 						<?php if (count($allDataConsegna) == 0): ?>
 							<i>Nessun ordine con data consegna.</i>
-						<?php else: ?>
-							<select name="data_consegna" autocomplete="off">
+						<?php else:
+							?>
+							<select name="data_consegna" autocomplete="off"-->
 								<?php
 								foreach ($allDataConsegna as $dataConsegna):
-									// fix nathi per errore data di consegna
+
+									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
 									$fixdate = new DateTime($fixdate);
+									//print_r($fixdate);
+
+									$wednesday = date('d/m/Y', strtotime('wednesday next week'));
+									print_r($wednesday);
 									?>
+
+
+
 									<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
-									<option
-										value="<?php echo $fixdate->format('Y-m-d'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+									<option <?php if($wednesday === $currentWeek ) { echo 'selected'; } ?> value="<?php echo $fixdate->format('d/m/Y'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+
 								<?php endforeach; ?>
 							</select>
 
+
+
 						<?php endif; ?>
 					</div>
+					</div>
+
+<br/>
+
 
 
 					<div id="codice_confezionamento_container">
-						<h4>Codice di confezionamento</h4>
+						<h4 style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Codice di confezionamento</h4>
 						<div style="display: flex">
-							<div>
-								<label>Dal</label><br>
+							<div style="margin-right:8px;">
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Dal</label>
 								<select autocomplete="off" name="confezionamento_dal">
 									<option value="">-- Seleziona --</option>
 									<?php foreach ($confezionamento as $codice): ?>
@@ -3423,7 +3450,7 @@ function consegne_ordini_pages()
 								</select>
 							</div>
 							<div>
-								<label>Al</label><br>
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Al</label>
 								<select class="select2" name="confezionamento_al">
 									<option value="">-- Seleziona --</option>
 									<?php foreach ($confezionamento as $codice): ?>
@@ -3434,10 +3461,10 @@ function consegne_ordini_pages()
 						</div>
 					</div>
 					<div id="settimana_div" style="display: none">
-						<h4>Settimana</h4>
+
 						<div style="display: flex">
 							<div>
-								<label>Settimana</label><br>
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
 								<?php
 								$date = new DateTime();
 								$date->modify('+1 week');
@@ -3459,7 +3486,8 @@ function consegne_ordini_pages()
 						</div>
 					</div>
 					<br>
-					<label>Cosa vuoi esportare?</label><br>
+					<br>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Cosa vuoi esportare?</label>
 
 					<select id="document_type" name="document_type" autocomplete="off">
 						<option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
@@ -3476,6 +3504,7 @@ function consegne_ordini_pages()
 				</form>
 
 
+			</div>
 			</div>
 
 			<div class="clear"></div>
