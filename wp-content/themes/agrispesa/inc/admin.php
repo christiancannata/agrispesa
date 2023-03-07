@@ -1558,6 +1558,7 @@ function my_custom_submenu_page_callback()
 									<thead>
 									<th style="padding: 8px 10px;">Descrizione</th>
 									<th style="padding: 8px 10px;">Codice</th>
+									<th style="padding: 8px 10px;">Gruppo Consegna</th>
 									<th style="padding: 8px 10px;">Peso</th>
 
 									<th style="padding: 8px 10px;">Prezzo</th>
@@ -1589,12 +1590,16 @@ function my_custom_submenu_page_callback()
 										$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
 
 										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
+										$gruppoConsegna = get_post_meta($fabbisogno->ID, 'gruppo_consegna', true);
+
 										?>
 										<td style="padding: 8px 10px;">
 											<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
 										</td>
 
 										<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
+										<td style="padding: 8px 10px;"><?php echo $gruppoConsegna; ?></td>
+
 										<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
 										<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
 										<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
