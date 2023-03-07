@@ -69,7 +69,7 @@ function get_order_delivery_date_from_date($date = null, $group = null, $cap = n
 	return $deliveryDate;
 }
 
-function calculate_delivery_date_order($id)
+function calculate_delivery_date_order($id, $updateWeek = true)
 {
 
 	$order = wc_get_order($id);
@@ -87,18 +87,21 @@ function calculate_delivery_date_order($id)
 	$order_date = $order->get_date_paid();
 
 
-	$week = $order_date->format("W");
+	if ($updateWeek) {
+		$week = $order_date->format("W");
 
-	if ($order->get_created_via() == 'checkout') {
-		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-	} else {
-		if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+		if ($order->get_created_via() == 'checkout') {
 			$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+		} else {
+			if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
+				$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+			}
 		}
+
+
+		update_post_meta($order->get_id(), '_week', $week);
 	}
 
-
-	update_post_meta($order->get_id(), '_week', $week);
 
 	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
@@ -130,7 +133,6 @@ add_action('woocommerce_new_order', function ($order_id, $order) {
 		//nathi
 		$order_date->modify('+1 week');
 		$week = $order_date->format("W");
-
 
 
 		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
@@ -1025,9 +1027,9 @@ function get_box_from_subscription($subscription, $week = null)
 
 	if (!$week) {
 		$date = new DateTime();
+		$date->modify('+1 week');
 		$week = $date->format("W");
 	}
-
 
 	$products = $subscription->get_items();
 
@@ -1216,6 +1218,7 @@ function create_order_from_subscription($id)
 	$weight = $productData['weight'];
 	}*/
 
+
 	$box = get_box_from_subscription($subscription);
 
 	if (!$box) {
@@ -1287,7 +1290,6 @@ function create_order_from_subscription($id)
 	$order->calculate_totals();
 	$order->update_status("processing", '', TRUE);
 
-
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
 
@@ -1324,7 +1326,7 @@ function create_order_from_subscription($id)
 		}
 	}
 
-	calculate_delivery_date_order($order->get_id());
+	calculate_delivery_date_order($order->get_id(), false);
 
 }
 
@@ -1478,9 +1480,9 @@ function my_custom_submenu_page_callback()
 
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
-					<?php $wednesday = date('d/m/Y', strtotime('wednesday next week')); ?>
-					<span
-						style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
+				<?php $wednesday = date('d/m/Y', strtotime('wednesday next week')); ?>
+				<span
+					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
 				<hr class="wp-header-end">
 
 				<br>
@@ -1656,8 +1658,8 @@ function my_custom_submenu_page_callback()
 								<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
 
 								<?php
-
-								if (!$box = get_single_box_from_attributes($tipologia, $dimensione)) {
+								$box = get_single_box_from_attributes($tipologia, $dimensione);
+								if (!$box) {
 									echo "Box Singola Non disponibile";
 								} else {
 									//check if exist weekly box
@@ -1736,7 +1738,7 @@ function custom_shop_order_column($columns)
 		$reordered_columns[$key] = $column;
 		if ($key == 'order_status') {
 			// Inserting after "Status" column
-		$reordered_columns['my-column1'] = 'Spesa';
+			$reordered_columns['my-column1'] = 'Spesa';
 			// $reordered_columns['my-column2'] = 'Data Consegna';
 			// $reordered_columns['my-column3'] = 'Preferenze';
 		}
@@ -1753,30 +1755,30 @@ function custom_orders_list_column_content($column, $post_id)
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
 
-		   $order = wc_get_order( $post_id );
+			$order = wc_get_order($post_id);
 
-		   $box_in_order = false;
-		   $not_a_box = false;
-			 $items = $order->get_items();
+			$box_in_order = false;
+			$not_a_box = false;
+			$items = $order->get_items();
 
-		   foreach ( $items as $item ) {
-		      $product_id = $item->get_product_id();
-		      if ( has_term( 'box', 'product_cat', $product_id ) ) {
-		         $box_in_order = true;
-		         break;
-		      }
-					if ( !has_term( 'box', 'product_cat', $product_id ) ) {
-		         $not_a_box = true;
-		         break;
-		      }
-		   }
-		   if ( $box_in_order == true && $not_a_box == false ) {
-		      echo 'FN';
-		   } else if( $box_in_order == false && $not_a_box == true ){
-				 echo 'ST';
-			 } else {
-				 echo 'FN + ST';
-			 }
+			foreach ($items as $item) {
+				$product_id = $item->get_product_id();
+				if (has_term('box', 'product_cat', $product_id)) {
+					$box_in_order = true;
+					break;
+				}
+				if (!has_term('box', 'product_cat', $product_id)) {
+					$not_a_box = true;
+					break;
+				}
+			}
+			if ($box_in_order == true && $not_a_box == false) {
+				echo 'FN';
+			} else if ($box_in_order == false && $not_a_box == true) {
+				echo 'ST';
+			} else {
+				echo 'FN + ST';
+			}
 
 			break;
 
@@ -1797,26 +1799,26 @@ function custom_orders_list_column_content($column, $post_id)
 		case 'my-column3' :
 			// Get custom post meta data
 			$orderType = get_post_meta($post_id, '_order_type', true);
-			$order = wc_get_order( $post_id );
+			$order = wc_get_order($post_id);
 
 			$box_in_order = false;
 			$items = $order->get_items();
 
-			foreach ( $items as $item ) {
-				 $product_id = $item->get_product_id();
-				 if ( has_term( 'box', 'product_cat', $product_id ) ) {
-						$box_in_order = true;
-						break;
-				 }
+			foreach ($items as $item) {
+				$product_id = $item->get_product_id();
+				if (has_term('box', 'product_cat', $product_id)) {
+					$box_in_order = true;
+					break;
+				}
 			}
-			if ( $box_in_order ) {
+			if ($box_in_order) {
 				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
-			 if (!empty($boxPreferences)) {
-				 echo '✅';
-			 } else {
- 				echo '-';
- 			}
-		}
+				if (!empty($boxPreferences)) {
+					echo '✅';
+				} else {
+					echo '-';
+				}
+			}
 
 
 			break;
@@ -1825,75 +1827,77 @@ function custom_orders_list_column_content($column, $post_id)
 }
 
 // Add a custom column
-add_filter( 'manage_edit-shop_order_columns', 'add_custom_shop_order_column' );
-function add_custom_shop_order_column( $columns ) {
-    $order_actions = $columns['order_actions'];
-    unset($columns[ 'order_actions' ]);
+add_filter('manage_edit-shop_order_columns', 'add_custom_shop_order_column');
+function add_custom_shop_order_column($columns)
+{
+	$order_actions = $columns['order_actions'];
+	unset($columns['order_actions']);
 
-    // add custom column
-    $columns['type_shopping'] = __('Spesa', 'woocommerce');
-    $columns['type_notes'] = __('Note', 'woocommerce');
+	// add custom column
+	$columns['type_shopping'] = __('Spesa', 'woocommerce');
+	$columns['type_notes'] = __('Note', 'woocommerce');
 
-    // Insert back 'order_actions' column
-    $columns['order_actions'] = $order_actions;
+	// Insert back 'order_actions' column
+	$columns['order_actions'] = $order_actions;
 
-    return $columns;
+	return $columns;
 }
 
 // Custom column content
-add_action( 'manage_shop_order_posts_custom_column', 'shop_order_column_meta_field_value' );
-function shop_order_column_meta_field_value( $column ) {
-    global $post, $the_order;
+add_action('manage_shop_order_posts_custom_column', 'shop_order_column_meta_field_value');
+function shop_order_column_meta_field_value($column)
+{
+	global $post, $the_order;
 
-    if ( ! is_a( $the_order, 'WC_Order' ) ) {
-        $the_order = wc_get_order( $post->ID );
-    }
+	if (!is_a($the_order, 'WC_Order')) {
+		$the_order = wc_get_order($post->ID);
+	}
 
-    if ( $column == 'type_notes' ) {
-			$order = wc_get_order( $the_order );
-			$items = $order->get_items();
-			$i = 1;
-			foreach ( $items as $item ) {
-				$meta_data = $item->get_formatted_meta_data();
-		    $meta_value = $item->get_meta("note");
-				if($meta_value == 'ST' || $meta_value == 'SF' || $meta_value == 'SC') {
-					if($i == 1) {
-						echo '<span style="line-height:1.2;display:block;">' .  $meta_value . '</span>';
-					} else {
-						echo '<span style="line-height:1.2;display:block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' . $meta_value . '</span>';
-					}
+	if ($column == 'type_notes') {
+		$order = wc_get_order($the_order);
+		$items = $order->get_items();
+		$i = 1;
+		foreach ($items as $item) {
+			$meta_data = $item->get_formatted_meta_data();
+			$meta_value = $item->get_meta("note");
+			if ($meta_value == 'ST' || $meta_value == 'SF' || $meta_value == 'SC') {
+				if ($i == 1) {
+					echo '<span style="line-height:1.2;display:block;">' . $meta_value . '</span>';
+				} else {
+					echo '<span style="line-height:1.2;display:block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' . $meta_value . '</span>';
 				}
+			}
 
-				$i++;
+			$i++;
+		}
+	}
+
+	if ($column == 'type_shopping') {
+		$order = wc_get_order($the_order);
+
+		$box_in_order = false;
+		$not_a_box = false;
+		$items = $order->get_items();
+
+		foreach ($items as $item) {
+			$product_id = $item->get_product_id();
+			if (has_term('box', 'product_cat', $product_id)) {
+				$box_in_order = true;
+				break;
+			}
+			if (!has_term('box', 'product_cat', $product_id)) {
+				$not_a_box = true;
+				break;
 			}
 		}
-
-    if ( $column == 'type_shopping' ) {
-			$order = wc_get_order( $the_order );
-
-		 $box_in_order = false;
-		 $not_a_box = false;
-		 $items = $order->get_items();
-
-		 foreach ( $items as $item ) {
-				$product_id = $item->get_product_id();
-					if ( has_term( 'box', 'product_cat', $product_id ) ) {
-						 $box_in_order = true;
-						 break;
-					}
-					if ( !has_term( 'box', 'product_cat', $product_id ) ) {
-						 $not_a_box = true;
-						 break;
-					}
-			 }
-			 if ( $box_in_order == true && $not_a_box == false ) {
-					echo 'FN';
-			 } else if( $box_in_order == false && $not_a_box == true ){
-				 echo 'ST';
-			 } else {
-				 echo 'FN + ST';
-			 }
-    }
+		if ($box_in_order == true && $not_a_box == false) {
+			echo 'FN';
+		} else if ($box_in_order == false && $not_a_box == true) {
+			echo 'ST';
+		} else {
+			echo 'FN + ST';
+		}
+	}
 }
 
 // Make custom column sortable
@@ -1904,9 +1908,6 @@ function shop_order_column_meta_field_value( $column ) {
 //     return wp_parse_args( array('type_notes' => $meta_key), $columns );
 //     return wp_parse_args( array('type_shopping' => $meta_key), $columns );
 // }
-
-
-
 
 
 function cptui_register_my_cpts_delivery_group()
@@ -2432,7 +2433,8 @@ function consegne_ordini_pages()
 
 					<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
 						<div style="margin-right:24px;">
-							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana n°</label>
+							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
+								n°</label>
 							<?php
 							//new current week (= next week)
 							$date = new DateTime();
