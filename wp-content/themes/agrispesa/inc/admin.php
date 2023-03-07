@@ -2549,7 +2549,8 @@ function consegne_ordini_pages()
 						<div style="margin-right:24px;">
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona
-								la Facciamo Noi</label>
+								la Box</label>
+
 							<select name="box_id" id="box_id" class="select2">
 								<option disabled selected value="">-- Scegli la box --</option>
 								<?php foreach ($products as $product): ?>
@@ -2567,7 +2568,7 @@ function consegne_ordini_pages()
 											$child = wc_get_product($child);
 											?>
 											<option
-												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_tipologia') . ' - ' . $child->get_attribute('pa_dimensione'); ?></option>
+												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_dimensione') . ' - ' . $child->get_attribute('pa_tipologia'); ?></option>
 										<?php endforeach; ?>
 									</optgroup>
 								<?php endforeach; ?>
@@ -2738,7 +2739,7 @@ function consegne_ordini_pages()
 									$posts_per_cat = $count_posts->found_posts;
 
 									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $loop_category->slug . '">';
+										echo '<optgroup label="' . $loop_category->name . '">';
 									}
 
 									while ($cat_query->have_posts()) : $cat_query->the_post();
