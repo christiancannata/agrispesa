@@ -1588,9 +1588,9 @@ function my_custom_submenu_page_callback()
 
 										$unitaMisura = ' ' . get_post_meta($fabbisogno->ID, 'weight_type', true);; //tabella riepilogo box
 										$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
+										$gruppoConsegna = get_post_meta($fabbisogno->ID, 'gruppo_consegna', true);
 
 										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
-										$gruppoConsegna = get_post_meta($fabbisogno->ID, 'gruppo_consegna', true);
 
 										?>
 										<td style="padding: 8px 10px;">
