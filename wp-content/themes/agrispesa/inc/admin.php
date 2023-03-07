@@ -3042,7 +3042,6 @@ function consegne_ordini_pages()
 												</td>
 											</tr>
 										<?php endforeach; ?>
-										<?php if ($week >= $currentWeek): ?>
 
 											<tr class="create-box-table--add-product-row">
 												<td colspan="4" class="create-box-table--add-product-item"
@@ -3287,9 +3286,10 @@ function consegne_ordini_pages()
 													   href="#">Aggiungi</a>
 												</td>
 											</tr>
-										<?php endif; ?>
+
 
 										<tr class="create-box-table--totals">
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso
 													Box</strong></td>
@@ -3302,6 +3302,7 @@ function consegne_ordini_pages()
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 										</tr>
 										<tr>
+											<td style="border-bottom:none;"></td>
 											<td style="border-bottom:none;"></td>
 											<td style="border-bottom:none;"><?php echo $totalWeight; ?> gr</td>
 											<td style="border-bottom:none;"></td>
