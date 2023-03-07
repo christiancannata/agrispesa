@@ -3412,8 +3412,8 @@ function consegne_ordini_pages()
 
 									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
-									// $fixdate = new DateTime($fixdate);
-									// $fixdate = $fixdate->format('d-m-Y');
+									$fixdate = new DateTime($fixdate);
+									$fixdate = $fixdate->format('d-m-Y');
 
 									$wednesday = date('d-m-Y', strtotime('wednesday next week'));
 									//print_r($wednesday);
