@@ -1540,7 +1540,169 @@ function my_custom_submenu_page_callback()
 				<hr class="wp-header-end">
 
 				<br>
-				<h3>Disponibilità prodotti</h3>
+
+				<form id="comments-form" method="POST"
+					  action="">
+
+					<input type="hidden" name="generate_orders" value="1">
+					<div class="tablenav top">
+
+						<div class="alignleft actions bulkactions">
+							<label for="bulk-action-selector-top" class="screen-reader-text">Seleziona l'azione di
+								gruppo</label><select name="action" id="bulk-action-selector-top">
+								<option value="-1">Azioni di gruppo</option>
+								<option value="unapprove">Genera ordini</option>
+							</select>
+							<input type="submit" id="doaction" class="button action" value="Applica">
+						</div>
+
+						<div class="tablenav-pages one-page">
+							<span class="displaying-num">Abbonamenti attivi</span>
+						</div>
+						<br class="clear">
+					</div>
+					<h2 class="screen-reader-text">Elenco abbonamenti</h2>
+
+
+					<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+						<thead>
+
+						<th id="cb" class="manage-column column-cb check-column"
+							style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+							<span style="display:flex;align-items:center;">
+								<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+								<label for="cb-select-all-1" style="font-size:16px;">
+									Seleziona tutti
+								</label>
+							</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="author" class="manage-column column-author sortable desc">
+							<span>Cliente</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="comment" class="manage-column column-comment column-primary">
+							<span>Abbonamento</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="comment" class="manage-column column-comment column-primary">
+							<span>Attivo dal</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+							<span>Ordine</span>
+						</th>
+						</thead>
+
+						<tbody>
+						<?php foreach ($subscriptions as $subscription):
+
+							$args = [
+								'posts_per_page' => -1,
+								'post_type' => 'shop_order',
+								'post_status' => ['wc-processing', 'wc-completed'],
+								'meta_query' => [
+									'relation' => 'AND',
+									[
+										'key' => '_week',
+										'value' => $week,
+										'compare' => '>='
+									],
+									[
+										'key' => '_subscription_id',
+										'value' => $subscription->get_id(),
+										'compare' => '='
+									]
+								]
+							];
+							$orders = new WP_Query($args);
+							$orders = $orders->get_posts();
+							$products = $subscription->get_items();
+							$boxProduct = reset($products);
+
+							$variationProduct = $boxProduct->get_product();
+
+							if (!$variationProduct) {
+								continue;
+							}
+
+
+							$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
+							$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
+
+							?>
+							<tr id="comment-1" class="comment even thread-even depth-1 approved">
+								<th scope="row" class="check-column" style="padding: 16px;">
+									<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
+
+									<?php
+									$box = get_single_box_from_attributes($tipologia, $dimensione);
+									if (!$box) {
+										echo "Box Singola Non disponibile";
+									} else {
+										//check if exist weekly box
+										$weekBox = get_weekly_box_from_box($box->get_id(), $week);
+
+										if ($weekBox):
+											?>
+											<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+												   value="<?php echo $subscription->get_id(); ?>"
+												<?php if (count($orders) > 0): ?>
+													disabled
+												<?php endif; ?>
+											><br>
+										<?php else: ?>
+											Devi prima creare la box
+										<?php endif; ?>
+									<?php } ?>
+
+								</th>
+								<td class="author column-author" data-colname="Autore" style="padding: 16px;">
+									<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
+								</td>
+								<td class="comment column-comment has-row-actions column-primary"
+									data-colname="Commento" style="padding: 16px;">
+									<span><?php
+
+										echo $boxProduct->get_name();
+
+										?>
+										</span>
+								</td>
+
+								<td class="response column-response" data-colname="In risposta a" style="padding: 16px;">
+									<span>
+									<?php
+									// fix nathi per errore data di consegna
+									$fixdate = $subscription->get_date_created();
+									$fixdate = new DateTime($fixdate);
+									echo $fixdate->format("d/m/Y"); ?>
+									</span>
+								</td>
+								<td style="padding: 16px;">
+									<?php if (count($orders) > 0): ?>
+										<a target="_blank"
+										   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
+											all'ordine</a>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<br><br>
+
+					<button type="submit" class="button-primary">Genera Ordini</button>
+				</form>
+
+				<br>
+				<br>
+				<br>
+				<h2>Fabbisogno (non modificabile)</h2>
+
+				<p style="font-size: 16px; margin-bottom: 24px;">
+					Qui puoi generare il fabbisogno automatico degli ordini appena generati e di tutti gli ordini non ancora completati.<br/>
+					Per modificare il fabbisogno, bisogna andare nel menu "Modifica fabbisogno".
+				</p>
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
@@ -1640,161 +1802,9 @@ function my_custom_submenu_page_callback()
 				<br/>
 
 			</div>
-			<br/>
-			<br/>
-
-			<form id="comments-form" method="POST"
-				  action="">
-
-				<input type="hidden" name="generate_orders" value="1">
-				<div class="tablenav top">
-
-					<div class="alignleft actions bulkactions">
-						<label for="bulk-action-selector-top" class="screen-reader-text">Seleziona l'azione di
-							gruppo</label><select name="action" id="bulk-action-selector-top">
-							<option value="-1">Azioni di gruppo</option>
-							<option value="unapprove">Genera ordini</option>
-						</select>
-						<input type="submit" id="doaction" class="button action" value="Applica">
-					</div>
-
-					<div class="tablenav-pages one-page">
-						<span class="displaying-num">Abbonamenti attivi</span>
-					</div>
-					<br class="clear">
-				</div>
-				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
 
 
-				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-					<thead>
 
-					<th id="cb" class="manage-column column-cb check-column"
-						style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-						<span style="display:flex;align-items:center;">
-							<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
-							<label for="cb-select-all-1" style="font-size:16px;">
-								Seleziona tutti
-							</label>
-						</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="author" class="manage-column column-author sortable desc">
-						<span>Cliente</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="comment" class="manage-column column-comment column-primary">
-						<span>Abbonamento</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="comment" class="manage-column column-comment column-primary">
-						<span>Attivo dal</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-						<span>Ordine</span>
-					</th>
-					</thead>
-
-					<tbody>
-					<?php foreach ($subscriptions as $subscription):
-
-						$args = [
-							'posts_per_page' => -1,
-							'post_type' => 'shop_order',
-							'post_status' => ['wc-processing', 'wc-completed'],
-							'meta_query' => [
-								'relation' => 'AND',
-								[
-									'key' => '_week',
-									'value' => $week,
-									'compare' => '>='
-								],
-								[
-									'key' => '_subscription_id',
-									'value' => $subscription->get_id(),
-									'compare' => '='
-								]
-							]
-						];
-						$orders = new WP_Query($args);
-						$orders = $orders->get_posts();
-						$products = $subscription->get_items();
-						$boxProduct = reset($products);
-
-						$variationProduct = $boxProduct->get_product();
-
-						if (!$variationProduct) {
-							continue;
-						}
-
-
-						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
-						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
-
-						?>
-						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column" style="padding: 16px;">
-								<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
-
-								<?php
-								$box = get_single_box_from_attributes($tipologia, $dimensione);
-								if (!$box) {
-									echo "Box Singola Non disponibile";
-								} else {
-									//check if exist weekly box
-									$weekBox = get_weekly_box_from_box($box->get_id(), $week);
-
-									if ($weekBox):
-										?>
-										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-											   value="<?php echo $subscription->get_id(); ?>"
-											<?php if (count($orders) > 0): ?>
-												disabled
-											<?php endif; ?>
-										><br>
-									<?php else: ?>
-										Devi prima creare la box
-									<?php endif; ?>
-								<?php } ?>
-
-							</th>
-							<td class="author column-author" data-colname="Autore" style="padding: 16px;">
-								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
-							</td>
-							<td class="comment column-comment has-row-actions column-primary"
-								data-colname="Commento" style="padding: 16px;">
-								<span><?php
-
-									echo $boxProduct->get_name();
-
-									?>
-									</span>
-							</td>
-
-							<td class="response column-response" data-colname="In risposta a" style="padding: 16px;">
-								<span>
-								<?php
-								// fix nathi per errore data di consegna
-								$fixdate = $subscription->get_date_created();
-								$fixdate = new DateTime($fixdate);
-								echo $fixdate->format("d/m/Y"); ?>
-								</span>
-							</td>
-							<td style="padding: 16px;">
-								<?php if (count($orders) > 0): ?>
-									<a target="_blank"
-									   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
-										all'ordine</a>
-								<?php endif; ?>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
-				<br><br>
-
-				<button type="submit" class="button-primary">Genera Ordini</button>
-			</form>
 		</div>
 
 		<div id="ajax-response"></div>
