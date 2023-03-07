@@ -810,7 +810,7 @@ function my_enqueue($hook)
 			return;
 		}
 
-		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
+		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_genera-ordini-box' !== $hook) {
 			return;
 		}
 
@@ -1432,7 +1432,7 @@ function get_fabbisogno($week)
 
 function register_my_custom_submenu_page()
 {
-	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
+	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'genera-ordini-box', 'my_custom_submenu_page_callback');
 }
 
 function my_custom_submenu_page_callback()
@@ -1780,14 +1780,14 @@ function my_custom_submenu_page_callback()
 					</tbody>
 				</table>
 				<br/>
-				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
+				<a href="/wp-admin/admin.php?page=genera-ordini-box&generate_fabbisogno=1" class="button-primary">
 					Genera Fabbisogno
 				</a>
 
 				<?php if (!empty($fabbisognoList)): ?>
 					<br><br>
 
-					<form method="POST" action="/wp-admin/admin.php?page=my-custom-submenu-page">
+					<form method="POST" action="/wp-admin/admin.php?page=genera-ordini-box">
 						<input type="hidden" name="send_email_produttori" value="1">
 
 						<button type="submit"
@@ -2149,7 +2149,7 @@ add_action('init', 'cptui_register_my_cpts_delivery_group');
 add_action('admin_menu', 'consegne_ordini_pages');
 function consegne_ordini_pages()
 {
-	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini-pages', function () {
+	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini', function () {
 		$groups = get_posts([
 			'post_type' => 'delivery-group',
 			'post_status' => 'publish',
