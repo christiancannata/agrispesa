@@ -1426,6 +1426,8 @@ function get_fabbisogno($week)
 		$groupedFabbisogno[$fornitoreString][] = $fabbisogno;
 
 	}
+
+	return $groupedFabbisogno;
 }
 
 function register_my_custom_submenu_page()
