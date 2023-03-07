@@ -21,11 +21,22 @@ jQuery(document).ready(function ($) {
     templateResult: formatState
   });
 
-  $('.datatable').DataTable();
+  $('.datatable').DataTable({
+    "language": {
+      "search": "Cerca:",
+      "lengthMenu": "Mostra _MENU_ elementi",
+      }
+  });
 
   $('.box-table').DataTable({
     order: [[0, 'desc']],
     orderClasses: false,
+    "pageLength": 16,
+    "lengthMenu": [ 16, 32, 48, 64, 80 ],
+    "language": {
+      "search": "Cerca:",
+      "lengthMenu": "Mostra _MENU_ box",
+      }
   });
 
 

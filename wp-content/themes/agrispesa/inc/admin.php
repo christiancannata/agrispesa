@@ -2874,7 +2874,7 @@ function consegne_ordini_pages()
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
 								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-								<span style="padding-right:16px;">Box n°</span></th>
+								<span style="padding-right:16px;">Creata il</span></th>
 							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
 								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
@@ -2925,7 +2925,7 @@ function consegne_ordini_pages()
 							<tr id="comment-1" class="comment even thread-even depth-1 approved ">
 
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
-									<span class="create-box-table--span-item week">Box n° <?php echo $i; ?></span>
+									<span class="create-box-table--span-item week"><?php $boxdate = date_create($box->post_date); echo '<span style="display:block;">'.date_format($boxdate,"Y/m/d").'</span><span style="display:block;margin-top:4px;">'.date_format($boxdate,"H:i:s").'</span>'; ?></span>
 								</td>
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
