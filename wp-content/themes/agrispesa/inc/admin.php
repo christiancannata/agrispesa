@@ -3436,7 +3436,7 @@ function consegne_ordini_pages()
 							    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
 							    console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('DD-MM-YYYY'));
 
-							    $('.get_date_shipping[value='+moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('DD-MM-YYYY')+']').attr('selected','selected');
+							    $('.get_date_shipping[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
 
 							  });
 							})
