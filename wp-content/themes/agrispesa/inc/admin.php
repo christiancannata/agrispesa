@@ -2593,11 +2593,31 @@ function consegne_ordini_pages()
 										<?php foreach ($children as $child): ?>
 											<?php
 											$child = wc_get_product($child);
+											$child_id =$child->get_id();
+
+											$type = $child->get_attribute('pa_tipologia');
+											$type_code = "";
+
+											$size = $child->get_attribute('pa_dimensione');
+											$size_code = substr($size, 0, 1);
+
+											$year = date("Y");
+											$year_code = substr($year, 2, 4);
+
+											if($type == 'Vegana' || $type == 'Vegetariana') {
+												$type_code = substr($type, 0, 4);
+											} else {
+												$type_code = substr($type, 0, 1);
+											}
+
+											//CODICE UNIVOCO BOX
+											$box_code = 'FN' .$type_code . $size_code . '-' . $year_code . $currentWeek;
+
 											?>
 											<option
 												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_dimensione') . ' - ' . $child->get_attribute('pa_tipologia'); ?></option>
 										<?php endforeach; ?>
-									</optgroup>
+									</optgroup--!>
 								<?php endforeach; ?>
 							</select>
 
@@ -2948,6 +2968,7 @@ function consegne_ordini_pages()
 
 							// fix nathi per errore data di consegna
 							$fixdate = new DateTime($dataConsegna);
+
 							?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved ">
