@@ -1700,7 +1700,7 @@ function my_custom_submenu_page_callback()
 				<h2>Fabbisogno (non modificabile)</h2>
 
 				<p style="font-size: 16px; margin-bottom: 24px;">
-					Qui puoi generare il fabbisogno automatico degli ordini appena generati e di tutti gli ordini non ancora completati.<br/>
+					Qui puoi generare il fabbisogno automatico degli ordini appena generati (Facciamo noi) e di tutti gli ordini ricevuti per questa settimana attraverso il negozio.<br/>
 					Per modificare il fabbisogno, bisogna andare nel menu "Modifica fabbisogno".
 				</p>
 
