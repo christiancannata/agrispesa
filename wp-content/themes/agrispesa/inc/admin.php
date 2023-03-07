@@ -1716,7 +1716,7 @@ function my_custom_submenu_page_callback()
 						<tr>
 							<td><?php echo $fornitore; ?></td>
 							<td>
-								<table style="width:100%">
+								<table style="width:100%;border-collapse: collapse;">
 									<thead>
 									<th style="padding: 8px 10px;">Descrizione</th>
 									<th style="padding: 8px 10px;">Codice</th>
@@ -1731,7 +1731,12 @@ function my_custom_submenu_page_callback()
 									</thead>
 									<tbody>
 
-									<?php foreach ($fabbisognoList as $fabbisogno):
+									<?php
+									$countFB = 0;
+									$sum = 0;
+									$sum_weight = 0;
+									foreach ($fabbisognoList as $fabbisogno):
+
 										echo '<tr>';
 										$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
 										$prodottoId = reset($prodottoId);
@@ -1755,6 +1760,9 @@ function my_custom_submenu_page_callback()
 
 										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
 
+										$sum += $fabbisogno;
+										$sum_weight += $weight;
+
 										?>
 										<td style="padding: 8px 10px;">
 											<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
@@ -1770,10 +1778,29 @@ function my_custom_submenu_page_callback()
 
 										<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
 										<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
+
 									</tr>
-									<?php endforeach; ?>
+									<?php
+									if( $countFB == count( $fabbisognoList ) - 1): ?>
+									<tr>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+											<strong><?php echo $sum_weight; ?></strong>
+										</td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+											<strong><?php echo $sum; ?></strong>
+										</td>
+									</tr>
+									<?php endif; $countFB = $countFB + 1; endforeach; ?>
 									</tbody>
 								</table>
+
 							</td>
 						</tr>
 					<?php endforeach; ?>
