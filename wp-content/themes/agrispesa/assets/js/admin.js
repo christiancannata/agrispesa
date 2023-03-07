@@ -92,6 +92,8 @@ jQuery(document).ready(function ($) {
     $('.change_shipping_date').val(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('YYYY-MM-DD'));
 
   });
+
+
 })
 
 const {createApp} = Vue

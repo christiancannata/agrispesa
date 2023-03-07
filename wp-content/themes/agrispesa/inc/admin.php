@@ -3391,12 +3391,12 @@ function consegne_ordini_pages()
 
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
 					<div style="display:flex;">
-					<div style="margin-right: 8px;">
+					<div style="margin-right: 16px;">
 						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana n°</label>
 						<?php $date = new DateTime();
 						$date->modify('+1 week');
 						$currentWeek = $date->format("W");?>
-						<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
+						<input class="change_week_print" name="week_print" id="week_print" value="<?php echo $currentWeek; ?>"
 								 type="number" style="width:150px;">
 					</div>
 					<div id="data_consegna_div">
@@ -3406,17 +3406,17 @@ function consegne_ordini_pages()
 							<i>Nessun ordine con data consegna.</i>
 						<?php else:
 							?>
-							<select name="data_consegna" autocomplete="on">
+							<select name="data_consegna" autocomplete="on" class="get_date_shipping">
 								<?php
 								foreach ($allDataConsegna as $dataConsegna):
 
 									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
 									$fixdate = new DateTime($fixdate);
-									$fixdate = $fixdate->format('d/m/Y');
+									$fixdate = $fixdate->format('d-m-Y');
 
 									$wednesday = date('d/m/Y', strtotime('wednesday next week'));
-									print_r($wednesday);
+									//print_r($wednesday);
 									?>
 
 									<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
@@ -3424,7 +3424,23 @@ function consegne_ordini_pages()
 
 								<?php endforeach; ?>
 							</select>
+							<?php wp_enqueue_script('moment', get_template_directory_uri() . '/assets/js/moment.min.js', ['jquery'], null, true);?>
+							<script type="text/javascript">
+							jQuery(document).ready(function ($) {
+								$(".change_week_print").on("change paste keyup", function () {
+							    const y = new Date().getFullYear();
+							    const jan1 = new Date(y, 0, 1);
+							    const jan1Day = jan1.getDay();
+							    const daysToMonday = jan1Day === 1 ? 0 : jan1Day === 0 ? 1 : 8 - jan1Day
 
+							    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
+							    console.log(moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('DD-MM-YYYY'));
+
+							    $('.get_date_shipping[value='+moment(new Date(+firstWednesday + ((09 - 1) * 7 * 86400e3) + (86400e3 * 2) )).format('DD-MM-YYYY')+']').attr('selected','selected');
+
+							  });
+							})
+							</script>
 
 
 						<?php endif; ?>
