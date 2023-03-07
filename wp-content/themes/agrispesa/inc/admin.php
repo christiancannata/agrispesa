@@ -1088,6 +1088,15 @@ function get_weekly_box_from_box($id, $week)
 	return reset($box);
 }
 
+function send_email_produttori($week)
+{
+	$groupedFabbisogno = get_fabbisogno($week);
+
+	foreach ($groupedFabbisogno as $fornitore => $fabbisogno) {
+
+	}
+}
+
 function generate_fabbisogno()
 {
 	$date = new DateTime();
@@ -1370,6 +1379,47 @@ function get_single_box_from_attributes($tipologia, $dimensione)
 
 }
 
+function get_fabbisogno($week)
+{
+
+
+	$fabbisognoList = new WP_Query([
+		'posts_per_page' => -1,
+		'post_type' => 'fabbisogno',
+		'meta_query' => [
+			'relation' => 'and',
+			[
+				'key' => 'settimana',
+				'value' => $week,
+				'compare' => '='
+			]
+		]
+	]);
+
+	$fabbisognoList = $fabbisognoList->get_posts();
+
+	$groupedFabbisogno = [];
+
+	foreach ($fabbisognoList as $fabbisogno) {
+		$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
+		$prodottoId = reset($prodottoId);
+		$fornitore = get_post_meta($prodottoId, 'product_producer', true);
+		$fornitoreString = '';
+		if (!empty($fornitore)) {
+			$fornitore = reset($fornitore);
+			$fornitore = get_post($fornitore);
+			$fornitoreString = $fornitore->post_title;
+		}
+
+		if (!isset($groupedFabbisogno[$fornitoreString])) {
+			$groupedFabbisogno[$fornitoreString] = [];
+		}
+
+		$groupedFabbisogno[$fornitoreString][] = $fabbisogno;
+
+	}
+}
+
 function register_my_custom_submenu_page()
 {
 	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
@@ -1377,6 +1427,11 @@ function register_my_custom_submenu_page()
 
 function my_custom_submenu_page_callback()
 {
+
+
+	$date = new DateTime();
+	$date->modify('+1 week');
+	$week = $date->format("W");
 
 	if (isset($_POST['generate_orders'])) {
 		$subscriptionIds = $_POST['subscriptions'];
@@ -1389,14 +1444,16 @@ function my_custom_submenu_page_callback()
 		generate_fabbisogno();
 	}
 
+
+	if (isset($_POST['send_email_produttori'])) {
+		send_email_produttori($week);
+	}
+
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => 'active']);
 	/*$subscriptions = array_filter($subscriptions, function ($subscription) {
 	return $subscription->has_status('active');
 	});*/
 
-	$date = new DateTime();
-	$date->modify('+1 week');
-	$week = $date->format("W");
 
 	$allProductsNeed = [];
 
@@ -1448,21 +1505,8 @@ function my_custom_submenu_page_callback()
 
 	}
 
+	$groupedFabbisogno = get_fabbisogno($week);
 
-	$fabbisognoList = new WP_Query([
-		'posts_per_page' => -1,
-		'post_type' => 'fabbisogno',
-		'meta_query' => [
-			'relation' => 'and',
-			[
-				'key' => 'settimana',
-				'value' => $week,
-				'compare' => '='
-			]
-		]
-	]);
-
-	$fabbisognoList = $fabbisognoList->get_posts();
 	?>
 
 	<div id="wpbody-content">
@@ -1491,65 +1535,67 @@ function my_custom_submenu_page_callback()
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
 					<tr>
-						<th style="padding: 8px 10px;">Descrizione</th>
-						<th style="padding: 8px 10px;">Codice</th>
-						<th style="padding: 8px 10px;">Peso</th>
 						<th style="padding: 8px 10px;">Fornitore</th>
-						<th style="padding: 8px 10px;">Prezzo</th>
-						<th style="padding: 8px 10px;">Un. Misura</th>
-						<th style="padding: 8px 10px;">Cod. Conf</th>
-						<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
-						<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
+						<th style="padding: 8px 10px;">Prodotti</th>
 					</tr>
 					</thead>
 					<tbody>
-					<?php foreach ($fabbisognoList as $fabbisogno):
-
-						$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
-						$prodottoId = reset($prodottoId);
-						$product = wc_get_product($prodottoId);
-
-						$weight = get_post_meta($fabbisogno->ID, 'weight', true);
-						$price = get_post_meta($prodottoId, '_regular_price', true);
-						$sku = get_post_meta($prodottoId, '_sku', true);
-
-						$fornitore = get_post_meta($prodottoId, 'product_producer', true);
-						$fornitoreString = '';
-						if (!empty($fornitore)) {
-							$fornitore = reset($fornitore);
-							$fornitore = get_post($fornitore);
-							$fornitoreString = $fornitore->post_title;
-						}
-
-						$codiceConfezionamento = get_post_meta($prodottoId, '_codice_confezionamento', true);
-						if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-							$codiceConfezionamento = '';
-						}
-						if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-							$codiceConfezionamento = reset($codiceConfezionamento);
-						}
-
-						$unitaMisura = ' ' . get_post_meta($fabbisogno->ID, 'weight_type', true);; //tabella riepilogo box
-						$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
-
-						$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
-						?>
-
+					<?php foreach ($groupedFabbisogno as $fornitore => $fabbisognoList): ?>
 						<tr>
-							<td style="padding: 8px 10px;">
-								<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
+							<td><?php echo $fornitore; ?></td>
+							<td>
+								<table style="width:100%">
+									<thead>
+									<th style="padding: 8px 10px;">Descrizione</th>
+									<th style="padding: 8px 10px;">Codice</th>
+									<th style="padding: 8px 10px;">Peso</th>
+
+									<th style="padding: 8px 10px;">Prezzo</th>
+									<th style="padding: 8px 10px;">Un. Misura</th>
+									<th style="padding: 8px 10px;">Cod. Conf</th>
+									<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
+									<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
+									</thead>
+									<tbody>
+									<?php foreach ($fabbisognoList as $fabbisogno):
+
+										$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
+										$prodottoId = reset($prodottoId);
+										$product = wc_get_product($prodottoId);
+
+										$weight = get_post_meta($fabbisogno->ID, 'weight', true);
+										$price = get_post_meta($prodottoId, '_regular_price', true);
+										$sku = get_post_meta($prodottoId, '_sku', true);
+
+										$codiceConfezionamento = get_post_meta($prodottoId, '_codice_confezionamento', true);
+										if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
+											$codiceConfezionamento = '';
+										}
+										if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
+											$codiceConfezionamento = reset($codiceConfezionamento);
+										}
+
+										$unitaMisura = ' ' . get_post_meta($fabbisogno->ID, 'weight_type', true);; //tabella riepilogo box
+										$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
+
+										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
+										?>
+										<td style="padding: 8px 10px;">
+											<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
+										</td>
+
+										<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
+										<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
+										<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
+										<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
+										<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
+
+										<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
+										<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
+									<?php endforeach; ?>
+									</tbody>
+								</table>
 							</td>
-
-							<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $fornitoreString; ?></td>
-							<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
-							<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
-
-							<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
-							<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
-
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
@@ -1558,6 +1604,22 @@ function my_custom_submenu_page_callback()
 				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
 					Genera Fabbisogno
 				</a>
+
+				<?php if (!empty($fabbisognoList)): ?>
+					<br><br>
+
+					<form method="POST" action="/wp-admin/admin.php?page=my-custom-submenu-page">
+						<input type="hidden" name="send_email_produttori" value="1">
+
+						<button type="submit"
+								class="button-primary">
+							Invia email ai produttori
+						</button>
+					</form>
+
+
+				<?php endif; ?>
+
 				<br/>
 
 			</div>
@@ -3293,27 +3355,31 @@ function consegne_ordini_pages()
 					Esporta Documenti</h1>
 
 				<hr class="wp-header-end">
+
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
-					<label>Data di consegna</label><br>
 
-					<?php if (count($allDataConsegna) == 0): ?>
-						<i>Nessun ordine con data consegna.</i>
-					<?php else: ?>
-						<select name="data_consegna" autocomplete="off">
-							<?php
-							foreach ($allDataConsegna as $dataConsegna):
-								// fix nathi per errore data di consegna
-								$fixdate = $dataConsegna['meta_value'];
-								$fixdate = new DateTime($fixdate);
-								?>
-								<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
-								<option
-									value="<?php echo $fixdate->format('Y-m-d'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
-							<?php endforeach; ?>
-						</select>
+					<div id="data_consegna_div">
+						<label>Data di consegna</label><br>
 
-					<?php endif; ?>
-					<br><br>
+						<?php if (count($allDataConsegna) == 0): ?>
+							<i>Nessun ordine con data consegna.</i>
+						<?php else: ?>
+							<select name="data_consegna" autocomplete="off">
+								<?php
+								foreach ($allDataConsegna as $dataConsegna):
+									// fix nathi per errore data di consegna
+									$fixdate = $dataConsegna['meta_value'];
+									$fixdate = new DateTime($fixdate);
+									?>
+									<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
+									<option
+										value="<?php echo $fixdate->format('Y-m-d'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+								<?php endforeach; ?>
+							</select>
+
+						<?php endif; ?>
+					</div>
+
 
 					<div id="codice_confezionamento_container">
 						<h4>Codice di confezionamento</h4>
@@ -3338,8 +3404,32 @@ function consegne_ordini_pages()
 							</div>
 						</div>
 					</div>
-
-					<br><br>
+					<div id="settimana_div" style="display: none">
+						<h4>Settimana</h4>
+						<div style="display: flex">
+							<div>
+								<label>Settimana</label><br>
+								<?php
+								$date = new DateTime();
+								$date->modify('+1 week');
+								$currentWeek = $date->format("W");
+								$allSettimaneFabbisogno = $wpdb->get_results("select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value");
+								$allSettimaneFabbisogno = array_map(function ($tmp) {
+									return $tmp->meta_value;
+								}, $allSettimaneFabbisogno);
+								?>
+								<select autocomplete="off" name="settimana">
+									<option value="">-- Seleziona --</option>
+									<?php foreach ($allSettimaneFabbisogno as $week): ?>
+										<option
+											<?php if ($week == $currentWeek): ?> selected <?php endif; ?>
+											value="<?php echo $week; ?>"><?php echo $week; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<br>
 					<label>Cosa vuoi esportare?</label><br>
 
 					<select id="document_type" name="document_type" autocomplete="off">

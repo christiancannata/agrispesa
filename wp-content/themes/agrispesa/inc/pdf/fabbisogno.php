@@ -92,6 +92,8 @@ foreach ($totalProducts as $key => $product) {
 	}
 }
 
+//$fabbisogno = get_fabbisogno();
+
 $dompdf = new Dompdf();
 
 ob_start();
