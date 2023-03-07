@@ -3406,7 +3406,7 @@ function consegne_ordini_pages()
 							<i>Nessun ordine con data consegna.</i>
 						<?php else:
 							?>
-							<select name="data_consegna" autocomplete="off"-->
+							<select name="data_consegna" autocomplete="on">
 								<?php
 								foreach ($allDataConsegna as $dataConsegna):
 
