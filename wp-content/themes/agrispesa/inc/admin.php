@@ -3438,9 +3438,9 @@ function consegne_ordini_pages()
 							    console.log(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY'));
 									console.log($(this).val());
 
-									if ($("get_date_shipping").find('option[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').length){
-									  $('.get_date_shipping option[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
-									}	else {
+									if ($('.get_date_shipping :contains('+ moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') +')').length) {
+									   $('.get_date_shipping option[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
+									} else {
 										$('.get_date_shipping option[value=null]').attr('selected','selected');
 									}
 
