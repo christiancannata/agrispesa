@@ -3413,16 +3413,14 @@ function consegne_ordini_pages()
 									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
 									$fixdate = new DateTime($fixdate);
-									//print_r($fixdate);
+									$fixdate = $fixdate->format('d/m/Y');
 
 									$wednesday = date('d/m/Y', strtotime('wednesday next week'));
 									print_r($wednesday);
 									?>
 
-
-
 									<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
-									<option <?php if($wednesday === $currentWeek ) { echo 'selected'; } ?> value="<?php echo $fixdate->format('d/m/Y'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+									<option <?php if($wednesday === $fixdate ) { echo 'selected'; } ?> value="<?php echo $fixdate; ?>"><?php echo $fixdate; ?></option>
 
 								<?php endforeach; ?>
 							</select>
