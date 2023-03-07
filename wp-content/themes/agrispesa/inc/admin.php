@@ -1568,8 +1568,9 @@ function my_custom_submenu_page_callback()
 									<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
 									</thead>
 									<tbody>
-									<?php foreach ($fabbisognoList as $fabbisogno):
 
+									<?php foreach ($fabbisognoList as $fabbisogno):
+										echo '<tr>';
 										$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
 										$prodottoId = reset($prodottoId);
 										$product = wc_get_product($prodottoId);
@@ -1607,6 +1608,7 @@ function my_custom_submenu_page_callback()
 
 										<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
 										<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
+									</tr>
 									<?php endforeach; ?>
 									</tbody>
 								</table>
