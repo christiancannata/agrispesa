@@ -257,3 +257,15 @@ function cloudways_save_extra_details( $post_id, $post ){
     update_post_meta( $post_id, '_cloudways_dropdown', wc_clean( $_POST[ '_cloudways_dropdown' ] ) );
 }
 add_action( 'woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2 );
+
+
+// disable double add to cart of a product
+add_filter('woocommerce_add_to_cart_validation', 'my_validation_handler', 10, 2);
+function my_validation_handler($is_valid, $product_id) {
+	foreach(WC()->cart->get_cart() as $cart_item_key => $values) {
+		if ($values['data']->get_id() == $product_id) {
+			return false;
+		}
+	}
+	return $is_valid;
+}

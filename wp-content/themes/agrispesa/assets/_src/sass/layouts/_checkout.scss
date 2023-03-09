@@ -284,7 +284,6 @@ body.woocommerce-checkout {
 		}
 
 		&--cost {
-			padding: 0 8px;
 
 			.includes_tax {
 				display: none;
@@ -309,12 +308,10 @@ body.woocommerce-checkout {
 		&--items {
 			@include font-size(16);
 			color: $black;
-			padding: 0 8px;
 
 			&.product-number {
 				padding-bottom: 10px;
 				padding-top: 10px;
-				border-top: 1px solid $white;
 			}
 
 			&.mg-t {
@@ -403,7 +400,75 @@ body.woocommerce-checkout {
 
 .woocommerce-after-sommair,
 .woocommerce-sommair-end {
-	display: none !important;
+	//display: none !important;
+}
+
+.woocommerce {
+	.woocommerce-checkout-review-order {
+		.shop_table {
+			@include border-radius(24px);
+			background: $panna;
+			border: none;
+			padding: 24px;
+
+			td,
+			th {
+				@include font-size(16);
+				font-weight: 300 !important;
+				border-top: 1px solid rgba($white, 0.7);
+				&.product-name {
+					border-top: none;
+				}
+			}
+
+			th {
+				text-align: left;
+			}
+
+			td {
+				text-align: right;
+			}
+
+			.recurring-totals {
+				font-family: $font-title;
+
+				th {
+					@include font-size(18);
+					padding-top: 24px !important;
+					font-weight: 900 !important;
+				}
+			}
+			tr.order-total {
+				th, td {
+					font-weight: 600 !important;
+				}
+			}
+
+			.cart-discount {
+				td {
+					color: $red;
+
+					a {
+						@include font-size(13);
+						color: $black;
+						display: block;
+					}
+				}
+
+
+				.checkout-coupon-name {
+					@include font-size(13);
+					display: block;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+					color: $black;
+				}
+				.free-shipping-hide {
+					display: none;
+				}
+			}
+		}
+	}
 }
 
 .woocommerce-sommair-end {
@@ -451,13 +516,15 @@ body.woocommerce-checkout {
 .woocommerce form .form-row {
 	margin: 16px 0 !important;
 	padding: 0 !important;
+
 	&.billing_cod_fisc_field {
 		border-top: 1px solid $background;
 		padding-top: 16px !important;
 	}
+
 	&.mailchimp-newsletter {
-		    margin-top: 0 !important;
-				margin-bottom: 8px !important;
+		margin-top: 0 !important;
+		margin-bottom: 8px !important;
 	}
 }
 

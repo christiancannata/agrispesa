@@ -1,0 +1,72 @@
+2023-03-09T19:41:43+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 27
+
+2023-03-09T19:45:02+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php(113): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#7 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-03-09T19:45:32+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php(112): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#7 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-03-09T19:46:13+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php(112): get_template_part('template-parts/...', 'shop')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#7 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-shop.php alla riga 7
+
+2023-03-09T20:09:06+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Variation::attributes() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:115
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 115
+
+2023-03-09T20:44:27+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 139
+
+2023-03-09T20:44:35+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 139
+
+2023-03-09T20:45:37+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 139
+
+2023-03-09T20:46:02+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 139
+
+2023-03-09T20:46:10+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 139
+
+2023-03-09T21:43:01+00:00 CRITICAL Uncaught Error: Call to a member function get_code() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/recurring-coupon-totals.php:24
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(217): wc_get_template('checkout/recurr...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_recurring_cart_coupons(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerc in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/recurring-coupon-totals.php alla riga 24
+
+2023-03-09T21:56:52+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function wcs_cart_totals_coupon_html(), 1 passed in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/recurring-coupon-totals.php on line 26 and exactly 2 expected in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php:276
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/recurring-coupon-totals.php(26): wcs_cart_totals_coupon_html(Object(WC_Coupon))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(217): wc_get_template('checkout/recurr...', Array, '', '/Users/nathalie...')
+#3 /Users/nathalie/Sites/localh in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php alla riga 276
+

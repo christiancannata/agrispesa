@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Landing - Categoria */
+/* Template Name: Landing - Azienda */
 
 /**
  * The main template file
@@ -19,16 +19,19 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 $container = get_theme_mod( 'understrap_container_type' );
-$what_category_ID = get_field('agr_landing_category');
+$agr_landing_product = get_field('agr_landing_product');
 $what_faq_category_ID = get_field('agr_landing_faq_category');
 $faq_mega_title = get_field('landing_cat_faq_title');
 $landing_cat_quote_image = get_field('landing_cat_quote_image');
+$agr_landing_coupon = get_field('agr_landing_coupon');
 
-if($what_category_ID) {
-	$what_category = get_term( $what_category_ID )->name;
+if($agr_landing_coupon){
+	$coupon = '&coupon-code='.$agr_landing_coupon;
 } else {
-	$what_category = 'Negozio';
+	$coupon= "";
 }
+
+
 ?>
 
 
@@ -49,7 +52,7 @@ if($what_category_ID) {
 		<div class="container-pg">
 			<div class="landing-category--values">
 				<div class="landing-category--values--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-					<img src="<?php echo the_field('landing_cat_values_image');?>" alt="Tutti i vantaggi dei prodotti <?php echo $what_category?> " />
+					<img src="<?php echo the_field('landing_cat_values_image');?>" alt="Tutti i vantaggi di Agrispesa" />
 				</div>
 				<?php $i = 1; if( have_rows('landing_cat_values') ):
 						echo '<div class="landing-category--values--list">';
@@ -91,7 +94,7 @@ if($what_category_ID) {
 				</div>
 				<?php if($landing_cat_quote_image): ?>
 				<div class="landing-category--quote--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-					<img src="<?php echo $landing_cat_quote_image;?>" alt="Tutti i vantaggi dei prodotti <?php echo $what_category?> " />
+					<img src="<?php echo $landing_cat_quote_image;?>" alt="Tutti i vantaggi di Agrispesa" />
 				</div>
 				<?php endif;?>
 			</div>
@@ -102,24 +105,59 @@ if($what_category_ID) {
 
 
 
-	<section id="go-products" class="landing-category--loop" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-		<h3 class="landing-category--loop--title">Abbiamo il prodotto giusto.</h3>
-		<div class="container-big">
-				<div class="products-carousel">
-				<?php $args = array(
-			        'product_cat' => $what_category,
-			        'posts_per_page' => 6,
-			        'orderby' => 'rand'
-			    );
-			    $loop = new WP_Query($args);
-			    while ($loop->have_posts()) : $loop->the_post();
-			        global $product; ?>
-			        <?php get_template_part( 'template-parts/loop', 'shop' ); ?>
-			    <?php endwhile; ?>
-			    <?php wp_reset_query(); ?>
-				</div>
+<section id="go-products" class="landing-category--loop" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
+	<h3 class="landing-category--loop--title">Prova Agrispesa.</h3>
+	<div class="container-big">
+			<div class="landing-products">
+				<?php if( $agr_landing_product ): ?>
+
+    <?php foreach( $agr_landing_product as $post ):
+
+        setup_postdata($post);
+				$product = wc_get_product( $post );
+				$thumb_id = get_post_thumbnail_id();
+				$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
+				$thumb_url = $thumb_url_array[0];
+				// print_r($product->get_id());
+				// print_r($product->get_sku());
+				 ?>
+				 <article class="product-box">
+ 				  <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
+ 				    <?php if($thumb_id):?>
+ 				      <img src="<?php the_post_thumbnail_url(); ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+ 				    <?php else: ?>
+ 				      <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+ 				    <?php endif;?>
+ 				  </a>
+ 				  <div class="product-box--text">
+ 				    <div class="product-box--text--top">
+ 				      <h2 class="product-box--title"><a href="<?php the_permalink(); ?>" title="<?php echo $product->get_title(); ?>"><?php echo $product->get_title(); ?></a></h2>
+							<div class="product-box--attributes">
+								<span><?php echo $product->get_attribute('pa_dimensione');?></span>
+								<span><?php echo $product->get_attribute('pa_tipologia');?></span>
+							</div>
+							<div class="product-box--price--flex">
+
+ 				        <div class="product-box--price">
+ 				          <?php echo $product->get_price_html(); ?>
+ 				        </div>
+ 				      </div>
+							<a href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1'. $coupon )); ?>" class="btn btn-primary btn-small">Abbonati</a>
+
+ 				      <?php// echo do_shortcode('[add_to_cart id="'.get_the_ID().'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
+ 				    </div>
+ 				  </div>
+ 				</article>
+    <?php endforeach; ?>
+
+    <?php
+    // Reset the global post object so that the rest of the page works correctly.
+    wp_reset_postdata(); ?>
+<?php endif; ?>
+
 			</div>
-		</section>
+		</div>
+	</section>
 
 
 

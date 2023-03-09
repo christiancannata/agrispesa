@@ -1530,7 +1530,7 @@ function my_custom_submenu_page_callback()
 				<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
 					per gli abbonamenti delle "Facciamo noi" attivi, in base
 					alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
-					prodotti che preferisci.</p>
+					prodotti che preferisci. Seleziona gli ordini che vuoi generare.</p>
 
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>

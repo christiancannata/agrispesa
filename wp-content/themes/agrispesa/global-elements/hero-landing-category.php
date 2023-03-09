@@ -20,6 +20,8 @@ function isMobileDevice() {
 ?>
 
 <?php if( have_rows('agr_cat_hero_slider') ):
+
+
 		echo '<div class="hero-landing" data-aos="fade-in" data-aos-duration="600" data-aos-delay="0">';
 		echo '<div class="hero-landing--slider">';
 
@@ -30,9 +32,14 @@ function isMobileDevice() {
     $image_desktop = get_sub_field('agr_cat_hero_image_desktop');
 		$landing_coupon = get_sub_field('landing_cat_coupon');
 		$cta = get_sub_field('agr_cat_hero_cta');
+		$hero_color = get_sub_field('hero_color');
 
 		if(isMobileDevice()){
+			if($image) {
 				$image = get_sub_field('agr_cat_hero_image');
+			} else {
+				$image = get_sub_field('agr_cat_hero_image_desktop');
+			}
 		}
 		else {
 				if($image_desktop) {
@@ -44,8 +51,14 @@ function isMobileDevice() {
 		}
 
     ?>
+		<?php if($hero_color == 'white'):?>
+			<div class="hero-landing--item dark-hero" style="background-image: url(<?php echo $image; ?>);">
+		<?php else:?>
+			<div class="hero-landing--item light-hero" style="background-image: url(<?php echo $image; ?>);">
+		<?php endif;?>
 
-			<div class="hero-landing--item" style="background-image: url(<?php echo $image; ?>);">
+
+				<img src="<?php echo $image; ?>" id="getBright" />
 				<div class="hero-landing--flex">
 					<div class="hero-landing--text">
 						<h1 class="hero-landing--title"><?php echo $title; ?></h1>

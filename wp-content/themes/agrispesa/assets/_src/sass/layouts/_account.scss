@@ -597,25 +597,25 @@ body.woocommerce-account {
 			li {
 				padding: 0;
 
-				label {
-					@include font-size(16);
-					font-weight: 300 !important;
-					letter-spacing: 2px;
-					text-transform: uppercase;
-					margin: 0;
-					text-align: right;
-					display: none;
-
-					.woocommerce-Price-amount.amount {
-						@include font-size(16);
-						font-weight: 300 !important;
-						letter-spacing: 2px;
-						text-transform: uppercase;
-						margin: 0;
-						text-align: right;
-						display: block;
-					}
-				}
+				// label {
+				// 	@include font-size(16);
+				// 	font-weight: 300 !important;
+				// 	letter-spacing: 2px;
+				// 	text-transform: uppercase;
+				// 	margin: 0;
+				// 	text-align: right;
+				// 	display: none;
+				//
+				// 	.woocommerce-Price-amount.amount {
+				// 		@include font-size(16);
+				// 		font-weight: 300 !important;
+				// 		letter-spacing: 2px;
+				// 		text-transform: uppercase;
+				// 		margin: 0;
+				// 		text-align: right;
+				// 		display: block;
+				// 	}
+				// }
 
 				&:before {
 					content: none;
