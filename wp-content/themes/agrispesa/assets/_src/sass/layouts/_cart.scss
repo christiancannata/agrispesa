@@ -178,22 +178,22 @@ body.woocommerce-checkout {
 						}
 					}
 
-					tr.order-total,
-					tr.ywgc-gift-card-applied {
-						display: none;
-
-						td,
-						th {
-							@include font-size(14);
-							color: $black;
-							font-weight: 500 !important;
-							vertical-align: top !important;
-
-							strong {
-								font-weight: 500 !important;
-							}
-						}
-					}
+					// tr.order-total,
+					// tr.ywgc-gift-card-applied {
+					// 	display: none;
+					//
+					// 	td,
+					// 	th {
+					// 		@include font-size(14);
+					// 		color: $black;
+					// 		font-weight: 500 !important;
+					// 		vertical-align: top !important;
+					//
+					// 		strong {
+					// 			font-weight: 500 !important;
+					// 		}
+					// 	}
+					// }
 				}
 			}
 		}
