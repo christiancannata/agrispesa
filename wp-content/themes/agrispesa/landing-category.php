@@ -22,6 +22,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 $what_category_ID = get_field('agr_landing_category');
 $what_faq_category_ID = get_field('agr_landing_faq_category');
 $faq_mega_title = get_field('landing_cat_faq_title');
+$landing_cat_quote_image = get_field('landing_cat_quote_image');
 
 if($what_category_ID) {
 	$what_category = get_term( $what_category_ID )->name;
@@ -77,7 +78,7 @@ if($what_category_ID) {
 	<section class="landing-category--quote">
 		<div class="container-pg">
 			<div class="landing-category--quote--flex">
-				<div class="landing-category--quote--text" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+				<div class="landing-category--quote--text <?php if(!$landing_cat_quote_image) { echo 'big';}?>" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
 					<div class="landing-category--quote--text--quote">
 						<?php $quote = get_field('landing_cat_quote'); ?>
 						<?php if($quote):?>
@@ -88,9 +89,11 @@ if($what_category_ID) {
 						<?php echo the_field('landing_cat_quote_text');?>
 					</p>
 				</div>
+				<?php if($landing_cat_quote_image): ?>
 				<div class="landing-category--quote--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-					<img src="<?php echo the_field('landing_cat_quote_image');?>" alt="Tutti i vantaggi dei prodotti <?php echo $what_category?> " />
+					<img src="<?php echo $landing_cat_quote_image;?>" alt="Tutti i vantaggi dei prodotti <?php echo $what_category?> " />
 				</div>
+				<?php endif;?>
 			</div>
 		</div>
 	</section>

@@ -410,6 +410,9 @@ body.page-template-page-password-php {
 				order: 1;
 				width: 50%;
 				padding: 40px 80px;
+				&.big {
+					width: 70%;
+				}
 			}
 
 			&--quote {
@@ -445,5 +448,14 @@ body.page-template-page-password-php {
 				}
 			}
 		}
+	}
+}
+
+.landing-products {
+	display: flex;
+	justify-content: center;
+	.product-box {
+		width: 30.333%;
+		margin: 0 1%;
 	}
 }

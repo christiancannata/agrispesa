@@ -810,7 +810,7 @@ function my_enqueue($hook)
 			return;
 		}
 
-		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_my-custom-submenu-page' !== $hook) {
+		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_genera-ordini-box' !== $hook) {
 			return;
 		}
 
@@ -1432,7 +1432,7 @@ function get_fabbisogno($week)
 
 function register_my_custom_submenu_page()
 {
-	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback');
+	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'genera-ordini-box', 'my_custom_submenu_page_callback');
 }
 
 function my_custom_submenu_page_callback()
@@ -1530,7 +1530,7 @@ function my_custom_submenu_page_callback()
 				<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
 					per gli abbonamenti delle "Facciamo noi" attivi, in base
 					alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
-					prodotti che preferisci.</p>
+					prodotti che preferisci. Seleziona gli ordini che vuoi generare.</p>
 
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
@@ -1540,7 +1540,169 @@ function my_custom_submenu_page_callback()
 				<hr class="wp-header-end">
 
 				<br>
-				<h3>Disponibilità prodotti</h3>
+
+				<form id="comments-form" method="POST"
+					  action="">
+
+					<input type="hidden" name="generate_orders" value="1">
+					<div class="tablenav top">
+
+						<div class="alignleft actions bulkactions">
+							<label for="bulk-action-selector-top" class="screen-reader-text">Seleziona l'azione di
+								gruppo</label><select name="action" id="bulk-action-selector-top">
+								<option value="-1">Azioni di gruppo</option>
+								<option value="unapprove">Genera ordini</option>
+							</select>
+							<input type="submit" id="doaction" class="button action" value="Applica">
+						</div>
+
+						<div class="tablenav-pages one-page">
+							<span class="displaying-num">Abbonamenti attivi</span>
+						</div>
+						<br class="clear">
+					</div>
+					<h2 class="screen-reader-text">Elenco abbonamenti</h2>
+
+
+					<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+						<thead>
+
+						<th id="cb" class="manage-column column-cb check-column"
+							style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+							<span style="display:flex;align-items:center;">
+								<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+								<label for="cb-select-all-1" style="font-size:16px;">
+									Seleziona tutti
+								</label>
+							</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="author" class="manage-column column-author sortable desc">
+							<span>Cliente</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="comment" class="manage-column column-comment column-primary">
+							<span>Abbonamento</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+							scope="col" id="comment" class="manage-column column-comment column-primary">
+							<span>Attivo dal</span>
+						</th>
+						<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+							<span>Ordine</span>
+						</th>
+						</thead>
+
+						<tbody>
+						<?php foreach ($subscriptions as $subscription):
+
+							$args = [
+								'posts_per_page' => -1,
+								'post_type' => 'shop_order',
+								'post_status' => ['wc-processing', 'wc-completed'],
+								'meta_query' => [
+									'relation' => 'AND',
+									[
+										'key' => '_week',
+										'value' => $week,
+										'compare' => '>='
+									],
+									[
+										'key' => '_subscription_id',
+										'value' => $subscription->get_id(),
+										'compare' => '='
+									]
+								]
+							];
+							$orders = new WP_Query($args);
+							$orders = $orders->get_posts();
+							$products = $subscription->get_items();
+							$boxProduct = reset($products);
+
+							$variationProduct = $boxProduct->get_product();
+
+							if (!$variationProduct) {
+								continue;
+							}
+
+
+							$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
+							$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
+
+							?>
+							<tr id="comment-1" class="comment even thread-even depth-1 approved">
+								<th scope="row" class="check-column" style="padding: 16px;">
+									<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
+
+									<?php
+									$box = get_single_box_from_attributes($tipologia, $dimensione);
+									if (!$box) {
+										echo "Box Singola Non disponibile";
+									} else {
+										//check if exist weekly box
+										$weekBox = get_weekly_box_from_box($box->get_id(), $week);
+
+										if ($weekBox):
+											?>
+											<input id="cb-select-1" type="checkbox" name="subscriptions[]"
+												   value="<?php echo $subscription->get_id(); ?>"
+												<?php if (count($orders) > 0): ?>
+													disabled
+												<?php endif; ?>
+											><br>
+										<?php else: ?>
+											Devi prima creare la box
+										<?php endif; ?>
+									<?php } ?>
+
+								</th>
+								<td class="author column-author" data-colname="Autore" style="padding: 16px;">
+									<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
+								</td>
+								<td class="comment column-comment has-row-actions column-primary"
+									data-colname="Commento" style="padding: 16px;">
+									<span><?php
+
+										echo $boxProduct->get_name();
+
+										?>
+										</span>
+								</td>
+
+								<td class="response column-response" data-colname="In risposta a" style="padding: 16px;">
+									<span>
+									<?php
+									// fix nathi per errore data di consegna
+									$fixdate = $subscription->get_date_created();
+									$fixdate = new DateTime($fixdate);
+									echo $fixdate->format("d/m/Y"); ?>
+									</span>
+								</td>
+								<td style="padding: 16px;">
+									<?php if (count($orders) > 0): ?>
+										<a target="_blank"
+										   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
+											all'ordine</a>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+					<br><br>
+
+					<button type="submit" class="button-primary">Genera Ordini</button>
+				</form>
+
+				<br>
+				<br>
+				<br>
+				<h2>Fabbisogno (non modificabile)</h2>
+
+				<p style="font-size: 16px; margin-bottom: 24px;">
+					Qui puoi generare il fabbisogno automatico degli ordini appena generati (Facciamo noi) e di tutti gli ordini ricevuti per questa settimana attraverso il negozio.<br/>
+					Per modificare il fabbisogno, bisogna andare nel menu "Modifica fabbisogno".
+				</p>
 
 				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
 					<thead>
@@ -1554,7 +1716,7 @@ function my_custom_submenu_page_callback()
 						<tr>
 							<td><?php echo $fornitore; ?></td>
 							<td>
-								<table style="width:100%">
+								<table style="width:100%;border-collapse: collapse;">
 									<thead>
 									<th style="padding: 8px 10px;">Descrizione</th>
 									<th style="padding: 8px 10px;">Codice</th>
@@ -1568,8 +1730,14 @@ function my_custom_submenu_page_callback()
 									<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
 									</thead>
 									<tbody>
-									<?php foreach ($fabbisognoList as $fabbisogno):
 
+									<?php
+									$countFB = 0;
+									$sum = 0;
+									$sum_weight = 0;
+									foreach ($fabbisognoList as $fabbisogno):
+
+										echo '<tr>';
 										$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
 										$prodottoId = reset($prodottoId);
 										$product = wc_get_product($prodottoId);
@@ -1592,6 +1760,9 @@ function my_custom_submenu_page_callback()
 
 										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
 
+										$sum += $fabbisogno;
+										$sum_weight += $weight;
+
 										?>
 										<td style="padding: 8px 10px;">
 											<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
@@ -1607,23 +1778,43 @@ function my_custom_submenu_page_callback()
 
 										<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
 										<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
-									<?php endforeach; ?>
+
+									</tr>
+									<?php
+									if( $countFB == count( $fabbisognoList ) - 1): ?>
+									<tr>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+											<strong><?php echo $sum_weight; ?></strong>
+										</td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+										<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+											<strong><?php echo $sum; ?></strong>
+										</td>
+									</tr>
+									<?php endif; $countFB = $countFB + 1; endforeach; ?>
 									</tbody>
 								</table>
+
 							</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
 				</table>
 				<br/>
-				<a href="/wp-admin/admin.php?page=my-custom-submenu-page&generate_fabbisogno=1" class="button-primary">
+				<a href="/wp-admin/admin.php?page=genera-ordini-box&generate_fabbisogno=1" class="button-primary">
 					Genera Fabbisogno
 				</a>
 
 				<?php if (!empty($fabbisognoList)): ?>
 					<br><br>
 
-					<form method="POST" action="/wp-admin/admin.php?page=my-custom-submenu-page">
+					<form method="POST" action="/wp-admin/admin.php?page=genera-ordini-box">
 						<input type="hidden" name="send_email_produttori" value="1">
 
 						<button type="submit"
@@ -1638,161 +1829,9 @@ function my_custom_submenu_page_callback()
 				<br/>
 
 			</div>
-			<br/>
-			<br/>
-
-			<form id="comments-form" method="POST"
-				  action="">
-
-				<input type="hidden" name="generate_orders" value="1">
-				<div class="tablenav top">
-
-					<div class="alignleft actions bulkactions">
-						<label for="bulk-action-selector-top" class="screen-reader-text">Seleziona l'azione di
-							gruppo</label><select name="action" id="bulk-action-selector-top">
-							<option value="-1">Azioni di gruppo</option>
-							<option value="unapprove">Genera ordini</option>
-						</select>
-						<input type="submit" id="doaction" class="button action" value="Applica">
-					</div>
-
-					<div class="tablenav-pages one-page">
-						<span class="displaying-num">Abbonamenti attivi</span>
-					</div>
-					<br class="clear">
-				</div>
-				<h2 class="screen-reader-text">Elenco abbonamenti</h2>
 
 
-				<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-					<thead>
 
-					<th id="cb" class="manage-column column-cb check-column"
-						style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-						<span style="display:flex;align-items:center;">
-							<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
-							<label for="cb-select-all-1" style="font-size:16px;">
-								Seleziona tutti
-							</label>
-						</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="author" class="manage-column column-author sortable desc">
-						<span>Cliente</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="comment" class="manage-column column-comment column-primary">
-						<span>Abbonamento</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-						scope="col" id="comment" class="manage-column column-comment column-primary">
-						<span>Attivo dal</span>
-					</th>
-					<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-						<span>Ordine</span>
-					</th>
-					</thead>
-
-					<tbody>
-					<?php foreach ($subscriptions as $subscription):
-
-						$args = [
-							'posts_per_page' => -1,
-							'post_type' => 'shop_order',
-							'post_status' => ['wc-processing', 'wc-completed'],
-							'meta_query' => [
-								'relation' => 'AND',
-								[
-									'key' => '_week',
-									'value' => $week,
-									'compare' => '>='
-								],
-								[
-									'key' => '_subscription_id',
-									'value' => $subscription->get_id(),
-									'compare' => '='
-								]
-							]
-						];
-						$orders = new WP_Query($args);
-						$orders = $orders->get_posts();
-						$products = $subscription->get_items();
-						$boxProduct = reset($products);
-
-						$variationProduct = $boxProduct->get_product();
-
-						if (!$variationProduct) {
-							continue;
-						}
-
-
-						$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
-						$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
-
-						?>
-						<tr id="comment-1" class="comment even thread-even depth-1 approved">
-							<th scope="row" class="check-column" style="padding: 16px;">
-								<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
-
-								<?php
-								$box = get_single_box_from_attributes($tipologia, $dimensione);
-								if (!$box) {
-									echo "Box Singola Non disponibile";
-								} else {
-									//check if exist weekly box
-									$weekBox = get_weekly_box_from_box($box->get_id(), $week);
-
-									if ($weekBox):
-										?>
-										<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-											   value="<?php echo $subscription->get_id(); ?>"
-											<?php if (count($orders) > 0): ?>
-												disabled
-											<?php endif; ?>
-										><br>
-									<?php else: ?>
-										Devi prima creare la box
-									<?php endif; ?>
-								<?php } ?>
-
-							</th>
-							<td class="author column-author" data-colname="Autore" style="padding: 16px;">
-								<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
-							</td>
-							<td class="comment column-comment has-row-actions column-primary"
-								data-colname="Commento" style="padding: 16px;">
-								<span><?php
-
-									echo $boxProduct->get_name();
-
-									?>
-									</span>
-							</td>
-
-							<td class="response column-response" data-colname="In risposta a" style="padding: 16px;">
-								<span>
-								<?php
-								// fix nathi per errore data di consegna
-								$fixdate = $subscription->get_date_created();
-								$fixdate = new DateTime($fixdate);
-								echo $fixdate->format("d/m/Y"); ?>
-								</span>
-							</td>
-							<td style="padding: 16px;">
-								<?php if (count($orders) > 0): ?>
-									<a target="_blank"
-									   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
-										all'ordine</a>
-								<?php endif; ?>
-							</td>
-						</tr>
-					<?php endforeach; ?>
-					</tbody>
-				</table>
-				<br><br>
-
-				<button type="submit" class="button-primary">Genera Ordini</button>
-			</form>
 		</div>
 
 		<div id="ajax-response"></div>
@@ -2137,7 +2176,7 @@ add_action('init', 'cptui_register_my_cpts_delivery_group');
 add_action('admin_menu', 'consegne_ordini_pages');
 function consegne_ordini_pages()
 {
-	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini-pages', function () {
+	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini', function () {
 		$groups = get_posts([
 			'post_type' => 'delivery-group',
 			'post_status' => 'publish',
@@ -2537,7 +2576,8 @@ function consegne_ordini_pages()
 						<div style="margin-right:24px;">
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona
-								la Facciamo Noi</label>
+								la Box</label>
+
 							<select name="box_id" id="box_id" class="select2">
 								<option disabled selected value="">-- Scegli la box --</option>
 								<?php foreach ($products as $product): ?>
@@ -2553,11 +2593,31 @@ function consegne_ordini_pages()
 										<?php foreach ($children as $child): ?>
 											<?php
 											$child = wc_get_product($child);
+											$child_id =$child->get_id();
+
+											$type = $child->get_attribute('pa_tipologia');
+											$type_code = "";
+
+											$size = $child->get_attribute('pa_dimensione');
+											$size_code = substr($size, 0, 1);
+
+											$year = date("Y");
+											$year_code = substr($year, 2, 4);
+
+											if($type == 'Vegana' || $type == 'Vegetariana') {
+												$type_code = substr($type, 0, 4);
+											} else {
+												$type_code = substr($type, 0, 1);
+											}
+
+											//CODICE UNIVOCO BOX
+											$box_code = 'FN' .$type_code . $size_code . '-' . $year_code . $currentWeek;
+
 											?>
 											<option
-												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_tipologia') . ' - ' . $child->get_attribute('pa_dimensione'); ?></option>
+												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_dimensione') . ' - ' . $child->get_attribute('pa_tipologia'); ?></option>
 										<?php endforeach; ?>
-									</optgroup>
+									</optgroup--!>
 								<?php endforeach; ?>
 							</select>
 
@@ -2726,7 +2786,7 @@ function consegne_ordini_pages()
 									$posts_per_cat = $count_posts->found_posts;
 
 									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $loop_category->slug . '">';
+										echo '<optgroup label="' . $loop_category->name . '">';
 									}
 
 									while ($cat_query->have_posts()) : $cat_query->the_post();
@@ -2862,7 +2922,7 @@ function consegne_ordini_pages()
 						<tr>
 							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
 								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-								<span style="padding-right:16px;">Box n°</span></th>
+								<span style="padding-right:16px;">Creata il</span></th>
 							<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
 								style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 								<span style="padding-right:16px;">Settimana</span></th>
@@ -2908,12 +2968,13 @@ function consegne_ordini_pages()
 
 							// fix nathi per errore data di consegna
 							$fixdate = new DateTime($dataConsegna);
+
 							?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved ">
 
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
-									<span class="create-box-table--span-item week">Box n° <?php echo $i; ?></span>
+									<span class="create-box-table--span-item week"><?php $boxdate = date_create($box->post_date); echo '<span style="display:block;">'.date_format($boxdate,"Y/m/d").'</span><span style="display:block;margin-top:4px;">'.date_format($boxdate,"H:i:s").'</span>'; ?></span>
 								</td>
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
@@ -3040,7 +3101,6 @@ function consegne_ordini_pages()
 												</td>
 											</tr>
 										<?php endforeach; ?>
-										<?php if ($week >= $currentWeek): ?>
 
 											<tr class="create-box-table--add-product-row">
 												<td colspan="4" class="create-box-table--add-product-item"
@@ -3285,9 +3345,10 @@ function consegne_ordini_pages()
 													   href="#">Aggiungi</a>
 												</td>
 											</tr>
-										<?php endif; ?>
+
 
 										<tr class="create-box-table--totals">
+											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 											<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso
 													Box</strong></td>
@@ -3300,6 +3361,7 @@ function consegne_ordini_pages()
 											<td style="border-top:2px solid #000;border-bottom:none;"></td>
 										</tr>
 										<tr>
+											<td style="border-bottom:none;"></td>
 											<td style="border-bottom:none;"></td>
 											<td style="border-bottom:none;"><?php echo $totalWeight; ?> gr</td>
 											<td style="border-bottom:none;"></td>
@@ -3366,41 +3428,89 @@ function consegne_ordini_pages()
 			<div class="wrap" id="box-app">
 
 
+				<div class="agr-create-new-boxes">
 				<h1 class="wp-heading-inline">
 					Esporta Documenti</h1>
 
+					<br/>
+					<br/>
+					<br/>
 				<hr class="wp-header-end">
 
 				<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
-
+					<div style="display:flex;">
+					<div style="margin-right: 16px;">
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana n°</label>
+						<?php $date = new DateTime();
+						$date->modify('+1 week');
+						$currentWeek = $date->format("W");?>
+						<input class="change_week_print" name="week_print" id="week_print" value="<?php echo $currentWeek; ?>"
+								 type="number" style="width:150px;">
+					</div>
 					<div id="data_consegna_div">
-						<label>Data di consegna</label><br>
+						<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Data di consegna</label>
 
 						<?php if (count($allDataConsegna) == 0): ?>
 							<i>Nessun ordine con data consegna.</i>
-						<?php else: ?>
-							<select name="data_consegna" autocomplete="off">
+						<?php else:
+							?>
+							<select name="data_consegna" autocomplete="on" class="get_date_shipping">
+								<option disabled selected value="null">Seleziona</option>
 								<?php
 								foreach ($allDataConsegna as $dataConsegna):
-									// fix nathi per errore data di consegna
+
+									//fix nathi per errore data di consegna quiiii
 									$fixdate = $dataConsegna['meta_value'];
 									$fixdate = new DateTime($fixdate);
+									$fixdate = $fixdate->format('d-m-Y');
+
+									$wednesday = date('d-m-Y', strtotime('wednesday next week'));
+									//print_r($wednesday);
 									?>
+
 									<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
-									<option
-										value="<?php echo $fixdate->format('Y-m-d'); ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
+									<option <?php if($wednesday === $fixdate ) { echo 'selected'; } ?> value="<?php echo $fixdate; ?>"><?php echo $fixdate; ?></option>
+
 								<?php endforeach; ?>
 							</select>
+							<?php wp_enqueue_script('moment', get_template_directory_uri() . '/assets/js/moment.min.js', ['jquery'], null, true);?>
+							<script type="text/javascript">
+							jQuery(document).ready(function ($) {
+								$(".change_week_print").on("change paste keyup", function () {
+							    const y = new Date().getFullYear();
+							    const jan1 = new Date(y, 0, 1);
+							    const jan1Day = jan1.getDay();
+							    const daysToMonday = jan1Day === 1 ? 0 : jan1Day === 0 ? 1 : 8 - jan1Day
+
+							    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
+							    // console.log(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY'));
+									// console.log($(this).val());
+
+									if ($('.get_date_shipping :contains('+ moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') +')').length) {
+									   $('.get_date_shipping option[value='+moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY')+']').attr('selected','selected');
+									} else {
+										$('.get_date_shipping option[value=null]').attr('selected','selected');
+									}
+
+
+							  });
+							})
+							</script>
+
 
 						<?php endif; ?>
 					</div>
+					</div>
+
+<br/>
+
 
 
 					<div id="codice_confezionamento_container">
-						<h4>Codice di confezionamento</h4>
+						<h4 style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Codice di confezionamento</h4>
 						<div style="display: flex">
-							<div>
-								<label>Dal</label><br>
+							<div style="margin-right:8px;">
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Dal</label>
 								<select autocomplete="off" name="confezionamento_dal">
 									<option value="">-- Seleziona --</option>
 									<?php foreach ($confezionamento as $codice): ?>
@@ -3409,7 +3519,7 @@ function consegne_ordini_pages()
 								</select>
 							</div>
 							<div>
-								<label>Al</label><br>
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Al</label>
 								<select class="select2" name="confezionamento_al">
 									<option value="">-- Seleziona --</option>
 									<?php foreach ($confezionamento as $codice): ?>
@@ -3420,10 +3530,10 @@ function consegne_ordini_pages()
 						</div>
 					</div>
 					<div id="settimana_div" style="display: none">
-						<h4>Settimana</h4>
+
 						<div style="display: flex">
 							<div>
-								<label>Settimana</label><br>
+								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
 								<?php
 								$date = new DateTime();
 								$date->modify('+1 week');
@@ -3445,7 +3555,8 @@ function consegne_ordini_pages()
 						</div>
 					</div>
 					<br>
-					<label>Cosa vuoi esportare?</label><br>
+					<br>
+					<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Cosa vuoi esportare?</label>
 
 					<select id="document_type" name="document_type" autocomplete="off">
 						<option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
@@ -3462,6 +3573,7 @@ function consegne_ordini_pages()
 				</form>
 
 
+			</div>
 			</div>
 
 			<div class="clear"></div>

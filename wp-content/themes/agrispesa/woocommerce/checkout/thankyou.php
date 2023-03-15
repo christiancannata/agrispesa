@@ -225,7 +225,7 @@ if ($next_week_month === '01') {
 					<div class="thankyou--details--item buttons">
 						<a href="<?php echo esc_url(home_url('/')); ?>bacheca" title="Vai alla tua bacheca"
 						   class="btn btn-primary">
-							Vai alla tua bachecas
+							Vai alla tua bacheca
 						</a>
 					</div>
 				</div>

@@ -77,9 +77,15 @@ body.woocommerce-checkout {
 
 			tr td,
 			tr th {
-				border-top: 1px solid $white !important;
+				width: 50%;
+				@include font-size(16);
+				font-weight: 300 !important;
+				border-top: 1px solid rgba($white, 0.7) !important;
 				vertical-align: middle !important;
 				background: transparent !important;
+				&.product-name {
+					border-top: none !important;
+				}
 				@include breakpoint(mobile) {
 					display: table-cell !important;
 					width: 100% !important;
@@ -108,21 +114,46 @@ body.woocommerce-checkout {
 					background: transparent;
 
 					th {
-						@include font-size(12);
-						font-weight: 400 !important;
+						@include font-size(16);
+						font-weight: 300 !important;
 					}
 
-					.recurring-total,
+					.cart-discount {
+						td {
+							color: $red;
+
+							a {
+								@include font-size(13);
+								color: $black;
+								display: block;
+							}
+						}
+
+
+						.checkout-coupon-name {
+							@include font-size(13);
+							display: block;
+							text-transform: uppercase;
+							letter-spacing: 1px;
+							color: $black;
+						}
+						.free-shipping-hide {
+							display: none;
+						}
+					}
+
 					.recurring-totals {
-						display: none;
+						font-family: $font-title;
 
 						th {
 							@include font-size(18);
+							padding-top: 24px !important;
 							font-weight: 900 !important;
-							padding: 24px 8px 8px !important;
-							font-family: $font-title;
-							text-transform: none !important;
-							letter-spacing: 0 !important;
+						}
+					}
+					tr.order-total {
+						th, td {
+							font-weight: 600 !important;
 						}
 					}
 
@@ -147,22 +178,22 @@ body.woocommerce-checkout {
 						}
 					}
 
-					tr.order-total,
-					tr.ywgc-gift-card-applied {
-						display: none;
-
-						td,
-						th {
-							@include font-size(14);
-							color: $black;
-							font-weight: 500 !important;
-							vertical-align: top !important;
-
-							strong {
-								font-weight: 500 !important;
-							}
-						}
-					}
+					// tr.order-total,
+					// tr.ywgc-gift-card-applied {
+					// 	display: none;
+					//
+					// 	td,
+					// 	th {
+					// 		@include font-size(14);
+					// 		color: $black;
+					// 		font-weight: 500 !important;
+					// 		vertical-align: top !important;
+					//
+					// 		strong {
+					// 			font-weight: 500 !important;
+					// 		}
+					// 	}
+					// }
 				}
 			}
 		}
