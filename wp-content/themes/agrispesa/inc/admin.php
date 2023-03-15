@@ -3663,7 +3663,7 @@ function variation_settings_fields($loop, $variation_data, $variation)
 			'value' => $categoriesVariation
 		), $variation_data->ID);
 	*/
-	$categoriesVariation = get_post_meta($variation->ID, '_id_navision', true);
+	$idNavision = get_post_meta($variation->ID, '_id_navision', true);
 
 	woocommerce_wp_text_input(array(
 		'id' => "_navision_id{$loop}",
