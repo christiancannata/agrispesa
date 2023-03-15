@@ -3605,65 +3605,7 @@ add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
 function variation_settings_fields($loop, $variation_data, $variation)
 {
 
-	$categoriesSelect = [];
-
-	$taxonomy = 'product_cat';
-	$orderby = 'name';
-	$show_count = 0;      // 1 for yes, 0 for no
-	$pad_counts = 0;      // 1 for yes, 0 for no
-	$hierarchical = 1;      // 1 for yes, 0 for no
-	$title = '';
-	$empty = 0;
-
-	$args = array(
-		'taxonomy' => $taxonomy,
-		'orderby' => $orderby,
-		'show_count' => $show_count,
-		'pad_counts' => $pad_counts,
-		'hierarchical' => $hierarchical,
-		'title_li' => $title,
-		'hide_empty' => $empty
-	);
-	$all_categories = get_categories($args);
-	foreach ($all_categories as $cat) {
-
-		if ($cat->category_parent == 0) {
-
-			$category_id = $cat->term_id;
-			$categoriesSelect[$category_id] = strtoupper('TUTTI ' . $cat->name);
-
-			$args2 = array(
-				'taxonomy' => $taxonomy,
-				'child_of' => 0,
-				'parent' => $category_id,
-				'orderby' => $orderby,
-				'show_count' => $show_count,
-				'pad_counts' => $pad_counts,
-				'hierarchical' => $hierarchical,
-				'title_li' => $title,
-				'hide_empty' => $empty
-			);
-			$sub_cats = get_categories($args2);
-			if ($sub_cats) {
-				foreach ($sub_cats as $sub_category) {
-					$categoriesSelect[$sub_category->term_id] = $cat->name . ' > ' . $sub_category->name;
-				}
-			}
-		}
-	}
-	/*
-		$categoriesVariation = get_post_meta($variation->ID, '_box_categories', true);
-
-		woocommerce_wp_multi_select(array(
-			'id' => "_box_categories{$loop}",
-			'name' => "_box_categories[{$loop}][]",
-			'wrapper_class' => 'form-row form-row-full',
-			'label' => 'Categorie compatibili',
-			'options' => $categoriesSelect,
-			'value' => $categoriesVariation
-		), $variation_data->ID);
-	*/
-	$idNavision = get_post_meta($variation->ID, '_id_navision', true);
+	$idNavision = get_post_meta($variation->ID, '_navision_id', true);
 
 	woocommerce_wp_text_input(array(
 		'id' => "_navision_id{$loop}",
@@ -3677,9 +3619,9 @@ function variation_settings_fields($loop, $variation_data, $variation)
 function save_variation_settings_fields($variation_id, $loop)
 {
 
-	if (isset($_POST['_id_navision'][$loop])) {
-		$post_data = $_POST['_id_navision'][$loop];
-		update_post_meta($variation_id, '_id_navision', $post_data);
+	if (isset($_POST['_navision_id'][$loop])) {
+		$post_data = $_POST['_navision_id'][$loop];
+		update_post_meta($variation_id, '_navision_id', $post_data);
 	}
 
 }
