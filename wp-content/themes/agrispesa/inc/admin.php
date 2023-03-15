@@ -3607,6 +3607,9 @@ function variation_settings_fields($loop, $variation_data, $variation)
 
 	$idNavision = get_post_meta($variation->ID, '_navision_id', true);
 
+	if (is_array($idNavision)) {
+		$idNavision = $idNavision[0];
+	}
 	woocommerce_wp_text_input(array(
 		'id' => "_navision_id{$loop}",
 		'name' => "_navision_id[{$loop}][]",
