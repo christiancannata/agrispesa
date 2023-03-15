@@ -3538,27 +3538,30 @@ function variation_settings_fields($loop, $variation_data, $variation)
 			'value' => $categoriesVariation
 		), $variation_data->ID);
 	*/
+	$categoriesVariation = get_post_meta($variation->ID, '_id_navision', true);
+
+	woocommerce_wp_text_input(array(
+		'id' => "_navision_id{$loop}",
+		'name' => "_navision_id[{$loop}][]",
+		'wrapper_class' => 'form-row form-row-full',
+		'label' => 'ID Navision',
+		'value' => $idNavision
+	), $variation_data->ID);
 }
 
 function save_variation_settings_fields($variation_id, $loop)
 {
 
-	if (isset($_POST['_box_categories'][$loop])) {
-		$post_data = $_POST['_box_categories'][$loop];
-		$sanitize_data = [];
-		if (is_array($post_data) && !empty($post_data)) {
-			foreach ($post_data as $value) {
-				$sanitize_data[] = intval(esc_attr($value));
-			}
-		}
-		update_post_meta($variation_id, '_box_categories', $sanitize_data);
+	if (isset($_POST['_id_navision'][$loop])) {
+		$post_data = $_POST['_id_navision'][$loop];
+		update_post_meta($variation_id, '_id_navision', $post_data);
 	}
 
 }
 
 function load_variation_settings_fields($variation)
 {
-	$variation['box_categories'] = get_post_meta($variation['variation_id'], 'box_categories', true);
+	$variation['_id_navision'] = get_post_meta($variation['variation_id'], '_id_navision', true);
 
 	return $variation;
 }
