@@ -28,9 +28,9 @@
 		padding: 0 20px;
 		text-align: center;
 		@include breakpoint(desktop) {
-			width: 48%;
+			width: 50%;
 			text-align: left;
-			max-width: 680px;
+			max-width: 800px;
 			padding: 0 0 0 160px;
 		}
 

@@ -206,7 +206,7 @@ if($agr_landing_coupon){
 								 ?>
  				        </div>
 								<div class="landing-box--button">
-									<a id="get_url" href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60'.$coupon )); ?>" class="btn btn-primary">Abbonati alla spesa</a>
+									<a id="get_url" href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60' )); ?>" class="btn btn-primary">Abbonati alla spesa</a>
 								</div>
  				      </div>
 
