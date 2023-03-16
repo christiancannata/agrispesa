@@ -10,6 +10,7 @@ get_header(); ?>
 		<?php get_template_part( 'global-elements/home', 'sections' ); ?>
 	</section>
 
+
 </div>
 
 <?php
