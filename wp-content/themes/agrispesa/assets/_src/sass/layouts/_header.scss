@@ -801,6 +801,25 @@
 	li {
 		margin-right: 24px;
 
+		&.new-menu {
+			position: relative;
+
+			&:after {
+				@include border-radius(2px);
+				content: 'Nuovo';
+				background: $orange;
+				color: $white;
+				@include font-size(8);
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				padding: 2px 4px;
+				position: absolute;
+				right: -18px;
+				top: -10px;
+			}
+		}
+
 		&:last-child {
 			margin-right: 0;
 		}

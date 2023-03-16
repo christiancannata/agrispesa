@@ -29,7 +29,7 @@ $landing_discount_badge = get_field('landing_discount_badge');
 $landing_discount_type = get_field('landing_discount_type');
 
 if($agr_landing_coupon){
-	$coupon = '&alg_apply_coupon='.$agr_landing_coupon;
+	$coupon = '&codice_sconto='.$agr_landing_coupon;
 } else {
 	$coupon= "";
 }
