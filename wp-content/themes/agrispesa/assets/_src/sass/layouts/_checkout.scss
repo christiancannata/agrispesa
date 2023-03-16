@@ -5,7 +5,9 @@ body.woocommerce-checkout {
 		display: none;
 	}
 }
-
+.shipping_address.no-mg-top {
+	margin-top: 0 !important;
+}
 body.woocommerce-checkout {
 	.woocommerce-form-login-toggle {
 		.woocommerce-info {

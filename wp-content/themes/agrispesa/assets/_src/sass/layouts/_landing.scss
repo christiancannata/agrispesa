@@ -410,6 +410,7 @@ body.page-template-page-password-php {
 				order: 1;
 				width: 50%;
 				padding: 40px 80px;
+
 				&.big {
 					width: 70%;
 				}
@@ -454,8 +455,241 @@ body.page-template-page-password-php {
 .landing-products {
 	display: flex;
 	justify-content: center;
+
 	.product-box {
 		width: 30.333%;
 		margin: 0 1%;
+	}
+}
+
+.landing-discount {
+	&--badge {
+		@include border-radius(50%);
+		width: 200px;
+		height: 200px;
+		background: $orange;
+		position: absolute;
+		color: $white;
+		@include font-size(80);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: -80px;
+		left: 20px;
+		font-weight: 600;
+		@include breakpoint(mobile) {
+			width: 80px;
+			height: 80px;
+			@include font-size(32);
+			left: 0;
+			top: -40px;
+		}
+
+		small {
+			@include font-size(50);
+			font-weight: 300;
+			margin-top: 22px;
+			@include breakpoint(mobile) {
+				margin-top: 0;
+				@include font-size(22);
+			}
+		}
+	}
+}
+
+.landing-box {
+	.nice-select,
+	.reset_variations,
+	select {
+		display: none;
+	}
+
+	.landing-label-var {
+		@include font-size(12);
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		font-weight: 400;
+	}
+
+	.variation-radios {
+		display: block;
+		clear: both;
+		width: 100%;
+		margin: 8px 0 24px;
+
+		label {
+			display: flex;
+			margin: 0 0 4px;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+
+		&.attribute_pa_dimensione,
+		&.attribute_pa_tipologia {
+			display: flex;
+			@include breakpoint(mobile) {
+				flex-wrap: wrap;
+			}
+
+			label {
+				width: 100%;
+				margin: 4px 0;
+				@include breakpoint(desktop) {
+					width: 25%;
+					margin: 0 4px 0 0;
+				}
+
+				&:last-of-type {
+					margin-right: 0;
+				}
+			}
+		}
+
+		input[type="radio"] {
+			display: none;
+
+			&:checked {
+				+ .box {
+					background-color: $primary;
+
+					span {
+						color: white;
+					}
+				}
+			}
+		}
+
+		label {
+			&:nth-child(even) {
+				.box {
+					&:hover {
+						@include breakpoint(desktop) {
+							@include transform(rotate(2deg));
+						}
+					}
+				}
+
+				input[type="radio"] {
+					display: none;
+				}
+			}
+		}
+
+		.box {
+			@include transition(all 0.3s ease);
+			@include border-radius(24px);
+			width: 100%;
+			background-color: $white;
+			transition: all 250ms ease;
+			display: inline-block;
+			text-align: center;
+			cursor: pointer;
+			position: relative;
+			font-weight: 300;
+			padding: 4px 16px;
+			line-height: 40px;
+			@include breakpoint(desktop) {
+				&:hover {
+					@include transform(rotate(-2deg));
+				}
+			}
+
+			span {
+				@include font-size(16);
+				transition: all 300ms ease;
+				user-select: none;
+				color: $black;
+				font-weight: 300;
+				display: block;
+			}
+		}
+	}
+
+	&--image {
+		position: relative;
+		max-width: 1024px;
+		margin: 0 auto;
+	}
+
+	&--article {
+		.shipping-info,
+		.woocommerce-variation-add-to-cart .btn-price {
+			display: none;
+		}
+	}
+
+	&--bottom {
+		max-width: 750px;
+		margin: 0 auto;
+	}
+
+	&--button {
+		@include breakpoint(mobile) {
+			text-align: center;
+			margin-top: 32px;
+
+			a {
+				width: 100%;
+			}
+		}
+	}
+
+	&--price {
+		@include breakpoint(mobile) {
+			text-align: center;
+		}
+
+		&--flex {
+			@include breakpoint(desktop) {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 32px;
+			}
+		}
+
+		.change-price-box {
+			display: none;
+
+			.week {
+				@include font-size(24);
+			}
+
+			.landing-old-price {
+				@include font-size(30);
+				color: $orange;
+				position: relative;
+				display: inline-block;
+				margin-right: 8px;
+
+				&:before {
+					content: '';
+					display: block;
+					width: 100%;
+					height: 2px;
+					background: $orange;
+					@include transform(rotate(-12deg));
+					position: absolute;
+					top: 50%;
+					left: 0;
+				}
+
+				.woocommerce-Price-currencySymbol {
+					@include font-size(20);
+					display: inline-block;
+				}
+			}
+
+			.landing-new-price {
+				@include font-size(40);
+
+				.woocommerce-Price-currencySymbol {
+					@include font-size(24);
+				}
+			}
+		}
 	}
 }

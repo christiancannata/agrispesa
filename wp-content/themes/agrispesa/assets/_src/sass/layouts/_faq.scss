@@ -85,10 +85,36 @@
 		}
 
 		p {
-			margin: 0;
+			@include font-size(16);
+			margin: 16px 0;
 
 			strong {
 				font-weight: 600;
+			}
+		}
+		ol,
+		ul {
+			margin: 24px 0;
+			padding-left: 24px;
+
+			li {
+				@include font-size(16);
+				line-height: 1.5;
+				position: relative;
+				padding-left: 16px;
+				margin: 8px 0;
+
+				&:before {
+					@include border-radius(50%);
+					background: $green;
+					content: '';
+					display: inline-block;
+					height: 8px;
+					width: 8px;
+					position: absolute;
+					top: 11px;
+					left: 0;
+				}
 			}
 		}
 	}

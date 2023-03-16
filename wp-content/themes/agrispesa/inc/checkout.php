@@ -194,16 +194,21 @@ function custom_dropdown_bulk_actions_shop_order( $actions ) {
 
 //Add custom fields to checkout
 function cloudways_custom_checkout_fields($fields){
+	if( in_array( 'welovedenso', WC()->cart->get_applied_coupons() ) ) {
+		$required = false;
+	} else {
+		$required = true;
+	}
     $fields['cloudways_extra_fields'] = array(
       	'cloudways_scala_field' => array(
           'type' => 'text',
-          'required'      => true,
+          'required'      => false,
 					'label'         => __('Scala'),
 					'placeholder'   => __('In quale scala abiti?'),
         ),
 				'cloudways_piano_field' => array(
           'type' => 'text',
-          'required'      => true,
+          'required'      => $required,
 					'label'         => __('Piano'),
 					'placeholder'   => __('A che piano vivi?'),
         ),
@@ -214,13 +219,19 @@ add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
 function cloudways_extra_checkout_fields(){
     $checkout = WC()->checkout(); ?>
 		<div id="shipping-custom-fields" class="woocommerce-border-form w-bottom">
-			<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>
-			<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
-	    <?php
-	       foreach ( $checkout->checkout_fields['cloudways_extra_fields'] as $key => $field ) : ?>
-	            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-	        <?php endforeach; ?>
-	    </div>
+			<?php if( in_array( 'welovedenso', WC()->cart->get_applied_coupons() ) ):?>
+				<h3 class="checkout--title company-shipping-label-get">Consegniamo nella tua azienda <span class="ec ec-sparkles"></span></h3>
+			<?php else:?>
+				<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>
+				<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
+				<?php
+		       foreach ( $checkout->checkout_fields['cloudways_extra_fields'] as $key => $field ) : ?>
+		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		        <?php endforeach; ?>
+			<?php endif;?>
+			</div>
+
+
 <?php }
 add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
 
@@ -268,4 +279,46 @@ function my_validation_handler($is_valid, $product_id) {
 		}
 	}
 	return $is_valid;
+}
+
+//Denso: apri form shipping e compila i dati
+add_filter( 'woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 10, 1 );
+function custom_checkout_billing_city_field( $shipping_fields ) {
+	if( in_array( 'welovedenso', WC()->cart->get_applied_coupons() ) ) {
+		add_filter( 'woocommerce_ship_to_different_address_checked', '__return_true' );
+		global $woocommerce;
+
+		$company = 'Denso Thermal Systems S.p.A.';
+    $city = 'Poirino';
+		$postcode = '10046';
+		$address = 'Frazione Masio, 24';
+		$state = 'TO';
+
+    // Set values (to be sure)
+    $woocommerce->customer->set_shipping_address( $address );
+		$woocommerce->customer->set_shipping_postcode( $postcode );
+    $woocommerce->customer->set_shipping_city( $city );
+    $woocommerce->customer->set_shipping_company( $company );
+		$woocommerce->customer->set_shipping_state( $state );
+
+    // Change fields
+    $shipping_fields['shipping_address_1']['default'] = $address;
+    $shipping_fields['shipping_postcode']['default'] = $postcode;
+    $shipping_fields['shipping_city']['default'] = $city;
+    $shipping_fields['shipping_company']['default'] = $company;
+    $shipping_fields['shipping_state']['default'] = $state;
+
+    $shipping_fields['shipping_address_1']['custom_attributes']['readonly'] = 'readonly';
+    $shipping_fields['shipping_postcode']['custom_attributes']['readonly'] = 'readonly';
+    $shipping_fields['shipping_city']['custom_attributes']['readonly'] = 'readonly';
+    $shipping_fields['shipping_company']['custom_attributes']['readonly'] = 'readonly';
+    //$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
+
+		// $shipping_fields['shipping_state']['type'] = 'select';
+    // $shipping_fields['shipping_state']['options'] = array( $state => $state );
+    // $shipping_fields['shipping_state']['default'] = $state;
+    //$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
+
+    return $shipping_fields;
+	}
 }

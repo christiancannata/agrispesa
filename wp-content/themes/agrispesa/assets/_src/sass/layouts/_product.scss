@@ -18,6 +18,7 @@
 
 			.woocommerce-Price {
 				font-weight: 400;
+
 				&-amount {
 					@include font-size(24);
 				}
@@ -957,14 +958,10 @@ body.tax-product_cat {
 			position: relative;
 			font-weight: 300;
 			padding: 4px 16px;
-
-			&:hover {
-				@include transform(rotate(-2deg));
-			}
-
-			&:active {
-				//transform: translateY(4px);
-				//@include transform(rotate(-2deg));
+			@include breakpoint(desktop) {
+				&:hover {
+					@include transform(rotate(-2deg));
+				}
 			}
 
 			span {

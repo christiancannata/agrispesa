@@ -1,0 +1,5 @@
+.gitignore export-ignore
+composer.lock export-ignore
+README.md export-ignore
+/git-tag.sh export-ignore
+/phpcs.xml export-ignore

@@ -1,0 +1,245 @@
+2023-03-16T10:41:59+00:00 CRITICAL Uncaught Error: Call to a member function get_title() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 133
+
+2023-03-16T10:42:06+00:00 CRITICAL Uncaught Error: Call to a member function get_title() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 133
+
+2023-03-16T10:42:42+00:00 CRITICAL Uncaught Error: Call to a member function get_title() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 133
+
+2023-03-16T10:43:18+00:00 CRITICAL Uncaught Error: Call to a member function get_title() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 133
+
+2023-03-16T10:43:24+00:00 CRITICAL Uncaught Error: Call to a member function get_title() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 133
+
+2023-03-16T11:11:34+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Subscription_Variation::attributes() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:132
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 132
+
+2023-03-16T11:25:25+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function WC_Product::get_attribute(), 0 passed in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php on line 132 and exactly 1 expected in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/abstracts/abstract-wc-product.php:1996
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php(132): WC_Product->get_attribute()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#4 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/abstracts/abstract-wc-product.php alla riga 1996
+
+2023-03-16T11:34:43+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T11:35:30+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T11:35:32+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T11:35:42+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 200
+
+2023-03-16T11:35:57+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T11:36:19+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T11:36:45+00:00 CRITICAL syntax error, unexpected '{' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 137
+
+2023-03-16T13:05:37+00:00 CRITICAL Uncaught Error: Call to a member function get_attributes() on array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:134
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 134
+
+2023-03-16T13:13:06+00:00 CRITICAL Uncaught Error: Call to undefined function get_attribute() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:140
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 140
+
+2023-03-16T13:13:33+00:00 CRITICAL syntax error, unexpected ';', expecting ']' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 140
+
+2023-03-16T13:14:24+00:00 CRITICAL syntax error, unexpected ';', expecting ']' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 141
+
+2023-03-16T13:16:53+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Subscription_Variation as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:142
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 142
+
+2023-03-16T13:17:03+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Subscription_Variation as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:142
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 142
+
+2023-03-16T13:25:22+00:00 CRITICAL Uncaught Error: Call to undefined function get_attribute() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:151
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 151
+
+2023-03-16T13:27:04+00:00 CRITICAL Uncaught Error: Call to a member function get_attribute() on array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:153
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 153
+
+2023-03-16T14:22:06+00:00 CRITICAL syntax error, unexpected ':', expecting ']' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 145
+
+2023-03-16T14:47:51+00:00 CRITICAL Uncaught Error: Call to a member function get_attribute() on array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:164
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 164
+
+2023-03-16T14:50:09+00:00 CRITICAL Uncaught Error: Call to undefined function array_value_recursive() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:164
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 164
+
+2023-03-16T14:50:45+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 164
+
+2023-03-16T15:13:37+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 211
+
+2023-03-16T15:16:04+00:00 CRITICAL syntax error, unexpected '$attribute' (T_VARIABLE), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 195
+
+2023-03-16T15:38:14+00:00 CRITICAL syntax error, unexpected 'selling' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 220
+
+2023-03-16T16:23:46+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Variable_Subscription::get_variations() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:214
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 214
+
+2023-03-16T16:39:34+00:00 CRITICAL Uncaught Error: Call to a member function get_available_variations() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:160
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 160
+
+2023-03-16T16:39:53+00:00 CRITICAL Uncaught Error: Call to a member function get_available_variations() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:160
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 160
+
+2023-03-16T16:40:35+00:00 CRITICAL Uncaught Error: Call to a member function get_available_variations() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php:157
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-company.php alla riga 157
+
+2023-03-16T18:01:22+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Checkout::set_value() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:278
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 278
+
+2023-03-16T18:01:29+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Checkout::set_value() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:278
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 278
+
+2023-03-16T18:02:03+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Checkout::set_value() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:278
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/a in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 278
+
+2023-03-16T18:17:23+00:00 CRITICAL Uncaught Error: Call to undefined function getElementById() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:279
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 279
+
+2023-03-16T18:17:27+00:00 CRITICAL Uncaught Error: Call to undefined function getElementById() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:279
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 279
+
+2023-03-16T18:17:33+00:00 CRITICAL Uncaught Error: Call to undefined function getElementById() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:279
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): wc_require_shipping_address(Object(WC_Checkout))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/form-billing.php(47): do_action('woocommerce_aft...', Object(WC_Checkout))
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(335): wc_get_template('checkout/form-b...', Array)
+#6 /Users/nathalie/Sites/localhost/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 279
+
+2023-03-16T18:17:59+00:00 CRITICAL syntax error, unexpected '10' (T_LNUMBER), expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 278
+
+2023-03-16T18:46:27+00:00 CRITICAL syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ']' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 295
+
