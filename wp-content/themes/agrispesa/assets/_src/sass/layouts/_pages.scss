@@ -322,6 +322,7 @@
 				@include font-size(22);
 			}
 		}
+
 		p {
 			margin: 16px 0;
 		}
@@ -678,6 +679,76 @@ body.woocommerce-order-received {
 		.account-borders,
 		.my-account--minititle {
 			display: none;
+		}
+	}
+}
+
+body.theme-agrispesa {
+	.wdap_product_availity_form {
+		max-width: 700px;
+		@include breakpoint(mobile) {
+			.clearfix {
+				display: flex;
+			}
+		}
+
+		&.default {
+			input[type=text]#wdap_type_location {
+				border-radius: 40px 0 0 40px !important;
+				@include font-size(20);
+				border: 2px solid $blue;
+				height: 70px;
+				line-height: 70px;
+				padding: 0 24px;
+				background: $white;
+				margin: 0 !important;
+			}
+
+			.type-location {
+				margin: 0;
+			}
+			.message-container {
+				@include font-size(16);
+				&.can_be_delivered {
+						background: $primary !important;
+				}
+
+			}
+		}
+
+		.check_availability {
+			@include button();
+			@include buttonprimary();
+			@include font-size(20);
+			display: inline-block;
+			min-width: 0;
+			height: 70px;
+			border-radius: 0 40px 40px 0 !important;
+
+			&.loadinggif {
+				background: #5e0bdb;
+				background-position: center;
+			}
+		}
+
+		.wdap-hero-title {
+			@include font-size(32);
+			text-shadow: none;
+			color: $black;
+			text-transform: none;
+			font-family: $font-title;
+			font-weight: 900;
+			margin-bottom: 32px;
+			line-height: 1.1;
+			@include breakpoint(mobile) {
+				@include font-size(28);
+			}
+		}
+
+		.wdap-shortcode-desc {
+			@include font-size(18);
+			font-weight: 300;
+			color: $black;
 		}
 	}
 }
