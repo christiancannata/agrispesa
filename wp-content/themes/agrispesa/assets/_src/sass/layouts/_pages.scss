@@ -685,9 +685,15 @@ body.woocommerce-order-received {
 
 body.theme-agrispesa {
 	.wdap_product_availity_form {
-		max-width: 700px;
-		@include breakpoint(mobile) {
-			.clearfix {
+		margin-top: -100px;
+		background: $primary;
+		padding: 100px 20px;
+		margin-bottom: -144px;
+
+		.clearfix {
+			max-width: 700px;
+			margin: 0 auto;
+			@include breakpoint(mobile) {
 				display: flex;
 			}
 		}
@@ -707,12 +713,13 @@ body.theme-agrispesa {
 			.type-location {
 				margin: 0;
 			}
+
 			.message-container {
 				@include font-size(16);
-				&.can_be_delivered {
-						background: $primary !important;
-				}
 
+				&.can_be_delivered {
+					background: $primary !important;
+				}
 			}
 		}
 
@@ -734,7 +741,7 @@ body.theme-agrispesa {
 		.wdap-hero-title {
 			@include font-size(32);
 			text-shadow: none;
-			color: $black;
+			color: $white;
 			text-transform: none;
 			font-family: $font-title;
 			font-weight: 900;
