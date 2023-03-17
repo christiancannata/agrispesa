@@ -717,9 +717,13 @@ body.theme-agrispesa {
 				border: 2px solid $blue;
 				height: 70px;
 				line-height: 70px;
-				padding: 0 24px;
+				padding: 0 24px !important;
 				background: $white;
 				margin: 0 !important;
+				@include breakpoint(mobile) {
+						@include font-size(18);
+					padding: 0 12px !important;
+				}
 			}
 
 			.type-location {
@@ -743,6 +747,9 @@ body.theme-agrispesa {
 			min-width: 0;
 			height: 70px;
 			border-radius: 0 40px 40px 0 !important;
+			@include breakpoint(mobile) {
+					@include font-size(18);
+			}
 
 			&.loadinggif {
 				background: #5e0bdb;
