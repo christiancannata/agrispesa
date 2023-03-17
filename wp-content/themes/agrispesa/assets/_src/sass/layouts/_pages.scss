@@ -686,14 +686,14 @@ body.woocommerce-order-received {
 body.theme-agrispesa {
 	.wdap_product_availity_form {
 
-		background: $primary;
+		background: $orange;
 		padding: 100px 20px;
 
 
 		margin: -200px -130px;
 		width: calc(100% + 260px);
 		@include breakpoint(container) {
-			margin: -120px -80px;
+			margin: -120px -80px -144px;
 			width: calc(100% + 160px);
 		}
 		@include breakpoint(mobile) {

@@ -279,9 +279,11 @@ if( have_rows('agr_sections') ):
                 <?php echo $title; ?>
               </div>
             <?php endif; ?>
+            <?php if($text): ?>
       				<div class="manifesto--hero--subtitle">
                 <?php echo $text; ?>
       				</div>
+              <?php endif; ?>
       		</div>
       	</section>
 
