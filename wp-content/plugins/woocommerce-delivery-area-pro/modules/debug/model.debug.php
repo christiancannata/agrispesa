@@ -1,0 +1,1 @@
+<?php/** * Class: Wdap_Model_Debug * * @author Flipper Code <hello@flippercode.com> * @version 2.0.1 * @package woo-delivery-area-pro */if ( ! class_exists( 'Wdap_Model_Debug' ) ) {	class Wdap_Model_Debug extends FlipperCode_Model_Base {		function __construct() {}		/**		* Admin menu for Wdap_Model_Debug		*/		function navigation() {					}	}}

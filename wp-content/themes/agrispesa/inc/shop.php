@@ -181,7 +181,7 @@ function my_custom_add_to_cart_redirect($url){
 
 	// Only redirect products that have the 'box' category
 	if (has_term('box', 'product_cat', $product_id)) {
-		$url = WC()->cart->get_cart_url();
+		$url = wc_get_cart_url();
 	}
 	return $url;
 }

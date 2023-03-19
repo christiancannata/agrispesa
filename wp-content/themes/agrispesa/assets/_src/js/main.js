@@ -57,10 +57,68 @@ showNameNewsletter();
 emptyCartSlider();
 listCategories();
 moveCustomFieldsCheckout();
+landingSelectVariable();
+checkoutRemoveCheckbox();
 
 
 //changeShippingLabel();
 
+function checkoutRemoveCheckbox() {
+  if(jQuery('.company-shipping-label-get').length) {
+    jQuery('#ship-to-different-address').hide();
+    jQuery('.shipping_address').addClass('no-mg-top');
+  }
+}
+
+function landingSelectVariable() {
+
+  //First load check
+  var currentUrl = jQuery('#get_url').attr("href");
+  //var currentUrl = 'https://staging.agrispesa.it/carrello?&quantity=1&variation_id=60';
+  var url = new URL(currentUrl);
+  const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+  const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+
+  var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+
+  url.searchParams.set("variation_id", var_id); // setting your param
+  var newUrl = url.href;
+
+  jQuery('#get_url').attr("href", newUrl);
+
+  jQuery('.change-price-box').hide();
+  jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+
+
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function() {
+     const valSize = jQuery(this).filter(":checked").val();
+     var valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+     var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+
+     jQuery('.change-price-box').hide();
+     jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+
+      url.searchParams.set("variation_id", var_id);
+      var newUrl = url.href;
+      jQuery('#get_url').attr("href", newUrl);
+
+  })
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function() {
+     const valType = jQuery(this).filter(":checked").val();
+     var valSize= jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+     var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+
+     jQuery('.change-price-box').hide();
+     jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+
+     url.searchParams.set("variation_id", var_id);
+     var newUrl = url.href;
+     jQuery('#get_url').attr("href", newUrl);
+  })
+
+
+
+}
 
 function moveCustomFieldsCheckout() {
   if (jQuery('#shipping-custom-fields').length) {
@@ -201,6 +259,7 @@ function giftCardCheckout() {
     });
 
   })
+
 }
 
 function minimumAmount() {

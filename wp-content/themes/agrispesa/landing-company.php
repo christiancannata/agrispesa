@@ -24,9 +24,12 @@ $what_faq_category_ID = get_field('agr_landing_faq_category');
 $faq_mega_title = get_field('landing_cat_faq_title');
 $landing_cat_quote_image = get_field('landing_cat_quote_image');
 $agr_landing_coupon = get_field('agr_landing_coupon');
+$landing_product_image = get_field('landing_product_image');
+$landing_discount_badge = get_field('landing_discount_badge');
+$landing_discount_type = get_field('landing_discount_type');
 
 if($agr_landing_coupon){
-	$coupon = '&coupon-code='.$agr_landing_coupon;
+	$coupon = '&codice_sconto='.$agr_landing_coupon;
 } else {
 	$coupon= "";
 }
@@ -108,51 +111,115 @@ if($agr_landing_coupon){
 <section id="go-products" class="landing-category--loop" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
 	<h3 class="landing-category--loop--title">Prova Agrispesa.</h3>
 	<div class="container-big">
-			<div class="landing-products">
+			<div class="landing-box">
 				<?php if( $agr_landing_product ): ?>
 
-    <?php foreach( $agr_landing_product as $post ):
+					<article class="landing-box--article">
 
+						<?php if($landing_product_image):?>
+ 						 <div class="landing-box--image">
+ 							 <?php if($landing_discount_badge):
+								 $type_discount = "";
+								 if($landing_discount_type == 'percentage') {
+									 $type_discount = "<small>%</small>";
+								 } else {
+									 $type_discount = "<small>€</small>";
+								 }
+								 ?>
+
+ 								 <span class="landing-discount--badge"><?php echo '<small>-</small>' .$landing_discount_badge . $type_discount;?></span>
+ 							 <?php endif;?>
+ 							 <img src="<?php echo $landing_product_image;?>" class="landing-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+ 						 </div>
+ 					 <?php endif;?>
+
+					 <div class="landing-box--bottom">
+
+    <?php
+
+		foreach( $agr_landing_product as $post ):
         setup_postdata($post);
 				$product = wc_get_product( $post );
-				$thumb_id = get_post_thumbnail_id();
-				$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
-				$thumb_url = $thumb_url_array[0];
-				// print_r($product->get_id());
-				// print_r($product->get_sku());
-				 ?>
-				 <article class="product-box">
- 				  <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
- 				    <?php if($thumb_id):?>
- 				      <img src="<?php the_post_thumbnail_url(); ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
- 				    <?php else: ?>
- 				      <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
- 				    <?php endif;?>
- 				  </a>
- 				  <div class="product-box--text">
- 				    <div class="product-box--text--top">
- 				      <h2 class="product-box--title"><a href="<?php the_permalink(); ?>" title="<?php echo $product->get_title(); ?>"><?php echo $product->get_title(); ?></a></h2>
-							<div class="product-box--attributes">
-								<span><?php echo $product->get_attribute('pa_dimensione');?></span>
-								<span><?php echo $product->get_attribute('pa_tipologia');?></span>
-							</div>
-							<div class="product-box--price--flex">
+				$children = $product->get_children();
 
- 				        <div class="product-box--price">
- 				          <?php echo $product->get_price_html(); ?>
+				 $attributes = $product->get_variation_attributes();
+         $attribute_keys = array_keys( $attributes );
+         $available_variations = array( $product->get_available_variations() );
+
+
+				 foreach ( $attributes as $attribute_name => $options ) :
+
+					 $attr_array = array( 'options' => $options, 'attribute' => $attribute_name, 'product' => $product );
+
+						 ?>
+							 <tr>
+								 <th class="label"><label class="landing-label-var" for="<?php echo esc_attr( sanitize_title( $attribute_name ) ); ?>"><?php echo wc_attribute_label( $attribute_name ); // WPCS: XSS ok. ?></label></th>
+									 <td class="value">
+											 <?php
+													 $selected = isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ? wc_clean( stripslashes( urldecode( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ) ) : $product->get_variation_default_attribute( $attribute_name );
+													 wc_dropdown_variation_attribute_options( array( 'options' => $options, 'attribute' => $attribute_name, 'product' => $product, 'selected' => $selected ) );
+											 ?>
+									 </td>
+							 </tr>
+					 <?php endforeach;
+					 ?>
+
+
+
+							<div class="landing-box--price--flex">
+ 				        <div class="landing-box--price">
+ 				          <?php
+
+									foreach($product->get_available_variations() as $variation ){
+
+										if($landing_discount_badge){
+										$var_old_price = "";
+		 								 $var_price = $variation['display_price'];
+		 								 if($landing_discount_type == 'percentage') {
+											 	$var_old_price = '<span class="landing-old-price">'.wc_price($var_price). '</span>';
+												$var_price = $var_price - ($var_price * ($landing_discount_badge / 100));
+												$var_price = wc_price($var_price) . '<span class="week">/settimana</span>';
+		 									 //$var_price = "<small>€</small>";
+		 								 } else {
+											 $var_old_price = '<span class="landing-old-price">'.wc_price($var_price). '</span>';
+											 $var_price = $var_price - $landing_discount_badge;
+											 $var_price = wc_price($var_price). '<span class="week">/settimana</span>';
+		 								 }
+									 } else {
+										 $var_old_price = "";
+										 $var_price = $variation['display_price']. '<span class="week">/settimana</span>';
+									 }
+
+				 		        // Variation ID
+				 		        $variation_id = $variation['variation_id'];
+				 		        // Attributes
+				 		        $attributes = array();
+				 		        foreach( $variation['attributes'] as $key => $value ){
+				 		            $taxonomy = str_replace('attribute_', '', $key );
+				 		            $taxonomy_label = get_taxonomy( $taxonomy )->labels->singular_name;
+				 		            $term_name = get_term_by( 'slug', $value, $taxonomy )->name;
+				 		            $attributes[] = $taxonomy_label.': '.$term_name;
+				 		        }
+										//print_r($variation['display_price']);
+				 		        echo '<span class="change-price-box" data-id="'.$variation_id.'" data-type="'.$variation['attributes']['attribute_pa_tipologia'].'" data-size="'.$variation['attributes']['attribute_pa_dimensione'].'">'.$var_old_price.'<span class="landing-new-price"> '.$var_price.'</span></span>';
+				 		    }
+								 ?>
  				        </div>
+								<div class="landing-box--button">
+									<a id="get_url" href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60' )); ?>" class="btn btn-primary">Abbonati alla spesa</a>
+								</div>
  				      </div>
-							<a href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1'. $coupon )); ?>" class="btn btn-primary btn-small">Abbonati</a>
 
- 				      <?php// echo do_shortcode('[add_to_cart id="'.get_the_ID().'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
- 				    </div>
- 				  </div>
- 				</article>
+
+
+
     <?php endforeach; ?>
 
     <?php
     // Reset the global post object so that the rest of the page works correctly.
     wp_reset_postdata(); ?>
+	</div>
+		</article>
 <?php endif; ?>
 
 			</div>

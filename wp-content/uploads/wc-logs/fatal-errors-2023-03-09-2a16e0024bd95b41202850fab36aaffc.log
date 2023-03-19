@@ -70,3 +70,14 @@ Stack trace:
 #2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(217): wc_get_template('checkout/recurr...', Array, '', '/Users/nathalie...')
 #3 /Users/nathalie/Sites/localh in /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php alla riga 276
 
+2023-03-09T23:01:15+00:00 CRITICAL Uncaught Error: Call to a member function has_session() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:273
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php(120): require_once()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-settings.php(585): include('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-config.php(91): require_once('/Users/nathalie...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-load.php(50): require_once('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(13): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 273
+
