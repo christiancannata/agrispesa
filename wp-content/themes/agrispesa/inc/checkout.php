@@ -228,12 +228,37 @@ function cloudways_extra_checkout_fields(){
 		       foreach ( $checkout->checkout_fields['cloudways_extra_fields'] as $key => $field ) : ?>
 		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 		        <?php endforeach; ?>
-			<?php endif;?>
+					<?php endif;?>
 			</div>
-
-
 <?php }
 add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
+
+
+//Add DOGS custom fields to checkout
+function cloudways_dog_custom_checkout_fields($fields){
+    $fields['cloudways_dog_extra_fields'] = array(
+      	'cloudways_dog_name_field' => array(
+          'type' => 'text',
+          'required'      => false,
+					'label'         => __('Nome del cane'),
+					'placeholder'   => __('Come si chiama il tuo cane?'),
+        ),
+    );
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'cloudways_dog_custom_checkout_fields' );
+function cloudways_dog_extra_checkout_fields(){
+    $checkout = WC()->checkout(); ?>
+		<div id="dog-custom-fields" class="woocommerce-border-form">
+				<h3 class="checkout--title">Amiano gli animali<span class="ec ec-sparkles"></span></h3>
+				<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
+				<?php
+		       foreach ( $checkout->checkout_fields['cloudways_dog_extra_fields'] as $key => $field ) : ?>
+		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		        <?php endforeach; ?>
+			</div>
+<?php }
+add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_dog_extra_checkout_fields' );
 
 //Save data of WooCommerce Custom Checkout Fields
 function cloudways_save_extra_checkout_fields( $order_id, $posted ){
@@ -243,6 +268,9 @@ function cloudways_save_extra_checkout_fields( $order_id, $posted ){
     }
     if( isset( $posted['cloudways_piano_field'] ) ) {
         update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
+    }
+		if( isset( $posted['cloudways_dog_name_field'] ) ) {
+        update_post_meta( $order_id, '_cloudways_dog_name_field', sanitize_text_field( $posted['cloudways_dog_name_field'] ) );
     }
 
 }
@@ -261,11 +289,17 @@ function admin_order_after_billing_address_callback( $order ){
     } else {
 			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
 		}
+		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
+        echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
+		}
 }
 
 function cloudways_save_extra_details( $post_id, $post ){
-    update_post_meta( $post_id, '_cloudways_text_field', wc_clean( $_POST[ '_cloudways_text_field' ] ) );
-    update_post_meta( $post_id, '_cloudways_dropdown', wc_clean( $_POST[ '_cloudways_dropdown' ] ) );
+    update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
+    update_post_meta( $post_id, '_cloudways_scala_field', wc_clean( $_POST[ '_cloudways_scala_field' ] ) );
+    update_post_meta( $post_id, '_cloudways_dog_name_field', wc_clean( $_POST[ '_cloudways_dog_name_field' ] ) );
 }
 add_action( 'woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2 );
 
@@ -279,46 +313,4 @@ function my_validation_handler($is_valid, $product_id) {
 		}
 	}
 	return $is_valid;
-}
-
-//Denso: apri form shipping e compila i dati
-add_filter( 'woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 10, 1 );
-function custom_checkout_billing_city_field( $shipping_fields ) {
-	if( in_array( 'welovedenso', WC()->cart->get_applied_coupons() ) ) {
-		add_filter( 'woocommerce_ship_to_different_address_checked', '__return_true' );
-		global $woocommerce;
-
-		$company = 'Denso Thermal Systems S.p.A.';
-    $city = 'Poirino';
-		$postcode = '10046';
-		$address = 'Frazione Masio, 24';
-		$state = 'TO';
-
-    // Set values (to be sure)
-    $woocommerce->customer->set_shipping_address( $address );
-		$woocommerce->customer->set_shipping_postcode( $postcode );
-    $woocommerce->customer->set_shipping_city( $city );
-    $woocommerce->customer->set_shipping_company( $company );
-		$woocommerce->customer->set_shipping_state( $state );
-
-    // Change fields
-    $shipping_fields['shipping_address_1']['default'] = $address;
-    $shipping_fields['shipping_postcode']['default'] = $postcode;
-    $shipping_fields['shipping_city']['default'] = $city;
-    $shipping_fields['shipping_company']['default'] = $company;
-    $shipping_fields['shipping_state']['default'] = $state;
-
-    $shipping_fields['shipping_address_1']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_postcode']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_city']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_company']['custom_attributes']['readonly'] = 'readonly';
-    //$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
-
-		// $shipping_fields['shipping_state']['type'] = 'select';
-    // $shipping_fields['shipping_state']['options'] = array( $state => $state );
-    // $shipping_fields['shipping_state']['default'] = $state;
-    //$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
-
-    return $shipping_fields;
-	}
 }

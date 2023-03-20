@@ -110,6 +110,13 @@
 }
 
 body.woocommerce-account {
+	.remove-me {
+		.button.change_address {
+			display: none !important;
+			pointer-events: none !important;
+		}
+	}
+
 	.entry-header,
 	.page-header {
 		display: none;
@@ -160,13 +167,11 @@ body.woocommerce-account {
 		@include breakpoint(desktop) {
 			@include font-size(42);
 		}
-
 	}
 
 	&--registered {
 		@include font-size(20);
 		color: $muted;
-
 		@include breakpoint(mobile) {
 			@include font-size(16);
 			margin-bottom: 24px;
@@ -196,7 +201,7 @@ body.woocommerce-account {
 			text-align: center;
 			background: $background;
 			@include breakpoint(mobile) {
-				padding: 16px 16px;
+				padding: 16px;
 				text-align: left;
 			}
 
@@ -596,7 +601,6 @@ body.woocommerce-account {
 		.woocommerce-shipping-methods {
 			li {
 				padding: 0;
-
 				// label {
 				// 	@include font-size(16);
 				// 	font-weight: 300 !important;
@@ -616,7 +620,6 @@ body.woocommerce-account {
 				// 		display: block;
 				// 	}
 				// }
-
 				&:before {
 					content: none;
 				}
@@ -914,5 +917,55 @@ body.woocommerce-account {
 
 	&--button {
 		margin-top: 24px;
+	}
+}
+
+.top_banner {
+	@include border-radius(4px);
+	background: $primary;
+	padding: 24px 24px 16px;
+	margin-bottom: 24px;
+
+	&--title {
+		@include font-size(28);
+		color: $white;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(32);
+		}
+	}
+
+	&--subtitle {
+		@include font-size(18);
+		color: $white;
+		font-weight: 400;
+		margin-top: 8px;
+	}
+
+	&--logos {
+		display: flex;
+		align-items: center;
+		color: $white;
+		margin-top: 32px;
+
+		.agrispesa {
+			font-family: $font-title;
+			font-weight: 400;
+			display: flex;
+			align-items: center;
+			color: $white;
+
+			svg {
+				margin-left: -10px;
+				width: 50px;
+				fill: $white;
+			}
+		}
+
+		.per {
+			@include font-size(14);
+			margin: 0 8px;
+			font-weight: 400;
+		}
 	}
 }

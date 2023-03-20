@@ -64,7 +64,7 @@ checkoutRemoveCheckbox();
 //changeShippingLabel();
 
 function checkoutRemoveCheckbox() {
-  if(jQuery('.company-shipping-label-get').length) {
+  if (jQuery('.company-shipping-label-get').length) {
     jQuery('#ship-to-different-address').hide();
     jQuery('.shipping_address').addClass('no-mg-top');
   }
@@ -79,7 +79,7 @@ function landingSelectVariable() {
   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
 
-  var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+  var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
 
   url.searchParams.set("variation_id", var_id); // setting your param
   var newUrl = url.href;
@@ -87,33 +87,33 @@ function landingSelectVariable() {
   jQuery('#get_url').attr("href", newUrl);
 
   jQuery('.change-price-box').hide();
-  jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+  jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
 
 
   jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function() {
-     const valSize = jQuery(this).filter(":checked").val();
-     var valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-     var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+    const valSize = jQuery(this).filter(":checked").val();
+    var valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+    var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
 
-     jQuery('.change-price-box').hide();
-     jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
 
-      url.searchParams.set("variation_id", var_id);
-      var newUrl = url.href;
-      jQuery('#get_url').attr("href", newUrl);
+    url.searchParams.set("variation_id", var_id);
+    var newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
 
   })
   jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function() {
-     const valType = jQuery(this).filter(":checked").val();
-     var valSize= jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-     var var_id = jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').attr('data-id');
+    const valType = jQuery(this).filter(":checked").val();
+    var valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+    var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
 
-     jQuery('.change-price-box').hide();
-     jQuery('.change-price-box[data-size="'+valSize+'"][data-type="'+valType+'"]').show();
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
 
-     url.searchParams.set("variation_id", var_id);
-     var newUrl = url.href;
-     jQuery('#get_url').attr("href", newUrl);
+    url.searchParams.set("variation_id", var_id);
+    var newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
   })
 
 
@@ -123,6 +123,9 @@ function landingSelectVariable() {
 function moveCustomFieldsCheckout() {
   if (jQuery('#shipping-custom-fields').length) {
     jQuery('#shipping-custom-fields').prependTo('.woocommerce-additional-fields');
+  }
+  if (jQuery('#dog-custom-fields').length) {
+    jQuery('#dog-custom-fields').prependTo('.woocommerce-additional-fields');
   }
 }
 
@@ -696,12 +699,13 @@ function faqs() {
     description.slideToggle();
   });
   if (window.screen.width > 640) {
-    if (jQuery('.faq-1').length) {
-      jQuery('.faq-1 .faq__title').trigger("click");
-    } else {
-      jQuery('.faq-11 .faq__title').trigger("click");
+    if (jQuery('body.post-type-archive-faq').length) {
+      if (jQuery('.faq-1').length) {
+        jQuery('.faq-1 .faq__title').trigger("click");
+      } else {
+        jQuery('.faq-11 .faq__title').trigger("click");
+      }
     }
-
   }
 }
 

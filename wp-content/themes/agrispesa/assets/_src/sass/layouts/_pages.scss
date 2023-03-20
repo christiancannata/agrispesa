@@ -697,7 +697,7 @@ body.theme-agrispesa {
 			width: calc(100% + 160px);
 		}
 		@include breakpoint(mobile) {
-			margin: -60px -40px;
+			margin: -60px -40px -84px;
 
 			width: calc(100% + 80px);
 		}

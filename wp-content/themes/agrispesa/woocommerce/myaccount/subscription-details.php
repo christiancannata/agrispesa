@@ -11,8 +11,41 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+global $current_user;
+$user_id = $current_user->ID;
 ?>
 <table class="shop_table subscription_details">
+
+<?php
+$subscription_coupons = $subscription->get_coupon_codes();
+
+if (in_array('welovedenso', $subscription_coupons)) {
+	$coupon_class = 'class="remove-me"';
+} else {
+	$coupon_class = '';
+}
+
+?>
+
+<?php if (in_array('welovedenso', $subscription_coupons)):?>
+	<div class="top_banner">
+		<h3 class="top_banner--title">We love Denso.</h3>
+		<p class="top_banner--subtitle">Consegniamo gratuitamente nella tua azienda.</p>
+		<div class="top_banner--logos">
+			<span class="agrispesa">
+				<?php get_template_part('global-elements/logo', 'open'); ?>
+				<?php bloginfo('name'); ?>
+			</span>
+			<span class="per">
+				per
+			</span>
+			<span class="denso">
+				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/partner/denso.png" alt="Denso" />
+			</span>
+		</div>
+	</div>
+<?php endif;?>
+
 	<tbody>
 		<tr>
 			<td><?php esc_html_e( 'Status', 'woocommerce-subscriptions' ); ?></td>
@@ -79,7 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php if ( ! empty( $actions ) ) : ?>
 			<tr>
 				<td><?php esc_html_e( 'Actions', 'woocommerce-subscriptions' ); ?></td>
-				<td>
+				<td <?php echo $coupon_class; ?>>
 					<?php foreach ( $actions as $key => $action ) : ?>
 						<a href="<?php echo esc_url( $action['url'] ); ?>" class="button <?php echo sanitize_html_class( $key ) ?>"><?php echo esc_html( $action['name'] ); ?></a>
 					<?php endforeach; ?>
@@ -89,6 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_action( 'woocommerce_subscription_after_actions', $subscription ); ?>
 	</tbody>
 </table>
+
 
 <?php if ( $notes = $subscription->get_customer_order_notes() ) : ?>
 	<h2><?php esc_html_e( 'Subscription updates', 'woocommerce-subscriptions' ); ?></h2>
