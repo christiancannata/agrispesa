@@ -815,6 +815,9 @@
 		@include breakpoint(desktop) {
 			width: calc(33.333% - 16px);
 			margin: 8px;
+			&.wide {
+				width: 100%; 
+			}
 		}
 	}
 }

@@ -52,11 +52,11 @@
 	            echo "</div>";
 
 	            echo "<div id='".$initial."' data-alpha='".$initial."' class='glossario--anchor'>$initial</div>";
-	            echo "<div class='sec-cards--flex'>";
+	            echo "<div class='sec-cards--container'>";
 	            $letter=$initial;
 	          } ?>
 
-						<div class="sec-cards--item producer-box">
+						<div class="sec-cards--item wide producer-box">
 			        <h4 class="producer-box--title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h4>
 
 								<p class="producer-box--city">
