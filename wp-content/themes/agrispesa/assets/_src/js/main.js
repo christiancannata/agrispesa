@@ -57,11 +57,26 @@ showNameNewsletter();
 emptyCartSlider();
 listCategories();
 moveCustomFieldsCheckout();
-landingSelectVariable();
+//landingSelectVariable();
 checkoutRemoveCheckbox();
+petNameAnimation();
 
 
 //changeShippingLabel();
+
+
+function petNameAnimation() {
+  if (window.screen.width > 640) {
+    var i = 1;
+    var sampleMessages = [ "Argo", "Black", "Mya", "Rocky", "Peggy", "Bull", "Pluto", "Pepe", " Pongo" ];
+    setInterval(function() {
+        var newText = sampleMessages[i++ % sampleMessages.length];
+        jQuery("#petname").fadeOut(600, function () {
+          jQuery(this).text(newText).fadeIn(600);
+        });
+    }, 1 * 4000);
+  }
+}
 
 function checkoutRemoveCheckbox() {
   if (jQuery('.company-shipping-label-get').length) {

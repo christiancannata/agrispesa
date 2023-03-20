@@ -56,24 +56,19 @@
 	            $letter=$initial;
 	          } ?>
 
-						<div class="sec-cards--item wide producer-box">
-			        <h4 class="producer-box--title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h4>
+						<div class="sec-cards--item wide ingredient-box">
+							<div class="ingredient-box--flex">
 
-								<p class="producer-box--city">
+				        <h4 class="ingredient-box--title">
+									<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+								</h4>
+								<?php echo the_post_thumbnail();?>
+							</div>
+
+								<p class="ingredient-box--descr">
 									<?php echo the_content();?>
 								</p>
 
-
-							<?php $prod_categories = get_field('produttore_categorie_associate');
-							if($prod_categories) {
-									echo '<div class="producer-box--categories">';
-									foreach ($prod_categories as &$value) {
-										$category = get_term_by('id', $value->term_id, 'category');
-										$term_link = get_term_link( $value );
-										echo '<a class="arrow-link" href="' . $term_link . '" title="' . $value->name . '">' . $value->name . '</a>';
-									}
-									echo '</div>';
-								} ?>
 							</div>
 
 
@@ -95,35 +90,24 @@
 		<?php endif; ?>
 
 
-		<section class="section-hero small">
-			<div class="section-hero--container">
-					<h4 class="section-hero--subtitle">
-						Storie di agricoltura contadina e di artigianato locale.
-					</h4>
-			</div>
-		</section>
-
-		<section class="magazine">
-			<div class="magazine--slider">
-			<?php /* Blog */ ?>
-		  <?php
-		  $args = array(
-		          'posts_per_page' => '3',
-		          'category_name' => 'storie',
-		          'post_type' => 'post',
-		  				'orderby' => 'date',
-		          'order' => 'DESC'
-		      );
-		  $query = new WP_Query( $args );
-		  if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post(); ?>
-
-		  <?php get_template_part( 'template-parts/loop', 'blog' ); ?>
-
-		  <?php endwhile;
-		  	wp_reset_postdata();
-		  endif; ?>
-			</div>
-		</section>
+		<section id="go-products" class="landing-category--loop" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
+			<h3 class="landing-category--loop--title">Abbiamo il prodotto giusto.</h3>
+			<div class="container-big">
+					<div class="products-carousel">
+					<?php $args = array(
+				        'product_cat' => 'Petfood',
+				        'posts_per_page' => 6,
+				        'orderby' => 'rand'
+				    );
+				    $loop = new WP_Query($args);
+				    while ($loop->have_posts()) : $loop->the_post();
+				        global $product; ?>
+				        <?php get_template_part( 'template-parts/loop', 'shop' ); ?>
+				    <?php endwhile; ?>
+				    <?php wp_reset_query(); ?>
+					</div>
+				</div>
+			</section>
 
 
 

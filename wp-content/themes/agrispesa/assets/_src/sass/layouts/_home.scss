@@ -816,7 +816,7 @@
 			width: calc(33.333% - 16px);
 			margin: 8px;
 			&.wide {
-				width: 100%; 
+				width: 100%;
 			}
 		}
 	}
@@ -862,6 +862,56 @@
 		}
 	}
 }
+
+.ingredient-box {
+	&--flex {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		img {
+			width: 100px;
+		}
+	}
+	&--title {
+		font-family: $font-title;
+		@include font-size(22);
+		font-weight: 900;
+		line-height: 1.1;
+
+		a {
+			color: $black;
+
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+
+	&--descr {
+		@include font-size(16);
+		color: $muted;
+		margin-top: 8px;
+	}
+
+	&--categories {
+		margin-top: 60px;
+
+		a {
+			@include font-size(14);
+			margin-right: 16px;
+			margin-top: 4px;
+
+			&:after {
+				bottom: -1px;
+			}
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
 
 .agr-section {
 	overflow: hidden;

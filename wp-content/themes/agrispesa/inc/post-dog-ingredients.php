@@ -28,7 +28,7 @@ function ingredienti_posts_init() {
        'has_archive' => true,
        'hierarchical' => false,
        'menu_position' => null,
-       'supports' => array( 'title', 'editor' ),
+       'supports' => array( 'title', 'editor', 'thumbnail' ),
        'menu_position'=>4,
        'taxonomies' => ['ingredienti_cats']
    );

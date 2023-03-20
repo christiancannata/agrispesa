@@ -43,11 +43,43 @@
 		@include font-size(38);
 		line-height: 1;
 		margin: 70px 0 0;
-		font-family: $font-title;
 		font-weight: 900;
 		@include breakpoint(desktop) {
 			@include font-size(52);
 			margin: 0;
+		}
+
+		.name-pet {
+			display: inline-block;
+			@include breakpoint(desktop) {
+				min-width: 225px;
+				position: relative;
+				min-height: 65px;
+				margin-bottom: 8px;
+			}
+
+			.pet {
+				@include breakpoint(desktop) {
+					font-weight: 300;
+					font-family: $font-americano;
+					@include font-size(80);
+					position: absolute;
+					left: 16px;
+				}
+			}
+			@include breakpoint(desktop) {
+				&:after {
+					@include border-radius(2px);
+					content: '';
+					display: block;
+					height: 8px;
+					background: $black;
+					width: 100%;
+					position: absolute;
+					left: 0;
+					bottom: -7px;
+				}
+			}
 		}
 	}
 
@@ -89,6 +121,159 @@
 				}
 			}
 		}
+	}
+}
+
+.landing-meet {
+	display: flex;
+	padding: 0 20px;
+	flex-wrap: wrap;
+	@include breakpoint(desktop) {
+		padding: 60px 80px;
+	}
+	@include breakpoint(container) {
+		padding: 50px 60px;
+	}
+	@include breakpoint(mobile) {
+		padding: 32 20px;
+	}
+
+	&--dx {
+		width: 50%;
+		padding: 24px 32px;
+		text-align: right;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--sx {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		@include breakpoint(desktop) {
+			width: 50%;
+			padding: 24px 100px;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px;
+		}
+		@include breakpoint(mobile) {
+			padding: 0;
+		}
+	}
+
+	&--bottom {
+		@include breakpoint(desktop) {
+			text-align: right;
+		}
+	}
+
+	&--image {
+		@include border-radius(24px);
+		margin-top: 32px;
+		display: inline-block;
+		@include breakpoint(desktop) {
+			width: 300px;
+		}
+	}
+
+	&--descr {
+		@include font-size(18);
+		width: 100%;
+		display: inline-block;
+		margin-top: 32px;
+		@include breakpoint(desktop) {
+			width: 300px;
+		}
+	}
+
+	&--minititle {
+		@include font-size(14);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		@include breakpoint(desktop) {
+			@include font-size(16);
+		}
+	}
+
+	&--title {
+		@include font-size(42);
+		font-weight: 900;
+		line-height: 1;
+		margin-top: 16px;
+		@include breakpoint(desktop) {
+			@include font-size(80);
+		}
+		@include breakpoint(container) {
+			@include font-size(70);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(42);
+		}
+	}
+
+	video {
+		@include border-radius(24px);
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+}
+
+.landing-ingredients {
+	display: flex;
+	background: $primary;
+	@include breakpoint(desktop) {
+		padding: 60px 80px;
+	}
+	@include breakpoint(container) {
+		padding: 50px 60px;
+	}
+	@include breakpoint(mobile) {
+		padding: 32 20px;
+	}
+
+	&--dx {
+		width: 50%;
+		padding: 24px 32px;
+	}
+
+	&--sx {
+		width: 100%;
+		@include breakpoint(desktop) {
+			width: 50%;
+			padding: 24px 100px;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px;
+		}
+		@include breakpoint(mobile) {
+			padding: 0;
+		}
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 600;
+		line-height: 1;
+		margin-top: 16px;
+		color: $panna;
+		@include breakpoint(desktop) {
+			@include font-size(60);
+		}
+		@include breakpoint(container) {
+			@include font-size(50);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(32);
+		}
+	}
+
+	&--buttons {
+		margin-top: 60px;
 	}
 }
 
@@ -282,7 +467,6 @@ body.page-template-page-password-php {
 
 		&--title {
 			@include font-size(24);
-			font-family: $font-title;
 			font-weight: 900;
 			text-align: center;
 			margin-bottom: 40px;

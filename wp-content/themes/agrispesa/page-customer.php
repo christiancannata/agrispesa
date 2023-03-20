@@ -19,12 +19,12 @@ get_header(); ?>
 		</div>
 	</section>
 
-	<section class="prices-page">
+	<section class="prices-page page-panna">
 	  <div class="container-xsmall">
 			<div class="prices--top">
-        <h2 class="prices--title"></h2>
+        <h2 class="prices--title">Contattaci</h2>
       </div>
-	<?php echo do_shortcode('[contact-form-7 id="379" title="Servizio Clienti"]'); ?>
+			<?php echo do_shortcode('[contact-form-7 id="379" title="Servizio Clienti"]'); ?>
 </div>
 </section>
 

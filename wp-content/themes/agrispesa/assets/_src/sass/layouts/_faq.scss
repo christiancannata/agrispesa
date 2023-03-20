@@ -16,7 +16,6 @@
 		@include font-size(24);
 		line-height: 1;
 		margin-bottom: 40px;
-		font-family: $font-title;
 		font-weight: 900;
 		text-align: center;
 		@include breakpoint(desktop) {

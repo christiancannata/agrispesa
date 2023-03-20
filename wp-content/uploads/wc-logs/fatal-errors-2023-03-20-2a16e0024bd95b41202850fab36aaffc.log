@@ -1,2 +1,22 @@
 2023-03-20T13:54:33+00:00 CRITICAL require_once(): Failed opening required '/Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/post-dogs-ingredients.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/functions.php alla riga 122
 
+2023-03-20T17:21:12+00:00 CRITICAL Uncaught Error: Call to undefined function the_thumbnail() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-ingredienti.php:60
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-ingredienti.php alla riga 60
+
+2023-03-20T19:33:33+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 277
+
+2023-03-20T19:34:32+00:00 CRITICAL syntax error, unexpected end of file, expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 277
+
+2023-03-20T19:35:53+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 148
+
+2023-03-20T19:35:56+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 147
+
+2023-03-20T19:35:58+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 147
+
+2023-03-20T19:36:13+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 147
+
