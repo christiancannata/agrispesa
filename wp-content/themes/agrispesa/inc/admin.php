@@ -224,6 +224,96 @@ add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_field
 add_action('rest_api_init', function () {
 
 
+	register_rest_route('agrispesa/v1', 'import-products', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$xml = simplexml_load_string($request->get_body()) or die("Error: Cannot create object");
+
+			$products = (array)$xml;
+
+			$activeProducts = array_filter($products['ROW'], function ($product) {
+				$product = (array)$product;
+				$price = str_replace(",", ".", (string)$product['unitprice']);
+				return $price > 0;
+			});
+
+
+			global $wpdb;
+
+			$wpdb->query("UPDATE wp_posts
+SET post_status = 'draft'
+WHERE post_type = 'product';");
+
+			$productIds = [];
+
+			foreach ($activeProducts as $key => $product) {
+				$product = (array)$product;
+				$sku = (string)$product['id_product'];
+				$sku = explode("_", $sku);
+
+				$productId = wc_get_product_id_by_sku($sku[0]);
+				$product['wordpress_id'] = $productId;
+				$productIds[] = $productId;
+				/*
+				$product = new WC_Product($productId);
+				$product->set_status('publish');
+				$product->save();
+				*/
+				$activeProducts[$key] = $product;
+			}
+
+			//Attivo i prodotti
+			$productIds = array_unique($productIds);
+			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+
+			foreach ($activeProducts as $product) {
+				$price = (string)$product['unitprice'];
+				$price = str_replace(",", ".", $price);
+				$price = floatval($price);
+
+				update_post_meta($product['wordpress_id'], '_regular_price', $price);
+				update_post_meta($product['wordpress_id'], '_price', $price);
+				update_post_meta($product['wordpress_id'], '_navision_id', (string)$product['id_product']);
+
+			}
+
+		}
+	));
+
+
+	register_rest_route('agrispesa/v1', 'import-box', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$xml = simplexml_load_string($request->get_body()) or die("Error: Cannot create object");
+
+			$products = (array)$xml;
+
+			$boxes = [];
+
+			foreach ($products['ROW'] as $product) {
+				$product = (array)$product;
+
+				if (!isset($boxes[(string)$product['offer_no']])) {
+					$boxes[(string)$product['offer_no']] = [];
+				}
+
+				$boxes[(string)$product['offer_no']][] = $product;
+			}
+
+
+			dd($boxes);
+
+		}
+	));
+
 	register_rest_route('agrispesa/v1', 'products/(?P<product_id>\d+)/category', array(
 		'methods' => 'GET',
 		'permission_callback' => function () {
@@ -625,7 +715,7 @@ add_action('rest_api_init', function () {
 			}
 			fseek($f, 0);
 			header('Content-Type: text/csv');
-			header('Content-Disposition: attachment; filename="PIEM ' . (new \DateTime($dataConsegna))->format("d-m-Y") . ' da nav a map&guide.csv";');
+			header('Content-Disposition: attachment; filename="PIEM ' . (new \DateTime($dataConsegna))->format("d-m-Y") . ' da nav a map & guide . csv";');
 			fpassthru($f);
 			die();
 
@@ -922,7 +1012,8 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
 
 		global $wpdb;
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {
+				$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 		?>
 		<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
@@ -935,8 +1026,8 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 				<?php else:
 					?>
 					<option
-						<?php if ($consegna && $dataConsegna->format("Y-m-d") == $consegna): ?> selected <?php endif; ?>
-						value="<?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
+						<?php if ($consegna && $dataConsegna->format("Y - m - d") == $consegna): ?> selected <?php endif; ?>
+						value=" <?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
 				<?php endif; ?>
 
 			<?php endforeach; ?>
