@@ -58,19 +58,11 @@
 
 						<div class="sec-cards--item producer-box">
 			        <h4 class="producer-box--title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h4>
-							<?php $producer_citta = get_field('producer_citta');
-										$producer_provincia = get_field('producer_provincia');
 
-							if($producer_citta || $producer_provincia): ?>
 								<p class="producer-box--city">
-									<?php if($producer_citta): ?>
-										<span><?php echo $producer_citta; ?></span>
-									<?php endif; ?>
-									<?php if($producer_provincia): ?>
-										<span><?php echo '(' . $producer_provincia . ')'; ?></span>
-									<?php endif; ?>
-									</p>
-							<?php endif; ?>
+									<?php echo the_content();?>
+								</p>
+
 
 							<?php $prod_categories = get_field('produttore_categorie_associate');
 							if($prod_categories) {
