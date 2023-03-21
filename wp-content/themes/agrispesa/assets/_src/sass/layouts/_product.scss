@@ -3,7 +3,6 @@
 	@include font-size(34);
 	font-weight: 900;
 	display: inline-block;
-	font-family: $font-title;
 	line-height: 1;
 	@include breakpoint(desktop) {
 		@include font-size(50);

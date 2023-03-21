@@ -124,31 +124,33 @@ if($what_category_ID) {
 						<a href="#go-products" class="btn btn-primary scroll-to" title="Scegli il tuo">Scegli il tuo</a>
 					</div>
 
-					<div class="pet-heroes--flex">
+					<div class="pet-values--flex">
 
-						<div class="pet-heroes--item big">
+						<div class="pet-values--item">
 							<span class="icon-carne-pesce"></span>
-							<p class="pet-heroes--descr">
-								Carne di prima scelta<br/>
-								<span>senza conservanti</span>
+							<p class="pet-values--descr">
+								<strong>Carne e pesce <br class="only-desktop"/>di prima scelta.</strong>
+								I croccantini Pawer sono ricchi di proteine animali proveniente da allevamenti selezionati secondo i principi di Agrispesa.
 							</p>
 						</div>
-						<div class="pet-heroes--item big">
+						<div class="pet-values--item">
 							<span class="icon-verdura"></span>
-							<p class="pet-heroes--descr">
-								Verdure ed erbe<br/>
-								<span>biologiche</span>
+							<p class="pet-values--descr">
+								<strong>Verdure ed erbe <br class="only-desktop"/> biologiche.</strong>
+								Frutta e verdura coltivata nel rispetto della terra e della biodiversità, disidratata e facilmente digeribile.
 							</p>
 						</div>
-						<div class="pet-heroes--item big">
-							<span class="icon-salse-olio"></span>
-							<p class="pet-heroes--descr">
-								Non stare solo<br/>
-								<span>neanche in bagno</span>
+						<div class="pet-values--item">
+							<span class="icon-animali"></span>
+							<p class="pet-values--descr">
+								<strong>Adatti a qualsiasi cane.</strong>
+								La composizione delle nostre ricette è stata studiata per essere adatta a cani di tutte le razze ed età.
 							</p>
 						</div>
 
-
+					</div>
+					<div class="pawer-born--sign">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/pawer-sign.svg" class="pawer-born--sign--img" alt="Pawer da Agrispesa" />
 					</div>
 
 				</div>
@@ -198,21 +200,26 @@ if($what_category_ID) {
 
 		</div>
 		<div class="pet-heroes--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
-			<a href="#go-products" class="btn btn-primary scroll-to" title="Come puoi aiutarlo tu?">Come puoi aiutarlo tu?</a>
+			<a href="#go-meet" class="btn btn-primary scroll-to" title="Come puoi aiutarlo tu?">Come puoi aiutarlo tu?</a>
 		</div>
 
 	</section>
 
-	<section class="landing-meet">
+	<section id="go-meet" class="landing-meet">
 		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
 			<div class="landing-meet--top">
 				<p class="landing-meet--minititle">Pawer, Petfood 100% naturale</p>
 				<h3 class="landing-meet--title">Energia naturale,<br/>per gli eroi di tutti i giorni.</h3>
-				<p class="landing-meet--descr wide">Attraverso la giusta alimentazione potrai garantirgli:
-					sano sviluppo degli organi,
-					corretta formazione di muscoli e articolazioni,
-					crescita ossea adeguata,
-					armonica interazione psichica e comportamentale</p>
+				<p class="landing-meet--descr wide">
+					I nostri alimenti nutrono la mente, il corpo e l'anima.<br/>
+					Come? Grazie ai ricchi nutrienti che li
+					compongono, agli ingredienti offerti dalla
+					natura, al metodo di lavorazione a filiera corta,
+					alla lavorazione rispettosa degli ingredienti,
+					senza alterazioni né utilizzo di modalità
+					aggressive, per mantenere al meglio le
+					proprietà in termini di nutrienti
+				</p>
 			</div>
 			<div class="landing-meet--bottom">
 
@@ -258,8 +265,8 @@ if($what_category_ID) {
 			</div>
 			<div class="landing-meet--bottom">
 				<p class="landing-meet--descr">
-					Per bovari bernesi, ma anche per chihuahua.
-					Il nostro alimento pressato o sfarinato disidratato è consigliato per cani e gatti di tutte le razze ed età.
+					Per bovari bernesi, ma anche per chihuahua.<br/>
+					Pawer è pensato per i cani di tutte le razze e di tutte le età.
 				</p>
 				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
 			</div>
