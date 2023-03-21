@@ -282,7 +282,7 @@ if($what_category_ID) {
 		<div class="landing-ingredients--flex">
 
 		<div class="landing-ingredients--sx" data-aos="fade-uo" data-aos-duration="800" data-aos-delay="150">
-			<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/camomilla.svg" alt="Per ogni razza, per ogni tipetto." />
+			<img class="landing-meet--image sticky" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/camomilla.svg" alt="Per ogni razza, per ogni tipetto." />
 		</div>
 		<div class="landing-ingredients--dx">
 			<?php

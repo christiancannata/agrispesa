@@ -192,6 +192,15 @@
 			width: 300px;
 			display: inline-block;
 		}
+		&.sticky {
+			position: sticky;
+    	top: 90px;
+			@include breakpoint(mobile) {
+				position: relative;
+				width: 200px
+			}
+		}
+
 	}
 
 	&--descr {
