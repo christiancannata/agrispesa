@@ -40,7 +40,7 @@
 
 <?php get_template_part( 'global-elements/home', 'sections' ); ?>
 
-<?php get_template_part( 'global-elements/reviews', 'home' ); ?>ì
+<?php get_template_part( 'global-elements/reviews', 'home' ); ?>
 <?php get_template_part( 'global-elements/home', 'press' ); ?>
 <?php get_template_part( 'global-elements/home', 'newsletter' ); ?>
 <?php //get_template_part( 'global-elements/home', 'popup' ); ?>

@@ -37,7 +37,7 @@
 		@include font-size(60);
 		font-weight: 800;
 		line-height: 1;
-		font-family: $font-title;
+		//font-family: $font-title;
 		color: $panna;
 		@include breakpoint(desktop) {
 			@include font-size(90);

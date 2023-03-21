@@ -19,8 +19,8 @@
 		}
 
 		&--title {
-			@include font-size(38);
-			font-family: $font-title;
+			@include font-size(32);
+			//font-family: $font-title;
 			font-style: normal;
 			font-weight: 900;
 			line-height: 1;
@@ -1087,7 +1087,7 @@
 			@include font-size(32);
 			line-height: 1;
 			font-weight: 900;
-			font-family: $font-title;
+			//font-family: $font-title;
 			@include breakpoint(desktop) {
 				@include font-size(50);
 			}
