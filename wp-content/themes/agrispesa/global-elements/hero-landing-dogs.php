@@ -61,7 +61,7 @@ function isMobileDevice() {
 				<img src="<?php echo $image; ?>" id="getBright" />
 				<div class="hero-landing--flex">
 					<div class="hero-landing--text">
-						<?php if(!$title):?>
+						<?php if($title):?>
 						<h1 class="hero-landing--title"><?php echo $title; ?></h1>
 						<?php else:?>
 							<h1 class="hero-landing--title">La salute di <span class="name-pet"><span class="pet"><span id="petname">Argo</span></span></span><br/>comincia dalla pappa.</h1>

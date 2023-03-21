@@ -20,3 +20,23 @@ Stack trace:
 
 2023-03-20T19:36:13+00:00 CRITICAL syntax error, unexpected 'endif' (T_ENDIF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 147
 
+2023-03-20T21:17:41+00:00 CRITICAL Uncaught Error: Call to a member function has_weight() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php:133
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#3 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/landing-category.php alla riga 133
+
+2023-03-20T22:35:38+00:00 CRITICAL Uncaught Error: Call to a member function get_meta() on bool in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-petfood.php:7
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(718): load_template('/Users/nathalie...', false, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/general-template.php(204): locate_template(Array, true, false, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/archive-ingredienti.php(105): get_template_part('template-parts/...', 'petfood')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#7 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/template-parts/loop-petfood.php alla riga 7
+

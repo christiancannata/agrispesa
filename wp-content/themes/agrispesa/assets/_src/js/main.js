@@ -60,7 +60,7 @@ moveCustomFieldsCheckout();
 //landingSelectVariable();
 checkoutRemoveCheckbox();
 petNameAnimation();
-
+sliderPetfood();
 
 //changeShippingLabel();
 
@@ -495,6 +495,38 @@ function reviewsSlider() {
         dots: true
       }
     }]
+  });
+}
+function sliderPetfood() {
+
+  let _carousel = jQuery(".products-petfood");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    centerMode: true,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+        breakpoint: 1240,
+        settings: {
+          slidesToShow: 2,
+        }
+      }, {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+          dots: true,
+          centerMode: false
+        }
+      },
+    ]
+
   });
 }
 

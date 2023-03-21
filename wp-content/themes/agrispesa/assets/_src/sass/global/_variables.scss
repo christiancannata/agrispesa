@@ -11,10 +11,21 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Sunday Morning';
+    src: url('../fonts/sunday/SundayMorningRegular.woff2') format('woff2'),
+        url('../fonts/sunday/SundayMorningRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 //Font
 $font-body: 'Barlow', sans-serif;
 $font-title: 'Alice', serif;
 $font-americano: 'Americano', sans-serif;
+$font-sunday: 'Sunday Morning', sans-serif;
 
 //Colors
 $light-gray: #DEE4E6;

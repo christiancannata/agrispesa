@@ -5,18 +5,12 @@
 
 	<?php if ( have_posts() ) : ?>
 
-
-
-		<section class="manifesto--hero">
-			<div class="manifesto--container">
-				<div class="manifesto--hero--title">
-					<h1>Produttori</h1>
-				</div>
-					<div class="manifesto--hero--subtitle">
-						<h2>Conosciamo da anni i contadini che ci forniscono <br />i prodotti: lavorano sentendosi parte della natura, con esperienza e coscienza, per questo te li presentiamo.</h2>
-					</div>
-
+		<section class="landing-ingredients archive-ingredients" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+			<div class="landing-ingredients--top">
+				<p class="landing-ingredients--minititle">Ingredienti buoni. Parola di Agrispesa.</p>
+				<h3 class="landing-ingredients--megatitle">Non è magia.<br/>È natura.</h3>
 			</div>
+
 		</section>
 
 		<?php
@@ -31,7 +25,7 @@
 
 		<?php if ( $the_query->have_posts() ) : ?>
 
-			<section class="sec-home sec-cards bg-beige">
+			<section class="sec-home sec-cards bg-green">
 				<div class="container-pg">
 
 				<div class="glossario">
@@ -51,28 +45,21 @@
 	          if($initial!=$letter) {
 	            echo "</div>";
 
-	            echo "<div id='".$initial."' data-alpha='".$initial."' class='glossario--anchor'>$initial</div>";
-	            echo "<div class='sec-cards--container'>";
+	            //echo "<div id='".$initial."' data-alpha='".$initial."' class='glossario--anchor'>$initial</div>";
+	            echo "<div id='".$initial."' data-alpha='".$initial."' class='glossario--anchor sec-cards--container'>";
 	            $letter=$initial;
 	          } ?>
 
 						<div class="sec-cards--item wide ingredient-box">
 							<div class="ingredient-box--flex">
-
 				        <h4 class="ingredient-box--title">
-									<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+									<?php the_title(); ?>
 								</h4>
-								<?php echo the_post_thumbnail();?>
 							</div>
-
-								<p class="ingredient-box--descr">
-									<?php echo the_content();?>
-								</p>
-
+							<div class="ingredient-box--descr">
+								<?php echo the_content();?>
 							</div>
-
-
-
+						</div>
 
 	    		<?php endwhile ?>
 					<?php wp_reset_postdata(); ?>
@@ -90,21 +77,23 @@
 		<?php endif; ?>
 
 
-		<section id="go-products" class="landing-category--loop" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-			<h3 class="landing-category--loop--title">Abbiamo il prodotto giusto.</h3>
-			<div class="container-big">
-					<div class="products-carousel">
+		<section id="go-products" class="products-petfood--content" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
+
+			<div class="products-petfood--loop">
+					<div class="products-petfood">
 					<?php $args = array(
 				        'product_cat' => 'Petfood',
-				        'posts_per_page' => 6,
+				        'posts_per_page' => 5,
 				        'orderby' => 'rand'
 				    );
 				    $loop = new WP_Query($args);
-				    while ($loop->have_posts()) : $loop->the_post();
-				        global $product; ?>
-				        <?php get_template_part( 'template-parts/loop', 'shop' ); ?>
-				    <?php endwhile; ?>
+				    $i = 1; while ($loop->have_posts()) : $loop->the_post();
+				        global $product;?>
+				        <?php get_template_part( 'template-parts/loop', 'petfood' ); ?>
+				    <?php $i++; endwhile; ?>
 				    <?php wp_reset_query(); ?>
+
+
 					</div>
 				</div>
 			</section>

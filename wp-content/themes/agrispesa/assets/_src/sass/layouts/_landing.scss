@@ -28,9 +28,9 @@
 		padding: 0 20px;
 		text-align: center;
 		@include breakpoint(desktop) {
-			width: 50%;
+			width: 60%;
 			text-align: left;
-			max-width: 800px;
+			max-width: 1024px;
 			padding: 0 0 0 160px;
 		}
 
@@ -40,13 +40,19 @@
 	}
 
 	&--title {
-		@include font-size(38);
+		@include font-size(42);
 		line-height: 1;
 		margin: 70px 0 0;
 		font-weight: 900;
 		@include breakpoint(desktop) {
-			@include font-size(52);
+			@include font-size(80);
 			margin: 0;
+		}
+		@include breakpoint(container) {
+			@include font-size(70);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(42);
 		}
 
 		.name-pet {
@@ -62,9 +68,12 @@
 				@include breakpoint(desktop) {
 					font-weight: 300;
 					font-family: $font-americano;
-					@include font-size(80);
+					@include font-size(100);
 					position: absolute;
 					left: 16px;
+					color: $blue;
+					z-index: 2;
+					bottom: -20px;
 				}
 			}
 			@include breakpoint(desktop) {
@@ -88,12 +97,17 @@
 		line-height: 1.2;
 		margin: 32px 0;
 		@include breakpoint(desktop) {
-			@include font-size(22);
+			@include font-size(24);
 			margin: 42px 0;
+			max-width: 500px;
 		}
 
 		.small {
 			@include font-size(16);
+		}
+
+		strong {
+			font-weight: 600;
 		}
 	}
 
@@ -129,13 +143,13 @@
 	padding: 0 20px;
 	flex-wrap: wrap;
 	@include breakpoint(desktop) {
-		padding: 60px 80px;
+		padding: 120px 80px;
 	}
 	@include breakpoint(container) {
-		padding: 50px 60px;
+		padding: 80px 60px;
 	}
 	@include breakpoint(mobile) {
-		padding: 32 20px;
+		padding: 32px 20px;
 	}
 
 	&--dx {
@@ -172,10 +186,11 @@
 
 	&--image {
 		@include border-radius(24px);
-		margin-top: 32px;
-		display: inline-block;
+		margin: 32px auto 0;
+		display: block;
 		@include breakpoint(desktop) {
 			width: 300px;
+			display: inline-block;
 		}
 	}
 
@@ -186,6 +201,10 @@
 		margin-top: 32px;
 		@include breakpoint(desktop) {
 			width: 300px;
+
+			&.wide {
+				width: 100%;
+			}
 		}
 	}
 
@@ -220,25 +239,424 @@
 		width: 100%;
 		height: auto;
 		display: block;
+		@include breakpoint(mobile) {
+			display: none;
+		}
+	}
+}
+
+.pet-heroes {
+	@include full-bg();
+	position: relative;
+	padding: 120px 0 300px;
+	color: $panna;
+	@include breakpoint(mobile) {
+		padding: 42px 0;
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 900;
+		line-height: 1;
+		margin-bottom: 32px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			@include font-size(42);
+		}
+		@include breakpoint(container) {
+			@include font-size(40);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(32);
+			padding: 0 20px;
+		}
+	}
+
+	&--flex {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+		flex-wrap: wrap;
+	}
+
+	&--item {
+		max-width: 20%;
+		text-align: center;
+		padding: 24px 32px;
+
+		@include breakpoint(mobile) {
+			max-width: 100%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			text-align: left;
+			padding: 16px 20px;
+		}
+
+		&.big {
+			max-width: 33.333%;
+			padding: 24px 8px;
+
+			& > span {
+				@include font-size(50);
+				padding: 20px;
+				border-color: $black;
+			}
+		}
+
+		& > span {
+			@include border-radius(50%);
+			@include font-size(90);
+			border: 8px solid $panna;
+			padding: 8px;
+		}
+	}
+
+	&--descr {
+		@include font-size(22);
+		font-weight: 600;
+		margin-top: 32px;
+		@include breakpoint(mobile) {
+			margin-top: 0;
+			margin-left: 16px;
+		}
+
+		span {
+			font-weight: 300;
+		}
+	}
+
+	&--button {
+		margin-top: 40px;
+		display: flex;
+		justify-content: center;
+	}
+
+	&--video {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		z-index: -1;
+	}
+}
+
+.pawer-born {
+	@include full-bg();
+	background-position: center bottom;
+	padding-top: 120px;
+	padding-bottom: 500px;
+
+	&--flex {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&--sx {
+		width: 50%;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--dx {
+		width: 50%;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--logo {
+		width: 400px;
+		display: block;
+		margin: 0 auto;
+	}
+
+	&--button {
+		margin-top: 40px;
+	}
+}
+
+.dog-credits {
+	@include font-size(16);
+	text-align: center;
+	padding-top: 16px;
+
+	.icon-sun {
+		@include font-size(22);
+		color: $yellow;
+		position: relative;
+		top: -4px;
+	}
+
+	.icon-water {
+		@include font-size(22);
+		color: $blue;
+		position: relative;
+		top: -4px;
+	}
+}
+
+.products-petfood {
+	display: flex;
+	flex-wrap: wrap;
+	@include breakpoint(mobile) {
+		padding: 0 16px;
+	}
+
+	.slick-list {
+		@include breakpoint(desktop) {
+			padding: 0 15% 0 0 !important;
+		}
+	}
+
+	.slick-next-agr,
+	.slick-prev-agr {
+		@include border-radius(50%);
+		background: $white;
+		width: 60px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: -32px;
+	}
+
+	&--loop {
+		@include breakpoint(desktop) {
+			padding-left: 80px;
+		}
+	}
+
+	&--title {
+		@include font-size(42);
+		line-height: 1;
+		margin: 0 0 40px;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(42);
+			padding-top: 120px;
+		}
+		@include breakpoint(container) {
+			@include font-size(40);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(32);
+		}
+	}
+
+	.petfood-box {
+		@include full-bg();
+		@include border-radius(24px);
+		margin: 8px;
+		padding: 240px 24px 12px;
+		position: relative;
+		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+		position: relative;
+		@include breakpoint(desktop) {
+			padding: 420px 24px 12px;
+		}
+
+		.puppies {
+			@include border-radius(24px);
+			@include font-size(14);
+			position: absolute;
+			background: $white;
+			top: 24px;
+			left: 24px;
+			letter-spacing: 1px;
+			//text-transform: uppercase;
+			font-weight: 400;
+			padding: 8px 16px;
+
+			.icon-heart {
+				color: $red;
+			}
+		}
+
+		.product-quantity--change .product-quantity--minus,
+		.product-quantity--change .product-quantity--plus,
+		.product-quantity--change .quantity .qty {
+			border-color: $white;
+		}
+
+		&--title {
+			@include font-size(24);
+			font-weight: 600;
+			line-height: 1;
+			margin-bottom: 8px;
+			color: $white;
+		}
+
+		.shop-buttons-flex form {
+			justify-content: flex-start;
+			margin-top: 4px;
+			@include breakpoint(mobile) {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 16px;
+
+				.product-quantity--change {
+					@include border-radius(4px);
+					background: $white;
+					padding-bottom: 0;
+				}
+
+				.add_to_cart_button {
+					height: 40px;
+					line-height: 40px;
+				}
+			}
+		}
+
+		&--price {
+			display: block;
+
+			.uom {
+				display: none;
+			}
+
+			&--flex {
+				padding-right: 124px;
+				display: flex;
+				align-items: baseline;
+				@include font-size(18);
+
+				.product-info--quantity {
+					color: $white;
+					margin-right: 16px;
+				}
+			}
+		}
+
+		.woocommerce-Price-amount {
+			color: $white;
+			@include font-size(22);
+
+			.woocommerce-Price-currencySymbol {
+				@include font-size(16);
+			}
+		}
+	}
+}
+
+body.post-type-archive-ingredienti {
+	.glossario--index {
+		margin-bottom: 80px;
+	}
+
+	.glossario--link {
+		color: $panna;
+
+		&.disabled {
+			opacity: 0.5;
+		}
+	}
+
+	.sec-cards {
+		&--item {
+			color: $panna;
+			@include breakpoint(mobile) {
+				background: transparent;
+				box-shadow: none;
+			}
+		}
+		@include breakpoint(mobile) {
+			padding-top: 24px;
+			margin-top: -1px;
+		}
 	}
 }
 
 .landing-ingredients {
-	display: flex;
+	@include border-radius(60px 60px 0 0);
 	background: $primary;
 	@include breakpoint(desktop) {
-		padding: 60px 80px;
+		padding: 120px 80px;
 	}
 	@include breakpoint(container) {
-		padding: 50px 60px;
+		padding: 80px 60px;
 	}
 	@include breakpoint(mobile) {
-		padding: 32 20px;
+		@include border-radius(30px 30px 0 0);
+		padding: 40px 20px;
+	}
+
+	body.single-product & {
+		margin-top: -60px;
+	}
+
+	&.archive-ingredients {
+		padding-bottom: 0;
+		margin-bottom: 0;
+		@include breakpoint(mobile) {
+			padding-bottom: 10px;
+		}
+
+		.landing-ingredients--top {
+			margin-bottom: 0;
+		}
+	}
+
+	&--top {
+		text-align: center;
+		color: $panna;
+		margin-bottom: 24px;
+		@include breakpoint(desktop) {
+			margin-bottom: 120px;
+		}
+	}
+
+	&--descr {
+		@include font-size(18);
+		width: 100%;
+		display: inline-block;
+		margin-top: 32px;
+		@include breakpoint(desktop) {
+			width: 300px;
+		}
+	}
+
+	&--minititle {
+		@include font-size(14);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		@include breakpoint(desktop) {
+			@include font-size(16);
+		}
+	}
+
+	&--megatitle {
+		@include font-size(42);
+		font-weight: 900;
+		line-height: 1;
+		margin-top: 16px;
+		@include breakpoint(desktop) {
+			@include font-size(80);
+		}
+		@include breakpoint(container) {
+			@include font-size(70);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(42);
+		}
+	}
+
+	&--flex {
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	&--dx {
 		width: 50%;
 		padding: 24px 32px;
+		@include breakpoint(mobile) {
+			width: 100%;
+			padding: 24px 16px;
+		}
 	}
 
 	&--sx {
@@ -257,7 +675,7 @@
 
 	&--title {
 		@include font-size(32);
-		font-weight: 600;
+		font-weight: 400;
 		line-height: 1;
 		margin-top: 16px;
 		color: $panna;
@@ -274,6 +692,13 @@
 
 	&--buttons {
 		margin-top: 60px;
+		@include breakpoint(mobile) {
+			margin-top: 40px;
+
+			a {
+				width: 100%;
+			}
+		}
 	}
 }
 
@@ -556,7 +981,7 @@ body.page-template-page-password-php {
 	&--quote {
 		padding: 40px 0;
 		@include breakpoint(desktop) {
-			padding: 60px 0;
+			padding: 120px 0 0;
 		}
 
 		&--flex {
@@ -579,9 +1004,9 @@ body.page-template-page-password-php {
 			}
 
 			img {
-				@include border-radius(100px 4px 80px 4px);
+				@include border-radius(80px 80px 80px 4px);
 				@include breakpoint(desktop) {
-					@include border-radius(200px 4px 100px 4px);
+					@include border-radius(160px 160px 160px 4px);
 				}
 			}
 		}
