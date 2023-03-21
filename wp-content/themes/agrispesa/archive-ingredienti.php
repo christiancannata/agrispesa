@@ -5,7 +5,7 @@
 
 	<?php if ( have_posts() ) : ?>
 
-		<section class="landing-ingredients archive-ingredients" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+		<section class="landing-ingredients archive-ingredients">
 			<div class="landing-ingredients--top">
 				<p class="landing-ingredients--minititle">Ingredienti buoni. Parola di Agrispesa.</p>
 				<h3 class="landing-ingredients--megatitle">Non è magia.<br/>È natura.</h3>
