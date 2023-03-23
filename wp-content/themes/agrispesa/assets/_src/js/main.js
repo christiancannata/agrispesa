@@ -61,6 +61,7 @@ moveCustomFieldsCheckout();
 checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
+galleryProduct();
 
 //changeShippingLabel();
 
@@ -68,12 +69,12 @@ sliderPetfood();
 function petNameAnimation() {
   if (window.screen.width > 640) {
     var i = 1;
-    var sampleMessages = [ "Argo", "Black", "Mya", "Rocky", "Peggy", "Bull", "Pluto", "Pepe", " Pongo" ];
+    var sampleMessages = ["Argo", "Black", "Mya", "Rocky", "Peggy", "Bull", "Pluto", "Pepe", " Pongo"];
     setInterval(function() {
-        var newText = sampleMessages[i++ % sampleMessages.length];
-        jQuery("#petname").fadeOut(600, function () {
-          jQuery(this).text(newText).fadeIn(600);
-        });
+      var newText = sampleMessages[i++ % sampleMessages.length];
+      jQuery("#petname").fadeOut(600, function() {
+        jQuery(this).text(newText).fadeIn(600);
+      });
     }, 1 * 4000);
   }
 }
@@ -497,6 +498,45 @@ function reviewsSlider() {
     }]
   });
 }
+
+function galleryProduct() {
+
+  let _carousel = jQuery(".pd-gallery-slider");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 900,
+      settings: {
+        arrows: false,
+        dots: true,
+        slidesToShow: 3
+      }
+    }]
+  });
+
+  jQuery('.woocommerce-product-gallery__image > a').on('click', function(e) {
+    e.preventDefault();
+  });
+
+  jQuery('.pd-gallery-slider--link').on('click', function(e) {
+    e.preventDefault();
+    let varImg = jQuery(this).attr("href");
+    console.log(varImg);
+
+    jQuery('.woocommerce-product-gallery__image').find('.wp-post-image').attr("src", varImg);
+    jQuery('.woocommerce-product-gallery__image').find('.wp-post-image').attr("srcset", varImg);
+  });
+
+}
+
 function sliderPetfood() {
 
   let _carousel = jQuery(".products-petfood");
@@ -512,20 +552,19 @@ function sliderPetfood() {
     nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
     prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
     responsive: [{
-        breakpoint: 1240,
-        settings: {
-          slidesToShow: 2,
-        }
-      }, {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          arrows: false,
-          dots: true,
-          centerMode: false
-        }
-      },
-    ]
+      breakpoint: 1240,
+      settings: {
+        slidesToShow: 2,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, ]
 
   });
 }
