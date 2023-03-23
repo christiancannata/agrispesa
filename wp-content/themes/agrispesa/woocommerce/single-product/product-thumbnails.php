@@ -26,11 +26,23 @@ global $product;
 
 $attachment_ids = $product->get_gallery_image_ids();
 
-if ( $attachment_ids && $product->get_image_id() ): ?>
+if ( $attachment_ids && $product->get_image_id() ):
+	$image = wp_get_attachment_image_url( $product->get_image_id(), '' );
+
+
+	?>
 
 <div class="pd-gallery-slider">
 
+	<div class="pd-gallery-slider--item">
+		<a class="pd-gallery-slider--link" href="<?php echo $image; ?>" style="background: url(<?php echo $image; ?>) center no-repeat;background-size:cover;">
+				<img src="<?php echo $image ?>" alt="Gallery">
+		</a>
+	</div>
+
 	 <?php
+
+
 			 foreach($attachment_ids as $attachment_id) {
 					 $image_url = wp_get_attachment_url($attachment_id);
 					 ?>
