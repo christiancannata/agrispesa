@@ -769,6 +769,21 @@ body.tax-product_cat {
 			.stock {
 				display: none;
 			}
+
+			.pawer-logo-badge {
+				width: 130px;
+				height: auto;
+				margin-top: -16px;
+				margin-bottom: 8px;
+				@include breakpoint(mobile) {
+					width: 100px;
+					margin-top: 0;
+				}
+
+				svg {
+					fill: $orange;
+				}
+			}
 		}
 	}
 }
@@ -871,6 +886,7 @@ body.tax-product_cat {
 	width: 120px;
 	height: 120px;
 	text-align: center;
+	font-family: $font-sunday;
 	box-shadow: 0 5px 5px 0 rgb(0 0 0 / 5%);
 	transform: rotate(-13deg);
 	@include breakpoint(mobile) {
@@ -881,11 +897,11 @@ body.tax-product_cat {
 		@include font-size(24);
 		display: block;
 		width: 100%;
-		line-height: 0.8;
+		line-height:1;
 
 		&.small {
 			@include font-size(30);
-			margin-top: 20px;
+			margin-top: 10px;
 		}
 	}
 }

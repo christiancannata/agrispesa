@@ -20,12 +20,24 @@ if (!defined('ABSPATH')) {
 }
 
 global $product;
+
+global $post;
+$terms = wp_get_post_terms( $post->ID, 'product_cat' );
+foreach ( $terms as $term ) $categories[] = $term->slug;
+
 $produttori = get_field('product_producer');
 $attributes = $product->get_attributes();
 
 // unità di misura personalizzata
 $product_data = $product->get_meta('_woo_uom_input');
 wc_print_notices();
+
+if( in_array( 'petfood', $categories ) ) {
+	echo '<div class="pawer-logo-badge">';
+	echo get_template_part('global-elements/logo', 'pawer');
+	echo '</div>';
+} 
+
 the_title('<h1 class="product_title entry-title">', '</h1>');
 echo '<div class="product-info">';
 if ($product->has_weight()) {

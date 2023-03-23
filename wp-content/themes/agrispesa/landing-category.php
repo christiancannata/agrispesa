@@ -335,6 +335,9 @@ if($what_category_ID) {
 				</div>
 				<?php if($landing_cat_quote_image): ?>
 				<div class="landing-category--quote--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
+					<div class="need-help">
+						<span class="need-help--label">Bisogno di aiuto?<br/>Scrivici!</span>
+					</div>
 					<img src="<?php echo $landing_cat_quote_image;?>" alt="Tutti i vantaggi dei prodotti <?php echo $what_category?> " />
 				</div>
 				<?php endif;?>

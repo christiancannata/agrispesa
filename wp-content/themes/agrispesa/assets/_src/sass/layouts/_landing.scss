@@ -462,6 +462,26 @@
 	}
 }
 
+.landing-category--quote--image {
+	position: relative;
+}
+
+.need-help {
+	@include border-radius(32px 32px 4px 32px);
+	position: absolute;
+	left: -24px;
+	top: -24px;
+	background: $orange;
+	color: $panna;
+	padding: 24px;
+
+	&--label {
+		@include font-size(24);
+		font-family: $font-sunday;
+		line-height: 0.4;
+	}
+}
+
 .products-petfood {
 	display: flex;
 	flex-wrap: wrap;
