@@ -87,6 +87,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 												if ($_product->is_type('variation')) {
 													$titolo = $_product->get_parent_data();
+													print_r($titolo);
 													echo '<a href="' . esc_url($product_permalink) . '" class="cart-product-var-title">' . $titolo['title'] . '</a>';
 												} else {
 													echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
