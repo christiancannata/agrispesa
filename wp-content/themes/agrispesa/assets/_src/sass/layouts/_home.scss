@@ -754,10 +754,11 @@
 
 	&--title {
 		@include font-size(32);
-		font-family: $font-title;
-		font-weight: 900;
+		//font-family: $font-title;
+		font-weight: 600;
 		color: $white;
 		line-height: 1.1;
+		letter-spacing: -0.5px;
 
 		p {
 			line-height: 1;
@@ -945,7 +946,7 @@
 			position: relative;
 
 			.img-bg {
-				@include border-radius(50%);
+				@include border-radius(24px);
 				content: '';
 				display: block;
 				background-repeat: no-repeat;
@@ -1084,18 +1085,19 @@
 		h5,
 		h6,
 		p {
-			@include font-size(32);
-			line-height: 1;
+			@include font-size(42);
 			font-weight: 900;
-			//font-family: $font-title;
+			line-height: 1;
+			margin-top: 16px;
 			@include breakpoint(desktop) {
-				@include font-size(50);
+				@include font-size(80);
+				margin: 0 0 24px;
 			}
 			@include breakpoint(container) {
-				@include font-size(45);
+				@include font-size(70);
 			}
 			@include breakpoint(mobile) {
-				@include font-size(32);
+				@include font-size(42);
 			}
 		}
 	}

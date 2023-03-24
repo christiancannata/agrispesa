@@ -248,16 +248,30 @@ function cloudways_dog_custom_checkout_fields($fields){
 }
 add_filter( 'woocommerce_checkout_fields', 'cloudways_dog_custom_checkout_fields' );
 function cloudways_dog_extra_checkout_fields(){
-    $checkout = WC()->checkout(); ?>
+    $checkout = WC()->checkout();
+
+		$cat_in_cart = false;
+		// Loop through all products in the Cart
+   foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      // If Cart has category "petfood", set $cat_in_cart to true
+      if ( has_term( 'petfood', 'product_cat', $cart_item['product_id'] ) ) {
+         $cat_in_cart = true;
+         break;
+      }
+   }
+	 if ( $cat_in_cart ) {
+		?>
+
 		<div id="dog-custom-fields" class="woocommerce-border-form">
-				<h3 class="checkout--title">Amiano gli animali<span class="ec ec-sparkles"></span></h3>
-				<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
+				<h3 class="checkout--title">Amiamo gli animali <span class="ec ec-dog"></span></h3>
+				<p class="woocommerce-border-form--info">Vogliamo sapere di più sul tuo amico a quattro zampe.</p>
 				<?php
 		       foreach ( $checkout->checkout_fields['cloudways_dog_extra_fields'] as $key => $field ) : ?>
 		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 		        <?php endforeach; ?>
 			</div>
 <?php }
+}
 add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_dog_extra_checkout_fields' );
 
 //Save data of WooCommerce Custom Checkout Fields

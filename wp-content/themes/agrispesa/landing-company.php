@@ -49,6 +49,52 @@ if($agr_landing_coupon){
 	<?php get_template_part( 'global-elements/home', 'sections' ); ?>
 	<?php endif;?>
 
+
+	<section id="go-meet" class="landing-meet">
+		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
+			<div class="landing-meet--top">
+				<p class="landing-meet--minititle">A casa tua, agricoltura contadina</p>
+				<h3 class="landing-meet--title">Il gusto in una scatola.</h3>
+				<p class="landing-meet--descr wide">
+					Questa non è la solita box, ma un mix perfetto e colorato di prodotti vegetariani, frutta e verdura che arrivano direttamente dal campo.
+				</p>
+			</div>
+			<div class="landing-meet--bottom">
+
+				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
+			</div>
+		</div>
+		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+			<video autoplay muted loop>
+			  <source src="<?php echo get_template_directory_uri(); ?>/assets/video/pawer-hero.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+			</video>
+		</div>
+	</section>
+
+	<section id="go-meet" class="landing-meet">
+		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+			<video autoplay muted loop>
+			  <source src="<?php echo get_template_directory_uri(); ?>/assets/video/pawer-hero.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+			</video>
+		</div>
+		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
+			<div class="landing-meet--top">
+				<p class="landing-meet--minititle">A casa tua, agricoltura contadina</p>
+				<h3 class="landing-meet--title">Il gusto in una scatola.</h3>
+				<p class="landing-meet--descr wide">
+					Questa non è la solita box, ma un mix perfetto e colorato di prodotti vegetariani, frutta e verdura che arrivano direttamente dal campo.
+				</p>
+			</div>
+			<div class="landing-meet--bottom">
+
+				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
+			</div>
+		</div>
+	</section>
+
+
 	<?php if(!get_field('landing_cat_hide_values')):?>
 
 	<section class="landing-category">
@@ -127,7 +173,12 @@ if($agr_landing_coupon){
 								 }
 								 ?>
 
- 								 <span class="landing-discount--badge"><?php echo '<small>-</small>' .$landing_discount_badge . $type_discount;?></span>
+ 								 <span class="landing-discount--badge" data-aos="fade-up" data-aos-duration="800" data-aos-delay="0">
+	 								 <span class="landing-discount--content">
+										 <?php echo '<small>-</small>' .$landing_discount_badge . $type_discount;?>
+											 <span class="landing-discount--discount">DI SCONTO</span>
+									 </span>
+								 </span>
  							 <?php endif;?>
  							 <img src="<?php echo $landing_product_image;?>" class="landing-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
  						 </div>
@@ -223,6 +274,44 @@ if($agr_landing_coupon){
 <?php endif; ?>
 
 			</div>
+		</div>
+	</section>
+
+	<section class="landing-ingredients" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+		<div class="landing-ingredients--top">
+			<p class="landing-ingredients--minititle">Ingredienti buoni. Parola di Agrispesa.</p>
+			<h3 class="landing-ingredients--megatitle">Non è magia.<br/>È natura.</h3>
+		</div>
+		<div class="landing-ingredients--flex">
+
+		<div class="landing-ingredients--sx" data-aos="fade-uo" data-aos-duration="800" data-aos-delay="150">
+			<img class="landing-meet--image sticky" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/camomilla.svg" alt="Per ogni razza, per ogni tipetto." />
+		</div>
+		<div class="landing-ingredients--dx">
+			<?php
+			$args = array(
+			  'post_type' => 'ingredienti',
+			  'posts_per_page' => -1,
+				'orderby' => 'post_title',
+			  'order' => 'ASC',
+			);
+			$the_query = new WP_Query( $args );
+			if ( $the_query->have_posts() ) : $i = 1;
+			 while ( $the_query->have_posts() ) : $the_query->the_post();
+			 $delay = 50 * $i;?>
+				<div class="landing-ingredients--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="<?php echo $delay; ?>">
+	        <h4 class="landing-ingredients--title">
+						<?php the_title(); ?>
+					</h4>
+				</div>
+  		<?php $i++;  endwhile; endif; ?>
+			<?php wp_reset_postdata(); ?>
+
+			<div class="landing-ingredients--buttons" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+				<a href="<?php echo esc_url(home_url('/ingredienti')); ?>" class="btn btn-primary" title="Scopri gli ingredienti">Scopri gli ingredienti</a>
+			</div>
+		</div>
+
 		</div>
 	</section>
 

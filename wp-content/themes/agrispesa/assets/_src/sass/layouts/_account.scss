@@ -162,8 +162,8 @@ body.woocommerce-account {
 		color: $black;
 		line-height: 1.1;
 		margin: 24px 0 16px;
-		font-family: $font-title;
-		font-weight: 900;
+		//font-family: $font-title;
+		font-weight: 600;
 		@include breakpoint(desktop) {
 			@include font-size(42);
 		}

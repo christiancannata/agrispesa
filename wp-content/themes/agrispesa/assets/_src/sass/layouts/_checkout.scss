@@ -405,6 +405,10 @@ body.woocommerce-checkout {
 	//display: none !important;
 }
 
+.woocommerce ul#shipping_method .amount {
+    font-weight: 300;
+}
+
 .woocommerce {
 	.woocommerce-checkout-review-order {
 		.shop_table {
@@ -432,7 +436,7 @@ body.woocommerce-checkout {
 			}
 
 			.recurring-totals {
-				font-family: $font-title;
+				//font-family: $font-title;
 
 				th {
 					@include font-size(18);

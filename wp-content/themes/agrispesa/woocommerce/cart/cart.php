@@ -301,6 +301,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 		 */
 		do_action( 'woocommerce_cart_collaterals' );
 	?>
+	<div class="checkout--preview--bottom"></div>
 </div>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>

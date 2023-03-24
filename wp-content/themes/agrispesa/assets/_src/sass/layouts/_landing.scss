@@ -1188,6 +1188,30 @@ body.page-template-page-password-php {
 			}
 		}
 	}
+
+	&--content {
+		text-align: center;
+		line-height: 1;
+		margin-top: -12px;
+		@include breakpoint(mobile) {
+		margin-top: -4px;
+		}
+	}
+
+	&--discount {
+		@include font-size(18);
+		display: block;
+		font-weight: 400;
+		letter-spacing: 3px;
+		margin-top: 8px;
+		@include breakpoint(mobile) {
+
+				@include font-size(9);
+				letter-spacing: 0.5px;
+				font-weight: 600;
+				margin-top: 0;
+		}
+	}
 }
 
 .landing-box {

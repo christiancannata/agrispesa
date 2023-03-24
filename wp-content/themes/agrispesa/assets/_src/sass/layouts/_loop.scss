@@ -522,8 +522,8 @@
 
 	&--title {
 		@include font-size(28);
-		font-weight: 900;
-		font-family: $font-title;
+		font-weight: 600;
+		//font-family: $font-title;
 		line-height: 1;
 		margin-bottom: 16px;
 		@include breakpoint(container) {
