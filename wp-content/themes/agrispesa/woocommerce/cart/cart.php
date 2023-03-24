@@ -85,8 +85,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 											} else {
 												$prodotto = $cart_item['data'];
 
-												if ($prodotto->is_type('variation')) {
-													$titolo = $prodotto->get_parent_data();
+												if ($_product->is_type('variation')) {
+													$titolo = $_product->get_parent_data();
 													echo '<a href="' . esc_url($product_permalink) . '" class="cart-product-var-title">' . $titolo['title'] . '</a>';
 												} else {
 													echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
@@ -118,11 +118,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 											} else {
 												// unità di misura personalizzata
 												$product_data = $_product->get_meta('_woo_uom_input');
-												if ( $prodotto->has_weight() ) {
+												if ( $_product->has_weight() ) {
 													if($product_data && $product_data != 'gr') {
 															echo '<span class="product-info--quantity">' . $_product->get_weight() . ' '.$product_data.'</span>';
 												} else {
-														if($prodotto->get_weight() == 1000) {
+														if($_product->get_weight() == 1000) {
 								        			echo '<span class="product-info--quantity">1 kg</span>';
 								        		} else {
 								        			echo '<span class="product-info--quantity">' . $_product->get_weight() . ' gr</span>';
