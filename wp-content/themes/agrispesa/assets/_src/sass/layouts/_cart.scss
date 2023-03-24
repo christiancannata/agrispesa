@@ -83,6 +83,7 @@ body.woocommerce-checkout {
 				border-top: 1px solid rgba($white, 0.7) !important;
 				vertical-align: middle !important;
 				background: transparent !important;
+
 				&.product-name {
 					border-top: none !important;
 				}
@@ -129,7 +130,6 @@ body.woocommerce-checkout {
 							}
 						}
 
-
 						.checkout-coupon-name {
 							@include font-size(13);
 							display: block;
@@ -137,6 +137,7 @@ body.woocommerce-checkout {
 							letter-spacing: 1px;
 							color: $black;
 						}
+
 						.free-shipping-hide {
 							display: none;
 						}
@@ -144,15 +145,16 @@ body.woocommerce-checkout {
 
 					.recurring-totals {
 						//font-family: $font-title;
-
 						th {
 							@include font-size(18);
 							padding-top: 24px !important;
 							font-weight: 900 !important;
 						}
 					}
+
 					tr.order-total {
-						th, td {
+						td,
+						th {
 							font-weight: 600 !important;
 						}
 					}
@@ -177,7 +179,6 @@ body.woocommerce-checkout {
 							}
 						}
 					}
-
 					// tr.order-total,
 					// tr.ywgc-gift-card-applied {
 					// 	display: none;
@@ -210,6 +211,7 @@ body.woocommerce-checkout {
 		@include breakpoint(mobile) {
 			padding: 8px 0;
 		}
+
 		&:first-of-type {
 			margin-top: 0;
 			border-top-left-radius: 16px;
@@ -220,8 +222,6 @@ body.woocommerce-checkout {
 			border-bottom-left-radius: 16px;
 			border-bottom-right-radius: 16px;
 		}
-
-
 	}
 
 	&--flex {
@@ -490,7 +490,7 @@ ul#shipping_method .shipping-mode-cart--label {
 
 	&--title {
 		@include font-size(32);
-		font-family: $font-title;
+		//font-family: $font-title;
 		line-height: 1;
 		font-weight: 900;
 		margin: 0 0 24px;
@@ -532,4 +532,8 @@ ul#shipping_method .shipping-mode-cart--label {
 		line-height: 1.2;
 		text-align: left;
 	}
+}
+
+.cart-no-shipping-available {
+	@include font-size(13);
 }

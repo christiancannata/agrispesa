@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-03-20 14:16+0100\n"
+"PO-Revision-Date: 2023-03-24 11:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3367,7 +3367,7 @@ msgstr ""
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2219
 msgid "now"
-msgstr "Adesso"
+msgstr "adesso"
 
 #. translators: placeholder is a number of days.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2378
