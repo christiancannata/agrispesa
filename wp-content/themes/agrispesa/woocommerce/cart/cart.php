@@ -107,9 +107,9 @@ do_action( 'woocommerce_before_cart' ); ?>
 										</div>
 										<div class="new-cart--details">
 											<?php if($_product->get_name() != 'Acquista credito') {
-												if ($prodotto->is_type('variation')) {
-												$dimensione = get_term_by( 'name', $prodotto->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
-												$tipologia = get_term_by( 'name', $prodotto->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
+												if ($_product->is_type('variation')) {
+												$dimensione = get_term_by( 'name', $_product->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
+												$tipologia = get_term_by( 'name', $_product->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
 
 												echo '<div class="new-cart--variations">';
 												echo '<span class="cart-product-var-var">' . $dimensione->name . '</span>';
@@ -117,15 +117,15 @@ do_action( 'woocommerce_before_cart' ); ?>
 												echo '</div>';
 											} else {
 												// unità di misura personalizzata
-												$product_data = $prodotto->get_meta('_woo_uom_input');
+												$product_data = $_product->get_meta('_woo_uom_input');
 												if ( $prodotto->has_weight() ) {
 													if($product_data && $product_data != 'gr') {
-															echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' '.$product_data.'</span>';
+															echo '<span class="product-info--quantity">' . $_product->get_weight() . ' '.$product_data.'</span>';
 												} else {
 														if($prodotto->get_weight() == 1000) {
 								        			echo '<span class="product-info--quantity">1 kg</span>';
 								        		} else {
-								        			echo '<span class="product-info--quantity">' . $prodotto->get_weight() . ' gr</span>';
+								        			echo '<span class="product-info--quantity">' . $_product->get_weight() . ' gr</span>';
 								        		}
 													}
 												}
