@@ -244,10 +244,10 @@ add_action('rest_api_init', function () {
 
 			global $wpdb;
 
-			$wpdb->query("UPDATE wp_posts
+		/*	$wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
 WHERE post_type = 'product';");
-
+*/
 			$productIds = [];
 
 			foreach ($activeProducts as $key => $product) {
@@ -256,6 +256,20 @@ WHERE post_type = 'product';");
 				$sku = explode("_", $sku);
 
 				$productId = wc_get_product_id_by_sku($sku[0]);
+
+				if(!$productId){
+
+$productObj = new WC_Product_Simple();
+
+$productObj->set_name( (string)$product['description'] ); // product title
+$productObj->set_regular_price(  floatval(str_replace(",",".",(string)$product['unitprice'])) ); // in current shop currency
+$productObj->set_description(  (string)$product['description2'] );
+$productObj->set_sku($sku[0]);
+$productObj->save();
+ $productId = $productObj->get_id();
+
+				}
+
 				$product['wordpress_id'] = $productId;
 				$productIds[] = $productId;
 				/*
@@ -268,7 +282,7 @@ WHERE post_type = 'product';");
 
 			//Attivo i prodotti
 			$productIds = array_unique($productIds);
-			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+			//$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
 
 			foreach ($activeProducts as $product) {
 				$price = (string)$product['unitprice'];
@@ -280,6 +294,16 @@ WHERE post_type = 'product';");
 				update_post_meta($product['wordpress_id'], '_navision_id', (string)$product['id_product']);
 
 			}
+
+$wpdb->query("UPDATE wp_posts
+SET post_status = 'draft'
+WHERE post_type = 'product';");
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+
+			return $response;
+
 
 		}
 	));
@@ -298,6 +322,16 @@ WHERE post_type = 'product';");
 
 			$boxes = [];
 
+		global $wpdb;
+
+			$wpdb->query("UPDATE wp_posts
+SET post_status = 'draft'
+WHERE post_type = 'product';");
+
+			$productsSku =  [];
+
+			$week = null;
+
 			foreach ($products['ROW'] as $product) {
 				$product = (array)$product;
 
@@ -305,14 +339,426 @@ WHERE post_type = 'product';");
 					$boxes[(string)$product['offer_no']] = [];
 				}
 
+				$productsSku[] = (string)$product['id_product'];
 				$boxes[(string)$product['offer_no']][] = $product;
+
+				$week = explode("-",(string)$product['offer_no']);
+				$week = substr($week[0],-2);
+			}
+
+			$productsSku = array_unique($productsSku);
+
+$importedPosts = $wpdb->get_results('SELECT post_id,meta_value FROM '.$wpdb->postmeta.' WHERE meta_key = "_navision_id" AND meta_value IN ("'. implode('","',$productsSku) .'")');
+			
+			$postIds = array_map(function($post){
+				return $post->post_id;
+			},$importedPosts);
+
+			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) . ")");
+
+			$boxIds = [];
+
+			//delete all box for the same week
+			$boxIdsToDelete = $wpdb->get_results("select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '".date('Y').'_'.$week."'");
+
+			$boxIdsToDelete = array_map(function($post){
+				return $post->ID;
+			}, $boxIdsToDelete);
+
+			$wpdb->query("DELETE from wp_posts p WHERE p.ID IN (" . implode(",", $boxIdsToDelete) . ")");
+
+
+			foreach($boxes as $idBox => $boxProducts){
+
+					$post_id = wp_insert_post(array(
+				'post_type' => 'weekly-box',
+				'post_title' => 'Box settimana ' . date('Y').'_'.$week . ' - ' . $idBox,
+				'post_content' => '',
+				'post_status' => 'publish',
+				'comment_status' => 'closed',   // if you prefer
+				'ping_status' => 'closed',      // if you prefer
+			));
+
+			if ($post_id) {
+				// insert post meta
+				add_post_meta($post_id, '_week',date('Y').'_'.$week);
+			//	add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
+			//	add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
+
+				$arrayProducts = [];
+
+				$postIds = $wpdb->get_results('SELECT post_id FROM '.$wpdb->postmeta.' WHERE meta_key = "_navision_id" AND meta_value IN ("'. implode('","',$productsSku) .'")');
+
+				foreach($boxProducts as $boxProduct){
+					$foundImportedProduct = array_filter($importedPosts,function($product) use($boxProduct){
+						return $product->meta_value == $boxProduct['id_product'];
+					});
+					
+					if(empty($foundImportedProduct)){
+						continue;
+					}	
+
+					$foundImportedProduct = reset($foundImportedProduct)->post_id;
+
+					$arrayProducts[] = [
+						'id' => $foundImportedProduct,
+						'quantity' => 1
+					];
+				}
+
+			   	add_post_meta($post_id, '_products', $arrayProducts);
+				$boxIds[] = $post_id;
+
 			}
 
 
-			dd($boxes);
+			}
+
+
+			
+			$response = new WP_REST_Response($boxIds);
+			$response->set_status(201);
+
+			return $response;
 
 		}
 	));
+
+
+register_rest_route('agrispesa/v1', 'export-customers', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+				$args = array(
+				);
+				$orders = wc_get_orders( $args );
+
+
+
+
+$doc = new DOMDocument();
+$doc->formatOutput = true;
+
+$root = $doc->createElement('ROOT');
+$root = $doc->appendChild($root);
+
+$customers = [];
+				foreach($orders as $order){
+					$isSubscription = get_post_meta($order->get_id(),'_subscription_id',true);
+					if(!$isSubscription){
+						continue;
+					}
+
+
+					if(in_array($order->get_customer_id(),$customers)){
+						continue;
+					}
+
+					$customers[] = $order->get_customer_id();
+
+					$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
+
+					if(count($subscriptions) == 0){
+						continue;
+					}
+
+					$subscription = end($subscriptions);
+
+					$products = $subscription->get_items();
+
+	if (empty($products)) {
+		continue;
+	}
+
+	$box = reset($products)->get_product();
+
+	if (!$box) {
+		continue;
+	}
+
+	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
+					$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
+
+
+					$productBox = get_single_box_from_attributes($tipologia, $dimensione);
+
+					$row =  $doc->createElement('ROW');
+
+					$ele1 = $doc->createElement('id_codeclient');
+					$ele1->nodeValue='10000'.$order->get_customer_id();
+					$row->appendChild($ele1);
+
+					$ele2 = $doc->createElement('business_name');
+					$ele2->nodeValue=$order->get_billing_first_name().' '.$order->get_billing_last_name();
+					$row->appendChild($ele2);
+
+
+					$taxCode = get_post_meta($order->get_id,'_codice_fiscale',true);
+					if(!$taxCode){
+						$taxCode = '';
+					}
+					$ele2 = $doc->createElement('tax_code');
+					$ele2->nodeValue=$taxCode;
+					$row->appendChild($ele2);
+
+					$vatCode = get_post_meta($order->get_id(),'_partita_iva',true);
+					if(!$vatCode){
+						$vatCode = '';
+					}
+					$ele2 = $doc->createElement('vat_number');
+					$ele2->nodeValue=$vatCode;
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('address');
+					$ele2->nodeValue=$order->get_shipping_address_1();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('city');
+					$ele2->nodeValue=$order->get_shipping_city();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('province');
+					$ele2->nodeValue=$order->get_shipping_state();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('postcode');
+					$ele2->nodeValue=$order->get_shipping_postcode();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('phone');
+					$ele2->nodeValue=$order->get_shipping_phone();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('phoneoffice');
+					$ele2->nodeValue='';
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('mobile');
+					$ele2->nodeValue=$order->get_shipping_phone();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('mobile2');
+					$ele2->nodeValue=$order->get_shipping_phone();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('fax');
+					$ele2->nodeValue='';
+					$row->appendChild($ele2);
+
+
+					$ele2 = $doc->createElement('nation');
+					$ele2->nodeValue='IT';
+					$row->appendChild($ele2);
+
+
+					$ele2 = $doc->createElement('codicemodellocliente');
+					$ele2->nodeValue='ITPRIV';
+					$row->appendChild($ele2);
+
+					$navisionId = get_post_meta($productBox->get_id(),'_navision_id',true);
+					if(empty($navisionId)){
+						$navisionId = [''];
+					}
+					$ele2 = $doc->createElement('codiceabbonamento');
+					$ele2->nodeValue=$navisionId[0];
+					$row->appendChild($ele2);
+
+					$startDate = $subscription->get_date('start');
+					$startDate = new DateTime($startDate);
+
+					$ele2 = $doc->createElement('dataabbonamento');
+					$ele2->nodeValue=$startDate->format("dmY");
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('fido');
+					$ele2->nodeValue= "0,0000";
+					$row->appendChild($ele2);
+
+					$root->appendChild($row);
+
+				}
+
+
+header("Content-type: text/xml");
+				die($doc->saveXml());
+			
+		}
+	));
+
+
+
+register_rest_route('agrispesa/v1', 'export-orders', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+				$args = array(
+    				'status' => array('wc-processing', 'wc-completed'),
+				);
+				$orders = wc_get_orders( $args );
+
+
+
+
+$doc = new DOMDocument();
+$doc->formatOutput = true;
+
+$root = $doc->createElement('ROOT');
+$root = $doc->appendChild($root);
+
+$customers = [];
+				foreach($orders as $order){
+
+					foreach ($order->get_items() as $item_id => $item ) {
+
+    					$product        = $item->get_product();
+
+    					$productNavisionId = get_post_meta($product->get_id(),'_navision_id',true);
+
+if(!$productNavisionId){
+	continue;
+}
+    					$row =  $doc->createElement('ROW');
+
+
+					$ele1 = $doc->createElement('id_order');
+					$ele1->nodeValue='10000'.$order->get_customer_id();
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('id_codeclient');
+					$ele1->nodeValue='10000'.$order->get_customer_id();
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('date');
+					$ele1->nodeValue=(new DateTime($order->get_date_paid()))->format("dmY");
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('date_consegna');
+					$ele1->nodeValue=(new DateTime($order->get_date_paid()))->format("dmY");
+					$row->appendChild($ele1);
+
+
+					$ele1 = $doc->createElement('sh_name');
+					$ele1->nodeValue=$order->get_shipping_first_name().' '.$order->get_shipping_last_name();
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('sh_address');
+					$ele1->nodeValue=$order->get_shipping_address_1();
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('sh_description1');
+					$ele1->nodeValue='Scala 1 | Piano 2';
+					$row->appendChild($ele1);
+
+					$ele1 = $doc->createElement('comment_lines');
+					$ele1->nodeValue=$order->get_customer_note();
+					$row->appendChild($ele1);
+
+
+					$ele2 = $doc->createElement('sh_city');
+					$ele2->nodeValue=$order->get_shipping_city();
+					$row->appendChild($ele2);
+
+
+					$ele2 = $doc->createElement('sh_postcode');
+					$ele2->nodeValue=$order->get_shipping_postcode();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('sh_province');
+					$ele2->nodeValue=$order->get_shipping_state();
+					$row->appendChild($ele2);
+
+
+					$ele2 = $doc->createElement('id_product');
+					$ele2->nodeValue=$productNavisionId;
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('quantity');
+					$ele2->nodeValue=$item->get_quantity();
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('discount');
+					$ele2->nodeValue='0';
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('unitprice');
+					$ele2->nodeValue=str_replace(".",",",number_format($product->get_price(),4));
+					$row->appendChild($ele2);
+
+
+				/*	$navisionId = get_post_meta($productBox->get_id(),'_navision_id',true);
+					if(empty($navisionId)){
+						$navisionId = [''];
+					}*/
+
+					$ele2 = $doc->createElement('ref_offer_no');
+					$ele2->nodeValue='2312-FNG';
+					$row->appendChild($ele2);
+
+					$ele2 = $doc->createElement('ref_offer_line_no');
+					$ele2->nodeValue='25000';
+					$row->appendChild($ele2);
+
+
+
+					$root->appendChild($row);
+
+					}
+					/*$isSubscription = get_post_meta($order->get_id(),'_subscription_id',true);
+					if(!$isSubscription){
+						continue;
+					}
+
+
+					if(in_array($order->get_customer_id(),$customers)){
+						continue;
+					}
+
+					$customers[] = $order->get_customer_id();
+
+					$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
+
+					if(count($subscriptions) == 0){
+						continue;
+					}
+
+					$subscription = end($subscriptions);
+
+					$products = $subscription->get_items();
+
+	if (empty($products)) {
+		continue;
+	}
+
+	$box = reset($products)->get_product();
+
+	if (!$box) {
+		continue;
+	}
+
+	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
+					$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
+
+
+					$productBox = get_single_box_from_attributes($tipologia, $dimensione);
+*/
+					
+
+				}
+
+
+header("Content-type: text/xml");
+				die($doc->saveXml());
+			
+		}
+	));
+
+
 
 	register_rest_route('agrispesa/v1', 'products/(?P<product_id>\d+)/category', array(
 		'methods' => 'GET',
@@ -3054,6 +3500,9 @@ function consegne_ordini_pages()
 
 							$week = get_post_meta($box->ID, '_week', true);
 							$products = get_post_meta($box->ID, '_products', true);
+							if(!is_array( $products)){
+								 $products = [];
+							}
 							$dataConsegna = get_post_meta($box->ID, '_data_consegna', true);
 							$productsAlreadyInBox = array_map(function ($p) {
 								return $p['id'];
