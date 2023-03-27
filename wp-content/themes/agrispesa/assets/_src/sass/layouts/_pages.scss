@@ -87,10 +87,21 @@
 	}
 }
 
+.page-panna {
+	background: $beige;
+	padding: 60px 0 40px;
+}
+
 .prices {
 	padding: 0 0 40px;
 	@include breakpoint(desktop) {
 		padding: 0 0 80px;
+	}
+
+	&--title {
+		@include font-size(26);
+		font-family: $font-title;
+		font-weight: 900;
 	}
 
 	&--flex {
@@ -169,7 +180,7 @@
 
 	&--header {
 		@include font-size(22);
-		font-family: $font-title;
+		//font-family: $font-title;
 		font-weight: 900;
 		border-bottom: 1px solid $background;
 		padding: 16px;
@@ -294,17 +305,20 @@
 		h5,
 		h6,
 		p {
-			@include font-size(32);
-			line-height: 1;
-			font-family: $font-title;
+			@include font-size(42);
 			font-weight: 900;
+			line-height: 1;
+			margin-top: 16px;
 			@include breakpoint(desktop) {
-				@include font-size(40);
+				@include font-size(80);
 				margin: 0 0 24px;
 			}
-		}
-		@include breakpoint(desktop) {
-			margin: 0 0 24px;
+			@include breakpoint(container) {
+				@include font-size(70);
+			}
+			@include breakpoint(mobile) {
+				@include font-size(42);
+			}
 		}
 	}
 
@@ -522,7 +536,7 @@
 
 	&--subtitle {
 		@include font-size(60);
-		font-family: $font-title;
+		//font-family: $font-title;
 		font-weight: 900;
 		line-height: 1;
 		@include breakpoint(container) {
@@ -638,7 +652,7 @@
 	&--title {
 		@include font-size(32);
 		margin-bottom: 24px;
-		font-family: $font-title;
+		//font-family: $font-title;
 		line-height: 1;
 		font-weight: 900;
 		@include breakpoint(desktop) {
@@ -685,20 +699,16 @@ body.woocommerce-order-received {
 
 body.theme-agrispesa {
 	.wdap_product_availity_form {
-
 		background: $orange;
 		padding: 100px 20px;
-
-
-		margin: -200px -130px -224px;;
+		margin: -200px -130px -224px;
 		width: calc(100% + 260px);
 		@include breakpoint(container) {
 			margin: -120px -80px -144px;
 			width: calc(100% + 160px);
 		}
 		@include breakpoint(mobile) {
-			margin: -60px -40px;
-
+			margin: -60px -40px -84px;
 			width: calc(100% + 80px);
 		}
 
@@ -721,7 +731,7 @@ body.theme-agrispesa {
 				background: $white;
 				margin: 0 !important;
 				@include breakpoint(mobile) {
-						@include font-size(18);
+					@include font-size(18);
 					padding: 0 12px !important;
 				}
 			}
@@ -748,7 +758,7 @@ body.theme-agrispesa {
 			height: 70px;
 			border-radius: 0 40px 40px 0 !important;
 			@include breakpoint(mobile) {
-					@include font-size(18);
+				@include font-size(18);
 			}
 
 			&.loadinggif {

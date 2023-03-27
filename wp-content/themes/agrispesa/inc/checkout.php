@@ -228,12 +228,51 @@ function cloudways_extra_checkout_fields(){
 		       foreach ( $checkout->checkout_fields['cloudways_extra_fields'] as $key => $field ) : ?>
 		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 		        <?php endforeach; ?>
-			<?php endif;?>
+					<?php endif;?>
 			</div>
-
-
 <?php }
 add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
+
+
+//Add DOGS custom fields to checkout
+function cloudways_dog_custom_checkout_fields($fields){
+    $fields['cloudways_dog_extra_fields'] = array(
+      	'cloudways_dog_name_field' => array(
+          'type' => 'text',
+          'required'      => false,
+					'label'         => __('Nome del cane'),
+					'placeholder'   => __('Come si chiama il tuo cane?'),
+        ),
+    );
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'cloudways_dog_custom_checkout_fields' );
+function cloudways_dog_extra_checkout_fields(){
+    $checkout = WC()->checkout();
+
+		$cat_in_cart = false;
+		// Loop through all products in the Cart
+   foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+      // If Cart has category "petfood", set $cat_in_cart to true
+      if ( has_term( 'petfood', 'product_cat', $cart_item['product_id'] ) ) {
+         $cat_in_cart = true;
+         break;
+      }
+   }
+	 if ( $cat_in_cart ) {
+		?>
+
+		<div id="dog-custom-fields" class="woocommerce-border-form">
+				<h3 class="checkout--title">Amiamo gli animali <span class="ec ec-dog"></span></h3>
+				<p class="woocommerce-border-form--info">Vogliamo sapere di più sul tuo amico a quattro zampe.</p>
+				<?php
+		       foreach ( $checkout->checkout_fields['cloudways_dog_extra_fields'] as $key => $field ) : ?>
+		            <?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+		        <?php endforeach; ?>
+			</div>
+<?php }
+}
+add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_dog_extra_checkout_fields' );
 
 //Save data of WooCommerce Custom Checkout Fields
 function cloudways_save_extra_checkout_fields( $order_id, $posted ){
@@ -243,6 +282,9 @@ function cloudways_save_extra_checkout_fields( $order_id, $posted ){
     }
     if( isset( $posted['cloudways_piano_field'] ) ) {
         update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
+    }
+		if( isset( $posted['cloudways_dog_name_field'] ) ) {
+        update_post_meta( $order_id, '_cloudways_dog_name_field', sanitize_text_field( $posted['cloudways_dog_name_field'] ) );
     }
 
 }
@@ -261,11 +303,17 @@ function admin_order_after_billing_address_callback( $order ){
     } else {
 			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
 		}
+		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
+        echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
+		}
 }
 
 function cloudways_save_extra_details( $post_id, $post ){
-    update_post_meta( $post_id, '_cloudways_text_field', wc_clean( $_POST[ '_cloudways_text_field' ] ) );
-    update_post_meta( $post_id, '_cloudways_dropdown', wc_clean( $_POST[ '_cloudways_dropdown' ] ) );
+    update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
+    update_post_meta( $post_id, '_cloudways_scala_field', wc_clean( $_POST[ '_cloudways_scala_field' ] ) );
+    update_post_meta( $post_id, '_cloudways_dog_name_field', wc_clean( $_POST[ '_cloudways_dog_name_field' ] ) );
 }
 add_action( 'woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2 );
 
@@ -281,44 +329,60 @@ function my_validation_handler($is_valid, $product_id) {
 	return $is_valid;
 }
 
-//Denso: apri form shipping e compila i dati
-add_filter( 'woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 10, 1 );
-function custom_checkout_billing_city_field( $shipping_fields ) {
-	if( in_array( 'welovedenso', WC()->cart->get_applied_coupons() ) ) {
-		add_filter( 'woocommerce_ship_to_different_address_checked', '__return_true' );
-		global $woocommerce;
 
-		$company = 'Denso Thermal Systems S.p.A.';
-    $city = 'Poirino';
-		$postcode = '10046';
-		$address = 'Frazione Masio, 24';
-		$state = 'TO';
+//Checkout: Remove proceed button if shipping not available
+function prevent_checkout_access_no_shipping() {
+    // Check that WC is enabled and loaded
+    if( function_exists( 'is_checkout' ) && is_checkout() ) {
 
-    // Set values (to be sure)
-    $woocommerce->customer->set_shipping_address( $address );
-		$woocommerce->customer->set_shipping_postcode( $postcode );
-    $woocommerce->customer->set_shipping_city( $city );
-    $woocommerce->customer->set_shipping_company( $company );
-		$woocommerce->customer->set_shipping_state( $state );
+        // get shipping packages and their rate counts
+        $packages = WC()->cart->get_shipping_packages();
+        foreach( $packages as $key => $pkg ) {
+            $calculate_shipping = WC()->shipping->calculate_shipping_for_package( $pkg );
+            if( empty( $calculate_shipping['rates'] ) ) {
+                wp_redirect( esc_url( WC()->cart->get_cart_url() ) );
+                exit;
+            }
+        }
+    }
+}
+add_action( 'wp', 'prevent_checkout_access_no_shipping' );
 
-    // Change fields
-    $shipping_fields['shipping_address_1']['default'] = $address;
-    $shipping_fields['shipping_postcode']['default'] = $postcode;
-    $shipping_fields['shipping_city']['default'] = $city;
-    $shipping_fields['shipping_company']['default'] = $company;
-    $shipping_fields['shipping_state']['default'] = $state;
+//Checkout: Remove checkout button if shipping not available
+function disable_checkout_button_no_shipping() {
+    $package_counts = array();
 
-    $shipping_fields['shipping_address_1']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_postcode']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_city']['custom_attributes']['readonly'] = 'readonly';
-    $shipping_fields['shipping_company']['custom_attributes']['readonly'] = 'readonly';
-    //$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
+    // get shipping packages and their rate counts
+    $packages = WC()->shipping->get_packages();
+    foreach( $packages as $key => $pkg )
+        $package_counts[ $key ] = count( $pkg[ 'rates' ] );
 
-		// $shipping_fields['shipping_state']['type'] = 'select';
-    // $shipping_fields['shipping_state']['options'] = array( $state => $state );
-    // $shipping_fields['shipping_state']['default'] = $state;
-    //$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
+    // remove button if any packages are missing shipping options
+    if( in_array( 0, $package_counts ) )
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+}
+add_action( 'woocommerce_proceed_to_checkout', 'disable_checkout_button_no_shipping', 1 );
 
-    return $shipping_fields;
+//Cambia testo nessuna spedizione disponibile
+class WPDeskNoShippingMessage {
+	/**
+	 * Register hooks.
+	 */
+	public function add_hooks() {
+		add_filter( 'woocommerce_no_shipping_available_html', [ $this, 'change_message' ] );
+		add_filter( 'woocommerce_cart_no_shipping_available_html', [ $this, 'change_message' ] );
+	}
+
+	/**
+	 * Change message.
+	 *
+	 * @param string $message
+	 *
+	 * @return string
+	 */
+	public function change_message( $message ) {
+		return __( '<span class="cart-no-shipping-available">Non consegniamo nella tua zona</span>' );
 	}
 }
+
+( new WPDeskNoShippingMessage() )->add_hooks();

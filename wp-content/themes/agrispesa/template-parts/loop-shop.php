@@ -8,11 +8,16 @@ $product_data = $product->get_meta('_woo_uom_input');
 ?>
 <article class="product-box">
   <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
+    <?php if( has_term( 'Petfood', 'product_cat' ) ) {
+      echo '<div class="pawer-logo-badge">';
+    	echo get_template_part('global-elements/logo', 'pawer');
+      echo '</div>';
+      } ?>
     <?php if($thumb_id):?>
       <img src="<?php the_post_thumbnail_url(); ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
     <?php else: ?>
       <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
-    <?php endif;?> 
+    <?php endif;?>
   </a>
   <div class="product-box--text">
     <div class="product-box--text--top">

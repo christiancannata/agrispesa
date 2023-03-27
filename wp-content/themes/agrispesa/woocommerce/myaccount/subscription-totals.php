@@ -19,7 +19,12 @@ $totals                     = $subscription->get_order_item_totals();
 
 // Don't display the payment method as it is included in the main subscription details table.
 unset( $totals['payment_method'] );
+
+
 ?>
+
+
+
 <h3 class="my-account--minititle"><?php esc_html_e( 'Subscription totals', 'woocommerce-subscriptions' ); ?></h3>
 
 <?php do_action( 'woocommerce_subscription_totals', $subscription, $include_item_removal_links, $totals, $include_switch_links ); ?>

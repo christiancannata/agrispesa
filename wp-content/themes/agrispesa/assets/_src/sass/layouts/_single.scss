@@ -34,7 +34,7 @@
 		h1 {
 			@include font-size(32);
 			font-weight: 900;
-			font-family: $font-title;
+			//font-family: $font-title;
 			line-height: 1;
 			@include breakpoint(desktop) {
 				@include font-size(45);

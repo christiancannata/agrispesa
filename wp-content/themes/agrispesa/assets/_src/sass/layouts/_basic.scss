@@ -52,6 +52,11 @@ p {
 	line-height: 1.2;
 }
 
+b,
+strong {
+	font-weight: 600 !important;
+}
+
 h1,
 h2,
 h3,
@@ -205,7 +210,6 @@ h6 {
 .woocommerce-NoticeGroup,
 .woocommerce-notices-wrapper {
 	//display: none;
-
 	.button {
 		display: none !important;
 	}
@@ -297,6 +301,7 @@ h6 {
 		margin: 4px 0;
 		overflow: hidden;
 		box-shadow: 0 0 5px 0 rgb(0 0 0 / 15%);
+
 		a {
 			display: none;
 		}

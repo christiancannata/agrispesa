@@ -300,6 +300,20 @@
 		}
 		display: block;
 		overflow: hidden;
+		position: relative;
+
+		.pawer-logo-badge {
+			position: absolute;
+			bottom: 16px;
+			left: 50%;
+			margin-left: -50px;
+			z-index: 2;
+			width: 100px;
+			height: auto;
+			svg {
+				fill: $white;
+			}
+		}
 
 		img {
 			@include transition(all 0.8s ease);
@@ -508,8 +522,8 @@
 
 	&--title {
 		@include font-size(28);
-		font-weight: 900;
-		font-family: $font-title;
+		font-weight: 600;
+		//font-family: $font-title;
 		line-height: 1;
 		margin-bottom: 16px;
 		@include breakpoint(container) {

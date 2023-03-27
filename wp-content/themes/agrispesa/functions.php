@@ -107,6 +107,7 @@ $ag_includes = array(
 	'/agrispesa.php',
 	'/post-produttori.php',
 	'/post-faq.php',
+	'/post-dog-ingredients.php',
 	'/box.php',
 	'/shop.php',
 	'/profile.php',
@@ -114,6 +115,7 @@ $ag_includes = array(
 	'/checkout.php',
 	'/admin-css.php',
 	'/orders.php',
+	'/denso.php',
 );
 
 foreach ($ag_includes as $file) {
