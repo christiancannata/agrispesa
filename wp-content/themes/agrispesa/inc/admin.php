@@ -757,6 +757,80 @@ $tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 	));
 
 
+	register_rest_route('agrispesa/v1', 'export-payments', array(
+		'methods' => 'GET',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$args = array(
+				'status' => array('wc-completed'),
+			);
+			$orders = wc_get_orders($args);
+
+
+			$doc = new DOMDocument();
+			$doc->formatOutput = true;
+
+			$root = $doc->createElement('ROOT');
+			$root = $doc->appendChild($root);
+
+			foreach ($orders as $order) {
+
+				$isSubscription = true;
+				foreach ($order->get_items() as $item_id => $item) {
+					$product = $item->get_product();
+
+					if (!$product->is_type('subscription') && !$product->is_type('subscription_variation')) {
+						$isSubscription = false;
+					}
+
+				}
+
+				if (!$isSubscription) {
+					continue;
+				}
+
+				$row = $doc->createElement('ROW');
+
+
+				$ele1 = $doc->createElement('id_payment');
+				$ele1->nodeValue = 10000 + $order->get_id();
+				$row->appendChild($ele1);
+
+				$ele1 = $doc->createElement('id_codeclient');
+				$ele1->nodeValue = 10000 + $order->get_customer_id();
+				$row->appendChild($ele1);
+
+				$ele1 = $doc->createElement('datein');
+				$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
+				$row->appendChild($ele1);
+
+				$ele1 = $doc->createElement('paymentbatchname');
+				$ele1->nodeValue = 'CREDITCARD';
+				$row->appendChild($ele1);
+
+				$ele1 = $doc->createElement('paymentinprogress');
+				$ele1->nodeValue = '0';
+				$row->appendChild($ele1);
+
+				$ele1 = $doc->createElement('amount');
+				$ele1->nodeValue = str_replace(".", ",", number_format($order->get_total(), 4));
+				$row->appendChild($ele1);
+
+				$root->appendChild($row);
+
+			}
+
+
+			header("Content-type: text/xml");
+			die($doc->saveXml());
+
+		}
+	));
+
+
 	register_rest_route('agrispesa/v1', 'products/(?P<product_id>\d+)/category', array(
 		'methods' => 'GET',
 		'permission_callback' => function () {
