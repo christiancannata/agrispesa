@@ -87,7 +87,8 @@ function calculate_delivery_date_order($id, $updateWeek = true)
 	$order_date = $order->get_date_paid();
 
 
-	if ($updateWeek) {
+	if($order_date){
+		if ($updateWeek) {
 		$week = $order_date->format("W");
 
 		if ($order->get_created_via() == 'checkout') {
@@ -105,6 +106,9 @@ function calculate_delivery_date_order($id, $updateWeek = true)
 
 	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
 	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
+
+	}
+
 
 }
 
@@ -250,6 +254,8 @@ add_action('rest_api_init', function () {
 	*/
 			$productIds = [];
 
+			$newProducts = [];
+
 			foreach ($activeProducts as $key => $product) {
 				$product = (array)$product;
 				$sku = (string)$product['id_product'];
@@ -267,7 +273,7 @@ add_action('rest_api_init', function () {
 					$productObj->set_sku($sku[0]);
 					$productObj->save();
 					$productId = $productObj->get_id();
-
+					$newProducts[] = $productObj;
 				}
 
 				$product['wordpress_id'] = $productId;
@@ -324,10 +330,6 @@ WHERE post_type = 'product';");
 
 			global $wpdb;
 
-			$wpdb->query("UPDATE wp_posts
-SET post_status = 'draft'
-WHERE post_type = 'product';");
-
 			$productsSku = [];
 
 			$week = null;
@@ -350,11 +352,42 @@ WHERE post_type = 'product';");
 
 			$importedPosts = $wpdb->get_results('SELECT post_id,meta_value FROM ' . $wpdb->postmeta . ' WHERE meta_key = "_navision_id" AND meta_value IN ("' . implode('","', $productsSku) . '")');
 
+
+			$wpdb->query("UPDATE wp_posts
+SET post_status = 'draft'
+WHERE post_type = 'product';");
+
 			$postIds = array_map(function ($post) {
 				return $post->post_id;
 			}, $importedPosts);
 
-			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) . ")");
+			$skuBoxSingole = array_keys($boxes);
+			$skuBoxSingole = array_map(function($box){
+				$id = explode("-",$box);
+				return $id[1];
+			},$skuBoxSingole);
+
+			foreach($skuBoxSingole as $sku){
+				$singleProductBox = new WP_Query([
+					'post_type' => 'product_variation',
+					'meta_key' => '_sku',
+					'meta_value' => $sku,
+					'order' => 'DESC',
+					'posts_per_page' => 1
+				]);
+
+				if($singleProductBox->have_posts()){
+					$singleProductBox = $singleProductBox->get_posts();
+					$postIds[] = $singleProductBox[0]->ID;
+					$postIds[] = $singleProductBox[0]->post_parent;
+				}
+
+			}
+
+			if (!empty($postIds)) {
+				$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) . ")");
+			}
+
 
 			$boxIds = [];
 
@@ -365,10 +398,41 @@ WHERE post_type = 'product';");
 				return $post->ID;
 			}, $boxIdsToDelete);
 
-			$wpdb->query("DELETE from wp_posts p WHERE p.ID IN (" . implode(",", $boxIdsToDelete) . ")");
+
+			if (!empty($boxIdsToDelete)) {
+				$wpdb->query("DELETE from wp_posts  WHERE ID IN (" . implode(",", $boxIdsToDelete) . ")");
+			}
+
+			$wpdb->query("DELETE pm
+FROM wp_postmeta pm
+LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
+WHERE wp.ID IS NULL");
+
 
 
 			foreach ($boxes as $idBox => $boxProducts) {
+
+
+				$navisionId = explode("-", $idBox);
+				$navisionId = end($navisionId);
+
+				$singleProductBox = new WP_Query(array(
+					'post_type' => 'product_variation',
+					'fields' => 'ids',
+					'meta_key' => '_sku',
+					'post_status' => 'publish',
+					'meta_value' => $navisionId,
+					'order' => 'DESC',
+					'posts_per_page' => 1
+				));
+
+				if (!$singleProductBox->have_posts()) {
+					continue;
+				}
+
+				$singleProductBox = $singleProductBox->get_posts();
+				$singleProductBox = reset($singleProductBox);
+
 
 				$post_id = wp_insert_post(array(
 					'post_type' => 'weekly-box',
@@ -381,28 +445,40 @@ WHERE post_type = 'product';");
 
 				if ($post_id) {
 					// insert post meta
-					add_post_meta($post_id, '_week', date('Y') . '_' . $week);
-					//	add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
-					//	add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
+
+					$deliveryDate = (string)$boxProducts[0]['requesteddeliverydate'];
+					$deliveryDate = DateTime::createFromFormat('dmY', $deliveryDate);
+
+					update_post_meta($post_id, '_week', date('Y') . '_' . $week);
+					update_post_meta($post_id, '_data_consegna', $deliveryDate->format("Y-m-d"));
+					update_post_meta($post_id, '_product_box_id', $singleProductBox);
+					update_post_meta($post_id, '_navision_id', (string)$boxProducts[0]['offer_no']);
 
 					$arrayProducts = [];
 
-					$postIds = $wpdb->get_results('SELECT post_id FROM ' . $wpdb->postmeta . ' WHERE meta_key = "_navision_id" AND meta_value IN ("' . implode('","', $productsSku) . '")');
-
 					foreach ($boxProducts as $boxProduct) {
-						$foundImportedProduct = array_filter($importedPosts, function ($product) use ($boxProduct) {
-							return $product->meta_value == $boxProduct['id_product'];
-						});
 
-						if (empty($foundImportedProduct)) {
+						$singleProduct = new WP_Query(array(
+							'post_type' => 'product',
+							'meta_key' => '_navision_id',
+							'meta_value' => $boxProduct['id_product'],
+							'order' => 'ASC',
+							'posts_per_page' => 1
+						));
+
+
+						if (!$singleProduct->have_posts()) {
 							continue;
 						}
 
-						$foundImportedProduct = reset($foundImportedProduct)->post_id;
+						$singleProduct = $singleProduct->get_posts();
+						$singleProduct = reset($singleProduct);
 
 						$arrayProducts[] = [
-							'id' => $foundImportedProduct,
-							'quantity' => 1
+							'id' => $singleProduct->ID,
+							'quantity' => 1,
+							'name' => $singleProduct->post_title,
+							'offer_line_no' => (string)$boxProduct['offer_line_no']
 						];
 					}
 
@@ -613,6 +689,12 @@ WHERE post_type = 'product';");
 			$customers = [];
 			foreach ($orders as $order) {
 
+				$navisionId = get_post_meta($order->get_id(),'_box_navision_id',true);
+
+				if(!$navisionId){
+					continue;
+				}
+
 				foreach ($order->get_items() as $item_id => $item) {
 
 					$product = $item->get_product();
@@ -690,61 +772,20 @@ WHERE post_type = 'product';");
 					$row->appendChild($ele2);
 
 
-					/*	$navisionId = get_post_meta($productBox->get_id(),'_navision_id',true);
-						if(empty($navisionId)){
-							$navisionId = [''];
-						}*/
+
 
 					$ele2 = $doc->createElement('ref_offer_no');
-					$ele2->nodeValue = '2312-FNG';
+					$ele2->nodeValue = $navisionId;
 					$row->appendChild($ele2);
+
 
 					$ele2 = $doc->createElement('ref_offer_line_no');
-					$ele2->nodeValue = '25000';
+					$ele2->nodeValue = $item->get_meta('offer_line_no');
 					$row->appendChild($ele2);
-
 
 					$root->appendChild($row);
 
 				}
-				/*$isSubscription = get_post_meta($order->get_id(),'_subscription_id',true);
-				if(!$isSubscription){
-					continue;
-				}
-
-
-				if(in_array($order->get_customer_id(),$customers)){
-					continue;
-				}
-
-				$customers[] = $order->get_customer_id();
-
-				$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
-
-				if(count($subscriptions) == 0){
-					continue;
-				}
-
-				$subscription = end($subscriptions);
-
-				$products = $subscription->get_items();
-
-if (empty($products)) {
-	continue;
-}
-
-$box = reset($products)->get_product();
-
-if (!$box) {
-	continue;
-}
-
-$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
-				$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
-
-
-				$productBox = get_single_box_from_attributes($tipologia, $dimensione);
-*/
 
 
 			}
@@ -1145,6 +1186,7 @@ $tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
 				$products = $subscription->get_items();
 
 				$productsToAdd = get_products_to_add_from_subscription($subscription);
+
 
 				$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
 				if (empty($boxPreferences)) {
@@ -1554,14 +1596,13 @@ if (!function_exists('mv_add_other_fields_for_packaging')) {
 }
 function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
 {
-	$box = get_box_from_subscription($subscription, $week);
+	$box = get_box_from_subscription($subscription);
 
 	if (!$box) {
 		return [];
 	}
 
 	$productsToAdd = get_post_meta($box->ID, '_products', true);
-
 	if ($overrideProducts) {
 		//check preferences
 		$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
@@ -1626,7 +1667,6 @@ function get_products_to_add_from_subscription($subscription, $week = null, $ove
 
 	}
 
-
 	return $productsToAdd;
 }
 
@@ -1635,7 +1675,7 @@ function get_box_from_subscription($subscription, $week = null)
 
 	if (!$week) {
 		$date = new DateTime();
-		$date->modify('+1 week');
+	//	$date->modify('+1 week');
 		$week = $date->format("W");
 	}
 
@@ -1669,6 +1709,7 @@ function get_box_from_subscription($subscription, $week = null)
 
 function get_weekly_box_from_box($id, $week)
 {
+
 	$box = get_posts([
 		'post_type' => 'weekly-box',
 		'post_status' => 'publish',
@@ -1677,7 +1718,7 @@ function get_weekly_box_from_box($id, $week)
 			'relation' => 'and',
 			[
 				'key' => '_week',
-				'value' => $week,
+				'value' => date('Y').'_'.$week,
 				'compare' => '='
 			],
 			[
@@ -1708,7 +1749,7 @@ function send_email_produttori($week)
 function generate_fabbisogno()
 {
 	$date = new DateTime();
-	$date->modify('+1 week');
+	//$date->modify('+1 week');
 	$week = $date->format("W");
 	//dd($week);
 
@@ -1852,6 +1893,7 @@ function create_order_from_subscription($id)
 
 	$week = get_post_meta($box->ID, '_week', true);
 	$consegna = get_post_meta($box->ID, '_data_consegna', true);
+	$boxNavisionId = get_post_meta($box->ID, '_navision_id', true);
 
 	$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 
@@ -1860,7 +1902,6 @@ function create_order_from_subscription($id)
 	$order = wc_create_order();
 	$order->set_customer_id($customerId);
 
-
 	foreach ($productsToAdd as $productToAdd) {
 		$productObjToAdd = wc_get_product($productToAdd['id']);
 
@@ -1868,7 +1909,8 @@ function create_order_from_subscription($id)
 			//Non ho più disponibilità
 		}
 
-		$order->add_product($productObjToAdd, $productToAdd['quantity']);
+		$itemId = $order->add_product($productObjToAdd, $productToAdd['quantity']);
+		wc_add_order_item_meta($itemId,'offer_line_no',$productToAdd['offer_line_no']);
 	}
 
 	// The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
@@ -1917,11 +1959,13 @@ function create_order_from_subscription($id)
 
 	update_post_meta($order->get_id(), '_total_box_weight', $weight);
 	update_post_meta($order->get_id(), '_week', $week);
+	update_post_meta($order->get_id(), '_box_navision_id', $boxNavisionId);
 
+	/*
 	if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
 		$order->get_date_paid()->add(new DateInterval('P7D'));
 	}
-
+*/
 
 	update_post_meta($order->get_id(), '_data_consegna', $consegna);
 	update_post_meta($order->get_id(), '_order_type', 'FN');
@@ -1972,7 +2016,6 @@ function get_single_box_from_attributes($tipologia, $dimensione)
 	));
 
 	$productFound = false;
-
 	foreach ($products as $product) {
 		$product = wc_get_product($product->ID);
 		$children = $product->get_children();
@@ -2048,7 +2091,7 @@ function my_custom_submenu_page_callback()
 
 
 	$date = new DateTime();
-	$date->modify('+1 week');
+	//$date->modify('+1 week');
 	$week = $date->format("W");
 
 	if (isset($_POST['generate_orders'])) {
@@ -2212,8 +2255,8 @@ function my_custom_submenu_page_callback()
 									'relation' => 'AND',
 									[
 										'key' => '_week',
-										'value' => $week,
-										'compare' => '>='
+										'value' => date('Y')."_".$week,
+										'compare' => '='
 									],
 									[
 										'key' => '_subscription_id',
@@ -2302,7 +2345,7 @@ function my_custom_submenu_page_callback()
 
 					<button type="submit" class="button-primary">Genera Ordini</button>
 				</form>
-
+<!--
 				<br>
 				<br>
 				<br>
@@ -2436,7 +2479,7 @@ function my_custom_submenu_page_callback()
 
 
 				<?php endif; ?>
-
+-->
 				<br/>
 
 			</div>
@@ -3152,7 +3195,7 @@ function consegne_ordini_pages()
 						Box Settimanali</h1>
 
 					<hr class="wp-header-end">
-
+<!--
 					<p v-text="message"></p>
 
 					<p style="font-size:16px;margin-bottom:24px;">Qui puoi preparare le offerte della settimana.</p>
@@ -3164,7 +3207,7 @@ function consegne_ordini_pages()
 							<?php
 							//new current week (= next week)
 							$date = new DateTime();
-							$date->modify('+1 week');
+							//$date->modify('+1 week');
 							$currentWeek = $date->format("W");
 							?>
 
@@ -3521,7 +3564,7 @@ function consegne_ordini_pages()
 					</button>
 
 				</div>
-
+-->
 
 				<form id="comments-form" method="POST"
 					  action="" style="margin-top:100px;width:100%;">
@@ -4058,7 +4101,7 @@ function consegne_ordini_pages()
 								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana
 									n°</label>
 								<?php $date = new DateTime();
-								$date->modify('+1 week');
+							//	$date->modify('+1 week');
 								$currentWeek = $date->format("W"); ?>
 								<input class="change_week_print" name="week_print" id="week_print"
 									   value="<?php echo $currentWeek; ?>"
@@ -4159,7 +4202,7 @@ function consegne_ordini_pages()
 										style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
 									<?php
 									$date = new DateTime();
-									$date->modify('+1 week');
+							//		$date->modify('+1 week');
 									$currentWeek = $date->format("W");
 									$allSettimaneFabbisogno = $wpdb->get_results("select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value");
 									$allSettimaneFabbisogno = array_map(function ($tmp) {
@@ -4299,7 +4342,7 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 			}, $allDataConsegna);
 
 			$date = new DateTime();
-			$date->modify('+1 week');
+		//	$date->modify('+1 week');
 			$currentWeek = $date->format("W");
 
 			// $dt = new DateTime();

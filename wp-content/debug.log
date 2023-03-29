@@ -7669,3 +7669,133 @@ Stack trace:
 [29-Mar-2023 13:22:26 UTC] PHP Notice:  Undefined index: _cloudways_dog_name_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 316
 [29-Mar-2023 13:22:32 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
 				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[29-Mar-2023 14:03:10 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'p WHERE p.ID IN (26083)' at line 1 for query DELETE from wp_posts p WHERE p.ID IN (26083) made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}
+[29-Mar-2023 14:05:29 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1 for query DELETE from wp_posts  WHERE ID IN () made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}
+[29-Mar-2023 14:06:06 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1 for query DELETE from wp_posts  WHERE ID IN () made by require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:11:35 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4261
+[29-Mar-2023 14:13:29 UTC] PHP Notice:  Undefined variable: idBox in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 382
+[29-Mar-2023 14:13:29 UTC] PHP Warning:  array_values() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 382
+[29-Mar-2023 14:16:23 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[29-Mar-2023 14:16:23 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[29-Mar-2023 14:57:39 UTC] PHP Parse error:  syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 418
+[29-Mar-2023 14:57:39 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[29-Mar-2023 14:57:39 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
+[29-Mar-2023 14:57:40 UTC] PHP Parse error:  syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 418
+[29-Mar-2023 14:58:29 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:58:29 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:58:30 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:58:30 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:423) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1752
+[29-Mar-2023 14:59:23 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:59:23 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:59:24 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 423
+[29-Mar-2023 14:59:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:423) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1752
+[29-Mar-2023 15:00:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 424
+[29-Mar-2023 15:00:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 424
+[29-Mar-2023 15:00:10 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 424
+[29-Mar-2023 15:00:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:424) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1752
+[29-Mar-2023 15:01:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:01:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:23 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:23 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:23 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:23 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:27 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:31 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:31 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:31 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:02:31 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:13 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:13 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:13 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:13 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:22 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:22 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:03:22 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:20 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:24 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:29 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:29 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:29 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:29 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:40 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:40 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:40 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:40 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:44 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:44 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:44 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:05:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3679
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:28:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4299
+[29-Mar-2023 15:34:05 UTC] PHP Parse error:  syntax error, unexpected '$box' (T_VARIABLE) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1744
+[29-Mar-2023 15:37:37 UTC] PHP Fatal error:  Uncaught Error: Call to a member function format() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1992
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(2127): create_order_from_subscription('25865')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_g...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1992
+[29-Mar-2023 15:44:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function format() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:106
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(2029): calculate_delivery_date_order(26111, false)
+#1 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(2131): create_order_from_subscription('25857')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_g...')
+#6 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 106
+[29-Mar-2023 15:46:02 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[29-Mar-2023 16:02:29 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[29-Mar-2023 16:14:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
