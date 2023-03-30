@@ -486,7 +486,7 @@ function partita_iva_order_meta( $order_id ) {
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'codice_fiscale_order_meta_admin', 10, 1 );
 
 function codice_fiscale_order_meta_admin($order){
-	echo '<p><strong>'.__('Codice Fiscale').':</strong> ' . get_post_meta( $order->id, 'Codice Fiscale', true ) . '</p>';
+	echo '<p><strong>'.__('Codice Fiscale').':</strong> ' . get_post_meta( $order->get_id(), 'Codice Fiscale', true ) . '</p>';
 }
 
 //inserisco il codice fiscale nella mail dell'ordine
@@ -501,7 +501,7 @@ function my_custom_fiscale_order_meta_keys( $keys ) {
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'partita_iva_order_meta_admin', 10, 1 );
 
 function partita_iva_order_meta_admin($order){
-	echo '<p><strong>'.__('Partita Iva').':</strong> ' . get_post_meta( $order->id, 'Partita Iva', true ) . '</p>';
+	echo '<p><strong>'.__('Partita Iva').':</strong> ' . get_post_meta( $order->get_id(), 'Partita Iva', true ) . '</p>';
 }
 
 //inserisco la partita iva nella mail dell'ordine
