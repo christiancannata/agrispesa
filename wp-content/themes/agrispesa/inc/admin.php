@@ -222,6 +222,11 @@ function woocommerce_product_custom_fields_save1($post_id)
 
 }
 
+function wpse27856_set_content_type(){
+    return "text/html";
+}
+add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+
 add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save1');
 
 
@@ -252,7 +257,7 @@ add_action('rest_api_init', function () {
 	SET post_status = 'draft'
 	WHERE post_type = 'product';");
 	*/
-			$productIds = [];
+			//$productIds = [];
 
 			$newProducts = [];
 
@@ -277,7 +282,7 @@ add_action('rest_api_init', function () {
 				}
 
 				$product['wordpress_id'] = $productId;
-				$productIds[] = $productId;
+				//$productIds[] = $productId;
 				/*
 				$product = new WC_Product($productId);
 				$product->set_status('publish');
@@ -287,7 +292,7 @@ add_action('rest_api_init', function () {
 			}
 
 			//Attivo i prodotti
-			$productIds = array_unique($productIds);
+		//	$productIds = array_unique($productIds);
 			//$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
 
 			foreach ($activeProducts as $product) {
@@ -301,9 +306,34 @@ add_action('rest_api_init', function () {
 
 			}
 
+			 $args = array(
+    'post_status' => 'publish',
+             'fields' => 'ids',
+    'tax_query' => array(
+       array(
+         'taxonomy' => 'product_cat',
+         'field'    => 'term_id',
+         'terms'     =>  [907,877],
+         'operator'  => 'IN',
+         )
+       )
+    );
+$productsToExclude = new WP_Query( $args );
+$idsToExclude = $productsToExclude->get_posts();
 			$wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
-WHERE post_type = 'product';");
+WHERE post_type = 'product' AND ID NOT IN (".implode(",",$idsToExclude).")");
+
+			if(count($newProducts) > 0){
+
+				$list = '<ul>';
+				foreach($newProducts as $product){
+					$list.='<li><a href="https://agrispesa.it/wp-admin/post.php?post='.$product->get_id().'&action=edit">'.$product->get_name().'</a></li>';
+				}
+				$list .= '</ul>';
+
+				wp_mail( 'agrispesa@agrispesa.it', count($newProducts).' nuovi prodotti', 'Ecco la lista dei nuovi prodotti inseriti: <br><br>'.$list);
+			}
 
 			$response = new WP_REST_Response([]);
 			$response->set_status(204);
@@ -568,7 +598,7 @@ WHERE wp.ID IS NULL");
 				$row->appendChild($ele1);
 
 				$ele2 = $doc->createElement('business_name');
-				$ele2->nodeValue = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+				$ele2->nodeValue = $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name();
 				$row->appendChild($ele2);
 
 				$taxCode = get_post_meta($order->get_id, '_codice_fiscale', true);
@@ -641,7 +671,7 @@ WHERE wp.ID IS NULL");
 					$navisionId = [''];
 				}
 				$ele2 = $doc->createElement('codiceabbonamento');
-				$ele2->nodeValue = $navisionId[0];
+				$ele2->nodeValue = 'ABSP-'.$navisionId[0];
 				$row->appendChild($ele2);
 
 				$startDate = $subscription->get_date('start');

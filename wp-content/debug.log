@@ -7799,3 +7799,35 @@ Stack trace:
 				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
 [29-Mar-2023 16:14:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
 				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[30-Mar-2023 19:12:30 UTC] PHP Notice:  Undefined index: order_actions in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2602
+[30-Mar-2023 19:13:18 UTC] PHP Notice:  Undefined index: order_actions in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2602
+[30-Mar-2023 19:13:42 UTC] get_id was called incorrectly. Order properties should not be accessed directly. Backtrace: require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong. This message was added in version 3.0.
+[30-Mar-2023 19:13:48 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[30-Mar-2023 19:14:14 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[30-Mar-2023 19:14:14 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[30-Mar-2023 19:14:14 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[30-Mar-2023 19:14:15 UTC] PHP Notice:  Undefined index: _cloudways_piano_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 314
+[30-Mar-2023 19:14:15 UTC] PHP Notice:  Undefined index: _cloudways_scala_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 315
+[30-Mar-2023 19:14:15 UTC] PHP Notice:  Undefined index: _cloudways_dog_name_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 316
+[30-Mar-2023 19:14:19 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[30-Mar-2023 19:14:32 UTC] get_id was called incorrectly. Order properties should not be accessed directly. Backtrace: require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong. This message was added in version 3.0.
+[30-Mar-2023 19:15:40 UTC] get_id was called incorrectly. Order properties should not be accessed directly. Backtrace: require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong. This message was added in version 3.0.
+[30-Mar-2023 19:27:15 UTC] get_id was called incorrectly. Order properties should not be accessed directly. Backtrace: require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong. This message was added in version 3.0.
+[30-Mar-2023 19:37:23 UTC] PHP Notice:  Undefined index: order_actions in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2602
+[30-Mar-2023 19:37:40 UTC] PHP Notice:  Undefined index: order_actions in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2602
+[30-Mar-2023 19:41:05 UTC] PHP Notice:  Undefined index: order_actions in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2602
+[30-Mar-2023 20:06:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function wp_query() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:320
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/i...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/i...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('pars in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 320
+[30-Mar-2023 20:13:08 UTC] PHP Parse error:  syntax error, unexpected '.' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 331
+[30-Mar-2023 20:13:08 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 372
+[30-Mar-2023 20:13:08 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 373
