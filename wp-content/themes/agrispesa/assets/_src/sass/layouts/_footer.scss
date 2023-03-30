@@ -144,6 +144,17 @@
 
 				margin: 16px 0 24px;
 			}
+			&.big-title {
+					@include breakpoint(desktop) {
+
+						@include font-size(32);
+						font-weight: 900;
+						margin-bottom: 16px;
+						&:after {
+							content: none;
+						}
+					}
+			}
 
 			&:after {
 				content: '';
@@ -280,7 +291,7 @@
 
 		&--flex {
 			margin-top: 16px !important;
-			
+
 		}
 	}
 }

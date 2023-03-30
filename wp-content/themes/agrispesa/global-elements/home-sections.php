@@ -93,103 +93,157 @@ if( have_rows('agr_sections') ):
 <?php if($type == 'wide'): ?>
     <?php if($align): ?>
 
-    <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
-      <div class="agr-section--wide" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
-      <div class="agr-section--wide--flex">
-        <div class="agr-section--image">
-          <?php if($mini_image): ?>
-            <img src="<?php echo $mini_image; ?>" class="mini-img" alt="<?php echo strip_tags($title); ?>" />
+    <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+      <div class="wb-section--wide wb-section--container" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>;  background-image:url(<?php echo $image; ?>)">
+    		<div class="wb-section--content--sx">
+          <?php if($title): ?>
+    			     <h3 class="wb-section--content--title"><?php echo $title; ?></h3>
           <?php endif;?>
-          <img src="<?php echo $image; ?>" class="main-img rounded" alt="<?php echo strip_tags($title); ?>" />
-        </div>
-      <div class="agr-section--text">
-        <div class="agr-section--text--content">
-          <div class="agr-section--title"><?php echo $title; ?></div>
-          <div class="agr-section--subtitle"><?php echo $text; ?></div>
           <?php if($show_buttons): ?>
-            <?php if($iscategory): ?>
-              <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php else: ?>
-              <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php endif;?>
+            <div class="wb-section--content--buttons">
+              <?php if($iscategory): ?>
+                <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+              <?php else: ?>
+                <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+              <?php endif;?>
+            </div>
           <?php endif;?>
-        </div>
-      </div>
-      </div>
-      </div>
-    </section>
+    		</div>
+    		<div class="wb-section--content--dx" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+          <?php if($text): ?>
+      			<div class="wb-section--content--descr wide">
+      				<?php echo $text; ?>
+      			</div>
+          <?php endif;?>
+    		</div>
+  		</div>
+  	</section>
+
     <?php else: ?>
-      <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
-        <div class="agr-section--wide" style="background-color:<?php echo $background;?>; color:<?php echo $text_color;?>">
-        <div class="agr-section--wide--flex">
-          <div class="agr-section--text">
-            <div class="agr-section--text--content">
-              <div class="agr-section--title"><?php echo $title; ?></div>
-              <div class="agr-section--subtitle"><?php echo $text; ?></div>
-              <?php if($show_buttons): ?>
+      <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+        <div class="wb-section--wide wb-section--container" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>;  background-image:url(<?php echo $image; ?>)">
+          <div class="wb-section--content--dx" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+            <?php if($text): ?>
+        			<div class="wb-section--content--descr wide">
+        				<?php echo $text; ?>
+        			</div>
+            <?php endif;?>
+      		</div>
+          <div class="wb-section--content--sx">
+            <?php if($title): ?>
+      			     <h3 class="wb-section--content--title"><?php echo $title; ?></h3>
+            <?php endif;?>
+            <?php if($show_buttons): ?>
+              <div class="wb-section--content--buttons">
                 <?php if($iscategory): ?>
                   <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
                 <?php else: ?>
                   <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
                 <?php endif;?>
-              <?php endif;?>
-            </div>
-          </div>
-          <div class="agr-section--image">
-            <?php if($mini_image): ?>
-              <img src="<?php echo $mini_image; ?>" class="mini-img" alt="<?php echo strip_tags($title); ?>" />
+              </div>
             <?php endif;?>
-            <div class="img-bg" style="background-image:url(<?php echo $image; ?>);"></div>
-          </div>
-        </div>
-        </div>
-      </section>
+      		</div>
+
+    		</div>
+    	</section>
     <?php endif; ?>
 <?php elseif($type == 'columns'): ?>
 
   <?php if($small_columns):?>
     <?php if($align): ?>
-      <div class="how-works-page--item">
-  			<div class="how-works-page--item--img" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-          <div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
-  			</div>
-  			<div class="how-works-page--item--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
-  				<div class="how-works-page--title">
-            <?php echo $title; ?>
+
+      <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+        <div class="wb-section--container">
+          <div class="wb-section--content">
+            <div class="wb-section--content--flex">
+              <div class="wb-section--content--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
+                <div class="wb-section--content--top">
+                  <?php if($title): ?>
+                  <div class="wb-section--content--title"><?php echo $title; ?></div>
+                  <?php endif;?>
+                  <?php if($text): ?>
+                  <div class="wb-section--content--descr wide">
+                    <?php echo $text; ?>
+                  </div>
+                  <?php endif;?>
+                  <?php if($show_buttons): ?>
+                    <div class="wb-section--content--buttons">
+                      <?php if($iscategory): ?>
+                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                      <?php else: ?>
+                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                      <?php endif;?>
+                    </div>
+                  <?php endif;?>
+                </div>
+                <?php if($mini_image):?>
+                  <div class="wb-section--content--bottom">
+                    <img class="wb-section--content--image" src="<?php echo $mini_image; ?>" alt="<?php echo esc_attr($title); ?>" />
+                  </div>
+                <?php endif;?>
+              </div>
+              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+                <?php if($video_file): ?>
+                  <video autoplay muted loop>
+                    <source src="<?php echo $video_file; ?>" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                <?php else: ?>
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo esc_attr($title); ?>" />
+                <?php endif;?>
+              </div>
+            </div>
           </div>
-  				<div class="how-works-page--description">
-            <?php echo $text; ?>
-          </div>
-          <?php if($show_buttons): ?>
-            <?php if($iscategory): ?>
-              <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php else: ?>
-              <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php endif;?>
-          <?php endif;?>
-  			</div>
-  		</div>
+        </div>
+      </section>
+
     <?php else: ?>
-      <div class="how-works-page--item">
-  			<div class="how-works-page--item--text" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-          <div class="how-works-page--title">
-            <?php echo $title; ?>
+
+      <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+        <div class="wb-section--container">
+          <div class="wb-section--content">
+            <div class="wb-section--content--flex">
+              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+                <?php if($video_file): ?>
+                  <video autoplay muted loop>
+                    <source src="<?php echo $video_file; ?>" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                <?php else: ?>
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo esc_attr($title); ?>" />
+                <?php endif;?>
+              </div>
+              <div class="wb-section--content--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
+                <div class="wb-section--content--top">
+                  <?php if($title): ?>
+                  <div class="wb-section--content--title"><?php echo $title; ?></div>
+                  <?php endif;?>
+                  <?php if($text): ?>
+                  <div class="wb-section--content--descr wide">
+                    <?php echo $text; ?>
+                  </div>
+                  <?php endif;?>
+                  <?php if($show_buttons): ?>
+                    <div class="wb-section--content--buttons">
+                      <?php if($iscategory): ?>
+                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                      <?php else: ?>
+                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                      <?php endif;?>
+                    </div>
+                  <?php endif;?>
+                </div>
+                <?php if($mini_image):?>
+                  <div class="wb-section--content--bottom">
+                    <img class="wb-section--content--image" src="<?php echo $mini_image; ?>" alt="<?php echo esc_attr($title); ?>" />
+                  </div>
+                <?php endif;?>
+              </div>
+
+            </div>
           </div>
-  				<div class="how-works-page--description">
-            <?php echo $text; ?>
-          </div>
-          <?php if($show_buttons): ?>
-            <?php if($iscategory): ?>
-              <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php else: ?>
-              <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-            <?php endif;?>
-          <?php endif;?>
-  			</div>
-  			<div class="how-works-page--item--img" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
-  				<div class="img-bg-column" style="background-image:url(<?php echo $image; ?>);"></div>
-  			</div>
-  		</div>
+        </div>
+      </section>
     <?php endif; ?>
 
   <?php elseif($no_images):?>

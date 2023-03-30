@@ -1,0 +1,218 @@
+/* stylelint-disable */
+.wb-section {
+	&--container {
+		@include container();
+	}
+	&.color-white {
+		color: $white;
+	}
+}
+
+.wb-section--content {
+	&--flex {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	&--dx {
+		width: 50%;
+		padding: 24px 32px;
+		text-align: right;
+		@include breakpoint(mobile) {
+			width: 100%;
+		}
+	}
+
+	&--sx {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		@include breakpoint(desktop) {
+			width: 50%;
+			padding: 24px 100px;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px;
+		}
+		@include breakpoint(mobile) {
+			padding: 0;
+		}
+	}
+
+	&--buttons {
+		margin-top: 40px;
+		@include breakpoint(desktop) {
+			margin-top: 60px;
+		}
+		&--flex {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+	}
+	&--price {
+		margin-right: 24px;
+		.woocommerce-Price {
+			font-weight: 400;
+
+			&-amount {
+				font-weight: 400;
+				@include font-size(40);
+			}
+
+			&-currencySymbol {
+				@include font-size(24);
+			}
+		}
+	}
+
+
+	&--bottom {
+		@include breakpoint(desktop) {
+			text-align: right;
+		}
+	}
+
+	&--image {
+		@include border-radius(24px);
+		margin: 32px auto 0;
+		display: block;
+		@include breakpoint(desktop) {
+			width: 300px;
+			display: inline-block;
+		}
+
+		&.sticky {
+			position: sticky;
+			top: 90px;
+			@include breakpoint(mobile) {
+				position: relative;
+				width: 200px;
+			}
+		}
+	}
+
+	&--descr {
+		@include font-size(18);
+		width: 100%;
+		display: inline-block;
+		margin-top: 32px;
+		text-align: left;
+		line-height: 1.4;
+		@include breakpoint(desktop) {
+			@include font-size(20);
+			width: 300px;
+
+			&.wide {
+				width: 100%;
+			}
+		}
+	}
+
+	&--minititle {
+		@include font-size(14);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		@include breakpoint(desktop) {
+			@include font-size(16);
+		}
+	}
+
+	&--title {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			@include font-size(42);
+			font-weight: 900;
+			line-height: 1;
+			@include breakpoint(desktop) {
+				@include font-size(80);
+			}
+			@include breakpoint(container) {
+				@include font-size(70);
+			}
+			@include breakpoint(mobile) {
+				@include font-size(42);
+			}
+		}
+		@include font-size(42);
+		font-weight: 900;
+		line-height: 1;
+		@include breakpoint(desktop) {
+			@include font-size(80);
+		}
+		@include breakpoint(container) {
+			@include font-size(70);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(42);
+		}
+	}
+
+	video {
+		@include border-radius(24px);
+		width: 100%;
+		height: auto;
+		display: block;
+		@include breakpoint(mobile) {
+			display: none;
+		}
+	}
+}
+
+.wb-section--wide {
+	@include full-bg();
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	position: relative;
+
+	&:after {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: rgba(0,0,0,0.3);
+		z-index: 1;
+	}
+
+	.wb-section--content--sx {
+		position: relative;
+		z-index: 2;
+		@include breakpoint(desktop) {
+			width: 50%;
+			padding: 24px 100px 300px;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px 250px;
+		}
+		@include breakpoint(mobile) {
+			padding: 0;
+		}
+	}
+
+	.wb-section--content--dx {
+		position: relative;
+		z-index: 2;
+		@include breakpoint(desktop) {
+			width: 40%;
+			padding: 24px 100px 0;
+			display: flex;
+			align-items: flex-end;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px 0;
+		}
+		@include breakpoint(mobile) {
+			padding: 0;
+		}
+	}
+}

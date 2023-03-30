@@ -1,4 +1,7 @@
-*** WooCommerce Payments Changelog ***
+*** WooCommerce Payments Changelog *** 
+
+= 5.5.2 - 2023-03-23 =
+* Update - Security update.
 
 = 5.5.1 - 2023-03-01 =
 * Add - When enabling WooPay, if legacy UPE is enabled, upgrades feature flag to split UPE instead.

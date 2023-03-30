@@ -657,7 +657,7 @@ msgstr "Espai superior del contenidor"
 
 # wpml-name: 7730444859567293bc7dca285243bfea
 #: includes/class-kadence-woomail-settings.php:1076
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr "Espai inferior del contenidor"
 
 # wpml-name: e7809587c69a98dbf9ffe3d656e4e72a

@@ -216,6 +216,7 @@ function cloudways_custom_checkout_fields($fields){
     return $fields;
 }
 add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
+
 function cloudways_extra_checkout_fields(){
     $checkout = WC()->checkout(); ?>
 		<div id="shipping-custom-fields" class="woocommerce-border-form w-bottom">
@@ -386,3 +387,219 @@ class WPDeskNoShippingMessage {
 }
 
 ( new WPDeskNoShippingMessage() )->add_hooks();
+
+
+
+// Display Billing cellulare field to checkout and My account addresses
+add_filter( 'woocommerce_billing_fields', 'display_cellulare_billing_field', 20, 1 );
+function display_cellulare_billing_field($billing_fields) {
+
+    $billing_fields['billing_cellulare'] = array(
+        'type'        => 'text',
+        'label'       => __('Cellulare'),
+        'class'       => array('form-row-wide'),
+        'priority'    => 25,
+        'required'    => false,
+        'clear'       => true,
+				'priority'    => 101
+    );
+    return $billing_fields;
+}
+
+// Save Billing cellulare field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_billing_cellulare_field', 10, 2 );
+function save_account_billing_cellulare_field( $customer, $data ){
+    if ( isset($_POST['billing_cellulare']) && ! empty($_POST['billing_cellulare']) ) {
+         $customer->update_meta_data( 'billing_cellulare', sanitize_text_field($_POST['billing_cellulare']) );
+    }
+}
+
+// Admin orders Billing cellulare editable field and display
+add_filter('woocommerce_admin_billing_fields', 'admin_order_billing_cellulare_editable_field');
+function admin_order_billing_cellulare_editable_field( $fields ) {
+    $fields['cellulare'] = array( 'label' => __('Cellulare', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add Billing cellulare editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_billing_cellulare_field');
+function wordpress_user_account_billing_cellulare_field( $fields ) {
+    $fields['billing']['fields']['billing_cellulare'] = array(
+        'label'       => __('Cellulare', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
+
+
+//creo il campo codice fiscale
+add_filter( 'woocommerce_checkout_fields' , 'codice_fiscale' );
+
+function codice_fiscale( $fields ) {
+	$fields['billing']['codice_fiscale'] = array(
+	'label'     => __('Codice Fiscale', 'woocommerce'),
+	'placeholder'   => _x('Codice Fiscale', 'placeholder', 'woocommerce'),
+	'required'  => true,
+	'class'     => array('form-row'),
+	'clear'     => true,
+	'priority'  => 20
+	);
+
+	return $fields;
+}
+
+add_action( 'woocommerce_checkout_update_order_meta', 'codice_fiscale_order_meta' );
+
+function codice_fiscale_order_meta( $order_id ) {
+	if ( ! empty( $_POST['codice_fiscale'] ) ) {
+		update_post_meta( $order_id, 'Codice Fiscale', strtoupper( sanitize_text_field( $_POST['codice_fiscale'] ) ) );
+	}
+}
+
+
+// creo il campo partita iva
+add_filter( 'woocommerce_checkout_fields' , 'partita_iva' );
+
+function partita_iva( $fields ) {
+	$fields['billing']['partita_iva'] = array(
+	'label'     => __('Partita Iva', 'woocommerce'),
+	'placeholder'   => _x('Partita Iva', 'placeholder', 'woocommerce'),
+	'required'  => false,
+	'class'     => array('form-row'),
+	'clear'     => true,
+	'priority'  => 30
+	);
+
+	return $fields;
+}
+
+add_action( 'woocommerce_checkout_update_order_meta', 'partita_iva_order_meta' );
+
+function partita_iva_order_meta( $order_id ) {
+	if ( ! empty( $_POST['partita_iva'] ) ) {
+		update_post_meta( $order_id, 'Partita Iva', sanitize_text_field( $_POST['partita_iva'] ) );
+	}
+}
+
+//inserisco il codice fiscale nel back end
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'codice_fiscale_order_meta_admin', 10, 1 );
+
+function codice_fiscale_order_meta_admin($order){
+	echo '<p><strong>'.__('Codice Fiscale').':</strong> ' . get_post_meta( $order->id, 'Codice Fiscale', true ) . '</p>';
+}
+
+//inserisco il codice fiscale nella mail dell'ordine
+add_filter('woocommerce_email_order_meta_keys', 'my_custom_fiscale_order_meta_keys');
+
+function my_custom_fiscale_order_meta_keys( $keys ) {
+	$keys[] = 'Codice Fiscale';
+	return $keys;
+}
+
+//inserisco la partita iva nel back end
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'partita_iva_order_meta_admin', 10, 1 );
+
+function partita_iva_order_meta_admin($order){
+	echo '<p><strong>'.__('Partita Iva').':</strong> ' . get_post_meta( $order->id, 'Partita Iva', true ) . '</p>';
+}
+
+//inserisco la partita iva nella mail dell'ordine
+add_filter('woocommerce_email_order_meta_keys', 'my_custom_partita_iva_order_meta_keys');
+
+function my_custom_partita_iva_order_meta_keys( $keys ) {
+	$keys[] = 'Partita Iva';
+	return $keys;
+}
+
+
+// Imposto gli attributi in modo che vengano salvati nel profilo utente:
+function cf_checkout_update_user_meta( $customer_id, $posted ) {
+	if (isset($posted['partita_iva'])) {
+		$partita_iva = sanitize_text_field( $posted['partita_iva'] );
+		update_user_meta( $customer_id, 'partita_iva', $partita_iva);
+	}
+	if (isset($posted['codice_fiscale'])) {
+		$codice_fiscale = sanitize_text_field( $posted['codice_fiscale'] );
+		update_user_meta( $customer_id, 'codice_fiscale', $codice_fiscale);
+	}
+
+}
+add_action( 'woocommerce_checkout_update_user_meta', 'cf_checkout_update_user_meta', 10, 2 );
+
+//validazione del codice fiscale
+function required_cf_checkout_field_process() {
+	if ( $_POST['codice_fiscale'] && ! codiceFiscale($_POST['codice_fiscale'] ))
+		wc_add_notice( __( 'Devi inserire un codice fiscale valido per inoltrare l\'ordine.' ), 'error' );
+}
+
+/** controllo del codice fiscale **/
+function codiceFiscale($cf){
+
+	if($cf=='')
+		return false;
+
+	if(strlen($cf)!= 16)
+		return false;
+
+	$cf=strtoupper($cf);
+	if(!preg_match("/[A-Z0-9]+$/", $cf))
+		return false;
+
+	$s = 0;
+
+	for($i=1; $i<=13; $i+=2){
+		$c=$cf[$i];
+		if('0'<=$c and $c<='9')
+			$s+=ord($c)-ord('0');
+		else
+			$s+=ord($c)-ord('A');
+	}
+
+	for($i=0; $i<=14; $i+=2){
+		$c=$cf[$i];
+		switch($c){
+			case '0':  $s += 1;  break;
+			case '1':  $s += 0;  break;
+			case '2':  $s += 5;  break;
+			case '3':  $s += 7;  break;
+			case '4':  $s += 9;  break;
+			case '5':  $s += 13;  break;
+			case '6':  $s += 15;  break;
+			case '7':  $s += 17;  break;
+			case '8':  $s += 19;  break;
+			case '9':  $s += 21;  break;
+			case 'A':  $s += 1;  break;
+			case 'B':  $s += 0;  break;
+			case 'C':  $s += 5;  break;
+			case 'D':  $s += 7;  break;
+			case 'E':  $s += 9;  break;
+			case 'F':  $s += 13;  break;
+			case 'G':  $s += 15;  break;
+			case 'H':  $s += 17;  break;
+			case 'I':  $s += 19;  break;
+			case 'J':  $s += 21;  break;
+			case 'K':  $s += 2;  break;
+			case 'L':  $s += 4;  break;
+			case 'M':  $s += 18;  break;
+			case 'N':  $s += 20;  break;
+			case 'O':  $s += 11;  break;
+			case 'P':  $s += 3;  break;
+			case 'Q':  $s += 6;  break;
+			case 'R':  $s += 8;  break;
+			case 'S':  $s += 12;  break;
+			case 'T':  $s += 14;  break;
+			case 'U':  $s += 16;  break;
+			case 'V':  $s += 10;  break;
+			case 'W':  $s += 22;  break;
+			case 'X':  $s += 25;  break;
+			case 'Y':  $s += 24;  break;
+			case 'Z':  $s += 23;  break;
+		}
+	}
+
+	if( chr($s%26+ord('A'))!=$cf[15] )
+		return false;
+
+	return true;
+}

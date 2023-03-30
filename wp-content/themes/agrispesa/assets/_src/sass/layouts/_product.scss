@@ -897,7 +897,7 @@ body.tax-product_cat {
 		@include font-size(24);
 		display: block;
 		width: 100%;
-		line-height:1;
+		line-height: 1;
 
 		&.small {
 			@include font-size(30);
@@ -1124,5 +1124,227 @@ body.tax-product_cat {
 				}
 			}
 		}
+	}
+}
+
+.sos-numbers {
+	@include container();
+	background: $panna;
+
+	&--container {
+		@include border-radius(24px);
+		max-width: 990px;
+		margin: 0 auto;
+		background: rgba($white,0.3);
+		padding: 40px;
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+
+		.btn {
+			margin-top: 180px;
+		}
+
+		.icon-heart {
+			@include font-size(30);
+			position: absolute;
+			right: 36px;
+			top: 36px;
+			color: $orange;
+		}
+	}
+
+	&--top {
+		@include breakpoint(desktop) {
+			width: 40%;
+		}
+	}
+
+	&--bottom {
+		text-align: right;
+		@include breakpoint(desktop) {
+			width: 40%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+		}
+	}
+
+	&--title {
+		@include font-size(40);
+		font-weight: 900;
+		display: block;
+		line-height: 0.9;
+		margin-bottom: 24px;
+	}
+
+	&--subtitle {
+		@include font-size(18);
+		font-weight: 300;
+		display: block;
+	}
+
+	&--number {
+		@include font-size(190);
+		font-weight: 300;
+		display: block;
+		line-height: 1;
+	}
+
+	&--label {
+		@include font-size(16);
+		font-weight: 300;
+		display: block;
+	}
+}
+
+.agri-values {
+	@include full-bg();
+	position: relative;
+	padding: 120px 0 300px;
+	color: $panna;
+	@include breakpoint(mobile) {
+		padding: 42px 0;
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 900;
+		line-height: 1;
+		margin-bottom: 32px;
+		text-align: center;
+		@include breakpoint(desktop) {
+			@include font-size(42);
+		}
+		@include breakpoint(container) {
+			@include font-size(40);
+		}
+		@include breakpoint(mobile) {
+			@include font-size(32);
+			padding: 0 20px;
+		}
+	}
+
+	&--flex {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+		flex-wrap: wrap;
+	}
+
+	&--item {
+		max-width: 20%;
+		text-align: center;
+		padding: 24px 32px;
+		@include breakpoint(mobile) {
+			max-width: 100%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			text-align: left;
+			padding: 16px 20px;
+		}
+
+		&.big {
+			max-width: 33.333%;
+			padding: 24px 8px;
+
+			& > span {
+				@include font-size(50);
+				padding: 20px;
+				border-color: $black;
+			}
+		}
+
+		& > svg {
+			@include border-radius(50%);
+			@include font-size(90);
+			border: 8px solid $panna;
+			padding: 16px;
+			fill: $panna;
+			width: 100px;
+			margin: 0 auto;
+			display: block;
+		}
+	}
+
+	&--descr {
+		@include font-size(22);
+		font-weight: 600;
+		margin-top: 32px;
+		@include breakpoint(mobile) {
+			margin-top: 0;
+			margin-left: 16px;
+		}
+
+		span {
+			font-weight: 300;
+		}
+	}
+
+	&--button {
+		margin-top: 40px;
+		display: flex;
+		justify-content: center;
+	}
+
+	&--video {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		z-index: -1;
+	}
+}
+
+.box-types {
+	@include container();
+
+	&--flex {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&--item {
+		@include border-radius(24px);
+		@include full-bg();
+		width: 23%;
+		padding: 300px 32px 32px;
+		position: relative;
+		overflow: hidden;
+		color: $white;
+		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+
+		&:before {
+			content: '';
+			display: block;
+			background: rgba(0,0,0,0.3);
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+		// &.vegana {
+		// 	background: rgba($primary, 0.3);
+		// }
+		// &.vegetariana {
+		// 	background: rgba($primary, 0.6);
+		// }
+		// &.pescetariana {
+		// 	background: rgba($primary, 0.8);
+		// }
+		// &.onnivora {
+		// 	background: rgba($primary, 1);
+		// }
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 900;
+		position: relative;
+		z-index: 2;
 	}
 }

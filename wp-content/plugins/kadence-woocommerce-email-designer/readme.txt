@@ -4,8 +4,8 @@ Tags: woocommerce, mail, email, email template, email templates, email design, p
 Donate link: https://www.kadencewp.com/about-us/
 Requires PHP: 5.2.4
 Requires at least: 5.3
-Tested up to: 6.0
-Stable tag: 1.5.7
+Tested up to: 6.2
+Stable tag: 1.5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,19 @@ After you create your translations make sure to clear your server cache from any
 
 
 == Changelog ==
+
+= 1.5.10 =
+* Fix: style issue in customizer since 6.2
+
+= 1.5.9 =
+* Update: Tweak getting order meta for HPOS support.
+
+= 1.5.8 =
+* Add: Option to Disable additional content.
+* Add: Option to disable mobile messaging.
+* Update: Declare HPOS support.
+* Update: Template file version numbers.
+* Fix: Typo in settings.
 
 = 1.5.7 =
 * Fix: Possible issue with admin+ PHP objection injection in settings importer.

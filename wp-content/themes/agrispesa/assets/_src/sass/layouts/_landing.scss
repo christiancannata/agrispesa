@@ -1194,7 +1194,7 @@ body.page-template-page-password-php {
 		line-height: 1;
 		margin-top: -12px;
 		@include breakpoint(mobile) {
-		margin-top: -4px;
+			margin-top: -4px;
 		}
 	}
 
@@ -1205,11 +1205,10 @@ body.page-template-page-password-php {
 		letter-spacing: 3px;
 		margin-top: 8px;
 		@include breakpoint(mobile) {
-
-				@include font-size(9);
-				letter-spacing: 0.5px;
-				font-weight: 600;
-				margin-top: 0;
+			@include font-size(9);
+			letter-spacing: 0.5px;
+			font-weight: 600;
+			margin-top: 0;
 		}
 	}
 }
@@ -1407,6 +1406,47 @@ body.page-template-page-password-php {
 					@include font-size(24);
 				}
 			}
+		}
+	}
+}
+
+.landing-full {
+	@include full-bg();
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 0 20px;
+	@include breakpoint(desktop) {
+		padding: 120px 80px;
+	}
+	@include breakpoint(container) {
+		padding: 80px 60px;
+	}
+	@include breakpoint(mobile) {
+		padding: 32px 20px;
+	}
+
+	&--text-sx {
+		color: $white;
+		@include breakpoint(desktop) {
+			width: 50%;
+			padding: 24px 100px 400px;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px 350px;
+		}
+	}
+
+	&--text-dx {
+		color: $white;
+		@include breakpoint(desktop) {
+			width: 40%;
+			padding: 24px 100px 0;
+			display: flex;
+			align-items: flex-end;
+		}
+		@include breakpoint(container) {
+			padding: 24px 60px 0;
 		}
 	}
 }

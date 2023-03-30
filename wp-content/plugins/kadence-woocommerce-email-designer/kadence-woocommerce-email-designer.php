@@ -3,13 +3,13 @@
  * Plugin Name: Kadence WooCommerce Email Designer
  * Plugin URI: http://kadencewp.com/products/woocommerce-email-designer/
  * Description: Customize the default woocommerce email templates design and text through the native WordPress customizer. Preview emails and send test emails.
- * Version: 1.5.7
+ * Version: 1.5.10
  * Author: Kadence WP
  * Author URI: http://kadencewp.com/
  * License: GPLv2 or later
  * Text Domain: kadence-woocommerce-email-designer
  * WC requires at least: 5.6.0
- * WC tested up to: 6.8
+ * WC tested up to: 7.5
  *
  * @package Kadence Woocommerce Email Designer
  */
@@ -59,7 +59,7 @@ class Kadence_Woomail_Designer {
 
 		define( 'KT_WOOMAIL_PATH', realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
 		define( 'KT_WOOMAIL_URL', plugin_dir_url( __FILE__ ) );
-		define( 'KT_WOOMAIL_VERSION', '1.5.7' );
+		define( 'KT_WOOMAIL_VERSION', '1.5.10' );
 
 		if ( ! kadence_woomail_is_woo_active() ) {
 			add_action( 'admin_notices', array( $this, 'admin_notice_need_woocommerce' ) );
@@ -379,7 +379,7 @@ class Kadence_Woomail_Designer {
 		$body_text = str_replace( '{site_url}', wp_parse_url( home_url(), PHP_URL_HOST ), $body_text );
 
 		if ( $order ) {
-			if ( 0 === ( $user_id = (int) get_post_meta( $order->get_id(), '_customer_user', true ) ) ) {
+			if ( 0 === ( $user_id = (int) $order->get_customer_id() ) ) {
 				$user_id = 'guest';
 			}
 			if ( class_exists( 'WCML_Orders' ) ) {
@@ -466,7 +466,7 @@ class Kadence_Woomail_Designer {
 			$subtitle = str_replace( '{customer_email}', $email->object->user_email, $subtitle );
 
 		} elseif ( is_a( $email->object, 'WC_Order' ) ) {
-			if ( 0 === ( $user_id = (int) get_post_meta( $email->object->get_id(), '_customer_user', true ) ) ) {
+			if ( 0 === ( $user_id = (int) $email->object->get_customer_id() ) ) {
 				$user_id = 'guest';
 			}
 			if ( class_exists( 'WCML_Orders' ) ) {
@@ -614,7 +614,7 @@ class Kadence_Woomail_Designer {
 			$string = str_replace( '{customer_email}', $email->object->user_email, $string );
 
 		} else if ( is_a( $email->object, 'WC_Order' ) ) {
-			if ( 0 === ( $user_id = (int) get_post_meta( $email->object->get_id(), '_customer_user', true ) ) ) {
+			if ( 0 === ( $user_id = (int) $email->object->get_customer_id() ) ) {
 				$user_id = 'guest';
 			}
 			$string = str_replace( '{customer_first_name}', $email->object->get_billing_first_name(), $string );
@@ -846,3 +846,9 @@ class Kadence_Woomail_Plugin_Check {
 function kadence_woomail_is_woo_active() {
 	return Kadence_Woomail_Plugin_Check::active_check_woo();
 }
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );

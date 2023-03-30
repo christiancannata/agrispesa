@@ -4,10 +4,10 @@ Tags: ecommerce,email,workflows,mailchimp
 Donate link: https://mailchimp.com
 Requires at least: 4.9
 Tested up to: 6.1
-Stable tag: 2.8
+Stable tag: 2.8.1
 Requires PHP: 7.4
-WC requires at least: 3.5
-WC tested up to: 7.4
+WC requires at least: 4.2
+WC tested up to: 7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Connect your store to your Mailchimp audience to track sales, create targeted emails, send abandoned cart emails, and more.
@@ -78,15 +78,12 @@ At this time, the synchronization of product categories from WooCommerce to Mail
 If you are unable to sync or connect with Mailchimp, you can open a ticket on our [Github plugin page](https://github.com/mailchimp/mc-woocommerce/issues). Please provide the version of the plugin and PHP you're using, any fatal errors in the WooCommerce logs (WooCommerce -> Status -> Logs) you're seeing, along with relevant information to the problem you're experiencing.
 
 == Changelog ==
-= 2.8 =
-* Added transient to help sync manager finish
-* Adds cookie enhancement filter
-* Support for previous unsubscribes to be resubscribed
-* Fixes the my account subscription status
-* Adds option to remove the my account opt-in checkbox
-* Adds ability to ignore campaign data reporting for admins
-* Support for Woocommerce Blocks options
-* Fix for Askew opt-in checkbox on Default Wordpress Theme
-* Adds ability to use "last clicked campaign" from the API as a fallback if cookies aren't capturing revenue
+= 2.8.1 =
+* Surfaces Archived status for customers accounts in admin
+* Updates to translation filenames 
+* support for populating usermeta on initial sync
+* fix for REST API caching issues 
+* Initial sync interface enchancements
+* Action Scheduler updates 
 
 [Historical Changelog](https://raw.githubusercontent.com/mailchimp/mc-woocommerce/master/CHANGELOG.txt)

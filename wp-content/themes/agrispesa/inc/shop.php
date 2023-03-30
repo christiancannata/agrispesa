@@ -384,3 +384,17 @@ function custom_products_widget_query_arg( $query_args ) {
         $query_args['meta_query'] = custom_meta_query( $query_args['meta_query'] );
     return $query_args;
 }
+
+
+//Rimuovi breadcrumb
+add_action('template_redirect', 'remove_shop_breadcrumbs' );
+function remove_shop_breadcrumbs(){
+	global $post;
+		$terms = wp_get_post_terms( $post->ID, 'product_cat' );
+		foreach ( $terms as $term ) $categories[] = $term->slug;
+
+		if ( is_product() ){
+    if( in_array( 'sos', $categories ) || in_array( 'box', $categories ) || in_array( 'box-singola', $categories ) )
+        remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
+		}
+}

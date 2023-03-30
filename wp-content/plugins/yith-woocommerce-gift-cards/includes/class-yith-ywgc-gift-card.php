@@ -809,10 +809,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 			update_post_meta( $this->ID, self::META_BALANCE_TOTAL, $total_balance_rounded );
 			update_post_meta( $this->ID, self::META_AMOUNT_TOTAL, $total_amount_rounded );
 
-			$order_user_id = get_post_meta( $this->order_id, '_customer_user', true );
-
-			update_post_meta( $this->ID, '_ywgc_sender_user_id', $order_user_id );
-
 			$date_format = apply_filters( 'yith_wcgc_date_format', 'Y-m-d' );
 
 			update_post_meta( $this->ID, self::META_SENDER_NAME, $this->sender_name );

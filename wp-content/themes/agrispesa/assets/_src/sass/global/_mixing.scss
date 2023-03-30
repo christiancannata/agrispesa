@@ -10,6 +10,19 @@
 		clear: both;
 	}
 }
+
+@mixin container() {
+	padding: 0 20px;
+	@include breakpoint(desktop) {
+		padding: 120px 80px;
+	}
+	@include breakpoint(container) {
+		padding: 80px 60px;
+	}
+	@include breakpoint(mobile) {
+		padding: 50px 20px;
+	}
+}
 @mixin full-bg() {
 	background-position: center center;
 	background-repeat: no-repeat;

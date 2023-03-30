@@ -614,7 +614,7 @@ msgstr "Fortsæt med at handle"
 
 #: includes/class-kadence-woomail-settings.php:1226
 #, fuzzy
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr "Fortsæt med at handle"
 
 #: includes/class-kadence-woomail-settings.php:1245

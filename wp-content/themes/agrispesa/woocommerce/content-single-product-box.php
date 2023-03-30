@@ -31,6 +31,29 @@ if ( post_password_required() ) {
 	return;
 }
 ?>
+
+<section class="wb-section color-white" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+	<div class="wb-section--wide wb-section--container" style="background-image:url(<?php echo wp_get_attachment_image_url( $product->get_image_id(), '' ); ?>)">
+		<div class="wb-section--content--sx">
+
+		 <?php echo the_title('<h3 class="wb-section--content--title">', '</h3>'); ?></h3>
+		 <?php
+		 $short_description = apply_filters( 'woocommerce_short_description', $post->post_excerpt ); if ($short_description ) {
+			 echo '<div class="wb-section--content--descr wide">';
+			 echo $short_description;
+			 echo '</div>';
+		 }?>
+
+		 <div class="wb-section--content--buttons">
+			 <div class="wb-section--content--buttons--flex">
+				 <div class="wb-section--content--price"><?php echo $product->get_price_html();?></div>
+					<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id()); ?>" class="btn btn-primary" title="Dona una spesa">Dona una spesa</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
 <div class="the-box-page">
 	<?php
@@ -63,6 +86,76 @@ if ( post_password_required() ) {
 	</div>
 </div>
 </div><!-- fine div.product-top in product-image.php -->
+
+<section class="agri-values" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/petfood/pawer-dog.jpg);">
+	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Il tuo cane ti aiuta a</h3>
+	<div class="agri-values--flex">
+
+		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+			<?php get_template_part( 'global-elements/icon', 'verdura' ); ?>
+			<p class="agri-values--descr">
+				Verdura<br/>
+				<span>(e cuccare)</span>
+			</p>
+		</div>
+		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+			<?php get_template_part( 'global-elements/icon', 'frutta' ); ?>
+			<p class="agri-values--descr">
+				Frutta fresca<br/>
+				<span>di stagione</span>
+			</p>
+		</div>
+		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
+			<?php get_template_part( 'global-elements/icon', 'latticini' ); ?>
+			<p class="agri-values--descr">
+				Uova e latticini<br/>
+				<span>neanche in bagno</span>
+			</p>
+		</div>
+		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+			<?php get_template_part( 'global-elements/icon', 'carne-pesce' ); ?>
+			<p class="agri-values--descr">
+				Carne e pesce<br/>
+				<span>allevati con rispetto</span>
+			</p>
+		</div>
+		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
+			<span class="icon-kids"></span>
+			<p class="agri-values--descr">
+				Accudire<br/>
+				<span>i bambini</span>
+			</p>
+		</div>
+
+	</div>
+	<div class="agri-values--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+		<a href="#go-meet" class="btn btn-primary scroll-to" title="Come puoi aiutarlo tu?">Come puoi aiutarlo tu?</a>
+	</div>
+
+</section>
+
+<section class="box-types">
+	<div class="box-types--flex">
+		<div class="box-types--item vegana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegana.jpg)">
+			<h3 class="box-types--title">Vegana</h3>
+			<ul class="box-types--list">
+				<li>Prodotti di agricoltura contadina</li>
+				<li>Tisane con ingredienti naturali</li>
+				<li>Amore per gli animali</li>
+			</ul>
+		</div>
+		<div class="box-types--item vegetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegetariana.jpg)">
+			<h3 class="box-types--title">Vegetariana</h3>
+		</div>
+		<div class="box-types--item pescetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/pescetariana.jpg)">
+			<h3 class="box-types--title">Pescetariana</h3>
+		</div>
+		<div class="box-types--item onnivora" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/onnivora.jpg)">
+			<h3 class="box-types--title">Onnivora</h3>
+		</div>
+	</div>
+</section>
+
 	<?php
 	/**
 	 * Hook: woocommerce_after_single_product_summary.

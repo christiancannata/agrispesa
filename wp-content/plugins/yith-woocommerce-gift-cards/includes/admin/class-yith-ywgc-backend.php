@@ -855,6 +855,10 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 */
 		public function set_gift_card_category_to_product( $post_id ) {
 
+			if ( isset( $_REQUEST['product-type'] ) && 'gift-card' !== $_REQUEST['product-type'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+				return;
+			}
+
 			if ( ! isset( $_REQUEST['action'] ) && ! isset( $_REQUEST['action2'] ) ) {//phpcs:ignore WordPress.Security.NonceVerification
 				return;
 			}

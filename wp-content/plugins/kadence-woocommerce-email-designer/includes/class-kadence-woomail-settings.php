@@ -187,7 +187,12 @@ if ( ! class_exists( 'Kadence_Woomail_Settings' ) ) {
 						'panel'    => 'header',
 						'priority' => 30,
 					),
-
+					// Footer Style.
+					'additional' => array(
+						'title'    => __( 'Additional Content', 'kadence-woocommerce-email-designer' ),
+						'panel'    => 'footer',
+						'priority' => 40,
+					),
 					// Footer Style.
 					'footer_style' => array(
 						'title'    => __( 'Footer Style', 'kadence-woocommerce-email-designer' ),
@@ -1108,7 +1113,7 @@ if ( ! class_exists( 'Kadence_Woomail_Settings' ) ) {
 					),
 					// Email Top Padding
 					'email_padding_bottom' => array(
-						'title'         => __( 'Container Botom Padding', 'kadence-woocommerce-email-designer' ),
+						'title'         => __( 'Container Bottom Padding', 'kadence-woocommerce-email-designer' ),
 						'control_type'  => 'rangevalue',
 						'section'       => 'container',
 						'default'       => self::get_default_value( 'email_padding' ),
@@ -2209,6 +2214,20 @@ if ( ! class_exists( 'Kadence_Woomail_Settings' ) ) {
 							'#body_content_inner .address-td' => array( 'text-align' ),
 						),
 					),
+					'additional_content_enable' => array(
+						'title'         => __( 'Enable Additional Content', 'kadence-woocommerce-email-designer' ),
+						'control_type'  => 'toggleswitch',
+						'section'       => 'additional',
+						'transport'     => 'refresh',
+						'default'       => self::get_default_value( 'additional_content_enable' ),
+					),
+					'mobile_messaging_enable' => array(
+						'title'         => __( 'Enable Mobile Messaging', 'kadence-woocommerce-email-designer' ),
+						'control_type'  => 'toggleswitch',
+						'section'       => 'additional',
+						'transport'     => 'refresh',
+						'default'       => self::get_default_value( 'mobile_messaging_enable' ),
+					),
 					// Footer Background Width
 					'footer_background_placement' => array(
 						'title'         => __( 'Footer Background Placement', 'kadence-woocommerce-email-designer' ),
@@ -2936,6 +2955,8 @@ To reset your password, visit the following address:',
 					'addresses_text_color'                                          => '#8f8f8f',
 					'addresses_text_align'                                          => 'left',
 					'footer_background_placement'                                   => 'inside',
+					'additional_content_enable'                                     => true,
+					'mobile_messaging_enable'                                       => true,
 					'footer_background_color'                                       => '',
 					'footer_top_padding'                                            => '0',
 					'footer_bottom_padding'                                         => '48',
@@ -3051,17 +3072,24 @@ To reset your password, visit the following address:',
 			if ( is_null( self::$order_ids ) ) {
 				$order_array           = array();
 				$order_array['mockup'] = __( 'Mockup Order', 'kadence-woocommerce-email-designer' );
-				$orders = new WP_Query(
-					array(
-						'post_type'      => 'shop_order',
-						'post_status'    => array_keys( wc_get_order_statuses() ),
-						'posts_per_page' => 20,
-					)
-				);
-				if ( $orders->posts ) {
-					foreach ( $orders->posts as $order ) {
+				// $orders = new WP_Query(
+				// 	array(
+				// 		'post_type'      => 'shop_order',
+				// 		'post_status'    => array_keys( wc_get_order_statuses() ),
+				// 		'posts_per_page' => 20,
+				// 	)
+				// );
+				$query = new WC_Order_Query( array(
+					'limit' => 20,
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'return' => 'ids',
+				) );
+				$orders = $query->get_orders();
+				if ( $orders ) {
+					foreach ( $orders as $order_id ) {
 						// Get order object.
-						$order_object = new WC_Order( $order->ID );
+						$order_object = new WC_Order( $order_id );
 						$order_array[ $order_object->get_id() ] = $order_object->get_id() . ' - ' . $order_object->get_billing_first_name() . ' ' . $order_object->get_billing_last_name();
 					}
 				}

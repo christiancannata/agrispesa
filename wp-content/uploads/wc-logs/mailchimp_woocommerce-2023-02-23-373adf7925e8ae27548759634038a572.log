@@ -1,2 +1,0 @@
-2023-02-23T16:57:51+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 22475
-2023-02-23T17:00:17+00:00 NOTICE product_submit.success :: addStoreProduct :: #22475
