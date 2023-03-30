@@ -10,18 +10,35 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates
+ * @see     https://docs.woocommerce.com/document/template-structure/
+ * @author  WooThemes
+ * @package WooCommerce/Templates
  * @version 3.4.0
  */
 
-defined( 'ABSPATH' ) || exit;
+/**
+ * EDIT NOTES FOR KADENCE WOOMAIL DESIGNER
+ *
+ * ADDED: Clear Div
+ * Add support for responsive email.
+ *
+ */
 
-$text_align = is_rtl() ? 'right' : 'left';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-?><h2 class="woocommerce-order-downloads__title"><?php esc_html_e( 'Downloads', 'woocommerce' ); ?></h2>
+$text_align       = is_rtl() ? 'right' : 'left';
+$responsive_check = Kadence_Woomail_Customizer::opt( 'responsive_mode' );
+if ( true == $responsive_check ) {
+	unset( $columns['download-expires'] );
+}
 
-<table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; margin-bottom: 40px;" border="1">
+?>
+<div style="clear:both; height:1px;"></div>
+<h2 class="woocommerce-order-downloads__title"><?php esc_html_e( 'Downloads', 'kadence-woocommerce-email-designer' ); ?></h2>
+
+<table class="email-spacing-wrap td" cellspacing="0" cellpadding="6" style="width: 100%; margin-bottom: 40px;" border="1">
 	<thead>
 		<tr>
 			<?php foreach ( $columns as $column_id => $column_name ) : ?>
@@ -48,6 +65,15 @@ $text_align = is_rtl() ? 'right' : 'left';
 								?>
 								<a href="<?php echo esc_url( $download['download_url'] ); ?>" class="woocommerce-MyAccount-downloads-file button alt"><?php echo esc_html( $download['download_name'] ); ?></a>
 								<?php
+								if ( true == $responsive_check ) {
+									if ( ! empty( $download['access_expires'] ) ) {
+										?>
+										<p style="margin-bottom:0;"><small><?php esc_html_e( 'Expires:', 'kadence-woocommerce-email-designer' ); ?> <time datetime="<?php echo esc_attr( date( 'Y-m-d', strtotime( $download['access_expires'] ) ) ); ?>" title="<?php echo esc_attr( strtotime( $download['access_expires'] ) ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $download['access_expires'] ) ) ); ?></time></small></p>
+										<?php
+									} else {
+										echo '<p style="margin-bottom:0;"><small>' . esc_html__( 'Expires: Never', 'kadence-woocommerce-email-designer' ) . '</small></p>';
+									}
+								}
 								break;
 							case 'download-expires':
 								if ( ! empty( $download['access_expires'] ) ) {
@@ -55,7 +81,7 @@ $text_align = is_rtl() ? 'right' : 'left';
 									<time datetime="<?php echo esc_attr( date( 'Y-m-d', strtotime( $download['access_expires'] ) ) ); ?>" title="<?php echo esc_attr( strtotime( $download['access_expires'] ) ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $download['access_expires'] ) ) ); ?></time>
 									<?php
 								} else {
-									esc_html_e( 'Never', 'woocommerce' );
+									esc_html_e( 'Never', 'kadence-woocommerce-email-designer' );
 								}
 								break;
 						}

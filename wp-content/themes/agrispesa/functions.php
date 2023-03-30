@@ -115,7 +115,7 @@ $ag_includes = array(
 	'/checkout.php',
 	'/admin-css.php',
 	'/orders.php',
-	'/denso.php',
+	//'/denso.php',
 );
 
 foreach ($ag_includes as $file) {
