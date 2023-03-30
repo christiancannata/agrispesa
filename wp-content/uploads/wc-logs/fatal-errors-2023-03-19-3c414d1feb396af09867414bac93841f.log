@@ -1,0 +1,39 @@
+2023-03-19T06:27:31+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 237
+
+2023-03-19T06:37:35+00:00 CRITICAL Uncaught Error: Call to undefined function get_product_by_sku() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:249
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/i...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/i...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_a in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 249
+
+2023-03-19T06:39:20+00:00 CRITICAL Uncaught Error: Call to undefined function WC_Product() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:254
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/i...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/i...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('pa in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 254
+
+2023-03-19T06:51:24+00:00 CRITICAL Uncaught Error: Call to undefined method wpdb::execute() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:247
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1171): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1018): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/i...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/i...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('p in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 247
+
+2023-03-19T06:55:44+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 275
+
+2023-03-19T07:03:04+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 305
+
