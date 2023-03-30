@@ -332,37 +332,37 @@ function my_validation_handler($is_valid, $product_id) {
 
 
 //Checkout: Remove proceed button if shipping not available
-function prevent_checkout_access_no_shipping() {
-    // Check that WC is enabled and loaded
-    if( function_exists( 'is_checkout' ) && is_checkout() ) {
-
-        // get shipping packages and their rate counts
-        $packages = WC()->cart->get_shipping_packages();
-        foreach( $packages as $key => $pkg ) {
-            $calculate_shipping = WC()->shipping->calculate_shipping_for_package( $pkg );
-            if( empty( $calculate_shipping['rates'] ) ) {
-                wp_redirect( esc_url( WC()->cart->get_cart_url() ) );
-                exit;
-            }
-        }
-    }
-}
-add_action( 'wp', 'prevent_checkout_access_no_shipping' );
-
-//Checkout: Remove checkout button if shipping not available
-function disable_checkout_button_no_shipping() {
-    $package_counts = array();
-
-    // get shipping packages and their rate counts
-    $packages = WC()->shipping->get_packages();
-    foreach( $packages as $key => $pkg )
-        $package_counts[ $key ] = count( $pkg[ 'rates' ] );
-
-    // remove button if any packages are missing shipping options
-    if( in_array( 0, $package_counts ) )
-        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
-}
-add_action( 'woocommerce_proceed_to_checkout', 'disable_checkout_button_no_shipping', 1 );
+// function prevent_checkout_access_no_shipping() {
+//     // Check that WC is enabled and loaded
+//     if( function_exists( 'is_checkout' ) && is_checkout() ) {
+//
+//         // get shipping packages and their rate counts
+//         $packages = WC()->cart->get_shipping_packages();
+//         foreach( $packages as $key => $pkg ) {
+//             $calculate_shipping = WC()->shipping->calculate_shipping_for_package( $pkg );
+//             if( empty( $calculate_shipping['rates'] ) ) {
+//                 wp_redirect( esc_url( WC()->cart->get_cart_url() ) );
+//                 exit;
+//             }
+//         }
+//     }
+// }
+// add_action( 'wp', 'prevent_checkout_access_no_shipping' );
+//
+// //Checkout: Remove checkout button if shipping not available
+// function disable_checkout_button_no_shipping() {
+//     $package_counts = array();
+//
+//     // get shipping packages and their rate counts
+//     $packages = WC()->shipping->get_packages();
+//     foreach( $packages as $key => $pkg )
+//         $package_counts[ $key ] = count( $pkg[ 'rates' ] );
+//
+//     // remove button if any packages are missing shipping options
+//     if( in_array( 0, $package_counts ) )
+//         remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+// }
+// add_action( 'woocommerce_proceed_to_checkout', 'disable_checkout_button_no_shipping', 1 );
 
 //Cambia testo nessuna spedizione disponibile
 class WPDeskNoShippingMessage {
