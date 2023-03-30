@@ -32,7 +32,7 @@ if ( post_password_required() ) {
 }
 ?>
 
-<section class="wb-section color-white" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+<section style="display:none;" class="wb-section color-white" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
 	<div class="wb-section--wide wb-section--container" style="background-image:url(<?php echo wp_get_attachment_image_url( $product->get_image_id(), '' ); ?>)">
 		<div class="wb-section--content--sx">
 
