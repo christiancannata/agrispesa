@@ -603,3 +603,16 @@ function codiceFiscale($cf){
 
 	return true;
 }
+
+
+/*
+* Adds then moves Apple Pay button on the checkout page.
+*/
+
+add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
+
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+
+add_action( 'woocommerce_after_checkout_form', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 2 );
+add_action( 'woocommerce_after_checkout_form', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 1 );
