@@ -112,18 +112,22 @@ if ($reg_month === '01') {
 
 
 					if (count($orders) > 0) {
-
+						$i=0;
 						foreach ($orders as $order) {
-							$dataConsegna = get_post_meta($order->ID, '_data_consegna', true);
+
+							$dataConsegna = get_post_meta($order->get_id(), '_data_consegna', true);
 							if ($dataConsegna) {
 								$origin = new DateTimeImmutable();
 								$target = new DateTimeImmutable($dataConsegna);
 								$interval = $origin->diff($target);
 								echo '<div class="user-profile--details--item next-box">';
 								echo '<p class="user-profile--details--number">' . $interval->format('%a') . '</p>';
-								echo '<h3 class="user-profile--details--title">Consegna a<br/>'. $order->first_name . $order->last_name .'</h3>';
+								echo '<h3 class="user-profile--details--title">Consegna a<br/>'. $order->get_shipping_first_name() .'</h3>';
 								echo '</div>';
 							}
+							$i++;
+							if($i==3) break;
+
 						}
 
 					}
