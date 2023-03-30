@@ -1,0 +1,55 @@
+2023-03-28T14:35:47+00:00 CRITICAL syntax error, unexpected ':', expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-sos.php alla riga 34
+
+2023-03-28T14:58:34+00:00 CRITICAL Uncaught Error: Call to undefined function the_thumbnail() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-sos.php:35
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(284): load_template('/Users/nathalie...', false)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product.php(46): wc_get_template_part('content', 'single-product-...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-sos.php alla riga 35
+
+2023-03-28T15:15:48+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Simple as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:92
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227):  in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 92
+
+2023-03-28T15:17:23+00:00 CRITICAL syntax error, unexpected ')', expecting ';' or ',' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-sos.php alla riga 41
+
+2023-03-28T15:17:39+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Simple as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:92
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227):  in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 92
+
+2023-03-28T15:18:15+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Simple as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:92
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227):  in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 92
+
+2023-03-28T15:18:35+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Simple as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php:92
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/shortcodes/class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shortcodes.php(85): WC_Shortcodes::shortcode_wrapper(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(355): WC_Shortcodes::cart('', '', 'woocommerce_car...')
+#5 [internal function]: do_shortcode_tag(Array)
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/shortcodes.php(227):  in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/cart/cart.php alla riga 92
+

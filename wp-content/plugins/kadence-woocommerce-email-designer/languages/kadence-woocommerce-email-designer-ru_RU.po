@@ -656,7 +656,7 @@ msgstr "Продолжить покупки"
 #: includes/class-kadence-woomail-settings.php:1076
 #, fuzzy
 #| msgid "Continue shopping"
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr "Продолжить покупки"
 
 #: includes/class-kadence-woomail-settings.php:1095

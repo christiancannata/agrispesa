@@ -580,7 +580,7 @@ msgid "Container Top Padding"
 msgstr "Container Innenabstand oben"
 
 #: includes/class-kadence-woomail-settings.php:1076
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr "Container Innenabstand unten"
 
 #: includes/class-kadence-woomail-settings.php:1095

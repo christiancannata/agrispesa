@@ -50,17 +50,18 @@ if($agr_landing_coupon){
 	<?php endif;?>
 
 
-	<section id="go-meet" class="landing-meet">
+	<section class="landing-meet">
 		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
 			<div class="landing-meet--top">
-				<p class="landing-meet--minititle">A casa tua, agricoltura contadina</p>
-				<h3 class="landing-meet--title">Il gusto in una scatola.</h3>
+				<p class="landing-meet--minititle">Agricoltura contadina, a casa tua</p>
+				<h3 class="landing-meet--title">Abbiamo a cuore il tuo benessere.</h3>
 				<p class="landing-meet--descr wide">
-					Questa non è la solita box, ma un mix perfetto e colorato di prodotti vegetariani, frutta e verdura che arrivano direttamente dal campo.
+					Per questo prepariamo noi la tua spesa, con prodotti che arrivano da un'agricoltura rispettosa della vitalità del terreno, delle acque, delle piante. Così, freschi, arriveranno ogni settimana in una scatola su misura per te direttamente in Denso.
+					<br/><br/>
+					<strong>E con il 10% di sconto.</strong>
 				</p>
 			</div>
 			<div class="landing-meet--bottom">
-
 				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
 			</div>
 		</div>
@@ -72,25 +73,17 @@ if($agr_landing_coupon){
 		</div>
 	</section>
 
-	<section id="go-meet" class="landing-meet">
-		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
-			<video autoplay muted loop>
-			  <source src="<?php echo get_template_directory_uri(); ?>/assets/video/pawer-hero.mp4" type="video/mp4">
-					Your browser does not support the video tag.
-			</video>
+	<section class="landing-full" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/denso/mirtilli.jpg)">
+		<div class="landing-meet--top landing-full--text-sx">
+			<p class="landing-meet--minititle">Agricoltura contadina, a casa tua</p>
+			<h3 class="landing-meet--title">Abbiamo a cuore il tuo benessere.</h3>
 		</div>
-		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
-			<div class="landing-meet--top">
-				<p class="landing-meet--minititle">A casa tua, agricoltura contadina</p>
-				<h3 class="landing-meet--title">Il gusto in una scatola.</h3>
-				<p class="landing-meet--descr wide">
-					Questa non è la solita box, ma un mix perfetto e colorato di prodotti vegetariani, frutta e verdura che arrivano direttamente dal campo.
-				</p>
-			</div>
-			<div class="landing-meet--bottom">
-
-				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
-			</div>
+		<div class="landing-meet--top landing-full--text-dx">
+			<p class="landing-meet--descr wide">
+				Per questo prepariamo noi la tua spesa, con prodotti che arrivano da un'agricoltura rispettosa della vitalità del terreno, delle acque, delle piante. Così, freschi, arriveranno ogni settimana in una scatola su misura per te direttamente in Denso.
+				<br/><br/>
+				<strong>E con il 10% di sconto.</strong>
+			</p>
 		</div>
 	</section>
 
@@ -257,7 +250,7 @@ if($agr_landing_coupon){
 								 ?>
  				        </div>
 								<div class="landing-box--button">
-									<a id="get_url" href="<?php echo esc_url(home_url('carrello?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60' )); ?>" class="btn btn-primary">Abbonati alla spesa</a>
+									<a id="get_url" href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60' ); ?>" class="btn btn-primary">Abbonati alla spesa</a>
 								</div>
  				      </div>
 

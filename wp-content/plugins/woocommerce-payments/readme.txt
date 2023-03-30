@@ -4,7 +4,7 @@ Tags: payment gateway, payment, apple pay, credit card, google pay
 Requires at least: 5.9
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 5.5.1
+Stable tag: 5.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,7 +96,10 @@ Please note that our support for the checkout block is still experimental and th
 3. Track Deposits
 4. Manage Disputes
 
-== Changelog ==
+== Changelog == 
+
+= 5.5.2 - 2023-03-23 =
+* Update - Security update.
 
 = 5.5.1 - 2023-03-01 =
 * Add - When enabling WooPay, if legacy UPE is enabled, upgrades feature flag to split UPE instead.
@@ -135,7 +138,10 @@ Please note that our support for the checkout block is still experimental and th
 
 = 5.4.0 - 2023-02-01 =
 * Add - Add logging and order notes when WCPay Subscriptions are suspended or put on-hold.
-* Add - Highlight subscriptions with overdue payment in list view with red icon == Changelog ==
+* Add - Highlight subscriptions with overdue payment in list view with red icon == Changelog == 
+
+= 5.5.2 - 2023-03-23 =
+* Update - Security update.
 
 = 5.5.0 - 2023-02-22 =
 * Add - Added learn more link to deposits page
@@ -204,7 +210,10 @@ Please note that our support for the checkout block is still experimental and th
 * Dev - Fix phpcs violations in the `WC_Subscriptions_Tracker` and `WCS_Admin_System_Status` classes to improve code quality.
 * Dev - Introduced a new `untrash_order()` in the `WCS_Orders_Table_Subscription_Data_Store` class to fix untrashing subscriptions on stores that have HPOS enabled.
 * Dev - Introduced a WCS_Object_Data_Cache_Manager and WCS_Object_Data_Cache_Manager_Many_To_One class as HPOS equivalents of the WCS_Post_Meta_Cache_Manager classes.
-* Dev - Moved the trash, untrash == Changelog ==
+* Dev - Moved the trash, untrash == Changelog == 
+
+= 5.5.2 - 2023-03-23 =
+* Update - Security update.
 
 = 5.5.0 - 2023-02-22 =
 * Add - Added learn more link to deposits page

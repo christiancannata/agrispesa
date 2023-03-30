@@ -34,7 +34,8 @@ do_action( 'kadence_woomail_designer_email_details', $order, $sent_to_admin, $pl
 /**
  * Show user-defined additonal content - this is set in each email's settings.
  */
-if ( isset( $additional_content ) && ! empty( $additional_content ) ) {
+$additional_enable = Kadence_Woomail_Customizer::opt( 'additional_content_enable' );
+if ( isset( $additional_content ) && ! empty( $additional_content ) && apply_filters( 'kadence_email_customizer_additional_enable', $additional_enable, $email ) ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 

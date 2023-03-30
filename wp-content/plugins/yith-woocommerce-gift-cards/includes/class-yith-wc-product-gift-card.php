@@ -284,57 +284,6 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		}
 
 		/**
-		 * Returns the price in html format
-		 *
-		 * @access public
-		 *
-		 * @param string $price (default: '')
-		 *
-		 * @return string
-		 */
-		public function get_price_html( $price = '' ) {
-			$amounts = $this->get_amounts_to_be_shown();
-
-			// No price for current gift card.
-			if ( ! count( $amounts ) ) {
-				/**
-				 * APPLY_FILTERS: yith_woocommerce_gift_cards_empty_price_html
-				 *
-				 * Filter the empty price HTML for the gift cards.
-				 *
-				 * @param string empty string
-				 * @param object $this gift card product instance
-				 *
-				 * @return string
-				 */
-				$price = apply_filters( 'yith_woocommerce_gift_cards_empty_price_html', '', $this );
-			} else {
-				ksort( $amounts, SORT_NUMERIC );
-
-				$min_price = current( $amounts );
-				$min_price = wc_price( $min_price['price'] );
-				$max_price = end( $amounts );
-				$max_price = wc_price( $max_price['price'] );
-
-				/**
-				 * APPLY_FILTERS: yith_woocommerce_gift_cards_amount_range
-				 *
-				 * Filter the price range of a gift card product.
-				 *
-				 * @param string $price price range of the gift card
-				 * @param object $this gift card product instance
-				 * @param string $min_price minimum amount of the gift card
-				 * @param string $max_price maximum amount of the gift card
-				 *
-				 * @return string
-				 */
-				$price = apply_filters( 'yith_woocommerce_gift_cards_amount_range', $min_price !== $max_price ? wc_format_price_range( $min_price, $max_price ) : $min_price, $this, $min_price, $max_price );
-			}
-
-			return apply_filters( 'woocommerce_get_price_html', $price, $this );
-		}
-
-		/**
 		 * Retrieve an array of gift cards amounts with the corrected value to be shown(inclusive or not inclusive taxes)
 		 *
 		 * @return array

@@ -10,45 +10,128 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates\Emails
- * @version 5.6.0
+ * @see 	    https://docs.woocommerce.com/document/template-structure/
+ * @author 		WooThemes
+ * @package 	WooCommerce/Templates/Emails
+ * @version     5.6.0
  */
+
+/** 
+ * EDIT NOTES FOR KADENCE WOOMAIL DESIGNER
+ *
+ * Add support for responsive email.
+ */
+
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$text_align = is_rtl() ? 'right' : 'left';
-$address    = $order->get_formatted_billing_address();
-$shipping   = $order->get_formatted_shipping_address();
-
-?><table id="addresses" cellspacing="0" cellpadding="0" style="width: 100%; vertical-align: top; margin-bottom: 40px; padding:0;" border="0">
-	<tr>
-		<td style="text-align:<?php echo esc_attr( $text_align ); ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; border:0; padding:0;" valign="top" width="50%">
-			<h2><?php esc_html_e( 'Billing address', 'woocommerce' ); ?></h2>
-
-			<address class="address">
-				<?php echo wp_kses_post( $address ? $address : esc_html__( 'N/A', 'woocommerce' ) ); ?>
-				<?php if ( $order->get_billing_phone() ) : ?>
-					<br/><?php echo wc_make_phone_clickable( $order->get_billing_phone() ); ?>
-				<?php endif; ?>
-				<?php if ( $order->get_billing_email() ) : ?>
-					<br/><?php echo esc_html( $order->get_billing_email() ); ?>
-				<?php endif; ?>
-			</address>
-		</td>
-		<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping ) : ?>
-			<td style="text-align:<?php echo esc_attr( $text_align ); ?>; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; padding:0;" valign="top" width="50%">
-				<h2><?php esc_html_e( 'Shipping address', 'woocommerce' ); ?></h2>
+$text_align       = is_rtl() ? 'right' : 'left';
+$address          = $order->get_formatted_billing_address();
+$shipping         = $order->get_formatted_shipping_address();
+$responsive_check = Kadence_Woomail_Customizer::opt( 'responsive_mode' );
+if ( true == $responsive_check ) {
+	?>
+	<table id="addresses" cellspacing="0" cellpadding="0" style="width: 100%; vertical-align: top; margin-bottom: 40px; padding:0;" border="0">
+		<tr>
+			<td class="address-container" style="text-align:<?php echo esc_attr( $text_align ); ?>; padding:0; border:0;" valign="top">
+				<h2><?php esc_html_e( 'Billing address', 'kadence-woocommerce-email-designer' ); ?></h2>
 
 				<address class="address">
-					<?php echo wp_kses_post( $shipping ); ?>
-					<?php if ( $order->get_shipping_phone() ) : ?>
-						<br /><?php echo wc_make_phone_clickable( $order->get_shipping_phone() ); ?>
-					<?php endif; ?>
+					<table cellspacing="0" cellpadding="0" style="width: 100%; padding:0;" border="0">
+						<tr>
+							<td class="address-td" valign="top">
+								<?php echo wp_kses_post( $address ? $address : esc_html__( 'N/A', 'kadence-woocommerce-email-designer' ) ); ?>
+								<?php
+								// Adds in support for plugin.
+								if ( ! class_exists( 'APG_Campo_NIF' ) ) {
+									if ( $order->get_billing_phone() ) :
+										?>
+										<br/><?php echo wc_make_phone_clickable( $order->get_billing_phone() ); ?>
+									<?php endif; ?>
+									<?php if ( $order->get_billing_email() ) : ?>
+										<br/><a href="mailto:<?php echo esc_attr( $order->get_billing_email() ); ?>"><?php echo esc_html( $order->get_billing_email() ); ?></a>
+										<?php
+									endif;
+								}
+								?>
+							</td>
+						</tr>
+					</table>
 				</address>
 			</td>
+		</tr>
+		<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping ) : ?>
+			<tr>
+				<td class="shipping-address-container" style="text-align:<?php echo esc_attr( $text_align ); ?>;" valign="top">
+					<h2><?php esc_html_e( 'Shipping address', 'kadence-woocommerce-email-designer' ); ?></h2>
+
+					<address class="address">
+						<table cellspacing="0" cellpadding="0" style="width: 100%; padding:0;" border="0">
+							<tr>
+								<td class="address-td" valign="top">
+									<?php echo wp_kses_post( $shipping ); ?>
+									<?php if ( method_exists( $order, 'get_shipping_phone' ) && $order->get_shipping_phone() ) : ?>
+										<br /><?php echo wc_make_phone_clickable( $order->get_shipping_phone() ); ?>
+									<?php endif; ?>
+								</td>
+							</tr>
+						</table>
+					</address>
+				</td>
+			</tr>
 		<?php endif; ?>
-	</tr>
-</table>
+	</table>
+	<?php
+} else {
+	?>
+	<table id="addresses" cellspacing="0" cellpadding="0" style="width: 100%; vertical-align: top; margin-bottom: 40px; padding:0;" border="0">
+		<tr>
+			<td class="address-container" style="text-align:<?php echo esc_attr( $text_align ); ?>; padding:0; border:0;" valign="top" width="50%">
+				<h2><?php esc_html_e( 'Billing address', 'kadence-woocommerce-email-designer' ); ?></h2>
+
+				<address class="address">
+					<table cellspacing="0" cellpadding="0" style="width: 100%; padding:0;" border="0">
+						<tr>
+							<td class="address-td" valign="top">
+							<?php echo wp_kses_post( $address ? $address : esc_html__( 'N/A', 'kadence-woocommerce-email-designer' ) ); ?>
+							<?php
+							// Adds in support for plugin.
+							if ( ! class_exists( 'APG_Campo_NIF' ) ) {
+								if ( $order->get_billing_phone() ) :
+									?>
+									<br/><?php echo wc_make_phone_clickable( $order->get_billing_phone() ); ?>
+								<?php endif; ?>
+								<?php if ( $order->get_billing_email() ) : ?>
+									<br/><a href="mailto:<?php echo esc_attr( $order->get_billing_email() ); ?>"><?php echo esc_html( $order->get_billing_email() ); ?></a>
+									<?php
+								endif;
+							}
+							?>
+							</td>
+						</tr>
+					</table>
+				</address>
+			</td>
+			<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && $shipping ) : ?>
+				<td class="shipping-address-container" style="text-align:<?php echo esc_attr( $text_align ); ?>; padding:0 0 0 20px;" valign="top" width="50%">
+					<h2><?php esc_html_e( 'Shipping address', 'kadence-woocommerce-email-designer' ); ?></h2>
+					<address class="address">
+						<table cellspacing="0" cellpadding="0" style="width: 100%; padding:0;" border="0">
+							<tr>
+								<td class="address-td" valign="top">
+									<?php echo wp_kses_post( $shipping ); ?>
+									<?php if ( method_exists( $order, 'get_shipping_phone' ) && $order->get_shipping_phone() ) : ?>
+										<br /><?php echo wc_make_phone_clickable( $order->get_shipping_phone() ); ?>
+									<?php endif; ?>
+								</td>
+							</tr>
+						</table>
+					</address>
+				</td>
+			<?php endif; ?>
+		</tr>
+	</table>
+	<?php
+}

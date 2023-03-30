@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @hooked WC_Emails::email_header() Output the email header
  */
 do_action( 'woocommerce_email_header', $email_heading, $email ); 
-
 $override_content = Kadence_Woomail_Customizer::opt( 'admin_payment_retry_override' );
 
 if ( true == $override_content ) {
@@ -58,7 +57,8 @@ do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_
 /**
  * Show user-defined additional content - this is set in each email's settings.
  */
-if ( $additional_content ) {
+$additional_enable = Kadence_Woomail_Customizer::opt( 'additional_content_enable' );
+if ( isset( $additional_content ) && ! empty( $additional_content ) && apply_filters( 'kadence_email_customizer_additional_enable', $additional_enable, $email ) ) {
 	echo wp_kses_post( wpautop( wptexturize( $additional_content ) ) );
 }
 

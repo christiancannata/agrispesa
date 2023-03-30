@@ -13,7 +13,7 @@
  * @see 	https://docs.woocommerce.com/document/template-structure/
  * @author  WooThemes
  * @package WooCommerce/Templates/Emails
- * @version 4.0.0
+ * @version 7.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -73,6 +73,7 @@ $img = get_option( 'woocommerce_email_header_image' );
 <html <?php language_attributes(); ?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 		<title><?php echo wp_kses_post( get_bloginfo( 'name', 'display' ) ); ?></title>
 	</head>
 	<body <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" class="kt-woo-wrap order-items-<?php echo esc_attr( $order_style ); ?> k-responsive-<?php echo esc_attr( $responsive_mode ); ?> title-style-<?php echo esc_attr( $h2_style ); ?> email-id-<?php echo esc_attr( $key ); ?>">

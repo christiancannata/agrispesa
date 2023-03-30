@@ -277,7 +277,7 @@ if ( ! class_exists( 'Kadence_Woomail_Preview' ) ) {
 
 			if ( is_object( $order ) ) {
 				// Get user ID from order, if guest get current user ID.
-				if ( 0 === ( $user_id = (int) get_post_meta( $order->get_id(), '_customer_user', true ) ) ) {
+				if ( 0 === ( $user_id = (int) $order->get_customer_id() ) ) {
 					$user_id = get_current_user_id();
 				}
 			} else {
@@ -884,7 +884,7 @@ if ( ! class_exists( 'Kadence_Woomail_Preview' ) ) {
 				$scripts .= 'var pl_customer_first_name = "' . self::$current_order->get_billing_first_name() . '";';
 				$scripts .= 'var pl_customer_last_name = "' . self::$current_order->get_billing_last_name() . '";';
 				$scripts .= 'var pl_customer_full_name = "' . self::$current_order->get_formatted_billing_full_name() . '";';
-				if ( 0 === ( $user_id = (int) get_post_meta( self::$current_order->get_id(), '_customer_user', true ) ) ) {
+				if ( 0 === ( $user_id = (int) self::$current_order->get_customer_id() ) ) {
 					$user_id = get_current_user_id();
 				}
 				$scripts .= 'var pl_customer_username = "' . Kadence_Woomail_Designer::get_username_from_id( $user_id ) . '";';

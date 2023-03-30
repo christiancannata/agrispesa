@@ -143,6 +143,9 @@ function moveCustomFieldsCheckout() {
   if (jQuery('#dog-custom-fields').length) {
     jQuery('#dog-custom-fields').prependTo('.woocommerce-additional-fields');
   }
+  if(jQuery('#wcpay-payment-request-wrapper').length) {
+    jQuery('#wcpay-payment-request-wrapper').appendTo('.woocommerce-checkout-payment');
+  }
 }
 
 

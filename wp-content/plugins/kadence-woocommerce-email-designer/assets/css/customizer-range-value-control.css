@@ -32,7 +32,9 @@ body {
     padding: 0;
     margin: 0;
 }
-
+.range-slider input.range-slider__range {
+    width: calc(100% - (95px));
+}
 .range-slider__range::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;

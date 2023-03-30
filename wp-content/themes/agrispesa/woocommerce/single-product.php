@@ -42,6 +42,8 @@ get_header(); ?>
 				  wc_get_template_part( 'content', 'single-product-box' );
 				} else if( in_array( 'gift-card', $categories ) ) {
 				  wc_get_template_part( 'content', 'single-product-giftcard' );
+				} else if( in_array( 'sos', $categories ) ) {
+				  wc_get_template_part( 'content', 'single-product-sos' );
 				} else {
 				  wc_get_template_part( 'content', 'single-product' );
 				} ?>

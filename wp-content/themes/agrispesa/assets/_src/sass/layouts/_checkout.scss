@@ -5,9 +5,11 @@ body.woocommerce-checkout {
 		display: none;
 	}
 }
+
 .shipping_address.no-mg-top {
 	margin-top: 0 !important;
 }
+
 body.woocommerce-checkout {
 	.woocommerce-form-login-toggle {
 		.woocommerce-info {
@@ -286,7 +288,6 @@ body.woocommerce-checkout {
 		}
 
 		&--cost {
-
 			.includes_tax {
 				display: none;
 			}
@@ -406,7 +407,7 @@ body.woocommerce-checkout {
 }
 
 .woocommerce ul#shipping_method .amount {
-    font-weight: 300;
+	font-weight: 300;
 }
 
 .woocommerce {
@@ -422,6 +423,7 @@ body.woocommerce-checkout {
 				@include font-size(16);
 				font-weight: 300 !important;
 				border-top: 1px solid rgba($white, 0.7);
+
 				&.product-name {
 					border-top: none;
 				}
@@ -437,15 +439,16 @@ body.woocommerce-checkout {
 
 			.recurring-totals {
 				//font-family: $font-title;
-
 				th {
 					@include font-size(18);
 					padding-top: 24px !important;
 					font-weight: 900 !important;
 				}
 			}
+
 			tr.order-total {
-				th, td {
+				td,
+				th {
 					font-weight: 600 !important;
 				}
 			}
@@ -461,7 +464,6 @@ body.woocommerce-checkout {
 					}
 				}
 
-
 				.checkout-coupon-name {
 					@include font-size(13);
 					display: block;
@@ -469,6 +471,7 @@ body.woocommerce-checkout {
 					letter-spacing: 1px;
 					color: $black;
 				}
+
 				.free-shipping-hide {
 					display: none;
 				}
@@ -693,7 +696,6 @@ body.woocommerce-checkout {
 	}
 }
 
-
 .free-shipping-li {
 	align-items: center;
 	border-top: 1px solid #ddd;
@@ -757,7 +759,6 @@ body.woocommerce-checkout {
 	}
 }
 
-
 .allergeni-lista {
 	position: relative;
 	@include breakpoint(mobile) {
@@ -820,15 +821,22 @@ body.woocommerce-cart {
 	}
 }
 
+body.woocommerce-checkout {
+	@include breakpoint(mobile) {
+		background: $white;
+	}
+}
+
 .woocommerce-account-fields,
 .woocommerce-billing-fields,
 .woocommerce-border-form,
 .woocommerce-checkout-payment,
 .woocommerce-coupons-section,
 body.woocommerce-checkout .woocommerce-gift-card-section {
+	background: $white;
+	padding: 24px 0;
 	@include breakpoint(desktop) {
 		@include border-radius(16px);
-		background: $white;
 		padding: 24px;
 		margin-bottom: 32px;
 	}
@@ -899,4 +907,94 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 
 #shipping_method input[type=radio] {
 	display: none;
+}
+
+.woocommerce {
+	.wpmc-steps-wrapper {
+		.woocommerce-coupons-section {
+			display: none;
+		}
+	}
+
+	.wpmc-nav-wrapper,
+	.wpmc-steps-wrapper,
+	.wpmc-tabs-wrapper {
+		max-width: 500px;
+		margin: 0 auto;
+	}
+#order_review_heading,
+	#payment_heading {
+		display: none;
+	}
+
+	.wpmc-nav-wrapper {
+		display: block;
+		text-align: center;
+		margin-top: -24px;
+		margin-bottom: 40px;
+
+		#wpmc-prev {
+			@include font-size(16);
+			background: transparent;
+			color: $blue;
+			font-weight: 300;
+		}
+
+		#wpmc-next {
+			@include button();
+			@include buttonprimary();
+		}
+
+	}
+
+	.wpmc-step-item {
+		.woocommerce-coupons-section {
+			display: block;
+		}
+
+		#payment,
+		.woocommerce-account-fields,
+		.woocommerce-billing-fields,
+		.woocommerce-border-form,
+		.woocommerce-checkout-payment,
+		.woocommerce-coupons-section,
+		.woocommerce-coupons-section,
+		body.woocommerce-checkout .woocommerce-gift-card-section {
+			// background: transparent !important;
+			// padding: 8px 0;
+			// border-radius: 0;
+		}
+
+		.shipping_address {
+			margin-top: 0;
+		}
+
+		#ship-to-different-address {
+			display: none;
+		}
+
+		.form-row-first,
+		.form-row-last {
+			float: none !important;
+			width: 100% !important;
+		}
+
+		.form-row {
+			margin: 8px 0 !important;
+
+			.input-text,
+			select {
+				//background: $white;
+			}
+		}
+
+		.woocommerce-checkout-review-order {
+			position: relative;
+			top: 0;
+		}
+
+		.selection .select2-selection--single {
+			background: $white !important;
+		}
+	}
 }

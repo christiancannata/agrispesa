@@ -602,7 +602,7 @@ msgid "Container Top Padding"
 msgstr "Marge intérieure supérieure du conteneur"
 
 #: includes/class-kadence-woomail-settings.php:1226
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr "Marge intérieure inférieure du conteneur"
 
 #: includes/class-kadence-woomail-settings.php:1245

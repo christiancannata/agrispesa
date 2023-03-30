@@ -525,7 +525,7 @@ msgid "Container Top Padding"
 msgstr ""
 
 #: includes/class-kadence-woomail-settings.php:1076
-msgid "Container Botom Padding"
+msgid "Container Bottom Padding"
 msgstr ""
 
 #: includes/class-kadence-woomail-settings.php:1095
