@@ -42,84 +42,34 @@ $customer_orders = wc_get_orders(array(
 
 // Count customers orders
 $count = count($customer_orders);
+$has_sub = wcs_user_has_subscription( '', '', 'active' );
+// $currentDate = date("d/m/Y");
+//
+// print_r($currentDate);
+
 
 ?>
 
+<?php if ( $has_sub):?>
+	<div id="box-calendar"></div>
 
-<?php if ($count >= 1) {
-	// Message
-	echo '<h3 class="my-account--minititle address-title">' . sprintf(_n('Il tuo ultimo ordine', 'I tuoi ultimi %s ordini', $count, 'woocommerce'), $count) . '</h3>';
-	?>
-	<table
-		class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
-		<thead>
-		<tr>
-			<?php foreach (wc_get_account_orders_columns() as $column_id => $column_name) : ?>
-				<th class="woocommerce-orders-table__header woocommerce-orders-table__header-<?php echo esc_attr($column_id); ?>">
-					<span class="nobr"><?php echo esc_html($column_name); ?></span></th>
-			<?php endforeach; ?>
-		</tr>
-		</thead>
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jsCalendar.js"></script>
+	<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jsCalendar.lang.it.js"></script>
+	<script type="text/javascript">
+		var today = new Date();
+		var myCalendar = jsCalendar.new('#box-calendar');
+		// Set date
+		myCalendar.setLanguage("it");
+		myCalendar.set("31/03/2023");
+		myCalendar.min("31/03/2023");
 
-		<tbody>
-		<?php
-		foreach ($customer_orders as $customer_order) {
-			$order = wc_get_order($customer_order); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$item_count = $order->get_item_count() - $order->get_item_count_refunded();
-			$isSubscription = get_post_meta($order->get_id(), '_subscription_id', true);
+		myCalendar.select([
+			"03/04/2023",
+			"10/04/2023",
+		]);
+	</script>
 
-			?>
-			<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr($order->get_status()); ?> order">
-				<?php foreach (wc_get_account_orders_columns() as $column_id => $column_name) : ?>
-					<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-<?php echo esc_attr($column_id); ?>"
-						data-title="<?php echo esc_attr($column_name); ?>">
-						<?php if (has_action('woocommerce_my_account_my_orders_column_' . $column_id)) : ?>
-							<?php do_action('woocommerce_my_account_my_orders_column_' . $column_id, $order); ?>
-
-						<?php elseif ('order-number' === $column_id) : ?>
-							<a href="<?php echo esc_url($order->get_view_order_url()); ?>">
-								<?php echo esc_html(_x('Ordine #', 'hash before order number', 'woocommerce') . $order->get_order_number()); ?>
-							</a>
-
-						<?php elseif ('order-date' === $column_id) : ?>
-							<time
-								datetime="<?php echo esc_attr($order->get_date_created()->date('c')); ?>"><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></time>
-
-						<?php elseif ('order-status' === $column_id) : ?>
-							<?php echo esc_html(wc_get_order_status_name($order->get_status())); ?>
-
-						<?php elseif ('order-total' === $column_id) : ?>
-							<?php
-							/* translators: 1: formatted order total 2: total order items */
-							if (!$isSubscription) {
-								echo wp_kses_post(sprintf(_n('%1$s', '%1$s', $item_count, 'woocommerce'), $order->get_formatted_order_total(), $item_count));
-							} else {
-								echo "In Abbonamento";
-							}
-							?>
-
-						<?php elseif ('order-actions' === $column_id) : ?>
-							<?php
-							$actions = wc_get_account_orders_actions($order);
-
-							if (!empty($actions)) {
-								foreach ($actions as $key => $action) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-									echo '<a href="' . esc_url($action['url']) . '" class="woocommerce-button button ' . sanitize_html_class($key) . '">' . esc_html($action['name']) . '</a>';
-								}
-							}
-							?>
-						<?php endif; ?>
-					</td>
-				<?php endforeach; ?>
-			</tr>
-			<?php
-		}
-		?>
-		</tbody>
-	</table>
-	<?php
-} else {
-	?>
+	<?php else: ?>
 	<div class="agr-memo">
 
 		<div class="agr-memo--flex">
@@ -140,8 +90,7 @@ $count = count($customer_orders);
 			</div>
 		</div>
 	</div>
-	<?php
-} ?>
+	<?php endif; ?>
 
 
 <?php

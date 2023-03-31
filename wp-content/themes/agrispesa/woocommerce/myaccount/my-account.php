@@ -152,8 +152,12 @@ if ($reg_month === '01') {
 						}
 						$i++;
 					}
+					if($i === 1) {
+						echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attiva</h3>';
+					} else {
+						echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attive</h3>';
+					}
 
-					echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attive</h3>';
 
 
 				} else {

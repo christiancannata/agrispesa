@@ -62,9 +62,18 @@ checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
 galleryProduct();
+profileCalendar();
 
 //changeShippingLabel();
 
+function profileCalendar() {
+  // var myCalendar = jsCalendar.new('#box-calendar');
+  // // Set date
+  // myCalendar.select([
+	// 	"01/04/2023",
+	// 	"08/04/2023",
+	// ]);
+}
 
 function petNameAnimation() {
   if (window.screen.width > 640) {
