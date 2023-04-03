@@ -87,15 +87,15 @@ if ( post_password_required() ) {
 </div>
 </div><!-- fine div.product-top in product-image.php -->
 
-<section class="agri-values" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/petfood/pawer-dog.jpg);">
-	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Il tuo cane ti aiuta a</h3>
+<section class="agri-values" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/cosa-contiene.jpg);">
+	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Cosa c'è nella scatola Agrispesa?</h3>
 	<div class="agri-values--flex">
 
 		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
 			<?php get_template_part( 'global-elements/icon', 'verdura' ); ?>
 			<p class="agri-values--descr">
 				Verdura<br/>
-				<span>(e cuccare)</span>
+				<span>appena raccolta</span>
 			</p>
 		</div>
 		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
@@ -109,7 +109,7 @@ if ( post_password_required() ) {
 			<?php get_template_part( 'global-elements/icon', 'latticini' ); ?>
 			<p class="agri-values--descr">
 				Uova e latticini<br/>
-				<span>neanche in bagno</span>
+				<span>da animali felici</span>
 			</p>
 		</div>
 		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
@@ -120,10 +120,10 @@ if ( post_password_required() ) {
 			</p>
 		</div>
 		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
-			<span class="icon-kids"></span>
+			<?php get_template_part( 'global-elements/icon', 'pane-cereali' ); ?>
 			<p class="agri-values--descr">
-				Accudire<br/>
-				<span>i bambini</span>
+				Pane e cereali<br/>
+				<span>da farine italiane</span>
 			</p>
 		</div>
 
@@ -139,21 +139,45 @@ if ( post_password_required() ) {
 		<div class="box-types--item vegana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegana.jpg)">
 			<h3 class="box-types--title">Vegana</h3>
 			<ul class="box-types--list">
-				<li>Prodotti di agricoltura contadina</li>
-				<li>Tisane con ingredienti naturali</li>
-				<li>Amore per gli animali</li>
+				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
+				<li><span class="icon-check"></span>Tisane con ingredienti naturali</li>
+				<li><span class="icon-check"></span>Amore per gli animali</li>
 			</ul>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18995'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item vegetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegetariana.jpg)">
 			<h3 class="box-types--title">Vegetariana</h3>
+			<ul class="box-types--list">
+				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
+				<li><span class="icon-check"></span>Latticini da allevamenti sostenibili</li>
+				<li><span class="icon-check"></span>Uova da galline felici</li>
+			</ul>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18996'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item pescetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/pescetariana.jpg)">
 			<h3 class="box-types--title">Pescetariana</h3>
+			<ul class="box-types--list">
+				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
+				<li><span class="icon-check"></span>Uova e latticini da animali felici</li>
+				<li><span class="icon-check"></span>Pesce allevato senza antibiotici</li>
+			</ul>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18997'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item onnivora" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/onnivora.jpg)">
 			<h3 class="box-types--title">Onnivora</h3>
+			<ul class="box-types--list">
+				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
+				<li><span class="icon-check"></span>Uova e latticini da animali felici</li>
+				<li><span class="icon-check"></span>Carne da allevamenti sostenibili</li>
+			</ul>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18998'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 	</div>
+
+	<div class="box-types--claim">
+		Prova la scatola piccola. Oppure <a href="" title="Seleziona la dimensione">seleziona la dimensione che preferisci</a>. — Disdici quando vuoi.
+	</div>
+
 </section>
 
 	<?php

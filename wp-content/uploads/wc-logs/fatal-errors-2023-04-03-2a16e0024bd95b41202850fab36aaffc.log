@@ -1,0 +1,17 @@
+2023-04-03T14:48:08+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-box.php alla riga 146
+
+2023-04-03T14:48:35+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-box.php alla riga 148
+
+2023-04-03T14:49:31+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Variable_Subscription::attributes() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-box.php:34
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template.php(785): require()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(284): load_template('/Users/nathalie...', false)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/single-product.php(42): wc_get_template_part('content', 'single-product-...')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(106): include('/Users/nathalie...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-box.php alla riga 34
+
+2023-04-03T14:51:57+00:00 CRITICAL syntax error, unexpected '$variationsType' (T_VARIABLE), expecting '(' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/content-single-product-box.php alla riga 36
+

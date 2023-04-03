@@ -1306,11 +1306,52 @@ body.tax-product_cat {
 		justify-content: space-between;
 	}
 
+	&--claim {
+		text-align: center;
+		@include font-size(14);
+		padding: 42px 0 0;
+		@include breakpoint(desktop) {
+			@include font-size(16);
+		}
+
+		a {
+			@include font-size(14);
+			color: $blue;
+			font-weight: 300;
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+			@include breakpoint(desktop) {
+				@include font-size(16);
+			}
+
+			&:after {
+				@include transition(all 0.2s linear);
+				background: $blue;
+				bottom: -2px;
+				content: '';
+				display: block;
+				height: 1px;
+				left: 0;
+				position: absolute;
+				width: 100%;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&::after {
+					width: 0;
+				}
+			}
+		}
+	}
+
 	&--item {
 		@include border-radius(24px);
 		@include full-bg();
 		width: 23%;
-		padding: 300px 32px 32px;
+		padding: 240px 32px 32px;
 		position: relative;
 		overflow: hidden;
 		color: $white;
@@ -1346,5 +1387,33 @@ body.tax-product_cat {
 		font-weight: 900;
 		position: relative;
 		z-index: 2;
+	}
+
+	.btn {
+		position: relative;
+		z-index: 2;
+		margin-top: 16px;
+	}
+
+	&--list {
+		@include font-size(16);
+		color: $white;
+		position: relative;
+		z-index: 2;
+
+		li {
+			position: relative;
+			padding-left: 20px;
+			line-height: 1;
+			margin: 8px 0;
+			font-weight: 400;
+		}
+
+		.icon-check {
+			@include font-size(30);
+			top: -8px;
+			position: absolute;
+			left: -9px;
+		}
 	}
 }
