@@ -62,18 +62,11 @@ checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
 galleryProduct();
-profileCalendar();
+sliderBox();
 
 //changeShippingLabel();
 
-function profileCalendar() {
-  // var myCalendar = jsCalendar.new('#box-calendar');
-  // // Set date
-  // myCalendar.select([
-	// 	"01/04/2023",
-	// 	"08/04/2023",
-	// ]);
-}
+
 
 function petNameAnimation() {
   if (window.screen.width > 640) {
@@ -577,6 +570,48 @@ function sliderPetfood() {
         centerMode: false
       }
     }, ]
+
+  });
+}
+
+function sliderBox() {
+
+  let _carousel = jQuery(".box-types--flex");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1340,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    } ]
 
   });
 }

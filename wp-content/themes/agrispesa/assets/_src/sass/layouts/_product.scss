@@ -1302,9 +1302,9 @@ body.tax-product_cat {
 	@include container();
 
 	&--flex {
-		display: flex;
-		justify-content: space-between;
-	}
+	// 	display: flex;
+	// 	justify-content: space-between;
+	 }
 
 	&--claim {
 		text-align: center;
@@ -1350,12 +1350,13 @@ body.tax-product_cat {
 	&--item {
 		@include border-radius(24px);
 		@include full-bg();
-		width: 23%;
+		//width: 23%;
 		padding: 240px 32px 32px;
 		position: relative;
 		overflow: hidden;
 		color: $white;
 		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+		margin: 0 20px;
 
 		&:before {
 			content: '';

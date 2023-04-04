@@ -1,0 +1,219 @@
+/* CSS Document */
+	.wpso{
+	}
+	.wpso h2:not(.nav-tab-wrapper) a{
+		background-color:#1269AE;
+		color:#fff;
+		padding:16px 20px !important;
+	}
+	.wpso h3,
+	.wpso h4{
+		padding:0;
+		margin:0;
+	}	
+	.wpso .hide{
+		display:none;
+	}
+	.wpso label{
+		height: 34px;
+		font-size: 14px;	
+	}
+	.wpso label.clickable{
+	
+		background-image: url("../images/uncheck.png");
+		background-repeat: no-repeat;
+		background-position: 12px 8px;
+		float: right;
+		position: relative;
+		top: 44px;
+		border-radius: 20px 0 0 20px;
+		padding: 14px 50px 0;
+		background-color:#fff;
+		border-right:3px solid #1269ae;	
+		color: #1269ae;
+	
+	}
+	.wpso label.clickable.check{
+	
+		background-image: url("../images/check.png");
+		background-repeat: no-repeat;
+		color: #F00;
+		border-right:3px solid #F00;	
+	}
+	.wpso_menu a {
+		background: url("../images/menu.png");
+		background-position: 108px center;
+		background-repeat: no-repeat;
+		background-size: 20px auto;
+	}
+	.wpso_menu a:hover {
+		background: url("../images/menu-over.png") !important;
+		background-position: 108px center !important;
+		background-repeat: no-repeat !important;
+		background-size: 20px auto !important;
+		color:#1269ae !important;
+		
+	}		
+	.wpso .button-primary {
+		background: rgba(0, 0, 0, 0) url("../images/menu.png") no-repeat scroll 154px 10px;
+		height: 50px;
+		padding: 0 58px;
+		background-color:#1269ae;
+	}	
+	.wpso .button-primary:hover {
+		background: rgba(0, 0, 0, 0) url("../images/menu-over.png") no-repeat scroll 154px 10px;
+		height: 50px;
+		padding: 0 58px;
+		color:#0085ba;
+		text-shadow:none;
+		background-color:#fff;
+	}	
+	.wpso .options1,
+	.wpso .options2{
+
+		height:246px;
+		vertical-align:top;
+	}
+	.wpso .form-table{
+		background: url("../images/bamboo.png");
+		background-repeat:no-repeat;
+		background-position:right bottom;		
+	}
+  	.wpso input[type="checkbox"]{
+	}
+	.wpso .form-table th,
+	.wpso .form-table td,
+	.wpso ul,
+	.wpso ul li,
+	.wpso .submit{
+		padding:0;
+		margin:0;
+	}
+	.wpso ul li label{
+		font-size:12px;
+	}
+	.wpso .form-table th{
+		background-color: #1269ae;
+		padding:10px 0;
+	}
+	.wpso .form-table td{
+		padding:0 30px;
+	}
+	.wpso .form-table th h4{
+		color:#fff;
+		text-align:center;
+	}
+	.wpso h2:not(.nav-tab-wrapper) a{
+		float:right;
+		color:#fff;
+		text-decoration:none;
+		font-size:14px;
+		background:url("../images/menu.png");
+		background-repeat:no-repeat;
+		background-position:right center;
+		padding-right:24px;
+		background-size:18px;
+	}
+	.wpso small.premium{
+		color:#F00;
+		font-style: italic;
+		cursor:pointer;
+		padding-left:20px;
+	}
+	.wpso .more_features{
+		padding:20px 0 0;
+	}
+	.wpso .more_features ul li label{
+		font-size:14px;
+		cursor:text;
+	}
+	.wpso .more_features small{
+		
+	}
+	.wpso .more_features span{
+		color:#F00;
+		font-weight:bold;
+	}
+	.wpso .more_features b{
+		color:#90F;
+	}
+
+	.wpso h2.nav-tab-wrapper .nav-tab,
+	.wpso h2.nav-tab-wrapper .nav-tab:hover{
+		cursor : pointer;
+		text-decoration:none;
+	}
+
+	.wpso .hide{
+
+		display : none;
+	}
+
+	/*Accordion Style Begins*/
+	.wpso .premium_content .accordion {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		text-align: left;
+		border: none;
+		outline: none;
+		transition: 0.4s;
+		position: relative;
+		border-bottom: 1px solid lightgrey;
+	}
+
+	.wpso .premium_content .accordion .dashicons {
+
+		position: absolute;
+		right: 15px;
+		top: 20px;
+	}
+
+
+	.wpso .premium_content .accordion.first .plus {
+
+		display: none;
+	}
+
+	.wpso .premium_content .accordion:not(.first) .minus {
+
+		display: none;
+	}
+
+	/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+	.wpso .premium_content .active, .wpso .premium_content .accordion:hover {
+		background-color: #ccc;
+	}
+
+	/* Style the accordion panel. Note: hidden by default */
+	.wpso .premium_content .panel {
+		padding: 0 18px;
+		background-color: #f1f1f1;
+		overflow: hidden;
+		border: 1px solid lightgrey;
+	}
+
+	.wpso .premium_content .panel:not(.first){
+		display: none;
+
+	}
+
+	.wpso .premium_content .accordion_wrapper{
+
+		margin : 25px;
+		box-shadow: 0 0 10px #b7b7b7;
+
+	}
+	.wpso .form-table th small {
+		text-align: center;
+		display: block;
+		color: yellow;
+		font-family: courier;
+		margin: 10px 0;
+	}
+	/*Accordion Style End*/
+
+
+	
