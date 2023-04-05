@@ -301,29 +301,29 @@ function cloudways_save_extra_checkout_fields( $order_id, $posted ){
 add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_checkout_fields', 10, 2 );
 
 //Display WooCommerce Admin Custom Order Fields
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
-function admin_order_after_billing_address_callback( $order ){
-    // if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
-    //     echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
-    // } else {
-		// 	  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
-		// }
-    // if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
-    //     echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
-    // } else {
-		// 	  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
-		// }
-		// if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
-    //     echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
-    // } else {
-		// 	  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
-		// }
-		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
-        echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
-    } else {
-			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
-		}
-}
+// add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
+// function admin_order_after_billing_address_callback( $order ){
+//     // if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
+//     //     echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
+//     // } else {
+// 		// 	  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
+// 		// }
+//     // if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
+//     //     echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
+//     // } else {
+// 		// 	  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
+// 		// }
+// 		// if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
+//     //     echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
+//     // } else {
+// 		// 	  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
+// 		// }
+// 		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
+//         echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
+//     } else {
+// 			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
+// 		}
+// }
 
 function cloudways_save_extra_details( $post_id, $post ){
     // update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
@@ -622,7 +622,7 @@ function admin_order_codice_fiscale_editable_field( $fields ) {
     return $fields;
 }
 
-// WordPress User: Add Billing cellulare editable field
+// WordPress User: Add Billing codice fiscale editable field
 add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_codice_fiscale_field');
 function wordpress_user_account_codice_fiscale_field( $fields ) {
     $fields['billing']['fields']['codice_fiscale'] = array(
@@ -711,6 +711,32 @@ add_filter('woocommerce_email_order_meta_keys', 'my_custom_partita_iva_order_met
 function my_custom_partita_iva_order_meta_keys( $keys ) {
 	$keys[] = 'Partita Iva';
 	return $keys;
+}
+
+
+//Display WooCommerce Admin Custom Order Fields
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
+function admin_order_after_billing_address_callback( $order ){
+    if ( $tiva1  = $order->get_meta('_shipping_scala') ) {
+        echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
+		}
+    if ( $tfcarr = $order->get_meta('_shipping_piano') ) {
+        echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
+		}
+		if ( $tfcitofono = $order->get_meta('_shipping_citofono') ) {
+        echo '<p><strong>'. __("Citofono e note") . ':</strong><br/> ' . $tfcitofono . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
+		}
+		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
+        echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
+    } else {
+			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
+		}
 }
 
 
