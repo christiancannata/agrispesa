@@ -107,7 +107,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 											?>
 										</div>
 										<div class="new-cart--details">
-											<?php if($_product->get_name() != 'Acquista credito' && $_product->get_name() != 'Spesa Sospesa') {
+											<?php if($_product->get_name() != 'Acquista saldo' && $_product->get_name() != 'Spesa Sospesa') {
 															if ($_product->is_type('variation')) {
 															$dimensione = get_term_by( 'name', $_product->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
 															$tipologia = get_term_by( 'name', $_product->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
@@ -132,6 +132,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 															}
 
 														}
+													} else {
+														echo 'ciaoo';
 													} ?>
 										</div>
 									</div>

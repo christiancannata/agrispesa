@@ -4,3 +4,157 @@
 
 2023-04-05T12:21:14+00:00 CRITICAL Cannot redeclare save_account_shipping_scala_field() (previously declared in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:428) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 471
 
+2023-04-05T14:15:09+00:00 CRITICAL Uncaught Error: Call to undefined method WP_Post::get_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:393
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): remove_shop_breadcrumbs('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(13): do_action('template_redire...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 393
+
+2023-04-05T14:15:11+00:00 CRITICAL Uncaught Error: Call to undefined method WP_Post::get_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:393
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): remove_shop_breadcrumbs('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(13): do_action('template_redire...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 393
+
+2023-04-05T14:15:18+00:00 CRITICAL Uncaught Error: Call to undefined method WP_Post::get_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:393
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): remove_shop_breadcrumbs('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(13): do_action('template_redire...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 393
+
+2023-04-05T14:15:52+00:00 CRITICAL Uncaught Error: Call to undefined method WP_Post::get_id() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:393
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): remove_shop_breadcrumbs('')
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/template-loader.php(13): do_action('template_redire...')
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-blog-header.php(19): require_once('/Users/nathalie...')
+#5 /Users/nathalie/Sites/localhost/agrispesa/index.php(17): require('/Users/nathalie...')
+#6 {main}
+  thrown in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 393
+
+2023-04-05T14:36:16+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:30
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 30
+
+2023-04-05T14:36:49+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:30
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 30
+
+2023-04-05T14:36:57+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:30
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 30
+
+2023-04-05T14:37:12+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:30
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 30
+
+2023-04-05T14:37:14+00:00 CRITICAL Uncaught Error: Call to a member function get_shipping_postcode() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:30
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 30
+
+2023-04-05T14:39:31+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_postcode() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:39:39+00:00 CRITICAL syntax error, unexpected ';', expecting ')' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:44:09+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_shipping() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:44:25+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_shipping() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:44:27+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_shipping() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:44:30+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Subscription::get_shipping() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispe in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:54:19+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Subscription as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woo in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
+2023-04-05T14:54:28+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Subscription as array in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:22
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woo in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
+
