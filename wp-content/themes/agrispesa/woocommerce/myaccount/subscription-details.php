@@ -37,7 +37,7 @@ if (in_array('welovedenso', $subscription_coupons)) {
 
 
 $deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $subscription_postcode);
-echo '<br/>data consegna: ' . $deliveryDate;
+print_r($deliveryDate);
 $shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
 $shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
 $shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
