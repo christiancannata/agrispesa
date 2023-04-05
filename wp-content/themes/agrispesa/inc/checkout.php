@@ -150,7 +150,7 @@ add_filter('ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_c
 
 // Modifica label note di consegna
 function theme_override_checkout_notes_fields($fields){
-	$fields['order']['order_comments']['placeholder'] = 'Se dobbiamo sapere qualcosa sul confezionamento, dicci tutto!';
+	$fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa di pià? Dicci tutto!';
 	$fields['order']['order_comments']['label'] = 'Note per il confezionamento';
 	return $fields;
 }
@@ -216,7 +216,7 @@ function cloudways_custom_checkout_fields($fields){
           'type' => 'textarea',
           'required'      => $required,
 					'label'         => __('Citofono e indicazioni per il corriere'),
-					'placeholder'   => __('Dobbiamo sapere qualcosa di più?'),
+					'placeholder'   => __('Aiutaci a consegnare la tua scatola in modo più preciso.'),
         ),
     );
     return $fields;
