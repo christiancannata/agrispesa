@@ -2,7 +2,7 @@
 <!-- Generator: Adobe Illustrator 27.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="pawer-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 232.1 83.1" style="enable-background:new 0 0 232.1 83.1;" xml:space="preserve">
-<g id="Livello_2_00000164509108577894723830000004525484601707522725_">
+<g>
 	<g>
 		<path class="st0" d="M47.7,36.7c0-1.1,0-1.9,0-2.4l0,0c-0.2-4.2-1.8-7.5-4.5-9.9c-2.7-2.3-6.4-3.4-10.7-3.2l-18.6,1
 			c-0.6,0-1.1,0.3-1.5,0.7c-0.3,0.4-0.5,0.8-0.6,1.4l-3,45c-0.1,0.6,0.1,1.2,0.5,1.7c0.4,0.4,0.9,0.6,1.5,0.6h0.1l9.1-0.5

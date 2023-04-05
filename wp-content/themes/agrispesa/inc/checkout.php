@@ -458,6 +458,33 @@ function codice_fiscale_order_meta( $order_id ) {
 }
 
 
+// Save Billing codice_fiscale field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_codice_fiscale_field', 10, 2 );
+function save_account_codice_fiscale_field( $customer, $data ){
+    if ( isset($_POST['codice_fiscale']) && ! empty($_POST['codice_fiscale']) ) {
+         $customer->update_meta_data( 'codice_fiscale', sanitize_text_field($_POST['codice_fiscale']) );
+    }
+}
+
+// Admin orders Billing codice_fiscale editable field and display
+add_filter('woocommerce_admin_billing_fields', 'admin_order_codice_fiscale_editable_field');
+function admin_order_codice_fiscale_editable_field( $fields ) {
+    $fields['codice_fiscale'] = array( 'label' => __('Codice Fiscale', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add Billing cellulare editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_codice_fiscale_field');
+function wordpress_user_account_codice_fiscale_field( $fields ) {
+    $fields['billing']['fields']['codice_fiscale'] = array(
+        'label'       => __('Codice Fiscale', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
+
+
 // creo il campo partita iva
 add_filter( 'woocommerce_checkout_fields' , 'partita_iva' );
 
@@ -482,6 +509,32 @@ function partita_iva_order_meta( $order_id ) {
 	}
 }
 
+
+// Save Billing partita_iva field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_partita_iva_field', 10, 2 );
+function save_account_partita_iva_field( $customer, $data ){
+    if ( isset($_POST['partita_iva']) && ! empty($_POST['partita_iva']) ) {
+         $customer->update_meta_data( 'partita_iva', sanitize_text_field($_POST['partita_iva']) );
+    }
+}
+
+// Admin orders Billing partita_iva editable field and display
+add_filter('woocommerce_admin_billing_fields', 'admin_order_partita_iva_editable_field');
+function admin_order_partita_iva_editable_field( $fields ) {
+    $fields['partita_iva'] = array( 'label' => __('P.IVA', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add Billing partita_iva editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_partita_iva_field');
+function wordpress_user_account_partita_iva_field( $fields ) {
+    $fields['billing']['fields']['partita_iva'] = array(
+        'label'       => __('P.IVA', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
 //inserisco il codice fiscale nel back end
 add_action( 'woocommerce_admin_order_data_after_billing_address', 'codice_fiscale_order_meta_admin', 10, 1 );
 
