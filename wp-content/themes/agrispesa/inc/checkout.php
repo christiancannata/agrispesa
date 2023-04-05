@@ -313,7 +313,7 @@ function admin_order_after_billing_address_callback( $order ){
     } else {
 			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
 		}
-		if ( $tfcitofono = $order->get_meta('_cloudways_piano_field') ) {
+		if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
         echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
     } else {
 			  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';

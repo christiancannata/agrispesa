@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WCPay\\MultiCurrency\\' => array($baseDir . '/includes/multi-currency'),
-    'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'Automattic\\Jetpack\\Autoloader\\' => array($vendorDir . '/automattic/jetpack-autoloader/src'),
 );

@@ -118,7 +118,7 @@ if ( ! class_exists( 'Woo_Wallet_Wallet' ) ) {
 				}
 				update_post_meta( $order_id, '_wc_wallet_purchase_gateway_charge', $charge_amount );
 			}
-			$transaction_id = $this->credit( $order->get_customer_id(), $recharge_amount, __( "Credito acquistato con l'ordine #", "woo-wallet" ) . $order->get_order_number() );
+			$transaction_id = $this->credit( $order->get_customer_id(), $recharge_amount, __( 'Wallet credit through purchase #', 'woo-wallet' ) . $order->get_order_number() );
 			if ( $transaction_id ) {
 				update_post_meta( $order_id, '_wc_wallet_purchase_credited', true );
 				update_post_meta( $order_id, '_wallet_payment_transaction_id', $transaction_id );
@@ -167,10 +167,10 @@ if ( ! class_exists( 'Woo_Wallet_Wallet' ) ) {
 			$order                  = wc_get_order( $order_id );
 			$partial_payment_amount = get_order_partial_payment_amount( $order_id );
 			if ( $partial_payment_amount && ! get_post_meta( $order_id, '_partial_pay_through_wallet_compleate', true ) ) {
-				$transaction_id = $this->debit( $order->get_customer_id(), $partial_payment_amount, __( "Usato per pagare l’ordine #", "woo-wallet" ) . $order->get_order_number() );
+				$transaction_id = $this->debit( $order->get_customer_id(), $partial_payment_amount, __( 'For order payment #', 'woo-wallet' ) . $order->get_order_number() );
 				if ( $transaction_id ) {
 					/* translators: wallet amount */
-					$order->add_order_note( sprintf( __( '%s pagato con il saldo', 'woo-wallet' ), wc_price( $partial_payment_amount, woo_wallet_wc_price_args( $order->get_customer_id() ) ) ) );
+					$order->add_order_note( sprintf( __( '%s paid through wallet', 'woo-wallet' ), wc_price( $partial_payment_amount, woo_wallet_wc_price_args( $order->get_customer_id() ) ) ) );
 					update_wallet_transaction_meta( $transaction_id, '_partial_payment', true, $order->get_customer_id() );
 					update_post_meta( $order_id, '_partial_pay_through_wallet_compleate', $transaction_id );
 					do_action( 'woo_wallet_partial_payment_completed', $transaction_id, $order );

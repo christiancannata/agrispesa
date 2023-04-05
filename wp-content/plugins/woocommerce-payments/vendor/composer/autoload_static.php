@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc
+class ComposerStaticInit555a8dd9a23a8a2e3f351ec3a7303fbf
 {
     public static $files = array (
         '3773ef3f09c37da5478d578e32b03a4b' => __DIR__ . '/..' . '/automattic/jetpack-assets/actions.php',
@@ -14,10 +14,6 @@ class ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc
         'W' => 
         array (
             'WCPay\\MultiCurrency\\' => 20,
-        ),
-        'M' => 
-        array (
-            'MyCLabs\\Enum\\' => 13,
         ),
         'C' => 
         array (
@@ -33,10 +29,6 @@ class ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc
         'WCPay\\MultiCurrency\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes/multi-currency',
-        ),
-        'MyCLabs\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
         ),
         'Composer\\Installers\\' => 
         array (
@@ -254,8 +246,6 @@ class ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc
         'Jetpack_Tracks_Client' => __DIR__ . '/..' . '/automattic/jetpack-tracking/legacy/class-jetpack-tracks-client.php',
         'Jetpack_Tracks_Event' => __DIR__ . '/..' . '/automattic/jetpack-tracking/legacy/class-jetpack-tracks-event.php',
         'Jetpack_XMLRPC_Server' => __DIR__ . '/..' . '/automattic/jetpack-connection/legacy/class-jetpack-xmlrpc-server.php',
-        'MyCLabs\\Enum\\Enum' => __DIR__ . '/..' . '/myclabs/php-enum/src/Enum.php',
-        'MyCLabs\\Enum\\PHPUnit\\Comparator' => __DIR__ . '/..' . '/myclabs/php-enum/src/PHPUnit/Comparator.php',
         'WCPay\\MultiCurrency\\AdminNotices' => __DIR__ . '/../..' . '/includes/multi-currency/AdminNotices.php',
         'WCPay\\MultiCurrency\\Analytics' => __DIR__ . '/../..' . '/includes/multi-currency/Analytics.php',
         'WCPay\\MultiCurrency\\BackendCurrencies' => __DIR__ . '/../..' . '/includes/multi-currency/BackendCurrencies.php',
@@ -292,9 +282,9 @@ class ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4c5e7d0d54ada4553446569af99f60dc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit555a8dd9a23a8a2e3f351ec3a7303fbf::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit555a8dd9a23a8a2e3f351ec3a7303fbf::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit555a8dd9a23a8a2e3f351ec3a7303fbf::$classMap;
 
         }, null, ClassLoader::class);
     }

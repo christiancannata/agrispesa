@@ -211,8 +211,6 @@ return array(
     'Jetpack_Tracks_Client' => $vendorDir . '/automattic/jetpack-tracking/legacy/class-jetpack-tracks-client.php',
     'Jetpack_Tracks_Event' => $vendorDir . '/automattic/jetpack-tracking/legacy/class-jetpack-tracks-event.php',
     'Jetpack_XMLRPC_Server' => $vendorDir . '/automattic/jetpack-connection/legacy/class-jetpack-xmlrpc-server.php',
-    'MyCLabs\\Enum\\Enum' => $vendorDir . '/myclabs/php-enum/src/Enum.php',
-    'MyCLabs\\Enum\\PHPUnit\\Comparator' => $vendorDir . '/myclabs/php-enum/src/PHPUnit/Comparator.php',
     'WCPay\\MultiCurrency\\AdminNotices' => $baseDir . '/includes/multi-currency/AdminNotices.php',
     'WCPay\\MultiCurrency\\Analytics' => $baseDir . '/includes/multi-currency/Analytics.php',
     'WCPay\\MultiCurrency\\BackendCurrencies' => $baseDir . '/includes/multi-currency/BackendCurrencies.php',
