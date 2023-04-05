@@ -5,6 +5,17 @@ add_action('admin_head', 'my_custom_fonts');
 
 function my_custom_fonts() {
   echo '<style>
+
+  body.user-edit-php .user-rich-editing-wrap,
+  body.user-edit-php .user-admin-color-wrap,
+  body.user-edit-php .user-comment-shortcuts-wrap,
+  body.user-edit-php .user-admin-bar-front-wrap,
+  body.user-edit-php .user-language-wrap,
+  body.user-edit-php .user-description-wrap,
+  body.user-edit-php .user-profile-picture,
+  body.user-edit-php .application-passwords {
+    display: none !important;
+  }
   body.wp-admin .wp-list-table td.price .uom {
     display: none;
   }
