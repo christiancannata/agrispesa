@@ -158,3 +158,12 @@ Stack trace:
 #4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woo in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 22
 
+2023-04-05T16:11:09+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:40
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrisp in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 40
+

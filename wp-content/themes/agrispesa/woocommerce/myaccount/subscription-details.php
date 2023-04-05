@@ -37,54 +37,54 @@ if (in_array('welovedenso', $subscription_coupons)) {
 
 
 $deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $subscription_postcode);
-print_r($deliveryDate);
-// $shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
-// $shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
-// $shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
-// $shipping_date_day = ($deliveryDate) ? $deliveryDate->format("d") : '';
-//
-// $shipping_month_it = '';
-// if ($shipping_date_month === '01') {
-// 	$shipping_month_it = 'Gennaio';
-// } else if ($shipping_date_month === '02') {
-// 	$shipping_month_it = 'Febbraio';
-// } else if ($shipping_date_month === '03') {
-// 	$shipping_month_it = 'Marzo';
-// } else if ($shipping_date_month === '04') {
-// 	$shipping_month_it = 'Aprile';
-// } else if ($shipping_date_month === '05') {
-// 	$shipping_month_it = 'Maggio';
-// } else if ($shipping_date_month === '06') {
-// 	$shipping_month_it = 'Giugno';
-// } else if ($shipping_date_month === '07') {
-// 	$shipping_month_it = 'Luglio';
-// } else if ($shipping_date_month === '08') {
-// 	$shipping_month_it = 'Agosto';
-// } else if ($shipping_date_month === '09') {
-// 	$shipping_month_it = 'Settembre';
-// } else if ($shipping_date_month === '10') {
-// 	$shipping_month_it = 'Ottobre';
-// } else if ($shipping_date_month === '11') {
-// 	$shipping_month_it = 'Novembre';
-// } else if ($shipping_date_month === '12') {
-// 	$shipping_month_it = 'Dicembre';
-// }
-// $shipping_weekday_it = '';
-// if ($shipping_date_weekday === 'Monday') {
-// 	$shipping_weekday_it = 'Lunedì';
-// } else if ($shipping_date_weekday === 'Tuesday') {
-// 	$shipping_weekday_it = 'Martedì';
-// } else if ($shipping_date_weekday === 'Wednesday') {
-// 	$weekday_it = 'Mercoledì';
-// } else if ($shipping_date_weekday === 'Thursday') {
-// 	$shipping_weekday_it = 'Giovedì';
-// } else if ($shipping_date_weekday === 'Friday') {
-// 	$shipping_weekday_it = 'Venerdì';
-// } else if ($shipping_date_weekday === 'Saturday') {
-// 	$shipping_weekday_it = 'Sabato';
-// } else if ($shipping_date_weekday === 'Sunday') {
-// 	$shipping_weekday_it = 'Domenica';
-// }
+print_r('<br/>data consegna: ' . $deliveryDate);
+$shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
+$shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
+$shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
+$shipping_date_day = ($deliveryDate) ? $deliveryDate->format("d") : '';
+
+$shipping_month_it = '';
+if ($shipping_date_month === '01') {
+	$shipping_month_it = 'Gennaio';
+} else if ($shipping_date_month === '02') {
+	$shipping_month_it = 'Febbraio';
+} else if ($shipping_date_month === '03') {
+	$shipping_month_it = 'Marzo';
+} else if ($shipping_date_month === '04') {
+	$shipping_month_it = 'Aprile';
+} else if ($shipping_date_month === '05') {
+	$shipping_month_it = 'Maggio';
+} else if ($shipping_date_month === '06') {
+	$shipping_month_it = 'Giugno';
+} else if ($shipping_date_month === '07') {
+	$shipping_month_it = 'Luglio';
+} else if ($shipping_date_month === '08') {
+	$shipping_month_it = 'Agosto';
+} else if ($shipping_date_month === '09') {
+	$shipping_month_it = 'Settembre';
+} else if ($shipping_date_month === '10') {
+	$shipping_month_it = 'Ottobre';
+} else if ($shipping_date_month === '11') {
+	$shipping_month_it = 'Novembre';
+} else if ($shipping_date_month === '12') {
+	$shipping_month_it = 'Dicembre';
+}
+$shipping_weekday_it = '';
+if ($shipping_date_weekday === 'Monday') {
+	$shipping_weekday_it = 'Lunedì';
+} else if ($shipping_date_weekday === 'Tuesday') {
+	$shipping_weekday_it = 'Martedì';
+} else if ($shipping_date_weekday === 'Wednesday') {
+	$weekday_it = 'Mercoledì';
+} else if ($shipping_date_weekday === 'Thursday') {
+	$shipping_weekday_it = 'Giovedì';
+} else if ($shipping_date_weekday === 'Friday') {
+	$shipping_weekday_it = 'Venerdì';
+} else if ($shipping_date_weekday === 'Saturday') {
+	$shipping_weekday_it = 'Sabato';
+} else if ($shipping_date_weekday === 'Sunday') {
+	$shipping_weekday_it = 'Domenica';
+}
 
 ?>
 
@@ -110,7 +110,7 @@ print_r($deliveryDate);
 <div class="top_banner">
 	<h3 class="top_banner--title">We love Denso.</h3>
 
-	<?php //echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>
+	<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>
 
 	<p class="top_banner--subtitle">Consegniamo gratuitamente nella tua azienda.</p>
 	<div class="top_banner--logos">
