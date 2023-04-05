@@ -999,7 +999,11 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 	}
 }
 
+.woocommerce-additional-fields {
+	display: none;
+}
 .form-row {
+	&#shipping_scala_field,
 	&#billing_phone_field,
 	&#billing_country_field {
 		border-top: 1px solid $panna;

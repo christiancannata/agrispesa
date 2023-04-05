@@ -150,7 +150,7 @@ add_filter('ywgc_gift_card_code_form_checkout_hook', 'ywgc_gift_card_code_form_c
 
 // Modifica label note di consegna
 function theme_override_checkout_notes_fields($fields){
-	$fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa di pià? Dicci tutto!';
+	$fields['order']['order_comments']['placeholder'] = 'Dobbiamo sapere qualcosa di più? Dicci tutto!';
 	$fields['order']['order_comments']['label'] = 'Note per il confezionamento';
 	return $fields;
 }
@@ -221,7 +221,7 @@ function cloudways_custom_checkout_fields($fields){
     );
     return $fields;
 }
-add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
+//add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
 
 function cloudways_extra_checkout_fields(){
     $checkout = WC()->checkout(); ?>
@@ -238,7 +238,7 @@ function cloudways_extra_checkout_fields(){
 					<?php endif;?>
 			</div>
 <?php }
-add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
+//add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
 
 
 //Add DOGS custom fields to checkout
@@ -284,15 +284,15 @@ add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_dog_extra_
 //Save data of WooCommerce Custom Checkout Fields
 function cloudways_save_extra_checkout_fields( $order_id, $posted ){
     // don't forget appropriate sanitization if you are using a different field type
-    if( isset( $posted['cloudways_scala_field'] ) ) {
-        update_post_meta( $order_id, '_cloudways_scala_field', sanitize_text_field( $posted['cloudways_scala_field'] ) );
-    }
-    if( isset( $posted['cloudways_piano_field'] ) ) {
-        update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
-    }
-		if( isset( $posted['cloudways_citofono_field'] ) ) {
-        update_post_meta( $order_id, '_cloudways_citofono_field', sanitize_text_field( $posted['cloudways_citofono_field'] ) );
-    }
+    // if( isset( $posted['cloudways_scala_field'] ) ) {
+    //     update_post_meta( $order_id, '_cloudways_scala_field', sanitize_text_field( $posted['cloudways_scala_field'] ) );
+    // }
+    // if( isset( $posted['cloudways_piano_field'] ) ) {
+    //     update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
+    // }
+		// if( isset( $posted['cloudways_citofono_field'] ) ) {
+    //     update_post_meta( $order_id, '_cloudways_citofono_field', sanitize_text_field( $posted['cloudways_citofono_field'] ) );
+    // }
 		if( isset( $posted['cloudways_dog_name_field'] ) ) {
         update_post_meta( $order_id, '_cloudways_dog_name_field', sanitize_text_field( $posted['cloudways_dog_name_field'] ) );
     }
@@ -303,21 +303,21 @@ add_action( 'woocommerce_checkout_update_order_meta', 'cloudways_save_extra_chec
 //Display WooCommerce Admin Custom Order Fields
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
 function admin_order_after_billing_address_callback( $order ){
-    if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
-        echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
-    } else {
-			  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
-		}
-    if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
-        echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
-    } else {
-			  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
-		}
-		if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
-        echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
-    } else {
-			  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
-		}
+    // if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
+    //     echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
+    // } else {
+		// 	  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
+		// }
+    // if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
+    //     echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
+    // } else {
+		// 	  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
+		// }
+		// if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
+    //     echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
+    // } else {
+		// 	  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
+		// }
 		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
         echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
     } else {
@@ -326,9 +326,9 @@ function admin_order_after_billing_address_callback( $order ){
 }
 
 function cloudways_save_extra_details( $post_id, $post ){
-    update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
-    update_post_meta( $post_id, '_cloudways_scala_field', wc_clean( $_POST[ '_cloudways_scala_field' ] ) );
-    update_post_meta( $post_id, '_cloudways_citofono_field', wc_clean( $_POST[ '_cloudways_citofono_field' ] ) );
+    // update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
+    // update_post_meta( $post_id, '_cloudways_scala_field', wc_clean( $_POST[ '_cloudways_scala_field' ] ) );
+    // update_post_meta( $post_id, '_cloudways_citofono_field', wc_clean( $_POST[ '_cloudways_citofono_field' ] ) );
     update_post_meta( $post_id, '_cloudways_dog_name_field', wc_clean( $_POST[ '_cloudways_dog_name_field' ] ) );
 }
 add_action( 'woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2 );
@@ -402,6 +402,139 @@ class WPDeskNoShippingMessage {
 }
 
 ( new WPDeskNoShippingMessage() )->add_hooks();
+
+
+
+
+
+// Display shipping_scala field to checkout and My account addresses
+add_filter( 'woocommerce_shipping_fields', 'display_shipping_scala_field', 20, 1 );
+function display_shipping_scala_field($shipping_fields) {
+
+    $shipping_fields['shipping_scala'] = array(
+        'type'        => 'text',
+        'label'       => __('Scala'),
+        'class'       => array('form-row-wide'),
+        'priority'    => 25,
+        'required'    => false,
+        'clear'       => true,
+				'priority'    => 101
+    );
+    return $shipping_fields;
+}
+
+// Save shipping_scala field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_shipping_scala_field', 10, 2 );
+function save_account_shipping_scala_field( $customer, $data ){
+    if ( isset($_POST['shipping_scala']) && ! empty($_POST['shipping_scala']) ) {
+         $customer->update_meta_data( 'shipping_scala', sanitize_text_field($_POST['shipping_scala']) );
+    }
+}
+
+// Admin orders shipping_scala editable field and display
+add_filter('woocommerce_admin_shipping_fields', 'admin_order_shipping_scala_editable_field');
+function admin_order_shipping_scala_editable_field( $fields ) {
+    $fields['shipping_scala'] = array( 'label' => __('Scala', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add shipping_scala editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_shipping_scala_field');
+function wordpress_user_account_shipping_scala_field( $fields ) {
+    $fields['shipping']['fields']['shipping_scala'] = array(
+        'label'       => __('Scala', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
+
+
+// Display shipping_scala field to checkout and My account addresses
+add_filter( 'woocommerce_shipping_fields', 'display_shipping_piano_field', 20, 1 );
+function display_shipping_piano_field($shipping_fields) {
+
+    $shipping_fields['shipping_piano'] = array(
+        'type'        => 'text',
+        'label'       => __('Piano'),
+        'class'       => array('form-row-wide'),
+        'priority'    => 25,
+        'required'    => true,
+        'clear'       => true,
+				'priority'    => 101
+    );
+    return $shipping_fields;
+}
+
+// Save shipping_piano field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_shipping_piano_field', 10, 2 );
+function save_account_shipping_piano_field( $customer, $data ){
+    if ( isset($_POST['shipping_piano']) && ! empty($_POST['shipping_piano']) ) {
+         $customer->update_meta_data( 'shipping_piano', sanitize_text_field($_POST['shipping_piano']) );
+    }
+}
+
+// Admin orders shipping_piano editable field and display
+add_filter('woocommerce_admin_shipping_fields', 'admin_order_shipping_piano_editable_field');
+function admin_order_shipping_piano_editable_field( $fields ) {
+    $fields['shipping_scala'] = array( 'label' => __('Piano', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add shipping_piano editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_shipping_piano_field');
+function wordpress_user_account_shipping_piano_field( $fields ) {
+    $fields['shipping']['fields']['shipping_piano'] = array(
+        'label'       => __('Piano', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
+
+
+// Display shipping_citofono field to checkout and My account addresses
+add_filter( 'woocommerce_shipping_fields', 'display_shipping_citofono_field', 20, 1 );
+function display_shipping_citofono_field($shipping_fields) {
+
+    $shipping_fields['shipping_citofono'] = array(
+        'type'        => 'textarea',
+        'label'       => __('Citofono e indicazioni per il corriere'),
+        'class'       => array('form-row-wide'),
+        'priority'    => 25,
+        'required'    => false,
+        'clear'       => true,
+				'priority'    => 101
+    );
+    return $shipping_fields;
+}
+
+// Save shipping_citofono field value as user meta data
+add_action( 'woocommerce_checkout_update_customer', 'save_account_shipping_citofono_field', 10, 2 );
+function save_account_shipping_citofono_field( $customer, $data ){
+    if ( isset($_POST['shipping_citofono']) && ! empty($_POST['shipping_citofono']) ) {
+         $customer->update_meta_data( 'shipping_citofono', sanitize_text_field($_POST['shipping_citofono']) );
+    }
+}
+
+// Admin orders shipping_citofono editable field and display
+add_filter('woocommerce_admin_shipping_fields', 'admin_order_shipping_citofono_editable_field');
+function admin_order_shipping_citofono_editable_field( $fields ) {
+    $fields['shipping_citofono'] = array( 'label' => __('Citofono e indicazioni', 'woocommerce') );
+
+    return $fields;
+}
+
+// WordPress User: Add shipping_piano editable field
+add_filter('woocommerce_customer_meta_fields', 'wordpress_user_account_shipping_citofono_field');
+function wordpress_user_account_shipping_citofono_field( $fields ) {
+    $fields['shipping']['fields']['shipping_citofono'] = array(
+        'label'       => __('Citofono e indicazioni', 'woocommerce'),
+        'description' => __('', 'woocommerce')
+    );
+    return $fields;
+}
+
 
 
 
