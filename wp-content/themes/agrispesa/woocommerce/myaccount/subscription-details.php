@@ -108,11 +108,11 @@ if ($shipping_date_weekday === 'Monday') {
 <?php endif;?>
 
 <div class="top_banner">
-	<h3 class="top_banner--title">We love Denso.</h3>
+	<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
 
-	<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>
 
-	<p class="top_banner--subtitle">Consegniamo gratuitamente nella tua azienda.</p>
+
+	<p class="top_banner--subtitle">Il corriere busserà alla tua porta <?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?></p>
 	<div class="top_banner--logos">
 		<span class="agrispesa">
 			<?php get_template_part('global-elements/logo', 'open'); ?>
