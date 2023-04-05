@@ -994,7 +994,15 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 		}
 
 		.selection .select2-selection--single {
-			background: $white !important;
+			//background: $white !important;
 		}
+	}
+}
+
+.form-row {
+	&#billing_phone_field,
+	&#billing_country_field {
+		border-top: 1px solid $panna;
+		padding-top: 12px !important;
 	}
 }
