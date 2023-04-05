@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <header>
-	<h3 class="my-account--minititle"><?php esc_html_e( 'Related orders', 'woocommerce-subscriptions' ); ?></h3>
+	<h3 class="my-account--minititle"><?php esc_html_e( 'Ordini collegati', 'woocommerce-subscriptions' ); ?></h3>
 </header>
 
 <table class="shop_table shop_table_responsive my_account_orders woocommerce-orders-table woocommerce-MyAccount-orders woocommerce-orders-table--orders">

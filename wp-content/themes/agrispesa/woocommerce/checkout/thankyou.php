@@ -73,7 +73,7 @@ if ($box_in_order) {
 	} else if ($shipping_date_weekday === 'Tuesday') {
 		$shipping_weekday_it = 'Martedì';
 	} else if ($shipping_date_weekday === 'Wednesday') {
-		$weekday_it = 'Mercoledì';
+		$shipping_weekday_it = 'Mercoledì';
 	} else if ($shipping_date_weekday === 'Thursday') {
 		$shipping_weekday_it = 'Giovedì';
 	} else if ($shipping_date_weekday === 'Friday') {
