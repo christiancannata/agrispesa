@@ -4,6 +4,102 @@ function dd($vars)
 	die(var_dump($vars));
 }
 
+function give_user_subscription( $product, $user, $note = '' ){
+
+	$user_id = $user->ID;
+	// First make sure all required functions and classes exist
+	if( ! function_exists( 'wc_create_order' ) || ! function_exists( 'wcs_create_subscription' ) || ! class_exists( 'WC_Subscriptions_Product' ) ){
+		return false;
+	}
+
+	$order = wc_create_order( array( 'customer_id' => $user_id ) );
+
+	if( is_wp_error( $order ) ){
+		return false;
+	}
+
+	$user = get_user_by( 'ID', $user_id );
+
+	$fname     = $user->first_name;
+	$lname     = $user->last_name;
+	$email     = $user->user_email;
+	$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
+	$address_2 = get_user_meta( $user_id, 'billing_address_2', true );
+	$city      = get_user_meta( $user_id, 'billing_city', true );
+	$postcode  = get_user_meta( $user_id, 'billing_postcode', true );
+	$country   = get_user_meta( $user_id, 'billing_country', true );
+	$state     = get_user_meta( $user_id, 'billing_state', true );
+
+	$address         = array(
+		'first_name' => $fname,
+		'last_name'  => $lname,
+		'email'      => $email,
+		'address_1'  => $address_1,
+		'address_2'  => $address_2,
+		'city'       => $city,
+		'state'      => $state,
+		'postcode'   => $postcode,
+		'country'    => $country,
+	);
+
+	$order->set_customer_id($user_id);
+	$order->set_address( $address, 'billing' );
+	$order->set_address( $address, 'shipping' );
+	$order->add_product( $product, 1 );
+	$order->set_status('completed');
+
+
+	$address         = array(
+		'first_name' => $fname,
+		'last_name'  => $lname,
+		'email'      => $email,
+		'address_1'  => $address_1,
+		'address_2'  => $address_2,
+		'city'       => $city,
+		'state'      => $state,
+		'postcode'   => $postcode,
+		'country'    => $country,
+	);
+
+	$order->set_address( $address, 'billing' );
+	$order->set_address( $address, 'shipping' );
+	$order->add_product( $product, 1 );
+
+	$sub = wcs_create_subscription(array(
+		'order_id' => $order->get_id(),
+		'status' => 'active',
+		'status' => 'pending', // Status should be initially set to pending to match how normal checkout process goes
+		'billing_period' => WC_Subscriptions_Product::get_period( $product ),
+		'billing_interval' => WC_Subscriptions_Product::get_interval( $product )
+	));
+
+	if( is_wp_error( $sub ) ){
+		return false;
+	}
+
+	// Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
+	$start_date = gmdate( 'Y-m-d H:i:s' );
+	// Add product to subscription
+	$sub->add_product( $product, 1 );
+
+	$dates = array(
+		'trial_end'    => WC_Subscriptions_Product::get_trial_expiration_date( $product, $start_date ),
+		'next_payment' => WC_Subscriptions_Product::get_first_renewal_payment_date( $product, $start_date ),
+		'end'          => WC_Subscriptions_Product::get_expiration_date( $product, $start_date ),
+	);
+
+	$sub->update_dates( $dates );
+	$sub->calculate_totals();
+
+	// Update order status with custom note
+	$note = ! empty( $note ) ? $note : __( 'Programmatically added order and subscription.' );
+	//$order->update_status( 'completed', $note, true );
+	// Also update subscription status to active from pending (and add note)
+	//	$sub->update_status( 'active', $note, true );
+
+	return $sub;
+}
+
 function get_order_delivery_date($id)
 {
 	$order = wc_get_order($id);
@@ -231,6 +327,95 @@ add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_field
 
 
 add_action('rest_api_init', function () {
+
+	register_rest_route('agrispesa/v1', 'import-subscriptions', array(
+		'methods' => 'POST',
+		'permission_callback' => function () {
+			return true;
+		},
+		'callback' => function ($request) {
+
+			$lines = explode(PHP_EOL, $request->get_body());
+			$users = [];
+			foreach ($lines as $line) {
+ 			   $users[] = str_getcsv($line,";");
+			}
+
+		    $header_row = array_shift($users);
+			$employee_csv = [];
+    		foreach($users as $row) {
+        		if(!empty($row)){
+					$employee_csv[] = array_combine($header_row, $row);
+        		}
+    		}
+
+			global $wpdb;
+			$wpdb->query("DELETE from wp_posts  WHERE post_type = 'shop_subscription'");
+
+
+			$allSingleBox = get_all_single_box();
+			$allSingleBox = array_map(function($box){
+				$navId = get_post_meta($box->get_id(),'_navision_id',true);
+				if(!empty($navId)){
+					$box->_navision_id = $navId[0];
+				}else{
+					$box->_navision_id  = null;
+				}
+				return $box;
+			}, $allSingleBox);
+
+			foreach($employee_csv as $user){
+				$wordpressUser = get_users(array(
+    				'meta_key'     => 'codice_fiscale',
+    				'meta_value' => $user['automatismiSettimanali_intestazioneFattura::codiceFiscale']
+				));
+
+				if(count($wordpressUser) > 0){
+				    $wordpressUser = reset($wordpressUser);
+				}
+
+				if(!$wordpressUser){
+					continue;
+				}
+
+				$hasSubscription = wcs_user_has_subscription($wordpressUser->get_id());
+
+				if(!$hasSubscription){
+					if(empty($user['automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa'])){
+						continue;
+					}
+
+					$boxNavisionId = $user['automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa'];
+
+					$singleBox = array_filter($allSingleBox,function($box) use($boxNavisionId){
+						return $box->_navision_id == $boxNavisionId;
+					});
+
+					if(count($singleBox) == 0){
+						continue;
+					}
+
+					$singleBox = reset($singleBox);
+
+					$tipologia = get_post_meta($singleBox->get_id(), 'attribute_pa_tipologia', true);
+					$dimensione = get_post_meta($singleBox->get_id(), 'attribute_pa_dimensione', true);
+
+
+				    $subscriptionProduct = get_subscription_box_from_attributes($tipologia, $dimensione);
+
+					give_user_subscription($subscriptionProduct,$wordpressUser);
+				}
+
+			}
+
+			$response = new WP_REST_Response([]);
+			$response->set_status(204);
+
+			return $response;
+
+
+		}
+	));
 
 
 	register_rest_route('agrispesa/v1', 'import-products', array(
@@ -2029,6 +2214,34 @@ function create_order_from_subscription($id)
 
 }
 
+function get_all_single_box(){
+	$products = get_posts(array(
+		'post_type' => 'product',
+		'numberposts' => -1,
+		'post_status' => 'publish',
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field' => 'slug',
+				'terms' => 'box singola',
+				'operator' => 'IN',
+			)
+		),
+	));
+
+	$singleBoxes = [];
+
+	foreach ($products as $product) {
+		$product = wc_get_product($product->ID);
+		$children = $product->get_children();
+		foreach ($children as $variation) {
+			$variation = wc_get_product($variation);
+			$singleBoxes[] = $variation;
+		}
+	}
+	return $singleBoxes;
+}
+
 function get_single_box_from_attributes($tipologia, $dimensione)
 {
 	$products = get_posts(array(
@@ -2040,6 +2253,47 @@ function get_single_box_from_attributes($tipologia, $dimensione)
 				'taxonomy' => 'product_cat',
 				'field' => 'slug',
 				'terms' => 'box singola',
+				'operator' => 'IN',
+			)
+		),
+	));
+
+	$productFound = false;
+	foreach ($products as $product) {
+		$product = wc_get_product($product->ID);
+		$children = $product->get_children();
+		foreach ($children as $variation) {
+			$tipologiaVariation = get_post_meta($variation, 'attribute_pa_tipologia', true);
+			$dimensioneVariation = get_post_meta($variation, 'attribute_pa_dimensione', true);
+
+			if ($tipologia == $tipologiaVariation && $dimensioneVariation == $dimensione) {
+				$productFound = $variation;
+			}
+		}
+	}
+
+	if ($productFound) {
+		$productFound = wc_get_product($productFound);
+		return $productFound;
+	}
+
+	return $productFound;
+
+}
+
+
+
+function get_subscription_box_from_attributes($tipologia, $dimensione)
+{
+	$products = get_posts(array(
+		'post_type' => 'product',
+		'numberposts' => -1,
+		'post_status' => 'publish',
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field' => 'slug',
+				'terms' => 'box',
 				'operator' => 'IN',
 			)
 		),
