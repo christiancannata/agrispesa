@@ -1,0 +1,126 @@
+2023-04-08T16:11:16+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26900)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26900, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:12:02+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26902)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26902, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:21:40+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26904)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26904, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:23:19+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26908)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26908, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:26:56+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26904)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26904, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:28:34+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26906)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26906, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:30:14+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26908)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26908, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:31:08+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26910)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26910, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:32:17+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26912)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26912, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:33:05+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26914)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26914, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:34:42+00:00 CRITICAL Uncaught TypeError: Argument 2 passed to WCS_Customer_Store_Cached_CPT::update_subscription_id_cache() must be of the type array, bool given, called in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php on line 179 and defined in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:190
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(179): WCS_Customer_Store_Cached_CPT->update_subscription_id_cache('Eleonora.Grechi', false)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(263): WCS_Customer_Store_Cached_CPT->delete_subscription_i in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 190
+
+2023-04-08T16:35:36+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26916)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26916, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:35:51+00:00 CRITICAL Uncaught Error: Call to a member function delete() on bool in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php:1492
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php(1426): WCS_Admin_Post_Types->do_bulk_action_delete_subscriptions(Array, true)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php(376): WCS_Admin_Post_Types->handle_subscription_bulk_actions('/wp-admin/edit....', 'delete_subscrip...', Array)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Admin_Post_Types->parse_bulk_actions('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+ in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/admin/class-wcs-admin-post-types.php alla riga 1492
+
+2023-04-08T16:37:05+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26918)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26918, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:37:19+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26920)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26920, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+
+2023-04-08T16:45:52+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php:162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php(270): WCS_Customer_Store_Cached_CPT->add_subscription_id_to_cache(36, 26925)
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Customer_Store_Cached_CPT->maybe_update_for_post_meta_change('update', 26925, '_customer_user', 36, '')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-post-meta-cache-manager.php(239): do_action('wcs_upda in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/data-stores/class-wcs-customer-store-cached-cpt.php alla riga 162
+

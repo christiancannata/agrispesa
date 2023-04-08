@@ -23,6 +23,7 @@ function give_user_subscription($product, $user, $row)
 		]);
 
 	if( is_wp_error( $order ) ){
+		dd($order);
 		return false;
 	}
 
@@ -74,7 +75,6 @@ function give_user_subscription($product, $user, $row)
 	update_post_meta($order->get_id(),'_billing_codice_fiscale',$row['automatismiSettimanali_intestazioneFattura::partitaIva']);
 	$order->save();
 
-
     $subscriptionParams = [
         'order_id' => $order->get_id(),
         "customer_id" => $user_id,
@@ -86,6 +86,7 @@ function give_user_subscription($product, $user, $row)
     $sub = wcs_create_subscription($subscriptionParams);
 
     if (is_wp_error($sub)) {
+		dd($sub);
         return false;
     }
 
@@ -464,6 +465,11 @@ add_action("rest_api_init", function () {
 				   $wpdb->query(
                 	"DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = ".$wordpressUser->ID
           		  );
+
+				  $wpdb->query(
+                	"delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';"
+          		  );
+
 
                 $hasSubscription = wcs_user_has_subscription(
                     $wordpressUser->ID

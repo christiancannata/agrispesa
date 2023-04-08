@@ -100,7 +100,6 @@ class WCS_Customer_Store_Cached_CPT extends WCS_Customer_Store_CPT implements WC
     {
 
         $subscription_ids = $this->get_users_subscription_ids_from_cache($user_id);
-
         // get user meta returns an empty string when no matching row is found for the given key, meaning it's not set yet
         if ('' === $subscription_ids) {
 
@@ -116,15 +115,15 @@ class WCS_Customer_Store_Cached_CPT extends WCS_Customer_Store_CPT implements WC
             }
 
 
-            if(!is_array($subscription_ids)){
-               // $subscription_ids = [];
+            if (!is_array($subscription_ids)) {
+                $subscription_ids = [];
             }
 
             $this->update_subscription_id_cache($user_id, $subscription_ids);
         }
 
-        if(!is_array($subscription_ids)){
-         //   $subscription_ids = [];
+        if (!is_array($subscription_ids)) {
+            $subscription_ids = [];
         }
         // Sort results in order to keep consistency between cached results and queried results.
         rsort($subscription_ids);
@@ -145,7 +144,6 @@ class WCS_Customer_Store_Cached_CPT extends WCS_Customer_Store_CPT implements WC
      */
     protected function get_users_subscription_ids_from_cache($user_id)
     {
-
         // Empty user IDs, like 0 or '', are never cached
         $subscription_ids = empty($user_id) ? array() : get_user_meta($user_id, $this->get_cache_meta_key(), true);
 
