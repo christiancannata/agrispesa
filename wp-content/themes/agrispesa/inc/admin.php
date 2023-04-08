@@ -16,7 +16,7 @@ function give_user_subscription($product, $user, $row)
         return false;
     }
 
-
+	$payment_gateways = WC()->payment_gateways->payment_gateways();
 
     $order = wc_create_order([
 		"customer_id" => $user_id
@@ -67,6 +67,7 @@ function give_user_subscription($product, $user, $row)
 	$order->set_address( $shippingAddress, 'shipping' );
 	$order->add_product( $product, 1 );
 	$order->set_status('completed');
+	$order->set_payment_method($payment_gateways['wallet']);
     $order->calculate_totals();
 
 	update_post_meta($order->get_id(),'_billing_partita_iva',$row['automatismiSettimanali_intestazioneFattura::codiceFiscale']);
@@ -87,6 +88,8 @@ function give_user_subscription($product, $user, $row)
     if (is_wp_error($sub)) {
         return false;
     }
+
+	$sub->set_payment_method($payment_gateways['wallet']);
 
 	$sub->set_address( $invoiceAddress, 'billing' );
 	$sub->set_address( $shippingAddress, 'shipping' );
@@ -120,7 +123,6 @@ function give_user_subscription($product, $user, $row)
     //$order->update_status( 'completed', $note, true );
     // Also update subscription status to active from pending (and add note)
     //	$sub->update_status( 'active', $note, true );
-
     return $sub;
 }
 
