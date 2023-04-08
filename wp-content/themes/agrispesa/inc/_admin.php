@@ -783,7 +783,8 @@ function my_enqueue($hook)
 
 	if ($hook == 'edit.php' || $hook == 'post.php') {
 		wp_enqueue_script('agrispesa-admin-delivery-box-js', get_theme_file_uri('assets/js/admin-delivery-box.js'), array('jquery', 'select2'), null, true);
-		wp_localize_script('agrispesa-admin-delivery-box-js', 'WPURL', array('siteurl' => get_option('siteurl')));
+		wp_localize_script('agrispesa-admin-delivery-box-js', 'WPURL', array('siteurl' => get_option('siteurl'),            'userId' => get_current_user_id()
+		));
 
 	} else {
 
@@ -813,7 +814,8 @@ function my_enqueue($hook)
 
 		wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
 		wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
-		wp_localize_script('agrispesa-admin-js', 'WPURL', array('siteurl' => get_option('siteurl')));
+		wp_localize_script('agrispesa-admin-js', 'WPURL', array('siteurl' => get_option('siteurl'),            'userId' => get_current_user_id()
+		));
 
 	}
 }

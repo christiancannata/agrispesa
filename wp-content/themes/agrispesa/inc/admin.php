@@ -1538,6 +1538,7 @@ WHERE wp.ID IS NULL");
             $args = [
                 "taxonomy" => $taxonomy,
                 "orderby" => $orderby,
+                "numberposts" => -1,
                 "show_count" => $show_count,
                 "pad_counts" => $pad_counts,
                 "hierarchical" => $hierarchical,
@@ -1551,15 +1552,16 @@ WHERE wp.ID IS NULL");
                 if ($cat->category_parent == 0) {
                     $category_id = $cat->term_id;
 
-                    $isVisible = get_term_meta(
+                  /*  $isVisible = get_term_meta(
                         $category_id,
                         "in_preferenze_utente",
                         true
                     );
+
                     if (empty($isVisible)) {
                         continue;
                     }
-
+*/
                     $args2 = [
                         "taxonomy" => $taxonomy,
                         "child_of" => 0,
@@ -1574,14 +1576,14 @@ WHERE wp.ID IS NULL");
                     $sub_cats = get_categories($args2);
                     if ($sub_cats) {
                         foreach ($sub_cats as $sub_category) {
-                            $isVisible = get_term_meta(
+                         /*   $isVisible = get_term_meta(
                                 $sub_category->term_id,
                                 "in_preferenze_utente",
                                 true
                             );
                             if (empty($isVisible)) {
                                 continue;
-                            }
+                            }*/
 
                             $categoryProducts = get_posts([
                                 "post_type" => "product",
@@ -1619,9 +1621,12 @@ WHERE wp.ID IS NULL");
             return true;
         },
         "callback" => function ($request) {
+
+			$loggedUser =  $_GET['userId'];
+
             $subscriptions = wcs_get_subscriptions([
                 "subscriptions_per_page" => -1,
-                "customer_id" => get_current_user_id(),
+                "customer_id" => $loggedUser,
                 "subscription_status" => "active",
             ]);
 
@@ -1943,6 +1948,7 @@ function my_enqueue($hook)
         );
         wp_localize_script("agrispesa-admin-delivery-box-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
+            'userId' => get_current_user_id()
         ]);
     } else {
         if ("toplevel_page_esporta-documenti" == $hook) {
@@ -2041,6 +2047,8 @@ function my_enqueue($hook)
         );
         wp_localize_script("agrispesa-admin-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
+            'userId' => get_current_user_id()
+
         ]);
     }
 }
@@ -2077,10 +2085,46 @@ if (!function_exists("mv_add_meta_boxes")) {
         global $post;
 
         $subscriptionId = get_post_meta($post->ID, "_subscription_id", true);
-        echo $subscriptionId;?>
-		<h4>Da Eliminare</h4><br>
 
+		$boxPreferences = get_post_meta(
+            $subscriptionId,
+            "_box_preferences",
+            true
+        );
+
+		$boxBlacklist = get_post_meta(
+            $subscriptionId,
+            "_box_blacklist",
+            true
+        );
+
+		if(!empty($boxPreferences)):
+		?>
+
+		<h4>Cosa mi piacerebbe ricevere</h4>
+		<table class="table">
+		<?php foreach($boxPreferences as $preference): ?>
+		<tr>
+		<td><?php echo $preference['name']; ?></td>
+		<td><a href="/wp-admin/post.php?post=<?php echo $preference['id']; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
+</tr>
+		<?php endforeach; ?>
+</table>
 		<?php
+		endif;
+		if(!empty($boxBlacklist)):
+		?>
+
+		<h4>Cosa non voglio ricevere</h4>
+		<table class="table">
+		<?php foreach($boxBlacklist as $preference): ?>
+		<tr>
+		<td><?php echo $preference['name']; ?></td>
+		<td><a href="/wp-admin/post.php?post=<?php echo $preference['id']; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
+</tr>
+		<?php endforeach; ?>
+</table>
+<?php endif;
     }
 }
 

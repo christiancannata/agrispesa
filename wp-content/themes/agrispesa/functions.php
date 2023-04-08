@@ -93,7 +93,7 @@ add_action('wp_enqueue_scripts', function () {
 		wp_enqueue_script('comment-reply');
 	}
 
-	wp_localize_script('agrispesa-js', 'WPURL', array('siteurl' => get_option('siteurl')));
+	wp_localize_script('agrispesa-js', 'WPURL', array('siteurl' => get_option('siteurl'), 'userId' => get_current_user_id()));
 
 });
 

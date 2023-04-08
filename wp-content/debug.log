@@ -8859,3 +8859,44 @@ Stack trace:
 [08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
 [08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
 [08-Apr-2023 14:40:09 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1170) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1201
+[08-Apr-2023 14:46:03 UTC] PHP Notice:  Undefined variable: changed_stock in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-ajax.php on line 1304
+[08-Apr-2023 14:46:47 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[08-Apr-2023 14:46:47 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[08-Apr-2023 14:46:47 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[08-Apr-2023 14:46:47 UTC] PHP Notice:  Undefined index: _cloudways_dog_name_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 332
+[08-Apr-2023 14:47:07 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:47:08 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:47:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:47:09 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:48:45 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:48:45 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:48:45 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:48:45 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:59:14 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:59:53 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 14:59:58 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 15:00:02 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/shop.php on line 393
+[08-Apr-2023 15:00:25 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3828 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:25 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:27 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3845 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:27 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:28 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3848 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:28 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:29 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3826 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:29 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3856 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:29 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:00:29 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[08-Apr-2023 15:06:00 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:07:02 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:09:12 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:09:28 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:09:52 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:10:10 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 15:13:29 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
