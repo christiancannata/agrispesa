@@ -1,18 +1,26 @@
 <?php
 function dd($vars)
 {
-	die(var_dump($vars));
+    die(var_dump($vars));
 }
 
-function give_user_subscription( $product, $user, $note = '' ){
+function give_user_subscription($product, $user, $row)
+{
+    $user_id = $user->ID;
+    // First make sure all required functions and classes exist
+    if (
+        !function_exists("wc_create_order") ||
+        !function_exists("wcs_create_subscription") ||
+        !class_exists("WC_Subscriptions_Product")
+    ) {
+        return false;
+    }
 
-	$user_id = $user->ID;
-	// First make sure all required functions and classes exist
-	if( ! function_exists( 'wc_create_order' ) || ! function_exists( 'wcs_create_subscription' ) || ! class_exists( 'WC_Subscriptions_Product' ) ){
-		return false;
-	}
 
-	$order = wc_create_order( array( 'customer_id' => $user_id ) );
+
+    $order = wc_create_order([
+		"customer_id" => $user_id
+		]);
 
 	if( is_wp_error( $order ) ){
 		return false;
@@ -23,2142 +31,2533 @@ function give_user_subscription( $product, $user, $note = '' ){
 	$fname     = $user->first_name;
 	$lname     = $user->last_name;
 	$email     = $user->user_email;
-	$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
+	/*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
 	$address_2 = get_user_meta( $user_id, 'billing_address_2', true );
 	$city      = get_user_meta( $user_id, 'billing_city', true );
 	$postcode  = get_user_meta( $user_id, 'billing_postcode', true );
 	$country   = get_user_meta( $user_id, 'billing_country', true );
 	$state     = get_user_meta( $user_id, 'billing_state', true );
+*/
+	 $shippingAddress = [
+        "first_name" => $fname,
+        "last_name" => $lname,
+        "email" => $email,
+        "phone" => $row['automatismiSettimanali_utenze::telmobile'],
+        "address_1" => $row['automatismiSettimanali_indirizzoSpedizione::indirizzo'].' '.$row['automatismiSettimanali_indirizzoSpedizione::numeroCivico'],
+        "city" => $row['automatismiSettimanali_indirizzoSpedizione::città'],
+        "state" => "",
+        "postcode" => $row['automatismiSettimanali_indirizzoSpedizione::cap'],
+        "country" => "IT",
+    ];
 
-	$address         = array(
-		'first_name' => $fname,
-		'last_name'  => $lname,
-		'email'      => $email,
-		'address_1'  => $address_1,
-		'address_2'  => $address_2,
-		'city'       => $city,
-		'state'      => $state,
-		'postcode'   => $postcode,
-		'country'    => $country,
-	);
+	  $invoiceAddress = [
+        "first_name" => $row['automatismiSettimanali_intestazioneFattura::nome'],
+        "last_name" => $row['automatismiSettimanali_intestazioneFattura::cognome'],
+        "email" => $email,
+        "phone" => $row['automatismiSettimanali_utenze::telmobile'],
+        "address_1" => $row['automatismiSettimanali_intestazioneFattura::indirizzo'].' '.$row['automatismiSettimanali_intestazioneFattura::numeroCivico'],
+        "city" => $row['automatismiSettimanali_intestazioneFattura::città'],
+        "state" => "",
+        "postcode" => $row['automatismiSettimanali_intestazioneFattura::cap'],
+        "country" => "IT",
+    ];
 
 	$order->set_customer_id($user_id);
-	$order->set_address( $address, 'billing' );
-	$order->set_address( $address, 'shipping' );
+	$order->set_address( $invoiceAddress, 'billing' );
+	$order->set_address( $shippingAddress, 'shipping' );
 	$order->add_product( $product, 1 );
 	$order->set_status('completed');
+    $order->calculate_totals();
+
+	update_post_meta($order->get_id(),'_billing_partita_iva',$row['automatismiSettimanali_intestazioneFattura::codiceFiscale']);
+	update_post_meta($order->get_id(),'_billing_codice_fiscale',$row['automatismiSettimanali_intestazioneFattura::partitaIva']);
+	$order->save();
 
 
-	$address         = array(
-		'first_name' => $fname,
-		'last_name'  => $lname,
-		'email'      => $email,
-		'address_1'  => $address_1,
-		'address_2'  => $address_2,
-		'city'       => $city,
-		'state'      => $state,
-		'postcode'   => $postcode,
-		'country'    => $country,
-	);
+    $subscriptionParams = [
+        'order_id' => $order->get_id(),
+        "customer_id" => $user_id,
+        "status" => "active",
+        "billing_period" => WC_Subscriptions_Product::get_period($product),
+        "billing_interval" => WC_Subscriptions_Product::get_interval($product),
+    ];
 
-	$order->set_address( $address, 'billing' );
-	$order->set_address( $address, 'shipping' );
-	$order->add_product( $product, 1 );
+    $sub = wcs_create_subscription($subscriptionParams);
 
-	$sub = wcs_create_subscription(array(
-		'order_id' => $order->get_id(),
-		'status' => 'active',
-		'status' => 'pending', // Status should be initially set to pending to match how normal checkout process goes
-		'billing_period' => WC_Subscriptions_Product::get_period( $product ),
-		'billing_interval' => WC_Subscriptions_Product::get_interval( $product )
-	));
+    if (is_wp_error($sub)) {
+        return false;
+    }
 
-	if( is_wp_error( $sub ) ){
-		return false;
-	}
+	$sub->set_address( $invoiceAddress, 'billing' );
+	$sub->set_address( $shippingAddress, 'shipping' );
+    // Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
+    $start_date = gmdate("Y-m-d H:i:s");
+    // Add product to subscription
+    $sub->add_product($product, 1);
 
-	// Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
-	$start_date = gmdate( 'Y-m-d H:i:s' );
-	// Add product to subscription
-	$sub->add_product( $product, 1 );
+    $dates = [
+        "trial_end" => WC_Subscriptions_Product::get_trial_expiration_date(
+            $product,
+            $start_date
+        ),
+        "next_payment" => WC_Subscriptions_Product::get_first_renewal_payment_date(
+            $product,
+            $start_date
+        ),
+        "end" => WC_Subscriptions_Product::get_expiration_date(
+            $product,
+            $start_date
+        ),
+    ];
 
-	$dates = array(
-		'trial_end'    => WC_Subscriptions_Product::get_trial_expiration_date( $product, $start_date ),
-		'next_payment' => WC_Subscriptions_Product::get_first_renewal_payment_date( $product, $start_date ),
-		'end'          => WC_Subscriptions_Product::get_expiration_date( $product, $start_date ),
-	);
+    $sub->update_dates($dates);
+    $sub->calculate_totals();
+	$sub->save();
+    // Update order status with custom note
+    $note = !empty($note)
+        ? $note
+        : __("Programmatically added order and subscription.");
+    //$order->update_status( 'completed', $note, true );
+    // Also update subscription status to active from pending (and add note)
+    //	$sub->update_status( 'active', $note, true );
 
-	$sub->update_dates( $dates );
-	$sub->calculate_totals();
-
-	// Update order status with custom note
-	$note = ! empty( $note ) ? $note : __( 'Programmatically added order and subscription.' );
-	//$order->update_status( 'completed', $note, true );
-	// Also update subscription status to active from pending (and add note)
-	//	$sub->update_status( 'active', $note, true );
-
-	return $sub;
+    return $sub;
 }
 
 function get_order_delivery_date($id)
 {
-	$order = wc_get_order($id);
-	if (!$order) {
-		return null;
-	}
+    $order = wc_get_order($id);
+    if (!$order) {
+        return null;
+    }
 
-	$deliveryDate = get_post_meta($id, '_delivery_date', true);
+    $deliveryDate = get_post_meta($id, "_delivery_date", true);
 
-	if ($deliveryDate) {
-		return DateTime::createFromFormat('Y-m-d', $deliveryDate)->format('d/m/Y');
-	}
+    if ($deliveryDate) {
+        return DateTime::createFromFormat("Y-m-d", $deliveryDate)->format(
+            "d/m/Y"
+        );
+    }
 }
 
-function get_order_delivery_date_from_date($date = null, $group = null, $cap = null)
-{
+function get_order_delivery_date_from_date(
+    $date = null,
+    $group = null,
+    $cap = null
+) {
+    if (!$group && $cap) {
+        $groups = get_posts([
+            "post_type" => "delivery-group",
+            "post_status" => "publish",
+            "posts_per_page" => -1,
+        ]);
 
-	if (!$group && $cap) {
-		$groups = get_posts([
-			'post_type' => 'delivery-group',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-		]);
+        foreach ($groups as $singleGroup) {
+            $caps = get_post_meta($singleGroup->ID, "cap", true);
 
-		foreach ($groups as $singleGroup) {
+            if (in_array($cap, $caps)) {
+                $group = $singleGroup->post_title;
+            }
+        }
+    }
 
-			$caps = get_post_meta($singleGroup->ID, 'cap', true);
+    if (!$group) {
+        return null;
+    }
 
-			if (in_array($cap, $caps)) {
-				$group = $singleGroup->post_title;
-			}
-		}
-	}
+    global $wpdb;
 
-	if (!$group) {
-		return null;
-	}
+    $ids = $wpdb->get_col(
+        "select ID from $wpdb->posts where post_title = '" .
+            $group .
+            "' AND post_status = 'publish'"
+    );
+    $ids = reset($ids);
 
-	global $wpdb;
+    $dowMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
-	$ids = $wpdb->get_col("select ID from $wpdb->posts where post_title = '" . $group . "' AND post_status = 'publish'");
-	$ids = reset($ids);
+    if (is_object($date) && get_class($date) != DateTime::class) {
+        $date = DateTime::createFromFormat("d-m-Y", $date);
+    }
 
-	$dowMap = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+    //if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+    if (is_string($date)) {
+        $date = new DateTime($date);
+    }
 
-	if (is_object($date) && get_class($date) != DateTime::class) {
-		$date = DateTime::createFromFormat('d-m-Y', $date);
-	}
+    $date->add(new DateInterval("P7D"));
+    //}
 
-	//if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
-	if (is_string($date)) {
-		$date = new DateTime($date);
-	}
+    $deliveryDay = get_post_meta($ids, "delivery_day", true);
 
-	$date->add(new DateInterval('P7D'));
-	//}
+    $deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());
+    $deliveryDate = DateTime::createFromFormat("U", $deliveryDate);
 
-	$deliveryDay = get_post_meta($ids, 'delivery_day', true);
-
-	$deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());
-	$deliveryDate = DateTime::createFromFormat('U', $deliveryDate);
-
-	return $deliveryDate;
+    return $deliveryDate;
 }
 
 function calculate_delivery_date_order($id, $updateWeek = true)
 {
+    $order = wc_get_order($id);
+    if (!$order) {
+        return null;
+    }
 
-	$order = wc_get_order($id);
-	if (!$order) {
-		return null;
-	}
+    $gruppoConsegna = get_post_meta($id, "_gruppo_consegna", true);
 
-	$gruppoConsegna = get_post_meta($id, '_gruppo_consegna', true);
+    if (!$gruppoConsegna) {
+        return null;
+    }
 
-	if (!$gruppoConsegna) {
-		return null;
-	}
+    $order_date = $order->get_date_paid();
 
+    if ($order_date) {
+        if ($updateWeek) {
+            $week = $order_date->format("W");
 
-	$order_date = $order->get_date_paid();
+            if ($order->get_created_via() == "checkout") {
+                $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+            } else {
+                if (
+                    ($order_date->format("w") > 5 &&
+                        $order_date->format("H") >= 8) ||
+                    $order_date->format("w") == 0
+                ) {
+                    $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+                }
+            }
 
+            update_post_meta($order->get_id(), "_week", $week);
+        }
 
-	if($order_date){
-		if ($updateWeek) {
-		$week = $order_date->format("W");
-
-		if ($order->get_created_via() == 'checkout') {
-			$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-		} else {
-			if (($order_date->format('w') > 5 && $order_date->format('H') >= 8) || $order_date->format('w') == 0) {
-				$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-			}
-		}
-
-
-		update_post_meta($order->get_id(), '_week', $week);
-	}
-
-
-	$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
-	update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
-
-	}
-
-
+        $deliveryDate = get_order_delivery_date_from_date(
+            $order_date->format("d-m-Y"),
+            $gruppoConsegna
+        );
+        update_post_meta(
+            $order->get_id(),
+            "_delivery_date",
+            $deliveryDate->format("Y-m-d")
+        );
+    }
 }
 
+add_action(
+    "woocommerce_new_order",
+    function ($order_id, $order) {
+        if ($order->get_created_via() == "checkout") {
+            $groups = get_posts([
+                "post_type" => "delivery-group",
+                "post_status" => "publish",
+                "posts_per_page" => -1,
+            ]);
 
-add_action('woocommerce_new_order', function ($order_id, $order) {
-	if ($order->get_created_via() == 'checkout') {
+            foreach ($groups as $group) {
+                $caps = get_post_meta($group->ID, "cap", true);
 
-		$groups = get_posts([
-			'post_type' => 'delivery-group',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-		]);
+                if (in_array($order->get_shipping_postcode(), $caps)) {
+                    update_post_meta(
+                        $order->get_id(),
+                        "_gruppo_consegna",
+                        $group->post_title
+                    );
+                }
+            }
 
-		foreach ($groups as $group) {
+            $gruppoConsegna = get_post_meta(
+                $order_id,
+                "_gruppo_consegna",
+                true
+            );
 
-			$caps = get_post_meta($group->ID, 'cap', true);
+            $order_date = $order->get_date_created();
+            //nathi
+            $order_date->modify("+1 week");
+            $week = $order_date->format("W");
 
-			if (in_array($order->get_shipping_postcode(), $caps)) {
-				update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
-			}
-		}
+            $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+            update_post_meta($order->get_id(), "_week", $week);
 
-		$gruppoConsegna = get_post_meta($order_id, '_gruppo_consegna', true);
+            if ($gruppoConsegna) {
+                $deliveryDate = get_order_delivery_date_from_date(
+                    $order_date->format("d-m-Y"),
+                    $gruppoConsegna
+                );
+                if ($deliveryDate) {
+                    update_post_meta(
+                        $order->get_id(),
+                        "_delivery_date",
+                        $deliveryDate->format("Y-m-d")
+                    );
+                }
+            }
+        }
+    },
+    10,
+    2
+);
 
-		$order_date = $order->get_date_created();
-		//nathi
-		$order_date->modify('+1 week');
-		$week = $order_date->format("W");
+add_action("woocommerce_product_options_advanced", function () {
+    woocommerce_wp_text_input([
+        "id" => "_codice_confezionamento",
+        "label" => "Codice Confezionamento",
+    ]);
 
-
-		$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-		update_post_meta($order->get_id(), '_week', $week);
-
-		if ($gruppoConsegna) {
-			$deliveryDate = get_order_delivery_date_from_date($order_date->format('d-m-Y'), $gruppoConsegna);
-			if ($deliveryDate) {
-				update_post_meta($order->get_id(), '_delivery_date', $deliveryDate->format("Y-m-d"));
-			}
-		}
-
-	}
-}, 10, 2);
-
-add_action('woocommerce_product_options_advanced', function () {
-	woocommerce_wp_text_input([
-		'id' => '_codice_confezionamento',
-		'label' => 'Codice Confezionamento',
-	]);
-
-	woocommerce_wp_checkbox([
-		'id' => '_is_magazzino',
-		'label' => "È da Magazzino?",
-	]);
-	woocommerce_wp_text_input([
-		'id' => '_qty_acquisto',
-		'label' => 'Quantità (Acquisto)',
-	]);
-	woocommerce_wp_text_input([
-		'id' => '_uom_acquisto',
-		'label' => 'Cod. Unità di misura',
-	]);
+    woocommerce_wp_checkbox([
+        "id" => "_is_magazzino",
+        "label" => "È da Magazzino?",
+    ]);
+    woocommerce_wp_text_input([
+        "id" => "_qty_acquisto",
+        "label" => "Quantità (Acquisto)",
+    ]);
+    woocommerce_wp_text_input([
+        "id" => "_uom_acquisto",
+        "label" => "Cod. Unità di misura",
+    ]);
 });
 
-add_action('woocommerce_product_options_general_product_data', function () {
-	global $post;
+add_action("woocommerce_product_options_general_product_data", function () {
+    global $post;
 
-	woocommerce_wp_text_input([
-		'id' => '_prezzo_acquisto',
-		'label' => 'Prezzo di acquisto (€)',
-		'placeholder' => '0.00',
-		'description' => __('I valori decimali sono separati con un punto. Es. €2.30', 'woocommerce'),
-	]);
+    woocommerce_wp_text_input([
+        "id" => "_prezzo_acquisto",
+        "label" => "Prezzo di acquisto (€)",
+        "placeholder" => "0.00",
+        "description" => __(
+            "I valori decimali sono separati con un punto. Es. €2.30",
+            "woocommerce"
+        ),
+    ]);
 
-	woocommerce_wp_checkbox([
-		'id' => '_tipo_percentuale_ricarico',
-		'label' => 'Eredita percentuale ricarico dalla categoria',
+    woocommerce_wp_checkbox([
+        "id" => "_tipo_percentuale_ricarico",
+        "label" => "Eredita percentuale ricarico dalla categoria",
+    ]);
 
-	]);
-
-	woocommerce_wp_text_input([
-		'id' => '_percentuale_ricarico',
-		'label' => 'Ricarico %',
-		'placeholder' => '0',
-		'description' => __('Valore della percentuale.', 'woocommerce'),
-	]);
-
-
+    woocommerce_wp_text_input([
+        "id" => "_percentuale_ricarico",
+        "label" => "Ricarico %",
+        "placeholder" => "0",
+        "description" => __("Valore della percentuale.", "woocommerce"),
+    ]);
 });
-
 
 function woocommerce_product_custom_fields_save1($post_id)
 {
-	if (isset($_POST['_codice_confezionamento']))
-		update_post_meta($post_id, '_codice_confezionamento', esc_attr($_POST['_codice_confezionamento']));
-	if (isset($_POST['_is_magazzino']))
-		update_post_meta($post_id, '_is_magazzino', esc_attr($_POST['_is_magazzino']));
+    if (isset($_POST["_codice_confezionamento"])) {
+        update_post_meta(
+            $post_id,
+            "_codice_confezionamento",
+            esc_attr($_POST["_codice_confezionamento"])
+        );
+    }
+    if (isset($_POST["_is_magazzino"])) {
+        update_post_meta(
+            $post_id,
+            "_is_magazzino",
+            esc_attr($_POST["_is_magazzino"])
+        );
+    }
 
-	if (isset($_POST['_prezzo_acquisto']))
-		update_post_meta($post_id, '_prezzo_acquisto', esc_attr($_POST['_prezzo_acquisto']));
+    if (isset($_POST["_prezzo_acquisto"])) {
+        update_post_meta(
+            $post_id,
+            "_prezzo_acquisto",
+            esc_attr($_POST["_prezzo_acquisto"])
+        );
+    }
 
-	if (isset($_POST['_percentuale_ricarico'])) {
-		update_post_meta($post_id, '_percentuale_ricarico', esc_attr($_POST['_percentuale_ricarico']));
-	}
+    if (isset($_POST["_percentuale_ricarico"])) {
+        update_post_meta(
+            $post_id,
+            "_percentuale_ricarico",
+            esc_attr($_POST["_percentuale_ricarico"])
+        );
+    }
 
-	if (isset($_POST['_uom_acquisto'])) {
-		update_post_meta($post_id, '_uom_acquisto', esc_attr($_POST['_uom_acquisto']));
-	}
-	if (isset($_POST['_qty_acquisto'])) {
-		update_post_meta($post_id, '_qty_acquisto', esc_attr($_POST['_qty_acquisto']));
-	}
-
+    if (isset($_POST["_uom_acquisto"])) {
+        update_post_meta(
+            $post_id,
+            "_uom_acquisto",
+            esc_attr($_POST["_uom_acquisto"])
+        );
+    }
+    if (isset($_POST["_qty_acquisto"])) {
+        update_post_meta(
+            $post_id,
+            "_qty_acquisto",
+            esc_attr($_POST["_qty_acquisto"])
+        );
+    }
 }
 
-function wpse27856_set_content_type(){
+function wpse27856_set_content_type()
+{
     return "text/html";
 }
-add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+add_filter("wp_mail_content_type", "wpse27856_set_content_type");
 
-add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save1');
+add_action(
+    "woocommerce_process_product_meta",
+    "woocommerce_product_custom_fields_save1"
+);
 
+add_action("rest_api_init", function () {
+    register_rest_route("agrispesa/v1", "import-subscriptions", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $lines = explode(PHP_EOL, $request->get_body());
+            $users = [];
+            foreach ($lines as $line) {
+                $users[] = str_getcsv($line, ";");
+            }
 
-add_action('rest_api_init', function () {
+            $header_row = array_shift($users);
+            $employee_csv = [];
+            foreach ($users as $row) {
+                if (!empty($row)) {
+                    $employee_csv[] = array_combine($header_row, $row);
+                }
+            }
 
-	register_rest_route('agrispesa/v1', 'import-subscriptions', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
+            global $wpdb;
 
-			$lines = explode(PHP_EOL, $request->get_body());
-			$users = [];
-			foreach ($lines as $line) {
- 			   $users[] = str_getcsv($line,";");
-			}
+            $allSingleBox = get_all_single_box();
+            $allSingleBox = array_map(function ($box) {
+                $navId = get_post_meta($box->get_id(), "_navision_id", true);
+                if (!empty($navId)) {
+                    $box->_navision_id = $navId[0];
+                } else {
+                    $box->_navision_id = null;
+                }
+                return $box;
+            }, $allSingleBox);
 
-		    $header_row = array_shift($users);
-			$employee_csv = [];
-    		foreach($users as $row) {
-        		if(!empty($row)){
-					$employee_csv[] = array_combine($header_row, $row);
-        		}
-    		}
-
-			global $wpdb;
-			$wpdb->query("DELETE from wp_posts  WHERE post_type = 'shop_subscription'");
-
-
-			$allSingleBox = get_all_single_box();
-			$allSingleBox = array_map(function($box){
-				$navId = get_post_meta($box->get_id(),'_navision_id',true);
-				if(!empty($navId)){
-					$box->_navision_id = $navId[0];
-				}else{
-					$box->_navision_id  = null;
-				}
-				return $box;
-			}, $allSingleBox);
-
-			foreach($employee_csv as $user){
-				$wordpressUser = get_users(array(
-    				'meta_key'     => 'codice_fiscale',
-    				'meta_value' => $user['automatismiSettimanali_intestazioneFattura::codiceFiscale']
-				));
-
-				if(count($wordpressUser) > 0){
-				    $wordpressUser = reset($wordpressUser);
-				}
-
-				if(!$wordpressUser){
-					continue;
-				}
-
-				$hasSubscription = wcs_user_has_subscription($wordpressUser->get_id());
-
-				if(!$hasSubscription){
-					if(empty($user['automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa'])){
-						continue;
-					}
-
-					$boxNavisionId = $user['automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa'];
-
-					$singleBox = array_filter($allSingleBox,function($box) use($boxNavisionId){
-						return $box->_navision_id == $boxNavisionId;
-					});
-
-					if(count($singleBox) == 0){
-						continue;
-					}
-
-					$singleBox = reset($singleBox);
-
-					$tipologia = get_post_meta($singleBox->get_id(), 'attribute_pa_tipologia', true);
-					$dimensione = get_post_meta($singleBox->get_id(), 'attribute_pa_dimensione', true);
+            foreach ($employee_csv as $user) {
 
 
-				    $subscriptionProduct = get_subscription_box_from_attributes($tipologia, $dimensione);
-
-					give_user_subscription($subscriptionProduct,$wordpressUser);
-				}
-
-			}
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
-
-			return $response;
 
 
-		}
-	));
+                $wordpressUser = get_users([
+                    "meta_key" => "codice_fiscale",
+                    "meta_value" =>
+                        $user[
+                            "automatismiSettimanali_intestazioneFattura::codiceFiscale"
+                        ],
+                ]);
+
+                if (count($wordpressUser) > 0) {
+                    $wordpressUser = reset($wordpressUser);
+                }
 
 
-	register_rest_route('agrispesa/v1', 'import-products', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
+                if (!$wordpressUser) {
+                    continue;
+                }
 
-			$xml = simplexml_load_string($request->get_body()) or die("Error: Cannot create object");
+				   $wpdb->query(
+                	"DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = ".$wordpressUser->ID
+          		  );
 
-			$products = (array)$xml;
+                $hasSubscription = wcs_user_has_subscription(
+                    $wordpressUser->ID
+                );
 
-			$activeProducts = array_filter($products['ROW'], function ($product) {
-				$product = (array)$product;
-				$price = str_replace(",", ".", (string)$product['unitprice']);
-				return $price > 0;
-			});
+                if (!$hasSubscription) {
+                    if (
+                        empty(
+                            $user[
+                                "automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"
+                            ]
+                        )
+                    ) {
+                        continue;
+                    }
 
+                    $boxNavisionId =
+                        $user[
+                            "automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"
+                        ];
 
-			global $wpdb;
+                    $singleBox = array_filter($allSingleBox, function (
+                        $box
+                    ) use ($boxNavisionId) {
+                        return $box->_navision_id == $boxNavisionId;
+                    });
 
-			/*	$wpdb->query("UPDATE wp_posts
+                    if (count($singleBox) == 0) {
+                        continue;
+                    }
+
+                    $singleBox = reset($singleBox);
+
+                    $tipologia = get_post_meta(
+                        $singleBox->get_id(),
+                        "attribute_pa_tipologia",
+                        true
+                    );
+                    $dimensione = get_post_meta(
+                        $singleBox->get_id(),
+                        "attribute_pa_dimensione",
+                        true
+                    );
+
+                    $subscriptionProduct = get_subscription_box_from_attributes(
+                        $tipologia,
+                        $dimensione
+                    );
+
+                    give_user_subscription(
+                        $subscriptionProduct,
+                        $wordpressUser,
+                        $user
+                    );
+                }
+            }
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "import-products", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            ($xml = simplexml_load_string($request->get_body())) or
+                die("Error: Cannot create object");
+
+            $products = (array) $xml;
+
+            $activeProducts = array_filter($products["ROW"], function (
+                $product
+            ) {
+                $product = (array) $product;
+                $price = str_replace(",", ".", (string) $product["unitprice"]);
+                return $price > 0;
+            });
+
+            global $wpdb;
+
+            /*	$wpdb->query("UPDATE wp_posts
 	SET post_status = 'draft'
 	WHERE post_type = 'product';");
 	*/
-			//$productIds = [];
+            //$productIds = [];
 
-			$newProducts = [];
+            $newProducts = [];
 
-			foreach ($activeProducts as $key => $product) {
-				$product = (array)$product;
-				$sku = (string)$product['id_product'];
-				$sku = explode("_", $sku);
+            foreach ($activeProducts as $key => $product) {
+                $product = (array) $product;
+                $sku = (string) $product["id_product"];
+                $sku = explode("_", $sku);
 
-				$productId = wc_get_product_id_by_sku($sku[0]);
+                $productId = wc_get_product_id_by_sku($sku[0]);
 
-				if (!$productId) {
+                if (!$productId) {
+                    $productObj = new WC_Product_Simple();
 
-					$productObj = new WC_Product_Simple();
+                    $productObj->set_name((string) $product["description"]); // product title
+                    $productObj->set_regular_price(
+                        floatval(
+                            str_replace(
+                                ",",
+                                ".",
+                                (string) $product["unitprice"]
+                            )
+                        )
+                    ); // in current shop currency
+                    $productObj->set_description(
+                        (string) $product["description2"]
+                    );
+                    $productObj->set_sku($sku[0]);
+                    $productObj->save();
+                    $productId = $productObj->get_id();
+                    $newProducts[] = $productObj;
+                }
 
-					$productObj->set_name((string)$product['description']); // product title
-					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product['unitprice']))); // in current shop currency
-					$productObj->set_description((string)$product['description2']);
-					$productObj->set_sku($sku[0]);
-					$productObj->save();
-					$productId = $productObj->get_id();
-					$newProducts[] = $productObj;
-				}
-
-				$product['wordpress_id'] = $productId;
-				//$productIds[] = $productId;
-				/*
+                $product["wordpress_id"] = $productId;
+                //$productIds[] = $productId;
+                /*
 				$product = new WC_Product($productId);
 				$product->set_status('publish');
 				$product->save();
 				*/
-				$activeProducts[$key] = $product;
-			}
+                $activeProducts[$key] = $product;
+            }
 
-			//Attivo i prodotti
-		//	$productIds = array_unique($productIds);
-			//$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+            //Attivo i prodotti
+            //	$productIds = array_unique($productIds);
+            //$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
 
-			foreach ($activeProducts as $product) {
-				$price = (string)$product['unitprice'];
-				$price = str_replace(",", ".", $price);
-				$price = floatval($price);
+            foreach ($activeProducts as $product) {
+                $price = (string) $product["unitprice"];
+                $price = str_replace(",", ".", $price);
+                $price = floatval($price);
 
-				update_post_meta($product['wordpress_id'], '_regular_price', $price);
-				update_post_meta($product['wordpress_id'], '_price', $price);
-				update_post_meta($product['wordpress_id'], '_navision_id', (string)$product['id_product']);
+                update_post_meta(
+                    $product["wordpress_id"],
+                    "_regular_price",
+                    $price
+                );
+                update_post_meta($product["wordpress_id"], "_price", $price);
+                update_post_meta(
+                    $product["wordpress_id"],
+                    "_navision_id",
+                    (string) $product["id_product"]
+                );
+            }
 
-			}
-
-			 $args = array(
-    'post_status' => 'publish',
-             'fields' => 'ids',
-    'tax_query' => array(
-       array(
-         'taxonomy' => 'product_cat',
-         'field'    => 'term_id',
-         'terms'     =>  [907,877],
-         'operator'  => 'IN',
-         )
-       )
-    );
-$productsToExclude = new WP_Query( $args );
-$idsToExclude = $productsToExclude->get_posts();
-			$wpdb->query("UPDATE wp_posts
+            $args = [
+                "post_status" => "publish",
+                "fields" => "ids",
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "term_id",
+                        "terms" => [907, 877],
+                        "operator" => "IN",
+                    ],
+                ],
+            ];
+            $productsToExclude = new WP_Query($args);
+            $idsToExclude = $productsToExclude->get_posts();
+            $wpdb->query(
+                "UPDATE wp_posts
 SET post_status = 'draft'
-WHERE post_type = 'product' AND ID NOT IN (".implode(",",$idsToExclude).")");
+WHERE post_type = 'product' AND ID NOT IN (" .
+                    implode(",", $idsToExclude) .
+                    ")"
+            );
 
-			if(count($newProducts) > 0){
+            if (count($newProducts) > 0) {
+                $list = "<ul>";
+                foreach ($newProducts as $product) {
+                    $list .=
+                        '<li><a href="https://agrispesa.it/wp-admin/post.php?post=' .
+                        $product->get_id() .
+                        '&action=edit">' .
+                        $product->get_name() .
+                        "</a></li>";
+                }
+                $list .= "</ul>";
 
-				$list = '<ul>';
-				foreach($newProducts as $product){
-					$list.='<li><a href="https://agrispesa.it/wp-admin/post.php?post='.$product->get_id().'&action=edit">'.$product->get_name().'</a></li>';
-				}
-				$list .= '</ul>';
+                wp_mail(
+                    "agrispesa@agrispesa.it",
+                    count($newProducts) . " nuovi prodotti",
+                    "Ecco la lista dei nuovi prodotti inseriti: <br><br>" .
+                        $list
+                );
+            }
 
-				wp_mail( 'agrispesa@agrispesa.it', count($newProducts).' nuovi prodotti', 'Ecco la lista dei nuovi prodotti inseriti: <br><br>'.$list);
-			}
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
 
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
+            return $response;
+        },
+    ]);
 
-			return $response;
+    register_rest_route("agrispesa/v1", "import-box", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            ($xml = simplexml_load_string($request->get_body())) or
+                die("Error: Cannot create object");
 
+            $products = (array) $xml;
 
-		}
-	));
+            $boxes = [];
 
+            global $wpdb;
 
-	register_rest_route('agrispesa/v1', 'import-box', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
+            $productsSku = [];
 
-			$xml = simplexml_load_string($request->get_body()) or die("Error: Cannot create object");
+            $week = null;
 
-			$products = (array)$xml;
+            foreach ($products["ROW"] as $product) {
+                $product = (array) $product;
 
-			$boxes = [];
+                if (!isset($boxes[(string) $product["offer_no"]])) {
+                    $boxes[(string) $product["offer_no"]] = [];
+                }
 
-			global $wpdb;
+                $productsSku[] = (string) $product["id_product"];
+                $boxes[(string) $product["offer_no"]][] = $product;
 
-			$productsSku = [];
+                $week = explode("-", (string) $product["offer_no"]);
+                $week = substr($week[0], -2);
+            }
 
-			$week = null;
+            $productsSku = array_unique($productsSku);
 
-			foreach ($products['ROW'] as $product) {
-				$product = (array)$product;
+            $importedPosts = $wpdb->get_results(
+                "SELECT post_id,meta_value FROM " .
+                    $wpdb->postmeta .
+                    ' WHERE meta_key = "_navision_id" AND meta_value IN ("' .
+                    implode('","', $productsSku) .
+                    '")'
+            );
 
-				if (!isset($boxes[(string)$product['offer_no']])) {
-					$boxes[(string)$product['offer_no']] = [];
-				}
-
-				$productsSku[] = (string)$product['id_product'];
-				$boxes[(string)$product['offer_no']][] = $product;
-
-				$week = explode("-", (string)$product['offer_no']);
-				$week = substr($week[0], -2);
-			}
-
-			$productsSku = array_unique($productsSku);
-
-			$importedPosts = $wpdb->get_results('SELECT post_id,meta_value FROM ' . $wpdb->postmeta . ' WHERE meta_key = "_navision_id" AND meta_value IN ("' . implode('","', $productsSku) . '")');
-
-
-			$wpdb->query("UPDATE wp_posts
+            $wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
 WHERE post_type = 'product';");
 
-			$postIds = array_map(function ($post) {
-				return $post->post_id;
-			}, $importedPosts);
+            $postIds = array_map(function ($post) {
+                return $post->post_id;
+            }, $importedPosts);
 
-			$skuBoxSingole = array_keys($boxes);
-			$skuBoxSingole = array_map(function($box){
-				$id = explode("-",$box);
-				return $id[1];
-			},$skuBoxSingole);
+            $skuBoxSingole = array_keys($boxes);
+            $skuBoxSingole = array_map(function ($box) {
+                $id = explode("-", $box);
+                return $id[1];
+            }, $skuBoxSingole);
 
-			foreach($skuBoxSingole as $sku){
-				$singleProductBox = new WP_Query([
-					'post_type' => 'product_variation',
-					'meta_key' => '_sku',
-					'meta_value' => $sku,
-					'order' => 'DESC',
-					'posts_per_page' => 1
-				]);
+            foreach ($skuBoxSingole as $sku) {
+                $singleProductBox = new WP_Query([
+                    "post_type" => "product_variation",
+                    "meta_key" => "_sku",
+                    "meta_value" => $sku,
+                    "order" => "DESC",
+                    "posts_per_page" => 1,
+                ]);
 
-				if($singleProductBox->have_posts()){
-					$singleProductBox = $singleProductBox->get_posts();
-					$postIds[] = $singleProductBox[0]->ID;
-					$postIds[] = $singleProductBox[0]->post_parent;
-				}
+                if ($singleProductBox->have_posts()) {
+                    $singleProductBox = $singleProductBox->get_posts();
+                    $postIds[] = $singleProductBox[0]->ID;
+                    $postIds[] = $singleProductBox[0]->post_parent;
+                }
+            }
 
-			}
+            if (!empty($postIds)) {
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
+                        implode(",", $postIds) .
+                        ")"
+                );
+            }
 
-			if (!empty($postIds)) {
-				$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) . ")");
-			}
+            $boxIds = [];
 
+            //delete all box for the same week
+            $boxIdsToDelete = $wpdb->get_results(
+                "select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '" .
+                    date("Y") .
+                    "_" .
+                    $week .
+                    "'"
+            );
 
-			$boxIds = [];
+            $boxIdsToDelete = array_map(function ($post) {
+                return $post->ID;
+            }, $boxIdsToDelete);
 
-			//delete all box for the same week
-			$boxIdsToDelete = $wpdb->get_results("select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '" . date('Y') . '_' . $week . "'");
+            if (!empty($boxIdsToDelete)) {
+                $wpdb->query(
+                    "DELETE from wp_posts  WHERE ID IN (" .
+                        implode(",", $boxIdsToDelete) .
+                        ")"
+                );
+            }
 
-			$boxIdsToDelete = array_map(function ($post) {
-				return $post->ID;
-			}, $boxIdsToDelete);
-
-
-			if (!empty($boxIdsToDelete)) {
-				$wpdb->query("DELETE from wp_posts  WHERE ID IN (" . implode(",", $boxIdsToDelete) . ")");
-			}
-
-			$wpdb->query("DELETE pm
+            $wpdb->query("DELETE pm
 FROM wp_postmeta pm
 LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
 WHERE wp.ID IS NULL");
 
-
-
-			foreach ($boxes as $idBox => $boxProducts) {
-
-
-				$navisionId = explode("-", $idBox);
-				$navisionId = end($navisionId);
-
-				$singleProductBox = new WP_Query(array(
-					'post_type' => 'product_variation',
-					'fields' => 'ids',
-					'meta_key' => '_sku',
-					'post_status' => 'publish',
-					'meta_value' => $navisionId,
-					'order' => 'DESC',
-					'posts_per_page' => 1
-				));
-
-				if (!$singleProductBox->have_posts()) {
-					continue;
-				}
-
-				$singleProductBox = $singleProductBox->get_posts();
-				$singleProductBox = reset($singleProductBox);
-
-
-				$post_id = wp_insert_post(array(
-					'post_type' => 'weekly-box',
-					'post_title' => 'Box settimana ' . date('Y') . '_' . $week . ' - ' . $idBox,
-					'post_content' => '',
-					'post_status' => 'publish',
-					'comment_status' => 'closed',   // if you prefer
-					'ping_status' => 'closed',      // if you prefer
-				));
-
-				if ($post_id) {
-					// insert post meta
-
-					$deliveryDate = (string)$boxProducts[0]['requesteddeliverydate'];
-					$deliveryDate = DateTime::createFromFormat('dmY', $deliveryDate);
-
-					update_post_meta($post_id, '_week', date('Y') . '_' . $week);
-					update_post_meta($post_id, '_data_consegna', $deliveryDate->format("Y-m-d"));
-					update_post_meta($post_id, '_product_box_id', $singleProductBox);
-					update_post_meta($post_id, '_navision_id', (string)$boxProducts[0]['offer_no']);
-
-					$arrayProducts = [];
-
-					foreach ($boxProducts as $boxProduct) {
-
-						$singleProduct = new WP_Query(array(
-							'post_type' => 'product',
-							'meta_key' => '_navision_id',
-							'meta_value' => $boxProduct['id_product'],
-							'order' => 'ASC',
-							'posts_per_page' => 1
-						));
-
-
-						if (!$singleProduct->have_posts()) {
-							continue;
-						}
-
-						$singleProduct = $singleProduct->get_posts();
-						$singleProduct = reset($singleProduct);
-
-						$arrayProducts[] = [
-							'id' => $singleProduct->ID,
-							'quantity' => 1,
-							'name' => $singleProduct->post_title,
-							'offer_line_no' => (string)$boxProduct['offer_line_no']
-						];
-					}
-
-					add_post_meta($post_id, '_products', $arrayProducts);
-					$boxIds[] = $post_id;
-
-				}
-
-
-			}
-
-
-			$response = new WP_REST_Response($boxIds);
-			$response->set_status(201);
-
-			return $response;
-
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'export-customers', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$args = array();
-			$orders = wc_get_orders($args);
-
-
-			$doc = new DOMDocument();
-			$doc->formatOutput = true;
-
-			$root = $doc->createElement('ROOT');
-			$root = $doc->appendChild($root);
-
-			$customers = [];
-			foreach ($orders as $order) {
-				$isSubscription = get_post_meta($order->get_id(), '_subscription_id', true);
-				if (!$isSubscription) {
-					continue;
-				}
-
-
-				if (in_array($order->get_customer_id(), $customers)) {
-					continue;
-				}
-
-				$customers[] = $order->get_customer_id();
-
-				$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
-
-				if (count($subscriptions) == 0) {
-					continue;
-				}
-
-				$subscription = end($subscriptions);
-
-				$products = $subscription->get_items();
-
-				if (empty($products)) {
-					continue;
-				}
-
-				$box = reset($products)->get_product();
-
-				if (!$box) {
-					continue;
-				}
-
-				$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
-				$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
-
-
-				$productBox = get_single_box_from_attributes($tipologia, $dimensione);
-
-				if (!$productBox) {
-					continue;
-				}
-
-				$row = $doc->createElement('ROW');
-
-				$ele1 = $doc->createElement('id_codeclient');
-				$ele1->nodeValue = 10000 + $order->get_customer_id();
-				$row->appendChild($ele1);
-
-				$ele2 = $doc->createElement('business_name');
-				$ele2->nodeValue = $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name();
-				$row->appendChild($ele2);
-
-				$taxCode = get_post_meta($order->get_id, '_codice_fiscale', true);
-				if (!$taxCode) {
-					$taxCode = '';
-				}
-				$ele2 = $doc->createElement('tax_code');
-				$ele2->nodeValue = $taxCode;
-				$row->appendChild($ele2);
-
-				$vatCode = get_post_meta($order->get_id(), '_partita_iva', true);
-				if (!$vatCode) {
-					$vatCode = '';
-				}
-				$ele2 = $doc->createElement('vat_number');
-				$ele2->nodeValue = $vatCode;
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('address');
-				$ele2->nodeValue = $order->get_shipping_address_1();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('city');
-				$ele2->nodeValue = $order->get_shipping_city();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('postcode');
-				$ele2->nodeValue = $order->get_shipping_postcode();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('province');
-				$ele2->nodeValue = $order->get_shipping_state();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('nation');
-				$ele2->nodeValue = 'IT';
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('email');
-				$ele2->nodeValue = $order->get_billing_email();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('phone');
-				$ele2->nodeValue = $order->get_shipping_phone();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('phoneoffice');
-				$ele2->nodeValue = '';
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('mobile');
-				$ele2->nodeValue = $order->get_shipping_phone();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('mobile2');
-				$ele2->nodeValue = $order->get_shipping_phone();
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('fax');
-				$ele2->nodeValue = '';
-				$row->appendChild($ele2);
-
-
-				$ele2 = $doc->createElement('codicemodellocliente');
-				$ele2->nodeValue = 'ITPRIV';
-				$row->appendChild($ele2);
-
-				$navisionId = get_post_meta($productBox->get_id(), '_navision_id', true);
-				if (empty($navisionId)) {
-					$navisionId = [''];
-				}
-				$ele2 = $doc->createElement('codiceabbonamento');
-				$ele2->nodeValue = 'ABSP-'.$navisionId[0];
-				$row->appendChild($ele2);
-
-				$startDate = $subscription->get_date('start');
-				$startDate = new DateTime($startDate);
-
-				$ele2 = $doc->createElement('dataabbonamento');
-				$ele2->nodeValue = $startDate->format("dmY");
-				$row->appendChild($ele2);
-
-				$ele2 = $doc->createElement('fido');
-				$ele2->nodeValue = "99999,0000";
-				$row->appendChild($ele2);
-
-				$root->appendChild($row);
-
-			}
-
-
-			header("Content-type: text/xml");
-			die($doc->saveXml());
-
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'export-orders', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$args = array(
-				'status' => array('wc-processing', 'wc-completed'),
-			);
-			$orders = wc_get_orders($args);
-
-
-			$doc = new DOMDocument();
-			$doc->formatOutput = true;
-
-			$root = $doc->createElement('ROOT');
-			$root = $doc->appendChild($root);
-
-			$customers = [];
-			foreach ($orders as $order) {
-
-				$navisionId = get_post_meta($order->get_id(),'_box_navision_id',true);
-
-				if(!$navisionId){
-					continue;
-				}
-
-				foreach ($order->get_items() as $item_id => $item) {
-
-					$product = $item->get_product();
-
-					$productNavisionId = get_post_meta($product->get_id(), '_navision_id', true);
-
-					if (!$productNavisionId) {
-						continue;
-					}
-					$row = $doc->createElement('ROW');
-
-
-					$ele1 = $doc->createElement('id_order');
-					$ele1->nodeValue = 10000 + $order->get_customer_id();
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('id_codeclient');
-					$ele1->nodeValue = 10000 + $order->get_customer_id();
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('date');
-					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('date_consegna');
-					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
-					$row->appendChild($ele1);
-
-
-					$ele1 = $doc->createElement('sh_name');
-					$ele1->nodeValue = $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name();
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('sh_address');
-					$ele1->nodeValue = $order->get_shipping_address_1();
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('sh_description1');
-					$ele1->nodeValue = 'Scala 1 | Piano 2';
-					$row->appendChild($ele1);
-
-					$ele1 = $doc->createElement('comment_lines');
-					$ele1->nodeValue = $order->get_customer_note();
-					$row->appendChild($ele1);
-
-
-					$ele2 = $doc->createElement('sh_city');
-					$ele2->nodeValue = $order->get_shipping_city();
-					$row->appendChild($ele2);
-
-
-					$ele2 = $doc->createElement('sh_postcode');
-					$ele2->nodeValue = $order->get_shipping_postcode();
-					$row->appendChild($ele2);
-
-					$ele2 = $doc->createElement('sh_province');
-					$ele2->nodeValue = $order->get_shipping_state();
-					$row->appendChild($ele2);
-
-
-					$ele2 = $doc->createElement('id_product');
-					$ele2->nodeValue = $productNavisionId;
-					$row->appendChild($ele2);
-
-					$ele2 = $doc->createElement('quantity');
-					$ele2->nodeValue = $item->get_quantity();
-					$row->appendChild($ele2);
-
-					$ele2 = $doc->createElement('discount');
-					$ele2->nodeValue = '0';
-					$row->appendChild($ele2);
-
-					$ele2 = $doc->createElement('unitprice');
-					$ele2->nodeValue = str_replace(".", ",", number_format($product->get_price(), 4));
-					$row->appendChild($ele2);
-
-
-
-
-					$ele2 = $doc->createElement('ref_offer_no');
-					$ele2->nodeValue = $navisionId;
-					$row->appendChild($ele2);
-
-
-					$ele2 = $doc->createElement('ref_offer_line_no');
-					$ele2->nodeValue = $item->get_meta('offer_line_no');
-					$row->appendChild($ele2);
-
-					$root->appendChild($row);
-
-				}
-
-
-			}
-
-
-			header("Content-type: text/xml");
-			die($doc->saveXml());
-
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'export-payments', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$args = array(
-				'status' => array('wc-completed'),
-			);
-			$orders = wc_get_orders($args);
-
-
-			$doc = new DOMDocument();
-			$doc->formatOutput = true;
-
-			$root = $doc->createElement('ROOT');
-			$root = $doc->appendChild($root);
-
-			foreach ($orders as $order) {
-
-				$isSubscription = true;
-				foreach ($order->get_items() as $item_id => $item) {
-					$product = $item->get_product();
-
-					if (!$product->is_type('subscription') && !$product->is_type('subscription_variation')) {
-						$isSubscription = false;
-					}
-
-				}
-
-				if (!$isSubscription) {
-					continue;
-				}
-
-				$row = $doc->createElement('ROW');
-
-
-				$ele1 = $doc->createElement('id_payment');
-				$ele1->nodeValue = 10000 + $order->get_id();
-				$row->appendChild($ele1);
-
-				$ele1 = $doc->createElement('id_codeclient');
-				$ele1->nodeValue = 10000 + $order->get_customer_id();
-				$row->appendChild($ele1);
-
-				$ele1 = $doc->createElement('datein');
-				$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
-				$row->appendChild($ele1);
-
-				$ele1 = $doc->createElement('paymentbatchname');
-				$ele1->nodeValue = 'CREDITCARD';
-				$row->appendChild($ele1);
-
-				$ele1 = $doc->createElement('paymentinprogress');
-				$ele1->nodeValue = '0';
-				$row->appendChild($ele1);
-
-				$ele1 = $doc->createElement('amount');
-				$ele1->nodeValue = str_replace(".", ",", number_format($order->get_total(), 4));
-				$row->appendChild($ele1);
-
-				$root->appendChild($row);
-
-			}
-
-
-			header("Content-type: text/xml");
-			die($doc->saveXml());
-
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'products/(?P<product_id>\d+)/category', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$terms = get_the_terms($request['product_id'], 'product_cat');
-
-			$terms = array_reverse($terms);
-
-			$selectedTerm = null;
-			foreach ($terms as $term) {
-				$ricarico = get_term_meta($term->term_id, 'ricarico_percentuale', true);
-				if (!empty($ricarico)) {
-					$selectedTerm = $term;
-					$selectedTerm->ricarico_percentuale = !empty($ricarico) ? floatval($ricarico) : 0;
-				}
-			}
-
-
-			$response = new WP_REST_Response($selectedTerm);
-			$response->set_status(200);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'weekly-box', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$body = $request->get_json_params();
-
-			$post_id = wp_insert_post(array(
-				'post_type' => 'weekly-box',
-				'post_title' => 'Box settimana ' . $body['week'] . ' - ' . $body['product_box_id'],
-				'post_content' => '',
-				'post_status' => 'publish',
-				'comment_status' => 'closed',   // if you prefer
-				'ping_status' => 'closed',      // if you prefer
-			));
-
-			if ($post_id) {
-				// insert post meta
-				add_post_meta($post_id, '_week', $body['week']);
-				add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
-				add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
-				add_post_meta($post_id, '_products', $body['products']);
-			}
-
-			$response = new WP_REST_Response([
-				'id' => $post_id
-			]);
-			$response->set_status(201);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'weekly-box/duplicate', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$body = $request->get_json_params();
-
-			$lastWeek = $body['week'] - 1;
-
-			$lastWeekBox = get_posts([
-				'post_type' => 'weekly-box',
-				'post_status' => 'publish',
-				'posts_per_page' => 1,
-				'meta_query' => [
-					'relation' => 'and',
-					[
-						'key' => '_week',
-						'value' => str_pad($lastWeek, 2, 0, STR_PAD_LEFT),
-						'compare' => '='
-					],
-					[
-						'key' => '_product_box_id',
-						'value' => $body['product_box_id'],
-						'compare' => '='
-					]
-				]
-			]);
-
-			if (empty($lastWeekBox)) {
-				$response = new WP_REST_Response([
-					'message' => 'Nessuna Box Settimana trovata per la settimana ' . $lastWeek
-				]);
-				$response->set_status(404);
-
-				return $response;
-			}
-
-			$lastWeekBox = reset($lastWeekBox);
-
-			$post_id = wp_insert_post(array(
-				'post_type' => 'weekly-box',
-				'post_title' => 'Box settimana ' . $body['week'] . ' - ' . $body['product_box_id'],
-				'post_content' => '',
-				'post_status' => 'publish',
-				'comment_status' => 'closed',   // if you prefer
-				'ping_status' => 'closed',      // if you prefer
-			));
-
-			if ($post_id) {
-				// insert post meta
-				add_post_meta($post_id, '_week', $body['week']);
-				add_post_meta($post_id, '_data_consegna', $body['data_consegna']);
-				add_post_meta($post_id, '_product_box_id', $body['product_box_id']);
-
-				$products = get_post_meta($lastWeekBox->ID, '_products', true);
-
-				add_post_meta($post_id, '_products', $products);
-			}
-
-			$response = new WP_REST_Response([
-				'id' => $post_id
-			]);
-			$response->set_status(201);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'weekly-box/(?P<box_id>\d+)/products/(?P<index>\d+)', array(
-		'methods' => 'DELETE',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-
-			$products = get_post_meta($request['box_id'], '_products', true);
-
-			unset($products[$request['index']]);
-
-			update_post_meta($request['box_id'], '_products', $products);
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'weekly-box/(?P<box_id>\d+)/products', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-
-			$products = get_post_meta($request['box_id'], '_products', true);
-
-			foreach ($request['product_ids'] as $key => $id) {
-
-				$product = wc_get_product($id);
-				$unitaMisura = 'gr';
-
-				$measureUnit = get_post_meta($id, '_woo_uom_input', true);
-				$price = get_post_meta($id, '_price', true);
-
-				if (!empty($measureUnit)) {
-					$unitaMisura = $measureUnit;
-				}
-
-
-				$products[] = [
-					'id' => $id,
-					'name' => $product->get_name(),
-					'quantity' => $request['quantity'][$key],
-					'price' => $product->get_price(),
-					'unit_measure' => $unitaMisura,
-					'unit_measure_print' => get_post_meta($id, '_uom_acquisto', true)
-				];
-			}
-
-
-			$products = array_map("unserialize", array_unique(array_map("serialize", $products)));
-
-			$newProducts = [];
-			foreach ($products as $product) {
-				$newProducts[] = $product;
-			}
-
-			update_post_meta($request['box_id'], '_products', $newProducts);
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'shop-categories', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$taxonomy = 'product_cat';
-			$orderby = 'name';
-			$show_count = 0;      // 1 for yes, 0 for no
-			$pad_counts = 0;      // 1 for yes, 0 for no
-			$hierarchical = 1;      // 1 for yes, 0 for no
-			$title = '';
-			$empty = 0;
-
-			$args = array(
-				'taxonomy' => $taxonomy,
-				'orderby' => $orderby,
-				'show_count' => $show_count,
-				'pad_counts' => $pad_counts,
-				'hierarchical' => $hierarchical,
-				'title_li' => $title,
-				'hide_empty' => $empty
-			);
-			$all_categories = get_categories($args);
-
-			$categories = [];
-			foreach ($all_categories as $cat) {
-				if ($cat->category_parent == 0) {
-
-					$category_id = $cat->term_id;
-
-					$isVisible = get_term_meta($category_id, 'in_preferenze_utente', true);
-					if (empty($isVisible)) {
-						continue;
-					}
-
-					$args2 = array(
-						'taxonomy' => $taxonomy,
-						'child_of' => 0,
-						'parent' => $category_id,
-						'orderby' => $orderby,
-						'show_count' => $show_count,
-						'pad_counts' => $pad_counts,
-						'hierarchical' => $hierarchical,
-						'title_li' => $title,
-						'hide_empty' => $empty
-					);
-					$sub_cats = get_categories($args2);
-					if ($sub_cats) {
-						foreach ($sub_cats as $sub_category) {
-							$isVisible = get_term_meta($sub_category->term_id, 'in_preferenze_utente', true);
-							if (empty($isVisible)) {
-								continue;
-							}
-
-
-							$categoryProducts = get_posts(array(
-								'post_type' => 'product',
-								'numberposts' => -1,
-								'post_status' => 'publish',
-								'tax_query' => array(
-									array(
-										'taxonomy' => 'product_cat',
-										'field' => 'slug',
-										'terms' => $sub_category->slug,
-										'operator' => 'IN',
-									)
-								),
-							));
-							$categories[] =
-								[
-									'id' => $sub_category->term_id,
-									'name' => $sub_category->name,
-									'products' => $categoryProducts
-								];
-
-						}
-					}
-				}
-			}
-
-			$response = new WP_REST_Response($categories);
-			$response->set_status(200);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'user-subscriptions', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
-
-			$json = [];
-
-			foreach ($subscriptions as $subscription) {
-				$products = $subscription->get_items();
-
-				$productsToAdd = get_products_to_add_from_subscription($subscription);
-
-
-				$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
-				if (empty($boxPreferences)) {
-					$boxPreferences = [];
-				}
-
-				$boxBlacklist = get_post_meta($subscription->get_id(), '_box_blacklist', true);
-				if (empty($boxBlacklist)) {
-					$boxBlacklist = [];
-				}
-
-				$json[] = [
-					'name' => reset($products)->get_name(),
-					'id' => $subscription->get_id(),
-					'box_preferences' => $boxPreferences,
-					'box_blacklist' => $boxBlacklist,
-					'products' => $productsToAdd
-				];
-			}
-
-			$response = new WP_REST_Response($json);
-			$response->set_status(200);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'delivery-group-csv', array(
-		'methods' => 'GET',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-
-			$dataConsegna = $_GET['data_consegna'];
-
-			$caps = get_post_meta($_GET['delivery_group'], 'cap', true);
-
-			$args = [
-				'posts_per_page' => -1,
-				'post_type' => 'shop_order',
-				'post_status' => ['wc-processing', 'wc-completed'],
-				'meta_query' => [
-					'relation' => 'AND',
-					[
-						'key' => '_data_consegna',
-						'value' => $dataConsegna,
-						'compare' => '='
-					],
-					[
-						'key' => '_shipping_postcode',
-						'value' => $caps,
-						'compare' => 'IN'
-					]
-				]
-			];
-			$orders = new WP_Query($args);
-			$orders = $orders->get_posts();
-
-			$csv = [];
-
-			foreach ($orders as $order) {
-				$order = wc_get_order($order->ID);
-
-				$csv[] = [
-					$order->get_shipping_postcode(),
-					$order->get_shipping_city(),
-					$order->get_shipping_address_1(),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					$order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name()
-				];
-
-			}
-
-			$f = fopen('php://memory', 'w');
-			foreach ($csv as $line) {
-				fputcsv($f, $line);
-			}
-			fseek($f, 0);
-			header('Content-Type: text/csv');
-			header('Content-Disposition: attachment; filename="PIEM ' . (new \DateTime($dataConsegna))->format("d-m-Y") . ' da nav a map & guide . csv";');
-			fpassthru($f);
-			die();
-
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'subscription-preference', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-			$body = $request->get_json_params();
-
-			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
-
-			if (empty($boxPreferences)) {
-				$boxPreferences = [];
-			}
-
-			foreach ($body['product_ids'] as $productId) {
-				$productToAdd = get_post($productId);
-				$boxPreferences[] = [
-					'id' => $productToAdd->ID,
-					'name' => $productToAdd->post_title
-				];
-			}
-
-			$boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
-
-			$newBoxPreferences = [];
-			foreach ($boxPreferences as $boxPreference) {
-				$newBoxPreferences[] = $boxPreference;
-			}
-
-			update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(201);
-
-			return $response;
-		}
-	));
-
-	register_rest_route('agrispesa/v1', 'subscription-blacklist', array(
-		'methods' => 'POST',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-			$body = $request->get_json_params();
-
-			$boxPreferences = get_post_meta($body['subscription_id'], '_box_blacklist', true);
-
-			if (empty($boxPreferences)) {
-				$boxPreferences = [];
-			}
-
-
-			foreach ($body['product_ids'] as $productId) {
-				$productToAdd = get_post($productId);
-				$boxPreferences[] = [
-					'id' => $productToAdd->ID,
-					'name' => $productToAdd->post_title
-				];
-			}
-
-			$boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
-
-			$newBoxPreferences = [];
-
-			foreach ($boxPreferences as $boxPreference) {
-				$newBoxPreferences[] = $boxPreference;
-			}
-
-			update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(201);
-
-			return $response;
-		}
-	));
-
-
-	register_rest_route('agrispesa/v1', 'subscription-preference', array(
-		'methods' => 'DELETE',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-			$body = $request->get_json_params();
-			$boxPreferences = get_post_meta($body['subscription_id'], '_box_preferences', true);
-
-
-			$productIds = $body['product_ids'];
-			$newBoxPreferences = [];
-
-			foreach ($productIds as $productId) {
-				//find product
-				$index = array_filter($boxPreferences, function ($product) use ($productId) {
-					return $product['id'] == $productId;
-				});
-
-				if (!empty($index)) {
-					$index = array_keys($index);
-					$index = reset($index);
-					unset($boxPreferences[$index]);
-				}
-
-			}
-
-			foreach ($boxPreferences as $preference) {
-				$newBoxPreferences[] = $preference;
-			}
-
-
-			update_post_meta($body['subscription_id'], '_box_preferences', $newBoxPreferences);
-
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
-			return $response;
-		}
-	));
-
-	register_rest_route('agrispesa/v1', 'subscription-blacklist', array(
-		'methods' => 'DELETE',
-		'permission_callback' => function () {
-			return true;
-		},
-		'callback' => function ($request) {
-			$body = $request->get_json_params();
-			$boxPreferences = get_post_meta($body['subscription_id'], '_box_blacklist', true);
-
-			$productIds = $body['product_ids'];
-			$newBoxPreferences = [];
-
-			foreach ($productIds as $productId) {
-				//find product
-				$index = array_filter($boxPreferences, function ($product) use ($productId) {
-					return $product['id'] == $productId;
-				});
-
-				if (!empty($index)) {
-					$index = array_keys($index);
-					$index = reset($index);
-					unset($boxPreferences[$index]);
-				}
-
-			}
-
-			foreach ($boxPreferences as $preference) {
-				$newBoxPreferences[] = $preference;
-			}
-
-			update_post_meta($body['subscription_id'], '_box_blacklist', $newBoxPreferences);
-
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
-			return $response;
-		}
-	));
-
-
+            foreach ($boxes as $idBox => $boxProducts) {
+                $navisionId = explode("-", $idBox);
+                $navisionId = end($navisionId);
+
+                $singleProductBox = new WP_Query([
+                    "post_type" => "product_variation",
+                    "fields" => "ids",
+                    "meta_key" => "_sku",
+                    "post_status" => "publish",
+                    "meta_value" => $navisionId,
+                    "order" => "DESC",
+                    "posts_per_page" => 1,
+                ]);
+
+                if (!$singleProductBox->have_posts()) {
+                    continue;
+                }
+
+                $singleProductBox = $singleProductBox->get_posts();
+
+
+                $singleProductBox = reset($singleProductBox);
+
+                $post_id = wp_insert_post([
+                    "post_type" => "weekly-box",
+                    "post_title" =>
+                        "Box settimana " .
+                        date("Y") .
+                        "_" .
+                        $week .
+                        " - " .
+                        $idBox,
+                    "post_content" => "",
+                    "post_status" => "publish",
+                    "comment_status" => "closed", // if you prefer
+                    "ping_status" => "closed", // if you prefer
+                ]);
+
+                if ($post_id) {
+                    // insert post meta
+
+                    $deliveryDate =
+                        (string) $boxProducts[0]["requesteddeliverydate"];
+                    $deliveryDate = DateTime::createFromFormat(
+                        "dmY",
+                        $deliveryDate
+                    );
+
+                    update_post_meta(
+                        $post_id,
+                        "_week",
+                        date("Y") . "_" . $week
+                    );
+                    update_post_meta(
+                        $post_id,
+                        "_data_consegna",
+                        $deliveryDate->format("Y-m-d")
+                    );
+                    update_post_meta(
+                        $post_id,
+                        "_product_box_id",
+                        $singleProductBox
+                    );
+                    update_post_meta(
+                        $post_id,
+                        "_navision_id",
+                        (string) $boxProducts[0]["offer_no"]
+                    );
+
+                    $arrayProducts = [];
+
+                    foreach ($boxProducts as $boxProduct) {
+                        $singleProduct = new WP_Query([
+                            "post_type" => "product",
+                            "meta_key" => "_navision_id",
+                            "meta_value" => $boxProduct["id_product"],
+                            "order" => "ASC",
+                            "posts_per_page" => 1,
+                        ]);
+
+                        if (!$singleProduct->have_posts()) {
+                            continue;
+                        }
+
+                        $singleProduct = $singleProduct->get_posts();
+                        $singleProduct = reset($singleProduct);
+
+                        $arrayProducts[] = [
+                            "id" => $singleProduct->ID,
+                            "quantity" => 1,
+                            "name" => $singleProduct->post_title,
+                            "offer_line_no" =>
+                                (string) $boxProduct["offer_line_no"],
+                        ];
+                    }
+
+                    add_post_meta($post_id, "_products", $arrayProducts);
+                    $boxIds[] = $post_id;
+                }
+            }
+
+            $response = new WP_REST_Response($boxIds);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "export-customers", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $args = [];
+            $orders = wc_get_orders($args);
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = true;
+
+            $root = $doc->createElement("ROOT");
+            $root = $doc->appendChild($root);
+
+            $customers = [];
+            foreach ($orders as $order) {
+                $isSubscription = get_post_meta(
+                    $order->get_id(),
+                    "_subscription_id",
+                    true
+                );
+                if (!$isSubscription) {
+                    continue;
+                }
+
+                if (in_array($order->get_customer_id(), $customers)) {
+                    continue;
+                }
+
+                $customers[] = $order->get_customer_id();
+
+                $subscriptions = wcs_get_users_subscriptions(
+                    $order->get_customer_id()
+                );
+
+                if (count($subscriptions) == 0) {
+                    continue;
+                }
+
+                $subscription = end($subscriptions);
+
+                $products = $subscription->get_items();
+
+                if (empty($products)) {
+                    continue;
+                }
+
+                $box = reset($products)->get_product();
+
+                if (!$box) {
+                    continue;
+                }
+
+                $tipologia = get_post_meta(
+                    $box->get_id(),
+                    "attribute_pa_tipologia",
+                    true
+                );
+                $dimensione = get_post_meta(
+                    $box->get_id(),
+                    "attribute_pa_dimensione",
+                    true
+                );
+
+                $productBox = get_single_box_from_attributes(
+                    $tipologia,
+                    $dimensione
+                );
+
+                if (!$productBox) {
+                    continue;
+                }
+
+                $row = $doc->createElement("ROW");
+
+                $ele1 = $doc->createElement("id_codeclient");
+                $ele1->nodeValue = 10000 + $order->get_customer_id();
+                $row->appendChild($ele1);
+
+                $ele2 = $doc->createElement("business_name");
+                $ele2->nodeValue =
+                    $order->get_shipping_first_name() .
+                    " " .
+                    $order->get_shipping_last_name();
+                $row->appendChild($ele2);
+
+                $taxCode = get_post_meta(
+                    $order->get_id,
+                    "_codice_fiscale",
+                    true
+                );
+                if (!$taxCode) {
+                    $taxCode = "";
+                }
+                $ele2 = $doc->createElement("tax_code");
+                $ele2->nodeValue = $taxCode;
+                $row->appendChild($ele2);
+
+                $vatCode = get_post_meta(
+                    $order->get_id(),
+                    "_partita_iva",
+                    true
+                );
+                if (!$vatCode) {
+                    $vatCode = "";
+                }
+                $ele2 = $doc->createElement("vat_number");
+                $ele2->nodeValue = $vatCode;
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("address");
+                $ele2->nodeValue = $order->get_shipping_address_1();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("city");
+                $ele2->nodeValue = $order->get_shipping_city();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("postcode");
+                $ele2->nodeValue = $order->get_shipping_postcode();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("province");
+                $ele2->nodeValue = $order->get_shipping_state();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("nation");
+                $ele2->nodeValue = "IT";
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("email");
+                $ele2->nodeValue = $order->get_billing_email();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("phone");
+                $ele2->nodeValue = $order->get_shipping_phone();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("phoneoffice");
+                $ele2->nodeValue = "";
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("mobile");
+                $ele2->nodeValue = $order->get_shipping_phone();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("mobile2");
+                $ele2->nodeValue = $order->get_shipping_phone();
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("fax");
+                $ele2->nodeValue = "";
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("codicemodellocliente");
+                $ele2->nodeValue = "ITPRIV";
+                $row->appendChild($ele2);
+
+                $navisionId = get_post_meta(
+                    $productBox->get_id(),
+                    "_navision_id",
+                    true
+                );
+                if (empty($navisionId)) {
+                    $navisionId = [""];
+                }
+                $ele2 = $doc->createElement("codiceabbonamento");
+                $ele2->nodeValue = "ABSP-" . $navisionId[0];
+                $row->appendChild($ele2);
+
+                $startDate = $subscription->get_date("start");
+                $startDate = new DateTime($startDate);
+
+                $ele2 = $doc->createElement("dataabbonamento");
+                $ele2->nodeValue = $startDate->format("dmY");
+                $row->appendChild($ele2);
+
+                $ele2 = $doc->createElement("fido");
+                $ele2->nodeValue = "99999,0000";
+                $row->appendChild($ele2);
+
+                $root->appendChild($row);
+            }
+
+            header("Content-type: text/xml");
+            die($doc->saveXml());
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "export-orders", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $args = [
+                "status" => ["wc-processing", "wc-completed"],
+            ];
+            $orders = wc_get_orders($args);
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = true;
+
+            $root = $doc->createElement("ROOT");
+            $root = $doc->appendChild($root);
+
+            $customers = [];
+            foreach ($orders as $order) {
+                $navisionId = get_post_meta(
+                    $order->get_id(),
+                    "_box_navision_id",
+                    true
+                );
+
+                if (!$navisionId) {
+                    continue;
+                }
+
+                foreach ($order->get_items() as $item_id => $item) {
+                    $product = $item->get_product();
+
+                    $productNavisionId = get_post_meta(
+                        $product->get_id(),
+                        "_navision_id",
+                        true
+                    );
+
+                    if (!$productNavisionId) {
+                        continue;
+                    }
+                    $row = $doc->createElement("ROW");
+
+                    $ele1 = $doc->createElement("id_order");
+                    $ele1->nodeValue = 10000 + $order->get_customer_id();
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("id_codeclient");
+                    $ele1->nodeValue = 10000 + $order->get_customer_id();
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("date");
+                    $ele1->nodeValue = (new DateTime(
+                        $order->get_date_paid()
+                    ))->format("dmY");
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("date_consegna");
+                    $ele1->nodeValue = (new DateTime(
+                        $order->get_date_paid()
+                    ))->format("dmY");
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("sh_name");
+                    $ele1->nodeValue =
+                        $order->get_shipping_first_name() .
+                        " " .
+                        $order->get_shipping_last_name();
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("sh_address");
+                    $ele1->nodeValue = $order->get_shipping_address_1();
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("sh_description1");
+                    $ele1->nodeValue = "Scala 1 | Piano 2";
+                    $row->appendChild($ele1);
+
+                    $ele1 = $doc->createElement("comment_lines");
+                    $ele1->nodeValue = $order->get_customer_note();
+                    $row->appendChild($ele1);
+
+                    $ele2 = $doc->createElement("sh_city");
+                    $ele2->nodeValue = $order->get_shipping_city();
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("sh_postcode");
+                    $ele2->nodeValue = $order->get_shipping_postcode();
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("sh_province");
+                    $ele2->nodeValue = $order->get_shipping_state();
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("id_product");
+                    $ele2->nodeValue = $productNavisionId;
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("quantity");
+                    $ele2->nodeValue = $item->get_quantity();
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("discount");
+                    $ele2->nodeValue = "0";
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("unitprice");
+                    $ele2->nodeValue = str_replace(
+                        ".",
+                        ",",
+                        number_format($product->get_price(), 4)
+                    );
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("ref_offer_no");
+                    $ele2->nodeValue = $navisionId;
+                    $row->appendChild($ele2);
+
+                    $ele2 = $doc->createElement("ref_offer_line_no");
+                    $ele2->nodeValue = $item->get_meta("offer_line_no");
+                    $row->appendChild($ele2);
+
+                    $root->appendChild($row);
+                }
+            }
+
+            header("Content-type: text/xml");
+            die($doc->saveXml());
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "export-payments", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $args = [
+                "status" => ["wc-completed"],
+            ];
+            $orders = wc_get_orders($args);
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = true;
+
+            $root = $doc->createElement("ROOT");
+            $root = $doc->appendChild($root);
+
+            foreach ($orders as $order) {
+                $isSubscription = true;
+                foreach ($order->get_items() as $item_id => $item) {
+                    $product = $item->get_product();
+
+                    if (
+                        !$product->is_type("subscription") &&
+                        !$product->is_type("subscription_variation")
+                    ) {
+                        $isSubscription = false;
+                    }
+                }
+
+                if (!$isSubscription) {
+                    continue;
+                }
+
+                $row = $doc->createElement("ROW");
+
+                $ele1 = $doc->createElement("id_payment");
+                $ele1->nodeValue = 10000 + $order->get_id();
+                $row->appendChild($ele1);
+
+                $ele1 = $doc->createElement("id_codeclient");
+                $ele1->nodeValue = 10000 + $order->get_customer_id();
+                $row->appendChild($ele1);
+
+                $ele1 = $doc->createElement("datein");
+                $ele1->nodeValue = (new DateTime(
+                    $order->get_date_paid()
+                ))->format("dmY");
+                $row->appendChild($ele1);
+
+                $ele1 = $doc->createElement("paymentbatchname");
+                $ele1->nodeValue = "CREDITCARD";
+                $row->appendChild($ele1);
+
+                $ele1 = $doc->createElement("paymentinprogress");
+                $ele1->nodeValue = "0";
+                $row->appendChild($ele1);
+
+                $ele1 = $doc->createElement("amount");
+                $ele1->nodeValue = str_replace(
+                    ".",
+                    ",",
+                    number_format($order->get_total(), 4)
+                );
+                $row->appendChild($ele1);
+
+                $root->appendChild($row);
+            }
+
+            header("Content-type: text/xml");
+            die($doc->saveXml());
+        },
+    ]);
+
+    register_rest_route(
+        "agrispesa/v1",
+        "products/(?P<product_id>\d+)/category",
+        [
+            "methods" => "GET",
+            "permission_callback" => function () {
+                return true;
+            },
+            "callback" => function ($request) {
+                $terms = get_the_terms($request["product_id"], "product_cat");
+
+                $terms = array_reverse($terms);
+
+                $selectedTerm = null;
+                foreach ($terms as $term) {
+                    $ricarico = get_term_meta(
+                        $term->term_id,
+                        "ricarico_percentuale",
+                        true
+                    );
+                    if (!empty($ricarico)) {
+                        $selectedTerm = $term;
+                        $selectedTerm->ricarico_percentuale = !empty($ricarico)
+                            ? floatval($ricarico)
+                            : 0;
+                    }
+                }
+
+                $response = new WP_REST_Response($selectedTerm);
+                $response->set_status(200);
+
+                return $response;
+            },
+        ]
+    );
+
+    register_rest_route("agrispesa/v1", "weekly-box", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+
+            $post_id = wp_insert_post([
+                "post_type" => "weekly-box",
+                "post_title" =>
+                    "Box settimana " .
+                    $body["week"] .
+                    " - " .
+                    $body["product_box_id"],
+                "post_content" => "",
+                "post_status" => "publish",
+                "comment_status" => "closed", // if you prefer
+                "ping_status" => "closed", // if you prefer
+            ]);
+
+            if ($post_id) {
+                // insert post meta
+                add_post_meta($post_id, "_week", $body["week"]);
+                add_post_meta(
+                    $post_id,
+                    "_data_consegna",
+                    $body["data_consegna"]
+                );
+                add_post_meta(
+                    $post_id,
+                    "_product_box_id",
+                    $body["product_box_id"]
+                );
+                add_post_meta($post_id, "_products", $body["products"]);
+            }
+
+            $response = new WP_REST_Response([
+                "id" => $post_id,
+            ]);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "weekly-box/duplicate", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+
+            $lastWeek = $body["week"] - 1;
+
+            $lastWeekBox = get_posts([
+                "post_type" => "weekly-box",
+                "post_status" => "publish",
+                "posts_per_page" => 1,
+                "meta_query" => [
+                    "relation" => "and",
+                    [
+                        "key" => "_week",
+                        "value" => str_pad($lastWeek, 2, 0, STR_PAD_LEFT),
+                        "compare" => "=",
+                    ],
+                    [
+                        "key" => "_product_box_id",
+                        "value" => $body["product_box_id"],
+                        "compare" => "=",
+                    ],
+                ],
+            ]);
+
+            if (empty($lastWeekBox)) {
+                $response = new WP_REST_Response([
+                    "message" =>
+                        "Nessuna Box Settimana trovata per la settimana " .
+                        $lastWeek,
+                ]);
+                $response->set_status(404);
+
+                return $response;
+            }
+
+            $lastWeekBox = reset($lastWeekBox);
+
+            $post_id = wp_insert_post([
+                "post_type" => "weekly-box",
+                "post_title" =>
+                    "Box settimana " .
+                    $body["week"] .
+                    " - " .
+                    $body["product_box_id"],
+                "post_content" => "",
+                "post_status" => "publish",
+                "comment_status" => "closed", // if you prefer
+                "ping_status" => "closed", // if you prefer
+            ]);
+
+            if ($post_id) {
+                // insert post meta
+                add_post_meta($post_id, "_week", $body["week"]);
+                add_post_meta(
+                    $post_id,
+                    "_data_consegna",
+                    $body["data_consegna"]
+                );
+                add_post_meta(
+                    $post_id,
+                    "_product_box_id",
+                    $body["product_box_id"]
+                );
+
+                $products = get_post_meta($lastWeekBox->ID, "_products", true);
+
+                add_post_meta($post_id, "_products", $products);
+            }
+
+            $response = new WP_REST_Response([
+                "id" => $post_id,
+            ]);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route(
+        "agrispesa/v1",
+        "weekly-box/(?P<box_id>\d+)/products/(?P<index>\d+)",
+        [
+            "methods" => "DELETE",
+            "permission_callback" => function () {
+                return true;
+            },
+            "callback" => function ($request) {
+                $products = get_post_meta(
+                    $request["box_id"],
+                    "_products",
+                    true
+                );
+
+                unset($products[$request["index"]]);
+
+                update_post_meta($request["box_id"], "_products", $products);
+
+                $response = new WP_REST_Response([]);
+                $response->set_status(204);
+
+                return $response;
+            },
+        ]
+    );
+
+    register_rest_route("agrispesa/v1", "weekly-box/(?P<box_id>\d+)/products", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $products = get_post_meta($request["box_id"], "_products", true);
+
+            foreach ($request["product_ids"] as $key => $id) {
+                $product = wc_get_product($id);
+                $unitaMisura = "gr";
+
+                $measureUnit = get_post_meta($id, "_woo_uom_input", true);
+                $price = get_post_meta($id, "_price", true);
+
+                if (!empty($measureUnit)) {
+                    $unitaMisura = $measureUnit;
+                }
+
+                $products[] = [
+                    "id" => $id,
+                    "name" => $product->get_name(),
+                    "quantity" => $request["quantity"][$key],
+                    "price" => $product->get_price(),
+                    "unit_measure" => $unitaMisura,
+                    "unit_measure_print" => get_post_meta(
+                        $id,
+                        "_uom_acquisto",
+                        true
+                    ),
+                ];
+            }
+
+            $products = array_map(
+                "unserialize",
+                array_unique(array_map("serialize", $products))
+            );
+
+            $newProducts = [];
+            foreach ($products as $product) {
+                $newProducts[] = $product;
+            }
+
+            update_post_meta($request["box_id"], "_products", $newProducts);
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "shop-categories", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $taxonomy = "product_cat";
+            $orderby = "name";
+            $show_count = 0; // 1 for yes, 0 for no
+            $pad_counts = 0; // 1 for yes, 0 for no
+            $hierarchical = 1; // 1 for yes, 0 for no
+            $title = "";
+            $empty = 0;
+
+            $args = [
+                "taxonomy" => $taxonomy,
+                "orderby" => $orderby,
+                "show_count" => $show_count,
+                "pad_counts" => $pad_counts,
+                "hierarchical" => $hierarchical,
+                "title_li" => $title,
+                "hide_empty" => $empty,
+            ];
+            $all_categories = get_categories($args);
+
+            $categories = [];
+            foreach ($all_categories as $cat) {
+                if ($cat->category_parent == 0) {
+                    $category_id = $cat->term_id;
+
+                    $isVisible = get_term_meta(
+                        $category_id,
+                        "in_preferenze_utente",
+                        true
+                    );
+                    if (empty($isVisible)) {
+                        continue;
+                    }
+
+                    $args2 = [
+                        "taxonomy" => $taxonomy,
+                        "child_of" => 0,
+                        "parent" => $category_id,
+                        "orderby" => $orderby,
+                        "show_count" => $show_count,
+                        "pad_counts" => $pad_counts,
+                        "hierarchical" => $hierarchical,
+                        "title_li" => $title,
+                        "hide_empty" => $empty,
+                    ];
+                    $sub_cats = get_categories($args2);
+                    if ($sub_cats) {
+                        foreach ($sub_cats as $sub_category) {
+                            $isVisible = get_term_meta(
+                                $sub_category->term_id,
+                                "in_preferenze_utente",
+                                true
+                            );
+                            if (empty($isVisible)) {
+                                continue;
+                            }
+
+                            $categoryProducts = get_posts([
+                                "post_type" => "product",
+                                "numberposts" => -1,
+                                "post_status" => "publish",
+                                "tax_query" => [
+                                    [
+                                        "taxonomy" => "product_cat",
+                                        "field" => "slug",
+                                        "terms" => $sub_category->slug,
+                                        "operator" => "IN",
+                                    ],
+                                ],
+                            ]);
+                            $categories[] = [
+                                "id" => $sub_category->term_id,
+                                "name" => $sub_category->name,
+                                "products" => $categoryProducts,
+                            ];
+                        }
+                    }
+                }
+            }
+
+            $response = new WP_REST_Response($categories);
+            $response->set_status(200);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "user-subscriptions", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $subscriptions = wcs_get_subscriptions([
+                "subscriptions_per_page" => -1,
+                "customer_id" => get_current_user_id(),
+                "subscription_status" => "active",
+            ]);
+
+            $json = [];
+
+            foreach ($subscriptions as $subscription) {
+                $products = $subscription->get_items();
+
+                $productsToAdd = get_products_to_add_from_subscription(
+                    $subscription
+                );
+
+                $boxPreferences = get_post_meta(
+                    $subscription->get_id(),
+                    "_box_preferences",
+                    true
+                );
+                if (empty($boxPreferences)) {
+                    $boxPreferences = [];
+                }
+
+                $boxBlacklist = get_post_meta(
+                    $subscription->get_id(),
+                    "_box_blacklist",
+                    true
+                );
+                if (empty($boxBlacklist)) {
+                    $boxBlacklist = [];
+                }
+
+                $json[] = [
+                    "name" => reset($products)->get_name(),
+                    "id" => $subscription->get_id(),
+                    "box_preferences" => $boxPreferences,
+                    "box_blacklist" => $boxBlacklist,
+                    "products" => $productsToAdd,
+                ];
+            }
+
+            $response = new WP_REST_Response($json);
+            $response->set_status(200);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "delivery-group-csv", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $dataConsegna = $_GET["data_consegna"];
+
+            $caps = get_post_meta($_GET["delivery_group"], "cap", true);
+
+            $args = [
+                "posts_per_page" => -1,
+                "post_type" => "shop_order",
+                "post_status" => ["wc-processing", "wc-completed"],
+                "meta_query" => [
+                    "relation" => "AND",
+                    [
+                        "key" => "_data_consegna",
+                        "value" => $dataConsegna,
+                        "compare" => "=",
+                    ],
+                    [
+                        "key" => "_shipping_postcode",
+                        "value" => $caps,
+                        "compare" => "IN",
+                    ],
+                ],
+            ];
+            $orders = new WP_Query($args);
+            $orders = $orders->get_posts();
+
+            $csv = [];
+
+            foreach ($orders as $order) {
+                $order = wc_get_order($order->ID);
+
+                $csv[] = [
+                    $order->get_shipping_postcode(),
+                    $order->get_shipping_city(),
+                    $order->get_shipping_address_1(),
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    $order->get_shipping_first_name() .
+                    " " .
+                    $order->get_shipping_last_name(),
+                ];
+            }
+
+            $f = fopen("php://memory", "w");
+            foreach ($csv as $line) {
+                fputcsv($f, $line);
+            }
+            fseek($f, 0);
+            header("Content-Type: text/csv");
+            header(
+                'Content-Disposition: attachment; filename="PIEM ' .
+                    (new \DateTime($dataConsegna))->format("d-m-Y") .
+                    ' da nav a map & guide . csv";'
+            );
+            fpassthru($f);
+            die();
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "subscription-preference", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+
+            $boxPreferences = get_post_meta(
+                $body["subscription_id"],
+                "_box_preferences",
+                true
+            );
+
+            if (empty($boxPreferences)) {
+                $boxPreferences = [];
+            }
+
+            foreach ($body["product_ids"] as $productId) {
+                $productToAdd = get_post($productId);
+                $boxPreferences[] = [
+                    "id" => $productToAdd->ID,
+                    "name" => $productToAdd->post_title,
+                ];
+            }
+
+            $boxPreferences = array_map(
+                "unserialize",
+                array_unique(array_map("serialize", $boxPreferences))
+            );
+
+            $newBoxPreferences = [];
+            foreach ($boxPreferences as $boxPreference) {
+                $newBoxPreferences[] = $boxPreference;
+            }
+
+            update_post_meta(
+                $body["subscription_id"],
+                "_box_preferences",
+                $newBoxPreferences
+            );
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "subscription-blacklist", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+
+            $boxPreferences = get_post_meta(
+                $body["subscription_id"],
+                "_box_blacklist",
+                true
+            );
+
+            if (empty($boxPreferences)) {
+                $boxPreferences = [];
+            }
+
+            foreach ($body["product_ids"] as $productId) {
+                $productToAdd = get_post($productId);
+                $boxPreferences[] = [
+                    "id" => $productToAdd->ID,
+                    "name" => $productToAdd->post_title,
+                ];
+            }
+
+            $boxPreferences = array_map(
+                "unserialize",
+                array_unique(array_map("serialize", $boxPreferences))
+            );
+
+            $newBoxPreferences = [];
+
+            foreach ($boxPreferences as $boxPreference) {
+                $newBoxPreferences[] = $boxPreference;
+            }
+
+            update_post_meta(
+                $body["subscription_id"],
+                "_box_blacklist",
+                $newBoxPreferences
+            );
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "subscription-preference", [
+        "methods" => "DELETE",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+            $boxPreferences = get_post_meta(
+                $body["subscription_id"],
+                "_box_preferences",
+                true
+            );
+
+            $productIds = $body["product_ids"];
+            $newBoxPreferences = [];
+
+            foreach ($productIds as $productId) {
+                //find product
+                $index = array_filter($boxPreferences, function ($product) use (
+                    $productId
+                ) {
+                    return $product["id"] == $productId;
+                });
+
+                if (!empty($index)) {
+                    $index = array_keys($index);
+                    $index = reset($index);
+                    unset($boxPreferences[$index]);
+                }
+            }
+
+            foreach ($boxPreferences as $preference) {
+                $newBoxPreferences[] = $preference;
+            }
+
+            update_post_meta(
+                $body["subscription_id"],
+                "_box_preferences",
+                $newBoxPreferences
+            );
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+            return $response;
+        },
+    ]);
+
+    register_rest_route("agrispesa/v1", "subscription-blacklist", [
+        "methods" => "DELETE",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $body = $request->get_json_params();
+            $boxPreferences = get_post_meta(
+                $body["subscription_id"],
+                "_box_blacklist",
+                true
+            );
+
+            $productIds = $body["product_ids"];
+            $newBoxPreferences = [];
+
+            foreach ($productIds as $productId) {
+                //find product
+                $index = array_filter($boxPreferences, function ($product) use (
+                    $productId
+                ) {
+                    return $product["id"] == $productId;
+                });
+
+                if (!empty($index)) {
+                    $index = array_keys($index);
+                    $index = reset($index);
+                    unset($boxPreferences[$index]);
+                }
+            }
+
+            foreach ($boxPreferences as $preference) {
+                $newBoxPreferences[] = $preference;
+            }
+
+            update_post_meta(
+                $body["subscription_id"],
+                "_box_blacklist",
+                $newBoxPreferences
+            );
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+            return $response;
+        },
+    ]);
 });
-
 
 function my_enqueue($hook)
 {
+    if ($hook == "edit.php" || $hook == "post.php") {
+        wp_enqueue_script(
+            "agrispesa-admin-delivery-box-js",
+            get_theme_file_uri("assets/js/admin-delivery-box.js"),
+            ["jquery", "select2"],
+            null,
+            true
+        );
+        wp_localize_script("agrispesa-admin-delivery-box-js", "WPURL", [
+            "siteurl" => get_option("siteurl"),
+        ]);
+    } else {
+        if ("toplevel_page_esporta-documenti" == $hook) {
+            wp_enqueue_script(
+                "agrispesa-export-js",
+                get_theme_file_uri("assets/js/export.js"),
+                ["jquery"],
+                null,
+                true
+            );
 
-	if ($hook == 'edit.php' || $hook == 'post.php') {
-		wp_enqueue_script('agrispesa-admin-delivery-box-js', get_theme_file_uri('assets/js/admin-delivery-box.js'), array('jquery', 'select2'), null, true);
-		wp_localize_script('agrispesa-admin-delivery-box-js', 'WPURL', array('siteurl' => get_option('siteurl')));
+            return;
+        }
 
-	} else {
+        if (
+            "toplevel_page_box-settimanali" !== $hook &&
+            "woocommerce_page_genera-ordini-box" !== $hook
+        ) {
+            return;
+        }
 
-		if ('toplevel_page_esporta-documenti' == $hook) {
-			wp_enqueue_script('agrispesa-export-js', get_theme_file_uri('assets/js/export.js'), array('jquery'), null, true);
+        wp_register_style(
+            "select2css",
+            "//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css",
+            false,
+            "1.0",
+            "all"
+        );
+        wp_register_script(
+            "select2",
+            "//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js",
+            ["jquery"],
+            "1.0",
+            true
+        );
 
-			return;
-		}
+        wp_enqueue_style("select2css");
+        wp_enqueue_script("select2");
 
-		if ('toplevel_page_box-settimanali' !== $hook && 'woocommerce_page_genera-ordini-box' !== $hook) {
-			return;
-		}
+        wp_enqueue_script(
+            "moment",
+            get_template_directory_uri() . "/assets/js/moment.min.js",
+            ["jquery"],
+            null,
+            true
+        );
 
+        wp_register_script(
+            "axios",
+            "//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js",
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script("axios");
 
-		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
-		wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+        wp_register_script(
+            "vuejs",
+            "//unpkg.com/vue@3/dist/vue.global.js",
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script("vuejs");
 
-		wp_enqueue_style('select2css');
-		wp_enqueue_script('select2');
+        wp_register_style(
+            "datatable",
+            "//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css",
+            false,
+            "1.0",
+            "all"
+        );
+        wp_enqueue_style("datatable");
 
-		wp_enqueue_script('moment', get_template_directory_uri() . '/assets/js/moment.min.js', ['jquery'], null, true);
-
-
-		wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
-		wp_enqueue_script('axios');
-
-		wp_register_script('vuejs', '//unpkg.com/vue@3/dist/vue.global.js', array(), null, true);
-		wp_enqueue_script('vuejs');
-
-		wp_register_style('datatable', '//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css', false, '1.0', 'all');
-		wp_enqueue_style('datatable');
-
-		wp_register_script('datatable-js', '//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js', array(), null, true);
-		wp_enqueue_script('datatable-js');
-		wp_enqueue_style('agrispesa-admin-css', get_theme_file_uri('assets/css/admin.css'), false, '1.0', 'all');
-		wp_enqueue_script('agrispesa-admin-js', get_theme_file_uri('assets/js/admin.js'), array('jquery', 'select2'), null, true);
-		wp_localize_script('agrispesa-admin-js', 'WPURL', array('siteurl' => get_option('siteurl')));
-
-	}
+        wp_register_script(
+            "datatable-js",
+            "//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js",
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script("datatable-js");
+        wp_enqueue_style(
+            "agrispesa-admin-css",
+            get_theme_file_uri("assets/css/admin.css"),
+            false,
+            "1.0",
+            "all"
+        );
+        wp_enqueue_script(
+            "agrispesa-admin-js",
+            get_theme_file_uri("assets/js/admin.js"),
+            ["jquery", "select2"],
+            null,
+            true
+        );
+        wp_localize_script("agrispesa-admin-js", "WPURL", [
+            "siteurl" => get_option("siteurl"),
+        ]);
+    }
 }
 
-add_action('admin_enqueue_scripts', 'my_enqueue');
+add_action("admin_enqueue_scripts", "my_enqueue");
 
 // Adding Meta container admin shop_order pages
-add_action('add_meta_boxes', 'mv_add_meta_boxes');
-if (!function_exists('mv_add_meta_boxes')) {
-	function mv_add_meta_boxes()
-	{
-		add_meta_box(
-			'box_preferences',
-			'Preferenze Facciamo noi',
-			'box_preferences_meta_box_callback',
-			'shop_order',
-			'advanced',
-			'core',
-			[]
-		);
+add_action("add_meta_boxes", "mv_add_meta_boxes");
+if (!function_exists("mv_add_meta_boxes")) {
+    function mv_add_meta_boxes()
+    {
+        add_meta_box(
+            "box_preferences",
+            "Preferenze Facciamo noi",
+            "box_preferences_meta_box_callback",
+            "shop_order",
+            "advanced",
+            "core",
+            []
+        );
 
-		add_meta_box('mv_other_fields', 'INFORMAZIONI CONSEGNA', 'mv_add_other_fields_for_packaging', 'shop_order', 'side', 'core');
+        add_meta_box(
+            "mv_other_fields",
+            "INFORMAZIONI CONSEGNA",
+            "mv_add_other_fields_for_packaging",
+            "shop_order",
+            "side",
+            "core"
+        );
+    }
 
+    function box_preferences_meta_box_callback($order)
+    {
+        global $post;
 
-	}
-
-	function box_preferences_meta_box_callback($order)
-	{
-		global $post;
-
-		$subscriptionId = get_post_meta($post->ID, '_subscription_id', true);
-		echo $subscriptionId;
-
-		?>
+        $subscriptionId = get_post_meta($post->ID, "_subscription_id", true);
+        echo $subscriptionId;?>
 		<h4>Da Eliminare</h4><br>
 
 		<?php
-
-	}
-
+    }
 }
 
 // if you don't add 3 as as 4th argument, this will not work as expected
-add_action('save_post', 'my_save_post_function', 10, 3);
+add_action("save_post", "my_save_post_function", 10, 3);
 
 function my_save_post_function($post_ID, $post, $update)
 {
-	if ($post->post_type == 'shop_order') {
-		if (isset($_POST['_numero_consegna'])) {
-			update_post_meta($post->ID, '_numero_consegna', $_POST['_numero_consegna']);
-		}
+    if ($post->post_type == "shop_order") {
+        if (isset($_POST["_numero_consegna"])) {
+            update_post_meta(
+                $post->ID,
+                "_numero_consegna",
+                $_POST["_numero_consegna"]
+            );
+        }
 
-		if (isset($_POST['_data_consegna'])) {
-			update_post_meta($post->ID, '_data_consegna', $_POST['_data_consegna']);
-		}
-
-	}
+        if (isset($_POST["_data_consegna"])) {
+            update_post_meta(
+                $post->ID,
+                "_data_consegna",
+                $_POST["_data_consegna"]
+            );
+        }
+    }
 }
 
 // Adding Meta field in the meta container admin shop_order pages
-if (!function_exists('mv_add_other_fields_for_packaging')) {
-	function mv_add_other_fields_for_packaging()
-	{
-		global $post;
+if (!function_exists("mv_add_other_fields_for_packaging")) {
+    function mv_add_other_fields_for_packaging()
+    {
+        global $post;
 
-		$weight = get_post_meta($post->ID, '_total_box_weight', true);
-		$week = get_post_meta($post->ID, '_week', true);
-		$numConsegna = get_post_meta($post->ID, '_numero_consegna', true);
-		$consegna = get_post_meta($post->ID, '_data_consegna', true);
-		$gruppoConsegna = get_post_meta($post->ID, '_gruppo_consegna', true);
-		$deliveryDay = get_order_delivery_date($post->ID);
+        $weight = get_post_meta($post->ID, "_total_box_weight", true);
+        $week = get_post_meta($post->ID, "_week", true);
+        $numConsegna = get_post_meta($post->ID, "_numero_consegna", true);
+        $consegna = get_post_meta($post->ID, "_data_consegna", true);
+        $gruppoConsegna = get_post_meta($post->ID, "_gruppo_consegna", true);
+        $deliveryDay = get_order_delivery_date($post->ID);
 
+        if (empty($weight)) {
+            $weight = 0;
+        }
+        echo "<span>Peso della scatola: <strong>" .
+            $weight .
+            " kg</strong></span><br>";
+        echo "<span>Settimana: <strong>" . $week . "</strong></span><br><br>";
+        echo "<span>Gruppo di consegna: <strong>" .
+            $gruppoConsegna .
+            "</strong></span><br><br>";
+        echo "<span>Data di ricezione: <strong>" .
+            $deliveryDay .
+            "</strong></span><br><br>";
+        echo '<strong>Numero di consegna:</strong><br>
+		<input autocomplete="off" type="text" value="' .
+            $numConsegna .
+            '" name="_numero_consegna"><br><br>';
 
-		if (empty($weight)) {
-			$weight = 0;
-		}
-		echo '<span>Peso della scatola: <strong>' . $weight . ' kg</strong></span><br>';
-		echo '<span>Settimana: <strong>' . $week . '</strong></span><br><br>';
-		echo '<span>Gruppo di consegna: <strong>' . $gruppoConsegna . '</strong></span><br><br>';
-		echo '<span>Data di ricezione: <strong>' . $deliveryDay . '</strong></span><br><br>';
-		echo '<strong>Numero di consegna:</strong><br>
-		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
-
-		global $wpdb;
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {
-				$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
-		?>
+        global $wpdb;
+        $allDataConsegna = $wpdb->get_results(
+            "SELECT meta_value FROM {
+				$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value",
+            ARRAY_A
+        );
+        ?>
 		<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
 
 			<?php foreach ($allDataConsegna as $dataConsegna):
-				$dataConsegna = new DateTime($dataConsegna['meta_value']);
-				//fix nathi per errore data di consegna
-				if (!$dataConsegna):?>
-					<option <?php if (!$consegna): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
-				<?php else:
-					?>
-					<option
-						<?php if ($consegna && $dataConsegna->format("Y - m - d") == $consegna): ?> selected <?php endif; ?>
-						value=" <?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
-				<?php endif; ?>
 
-			<?php endforeach; ?>
+       $dataConsegna = new DateTime($dataConsegna["meta_value"]);
+       //fix nathi per errore data di consegna
+       if (!$dataConsegna): ?>
+					<option <?php if (
+         !$consegna
+     ): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
+				<?php else: ?>
+					<option
+						<?php if (
+          $consegna &&
+          $dataConsegna->format("Y - m - d") == $consegna
+      ): ?> selected <?php endif; ?>
+						value=" <?php echo $dataConsegna->format(
+          "Y-m-d"
+      ); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
+				<?php endif;
+       ?>
+
+			<?php
+   endforeach; ?>
 		</select>
 		<?php
-	}
+    }
 }
-function get_products_to_add_from_subscription($subscription, $week = null, $overrideProducts = false)
-{
-	$box = get_box_from_subscription($subscription);
+function get_products_to_add_from_subscription(
+    $subscription,
+    $week = null,
+    $overrideProducts = false
+) {
+    $box = get_box_from_subscription($subscription);
 
-	if (!$box) {
-		return [];
-	}
+    if (!$box) {
+        return [];
+    }
 
-	$productsToAdd = get_post_meta($box->ID, '_products', true);
-	if ($overrideProducts) {
-		//check preferences
-		$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
-		if (empty($boxPreferences)) {
-			$boxPreferences = [];
-		}
+    $productsToAdd = get_post_meta($box->ID, "_products", true);
+    if ($overrideProducts) {
+        //check preferences
+        $boxPreferences = get_post_meta(
+            $subscription->get_id(),
+            "_box_preferences",
+            true
+        );
+        if (empty($boxPreferences)) {
+            $boxPreferences = [];
+        }
 
-		foreach ($boxPreferences as $preference) {
-			$productSearched = array_filter(
-				$productsToAdd,
-				function ($product) use ($preference) {
-					return $product['id'] == $preference['id'];
-				}
-			);
+        foreach ($boxPreferences as $preference) {
+            $productSearched = array_filter($productsToAdd, function (
+                $product
+            ) use ($preference) {
+                return $product["id"] == $preference["id"];
+            });
 
-			if (!empty($productSearched)) {
+            if (!empty($productSearched)) {
+                $keys = array_keys($productSearched);
 
-				$keys = array_keys($productSearched);
+                $productSearched = reset($productSearched);
 
-				$productSearched = reset($productSearched);
+                $productSearchedKey = reset($keys);
 
+                $quantity = $productsToAdd[$productSearchedKey]["quantity"];
+                unset($productsToAdd[$productSearchedKey]);
 
-				$productSearchedKey = reset($keys);
+                $categories = get_the_terms(
+                    $productSearched["id"],
+                    "product_cat"
+                );
+                $category = reset($categories);
 
-				$quantity = $productsToAdd[$productSearchedKey]['quantity'];
-				unset($productsToAdd[$productSearchedKey]);
+                $prod_categories = [$category->term_id];
+                $product_args = [
+                    "numberposts" => -1,
+                    "post_status" => ["publish"],
+                    "post_type" => ["product"],
+                    "suppress_filters" => false,
+                    "order" => "ASC",
+                    "offset" => 0,
+                ];
 
-				$categories = get_the_terms($productSearched['id'], 'product_cat');
-				$category = reset($categories);
+                $product_args["tax_query"] = [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "id",
+                        "terms" => $prod_categories,
+                        "operator" => "IN",
+                    ],
+                ];
 
-				$prod_categories = [$category->term_id];
-				$product_args = array(
-					'numberposts' => -1,
-					'post_status' => array('publish'),
-					'post_type' => array('product'),
-					'suppress_filters' => false,
-					'order' => 'ASC',
-					'offset' => 0
-				);
+                $productsByCategory = get_posts($product_args);
 
-				$product_args['tax_query'] = array(
-					array(
-						'taxonomy' => 'product_cat',
-						'field' => 'id',
-						'terms' => $prod_categories,
-						'operator' => 'IN',
-					));
+                $productToAdd = reset($productsByCategory);
 
-				$productsByCategory = get_posts($product_args);
+                $productsToAdd[] = [
+                    "id" => $productToAdd->ID,
+                    "name" => $productToAdd->post_title,
+                    "quantity" => $quantity,
+                ];
+            }
+        }
+    }
 
-				$productToAdd = reset($productsByCategory);
-
-				$productsToAdd[] = [
-					'id' => $productToAdd->ID,
-					'name' => $productToAdd->post_title,
-					'quantity' => $quantity
-				];
-
-			}
-
-		}
-
-	}
-
-	return $productsToAdd;
+    return $productsToAdd;
 }
 
 function get_box_from_subscription($subscription, $week = null)
 {
+    if (!$week) {
+        $date = new DateTime();
+        //	$date->modify('+1 week');
+        $week = $date->format("W");
+    }
 
-	if (!$week) {
-		$date = new DateTime();
-	//	$date->modify('+1 week');
-		$week = $date->format("W");
-	}
+    $products = $subscription->get_items();
 
-	$products = $subscription->get_items();
+    if (empty($products)) {
+        return null;
+    }
 
-	if (empty($products)) {
-		return null;
-	}
+    $box = reset($products)->get_product();
 
-	$box = reset($products)->get_product();
+    if (!$box) {
+        return null;
+    }
 
-	if (!$box) {
-		return null;
-	}
+    $tipologia = get_post_meta($box->get_id(), "attribute_pa_tipologia", true);
+    $dimensione = get_post_meta(
+        $box->get_id(),
+        "attribute_pa_dimensione",
+        true
+    );
 
-	$tipologia = get_post_meta($box->get_id(), 'attribute_pa_tipologia', true);
-	$dimensione = get_post_meta($box->get_id(), 'attribute_pa_dimensione', true);
+    $productBox = get_single_box_from_attributes($tipologia, $dimensione);
 
+    if (empty($productBox)) {
+        return null;
+    }
 
-	$productBox = get_single_box_from_attributes($tipologia, $dimensione);
-
-	if (empty($productBox)) {
-		return null;
-	}
-
-	//get product data box
-	$box = get_weekly_box_from_box($productBox->get_id(), $week);
-	return $box;
+    //get product data box
+    $box = get_weekly_box_from_box($productBox->get_id(), $week);
+    return $box;
 }
-
 
 function get_weekly_box_from_box($id, $week)
 {
+    $box = get_posts([
+        "post_type" => "weekly-box",
+        "post_status" => "publish",
+        "posts_per_page" => 1,
+        "meta_query" => [
+            "relation" => "and",
+            [
+                "key" => "_week",
+                "value" => date("Y") . "_" . $week,
+                "compare" => "=",
+            ],
+            [
+                "key" => "_product_box_id",
+                "value" => $id,
+                "compare" => "=",
+            ],
+        ],
+    ]);
 
-	$box = get_posts([
-		'post_type' => 'weekly-box',
-		'post_status' => 'publish',
-		'posts_per_page' => 1,
-		'meta_query' => [
-			'relation' => 'and',
-			[
-				'key' => '_week',
-				'value' => date('Y').'_'.$week,
-				'compare' => '='
-			],
-			[
-				'key' => '_product_box_id',
-				'value' => $id,
-				'compare' => '='
-			]
-		]
-	]);
+    if (empty($box)) {
+        return null;
+    }
 
-	if (empty($box)) {
-		return null;
-	}
-
-
-	return reset($box);
+    return reset($box);
 }
 
 function send_email_produttori($week)
 {
-	$groupedFabbisogno = get_fabbisogno($week);
+    $groupedFabbisogno = get_fabbisogno($week);
 
-	foreach ($groupedFabbisogno as $fornitore => $fabbisogno) {
-
-	}
+    foreach ($groupedFabbisogno as $fornitore => $fabbisogno) {
+    }
 }
 
 function generate_fabbisogno()
 {
-	$date = new DateTime();
-	//$date->modify('+1 week');
-	$week = $date->format("W");
-	//dd($week);
+    $date = new DateTime();
+    //$date->modify('+1 week');
+    $week = $date->format("W");
+    //dd($week);
 
-	//get all pending orders
+    //get all pending orders
 
-	$args = [
-		'posts_per_page' => -1,
-		'post_type' => 'shop_order',
-		'post_status' => ['wc-processing', 'wc-on-hold'],
-		'meta_query' => [
-			'relation' => 'and',
-			[
-				'key' => '_week',
-				'value' => $week,
-				'compare' => '='
-			]
-		]
-	];
-	$orders = new WP_Query($args);
-	$orders = $orders->get_posts();
+    $args = [
+        "posts_per_page" => -1,
+        "post_type" => "shop_order",
+        "post_status" => ["wc-processing", "wc-on-hold"],
+        "meta_query" => [
+            "relation" => "and",
+            [
+                "key" => "_week",
+                "value" => $week,
+                "compare" => "=",
+            ],
+        ],
+    ];
+    $orders = new WP_Query($args);
+    $orders = $orders->get_posts();
 
-	$fabbisogni = [];
+    $fabbisogni = [];
 
-	foreach ($orders as $order) {
-		$order = wc_get_order($order->ID);
+    foreach ($orders as $order) {
+        $order = wc_get_order($order->ID);
 
-		$gruppoConsegna = get_post_meta($order->ID, '_gruppo_consegna', true);
+        $gruppoConsegna = get_post_meta($order->ID, "_gruppo_consegna", true);
 
-		foreach ($order->get_items() as $item) {
-			$quantity = $item->get_quantity();
-			$product = $item->get_product();
-			if (!$product->is_type('simple')) {
-				continue;
-			}
-			if (!isset($fabbisogni[$product->get_id()])) {
-				$weight = get_post_meta($product->get_id(), '_weight', true);
+        foreach ($order->get_items() as $item) {
+            $quantity = $item->get_quantity();
+            $product = $item->get_product();
+            if (!$product->is_type("simple")) {
+                continue;
+            }
+            if (!isset($fabbisogni[$product->get_id()])) {
+                $weight = get_post_meta($product->get_id(), "_weight", true);
 
-				$measureUnit = get_post_meta($product->get_id(), '_woo_uom_input', true);
-				if (!$measureUnit) {
-					$measureUnit = 'gr';
-				}
+                $measureUnit = get_post_meta(
+                    $product->get_id(),
+                    "_woo_uom_input",
+                    true
+                );
+                if (!$measureUnit) {
+                    $measureUnit = "gr";
+                }
 
-				$measureAcquisto = get_post_meta($product->get_id(), '_uom_acquisto', true);
-				if (empty($measureAcquisto)) {
-					$measureAcquisto = 'pz';
-				}
+                $measureAcquisto = get_post_meta(
+                    $product->get_id(),
+                    "_uom_acquisto",
+                    true
+                );
+                if (empty($measureAcquisto)) {
+                    $measureAcquisto = "pz";
+                }
 
-				$fornitore = get_post_meta($product->get_id(), 'product_producer', true);
-				$fornitoreString = '';
-				if (!empty($fornitore)) {
-					$fornitore = reset($fornitore);
-					$fornitore = get_post($fornitore);
-					$fornitoreString = $fornitore->post_title;
-				}
+                $fornitore = get_post_meta(
+                    $product->get_id(),
+                    "product_producer",
+                    true
+                );
+                $fornitoreString = "";
+                if (!empty($fornitore)) {
+                    $fornitore = reset($fornitore);
+                    $fornitore = get_post($fornitore);
+                    $fornitoreString = $fornitore->post_title;
+                }
 
-				$tmpFabbisogno = [
-					'fabbisogno' => $quantity,
-					'weight' => $weight,
-					'product_name' => $product->get_name(),
-					'quantity_type' => $measureAcquisto,
-					'weight_type' => $measureUnit,
-					'sku' => $product->get_sku(),
-					'produttore' => $fornitoreString,
-					'gruppo_consegna' => $gruppoConsegna
-				];
+                $tmpFabbisogno = [
+                    "fabbisogno" => $quantity,
+                    "weight" => $weight,
+                    "product_name" => $product->get_name(),
+                    "quantity_type" => $measureAcquisto,
+                    "weight_type" => $measureUnit,
+                    "sku" => $product->get_sku(),
+                    "produttore" => $fornitoreString,
+                    "gruppo_consegna" => $gruppoConsegna,
+                ];
 
-				$fabbisogni[$product->get_id() . '_' . $gruppoConsegna] = $tmpFabbisogno;
+                $fabbisogni[
+                    $product->get_id() . "_" . $gruppoConsegna
+                ] = $tmpFabbisogno;
+            } else {
+                $fabbisogni[$product->get_id() . "_" . $gruppoConsegna][
+                    "fabbisogno"
+                ] += $quantity;
+            }
+        }
+    }
 
-			} else {
-				$fabbisogni[$product->get_id() . '_' . $gruppoConsegna]['fabbisogno'] += $quantity;
-			}
+    global $wpdb;
 
-
-		}
-	}
-
-	global $wpdb;
-
-	$wpdb->query("DELETE p, pm
+    $wpdb->query(
+        "DELETE p, pm
   FROM {$wpdb->prefix}posts p
  INNER
   JOIN {$wpdb->prefix}postmeta pm
     ON pm.post_id = p.ID
  WHERE p.post_type = 'fabbisogno' AND
        pm.meta_key = 'settimana'
-   AND pm.meta_value = '" . $week . "';");
+   AND pm.meta_value = '" .
+            $week .
+            "';"
+    );
 
-	$wpdb->query("
+    $wpdb->query("
 	DELETE pm
 FROM {$wpdb->prefix}postmeta pm
 LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
 WHERE wp.ID IS NULL
 	");
 
-	foreach ($fabbisogni as $key => $product) {
+    foreach ($fabbisogni as $key => $product) {
+        $key = explode("_", $key);
+        $productId = $key[0];
+        $gruppoConsegna = $key[1];
 
-		$key = explode("_", $key);
-		$productId = $key[0];
-		$gruppoConsegna = $key[1];
+        $post_id = wp_insert_post([
+            "post_type" => "fabbisogno",
+            "post_title" => $product["product_name"] . " - " . $gruppoConsegna,
+            "post_content" => "",
+            "post_status" => "publish",
+            "comment_status" => "closed", // if you prefer
+            "ping_status" => "closed", // if you prefer
+        ]);
 
-		$post_id = wp_insert_post(array(
-			'post_type' => 'fabbisogno',
-			'post_title' => $product['product_name'] . ' - ' . $gruppoConsegna,
-			'post_content' => '',
-			'post_status' => 'publish',
-			'comment_status' => 'closed',   // if you prefer
-			'ping_status' => 'closed',      // if you prefer
-		));
+        add_post_meta($post_id, "settimana", $week);
+        add_post_meta($post_id, "prodotto", [$productId]);
 
-		add_post_meta($post_id, 'settimana', $week);
-		add_post_meta($post_id, 'prodotto', [$productId]);
-
-		foreach ($product as $key => $value) {
-			add_post_meta($post_id, $key, $value);
-		}
-
-	}
-
-
+        foreach ($product as $key => $value) {
+            add_post_meta($post_id, $key, $value);
+        }
+    }
 }
 
 function create_order_from_subscription($id)
 {
-	$subscription = wcs_get_subscription($id);
+    $subscription = wcs_get_subscription($id);
 
-	if (!$subscription) {
-		return false;
-	}
+    if (!$subscription) {
+        return false;
+    }
 
-	$weight = 0;
-	/*    if (!empty($productData['weight'])) {
+    $weight = 0;
+    /*    if (!empty($productData['weight'])) {
 	$weight = $productData['weight'];
 	}*/
 
+    $box = get_box_from_subscription($subscription);
 
-	$box = get_box_from_subscription($subscription);
+    if (!$box) {
+        return false;
+    }
 
-	if (!$box) {
-		return false;
-	}
+    $week = get_post_meta($box->ID, "_week", true);
+    $consegna = get_post_meta($box->ID, "_data_consegna", true);
+    $boxNavisionId = get_post_meta($box->ID, "_navision_id", true);
 
-	$week = get_post_meta($box->ID, '_week', true);
-	$consegna = get_post_meta($box->ID, '_data_consegna', true);
-	$boxNavisionId = get_post_meta($box->ID, '_navision_id', true);
+    $productsToAdd = get_products_to_add_from_subscription(
+        $subscription,
+        $week,
+        true
+    );
 
-	$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
+    $customerId = $subscription->get_user_id();
 
-	$customerId = $subscription->get_user_id();
+    $order = wc_create_order();
+    $order->set_customer_id($customerId);
 
-	$order = wc_create_order();
-	$order->set_customer_id($customerId);
+    foreach ($productsToAdd as $productToAdd) {
+        $productObjToAdd = wc_get_product($productToAdd["id"]);
 
-	foreach ($productsToAdd as $productToAdd) {
-		$productObjToAdd = wc_get_product($productToAdd['id']);
+        if (
+            $productToAdd["quantity"] > $productObjToAdd->get_stock_quantity()
+        ) {
+            //Non ho più disponibilità
+        }
 
-		if ($productToAdd['quantity'] > $productObjToAdd->get_stock_quantity()) {
-			//Non ho più disponibilità
-		}
+        $itemId = $order->add_product(
+            $productObjToAdd,
+            $productToAdd["quantity"]
+        );
+        wc_add_order_item_meta(
+            $itemId,
+            "offer_line_no",
+            $productToAdd["offer_line_no"]
+        );
+    }
 
-		$itemId = $order->add_product($productObjToAdd, $productToAdd['quantity']);
-		wc_add_order_item_meta($itemId,'offer_line_no',$productToAdd['offer_line_no']);
-	}
+    // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
+    $order->set_address(
+        [
+            "first_name" => $subscription->get_billing_first_name(),
+            "last_name" => $subscription->get_billing_last_name(),
+            "company" => $subscription->get_billing_company(),
+            "email" => $subscription->get_billing_email(),
+            "phone" => $subscription->get_billing_phone(),
+            "address_1" => $subscription->get_billing_address_1(),
+            "address_2" => $subscription->get_billing_address_2(),
+            "city" => $subscription->get_billing_city(),
+            "state" => $subscription->get_billing_state(),
+            "postcode" => $subscription->get_billing_postcode(),
+            "country" => $subscription->get_billing_country(),
+        ],
+        "billing"
+    );
 
-	// The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
-	$order->set_address([
-		'first_name' => $subscription->get_billing_first_name(),
-		'last_name' => $subscription->get_billing_last_name(),
-		'company' => $subscription->get_billing_company(),
-		'email' => $subscription->get_billing_email(),
-		'phone' => $subscription->get_billing_phone(),
-		'address_1' => $subscription->get_billing_address_1(),
-		'address_2' => $subscription->get_billing_address_2(),
-		'city' => $subscription->get_billing_city(),
-		'state' => $subscription->get_billing_state(),
-		'postcode' => $subscription->get_billing_postcode(),
-		'country' => $subscription->get_billing_country()
-	], 'billing');
+    $order->set_address(
+        [
+            "first_name" => $subscription->get_shipping_first_name(),
+            "last_name" => $subscription->get_shipping_last_name(),
+            "company" => $subscription->get_shipping_company(),
+            "email" => $subscription->get_billing_email(),
+            "phone" => $subscription->get_shipping_phone(),
+            "address_1" => $subscription->get_shipping_address_1(),
+            "address_2" => $subscription->get_shipping_address_2(),
+            "city" => $subscription->get_shipping_city(),
+            "state" => $subscription->get_shipping_state(),
+            "postcode" => $subscription->get_shipping_postcode(),
+            "country" => $subscription->get_shipping_country(),
+        ],
+        "shipping"
+    );
 
-	$order->set_address([
-		'first_name' => $subscription->get_shipping_first_name(),
-		'last_name' => $subscription->get_shipping_last_name(),
-		'company' => $subscription->get_shipping_company(),
-		'email' => $subscription->get_billing_email(),
-		'phone' => $subscription->get_shipping_phone(),
-		'address_1' => $subscription->get_shipping_address_1(),
-		'address_2' => $subscription->get_shipping_address_2(),
-		'city' => $subscription->get_shipping_city(),
-		'state' => $subscription->get_shipping_state(),
-		'postcode' => $subscription->get_shipping_postcode(),
-		'country' => $subscription->get_shipping_country()
-	], 'shipping');
-
-
-	/*$items = $subscription->get_items();
+    /*$items = $subscription->get_items();
 	foreach ($items as $item) {
 
 	$order->add_product(, 1);
@@ -2169,290 +2568,317 @@ function create_order_from_subscription($id)
 	$item->save();
 	}*/
 
-	$order->calculate_totals();
-	$order->update_status("processing", '', TRUE);
+    $order->calculate_totals();
+    $order->update_status("processing", "", true);
 
-	update_post_meta($order->get_id(), '_total_box_weight', $weight);
-	update_post_meta($order->get_id(), '_week', $week);
-	update_post_meta($order->get_id(), '_box_navision_id', $boxNavisionId);
+    update_post_meta($order->get_id(), "_total_box_weight", $weight);
+    update_post_meta($order->get_id(), "_week", $week);
+    update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
 
-	/*
+    /*
 	if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
 		$order->get_date_paid()->add(new DateInterval('P7D'));
 	}
 */
 
-	update_post_meta($order->get_id(), '_data_consegna', $consegna);
-	update_post_meta($order->get_id(), '_order_type', 'FN');
-	update_post_meta($order->get_id(), '_subscription_id', $id);
+    update_post_meta($order->get_id(), "_data_consegna", $consegna);
+    update_post_meta($order->get_id(), "_order_type", "FN");
+    update_post_meta($order->get_id(), "_subscription_id", $id);
 
+    $boxPreferences = get_post_meta(
+        $subscription->get_id(),
+        "_box_preferences",
+        true
+    );
+    if (empty($boxPreferences)) {
+        $boxPreferences = [];
+    }
 
-	$boxPreferences = get_post_meta($subscription->get_id(), '_box_preferences', true);
-	if (empty($boxPreferences)) {
-		$boxPreferences = [];
-	}
+    update_post_meta($order->get_id(), "_box_preferences", $boxPreferences);
 
-	update_post_meta($order->get_id(), '_box_preferences', $boxPreferences);
+    $groups = get_posts([
+        "post_type" => "delivery-group",
+        "post_status" => "publish",
+        "posts_per_page" => -1,
+    ]);
 
+    foreach ($groups as $group) {
+        $caps = get_post_meta($group->ID, "cap", true);
 
-	$groups = get_posts([
-		'post_type' => 'delivery-group',
-		'post_status' => 'publish',
-		'posts_per_page' => -1,
-	]);
+        if (in_array($order->get_shipping_postcode(), $caps)) {
+            update_post_meta(
+                $order->get_id(),
+                "_gruppo_consegna",
+                $group->post_title
+            );
+        }
+    }
 
-	foreach ($groups as $group) {
-
-		$caps = get_post_meta($group->ID, 'cap', true);
-
-		if (in_array($order->get_shipping_postcode(), $caps)) {
-			update_post_meta($order->get_id(), '_gruppo_consegna', $group->post_title);
-		}
-	}
-
-	calculate_delivery_date_order($order->get_id(), false);
-
+    calculate_delivery_date_order($order->get_id(), false);
 }
 
-function get_all_single_box(){
-	$products = get_posts(array(
-		'post_type' => 'product',
-		'numberposts' => -1,
-		'post_status' => 'publish',
-		'tax_query' => array(
-			array(
-				'taxonomy' => 'product_cat',
-				'field' => 'slug',
-				'terms' => 'box singola',
-				'operator' => 'IN',
-			)
-		),
-	));
+function get_all_single_box()
+{
+    $products = get_posts([
+        "post_type" => "product",
+        "numberposts" => -1,
+        "post_status" => "publish",
+        "tax_query" => [
+            [
+                "taxonomy" => "product_cat",
+                "field" => "slug",
+                "terms" => "box singola",
+                "operator" => "IN",
+            ],
+        ],
+    ]);
 
-	$singleBoxes = [];
+    $singleBoxes = [];
 
-	foreach ($products as $product) {
-		$product = wc_get_product($product->ID);
-		$children = $product->get_children();
-		foreach ($children as $variation) {
-			$variation = wc_get_product($variation);
-			$singleBoxes[] = $variation;
-		}
-	}
-	return $singleBoxes;
+    foreach ($products as $product) {
+        $product = wc_get_product($product->ID);
+        $children = $product->get_children();
+        foreach ($children as $variation) {
+            $variation = wc_get_product($variation);
+            $singleBoxes[] = $variation;
+        }
+    }
+    return $singleBoxes;
 }
 
 function get_single_box_from_attributes($tipologia, $dimensione)
 {
-	$products = get_posts(array(
-		'post_type' => 'product',
-		'numberposts' => -1,
-		'post_status' => 'publish',
-		'tax_query' => array(
-			array(
-				'taxonomy' => 'product_cat',
-				'field' => 'slug',
-				'terms' => 'box singola',
-				'operator' => 'IN',
-			)
-		),
-	));
+    $products = get_posts([
+        "post_type" => "product",
+        "numberposts" => -1,
+        "post_status" => "publish",
+        "tax_query" => [
+            [
+                "taxonomy" => "product_cat",
+                "field" => "slug",
+                "terms" => "box singola",
+                "operator" => "IN",
+            ],
+        ],
+    ]);
 
-	$productFound = false;
-	foreach ($products as $product) {
-		$product = wc_get_product($product->ID);
-		$children = $product->get_children();
-		foreach ($children as $variation) {
-			$tipologiaVariation = get_post_meta($variation, 'attribute_pa_tipologia', true);
-			$dimensioneVariation = get_post_meta($variation, 'attribute_pa_dimensione', true);
+    $productFound = false;
+    foreach ($products as $product) {
+        $product = wc_get_product($product->ID);
+        $children = $product->get_children();
+        foreach ($children as $variation) {
+            $tipologiaVariation = get_post_meta(
+                $variation,
+                "attribute_pa_tipologia",
+                true
+            );
+            $dimensioneVariation = get_post_meta(
+                $variation,
+                "attribute_pa_dimensione",
+                true
+            );
 
-			if ($tipologia == $tipologiaVariation && $dimensioneVariation == $dimensione) {
-				$productFound = $variation;
-			}
-		}
-	}
+            if (
+                $tipologia == $tipologiaVariation &&
+                $dimensioneVariation == $dimensione
+            ) {
+                $productFound = $variation;
+            }
+        }
+    }
 
-	if ($productFound) {
-		$productFound = wc_get_product($productFound);
-		return $productFound;
-	}
+    if ($productFound) {
+        $productFound = wc_get_product($productFound);
+        return $productFound;
+    }
 
-	return $productFound;
-
+    return $productFound;
 }
-
-
 
 function get_subscription_box_from_attributes($tipologia, $dimensione)
 {
-	$products = get_posts(array(
-		'post_type' => 'product',
-		'numberposts' => -1,
-		'post_status' => 'publish',
-		'tax_query' => array(
-			array(
-				'taxonomy' => 'product_cat',
-				'field' => 'slug',
-				'terms' => 'box',
-				'operator' => 'IN',
-			)
-		),
-	));
+    $products = get_posts([
+        "post_type" => "product",
+        "numberposts" => -1,
+        "post_status" => "publish",
+        "tax_query" => [
+            [
+                "taxonomy" => "product_cat",
+                "field" => "slug",
+                "terms" => "box",
+                "operator" => "IN",
+            ],
+        ],
+    ]);
 
-	$productFound = false;
-	foreach ($products as $product) {
-		$product = wc_get_product($product->ID);
-		$children = $product->get_children();
-		foreach ($children as $variation) {
-			$tipologiaVariation = get_post_meta($variation, 'attribute_pa_tipologia', true);
-			$dimensioneVariation = get_post_meta($variation, 'attribute_pa_dimensione', true);
+    $productFound = false;
+    foreach ($products as $product) {
+        $product = wc_get_product($product->ID);
+        $children = $product->get_children();
+        foreach ($children as $variation) {
+            $tipologiaVariation = get_post_meta(
+                $variation,
+                "attribute_pa_tipologia",
+                true
+            );
+            $dimensioneVariation = get_post_meta(
+                $variation,
+                "attribute_pa_dimensione",
+                true
+            );
 
-			if ($tipologia == $tipologiaVariation && $dimensioneVariation == $dimensione) {
-				$productFound = $variation;
-			}
-		}
-	}
+            if (
+                $tipologia == $tipologiaVariation &&
+                $dimensioneVariation == $dimensione
+            ) {
+                $productFound = $variation;
+            }
+        }
+    }
 
-	if ($productFound) {
-		$productFound = wc_get_product($productFound);
-		return $productFound;
-	}
+    if ($productFound) {
+        $productFound = wc_get_product($productFound);
+        return $productFound;
+    }
 
-	return $productFound;
-
+    return $productFound;
 }
 
 function get_fabbisogno($week)
 {
+    $fabbisognoList = new WP_Query([
+        "posts_per_page" => -1,
+        "post_type" => "fabbisogno",
+        "meta_query" => [
+            "relation" => "and",
+            [
+                "key" => "settimana",
+                "value" => $week,
+                "compare" => "=",
+            ],
+        ],
+    ]);
 
+    $fabbisognoList = $fabbisognoList->get_posts();
 
-	$fabbisognoList = new WP_Query([
-		'posts_per_page' => -1,
-		'post_type' => 'fabbisogno',
-		'meta_query' => [
-			'relation' => 'and',
-			[
-				'key' => 'settimana',
-				'value' => $week,
-				'compare' => '='
-			]
-		]
-	]);
+    $groupedFabbisogno = [];
 
-	$fabbisognoList = $fabbisognoList->get_posts();
+    foreach ($fabbisognoList as $fabbisogno) {
+        $prodottoId = get_post_meta($fabbisogno->ID, "prodotto", true);
+        $prodottoId = reset($prodottoId);
+        $fornitore = get_post_meta($prodottoId, "product_producer", true);
+        $fornitoreString = "";
+        if (!empty($fornitore)) {
+            $fornitore = reset($fornitore);
+            $fornitore = get_post($fornitore);
+            $fornitoreString = $fornitore->post_title;
+        }
 
-	$groupedFabbisogno = [];
+        if (!isset($groupedFabbisogno[$fornitoreString])) {
+            $groupedFabbisogno[$fornitoreString] = [];
+        }
 
-	foreach ($fabbisognoList as $fabbisogno) {
-		$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
-		$prodottoId = reset($prodottoId);
-		$fornitore = get_post_meta($prodottoId, 'product_producer', true);
-		$fornitoreString = '';
-		if (!empty($fornitore)) {
-			$fornitore = reset($fornitore);
-			$fornitore = get_post($fornitore);
-			$fornitoreString = $fornitore->post_title;
-		}
+        $groupedFabbisogno[$fornitoreString][] = $fabbisogno;
+    }
 
-		if (!isset($groupedFabbisogno[$fornitoreString])) {
-			$groupedFabbisogno[$fornitoreString] = [];
-		}
-
-		$groupedFabbisogno[$fornitoreString][] = $fabbisogno;
-
-	}
-
-	return $groupedFabbisogno;
+    return $groupedFabbisogno;
 }
 
 function register_my_custom_submenu_page()
 {
-	add_menu_page('Genera Ordini Box', 'Genera Ordini Box', 'manage_options', 'genera-ordini-box', 'my_custom_submenu_page_callback');
+    add_menu_page(
+        "Genera Ordini Box",
+        "Genera Ordini Box",
+        "manage_options",
+        "genera-ordini-box",
+        "my_custom_submenu_page_callback"
+    );
 }
 
 function my_custom_submenu_page_callback()
 {
+    $date = new DateTime();
+    //$date->modify('+1 week');
+    $week = $date->format("W");
 
+    if (isset($_POST["generate_orders"])) {
+        $subscriptionIds = $_POST["subscriptions"];
+        foreach ($subscriptionIds as $subscriptionId) {
+            create_order_from_subscription($subscriptionId);
+        }
+    }
 
-	$date = new DateTime();
-	//$date->modify('+1 week');
-	$week = $date->format("W");
+    if (isset($_GET["generate_fabbisogno"])) {
+        generate_fabbisogno();
+    }
 
-	if (isset($_POST['generate_orders'])) {
-		$subscriptionIds = $_POST['subscriptions'];
-		foreach ($subscriptionIds as $subscriptionId) {
-			create_order_from_subscription($subscriptionId);
-		}
-	}
+    if (isset($_POST["send_email_produttori"])) {
+        send_email_produttori($week);
+    }
 
-	if (isset($_GET['generate_fabbisogno'])) {
-		generate_fabbisogno();
-	}
-
-
-	if (isset($_POST['send_email_produttori'])) {
-		send_email_produttori($week);
-	}
-
-	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => 'active']);
-	/*$subscriptions = array_filter($subscriptions, function ($subscription) {
+    $subscriptions = wcs_get_subscriptions([
+        "subscriptions_per_page" => -1,
+        "subscription_status" => "active",
+    ]);
+    /*$subscriptions = array_filter($subscriptions, function ($subscription) {
 	return $subscription->has_status('active');
 	});*/
 
+    $allProductsNeed = [];
 
-	$allProductsNeed = [];
+    foreach ($subscriptions as $subscription) {
+        $args = [
+            "posts_per_page" => -1,
+            "post_type" => "shop_order",
+            "post_status" => ["wc-processing", "wc-completed"],
+            "meta_query" => [
+                "relation" => "and",
+                [
+                    "key" => "_week",
+                    "value" => $week,
+                    "compare" => "=",
+                ],
+                [
+                    "key" => "_subscription_id",
+                    "value" => $subscription->get_id(),
+                    "compare" => "=",
+                ],
+            ],
+        ];
+        $orders = new WP_Query($args);
+        $orders = $orders->get_posts();
+        if (count($orders) > 0) {
+            continue;
+        }
 
-	foreach ($subscriptions as $subscription) {
-		$args = [
-			'posts_per_page' => -1,
-			'post_type' => 'shop_order',
-			'post_status' => ['wc-processing', 'wc-completed'],
-			'meta_query' => [
-				'relation' => 'and',
-				[
-					'key' => '_week',
-					'value' => $week,
-					'compare' => '='
-				],
-				[
-					'key' => '_subscription_id',
-					'value' => $subscription->get_id(),
-					'compare' => '='
-				]
-			]
-		];
-		$orders = new WP_Query($args);
-		$orders = $orders->get_posts();
-		if (count($orders) > 0) {
-			continue;
-		}
+        $productsToAdd = get_products_to_add_from_subscription(
+            $subscription,
+            $week,
+            true
+        );
+        foreach ($productsToAdd as $productToAdd) {
+            if (!isset($allProductsNeed[$productToAdd["id"]])) {
+                $allProductsNeed[$productToAdd["id"]] = [
+                    "name" => $productToAdd["name"],
+                    "product_id" => $productToAdd["id"],
+                    "quantity" => $productToAdd["quantity"],
+                ];
+            } else {
+                $allProductsNeed[$productToAdd["id"]]["quantity"] +=
+                    $productToAdd["quantity"];
+            }
+        }
 
-		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
-		foreach ($productsToAdd as $productToAdd) {
+        foreach ($allProductsNeed as $key => $productNeed) {
+            $productObjToAdd = wc_get_product($productNeed["product_id"]);
+            $allProductsNeed[$key][
+                "current_availability"
+            ] = $productObjToAdd->get_stock_quantity();
+        }
+    }
 
-			if (!isset($allProductsNeed[$productToAdd['id']])) {
-				$allProductsNeed[$productToAdd['id']] = [
-					'name' => $productToAdd['name'],
-					'product_id' => $productToAdd['id'],
-					'quantity' => $productToAdd['quantity']
-				];
-			} else {
-				$allProductsNeed[$productToAdd['id']]['quantity'] += $productToAdd['quantity'];
-			}
-
-		}
-
-
-		foreach ($allProductsNeed as $key => $productNeed) {
-			$productObjToAdd = wc_get_product($productNeed['product_id']);
-			$allProductsNeed[$key]['current_availability'] = $productObjToAdd->get_stock_quantity();
-		}
-
-	}
-
-	$groupedFabbisogno = get_fabbisogno($week);
-
-	?>
+    $groupedFabbisogno = get_fabbisogno($week);
+    ?>
 
 	<div id="wpbody-content">
 
@@ -2469,7 +2895,7 @@ function my_custom_submenu_page_callback()
 
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
-				<?php $wednesday = date('d/m/Y', strtotime('wednesday next week')); ?>
+				<?php $wednesday = date("d/m/Y", strtotime("wednesday next week")); ?>
 				<span
 					style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
 				<hr class="wp-header-end">
@@ -2531,54 +2957,60 @@ function my_custom_submenu_page_callback()
 						<tbody>
 						<?php foreach ($subscriptions as $subscription):
 
-							$args = [
-								'posts_per_page' => -1,
-								'post_type' => 'shop_order',
-								'post_status' => ['wc-processing', 'wc-completed'],
-								'meta_query' => [
-									'relation' => 'AND',
-									[
-										'key' => '_week',
-										'value' => date('Y')."_".$week,
-										'compare' => '='
-									],
-									[
-										'key' => '_subscription_id',
-										'value' => $subscription->get_id(),
-										'compare' => '='
-									]
-								]
-							];
-							$orders = new WP_Query($args);
-							$orders = $orders->get_posts();
-							$products = $subscription->get_items();
-							$boxProduct = reset($products);
+          $args = [
+              "posts_per_page" => -1,
+              "post_type" => "shop_order",
+              "post_status" => ["wc-processing", "wc-completed"],
+              "meta_query" => [
+                  "relation" => "AND",
+                  [
+                      "key" => "_week",
+                      "value" => date("Y") . "_" . $week,
+                      "compare" => "=",
+                  ],
+                  [
+                      "key" => "_subscription_id",
+                      "value" => $subscription->get_id(),
+                      "compare" => "=",
+                  ],
+              ],
+          ];
+          $orders = new WP_Query($args);
+          $orders = $orders->get_posts();
+          $products = $subscription->get_items();
+          $boxProduct = reset($products);
 
-							$variationProduct = $boxProduct->get_product();
+          $variationProduct = $boxProduct->get_product();
 
-							if (!$variationProduct) {
-								continue;
-							}
+          if (!$variationProduct) {
+              continue;
+          }
 
-
-							$tipologia = get_post_meta($variationProduct->get_id(), 'attribute_pa_tipologia', true);
-							$dimensione = get_post_meta($variationProduct->get_id(), 'attribute_pa_dimensione', true);
-
-							?>
+          $tipologia = get_post_meta(
+              $variationProduct->get_id(),
+              "attribute_pa_tipologia",
+              true
+          );
+          $dimensione = get_post_meta(
+              $variationProduct->get_id(),
+              "attribute_pa_dimensione",
+              true
+          );
+          ?>
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
 								<th scope="row" class="check-column" style="padding: 16px;">
 									<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
 
 									<?php
-									$box = get_single_box_from_attributes($tipologia, $dimensione);
-									if (!$box) {
-										echo "Box Singola Non disponibile";
-									} else {
-										//check if exist weekly box
-										$weekBox = get_weekly_box_from_box($box->get_id(), $week);
+         $box = get_single_box_from_attributes($tipologia, $dimensione);
+         if (!$box) {
+             echo "Box Singola Non disponibile";
+         } else {
 
-										if ($weekBox):
-											?>
+             //check if exist weekly box
+             $weekBox = get_weekly_box_from_box($box->get_id(), $week);
+
+             if ($weekBox): ?>
 											<input id="cb-select-1" type="checkbox" name="subscriptions[]"
 												   value="<?php echo $subscription->get_id(); ?>"
 												<?php if (count($orders) > 0): ?>
@@ -2587,20 +3019,21 @@ function my_custom_submenu_page_callback()
 											><br>
 										<?php else: ?>
 											Devi prima creare la box
-										<?php endif; ?>
-									<?php } ?>
+										<?php endif;
+             ?>
+									<?php
+         }
+         ?>
 
 								</th>
 								<td class="author column-author" data-colname="Autore" style="padding: 16px;">
-									<span><?php echo $subscription->get_billing_first_name() . " " . $subscription->get_billing_last_name(); ?></span>
+									<span><?php echo $subscription->get_billing_first_name() .
+             " " .
+             $subscription->get_billing_last_name(); ?></span>
 								</td>
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding: 16px;">
-									<span><?php
-
-										echo $boxProduct->get_name();
-
-										?>
+									<span><?php echo $boxProduct->get_name(); ?>
 										</span>
 								</td>
 
@@ -2608,21 +3041,23 @@ function my_custom_submenu_page_callback()
 									style="padding: 16px;">
 									<span>
 									<?php
-									// fix nathi per errore data di consegna
-									$fixdate = $subscription->get_date_created();
-									$fixdate = new DateTime($fixdate);
-									echo $fixdate->format("d/m/Y"); ?>
+         // fix nathi per errore data di consegna
+         $fixdate = $subscription->get_date_created();
+         $fixdate = new DateTime($fixdate);
+         echo $fixdate->format("d/m/Y");
+         ?>
 									</span>
 								</td>
 								<td style="padding: 16px;">
 									<?php if (count($orders) > 0): ?>
 										<a target="_blank"
-										   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID ?>&action=edit">Vai
+										   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID; ?>&action=edit">Vai
 											all'ordine</a>
 									<?php endif; ?>
 								</td>
 							</tr>
-						<?php endforeach; ?>
+						<?php
+      endforeach; ?>
 						</tbody>
 					</table>
 					<br><br>
@@ -2669,47 +3104,68 @@ function my_custom_submenu_page_callback()
 									<tbody>
 
 									<?php
-									$countFB = 0;
-									$sum = 0;
-									$sum_weight = 0;
-									foreach ($fabbisognoList as $fabbisogno):
+         $countFB = 0;
+         $sum = 0;
+         $sum_weight = 0;
+         foreach ($fabbisognoList as $fabbisogno):
 
-										echo '<tr>';
-										$prodottoId = get_post_meta($fabbisogno->ID, 'prodotto', true);
-										$prodottoId = reset($prodottoId);
-										$product = wc_get_product($prodottoId);
+             echo "<tr>";
+             $prodottoId = get_post_meta($fabbisogno->ID, "prodotto", true);
+             $prodottoId = reset($prodottoId);
+             $product = wc_get_product($prodottoId);
 
-										$weight = get_post_meta($fabbisogno->ID, 'weight', true);
-										$price = get_post_meta($prodottoId, '_regular_price', true);
-										$sku = get_post_meta($prodottoId, '_sku', true);
+             $weight = get_post_meta($fabbisogno->ID, "weight", true);
+             $price = get_post_meta($prodottoId, "_regular_price", true);
+             $sku = get_post_meta($prodottoId, "_sku", true);
 
-										$codiceConfezionamento = get_post_meta($prodottoId, '_codice_confezionamento', true);
-										if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-											$codiceConfezionamento = '';
-										}
-										if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-											$codiceConfezionamento = reset($codiceConfezionamento);
-										}
+             $codiceConfezionamento = get_post_meta(
+                 $prodottoId,
+                 "_codice_confezionamento",
+                 true
+             );
+             if (
+                 is_array($codiceConfezionamento) &&
+                 empty($codiceConfezionamento)
+             ) {
+                 $codiceConfezionamento = "";
+             }
+             if (
+                 is_array($codiceConfezionamento) &&
+                 !empty($codiceConfezionamento)
+             ) {
+                 $codiceConfezionamento = reset($codiceConfezionamento);
+             }
 
-										$unitaMisura = ' ' . get_post_meta($fabbisogno->ID, 'weight_type', true);; //tabella riepilogo box
-										$measureAcquisto = get_post_meta($fabbisogno->ID, 'quantity_type', true);
-										$gruppoConsegna = get_post_meta($fabbisogno->ID, 'gruppo_consegna', true);
+             $unitaMisura =
+                 " " . get_post_meta($fabbisogno->ID, "weight_type", true); //tabella riepilogo box
+             $measureAcquisto = get_post_meta(
+                 $fabbisogno->ID,
+                 "quantity_type",
+                 true
+             );
+             $gruppoConsegna = get_post_meta(
+                 $fabbisogno->ID,
+                 "gruppo_consegna",
+                 true
+             );
 
-										$fabbisogno = get_post_meta($fabbisogno->ID, 'fabbisogno', true);
+             $fabbisogno = get_post_meta($fabbisogno->ID, "fabbisogno", true);
 
-										$sum += $fabbisogno;
-										$sum_weight += $weight;
-
-										?>
+             $sum += $fabbisogno;
+             $sum_weight += $weight;
+             ?>
 										<td style="padding: 8px 10px;">
-											<a href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $prodottoId . '&action=edit'; ?>"><?php echo $product->get_name(); ?></a>
+											<a href="<?php echo esc_url(home_url()) .
+               "/wp-admin/post.php?post=" .
+               $prodottoId .
+               "&action=edit"; ?>"><?php echo $product->get_name(); ?></a>
 										</td>
 
 										<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
 										<td style="padding: 8px 10px;"><?php echo $gruppoConsegna; ?></td>
 
 										<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
-										<td style="padding: 8px 10px;"><?php echo '€' . $price; ?></td>
+										<td style="padding: 8px 10px;"><?php echo "€" . $price; ?></td>
 										<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
 										<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
 
@@ -2718,7 +3174,7 @@ function my_custom_submenu_page_callback()
 
 										</tr>
 										<?php
-										if ($countFB == count($fabbisognoList) - 1): ?>
+          if ($countFB == count($fabbisognoList) - 1): ?>
 											<tr>
 												<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
 												<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
@@ -2735,7 +3191,10 @@ function my_custom_submenu_page_callback()
 												</td>
 											</tr>
 										<?php endif;
-										$countFB = $countFB + 1; endforeach; ?>
+          $countFB = $countFB + 1;
+
+         endforeach;
+         ?>
 									</tbody>
 								</table>
 
@@ -2778,179 +3237,190 @@ function my_custom_submenu_page_callback()
 	<?php
 }
 
-add_action('admin_menu', 'register_my_custom_submenu_page', 99);
-
+add_action("admin_menu", "register_my_custom_submenu_page", 99);
 
 //add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
 function custom_shop_order_column($columns)
 {
-	$reordered_columns = array();
+    $reordered_columns = [];
 
-	// Inserting columns to a specific location
-	foreach ($columns as $key => $column) {
-		$reordered_columns[$key] = $column;
-		if ($key == 'order_status') {
-			// Inserting after "Status" column
-			$reordered_columns['my-column1'] = 'Spesa';
-			// $reordered_columns['my-column2'] = 'Data Consegna';
-			// $reordered_columns['my-column3'] = 'Preferenze';
-		}
-	}
-	return $reordered_columns;
+    // Inserting columns to a specific location
+    foreach ($columns as $key => $column) {
+        $reordered_columns[$key] = $column;
+        if ($key == "order_status") {
+            // Inserting after "Status" column
+            $reordered_columns["my-column1"] = "Spesa";
+            // $reordered_columns['my-column2'] = 'Data Consegna';
+            // $reordered_columns['my-column3'] = 'Preferenze';
+        }
+    }
+    return $reordered_columns;
 }
 
 // Adding custom fields meta data for each new column (example)
 //add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
 function custom_orders_list_column_content($column, $post_id)
 {
-	switch ($column) {
-		case 'my-column1' :
-			// Get custom post meta data
-			$orderType = get_post_meta($post_id, '_order_type', true);
+    switch ($column) {
+        case "my-column1":
+            // Get custom post meta data
+            $orderType = get_post_meta($post_id, "_order_type", true);
 
-			$order = wc_get_order($post_id);
+            $order = wc_get_order($post_id);
 
-			$box_in_order = false;
-			$not_a_box = false;
-			$items = $order->get_items();
+            $box_in_order = false;
+            $not_a_box = false;
+            $items = $order->get_items();
 
-			foreach ($items as $item) {
-				$product_id = $item->get_product_id();
-				if (has_term('box', 'product_cat', $product_id)) {
-					$box_in_order = true;
-					break;
-				}
-				if (!has_term('box', 'product_cat', $product_id)) {
-					$not_a_box = true;
-					break;
-				}
-			}
-			if ($box_in_order == true && $not_a_box == false) {
-				echo 'FN';
-			} else if ($box_in_order == false && $not_a_box == true) {
-				echo 'ST';
-			} else {
-				echo 'FN + ST';
-			}
+            foreach ($items as $item) {
+                $product_id = $item->get_product_id();
+                if (has_term("box", "product_cat", $product_id)) {
+                    $box_in_order = true;
+                    break;
+                }
+                if (!has_term("box", "product_cat", $product_id)) {
+                    $not_a_box = true;
+                    break;
+                }
+            }
+            if ($box_in_order == true && $not_a_box == false) {
+                echo "FN";
+            } elseif ($box_in_order == false && $not_a_box == true) {
+                echo "ST";
+            } else {
+                echo "FN + ST";
+            }
 
-			break;
+            break;
 
-		case 'my-column2' :
+        case "my-column2":
+            // Get custom post meta data
+            $dataConsegna = get_post_meta($post_id, "_data_consegna", true);
 
-			// Get custom post meta data
-			$dataConsegna = get_post_meta($post_id, '_data_consegna', true);
+            if ($dataConsegna === "Nessuna data di consegna") {
+                echo "-";
+            } else {
+                $fixshippingdate = new DateTime($dataConsegna);
+                echo $fixshippingdate->format("d/m/Y");
+            }
 
-			if ($dataConsegna === "Nessuna data di consegna") {
-				echo '-';
-			} else {
-				$fixshippingdate = new DateTime($dataConsegna);
-				echo $fixshippingdate->format('d/m/Y');
-			}
+            break;
 
-			break;
+        case "my-column3":
+            // Get custom post meta data
+            $orderType = get_post_meta($post_id, "_order_type", true);
+            $order = wc_get_order($post_id);
 
-		case 'my-column3' :
-			// Get custom post meta data
-			$orderType = get_post_meta($post_id, '_order_type', true);
-			$order = wc_get_order($post_id);
+            $box_in_order = false;
+            $items = $order->get_items();
 
-			$box_in_order = false;
-			$items = $order->get_items();
+            foreach ($items as $item) {
+                $product_id = $item->get_product_id();
+                if (has_term("box", "product_cat", $product_id)) {
+                    $box_in_order = true;
+                    break;
+                }
+            }
+            if ($box_in_order) {
+                $boxPreferences = get_post_meta(
+                    $post_id,
+                    "_box_preferences",
+                    true
+                );
+                if (!empty($boxPreferences)) {
+                    echo "✅";
+                } else {
+                    echo "-";
+                }
+            }
 
-			foreach ($items as $item) {
-				$product_id = $item->get_product_id();
-				if (has_term('box', 'product_cat', $product_id)) {
-					$box_in_order = true;
-					break;
-				}
-			}
-			if ($box_in_order) {
-				$boxPreferences = get_post_meta($post_id, '_box_preferences', true);
-				if (!empty($boxPreferences)) {
-					echo '✅';
-				} else {
-					echo '-';
-				}
-			}
-
-
-			break;
-
-	}
+            break;
+    }
 }
 
 // Add a custom column
-add_filter('manage_edit-shop_order_columns', 'add_custom_shop_order_column');
+add_filter("manage_edit-shop_order_columns", "add_custom_shop_order_column");
 function add_custom_shop_order_column($columns)
 {
-	$order_actions = $columns['order_actions'];
-	unset($columns['order_actions']);
+    $order_actions = $columns["order_actions"];
+    unset($columns["order_actions"]);
 
-	// add custom column
-	$columns['type_shopping'] = __('Spesa', 'woocommerce');
-	$columns['type_notes'] = __('Note', 'woocommerce');
+    // add custom column
+    $columns["type_shopping"] = __("Spesa", "woocommerce");
+    $columns["type_notes"] = __("Note", "woocommerce");
 
-	// Insert back 'order_actions' column
-	$columns['order_actions'] = $order_actions;
+    // Insert back 'order_actions' column
+    $columns["order_actions"] = $order_actions;
 
-	return $columns;
+    return $columns;
 }
 
 // Custom column content
-add_action('manage_shop_order_posts_custom_column', 'shop_order_column_meta_field_value');
+add_action(
+    "manage_shop_order_posts_custom_column",
+    "shop_order_column_meta_field_value"
+);
 function shop_order_column_meta_field_value($column)
 {
-	global $post, $the_order;
+    global $post, $the_order;
 
-	if (!is_a($the_order, 'WC_Order')) {
-		$the_order = wc_get_order($post->ID);
-	}
+    if (!is_a($the_order, "WC_Order")) {
+        $the_order = wc_get_order($post->ID);
+    }
 
-	if ($column == 'type_notes') {
-		$order = wc_get_order($the_order);
-		$items = $order->get_items();
-		$i = 1;
-		foreach ($items as $item) {
-			$meta_data = $item->get_formatted_meta_data();
-			$meta_value = $item->get_meta("note");
-			if ($meta_value == 'ST' || $meta_value == 'SF' || $meta_value == 'SC') {
-				if ($i == 1) {
-					echo '<span style="line-height:1.2;display:block;">' . $meta_value . '</span>';
-				} else {
-					echo '<span style="line-height:1.2;display:block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' . $meta_value . '</span>';
-				}
-			}
+    if ($column == "type_notes") {
+        $order = wc_get_order($the_order);
+        $items = $order->get_items();
+        $i = 1;
+        foreach ($items as $item) {
+            $meta_data = $item->get_formatted_meta_data();
+            $meta_value = $item->get_meta("note");
+            if (
+                $meta_value == "ST" ||
+                $meta_value == "SF" ||
+                $meta_value == "SC"
+            ) {
+                if ($i == 1) {
+                    echo '<span style="line-height:1.2;display:block;">' .
+                        $meta_value .
+                        "</span>";
+                } else {
+                    echo '<span style="line-height:1.2;display:block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' .
+                        $meta_value .
+                        "</span>";
+                }
+            }
 
-			$i++;
-		}
-	}
+            $i++;
+        }
+    }
 
-	if ($column == 'type_shopping') {
-		$order = wc_get_order($the_order);
+    if ($column == "type_shopping") {
+        $order = wc_get_order($the_order);
 
-		$box_in_order = false;
-		$not_a_box = false;
-		$items = $order->get_items();
+        $box_in_order = false;
+        $not_a_box = false;
+        $items = $order->get_items();
 
-		foreach ($items as $item) {
-			$product_id = $item->get_product_id();
-			if (has_term('box', 'product_cat', $product_id)) {
-				$box_in_order = true;
-				break;
-			}
-			if (!has_term('box', 'product_cat', $product_id)) {
-				$not_a_box = true;
-				break;
-			}
-		}
-		if ($box_in_order == true && $not_a_box == false) {
-			echo 'FN';
-		} else if ($box_in_order == false && $not_a_box == true) {
-			echo 'ST';
-		} else {
-			echo 'FN + ST';
-		}
-	}
+        foreach ($items as $item) {
+            $product_id = $item->get_product_id();
+            if (has_term("box", "product_cat", $product_id)) {
+                $box_in_order = true;
+                break;
+            }
+            if (!has_term("box", "product_cat", $product_id)) {
+                $not_a_box = true;
+                break;
+            }
+        }
+        if ($box_in_order == true && $not_a_box == false) {
+            echo "FN";
+        } elseif ($box_in_order == false && $not_a_box == true) {
+            echo "ST";
+        } else {
+            echo "FN + ST";
+        }
+    }
 }
 
 // Make custom column sortable
@@ -2962,231 +3432,244 @@ function shop_order_column_meta_field_value($column)
 //     return wp_parse_args( array('type_shopping' => $meta_key), $columns );
 // }
 
-
 function cptui_register_my_cpts_delivery_group()
 {
+    /**
+     * Post Type: Gruppi di Consegna.
+     */
 
-	/**
-	 * Post Type: Gruppi di Consegna.
-	 */
+    $labels = [
+        "name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
+        "singular_name" => esc_html__(
+            "Gruppo di consegna",
+            "custom-post-type-ui"
+        ),
+    ];
 
-	$labels = [
-		"name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
-		"singular_name" => esc_html__("Gruppo di consegna", "custom-post-type-ui"),
-	];
+    $args = [
+        "label" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "rest_namespace" => "wp/v2",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "can_export" => false,
+        "rewrite" => ["slug" => "delivery-group", "with_front" => true],
+        "query_var" => true,
+        "supports" => ["title", "editor"],
+        "show_in_graphql" => false,
+    ];
 
-	$args = [
-		"label" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
-		"labels" => $labels,
-		"description" => "",
-		"public" => true,
-		"publicly_queryable" => true,
-		"show_ui" => true,
-		"show_in_rest" => true,
-		"rest_base" => "",
-		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"rest_namespace" => "wp/v2",
-		"has_archive" => false,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
-		"delete_with_user" => false,
-		"exclude_from_search" => false,
-		"capability_type" => "post",
-		"map_meta_cap" => true,
-		"hierarchical" => false,
-		"can_export" => false,
-		"rewrite" => ["slug" => "delivery-group", "with_front" => true],
-		"query_var" => true,
-		"supports" => ["title", "editor"],
-		"show_in_graphql" => false,
-	];
+    register_post_type("delivery-group", $args);
 
-	register_post_type("delivery-group", $args);
+    /**
+     * Post Type: Gruppi di Consegna.
+     */
 
+    $labels = [
+        "name" => esc_html__("Consegne", "custom-post-type-ui"),
+        "singular_name" => esc_html__("Consegna", "custom-post-type-ui"),
+    ];
 
-	/**
-	 * Post Type: Gruppi di Consegna.
-	 */
+    $args = [
+        "label" => esc_html__("Consegna", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "rest_namespace" => "wp/v2",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "can_export" => false,
+        "rewrite" => ["slug" => "delivery-item", "with_front" => true],
+        "query_var" => true,
+        "supports" => ["title", "editor"],
+        "show_in_graphql" => false,
+    ];
 
-	$labels = [
-		"name" => esc_html__("Consegne", "custom-post-type-ui"),
-		"singular_name" => esc_html__("Consegna", "custom-post-type-ui"),
-	];
+    $labels = [
+        "name" => esc_html__("Box settimanali", "custom-post-type-ui"),
+        "singular_name" => esc_html__("Box settimanale", "custom-post-type-ui"),
+    ];
 
-	$args = [
-		"label" => esc_html__("Consegna", "custom-post-type-ui"),
-		"labels" => $labels,
-		"description" => "",
-		"public" => true,
-		"publicly_queryable" => true,
-		"show_ui" => true,
-		"show_in_rest" => true,
-		"rest_base" => "",
-		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"rest_namespace" => "wp/v2",
-		"has_archive" => false,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
-		"delete_with_user" => false,
-		"exclude_from_search" => false,
-		"capability_type" => "post",
-		"map_meta_cap" => true,
-		"hierarchical" => false,
-		"can_export" => false,
-		"rewrite" => ["slug" => "delivery-item", "with_front" => true],
-		"query_var" => true,
-		"supports" => ["title", "editor"],
-		"show_in_graphql" => false,
-	];
+    $args = [
+        "label" => esc_html__("Box settimanale", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => false,
+        "publicly_queryable" => false,
+        "show_ui" => false,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "rest_namespace" => "wp/v2",
+        "has_archive" => false,
+        "show_in_menu" => false,
+        "show_in_nav_menus" => false,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "can_export" => false,
+        "rewrite" => ["slug" => "weekly-box", "with_front" => true],
+        "query_var" => true,
+        "supports" => ["title", "editor"],
+        "show_in_graphql" => false,
+    ];
 
+    register_post_type("weekly-box", $args);
 
-	$labels = [
-		"name" => esc_html__("Box settimanali", "custom-post-type-ui"),
-		"singular_name" => esc_html__("Box settimanale", "custom-post-type-ui"),
-	];
+    $labels = [
+        "name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+        "singular_name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+    ];
 
-	$args = [
-		"label" => esc_html__("Box settimanale", "custom-post-type-ui"),
-		"labels" => $labels,
-		"description" => "",
-		"public" => false,
-		"publicly_queryable" => false,
-		"show_ui" => false,
-		"show_in_rest" => true,
-		"rest_base" => "",
-		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"rest_namespace" => "wp/v2",
-		"has_archive" => false,
-		"show_in_menu" => false,
-		"show_in_nav_menus" => false,
-		"delete_with_user" => false,
-		"exclude_from_search" => false,
-		"capability_type" => "post",
-		"map_meta_cap" => true,
-		"hierarchical" => false,
-		"can_export" => false,
-		"rewrite" => ["slug" => "weekly-box", "with_front" => true],
-		"query_var" => true,
-		"supports" => ["title", "editor"],
-		"show_in_graphql" => false,
-	];
-
-	register_post_type("weekly-box", $args);
-
-
-	$labels = [
-		"name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
-		"singular_name" => esc_html__("Fabbisogno", "custom-post-type-ui"),
-	];
-
-	$args = [
-		"label" => esc_html__("Fabbisogno", "custom-post-type-ui"),
-		"labels" => $labels,
-		"public" => true,
-		"publicly_queryable" => true,
-		"show_ui" => true,
-		"show_in_rest" => true,
-		"rest_base" => "",
-		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"rest_namespace" => "wp/v2",
-		"has_archive" => false,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
-		"delete_with_user" => false,
-		"exclude_from_search" => false,
-		"capability_type" => "post",
-		"map_meta_cap" => true,
-		"hierarchical" => false,
-		"can_export" => false,
-		"rewrite" => ["slug" => "fabbisogno", "with_front" => true],
-		"query_var" => true,
-		"supports" => ["title", "editor"],
-		"show_in_graphql" => false,
-	];
-	register_post_type("fabbisogno", $args);
-
+    $args = [
+        "label" => esc_html__("Fabbisogno", "custom-post-type-ui"),
+        "labels" => $labels,
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "rest_namespace" => "wp/v2",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "can_export" => false,
+        "rewrite" => ["slug" => "fabbisogno", "with_front" => true],
+        "query_var" => true,
+        "supports" => ["title", "editor"],
+        "show_in_graphql" => false,
+    ];
+    register_post_type("fabbisogno", $args);
 }
 
-add_action('init', 'cptui_register_my_cpts_delivery_group');
+add_action("init", "cptui_register_my_cpts_delivery_group");
 
-
-add_action('admin_menu', 'consegne_ordini_pages');
+add_action("admin_menu", "consegne_ordini_pages");
 function consegne_ordini_pages()
 {
-	add_menu_page('Consegne Ordini', 'Consegne Ordini', 'manage_options', 'consegne-ordini', function () {
-		$groups = get_posts([
-			'post_type' => 'delivery-group',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-		]);
+    add_menu_page(
+        "Consegne Ordini",
+        "Consegne Ordini",
+        "manage_options",
+        "consegne-ordini",
+        function () {
+            $groups = get_posts([
+                "post_type" => "delivery-group",
+                "post_status" => "publish",
+                "posts_per_page" => -1,
+            ]);
 
-		if (isset($_POST['import_consegne'])) {
+            if (isset($_POST["import_consegne"])) {
+                if (isset($_FILES["file"])) {
+                    //if there was an error uploading the file
+                    if ($_FILES["file"]["error"] > 0) {
+                        echo "Return Code: " .
+                            $_FILES["file"]["error"] .
+                            "<br />";
+                    } else {
 
-			if (isset($_FILES["file"])) {
+                        $storagename = "csv.txt";
+                        move_uploaded_file(
+                            $_FILES["file"]["tmp_name"],
+                            get_temp_dir() . "/" . $storagename
+                        );
 
-				//if there was an error uploading the file
-				if ($_FILES["file"]["error"] > 0) {
-					echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+                        $file = fopen(get_temp_dir() . "/" . $storagename, "r");
 
-				} else {
-					$storagename = "csv.txt";
-					move_uploaded_file($_FILES["file"]["tmp_name"], get_temp_dir() . "/" . $storagename);
+                        $csv = [];
+                        while (!feof($file)) {
+                            $csv[] = fgetcsv($file, null, ";");
+                        }
 
-					$file = fopen(get_temp_dir() . "/" . $storagename, "r");
+                        fclose($file);
 
-					$csv = [];
-					while (!feof($file)) {
-						$csv[] = fgetcsv($file, null, ';');
-					}
+                        $args = [
+                            "posts_per_page" => -1,
+                            "post_type" => "shop_order",
+                            "post_status" => ["wc-processing", "wc-completed"],
+                            "meta_query" => [
+                                "relation" => "AND",
+                                [
+                                    "key" => "_data_consegna",
+                                    "value" => $_POST["_data_consegna"],
+                                    "compare" => "=",
+                                ],
+                            ],
+                        ];
+                        $orders = new WP_Query($args);
+                        $orders = $orders->get_posts();
 
-					fclose($file);
+                        $i = 0;
+                        foreach ($csv as $single) {
+                            $order = array_filter($orders, function (
+                                $tmpOrder
+                            ) use ($single) {
+                                $address = get_post_meta(
+                                    $tmpOrder->ID,
+                                    "_shipping_address_1",
+                                    true
+                                );
+                                $town = get_post_meta(
+                                    $tmpOrder->ID,
+                                    "_shipping_city",
+                                    true
+                                );
+                                return trim($address) == trim($single[4]) &&
+                                    trim($town) == trim($single[3]);
+                            });
 
-					$args = [
-						'posts_per_page' => -1,
-						'post_type' => 'shop_order',
-						'post_status' => ['wc-processing', 'wc-completed'],
-						'meta_query' => [
-							'relation' => 'AND',
-							[
-								'key' => '_data_consegna',
-								'value' => $_POST['_data_consegna'],
-								'compare' => '='
-							]
-						]
-					];
-					$orders = new WP_Query($args);
-					$orders = $orders->get_posts();
-
-					$i = 0;
-					foreach ($csv as $single) {
-
-						$order = array_filter($orders, function ($tmpOrder) use ($single) {
-							$address = get_post_meta($tmpOrder->ID, '_shipping_address_1', true);
-							$town = get_post_meta($tmpOrder->ID, '_shipping_city', true);
-							return trim($address) == trim($single[4]) && trim($town) == trim($single[3]);
-						});
-
-						if (!empty($order)) {
-							$order = reset($order);
-							update_post_meta($order->ID, '_numero_consegna', trim($single[0]));
-							$i++;
-						}
-					}
-
-					?>
+                            if (!empty($order)) {
+                                $order = reset($order);
+                                update_post_meta(
+                                    $order->ID,
+                                    "_numero_consegna",
+                                    trim($single[0])
+                                );
+                                $i++;
+                            }
+                        }
+                        ?>
 					<span class="custom-alert alert-success"
 						  style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
 					<?php
-
-				}
-			} else {
-				echo "<span style='font-size: 14px;padding: 16px;background: orangered; color:#fff;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;'>Nessun file inserito.</span>";
-			}
-
-
-		}
-
-		?>
+                    }
+                } else {
+                    echo "<span style='font-size: 14px;padding: 16px;background: orangered; color:#fff;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;'>Nessun file inserito.</span>";
+                }
+            }
+            ?>
 		<div id="wpbody-content">
 
 			<div class="wrap">
@@ -3202,21 +3685,26 @@ function consegne_ordini_pages()
 					<form enctype="multipart/form-data" method="POST" action="">
 						<input type="hidden" name="import_consegne" value="1">
 						<?php
-						$date = new DateTime();
-						$currentWeek = $date->format("W");
-						global $wpdb;
-						$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
-						?>
+      $date = new DateTime();
+      $currentWeek = $date->format("W");
+      global $wpdb;
+      $allDataConsegna = $wpdb->get_results(
+          "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value",
+          ARRAY_A
+      );
+      ?>
 						<strong>Data di consegna:</strong><br>
 						<select autocomplete="off" name="_data_consegna">
 
 							<?php foreach ($allDataConsegna as $dataConsegna):
-								$dataConsegna = new DateTime($dataConsegna['meta_value']);
-								?>
+           $dataConsegna = new DateTime($dataConsegna["meta_value"]); ?>
 								<option
 
-									value="<?php echo $dataConsegna->format("Y-m-d"); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
-							<?php endforeach; ?>
+									value="<?php echo $dataConsegna->format(
+             "Y-m-d"
+         ); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
+							<?php
+       endforeach; ?>
 						</select>
 						<p style="font-style:italic;font-size:14px;">
 							Settimana corrente: <?php echo $currentWeek; ?>
@@ -3261,20 +3749,19 @@ function consegne_ordini_pages()
 						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 						<?php foreach ($groups as $group):
 
-							$caps = get_post_meta($group->ID, 'cap', true);
+          $caps = get_post_meta($group->ID, "cap", true);
 
-							$orders = wc_get_orders([
-								'limit' => -1,
-								'meta_key' => '_gruppo_consegna',
-								'meta_value' => $group->post_title,
-								'meta_compare' => '=',
-							]);
+          $orders = wc_get_orders([
+              "limit" => -1,
+              "meta_key" => "_gruppo_consegna",
+              "meta_value" => $group->post_title,
+              "meta_compare" => "=",
+          ]);
 
-							$orders = array_filter($orders, function ($order) {
-								return $order->get_status() == 'processing';
-							});
-
-							?>
+          $orders = array_filter($orders, function ($order) {
+              return $order->get_status() == "processing";
+          });
+          ?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved">
 								<!--	<th scope="row" class="check-column"><label class="screen-reader-text"
@@ -3301,9 +3788,7 @@ function consegne_ordini_pages()
 										</tr>
 
 										<?php foreach ($orders as $order): ?>
-											<?php
-											$consegna = get_post_meta($order->get_id(), '_numero_consegna', true);
-											?>
+											<?php $consegna = get_post_meta($order->get_id(), "_numero_consegna", true); ?>
 											<tr>
 												<td>#<?php echo $order->get_id(); ?>
 													- <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?></td>
@@ -3315,7 +3800,8 @@ function consegne_ordini_pages()
 
 
 							</tr>
-						<?php endforeach; ?>
+						<?php
+      endforeach; ?>
 						</tbody>
 					</table>
 					<br><br>
@@ -3330,142 +3816,166 @@ function consegne_ordini_pages()
 		</div>
 
 		<?php
-	});
+        }
+    );
 
+    add_menu_page(
+        "Box Settimanali",
+        "Box Settimanali",
+        "manage_options",
+        "box-settimanali",
+        function () {
+            if (isset($_GET["delete_box"])) {
+                wp_delete_post($_GET["delete_box"]);
+            }
 
-	add_menu_page('Box Settimanali', 'Box Settimanali', 'manage_options', 'box-settimanali', function () {
+            $boxs = get_posts([
+                "post_type" => "weekly-box",
+                "post_status" => "publish",
+                "posts_per_page" => -1,
+                "orderby" => "meta_value_num",
+                "meta_key" => "_week",
+                "order" => "DESC",
+            ]);
 
-		if (isset($_GET['delete_box'])) {
-			wp_delete_post($_GET['delete_box']);
+            $date = new DateTime();
+            $currentWeek = $date->format("W");
 
-		}
+            $products = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "post_status" => "publish",
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => "box singola",
+                        "operator" => "IN",
+                    ],
+                ],
+            ]);
 
-		$boxs = get_posts([
-			'post_type' => 'weekly-box',
-			'post_status' => 'publish',
-			'posts_per_page' => -1,
-			'orderby' => 'meta_value_num',
-			'meta_key' => '_week',
-			'order' => 'DESC',
-		]);
+            $taxonomy = "product_cat";
+            $orderby = "name";
+            $show_count = 0; // 1 for yes, 0 for no
+            $pad_counts = 0; // 1 for yes, 0 for no
+            $hierarchical = 1; // 1 for yes, 0 for no
+            $title = "";
+            $empty = 0;
 
-		$date = new DateTime();
-		$currentWeek = $date->format("W");
+            $args = [
+                "taxonomy" => $taxonomy,
+                "orderby" => $orderby,
+                "show_count" => $show_count,
+                "pad_counts" => $pad_counts,
+                "hierarchical" => $hierarchical,
+                "title_li" => $title,
+                "hide_empty" => $empty,
+            ];
+            $all_categories = get_categories($args);
 
+            $jsonProducts = [];
+            foreach ($all_categories as $cat) {
+                if ($cat->category_parent == 0) {
+                    $category_id = $cat->term_id;
 
-		$products = get_posts(array(
-			'post_type' => 'product',
-			'numberposts' => -1,
-			'post_status' => 'publish',
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'product_cat',
-					'field' => 'slug',
-					'terms' => 'box singola',
-					'operator' => 'IN',
-				)
-			),
-		));
+                    $args2 = [
+                        "taxonomy" => $taxonomy,
+                        "child_of" => 0,
+                        "parent" => $category_id,
+                        "orderby" => $orderby,
+                        "show_count" => $show_count,
+                        "pad_counts" => $pad_counts,
+                        "hierarchical" => $hierarchical,
+                        "title_li" => $title,
+                        "hide_empty" => $empty,
+                    ];
+                    $sub_cats = get_categories($args2);
+                    if ($sub_cats) {
+                        foreach ($sub_cats as $sub_category) {
+                            $categoryProducts = get_posts([
+                                "post_type" => "product",
+                                "numberposts" => -1,
+                                "post_status" => "publish",
+                                "tax_query" => [
+                                    [
+                                        "taxonomy" => "product_cat",
+                                        "field" => "slug",
+                                        "terms" => $sub_category->slug,
+                                        "operator" => "IN",
+                                    ],
+                                ],
+                            ]);
+                            $categories[$sub_category->term_id] = [
+                                "name" => $sub_category->name,
+                                "products" => $categoryProducts,
+                            ];
 
-		$taxonomy = 'product_cat';
-		$orderby = 'name';
-		$show_count = 0;      // 1 for yes, 0 for no
-		$pad_counts = 0;      // 1 for yes, 0 for no
-		$hierarchical = 1;      // 1 for yes, 0 for no
-		$title = '';
-		$empty = 0;
+                            foreach ($categoryProducts as $categoryProduct) {
+                                $price = get_post_meta(
+                                    $categoryProduct->ID,
+                                    "_price",
+                                    true
+                                );
+                                $weight = get_post_meta(
+                                    $categoryProduct->ID,
+                                    "_weight",
+                                    true
+                                );
 
-		$args = array(
-			'taxonomy' => $taxonomy,
-			'orderby' => $orderby,
-			'show_count' => $show_count,
-			'pad_counts' => $pad_counts,
-			'hierarchical' => $hierarchical,
-			'title_li' => $title,
-			'hide_empty' => $empty
-		);
-		$all_categories = get_categories($args);
+                                $unitaMisura = ""; //tabella prodotti selezionati
+                                $measureUnit = get_post_meta(
+                                    $categoryProduct->ID,
+                                    "_woo_uom_input",
+                                    true
+                                );
+                                if (!empty($measureUnit)) {
+                                    $unitaMisura = " " . $measureUnit;
+                                } else {
+                                    $unitaMisura = " gr";
+                                }
 
-		$jsonProducts = [];
-		foreach ($all_categories as $cat) {
-			if ($cat->category_parent == 0) {
+                                $fornitore = get_post_meta(
+                                    $categoryProduct->ID,
+                                    "product_producer",
+                                    true
+                                );
+                                $fornitoreString = "";
+                                if (!empty($fornitore)) {
+                                    $fornitore = reset($fornitore);
+                                    $fornitore = get_post($fornitore);
+                                    $fornitoreString = $fornitore->post_title;
+                                }
 
-				$category_id = $cat->term_id;
-
-				$args2 = array(
-					'taxonomy' => $taxonomy,
-					'child_of' => 0,
-					'parent' => $category_id,
-					'orderby' => $orderby,
-					'show_count' => $show_count,
-					'pad_counts' => $pad_counts,
-					'hierarchical' => $hierarchical,
-					'title_li' => $title,
-					'hide_empty' => $empty
-				);
-				$sub_cats = get_categories($args2);
-				if ($sub_cats) {
-					foreach ($sub_cats as $sub_category) {
-						$categoryProducts = get_posts(array(
-							'post_type' => 'product',
-							'numberposts' => -1,
-							'post_status' => 'publish',
-							'tax_query' => array(
-								array(
-									'taxonomy' => 'product_cat',
-									'field' => 'slug',
-									'terms' => $sub_category->slug,
-									'operator' => 'IN',
-								)
-							),
-						));
-						$categories[$sub_category->term_id] =
-							[
-								'name' => $sub_category->name,
-								'products' => $categoryProducts
-							];
-
-						foreach ($categoryProducts as $categoryProduct) {
-
-
-							$price = get_post_meta($categoryProduct->ID, '_price', true);
-							$weight = get_post_meta($categoryProduct->ID, '_weight', true);
-
-							$unitaMisura = ''; //tabella prodotti selezionati
-							$measureUnit = get_post_meta($categoryProduct->ID, '_woo_uom_input', true);
-							if (!empty($measureUnit)) {
-								$unitaMisura = ' ' . $measureUnit;
-							} else {
-								$unitaMisura = ' gr';
-							}
-
-							$fornitore = get_post_meta($categoryProduct->ID, 'product_producer', true);
-							$fornitoreString = '';
-							if (!empty($fornitore)) {
-								$fornitore = reset($fornitore);
-								$fornitore = get_post($fornitore);
-								$fornitoreString = $fornitore->post_title;
-							}
-
-
-							$jsonProducts[] = [
-								'id' => $categoryProduct->ID,
-								'name' => $categoryProduct->post_title,
-								'weight' => $weight,
-								'sku' => get_post_meta($categoryProduct->ID, '_sku', true),
-								'fornitore' => $fornitoreString,
-								'unit_measure' => $unitaMisura,
-								'codice_confezionamento' => get_post_meta($categoryProduct->ID, '_codice_confezionamento', true),
-								'unit_measure_print' => get_post_meta($categoryProduct->ID, '_uom_acquisto', true),
-								'price' => floatval($price)
-							];
-						}
-					}
-				}
-			}
-		}
-
-		?>
+                                $jsonProducts[] = [
+                                    "id" => $categoryProduct->ID,
+                                    "name" => $categoryProduct->post_title,
+                                    "weight" => $weight,
+                                    "sku" => get_post_meta(
+                                        $categoryProduct->ID,
+                                        "_sku",
+                                        true
+                                    ),
+                                    "fornitore" => $fornitoreString,
+                                    "unit_measure" => $unitaMisura,
+                                    "codice_confezionamento" => get_post_meta(
+                                        $categoryProduct->ID,
+                                        "_codice_confezionamento",
+                                        true
+                                    ),
+                                    "unit_measure_print" => get_post_meta(
+                                        $categoryProduct->ID,
+                                        "_uom_acquisto",
+                                        true
+                                    ),
+                                    "price" => floatval($price),
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+            ?>
 
 		<script>
 			let productIds = <?php echo json_encode($jsonProducts); ?>
@@ -3489,11 +3999,11 @@ function consegne_ordini_pages()
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
 								n°</label>
 							<?php
-							//new current week (= next week)
-							$date = new DateTime();
-							//$date->modify('+1 week');
-							$currentWeek = $date->format("W");
-							?>
+       //new current week (= next week)
+       $date = new DateTime();
+       //$date->modify('+1 week');
+       $currentWeek = $date->format("W");
+       ?>
 
 							<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
 								   type="number" style="width:150px;">
@@ -3502,7 +4012,7 @@ function consegne_ordini_pages()
 
 							<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data
 								Consegna</label>
-							<?php $wednesday = date('Y-m-d', strtotime('wednesday next week')); ?>
+							<?php $wednesday = date("Y-m-d", strtotime("wednesday next week")); ?>
 							<input class="change_shipping_date" name="data_consegna" id="data_consegna"
 								   value="<?php echo $wednesday; ?>" required type="date" style="width:150px;">
 						</div>
@@ -3519,40 +4029,44 @@ function consegne_ordini_pages()
 								<option disabled selected value="">-- Scegli la box --</option>
 								<?php foreach ($products as $product): ?>
 									<?php
-									$product = wc_get_product($product->ID);
-									if ($product->get_type() == 'variable-subscription') {
-										continue;
-									}
+         $product = wc_get_product($product->ID);
+         if ($product->get_type() == "variable-subscription") {
+             continue;
+         }
 
-									$children = $product->get_children();
-									?>
+         $children = $product->get_children();
+         ?>
 									<optgroup label="<?php echo $product->get_name(); ?>">
 										<?php foreach ($children as $child): ?>
 											<?php
-											$child = wc_get_product($child);
-											$child_id = $child->get_id();
+           $child = wc_get_product($child);
+           $child_id = $child->get_id();
 
-											$type = $child->get_attribute('pa_tipologia');
-											$type_code = "";
+           $type = $child->get_attribute("pa_tipologia");
+           $type_code = "";
 
-											$size = $child->get_attribute('pa_dimensione');
-											$size_code = substr($size, 0, 1);
+           $size = $child->get_attribute("pa_dimensione");
+           $size_code = substr($size, 0, 1);
 
-											$year = date("Y");
-											$year_code = substr($year, 2, 4);
+           $year = date("Y");
+           $year_code = substr($year, 2, 4);
 
-											if ($type == 'Vegana' || $type == 'Vegetariana') {
-												$type_code = substr($type, 0, 4);
-											} else {
-												$type_code = substr($type, 0, 1);
-											}
+           if ($type == "Vegana" || $type == "Vegetariana") {
+               $type_code = substr($type, 0, 4);
+           } else {
+               $type_code = substr($type, 0, 1);
+           }
 
-											//CODICE UNIVOCO BOX
-											$box_code = 'FN' . $type_code . $size_code . '-' . $year_code . $currentWeek;
-
-											?>
+           //CODICE UNIVOCO BOX
+           $box_code =
+               "FN" . $type_code . $size_code . "-" . $year_code . $currentWeek;
+           ?>
 											<option
-												value="<?php echo $child->get_id() ?>"><?php echo $child->get_attribute('pa_dimensione') . ' - ' . $child->get_attribute('pa_tipologia'); ?></option>
+												value="<?php echo $child->get_id(); ?>"><?php echo $child->get_attribute(
+    "pa_dimensione"
+) .
+    " - " .
+    $child->get_attribute("pa_tipologia"); ?></option>
 										<?php endforeach; ?>
 									</optgroup>
 								<?php endforeach; ?>
@@ -3579,92 +4093,124 @@ function consegne_ordini_pages()
 							<select name="products_id" id="products_id" class="select2 agr-select" style="width: 100%">
 								<option disabled selected value="">Scegli un prodotto</option>
 								<?php
-								$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-								$negozioID = $getIDbyNAME->term_id;
+        $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
+        $negozioID = $getIDbyNAME->term_id;
 
-								$loop_categories = get_categories(
-									array(
-										'taxonomy' => 'product_cat',
-										'hide_empty' => 1,
-										'parent' => $negozioID,
-									)
-								);
+        $loop_categories = get_categories([
+            "taxonomy" => "product_cat",
+            "hide_empty" => 1,
+            "parent" => $negozioID,
+        ]);
 
-								foreach ($loop_categories as $loop_category) {
+        foreach ($loop_categories as $loop_category) {
+            $args = [
+                "posts_per_page" => -1,
+                "tax_query" => [
+                    "relation" => "AND",
+                    "hide_empty" => 1,
+                    "paged" => false,
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => $loop_category->slug,
+                    ],
+                ],
+                "post_type" => "product",
+                "orderby" => "menu_order",
+                "order" => "asc",
+                "meta_query" => [
+                    [
+                        "key" => "_is_active_shop",
+                        "value" => "1",
+                        "compare" => "==",
+                    ],
+                ],
+            ];
+            $cat_query = new WP_Query($args);
+            $count_posts = new WP_Query($args);
+            $posts_per_cat = $count_posts->found_posts;
 
-									$args = array(
-										'posts_per_page' => -1,
-										'tax_query' => array(
-											'relation' => 'AND',
-											'hide_empty' => 1,
-											'paged' => false,
-											array(
-												'taxonomy' => 'product_cat',
-												'field' => 'slug',
-												'terms' => $loop_category->slug
-											),
-										),
-										'post_type' => 'product',
-										'orderby' => 'menu_order',
-										'order' => 'asc',
-										'meta_query' => array(
-											array(
-												'key' => '_is_active_shop',
-												'value' => '1',
-												'compare' => '=='
-											)
-										),
-									);
-									$cat_query = new WP_Query($args);
-									$count_posts = new WP_Query($args);
-									$posts_per_cat = $count_posts->found_posts;
+            if ($posts_per_cat != 0) {
+                echo '<optgroup label="' . $loop_category->name . '">';
+            }
 
-									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $loop_category->name . '">';
-									}
+            while ($cat_query->have_posts()):
+                $cat_query->the_post();
+                //Valori prodotto
+                $productID = get_the_ID();
+                $price = get_post_meta($productID, "_regular_price", true);
+                $weight = get_post_meta($productID, "_weight", true);
+                $sku = get_post_meta($productID, "_sku", true);
+                $fornitore = get_post_meta(
+                    $productID,
+                    "product_producer",
+                    true
+                );
 
-									while ($cat_query->have_posts()) : $cat_query->the_post();
-										//Valori prodotto
-										$productID = get_the_ID();
-										$price = get_post_meta($productID, '_regular_price', true);
-										$weight = get_post_meta($productID, '_weight', true);
-										$sku = get_post_meta($productID, '_sku', true);
-										$fornitore = get_post_meta($productID, 'product_producer', true);
+                $measureUnit = get_post_meta(
+                    $productID,
+                    "_woo_uom_input",
+                    true
+                );
+                if (!empty($measureUnit)) {
+                    $unitaMisura = " " . $measureUnit;
+                } else {
+                    $unitaMisura = " gr"; //select prodotti
+                }
+                $fornitoreString = "";
+                if (!empty($fornitore)) {
+                    $fornitore = reset($fornitore);
+                    $fornitore = get_post($fornitore);
+                    $fornitoreString = $fornitore->post_title;
+                }
 
-										$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
-										if (!empty($measureUnit)) {
-											$unitaMisura = ' ' . $measureUnit;
-										} else {
-											$unitaMisura = ' gr'; //select prodotti
-										}
-										$fornitoreString = '';
-										if (!empty($fornitore)) {
-											$fornitore = reset($fornitore);
-											$fornitore = get_post($fornitore);
-											$fornitoreString = $fornitore->post_title;
-										}
+                $codiceConfezionamento = get_post_meta(
+                    $productID,
+                    "_codice_confezionamento",
+                    true
+                );
 
-										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
+                if (
+                    is_array($codiceConfezionamento) &&
+                    empty($codiceConfezionamento)
+                ) {
+                    $codiceConfezionamento = "";
+                }
 
-										if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-											$codiceConfezionamento = '';
-										}
+                if (
+                    is_array($codiceConfezionamento) &&
+                    !empty($codiceConfezionamento)
+                ) {
+                    $codiceConfezionamento = reset($codiceConfezionamento);
+                }
+                if ($codiceConfezionamento) {
+                    $codiceConfezionamento = $codiceConfezionamento;
+                }
 
-										if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-											$codiceConfezionamento = reset($codiceConfezionamento);
-										}
-										if ($codiceConfezionamento) {
-											$codiceConfezionamento = $codiceConfezionamento;
-										}
+                //echo the_title() . ' '. $weight. ' <br>';
+                echo '<option value="' .
+                    $productID .
+                    '" data-sku="' .
+                    $sku .
+                    '" data-producer="' .
+                    $fornitoreString .
+                    '" data-conf="' .
+                    $codiceConfezionamento .
+                    '" data-weight="' .
+                    $weight .
+                    $unitaMisura .
+                    '" data-price="' .
+                    $price .
+                    '">' .
+                    get_the_title() .
+                    "</option>";
+            endwhile; // end of the loop.
+            wp_reset_postdata();
 
-										//echo the_title() . ' '. $weight. ' <br>';
-										echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
-									endwhile; // end of the loop.
-									wp_reset_postdata();
-
-									echo '</optgroup>';
-								} //endforeach category
-								?>
+            echo "</optgroup>";
+        }
+        //endforeach category
+            ?>
 							</select>
 							<div style="display:block;width:100%;margin-top:16px;">
 								<button class="button-primary add-product" @click="addProduct('products_id')">
@@ -3680,91 +4226,123 @@ function consegne_ordini_pages()
 									style="width:100%;">
 								<option disabled selected value="">Scegli un prodotto</option>
 								<?php
-								$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-								$negozioID = $getIDbyNAME->term_id;
+        $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
+        $negozioID = $getIDbyNAME->term_id;
 
-								$loop_categories = get_categories(
-									array(
-										'taxonomy' => 'product_cat',
-										// 'orderby' => $orderby,
-										// 'meta_key' => $meta_key,
-										'hide_empty' => 1,
-										'parent' => $negozioID,
-									)
-								);
+        $loop_categories = get_categories([
+            "taxonomy" => "product_cat",
+            // 'orderby' => $orderby,
+            // 'meta_key' => $meta_key,
+            "hide_empty" => 1,
+            "parent" => $negozioID,
+        ]);
 
-								foreach ($loop_categories as $loop_category) {
+        foreach ($loop_categories as $loop_category) {
+            $args = [
+                "posts_per_page" => -1,
+                "tax_query" => [
+                    "relation" => "AND",
+                    "hide_empty" => 1,
+                    "paged" => false,
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => $loop_category->slug,
+                    ],
+                ],
+                "post_type" => "product",
+                "orderby" => "menu_order",
+                "order" => "asc",
+                "meta_query" => [
+                    [
+                        "key" => "_is_active_shop",
+                        "value" => "1",
+                        "compare" => "!=",
+                    ],
+                ],
+            ];
+            $cat_query = new WP_Query($args);
+            $count_posts = new WP_Query($args);
+            $posts_per_cat = $count_posts->found_posts;
 
-									$args = array(
-										'posts_per_page' => -1,
-										'tax_query' => array(
-											'relation' => 'AND',
-											'hide_empty' => 1,
-											'paged' => false,
-											array(
-												'taxonomy' => 'product_cat',
-												'field' => 'slug',
-												'terms' => $loop_category->slug
-											),
-										),
-										'post_type' => 'product',
-										'orderby' => 'menu_order',
-										'order' => 'asc',
-										'meta_query' => array(
-											array(
-												'key' => '_is_active_shop',
-												'value' => '1',
-												'compare' => '!='
-											)
-										),
-									);
-									$cat_query = new WP_Query($args);
-									$count_posts = new WP_Query($args);
-									$posts_per_cat = $count_posts->found_posts;
+            if ($posts_per_cat != 0) {
+                echo '<optgroup label="' . $loop_category->name . '">';
+            }
 
-									if ($posts_per_cat != 0) {
-										echo '<optgroup label="' . $loop_category->name . '">';
-									}
+            while ($cat_query->have_posts()):
+                $cat_query->the_post();
+                //Valori prodotto
+                $productID = get_the_ID();
+                $price = get_post_meta($productID, "_regular_price", true);
+                $weight = get_post_meta($productID, "_weight", true);
+                $sku = get_post_meta($productID, "_sku", true);
+                $fornitore = get_post_meta(
+                    $productID,
+                    "product_producer",
+                    true
+                );
+                $unitaMisura = " gr";
+                $measureUnit = get_post_meta(
+                    $productID,
+                    "_woo_uom_input",
+                    true
+                );
+                if (!empty($measureUnit)) {
+                    $unitaMisura = " " . $measureUnit;
+                }
+                $fornitoreString = "";
+                if (!empty($fornitore)) {
+                    $fornitore = reset($fornitore);
+                    $fornitore = get_post($fornitore);
+                    $fornitoreString = $fornitore->post_title;
+                }
 
-									while ($cat_query->have_posts()) : $cat_query->the_post();
-										//Valori prodotto
-										$productID = get_the_ID();
-										$price = get_post_meta($productID, '_regular_price', true);
-										$weight = get_post_meta($productID, '_weight', true);
-										$sku = get_post_meta($productID, '_sku', true);
-										$fornitore = get_post_meta($productID, 'product_producer', true);
-										$unitaMisura = ' gr';
-										$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
-										if (!empty($measureUnit)) {
-											$unitaMisura = ' ' . $measureUnit;
-										}
-										$fornitoreString = '';
-										if (!empty($fornitore)) {
-											$fornitore = reset($fornitore);
-											$fornitore = get_post($fornitore);
-											$fornitoreString = $fornitore->post_title;
-										}
+                $codiceConfezionamento = get_post_meta(
+                    $productID,
+                    "_codice_confezionamento",
+                    true
+                );
 
-										$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
+                if (
+                    is_array($codiceConfezionamento) &&
+                    empty($codiceConfezionamento)
+                ) {
+                    $codiceConfezionamento = "";
+                }
 
-										if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-											$codiceConfezionamento = '';
-										}
+                if (
+                    is_array($codiceConfezionamento) &&
+                    !empty($codiceConfezionamento)
+                ) {
+                    $codiceConfezionamento = reset($codiceConfezionamento);
+                }
+                if ($codiceConfezionamento) {
+                    $codiceConfezionamento = $codiceConfezionamento;
+                }
 
-										if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-											$codiceConfezionamento = reset($codiceConfezionamento);
-										}
-										if ($codiceConfezionamento) {
-											$codiceConfezionamento = $codiceConfezionamento;
-										}
+                echo '<option value="' .
+                    $productID .
+                    '" data-sku="' .
+                    $sku .
+                    '" data-producer="' .
+                    $fornitoreString .
+                    '" data-conf="' .
+                    $codiceConfezionamento .
+                    '" data-weight="' .
+                    $weight .
+                    $unitaMisura .
+                    '" data-price="' .
+                    $price .
+                    '">' .
+                    get_the_title() .
+                    "</option>";
+            endwhile; // end of the loop.
+            wp_reset_postdata();
 
-										echo '<option value="' . $productID . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
-									endwhile; // end of the loop.
-									wp_reset_postdata();
-
-									echo '</optgroup>';
-								} //endforeach category
-								?>
+            echo "</optgroup>";
+        }
+        //endforeach category
+            ?>
 							</select>
 							<div style="display:block;width:100%;margin-top:16px;">
 								<button class="button-primary add-product"
@@ -3883,40 +4461,46 @@ function consegne_ordini_pages()
 						<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 
 						<?php
-						$i = 1;
-						foreach ($boxs as $box):
-							if ($i < 10) {
-								$i = '0' . $i;
-							}
-							$boxId = get_post_meta($box->ID, '_product_box_id', true);
+      $i = 1;
+      foreach ($boxs as $box):
 
-							$productBox = get_post($boxId);
+          if ($i < 10) {
+              $i = "0" . $i;
+          }
+          $boxId = get_post_meta($box->ID, "_product_box_id", true);
 
-							if (!$productBox) {
-								continue;
-							}
+          $productBox = get_post($boxId);
 
-							$week = get_post_meta($box->ID, '_week', true);
-							$products = get_post_meta($box->ID, '_products', true);
-							if (!is_array($products)) {
-								$products = [];
-							}
-							$dataConsegna = get_post_meta($box->ID, '_data_consegna', true);
-							$productsAlreadyInBox = array_map(function ($p) {
-								return $p['id'];
-							}, $products);
+          if (!$productBox) {
+              continue;
+          }
 
-							// fix nathi per errore data di consegna
-							$fixdate = new DateTime($dataConsegna);
+          $week = get_post_meta($box->ID, "_week", true);
+          $products = get_post_meta($box->ID, "_products", true);
+          if (!is_array($products)) {
+              $products = [];
+          }
+          $dataConsegna = get_post_meta($box->ID, "_data_consegna", true);
+          $productsAlreadyInBox = array_map(function ($p) {
+              return $p["id"];
+          }, $products);
 
-							?>
+          // fix nathi per errore data di consegna
+          $fixdate = new DateTime($dataConsegna);
+          ?>
 
 							<tr id="comment-1" class="comment even thread-even depth-1 approved ">
 
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
 									<span
-										class="create-box-table--span-item week"><?php $boxdate = date_create($box->post_date);
-										echo '<span style="display:block;">' . date_format($boxdate, "Y/m/d") . '</span><span style="display:block;margin-top:4px;">' . date_format($boxdate, "H:i:s") . '</span>'; ?></span>
+										class="create-box-table--span-item week"><?php
+          $boxdate = date_create($box->post_date);
+          echo '<span style="display:block;">' .
+              date_format($boxdate, "Y/m/d") .
+              '</span><span style="display:block;margin-top:4px;">' .
+              date_format($boxdate, "H:i:s") .
+              "</span>";
+          ?></span>
 								</td>
 								<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
 									<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
@@ -3929,7 +4513,9 @@ function consegne_ordini_pages()
 								<td class="comment column-comment has-row-actions column-primary"
 									data-colname="Commento" style="padding:25px 10px 10px;">
 									<span
-										class="create-box-table--span-item delivery"><?php echo ($dataConsegna) ? $fixdate->format("d/m/Y") : '-'; ?></span>
+										class="create-box-table--span-item delivery"><?php echo $dataConsegna
+              ? $fixdate->format("d/m/Y")
+              : "-"; ?></span>
 
 								</td>
 								<td class="response column-response">
@@ -3947,61 +4533,81 @@ function consegne_ordini_pages()
 										</thead>
 										<tbody>
 										<?php
-										$totalWeight = 0;
-										$totalPrice = 0;
-										?>
+          $totalWeight = 0;
+          $totalPrice = 0;
+          ?>
 										<?php foreach ($products as $key => $product): ?>
 											<?php
-											$sku = get_post_meta($product['id'], '_sku', true);
-											$weight = get_post_meta($product['id'], '_weight', true);
+           $sku = get_post_meta($product["id"], "_sku", true);
+           $weight = get_post_meta($product["id"], "_weight", true);
 
-											if (!isset($product['price'])) {
-												$product['price'] = 0;
-											}
+           if (!isset($product["price"])) {
+               $product["price"] = 0;
+           }
 
-											$totalWeight += ($product['quantity'] * $weight);
-											$totalPrice += ($product['price'] * $product['quantity']);
+           $totalWeight += $product["quantity"] * $weight;
+           $totalPrice += $product["price"] * $product["quantity"];
 
-											$fornitore = get_post_meta($product['id'], 'product_producer', true);
-											$fornitoreString = '';
-											if (!empty($fornitore)) {
-												$fornitore = reset($fornitore);
-												$fornitore = get_post($fornitore);
-												$fornitoreString = $fornitore->post_title;
-											}
+           $fornitore = get_post_meta($product["id"], "product_producer", true);
+           $fornitoreString = "";
+           if (!empty($fornitore)) {
+               $fornitore = reset($fornitore);
+               $fornitore = get_post($fornitore);
+               $fornitoreString = $fornitore->post_title;
+           }
 
-											$codiceConfezionamento = get_post_meta($product['id'], '_codice_confezionamento', true);
+           $codiceConfezionamento = get_post_meta(
+               $product["id"],
+               "_codice_confezionamento",
+               true
+           );
 
-											if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-												$codiceConfezionamento = '';
-											}
+           if (
+               is_array($codiceConfezionamento) &&
+               empty($codiceConfezionamento)
+           ) {
+               $codiceConfezionamento = "";
+           }
 
-											if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-												$codiceConfezionamento = reset($codiceConfezionamento);
-											}
+           if (
+               is_array($codiceConfezionamento) &&
+               !empty($codiceConfezionamento)
+           ) {
+               $codiceConfezionamento = reset($codiceConfezionamento);
+           }
 
-											$unitaMisura = ' gr'; //tabella riepilogo box
-											$measureUnit = get_post_meta($product['id'], '_woo_uom_input', true);
+           $unitaMisura = " gr"; //tabella riepilogo box
+           $measureUnit = get_post_meta($product["id"], "_woo_uom_input", true);
 
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
-											if (!empty($measureUnit)) {
-												$unitaMisura = ' ' . $measureUnit;
-											}
+           if (!empty($measureUnit)) {
+               $unitaMisura = " " . $measureUnit;
+           }
+           if (!empty($measureUnit)) {
+               $unitaMisura = " " . $measureUnit;
+           }
 
-											$measureAcquisto = get_post_meta($product['id'], '_uom_acquisto', true);
-											$misura_acquisto = '-';
-											if (!empty($measureAcquisto)) {
-												$misura_acquisto = get_post_meta($product['id'], '_uom_acquisto', true);
-											}
-
-											?>
+           $measureAcquisto = get_post_meta(
+               $product["id"],
+               "_uom_acquisto",
+               true
+           );
+           $misura_acquisto = "-";
+           if (!empty($measureAcquisto)) {
+               $misura_acquisto = get_post_meta(
+                   $product["id"],
+                   "_uom_acquisto",
+                   true
+               );
+           }
+           ?>
 
 											<tr class="create-box-table--row">
 												<td class="create-box-table--name">
 													<a target="_blank"
-													   href="<?php echo esc_url(home_url()) . '/wp-admin/post.php?post=' . $product['id'] . '&action=edit'; ?>"><?php echo $product['name']; ?></a>
+													   href="<?php echo esc_url(home_url()) .
+                    "/wp-admin/post.php?post=" .
+                    $product["id"] .
+                    "&action=edit"; ?>"><?php echo $product["name"]; ?></a>
 												</td>
 												<td>
 													<?php echo $sku; ?>
@@ -4013,18 +4619,18 @@ function consegne_ordini_pages()
 													<?php if ($fornitoreString): ?>
 														<?php echo $fornitoreString; ?>
 													<?php else: ?>
-														<?php echo '-'; ?>
+														<?php echo "-"; ?>
 													<?php endif; ?>
 												</td>
 												<td class="create-box-table--price">
-													€<?php echo number_format($product['price'] * $product['quantity'], 2); ?>
+													€<?php echo number_format($product["price"] * $product["quantity"], 2); ?>
 												</td>
 												<td class="create-box-table--misura">
 													<?php echo $misura_acquisto; ?>
 												</td>
 												<td class="create-box-table--quantity">
 													<input style="width:70px;" readonly
-														   value="<?php echo $product['quantity']; ?>"
+														   value="<?php echo $product["quantity"]; ?>"
 														<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
 														   type="number"
 														   name="quantity[<?php echo $key; ?>][]">
@@ -4033,7 +4639,7 @@ function consegne_ordini_pages()
 													<?php if ($codiceConfezionamento): ?>
 														<?php echo $codiceConfezionamento; ?>
 													<?php else: ?>
-														<?php echo '-'; ?>
+														<?php echo "-"; ?>
 													<?php endif; ?>
 												</td>
 												<td class="create-box-table--actions">
@@ -4055,95 +4661,130 @@ function consegne_ordini_pages()
 													<option disabled selected value="">Seleziona un prodotto
 													</option>
 													<?php
-													$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-													$negozioID = $getIDbyNAME->term_id;
+             $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
+             $negozioID = $getIDbyNAME->term_id;
 
-													$loop_categories = get_categories(
-														array(
-															'taxonomy' => 'product_cat',
-															// 'orderby' => $orderby,
-															// 'meta_key' => $meta_key,
-															'hide_empty' => 1,
-															'parent' => $negozioID,
-														)
-													);
+             $loop_categories = get_categories([
+                 "taxonomy" => "product_cat",
+                 // 'orderby' => $orderby,
+                 // 'meta_key' => $meta_key,
+                 "hide_empty" => 1,
+                 "parent" => $negozioID,
+             ]);
 
-													foreach ($loop_categories as $loop_category) {
+             foreach ($loop_categories as $loop_category) {
+                 $args = [
+                     "posts_per_page" => -1,
+                     "tax_query" => [
+                         "relation" => "AND",
+                         "hide_empty" => 1,
+                         "paged" => false,
+                         [
+                             "taxonomy" => "product_cat",
+                             "field" => "slug",
+                             "terms" => $loop_category->slug,
+                         ],
+                     ],
+                     "post_type" => "product",
+                     "orderby" => "menu_order",
+                     "order" => "asc",
+                     "meta_query" => [
+                         [
+                             "key" => "_is_active_shop",
+                             "value" => "1",
+                             "compare" => "==",
+                         ],
+                     ],
+                 ];
+                 $cat_query = new WP_Query($args);
+                 $count_posts = new WP_Query($args);
+                 $posts_per_cat = $count_posts->found_posts;
 
-														$args = array(
-															'posts_per_page' => -1,
-															'tax_query' => array(
-																'relation' => 'AND',
-																'hide_empty' => 1,
-																'paged' => false,
-																array(
-																	'taxonomy' => 'product_cat',
-																	'field' => 'slug',
-																	'terms' => $loop_category->slug
-																),
-															),
-															'post_type' => 'product',
-															'orderby' => 'menu_order',
-															'order' => 'asc',
-															'meta_query' => array(
-																array(
-																	'key' => '_is_active_shop',
-																	'value' => '1',
-																	'compare' => '=='
-																)
-															),
-														);
-														$cat_query = new WP_Query($args);
-														$count_posts = new WP_Query($args);
-														$posts_per_cat = $count_posts->found_posts;
+                 if ($posts_per_cat != 0) {
+                     echo '<optgroup label="' . $loop_category->name . '">';
+                 }
 
-														if ($posts_per_cat != 0) {
-															echo '<optgroup label="' . $loop_category->name . '">';
-														}
+                 while ($cat_query->have_posts()):
+                     $cat_query->the_post();
+                     //Valori prodotto
+                     $productID = get_the_ID();
+                     $price = get_post_meta($productID, "_regular_price", true);
+                     $sku = get_post_meta($productID, "_sku", true);
+                     $weight = get_post_meta($productID, "_weight", true);
+                     $fornitore = get_post_meta(
+                         $productID,
+                         "product_producer",
+                         true
+                     );
 
-														while ($cat_query->have_posts()) : $cat_query->the_post();
-															//Valori prodotto
-															$productID = get_the_ID();
-															$price = get_post_meta($productID, '_regular_price', true);
-															$sku = get_post_meta($productID, '_sku', true);
-															$weight = get_post_meta($productID, '_weight', true);
-															$fornitore = get_post_meta($productID, 'product_producer', true);
+                     $measureUnit = get_post_meta(
+                         $productID,
+                         "_woo_uom_input",
+                         true
+                     );
+                     if (!empty($measureUnit)) {
+                         $unitaMisura = " " . $measureUnit;
+                     } else {
+                         $unitaMisura = " gr"; //select prodotti
+                     }
+                     $fornitoreString = "";
+                     if (!empty($fornitore)) {
+                         $fornitore = reset($fornitore);
+                         $fornitore = get_post($fornitore);
+                         $fornitoreString = $fornitore->post_title;
+                     }
 
-															$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
-															if (!empty($measureUnit)) {
-																$unitaMisura = ' ' . $measureUnit;
-															} else {
-																$unitaMisura = ' gr'; //select prodotti
-															}
-															$fornitoreString = '';
-															if (!empty($fornitore)) {
-																$fornitore = reset($fornitore);
-																$fornitore = get_post($fornitore);
-																$fornitoreString = $fornitore->post_title;
-															}
+                     $codiceConfezionamento = get_post_meta(
+                         $productID,
+                         "_codice_confezionamento",
+                         true
+                     );
 
-															$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
+                     if (
+                         is_array($codiceConfezionamento) &&
+                         empty($codiceConfezionamento)
+                     ) {
+                         $codiceConfezionamento = "";
+                     }
 
-															if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-																$codiceConfezionamento = '';
-															}
+                     if (
+                         is_array($codiceConfezionamento) &&
+                         !empty($codiceConfezionamento)
+                     ) {
+                         $codiceConfezionamento = reset($codiceConfezionamento);
+                     }
+                     if ($codiceConfezionamento) {
+                         $codiceConfezionamento = $codiceConfezionamento;
+                     }
 
-															if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-																$codiceConfezionamento = reset($codiceConfezionamento);
-															}
-															if ($codiceConfezionamento) {
-																$codiceConfezionamento = $codiceConfezionamento;
-															}
+                     //echo the_title() . ' '. $weight. ' <br>';
+                     echo '<option value="' .
+                         $productID .
+                         '"
+																data-name="' .
+                         get_the_title() .
+                         '" data-sku="' .
+                         $sku .
+                         '" data-producer="' .
+                         $fornitoreString .
+                         '" data-conf="' .
+                         $codiceConfezionamento .
+                         '" data-weight="' .
+                         $weight .
+                         $unitaMisura .
+                         '" data-price="' .
+                         $price .
+                         '">' .
+                         get_the_title() .
+                         "</option>";
+                 endwhile; // end of the loop.
+                 wp_reset_postdata();
 
-															//echo the_title() . ' '. $weight. ' <br>';
-															echo '<option value="' . $productID . '"
-																data-name="' . get_the_title() . '" data-sku="' . $sku . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
-														endwhile; // end of the loop.
-														wp_reset_postdata();
+                 echo "</optgroup>";
+             }
 
-														echo '</optgroup>';
-													} //endforeach category
-													?>
+          //endforeach category
+          ?>
 
 												</select>
 
@@ -4176,94 +4817,130 @@ function consegne_ordini_pages()
 														class="agr-select new-product-box" style="width:100%;">
 													<option disabled selected value="">Scegli un prodotto</option>
 													<?php
-													$getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-													$negozioID = $getIDbyNAME->term_id;
+             $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
+             $negozioID = $getIDbyNAME->term_id;
 
-													$loop_categories = get_categories(
-														array(
-															'taxonomy' => 'product_cat',
-															// 'orderby' => $orderby,
-															// 'meta_key' => $meta_key,
-															'hide_empty' => 1,
-															'parent' => $negozioID,
-														)
-													);
+             $loop_categories = get_categories([
+                 "taxonomy" => "product_cat",
+                 // 'orderby' => $orderby,
+                 // 'meta_key' => $meta_key,
+                 "hide_empty" => 1,
+                 "parent" => $negozioID,
+             ]);
 
-													foreach ($loop_categories as $loop_category) {
-														$args = array(
-															'posts_per_page' => -1,
-															'tax_query' => array(
-																'relation' => 'AND',
-																'hide_empty' => 1,
-																'paged' => false,
-																array(
-																	'taxonomy' => 'product_cat',
-																	'field' => 'slug',
-																	'terms' => $loop_category->slug
-																),
-															),
-															'post_type' => 'product',
-															'orderby' => 'menu_order',
-															'order' => 'asc',
-															'meta_query' => array(
-																array(
-																	'key' => '_is_active_shop',
-																	'value' => '1',
-																	'compare' => '!='
-																)
-															),
-														);
-														$cat_query = new WP_Query($args);
-														$count_posts = new WP_Query($args);
-														$posts_per_cat = $count_posts->found_posts;
+             foreach ($loop_categories as $loop_category) {
+                 $args = [
+                     "posts_per_page" => -1,
+                     "tax_query" => [
+                         "relation" => "AND",
+                         "hide_empty" => 1,
+                         "paged" => false,
+                         [
+                             "taxonomy" => "product_cat",
+                             "field" => "slug",
+                             "terms" => $loop_category->slug,
+                         ],
+                     ],
+                     "post_type" => "product",
+                     "orderby" => "menu_order",
+                     "order" => "asc",
+                     "meta_query" => [
+                         [
+                             "key" => "_is_active_shop",
+                             "value" => "1",
+                             "compare" => "!=",
+                         ],
+                     ],
+                 ];
+                 $cat_query = new WP_Query($args);
+                 $count_posts = new WP_Query($args);
+                 $posts_per_cat = $count_posts->found_posts;
 
-														if ($posts_per_cat != 0) {
-															echo '<optgroup label="' . $loop_category->name . '">';
-														}
+                 if ($posts_per_cat != 0) {
+                     echo '<optgroup label="' . $loop_category->name . '">';
+                 }
 
-														while ($cat_query->have_posts()) : $cat_query->the_post();
-															//Valori prodotto
-															$productID = get_the_ID();
-															$price = get_post_meta($productID, '_regular_price', true);
-															$sku = get_post_meta($productID, '_sku', true);
-															$weight = get_post_meta($productID, '_weight', true);
-															$fornitore = get_post_meta($productID, 'product_producer', true);
+                 while ($cat_query->have_posts()):
+                     $cat_query->the_post();
+                     //Valori prodotto
+                     $productID = get_the_ID();
+                     $price = get_post_meta($productID, "_regular_price", true);
+                     $sku = get_post_meta($productID, "_sku", true);
+                     $weight = get_post_meta($productID, "_weight", true);
+                     $fornitore = get_post_meta(
+                         $productID,
+                         "product_producer",
+                         true
+                     );
 
-															$measureUnit = get_post_meta($productID, '_woo_uom_input', true);
-															if (!empty($measureUnit)) {
-																$unitaMisura = ' ' . $measureUnit;
-															} else {
-																$unitaMisura = ' gr'; //select prodotti
-															}
-															$fornitoreString = '';
-															if (!empty($fornitore)) {
-																$fornitore = reset($fornitore);
-																$fornitore = get_post($fornitore);
-																$fornitoreString = $fornitore->post_title;
-															}
+                     $measureUnit = get_post_meta(
+                         $productID,
+                         "_woo_uom_input",
+                         true
+                     );
+                     if (!empty($measureUnit)) {
+                         $unitaMisura = " " . $measureUnit;
+                     } else {
+                         $unitaMisura = " gr"; //select prodotti
+                     }
+                     $fornitoreString = "";
+                     if (!empty($fornitore)) {
+                         $fornitore = reset($fornitore);
+                         $fornitore = get_post($fornitore);
+                         $fornitoreString = $fornitore->post_title;
+                     }
 
-															$codiceConfezionamento = get_post_meta($productID, '_codice_confezionamento', true);
+                     $codiceConfezionamento = get_post_meta(
+                         $productID,
+                         "_codice_confezionamento",
+                         true
+                     );
 
-															if (is_array($codiceConfezionamento) && empty($codiceConfezionamento)) {
-																$codiceConfezionamento = '';
-															}
+                     if (
+                         is_array($codiceConfezionamento) &&
+                         empty($codiceConfezionamento)
+                     ) {
+                         $codiceConfezionamento = "";
+                     }
 
-															if (is_array($codiceConfezionamento) && !empty($codiceConfezionamento)) {
-																$codiceConfezionamento = reset($codiceConfezionamento);
-															}
-															if ($codiceConfezionamento) {
-																$codiceConfezionamento = $codiceConfezionamento;
-															}
+                     if (
+                         is_array($codiceConfezionamento) &&
+                         !empty($codiceConfezionamento)
+                     ) {
+                         $codiceConfezionamento = reset($codiceConfezionamento);
+                     }
+                     if ($codiceConfezionamento) {
+                         $codiceConfezionamento = $codiceConfezionamento;
+                     }
 
-															//echo the_title() . ' '. $weight. ' <br>';
-															echo '<option value="' . $productID . '"
-																data-sku="' . $sku . '" data-name="' . get_the_title() . '" data-producer="' . $fornitoreString . '" data-conf="' . $codiceConfezionamento . '" data-weight="' . $weight . $unitaMisura . '" data-price="' . $price . '">' . get_the_title() . '</option>';
-														endwhile; // end of the loop.
-														wp_reset_postdata();
+                     //echo the_title() . ' '. $weight. ' <br>';
+                     echo '<option value="' .
+                         $productID .
+                         '"
+																data-sku="' .
+                         $sku .
+                         '" data-name="' .
+                         get_the_title() .
+                         '" data-producer="' .
+                         $fornitoreString .
+                         '" data-conf="' .
+                         $codiceConfezionamento .
+                         '" data-weight="' .
+                         $weight .
+                         $unitaMisura .
+                         '" data-price="' .
+                         $price .
+                         '">' .
+                         get_the_title() .
+                         "</option>";
+                 endwhile; // end of the loop.
+                 wp_reset_postdata();
 
-														echo '</optgroup>';
-													} //endforeach category
-													?>
+                 echo "</optgroup>";
+             }
+
+          //endforeach category
+          ?>
 
 
 												</select>
@@ -4324,7 +5001,8 @@ function consegne_ordini_pages()
 								</td>
 
 							</tr>
-							<?php $i++; endforeach; ?>
+							<?php $i++;
+      endforeach;?>
 						</tbody>
 					</table>
 					<br><br>
@@ -4339,32 +5017,43 @@ function consegne_ordini_pages()
 		</div>
 
 		<?php
-	});
+        }
+    );
 
+    add_menu_page(
+        "Esporta Documenti",
+        "Esporta Documenti",
+        "manage_options",
+        "esporta-documenti",
+        function () {
+            global $wpdb;
 
-	add_menu_page('Esporta Documenti', 'Esporta Documenti', 'manage_options', 'esporta-documenti', function () {
-		global $wpdb;
+            if (isset($_POST["document_type"])) {
+                require_once get_template_directory() .
+                    "/libraries/dompdf/autoload.inc.php";
+                require_once get_template_directory() .
+                    "/inc/pdf/" .
+                    $_POST["document_type"] .
+                    ".php";
+                die();
+            }
 
-		if (isset($_POST['document_type'])) {
-			require_once get_template_directory() . '/libraries/dompdf/autoload.inc.php';
-			require_once get_template_directory() . '/inc/pdf/' . $_POST['document_type'] . '.php';
-			die();
-		}
+            $sql =
+                "SELECT meta_value from wp_postmeta where meta_key='_codice_confezionamento' group by meta_value";
+            $confezionamento = $wpdb->get_results($sql, ARRAY_A);
 
+            $confezionamento = array_map(function ($cod) {
+                return $cod["meta_value"];
+            }, $confezionamento);
 
-		$sql = "SELECT meta_value from wp_postmeta where meta_key='_codice_confezionamento' group by meta_value";
-		$confezionamento = $wpdb->get_results($sql, ARRAY_A);
+            $confezionamento = array_unique($confezionamento);
+            sort($confezionamento);
 
-		$confezionamento = array_map(function ($cod) {
-			return $cod['meta_value'];
-		}, $confezionamento);
-
-
-		$confezionamento = array_unique($confezionamento);
-		sort($confezionamento);
-
-		$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
-		?>
+            $allDataConsegna = $wpdb->get_results(
+                "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value",
+                ARRAY_A
+            );
+            ?>
 		<div id="wpbody-content">
 
 			<div class="wrap" id="box-app">
@@ -4384,9 +5073,11 @@ function consegne_ordini_pages()
 							<div style="margin-right: 16px;">
 								<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana
 									n°</label>
-								<?php $date = new DateTime();
-							//	$date->modify('+1 week');
-								$currentWeek = $date->format("W"); ?>
+								<?php
+        $date = new DateTime();
+        //	$date->modify('+1 week');
+        $currentWeek = $date->format("W");
+        ?>
 								<input class="change_week_print" name="week_print" id="week_print"
 									   value="<?php echo $currentWeek; ?>"
 									   type="number" style="width:150px;">
@@ -4397,30 +5088,46 @@ function consegne_ordini_pages()
 
 								<?php if (count($allDataConsegna) == 0): ?>
 									<i>Nessun ordine con data consegna.</i>
-								<?php else:
-								?>
+								<?php
+
+            //fix nathi per errore data di consegna quiiii
+            //print_r($wednesday);
+            //fix nathi per errore data di consegna quiiii
+            //print_r($wednesday);
+            ?>else: ?>
 									<select name="data_consegna" autocomplete="on" class="get_date_shipping">
 										<option disabled selected value="null">Seleziona</option>
-										<?php
-										foreach ($allDataConsegna as $dataConsegna):
+										<?php foreach ($allDataConsegna as $dataConsegna):
 
-											//fix nathi per errore data di consegna quiiii
-											$fixdate = $dataConsegna['meta_value'];
-											$fixdate = new DateTime($fixdate);
-											$fixdate = $fixdate->format('d-m-Y');
+              $fixdate = $dataConsegna["meta_value"];
+              $fixdate = new DateTime($fixdate);
+              $fixdate = $fixdate->format("d-m-Y");
 
-											$wednesday = date('d-m-Y', strtotime('wednesday next week'));
-											//print_r($wednesday);
-											?>
+              $wednesday = date("d-m-Y", strtotime("wednesday next week"));
 
-											<?php if (is_array($dataConsegna['meta_value']) || empty($dataConsegna['meta_value'])) continue; ?>
+              //print_r($wednesday);
+              ?>
+
+											<?php if (
+               is_array($dataConsegna["meta_value"]) ||
+               empty($dataConsegna["meta_value"])
+           ) {
+               continue;
+           } ?>
 											<option <?php if ($wednesday === $fixdate) {
-												echo 'selected';
-											} ?> value="<?php echo $fixdate; ?>"><?php echo $fixdate; ?></option>
+               echo "selected";
+           } ?> value="<?php echo $fixdate; ?>"><?php echo $fixdate; ?></option>
 
-										<?php endforeach; ?>
+										<?php
+          endforeach; ?>
 									</select>
-								<?php wp_enqueue_script('moment', get_template_directory_uri() . '/assets/js/moment.min.js', ['jquery'], null, true); ?>
+								<?php wp_enqueue_script(
+            "moment",
+            get_template_directory_uri() . "/assets/js/moment.min.js",
+            ["jquery"],
+            null,
+            true
+        ); ?>
 									<script type="text/javascript">
 										jQuery(document).ready(function ($) {
 											$(".change_week_print").on("change paste keyup", function () {
@@ -4485,14 +5192,16 @@ function consegne_ordini_pages()
 									<label
 										style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
 									<?php
-									$date = new DateTime();
-							//		$date->modify('+1 week');
-									$currentWeek = $date->format("W");
-									$allSettimaneFabbisogno = $wpdb->get_results("select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value");
-									$allSettimaneFabbisogno = array_map(function ($tmp) {
-										return $tmp->meta_value;
-									}, $allSettimaneFabbisogno);
-									?>
+         $date = new DateTime();
+         //		$date->modify('+1 week');
+         $currentWeek = $date->format("W");
+         $allSettimaneFabbisogno = $wpdb->get_results(
+             "select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value"
+         );
+         $allSettimaneFabbisogno = array_map(function ($tmp) {
+             return $tmp->meta_value;
+         }, $allSettimaneFabbisogno);
+         ?>
 									<select autocomplete="off" name="settimana">
 										<option value="">-- Seleziona --</option>
 										<?php foreach ($allSettimaneFabbisogno as $week): ?>
@@ -4531,143 +5240,195 @@ function consegne_ordini_pages()
 		</div>
 
 		<?php
-	});
-
+        }
+    );
 }
 
-
-add_action('woocommerce_product_after_variable_attributes', 'variation_settings_fields', 10, 3);
-add_action('woocommerce_save_product_variation', 'save_variation_settings_fields', 10, 2);
-add_filter('woocommerce_available_variation', 'load_variation_settings_fields');
+add_action(
+    "woocommerce_product_after_variable_attributes",
+    "variation_settings_fields",
+    10,
+    3
+);
+add_action(
+    "woocommerce_save_product_variation",
+    "save_variation_settings_fields",
+    10,
+    2
+);
+add_filter("woocommerce_available_variation", "load_variation_settings_fields");
 
 function variation_settings_fields($loop, $variation_data, $variation)
 {
+    $idNavision = get_post_meta($variation->ID, "_navision_id", true);
 
-	$idNavision = get_post_meta($variation->ID, '_navision_id', true);
-
-	if (is_array($idNavision)) {
-		$idNavision = $idNavision[0];
-	}
-	woocommerce_wp_text_input(array(
-		'id' => "_navision_id{$loop}",
-		'name' => "_navision_id[{$loop}][]",
-		'wrapper_class' => 'form-row form-row-full',
-		'label' => 'ID Navision',
-		'value' => $idNavision
-	), $variation_data->ID);
+    if (is_array($idNavision)) {
+        $idNavision = $idNavision[0];
+    }
+    woocommerce_wp_text_input(
+        [
+            "id" => "_navision_id{$loop}",
+            "name" => "_navision_id[{$loop}][]",
+            "wrapper_class" => "form-row form-row-full",
+            "label" => "ID Navision",
+            "value" => $idNavision,
+        ],
+        $variation_data->ID
+    );
 }
 
 function save_variation_settings_fields($variation_id, $loop)
 {
-
-	if (isset($_POST['_navision_id'][$loop])) {
-		$post_data = $_POST['_navision_id'][$loop];
-		update_post_meta($variation_id, '_navision_id', $post_data);
-	}
-
+    if (isset($_POST["_navision_id"][$loop])) {
+        $post_data = $_POST["_navision_id"][$loop];
+        update_post_meta($variation_id, "_navision_id", $post_data);
+    }
 }
 
 function load_variation_settings_fields($variation)
 {
-	$variation['_id_navision'] = get_post_meta($variation['variation_id'], '_id_navision', true);
+    $variation["_id_navision"] = get_post_meta(
+        $variation["variation_id"],
+        "_id_navision",
+        true
+    );
 
-	return $variation;
+    return $variation;
 }
-
 
 function woocommerce_wp_multi_select($field, $variation_id = 0)
 {
-	global $thepostid, $post;
+    global $thepostid, $post;
 
-	if ($variation_id == 0)
-		$the_id = empty($thepostid) ? $post->ID : $thepostid;
-	else
-		$the_id = $variation_id;
+    if ($variation_id == 0) {
+        $the_id = empty($thepostid) ? $post->ID : $thepostid;
+    } else {
+        $the_id = $variation_id;
+    }
 
-	$field['class'] = isset($field['class']) ? $field['class'] : 'select short';
-	$field['wrapper_class'] = isset($field['wrapper_class']) ? $field['wrapper_class'] : '';
-	$field['name'] = isset($field['name']) ? $field['name'] : $field['id'];
+    $field["class"] = isset($field["class"]) ? $field["class"] : "select short";
+    $field["wrapper_class"] = isset($field["wrapper_class"])
+        ? $field["wrapper_class"]
+        : "";
+    $field["name"] = isset($field["name"]) ? $field["name"] : $field["id"];
 
-	$meta_data = maybe_unserialize(get_post_meta($the_id, $field['id'], true));
-	$meta_data = $meta_data ? $meta_data : array();
+    $meta_data = maybe_unserialize(get_post_meta($the_id, $field["id"], true));
+    $meta_data = $meta_data ? $meta_data : [];
 
-	$field['value'] = isset($field['value']) ? $field['value'] : $meta_data;
+    $field["value"] = isset($field["value"]) ? $field["value"] : $meta_data;
 
-	echo '<p class="form-field ' . esc_attr($field['id']) . '_field ' . esc_attr($field['wrapper_class']) . '"><label for="' . esc_attr($field['id']) . '">' . wp_kses_post($field['label']) . '</label><select id="' . esc_attr($field['id']) . '" name="' . esc_attr($field['name']) . '" class="' . esc_attr($field['class']) . '" multiple="multiple">';
+    echo '<p class="form-field ' .
+        esc_attr($field["id"]) .
+        "_field " .
+        esc_attr($field["wrapper_class"]) .
+        '"><label for="' .
+        esc_attr($field["id"]) .
+        '">' .
+        wp_kses_post($field["label"]) .
+        '</label><select id="' .
+        esc_attr($field["id"]) .
+        '" name="' .
+        esc_attr($field["name"]) .
+        '" class="' .
+        esc_attr($field["class"]) .
+        '" multiple="multiple">';
 
-	foreach ($field['options'] as $key => $value) {
-		echo '<option value="' . esc_attr($key) . '" ' . (is_array($field['value']) && in_array($key, $field['value']) ? 'selected="selected"' : '') . '>' . esc_html($value) . '</option>';
-	}
-	echo '</select> ';
-	if (!empty($field['description'])) {
-		if (isset($field['desc_tip']) && false !== $field['desc_tip']) {
-			echo '<img class="help_tip" data-tip="' . esc_attr($field['description']) . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />';
-		} else {
-			echo '<span class="description">' . wp_kses_post($field['description']) . '</span>';
-		}
-	}
+    foreach ($field["options"] as $key => $value) {
+        echo '<option value="' .
+            esc_attr($key) .
+            '" ' .
+            (is_array($field["value"]) && in_array($key, $field["value"])
+                ? 'selected="selected"'
+                : "") .
+            ">" .
+            esc_html($value) .
+            "</option>";
+    }
+    echo "</select> ";
+    if (!empty($field["description"])) {
+        if (isset($field["desc_tip"]) && false !== $field["desc_tip"]) {
+            echo '<img class="help_tip" data-tip="' .
+                esc_attr($field["description"]) .
+                '" src="' .
+                esc_url(WC()->plugin_url()) .
+                '/assets/images/help.png" height="16" width="16" />';
+        } else {
+            echo '<span class="description">' .
+                wp_kses_post($field["description"]) .
+                "</span>";
+        }
+    }
 }
 
-
-add_filter('manage_delivery-group_posts_columns', function ($columns) {
-	$columns['week'] = 'CSV';
-	return $columns;
+add_filter("manage_delivery-group_posts_columns", function ($columns) {
+    $columns["week"] = "CSV";
+    return $columns;
 });
 // Add the data to the custom columns for the book post type:
-add_action('manage_delivery-group_posts_custom_column', function ($column, $post_id) {
-	switch ($column) {
+add_action(
+    "manage_delivery-group_posts_custom_column",
+    function ($column, $post_id) {
+        switch ($column) {
+            case "week":
 
-		case 'week' :
-			global $wpdb;
-			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna'", ARRAY_A);
+                global $wpdb;
+                $allDataConsegna = $wpdb->get_results(
+                    "SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna'",
+                    ARRAY_A
+                );
 
-			$allDataConsegna = array_map(function ($val) {
-				return $val['meta_value'];
-			}, $allDataConsegna);
+                $allDataConsegna = array_map(function ($val) {
+                    return $val["meta_value"];
+                }, $allDataConsegna);
 
-			$date = new DateTime();
-		//	$date->modify('+1 week');
-			$currentWeek = $date->format("W");
+                $date = new DateTime();
+                //	$date->modify('+1 week');
+                $currentWeek = $date->format("W");
 
-			// $dt = new DateTime();
-			// // create DateTime object with current time
-			//
-			// $dt->setISODate($dt->format('o'), $dt->format('W') + 1);
-			// // set object to Monday on next week
-			//
-			// $periods = new DatePeriod($dt, new DateInterval('P1D'), 6);
-			// // get all 1day periods from Monday to +6 days
-			//
-			// $days = iterator_to_array($periods);
-			// // convert DatePeriod object to array
-			//
-			// //print_r($days);
-			// $currentWeek = $days[0]->format("W");
+                // $dt = new DateTime();
+                // // create DateTime object with current time
+                //
+                // $dt->setISODate($dt->format('o'), $dt->format('W') + 1);
+                // // set object to Monday on next week
+                //
+                // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6);
+                // // get all 1day periods from Monday to +6 days
+                //
+                // $days = iterator_to_array($periods);
+                // // convert DatePeriod object to array
+                //
+                // //print_r($days);
+                // $currentWeek = $days[0]->format("W");
 
-			// echo '<br/>Mon:' . $days[0]->format('Y-m-d');
-			// echo '<br/>Sun:' . $days[6]->format('Y-m-d');
+                // echo '<br/>Mon:' . $days[0]->format('Y-m-d');
+                // echo '<br/>Sun:' . $days[6]->format('Y-m-d');
 
-			$allDataConsegna = array_unique($allDataConsegna);
-			sort($allDataConsegna);
-			?>
+                $allDataConsegna = array_unique($allDataConsegna);
+                sort($allDataConsegna);
+                ?>
 			<?php if (count($allDataConsegna) == 0): ?>
 			<i>Nessun ordine con data consegna.</i>
-		<?php else: ?>
-			<select name="data_consegna" autocomplete="off">
-				<?php
-				foreach ($allDataConsegna as $dataConsegna):
+		<?php
 
-					// fix nathi per errore data di consegna
-					$fixdate = $dataConsegna;
-					try {
-						$fixdate = new DateTime($fixdate);
-					} catch (\Exception $e) {
-						continue;
-					}
-					?>
+       // fix nathi per errore data di consegna
+       // fix nathi per errore data di consegna
+       ?>else: ?>
+			<select name="data_consegna" autocomplete="off">
+				<?php foreach ($allDataConsegna as $dataConsegna):
+
+        $fixdate = $dataConsegna;
+        try {
+            $fixdate = new DateTime($fixdate);
+        } catch (\Exception $e) {
+            continue;
+        }
+        ?>
 					<option
-						value="<?php echo $dataConsegna; ?>"><?php echo $fixdate->format('d/m/Y'); ?></option>
-				<?php endforeach; ?>
+						value="<?php echo $dataConsegna; ?>"><?php echo $fixdate->format(
+    "d/m/Y"
+); ?></option>
+				<?php
+    endforeach; ?>
 			</select>
 
 		<?php endif; ?>
@@ -4677,84 +5438,116 @@ add_action('manage_delivery-group_posts_custom_column', function ($column, $post
 
 			<br>
 			<em>Settimana corrente: <?php echo $currentWeek; ?></em>
-			<?php
-			break;
-
-	}
-}, 10, 2);
-
+			<?php break;
+        }
+    },
+    10,
+    2
+);
 
 function my_saved_post($post_id, $json, $is_update)
 {
+    $product = wc_get_product($post_id);
 
-	$product = wc_get_product($post_id);
+    if ($product) {
+        // Retrieve the import ID.
+        // Convert SimpleXml object to array for easier use.
 
-	if ($product) {
-		// Retrieve the import ID.
-		// Convert SimpleXml object to array for easier use.
+        if (isset($json->_percentuale_ricarico)) {
+            update_post_meta(
+                $post_id,
+                "_percentuale_ricarico",
+                (string) $json->_percentuale_ricarico
+            );
+        }
+        if (isset($json->costounitario)) {
+            update_post_meta(
+                $post_id,
+                "_prezzo_acquisto",
+                number_format((string) $json->costounitario, 2)
+            );
+        }
+        if (isset($json->codicecategoriaconfezionamento)) {
+            update_post_meta(
+                $post_id,
+                "_codice_confezionamento",
+                (string) $json->codicecategoriaconfezionamento
+            );
+        }
+        if (isset($json->_is_magazzino)) {
+            update_post_meta(
+                $post_id,
+                "_is_magazzino",
+                (string) $json->_is_magazzino
+            );
+        }
+        if (isset($json->_uom_acquisto)) {
+            update_post_meta(
+                $post_id,
+                "_uom_acquisto",
+                (string) $json->_uom_acquisto
+            );
+        }
+        if (isset($json->_qty_acquisto)) {
+            update_post_meta(
+                $post_id,
+                "_qty_acquisto",
+                (string) $json->_qty_acquisto
+            );
+        }
 
-		if (isset($json->_percentuale_ricarico)) {
-			update_post_meta($post_id, '_percentuale_ricarico', (string)$json->_percentuale_ricarico);
-		}
-		if (isset($json->costounitario)) {
-			update_post_meta($post_id, '_prezzo_acquisto', number_format((string)$json->costounitario, 2));
-		}
-		if (isset($json->codicecategoriaconfezionamento)) {
-			update_post_meta($post_id, '_codice_confezionamento', (string)$json->codicecategoriaconfezionamento);
-		}
-		if (isset($json->_is_magazzino)) {
-			update_post_meta($post_id, '_is_magazzino', (string)$json->_is_magazzino);
-		}
-		if (isset($json->_uom_acquisto)) {
-			update_post_meta($post_id, '_uom_acquisto', (string)$json->_uom_acquisto);
-		}
-		if (isset($json->_qty_acquisto)) {
-			update_post_meta($post_id, '_qty_acquisto', (string)$json->_qty_acquisto);
-		}
+        $product->set_manage_stock(true);
+        if (isset($json->scorte)) {
+            $product->set_stock_quantity((string) $json->scorte);
+        }
+        $product->set_stock_status();
 
-		$product->set_manage_stock(true);
-		if (isset($json->scorte)) {
-			$product->set_stock_quantity((string)$json->scorte);
-		}
-		$product->set_stock_status();
+        $json->costounitario = str_replace(
+            ",",
+            ".",
+            (string) $json->costounitario
+        );
 
-		$json->costounitario = str_replace(",", '.', (string)$json->costounitario);
+        $price = number_format((string) $json->costounitario, 2);
 
+        if (
+            !isset($json->_percentuale_ricarico) ||
+            empty($json->_percentuale_ricarico)
+        ) {
+            $json->_percentuale_ricarico = 0;
+        }
 
-		$price = number_format((string)$json->costounitario, 2);
+        if (is_array($json->_percentuale_ricarico)) {
+            $json->_percentuale_ricarico =
+                (string) $json->_percentuale_ricarico[0];
+        }
 
-		if (!isset($json->_percentuale_ricarico) || empty($json->_percentuale_ricarico)) {
-			$json->_percentuale_ricarico = 0;
-		}
+        $json->_percentuale_ricarico = str_replace(
+            ",",
+            ".",
+            (string) $json->_percentuale_ricarico
+        );
 
-		if (is_array($json->_percentuale_ricarico)) {
-			$json->_percentuale_ricarico = (string)$json->_percentuale_ricarico[0];
-		}
+        $price *= 1 + (string) $json->_percentuale_ricarico / 100;
+        $price = number_format($price, 2);
 
-		$json->_percentuale_ricarico = str_replace(",", '.', (string)$json->_percentuale_ricarico);
+        $iva = (string) $json->iva;
 
+        if (empty(trim($iva))) {
+            $iva = 0;
+        }
 
-		$price *= (1 + (string)$json->_percentuale_ricarico / 100);
-		$price = number_format($price, 2);
+        if ($iva > 0) {
+            $price = $price + $iva * ($price / 100);
+            $price = round($price, 2);
+        }
 
-		$iva = (string)$json->iva;
-
-		if (empty(trim($iva))) {
-			$iva = 0;
-		}
-
-		if ($iva > 0) {
-			$price = $price + ($iva * ($price / 100));
-			$price = round($price, 2);
-		}
-
-		$product->set_regular_price($price);
-		$product->set_price($price);
-		$product->save();
-		wc_delete_product_transients($product->get_id());
-		// Do something.
-	}
-
+        $product->set_regular_price($price);
+        $product->set_price($price);
+        $product->save();
+        wc_delete_product_transients($product->get_id());
+        // Do something.
+    }
 }
 
-add_action('pmxi_saved_post', 'my_saved_post', 10, 3);
+add_action("pmxi_saved_post", "my_saved_post", 10, 3);
