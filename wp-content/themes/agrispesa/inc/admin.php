@@ -1110,7 +1110,7 @@ WHERE wp.ID IS NULL");
                         true
                     );
 
-                    if (!$productNavisionId) {
+                    if (!$productNavisionId || (is_array($productNavisionId) && $productNavisionId[0] == '')) {
                         continue;
                     }
                     $row = $doc->createElement("ROW");

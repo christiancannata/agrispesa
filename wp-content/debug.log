@@ -8845,3 +8845,17 @@ Stack trace:
 				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
 [08-Apr-2023 14:31:24 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
 				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 14:35:43 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 14:39:51 UTC] WordPress database error You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '}postmeta WHERE meta_key = '_data_consegna' group by meta_value' at line 2 for query SELECT meta_value FROM {
+				wp_}postmeta WHERE meta_key = '_data_consegna' group by meta_value made by require('wp-admin/edit-form-advanced.php'), do_meta_boxes, mv_add_other_fields_for_packaging
+[08-Apr-2023 14:40:08 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:08 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:08 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1170
+[08-Apr-2023 14:40:09 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1170) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1201
