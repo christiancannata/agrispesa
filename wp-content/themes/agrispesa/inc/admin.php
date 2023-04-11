@@ -666,6 +666,8 @@ WHERE post_type = 'product' AND ID NOT IN (" .
                 );
             }
 
+			update_option('last_import_products', (new DateTime())->format("Y-m-d H:i:s"));
+
             $response = new WP_REST_Response([]);
             $response->set_status(204);
 
@@ -885,6 +887,7 @@ WHERE wp.ID IS NULL");
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
+			update_option('last_import_box', (new DateTime())->format("Y-m-d H:i:s"));
 
             return $response;
         },
