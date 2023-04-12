@@ -9291,3 +9291,18 @@ Stack trace:
 [08-Apr-2023 16:57:53 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5329
 [08-Apr-2023 16:57:53 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5329
 [08-Apr-2023 16:57:53 UTC] PHP Notice:  Trying to get property 'ID' of non-object in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5329
+[12-Apr-2023 15:33:24 UTC] PHP Notice:  Undefined variable: invoices in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1096
+[12-Apr-2023 15:33:24 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1096
+[12-Apr-2023 15:33:24 UTC] PHP Notice:  Undefined variable: activeProducts in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1145
+[12-Apr-2023 15:33:25 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1145
+[12-Apr-2023 15:33:25 UTC] PHP Notice:  Undefined variable: newProducts in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1185
+[12-Apr-2023 15:33:25 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1185
+[12-Apr-2023 15:33:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1096) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1762
+[12-Apr-2023 15:33:36 UTC] PHP Notice:  Undefined variable: activeProducts in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1145
+[12-Apr-2023 15:33:36 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1145
+[12-Apr-2023 15:33:36 UTC] PHP Notice:  Undefined variable: newProducts in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1185
+[12-Apr-2023 15:33:36 UTC] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 1185
+[12-Apr-2023 15:33:36 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:1145) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1762
+[12-Apr-2023 16:03:13 UTC] PHP Parse error:  syntax error, unexpected '$amount' (T_VARIABLE), expecting ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 296
+[12-Apr-2023 16:03:13 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[12-Apr-2023 16:03:13 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368

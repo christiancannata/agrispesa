@@ -16,67 +16,83 @@ function give_user_subscription($product, $user, $row)
         return false;
     }
 
-	$payment_gateways = WC()->payment_gateways->payment_gateways();
+    $payment_gateways = WC()->payment_gateways->payment_gateways();
 
     $order = wc_create_order([
-		"customer_id" => $user_id
-		]);
+        "customer_id" => $user_id,
+    ]);
 
-	if( is_wp_error( $order ) ){
-		dd($order);
-		return false;
-	}
+    if (is_wp_error($order)) {
+        dd($order);
+        return false;
+    }
 
-	$user = get_user_by( 'ID', $user_id );
+    $user = get_user_by("ID", $user_id);
 
-	$fname     = $user->first_name;
-	$lname     = $user->last_name;
-	$email     = $user->user_email;
-	/*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
+    $fname = $user->first_name;
+    $lname = $user->last_name;
+    $email = $user->user_email;
+    /*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
 	$address_2 = get_user_meta( $user_id, 'billing_address_2', true );
 	$city      = get_user_meta( $user_id, 'billing_city', true );
 	$postcode  = get_user_meta( $user_id, 'billing_postcode', true );
 	$country   = get_user_meta( $user_id, 'billing_country', true );
 	$state     = get_user_meta( $user_id, 'billing_state', true );
 */
-	 $shippingAddress = [
+    $shippingAddress = [
         "first_name" => $fname,
         "last_name" => $lname,
         "email" => $email,
-        "phone" => $row['automatismiSettimanali_utenze::telmobile'],
-        "address_1" => $row['automatismiSettimanali_indirizzoSpedizione::indirizzo'].' '.$row['automatismiSettimanali_indirizzoSpedizione::numeroCivico'],
-        "city" => $row['automatismiSettimanali_indirizzoSpedizione::città'],
+        "phone" => $row["automatismiSettimanali_utenze::telmobile"],
+        "address_1" =>
+            $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] .
+            " " .
+            $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"],
+        "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"],
         "state" => "",
-        "postcode" => $row['automatismiSettimanali_indirizzoSpedizione::cap'],
+        "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"],
         "country" => "IT",
     ];
 
-	  $invoiceAddress = [
-        "first_name" => $row['automatismiSettimanali_intestazioneFattura::nome'],
-        "last_name" => $row['automatismiSettimanali_intestazioneFattura::cognome'],
+    $invoiceAddress = [
+        "first_name" =>
+            $row["automatismiSettimanali_intestazioneFattura::nome"],
+        "last_name" =>
+            $row["automatismiSettimanali_intestazioneFattura::cognome"],
         "email" => $email,
-        "phone" => $row['automatismiSettimanali_utenze::telmobile'],
-        "address_1" => $row['automatismiSettimanali_intestazioneFattura::indirizzo'].' '.$row['automatismiSettimanali_intestazioneFattura::numeroCivico'],
-        "city" => $row['automatismiSettimanali_intestazioneFattura::città'],
+        "phone" => $row["automatismiSettimanali_utenze::telmobile"],
+        "address_1" =>
+            $row["automatismiSettimanali_intestazioneFattura::indirizzo"] .
+            " " .
+            $row["automatismiSettimanali_intestazioneFattura::numeroCivico"],
+        "city" => $row["automatismiSettimanali_intestazioneFattura::città"],
         "state" => "",
-        "postcode" => $row['automatismiSettimanali_intestazioneFattura::cap'],
+        "postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"],
         "country" => "IT",
     ];
 
-	$order->set_customer_id($user_id);
-	$order->set_address( $invoiceAddress, 'billing' );
-	$order->set_address( $shippingAddress, 'shipping' );
-	$order->add_product( $product, 1 );
-	$order->set_status('completed');
-	$order->set_payment_method($payment_gateways['wallet']);
+    $order->set_customer_id($user_id);
+    $order->set_address($invoiceAddress, "billing");
+    $order->set_address($shippingAddress, "shipping");
+    $order->add_product($product, 1);
+    $order->set_status("completed");
+    $order->set_payment_method($payment_gateways["wallet"]);
     $order->calculate_totals();
 
-	update_post_meta($order->get_id(),'_billing_partita_iva',$row['automatismiSettimanali_intestazioneFattura::codiceFiscale']);
-	update_post_meta($order->get_id(),'_billing_codice_fiscale',$row['automatismiSettimanali_intestazioneFattura::partitaIva']);
-	$order->save();
+    update_post_meta(
+        $order->get_id(),
+        "_billing_partita_iva",
+        $row["automatismiSettimanali_intestazioneFattura::codiceFiscale"]
+    );
+    update_post_meta(
+        $order->get_id(),
+        "_billing_codice_fiscale",
+        $row["automatismiSettimanali_intestazioneFattura::partitaIva"]
+    );
+    $order->save();
 
     $subscriptionParams = [
-        'order_id' => $order->get_id(),
+        "order_id" => $order->get_id(),
         "customer_id" => $user_id,
         "status" => "active",
         "billing_period" => WC_Subscriptions_Product::get_period($product),
@@ -86,14 +102,14 @@ function give_user_subscription($product, $user, $row)
     $sub = wcs_create_subscription($subscriptionParams);
 
     if (is_wp_error($sub)) {
-		dd($sub);
+        dd($sub);
         return false;
     }
 
-	$sub->set_payment_method($payment_gateways['wallet']);
+    $sub->set_payment_method($payment_gateways["wallet"]);
 
-	$sub->set_address( $invoiceAddress, 'billing' );
-	$sub->set_address( $shippingAddress, 'shipping' );
+    $sub->set_address($invoiceAddress, "billing");
+    $sub->set_address($shippingAddress, "shipping");
     // Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
     $start_date = gmdate("Y-m-d H:i:s");
     // Add product to subscription
@@ -116,7 +132,7 @@ function give_user_subscription($product, $user, $row)
 
     $sub->update_dates($dates);
     $sub->calculate_totals();
-	$sub->save();
+    $sub->save();
     // Update order status with custom note
     $note = !empty($note)
         ? $note
@@ -441,10 +457,6 @@ add_action("rest_api_init", function () {
             }, $allSingleBox);
 
             foreach ($employee_csv as $user) {
-
-
-
-
                 $wordpressUser = get_users([
                     "meta_key" => "codice_fiscale",
                     "meta_value" =>
@@ -457,19 +469,18 @@ add_action("rest_api_init", function () {
                     $wordpressUser = reset($wordpressUser);
                 }
 
-
                 if (!$wordpressUser) {
                     continue;
                 }
 
-				   $wpdb->query(
-                	"DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = ".$wordpressUser->ID
-          		  );
+                $wpdb->query(
+                    "DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " .
+                        $wordpressUser->ID
+                );
 
-				  $wpdb->query(
-                	"delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';"
-          		  );
-
+                $wpdb->query(
+                    "delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';"
+                );
 
                 $hasSubscription = wcs_user_has_subscription(
                     $wordpressUser->ID
@@ -666,7 +677,10 @@ WHERE post_type = 'product' AND ID NOT IN (" .
                 );
             }
 
-			update_option('last_import_products', (new DateTime())->format("Y-m-d H:i:s"));
+            update_option(
+                "last_import_products",
+                (new DateTime())->format("Y-m-d H:i:s")
+            );
 
             $response = new WP_REST_Response([]);
             $response->set_status(204);
@@ -804,7 +818,6 @@ WHERE wp.ID IS NULL");
 
                 $singleProductBox = $singleProductBox->get_posts();
 
-
                 $singleProductBox = reset($singleProductBox);
 
                 $post_id = wp_insert_post([
@@ -887,7 +900,10 @@ WHERE wp.ID IS NULL");
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
-			update_option('last_import_box', (new DateTime())->format("Y-m-d H:i:s"));
+            update_option(
+                "last_import_box",
+                (new DateTime())->format("Y-m-d H:i:s")
+            );
 
             return $response;
         },
@@ -1083,6 +1099,70 @@ WHERE wp.ID IS NULL");
         },
     ]);
 
+    register_rest_route("agrispesa/v1", "import-invoices", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            ($xml = simplexml_load_string($request->get_body())) or
+                die("Error: Cannot create object");
+
+            $invoices = (array) $xml;
+            $invoices = $invoices["ROW"];
+
+            $newInvoices = [];
+
+            foreach ($invoices as $key => $invoice) {
+                $invoice = (array) $invoice;
+
+                $alreadyExists = get_posts([
+                    "post_type" => "invoice",
+                    "fields" => "ids",
+                    "post_status" => "publish",
+                    "posts_per_page" => 1,
+                    "meta_query" => [
+                        [
+                            "key" => "_navision_id",
+                            "value" => $invoice["entry_id"],
+                            "compare" => "=",
+                        ],
+                    ],
+                ]);
+                if (!empty($alreadyExists)) {
+                    continue;
+                }
+
+                $my_post = [
+                    "post_title" => "Fattura #" . $invoice["entry_id"],
+                    "post_content" => "",
+                    "post_status" => "publish",
+                    "post_type" => "invoice",
+                ];
+
+                // Insert the post into the database
+                $postId = wp_insert_post($my_post);
+
+				$createdDate = DateTime::createFromFormat('dmY',$invoice["postingdate"]);
+
+				update_post_meta($postId,'_navision_id',$invoice["entry_id"]);
+				update_post_meta($postId,'_customer_id',$invoice["id_codeclient"]);
+				update_post_meta($postId,'_created_date',$createdDate->format("Y-m-d"));
+				update_post_meta($postId,'_order_id',trim(str_replace("Ordine ","",$invoice["reasoncode"])));
+				update_post_meta($postId,'_filename',trim(str_replace("/","_",$invoice["documentno"])).'.pdf');
+				update_post_meta($postId,'_amount',trim(str_replace("-","",$invoice["amount"])));
+
+				$newInvoices[] = $postId;
+
+            }
+
+            $response = new WP_REST_Response($newInvoices);
+            $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
     register_rest_route("agrispesa/v1", "export-orders", [
         "methods" => "GET",
         "permission_callback" => function () {
@@ -1121,7 +1201,11 @@ WHERE wp.ID IS NULL");
                         true
                     );
 
-                    if (!$productNavisionId || (is_array($productNavisionId) && $productNavisionId[0] == '')) {
+                    if (
+                        !$productNavisionId ||
+                        (is_array($productNavisionId) &&
+                            $productNavisionId[0] == "")
+                    ) {
                         continue;
                     }
                     $row = $doc->createElement("ROW");
@@ -1563,7 +1647,7 @@ WHERE wp.ID IS NULL");
                 if ($cat->category_parent == 0) {
                     $category_id = $cat->term_id;
 
-                  /*  $isVisible = get_term_meta(
+                    /*  $isVisible = get_term_meta(
                         $category_id,
                         "in_preferenze_utente",
                         true
@@ -1587,7 +1671,7 @@ WHERE wp.ID IS NULL");
                     $sub_cats = get_categories($args2);
                     if ($sub_cats) {
                         foreach ($sub_cats as $sub_category) {
-                         /*   $isVisible = get_term_meta(
+                            /*   $isVisible = get_term_meta(
                                 $sub_category->term_id,
                                 "in_preferenze_utente",
                                 true
@@ -1632,8 +1716,7 @@ WHERE wp.ID IS NULL");
             return true;
         },
         "callback" => function ($request) {
-
-			$loggedUser =  $_GET['userId'];
+            $loggedUser = $_GET["userId"];
 
             $subscriptions = wcs_get_subscriptions([
                 "subscriptions_per_page" => -1,
@@ -1959,7 +2042,7 @@ function my_enqueue($hook)
         );
         wp_localize_script("agrispesa-admin-delivery-box-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
-            'userId' => get_current_user_id()
+            "userId" => get_current_user_id(),
         ]);
     } else {
         if ("toplevel_page_esporta-documenti" == $hook) {
@@ -2058,8 +2141,7 @@ function my_enqueue($hook)
         );
         wp_localize_script("agrispesa-admin-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
-            'userId' => get_current_user_id()
-
+            "userId" => get_current_user_id(),
         ]);
     }
 }
@@ -2097,41 +2179,38 @@ if (!function_exists("mv_add_meta_boxes")) {
 
         $subscriptionId = get_post_meta($post->ID, "_subscription_id", true);
 
-		$boxPreferences = get_post_meta(
+        $boxPreferences = get_post_meta(
             $subscriptionId,
             "_box_preferences",
             true
         );
 
-		$boxBlacklist = get_post_meta(
-            $subscriptionId,
-            "_box_blacklist",
-            true
-        );
+        $boxBlacklist = get_post_meta($subscriptionId, "_box_blacklist", true);
 
-		if(!empty($boxPreferences)):
-		?>
+        if (!empty($boxPreferences)): ?>
 
 		<h4>Cosa mi piacerebbe ricevere</h4>
 		<table class="table">
-		<?php foreach($boxPreferences as $preference): ?>
+		<?php foreach ($boxPreferences as $preference): ?>
 		<tr>
-		<td><?php echo $preference['name']; ?></td>
-		<td><a href="/wp-admin/post.php?post=<?php echo $preference['id']; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
+		<td><?php echo $preference["name"]; ?></td>
+		<td><a href="/wp-admin/post.php?post=<?php echo $preference[
+      "id"
+  ]; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
 </tr>
 		<?php endforeach; ?>
 </table>
-		<?php
-		endif;
-		if(!empty($boxBlacklist)):
-		?>
+		<?php endif;
+        if (!empty($boxBlacklist)): ?>
 
 		<h4>Cosa non voglio ricevere</h4>
 		<table class="table">
-		<?php foreach($boxBlacklist as $preference): ?>
+		<?php foreach ($boxBlacklist as $preference): ?>
 		<tr>
-		<td><?php echo $preference['name']; ?></td>
-		<td><a href="/wp-admin/post.php?post=<?php echo $preference['id']; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
+		<td><?php echo $preference["name"]; ?></td>
+		<td><a href="/wp-admin/post.php?post=<?php echo $preference[
+      "id"
+  ]; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
 </tr>
 		<?php endforeach; ?>
 </table>
@@ -5144,7 +5223,6 @@ function consegne_ordini_pages()
 								<?php if (count($allDataConsegna) == 0): ?>
 									<i>Nessun ordine con data consegna.</i>
 								<?php
-
             //fix nathi per errore data di consegna quiiii
             //print_r($wednesday);
             //fix nathi per errore data di consegna quiiii
@@ -5464,7 +5542,6 @@ add_action(
 			<?php if (count($allDataConsegna) == 0): ?>
 			<i>Nessun ordine con data consegna.</i>
 		<?php
-
        // fix nathi per errore data di consegna
        // fix nathi per errore data di consegna
        ?>else: ?>

@@ -38,6 +38,8 @@ add_action('wp_enqueue_scripts', 'enqueue_box_js');
 function add_settings_box_endpoint()
 {
 	add_rewrite_endpoint('personalizza-scatola', EP_ROOT | EP_PAGES);
+	add_rewrite_endpoint('fatture', EP_ROOT | EP_PAGES);
+
 }
 
 add_action('init', 'add_settings_box_endpoint');
@@ -47,6 +49,7 @@ function settings_box_query_vars($vars)
 {
 
 	$vars[] = 'personalizza-scatola';
+	$vars[] = 'fatture';
 
 	return $vars;
 
@@ -62,6 +65,10 @@ function settings_box_link_my_account($items)
 {
 
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
+
+	$items = array_insert_after($items, 'subscriptions', [
+		'fatture' => 'Fatture'
+	]);
 
 	if (count($subscriptions) > 0) {
 
@@ -219,3 +226,90 @@ function settings_box_content()
 }
 
 add_action('woocommerce_account_personalizza-scatola_endpoint', 'settings_box_content');
+
+
+function invoice_box_content()
+{
+	$usersIds = [get_current_user_id()];
+
+	$navisionId = get_user_meta(get_current_user_id(), '_navision_id', true);
+	if ($navisionId) {
+		$usersIds[] = $navisionId;
+	}
+
+	$userInvoices = get_posts([
+		"post_type" => "invoice",
+		"post_status" => "publish",
+		"posts_per_page" => -1,
+		"fields" => "ids",
+		"meta_query" => [
+			[
+				"key" => "_customer_id",
+				"value" => $usersIds,
+				"compare" => "IN",
+			],
+		],
+	]);
+
+	?>
+	<div class="woocommerce-Fatture-content">
+
+		<div class="woocommerce-notices-wrapper"></div>
+		<h3 class="my-account--minititle address-title">Fatture</h3>
+
+		<div class="table-shadow-relative">
+			<table
+				class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
+				<thead>
+				<tr>
+					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number">
+						<span class="nobr">Fattura</span></th>
+					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-date">
+						<span class="nobr">Data</span></th>
+					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status">
+						<span class="nobr">Totale</span></th>
+					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
+						<span class="nobr">Azioni</span></th>
+				</tr>
+				</thead>
+
+				<tbody>
+				<?php foreach ($userInvoices as $invoice): ?>
+					<?php
+					$amount = get_post_meta($invoice, '_amount', true);
+					$navisionId = get_post_meta($invoice, '_navision_id', true);
+					$date = get_post_meta($invoice, '_created_date', true);
+					$filename = get_post_meta($invoice, '_filename', true);
+					?>
+
+					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
+						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
+							data-title="Ordine">
+							Fattura #<?php echo $navisionId; ?>
+						</td>
+						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
+							data-title="Data">
+							<?php echo (new DateTime($date))->format("d-m-Y"); ?>
+						</td>
+						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-status"
+							data-title="Stato">
+							<?php echo substr($amount, 0, -2); ?>€
+						</td>
+						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
+							data-title="Azioni">
+							<a href="/wp-content/uploads/invoices/<?php echo $filename; ?>"
+							   target="_blank"
+							   class="woocommerce-button button view">Visualizza</a></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<div class="table-shadow"></div>
+		</div>
+
+
+	</div>
+	<?php
+}
+
+add_action('woocommerce_account_fatture_endpoint', 'invoice_box_content');
