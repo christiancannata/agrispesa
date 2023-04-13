@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Barlow:wght@300;700&display=swap');
+* {
+  box-sizing: border-box !important;
+  transition: ease all 0.5s;
+}
+
+html {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: #3a3535;
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.80857;
+  font-weight: normal;
+  overflow-x: hidden;
+  font-family: 'Barlow', sans-serif;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+strong {
+  font-weight: bold;
+}
+
+*,
+*::after,
+*::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+p,a {
+  font-weight: 300;
+  color: #b5a7a4;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus {
+  outline: 0;
+}
+
+.gl-content {
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.gl-center img {
+  width: 400px;
+  display: block;
+  margin: 0 auto 36px;
+}
+
+.gl-top {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 60px;
+}
+
+.gl-top p {
+  margin: 0;
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+.gl-center {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.gl-center p {
+  margin: 24px 0;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.gl-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 30px;
+}
+
+.gl-bottom p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.gl-bottom p span {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.gl-bottom p a {
+  color: #b5a7a4;
+
+  text-decoration: none;
+}
+
+.gl-bottom p a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 640px) {
+  .gl-top {
+    top: 40px;
+    padding: 0 20px;
+  }
+
+  .gl-center {
+    padding: 0 20px;
+  }
+
+  .gl-center img {
+    width: 90%;
+  }
+
+  .gl-center p {
+    font-size: 18px;
+  }
+
+  .gl-bottom {
+    bottom: 24px;
+    padding: 0 20px;
+  }
+
+  .gl-bottom p {
+    font-size: 16px;
+  }
+
+  .gl-bottom p span {
+    display: block;
+  }
+
+  .gl-bottom p span.hideme {
+    display: none;
+  }
+}
