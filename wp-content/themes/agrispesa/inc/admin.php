@@ -2414,8 +2414,6 @@ if (!function_exists("mv_add_meta_boxes")) {
     function mv_add_meta_boxes()
     {
 
-		$subscriptions_screen_id = wcs_get_page_screen_id( 'shop_subscription' );
-
 		 add_meta_box(
             "old_preferences",
             "Preferenze Utente Vecchio sito",
@@ -2423,6 +2421,16 @@ if (!function_exists("mv_add_meta_boxes")) {
             "shop_subscription",
             'normal',
             'default'
+                    );
+
+
+		  add_meta_box(
+            "old_preferences_order",
+            "Preferenze Utente Vecchio sito",
+            "old_preferences_order_meta_box_callback",
+            "shop_order",
+                "advanced",
+            "core",
                     );
 
         add_meta_box(
@@ -2445,6 +2453,24 @@ if (!function_exists("mv_add_meta_boxes")) {
         );
     }
 
+		  function old_preferences_order_meta_box_callback($order)
+    {
+		$order = new WC_Order($order->ID);
+        $oldPreferences = get_user_meta($order->get_customer_id(), "old_box_preferences", true);
+
+        if (!empty($oldPreferences)): ?>
+
+		<h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
+		<table class="table">
+		<?php foreach ($oldPreferences as $preference): ?>
+		<tr>
+		<td>NO <?php echo $preference["name"]; ?></td>
+		<td>Sostituire con <?php echo $preference["substitute"]; ?></td>
+</tr>
+		<?php endforeach; ?>
+</table>
+		<?php endif;
+    }
 
 	  function old_preferences_meta_box_callback($post)
     {
