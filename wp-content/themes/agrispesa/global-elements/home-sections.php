@@ -178,7 +178,7 @@ if( have_rows('agr_sections') ):
                 </div>
                 <?php if($mini_image):?>
                   <div class="wb-section--content--bottom">
-                    <img class="wb-section--content--image" src="<?php echo $mini_image; ?>" alt="<?php echo esc_attr($title); ?>" />
+                    <img class="wb-section--content--image mini-image" src="<?php echo $mini_image; ?>" alt="<?php echo strip_tags($title); ?>" />
                   </div>
                 <?php endif;?>
               </div>
@@ -189,7 +189,7 @@ if( have_rows('agr_sections') ):
                       Your browser does not support the video tag.
                   </video>
                 <?php else: ?>
-                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo esc_attr($title); ?>" />
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
                 <?php endif;?>
               </div>
             </div>
@@ -210,7 +210,7 @@ if( have_rows('agr_sections') ):
                       Your browser does not support the video tag.
                   </video>
                 <?php else: ?>
-                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo esc_attr($title); ?>" />
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
                 <?php endif;?>
               </div>
               <div class="wb-section--content--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
@@ -235,7 +235,7 @@ if( have_rows('agr_sections') ):
                 </div>
                 <?php if($mini_image):?>
                   <div class="wb-section--content--bottom">
-                    <img class="wb-section--content--image" src="<?php echo $mini_image; ?>" alt="<?php echo esc_attr($title); ?>" />
+                    <img class="wb-section--content--image mini-image" src="<?php echo $mini_image; ?>" alt="<?php echo strip_tags($title); ?>" />
                   </div>
                 <?php endif;?>
               </div>
