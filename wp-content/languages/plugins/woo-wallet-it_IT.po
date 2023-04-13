@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: TeraWallet 1.4.6\n"
 "Report-Msgid-Bugs-To: https://github.com/malsubrata/woo-wallet/issues\n"
 "POT-Creation-Date: 2023-02-14 18:19+0100\n"
-"PO-Revision-Date: 2023-03-01 09:18+0100\n"
+"PO-Revision-Date: 2023-04-13 18:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: StandaloneTech <admin@standalonetech.com>\n"
 "Language: it_IT\n"
@@ -1557,11 +1557,13 @@ msgid ""
 "%1$s will be debited from your wallet and %2$s will be paid through other "
 "payment method"
 msgstr ""
+"%1$s verranno scalati dal tuo saldo e %2$s saranno addebitati ad un altro "
+"metodo di pagamento"
 
 #: templates/woo-wallet-partial-payment.php:43
 #: templates/woo-wallet-partial-payment.php:47
 msgid "Pay by wallet"
-msgstr ""
+msgstr "Usa il saldo"
 
 #. translators: wallet amount
 #: templates/woo-wallet-partial-payment.php:45

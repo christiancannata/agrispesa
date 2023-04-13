@@ -37,5 +37,5 @@ global $product;
 	<input type="hidden" name="variation_id" class="variation_id" value="0" />
 </div>
 <div class="shipping-info">
-	<p>Pssst — La prima consegna è gratuita. <span class="icon-heart"></span>
+	<p><span class="icon-heart"></span> Arriva ogni settimana — La personalizzi entro il giovedì — Disdici quando vuoi 
 </div>

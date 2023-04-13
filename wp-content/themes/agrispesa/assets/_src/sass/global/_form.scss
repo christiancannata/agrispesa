@@ -397,6 +397,7 @@ textarea {
 		}
 	}
 
+label:checked:before,
 	&.perfect label:before,
 	input[type=checkbox]:checked + label:before {
 		background: #fff url("../images/elements/check.svg") center center no-repeat;

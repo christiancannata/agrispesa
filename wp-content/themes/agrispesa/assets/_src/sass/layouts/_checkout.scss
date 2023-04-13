@@ -375,10 +375,7 @@ body.woocommerce-checkout {
 	font-family: $font-body;
 }
 
-.woocommerce-terms-and-conditions-wrapper {
-	padding: 0 0 32px;
-	width: 100%;
-}
+
 
 .woocommerce #payment #place_order,
 .woocommerce-page #payment #place_order {
@@ -533,8 +530,13 @@ body.woocommerce-checkout {
 
 	&.mailchimp-newsletter {
 		margin-top: 0 !important;
-		margin-bottom: 8px !important;
+		margin-bottom:32px !important;
 	}
+}
+
+.woocommerce-terms-and-conditions-wrapper {
+    padding: 0 0 10px;
+    width: 100%;
 }
 
 .woocommerce form .form-row input.input-text,
