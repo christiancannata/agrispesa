@@ -121,7 +121,7 @@ if($what_category_ID) {
 					</p>
 
 					<div class="pawer-born--button">
-						<a href="#go-products" class="btn btn-primary scroll-to" title="Scegli il tuo">Scegli il tuo</a>
+						<a href="#go-products" class="btn btn-primary scroll-to" title="Scopri i gusti">Scopri i gusti</a>
 					</div>
 
 					<div class="pet-values--flex">
@@ -160,7 +160,8 @@ if($what_category_ID) {
 
 	<section class="pet-heroes" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/petfood/pawer-dog.jpg);">
 		<h3 class="pet-heroes--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Il tuo cane ti aiuta a</h3>
-		<div class="pet-heroes--flex">
+		<div class="container-big">
+			<div class="pet-heroes--flex">
 
 			<div class="pet-heroes--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
 				<span class="icon-social"></span>
@@ -198,6 +199,7 @@ if($what_category_ID) {
 				</p>
 			</div>
 
+		</div>
 		</div>
 		<div class="pet-heroes--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
 			<a href="#go-meet" class="btn btn-primary scroll-to" title="Come puoi aiutarlo tu?">Come puoi aiutarlo tu?</a>
@@ -238,7 +240,7 @@ if($what_category_ID) {
 	<section id="go-products" class="products-petfood--content" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
 
 		<div class="products-petfood--loop">
-			<h3 class="products-petfood--title">Buoni, come quelli che mangi tu.</h3>
+			<h3 class="products-petfood--title">Buoni, come ciò che mangi tu.</h3>
 				<div class="products-petfood">
 				<?php $args = array(
 			        'product_cat' => $what_category,

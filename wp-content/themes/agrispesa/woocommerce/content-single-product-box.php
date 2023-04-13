@@ -89,6 +89,7 @@ if ( post_password_required() ) {
 
 <section class="agri-values" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/cosa-contiene.jpg);">
 	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Cosa c'è nella scatola Agrispesa?</h3>
+	<div class="container-big">
 	<div class="agri-values--flex">
 
 		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
@@ -127,6 +128,7 @@ if ( post_password_required() ) {
 			</p>
 		</div>
 
+	</div>
 	</div>
 	<div class="agri-values--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
 		<a href="#select-box" class="btn btn-primary scroll-to" title="Prova Agrispesa">Prova Agrispesa</a>

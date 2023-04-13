@@ -158,6 +158,7 @@
 		text-align: right;
 		@include breakpoint(mobile) {
 			width: 100%;
+			padding: 16px 0;
 		}
 	}
 
@@ -251,17 +252,15 @@
 		width: 100%;
 		height: auto;
 		display: block;
-		@include breakpoint(mobile) {
-			display: none;
-		}
+
 	}
 }
 
 .pet-values {
 	&--flex {
 		margin-top: 80px;
-		display: flex;
-		justify-content: space-between;
+		// display: flex;
+		// justify-content: space-between;
 	}
 
 	&--item {
@@ -270,6 +269,7 @@
 		background: rgba($white,0.3);
 		padding: 24px 16px;
 		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+		margin: 0 8px;
 
 		& > span {
 			@include font-size(60);
@@ -319,10 +319,7 @@
 	}
 
 	&--flex {
-		display: flex;
-		justify-content: center;
 		margin-top: 40px;
-		flex-wrap: wrap;
 	}
 
 	&--item {
@@ -334,7 +331,6 @@
 			width: 100%;
 			display: flex;
 			align-items: center;
-			text-align: left;
 			padding: 16px 20px;
 		}
 
@@ -354,6 +350,9 @@
 			@include font-size(90);
 			border: 8px solid $panna;
 			padding: 8px;
+			@include breakpoint(mobile) {
+				margin: 0 auto;
+			}
 		}
 	}
 
@@ -362,8 +361,7 @@
 		font-weight: 600;
 		margin-top: 32px;
 		@include breakpoint(mobile) {
-			margin-top: 0;
-			margin-left: 16px;
+			margin-top: 32px;
 		}
 
 		span {
@@ -527,6 +525,8 @@
 		}
 		@include breakpoint(mobile) {
 			@include font-size(32);
+
+			margin: 0 20px 16px;
 		}
 	}
 
