@@ -14610,3 +14610,11 @@ Stack trace:
 [13-Apr-2023 19:12:41 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
 [13-Apr-2023 19:12:42 UTC] PHP Notice:  Undefined index: _cloudways_dog_name_field in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 332
 [13-Apr-2023 19:19:24 UTC] ID was called incorrectly. Order properties should not be accessed directly. Backtrace: require('wp-blog-header.php'), wp, WP->main, WP->parse_request, do_action_ref_array('parse_request'), WP_Hook->do_action, WP_Hook->apply_filters, rest_api_loaded, WP_REST_Server->serve_request, WP_REST_Server->dispatch, WP_REST_Server->respond_to_request, {closure}, WC_Subscription->__get, WC_Abstract_Legacy_Order->__get, wc_doing_it_wrong. This message was added in version 3.0.
+[13-Apr-2023 20:31:33 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3764 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:31:33 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:31:46 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3766 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:31:46 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:32:01 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3839 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:32:01 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:32:25 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3852 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 20:32:25 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019

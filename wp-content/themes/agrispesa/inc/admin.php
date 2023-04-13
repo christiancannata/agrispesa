@@ -551,10 +551,10 @@ add_action("rest_api_init", function () {
 
             foreach ($employee_csv as $user) {
                 $wordpressUser = get_users([
-                    "meta_key" => "codice_fiscale",
+                    "meta_key" => "navision_id",
                     "meta_value" =>
                         $user[
-                            "automatismiSettimanali_intestazioneFattura::codiceFiscale"
+                            "id_utente"
                         ],
                 ]);
 
