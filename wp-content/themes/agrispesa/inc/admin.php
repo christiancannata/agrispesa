@@ -423,6 +423,99 @@ add_action(
 );
 
 add_action("rest_api_init", function () {
+    register_rest_route("agrispesa/v1", "import-preferences", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $lines = explode(PHP_EOL, $request->get_body());
+            $preferences = [];
+            foreach ($lines as $line) {
+                $preferences[] = str_getcsv($line, ";");
+            }
+
+            $employee_csv = [];
+            foreach ($preferences as $row) {
+                if (!empty($row)) {
+                    $employee_csv[] = $row;
+                }
+            }
+            array_shift($preferences);
+            $users = [];
+            foreach ($preferences as $preference) {
+                if (!isset($preference[1])) {
+                    continue;
+                }
+                if (!isset($users[$preference[0]])) {
+                    $users[$preference[0]] = [];
+                }
+                $users[$preference[0]][] = $preference[1];
+            }
+
+            global $wpdb;
+
+            foreach ($users as $id => $userPreference) {
+                $args = [
+                    "fields" => "ids",
+                    "meta_query" => [
+                        [
+                            "key" => "navision_id",
+                            "value" => $id,
+                            "compare" => "=",
+                        ],
+                    ],
+                ];
+
+                $member_arr = get_users($args); //finds all users with this meta_key == 'member_id' and meta_value == $member_id passed in url
+
+                if (!empty($member_arr)) {
+                    $member_arr = reset($member_arr);
+
+                    $userPreference = array_map(function ($product) {
+                        $ids = explode("-", $product);
+                        return end($ids);
+                    }, $userPreference);
+
+                    $productsBlacklistIds = $wpdb->get_results(
+                        "SELECT p.ID,p.post_title FROM wp_posts p," .
+                            $wpdb->postmeta .
+                            ' m WHERE p.ID = m.post_id AND m.meta_key = "_sku" AND m.meta_value IN ("' .
+                            implode('","', $userPreference) .
+                            '")'
+                    );
+
+                    $productsBlacklistIds = array_map(function ($product) {
+                        return [
+                            "id" => $product->ID,
+                            "name" => $product->post_title,
+                        ];
+                    }, $productsBlacklistIds);
+
+                    $subscriptions = wcs_get_subscriptions([
+                        "subscriptions_per_page" => -1,
+                        "customer_id" => $member_arr,
+                    ]);
+
+                    foreach ($subscriptions as $subscription) {
+                        update_post_meta(
+                            $subscription->ID,
+                            "_box_blacklist",
+                            $productsBlacklistIds
+                        );
+                    }
+                }
+            }
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+
+            return $response;
+        },
+    ]);
+});
+
+add_action("rest_api_init", function () {
     register_rest_route("agrispesa/v1", "import-subscriptions", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -601,9 +694,9 @@ add_action("rest_api_init", function () {
                     $productObj->save();
                     $productId = $productObj->get_id();
                     $newProducts[] = $productObj;
-                }else{
-					$productObj = wc_get_product($productId);
-					$productObj->set_name((string) $product["description"]);
+                } else {
+                    $productObj = wc_get_product($productId);
+                    $productObj->set_name((string) $product["description"]);
                     $productObj->set_regular_price(
                         floatval(
                             str_replace(
@@ -616,7 +709,7 @@ add_action("rest_api_init", function () {
                     $productObj->set_description(
                         (string) $product["description2"]
                     );
-					$productObj->save();
+                    $productObj->save();
                 }
 
                 $product["wordpress_id"] = $productId;
@@ -748,27 +841,28 @@ WHERE post_type = 'product' AND ID NOT IN (" .
                     '")'
             );
 
+            $productsToExclude = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => "publish",
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => ["box", "sos", "box-singola"],
+                        "operator" => "IN",
+                    ],
+                ],
+            ]);
 
-
-				$productsToExclude =  get_posts([
-                                "post_type" => "product",
-                                "numberposts" => -1,
-								'fields' => 'ids',
-                                "post_status" => "publish",
-                                "tax_query" => [
-                                    [
-                                        "taxonomy" => "product_cat",
-                                        "field" => "slug",
-                                        "terms" => ['box','sos','box-singola'],
-                                        "operator" => "IN",
-                                    ],
-                                ],
-              ]);
-
-
-            $wpdb->query("UPDATE wp_posts
+            $wpdb->query(
+                "UPDATE wp_posts
 SET post_status = 'draft'
-WHERE post_type = 'product' WHERE ID NOT IN (".implode(",",$productsToExclude).");");
+WHERE post_type = 'product' WHERE ID NOT IN (" .
+                    implode(",", $productsToExclude) .
+                    ");"
+            );
 
             $postIds = array_map(function ($post) {
                 return $post->post_id;
@@ -1177,17 +1271,39 @@ WHERE wp.ID IS NULL");
                 // Insert the post into the database
                 $postId = wp_insert_post($my_post);
 
-				$createdDate = DateTime::createFromFormat('dmY',$invoice["postingdate"]);
+                $createdDate = DateTime::createFromFormat(
+                    "dmY",
+                    $invoice["postingdate"]
+                );
 
-				update_post_meta($postId,'_navision_id',$invoice["entry_id"]);
-				update_post_meta($postId,'_customer_id',$invoice["id_codeclient"]);
-				update_post_meta($postId,'_created_date',$createdDate->format("Y-m-d"));
-				update_post_meta($postId,'_order_id',trim(str_replace("Ordine ","",$invoice["reasoncode"])));
-				update_post_meta($postId,'_filename',trim(str_replace("/","_",$invoice["documentno"])).'.pdf');
-				update_post_meta($postId,'_amount',trim(str_replace("-","",$invoice["amount"])));
+                update_post_meta($postId, "_navision_id", $invoice["entry_id"]);
+                update_post_meta(
+                    $postId,
+                    "_customer_id",
+                    $invoice["id_codeclient"]
+                );
+                update_post_meta(
+                    $postId,
+                    "_created_date",
+                    $createdDate->format("Y-m-d")
+                );
+                update_post_meta(
+                    $postId,
+                    "_order_id",
+                    trim(str_replace("Ordine ", "", $invoice["reasoncode"]))
+                );
+                update_post_meta(
+                    $postId,
+                    "_filename",
+                    trim(str_replace("/", "_", $invoice["documentno"])) . ".pdf"
+                );
+                update_post_meta(
+                    $postId,
+                    "_amount",
+                    trim(str_replace("-", "", $invoice["amount"]))
+                );
 
-				$newInvoices[] = $postId;
-
+                $newInvoices[] = $postId;
             }
 
             $response = new WP_REST_Response($newInvoices);
