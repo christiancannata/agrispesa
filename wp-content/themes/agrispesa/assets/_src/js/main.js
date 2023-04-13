@@ -64,7 +64,9 @@ petNameAnimation();
 sliderPetfood();
 galleryProduct();
 sliderBox();
-
+sliderValues();
+sliderHeroes();
+sliderPetValues();
 //changeShippingLabel();
 
 
@@ -614,7 +616,130 @@ function sliderBox() {
 
   });
 }
+function sliderValues() {
 
+  let _carousel = jQuery(".agri-values--flex");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1340,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }]
+
+  });
+}
+function sliderHeroes() {
+
+  let _carousel = jQuery(".pet-heroes--flex");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1340,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }]
+
+  });
+}
+
+function sliderPetValues() {
+
+  let _carousel = jQuery(".pet-values--flex");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow:3,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1340,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }]
+
+  });
+}
 
 function productsCarouselHome() {
 

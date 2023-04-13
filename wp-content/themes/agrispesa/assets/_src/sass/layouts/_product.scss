@@ -953,10 +953,11 @@ body.tax-product_cat {
 			display: flex;
 			@include breakpoint(mobile) {
 				flex-wrap: wrap;
+				justify-content: space-between;
 			}
 
 			label {
-				width: 100%;
+				width: 48%;
 				margin: 4px 0;
 				@include breakpoint(desktop) {
 					width: 25%;
@@ -1031,6 +1032,9 @@ body.tax-product_cat {
 
 .woocommerce-variation-description {
 	@include clearfix();
+	@include breakpoint(mobile) {
+		display: none;
+	}
 
 	ul {
 		li {
@@ -1078,9 +1082,22 @@ body.tax-product_cat {
 	}
 }
 
+.woocommerce-variation {
+	@include breakpoint(mobile) {
+		text-align: center;
+	}
+}
+
 .woocommerce-variation-add-to-cart {
 	text-align: right;
 	margin-top: -54px;
+	@include breakpoint(mobile) {
+		margin-top: 8px;
+
+		.btn {
+			width: 100%;
+		}
+	}
 }
 
 .shipping-info {
@@ -1226,10 +1243,10 @@ body.tax-product_cat {
 	}
 
 	&--flex {
-		display: flex;
-		justify-content: center;
+		// display: flex;
+		// justify-content: center;
+		// flex-wrap: wrap;
 		margin-top: 40px;
-		flex-wrap: wrap;
 	}
 
 	&--item {
@@ -1241,7 +1258,6 @@ body.tax-product_cat {
 			width: 100%;
 			display: flex;
 			align-items: center;
-			text-align: left;
 			padding: 16px 20px;
 		}
 
@@ -1273,8 +1289,7 @@ body.tax-product_cat {
 		font-weight: 600;
 		margin-top: 32px;
 		@include breakpoint(mobile) {
-			margin-top: 0;
-			margin-left: 16px;
+			margin-top: 16px;
 		}
 
 		span {
@@ -1301,10 +1316,32 @@ body.tax-product_cat {
 .box-types {
 	@include container();
 
-	&--flex {
-	// 	display: flex;
-	// 	justify-content: space-between;
-	 }
+	&--buttons {
+		display: flex;
+		justify-content: space-between;
+		position: relative;
+		z-index: 2;
+	}
+
+	&--label {
+		@include border-radius(50%);
+		background: $orange;
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		z-index: 2;
+		font-family: $font-sunday;
+		color: $white;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 16px;
+		line-height: 1;
+		@include font-size(20);
+		width: 80px;
+		height: 80px;
+	}
 
 	&--claim {
 		text-align: center;

@@ -392,8 +392,8 @@
 
 	&--text {
 		@include font-size(30);
-		font-family: $font-title;
 		line-height: 1.2;
+		font-weight: 400;
 		@include breakpoint(desktop) {
 			@include font-size(40);
 		}
