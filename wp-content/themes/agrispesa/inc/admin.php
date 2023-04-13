@@ -584,7 +584,7 @@ add_action("rest_api_init", function () {
                 if (!$productId) {
                     $productObj = new WC_Product_Simple();
 
-                    $productObj->set_name((string) $product["description"]); // product title
+                    $productObj->set_name((string) $product["description"]);
                     $productObj->set_regular_price(
                         floatval(
                             str_replace(
@@ -593,7 +593,7 @@ add_action("rest_api_init", function () {
                                 (string) $product["unitprice"]
                             )
                         )
-                    ); // in current shop currency
+                    );
                     $productObj->set_description(
                         (string) $product["description2"]
                     );
@@ -601,6 +601,22 @@ add_action("rest_api_init", function () {
                     $productObj->save();
                     $productId = $productObj->get_id();
                     $newProducts[] = $productObj;
+                }else{
+					$productObj = wc_get_product($productId);
+					$productObj->set_name((string) $product["description"]);
+                    $productObj->set_regular_price(
+                        floatval(
+                            str_replace(
+                                ",",
+                                ".",
+                                (string) $product["unitprice"]
+                            )
+                        )
+                    );
+                    $productObj->set_description(
+                        (string) $product["description2"]
+                    );
+					$productObj->save();
                 }
 
                 $product["wordpress_id"] = $productId;
@@ -732,9 +748,27 @@ WHERE post_type = 'product' AND ID NOT IN (" .
                     '")'
             );
 
+
+
+				$productsToExclude =  get_posts([
+                                "post_type" => "product",
+                                "numberposts" => -1,
+								'fields' => 'ids',
+                                "post_status" => "publish",
+                                "tax_query" => [
+                                    [
+                                        "taxonomy" => "product_cat",
+                                        "field" => "slug",
+                                        "terms" => ['box','sos','box-singola'],
+                                        "operator" => "IN",
+                                    ],
+                                ],
+              ]);
+
+
             $wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
-WHERE post_type = 'product';");
+WHERE post_type = 'product' WHERE ID NOT IN (".implode(",",$productsToExclude).");");
 
             $postIds = array_map(function ($post) {
                 return $post->post_id;
