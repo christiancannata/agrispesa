@@ -153,6 +153,9 @@
 			@include font-size(42);
 		}
 	}
+	.the-image {
+		@include border-radius(24px);
+	}
 
 	video {
 		@include border-radius(24px);
