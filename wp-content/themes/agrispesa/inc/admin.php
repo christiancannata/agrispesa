@@ -561,7 +561,7 @@ add_action("rest_api_init", function () {
                     continue;
                 }
 
-				$member_arr = $member_arr[0];
+                $member_arr = $member_arr[0];
 
                 $hasCarne = true;
                 $hasUova = true;
@@ -570,56 +570,72 @@ add_action("rest_api_init", function () {
                 $hasPesce = true;
                 $hasVerdura = true;
 
-				$jsonPreferencesBlacklist = [];
+                $jsonPreferencesBlacklist = [];
 
                 if (!empty($user["carni"])) {
                     $hasCarne = false;
-					$jsonPreferencesBlacklist[] = [
-							'name' => 'Carne',
-							'substitute' => isset($categories[$user["carniSost"]])?$categories[$user["carniSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Carne",
+                        "substitute" => isset($categories[$user["carniSost"]])
+                            ? $categories[$user["carniSost"]]
+                            : "-",
+                    ];
                 }
                 if (!empty($user["formaggi"])) {
                     $hasFormaggi = false;
-					$jsonPreferencesBlacklist[] = [
-							'name' => 'Formaggio',
-							'substitute' => isset($categories[$user["formaggiSost"]])?$categories[$user["formaggiSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Formaggio",
+                        "substitute" => isset(
+                            $categories[$user["formaggiSost"]]
+                        )
+                            ? $categories[$user["formaggiSost"]]
+                            : "-",
+                    ];
                 }
                 if (!empty($user["frutta"])) {
                     $hasFrutta = false;
-					$jsonPreferencesBlacklist[] = [
-							'name' => 'Frutta',
-							'substitute' =>  isset($categories[$user["fruttaSost"]])?$categories[$user["fruttaSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Frutta",
+                        "substitute" => isset($categories[$user["fruttaSost"]])
+                            ? $categories[$user["fruttaSost"]]
+                            : "-",
+                    ];
                 }
                 if (!empty($user["pesce"])) {
                     $hasPesce = false;
-					$jsonPreferencesBlacklist[] = [
-							'name' => 'Pesce',
-							'substitute' => isset($categories[$user["pesceSost"]])?$categories[$user["pesceSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Pesce",
+                        "substitute" => isset($categories[$user["pesceSost"]])
+                            ? $categories[$user["pesceSost"]]
+                            : "-",
+                    ];
                 }
                 if (!empty($user["uova"])) {
                     $hasUova = false;
-						$jsonPreferencesBlacklist[] = [
-							'name' => 'Uova',
-							'substitute' => isset($categories[$user["uovaSost"]])?$categories[$user["uovaSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Uova",
+                        "substitute" => isset($categories[$user["uovaSost"]])
+                            ? $categories[$user["uovaSost"]]
+                            : "-",
+                    ];
                 }
                 if (!empty($user["verdura"])) {
                     $hasVerdura = false;
-					$jsonPreferencesBlacklist[] = [
-							'name' => 'Verdura',
-							'substitute' => isset($categories[$user["verduraSost"]])?$categories[$user["verduraSost"]]:'-'
-					];
+                    $jsonPreferencesBlacklist[] = [
+                        "name" => "Verdura",
+                        "substitute" => isset($categories[$user["verduraSost"]])
+                            ? $categories[$user["verduraSost"]]
+                            : "-",
+                    ];
                 }
 
-
-				if(!empty($jsonPreferencesBlacklist)){
-					update_user_meta($member_arr,'old_box_preferences',$jsonPreferencesBlacklist);
-				}
-
+                if (!empty($jsonPreferencesBlacklist)) {
+                    update_user_meta(
+                        $member_arr,
+                        "old_box_preferences",
+                        $jsonPreferencesBlacklist
+                    );
+                }
             }
 
             $response = new WP_REST_Response([]);
@@ -1471,11 +1487,32 @@ WHERE wp.ID IS NULL");
                     $row = $doc->createElement("ROW");
 
                     $ele1 = $doc->createElement("id_order");
-                    $ele1->nodeValue = 10000 + $order->get_customer_id();
+                    $ele1->nodeValue = 10000 + $order->get_id();
                     $row->appendChild($ele1);
 
+                    update_post_meta(
+                        $order->get_id(),
+                        "navision_id",
+                        10000 + $order->get_id()
+                    );
+
+                    //check if has navision id
+                    $navisionId = get_user_meta(
+                        $order->get_customer_id(),
+                        "navision_id",
+                        true
+                    );
+                    if (!$navisionId) {
+                        $navisionId = 10000 + $order->get_customer_id();
+                        update_user_meta(
+                            $order->get_customer_id(),
+                            "navision_id",
+                            $navisionId
+                        );
+                    }
+
                     $ele1 = $doc->createElement("id_codeclient");
-                    $ele1->nodeValue = 10000 + $order->get_customer_id();
+                    $ele1->nodeValue = $navisionId;
                     $row->appendChild($ele1);
 
                     $ele1 = $doc->createElement("date");
@@ -1598,8 +1635,23 @@ WHERE wp.ID IS NULL");
                 $ele1->nodeValue = 10000 + $order->get_id();
                 $row->appendChild($ele1);
 
+                //check if has navision id
+                $navisionId = get_user_meta(
+                    $order->get_customer_id(),
+                    "navision_id",
+                    true
+                );
+                if (!$navisionId) {
+                    $navisionId = 10000 + $order->get_customer_id();
+                    update_user_meta(
+                        $order->get_customer_id(),
+                        "navision_id",
+                        $navisionId
+                    );
+                }
+
                 $ele1 = $doc->createElement("id_codeclient");
-                $ele1->nodeValue = 10000 + $order->get_customer_id();
+                $ele1->nodeValue = $navisionId;
                 $row->appendChild($ele1);
 
                 $ele1 = $doc->createElement("datein");
@@ -2413,25 +2465,23 @@ add_action("add_meta_boxes", "mv_add_meta_boxes");
 if (!function_exists("mv_add_meta_boxes")) {
     function mv_add_meta_boxes()
     {
-
-		 add_meta_box(
+        add_meta_box(
             "old_preferences",
             "Preferenze Utente Vecchio sito",
             "old_preferences_meta_box_callback",
             "shop_subscription",
-            'normal',
-            'default'
-                    );
+            "normal",
+            "default"
+        );
 
-
-		  add_meta_box(
+        add_meta_box(
             "old_preferences_order",
             "Preferenze Utente Vecchio sito",
             "old_preferences_order_meta_box_callback",
             "shop_order",
-                "advanced",
-            "core",
-                    );
+            "advanced",
+            "core"
+        );
 
         add_meta_box(
             "box_preferences",
@@ -2453,10 +2503,14 @@ if (!function_exists("mv_add_meta_boxes")) {
         );
     }
 
-		  function old_preferences_order_meta_box_callback($order)
+    function old_preferences_order_meta_box_callback($order)
     {
-		$order = new WC_Order($order->ID);
-        $oldPreferences = get_user_meta($order->get_customer_id(), "old_box_preferences", true);
+        $order = new WC_Order($order->ID);
+        $oldPreferences = get_user_meta(
+            $order->get_customer_id(),
+            "old_box_preferences",
+            true
+        );
 
         if (!empty($oldPreferences)): ?>
 
@@ -2472,11 +2526,15 @@ if (!function_exists("mv_add_meta_boxes")) {
 		<?php endif;
     }
 
-	  function old_preferences_meta_box_callback($post)
+    function old_preferences_meta_box_callback($post)
     {
-		$subscription = new WC_Subscription($post->ID);
+        $subscription = new WC_Subscription($post->ID);
 
-        $oldPreferences = get_user_meta($subscription->get_customer_id(), "old_box_preferences", true);
+        $oldPreferences = get_user_meta(
+            $subscription->get_customer_id(),
+            "old_box_preferences",
+            true
+        );
 
         if (!empty($oldPreferences)): ?>
 
