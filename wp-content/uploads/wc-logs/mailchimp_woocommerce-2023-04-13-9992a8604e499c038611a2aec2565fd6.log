@@ -1,0 +1,109 @@
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2638
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2639
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 47
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2640
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2641
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2642
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2643
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 904
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2644
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2645
+2023-04-13T22:38:42+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_User_Submit not found at wp__mailchimp_jobs database table :: obj_id 2646
+2023-04-13T22:38:43+00:00 ERROR action_scheduler.process_job.fail :: Job MailChimp_WooCommerce_Single_Product not found at wp__mailchimp_jobs database table :: obj_id 22442
+2023-04-13T22:38:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #22446
+2023-04-13T22:38:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #22450
+2023-04-13T22:38:58+00:00 NOTICE order.member.updated :: Updated segreteria@fattorialamaliosa.it subscriber status to subscribed and language to it
+2023-04-13T22:38:58+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27070 :: email: segreteria@fattorialamaliosa.it
+2023-04-13T22:39:04+00:00 NOTICE order.member.updated :: Updated ale.ale.bitetti@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:39:04+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27072 :: email: ale.ale.bitetti@gmail.com
+2023-04-13T22:39:09+00:00 NOTICE order.member.updated :: Updated chianale.fabio@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:39:09+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27074 :: email: chianale.fabio@gmail.com
+2023-04-13T22:39:15+00:00 NOTICE order.member.updated :: Updated entoni.santoro@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:39:15+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27076 :: email: entoni.santoro@gmail.com
+2023-04-13T22:44:12+00:00 NOTICE order.member.updated :: Updated nataliepaul2000@yahoo.it subscriber status to subscribed and language to it
+2023-04-13T22:44:12+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27078 :: email: nataliepaul2000@yahoo.it
+2023-04-13T22:44:17+00:00 NOTICE order.member.updated :: Updated denardi.paola@hsr.it subscriber status to subscribed and language to it
+2023-04-13T22:44:17+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27080 :: email: denardi.paola@hsr.it
+2023-04-13T22:44:40+00:00 NOTICE order.member.updated :: Updated cristina.tonello@tiscali.it subscriber status to subscribed and language to it
+2023-04-13T22:44:40+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27082 :: email: cristina.tonello@tiscali.it
+2023-04-13T22:44:44+00:00 NOTICE order.member.updated :: Updated lauravilla@centromedicoboccaccio.com subscriber status to subscribed and language to it
+2023-04-13T22:44:44+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27084 :: email: lauravilla@centromedicoboccaccio.com
+2023-04-13T22:44:50+00:00 NOTICE order.member.updated :: Updated bluevelvetchristine@outlook.com subscriber status to subscribed and language to it
+2023-04-13T22:44:50+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27086 :: email: bluevelvetchristine@outlook.com
+2023-04-13T22:48:45+00:00 NOTICE order.member.updated :: Updated sabrina.brianza@natixis.com subscriber status to subscribed and language to it
+2023-04-13T22:48:45+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27088 :: email: sabrina.brianza@natixis.com
+2023-04-13T22:48:49+00:00 NOTICE order.member.updated :: Updated cinzia.calcagno@sella.it subscriber status to transactional and language to it
+2023-04-13T22:48:49+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27090 :: email: cinzia.calcagno@sella.it
+2023-04-13T22:48:53+00:00 NOTICE order.member.updated :: Updated chiara.boschetto@yahoo.it subscriber status to subscribed and language to it
+2023-04-13T22:48:53+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27092 :: email: chiara.boschetto@yahoo.it
+2023-04-13T22:48:58+00:00 NOTICE order.member.updated :: Updated mennarita69@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:48:58+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27094 :: email: mennarita69@gmail.com
+2023-04-13T22:54:56+00:00 NOTICE order.member.updated :: Updated marina@alteregostudio.it subscriber status to subscribed and language to it
+2023-04-13T22:54:56+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27096 :: email: marina@alteregostudio.it
+2023-04-13T22:55:01+00:00 NOTICE order.member.updated :: Updated ellis.peretti@tin.it subscriber status to subscribed and language to it
+2023-04-13T22:55:01+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27098 :: email: ellis.peretti@tin.it
+2023-04-13T22:55:05+00:00 NOTICE order.member.updated :: Updated micol.scabbia@cliffordchance.com subscriber status to subscribed and language to it
+2023-04-13T22:55:05+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27100 :: email: micol.scabbia@cliffordchance.com
+2023-04-13T22:55:19+00:00 NOTICE order.member.updated :: Updated simona@simonaoberti.com subscriber status to subscribed and language to it
+2023-04-13T22:55:19+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27102 :: email: simona@simonaoberti.com
+2023-04-13T22:55:23+00:00 NOTICE order.member.updated :: Updated tintoc@libero.it subscriber status to subscribed and language to it
+2023-04-13T22:55:23+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27104 :: email: tintoc@libero.it
+2023-04-13T22:55:28+00:00 NOTICE order.member.updated :: Updated mariateresa@quaranta.to subscriber status to subscribed and language to it
+2023-04-13T22:55:28+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27106 :: email: mariateresa@quaranta.to
+2023-04-13T22:55:32+00:00 NOTICE order.member.updated :: Updated fulviableu@visualmade.it subscriber status to subscribed and language to it
+2023-04-13T22:55:32+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27108 :: email: fulviableu@visualmade.it
+2023-04-13T22:56:07+00:00 NOTICE order.member.updated :: Updated giuseppe.caiafa@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:56:07+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27110 :: email: giuseppe.caiafa@gmail.com
+2023-04-13T22:56:11+00:00 NOTICE order.member.updated :: Updated alice.sorrenti@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:56:11+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27112 :: email: alice.sorrenti@gmail.com
+2023-04-13T22:56:18+00:00 NOTICE order.member.updated :: Updated ade.bianchi@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:56:18+00:00 NOTICE order_submit.success :: addStoreOrder :: #27114 :: email: ade.bianchi@gmail.com
+2023-04-13T22:56:31+00:00 NOTICE order.member.updated :: Updated silviaplebani84@libero.it subscriber status to subscribed and language to it
+2023-04-13T22:56:31+00:00 NOTICE order_submit.success :: updateStoreOrder :: #27116 :: email: silviaplebani84@libero.it
+2023-04-13T22:56:34+00:00 ERROR order_submit.error :: addStoreOrder :: #27118 :: Error Code 400 :: We were unable to process the request. An order with the provided ID already exists in the account. on 2447 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php
+2023-04-13T22:56:40+00:00 NOTICE order.member.updated :: Updated margherita.cassino@yahoo.it subscriber status to subscribed and language to it
+2023-04-13T22:56:40+00:00 NOTICE order_submit.success :: addStoreOrder :: #27120 :: email: margherita.cassino@yahoo.it
+2023-04-13T22:56:53+00:00 NOTICE order.member.updated :: Updated bmiotti@vodafone.it subscriber status to subscribed and language to it
+2023-04-13T22:56:53+00:00 NOTICE order_submit.success :: addStoreOrder :: #27122 :: email: bmiotti@vodafone.it
+2023-04-13T22:56:58+00:00 NOTICE order.member.updated :: Updated sofia.shores@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:56:58+00:00 NOTICE order_submit.success :: addStoreOrder :: #27124 :: email: sofia.shores@gmail.com
+2023-04-13T22:57:13+00:00 NOTICE order.member.updated :: Updated annalisa.rizzo@gmail.com subscriber status to transactional and language to it
+2023-04-13T22:57:13+00:00 NOTICE order_submit.success :: addStoreOrder :: #27126 :: email: annalisa.rizzo@gmail.com
+2023-04-13T22:57:27+00:00 NOTICE order.member.updated :: Updated visca_nelsy@hotmail.it subscriber status to subscribed and language to it
+2023-04-13T22:57:27+00:00 NOTICE order_submit.success :: addStoreOrder :: #27128 :: email: visca_nelsy@hotmail.it
+2023-04-13T22:57:43+00:00 NOTICE order.member.updated :: Updated federica.figini@mediaset.it subscriber status to subscribed and language to it
+2023-04-13T22:57:43+00:00 NOTICE order_submit.success :: addStoreOrder :: #27130 :: email: federica.figini@mediaset.it
+2023-04-13T22:57:56+00:00 NOTICE order.member.updated :: Updated laigner@gmx.at subscriber status to subscribed and language to it
+2023-04-13T22:57:56+00:00 NOTICE order_submit.success :: addStoreOrder :: #27132 :: email: laigner@gmx.at
+2023-04-13T22:58:02+00:00 NOTICE order.member.updated :: Updated francesca.orlandini80@hotmail.it subscriber status to subscribed and language to it
+2023-04-13T22:58:02+00:00 NOTICE order_submit.success :: addStoreOrder :: #27134 :: email: francesca.orlandini80@hotmail.it
+2023-04-13T22:58:17+00:00 NOTICE order.member.updated :: Updated ameagarinoasa@mac.com subscriber status to subscribed and language to it
+2023-04-13T22:58:17+00:00 NOTICE order_submit.success :: addStoreOrder :: #27136 :: email: ameagarinoasa@mac.com
+2023-04-13T22:58:30+00:00 NOTICE order.member.updated :: Updated info@trikego.com subscriber status to subscribed and language to it
+2023-04-13T22:58:30+00:00 NOTICE order_submit.success :: addStoreOrder :: #27138 :: email: info@trikego.com
+2023-04-13T22:58:43+00:00 NOTICE order.member.updated :: Updated ilaria.merchiori@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:58:43+00:00 NOTICE order_submit.success :: addStoreOrder :: #27140 :: email: ilaria.merchiori@gmail.com
+2023-04-13T22:58:48+00:00 NOTICE order.member.updated :: Updated Marqo@tiscali.it subscriber status to transactional and language to it
+2023-04-13T22:58:48+00:00 NOTICE order_submit.success :: addStoreOrder :: #27142 :: email: Marqo@tiscali.it
+2023-04-13T22:58:54+00:00 NOTICE order.member.updated :: Updated guididivani@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:58:54+00:00 NOTICE order_submit.success :: addStoreOrder :: #27144 :: email: guididivani@gmail.com
+2023-04-13T22:59:07+00:00 NOTICE order.member.updated :: Updated mila.bertinetti@sirin.it subscriber status to subscribed and language to it
+2023-04-13T22:59:07+00:00 NOTICE order_submit.success :: addStoreOrder :: #27146 :: email: mila.bertinetti@sirin.it
+2023-04-13T22:59:13+00:00 NOTICE order.member.updated :: Updated cesareg@studiogirello.it subscriber status to subscribed and language to it
+2023-04-13T22:59:13+00:00 NOTICE order_submit.success :: addStoreOrder :: #27148 :: email: cesareg@studiogirello.it
+2023-04-13T22:59:28+00:00 NOTICE order.member.updated :: Updated luigi.chiesa1@tin.it subscriber status to transactional and language to it
+2023-04-13T22:59:28+00:00 NOTICE order_submit.success :: addStoreOrder :: #27150 :: email: luigi.chiesa1@tin.it
+2023-04-13T22:59:39+00:00 NOTICE order.member.updated :: Updated carlotta.bolelli@bolellieassociati.it subscriber status to subscribed and language to it
+2023-04-13T22:59:39+00:00 NOTICE order_submit.success :: addStoreOrder :: #27152 :: email: carlotta.bolelli@bolellieassociati.it
+2023-04-13T22:59:44+00:00 NOTICE order.member.updated :: Updated cucchianil@gmail.com subscriber status to subscribed and language to it
+2023-04-13T22:59:44+00:00 NOTICE order_submit.success :: addStoreOrder :: #27154 :: email: cucchianil@gmail.com
+2023-04-13T22:59:57+00:00 NOTICE order.member.updated :: Updated dario.totaro@agentitoro.it subscriber status to subscribed and language to it
+2023-04-13T22:59:57+00:00 NOTICE order_submit.success :: addStoreOrder :: #27156 :: email: dario.totaro@agentitoro.it
+2023-04-13T23:00:12+00:00 NOTICE order.member.updated :: Updated cineforum.bocconi@gmail.com subscriber status to subscribed and language to it
+2023-04-13T23:00:12+00:00 NOTICE order_submit.success :: addStoreOrder :: #27158 :: email: cineforum.bocconi@gmail.com
+2023-04-13T23:00:26+00:00 NOTICE order.member.updated :: Updated albym752017@libero.it subscriber status to subscribed and language to it
+2023-04-13T23:00:26+00:00 NOTICE order_submit.success :: addStoreOrder :: #27160 :: email: albym752017@libero.it
+2023-04-13T23:00:40+00:00 NOTICE order.member.updated :: Updated giuliamancinelli05@gmail.com subscriber status to subscribed and language to it
+2023-04-13T23:00:40+00:00 NOTICE order_submit.success :: addStoreOrder :: #27162 :: email: giuliamancinelli05@gmail.com
+2023-04-13T23:00:57+00:00 NOTICE order.member.updated :: Updated cristina@fabio.net subscriber status to subscribed and language to it
+2023-04-13T23:00:57+00:00 NOTICE order_submit.success :: addStoreOrder :: #27164 :: email: cristina@fabio.net

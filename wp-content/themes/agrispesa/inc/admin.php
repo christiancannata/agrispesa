@@ -513,9 +513,122 @@ add_action("rest_api_init", function () {
             return $response;
         },
     ]);
-});
 
-add_action("rest_api_init", function () {
+    register_rest_route("agrispesa/v1", "import-extra-preferences", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $lines = explode(PHP_EOL, $request->get_body());
+            $users = [];
+            foreach ($lines as $line) {
+                $users[] = str_getcsv($line, ";");
+            }
+
+            $header_row = array_shift($users);
+            $employee_csv = [];
+            foreach ($users as $row) {
+                if (!empty($row)) {
+                    $employee_csv[] = array_combine($header_row, $row);
+                }
+            }
+
+            $categories = [
+                "01" => "Verdura",
+                "02" => "Frutta",
+                "05" => "Formaggio",
+                "06" => "Uova",
+                "08" => "Carne",
+                "10" => "Pesce",
+            ];
+
+            foreach ($employee_csv as $user) {
+                $args = [
+                    "fields" => "ids",
+                    "meta_query" => [
+                        [
+                            "key" => "navision_id",
+                            "value" => $user["idUtente"],
+                            "compare" => "=",
+                        ],
+                    ],
+                ];
+
+                $member_arr = get_users($args); //finds all users with this meta_key == 'member_id' and meta_value == $member_id passed in url
+
+                if (empty($member_arr)) {
+                    continue;
+                }
+
+				$member_arr = $member_arr[0];
+
+                $hasCarne = true;
+                $hasUova = true;
+                $hasFrutta = true;
+                $hasFormaggi = true;
+                $hasPesce = true;
+                $hasVerdura = true;
+
+				$jsonPreferencesBlacklist = [];
+
+                if (!empty($user["carni"])) {
+                    $hasCarne = false;
+					$jsonPreferencesBlacklist[] = [
+							'name' => 'Carne',
+							'substitute' => isset($categories[$user["carniSost"]])?$categories[$user["carniSost"]]:'-'
+					];
+                }
+                if (!empty($user["formaggi"])) {
+                    $hasFormaggi = false;
+					$jsonPreferencesBlacklist[] = [
+							'name' => 'Formaggio',
+							'substitute' => isset($categories[$user["formaggiSost"]])?$categories[$user["formaggiSost"]]:'-'
+					];
+                }
+                if (!empty($user["frutta"])) {
+                    $hasFrutta = false;
+					$jsonPreferencesBlacklist[] = [
+							'name' => 'Frutta',
+							'substitute' =>  isset($categories[$user["fruttaSost"]])?$categories[$user["fruttaSost"]]:'-'
+					];
+                }
+                if (!empty($user["pesce"])) {
+                    $hasPesce = false;
+					$jsonPreferencesBlacklist[] = [
+							'name' => 'Pesce',
+							'substitute' => isset($categories[$user["pesceSost"]])?$categories[$user["pesceSost"]]:'-'
+					];
+                }
+                if (!empty($user["uova"])) {
+                    $hasUova = false;
+						$jsonPreferencesBlacklist[] = [
+							'name' => 'Uova',
+							'substitute' => isset($categories[$user["uovaSost"]])?$categories[$user["uovaSost"]]:'-'
+					];
+                }
+                if (!empty($user["verdura"])) {
+                    $hasVerdura = false;
+					$jsonPreferencesBlacklist[] = [
+							'name' => 'Verdura',
+							'substitute' => isset($categories[$user["verduraSost"]])?$categories[$user["verduraSost"]]:'-'
+					];
+                }
+
+
+				if(!empty($jsonPreferencesBlacklist)){
+					update_user_meta($member_arr,'old_box_preferences',$jsonPreferencesBlacklist);
+				}
+
+            }
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+
+            return $response;
+        },
+    ]);
+
     register_rest_route("agrispesa/v1", "import-subscriptions", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -552,10 +665,7 @@ add_action("rest_api_init", function () {
             foreach ($employee_csv as $user) {
                 $wordpressUser = get_users([
                     "meta_key" => "navision_id",
-                    "meta_value" =>
-                        $user[
-                            "id_utente"
-                        ],
+                    "meta_value" => $user["id_utente"],
                 ]);
 
                 if (count($wordpressUser) > 0) {
@@ -2303,6 +2413,18 @@ add_action("add_meta_boxes", "mv_add_meta_boxes");
 if (!function_exists("mv_add_meta_boxes")) {
     function mv_add_meta_boxes()
     {
+
+		$subscriptions_screen_id = wcs_get_page_screen_id( 'shop_subscription' );
+
+		 add_meta_box(
+            "old_preferences",
+            "Preferenze Utente Vecchio sito",
+            "old_preferences_meta_box_callback",
+            "shop_subscription",
+            'normal',
+            'default'
+                    );
+
         add_meta_box(
             "box_preferences",
             "Preferenze Facciamo noi",
@@ -2323,6 +2445,26 @@ if (!function_exists("mv_add_meta_boxes")) {
         );
     }
 
+
+	  function old_preferences_meta_box_callback($post)
+    {
+		$subscription = new WC_Subscription($post->ID);
+
+        $oldPreferences = get_user_meta($subscription->get_customer_id(), "old_box_preferences", true);
+
+        if (!empty($oldPreferences)): ?>
+
+		<h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
+		<table class="table">
+		<?php foreach ($oldPreferences as $preference): ?>
+		<tr>
+		<td>NO <?php echo $preference["name"]; ?></td>
+		<td>Sostituire con <?php echo $preference["substitute"]; ?></td>
+</tr>
+		<?php endforeach; ?>
+</table>
+		<?php endif;
+    }
     function box_preferences_meta_box_callback($order)
     {
         global $post;

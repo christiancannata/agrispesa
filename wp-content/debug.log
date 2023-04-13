@@ -14618,3 +14618,43 @@ Stack trace:
 [13-Apr-2023 20:32:01 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
 [13-Apr-2023 20:32:25 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3852 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
 [13-Apr-2023 20:32:25 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[13-Apr-2023 22:44:42 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:44:42 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:44:46 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:44:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:44:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:10 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:11 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:12 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:45:18 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:45:18 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:45:20 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:20 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:45:20 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:21 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:22 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:45:25 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:25 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:31 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:31 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:38 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:586) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1762
+[13-Apr-2023 22:45:44 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:46 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:47 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:45:54 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:54 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 586
+[13-Apr-2023 22:45:54 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:55 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:55 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 607
+[13-Apr-2023 22:45:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:56 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:45:59 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
+[13-Apr-2023 22:45:59 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
+[13-Apr-2023 22:46:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:586) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1762
