@@ -141,10 +141,10 @@
 			font-weight: 900;
 			line-height: 1;
 			@include breakpoint(desktop) {
-				@include font-size(50);
+				@include font-size(60);
 			}
 			@include breakpoint(container) {
-				@include font-size(48);
+				@include font-size(50);
 			}
 			@include breakpoint(mobile) {
 				@include font-size(42);
@@ -154,10 +154,10 @@
 		font-weight: 900;
 		line-height: 1;
 		@include breakpoint(desktop) {
-			@include font-size(50);
+			@include font-size(60);
 		}
 		@include breakpoint(container) {
-			@include font-size(48);
+			@include font-size(50);
 		}
 		@include breakpoint(mobile) {
 			@include font-size(42);
