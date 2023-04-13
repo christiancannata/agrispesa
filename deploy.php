@@ -21,10 +21,15 @@ add('cloudflare', [
 ]);
 // Hosts
 
-host('46.101.145.102')
+host('167.71.36.33')
     ->set('remote_user', 'root')
     ->set('deploy_path', '/var/www/agrispesa')
     ->set('branch', 'master');
+
+host('46.101.145.102')
+    ->set('remote_user', 'root')
+    ->set('deploy_path', '/var/www/agrispesa')
+    ->set('branch', 'dev');
 
 // Hooks
 
@@ -34,7 +39,7 @@ after('deploy:publish', 'reload:php');
 //after('deploy:publish', 'deploy:cloudflare');
 
 task('reload:php', function () {
-    run('sudo /usr/sbin/service php7.4-fpm restart');
+    run('sudo /usr/sbin/service php8.1-fpm restart');
 });
 
 
