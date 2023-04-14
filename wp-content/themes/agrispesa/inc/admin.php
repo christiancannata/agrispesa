@@ -1007,48 +1007,26 @@ WHERE wp.ID IS NULL");
     register_rest_route("agrispesa/v1", "shop-categories", ["methods" => "GET", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
-        $taxonomy = "product_cat";
-        $orderby = "name";
-        $show_count = 0; // 1 for yes, 0 for no
-        $pad_counts = 0; // 1 for yes, 0 for no
-        $hierarchical = 1; // 1 for yes, 0 for no
-        $title = "";
-        $empty = 0;
-        $args = ["taxonomy" => $taxonomy, "orderby" => $orderby, "numberposts" => - 1, "show_count" => $show_count, "pad_counts" => $pad_counts, "hierarchical" => $hierarchical, "title_li" => $title, "hide_empty" => $empty, ];
-        $all_categories = get_categories($args);
-        $categories = [];
-        foreach ($all_categories as $cat) {
-            if ($cat->category_parent == 0) {
-                $category_id = $cat->term_id;
-                /*  $isVisible = get_term_meta(
-                        $category_id,
-                        "in_preferenze_utente",
-                        true
-                    );
 
-                    if (empty($isVisible)) {
-                        continue;
-                    }
-                */
-                $args2 = ["taxonomy" => $taxonomy, "child_of" => 0, "parent" => $category_id, "orderby" => $orderby, "show_count" => $show_count, "pad_counts" => $pad_counts, "hierarchical" => $hierarchical, "title_li" => $title, "hide_empty" => $empty, ];
-                $sub_cats = get_categories($args2);
-                if ($sub_cats) {
-                    foreach ($sub_cats as $sub_category) {
-                        /*   $isVisible = get_term_meta(
-                                $sub_category->term_id,
-                                "in_preferenze_utente",
-                                true
-                            );
-                            if (empty($isVisible)) {
-                                continue;
-                            }*/
-                        $categoryProducts = get_posts(["post_type" => "product", "numberposts" => - 1, "post_status" => "publish", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => $sub_category->slug, "operator" => "IN", ], ], ]);
-                        $categories[] = ["id" => $sub_category->term_id, "name" => $sub_category->name, "products" => $categoryProducts, ];
-                    }
-                }
-            }
-        }
-        $response = new WP_REST_Response($categories);
+        $gruppiProdotti = get_posts(["post_type" => "gruppo-prodotto", "post_status" => "publish", "posts_per_page" => -1]);
+
+		$categorie = [];
+		foreach($gruppiProdotti as $gruppoProdotto){
+			$categoria = get_post_meta($gruppoProdotto->ID,'categoria_principale_gruppo_prodotto',true);
+			$code = get_post_meta($gruppoProdotto->ID,'codice_gruppo_prodotto',true);
+
+			if(!isset($categorie[$categoria])){
+				$categorie[$categoria] = [
+					'name' => $categoria,
+					'products' => []
+				];
+			}
+			$categorie[$categoria]['products'][] = ['post_title' => $gruppoProdotto->post_title,'code' =>$code];
+		}
+
+		$categorie = array_values($categorie);
+
+        $response = new WP_REST_Response($categorie);
         $response->set_status(200);
         return $response;
     }, ]);
@@ -1107,8 +1085,16 @@ WHERE wp.ID IS NULL");
             $boxPreferences = [];
         }
         foreach ($body["product_ids"] as $productId) {
-            $productToAdd = get_post($productId);
-            $boxPreferences[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title, ];
+            $productToAdd = get_posts(
+					 ["post_type" => "gruppo-prodotto",
+					 "post_status" => "publish",
+					 "posts_per_page" => 1,
+					 'meta_key' => 'codice_gruppo_prodotto',
+					 'meta_value' => $productId
+					    	   ]);
+			$productToAdd = $productToAdd[0];
+
+            $boxPreferences[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title,"code" =>$productId  ];
         }
         $boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
         $newBoxPreferences = [];
@@ -1129,8 +1115,16 @@ WHERE wp.ID IS NULL");
             $boxPreferences = [];
         }
         foreach ($body["product_ids"] as $productId) {
-            $productToAdd = get_post($productId);
-            $boxPreferences[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title, ];
+			$productToAdd = get_posts(
+					 ["post_type" => "gruppo-prodotto",
+					 "post_status" => "publish",
+					 "posts_per_page" => 1,
+					 'meta_key' => 'codice_gruppo_prodotto',
+					 'meta_value' => $productId
+					    	   ]);
+			$productToAdd = $productToAdd[0];
+
+            $boxPreferences[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title,"code" =>$productId  ];
         }
         $boxPreferences = array_map("unserialize", array_unique(array_map("serialize", $boxPreferences)));
         $newBoxPreferences = [];

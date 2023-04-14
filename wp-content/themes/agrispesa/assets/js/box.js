@@ -24,7 +24,7 @@ createApp({
     toggleAllBlacklist: function (category, subscription) {
 
       let products = category.products.map(function (product) {
-        return product.ID
+        return product.code
       })
 
       if (!category.is_all_blacklist_selected) {
@@ -40,7 +40,7 @@ createApp({
     toggleAllWishlist: function (category, subscription) {
 
       let products = category.products.map(function (product) {
-        return product.ID
+        return product.code
       })
 
       if (!category.is_all_wishlist_selected) {
@@ -71,12 +71,12 @@ createApp({
     },
     isBlacklisted: function (product, subscription) {
       return subscription.box_blacklist.some(function (field) {
-        return field.id === product
+        return field.code == product
       })
     },
     isPreference: function (product, subscription) {
       return subscription.box_preferences.some(function (field) {
-        return field.id === product
+        return field.code == product
       })
     },
     getSubscriptions: function () {

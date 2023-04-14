@@ -142,10 +142,10 @@ function settings_box_content()
 									</label>
 								</li>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="toggleBlacklist(product.ID,subscription)"
+									<label @click.prevent="toggleBlacklist(product.code,subscription)"
 										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isBlacklisted(product.ID,subscription)" type="checkbox">
+										<input :checked="isBlacklisted(product.code,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -189,10 +189,10 @@ function settings_box_content()
 									</label>
 								</li>
 								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="togglePreference(product.ID,subscription)"
+									<label @click.prevent="togglePreference(product.code,subscription)"
 										   class="checkbox-container">
 										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isPreference(product.ID,subscription)" type="checkbox">
+										<input :checked="isPreference(product.code,subscription)" type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 								</li>
