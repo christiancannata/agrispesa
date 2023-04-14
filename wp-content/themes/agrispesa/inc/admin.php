@@ -840,6 +840,7 @@ add_action("rest_api_init", function () {
                 }
 
                 $product["wordpress_id"] = $productId;
+
                 //$productIds[] = $productId;
                 /*
 				$product = new WC_Product($productId);
@@ -868,6 +869,12 @@ add_action("rest_api_init", function () {
                     $product["wordpress_id"],
                     "_navision_id",
                     (string) $product["id_product"]
+                );
+
+				 update_post_meta(
+                    $product["wordpress_id"],
+                    "_gruppo_prodotto",
+                    (string) $product["productgroupcode"]
                 );
             }
 
