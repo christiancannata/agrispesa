@@ -25,7 +25,7 @@ function give_user_subscription($product, $user, $row) {
     $country   = get_user_meta( $user_id, 'billing_country', true );
     $state     = get_user_meta( $user_id, 'billing_state', true );
     */
-    $shippingAddress = ["first_name" => $fname, "last_name" => $lname, "email" => $email, "phone" => $row["automatismiSettimanali_utenze::telmobile"], "address_1" => $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] . " " . $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"], "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"], "state" => "", "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"], "country" => "IT", ];
+    $shippingAddress = ["first_name" => $fname, "last_name" => $lname, "email" => $email, "phone" => (isset($row["automatismiSettimanali_utenze::telmobile"]))?$row["automatismiSettimanali_utenze::telmobile"]:'', "address_1" => $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] . " " . $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"], "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"], "state" => "", "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"], "country" => "IT", ];
     $invoiceAddress = ["first_name" => $row["automatismiSettimanali_intestazioneFattura::nome"], "last_name" => $row["automatismiSettimanali_intestazioneFattura::cognome"], "email" => $email, "phone" => $row["automatismiSettimanali_utenze::telmobile"], "address_1" => $row["automatismiSettimanali_intestazioneFattura::indirizzo"] . " " . $row["automatismiSettimanali_intestazioneFattura::numeroCivico"], "city" => $row["automatismiSettimanali_intestazioneFattura::città"], "state" => "", "postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"], "country" => "IT", ];
     $order->set_customer_id($user_id);
     $order->set_address($invoiceAddress, "billing");
@@ -352,7 +352,7 @@ add_action("rest_api_init", function () {
             $hasSubscription = wcs_user_has_subscription($wordpressUser->ID);
             if (!$hasSubscription) {
 				 $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
-                if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"])) {
+                if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"]) || !isset($user["automatismiSettimanali_utenze_tipoSpesa::tipoSpesaCalcolato"])) {
                     continue;
                 }
                 $boxNavisionId = $user["automatismiSettimanali_utenze_tipoSpesa::tipoSpesaCalcolato"];
