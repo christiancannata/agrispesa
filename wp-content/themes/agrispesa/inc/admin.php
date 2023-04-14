@@ -1023,6 +1023,12 @@ WHERE post_type = 'product' WHERE ID NOT IN (" .
                         implode(",", $postIds) .
                         ")"
                 );
+
+				 $wpdb->query(
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
+                        implode(",", $postIds) .
+                        ")"
+                );
             }
 
             $boxIds = [];
@@ -3990,6 +3996,43 @@ function cptui_register_my_cpts_delivery_group()
     ];
 
     register_post_type("delivery-group", $args);
+
+
+	 $labels = [
+        "name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
+        "singular_name" => esc_html__(
+            "Gruppi prodotto",
+            "custom-post-type-ui"
+        ),
+    ];
+
+    $args = [
+        "label" => esc_html__("Gruppi Prodotto", "custom-post-type-ui"),
+        "labels" => $labels,
+        "description" => "",
+        "public" => true,
+        "publicly_queryable" => true,
+        "show_ui" => true,
+        "show_in_rest" => true,
+        "rest_base" => "",
+        "rest_controller_class" => "WP_REST_Posts_Controller",
+        "rest_namespace" => "wp/v2",
+        "has_archive" => false,
+        "show_in_menu" => true,
+        "show_in_nav_menus" => true,
+        "delete_with_user" => false,
+        "exclude_from_search" => false,
+        "capability_type" => "post",
+        "map_meta_cap" => true,
+        "hierarchical" => false,
+        "can_export" => false,
+        "rewrite" => ["slug" => "gruppo-prodotto", "with_front" => true],
+        "query_var" => true,
+        "supports" => ["title", "editor"],
+        "show_in_graphql" => false,
+    ];
+
+    register_post_type("gruppo-prodotto", $args);
 
     /**
      * Post Type: Gruppi di Consegna.
