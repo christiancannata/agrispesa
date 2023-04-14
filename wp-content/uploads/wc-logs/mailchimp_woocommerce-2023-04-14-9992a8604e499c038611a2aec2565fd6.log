@@ -233,3 +233,599 @@
 2023-04-14T19:18:44+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24121
 2023-04-14T19:18:44+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24122
 2023-04-14T19:18:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24123
+2023-04-14T19:18:46+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24124
+2023-04-14T19:18:48+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24125
+2023-04-14T19:18:48+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24126
+2023-04-14T19:34:21+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24127
+2023-04-14T19:34:22+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24128
+2023-04-14T19:34:22+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24134
+2023-04-14T19:34:23+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23698
+2023-04-14T19:34:24+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23699
+2023-04-14T19:34:25+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23700
+2023-04-14T19:34:25+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23701
+2023-04-14T19:34:26+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23702
+2023-04-14T19:34:27+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23703
+2023-04-14T19:34:28+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23886
+2023-04-14T19:34:29+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23887
+2023-04-14T19:34:29+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23888
+2023-04-14T19:34:30+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23889
+2023-04-14T19:34:31+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23890
+2023-04-14T19:34:32+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23891
+2023-04-14T19:34:33+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23704
+2023-04-14T19:34:33+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23705
+2023-04-14T19:34:34+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23706
+2023-04-14T19:34:35+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23707
+2023-04-14T19:34:36+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23708
+2023-04-14T19:34:37+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23892
+2023-04-14T19:34:38+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23893
+2023-04-14T19:34:38+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23894
+2023-04-14T19:34:39+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23895
+2023-04-14T19:34:40+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23896
+2023-04-14T19:34:41+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23897
+2023-04-14T19:34:41+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23898
+2023-04-14T19:34:42+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23899
+2023-04-14T19:34:43+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23900
+2023-04-14T19:34:44+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23901
+2023-04-14T19:34:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23902
+2023-04-14T19:34:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24293
+2023-04-14T19:34:46+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23903
+2023-04-14T19:37:58+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23904
+2023-04-14T19:37:58+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23905
+2023-04-14T19:37:59+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23906
+2023-04-14T19:38:00+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23907
+2023-04-14T19:38:01+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23908
+2023-04-14T19:38:01+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23909
+2023-04-14T19:38:02+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23910
+2023-04-14T19:38:03+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23911
+2023-04-14T19:38:03+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23912
+2023-04-14T19:38:05+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23913
+2023-04-14T19:38:06+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24351
+2023-04-14T19:38:06+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23811
+2023-04-14T19:38:07+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24380
+2023-04-14T19:38:08+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24381
+2023-04-14T19:38:08+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24016
+2023-04-14T19:38:09+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24136
+2023-04-14T19:38:10+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24382
+2023-04-14T19:38:11+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24383
+2023-04-14T19:38:11+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24502
+2023-04-14T19:38:12+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24384
+2023-04-14T19:38:13+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24137
+2023-04-14T19:38:14+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24138
+2023-04-14T19:38:14+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24139
+2023-04-14T19:38:15+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24140
+2023-04-14T19:38:16+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24385
+2023-04-14T19:38:17+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24386
+2023-04-14T19:38:18+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24387
+2023-04-14T19:38:19+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24509
+2023-04-14T19:38:19+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24503
+2023-04-14T19:38:20+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24510
+2023-04-14T19:38:21+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24218
+2023-04-14T19:38:21+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24511
+2023-04-14T19:38:22+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24512
+2023-04-14T19:38:38+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24219
+2023-04-14T19:38:39+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24513
+2023-04-14T19:38:40+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24388
+2023-04-14T19:38:41+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24514
+2023-04-14T19:38:42+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24515
+2023-04-14T19:38:42+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24220
+2023-04-14T19:38:43+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24221
+2023-04-14T19:38:44+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24141
+2023-04-14T19:38:44+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24389
+2023-04-14T19:38:45+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24516
+2023-04-14T19:38:46+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24169
+2023-04-14T19:38:47+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24170
+2023-04-14T19:38:47+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24171
+2023-04-14T19:38:48+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24172
+2023-04-14T19:38:49+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24142
+2023-04-14T19:38:50+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24143
+2023-04-14T19:38:50+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24390
+2023-04-14T19:38:51+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24391
+2023-04-14T19:38:52+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24173
+2023-04-14T19:38:52+00:00 NOTICE product_submit.success :: updateStoreProduct :: #23831
+2023-04-14T19:38:53+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24174
+2023-04-14T19:38:54+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24175
+2023-04-14T19:38:55+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24176
+2023-04-14T19:38:55+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24144
+2023-04-14T19:38:56+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24145
+2023-04-14T19:38:57+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24146
+2023-04-14T19:38:57+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24147
+2023-04-14T19:38:58+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24148
+2023-04-14T19:38:59+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24149
+2023-04-14T19:39:00+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24177
+2023-04-14T19:39:00+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24178
+2023-04-14T19:39:01+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24179
+2023-04-14T19:39:02+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24180
+2023-04-14T19:39:02+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24181
+2023-04-14T19:39:03+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24234
+2023-04-14T19:39:05+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24204
+2023-04-14T19:40:07+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24235
+2023-04-14T19:40:08+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24411
+2023-04-14T19:40:09+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24352
+2023-04-14T19:40:09+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24353
+2023-04-14T19:40:10+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24354
+2023-04-14T19:40:11+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24199
+2023-04-14T19:40:12+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24775
+2023-04-14T19:40:12+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24437
+2023-04-14T19:40:13+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24571
+2023-04-14T19:40:14+00:00 NOTICE product_submit.success :: updateStoreProduct :: #24690
+2023-04-14T20:10:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27197
+2023-04-14T20:10:47+00:00 NOTICE debug :: Order ID 27197 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:10:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27199
+2023-04-14T20:10:49+00:00 NOTICE debug :: Order ID 27199 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:10:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27201
+2023-04-14T20:10:52+00:00 NOTICE debug :: Order ID 27201 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:10:53+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27203
+2023-04-14T20:10:55+00:00 NOTICE debug :: Order ID 27203 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:10:56+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27205
+2023-04-14T20:10:58+00:00 NOTICE debug :: Order ID 27205 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:10:59+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27207
+2023-04-14T20:11:01+00:00 NOTICE debug :: Order ID 27207 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:02+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27209
+2023-04-14T20:11:04+00:00 NOTICE debug :: Order ID 27209 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:05+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27211
+2023-04-14T20:11:07+00:00 NOTICE debug :: Order ID 27211 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:08+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27213
+2023-04-14T20:11:10+00:00 NOTICE debug :: Order ID 27213 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:11+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27215
+2023-04-14T20:11:13+00:00 NOTICE debug :: Order ID 27215 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:14+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27217
+2023-04-14T20:11:16+00:00 NOTICE debug :: Order ID 27217 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27219
+2023-04-14T20:11:20+00:00 NOTICE debug :: Order ID 27219 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27221
+2023-04-14T20:11:23+00:00 NOTICE debug :: Order ID 27221 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:24+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27223
+2023-04-14T20:11:26+00:00 NOTICE debug :: Order ID 27223 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:28+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27225
+2023-04-14T20:11:30+00:00 NOTICE debug :: Order ID 27225 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:31+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27227
+2023-04-14T20:11:33+00:00 NOTICE debug :: Order ID 27227 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:34+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27229
+2023-04-14T20:11:36+00:00 NOTICE debug :: Order ID 27229 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27231
+2023-04-14T20:11:39+00:00 NOTICE debug :: Order ID 27231 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:40+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27233
+2023-04-14T20:11:42+00:00 NOTICE debug :: Order ID 27233 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27235
+2023-04-14T20:11:46+00:00 NOTICE debug :: Order ID 27235 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27237
+2023-04-14T20:11:49+00:00 NOTICE debug :: Order ID 27237 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27239
+2023-04-14T20:11:52+00:00 NOTICE debug :: Order ID 27239 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:54+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27241
+2023-04-14T20:11:56+00:00 NOTICE debug :: Order ID 27241 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:11:57+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27243
+2023-04-14T20:11:59+00:00 NOTICE debug :: Order ID 27243 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:00+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27245
+2023-04-14T20:12:03+00:00 NOTICE debug :: Order ID 27245 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:04+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27247
+2023-04-14T20:12:06+00:00 NOTICE debug :: Order ID 27247 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:07+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27249
+2023-04-14T20:12:09+00:00 NOTICE debug :: Order ID 27249 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:10+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27251
+2023-04-14T20:12:12+00:00 NOTICE debug :: Order ID 27251 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:13+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27253
+2023-04-14T20:12:15+00:00 NOTICE debug :: Order ID 27253 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:16+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27255
+2023-04-14T20:12:18+00:00 NOTICE debug :: Order ID 27255 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:19+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27257
+2023-04-14T20:12:21+00:00 NOTICE debug :: Order ID 27257 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:23+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27259
+2023-04-14T20:12:25+00:00 NOTICE debug :: Order ID 27259 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:26+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27261
+2023-04-14T20:12:28+00:00 NOTICE debug :: Order ID 27261 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:29+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27263
+2023-04-14T20:12:32+00:00 NOTICE debug :: Order ID 27263 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:33+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27265
+2023-04-14T20:12:35+00:00 NOTICE debug :: Order ID 27265 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:36+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27267
+2023-04-14T20:12:38+00:00 NOTICE debug :: Order ID 27267 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:39+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27269
+2023-04-14T20:12:41+00:00 NOTICE debug :: Order ID 27269 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:42+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27271
+2023-04-14T20:12:45+00:00 NOTICE debug :: Order ID 27271 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => 
+        )
+
+)
+
+2023-04-14T20:12:46+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 27273
+2023-04-14T20:14:01+00:00 NOTICE order.member.updated :: Updated luciocell@gmail.com subscriber status to transactional and language to it
+2023-04-14T20:14:01+00:00 NOTICE order_submit.success :: addStoreOrder :: #27197 :: email: luciocell@gmail.com
+2023-04-14T20:14:07+00:00 NOTICE order.member.updated :: Updated segreteria@fattorialamaliosa.it subscriber status to subscribed and language to it
+2023-04-14T20:14:07+00:00 NOTICE order_submit.success :: addStoreOrder :: #27199 :: email: segreteria@fattorialamaliosa.it
+2023-04-14T20:14:14+00:00 NOTICE order.member.updated :: Updated ale.ale.bitetti@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:14:14+00:00 NOTICE order_submit.success :: addStoreOrder :: #27201 :: email: ale.ale.bitetti@gmail.com
+2023-04-14T20:14:22+00:00 NOTICE order.member.updated :: Updated annamariabocci@tiscali.it subscriber status to subscribed and language to it
+2023-04-14T20:14:22+00:00 NOTICE order_submit.success :: addStoreOrder :: #27203 :: email: annamariabocci@tiscali.it
+2023-04-14T20:14:37+00:00 NOTICE order.member.updated :: Updated chianale.fabio@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:14:37+00:00 NOTICE order_submit.success :: addStoreOrder :: #27205 :: email: chianale.fabio@gmail.com
+2023-04-14T20:14:43+00:00 NOTICE order.member.updated :: Updated biancamaria.curti@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:14:43+00:00 NOTICE order_submit.success :: addStoreOrder :: #27207 :: email: biancamaria.curti@gmail.com
+2023-04-14T20:14:49+00:00 NOTICE order.member.updated :: Updated marco.pitto@alice.it subscriber status to subscribed and language to it
+2023-04-14T20:14:49+00:00 NOTICE order_submit.success :: addStoreOrder :: #27209 :: email: marco.pitto@alice.it
+2023-04-14T20:15:20+00:00 NOTICE order.member.updated :: Updated entoni.santoro@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:15:20+00:00 NOTICE order_submit.success :: addStoreOrder :: #27211 :: email: entoni.santoro@gmail.com
+2023-04-14T20:15:26+00:00 NOTICE order.member.updated :: Updated valieri@fastwebnet.it subscriber status to subscribed and language to it
+2023-04-14T20:15:26+00:00 NOTICE order_submit.success :: addStoreOrder :: #27213 :: email: valieri@fastwebnet.it
+2023-04-14T20:15:33+00:00 NOTICE order.member.updated :: Updated fabrizio@nicolucci.info subscriber status to subscribed and language to it
+2023-04-14T20:15:33+00:00 NOTICE order_submit.success :: addStoreOrder :: #27215 :: email: fabrizio@nicolucci.info
+2023-04-14T20:15:47+00:00 NOTICE order.member.updated :: Updated valerianegro@iol.it subscriber status to subscribed and language to it
+2023-04-14T20:15:47+00:00 NOTICE order_submit.success :: addStoreOrder :: #27217 :: email: valerianegro@iol.it
+2023-04-14T20:15:53+00:00 NOTICE order.member.updated :: Updated steficalcagnini@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:15:53+00:00 NOTICE order_submit.success :: addStoreOrder :: #27219 :: email: steficalcagnini@gmail.com
