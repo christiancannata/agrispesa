@@ -388,8 +388,19 @@ add_action("rest_api_init", function () {
 
 		//create categories blacklist
 		$categories = [];
+ 		global $wpdb;
+		$wpdb->query("UPDATE wp_posts
+        SET post_status = 'draft'
+        WHERE post_type = 'gruppo-prodotto';");
 
-		foreach($products["ROW"] as $product){
+
+        $activeProducts = array_filter($products["ROW"], function ($product) {
+            $product = (array)$product;
+            $price = str_replace(",", ".", (string)$product["unitprice"]);
+            return $price > 0;
+        });
+
+				foreach($activeProducts as $product){
 			$product = (array)$product;
 			$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
 			$product['productgroupcode'] = (string)$product['productgroupcode'];
@@ -449,12 +460,6 @@ add_action("rest_api_init", function () {
 
 		}
 
-        $activeProducts = array_filter($products["ROW"], function ($product) {
-            $product = (array)$product;
-            $price = str_replace(",", ".", (string)$product["unitprice"]);
-            return $price > 0;
-        });
-        global $wpdb;
         /*	$wpdb->query("UPDATE wp_posts
         SET post_status = 'draft'
         WHERE post_type = 'product';");
