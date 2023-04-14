@@ -333,6 +333,10 @@ add_action("rest_api_init", function () {
             return $box;
         }, $allSingleBox);
 
+		$allSingleBox = array_filter($allSingleBox,function($box){
+			return $box->_navision_id != null;
+		});
+
 		global $wpdb;
 		$wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
 
@@ -352,10 +356,12 @@ add_action("rest_api_init", function () {
             $hasSubscription = wcs_user_has_subscription($wordpressUser->ID);
             if (!$hasSubscription) {
 				 $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
-                if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"]) || !isset($user["automatismiSettimanali_utenze_tipoSpesa::tipoSpesaCalcolato"])) {
+
+                if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"]) || !isset($user["tipoSpesaCalcolato"])) {
                     continue;
                 }
-                $boxNavisionId = $user["automatismiSettimanali_utenze_tipoSpesa::tipoSpesaCalcolato"];
+
+                $boxNavisionId = $user["tipoSpesaCalcolato"];
                 $singleBox = array_filter($allSingleBox, function ($box) use ($boxNavisionId) {
                     return $box->_navision_id == $boxNavisionId;
                 });
@@ -366,6 +372,7 @@ add_action("rest_api_init", function () {
                 $tipologia = get_post_meta($singleBox->get_id(), "attribute_pa_tipologia", true);
                 $dimensione = get_post_meta($singleBox->get_id(), "attribute_pa_dimensione", true);
                 $subscriptionProduct = get_subscription_box_from_attributes($tipologia, $dimensione);
+				dd($subscriptionProduct);
                 $subscription = give_user_subscription($subscriptionProduct, $wordpressUser, $user);
                 $subscriptionCreated[] = $subscription->get_id();
             }
