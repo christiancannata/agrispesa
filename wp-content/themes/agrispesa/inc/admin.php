@@ -306,7 +306,7 @@ add_action("rest_api_init", function () {
     register_rest_route("agrispesa/v1", "import-subscriptions", ["methods" => "POST", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
-		$wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
+
 
         $lines = explode(PHP_EOL, $request->get_body());
         $users = [];
@@ -322,7 +322,6 @@ add_action("rest_api_init", function () {
                 $employee_csv[] = array_combine($header_row, $row);
             }
         }
-        global $wpdb;
         $allSingleBox = get_all_single_box();
         $allSingleBox = array_map(function ($box) {
             $navId = get_post_meta($box->get_id(), "_navision_id", true);
@@ -333,6 +332,10 @@ add_action("rest_api_init", function () {
             }
             return $box;
         }, $allSingleBox);
+
+		global $wpdb;
+		$wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
+
         foreach ($employee_csv as $user) {
             if (empty($user["id_utente"])) {
                 continue;
