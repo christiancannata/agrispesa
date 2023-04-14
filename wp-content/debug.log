@@ -14658,3 +14658,36 @@ Stack trace:
 [13-Apr-2023 22:45:59 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 579
 [13-Apr-2023 22:45:59 UTC] PHP Notice:  Undefined index:  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 600
 [13-Apr-2023 22:46:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:586) in /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php on line 1762
+[14-Apr-2023 16:53:52 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:53:52 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:53:52 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:53:56 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:53:56 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:53:56 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:53:59 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:53:59 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:53:59 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:01 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:01 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:01 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:02 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:02 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:18 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:18 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:18 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:22 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:22 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:22 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:34 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:34 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:34 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:54:39 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:54:39 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:54:39 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:55:06 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:55:06 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:55:06 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
+[14-Apr-2023 16:55:10 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-countries.php on line 1650
+[14-Apr-2023 16:55:10 UTC] PHP Warning:  uasort() expects parameter 1 to be array, null given in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 304
+[14-Apr-2023 16:55:10 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 307
