@@ -372,7 +372,6 @@ add_action("rest_api_init", function () {
                 $tipologia = get_post_meta($singleBox->get_id(), "attribute_pa_tipologia", true);
                 $dimensione = get_post_meta($singleBox->get_id(), "attribute_pa_dimensione", true);
                 $subscriptionProduct = get_subscription_box_from_attributes($tipologia, $dimensione);
-				dd($subscriptionProduct);
                 $subscription = give_user_subscription($subscriptionProduct, $wordpressUser, $user);
                 $subscriptionCreated[] = $subscription->get_id();
             }
