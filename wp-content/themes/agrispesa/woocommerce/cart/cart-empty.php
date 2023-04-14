@@ -59,7 +59,7 @@ if ( wc_get_page_id( 'shop' ) > 0 ) :
 						    <?php if($thumb_id):?>
 						      <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( $product->get_name() ); ?>" />
 						    <?php else: ?>
-						      <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $product->get_name() ); ?>" />
+						      <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $product->get_name() ); ?>" />
 						    <?php endif;?>
 						  </a>
 						  <div class="product-box--text">
