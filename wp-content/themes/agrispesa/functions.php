@@ -117,7 +117,7 @@ $ag_includes = array(
 	'/checkout.php',
 	'/admin-css.php',
 	'/orders.php',
-	'/calendar.php',
+	//'/calendar.php', //lasciare disabilitato
 	'/denso.php',
 );
 

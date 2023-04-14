@@ -1,14 +1,14 @@
 <?php
 
 // Change add to cart text on single product page
-add_filter('woocommerce_product_single_add_to_cart_text', 'woocommerce_add_to_cart_button_text_single');
+// add_filter('woocommerce_product_single_add_to_cart_text', 'woocommerce_add_to_cart_button_text_single');
 function woocommerce_add_to_cart_button_text_single()
 {
 	return __('Acquista', 'woocommerce');
 }
 
 //Prezzo prima del pulsante add to cart
-add_action('woocommerce_before_add_to_cart_button', 'misha_before_add_to_cart_btn');
+//add_action('woocommerce_before_add_to_cart_button', 'misha_before_add_to_cart_btn');
 function misha_before_add_to_cart_btn()
 {
 	global $product;
@@ -17,7 +17,7 @@ function misha_before_add_to_cart_btn()
 
 
 //// Layout pagina negozio vuoto
-add_action('woocommerce_no_products_found', 'shop_page_empty_layout');
+// add_action('woocommerce_no_products_found', 'shop_page_empty_layout');
 
 function shop_page_empty_layout()
 {
@@ -85,7 +85,7 @@ function shop_page_empty_layout()
 }
 
 //Cambio testo bollino sconti
-add_filter('woocommerce_sale_flash', 'woocommerce_custom_sale_text', 10, 3);
+//add_filter('woocommerce_sale_flash', 'woocommerce_custom_sale_text', 10, 3);
 function woocommerce_custom_sale_text($text, $post, $_product)
 {
 	return '<span class="onsale"><span class="small">HEY,</span><span>COSTA</span><span>MENO!</span></span>';
@@ -93,7 +93,7 @@ function woocommerce_custom_sale_text($text, $post, $_product)
 
 //Limita la ricerca ai prodotti
 // Only show products in the front-end search results
-add_filter('pre_get_posts', 'lw_search_filter_pages');
+// add_filter('pre_get_posts', 'lw_search_filter_pages');
 function lw_search_filter_pages($query)
 {
 	// Frontend search only
@@ -114,7 +114,7 @@ function woo_related_products_limit()
 	return $args;
 }
 
-add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
+// add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
 function jk_related_products_args($args)
 {
 	$args['posts_per_page'] = 6; // 4 related products
@@ -123,8 +123,8 @@ function jk_related_products_args($args)
 }
 
 //Cambia h2 a lista prodotti e aggiungi peso
-remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
-add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10);
+// remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
+// add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10);
 function soChangeProductsTitle()
 {
 	global $product;
@@ -149,7 +149,7 @@ function soChangeProductsTitle()
 }
 
 //Bottone minicart
-add_action('wp_footer', 'trigger_for_ajax_add_to_cart');
+//add_action('wp_footer', 'trigger_for_ajax_add_to_cart');
 function trigger_for_ajax_add_to_cart()
 {
 	?>
@@ -175,7 +175,7 @@ function trigger_for_ajax_add_to_cart()
 }
 
 //Aggiorna numero carrello
-add_filter('woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1);
+//add_filter('woocommerce_add_to_cart_fragments', 'iconic_cart_count_fragments', 10, 1);
 function iconic_cart_count_fragments($fragments)
 {
 	$fragments['.cart-number-elements'] = '<span class="cart-number-elements">' . WC()->cart->get_cart_contents_count() . '</span>';
@@ -197,11 +197,11 @@ function my_custom_add_to_cart_redirect($url)
 	return $url;
 }
 
-add_filter('woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect');
-add_filter('woocommerce_checkout_fields', 'theme_override_checkout_notes_fields');
+// add_filter('woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect');
+// add_filter('woocommerce_checkout_fields', 'theme_override_checkout_notes_fields');
 
 /*** Override loop template and show quantities next to add to cart buttons*/
-add_filter('woocommerce_loop_add_to_cart_link', 'quantity_inputs_for_woocommerce_loop_add_to_cart_link', 10, 2);
+//add_filter('woocommerce_loop_add_to_cart_link', 'quantity_inputs_for_woocommerce_loop_add_to_cart_link', 10, 2);
 function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 {
 	if ($product && $product->is_type('simple') && $product->is_purchasable() && $product->is_in_stock() && !$product->is_sold_individually()) {
@@ -363,7 +363,7 @@ function category_has_children($term_id = 0, $taxonomy = 'product_cat')
 }
 
 /*** Change number of products that are displayed per page (shop page)*/
-add_filter('loop_shop_per_page', 'new_loop_shop_per_page', 20);
+//add_filter('loop_shop_per_page', 'new_loop_shop_per_page', 20);
 
 function new_loop_shop_per_page($cols)
 {
@@ -385,7 +385,7 @@ function custom_meta_query($meta_query)
 }
 
 // The main shop and archives meta query
-add_filter('woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2);
+//add_filter('woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2);
 function custom_product_query_meta_query($meta_query, $query)
 {
 	//if( ! is_admin() )
@@ -393,7 +393,7 @@ function custom_product_query_meta_query($meta_query, $query)
 }
 
 // The shortcode products query
-add_filter('woocommerce_shortcode_products_query', 'custom__shortcode_products_query', 10, 3);
+//add_filter('woocommerce_shortcode_products_query', 'custom__shortcode_products_query', 10, 3);
 function custom__shortcode_products_query($query_args, $atts, $loop_name)
 {
 	if (!is_admin())
@@ -402,7 +402,7 @@ function custom__shortcode_products_query($query_args, $atts, $loop_name)
 }
 
 // The widget products query
-add_filter('woocommerce_products_widget_query_args', 'custom_products_widget_query_arg', 10, 1);
+//add_filter('woocommerce_products_widget_query_args', 'custom_products_widget_query_arg', 10, 1);
 function custom_products_widget_query_arg($query_args)
 {
 	if (!is_admin())
@@ -412,7 +412,7 @@ function custom_products_widget_query_arg($query_args)
 
 
 //Rimuovi breadcrumb
-add_action('template_redirect', 'remove_shop_breadcrumbs');
+//add_action('template_redirect', 'remove_shop_breadcrumbs');
 function remove_shop_breadcrumbs()
 {
 	global $post;
@@ -428,7 +428,7 @@ function remove_shop_breadcrumbs()
 
 }
 
-add_filter('woocommerce_my_account_my_orders_query', 'custom_my_account_orders', 10, 1);
+//add_filter('woocommerce_my_account_my_orders_query', 'custom_my_account_orders', 10, 1);
 function custom_my_account_orders($args)
 {
 	// Set the post per page
