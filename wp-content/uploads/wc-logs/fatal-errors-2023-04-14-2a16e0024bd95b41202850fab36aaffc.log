@@ -1,2 +1,6 @@
 2023-04-14T13:29:05+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ':' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/checkout/payment-method.php alla riga 29
 
+2023-04-14T14:44:30+00:00 CRITICAL syntax error, unexpected 'proceed' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 349
+
+2023-04-14T14:44:32+00:00 CRITICAL syntax error, unexpected 'proceed' (T_STRING) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 349
+
