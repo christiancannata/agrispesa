@@ -61,7 +61,7 @@ if( $related_products ): ?>
             <?php if($thumb_url):?>
               <img src="<?php $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
             <?php else: ?>
-              <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+              <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
             <?php endif;?>
           </a>
           <div class="product-box--text">

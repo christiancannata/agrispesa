@@ -72,7 +72,7 @@
 										<?php if($thumb_id):?>
 								      <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( get_the_title($producer->ID) ); ?>" />
 								    <?php else: ?>
-								      <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( get_the_title($producer->ID) ); ?>" />
+								      <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( get_the_title($producer->ID) ); ?>" />
 								    <?php endif;?>
 
 								  </a>

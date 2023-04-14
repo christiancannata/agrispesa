@@ -94,7 +94,7 @@ function landingSelectVariable() {
 
   //First load check
   var currentUrl = jQuery('#get_url').attr("href");
-  //var currentUrl = 'https://staging.agrispesa.it/carrello?&quantity=1&variation_id=60';
+  //var currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
   var url = new URL(currentUrl);
   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();

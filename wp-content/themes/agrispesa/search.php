@@ -131,7 +131,7 @@ if( !empty($product_categories) ){
                 <?php if($thumb_id):?>
                   <img width="300" height="300" src="<?php the_post_thumbnail_url(); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?php echo the_title(); ?>" decoding="async" loading="lazy" />
                 <?php else: ?>
-                  <img src="https://staging.agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+                  <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
                 <?php endif;?>
 
                 <h2 class="woocommerce-loop-product__title"><?php echo the_title(); ?></h2>
