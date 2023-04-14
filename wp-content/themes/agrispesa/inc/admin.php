@@ -306,6 +306,8 @@ add_action("rest_api_init", function () {
     register_rest_route("agrispesa/v1", "import-subscriptions", ["methods" => "POST", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
+		$wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
+
         $lines = explode(PHP_EOL, $request->get_body());
         $users = [];
         foreach ($lines as $line) {
@@ -347,7 +349,6 @@ add_action("rest_api_init", function () {
             $hasSubscription = wcs_user_has_subscription($wordpressUser->ID);
             if (!$hasSubscription) {
 				 $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
-				 $wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
                 if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"])) {
                     continue;
                 }
