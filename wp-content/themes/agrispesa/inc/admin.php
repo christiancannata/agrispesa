@@ -385,6 +385,70 @@ add_action("rest_api_init", function () {
     }, "callback" => function ($request) {
         ($xml = simplexml_load_string($request->get_body())) or die("Error: Cannot create object");
         $products = (array)$xml;
+
+		//create categories blacklist
+		$categories = [];
+
+		foreach($products["ROW"] as $product){
+			$product = (array)$product;
+			$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
+			$product['productgroupcode'] = (string)$product['productgroupcode'];
+			$product['productgroupdescription'] = (string)$product['productgroupdescription'];
+
+			if(!isset($categories[$product['itemcategorydescription']])){
+				$categories[$product['itemcategorydescription']] = [
+					'name' => $product['itemcategorydescription'],
+					'subcategories' => []
+					];
+			}
+
+			$product['productgroupcode'] = explode("-",$product['productgroupcode']);
+			if(isset($product['productgroupcode'][1])){
+				$product['productgroupcode'] = $product['productgroupcode'][1];
+			}else{
+				$product['productgroupcode'] = $product['productgroupcode'][0];
+			}
+
+			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = $product['productgroupdescription'];
+
+		}
+
+		foreach($categories as $category){
+			if($category['name'] == 'TRASPORTO' || $category['name'] == 'ABBONAMENTI' ){
+				continue;
+			}
+
+			foreach($category['subcategories'] as $code => $subcategory){
+				if(empty($subcategory)){
+					continue;
+				}
+
+				 $categoryAlreadyExists = get_posts(
+					 ["post_type" => "gruppo-prodotto",
+					 "post_status" => "publish",
+					 "posts_per_page" => 1,
+					 'meta_key' => 'codice_gruppo_prodotto',
+					 'meta_value' => $code
+					    	   ]);
+
+				if(empty($categoryAlreadyExists)){
+
+					$gruppoProdotto = wp_insert_post([
+						'post_title' => $subcategory,
+'post_content' => '',
+'post_status' => 'publish',
+'post_author' => 1,
+'post_type' => 'gruppo-prodotto'
+]);
+				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
+				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
+
+				}
+
+			}
+
+		}
+
         $activeProducts = array_filter($products["ROW"], function ($product) {
             $product = (array)$product;
             $price = str_replace(",", ".", (string)$product["unitprice"]);
@@ -437,7 +501,15 @@ add_action("rest_api_init", function () {
             update_post_meta($product["wordpress_id"], "_regular_price", $price);
             update_post_meta($product["wordpress_id"], "_price", $price);
             update_post_meta($product["wordpress_id"], "_navision_id", (string)$product["id_product"]);
-            update_post_meta($product["wordpress_id"], "_gruppo_prodotto", (string)$product["productgroupcode"]);
+
+			$code =  (string)$product["productgroupcode"];
+			$code = explode("-",$code);
+			if(isset($code[1])){
+				$code = $code[1];
+			}else{
+				$code = $code[0];
+			}
+            update_post_meta($product["wordpress_id"], "_gruppo_prodotto",$code);
         }
         $args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "term_id", "terms" => [907, 877], "operator" => "IN", ], ], ];
         $productsToExclude = new WP_Query($args);
@@ -2085,7 +2157,7 @@ function cptui_register_my_cpts_delivery_group() {
     $labels = ["name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"), "singular_name" => esc_html__("Gruppo di consegna", "custom-post-type-ui"), ];
     $args = ["label" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"), "labels" => $labels, "description" => "", "public" => true, "publicly_queryable" => true, "show_ui" => true, "show_in_rest" => true, "rest_base" => "", "rest_controller_class" => "WP_REST_Posts_Controller", "rest_namespace" => "wp/v2", "has_archive" => false, "show_in_menu" => true, "show_in_nav_menus" => true, "delete_with_user" => false, "exclude_from_search" => false, "capability_type" => "post", "map_meta_cap" => true, "hierarchical" => false, "can_export" => false, "rewrite" => ["slug" => "delivery-group", "with_front" => true], "query_var" => true, "supports" => ["title", "editor"], "show_in_graphql" => false, ];
     register_post_type("delivery-group", $args);
-    $labels = ["name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"), "singular_name" => esc_html__("Gruppi prodotto", "custom-post-type-ui"), ];
+    $labels = ["name" => esc_html__("Gruppi di Prodotto", "custom-post-type-ui"), "singular_name" => esc_html__("Gruppi di Prodotto", "custom-post-type-ui"), ];
     $args = ["label" => esc_html__("Gruppi Prodotto", "custom-post-type-ui"), "labels" => $labels, "description" => "", "public" => true, "publicly_queryable" => true, "show_ui" => true, "show_in_rest" => true, "rest_base" => "", "rest_controller_class" => "WP_REST_Posts_Controller", "rest_namespace" => "wp/v2", "has_archive" => false, "show_in_menu" => true, "show_in_nav_menus" => true, "delete_with_user" => false, "exclude_from_search" => false, "capability_type" => "post", "map_meta_cap" => true, "hierarchical" => false, "can_export" => false, "rewrite" => ["slug" => "gruppo-prodotto", "with_front" => true], "query_var" => true, "supports" => ["title", "editor"], "show_in_graphql" => false, ];
     register_post_type("gruppo-prodotto", $args);
     /**

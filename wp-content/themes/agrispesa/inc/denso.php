@@ -4,7 +4,8 @@
 add_filter('woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 10, 1);
 function custom_checkout_billing_city_field($shipping_fields)
 {
-	if (in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+
+	if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
 		add_filter('woocommerce_ship_to_different_address_checked', '__return_true');
 		global $woocommerce;
 
