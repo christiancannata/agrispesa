@@ -1433,6 +1433,12 @@ WHERE wp.ID IS NULL");
                 $newInvoices[] = $postId;
             }
 
+
+            update_option(
+                "last_import_invoices",
+                (new DateTime())->format("Y-m-d H:i:s")
+            );
+
             $response = new WP_REST_Response($newInvoices);
             $response->set_status(201);
 
