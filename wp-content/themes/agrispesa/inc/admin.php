@@ -219,6 +219,7 @@ add_action("rest_api_init", function () {
         }
         global $wpdb;
         foreach ($users as $id => $userPreference) {
+
             $args = ["fields" => "ids", "meta_query" => [["key" => "navision_id", "value" => $id, "compare" => "=", ], ], ];
             $member_arr = get_users($args); //finds all users with this meta_key == 'member_id' and meta_value == $member_id passed in url
             if (!empty($member_arr)) {
@@ -227,10 +228,12 @@ add_action("rest_api_init", function () {
                     $ids = explode("-", $product);
                     return end($ids);
                 }, $userPreference);
-                $productsBlacklistIds = $wpdb->get_results("SELECT p.ID,p.post_title FROM wp_posts p," . $wpdb->postmeta . ' m WHERE p.ID = m.post_id AND m.meta_key = "_sku" AND m.meta_value IN ("' . implode('","', $userPreference) . '")');
+
+                $productsBlacklistIds = $wpdb->get_results("SELECT p.ID,p.post_title,m.meta_value FROM wp_posts p," . $wpdb->postmeta . ' m WHERE p.ID = m.post_id AND m.meta_key = "codice_gruppo_prodotto" AND m.meta_value IN ("' . implode('","', $userPreference) . '")');
                 $productsBlacklistIds = array_map(function ($product) {
-                    return ["id" => $product->ID, "name" => $product->post_title, ];
+                    return ["id" => $product->ID, "name" => $product->post_title, 'code' => $product->meta_value];
                 }, $productsBlacklistIds);
+
                 $subscriptions = wcs_get_subscriptions(["subscriptions_per_page" => - 1, "customer_id" => $member_arr, ]);
                 foreach ($subscriptions as $subscription) {
                     update_post_meta($subscription->ID, "_box_blacklist", $productsBlacklistIds);
