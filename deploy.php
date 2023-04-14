@@ -5,7 +5,7 @@ namespace Deployer;
 require 'recipe/common.php';
 
 // Config
-set('keep_releases', 1);
+set('keep_releases', 3);
 
 set('repository', 'git@github.com:christiancannata/agrispesa.git');
 
@@ -21,14 +21,27 @@ host('167.71.36.33')
     ->set('branch', 'master');
 
 // Hooks
+task('ssh:permission', function () {
+    run('chmod 400 ~/.ssh/id_rsa');
+})->desc('Artisan migrations');
+
+
+task('permission:reset', function () {
+    run('chown -R root:www-data {{deploy_path}}');
+    //run('cd {{deploy_path}} && find . -type f -exec chmod 644 {} \;');
+})->desc('Fix permissions');
 
 after('deploy:failed', 'deploy:unlock');
 
 after('deploy:publish', 'reload:php');
+after('deploy:prepare', 'ssh:permission');
+//after('deploy:release', 'permission:reset');
 //after('deploy:publish', 'deploy:cloudflare');
 
 task('reload:php', function () {
+    run('chown -R root:www-data {{deploy_path}}');
     run('sudo /usr/sbin/service php8.1-fpm restart');
+    run('sudo /usr/sbin/service nginx restart');
 });
 
 

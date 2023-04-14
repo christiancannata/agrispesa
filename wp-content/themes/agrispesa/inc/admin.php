@@ -173,10 +173,11 @@ function get_order_delivery_date_from_date(
 
         foreach ($groups as $singleGroup) {
             $caps = get_post_meta($singleGroup->ID, "cap", true);
-
-            if (in_array($cap, $caps)) {
+			if(is_array($caps)){
+				  if (in_array($cap, $caps)) {
                 $group = $singleGroup->post_title;
             }
+			}
         }
     }
 
