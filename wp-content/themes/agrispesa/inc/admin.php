@@ -37,7 +37,7 @@ function give_user_subscription($product, $user, $row) {
     update_post_meta($order->get_id(), "_billing_partita_iva", $row["automatismiSettimanali_intestazioneFattura::codiceFiscale"]);
     update_post_meta($order->get_id(), "_billing_codice_fiscale", $row["automatismiSettimanali_intestazioneFattura::partitaIva"]);
     $order->save();
-    $subscriptionParams = ["order_id" => $order->get_id(), "customer_id" => $user_id, "status" => $row['riceveSpesa'] == 1?"active":"hold", "billing_period" => WC_Subscriptions_Product::get_period($product), "billing_interval" => WC_Subscriptions_Product::get_interval($product), ];
+    $subscriptionParams = ["order_id" => $order->get_id(), "customer_id" => $user_id, "status" => $row['riceveSpesa'] == 1?"active":"on-hold", "billing_period" => WC_Subscriptions_Product::get_period($product), "billing_interval" => WC_Subscriptions_Product::get_interval($product), ];
     $sub = wcs_create_subscription($subscriptionParams);
     if (is_wp_error($sub)) {
         dd($sub);
