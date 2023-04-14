@@ -828,7 +828,7 @@ body.woocommerce-checkout {
 		background: $white;
 	}
 }
-
+body.woocommerce-checkout .woocommerce-form-login,
 .woocommerce-account-fields,
 .woocommerce-billing-fields,
 .woocommerce-border-form,
@@ -865,6 +865,15 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 		@include font-size(16);
 		margin-bottom: 32px;
 	}
+}
+
+body.woocommerce-checkout .woocommerce-form-login {
+	border: none;
+	margin-top: 4px;
+}
+
+body.woocommerce-checkout .woocommerce-form-login p:not(.form-row) {
+	margin-bottom: 24px;
 }
 
 .woocommerce-coupons-section {
@@ -1011,4 +1020,9 @@ body.woocommerce-checkout .woocommerce-gift-card-section {
 		border-top: 1px solid $panna;
 		padding-top: 12px !important;
 	}
+}
+
+
+.wpmc-tabs-wrapper .wpmc-tab-text {
+	text-transform: none;
 }

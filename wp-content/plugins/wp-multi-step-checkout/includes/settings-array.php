@@ -211,9 +211,9 @@ if ( ! function_exists( 'get_wmsc_settings' ) ) {
 				'section'    => 'titles',
 			),
 			't_skip_login'             => array(
-				'label'      => __( 'Skip Login', 'wp-multi-step-checkout' ),
+				'label'      => __( 'Salta', 'wp-multi-step-checkout' ),
 				'input_form' => 'input_text',
-				'value'      => _x( 'Skip Login', 'Frontend: button label', 'wp-multi-step-checkout' ),
+				'value'      => _x( 'Salta', 'Frontend: button label', 'wp-multi-step-checkout' ),
 				'section'    => 'titles',
 			),
 			't_previous'               => array(
@@ -306,13 +306,13 @@ if ( ! function_exists( 'wmsc_step_content_login' ) ) {
 	 * @param object $checkout The Checkout object from the WooCommerce plugin.
 	 * @param bool   $stop_at_login If the user should be logged in in order to checkout.
 	 */
-	function wmsc_step_content_login( $checkout, $stop_at_login ) { ?> 
+	function wmsc_step_content_login( $checkout, $stop_at_login ) { ?>
 	<div class="wpmc-step-item wpmc-step-login">
 			<div id="checkout_login" class="woocommerce_checkout_login wp-multi-step-checkout-step">
 				<?php
 				woocommerce_login_form(
 					array(
-						'message'  => apply_filters( 'woocommerce_checkout_logged_in_message', __( 'If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing &amp; Shipping section.', 'wp-multi-step-checkout' ) ),
+						'message'  => apply_filters( 'woocommerce_checkout_logged_in_message', __( 'Se sei già nostro cliente, accedi al tuo account.', 'wp-multi-step-checkout' ) ),
 						'redirect' => wc_get_page_permalink( 'checkout' ),
 						'hidden'   => false,
 					)

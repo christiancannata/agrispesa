@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$buttons_class = apply_filters( 'wmsc_buttons_class', 'button alt' );
+$buttons_class = apply_filters( 'wmsc_buttons_class', 'btn btn-secondary btn-small' );
 $wrapper_class = apply_filters( 'wmsc_buttons_wrapper_class', 'wpmc-nav-wrapper' );
 $back_to_cart  = ( isset( $options['show_back_to_cart_button'] ) && $options['show_back_to_cart_button'] ) ? true : false;
 if ( ! $back_to_cart ) {
@@ -24,7 +24,7 @@ if ( ! $back_to_cart ) {
 	<button id="wpmc-prev" class="<?php echo $buttons_class; // phpcs:ignore ?> button-inactive wpmc-nav-button" type="button"><?php echo $options['t_previous']; // phpcs:ignore ?></button>
 	<?php if ( $show_login_step ) : ?>
 		<button id="wpmc-next" class="<?php echo $buttons_class; // phpcs:ignore ?> button-active wpmc-nav-button" type="button"><?php echo $options['t_next']; // phpcs:ignore ?></button>
-		<button id="wpmc-skip-login" class="<?php echo $buttons_class; // phpcs:ignore ?> button-active current wpmc-nav-button" type="button"><?php echo $options['t_skip_login']; // phpcs:ignore ?></button>
+		<button id="wpmc-skip-login" class="<?php echo $buttons_class; // phpcs:ignore ?> button-active current wpmc-nav-button" type="button">Salta e procedi</button>
 	<?php else : ?>
 		<button id="wpmc-next" class="<?php echo $buttons_class; // phpcs:ignore ?> button-active current wpmc-nav-button" type="button"><?php echo $options['t_next']; // phpcs:ignore ?></button>
 	<?php endif; ?>
