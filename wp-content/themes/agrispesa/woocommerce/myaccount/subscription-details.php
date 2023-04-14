@@ -34,6 +34,10 @@ if($subscription->get_shipping_postcode()) {
 
 //Robe di date di consegna
 $current_date = date('Y-m-d');
+//$current_date_hour = date('Y-m-d H:i:s' );
+$current_date_hour = new DateTime("now", new DateTimeZone( "Europe/Rome" ));
+$current_date_hour->format('d-m-Y H:i:s');
+
 $deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $subscription_postcode);
 
 $shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
@@ -156,6 +160,21 @@ if($current_date > $deliveryDate) {
 
 }
 
+//print_r($next_date);
+//print_r($deliveryDate);
+
+
+// $dataLimite = $previousThursday . ' 08:00:00';
+// $dataOra = $current_date_hour;
+
+
+// // compare dates
+// if ($dataLimite < $dataOra) {
+//     echo 'scaduto';
+// }else {
+//     echo "libero";
+// }
+
 echo "
 <script>
 var countDownDate = new Date('".$previousThursday." 08:00:00').getTime();
@@ -178,9 +197,23 @@ var x = setInterval(function() {
 	// Display the result in the element with id='countdown'
 	if(days > 1) {
 		document.getElementById('countdown').innerHTML = days + ' giorni';
+	} else if(days < 1 && hours < 1) {
+		if(minutes > 1) {
+			document.getElementById('countdown').innerHTML = minutes + ' minuti';
+		} if(minutes < 1 ) {
+			document.getElementById('countdown').innerHTML = seconds + ' secondi';
+		} else {
+			document.getElementById('countdown').innerHTML = minutes + ' minuto';
+		}
 	} else {
-		document.getElementById('countdown').innerHTML = hours + ' ore e '
-		+ minutes + ' minuti';
+		if(hours > 1) {
+			document.getElementById('countdown').innerHTML = hours + ' ore e '
+			+ minutes + ' minuti';
+		} else {
+			document.getElementById('countdown').innerHTML = hours + ' ora e '
+			+ minutes + ' minuti';
+		}
+
 	}
 
 

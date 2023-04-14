@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-03-24 11:36+0100\n"
+"PO-Revision-Date: 2023-04-13 20:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3433,7 +3433,7 @@ msgstr "il %1$s giorno di ogni %2$s mese"
 #. translators: on, 1$: <date>, 2$: <month> each year (e.g. "on March 15th each year").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2454
 msgid "on %1$s %2$s each year"
-msgstr "Il %1$s %2$s ogni anno"
+msgstr "il %1$s %2$s ogni anno"
 
 #. translators: 1$: month (e.g. "March"), 2$: day of the month (e.g. "23rd), 3$: interval year (r.g  March 23rd every 2nd year").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2461
