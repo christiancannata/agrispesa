@@ -343,10 +343,11 @@ add_action("rest_api_init", function () {
                 $usersSkipped[] = $user["id_utente"];
                 continue;
             }
-            $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
-            $wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
+
             $hasSubscription = wcs_user_has_subscription($wordpressUser->ID);
             if (!$hasSubscription) {
+				 $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
+				 $wpdb->query("delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';");
                 if (empty($user["automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"])) {
                     continue;
                 }

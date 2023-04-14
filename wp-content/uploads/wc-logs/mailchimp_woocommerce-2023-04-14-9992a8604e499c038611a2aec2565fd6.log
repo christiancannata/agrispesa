@@ -853,3 +853,32 @@
 2023-04-14T20:18:07+00:00 NOTICE order_submit.success :: addStoreOrder :: #27241 :: email: annalisa.rizzo@gmail.com
 2023-04-14T20:18:13+00:00 NOTICE order.member.updated :: Updated ricci.giusy@virgilio.it subscriber status to subscribed and language to it
 2023-04-14T20:18:13+00:00 NOTICE order_submit.success :: addStoreOrder :: #27243 :: email: ricci.giusy@virgilio.it
+2023-04-14T20:18:28+00:00 NOTICE order.member.updated :: Updated benedetta.panni@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:18:28+00:00 NOTICE order_submit.success :: addStoreOrder :: #27245 :: email: benedetta.panni@gmail.com
+2023-04-14T20:18:42+00:00 NOTICE order.member.updated :: Updated marina@alteregostudio.it subscriber status to subscribed and language to it
+2023-04-14T20:18:42+00:00 NOTICE order_submit.success :: addStoreOrder :: #27247 :: email: marina@alteregostudio.it
+2023-04-14T20:18:54+00:00 NOTICE order.member.updated :: Updated michirea2@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:18:54+00:00 NOTICE order_submit.success :: addStoreOrder :: #27249 :: email: michirea2@gmail.com
+2023-04-14T20:19:00+00:00 NOTICE order.member.updated :: Updated gael.mattone@sgcib.com subscriber status to subscribed and language to it
+2023-04-14T20:19:00+00:00 NOTICE order_submit.success :: addStoreOrder :: #27251 :: email: gael.mattone@sgcib.com
+2023-04-14T20:19:05+00:00 NOTICE order.member.updated :: Updated avenia@tin.it subscriber status to subscribed and language to it
+2023-04-14T20:19:05+00:00 NOTICE order_submit.success :: addStoreOrder :: #27253 :: email: avenia@tin.it
+2023-04-14T20:19:17+00:00 NOTICE order.member.updated :: Updated lorena.boriani@live.it subscriber status to subscribed and language to it
+2023-04-14T20:19:17+00:00 NOTICE order_submit.success :: addStoreOrder :: #27255 :: email: lorena.boriani@live.it
+2023-04-14T20:19:23+00:00 NOTICE order.member.updated :: Updated rossanadiana@virgilio.it subscriber status to subscribed and language to it
+2023-04-14T20:19:23+00:00 NOTICE order_submit.success :: addStoreOrder :: #27257 :: email: rossanadiana@virgilio.it
+2023-04-14T20:19:36+00:00 NOTICE order.member.updated :: Updated atarchin@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:19:36+00:00 NOTICE order_submit.success :: addStoreOrder :: #27259 :: email: atarchin@gmail.com
+2023-04-14T20:19:42+00:00 NOTICE order.member.updated :: Updated valentina.pasquali@evonik.com subscriber status to subscribed and language to it
+2023-04-14T20:19:42+00:00 NOTICE order_submit.success :: addStoreOrder :: #27261 :: email: valentina.pasquali@evonik.com
+2023-04-14T20:19:55+00:00 NOTICE order.member.updated :: Updated ellis.peretti@tin.it subscriber status to subscribed and language to it
+2023-04-14T20:19:55+00:00 NOTICE order_submit.success :: addStoreOrder :: #27263 :: email: ellis.peretti@tin.it
+2023-04-14T20:20:09+00:00 NOTICE order.member.updated :: Updated alessandrabonanno@hotmail.it subscriber status to subscribed and language to it
+2023-04-14T20:20:09+00:00 NOTICE order_submit.success :: addStoreOrder :: #27265 :: email: alessandrabonanno@hotmail.it
+2023-04-14T20:20:23+00:00 NOTICE order.member.updated :: Updated micol.scabbia@cliffordchance.com subscriber status to subscribed and language to it
+2023-04-14T20:20:23+00:00 NOTICE order_submit.success :: addStoreOrder :: #27267 :: email: micol.scabbia@cliffordchance.com
+2023-04-14T20:20:36+00:00 NOTICE order.member.updated :: Updated simona@simonaoberti.com subscriber status to subscribed and language to it
+2023-04-14T20:20:36+00:00 NOTICE order_submit.success :: addStoreOrder :: #27269 :: email: simona@simonaoberti.com
+2023-04-14T20:20:41+00:00 NOTICE order.member.updated :: Updated cabrinichiara@gmail.com subscriber status to subscribed and language to it
+2023-04-14T20:20:41+00:00 NOTICE order_submit.success :: addStoreOrder :: #27271 :: email: cabrinichiara@gmail.com
+2023-04-14T20:20:50+00:00 NOTICE order_submit :: #27273 has a financial status of pending and was skipped.
