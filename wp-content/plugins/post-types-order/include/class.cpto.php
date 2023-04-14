@@ -252,10 +252,7 @@
                 {
                     $options          =     $this->functions->get_options();
                     
-                    //if functionality turned off, continue
-                    if( $options['archive_drag_drop']   !=      '1')
-                        return;
-                    
+                                        
                     //if adminsort turned off no need to continue
                     if( $options['adminsort']           !=      '1')
                         return;

@@ -4,7 +4,7 @@ Tags: acf, fields, custom fields, meta, repeater
 Requires at least: 4.7
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 6.1.1
+Stable tag: 6.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,21 @@ From your WordPress dashboard
 
 
 == Changelog ==
+
+= 6.1.4 =
+*Release Date 12th April 2023*
+
+* Fix - ACF now detects when another plugin or theme is loading an incompatible version of Select2, and will fallback to a basic select field for the field type selection
+* Fix - Post Object, Page Link and Relationship field types now use a default `post_status` filter of `any`, matching the behavior prior to ACF 6.1. This can be edited per field in the field group admin or via the `acf/fields/$field_type/query` filters
+* Fix - Post Type and Taxonomy key generation now uses dashes rather than underscores
+* Fix - The "add first" text no longer appears when no search results are found for ACF field groups, post types or taxonomies
+
+= 6.1.3 =
+*Release Date 5th April 2023*
+
+* Fix - 'Create Terms' button for taxonomy fields now displays correctly
+* Fix - ACF JSON field group files which have unsupported keys (not beginning with `group_`) will now load as field groups
+* Fix - Renaming capabilities for post types will now set `map_meta_cap` to `true` solving an issue with assigning permissions to roles for that post type
 
 = 6.1.2 =
 *Release Date 4th April 2023*

@@ -187,6 +187,7 @@ function wcs_create_subscription( $args = array() ) {
 	}
 
 	$subscription->save();
+
 	/**
 	 * Filter the newly created subscription object.
 	 * We need to fetch the subscription from the database as the current object state doesn't match the loaded state.

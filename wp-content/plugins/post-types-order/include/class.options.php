@@ -33,7 +33,6 @@
                             $options['autosort']                = isset($_POST['autosort'])     ? intval($_POST['autosort'])    : '';
                             $options['adminsort']               = isset($_POST['adminsort'])    ? intval($_POST['adminsort'])   : '';
                             $options['use_query_ASC_DESC']      = isset($_POST['use_query_ASC_DESC'])    ? intval($_POST['use_query_ASC_DESC'])   : '';
-                            $options['archive_drag_drop']       = isset($_POST['archive_drag_drop'])    ? intval($_POST['archive_drag_drop'])   : '';
                             
                             $options['navigation_sort_apply']   = isset($_POST['navigation_sort_apply'])    ? intval($_POST['navigation_sort_apply'])   : '';
                                                 
@@ -154,8 +153,7 @@
                                             <th scope="row" style="text-align: right;"><label for="archive_drag_drop"><?php esc_html_e('Archive Drag&Drop ', 'post-types-order') ?></label></th>
                                             <td>
                                                 <p>
-                                                <input type="checkbox" <?php checked( '1', $options['archive_drag_drop'] ); ?> id="archive_drag_drop" value="1" name="archive_drag_drop">
-                                                <?php esc_html_e("Allow sortable drag & drop functionality within default WordPress post type archive. Admin Sort need to be active.", 'post-types-order') ?>.</p>
+                                                <?php esc_html_e("Allow sortable drag & drop functionality within default WordPress post type archive. Admin Sort need to be active.", 'post-types-order') ?></p>
                                                 <br />
                                                 <?php
                                                 

@@ -555,7 +555,8 @@ class WC_Order extends WC_Abstract_Order {
 	 */
 	protected function get_address_prop( $prop, $address = 'billing', $context = 'view' ) {
 		$value = null;
-        if ( array_key_exists( $prop, $this->data[ $address ] ) ) {
+
+		if ( array_key_exists( $prop, $this->data[ $address ] ) ) {
 			$value = isset( $this->changes[ $address ][ $prop ] ) ? $this->changes[ $address ][ $prop ] : $this->data[ $address ][ $prop ];
 
 			if ( 'view' === $context ) {

@@ -875,6 +875,9 @@ body.woocommerce-checkout .woocommerce-form-login {
 body.woocommerce-checkout .woocommerce-form-login p:not(.form-row) {
 	margin-bottom: 24px;
 }
+.wpmc-tabs-wrapper {
+	margin-top: 16px !important;
+}
 
 .woocommerce-coupons-section {
 	@include border-radius(16px 16px 0 0);

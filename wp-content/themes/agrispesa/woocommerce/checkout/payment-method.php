@@ -26,7 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
 		<?php if( esc_attr($gateway->id) == 'satispay'):?>
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/satispay@2x.png" class="show-img" alt="Paga con Satispay"/>
-		<?php elseif(esc_attr($gateway->id) == 'woocommerce_payments'):?>
+		<?php endif;?>
+		<?php if(esc_attr($gateway->id) == 'woocommerce_payments'):?>
 		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/credit-cards@2x.png" class="show-img" alt="Paga con Carta di credito"/>
 		<?php endif;?>
 	</label>
