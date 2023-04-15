@@ -865,6 +865,11 @@ WHERE wp.ID IS NULL");
             if (!$navisionId) {
                 continue;
             }
+
+			$piano = get_post_meta($order->get_id(),'shipping_piano',true);
+			if(!$piano){
+				$piano = '';
+			}
             foreach ($order->get_items() as $item_id => $item) {
                 $product = $item->get_product();
                 $productNavisionId = get_post_meta($product->get_id(), "_navision_id", true);
@@ -898,7 +903,7 @@ WHERE wp.ID IS NULL");
                 $ele1->nodeValue = $order->get_shipping_address_1();
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("sh_description1");
-                $ele1->nodeValue = "";
+                $ele1->nodeValue = $piano;
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("comment_lines");
                 $ele1->nodeValue = $order->get_customer_note();
@@ -963,7 +968,7 @@ WHERE wp.ID IS NULL");
                 $ele1->nodeValue = $order->get_shipping_address_1();
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("sh_description1");
-                $ele1->nodeValue = "";
+                $ele1->nodeValue = $piano;
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("comment_lines");
                 $ele1->nodeValue = $order->get_customer_note();
@@ -1699,6 +1704,13 @@ function create_order_from_subscription($id) {
     update_post_meta($order->get_id(), "_total_box_weight", $weight);
     update_post_meta($order->get_id(), "_week", $week);
     update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
+
+	$piano = get_user_meta($customerId,'shipping_piano',true);
+	$pianoValue = '';
+	if($piano){
+		$pianoValue = 'Piano '.$piano;
+	}
+	update_post_meta($order->get_id(),'shipping_piano',$pianoValue);
     /*
     if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
     $order->get_date_paid()->add(new DateInterval('P7D'));
