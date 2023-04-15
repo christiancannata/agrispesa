@@ -30,9 +30,6 @@ $allowed_html = array(
 //Get User info
 $current_user = wp_get_current_user();
 
-
-
-
 // Set limit
 $limit = 3;
 
@@ -261,7 +258,67 @@ if($current_date < $deliveryDate) {
 
 		<?php  endif;endif; endforeach;?>
 
+		<div class="account-get-products">
+			<h3 class="account-get-products--title">Aggiungi prodotti alla tua scatola</h3>
+			<div class="account-get-products--loop">
+					<?php
+					$args = array(
+		        'limit'     => '8',
+		        'orderby'   => array( 'meta_value_num' => 'DESC', 'title' => 'ASC' ),
+						'product_cat' => 'Negozio',
+		        'meta_key'  => 'total_sales',
+		    );
 
+		    $query    = new WC_Product_Query( $args );
+		    $products = $query->get_products();
+		    if ( $products ): ?>
+		        <?php foreach ( $products as $product ):
+							$product = wc_get_product( $product->get_id() );
+							//print_r($product);
+							$thumb_id = get_post_thumbnail_id( $product->get_id() );
+							$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
+							$thumb_url = $thumb_url_array[0];
+							// unità di misura personalizzata
+							$product_data = $product->get_meta('_woo_uom_input');
+							?>
+								<article class="product-box">
+								  <a href="<?php the_permalink($product->get_id()); ?>" class="product-box--link" title="<?php echo $product->get_name(); ?>">
+								    <?php if($thumb_id):?>
+								      <img src="<?php echo $thumb_url; ?>" class="product-box--thumb" alt="<?php echo strip_tags( $product->get_name() ); ?>" />
+								    <?php else: ?>
+								      <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo  strip_tags( $product->get_name() ); ?>" />
+								    <?php endif;?>
+								  </a>
+								  <div class="product-box--text">
+								    <div class="product-box--text--top">
+								      <h2 class="product-box--title"><a href="<?php the_permalink($product->get_id()); ?>" title="<?php echo $product->get_name(); ?>"><?php echo $product->get_name(); ?></a></h2>
+								      <div class="product-box--price--flex">
+
+												<?php if ( $product->has_weight() ) {
+								        	if($product_data && $product_data != 'gr') {
+								        		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span>';
+								        	} else {
+								            if($product->get_weight() == 1000) {
+								        			echo '<span class="product-info--quantity">1 kg</span>';
+								        		} else {
+								        			echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span>';
+								        		}
+								        	}
+								        } ?>
+								        <div class="product-box--price">
+								          <?php echo $product->get_price_html(); ?>
+								        </div>
+								      </div>
+
+								      <?php echo do_shortcode('[add_to_cart id="'.$product->get_id().'" show_price="false" class="btn-fake" quantity="1" style="border:none;"]');?>
+								    </div>
+								  </div>
+								</article>
+
+		        <?php endforeach; ?>
+		    <?php endif; ?>
+				</div>
+		</div>
 
 
 
