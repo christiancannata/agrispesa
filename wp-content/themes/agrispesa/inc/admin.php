@@ -2,6 +2,39 @@
 function dd($vars) {
     die(var_dump($vars));
 }
+
+function merge_orders($subscriptionOrder, $orders){
+
+		foreach($orders as $order){
+			$first_order_id = $orders->get_id();
+			foreach( $order->get_items() as $item_id => $item )
+            {
+                $product_id = $item->get_product_id();
+                $variation_id = $item->get_variation_id();
+                $product_quantity = $item->get_quantity();
+
+                //if product type is simple
+                if($variation_id == 0)
+                {
+                    $product = wc_get_product($product_id);
+                    $subscriptionOrder->add_product($product, $product_quantity);
+                }
+                //if product type is variable
+                else
+                {
+                    $variation = wc_get_product($variation_id);
+                    $subscriptionOrder->add_product($variation, $product_quantity);
+                }
+            }
+            $subscriptionOrder->calculate_totals();
+			update_post_meta($order->get_id(),'is_merged_order',1);
+            $order->update_status("cancelled", "This order is cancelled since it is combined with order ID: ".$subscriptionOrder->get_id());
+            $subscriptionOrder->add_order_note("Order ID: $first_order_id is cancelled and combined with this order.");
+		}
+
+
+
+}
 function give_user_subscription($product, $user, $row) {
     $user_id = $user->ID;
     // First make sure all required functions and classes exist
@@ -352,6 +385,15 @@ add_action("rest_api_init", function () {
                 $wordpressUser = reset($wordpressUser);
             }
             if (!$wordpressUser) {
+
+			/*	//creo utente
+
+				$user_id = wp_create_user( $username, $password, $email_address );
+				$user = new WP_User( $user_id );
+				$user->set_role( 'customer' );
+
+				$wordpressUser = get_user_by('id', $userId);
+*/
                 $usersSkipped[] = $user["id_utente"];
                 continue;
             }
@@ -403,11 +445,13 @@ add_action("rest_api_init", function () {
             return $price > 0;
         });
 
-				foreach($activeProducts as $product){
+			foreach($activeProducts as $product){
 			$product = (array)$product;
 			$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
 			$product['productgroupcode'] = (string)$product['productgroupcode'];
 			$product['productgroupdescription'] = (string)$product['productgroupdescription'];
+
+
 
 			if(!isset($categories[$product['itemcategorydescription']])){
 				$categories[$product['itemcategorydescription']] = [
@@ -470,6 +514,12 @@ add_action("rest_api_init", function () {
         $productIds = [];
         $newProducts = [];
         foreach ($activeProducts as $key => $product) {
+
+			if((string)$product["productgroupcode"] == 'TRASPORTO'){
+				update_option('delivery_product_sku',(string)$product["id_product"]);
+				continue;
+			}
+
             $product = (array)$product;
             $sku = (string)$product["id_product"];
             $sku = explode("_", $sku);
@@ -561,9 +611,11 @@ WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")"
         $productsSku = array_unique($productsSku);
         $importedPosts = $wpdb->get_results("SELECT post_id,meta_value FROM " . $wpdb->postmeta . ' WHERE meta_key = "_navision_id" AND meta_value IN ("' . implode('","', $productsSku) . '")');
         $productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => "publish", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola"], "operator" => "IN", ], ], ]);
-        $wpdb->query("UPDATE wp_posts
+
+       /* $wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
-WHERE post_type = 'product' WHERE ID NOT IN (" . implode(",", $productsToExclude) . ");");
+WHERE post_type = 'product' WHERE ID NOT IN (" . implode(",", $productsToExclude) . ");");*/
+
         $postIds = array_map(function ($post) {
             return $post->post_id;
         }, $importedPosts);
@@ -597,6 +649,7 @@ WHERE post_type = 'product' WHERE ID NOT IN (" . implode(",", $productsToExclude
 FROM wp_postmeta pm
 LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
 WHERE wp.ID IS NULL");
+
         foreach ($boxes as $idBox => $boxProducts) {
             $navisionId = explode("-", $idBox);
             $navisionId = end($navisionId);
@@ -784,14 +837,30 @@ WHERE wp.ID IS NULL");
     register_rest_route("agrispesa/v1", "export-orders", ["methods" => "GET", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
-        $args = ["status" => ["wc-processing", "wc-completed"], ];
-        $orders = wc_get_orders($args);
+
+		$week = (new \DateTime())->format("W");
+		$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+		$currentWeek =  date("y") . $week;
+
         $doc = new DOMDocument();
         $doc->formatOutput = true;
         $root = $doc->createElement("ROOT");
         $root = $doc->appendChild($root);
         $customers = [];
+
+		$lastWeek = (new \DateTime())->sub(new DateInterval('P7Y'));
+
+		$orders = wc_get_orders([
+    'limit'        => -1,
+    'orderby'      => 'date',
+    'order'        => 'ASC',
+    'meta_key'     => '_date_completed',
+    'meta_compare' => '>',
+    'meta_value' => $lastWeek->getTimestamp()
+]);
         foreach ($orders as $order) {
+
+
             $navisionId = get_post_meta($order->get_id(), "_box_navision_id", true);
             if (!$navisionId) {
                 continue;
@@ -829,7 +898,7 @@ WHERE wp.ID IS NULL");
                 $ele1->nodeValue = $order->get_shipping_address_1();
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("sh_description1");
-                $ele1->nodeValue = "Scala 1 | Piano 2";
+                $ele1->nodeValue = "";
                 $row->appendChild($ele1);
                 $ele1 = $doc->createElement("comment_lines");
                 $ele1->nodeValue = $order->get_customer_note();
@@ -863,6 +932,73 @@ WHERE wp.ID IS NULL");
                 $row->appendChild($ele2);
                 $root->appendChild($row);
             }
+
+			$shipping_method_total = 0;
+
+			foreach( $order->get_items( 'shipping' ) as $item_id => $item ){
+    			$shipping_method_total = $item->get_total();
+			}
+
+			if($shipping_method_total > 0){
+				//add shipping
+				$row = $doc->createElement("ROW");
+                $ele1 = $doc->createElement("id_order");
+                $ele1->nodeValue = 10000 + $order->get_id();
+                $row->appendChild($ele1);
+                //check if has navision id
+                $navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
+                $ele1 = $doc->createElement("id_codeclient");
+                $ele1->nodeValue = $navisionId;
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("date");
+                $ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("date_consegna");
+                $ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("sh_name");
+                $ele1->nodeValue = $order->get_shipping_first_name() . " " . $order->get_shipping_last_name();
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("sh_address");
+                $ele1->nodeValue = $order->get_shipping_address_1();
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("sh_description1");
+                $ele1->nodeValue = "";
+                $row->appendChild($ele1);
+                $ele1 = $doc->createElement("comment_lines");
+                $ele1->nodeValue = $order->get_customer_note();
+                $row->appendChild($ele1);
+                $ele2 = $doc->createElement("sh_city");
+                $ele2->nodeValue = $order->get_shipping_city();
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("sh_postcode");
+                $ele2->nodeValue = $order->get_shipping_postcode();
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("sh_province");
+                $ele2->nodeValue = $order->get_shipping_state();
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("id_product");
+                $ele2->nodeValue = get_option();
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("quantity");
+                $ele2->nodeValue = 1;
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("discount");
+                $ele2->nodeValue = "0";
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("unitprice");
+                $ele2->nodeValue = str_replace(".", ",", number_format(5, 4));
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("ref_offer_no");
+                $ele2->nodeValue = $currentWeek.'-STCOMP';
+                $row->appendChild($ele2);
+                $ele2 = $doc->createElement("ref_offer_line_no");
+                $ele2->nodeValue = get_option('delivery_ref_offer_line_no');
+                $row->appendChild($ele2);
+                $root->appendChild($row);
+
+			}
+
         }
         header("Content-type: text/xml");
         die($doc->saveXml());
@@ -1298,9 +1434,12 @@ if (!function_exists("mv_add_meta_boxes")) {
 		<h4>Cosa non voglio ricevere</h4>
 		<table class="table">
 		<?php foreach ($boxBlacklist as $preference): ?>
+		<?php
+			$category = get_post_meta($preference["id"],'categoria_principale_gruppo_prodotto',true)
+		?>
 		<tr>
-		<td><?php echo $preference["name"]; ?></td>
-		<td><a href="/wp-admin/post.php?post=<?php echo $preference["id"]; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
+		<td><?php echo $category.' > '.$preference["name"]; ?></td>
+		</tr>
 </tr>
 		<?php
             endforeach; ?>
@@ -1334,17 +1473,18 @@ if (!function_exists("mv_add_other_fields_for_packaging")) {
         if (empty($weight)) {
             $weight = 0;
         }
-        echo "<span>Peso della scatola: <strong>" . $weight . " kg</strong></span><br>";
+        //echo "<span>Peso della scatola: <strong>" . $weight . " kg</strong></span><br>";
         echo "<span>Settimana: <strong>" . $week . "</strong></span><br><br>";
         echo "<span>Gruppo di consegna: <strong>" . $gruppoConsegna . "</strong></span><br><br>";
         echo "<span>Data di ricezione: <strong>" . $deliveryDay . "</strong></span><br><br>";
-        echo '<strong>Numero di consegna:</strong><br>
+      /*  echo '<strong>Numero di consegna:</strong><br>
 		<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
+
         global $wpdb;
-        $allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {
-				$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+        $allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+*/
 ?>
-		<strong>Data di consegna:</strong><br>
+	<!--	<strong>Data di consegna:</strong><br>
 		<select autocomplete="off" name="_data_consegna">
 
 			<?php foreach ($allDataConsegna as $dataConsegna):
@@ -1365,7 +1505,7 @@ if (!function_exists("mv_add_other_fields_for_packaging")) {
 
 			<?php
         endforeach; ?>
-		</select>
+		</select>-->
 		<?php
     }
 }
@@ -1555,7 +1695,7 @@ function create_order_from_subscription($id) {
     $item->save();
     }*/
     $order->calculate_totals();
-    $order->update_status("processing", "", true);
+    $order->update_status("completed", "", true);
     update_post_meta($order->get_id(), "_total_box_weight", $weight);
     update_post_meta($order->get_id(), "_week", $week);
     update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
@@ -1579,6 +1719,15 @@ function create_order_from_subscription($id) {
             update_post_meta($order->get_id(), "_gruppo_consegna", $group->post_title);
         }
     }
+
+	//get all orders of same user
+	/*$args = array(
+    'customer_id' => $customerId,
+	'status' => 'completed',
+    'limit' => -1, // to retrieve _all_ orders by this user
+	);
+	$orders = wc_get_orders($args);
+*/
     calculate_delivery_date_order($order->get_id(), false);
 }
 function get_all_single_box() {
