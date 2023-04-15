@@ -142,7 +142,7 @@ if ($next_date->format("m") === '01') {
 }
 
 //Quanti giorni mancano alla consegna?
-if($current_date > $deliveryDate) {
+if($current_date < $deliveryDate) {
 	$date1 = new DateTime($current_date);
 	$date2 = $deliveryDate;
 	$diff = $date2->diff($date1)->format("%a");
@@ -160,8 +160,6 @@ if($current_date > $deliveryDate) {
 
 }
 
-//print_r($next_date);
-//print_r($deliveryDate);
 
 
 // $dataLimite = $previousThursday . ' 08:00:00';

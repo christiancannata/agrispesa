@@ -24,8 +24,19 @@ function wc_minimum_order_amount(){
 	$loggedUser = is_user_logged_in();
 	$allowedClients = get_field('agr_clients_no_limits', 'option');
 
+	$has_sub = '';
+	if($loggedUser) {
+		$current_user = wp_get_current_user();
+		$has_sub = wcs_user_has_subscription( $current_user->ID, '', 'active' );
+	}
 
-	if ($loggedUser && $allowedClients && in_array($loggedUser, $allowedClients)) {
+
+	if($loggedUser && $has_sub) {
+		//tolgo il limite se l'utente ha un abbonamento attivo
+		$minimum = 0;
+		echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-check is-icon green"></span>Hai già una Facciamo noi!</span><span class="is-description">Aggiungeremo questi prodotti alla tua prossima scatola.</span></div></div>';
+	} else if ($loggedUser && $allowedClients && in_array($loggedUser, $allowedClients)) {
+		//tolgo il limite se l'utente è autorizzato da backend
 		$minimum = 10;
 	}
 
