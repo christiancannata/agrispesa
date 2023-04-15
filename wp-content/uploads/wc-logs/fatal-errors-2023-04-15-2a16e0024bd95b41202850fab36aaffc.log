@@ -114,3 +114,12 @@ Stack trace:
 
 2023-04-15T10:43:35+00:00 CRITICAL syntax error, unexpected 'else' (T_ELSE), expecting end of file in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 269
 
+2023-04-15T15:13:10+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/emails/customer-completed-order.php:67
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(364): wc_get_template('emails/customer...', Array, '', '')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/emails/class-wc-email-customer-completed-order.php(109): wc_get_template_html('emails/customer...', Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/emails/class-wc-email.php(572): WC_Email_Customer_Completed_Order->get_content_html()
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/kadence-woocommerce-email-designer/includes/class-kadence-woomail-preview.php(740): WC_Email->get_content()
+#5 / in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/emails/customer-completed-order.php alla riga 67
+
