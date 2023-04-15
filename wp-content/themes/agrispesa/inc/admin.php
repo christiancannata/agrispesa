@@ -500,9 +500,10 @@ add_action("rest_api_init", function () {
             $activeProducts[$key] = $product;
         }
         //Attivo i prodotti
-        //	$productIds = array_unique($productIds);
-        //$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
-        foreach ($activeProducts as $product) {
+       	$productIds = array_unique($productIds);
+        $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+
+		foreach ($activeProducts as $product) {
             $price = (string)$product["unitprice"];
             $price = str_replace(",", ".", $price);
             $price = floatval($price);
