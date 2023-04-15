@@ -225,7 +225,7 @@ if($what_category_ID) {
 			</div>
 			<div class="landing-meet--bottom">
 
-				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
+				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood-1.jpg" alt="Per ogni razza, per ogni tipetto" />
 			</div>
 		</div>
 		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
@@ -270,7 +270,7 @@ if($what_category_ID) {
 					Per bovari bernesi, ma anche per chihuahua.<br/>
 					Pawer è pensato per i cani di tutte le razze e di tutte le età.
 				</p>
-				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
+				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood-2.jpg" alt="Per ogni razza, per ogni tipetto" />
 			</div>
 		</div>
 		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
