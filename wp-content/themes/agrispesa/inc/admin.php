@@ -467,7 +467,7 @@ add_action("rest_api_init", function () {
         SET post_status = 'draft'
         WHERE post_type = 'product';");
         */
-        //$productIds = [];
+        $productIds = [];
         $newProducts = [];
         foreach ($activeProducts as $key => $product) {
             $product = (array)$product;
