@@ -491,7 +491,7 @@ add_action("rest_api_init", function () {
                 $productObj->save();
             }
             $product["wordpress_id"] = $productId;
-            //$productIds[] = $productId;
+            $productIds[] = $productId;
             /*
             $product = new WC_Product($productId);
             $product->set_status('publish');
