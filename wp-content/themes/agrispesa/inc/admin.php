@@ -848,7 +848,7 @@ WHERE wp.ID IS NULL");
         $root = $doc->appendChild($root);
         $customers = [];
 
-		$lastWeek = (new \DateTime())->sub(new DateInterval('P7Y'));
+		$lastWeek = (new \DateTime())->sub(new DateInterval('P7D'));
 
 		$orders = wc_get_orders([
     'limit'        => -1,
@@ -1708,7 +1708,7 @@ function create_order_from_subscription($id) {
 	$piano = get_user_meta($customerId,'shipping_piano',true);
 	$pianoValue = '';
 	if($piano){
-		$pianoValue = 'Piano '.$piano;
+		$pianoValue = 'Piano/Scala '.$piano;
 	}
 	update_post_meta($order->get_id(),'shipping_piano',$pianoValue);
     /*
