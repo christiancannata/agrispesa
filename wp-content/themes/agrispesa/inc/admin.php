@@ -467,7 +467,7 @@ add_action("rest_api_init", function () {
         SET post_status = 'draft'
         WHERE post_type = 'product';");
         */
-        //$productIds = [];
+        $productIds = [];
         $newProducts = [];
         foreach ($activeProducts as $key => $product) {
             $product = (array)$product;
@@ -491,7 +491,7 @@ add_action("rest_api_init", function () {
                 $productObj->save();
             }
             $product["wordpress_id"] = $productId;
-            //$productIds[] = $productId;
+            $productIds[] = $productId;
             /*
             $product = new WC_Product($productId);
             $product->set_status('publish');
@@ -500,9 +500,10 @@ add_action("rest_api_init", function () {
             $activeProducts[$key] = $product;
         }
         //Attivo i prodotti
-        //	$productIds = array_unique($productIds);
-        //$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
-        foreach ($activeProducts as $product) {
+       	$productIds = array_unique($productIds);
+        $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+
+		foreach ($activeProducts as $product) {
             $price = (string)$product["unitprice"];
             $price = str_replace(",", ".", $price);
             $price = floatval($price);
