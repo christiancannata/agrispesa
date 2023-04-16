@@ -863,7 +863,7 @@ function filter_woocommerce_package_rates( $rates, $package ) {
         // Loop
         foreach ( $rates as $rate_id => $rate ) {
             // Rate method id = free shipping
-            if ( $rate->cost === 0 ) {
+            if ( $rate->method_id === 'free-shipping' ) {
                 $free[ $rate_id ] = $rate;
                 break;
             }
