@@ -58,8 +58,17 @@ function give_user_subscription($product, $user, $row) {
     $country   = get_user_meta( $user_id, 'billing_country', true );
     $state     = get_user_meta( $user_id, 'billing_state', true );
     */
-    $shippingAddress = ["first_name" => $fname, "last_name" => $lname, "email" => $email, "phone" => (isset($row["automatismiSettimanali_utenze::telmobile"]))?$row["automatismiSettimanali_utenze::telmobile"]:'', "address_1" => $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] . " " . $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"], "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"], "state" => "", "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"], "country" => "IT", ];
-    $invoiceAddress = ["first_name" => $row["automatismiSettimanali_intestazioneFattura::nome"], "last_name" => $row["automatismiSettimanali_intestazioneFattura::cognome"], "email" => $email, "phone" => (isset($row["automatismiSettimanali_utenze::telmobile"]))?$row["automatismiSettimanali_utenze::telmobile"]:'', "address_1" => $row["automatismiSettimanali_intestazioneFattura::indirizzo"] . " " . $row["automatismiSettimanali_intestazioneFattura::numeroCivico"], "city" => $row["automatismiSettimanali_intestazioneFattura::città"], "state" => "", "postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"], "country" => "IT", ];
+    $shippingAddress = [
+		"first_name" => $fname,
+		 "last_name" => $lname,
+		  "email" => $email,
+		  "phone" => (isset($row["automatismiSettimanali_utenze::telmobile"]))?$row["automatismiSettimanali_utenze::telmobile"]:'',
+		   "address_1" => $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] . " " . $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"],
+		   "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"],
+		   "state" => $row["automatismiSettimanali_speseSpedizione::provincia"],
+		    "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"],
+		     "country" => "IT" ];
+    $invoiceAddress = ["first_name" => $row["automatismiSettimanali_intestazioneFattura::nome"], "last_name" => $row["automatismiSettimanali_intestazioneFattura::cognome"], "email" => $email, "phone" => (isset($row["automatismiSettimanali_utenze::telmobile"]))?$row["automatismiSettimanali_utenze::telmobile"]:'', "address_1" => $row["automatismiSettimanali_intestazioneFattura::indirizzo"] . " " . $row["automatismiSettimanali_intestazioneFattura::numeroCivico"], "city" => $row["automatismiSettimanali_intestazioneFattura::città"], "state" => $row["automatismiSettimanali_speseSpedizione::provincia"], "postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"], "country" => "IT", ];
     $order->set_customer_id($user_id);
     $order->set_address($invoiceAddress, "billing");
     $order->set_address($shippingAddress, "shipping");
@@ -484,6 +493,7 @@ add_action("rest_api_init", function () {
 				 $categoryAlreadyExists = get_posts(
 					 ["post_type" => "gruppo-prodotto",
 					 "post_status" => "publish",
+					 'fields' => 'ids',
 					 "posts_per_page" => 1,
 					 'meta_key' => 'codice_gruppo_prodotto',
 					 'meta_value' => $code
@@ -501,6 +511,10 @@ add_action("rest_api_init", function () {
 				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
 				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
 
+				}else{
+					$gruppoProdotto = $categoryAlreadyExists[0];
+					update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
+				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
 				}
 
 			}
@@ -878,13 +892,13 @@ WHERE wp.ID IS NULL");
                 }
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_order");
-                $ele1->nodeValue = 10000 + $order->get_id();
+                $ele1->nodeValue = 100000+ $order->get_id();
                 $row->appendChild($ele1);
                 update_post_meta($order->get_id(), "navision_id", 10000 + $order->get_id());
                 //check if has navision id
                 $navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
                 if (!$navisionId) {
-                    $navisionId = 10000 + $order->get_customer_id();
+                    $navisionId = 100000 + $order->get_customer_id();
                     update_user_meta($order->get_customer_id(), "navision_id", $navisionId);
                 }
                 $ele1 = $doc->createElement("id_codeclient");
@@ -1687,8 +1701,33 @@ function create_order_from_subscription($id) {
         wc_add_order_item_meta($itemId, "offer_line_no", $productToAdd["offer_line_no"]);
     }
     // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
-    $order->set_address(["first_name" => $subscription->get_billing_first_name(), "last_name" => $subscription->get_billing_last_name(), "company" => $subscription->get_billing_company(), "email" => $subscription->get_billing_email(), "phone" => $subscription->get_billing_phone(), "address_1" => $subscription->get_billing_address_1(), "address_2" => $subscription->get_billing_address_2(), "city" => $subscription->get_billing_city(), "state" => $subscription->get_billing_state(), "postcode" => $subscription->get_billing_postcode(), "country" => $subscription->get_billing_country(), ], "billing");
-    $order->set_address(["first_name" => $subscription->get_shipping_first_name(), "last_name" => $subscription->get_shipping_last_name(), "company" => $subscription->get_shipping_company(), "email" => $subscription->get_billing_email(), "phone" => $subscription->get_shipping_phone(), "address_1" => $subscription->get_shipping_address_1(), "address_2" => $subscription->get_shipping_address_2(), "city" => $subscription->get_shipping_city(), "state" => $subscription->get_shipping_state(), "postcode" => $subscription->get_shipping_postcode(), "country" => $subscription->get_shipping_country(), ], "shipping");
+    $order->set_address([
+		"first_name" => $subscription->get_billing_first_name(),
+		 "last_name" => $subscription->get_billing_last_name(),
+		 "company" => $subscription->get_billing_company(),
+		  "email" => $subscription->get_billing_email(),
+		   "phone" => $subscription->get_billing_phone(),
+		   "address_1" => $subscription->get_billing_address_1(),
+		   "address_2" => $subscription->get_billing_address_2(),
+		   "city" => $subscription->get_billing_city(),
+		   "state" => $subscription->get_billing_state(),
+		   "postcode" => $subscription->get_billing_postcode(),
+		   "country" => $subscription->get_billing_country()
+		    ],
+     "billing");
+    $order->set_address([
+		"first_name" => $subscription->get_shipping_first_name(),
+		"last_name" => $subscription->get_shipping_last_name(),
+		"company" => $subscription->get_shipping_company(),
+		"email" => $subscription->get_billing_email(),
+		"phone" => $subscription->get_shipping_phone(),
+		"address_1" => $subscription->get_shipping_address_1(),
+		"address_2" => $subscription->get_shipping_address_2(),
+		"city" => $subscription->get_shipping_city(),
+		"state" => $subscription->get_shipping_state(),
+		"postcode" => $subscription->get_shipping_postcode(),
+		 "country" => $subscription->get_shipping_country()
+		  ], "shipping");
     /*$items = $subscription->get_items();
     foreach ($items as $item) {
 
