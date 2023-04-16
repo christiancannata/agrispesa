@@ -841,3 +841,35 @@ function codiceFiscale($cf){
 
 	return true;
 }
+
+
+
+//set free shipping if user has subscription
+function filter_woocommerce_package_rates( $rates, $package ) {
+	$loggedUser = is_user_logged_in();
+
+	$has_sub = '';
+	if($loggedUser) {
+		$current_user = wp_get_current_user();
+		$has_sub = wcs_user_has_subscription( $current_user->ID, '', 'active' );
+	}
+
+
+    // Condition
+    if($has_sub) {
+        // Set
+        $free = array();
+
+        // Loop
+        foreach ( $rates as $rate_id => $rate ) {
+            // Rate method id = free shipping
+            if ( $rate->cost === 0 ) {
+                $free[ $rate_id ] = $rate;
+                break;
+            }
+        }
+    }
+
+    return ! empty( $free ) ? $free : $rates;
+}
+add_filter( 'woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2 );
