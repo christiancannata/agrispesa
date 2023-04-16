@@ -1671,6 +1671,21 @@ WHERE wp.ID IS NULL
         }
     }
 }
+
+add_filter( 'woocommerce_email_recipient_customer_on_hold_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
+add_filter( 'woocommerce_email_recipient_customer_processing_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
+add_filter( 'woocommerce_email_recipient_customer_completed_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
+// TARGET OTHER EMAILS WITH https://www.businessbloomer.com/woocommerce-add-extra-content-order-email/
+
+function bbloomer_disable_customer_emails_if_disabled( $recipient, $order ) {
+    $page = $_GET['page'] = isset( $_GET['page'] ) ? $_GET['page'] : '';
+    if ( 'wc-settings' === $page ) {
+        return $recipient;
+    }
+    if ( get_post_meta( $order->get_id(), '_disable_order_emails', true ) ) $recipient = '';
+    return $recipient;
+}
+
 function create_order_from_subscription($id) {
     $subscription = wcs_get_subscription($id);
     if (!$subscription) {
@@ -1743,7 +1758,7 @@ function create_order_from_subscription($id) {
     update_post_meta($order->get_id(), "_total_box_weight", $weight);
     update_post_meta($order->get_id(), "_week", $week);
     update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
-
+	update_post_meta( $order->get_id(), '_disable_order_emails', true );
 	$piano = get_user_meta($customerId,'shipping_piano',true);
 	$pianoValue = '';
 	if($piano){
