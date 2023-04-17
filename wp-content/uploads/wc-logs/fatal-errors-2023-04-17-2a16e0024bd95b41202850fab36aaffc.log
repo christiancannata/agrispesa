@@ -1,0 +1,20 @@
+2023-04-17T17:51:15+00:00 CRITICAL Uncaught Error: Call to undefined function custom_meta_query() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:392
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_product_query_meta_query(Array, Object(WC_Query))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(774): apply_filters('woocommerce_pro...', Array, Object(WC_Query))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(530): WC_Query->get_meta_query(Array, true)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(422): WC_Query->product_query(Object(WP_Query))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WC_Query->pre_get_posts(Object(WP_Query))
+#6 /Users/natha in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 392
+
+2023-04-17T17:55:54+00:00 CRITICAL Uncaught Error: Call to undefined function custom_meta_query() in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php:392
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): custom_product_query_meta_query(Array, Object(WC_Query))
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(774): apply_filters('woocommerce_pro...', Array, Object(WC_Query))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(530): WC_Query->get_meta_query(Array, true)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-query.php(422): WC_Query->product_query(Object(WP_Query))
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WC_Query->pre_get_posts(Object(WP_Query))
+#6 /Users/natha in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/shop.php alla riga 392
+

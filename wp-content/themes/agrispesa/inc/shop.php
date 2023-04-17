@@ -385,12 +385,12 @@ function new_loop_shop_per_page($cols)
 // }
 
 // The main shop and archives meta query
-add_filter('woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2);
-function custom_product_query_meta_query($meta_query, $query)
-{
-	//if( ! is_admin() )
-	return custom_meta_query($meta_query);
-}
+// add_filter('woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2);
+// function custom_product_query_meta_query($meta_query, $query)
+// {
+// 	//if( ! is_admin() )
+// 	return custom_meta_query($meta_query);
+// }
 
 // The shortcode products query
 add_filter('woocommerce_shortcode_products_query', 'custom__shortcode_products_query', 10, 3);
