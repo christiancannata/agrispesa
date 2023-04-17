@@ -565,6 +565,7 @@ add_action("rest_api_init", function () {
             }
             $product["wordpress_id"] = $productId;
             $productIds[] = $productId;
+			update_post_meta($productId,'_is_active_shop',1);
             /*
             $product = new WC_Product($productId);
             $product->set_status('publish');
@@ -575,7 +576,6 @@ add_action("rest_api_init", function () {
         //Attivo i prodotti
        	$productIds = array_unique($productIds);
         $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
-		$wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productIds) . ")");
 
 		foreach ($activeProducts as $product) {
             $price = (string)$product["unitprice"];
@@ -660,6 +660,7 @@ WHERE post_type = 'product' WHERE ID NOT IN (" . implode(",", $productsToExclude
                 $singleProductBox = $singleProductBox->get_posts();
                 $postIds[] = $singleProductBox[0]->ID;
                 $postIds[] = $singleProductBox[0]->post_parent;
+
             }
         }
         if (!empty($postIds)) {
@@ -700,6 +701,7 @@ WHERE wp.ID IS NULL");
                 update_post_meta($post_id, "_data_consegna", $deliveryDate->format("Y-m-d"));
                 update_post_meta($post_id, "_product_box_id", $singleProductBox);
                 update_post_meta($post_id, "_navision_id", (string)$boxProducts[0]["offer_no"]);
+
                 $arrayProducts = [];
                 foreach ($boxProducts as $boxProduct) {
                     $singleProduct = new WP_Query(["post_type" => "product", "meta_key" => "_navision_id", "meta_value" => $boxProduct["id_product"], "order" => "ASC", "posts_per_page" => 1, ]);
@@ -708,6 +710,8 @@ WHERE wp.ID IS NULL");
                     }
                     $singleProduct = $singleProduct->get_posts();
                     $singleProduct = reset($singleProduct);
+					update_post_meta($singleProduct->ID,'_is_active_shop',1);
+
                     $arrayProducts[] = ["id" => $singleProduct->ID, "quantity" => 1, "name" => $singleProduct->post_title, "offer_line_no" => (string)$boxProduct["offer_line_no"], ];
                 }
                 add_post_meta($post_id, "_products", $arrayProducts);
