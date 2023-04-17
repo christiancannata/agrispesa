@@ -552,7 +552,7 @@ add_action("rest_api_init", function () {
             $productId = wc_get_product_id_by_sku($sku[0]);
             if (!$productId) {
                 $productObj = new WC_Product_Simple();
-                $productObj->set_name((string)$product["description"].(string)$product["description2"]);
+                $productObj->set_name((string)$product["description"].' '.(string)$product["description2"]);
                 $productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
                 $productObj->set_sku($sku[0]);
                 $productObj->save();
@@ -564,7 +564,7 @@ add_action("rest_api_init", function () {
                 $newProducts[] = $productObj;
             } else {
                 $productObj = wc_get_product($productId);
-                $productObj->set_name((string)$product["description"].(string)$product["description2"]);
+                $productObj->set_name((string)$product["description"].' '.(string)$product["description2"]);
                 $productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
                 $productObj->save();
             }
