@@ -33,6 +33,17 @@ global $woocommerce;
 		  href="<?php echo get_template_directory_uri(); ?>/assets/fonts/emoji/emoji.min.css">
 
 	<?php wp_head(); ?>
+	<!-- Hotjar Tracking Code for https://www.agrispesa.it/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3453600,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 </head>
 
 <?php $info_agr = get_field('info_agr', 'option'); ?>
@@ -102,7 +113,7 @@ global $woocommerce;
 									<?php get_template_part('global-elements/logo', 'open'); ?>
 								</span>
 						</a>
-						
+
 					</div>
 			</div>
 
