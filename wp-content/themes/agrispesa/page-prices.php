@@ -30,10 +30,10 @@ get_header(); ?>
 						</div>
 						<div class="prices--element">
 							Consegna €5
-							<span class="info-shipping">La prima consegna è gratuita!</span>
+							
 						</div>
 						<div class="prices--element price">
-							<span class="symbol">€</span>26
+							<span class="symbol">€</span>25
 						</div>
 						<div class="prices--element final">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
@@ -53,7 +53,7 @@ get_header(); ?>
 						</div>
 						<div class="prices--element">
 							Consegna €5
-							<span class="info-shipping">La prima consegna è gratuita!</span>
+
 						</div>
 						<div class="prices--element price">
 							<span class="symbol">€</span>38
@@ -75,7 +75,7 @@ get_header(); ?>
 						</div>
 						<div class="prices--element">
 							Consegna €5
-							<span class="info-shipping">La prima consegna è gratuita!</span>
+
 						</div>
 						<div class="prices--element price">
 							<span class="symbol">€</span>55
@@ -97,7 +97,7 @@ get_header(); ?>
 						</div>
 						<div class="prices--element">
 							Consegna €5
-							<span class="info-shipping">La prima consegna è gratuita!</span>
+
 						</div>
 						<div class="prices--element price">
 							<span class="symbol">€</span>74

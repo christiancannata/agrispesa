@@ -46,8 +46,46 @@
 
 	&--title {
 		@include font-size(32);
-		font-weight: bold;
-		font-family: $font-title;
+		font-weight: 900;
+		@include breakpoint(desktop) {
+			@include font-size(40);
+		}
+	}
+
+	&--subtitle {
+		@include font-size(20);
+		margin: 24px 0 32px;
+		line-height: 1.3;
+		@include breakpoint(desktop) {
+			@include font-size(22);
+			margin: 8px 0 32px;
+		}
+	}
+}
+
+.thanks {
+	text-align: center;
+	padding: 32px 24px;
+	margin-bottom: 100px;
+	margin-top: 40px;
+	@include breakpoint(desktop) {
+		margin-top: 100px;
+	}
+
+	&--image {
+		max-width: 100%;
+		display: block;
+		margin: 32px auto;
+		width: 240px;
+
+		&.big {
+			width: 250px;
+		}
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 900;
 		@include breakpoint(desktop) {
 			@include font-size(40);
 		}
