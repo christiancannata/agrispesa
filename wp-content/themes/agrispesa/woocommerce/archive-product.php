@@ -215,13 +215,13 @@ if (woocommerce_product_loop()) {
 				'post_type' => 'product',
 				'orderby' => 'menu_order',
 				'order' => 'asc',
-				'meta_query'     => array(
-					array(
-            'key'        => '_is_active_shop',
-						'value' => '1',
-			      'compare' => '=='
-	        )
-				),
+				// 'meta_query'     => array(
+				// 	array(
+        //     'key'        => '_is_active_shop',
+				// 		'value' => '1',
+			  //     'compare' => '=='
+	      //   )
+				// ),
 			);
 			$cat_query = new WP_Query($args);
 
