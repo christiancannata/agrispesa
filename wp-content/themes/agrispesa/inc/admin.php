@@ -437,6 +437,12 @@ add_action("rest_api_init", function () {
     register_rest_route("agrispesa/v1", "import-products", ["methods" => "POST", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
+
+		$now = new DateTime();
+		$file = 'prodotti_'.$now->format("dmY_Hi").'.xml';
+		$uploadDire = wp_upload_dir($now->format("Y/m"));
+		file_put_contents($uploadDire['path'].'/'.$file, $request->get_body());
+
         ($xml = simplexml_load_string($request->get_body())) or die("Error: Cannot create object");
         $products = (array)$xml;
 
@@ -606,6 +612,12 @@ WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")"
     register_rest_route("agrispesa/v1", "import-box", ["methods" => "POST", "permission_callback" => function () {
         return true;
     }, "callback" => function ($request) {
+
+		$now = new DateTime();
+		$file = 'box_'.$now->format("dmY_Hi").'.xml';
+		$uploadDire = wp_upload_dir($now->format("Y/m"));
+		file_put_contents($uploadDire['path'].'/'.$file, $request->get_body());
+
         ($xml = simplexml_load_string($request->get_body())) or die("Error: Cannot create object");
         $products = (array)$xml;
         $boxes = [];
@@ -1675,7 +1687,6 @@ WHERE wp.ID IS NULL
 add_filter( 'woocommerce_email_recipient_customer_on_hold_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
 add_filter( 'woocommerce_email_recipient_customer_processing_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
 add_filter( 'woocommerce_email_recipient_customer_completed_order', 'bbloomer_disable_customer_emails_if_disabled', 9999, 2 );
-// TARGET OTHER EMAILS WITH https://www.businessbloomer.com/woocommerce-add-extra-content-order-email/
 
 function bbloomer_disable_customer_emails_if_disabled( $recipient, $order ) {
     $page = $_GET['page'] = isset( $_GET['page'] ) ? $_GET['page'] : '';
