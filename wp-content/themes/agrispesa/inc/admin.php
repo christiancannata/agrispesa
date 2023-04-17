@@ -558,8 +558,8 @@ add_action("rest_api_init", function () {
                 $newProducts[] = $productObj;
             } else {
                 $productObj = wc_get_product($productId);
-                $productObj->set_name((string)$product["description"]);
-                $productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
+                //$productObj->set_name((string)$product["description"]);
+                //$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
                 $productObj->set_description((string)$product["description2"]);
                 $productObj->save();
             }
@@ -593,7 +593,7 @@ add_action("rest_api_init", function () {
 			}
             update_post_meta($product["wordpress_id"], "_gruppo_prodotto",$code);
         }
-        $args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "term_id", "terms" => [907, 877], "operator" => "IN", ], ], ];
+        $args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ];
         $productsToExclude = new WP_Query($args);
         $idsToExclude = $productsToExclude->get_posts();
         $wpdb->query("UPDATE wp_posts
@@ -639,7 +639,7 @@ WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")"
         }
         $productsSku = array_unique($productsSku);
         $importedPosts = $wpdb->get_results("SELECT post_id,meta_value FROM " . $wpdb->postmeta . ' WHERE meta_key = "_navision_id" AND meta_value IN ("' . implode('","', $productsSku) . '")');
-        $productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => "publish", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola"], "operator" => "IN", ], ], ]);
+        $productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => "publish", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ]);
 
        /* $wpdb->query("UPDATE wp_posts
 SET post_status = 'draft'
