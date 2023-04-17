@@ -539,7 +539,7 @@ add_action("rest_api_init", function () {
         foreach ($activeProducts as $key => $product) {
 
 			if((string)$product["productgroupcode"] == 'arrotondamento'){
-				continue
+				continue;
 			}
 			if((string)$product["productgroupcode"] == 'TRASPORTO'){
 				update_option('delivery_product_sku',(string)$product["id_product"]);
