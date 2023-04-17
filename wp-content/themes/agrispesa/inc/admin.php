@@ -43,6 +43,8 @@ function give_user_subscription($product, $user, $row) {
     }
     $payment_gateways = WC()->payment_gateways->payment_gateways();
     $order = wc_create_order(["customer_id" => $user_id, ]);
+	update_post_meta( $order->get_id(), '_disable_order_emails', true );
+
     if (is_wp_error($order)) {
         dd($order);
         return false;
@@ -81,6 +83,7 @@ function give_user_subscription($product, $user, $row) {
     $order->save();
     $subscriptionParams = ["order_id" => $order->get_id(), "customer_id" => $user_id, "status" => $row['riceveSpesa'] == 1?"active":"on-hold", "billing_period" => WC_Subscriptions_Product::get_period($product), "billing_interval" => WC_Subscriptions_Product::get_interval($product), ];
     $sub = wcs_create_subscription($subscriptionParams);
+	update_post_meta( $sub->get_id(), '_disable_order_emails', true );
     if (is_wp_error($sub)) {
         dd($sub);
         return false;
