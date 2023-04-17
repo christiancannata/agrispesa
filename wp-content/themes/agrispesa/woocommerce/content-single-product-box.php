@@ -138,7 +138,7 @@ if ( post_password_required() ) {
 
 <section id="select-box" class="box-types">
 	<div class="box-types--flex">
-		<div class="box-types--item vegana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegana.jpg)">
+		<div class="box-types--item vegana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegana.webp)">
 			<span class="box-types--label">Box<br/>per 2</span>
 			<h3 class="box-types--title">Vegana</h3>
 			<ul class="box-types--list">
@@ -150,7 +150,7 @@ if ( post_password_required() ) {
 				<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18983'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 			</div>
 		</div>
-		<div class="box-types--item vegetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegetariana.jpg)">
+		<div class="box-types--item vegetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/vegetariana.webp)">
 			<span class="box-types--label">Box<br/>per 2</span>
 			<h3 class="box-types--title">Vegetariana</h3>
 			<ul class="box-types--list">
@@ -160,7 +160,7 @@ if ( post_password_required() ) {
 			</ul>
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18984'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
-		<div class="box-types--item pescetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/pescetariana.jpg)">
+		<div class="box-types--item pescetariana" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/pescetariana.webp)">
 			<span class="box-types--label">Box<br/>per 2</span>
 			<h3 class="box-types--title">Pescetariana</h3>
 			<ul class="box-types--list">
@@ -170,7 +170,7 @@ if ( post_password_required() ) {
 			</ul>
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18985'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
-		<div class="box-types--item onnivora" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/onnivora.jpg)">
+		<div class="box-types--item onnivora" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/onnivora.webp)">
 			<span class="box-types--label">Box<br/>per 2</span>
 			<h3 class="box-types--title">Onnivora</h3>
 			<ul class="box-types--list">

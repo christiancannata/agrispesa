@@ -13,7 +13,7 @@
 				<div class="footer--column one">
 
 					<div class="footer--menu">
-						<h6 class="footer--menu--title big-title">Stai fresc<small>*</small> <span class="icon-arrow-down footer--menu--title__icon only-mobile"></span></h6>
+						<h6 class="footer--menu--title big-title">Fai la spesa <span class="icon-arrow-down footer--menu--title__icon only-mobile"></span></h6>
 						<?php
 								wp_nav_menu( array(
 										'theme_location' => 'footer_menu_one',

@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="hero--box" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/box1_BZ.png" alt="Prova Agrispesa" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/box1_BZ.webp" alt="Prova Agrispesa" />
       </div>
     </div>
   </div>
