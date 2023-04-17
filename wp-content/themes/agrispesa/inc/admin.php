@@ -558,8 +558,8 @@ add_action("rest_api_init", function () {
                 $newProducts[] = $productObj;
             } else {
                 $productObj = wc_get_product($productId);
-                $productObj->set_name((string)$product["description"]);
-                $productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
+                //$productObj->set_name((string)$product["description"]);
+                //$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
                 $productObj->set_description((string)$product["description2"]);
                 $productObj->save();
             }
@@ -593,7 +593,7 @@ add_action("rest_api_init", function () {
 			}
             update_post_meta($product["wordpress_id"], "_gruppo_prodotto",$code);
         }
-        $args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "term_id", "terms" => [907, 877], "operator" => "IN", ], ], ];
+        $args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola"], "operator" => "IN", ], ], ];
         $productsToExclude = new WP_Query($args);
         $idsToExclude = $productsToExclude->get_posts();
         $wpdb->query("UPDATE wp_posts
