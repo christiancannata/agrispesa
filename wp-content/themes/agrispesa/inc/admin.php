@@ -523,7 +523,7 @@ add_action("rest_api_init", function () {
 				}else{
 					$gruppoProdotto = $categoryAlreadyExists[0];
 					update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
-				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
+					update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
 				}
 
 			}
@@ -575,6 +575,7 @@ add_action("rest_api_init", function () {
         //Attivo i prodotti
        	$productIds = array_unique($productIds);
         $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+		$wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productIds) . ")");
 
 		foreach ($activeProducts as $product) {
             $price = (string)$product["unitprice"];
