@@ -33,7 +33,7 @@ get_header(); ?>
 							<span class="info-shipping">La prima consegna è gratuita!</span>
 						</div>
 						<div class="prices--element price">
-							<span class="symbol">€</span>26
+							<span class="symbol">€</span>25
 						</div>
 						<div class="prices--element final">
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary" alt="Abbonati alla spesa">Abbonati alla spesa</a>
