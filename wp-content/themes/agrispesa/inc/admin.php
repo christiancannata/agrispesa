@@ -557,6 +557,10 @@ add_action("rest_api_init", function () {
                 $productObj->set_sku($sku[0]);
                 $productObj->save();
                 $productId = $productObj->get_id();
+
+				$term = get_term_by('slug', 'senza-categoria', 'product_cat');
+				wp_set_object_terms($productId, $term->term_id, 'product_cat');
+
                 $newProducts[] = $productObj;
             } else {
                 $productObj = wc_get_product($productId);
