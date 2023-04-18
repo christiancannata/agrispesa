@@ -624,6 +624,10 @@ WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")"
 				}else{
 					$gruppoProdotto = $categoryAlreadyExists[0];
 					update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
+					wp_update_post(array(
+        'ID'    =>  $gruppoProdotto,
+        'post_status'   =>  'publish'
+        ));
 					update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
 				}
 
