@@ -641,6 +641,9 @@
 			$response->set_status(204);
 			return $response;
 		}, ]);
+
+
+
 		register_rest_route("agrispesa/v1", "import-box", ["methods" => "POST", "permission_callback" => function () {
 			return true;
 		}, "callback" => function ($request) {
@@ -797,8 +800,19 @@
 			$response = new WP_REST_Response($boxIds);
 			$response->set_status(201);
 			update_option("last_import_box", (new DateTime())->format("Y-m-d H:i:s"));
+
+			as_enqueue_async_action( 'reload_terms_count' );
+
 			return $response;
 		}, ]);
+
+
+		add_action( 'reload_terms_count',function(){
+			update_option("entrato", (new DateTime())->format("Y-m-d H:i:s"));
+		}, 10);
+
+
+
 		register_rest_route("agrispesa/v1", "export-customers", ["methods" => "GET", "permission_callback" => function () {
 			return true;
 		}, "callback" => function ($request) {
