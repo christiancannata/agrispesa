@@ -463,8 +463,30 @@
 				return $price > 0;
 			});
 
-				foreach($activeProducts as $product){
+			/*	$wpdb->query("UPDATE wp_posts
+			SET post_status = 'draft'
+			WHERE post_type = 'product';");
+			*/
+			$productIds = [];
+			$newProducts = [];
+			foreach ($activeProducts as $key => $product) {
+
+				if((string)$product["productgroupcode"] == 'arrotondamento'){
+					continue;
+				}
+				if((string)$product["productgroupcode"] == 'TRASPORTO'){
+					update_option('delivery_product_sku',(string)$product["id_product"]);
+					continue;
+				}
+
 				$product = (array)$product;
+				$sku = (string)$product["id_product"];
+				$sku = explode("_", $sku);
+
+
+
+				/* CREATE GROUP */
+
 				$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
 				$product['productgroupcode'] = (string)$product['productgroupcode'];
 				$product['productgroupdescription'] = (string)$product['productgroupdescription'];
@@ -544,27 +566,10 @@
 
 				}
 
-			}
 
-			/*	$wpdb->query("UPDATE wp_posts
-			SET post_status = 'draft'
-			WHERE post_type = 'product';");
-			*/
-			$productIds = [];
-			$newProducts = [];
-			foreach ($activeProducts as $key => $product) {
 
-				if((string)$product["productgroupcode"] == 'arrotondamento'){
-					continue;
-				}
-				if((string)$product["productgroupcode"] == 'TRASPORTO'){
-					update_option('delivery_product_sku',(string)$product["id_product"]);
-					continue;
-				}
 
-				$product = (array)$product;
-				$sku = (string)$product["id_product"];
-				$sku = explode("_", $sku);
+
 				$productId = wc_get_product_id_by_sku($sku[0]);
 				if (!$productId) {
 					$productObj = new WC_Product_Simple();
