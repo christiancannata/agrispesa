@@ -215,6 +215,7 @@ if (woocommerce_product_loop()) {
 				'post_type' => 'product',
 				'orderby' => 'menu_order',
 				'order' => 'asc',
+				'post_status' => 'publish',
 				// 'meta_query'     => array(
 				// 	array(
         //     'key'        => '_is_active_shop',
