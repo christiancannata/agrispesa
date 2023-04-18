@@ -1,0 +1,4 @@
+2023-04-18T15:54:24+00:00 CRITICAL syntax error, unexpected ')', expecting ';' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 564
+
+2023-04-18T16:21:52+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 672
+
