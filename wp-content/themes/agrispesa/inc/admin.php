@@ -485,7 +485,16 @@ add_action("rest_api_init", function () {
 				$product['productgroupcode'] = $product['productgroupcode'][0];
 			}
 
-			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = $product['productgroupdescription'];
+			if(!isset($categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']])){
+					$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = [
+				'description' => $product['productgroupdescription'],
+				'code' => $product['productgroupcode'],
+				'products' => []
+			];
+			}
+
+
+			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']]['products'][] =(string)$product['id_product'];
 
 		}
 
@@ -501,30 +510,36 @@ add_action("rest_api_init", function () {
 
 				 $categoryAlreadyExists = get_posts(
 					 ["post_type" => "gruppo-prodotto",
-					 "post_status" => "publish",
 					 'fields' => 'ids',
 					 "posts_per_page" => 1,
 					 'meta_key' => 'codice_gruppo_prodotto',
 					 'meta_value' => $code
 					    	   ]);
 
+				$gruppoProdotto = null;
+
 				if(empty($categoryAlreadyExists)){
 
 					$gruppoProdotto = wp_insert_post([
-						'post_title' => $subcategory,
+						'post_title' => $subcategory['description'],
 'post_content' => '',
-'post_status' => 'publish',
+'post_status' => 'draft',
 'post_author' => 1,
 'post_type' => 'gruppo-prodotto'
 ]);
-				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
-				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
 
 				}else{
 					$gruppoProdotto = $categoryAlreadyExists[0];
-					update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
-					update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
+
 				}
+
+				if(!$gruppoProdotto){
+					continue;
+				}
+
+				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
+				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
+				update_post_meta($gruppoProdotto,'products_sku',$subcategory['products']);
 
 			}
 
