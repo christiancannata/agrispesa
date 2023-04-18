@@ -1,8 +1,7 @@
-	<?php
+<?php
 	function dd($vars) {
 		die(var_dump($vars));
 	}
-
 	function merge_orders($subscriptionOrder, $orders){
 
 			foreach($orders as $order){
