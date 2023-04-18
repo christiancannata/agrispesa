@@ -112,13 +112,8 @@ if($what_category_ID) {
 				</div>
 				<div class="pawer-born--dx">
 					<p class="landing-meet--minititle">Petfood 100% naturale</p>
-					<h3 class="landing-meet--title">Nasce Pawer,<br/>la forza della natura <br class="only-desktop" />in un croccantino.</h3>
-					<p class="landing-meet--descr wide">Attraverso la giusta alimentazione potrai garantirgli:
-						sano sviluppo degli organi,
-						corretta formazione di muscoli e articolazioni,
-						crescita ossea adeguata,
-						armonica interazione psichica e comportamentale
-					</p>
+					<h3 class="landing-meet--title"><?php the_field('titolo_1'); ?></h3>
+					<p class="landing-meet--descr wide"><?php the_field('sottotitolo_1'); ?></p>
 
 					<div class="pawer-born--button">
 						<a href="#go-products" class="btn btn-primary scroll-to" title="Scopri i gusti">Scopri i gusti</a>
@@ -129,22 +124,22 @@ if($what_category_ID) {
 						<div class="pet-values--item">
 							<span class="icon-carne-pesce"></span>
 							<p class="pet-values--descr">
-								<strong>Carne e pesce <br class="only-desktop"/>di prima scelta.</strong>
-								I croccantini Pawer sono ricchi di proteine animali proveniente da allevamenti selezionati secondo i principi di Agrispesa.
+								<strong><?php the_field('titolo_valore_1'); ?></strong>
+								<?php the_field('testo_valore_1'); ?>
 							</p>
 						</div>
 						<div class="pet-values--item">
 							<span class="icon-verdura"></span>
 							<p class="pet-values--descr">
-								<strong>Verdure ed erbe <br class="only-desktop"/> biologiche.</strong>
-								Frutta e verdura coltivata nel rispetto della terra e della biodiversità, disidratata e facilmente digeribile.
+								<strong><?php the_field('titolo_valore_2'); ?></strong>
+								<?php the_field('testo_valore_2'); ?>
 							</p>
 						</div>
 						<div class="pet-values--item">
 							<span class="icon-animali"></span>
 							<p class="pet-values--descr">
-								<strong>Adatti a qualsiasi cane.</strong>
-								La composizione delle nostre ricette è stata studiata per essere adatta a cani di tutte le razze ed età.
+								<strong><?php the_field('titolo_valore_3'); ?></strong>
+								<?php the_field('testo_valore_3'); ?>
 							</p>
 						</div>
 
@@ -211,17 +206,8 @@ if($what_category_ID) {
 		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
 			<div class="landing-meet--top">
 				<p class="landing-meet--minititle">Pawer, Petfood 100% naturale</p>
-				<h3 class="landing-meet--title">Energia naturale,<br/>per gli eroi di tutti i giorni.</h3>
-				<p class="landing-meet--descr wide">
-					I nostri alimenti nutrono la mente, il corpo e l'anima.<br/>
-					Come? Grazie ai ricchi nutrienti che li
-					compongono, agli ingredienti offerti dalla
-					natura, al metodo di lavorazione a filiera corta,
-					alla lavorazione rispettosa degli ingredienti,
-					senza alterazioni né utilizzo di modalità
-					aggressive, per mantenere al meglio le
-					proprietà in termini di nutrienti
-				</p>
+				<h3 class="landing-meet--title"><?php the_field('titolo_2'); ?></h3>
+				<p class="landing-meet--descr wide"><?php the_field('sottotitolo_2'); ?></p>
 			</div>
 			<div class="landing-meet--bottom">
 
@@ -263,12 +249,11 @@ if($what_category_ID) {
 		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
 			<div class="landing-meet--top">
 				<p class="landing-meet--minititle">Pawer, Petfood 100% naturale</p>
-				<h3 class="landing-meet--title">Per ogni razza, <br />per ogni tipetto.</h3>
+				<h3 class="landing-meet--title"><?php the_field('titolo_3'); ?></h3>
 			</div>
 			<div class="landing-meet--bottom">
 				<p class="landing-meet--descr">
-					Per bovari bernesi, ma anche per chihuahua.<br/>
-					Pawer è pensato per i cani di tutte le razze e di tutte le età.
+				<?php the_field('sottotitolo_3'); ?>
 				</p>
 				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood-2.jpg" alt="Per ogni razza, per ogni tipetto" />
 			</div>
