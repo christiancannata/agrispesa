@@ -425,8 +425,9 @@ body.tax-product_cat {
 			background: $white;
 			position: relative;
 			//border: 1px solid #eaeae1;
-			margin-bottom: 4px;
+			margin-bottom: 4px !important;
 			box-shadow: 0 3px 3px 0 rgb(0 0 0 / 3%);
+
 
 			.uom {
 				display: none;
@@ -1216,9 +1217,9 @@ body.tax-product_cat {
 }
 
 .agri-values {
-	@include full-bg();
+	background: $primary;
 	position: relative;
-	padding: 120px 0 300px;
+	padding: 120px 0 120px;
 	color: $panna;
 	@include breakpoint(mobile) {
 		padding: 42px 0;
@@ -1391,33 +1392,33 @@ body.tax-product_cat {
 		padding: 240px 32px 32px;
 		position: relative;
 		overflow: hidden;
-		color: $white;
+		//color: $white;
 		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
 		margin: 0 20px;
 
-		&:before {
-			content: '';
-			display: block;
-			background: rgba(0,0,0,0.3);
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 1;
+		// &:before {
+		// 	content: '';
+		// 	display: block;
+		// 	background: rgba(0,0,0,0.3);
+		// 	width: 100%;
+		// 	height: 100%;
+		// 	position: absolute;
+		// 	top: 0;
+		// 	left: 0;
+		// 	z-index: 1;
+		// }
+		&.vegana {
+			background: rgba($beige, 0.4);
 		}
-		// &.vegana {
-		// 	background: rgba($primary, 0.3);
-		// }
-		// &.vegetariana {
-		// 	background: rgba($primary, 0.6);
-		// }
-		// &.pescetariana {
-		// 	background: rgba($primary, 0.8);
-		// }
-		// &.onnivora {
-		// 	background: rgba($primary, 1);
-		// }
+		&.vegetariana {
+			background: rgba($beige, 0.6);
+		}
+		&.pescetariana {
+			background: rgba($beige, 0.8);
+		}
+		&.onnivora {
+			background: rgba($beige, 1);
+		}
 	}
 
 	&--title {
@@ -1435,7 +1436,7 @@ body.tax-product_cat {
 
 	&--list {
 		@include font-size(16);
-		color: $white;
+		//color: $white;
 		position: relative;
 		z-index: 2;
 

@@ -73,10 +73,10 @@ sliderPetValues();
 
 function petNameAnimation() {
   if (window.screen.width > 640) {
-    var i = 1;
-    var sampleMessages = ["Argo", "Black", "Mya", "Rocky", "Peggy", "Bull", "Pluto", "Pepe", " Pongo"];
+    let i = 1;
+    let sampleMessages = ["Argo", "Black", "Mya", "Rocky", "Peggy", "Bull", "Pluto", "Pepe", " Pongo"];
     setInterval(function () {
-      var newText = sampleMessages[i++ % sampleMessages.length];
+      let newText = sampleMessages[i++ % sampleMessages.length];
       jQuery("#petname").fadeOut(600, function () {
         jQuery(this).text(newText).fadeIn(600);
       });
@@ -91,54 +91,54 @@ function checkoutRemoveCheckbox() {
   }
 }
 
-function landingSelectVariable() {
-
-  //First load check
-  var currentUrl = jQuery('#get_url').attr("href");
-  //var currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
-  var url = new URL(currentUrl);
-  const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-  const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-
-  var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-
-  url.searchParams.set("variation_id", var_id); // setting your param
-  var newUrl = url.href;
-
-  jQuery('#get_url').attr("href", newUrl);
-
-  jQuery('.change-price-box').hide();
-  jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-
-
-  jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
-    const valSize = jQuery(this).filter(":checked").val();
-    var valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-    var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-
-    jQuery('.change-price-box').hide();
-    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-
-    url.searchParams.set("variation_id", var_id);
-    var newUrl = url.href;
-    jQuery('#get_url').attr("href", newUrl);
-
-  })
-  jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
-    const valType = jQuery(this).filter(":checked").val();
-    var valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-    var var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-
-    jQuery('.change-price-box').hide();
-    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-
-    url.searchParams.set("variation_id", var_id);
-    var newUrl = url.href;
-    jQuery('#get_url').attr("href", newUrl);
-  })
-
-
-}
+// function landingSelectVariable() {
+//
+//   //First load check
+//   let currentUrl = jQuery('#get_url').attr("href");
+//   //let currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
+//   let url = new URL(currentUrl);
+//   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+//   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+//
+//   let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+//
+//   url.searchParams.set("variation_id", var_id); // setting your param
+//   let newUrl = url.href;
+//
+//   jQuery('#get_url').attr("href", newUrl);
+//
+//   jQuery('.change-price-box').hide();
+//   jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+//
+//
+//   jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
+//     const valSize = jQuery(this).filter(":checked").val();
+//     let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+//
+//     jQuery('.change-price-box').hide();
+//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+//
+//     url.searchParams.set("variation_id", var_id);
+//     let newUrl = url.href;
+//     jQuery('#get_url').attr("href", newUrl);
+//
+//   })
+//   jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
+//     const valType = jQuery(this).filter(":checked").val();
+//     let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+//
+//     jQuery('.change-price-box').hide();
+//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+//
+//     url.searchParams.set("variation_id", var_id);
+//     let newUrl = url.href;
+//     jQuery('#get_url').attr("href", newUrl);
+//   })
+//
+//
+// }
 
 function moveCustomFieldsCheckout() {
   if (jQuery('#shipping-custom-fields').length) {
@@ -1170,43 +1170,43 @@ function openMenu() {
 }
 
 
-function getImageBrightness(image, callback) {
-  let thisImgID = image.attr("id");
-
-  let img = document.createElement("img");
-  img.src = image.attr("src");
-
-  img.style.display = "none";
-  document.body.appendChild(img);
-
-  let colorSum = 0;
-
-  img.onload = function () {
-    // create canvas
-    let canvas = document.createElement("canvas");
-    canvas.width = this.width;
-    canvas.height = this.height;
-
-    let ctx = canvas.getContext("2d");
-    ctx.drawImage(this, 0, 0);
-
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
-    let r, g, b, avg;
-
-    for (let x = 0, len = data.length; x < len; x += 4) {
-      r = data[x];
-      g = data[x + 1];
-      b = data[x + 2];
-
-      avg = Math.floor((r + g + b) / 3);
-      colorSum += avg;
-    }
-
-    let brightness = Math.floor(colorSum / (this.width * this.height));
-    callback(thisImgID, brightness);
-  }
-}
+// function getImageBrightness(image, callback) {
+//   let thisImgID = image.attr("id");
+//
+//   let img = document.createElement("img");
+//   img.src = image.attr("src");
+//
+//   img.style.display = "none";
+//   document.body.appendChild(img);
+//
+//   let colorSum = 0;
+//
+//   img.onload = function () {
+//     // create canvas
+//     let canvas = document.createElement("canvas");
+//     canvas.width = this.width;
+//     canvas.height = this.height;
+//
+//     let ctx = canvas.getContext("2d");
+//     ctx.drawImage(this, 0, 0);
+//
+//     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+//     let data = imageData.data;
+//     let r, g, b, avg;
+//
+//     for (let x = 0, len = data.length; x < len; x += 4) {
+//       r = data[x];
+//       g = data[x + 1];
+//       b = data[x + 2];
+//
+//       avg = Math.floor((r + g + b) / 3);
+//       colorSum += avg;
+//     }
+//
+//     let brightness = Math.floor(colorSum / (this.width * this.height));
+//     callback(thisImgID, brightness);
+//   }
+// }
 
 
 // getImageBrightness(jQuery('#getBright'), function(thisImgID, brightness) {

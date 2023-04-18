@@ -88,6 +88,7 @@ if( !empty($product_categories) ){
           's'              => $search_string,
           'orderby'        => 'date',
           'order'          => 'DESC',
+          'post_status' => 'publish',
           // 'meta_query'     => array(
   				// 	array(
           //     'key'        => '_is_active_shop',
