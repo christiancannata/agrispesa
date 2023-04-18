@@ -2,6 +2,14 @@
 	function dd($vars) {
 		die(var_dump($vars));
 	}
+
+
+
+		add_action( 'reload_terms_count',function(){
+			update_option("entrato", (new DateTime())->format("Y-m-d H:i:s"));
+		}, 10);
+
+
 	function merge_orders($subscriptionOrder, $orders){
 
 			foreach($orders as $order){
@@ -804,11 +812,6 @@
 
 			return $response;
 		}, ]);
-
-
-		add_action( 'reload_terms_count',function(){
-			update_option("entrato", (new DateTime())->format("Y-m-d H:i:s"));
-		}, 10);
 
 
 
