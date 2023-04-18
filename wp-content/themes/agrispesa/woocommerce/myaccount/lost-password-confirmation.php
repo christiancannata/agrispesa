@@ -25,7 +25,7 @@ wc_print_notice( esc_html__( 'Password reset email has been sent.', 'woocommerce
 <div class="login-beauty">
 
 <div class="login-beauty--image">
-	<img src="<?php echo get_template_directory_uri(); ?>/assets/images/farmers/login.jpg" class="login-beauty--image__img" alt="Registrati ad Agrispesa" />
+	<img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/newsletter.jpg" class="login-beauty--image__img" alt="Registrati ad Agrispesa" />
 </div>
 
 
