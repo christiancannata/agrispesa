@@ -485,7 +485,16 @@ add_action("rest_api_init", function () {
 				$product['productgroupcode'] = $product['productgroupcode'][0];
 			}
 
-			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = $product['productgroupdescription'];
+			if(!isset($categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']])){
+					$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = [
+				'description' => $product['productgroupdescription'],
+				'code' => $product['productgroupcode'],
+				'products' => []
+			];
+			}
+
+
+			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']]['products'][] =(string)$product['id_product'];
 
 		}
 
@@ -512,7 +521,7 @@ add_action("rest_api_init", function () {
 				if(empty($categoryAlreadyExists)){
 
 					$gruppoProdotto = wp_insert_post([
-						'post_title' => $subcategory,
+						'post_title' => $subcategory['description'],
 'post_content' => '',
 'post_status' => 'draft',
 'post_author' => 1,
@@ -530,10 +539,7 @@ add_action("rest_api_init", function () {
 
 				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
 				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
-
-				$sku = (string)$product["id_product"];
-				$sku = explode("_", $sku);
-				update_post_meta($gruppoProdotto,'product_sku',$sku[0]);
+				update_post_meta($gruppoProdotto,'products_sku',$subcategory['products']);
 
 			}
 
