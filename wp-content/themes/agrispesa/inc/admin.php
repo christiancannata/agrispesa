@@ -509,13 +509,14 @@
 					}
 
 					 $categoryAlreadyExists = get_posts(
-						 ["post_type" => "gruppo-prodotto",
+						 [
+							 "post_type" => "gruppo-prodotto",
+						 "post_status" => ['publish','draft'],
 						 'fields' => 'ids',
 						 "posts_per_page" => 1,
 						 'meta_key' => 'codice_gruppo_prodotto',
 						 'meta_value' => $code
 								   ]);
-
 					$gruppoProdotto = null;
 
 					if(empty($categoryAlreadyExists)){
