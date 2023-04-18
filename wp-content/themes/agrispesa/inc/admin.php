@@ -449,6 +449,96 @@ add_action("rest_api_init", function () {
         ($xml = simplexml_load_string($request->get_body())) or die("Error: Cannot create object");
         $products = (array)$xml;
 
+		//create categories blacklist
+		$categories = [];
+ 		global $wpdb;
+		$wpdb->query("UPDATE wp_posts
+        SET post_status = 'draft'
+        WHERE post_type = 'gruppo-prodotto';");
+
+
+        $activeProducts = array_filter($products["ROW"], function ($product) {
+            $product = (array)$product;
+            $price = str_replace(",", ".", (string)$product["unitprice"]);
+            return $price > 0;
+        });
+
+			foreach($activeProducts as $product){
+			$product = (array)$product;
+			$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
+			$product['productgroupcode'] = (string)$product['productgroupcode'];
+			$product['productgroupdescription'] = (string)$product['productgroupdescription'];
+
+
+
+			if(!isset($categories[$product['itemcategorydescription']])){
+				$categories[$product['itemcategorydescription']] = [
+					'name' => $product['itemcategorydescription'],
+					'subcategories' => []
+					];
+			}
+
+			$product['productgroupcode'] = explode("-",$product['productgroupcode']);
+			if(isset($product['productgroupcode'][1])){
+				$product['productgroupcode'] = $product['productgroupcode'][1];
+			}else{
+				$product['productgroupcode'] = $product['productgroupcode'][0];
+			}
+
+			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = $product['productgroupdescription'];
+
+		}
+
+		foreach($categories as $category){
+			if($category['name'] == 'TRASPORTO' || $category['name'] == 'ABBONAMENTI' ){
+				continue;
+			}
+
+			foreach($category['subcategories'] as $code => $subcategory){
+				if(empty($subcategory)){
+					continue;
+				}
+
+				 $categoryAlreadyExists = get_posts(
+					 ["post_type" => "gruppo-prodotto",
+					 'fields' => 'ids',
+					 "posts_per_page" => 1,
+					 'meta_key' => 'codice_gruppo_prodotto',
+					 'meta_value' => $code
+					    	   ]);
+
+				$gruppoProdotto = null;
+
+				if(empty($categoryAlreadyExists)){
+
+					$gruppoProdotto = wp_insert_post([
+						'post_title' => $subcategory,
+'post_content' => '',
+'post_status' => 'draft',
+'post_author' => 1,
+'post_type' => 'gruppo-prodotto'
+]);
+
+				}else{
+					$gruppoProdotto = $categoryAlreadyExists[0];
+
+				}
+
+				if(!$gruppoProdotto){
+					continue;
+				}
+
+				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
+				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
+
+				$sku = (string)$product["id_product"];
+				$sku = explode("_", $sku);
+				update_post_meta($gruppoProdotto,'product_sku',$sku[0]);
+
+			}
+
+		}
+
         /*	$wpdb->query("UPDATE wp_posts
         SET post_status = 'draft'
         WHERE post_type = 'product';");
@@ -548,98 +638,6 @@ WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")"
 
         ($xml = simplexml_load_string($request->get_body())) or die("Error: Cannot create object");
         $products = (array)$xml;
-
-
-		//create categories blacklist
-		$categories = [];
- 		global $wpdb;
-		$wpdb->query("UPDATE wp_posts
-        SET post_status = 'draft'
-        WHERE post_type = 'gruppo-prodotto';");
-
-
-        $activeProducts = array_filter($products["ROW"], function ($product) {
-            $product = (array)$product;
-            $price = str_replace(",", ".", (string)$product["unitprice"]);
-            return $price > 0 && strstr((string)$product["offer_no"],'STCOMP') !== false;
-        });
-
-			foreach($activeProducts as $product){
-			$product = (array)$product;
-			$product['itemcategorydescription'] = (string)$product['itemcategorydescription'];
-			$product['productgroupcode'] = (string)$product['productgroupcode'];
-			$product['productgroupdescription'] = (string)$product['productgroupdescription'];
-
-
-
-			if(!isset($categories[$product['itemcategorydescription']])){
-				$categories[$product['itemcategorydescription']] = [
-					'name' => $product['itemcategorydescription'],
-					'subcategories' => []
-					];
-			}
-
-			$product['productgroupcode'] = explode("-",$product['productgroupcode']);
-			if(isset($product['productgroupcode'][1])){
-				$product['productgroupcode'] = $product['productgroupcode'][1];
-			}else{
-				$product['productgroupcode'] = $product['productgroupcode'][0];
-			}
-
-			$categories[$product['itemcategorydescription']]['subcategories'][$product['productgroupcode']] = $product['productgroupdescription'];
-
-		}
-
-		foreach($categories as $category){
-			if($category['name'] == 'TRASPORTO' || $category['name'] == 'ABBONAMENTI' ){
-				continue;
-			}
-
-			foreach($category['subcategories'] as $code => $subcategory){
-				if(empty($subcategory)){
-					continue;
-				}
-
-				 $categoryAlreadyExists = get_posts(
-					 ["post_type" => "gruppo-prodotto",
-					 "post_status" => "publish",
-					 'fields' => 'ids',
-					 "posts_per_page" => 1,
-					 'meta_key' => 'codice_gruppo_prodotto',
-					 'meta_value' => $code
-					    	   ]);
-
-				if(empty($categoryAlreadyExists)){
-
-					$gruppoProdotto = wp_insert_post([
-						'post_title' => $subcategory,
-'post_content' => '',
-'post_status' => 'publish',
-'post_author' => 1,
-'post_type' => 'gruppo-prodotto'
-]);
-
-				}else{
-					$gruppoProdotto = $categoryAlreadyExists[0];
-					wp_update_post(array(
-        'ID'    =>  $gruppoProdotto,
-        'post_status'   =>  'publish'
-        ));
-				}
-
-				update_post_meta($gruppoProdotto,'codice_gruppo_prodotto',$code);
-				update_post_meta($gruppoProdotto,'categoria_principale_gruppo_prodotto',strtolower($category['name']));
-
-
-			}
-
-		}
-
-
-
-
-
-
         $boxes = [];
         global $wpdb;
         $productsSku = [];
