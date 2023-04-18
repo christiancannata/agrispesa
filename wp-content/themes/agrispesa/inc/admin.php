@@ -634,6 +634,9 @@
 				wp_mail("agrispesa@agrispesa.it", count($newProducts) . " nuovi prodotti", "Ecco la lista dei nuovi prodotti inseriti: <br><br>" . $list);
 			}
 			update_option("last_import_products", (new DateTime())->format("Y-m-d H:i:s"));
+
+			wc_recount_all_terms();
+
 			$response = new WP_REST_Response([]);
 			$response->set_status(204);
 			return $response;
@@ -788,6 +791,9 @@
 					$boxIds[] = $post_id;
 				}
 			}
+			wc_recount_all_terms();
+
+
 			$response = new WP_REST_Response($boxIds);
 			$response->set_status(201);
 			update_option("last_import_box", (new DateTime())->format("Y-m-d H:i:s"));
