@@ -228,6 +228,7 @@ if (woocommerce_product_loop()) {
 
 			$count_posts = new WP_Query($args);
 			$posts_per_cat = $count_posts->found_posts;
+			//print_r($posts_per_cat);
 
 
 			if ($posts_per_cat != 0) {
@@ -243,6 +244,7 @@ if (woocommerce_product_loop()) {
 				wc_get_template_part('content', 'product');
 			endwhile; // end of the loop.
 			wp_reset_postdata();
+
 			if ($posts_per_cat != 0) {
 				woocommerce_product_loop_end(); //close ul
 
