@@ -280,7 +280,7 @@
 
 					$subscriptions = wcs_get_subscriptions(["subscriptions_per_page" => - 1, "customer_id" => $member_arr, ]);
 					foreach ($subscriptions as $subscription) {
-						update_post_meta($subscription->ID, "_box_blacklist", $productsBlacklistIds);
+						update_post_meta($subscription->get_id(), "_box_blacklist", $productsBlacklistIds);
 					}
 				}
 			}
