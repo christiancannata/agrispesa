@@ -629,7 +629,6 @@
 					$productObj = new WC_Product_Simple();
 					$productObj->set_name($productName);
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
-					$productObj->set_sku(implode("_",$sku));
 					$productObj->save();
 					$productId = $productObj->get_id();
 
