@@ -1086,7 +1086,7 @@
 
 			foreach ($orders as $order) {
 
-				if($items>0){
+				if($items>1){
 					continue;
 				}
 
