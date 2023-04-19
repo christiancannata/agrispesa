@@ -1126,7 +1126,14 @@
 					}
 					$row = $doc->createElement("ROW");
 					$ele1 = $doc->createElement("id_order");
-					$ele1->nodeValue = 100000+ $order->get_id();
+
+					$navisionId = get_user_meta($order->get_id(), "navision_id", true);
+					if (!$navisionId) {
+						$navisionId = 6000000 + $order->get_id();
+						update_user_meta($order->get_id(), "navision_id", $navisionId);
+					}
+					$ele1->nodeValue = $navisionId;
+
 					$row->appendChild($ele1);
 					update_post_meta($order->get_id(), "navision_id", 10000 + $order->get_id());
 					//check if has navision id
