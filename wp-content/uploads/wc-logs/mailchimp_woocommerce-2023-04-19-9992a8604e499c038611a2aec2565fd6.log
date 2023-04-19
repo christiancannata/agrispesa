@@ -6,3 +6,130 @@
 2023-04-19T14:45:32+00:00 NOTICE validation.bad_email :: Order #36814 has an invalid email address. Skipping!
 2023-04-19T14:58:06+00:00 NOTICE validation.bad_email :: Order #36815 has an invalid email address. Skipping!
 2023-04-19T14:58:07+00:00 NOTICE validation.bad_email :: Order #36816 has an invalid email address. Skipping!
+2023-04-19T15:33:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36817
+2023-04-19T15:33:38+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36818
+2023-04-19T15:33:39+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36819
+2023-04-19T15:33:40+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36820
+2023-04-19T15:33:42+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36821
+2023-04-19T15:33:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36822
+2023-04-19T15:33:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36823
+2023-04-19T15:33:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36824
+2023-04-19T15:33:49+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36825
+2023-04-19T15:33:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36826
+2023-04-19T15:33:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36827
+2023-04-19T15:33:51+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36828
+2023-04-19T15:33:52+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36829
+2023-04-19T15:33:53+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36830
+2023-04-19T15:33:54+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36831
+2023-04-19T15:33:55+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36832
+2023-04-19T15:33:55+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36833
+2023-04-19T15:33:56+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36834
+2023-04-19T15:33:57+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36835
+2023-04-19T15:33:58+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36836
+2023-04-19T15:34:00+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36837
+2023-04-19T15:34:01+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36838
+2023-04-19T15:34:02+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36839
+2023-04-19T15:34:03+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36840
+2023-04-19T15:34:04+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36841
+2023-04-19T15:34:05+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36842
+2023-04-19T15:34:06+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 36843
+2023-04-19T15:37:08+00:00 NOTICE product_submit.success :: addStoreProduct :: #36817
+2023-04-19T15:37:08+00:00 NOTICE product_submit.success :: addStoreProduct :: #36818
+2023-04-19T15:37:09+00:00 NOTICE product_submit.success :: addStoreProduct :: #36819
+2023-04-19T15:37:10+00:00 NOTICE product_submit.success :: addStoreProduct :: #36820
+2023-04-19T15:37:11+00:00 NOTICE product_submit.success :: addStoreProduct :: #36821
+2023-04-19T15:37:11+00:00 NOTICE product_submit.success :: addStoreProduct :: #36822
+2023-04-19T15:37:12+00:00 NOTICE product_submit.success :: addStoreProduct :: #36823
+2023-04-19T15:37:13+00:00 NOTICE product_submit.success :: addStoreProduct :: #36824
+2023-04-19T15:37:14+00:00 NOTICE product_submit.success :: addStoreProduct :: #36825
+2023-04-19T15:37:15+00:00 NOTICE product_submit.success :: addStoreProduct :: #36826
+2023-04-19T15:37:15+00:00 NOTICE product_submit.success :: addStoreProduct :: #36827
+2023-04-19T15:37:16+00:00 NOTICE product_submit.success :: addStoreProduct :: #36828
+2023-04-19T15:37:17+00:00 NOTICE product_submit.success :: addStoreProduct :: #36829
+2023-04-19T15:37:18+00:00 NOTICE product_submit.success :: addStoreProduct :: #36830
+2023-04-19T15:37:18+00:00 NOTICE product_submit.success :: addStoreProduct :: #36831
+2023-04-19T15:37:19+00:00 NOTICE product_submit.success :: addStoreProduct :: #36832
+2023-04-19T15:37:20+00:00 NOTICE product_submit.success :: addStoreProduct :: #36833
+2023-04-19T15:37:21+00:00 NOTICE product_submit.success :: addStoreProduct :: #36834
+2023-04-19T15:37:21+00:00 NOTICE product_submit.success :: addStoreProduct :: #36835
+2023-04-19T15:37:22+00:00 NOTICE product_submit.success :: addStoreProduct :: #36836
+2023-04-19T15:37:23+00:00 NOTICE product_submit.success :: addStoreProduct :: #36837
+2023-04-19T15:37:24+00:00 NOTICE product_submit.success :: addStoreProduct :: #36838
+2023-04-19T15:37:24+00:00 NOTICE product_submit.success :: addStoreProduct :: #36839
+2023-04-19T15:37:25+00:00 NOTICE product_submit.success :: addStoreProduct :: #36840
+2023-04-19T15:37:26+00:00 NOTICE product_submit.success :: addStoreProduct :: #36841
+2023-04-19T15:37:27+00:00 NOTICE product_submit.success :: addStoreProduct :: #36842
+2023-04-19T15:37:28+00:00 NOTICE product_submit.success :: addStoreProduct :: #36843
+2023-04-19T15:50:36+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36878
+2023-04-19T15:50:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_User_Submit queued :: obj_id 4160
+2023-04-19T15:50:47+00:00 NOTICE debug :: Order ID 36878 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/admin.php?page=genera-ordini-box
+        )
+
+)
+
+2023-04-19T15:53:54+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36836
+2023-04-19T15:53:55+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36837
+2023-04-19T15:53:56+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36838
+2023-04-19T15:53:57+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36839
+2023-04-19T15:53:58+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36840
+2023-04-19T15:53:59+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36841
+2023-04-19T15:53:59+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36842
+2023-04-19T15:54:00+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36843
+2023-04-19T15:54:01+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36844
+2023-04-19T15:54:02+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36845
+2023-04-19T15:54:03+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36846
+2023-04-19T15:54:03+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36847
+2023-04-19T15:54:04+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36848
+2023-04-19T15:54:05+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36849
+2023-04-19T15:54:06+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36850
+2023-04-19T15:54:07+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36851
+2023-04-19T15:54:08+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36852
+2023-04-19T15:54:09+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36853
+2023-04-19T15:54:10+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36854
+2023-04-19T15:54:30+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36879
+2023-04-19T15:54:31+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36855
+2023-04-19T15:54:32+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36856
+2023-04-19T15:54:32+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36857
+2023-04-19T15:54:33+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36858
+2023-04-19T15:54:34+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36859
+2023-04-19T15:54:34+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36860
+2023-04-19T15:54:35+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36861
+2023-04-19T15:54:36+00:00 NOTICE product_submit.success :: updateStoreProduct :: #36862
+2023-04-19T15:55:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36880
+2023-04-19T15:56:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36881
+2023-04-19T15:57:00+00:00 NOTICE member.sync :: Updated Member mennarita69@gmail.com :: Array
+(
+    [previous_status] => transactional
+    [status] => 
+    [language] => 
+    [merge_fields] => Array
+        (
+            [FNAME] => RITA
+            [LNAME] => MENNA
+        )
+
+    [gdpr_fields] => 
+)
+
+2023-04-19T15:58:15+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36882
+2023-04-19T16:01:20+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36883
+2023-04-19T16:02:17+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-19T16:02:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36897
+2023-04-19T16:03:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36898
+2023-04-19T16:03:54+00:00 NOTICE debug :: Order ID 36898 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/admin.php?page=genera-ordini-box
+        )
+
+)
+

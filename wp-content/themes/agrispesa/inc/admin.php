@@ -1680,8 +1680,9 @@
 		if (!$box) {
 			return [];
 		}
+
 		$productsToAdd = get_post_meta($box->ID, "_products", true);
-		if ($overrideProducts) {
+		/*if ($overrideProducts) {
 			//check preferences
 			$boxPreferences = get_post_meta($subscription->get_id(), "_box_preferences", true);
 			if (empty($boxPreferences)) {
@@ -1708,13 +1709,13 @@
 					$productsToAdd[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title, "quantity" => $quantity, ];
 				}
 			}
-		}
+		}*/
 		return $productsToAdd;
 	}
 	function get_box_from_subscription($subscription, $week = null) {
 		if (!$week) {
 			$date = new DateTime();
-			//	$date->modify('+1 week');
+			$date->modify('+1 week');
 			$week = $date->format("W");
 		}
 		$products = $subscription->get_items();
@@ -1843,24 +1844,29 @@
 		$weight = $productData['weight'];
 		}*/
 		$box = get_box_from_subscription($subscription);
+
 		if (!$box) {
 			return false;
 		}
+
 		$week = get_post_meta($box->ID, "_week", true);
 		$consegna = get_post_meta($box->ID, "_data_consegna", true);
 		$boxNavisionId = get_post_meta($box->ID, "_navision_id", true);
-		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 		$customerId = $subscription->get_user_id();
 		$order = wc_create_order();
 		$order->set_customer_id($customerId);
-		update_post_meta( $order->get_id(), '_disable_order_emails', true );
+		update_post_meta( $order->get_id(), '_disable_order_emails','1' );
+
+		$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
 
 		foreach ($productsToAdd as $productToAdd) {
 
 			$productObjToAdd = wc_get_product($productToAdd["id"]);
+
 			if(!$productObjToAdd){
 				continue;
 			}
+
 			if ($productToAdd["quantity"] > $productObjToAdd->get_stock_quantity()) {
 				//Non ho più disponibilità
 
@@ -1907,7 +1913,7 @@
 		$item->save();
 		}*/
 		$order->calculate_totals();
-		$order->update_status("completed", "", true);
+		$order->update_status("completed", "Ordine generato in automatico", true);
 		update_post_meta($order->get_id(), "_total_box_weight", $weight);
 		update_post_meta($order->get_id(), "_week", $week);
 		update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
