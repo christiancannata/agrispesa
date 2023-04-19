@@ -1130,12 +1130,14 @@
 					$navisionId = get_user_meta($order->get_id(), "navision_id", true);
 					if (!$navisionId) {
 						$navisionId = 6000000 + $order->get_id();
-						update_user_meta($order->get_id(), "navision_id", $navisionId);
 					}
-					$ele1->nodeValue = $navisionId;
+					$navisionId = 6000000 + $order->get_id();
 
+					$ele1->nodeValue = $navisionId;
 					$row->appendChild($ele1);
-					update_post_meta($order->get_id(), "navision_id", 10000 + $order->get_id());
+
+					update_user_meta($order->get_id(), "navision_id", $navisionId);
+
 					//check if has navision id
 					$navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
 					if (!$navisionId) {
