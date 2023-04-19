@@ -1985,7 +1985,7 @@
 	}
 	function my_custom_submenu_page_callback() {
 		$date = new DateTime();
-		//$date->modify('+1 week');
+		$date->modify('+1 week');
 		$week = $date->format("W");
 		if (isset($_POST["generate_orders"])) {
 			$subscriptionIds = $_POST["subscriptions"];
@@ -1994,10 +1994,10 @@
 			}
 		}
 		if (isset($_GET["generate_fabbisogno"])) {
-			generate_fabbisogno();
+			//generate_fabbisogno();
 		}
 		if (isset($_POST["send_email_produttori"])) {
-			send_email_produttori($week);
+			//send_email_produttori($week);
 		}
 		$subscriptions = wcs_get_subscriptions(["subscriptions_per_page" => - 1, "subscription_status" => "active", ]);
 
@@ -2112,7 +2112,8 @@
 					endif; ?>
 												><br>
 											<?php
-				else: ?>
+				else:
+				?>
 												Devi prima creare la box
 											<?php
 				endif;
