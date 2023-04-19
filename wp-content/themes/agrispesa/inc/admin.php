@@ -513,6 +513,7 @@
 			WHERE post_type = 'product';");
 			*/
 			foreach ($activeProducts as $key => $product) {
+				$product = (array)$product;
 
 				if((string)$product["productgroupcode"] == 'arrotondamento'){
 					continue;
@@ -522,11 +523,8 @@
 					continue;
 				}
 
-				$product = (array)$product;
 				$sku = (string)$product["id_product"];
 				$sku = explode("_", $sku);
-
-
 
 				/* CREATE GROUP */
 
@@ -610,8 +608,13 @@
 				}
 
 
+			}
 
 
+			foreach($activeProducts as $product){
+
+				$sku = (string)$product["id_product"];
+				$sku = explode("_", $sku);
 
 				$productId = wc_get_product_id_by_sku($sku[0]);
 				if (!$productId) {
@@ -634,20 +637,12 @@
 				}
 				$product["wordpress_id"] = $productId;
 				$productIds[] = $productId;
-				update_post_meta($productId,'_is_active_shop',1);
+				//update_post_meta($productId,'_is_active_shop',1);
 				/*
 				$product = new WC_Product($productId);
 				$product->set_status('publish');
 				$product->save();
 				*/
-				$activeProducts[$key] = $product;
-			}
-			//Attivo i prodotti
-			$productIds = array_unique($productIds);
-			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
-
-			foreach ($activeProducts as $product) {
-				$product = (array)$product;
 
 				$price = (string)$product["unitprice"];
 				$price = str_replace(",", ".", $price);
@@ -663,8 +658,14 @@
 				}else{
 					$code = $code[0];
 				}
-				update_post_meta($product["wordpress_id"], "_gruppo_prodotto",$code);
+				update_post_meta($productId, "_gruppo_prodotto",$code);
 			}
+
+				//Attivo i prodotti
+			$productIds = array_unique($productIds);
+			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
+
+
 			$args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ];
 			$productsToExclude = new WP_Query($args);
 			$idsToExclude = $productsToExclude->get_posts();
