@@ -1082,6 +1082,30 @@
 	]);
 			foreach ($orders as $order) {
 
+				$isSubscription = get_post_meta($order->get_id(), "_subscription_id", true);
+				if (!$isSubscription) {
+					continue;
+				}
+
+				$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
+				if (count($subscriptions) == 0) {
+					continue;
+				}
+				$subscription = end($subscriptions);
+				$products = $subscription->get_items();
+				if (empty($products)) {
+					continue;
+				}
+				$box = reset($products)->get_product();
+				if (!$box) {
+					continue;
+				}
+				$tipologia = get_post_meta($box->get_id(), "attribute_pa_tipologia", true);
+				$dimensione = get_post_meta($box->get_id(), "attribute_pa_dimensione", true);
+				$productBox = get_single_box_from_attributes($tipologia, $dimensione);
+				if (!$productBox) {
+					continue;
+				}
 
 				$navisionId = get_post_meta($order->get_id(), "_box_navision_id", true);
 				if (!$navisionId) {
@@ -1152,7 +1176,11 @@
 					$ele2->nodeValue = str_replace(".", ",", number_format($product->get_price(), 4));
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_no");
-					$ele2->nodeValue = $navisionId;
+					$navisionId = get_post_meta($productBox->get_id(), "_navision_id", true);
+					if (empty($navisionId)) {
+					$navisionId = [""];
+					}
+					$ele2->nodeValue = "ABSP-" . $navisionId[0];
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_line_no");
 					$ele2->nodeValue = $item->get_meta("offer_line_no");
