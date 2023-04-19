@@ -1933,7 +1933,7 @@ add_action("rest_api_init", function () {
                         $ele2->nodeValue = str_replace(
                             ".",
                             ",",
-                            number_format($product->get_price(), 4)
+                            number_format(floatval($product->get_price()), 4)
                         );
                         $row->appendChild($ele2);
                         $ele2 = $doc->createElement("ref_offer_no");
