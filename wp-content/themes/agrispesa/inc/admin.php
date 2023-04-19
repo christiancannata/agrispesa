@@ -1816,6 +1816,8 @@
 		$customerId = $subscription->get_user_id();
 		$order = wc_create_order();
 		$order->set_customer_id($customerId);
+		update_post_meta( $order->get_id(), '_disable_order_emails', true );
+
 		foreach ($productsToAdd as $productToAdd) {
 			$productObjToAdd = wc_get_product($productToAdd["id"]);
 			if ($productToAdd["quantity"] > $productObjToAdd->get_stock_quantity()) {
@@ -1868,7 +1870,6 @@
 		update_post_meta($order->get_id(), "_total_box_weight", $weight);
 		update_post_meta($order->get_id(), "_week", $week);
 		update_post_meta($order->get_id(), "_box_navision_id", $boxNavisionId);
-		update_post_meta( $order->get_id(), '_disable_order_emails', true );
 		$piano = get_user_meta($customerId,'shipping_piano',true);
 		$pianoValue = '';
 		if($piano){
