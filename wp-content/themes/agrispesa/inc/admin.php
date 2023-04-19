@@ -468,12 +468,13 @@
 
 			$arrotondamenti = array_filter($products["ROW"], function ($product) {
 				$product = (array)$product;
-				return strtolower((string)$product['description']) == 'arrotondamento';
+				return strtolower((string)$product['productgroupdescription']) == 'arrotondamento spese';
 			});
 
 			foreach($arrotondamenti as $arrotondamento){
-				$productId = wc_get_product_id_by_sku((string)$arrotondamento['id_product']);
-				$price = floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"]));
+				$arrotondamento = (array)$arrotondamento;
+				$productId = wc_get_product_id_by_sku($arrotondamento['id_product']);
+
 				if (!$productId) {
 					$productObj = new WC_Product_Simple();
 					$productObj->set_name((string)$arrotondamento["description"].' '.(string)$arrotondamento["description2"]);
@@ -493,6 +494,7 @@
 					$productObj->save();
 				}
 
+				$price = floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"]));
 				update_post_meta($productObj->get_id(), "_regular_price", $price);
 				update_post_meta($productObj->get_id(), "_price", $price);
 				update_post_meta($productObj->get_id(), "_navision_id", (string)$arrotondamento["id_product"]);
