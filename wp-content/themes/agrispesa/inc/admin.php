@@ -937,7 +937,14 @@
 				}
 				$row = $doc->createElement("ROW");
 				$ele1 = $doc->createElement("id_codeclient");
-				$ele1->nodeValue = 10000 + $order->get_customer_id();
+
+				$idNavision = get_user_meta($order->get_customer_id(),'navision_id',true);
+				if(!$idNavision){
+					$idNavision = 500000 + $order->get_customer_id();
+					update_user_meta($order->get_customer_id(),'navision_id',$idNavision);
+				}
+
+				$ele1->nodeValue = $idNavision;
 				$row->appendChild($ele1);
 				$ele2 = $doc->createElement("business_name");
 				$ele2->nodeValue = $order->get_shipping_first_name() . " " . $order->get_shipping_last_name();
