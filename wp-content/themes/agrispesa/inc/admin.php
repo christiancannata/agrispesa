@@ -2000,31 +2000,8 @@
 			send_email_produttori($week);
 		}
 		$subscriptions = wcs_get_subscriptions(["subscriptions_per_page" => - 1, "subscription_status" => "active", ]);
-		/*$subscriptions = array_filter($subscriptions, function ($subscription) {
-		return $subscription->has_status('active');
-		});*/
-		$allProductsNeed = [];
-		foreach ($subscriptions as $subscription) {
-			$args = ["posts_per_page" => - 1, "post_type" => "shop_order", "post_status" => ["wc-processing", "wc-completed"], "meta_query" => ["relation" => "and", ["key" => "_week", "value" => $week, "compare" => "=", ], ["key" => "_subscription_id", "value" => $subscription->get_id(), "compare" => "=", ], ], ];
-			$orders = new WP_Query($args);
-			$orders = $orders->get_posts();
-			if (count($orders) > 0) {
-				continue;
-			}
-			$productsToAdd = get_products_to_add_from_subscription($subscription, $week, true);
-			foreach ($productsToAdd as $productToAdd) {
-				if (!isset($allProductsNeed[$productToAdd["id"]])) {
-					$allProductsNeed[$productToAdd["id"]] = ["name" => $productToAdd["name"], "product_id" => $productToAdd["id"], "quantity" => $productToAdd["quantity"], ];
-				} else {
-					$allProductsNeed[$productToAdd["id"]]["quantity"]+= $productToAdd["quantity"];
-				}
-			}
-			foreach ($allProductsNeed as $key => $productNeed) {
-				$productObjToAdd = wc_get_product($productNeed["product_id"]);
-				$allProductsNeed[$key]["current_availability"] = $productObjToAdd->get_stock_quantity();
-			}
-		}
-		$groupedFabbisogno = get_fabbisogno($week);
+
+		$groupedFabbisogno = [];
 	?>
 
 		<div id="wpbody-content">
