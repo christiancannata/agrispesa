@@ -660,7 +660,6 @@
 
 					}
 
-					$productObj->set_name($productName);
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
 					$productObj->save();
 
@@ -1006,7 +1005,13 @@
 				$ele2->nodeValue = $startDate->format("dmY");
 				$row->appendChild($ele2);
 				$ele2 = $doc->createElement("fido");
-				$ele2->nodeValue = "99999,0000";
+
+				$fido = get_user_meta($order->get_customer_id(),'_current_woo_wallet_balance',true);
+				if(!$fido){
+					$fido = 0;
+				}
+				$fido = number_format($fido,4,',');
+				$ele2->nodeValue = $fido;
 				$row->appendChild($ele2);
 				$root->appendChild($row);
 			}
