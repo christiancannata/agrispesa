@@ -1088,6 +1088,10 @@
 
 			foreach ($orders as $order) {
 
+				if($order->get_shipping_first_name() . " " . $order->get_shipping_last_name() == 'Alberto Alessandria'){
+					continue;
+				}
+
 				if($limit && $items>$limit){
 					continue;
 				}
