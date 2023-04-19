@@ -1060,9 +1060,11 @@
 			return true;
 		}, "callback" => function ($request) {
 
-			$week = (new \DateTime())->format("W");
+			$today = new \DateTime();
+			$today->add(new \DateInterval('P7D'));
+			$week = $today->format("W");
 			$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
-			$currentWeek =  date("y") . $week;
+			$currentWeek =  date("y") . $currentWeek;
 
 			$doc = new DOMDocument();
 			$doc->formatOutput = true;
@@ -1080,7 +1082,7 @@
 		'meta_compare' => '>',
 		'meta_value' => $lastWeek->getTimestamp()
 	]);
-			foreach ($orders as $order) {
+			foreach (array_slice($orders,0,1) as $order) {
 
 				$isSubscription = get_post_meta($order->get_id(), "_subscription_id", true);
 				if (!$isSubscription) {
@@ -1140,7 +1142,7 @@
 					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("date_consegna");
-					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
+					$ele1->nodeValue = '01011970';
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("sh_name");
 					$ele1->nodeValue = $order->get_shipping_first_name() . " " . $order->get_shipping_last_name();
@@ -1149,11 +1151,15 @@
 					$ele1->nodeValue = $order->get_shipping_address_1();
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("sh_description1");
-					$ele1->nodeValue = $piano;
+					//$ele1->nodeValue = $piano;
+					$ele1->nodeValue = '';
 					$row->appendChild($ele1);
+
 					$ele1 = $doc->createElement("comment_lines");
-					$ele1->nodeValue = $order->get_customer_note();
+					//$ele1->nodeValue = $order->get_customer_note();
+					$ele1->nodeValue = '';
 					$row->appendChild($ele1);
+
 					$ele2 = $doc->createElement("sh_city");
 					$ele2->nodeValue = $order->get_shipping_city();
 					$row->appendChild($ele2);
@@ -1180,14 +1186,15 @@
 					if (empty($navisionId)) {
 					$navisionId = [""];
 					}
-					$ele2->nodeValue = "ABSP-" . $navisionId[0];
+
+					$ele2->nodeValue = $currentWeek."-" . $navisionId[0];
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_line_no");
 					$ele2->nodeValue = $item->get_meta("offer_line_no");
 					$row->appendChild($ele2);
 					$root->appendChild($row);
 				}
-
+/*
 				$shipping_method_total = 0;
 
 				foreach( $order->get_items( 'shipping' ) as $item_id => $item ){
@@ -1252,7 +1259,7 @@
 					$row->appendChild($ele2);
 					$root->appendChild($row);
 
-				}
+				} */
 
 			}
 			header("Content-type: text/xml");
