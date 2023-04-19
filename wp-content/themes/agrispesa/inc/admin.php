@@ -648,7 +648,6 @@
 					if(empty($alreadyExistByTitle)){
 							$productObj = new WC_Product_Simple();
 							$productObj->set_name($productName);
-							$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
 							$productObj->save();
 							$productId = $productObj->get_id();
 
@@ -663,7 +662,6 @@
 					}
 
 					$productObj->set_name($productName);
-					$productObj->set_sku(implode("_",$sku));
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
 					$productObj->save();
 
@@ -683,6 +681,8 @@
 
 				update_post_meta($productId, "_regular_price", $price);
 				update_post_meta($productId, "_price", $price);
+				update_post_meta($productId, "_sku", implode("_",$sku));
+
 				update_post_meta($productId, "_navision_id", (string)$product["id_product"]);
 
 				$code =  (string)$product["productgroupcode"];
