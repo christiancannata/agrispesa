@@ -463,6 +463,42 @@
 			SET post_status = 'draft'
 			WHERE post_type = 'gruppo-prodotto';");
 
+			$productIds = [];
+			$newProducts = [];
+
+			$arrotondamenti = array_filter($products["ROW"], function ($product) {
+				$product = (array)$product;
+				return strtolower((string)$product['description']) == 'arrotondamento';
+			});
+
+			foreach($arrotondamenti as $arrotondamento){
+				$productId = wc_get_product_id_by_sku((string)$arrotondamento['id_product']);
+				$price = floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"]));
+				if (!$productId) {
+					$productObj = new WC_Product_Simple();
+					$productObj->set_name((string)$arrotondamento["description"].' '.(string)$arrotondamento["description2"]);
+					//$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"])));
+					$productObj->set_sku((string)$arrotondamento['id_product']);
+					$productObj->save();
+					$productId = $productObj->get_id();
+
+					$term = get_term_by('slug', 'arrotondamenti', 'product_cat');
+					wp_set_object_terms($productId, $term->term_id, 'product_cat');
+
+					$newProducts[] = $productObj;
+				} else {
+					$productObj = wc_get_product($productId);
+					$productObj->set_name((string)$arrotondamento["description"].' '.(string)$arrotondamento["description2"]);
+				//	$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"])));
+					$productObj->save();
+				}
+
+				update_post_meta($productObj->get_id(), "_regular_price", $price);
+				update_post_meta($productObj->get_id(), "_price", $price);
+				update_post_meta($productObj->get_id(), "_navision_id", (string)$product["id_product"]);
+
+				$productIds[] = $productObj->get_id();
+			}
 
 			$activeProducts = array_filter($products["ROW"], function ($product) {
 				$product = (array)$product;
@@ -474,8 +510,6 @@
 			SET post_status = 'draft'
 			WHERE post_type = 'product';");
 			*/
-			$productIds = [];
-			$newProducts = [];
 			foreach ($activeProducts as $key => $product) {
 
 				if((string)$product["productgroupcode"] == 'arrotondamento'){
