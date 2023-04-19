@@ -5,8 +5,8 @@
 
 
 
-		add_action( 'reload_terms_count',function(){
-			update_option("entrato", (new DateTime())->format("Y-m-d H:i:s"));
+		add_action( 'reload_terms_count',function($productId){
+
 		});
 
 
@@ -804,7 +804,6 @@
 			}
 			wc_recount_all_terms();
 			update_option("last_import_box", (new DateTime())->format("Y-m-d H:i:s"));
-			as_enqueue_async_action( 'reload_terms_count' );
 
 			$response = new WP_REST_Response($boxIds);
 			$response->set_status(201);
