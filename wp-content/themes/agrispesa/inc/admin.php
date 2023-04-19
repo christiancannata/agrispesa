@@ -1257,7 +1257,7 @@
 				//check if has navision id
 				$navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
 				if (!$navisionId) {
-					$navisionId = 10000 + $order->get_customer_id();
+					$navisionId = 50000 + $order->get_customer_id();
 					update_user_meta($order->get_customer_id(), "navision_id", $navisionId);
 				}
 				$ele1 = $doc->createElement("id_codeclient");
