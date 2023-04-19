@@ -612,16 +612,24 @@
 
 
 			foreach($activeProducts as $product){
+				$product = (array)$product;
+
+				if(is_object($product["description2"]) && get_class($product["description2"]) == SimpleXMLElement::class){
+					$product["description2"] = $product["description2"]->__toString();
+				}
 
 				$sku = (string)$product["id_product"];
 				$sku = explode("_", $sku);
 
+				$productName = (string)$product["description"].' '.(string)$product["description2"];
+
 				$productId = wc_get_product_id_by_sku($sku[0]);
+
 				if (!$productId) {
 					$productObj = new WC_Product_Simple();
-					$productObj->set_name((string)$product["description"].' '.(string)$product["description2"]);
+					$productObj->set_name($productName);
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
-					$productObj->set_sku($sku[0]);
+					$productObj->set_sku(implode("_",$sku));
 					$productObj->save();
 					$productId = $productObj->get_id();
 
@@ -630,13 +638,36 @@
 
 					$newProducts[] = $productObj;
 				} else {
-					$productObj = wc_get_product($productId);
-					$productObj->set_name((string)$product["description"].' '.(string)$product["description2"]);
+
+					// FIX PER SKU CONTROLLO ERRATO
+					// cerco per nome, se non lo trovo lo creo nuovo
+					$alreadyExistByTitle = $wpdb->get_results( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title = '%s'", $wpdb->esc_like( $productName)) );
+
+					$productObj = null;
+
+					if(empty($alreadyExistByTitle)){
+							$productObj = new WC_Product_Simple();
+							$productObj->set_name($productName);
+							$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
+							$productObj->set_sku(implode("_",$sku));
+							$productObj->save();
+							$productId = $productObj->get_id();
+
+							$term = get_term_by('slug', 'senza-categoria', 'product_cat');
+							wp_set_object_terms($productId, $term->term_id, 'product_cat');
+
+							$newProducts[] = $productObj;
+					}else{
+					$productObj = wc_get_product($alreadyExistByTitle[0]->ID);
+					}
+
+					$productObj->set_name($productName);
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
 					$productObj->save();
+
 				}
-				$product["wordpress_id"] = $productId;
-				$productIds[] = $productId;
+				$product["wordpress_id"] = $productObj->get_id();
+				$productIds[] =  $productObj->get_id();
 				//update_post_meta($productId,'_is_active_shop',1);
 				/*
 				$product = new WC_Product($productId);
