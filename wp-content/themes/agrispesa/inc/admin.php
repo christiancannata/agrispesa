@@ -649,7 +649,6 @@
 							$productObj = new WC_Product_Simple();
 							$productObj->set_name($productName);
 							$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
-							$productObj->set_sku(implode("_",$sku));
 							$productObj->save();
 							$productId = $productObj->get_id();
 
@@ -658,10 +657,13 @@
 
 							$newProducts[] = $productObj;
 					}else{
+
 					$productObj = wc_get_product($alreadyExistByTitle[0]->ID);
+
 					}
 
 					$productObj->set_name($productName);
+					$productObj->set_sku(implode("_",$sku));
 					$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$product["unitprice"])));
 					$productObj->save();
 
