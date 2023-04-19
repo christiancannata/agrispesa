@@ -1060,6 +1060,8 @@
 			return true;
 		}, "callback" => function ($request) {
 
+			$limit = $request->get_param('limit');
+
 			$today = new \DateTime();
 			$today->add(new \DateInterval('P7D'));
 			$week = $today->format("W");
@@ -1086,7 +1088,7 @@
 
 			foreach ($orders as $order) {
 
-				if($items>1){
+				if($limit && $items>$limit){
 					continue;
 				}
 
