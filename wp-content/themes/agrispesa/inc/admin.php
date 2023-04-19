@@ -1096,10 +1096,10 @@
 					continue;
 				}
 
+				$boxCode = 'STCOMP';
+
 				$isSubscription = get_post_meta($order->get_id(), "_subscription_id", true);
-				if (!$isSubscription) {
-					continue;
-				}
+				if ($isSubscription) {
 
 				$subscriptions = wcs_get_users_subscriptions($order->get_customer_id());
 				if (count($subscriptions) == 0) {
@@ -1114,6 +1114,8 @@
 				if (!$box) {
 					continue;
 				}
+
+
 				$tipologia = get_post_meta($box->get_id(), "attribute_pa_tipologia", true);
 				$dimensione = get_post_meta($box->get_id(), "attribute_pa_dimensione", true);
 				$productBox = get_single_box_from_attributes($tipologia, $dimensione);
@@ -1121,10 +1123,23 @@
 					continue;
 				}
 
-				$navisionId = get_post_meta($order->get_id(), "_box_navision_id", true);
-				if (!$navisionId) {
-					continue;
+
+					$navisionIdBox = get_post_meta($productBox->get_id(), "_navision_id", true);
+
+				    if (empty($navisionIdBox)) {
+					   continue;
+					}
+
+					$boxCode = $navisionIdBox[0];
+
+
+				//$navisionId = get_post_meta($order->get_id(), "_box_navision_id", true);
+				//if (!$navisionId) {
+				//	continue;
+				//}
+
 				}
+
 
 				$piano = get_post_meta($order->get_id(),'shipping_piano',true);
 				if(!$piano){
@@ -1203,12 +1218,8 @@
 					$ele2->nodeValue = str_replace(".", ",", number_format($product->get_price(), 4));
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_no");
-					$navisionId = get_post_meta($productBox->get_id(), "_navision_id", true);
-					if (empty($navisionId)) {
-					$navisionId = [""];
-					}
 
-					$ele2->nodeValue = $currentWeek."-" . $navisionId[0];
+					$ele2->nodeValue = $currentWeek."-" . $boxCode;
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_line_no");
 					$ele2->nodeValue = $item->get_meta("offer_line_no");
