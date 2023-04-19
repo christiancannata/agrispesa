@@ -1651,6 +1651,7 @@
 			if (empty($boxPreferences)) {
 				$boxPreferences = [];
 			}
+			$boxPreferences = [];
 			foreach ($boxPreferences as $preference) {
 				$productSearched = array_filter($productsToAdd, function ($product) use ($preference) {
 					return $product["id"] == $preference["id"];
@@ -1819,7 +1820,11 @@
 		update_post_meta( $order->get_id(), '_disable_order_emails', true );
 
 		foreach ($productsToAdd as $productToAdd) {
+
 			$productObjToAdd = wc_get_product($productToAdd["id"]);
+			if(!$productObjToAdd){
+				continue;
+			}
 			if ($productToAdd["quantity"] > $productObjToAdd->get_stock_quantity()) {
 				//Non ho più disponibilità
 

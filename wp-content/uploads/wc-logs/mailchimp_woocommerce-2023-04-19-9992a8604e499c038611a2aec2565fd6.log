@@ -1,0 +1,6 @@
+2023-04-19T14:41:52+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36813
+2023-04-19T14:43:25+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36814
+2023-04-19T14:43:27+00:00 NOTICE validation.bad_email :: Order #36813 has an invalid email address. Skipping!
+2023-04-19T14:44:06+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36815
+2023-04-19T14:44:58+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 36816
+2023-04-19T14:45:32+00:00 NOTICE validation.bad_email :: Order #36814 has an invalid email address. Skipping!
