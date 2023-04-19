@@ -670,12 +670,15 @@
 			$args = ["post_status" => "publish", "fields" => "ids", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ];
 			$productsToExclude = new WP_Query($args);
 			$idsToExclude = $productsToExclude->get_posts();
+
 			$wpdb->query("UPDATE wp_posts
 	SET post_status = 'draft'
 	WHERE post_type = 'product' AND ID NOT IN (" . implode(",", $idsToExclude) . ")");
+			$newIdsProducts = [];
 			if (count($newProducts) > 0) {
 				$list = "<ul>";
 				foreach ($newProducts as $product) {
+					$newIdsProducts[] = $product->get_id();
 					$list.= '<li><a href="https://agrispesa.it/wp-admin/post.php?post=' . $product->get_id() . '&action=edit">' . $product->get_name() . "</a></li>";
 				}
 				$list.= "</ul>";
@@ -685,8 +688,8 @@
 
 			wc_recount_all_terms();
 
-			$response = new WP_REST_Response([]);
-			$response->set_status(204);
+			$response = new WP_REST_Response($newIdsProducts);
+			$response->set_status(201);
 			return $response;
 		}, ]);
 
