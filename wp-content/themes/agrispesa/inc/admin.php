@@ -1082,7 +1082,13 @@
 		'meta_compare' => '>',
 		'meta_value' => $lastWeek->getTimestamp()
 	]);
-			foreach (array_slice($orders,0,1) as $order) {
+			$items = 0;
+
+			foreach ($orders as $order) {
+
+				if($items>0){
+					continue;
+				}
 
 				$isSubscription = get_post_meta($order->get_id(), "_subscription_id", true);
 				if (!$isSubscription) {
@@ -1203,6 +1209,7 @@
 					$row->appendChild($ele2);
 					$root->appendChild($row);
 				}
+				$items++;
 /*
 				$shipping_method_total = 0;
 
