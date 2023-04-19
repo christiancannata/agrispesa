@@ -495,7 +495,7 @@
 
 				update_post_meta($productObj->get_id(), "_regular_price", $price);
 				update_post_meta($productObj->get_id(), "_price", $price);
-				update_post_meta($productObj->get_id(), "_navision_id", (string)$product["id_product"]);
+				update_post_meta($productObj->get_id(), "_navision_id", (string)$arrotondamento["id_product"]);
 
 				$productIds[] = $productObj->get_id();
 			}
