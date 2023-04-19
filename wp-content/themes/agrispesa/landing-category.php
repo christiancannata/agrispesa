@@ -162,14 +162,14 @@ if($what_category_ID) {
 				<span class="icon-social"></span>
 				<p class="pet-heroes--descr">
 					Socializzare<br/>
-					<span>(e cuccare)</span>
+					<span>(e magari incontrare l'amore)</span>
 				</p>
 			</div>
 			<div class="pet-heroes--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
 				<span class="icon-sport"></span>
 				<p class="pet-heroes--descr">
 					Stare in forma<br/>
-					<span>e dimagrire</span>
+					<span>e mantenerti giovane</span>
 				</p>
 			</div>
 			<div class="pet-heroes--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
@@ -189,7 +189,7 @@ if($what_category_ID) {
 			<div class="pet-heroes--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
 				<span class="icon-kids"></span>
 				<p class="pet-heroes--descr">
-					Accudire<br/>
+					Far giocare<br/>
 					<span>i bambini</span>
 				</p>
 			</div>
