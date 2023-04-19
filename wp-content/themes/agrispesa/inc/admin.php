@@ -1834,7 +1834,10 @@ add_action("rest_api_init", function () {
 							});
 
 							if(empty($foundProductInSt)){
-								dd("Prodotto non trovato nella scegli tu: ". $product->get_name());
+								$response = new WP_REST_Response(["error" => "Prodotto non trovato nella scegli tu: ". $product->get_name(),'scegli_tu' => $productsScegliTu]);
+								$response->set_status(500);
+								return $response;
+
 							}
 
 							$foundProductInSt = reset($foundProductInSt);
