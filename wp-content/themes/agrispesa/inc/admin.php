@@ -647,6 +647,8 @@
 			$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productIds) . ")");
 
 			foreach ($activeProducts as $product) {
+				$product = (array)$product;
+
 				$price = (string)$product["unitprice"];
 				$price = str_replace(",", ".", $price);
 				$price = floatval($price);
@@ -774,6 +776,7 @@
 				$id = explode("-", $box);
 				return $id[1];
 			}, $skuBoxSingole);
+
 			foreach ($skuBoxSingole as $sku) {
 				$singleProductBox = new WP_Query(["post_type" => "product_variation", "meta_key" => "_sku", "meta_value" => $sku, "order" => "DESC", "posts_per_page" => 1, ]);
 				if ($singleProductBox->have_posts()) {
@@ -787,6 +790,7 @@
 				$wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) . ")");
 				$wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $postIds) . ")");
 			}
+
 			$boxIds = [];
 			//delete all box for the same week
 			$boxIdsToDelete = $wpdb->get_results("select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '" . date("Y") . "_" . $week . "'");
@@ -804,15 +808,19 @@
 			foreach ($boxes as $idBox => $boxProducts) {
 				$navisionId = explode("-", $idBox);
 				$navisionId = end($navisionId);
+
 				$singleProductBox = new WP_Query(["post_type" => "product_variation", "fields" => "ids", "meta_key" => "_sku", "post_status" => "publish", "meta_value" => $navisionId, "order" => "DESC", "posts_per_page" => 1, ]);
 				if (!$singleProductBox->have_posts()) {
 					continue;
 				}
+
 				$singleProductBox = $singleProductBox->get_posts();
 				$singleProductBox = reset($singleProductBox);
+
 				$post_id = wp_insert_post(["post_type" => "weekly-box", "post_title" => "Box settimana " . date("Y") . "_" . $week . " - " . $idBox, "post_content" => "", "post_status" => "publish", "comment_status" => "closed", // if you prefer
 				"ping_status" => "closed", // if you prefer
 				]);
+
 				if ($post_id) {
 					// insert post meta
 					$deliveryDate = (string)$boxProducts[0]["requesteddeliverydate"];
@@ -824,13 +832,15 @@
 
 					$arrayProducts = [];
 					foreach ($boxProducts as $boxProduct) {
+
 						$singleProduct = new WP_Query(["post_type" => "product", "meta_key" => "_navision_id", "meta_value" => $boxProduct["id_product"], "order" => "ASC", "posts_per_page" => 1, ]);
+
 						if (!$singleProduct->have_posts()) {
 							continue;
 						}
 						$singleProduct = $singleProduct->get_posts();
 						$singleProduct = reset($singleProduct);
-						update_post_meta($singleProduct->ID,'_is_active_shop',1);
+						//update_post_meta($singleProduct->ID,'_is_active_shop',1);
 
 						$arrayProducts[] = ["id" => $singleProduct->ID, "quantity" => 1, "name" => $singleProduct->post_title, "offer_line_no" => (string)$boxProduct["offer_line_no"], ];
 					}
@@ -838,6 +848,7 @@
 					$boxIds[] = $post_id;
 				}
 			}
+
 			wc_recount_all_terms();
 			update_option("last_import_box", (new DateTime())->format("Y-m-d H:i:s"));
 

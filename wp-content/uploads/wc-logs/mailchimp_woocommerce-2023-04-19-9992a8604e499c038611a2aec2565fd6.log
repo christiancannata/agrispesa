@@ -133,3 +133,11 @@
 
 )
 
+2023-04-19T16:05:30+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-19T16:05:30+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-19T16:05:30+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-19T16:05:30+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-19T16:07:39+00:00 NOTICE validation.bad_email :: Order #36883 has an invalid email address. Skipping!
+2023-04-19T16:07:40+00:00 NOTICE validation.bad_email :: Order #36897 has an invalid email address. Skipping!
+2023-04-19T16:13:28+00:00 NOTICE order.member.updated :: Updated mennarita69@gmail.com subscriber status to transactional and language to it
+2023-04-19T16:13:28+00:00 NOTICE order_submit.success :: addStoreOrder :: #36898 :: email: mennarita69@gmail.com :: landing site https://agrispesa.loc/wp-admin/admin.php?page=genera-ordini-box
