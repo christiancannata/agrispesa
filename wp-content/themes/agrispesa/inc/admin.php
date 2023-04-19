@@ -647,9 +647,10 @@
 				$price = (string)$product["unitprice"];
 				$price = str_replace(",", ".", $price);
 				$price = floatval($price);
-				update_post_meta($product["wordpress_id"], "_regular_price", $price);
-				update_post_meta($product["wordpress_id"], "_price", $price);
-				update_post_meta($product["wordpress_id"], "_navision_id", (string)$product["id_product"]);
+
+				update_post_meta($productId, "_regular_price", $price);
+				update_post_meta($productId, "_price", $price);
+				update_post_meta($productId, "_navision_id", (string)$product["id_product"]);
 
 				$code =  (string)$product["productgroupcode"];
 				$code = explode("-",$code);
