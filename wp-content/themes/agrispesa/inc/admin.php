@@ -641,7 +641,7 @@
 
 					// FIX PER SKU CONTROLLO ERRATO
 					// cerco per nome, se non lo trovo lo creo nuovo
-					$alreadyExistByTitle = $wpdb->get_results( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title = '%s'", $wpdb->esc_like( $productName)) );
+					$alreadyExistByTitle = $wpdb->get_results( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_status = 'publish' AND post_title = '%s' ORDER BY ID DESC", $wpdb->esc_like( $productName)) );
 
 					$productObj = null;
 
