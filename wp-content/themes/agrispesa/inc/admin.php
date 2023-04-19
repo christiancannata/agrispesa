@@ -1010,7 +1010,7 @@
 				if(!$fido){
 					$fido = 0;
 				}
-				$fido = number_format($fido,4,',');
+				$fido = number_format(floatval($fido),4,',');
 				$ele2->nodeValue = $fido;
 				$row->appendChild($ele2);
 				$root->appendChild($row);
