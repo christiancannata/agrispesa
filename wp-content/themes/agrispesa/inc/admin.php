@@ -839,20 +839,27 @@ add_action("rest_api_init", function () {
                 ) == "arrotondamento spese";
             });
 
+			$productIds = [];
+
             foreach ($arrotondamenti as $arrotondamento) {
                 $arrotondamento = (array) $arrotondamento;
-                $productId = wc_get_product_id_by_sku(
-                    $arrotondamento["id_product"]
-                );
 
-                if (!$productId) {
-                    $productObj = new WC_Product_Simple();
+				 $productId = get_posts([
+                        "post_type" => "product",
+                        "post_status" => ["publish", "draft","trash"],
+                        "fields" => "ids",
+                        "posts_per_page" => 1,
+                        "meta_key" => "_sku",
+                        "meta_value" => $arrotondamento["id_product"],
+                    ]);
+
+				 if(empty($productId)){
+					 $productObj = new WC_Product_Simple();
                     $productObj->set_name(
                         (string) $arrotondamento["description"] .
                             " " .
                             (string) $arrotondamento["description2"]
                     );
-                    //$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"])));
                     $productObj->set_sku(
                         (string) $arrotondamento["id_product"]
                     );
@@ -870,34 +877,32 @@ add_action("rest_api_init", function () {
                         "product_cat"
                     );
 
-                    $newProducts[] = $productObj;
-                } else {
-                    $productObj = wc_get_product($productId);
-                    $productObj->set_name(
-                        (string) $arrotondamento["description"] .
-                            " " .
-                            (string) $arrotondamento["description2"]
-                    );
-                    //	$productObj->set_regular_price(floatval(str_replace(",", ".", (string)$arrotondamento["unitprice"])));
-                    $productObj->save();
-                }
 
                 $price = floatval(
                     str_replace(",", ".", (string) $arrotondamento["unitprice"])
                 );
                 update_post_meta(
-                    $productObj->get_id(),
+                    $productId,
                     "_regular_price",
                     $price
                 );
-                update_post_meta($productObj->get_id(), "_price", $price);
+                update_post_meta($productId, "_price", $price);
                 update_post_meta(
-                    $productObj->get_id(),
+                    $productId,
                     "_navision_id",
                     (string) $arrotondamento["id_product"]
                 );
 
-                $productIds[] = $productObj->get_id();
+				update_post_meta(
+                    $productId,
+                    "_sku",
+                    (string) $arrotondamento["id_product"]
+                );
+
+                    $newProducts[] = $productObj;
+				 }
+
+
             }
 
             $activeProducts = array_filter($products["ROW"], function (
@@ -1268,7 +1273,7 @@ add_action("rest_api_init", function () {
             $productsSku = array_unique($productsSku);
 
             $productsToExclude = get_posts([
-                "post_type" => "product",
+                "post_type" => ["product","product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
