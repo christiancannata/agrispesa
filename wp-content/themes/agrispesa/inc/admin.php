@@ -19,7 +19,6 @@ function call_order_status_completed( $orderId ) {
 			if(in_array($term->slug,['box'])){
 				$orderType = 'FN';
 			}
-    	break;
 		}
 	}
 
