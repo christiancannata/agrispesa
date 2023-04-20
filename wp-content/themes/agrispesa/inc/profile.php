@@ -72,9 +72,9 @@ function settings_box_link_my_account($items)
 
 	if (count($subscriptions) > 0) {
 
-		$items = array_insert_after($items, 'subscriptions', [
+	/*	$items = array_insert_after($items, 'subscriptions', [
 			'personalizza-scatola' => 'Personalizza la scatola'
-		]);
+		]);*/
 	}
 
 	return $items;

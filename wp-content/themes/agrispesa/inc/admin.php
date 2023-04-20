@@ -752,6 +752,30 @@ add_action("rest_api_init", function () {
             return $response;
         },
     ]);
+
+	register_rest_route("agrispesa/v1", "fix-sku", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+
+		global $wpdb;
+		$duplicatedProducts = $wpdb->get_results(
+			"select meta_value,COUNT(meta_value),GROUP_CONCAT(DISTINCT post_id ORDER BY post_id SEPARATOR ',') post_id
+FROM wp_postmeta
+JOIN wp_posts ON wp_posts.ID=wp_postmeta.post_id
+WHERE meta_key = '_sku'
+AND meta_value != ''
+GROUP BY meta_value HAVING COUNT(meta_value) > 1"
+            );
+
+		foreach($duplicatedProducts as $duplicatedPost){
+			$postIds = explode(",", $duplicatedPost->post_id);
+		}
+
+        }]);
+
     register_rest_route("agrispesa/v1", "import-products", [
         "methods" => "POST",
         "permission_callback" => function () {
