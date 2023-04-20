@@ -1629,7 +1629,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 update_user_meta(
                     $userObj[0],
                     "_saldo_navision",
-                    $user['balance']
+                    substr($user['balance'], 0, -2)
                 );
 
             }
