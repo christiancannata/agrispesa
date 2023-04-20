@@ -384,7 +384,7 @@ function custom_meta_query($meta_query)
 	return $meta_query;
 }
 
-The main shop and archives meta query
+//The main shop and archives meta query
 add_filter('woocommerce_product_query_meta_query', 'custom_product_query_meta_query', 10, 2);
 function custom_product_query_meta_query($meta_query, $query)
 {
