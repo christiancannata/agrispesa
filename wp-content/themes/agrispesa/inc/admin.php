@@ -783,7 +783,7 @@ add_action("rest_api_init", function () {
 
 
 			       $productsToExclude = get_posts([
-                "post_type" => "product",
+                "post_type" => ["product","product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
