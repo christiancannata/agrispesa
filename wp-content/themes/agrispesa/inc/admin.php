@@ -1433,7 +1433,7 @@ add_action("rest_api_init", function () {
                             "meta_key" => "_navision_id",
 							"post_status" => ["publish","private","trash","draft"],
                             "meta_value" => $boxProduct["id_product"],
-                            "order" => "ASC",
+                            "order" => "DESC",
                             "posts_per_page" => 1,
                         ]);
 
