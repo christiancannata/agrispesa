@@ -432,6 +432,7 @@ add_action(
     "woocommerce_product_custom_fields_save1"
 );
 add_action("rest_api_init", function () {
+
     register_rest_route("agrispesa/v1", "import-preferences", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -1575,6 +1576,66 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
+
+            return $response;
+        },
+    ]);
+
+
+
+
+
+    register_rest_route("agrispesa/v1", "import-fido", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $now = new DateTime();
+            $file = "box_" . $now->format("dmY_Hi") . ".xml";
+            $uploadDire = wp_upload_dir($now->format("Y/m"));
+            file_put_contents(
+                $uploadDire["path"] . "/" . $file,
+                $request->get_body()
+            );
+
+            ($xml = simplexml_load_string($request->get_body())) or
+                die("Error: Cannot create object");
+            $users = (array) $xml;
+
+            global $wpdb;
+
+            $users = $users["ROW"];
+
+            foreach ($users as $key => $user) {
+                $user = (array) $user;
+
+				$args = [
+                    "fields" => "ids",
+                    "meta_query" => [
+                        [
+                            "key" => "navision_id",
+                            "value" => $user['id_codeclient'],
+                            "compare" => "=",
+                        ],
+                    ],
+                ];
+
+                $userObj = get_users($args); //finds all users with this meta_key == 'member_id' and meta_value == $member_id passed in url
+				if(empty($userObj)){
+					continue;
+				}
+
+                update_user_meta(
+                    $userObj[0],
+                    "_saldo_navision",
+                    $user['balance']
+                );
+
+            }
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
 
             return $response;
         },

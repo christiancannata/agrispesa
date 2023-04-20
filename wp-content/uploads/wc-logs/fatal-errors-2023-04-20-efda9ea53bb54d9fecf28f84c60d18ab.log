@@ -10,3 +10,11 @@ Stack trace:
 #3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
 #4 /shared/httpd/agrispesa/wp-inclu in /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Engine/Preload/Controller/CheckExcludedTrait.php alla riga 36
 
+2023-04-20T17:58:34+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1633
+
+2023-04-20T17:58:36+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1633
+
+2023-04-20T17:58:37+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1633
+
+2023-04-20T17:58:39+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 1633
+
