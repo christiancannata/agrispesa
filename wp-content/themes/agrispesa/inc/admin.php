@@ -780,6 +780,56 @@ add_action("rest_api_init", function () {
             $productIds = [];
             $newProducts = [];
 
+
+
+			       $productsToExclude = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => ["publish", "draft", "trash", "private"],
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => ["box", "sos", "box-singola", "gift-card"],
+                        "operator" => "IN",
+                    ],
+                ],
+            ]);
+
+            $productsToInclude = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => ["publish", "draft", "trash", "private"],
+            ]);
+
+            $wpdb->query(
+                "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
+                    implode(",", $productsToInclude) .
+                    ");"
+            );
+            $wpdb->query(
+                "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
+                    implode(",", $productsToInclude) .
+                    ");"
+            );
+
+            if (!empty($productsToExclude)) {
+                $wpdb->query(
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+            }
+
+
+
             $arrotondamenti = array_filter($products["ROW"], function (
                 $product
             ) {
