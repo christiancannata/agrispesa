@@ -854,10 +854,7 @@ add_action("rest_api_init", function () {
                 return $price > 0;
             });
 
-            /*	$wpdb->query("UPDATE wp_posts
-			SET post_status = 'draft'
-			WHERE post_type = 'product';");
-			*/
+
             foreach ($activeProducts as $key => $product) {
                 $product = (array) $product;
 
@@ -872,8 +869,8 @@ add_action("rest_api_init", function () {
                     continue;
                 }
 
-                $sku = (string) $product["id_product"];
-                $sku = explode("_", $sku);
+               // $sku = (string) $product["id_product"];
+               // $sku = explode("_", $sku);
 
                 /* CREATE GROUP */
 
@@ -982,6 +979,8 @@ add_action("rest_api_init", function () {
                 }
             }
 
+
+
             foreach ($activeProducts as $product) {
                 $product = (array) $product;
 
@@ -996,27 +995,20 @@ add_action("rest_api_init", function () {
                 }
 
                 $sku = (string) $product["id_product"];
-                $sku = explode("_", $sku);
+              //  $sku = explode("_", $sku);
 
                 $productName =
                     (string) $product["description"] .
                     " " .
                     (string) $product["description2"];
 
-                $productId = wc_get_product_id_by_sku($sku[0]);
+                $productId = wc_get_product_id_by_sku($sku);
+
+				$productObj = null;
 
                 if (!$productId) {
                     $productObj = new WC_Product_Simple();
                     $productObj->set_name($productName);
-                    $productObj->set_regular_price(
-                        floatval(
-                            str_replace(
-                                ",",
-                                ".",
-                                (string) $product["unitprice"]
-                            )
-                        )
-                    );
                     $productObj->save();
                     $productId = $productObj->get_id();
 
@@ -1035,7 +1027,7 @@ add_action("rest_api_init", function () {
                 } else {
                     // FIX PER SKU CONTROLLO ERRATO
                     // cerco per nome, se non lo trovo lo creo nuovo
-                    $alreadyExistByTitle = $wpdb->get_results(
+                    /*$alreadyExistByTitle = $wpdb->get_results(
                         $wpdb->prepare(
                             "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_status = 'publish' AND post_title = '%s' ORDER BY ID DESC",
                             $wpdb->esc_like($productName)
@@ -1063,22 +1055,17 @@ add_action("rest_api_init", function () {
 
                         $newProducts[] = $productObj;
                     } else {
-                        $productObj = wc_get_product(
-                            $alreadyExistByTitle[0]->ID
-                        );
-                    }
 
-                    $productObj->set_regular_price(
-                        floatval(
-                            str_replace(
-                                ",",
-                                ".",
-                                (string) $product["unitprice"]
-                            )
-                        )
-                    );
-                    $productObj->save();
+                    }*/
+
+
+                    $productObj = wc_get_product($productId);
+					$productObj->save();
+
                 }
+
+
+
                 $product["wordpress_id"] = $productObj->get_id();
                 $productIds[] = $productObj->get_id();
                 //update_post_meta($productId,'_is_active_shop',1);
@@ -1094,7 +1081,7 @@ add_action("rest_api_init", function () {
 
                 update_post_meta($productId, "_regular_price", $price);
                 update_post_meta($productId, "_price", $price);
-                update_post_meta($productId, "_sku", implode("_", $sku));
+                update_post_meta($productId, "_sku", $sku);
 
                 update_post_meta(
                     $productId,
@@ -1113,12 +1100,12 @@ add_action("rest_api_init", function () {
             }
 
             //Attivo i prodotti
-            $productIds = array_unique($productIds);
+            /*$productIds = array_unique($productIds);
             $wpdb->query(
                 "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
                     implode(",", $productIds) .
                     ")"
-            );
+            );*/
 
             $args = [
                 "post_status" => "publish",
@@ -1142,6 +1129,7 @@ add_action("rest_api_init", function () {
                     implode(",", $idsToExclude) .
                     ")"
             );
+
             $newIdsProducts = [];
             if (count($newProducts) > 0) {
                 $list = "<ul>";
@@ -1263,11 +1251,11 @@ add_action("rest_api_init", function () {
 
 
            $wpdb->query("UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productsToInclude) . ");");
-
 		   $wpdb->query("UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToInclude) . ");");
 
 		   if(!empty($productsToExclude)){
 			  $wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" . implode(",", $productsToExclude) . ");");
+			  $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToExclude) . ");");
 		   }
 
 
