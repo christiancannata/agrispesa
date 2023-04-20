@@ -783,8 +783,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$terms = get_the_terms($postId, 'product_cat' );
 
 				if(count($terms) == 1){
-					update_post_meta($postId,'_sku','__'.$duplicatedPost->meta_value);
-					update_post_meta($postId,'_navision_id','__'.$duplicatedPost->meta_value);
+					update_post_meta($postId,'_sku','__'.$duplicatedPost->meta_value."__".time());
+					update_post_meta($postId,'_navision_id','__'.$duplicatedPost->meta_value."__".time());
 				}
 
 			}
