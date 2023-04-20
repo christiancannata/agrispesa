@@ -1416,7 +1416,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $boxIds = [];
             //delete all box for the same week
-            $boxIdsToDelete = $wpdb->get_results(
+            /*$boxIdsToDelete = $wpdb->get_results(
                 "select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '" .
                     date("Y") .
                     "_" .
@@ -1433,13 +1433,24 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         implode(",", $boxIdsToDelete) .
                         ")"
                 );
-            }
+            }*/
             $wpdb->query("DELETE pm
 	FROM wp_postmeta pm
 	LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
 	WHERE wp.ID IS NULL");
 
             foreach ($boxes as $idBox => $boxProducts) {
+
+				$boxName = "Box settimana " .
+                        date("Y") .
+                        "_" .
+                        $week .
+                        " - " .
+                        $idBox;
+
+				// DELETE BOX FOR THE CURRENT WEEK
+				 $wpdb->query('DELETE from wp_posts WHERE post_title = "'.$boxName.'"');
+
                 $navisionId = explode("-", $idBox);
                 $navisionId = end($navisionId);
 
@@ -1462,13 +1473,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $post_id = wp_insert_post([
                     "post_type" => "weekly-box",
-                    "post_title" =>
-                        "Box settimana " .
-                        date("Y") .
-                        "_" .
-                        $week .
-                        " - " .
-                        $idBox,
+                    "post_title" => $boxName,
                     "post_content" => "",
                     "post_status" => "publish",
                     "comment_status" => "closed", // if you prefer
@@ -3221,34 +3226,7 @@ if (!function_exists("mv_add_other_fields_for_packaging")) {
 			global $wpdb;
 			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 	*/
-        ?>
-		<!--	<strong>Data di consegna:</strong><br>
-			<select autocomplete="off" name="_data_consegna">
 
-				<?php foreach ($allDataConsegna as $dataConsegna):
-
-        $dataConsegna = new DateTime($dataConsegna["meta_value"]);
-        //fix nathi per errore data di consegna
-        if (!$dataConsegna): ?>
-						<option <?php if (
-          !$consegna
-      ): ?> selected <?php endif; ?>>Nessuna data di consegna</option>
-					<?php else: ?>
-						<option
-							<?php if (
-           $consegna &&
-           $dataConsegna->format("Y - m - d") == $consegna
-       ): ?> selected <?php endif; ?>
-							value=" <?php echo $dataConsegna->format(
-           "Y-m-d"
-       ); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
-					<?php endif;
-        ?>
-
-				<?php
-    endforeach; ?>
-			</select>-->
-			<?php
     }
 }
 function get_products_to_add_from_subscription(
