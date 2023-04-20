@@ -1240,6 +1240,10 @@ add_action("rest_api_init", function () {
 
             /* FINE ACTIVATE GRUPPI CATEGORIE */
 
+
+
+
+
             $productsSku = [];
             $week = null;
             foreach ($products["ROW"] as $product) {
@@ -1253,22 +1257,35 @@ add_action("rest_api_init", function () {
                 $week = substr($week[0], -2);
             }
             $productsSku = array_unique($productsSku);
-            $importedPosts = $wpdb->get_results(
+
+
+			$productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids" , "post_status" => ["publish","draft","trash","private"], "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ]);
+			$productsToInclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => ["publish","draft","trash","private"]]);
+
+           $wpdb->query("UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productsToInclude) . ");");
+
+		   $wpdb->query("UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToInclude) . ");");
+
+		   if(!empty($productsToExclude)){
+			  $wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" . implode(",", $productsToExclude) . ");");
+		   }
+
+
+		   $facciamoNoiProducts = [];
+		   $scegliTuProducts = [];
+
+
+ 			$importedPosts = $wpdb->get_results(
                 "SELECT post_id,meta_value FROM " .
                     $wpdb->postmeta .
                     ' WHERE meta_key = "_navision_id" AND meta_value IN ("' .
                     implode('","', $productsSku) .
                     '")'
             );
-            //$productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => "publish", "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ]);
-
-            /* $wpdb->query("UPDATE wp_posts
-	SET post_status = 'draft'
-	WHERE post_type = 'product' WHERE ID NOT IN (" . implode(",", $productsToExclude) . ");");*/
-
             $postIds = array_map(function ($post) {
                 return $post->post_id;
             }, $importedPosts);
+
             $skuBoxSingole = array_keys($boxes);
             $skuBoxSingole = array_map(function ($box) {
                 $id = explode("-", $box);
@@ -1289,6 +1306,9 @@ add_action("rest_api_init", function () {
                     $postIds[] = $singleProductBox[0]->post_parent;
                 }
             }
+
+
+
             if (!empty($postIds)) {
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
@@ -1414,11 +1434,36 @@ add_action("rest_api_init", function () {
                             "offer_line_no" =>
                                 (string) $boxProduct["offer_line_no"],
                         ];
+
+
+						$isActive = 1;
+						 if (strstr((string) $product["offer_no"], "STCOMP") == false) {
+                  		  $isActive = 0;
+							$facciamoNoiProducts[] = $singleProduct->ID;
+						 }else{
+							 $scegliTuProducts[] = $singleProduct->ID;
+						 }
+
+						 update_post_meta($singleProduct->ID,'_is_active_shop',$isActive);
+
+
                     }
                     add_post_meta($post_id, "_products", $arrayProducts);
                     $boxIds[] = $post_id;
                 }
             }
+
+
+			// ENABLE PRODUCTS
+						if(!empty($scegliTuProducts)){
+									   $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $scegliTuProducts) . ");");
+			}
+
+			if(!empty($facciamoNoiProducts)){
+							$wpdb->query("UPDATE wp_posts SET post_status = 'private' WHERE post_type = 'product' AND ID IN (" . implode(",", $facciamoNoiProducts) . ");");
+			}
+
+
 
             wc_recount_all_terms();
             update_option(

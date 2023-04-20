@@ -13,3 +13,6 @@
     [gdpr_fields] => 
 )
 
+2023-04-20T13:06:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 37386
+2023-04-20T13:27:14+00:00 NOTICE product.delete_fail :: Unable to deleted product 25763
+2023-04-20T13:27:44+00:00 NOTICE order_submit :: #37400 has a financial status of pending and was skipped.
