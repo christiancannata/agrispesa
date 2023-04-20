@@ -1612,7 +1612,7 @@ add_action("rest_api_init", function () {
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
-                $startDate = $subscription->get_date("start");
+                $startDate = ($subscription)?$subscription->get_date("start"):'';
                 $startDate = new DateTime($startDate);
                 $ele2 = $doc->createElement("dataabbonamento");
                 $ele2->nodeValue = $startDate->format("dmY");
