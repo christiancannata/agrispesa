@@ -1243,7 +1243,6 @@ add_action("rest_api_init", function () {
 
 
 
-
             $productsSku = [];
             $week = null;
             foreach ($products["ROW"] as $product) {
@@ -1271,10 +1270,11 @@ add_action("rest_api_init", function () {
 		   }
 
 
+
 		   $facciamoNoiProducts = [];
 		   $scegliTuProducts = [];
 
-
+		   /*
  			$importedPosts = $wpdb->get_results(
                 "SELECT post_id,meta_value FROM " .
                     $wpdb->postmeta .
@@ -1284,7 +1284,7 @@ add_action("rest_api_init", function () {
             );
             $postIds = array_map(function ($post) {
                 return $post->post_id;
-            }, $importedPosts);
+            }, $importedPosts);*/
 
             $skuBoxSingole = array_keys($boxes);
             $skuBoxSingole = array_map(function ($box) {
@@ -1322,6 +1322,7 @@ add_action("rest_api_init", function () {
                 );
             }
 
+
             $boxIds = [];
             //delete all box for the same week
             $boxIdsToDelete = $wpdb->get_results(
@@ -1334,6 +1335,8 @@ add_action("rest_api_init", function () {
             $boxIdsToDelete = array_map(function ($post) {
                 return $post->ID;
             }, $boxIdsToDelete);
+
+
             if (!empty($boxIdsToDelete)) {
                 $wpdb->query(
                     "DELETE from wp_posts  WHERE ID IN (" .
@@ -1455,8 +1458,8 @@ add_action("rest_api_init", function () {
 
 
 			// ENABLE PRODUCTS
-						if(!empty($scegliTuProducts)){
-									   $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $scegliTuProducts) . ");");
+			if(!empty($scegliTuProducts)){
+				 $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $scegliTuProducts) . ");");
 			}
 
 			if(!empty($facciamoNoiProducts)){
