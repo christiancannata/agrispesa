@@ -89,13 +89,13 @@ if( !empty($product_categories) ){
           'orderby'        => 'date',
           'order'          => 'DESC',
           'post_status' => 'publish',
-          // 'meta_query'     => array(
-  				// 	array(
-          //     'key'        => '_is_active_shop',
-  				// 		'value' => '1',
-  			  //     'compare' => '=='
-  	      //   )
-  				// ),
+          'meta_query'     => array(
+  					array(
+              'key'        => '_is_active_shop',
+  						'value' => '1',
+  			      'compare' => '=='
+  	        )
+  				),
       );
 
       $search_posts = new WP_Query( $args );
