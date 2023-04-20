@@ -1261,6 +1261,7 @@ add_action("rest_api_init", function () {
 			$productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids" , "post_status" => ["publish","draft","trash","private"], "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ]);
 			$productsToInclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => ["publish","draft","trash","private"]]);
 
+
            $wpdb->query("UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productsToInclude) . ");");
 
 		   $wpdb->query("UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToInclude) . ");");
@@ -1286,6 +1287,7 @@ add_action("rest_api_init", function () {
                 return $post->post_id;
             }, $importedPosts);*/
 
+			$postIds = [];
             $skuBoxSingole = array_keys($boxes);
             $skuBoxSingole = array_map(function ($box) {
                 $id = explode("-", $box);
@@ -1307,8 +1309,6 @@ add_action("rest_api_init", function () {
                 }
             }
 
-
-
             if (!empty($postIds)) {
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
@@ -1321,7 +1321,6 @@ add_action("rest_api_init", function () {
                         ")"
                 );
             }
-
 
             $boxIds = [];
             //delete all box for the same week
@@ -1349,6 +1348,7 @@ add_action("rest_api_init", function () {
 	LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
 	WHERE wp.ID IS NULL");
 
+
             foreach ($boxes as $idBox => $boxProducts) {
                 $navisionId = explode("-", $idBox);
                 $navisionId = end($navisionId);
@@ -1357,11 +1357,12 @@ add_action("rest_api_init", function () {
                     "post_type" => "product_variation",
                     "fields" => "ids",
                     "meta_key" => "_sku",
-                    "post_status" => "publish",
+                    "post_status" => ["publish"],
                     "meta_value" => $navisionId,
                     "order" => "DESC",
                     "posts_per_page" => 1,
                 ]);
+
                 if (!$singleProductBox->have_posts()) {
                     continue;
                 }
@@ -1384,7 +1385,17 @@ add_action("rest_api_init", function () {
                     "ping_status" => "closed", // if you prefer
                 ]);
 
-                if ($post_id) {
+				if (!$post_id) {
+           		 $response = new WP_REST_Response(["error" => 'Errore creazione box '. "Box settimana " .
+                        date("Y") .
+                        "_" .
+                        $week .
+                        " - " .
+                        $idBox]);
+            		$response->set_status(500);
+					return $response;
+				}
+
                     // insert post meta
                     $deliveryDate =
                         (string) $boxProducts[0]["requesteddeliverydate"];
@@ -1415,9 +1426,12 @@ add_action("rest_api_init", function () {
 
                     $arrayProducts = [];
                     foreach ($boxProducts as $boxProduct) {
+
+
                         $singleProduct = new WP_Query([
                             "post_type" => "product",
                             "meta_key" => "_navision_id",
+							"post_status" => ["publish","private","trash","draft"],
                             "meta_value" => $boxProduct["id_product"],
                             "order" => "ASC",
                             "posts_per_page" => 1,
@@ -1427,8 +1441,11 @@ add_action("rest_api_init", function () {
                             continue;
                         }
                         $singleProduct = $singleProduct->get_posts();
+
+
                         $singleProduct = reset($singleProduct);
                         //update_post_meta($singleProduct->ID,'_is_active_shop',1);
+
 
                         $arrayProducts[] = [
                             "id" => $singleProduct->ID,
@@ -1440,6 +1457,7 @@ add_action("rest_api_init", function () {
 
 
 						$isActive = 1;
+
 						 if (strstr((string) $product["offer_no"], "STCOMP") == false) {
                   		  $isActive = 0;
 							$facciamoNoiProducts[] = $singleProduct->ID;
@@ -1453,7 +1471,6 @@ add_action("rest_api_init", function () {
                     }
                     add_post_meta($post_id, "_products", $arrayProducts);
                     $boxIds[] = $post_id;
-                }
             }
 
 
