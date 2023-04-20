@@ -6,28 +6,32 @@ function dd($vars)
 
 add_action("reload_terms_count", function ($productId) {});
 
-
 // define woocommerce_order_status_completed callback function
-function call_order_status_completed( $orderId ) {
+function call_order_status_completed($orderId)
+{
     $order = wc_get_order($orderId);
 
-	$orderType = 'ST';
+    $orderType = "ST";
 
-	foreach ( $order->get_items() as $item_id => $item ) {
-		$categories = get_the_terms( $item->get_product_id(), 'product_cat' );
-		foreach ($categories as $term) {
-			if(in_array($term->slug,['box'])){
-				$orderType = 'FN';
-			}
-		}
-	}
+    foreach ($order->get_items() as $item_id => $item) {
+        $categories = get_the_terms($item->get_product_id(), "product_cat");
+        foreach ($categories as $term) {
+            if (in_array($term->slug, ["box"])) {
+                $orderType = "FN";
+            }
+        }
+    }
 
-	update_post_meta($orderId,'_order_type',$orderType);
-};
+    update_post_meta($orderId, "_order_type", $orderType);
+}
 
 // Call our custom function with the action hook
-add_action( 'woocommerce_order_status_completed', 'call_order_status_completed', 10, 1);
-
+add_action(
+    "woocommerce_order_status_completed",
+    "call_order_status_completed",
+    10,
+    1
+);
 
 function merge_orders($subscriptionOrder, $orders)
 {
@@ -854,7 +858,6 @@ add_action("rest_api_init", function () {
                 return $price > 0;
             });
 
-
             foreach ($activeProducts as $key => $product) {
                 $product = (array) $product;
 
@@ -869,8 +872,8 @@ add_action("rest_api_init", function () {
                     continue;
                 }
 
-               // $sku = (string) $product["id_product"];
-               // $sku = explode("_", $sku);
+                // $sku = (string) $product["id_product"];
+                // $sku = explode("_", $sku);
 
                 /* CREATE GROUP */
 
@@ -979,8 +982,6 @@ add_action("rest_api_init", function () {
                 }
             }
 
-
-
             foreach ($activeProducts as $product) {
                 $product = (array) $product;
 
@@ -995,79 +996,121 @@ add_action("rest_api_init", function () {
                 }
 
                 $sku = (string) $product["id_product"];
-              //  $sku = explode("_", $sku);
+                //  $sku = explode("_", $sku);
 
                 $productName =
                     (string) $product["description"] .
                     " " .
                     (string) $product["description2"];
 
-                $productId = wc_get_product_id_by_sku($sku);
+				 $productId = get_posts([
+                        "post_type" => "product",
+                        "post_status" => ["publish", "draft","trash"],
+                        "fields" => "ids",
+                        "posts_per_page" => 1,
+                        "meta_key" => "_sku",
+                        "meta_value" => $sku,
+                    ]);
 
-				$productObj = null;
+				 if(!empty($productId)){
+					 $productId = reset($productId);
+				 }
 
-                if (!$productId) {
-                    $productObj = new WC_Product_Simple();
-                    $productObj->set_name($productName);
-                    $productObj->save();
-                    $productId = $productObj->get_id();
+                $productObj = null;
 
-                    $term = get_term_by(
-                        "slug",
-                        "senza-categoria",
-                        "product_cat"
-                    );
-                    wp_set_object_terms(
-                        $productId,
-                        $term->term_id,
-                        "product_cat"
-                    );
-
-                    $newProducts[] = $productObj;
-                } else {
-                    // FIX PER SKU CONTROLLO ERRATO
-                    // cerco per nome, se non lo trovo lo creo nuovo
-                    /*$alreadyExistByTitle = $wpdb->get_results(
+                if (empty($productId)) {
+                    $alreadyExistByTitle = $wpdb->get_results(
                         $wpdb->prepare(
-                            "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_status = 'publish' AND post_title = '%s' ORDER BY ID DESC",
+                            "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content != '' ORDER BY ID ASC",
                             $wpdb->esc_like($productName)
                         )
                     );
 
-                    $productObj = null;
-
-                    if (empty($alreadyExistByTitle)) {
-                        $productObj = new WC_Product_Simple();
-                        $productObj->set_name($productName);
-                        $productObj->save();
-                        $productId = $productObj->get_id();
-
-                        $term = get_term_by(
-                            "slug",
-                            "senza-categoria",
-                            "product_cat"
-                        );
-                        wp_set_object_terms(
-                            $productId,
-                            $term->term_id,
-                            "product_cat"
-                        );
-
-                        $newProducts[] = $productObj;
+                    if (!empty($alreadyExistByTitle)) {
+                        $productId = $alreadyExistByTitle[0]->ID;
+                        $productObj = wc_get_product($productId);
                     } else {
+                        //cerco prodotti già esistenti con descrizione vuota
+                        $alreadyExistByTitle = $wpdb->get_results(
+                            $wpdb->prepare(
+                                "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content = '' ORDER BY ID ASC",
+                                $wpdb->esc_like($productName)
+                            )
+                        );
 
-                    }*/
+                        if (!empty($alreadyExistByTitle)) {
+                            $productId = $alreadyExistByTitle[0]->ID;
+                            $productObj = wc_get_product($productId);
+                        } else {
+                            $productObj = new WC_Product_Simple();
+                            $productObj->set_name($productName);
+                            $productObj->save();
+                            $productId = $productObj->get_id();
 
+                            $term = get_term_by(
+                                "slug",
+                                "senza-categoria",
+                                "product_cat"
+                            );
+                            wp_set_object_terms(
+                                $productId,
+                                $term->term_id,
+                                "product_cat"
+                            );
 
-                    $productObj = wc_get_product($productId);
-					$productObj->save();
+                            $newProducts[] = $productObj;
+                        }
+                    }
+                } else {
+                    // FIX PER SKU CONTROLLO ERRATO
+                    // cerco per nome, se non lo trovo lo creo nuovo
+                    $alreadyExistByTitle = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content != '' ORDER BY ID ASC",
+                            $wpdb->esc_like($productName)
+                        )
+                    );
 
+                    if (!empty($alreadyExistByTitle)) {
+                        $productId = $alreadyExistByTitle[0]->ID;
+                        $productObj = wc_get_product($productId);
+                    } else {
+                        //cerco prodotti già esistenti con descrizione vuota
+                        $alreadyExistByTitle = $wpdb->get_results(
+                            $wpdb->prepare(
+                                "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content = '' ORDER BY ID ASC",
+                                $wpdb->esc_like($productName)
+                            )
+                        );
+
+                        if (!empty($alreadyExistByTitle)) {
+                            $productId = $alreadyExistByTitle[0]->ID;
+                            $productObj = wc_get_product($productId);
+                        } else {
+                            $productObj = new WC_Product_Simple();
+                            $productObj->set_name($productName);
+                            $productObj->save();
+                            $productId = $productObj->get_id();
+
+                            $term = get_term_by(
+                                "slug",
+                                "senza-categoria",
+                                "product_cat"
+                            );
+                            wp_set_object_terms(
+                                $productId,
+                                $term->term_id,
+                                "product_cat"
+                            );
+
+                            $newProducts[] = $productObj;
+                        }
+                    }
                 }
 
-
-
+                $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
-                $productIds[] = $productObj->get_id();
+                //$productIds[] = $productObj->get_id();
                 //update_post_meta($productId,'_is_active_shop',1);
                 /*
 				$product = new WC_Product($productId);
@@ -1228,9 +1271,6 @@ add_action("rest_api_init", function () {
 
             /* FINE ACTIVATE GRUPPI CATEGORIE */
 
-
-
-
             $productsSku = [];
             $week = null;
             foreach ($products["ROW"] as $product) {
@@ -1245,25 +1285,55 @@ add_action("rest_api_init", function () {
             }
             $productsSku = array_unique($productsSku);
 
+            $productsToExclude = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => ["publish", "draft", "trash", "private"],
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => ["box", "sos", "box-singola", "gift-card"],
+                        "operator" => "IN",
+                    ],
+                ],
+            ]);
+            $productsToInclude = get_posts([
+                "post_type" => "product",
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => ["publish", "draft", "trash", "private"],
+            ]);
 
-			$productsToExclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids" , "post_status" => ["publish","draft","trash","private"], "tax_query" => [["taxonomy" => "product_cat", "field" => "slug", "terms" => ["box", "sos", "box-singola","gift-card"], "operator" => "IN", ], ], ]);
-			$productsToInclude = get_posts(["post_type" => "product", "numberposts" => - 1, "fields" => "ids", "post_status" => ["publish","draft","trash","private"]]);
+            $wpdb->query(
+                "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
+                    implode(",", $productsToInclude) .
+                    ");"
+            );
+            $wpdb->query(
+                "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
+                    implode(",", $productsToInclude) .
+                    ");"
+            );
 
+            if (!empty($productsToExclude)) {
+                $wpdb->query(
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+            }
 
-           $wpdb->query("UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" . implode(",", $productsToInclude) . ");");
-		   $wpdb->query("UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToInclude) . ");");
+            $facciamoNoiProducts = [];
+            $scegliTuProducts = [];
 
-		   if(!empty($productsToExclude)){
-			  $wpdb->query("UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" . implode(",", $productsToExclude) . ");");
-			  $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $productsToExclude) . ");");
-		   }
-
-
-
-		   $facciamoNoiProducts = [];
-		   $scegliTuProducts = [];
-
-		   /*
+            /*
  			$importedPosts = $wpdb->get_results(
                 "SELECT post_id,meta_value FROM " .
                     $wpdb->postmeta .
@@ -1275,7 +1345,7 @@ add_action("rest_api_init", function () {
                 return $post->post_id;
             }, $importedPosts);*/
 
-			$postIds = [];
+            $postIds = [];
             $skuBoxSingole = array_keys($boxes);
             $skuBoxSingole = array_map(function ($box) {
                 $id = explode("-", $box);
@@ -1323,7 +1393,6 @@ add_action("rest_api_init", function () {
                 return $post->ID;
             }, $boxIdsToDelete);
 
-
             if (!empty($boxIdsToDelete)) {
                 $wpdb->query(
                     "DELETE from wp_posts  WHERE ID IN (" .
@@ -1335,7 +1404,6 @@ add_action("rest_api_init", function () {
 	FROM wp_postmeta pm
 	LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
 	WHERE wp.ID IS NULL");
-
 
             foreach ($boxes as $idBox => $boxProducts) {
                 $navisionId = explode("-", $idBox);
@@ -1373,105 +1441,119 @@ add_action("rest_api_init", function () {
                     "ping_status" => "closed", // if you prefer
                 ]);
 
-				if (!$post_id) {
-           		 $response = new WP_REST_Response(["error" => 'Errore creazione box '. "Box settimana " .
-                        date("Y") .
-                        "_" .
-                        $week .
-                        " - " .
-                        $idBox]);
-            		$response->set_status(500);
-					return $response;
-				}
+                if (!$post_id) {
+                    $response = new WP_REST_Response([
+                        "error" =>
+                            "Errore creazione box " .
+                            "Box settimana " .
+                            date("Y") .
+                            "_" .
+                            $week .
+                            " - " .
+                            $idBox,
+                    ]);
+                    $response->set_status(500);
+                    return $response;
+                }
 
-                    // insert post meta
-                    $deliveryDate =
-                        (string) $boxProducts[0]["requesteddeliverydate"];
-                    $deliveryDate = DateTime::createFromFormat(
-                        "dmY",
-                        $deliveryDate
-                    );
-                    update_post_meta(
-                        $post_id,
-                        "_week",
-                        date("Y") . "_" . $week
-                    );
-                    update_post_meta(
-                        $post_id,
-                        "_data_consegna",
-                        $deliveryDate->format("Y-m-d")
-                    );
-                    update_post_meta(
-                        $post_id,
-                        "_product_box_id",
-                        $singleProductBox
-                    );
-                    update_post_meta(
-                        $post_id,
-                        "_navision_id",
-                        (string) $boxProducts[0]["offer_no"]
-                    );
+                // insert post meta
+                $deliveryDate =
+                    (string) $boxProducts[0]["requesteddeliverydate"];
+                $deliveryDate = DateTime::createFromFormat(
+                    "dmY",
+                    $deliveryDate
+                );
+                update_post_meta($post_id, "_week", date("Y") . "_" . $week);
+                update_post_meta(
+                    $post_id,
+                    "_data_consegna",
+                    $deliveryDate->format("Y-m-d")
+                );
+                update_post_meta(
+                    $post_id,
+                    "_product_box_id",
+                    $singleProductBox
+                );
+                update_post_meta(
+                    $post_id,
+                    "_navision_id",
+                    (string) $boxProducts[0]["offer_no"]
+                );
 
-                    $arrayProducts = [];
-                    foreach ($boxProducts as $boxProduct) {
+                $arrayProducts = [];
+                foreach ($boxProducts as $boxProduct) {
+                    $singleProduct = new WP_Query([
+                        "post_type" => "product",
+                        "meta_key" => "_navision_id",
+                        "post_status" => [
+                            "publish",
+                            "private",
+                            "trash",
+                            "draft",
+                        ],
+                        "meta_value" => $boxProduct["id_product"],
+                        "order" => "ASC",
+                        "posts_per_page" => 1,
+                    ]);
 
-
-                        $singleProduct = new WP_Query([
-                            "post_type" => "product",
-                            "meta_key" => "_navision_id",
-							"post_status" => ["publish","private","trash","draft"],
-                            "meta_value" => $boxProduct["id_product"],
-                            "order" => "ASC",
-                            "posts_per_page" => 1,
-                        ]);
-
-                        if (!$singleProduct->have_posts()) {
-                            continue;
-                        }
-                        $singleProduct = $singleProduct->get_posts();
-
-
-                        $singleProduct = reset($singleProduct);
-                        //update_post_meta($singleProduct->ID,'_is_active_shop',1);
-
-
-                        $arrayProducts[] = [
-                            "id" => $singleProduct->ID,
-                            "quantity" => 1,
-                            "name" => $singleProduct->post_title,
-                            "offer_line_no" =>
-                                (string) $boxProduct["offer_line_no"],
-                        ];
-
-
-						$isActive = 1;
-
-						 if (strstr((string) $product["offer_no"], "STCOMP") == false) {
-                  		  $isActive = 0;
-							$facciamoNoiProducts[] = $singleProduct->ID;
-						 }else{
-							 $scegliTuProducts[] = $singleProduct->ID;
-						 }
-
-						 update_post_meta($singleProduct->ID,'_is_active_shop',$isActive);
-						 update_post_meta($singleProduct->ID,'_sku',$boxProduct["id_product"]);
-
+                    if (!$singleProduct->have_posts()) {
+                        continue;
                     }
-                    add_post_meta($post_id, "_products", $arrayProducts);
-                    $boxIds[] = $post_id;
+                    $singleProduct = $singleProduct->get_posts();
+
+                    $singleProduct = reset($singleProduct);
+                    //update_post_meta($singleProduct->ID,'_is_active_shop',1);
+
+                    $arrayProducts[] = [
+                        "id" => $singleProduct->ID,
+                        "quantity" => 1,
+                        "name" => $singleProduct->post_title,
+                        "offer_line_no" =>
+                            (string) $boxProduct["offer_line_no"],
+                    ];
+
+                    $isActive = 1;
+
+                    if (
+                        strstr((string) $product["offer_no"], "STCOMP") == false
+                    ) {
+                        $isActive = 0;
+                        $facciamoNoiProducts[] = $singleProduct->ID;
+                    } else {
+                        $scegliTuProducts[] = $singleProduct->ID;
+                    }
+
+                    update_post_meta(
+                        $singleProduct->ID,
+                        "_is_active_shop",
+                        $isActive
+                    );
+                    update_post_meta(
+                        $singleProduct->ID,
+                        "_sku",
+                        $boxProduct["id_product"]
+                    );
+                }
+                add_post_meta($post_id, "_products", $arrayProducts);
+                $boxIds[] = $post_id;
             }
 
+            // ENABLE PRODUCTS
+            if (!empty($scegliTuProducts)) {
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" .
+                        implode(",", $scegliTuProducts) .
+                        ");"
+                );
+            }
 
-			// ENABLE PRODUCTS
-			if(!empty($scegliTuProducts)){
-				 $wpdb->query("UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", $scegliTuProducts) . ");");
-			}
-
-			if(!empty($facciamoNoiProducts)){
-							$wpdb->query("UPDATE wp_posts SET post_status = 'private' WHERE post_type = 'product' AND ID IN (" . implode(",", $facciamoNoiProducts) . ");");
-			}
-
-
+            if (!empty($facciamoNoiProducts)) {
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'private' WHERE post_type = 'product' AND ID IN (" .
+                        implode(",", $facciamoNoiProducts) .
+                        ");"
+                );
+            }
 
             wc_recount_all_terms();
             update_option(
@@ -1492,8 +1574,7 @@ add_action("rest_api_init", function () {
             return true;
         },
         "callback" => function ($request) {
-
-		    $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
             $args = [
                 "limit" => -1,
                 "orderby" => "date",
@@ -1509,26 +1590,22 @@ add_action("rest_api_init", function () {
             $root = $doc->appendChild($root);
             $customers = [];
             foreach ($orders as $order) {
-
-
                 if (in_array($order->get_customer_id(), $customers)) {
                     continue;
                 }
 
                 $customers[] = $order->get_customer_id();
 
-
-				   $isSubscription = get_post_meta(
+                $isSubscription = get_post_meta(
                     $order->get_id(),
                     "_subscription_id",
                     true
                 );
 
-				$customerType = 'STCOMP';
+                $customerType = "STCOMP";
 
-				$subscription = null;
+                $subscription = null;
                 if ($isSubscription) {
-
                     $subscription = new WC_Subscription($isSubscription);
                     $products = $subscription->get_items();
 
@@ -1556,7 +1633,6 @@ add_action("rest_api_init", function () {
                         $dimensione
                     );
 
-
                     if (!$productBox) {
                         continue;
                     }
@@ -1572,10 +1648,7 @@ add_action("rest_api_init", function () {
                     }
 
                     $customerType = $navisionIdBox[0];
-
                 }
-
-
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_codeclient");
@@ -1661,11 +1734,12 @@ add_action("rest_api_init", function () {
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
 
-
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
-                $startDate = ($subscription)?$subscription->get_date("start"):'';
+                $startDate = $subscription
+                    ? $subscription->get_date("start")
+                    : "";
                 $startDate = new DateTime($startDate);
                 $ele2 = $doc->createElement("dataabbonamento");
                 $ele2->nodeValue = $startDate->format("dmY");
@@ -1800,27 +1874,26 @@ add_action("rest_api_init", function () {
             ]);
             $items = 0;
 
-			$productsScegliTu = [];
+            $productsScegliTu = [];
 
-			$scegliTuBox = get_posts([
+            $scegliTuBox = get_posts([
                 "post_type" => "weekly-box",
                 "post_status" => "publish",
-				"fields" => "ids",
+                "fields" => "ids",
                 "posts_per_page" => 1,
-				"meta_key" => "_navision_id",
-				"meta_value" => $currentWeek.'-STCOMP'
-
+                "meta_key" => "_navision_id",
+                "meta_value" => $currentWeek . "-STCOMP",
             ]);
 
-			if(!empty($scegliTuBox)){
-				$productsScegliTu = get_post_meta($scegliTuBox[0],'_products',true);
-			}
-
-
+            if (!empty($scegliTuBox)) {
+                $productsScegliTu = get_post_meta(
+                    $scegliTuBox[0],
+                    "_products",
+                    true
+                );
+            }
 
             foreach ($orders as $order) {
-
-
                 if (
                     $order->get_shipping_first_name() .
                         " " .
@@ -1848,10 +1921,7 @@ add_action("rest_api_init", function () {
                     true
                 );
 
-
-
                 if ($isSubscription) {
-
                     $subscription = new WC_Subscription($isSubscription);
                     $products = $subscription->get_items();
 
@@ -1879,7 +1949,6 @@ add_action("rest_api_init", function () {
                         $dimensione
                     );
 
-
                     if (!$productBox) {
                         continue;
                     }
@@ -1889,8 +1958,6 @@ add_action("rest_api_init", function () {
                         "_navision_id",
                         true
                     );
-
-
 
                     if (empty($navisionIdBox)) {
                         continue;
@@ -1905,8 +1972,6 @@ add_action("rest_api_init", function () {
                 }
 
                 if ($orderType == "ST" || $isSubscription) {
-
-
                     $piano = get_post_meta(
                         $order->get_id(),
                         "shipping_piano",
@@ -1916,9 +1981,7 @@ add_action("rest_api_init", function () {
                         $piano = "";
                     }
 
-
                     foreach ($order->get_items() as $item_id => $item) {
-
                         $product = $item->get_product();
 
                         $productNavisionId = get_post_meta(
@@ -1927,59 +1990,87 @@ add_action("rest_api_init", function () {
                             true
                         );
 
-						if(is_array($productNavisionId) && !empty($productNavisionId)){
-							$productNavisionId = $productNavisionId[0];
-						}
-
+                        if (
+                            is_array($productNavisionId) &&
+                            !empty($productNavisionId)
+                        ) {
+                            $productNavisionId = $productNavisionId[0];
+                        }
 
                         $row = $doc->createElement("ROW");
                         $ele1 = $doc->createElement("id_order");
 
-						$offerLineNo = $item->get_meta("offer_line_no");
+                        $offerLineNo = $item->get_meta("offer_line_no");
 
-						if(!$offerLineNo && $orderType == "ST"){
-							//lo vado a prendere nella lista di prodotti dalla scegli tu
-							$foundProductInSt = array_filter($productsScegliTu,function($stProduct) use($product){
-								return $stProduct['name'] == $product->get_name();
-							});
+                        if (!$offerLineNo && $orderType == "ST") {
+                            //lo vado a prendere nella lista di prodotti dalla scegli tu
+                            $foundProductInSt = array_filter(
+                                $productsScegliTu,
+                                function ($stProduct) use ($product) {
+                                    return $stProduct["name"] ==
+                                        $product->get_name();
+                                }
+                            );
 
-							if(empty($foundProductInSt)){
+                            if (empty($foundProductInSt)) {
+                                // provo a cercare il nome
+                                $explodedProductName = explode(
+                                    " ",
+                                    $product->get_name()
+                                );
 
-								// provo a cercare il nome
-								$explodedProductName = explode(" ", $product->get_name());
+                                if (count($explodedProductName) > 0) {
+                                    while (count($explodedProductName) > 0) {
+                                        array_pop($explodedProductName);
+                                        if (empty($foundProductInSt)) {
+                                            $newProductName = implode(
+                                                " ",
+                                                $explodedProductName
+                                            );
+                                            $foundProductInSt = array_filter(
+                                                $productsScegliTu,
+                                                function ($stProduct) use (
+                                                    $newProductName
+                                                ) {
+                                                    return $stProduct["name"] ==
+                                                        $newProductName;
+                                                }
+                                            );
+                                        }
+                                    }
+                                }
 
-								if(count($explodedProductName)>0){
-									while(count($explodedProductName) > 0){
-									array_pop($explodedProductName);
-									if(empty($foundProductInSt)){
-										$newProductName = implode(" ",$explodedProductName);
-										$foundProductInSt = array_filter($productsScegliTu,function($stProduct) use($newProductName){
-											return $stProduct['name'] == $newProductName;
-										});
-									}
-								}
-								}
+                                if (empty($foundProductInSt)) {
+                                    $response = new WP_REST_Response([
+                                        "order_id" => $order->get_id(),
+                                        "error" =>
+                                            "Prodotto non trovato nella scegli tu: " .
+                                            $product->get_name(),
+                                        "scegli_tu" => $productsScegliTu,
+                                    ]);
+                                    $response->set_status(500);
+                                    return $response;
+                                }
+                            }
 
+                            $foundProductInSt = reset($foundProductInSt);
+                            $offerLineNo = $foundProductInSt["offer_line_no"];
+                        }
 
-								if(empty($foundProductInSt)){
-										$response = new WP_REST_Response(["order_id" => $order->get_id(), "error" => "Prodotto non trovato nella scegli tu: ". $product->get_name(),'scegli_tu' => $productsScegliTu]);
-										$response->set_status(500);
-										return $response;
-								}
+                        if (!$offerLineNo) {
+                            $response = new WP_REST_Response([
+                                "order_id" => $order->get_id(),
+                                "error" =>
+                                    "Offer Line No non trovato per: " .
+                                    $product->get_name() .
+                                    " SKU " .
+                                    $product->get_sku(),
+                            ]);
+                            $response->set_status(500);
+                            return $response;
+                        }
 
-							}
-
-							$foundProductInSt = reset($foundProductInSt);
-							$offerLineNo = $foundProductInSt['offer_line_no'];
-						}
-
-						if(!$offerLineNo){
-								$response = new WP_REST_Response(["order_id" => $order->get_id(), "error" => "Offer Line No non trovato per: ".$product->get_name().' SKU '.$product->get_sku()]);
-								$response->set_status(500);
-							return $response;
-						}
-
-						/* ORDER NAVISION ID */
+                        /* ORDER NAVISION ID */
                         $navisionId = get_user_meta(
                             $order->get_id(),
                             "navision_id",
@@ -1999,14 +2090,15 @@ add_action("rest_api_init", function () {
                             $navisionId
                         );
 
-						/* USER NAVISION ID */
+                        /* USER NAVISION ID */
                         $userNavisionId = get_user_meta(
                             $order->get_customer_id(),
                             "navision_id",
                             true
                         );
                         if (!$userNavisionId) {
-                            $userNavisionId = 500000 + $order->get_customer_id();
+                            $userNavisionId =
+                                500000 + $order->get_customer_id();
                             update_user_meta(
                                 $order->get_customer_id(),
                                 "navision_id",
@@ -2015,7 +2107,6 @@ add_action("rest_api_init", function () {
                         }
                         $ele1 = $doc->createElement("id_codeclient");
                         $ele1->nodeValue = $userNavisionId;
-
 
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("date");
