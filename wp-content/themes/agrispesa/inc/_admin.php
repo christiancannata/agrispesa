@@ -160,7 +160,7 @@ add_action('woocommerce_product_options_advanced', function () {
 
 add_action('woocommerce_product_options_general_product_data', function () {
 	global $post;
-
+/*
 	woocommerce_wp_text_input([
 		'id' => '_prezzo_acquisto',
 		'label' => 'Prezzo di acquisto (€)',
@@ -180,7 +180,7 @@ add_action('woocommerce_product_options_general_product_data', function () {
 		'placeholder' => '0',
 		'description' => __('Valore della percentuale.', 'woocommerce'),
 	]);
-
+*/
 
 });
 

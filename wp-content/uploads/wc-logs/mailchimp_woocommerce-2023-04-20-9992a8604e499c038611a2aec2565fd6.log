@@ -351,3 +351,34 @@
 2023-04-20T16:40:39+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 37726
 2023-04-20T16:40:40+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 37727
 2023-04-20T16:40:41+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Product starts in 5 seconds :: obj_id 37728
+2023-04-20T22:20:59+00:00 NOTICE product_submit.success :: addStoreProduct :: #37689
+2023-04-20T22:20:59+00:00 NOTICE product_submit.success :: addStoreProduct :: #37690
+2023-04-20T22:21:00+00:00 NOTICE product_submit.success :: addStoreProduct :: #37691
+2023-04-20T22:21:01+00:00 NOTICE product_submit.success :: addStoreProduct :: #37692
+2023-04-20T22:21:02+00:00 NOTICE product_submit.success :: addStoreProduct :: #37693
+2023-04-20T22:21:03+00:00 NOTICE product_submit.success :: addStoreProduct :: #37694
+2023-04-20T22:21:04+00:00 NOTICE product_submit.success :: addStoreProduct :: #37695
+2023-04-20T22:21:05+00:00 NOTICE product_submit.success :: addStoreProduct :: #37696
+2023-04-20T22:21:05+00:00 NOTICE product_submit.success :: addStoreProduct :: #37697
+2023-04-20T22:21:06+00:00 NOTICE product_submit.success :: addStoreProduct :: #37698
+2023-04-20T22:21:07+00:00 NOTICE product_submit.success :: addStoreProduct :: #37699
+2023-04-20T22:21:56+00:00 NOTICE product_submit.success :: addStoreProduct :: #37700
+2023-04-20T22:21:57+00:00 NOTICE product_submit.success :: addStoreProduct :: #37701
+2023-04-20T22:26:52+00:00 NOTICE product_submit.success :: addStoreProduct :: #37702
+2023-04-20T22:26:53+00:00 NOTICE product_submit.success :: addStoreProduct :: #37703
+2023-04-20T22:26:54+00:00 NOTICE product_submit.success :: addStoreProduct :: #37704
+2023-04-20T22:26:54+00:00 NOTICE product_submit.success :: addStoreProduct :: #37705
+2023-04-20T22:26:55+00:00 NOTICE product_submit.success :: addStoreProduct :: #37706
+2023-04-20T22:26:55+00:00 NOTICE product_submit.success :: addStoreProduct :: #37707
+2023-04-20T22:26:56+00:00 NOTICE product_submit.success :: addStoreProduct :: #37708
+2023-04-20T22:26:57+00:00 NOTICE product_submit.success :: addStoreProduct :: #37709
+2023-04-20T22:26:58+00:00 NOTICE product_submit.success :: addStoreProduct :: #37710
+2023-04-20T22:26:58+00:00 NOTICE product_submit.success :: addStoreProduct :: #37711
+2023-04-20T22:26:59+00:00 NOTICE product_submit.success :: addStoreProduct :: #37712
+2023-04-20T22:27:00+00:00 NOTICE product_submit.success :: addStoreProduct :: #37713
+2023-04-20T22:27:01+00:00 NOTICE product_submit.success :: addStoreProduct :: #37714
+2023-04-20T22:27:01+00:00 NOTICE product_submit.success :: addStoreProduct :: #37715
+2023-04-20T22:27:03+00:00 NOTICE product_submit.success :: addStoreProduct :: #37716
+2023-04-20T22:27:03+00:00 NOTICE product_submit.success :: addStoreProduct :: #37717
+2023-04-20T22:27:04+00:00 NOTICE product_submit.success :: addStoreProduct :: #37718
+2023-04-20T22:27:05+00:00 NOTICE product_submit.success :: addStoreProduct :: #37719

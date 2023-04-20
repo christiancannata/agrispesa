@@ -357,6 +357,7 @@ add_action("woocommerce_product_options_advanced", function () {
 });
 add_action("woocommerce_product_options_general_product_data", function () {
     global $post;
+   /*
     woocommerce_wp_text_input([
         "id" => "_prezzo_acquisto",
         "label" => "Prezzo di acquisto (€)",
@@ -376,6 +377,7 @@ add_action("woocommerce_product_options_general_product_data", function () {
         "placeholder" => "0",
         "description" => __("Valore della percentuale.", "woocommerce"),
     ]);
+   */
 });
 function woocommerce_product_custom_fields_save1($post_id)
 {
@@ -768,11 +770,25 @@ FROM wp_postmeta
 JOIN wp_posts ON wp_posts.ID=wp_postmeta.post_id
 WHERE meta_key = '_sku'
 AND meta_value != ''
+AND post_type = 'product'
 GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
 		foreach($duplicatedProducts as $duplicatedPost){
 			$postIds = explode(",", $duplicatedPost->post_id);
+
+			foreach($postIds as $postId){
+				//$content_post = get_post($postId);
+				//$content = $content_post->post_content;
+				$terms = get_the_terms($postId, 'product_cat' );
+
+				if(count($terms) == 1){
+					update_post_meta($postId,'_sku','__'.$duplicatedPost->meta_value);
+					update_post_meta($postId,'_navision_id','__'.$duplicatedPost->meta_value);
+				}
+
+			}
+
 		}
 
         }]);
@@ -1128,7 +1144,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $price = (string) $product["unitprice"];
                 $price = str_replace(",", ".", $price);
                 $price = floatval($price);
-
 				$productObj->set_price($price);
                 $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
