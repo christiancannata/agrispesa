@@ -270,43 +270,7 @@ if($agr_landing_coupon){
 		</div>
 	</section>
 
-	<section class="landing-ingredients" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
-		<div class="landing-ingredients--top">
-			<p class="landing-ingredients--minititle">Ingredienti buoni. Parola di Agrispesa.</p>
-			<h3 class="landing-ingredients--megatitle">Non è magia.<br/>È natura.</h3>
-		</div>
-		<div class="landing-ingredients--flex">
-
-		<div class="landing-ingredients--sx" data-aos="fade-uo" data-aos-duration="800" data-aos-delay="150">
-			<img class="landing-meet--image sticky" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/camomilla.svg" alt="Per ogni razza, per ogni tipetto." />
-		</div>
-		<div class="landing-ingredients--dx">
-			<?php
-			$args = array(
-			  'post_type' => 'ingredienti',
-			  'posts_per_page' => -1,
-				'orderby' => 'post_title',
-			  'order' => 'ASC',
-			);
-			$the_query = new WP_Query( $args );
-			if ( $the_query->have_posts() ) : $i = 1;
-			 while ( $the_query->have_posts() ) : $the_query->the_post();
-			 $delay = 50 * $i;?>
-				<div class="landing-ingredients--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="<?php echo $delay; ?>">
-	        <h4 class="landing-ingredients--title">
-						<?php the_title(); ?>
-					</h4>
-				</div>
-  		<?php $i++;  endwhile; endif; ?>
-			<?php wp_reset_postdata(); ?>
-
-			<div class="landing-ingredients--buttons" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
-				<a href="<?php echo esc_url(home_url('/ingredienti')); ?>" class="btn btn-primary" title="Scopri gli ingredienti">Scopri gli ingredienti</a>
-			</div>
-		</div>
-
-		</div>
-	</section>
+	
 
 
 
