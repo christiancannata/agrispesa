@@ -1439,7 +1439,16 @@ add_action("rest_api_init", function () {
             return true;
         },
         "callback" => function ($request) {
-            $args = [];
+
+		    $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            $args = [
+                "limit" => -1,
+                "orderby" => "date",
+                "order" => "DESC",
+                "meta_key" => "_date_completed",
+                "meta_compare" => ">",
+                "meta_value" => $lastWeek->getTimestamp(),
+            ];
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
             $doc->formatOutput = true;
@@ -1452,9 +1461,8 @@ add_action("rest_api_init", function () {
                     "_subscription_id",
                     true
                 );
-                if (!$isSubscription) {
-                    continue;
-                }
+
+
                 if (in_array($order->get_customer_id(), $customers)) {
                     continue;
                 }
@@ -1574,16 +1582,21 @@ add_action("rest_api_init", function () {
                 $ele2 = $doc->createElement("codicemodellocliente");
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
+
+
                 $navisionId = get_post_meta(
                     $productBox->get_id(),
                     "_navision_id",
                     true
                 );
-                if (empty($navisionId)) {
-                    $navisionId = [""];
+
+				$customerType = 'STCOMP';
+                if (!empty($navisionId)) {
+                    $customerType =  $navisionId[0];
                 }
+
                 $ele2 = $doc->createElement("codiceabbonamento");
-                $ele2->nodeValue = "ABSP-" . $navisionId[0];
+                $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
                 $startDate = $subscription->get_date("start");
                 $startDate = new DateTime($startDate);
