@@ -1473,7 +1473,7 @@ add_action("rest_api_init", function () {
 
 				$customerType = 'STCOMP';
 
-
+				$subscription = null;
                 if ($isSubscription) {
 
                     $subscription = new WC_Subscription($isSubscription);
