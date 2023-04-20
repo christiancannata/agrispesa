@@ -6,6 +6,30 @@ function dd($vars)
 
 add_action("reload_terms_count", function ($productId) {});
 
+
+// define woocommerce_order_status_completed callback function
+function call_order_status_completed( $orderId ) {
+    $order = wc_get_order($orderId);
+
+	$orderType = 'ST';
+
+	foreach ( $order->get_items() as $item_id => $item ) {
+		$categories = get_the_terms( $item->get_product_id(), 'product_cat' );
+		foreach ($categories as $term) {
+			if(in_array($term->slug,['box'])){
+				$orderType = 'FN';
+			}
+    	break;
+		}
+	}
+
+	update_post_meta($orderId,'_order_type',$orderType);
+};
+
+// Call our custom function with the action hook
+add_action( 'woocommerce_order_status_completed', 'call_order_status_completed', 10, 1);
+
+
 function merge_orders($subscriptionOrder, $orders)
 {
     foreach ($orders as $order) {
@@ -1714,7 +1738,10 @@ add_action("rest_api_init", function () {
 			}
 
 
+
             foreach ($orders as $order) {
+
+
                 if (
                     $order->get_shipping_first_name() .
                         " " .
@@ -1741,18 +1768,18 @@ add_action("rest_api_init", function () {
                     "_subscription_id",
                     true
                 );
+
+
+
                 if ($isSubscription) {
-                    $subscriptions = wcs_get_users_subscriptions(
-                        $order->get_customer_id()
-                    );
-                    if (count($subscriptions) == 0) {
-                        continue;
-                    }
-                    $subscription = end($subscriptions);
+
+                    $subscription = new WC_Subscription($isSubscription);
                     $products = $subscription->get_items();
+
                     if (empty($products)) {
                         continue;
                     }
+
                     $box = reset($products)->get_product();
                     if (!$box) {
                         continue;
@@ -1772,6 +1799,8 @@ add_action("rest_api_init", function () {
                         $tipologia,
                         $dimensione
                     );
+
+
                     if (!$productBox) {
                         continue;
                     }
@@ -1781,6 +1810,8 @@ add_action("rest_api_init", function () {
                         "_navision_id",
                         true
                     );
+
+
 
                     if (empty($navisionIdBox)) {
                         continue;
@@ -1864,7 +1895,9 @@ add_action("rest_api_init", function () {
 						}
 
 						if(!$offerLineNo){
-							dd("Offer Line No non trovato per: ".$product->get_name().' SKU '.$product->get_sku());
+								$response = new WP_REST_Response(["order_id" => $order->get_id(), "error" => "Offer Line No non trovato per: ".$product->get_name().' SKU '.$product->get_sku()]);
+								$response->set_status(500);
+							return $response;
 						}
 
 						/* ORDER NAVISION ID */
