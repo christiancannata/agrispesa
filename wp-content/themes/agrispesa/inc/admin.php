@@ -1456,49 +1456,74 @@ add_action("rest_api_init", function () {
             $root = $doc->appendChild($root);
             $customers = [];
             foreach ($orders as $order) {
-                $isSubscription = get_post_meta(
-                    $order->get_id(),
-                    "_subscription_id",
-                    true
-                );
 
 
                 if (in_array($order->get_customer_id(), $customers)) {
                     continue;
                 }
+
                 $customers[] = $order->get_customer_id();
-                $subscriptions = wcs_get_users_subscriptions(
-                    $order->get_customer_id()
-                );
-                if (count($subscriptions) == 0) {
-                    continue;
-                }
-                $subscription = end($subscriptions);
-                $products = $subscription->get_items();
-                if (empty($products)) {
-                    continue;
-                }
-                $box = reset($products)->get_product();
-                if (!$box) {
-                    continue;
-                }
-                $tipologia = get_post_meta(
-                    $box->get_id(),
-                    "attribute_pa_tipologia",
+
+
+				   $isSubscription = get_post_meta(
+                    $order->get_id(),
+                    "_subscription_id",
                     true
                 );
-                $dimensione = get_post_meta(
-                    $box->get_id(),
-                    "attribute_pa_dimensione",
-                    true
-                );
-                $productBox = get_single_box_from_attributes(
-                    $tipologia,
-                    $dimensione
-                );
-                if (!$productBox) {
-                    continue;
+
+				$customerType = 'STCOMP';
+
+
+                if ($isSubscription) {
+
+                    $subscription = new WC_Subscription($isSubscription);
+                    $products = $subscription->get_items();
+
+                    if (empty($products)) {
+                        continue;
+                    }
+
+                    $box = reset($products)->get_product();
+                    if (!$box) {
+                        continue;
+                    }
+
+                    $tipologia = get_post_meta(
+                        $box->get_id(),
+                        "attribute_pa_tipologia",
+                        true
+                    );
+                    $dimensione = get_post_meta(
+                        $box->get_id(),
+                        "attribute_pa_dimensione",
+                        true
+                    );
+                    $productBox = get_single_box_from_attributes(
+                        $tipologia,
+                        $dimensione
+                    );
+
+
+                    if (!$productBox) {
+                        continue;
+                    }
+
+                    $navisionIdBox = get_post_meta(
+                        $productBox->get_id(),
+                        "_navision_id",
+                        true
+                    );
+
+                    if (empty($navisionIdBox)) {
+                        continue;
+                    }
+
+                    $customerType = $navisionIdBox[0];
+
                 }
+
+
+
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_codeclient");
 
@@ -1583,17 +1608,6 @@ add_action("rest_api_init", function () {
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
 
-
-                $navisionId = get_post_meta(
-                    $productBox->get_id(),
-                    "_navision_id",
-                    true
-                );
-
-				$customerType = 'STCOMP';
-                if (!empty($navisionId)) {
-                    $customerType =  $navisionId[0];
-                }
 
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
