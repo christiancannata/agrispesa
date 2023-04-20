@@ -1120,6 +1120,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                    $productObj = wc_get_product($productId);
                 }
 
+
+                $price = (string) $product["unitprice"];
+                $price = str_replace(",", ".", $price);
+                $price = floatval($price);
+
+				$productObj->set_price($price);
                 $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
                 //$productIds[] = $productObj->get_id();
@@ -1129,10 +1135,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$product->set_status('publish');
 				$product->save();
 				*/
-
-                $price = (string) $product["unitprice"];
-                $price = str_replace(",", ".", $price);
-                $price = floatval($price);
 
                 update_post_meta($productId, "_regular_price", $price);
                 update_post_meta($productId, "_price", $price);
