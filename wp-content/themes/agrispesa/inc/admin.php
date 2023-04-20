@@ -1019,30 +1019,7 @@ add_action("rest_api_init", function () {
                 $productObj = null;
 
                 if (empty($productId)) {
-                    $alreadyExistByTitle = $wpdb->get_results(
-                        $wpdb->prepare(
-                            "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content != '' ORDER BY ID ASC",
-                            $wpdb->esc_like($productName)
-                        )
-                    );
-
-                    if (!empty($alreadyExistByTitle)) {
-                        $productId = $alreadyExistByTitle[0]->ID;
-                        $productObj = wc_get_product($productId);
-                    } else {
-                        //cerco prodotti già esistenti con descrizione vuota
-                        $alreadyExistByTitle = $wpdb->get_results(
-                            $wpdb->prepare(
-                                "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content = '' ORDER BY ID ASC",
-                                $wpdb->esc_like($productName)
-                            )
-                        );
-
-                        if (!empty($alreadyExistByTitle)) {
-                            $productId = $alreadyExistByTitle[0]->ID;
-                            $productObj = wc_get_product($productId);
-                        } else {
-                            $productObj = new WC_Product_Simple();
+                    $productObj = new WC_Product_Simple();
                             $productObj->set_name($productName);
                             $productObj->save();
                             $productId = $productObj->get_id();
@@ -1058,54 +1035,9 @@ add_action("rest_api_init", function () {
                                 "product_cat"
                             );
 
-                            $newProducts[] = $productObj;
-                        }
-                    }
+                    $newProducts[] = $productObj;
                 } else {
-                    // FIX PER SKU CONTROLLO ERRATO
-                    // cerco per nome, se non lo trovo lo creo nuovo
-                    $alreadyExistByTitle = $wpdb->get_results(
-                        $wpdb->prepare(
-                            "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content != '' ORDER BY ID ASC",
-                            $wpdb->esc_like($productName)
-                        )
-                    );
-
-                    if (!empty($alreadyExistByTitle)) {
-                        $productId = $alreadyExistByTitle[0]->ID;
-                        $productObj = wc_get_product($productId);
-                    } else {
-                        //cerco prodotti già esistenti con descrizione vuota
-                        $alreadyExistByTitle = $wpdb->get_results(
-                            $wpdb->prepare(
-                                "SELECT ID FROM $wpdb->posts WHERE post_type='product' AND post_title = '%s' and post_content = '' ORDER BY ID ASC",
-                                $wpdb->esc_like($productName)
-                            )
-                        );
-
-                        if (!empty($alreadyExistByTitle)) {
-                            $productId = $alreadyExistByTitle[0]->ID;
-                            $productObj = wc_get_product($productId);
-                        } else {
-                            $productObj = new WC_Product_Simple();
-                            $productObj->set_name($productName);
-                            $productObj->save();
-                            $productId = $productObj->get_id();
-
-                            $term = get_term_by(
-                                "slug",
-                                "senza-categoria",
-                                "product_cat"
-                            );
-                            wp_set_object_terms(
-                                $productId,
-                                $term->term_id,
-                                "product_cat"
-                            );
-
-                            $newProducts[] = $productObj;
-                        }
-                    }
+                   $productObj = wc_get_product($productId);
                 }
 
                 $productObj->save();
