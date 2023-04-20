@@ -73,11 +73,19 @@ if ($reg_month === '01') {
 	<div class="user-profile--header">
 		<div class="user-profile--user">
 			<h2 class="user-profile--name">
-				Ciao<?php if ($current_user->first_name): ?>, <span style="text-transform: capitalize;"><?php echo esc_html($current_user->first_name); ?></span><?php endif; ?>
+				Ciao<?php if ($current_user->first_name): ?>, <span
+					style="text-transform: capitalize;"><?php echo esc_html($current_user->first_name); ?></span><?php endif; ?>
 				.</h2>
 			<p class="user-profile--registered">Fai parte di Agrispesa
 				dal <?php echo $reg_day . ' ' . $reg_month . ' ' . $reg_year; ?> <span class="ec ec-green-heart"></span>
 				<span class="ec ec-sparkles"></span></p>
+
+			<?php
+			$fido = get_user_meta($current_user->ID, '_saldo_navision', true);
+			if ($fido):
+				?>
+				<span><strong>Saldo:</strong> <?php echo $fido; ?>€ </span>
+			<?php endif; ?>
 		</div>
 		<div class="user-profile--details">
 
@@ -152,12 +160,11 @@ if ($reg_month === '01') {
 						}
 						$i++;
 					}
-					if($i === 1) {
+					if ($i === 1) {
 						echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attiva</h3>';
 					} else {
 						echo '<h3 class="user-profile--details--title">Facciamo noi<br/>attive</h3>';
 					}
-
 
 
 				} else {
