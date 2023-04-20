@@ -83,7 +83,7 @@ if ($reg_month === '01') {
 			<?php
 			$fido = get_user_meta($current_user->ID, '_saldo_navision', true);
 			if ($fido):
-				?>
+				?><br>
 				<span><strong>Saldo:</strong> <?php echo $fido; ?>€ </span>
 			<?php endif; ?>
 		</div>
