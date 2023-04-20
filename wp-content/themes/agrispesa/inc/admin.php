@@ -1466,7 +1466,7 @@ add_action("rest_api_init", function () {
 						 }
 
 						 update_post_meta($singleProduct->ID,'_is_active_shop',$isActive);
-
+						 update_post_meta($singleProduct->ID,'_sku',$boxProduct["id_product"]);
 
                     }
                     add_post_meta($post_id, "_products", $arrayProducts);
