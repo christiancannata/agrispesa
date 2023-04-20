@@ -1062,6 +1062,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 }
             }
 
+
+
+
+
             foreach ($activeProducts as $product) {
                 $product = (array) $product;
 
@@ -1136,13 +1140,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$product->save();
 				*/
 
-                update_post_meta($productId, "_regular_price", $price);
-                update_post_meta($productId, "_price", $price);
-                update_post_meta($productId, "_sku", $sku);
-                update_post_meta($productId, "_id_produttore_navision", (string)$product['id_producercard']);
+                update_post_meta($productObj->get_id(), "_regular_price", $price);
+                update_post_meta($productObj->get_id(), "_price", $price);
+                update_post_meta($productObj->get_id(), "_sku", $sku);
+                update_post_meta($productObj->get_id(), "_id_produttore_navision", (string)$product['id_producercard']);
 
                 update_post_meta(
-                    $productId,
+                    $productObj->get_id(),
                     "_navision_id",
                     (string) $product["id_product"]
                 );
@@ -1154,7 +1158,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 } else {
                     $code = $code[0];
                 }
-                update_post_meta($productId, "_gruppo_prodotto", $code);
+                update_post_meta($productObj->get_id(), "_gruppo_prodotto", $code);
             }
 
             //Attivo i prodotti
