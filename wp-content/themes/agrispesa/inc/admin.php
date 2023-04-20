@@ -1112,7 +1112,7 @@ add_action("rest_api_init", function () {
                 update_post_meta($productId, "_regular_price", $price);
                 update_post_meta($productId, "_price", $price);
                 update_post_meta($productId, "_sku", $sku);
-                update_post_meta($productId, "_id_produttore_navision", $sku);
+                update_post_meta($productId, "_id_produttore_navision", (string)$product['id_producercard']);
 
                 update_post_meta(
                     $productId,
