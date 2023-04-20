@@ -1983,13 +1983,11 @@ add_action("rest_api_init", function () {
                         $ele1->nodeValue = $order->get_shipping_address_1();
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_description1");
-                        //$ele1->nodeValue = $piano;
-                        $ele1->nodeValue = "";
+                        $ele1->nodeValue = $piano;
                         $row->appendChild($ele1);
 
                         $ele1 = $doc->createElement("comment_lines");
-                        //$ele1->nodeValue = $order->get_customer_note();
-                        $ele1->nodeValue = "";
+                        $ele1->nodeValue = $order->get_customer_note();
                         $row->appendChild($ele1);
 
                         $ele2 = $doc->createElement("sh_city");
