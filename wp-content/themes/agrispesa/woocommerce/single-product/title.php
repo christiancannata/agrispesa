@@ -36,9 +36,16 @@ if( in_array( 'petfood', $categories ) ) {
 	echo '<div class="pawer-logo-badge">';
 	echo get_template_part('global-elements/logo', 'pawer');
 	echo '</div>';
-} 
+}
 
-the_title('<h1 class="product_title entry-title">', '</h1>');
+$title = get_the_title();
+$title_without_weight = preg_replace(
+	 array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+	 array(''),
+	 $title
+);
+
+echo '<h1 class="product_title entry-title">'. $title_without_weight . '</h1>';
 echo '<div class="product-info">';
 if ($product->has_weight()) {
 	if ($product_data && $product_data != 'gr') {
