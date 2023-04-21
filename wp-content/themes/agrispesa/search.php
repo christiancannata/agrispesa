@@ -124,10 +124,17 @@ if( !empty($product_categories) ){
           $thumb_id = get_post_thumbnail_id();
           $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
           $thumb_url = $thumb_url_array[0];
+          $product_data = $product->get_meta('_woo_uom_input');
+          $title = get_the_title();
+          $title_without_weight = preg_replace(
+          	 array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+          	 array(''),
+          	 $title
+          );
           ?>
 
 
-            <li class="product type-product post-43 status-publish first instock product_cat-latte-formaggio product_cat-negozio has-post-thumbnail featured shipping-taxable purchasable product-type-simple">
+            <li class="product remove-last-p">
             	<a href="<?php the_permalink(); ?>" title="<?php echo the_title(); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
                 <?php if($thumb_id):?>
                   <img width="300" height="300" src="<?php the_post_thumbnail_url(); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?php echo the_title(); ?>" decoding="async" loading="lazy" />
@@ -135,8 +142,24 @@ if( !empty($product_categories) ){
                   <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
                 <?php endif;?>
 
-                <h2 class="woocommerce-loop-product__title"><?php echo the_title(); ?></h2>
+                <div class="product-loop-title-meta">
+                  <h6 class="woocommerce-loop-product__title"><?php echo $title_without_weight; ?></h6>
+                  <?php if ($product->has_weight()) {
+                  	if ($product_data && $product_data != 'gr') {
+                  		echo '<span class="product-info--quantity">' . $product->get_weight() . ' ' . $product_data . '</span>';
+                  	} else {
+                  		if ($product->get_weight() == 1000) {
+                  			echo '<span class="product-info--quantity">1 kg</span>';
+                  		} else {
+                  			echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span>';
+                  		}
+
+                  	}
+                  } ?>
+                </div>
+
               	<span class="price"><?php echo $product->get_price_html(); ?></span>
+
               </a>
               <?php echo do_shortcode('[add_to_cart id="'.get_the_ID().'" show_price="false" quantity="1" style="border:none; padding:0;margin: 0;"]');?>
             </li>

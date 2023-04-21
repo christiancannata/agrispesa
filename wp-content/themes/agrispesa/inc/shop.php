@@ -130,21 +130,28 @@ function soChangeProductsTitle()
 	global $product;
 	$product_data = $product->get_meta('_woo_uom_input');
 
+	$title = get_the_title();
+	$title_without_weight = preg_replace(
+	   array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+	   array(''),
+	   $title
+	);
+
 	if ($product->has_weight()) {
 		if ($product_data && $product_data != 'gr') {
-			echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . get_the_title() . '</h6>';
+			echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
 			echo '<span class="product-info--quantity">' . $product->get_weight() . ' ' . $product_data . '</span></div>';
 		} else {
 			if ($product->get_weight() == 1000) {
-				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . get_the_title() . '</h6>';
+				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
 				echo '<span class="product-info--quantity">1 kg</span></div>';
 			} else {
-				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . get_the_title() . '</h6>';
+				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
 				echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span></div>';
 			}
 		}
 	} else {
-		echo '<h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . get_the_title() . '</h6>';
+		echo '<h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
 	}
 }
 
@@ -208,7 +215,7 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 		$html = '<div class="shop-buttons-flex"><form action="' . esc_url($product->add_to_cart_url()) . '" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button>';
 		$html .= woocommerce_quantity_input(array(), $product, false);
 		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="' . $product->get_id() . '" data-quantity="1" data-tip="Ciao" data-product_sku="' . esc_attr($product->get_sku()) . '" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">' . esc_html($product->add_to_cart_text()) . '</button>';
-		$html .= '</form></div>';
+		$html .= '</form></div>'; 
 	}
 	return $html;
 }

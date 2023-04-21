@@ -68,8 +68,18 @@ sliderBox();
 sliderValues();
 sliderHeroes();
 sliderPetValues();
+removeP();
 //changeShippingLabel();
 
+
+function removeP() {
+
+  if(jQuery('body.search-results').length) {
+    jQuery('.woocommerce ul.products li.product.remove-last-p > p').each(function() {
+      jQuery( this ).remove();
+    });
+  }
+}
 
 function petNameAnimation() {
   if (window.screen.width > 640) {

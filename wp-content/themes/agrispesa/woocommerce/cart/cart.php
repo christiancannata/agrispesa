@@ -80,8 +80,15 @@ do_action( 'woocommerce_before_cart' ); ?>
 									<div class="new-cart--top">
 										<div class="new-cart--name">
 											<?php
+											$title = $_product->get_name();
+											$title_without_weight = preg_replace(
+												 array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+												 array(''),
+												 $title
+											);
+
 											if (!$product_permalink) {
-												echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;');
+												echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $title_without_weight, $cart_item, $cart_item_key) . '&nbsp;');
 											} else {
 												$prodotto = $cart_item['data'];
 
@@ -90,7 +97,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 													echo '<a href="' . esc_url($product_permalink) . '" class="cart-product-var-title">' . $titolo['title'] . '</a>';
 												} else {
 													//print_r($_product['name'] );
-													echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
+													echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $title_without_weight), $cart_item, $cart_item_key));
 												}
 
 											}
