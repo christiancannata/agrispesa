@@ -1198,7 +1198,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ];
             $productsToExclude = new WP_Query($args);
             $idsToExclude = $productsToExclude->get_posts();
-
+			$idsToExclude[] = 17647;
             $wpdb->query(
                 "UPDATE wp_posts
 	SET post_status = 'draft'
@@ -1339,6 +1339,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
             ]);
+			$productsToInclude[] = 17647;
 
             $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
