@@ -215,7 +215,7 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 		$html = '<div class="shop-buttons-flex"><form action="' . esc_url($product->add_to_cart_url()) . '" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button>';
 		$html .= woocommerce_quantity_input(array(), $product, false);
 		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="' . $product->get_id() . '" data-quantity="1" data-tip="Ciao" data-product_sku="' . esc_attr($product->get_sku()) . '" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">' . esc_html($product->add_to_cart_text()) . '</button>';
-		$html .= '</form></div>';
+		$html .= '</form></div>'; 
 	}
 	return $html;
 }
