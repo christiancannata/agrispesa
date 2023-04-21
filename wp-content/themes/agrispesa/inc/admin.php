@@ -1277,14 +1277,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $group;
             }, $allGroups);
 
+
             foreach ($products["ROW"] as $product) {
                 $product = (array) $product;
+
                 if (strstr((string) $product["offer_no"], "STCOMP") == false) {
                     continue;
                 }
 
-                $sku = explode("_", $product["id_product"]);
-                $sku = $sku[0];
+                $sku = $product["id_product"];
 
                 $isFoundGroup = array_filter($allGroups, function ($group) use (
                     $sku
@@ -1302,7 +1303,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
             }
-
             /* FINE ACTIVATE GRUPPI CATEGORIE */
 
             $productsSku = [];
@@ -2816,7 +2816,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
-    register_rest_route("agrispesa/v1", "subscription-blacklist", [
+
+
+	register_rest_route("agrispesa/v1", "subscription-blacklist", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
@@ -2865,6 +2867,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+
     register_rest_route("agrispesa/v1", "subscription-preference", [
         "methods" => "DELETE",
         "permission_callback" => function () {

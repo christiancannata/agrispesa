@@ -72,9 +72,9 @@ function settings_box_link_my_account($items)
 
 	if (count($subscriptions) > 0) {
 
-	/*	$items = array_insert_after($items, 'subscriptions', [
-			'personalizza-scatola' => 'Personalizza la scatola'
-		]);*/
+		/*	$items = array_insert_after($items, 'subscriptions', [
+				'personalizza-scatola' => 'Personalizza la scatola'
+			]);*/
 	}
 
 	return $items;
@@ -162,57 +162,57 @@ function settings_box_content()
 							</div>
 						</div>
 					</div>
-<!--
-					<h4 class="my-account--minititle small mg-top">Preferiti</h4>
-					<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui,
-						faremo in modo di mandartelo più spesso.</p>
+					<!--
+										<h4 class="my-account--minititle small mg-top">Preferiti</h4>
+										<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui,
+											faremo in modo di mandartelo più spesso.</p>
 
 
-					<div class="container-flex-box">
+										<div class="container-flex-box">
 
-						<div class="right-categories-box">
-							<ul v-if="categories.length > 0">
-								<li :class="{'active':currentCategory == category}" v-for="category of categories">
-									<a href="#" @click.prevent="currentCategory = category" v-html="category.name"></a>
-								</li>
-							</ul>
-						</div>
+											<div class="right-categories-box">
+												<ul v-if="categories.length > 0">
+													<li :class="{'active':currentCategory == category}" v-for="category of categories">
+														<a href="#" @click.prevent="currentCategory = category" v-html="category.name"></a>
+													</li>
+												</ul>
+											</div>
 
-						<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
-							<ul>
-								<li :key="'list_all'">
-									<label @click.prevent="toggleAllWishlist(currentCategory,subscription)"
-										   class="checkbox-container">
-										<span class="label">Seleziona tutti</span>
-										<input :checked="currentCategory.is_all_wishlist_selected" type="checkbox">
-										<span class="checkmark"></span>
-									</label>
-								</li>
-								<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
-									<label @click.prevent="togglePreference(product.code,subscription)"
-										   class="checkbox-container">
-										<span class="label" v-html="product.post_title"></span>
-										<input :checked="isPreference(product.code,subscription)" type="checkbox">
-										<span class="checkmark"></span>
-									</label>
-								</li>
+											<div class="products-box" v-if="currentCategory && currentCategory.products.length > 0">
+												<ul>
+													<li :key="'list_all'">
+														<label @click.prevent="toggleAllWishlist(currentCategory,subscription)"
+															   class="checkbox-container">
+															<span class="label">Seleziona tutti</span>
+															<input :checked="currentCategory.is_all_wishlist_selected" type="checkbox">
+															<span class="checkmark"></span>
+														</label>
+													</li>
+													<li :key="'list_'+subscription.id" v-for="product of currentCategory.products">
+														<label @click.prevent="togglePreference(product.code,subscription)"
+															   class="checkbox-container">
+															<span class="label" v-html="product.post_title"></span>
+															<input :checked="isPreference(product.code,subscription)" type="checkbox">
+															<span class="checkmark"></span>
+														</label>
+													</li>
 
-							</ul>
-						</div>
+												</ul>
+											</div>
 
-						<div class="preferences-box">
-							<h4 class="my-account--minititle small">I tuoi prodotti preferiti</h4>
-							<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
-								<a class="delete_item" @click.prevent="deletePreference(subscription,preference.id)"
-								   href="#"><span class="icon-close"></span></a>
-								<span v-html="preference.name"></span>
-							</div>
-						</div>
+											<div class="preferences-box">
+												<h4 class="my-account--minititle small">I tuoi prodotti preferiti</h4>
+												<div class="blacklist-item" v-for="(preference) of subscription.box_preferences">
+													<a class="delete_item" @click.prevent="deletePreference(subscription,preference.id)"
+													   href="#"><span class="icon-close"></span></a>
+													<span v-html="preference.name"></span>
+												</div>
+											</div>
 
-						<hr>
-					</div>
+											<hr>
+										</div>
 
--->
+					-->
 				</div>
 
 			</div>
