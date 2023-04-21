@@ -117,7 +117,7 @@ function settings_box_content()
 					</div>
 
 
-					<h4 class="my-account--minititle small">Black list</h4>
+					<h4 class="my-account--minititle small">Desidero non ricevere</h4>
 					<p class="subscription-preferences-description">Sei allergico a qualcosa? Non ami i broccoli?<br/>Nessun
 						problema! Seleziona i prodotti che non voi mai ricevere con questo abbonamento.</p>
 					<div class="container-flex-box">
@@ -162,7 +162,7 @@ function settings_box_content()
 							</div>
 						</div>
 					</div>
-
+<!--
 					<h4 class="my-account--minititle small mg-top">Preferiti</h4>
 					<p class="subscription-preferences-description">Ami un prodotto alla follia?<br/>Segnalalo qui,
 						faremo in modo di mandartelo più spesso.</p>
@@ -212,7 +212,7 @@ function settings_box_content()
 						<hr>
 					</div>
 
-
+-->
 				</div>
 
 			</div>
