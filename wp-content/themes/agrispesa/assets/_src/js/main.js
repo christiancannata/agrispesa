@@ -59,7 +59,6 @@ emptyCartSlider();
 accountProductsSlider();
 listCategories();
 moveCustomFieldsCheckout();
-//landingSelectVariable();
 checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
@@ -69,7 +68,9 @@ sliderValues();
 sliderHeroes();
 sliderPetValues();
 removeP();
+sliderBoxLanding();
 //changeShippingLabel();
+landingSelectVariable();
 
 
 function removeP() {
@@ -101,54 +102,55 @@ function checkoutRemoveCheckbox() {
   }
 }
 
-// function landingSelectVariable() {
-//
-//   //First load check
-//   let currentUrl = jQuery('#get_url').attr("href");
-//   //let currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
-//   let url = new URL(currentUrl);
-//   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-//   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-//
-//   let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//   url.searchParams.set("variation_id", var_id); // setting your param
-//   let newUrl = url.href;
-//
-//   jQuery('#get_url').attr("href", newUrl);
-//
-//   jQuery('.change-price-box').hide();
-//   jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//
-//   jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
-//     const valSize = jQuery(this).filter(":checked").val();
-//     let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//     jQuery('.change-price-box').hide();
-//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//     url.searchParams.set("variation_id", var_id);
-//     let newUrl = url.href;
-//     jQuery('#get_url').attr("href", newUrl);
-//
-//   })
-//   jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
-//     const valType = jQuery(this).filter(":checked").val();
-//     let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//     jQuery('.change-price-box').hide();
-//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//     url.searchParams.set("variation_id", var_id);
-//     let newUrl = url.href;
-//     jQuery('#get_url').attr("href", newUrl);
-//   })
-//
-//
-// }
+function landingSelectVariable() {
+  if(jQuery('body.page-template-landing-company').length) {
+  //First load check
+  //let currentUrl = jQuery('#get_url').attr("href");
+  //console.log(currentUrl);
+  let currentUrl = 'https://www.agrispesa.it/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
+  let url = new URL(currentUrl);
+  const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+  const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+
+  let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+  url.searchParams.set("variation_id", var_id); // setting your param
+  let newUrl = url.href;
+
+  jQuery('#get_url').attr("href", newUrl);
+
+  jQuery('.change-price-box').hide();
+  jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
+    const valSize = jQuery(this).filter(":checked").val();
+    let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+    let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+    url.searchParams.set("variation_id", var_id);
+    let newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
+
+  })
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
+    const valType = jQuery(this).filter(":checked").val();
+    let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+    let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+    url.searchParams.set("variation_id", var_id);
+    let newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
+  })
+}
+
+}
 
 function moveCustomFieldsCheckout() {
   if (jQuery('#shipping-custom-fields').length) {
@@ -589,6 +591,47 @@ function sliderPetfood() {
 function sliderBox() {
 
   let _carousel = jQuery(".box-types--flex");
+
+  _carousel.slick({
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    centerMode: false,
+    nextArrow: '<span class="slick-next-agr icon-arrow-right"></span>',
+    prevArrow: '<span class="slick-prev-agr icon-arrow-left"></span>',
+    responsive: [{
+      breakpoint: 1340,
+      settings: {
+        slidesToShow: 3,
+        arrows: false,
+        dots: true,
+      }
+    }, {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }, {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true,
+        centerMode: false
+      }
+    }]
+
+  });
+}
+function sliderBoxLanding() {
+
+  let _carousel = jQuery(".wb-section-box--flex");
 
   _carousel.slick({
     infinite: true,

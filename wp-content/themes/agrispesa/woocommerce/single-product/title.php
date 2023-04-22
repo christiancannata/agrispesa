@@ -44,21 +44,26 @@ $title_without_weight = preg_replace(
 	 array(''),
 	 $title
 );
+$the_weight_array = getNumbersFromString($title);
+$i = 1;
+$weigth_nav = "";
+if(isset($the_weight_array) && !empty($the_weight_array)) {
+	foreach ($the_weight_array as $the_weight) {
+		if(isset($the_weight[0])) {
+			$weigth_nav = $the_weight[0];
+		} else {
+			$weigth_nav = "";
+		}
+
+		if($i === 1) {
+			break;
+		}
+	}
+}
 
 echo '<h1 class="product_title entry-title">'. $title_without_weight . '</h1>';
 echo '<div class="product-info">';
-if ($product->has_weight()) {
-	if ($product_data && $product_data != 'gr') {
-		echo '<span class="product-info--quantity">' . $product->get_weight() . ' ' . $product_data . '</span>';
-	} else {
-		if ($product->get_weight() == 1000) {
-			echo '<span class="product-info--quantity">1 kg</span>';
-		} else {
-			echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span>';
-		}
-
-	}
-}
+echo '<span class="product-info--quantity">' . $weigth_nav . '</span>';
 
 
 if ($produttori) {

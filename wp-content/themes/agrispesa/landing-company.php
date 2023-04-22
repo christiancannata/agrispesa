@@ -43,81 +43,9 @@ if($agr_landing_coupon){
 	<?php get_template_part( 'global-elements/hero', 'landing-category' ); ?>
 
 
-
-	<?php if(!get_field('landing_cat_hide_sections')):?>
-
 	<?php get_template_part( 'global-elements/home', 'sections' ); ?>
-	<?php endif;?>
 
 
-	<section class="landing-meet">
-		<div class="landing-meet--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
-			<div class="landing-meet--top">
-				<p class="landing-meet--minititle">Agricoltura contadina, a casa tua</p>
-				<h3 class="landing-meet--title">Abbiamo a cuore il tuo benessere.</h3>
-				<p class="landing-meet--descr wide">
-					Per questo prepariamo noi la tua spesa, con prodotti che arrivano da un'agricoltura rispettosa della vitalità del terreno, delle acque, delle piante. Così, freschi, arriveranno ogni settimana in una scatola su misura per te direttamente in Denso.
-					<br/><br/>
-					<strong>E con il 10% di sconto.</strong>
-				</p>
-			</div>
-			<div class="landing-meet--bottom">
-				<img class="landing-meet--image" src="<?php echo get_template_directory_uri(); ?>/assets/images/petfood/petfood.jpg" alt="Per ogni razza, per ogni tipetto" />
-			</div>
-		</div>
-		<div class="landing-meet--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
-			<video autoplay muted loop>
-			  <source src="<?php echo get_template_directory_uri(); ?>/assets/video/pawer-hero.mp4" type="video/mp4">
-					Your browser does not support the video tag.
-			</video>
-		</div>
-	</section>
-
-	<section class="landing-full" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/denso/mirtilli.jpg)">
-		<div class="landing-meet--top landing-full--text-sx">
-			<p class="landing-meet--minititle">Agricoltura contadina, a casa tua</p>
-			<h3 class="landing-meet--title">Abbiamo a cuore il tuo benessere.</h3>
-		</div>
-		<div class="landing-meet--top landing-full--text-dx">
-			<p class="landing-meet--descr wide">
-				Per questo prepariamo noi la tua spesa, con prodotti che arrivano da un'agricoltura rispettosa della vitalità del terreno, delle acque, delle piante. Così, freschi, arriveranno ogni settimana in una scatola su misura per te direttamente in Denso.
-				<br/><br/>
-				<strong>E con il 10% di sconto.</strong>
-			</p>
-		</div>
-	</section>
-
-
-	<?php if(!get_field('landing_cat_hide_values')):?>
-
-	<section class="landing-category">
-		<div class="container-pg">
-			<div class="landing-category--values">
-				<div class="landing-category--values--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-					<img src="<?php echo the_field('landing_cat_values_image');?>" alt="Tutti i vantaggi di Agrispesa" />
-				</div>
-				<?php $i = 1; if( have_rows('landing_cat_values') ):
-						echo '<div class="landing-category--values--list">';
-				    while( have_rows('landing_cat_values') ) : the_row();
-				    $title = get_sub_field('landing_cat_values_title');
-				    $text = get_sub_field('landing_cat_values_subtitle');
-
-						$delay = 50 * $i;
-							?>
-
-					<div class="landing-category--values--list--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="<?php echo $delay; ?>">
-						<h3 class="landing-category--values--list--title"><?php echo $title; ?></h3>
-						<p class="landing-category--values--list--subtitle"><?php echo $text; ?></p>
-					</div>
-
-			<?php $i++; endwhile;
-					echo'</div>';
-				endif; ?>
-
-			</div>
-		</div>
-	</section>
-	<?php endif;?>
 
 <?php if(!get_field('landing_cat_hide_quote')): ?>
 	<section class="landing-category--quote">
@@ -207,9 +135,6 @@ if($agr_landing_coupon){
 							 </tr>
 					 <?php endforeach;
 					 ?>
-
-
-
 							<div class="landing-box--price--flex">
  				        <div class="landing-box--price">
  				          <?php
@@ -245,12 +170,13 @@ if($agr_landing_coupon){
 				 		            $attributes[] = $taxonomy_label.': '.$term_name;
 				 		        }
 										//print_r($variation['display_price']);
+										//print_r($variation_id);
 				 		        echo '<span class="change-price-box" data-id="'.$variation_id.'" data-type="'.$variation['attributes']['attribute_pa_tipologia'].'" data-size="'.$variation['attributes']['attribute_pa_dimensione'].'">'.$var_old_price.'<span class="landing-new-price"> '.$var_price.'</span></span>';
 				 		    }
 								 ?>
  				        </div>
 								<div class="landing-box--button">
-									<a id="get_url" href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id().'&quantity=1&variation_id=60' ); ?>" class="btn btn-primary">Abbonati alla spesa</a>
+									<a id="get_url" href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id().'&quantity=1&variation_id=18995' ); ?>" class="btn btn-primary">Abbonati alla spesa</a>
 								</div>
  				      </div>
 
@@ -270,7 +196,7 @@ if($agr_landing_coupon){
 		</div>
 	</section>
 
-	
+
 
 
 

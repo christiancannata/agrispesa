@@ -6,11 +6,13 @@ if( have_rows('agr_sections') ):
     $align = get_sub_field('agr_sections_align'); //Allineamento griglia
     $small_columns = get_sub_field('agr_sections_small_columns');
 
+    $icons_title = get_sub_field('agr_sections_icons_title');
     $title = get_sub_field('agr_sections_title');
     $text = get_sub_field('agr_sections_text');
     $show_buttons = get_sub_field('agr_sections_show_buttons');
     $cta = get_sub_field('agr_sections_cta');
     $iscategory = get_sub_field('agr_sections_iscategory');
+    $go_products = get_sub_field('agr_sections_go_products');
     $url = get_sub_field('agr_sections_url');
     $url_category = get_sub_field('agr_sections_url_category');
     $show_colors = get_sub_field('agr_sections_showcolors');
@@ -34,6 +36,7 @@ if( have_rows('agr_sections') ):
     $mini_image = get_sub_field('agr_sections_mini_image');
     $no_images = get_sub_field('agr_sections_noimages');
     $video_file = get_sub_field('agr_sections_video_file');
+    $video_descr = get_sub_field('agr_sections_video_descr');
     $link = get_term_link( $url_category, 'product_cat' );
 
     if($color == 'nero' ) {
@@ -93,52 +96,27 @@ if( have_rows('agr_sections') ):
 <?php if($type == 'wide'): ?>
     <?php if($align): ?>
 
-    <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
-      <div class="wb-section--wide wb-section--container" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>;  background-image:url(<?php echo $image; ?>)">
-    		<div class="wb-section--content--sx">
-          <?php if($title): ?>
-    			     <h3 class="wb-section--content--title"><?php echo $title; ?></h3>
-          <?php endif;?>
-          <?php if($show_buttons): ?>
-            <div class="wb-section--content--buttons">
-              <?php if($iscategory): ?>
-                <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-              <?php else: ?>
-                <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
-              <?php endif;?>
-            </div>
-          <?php endif;?>
-    		</div>
-    		<div class="wb-section--content--dx" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-          <?php if($text): ?>
-      			<div class="wb-section--content--descr wide">
-      				<?php echo $text; ?>
-      			</div>
-          <?php endif;?>
-    		</div>
-  		</div>
-  	</section>
-
-    <?php else: ?>
       <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
         <div class="wb-section--wide wb-section--container" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>;  background-image:url(<?php echo $image; ?>)">
           <div class="wb-section--content--dx" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+      		</div>
+          <div class="wb-section--content--sx">
+            <?php if($title): ?>
+      			    <div class="wb-section--content--title"><?php echo $title; ?></div>
+            <?php endif;?>
             <?php if($text): ?>
         			<div class="wb-section--content--descr wide">
         				<?php echo $text; ?>
         			</div>
             <?php endif;?>
-      		</div>
-          <div class="wb-section--content--sx">
-            <?php if($title): ?>
-      			     <h3 class="wb-section--content--title"><?php echo $title; ?></h3>
-            <?php endif;?>
             <?php if($show_buttons): ?>
               <div class="wb-section--content--buttons">
                 <?php if($iscategory): ?>
-                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php elseif($go_products): ?>
+                  <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php else: ?>
-                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php endif;?>
               </div>
             <?php endif;?>
@@ -146,7 +124,101 @@ if( have_rows('agr_sections') ):
 
     		</div>
     	</section>
+    <?php else: ?>
+      <section class="wb-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50">
+        <div class="wb-section--wide wb-section--container" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>; background-image:url(<?php echo $image; ?>)">
+      		<div class="wb-section--content--sx">
+            <?php if($title): ?>
+      			   <div class="wb-section--content--title"><?php echo $title; ?></div>
+            <?php endif;?>
+            <?php if($text): ?>
+        			<div class="wb-section--content--descr wide">
+        				<?php echo $text; ?>
+        			</div>
+            <?php endif;?>
+            <?php if($show_buttons): ?>
+              <div class="wb-section--content--buttons">
+                <?php if($iscategory): ?>
+                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php elseif($go_products): ?>
+                  <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php else: ?>
+                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php endif;?>
+              </div>
+            <?php endif;?>
+      		</div>
+      		<div class="wb-section--content--dx" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
+      		</div>
+    		</div>
+    	</section>
+
+
     <?php endif; ?>
+<?php elseif($type == 'icons'): ?>
+  <section class="pet-heroes" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50" style="color:<?php echo $text_color;?>; background-color:<?php echo $background;?>;background-image:url(<?php echo $image; ?>)">
+		<h3 class="pet-heroes--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50"><?php echo $icons_title;?></h3>
+		<div class="container-big">
+			<div class="pet-heroes--flex">
+        <?php
+        if( have_rows('agr_sections_icons') ):
+            while( have_rows('agr_sections_icons') ) : the_row();
+                $icon = get_sub_field('agr_icons_pic');
+                $label = get_sub_field('agr_icons_label'); ?>
+
+                <div class="pet-heroes--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+          				<span class="icon-<?php echo $icon;?>"></span>
+          				<p class="pet-heroes--descr">
+          					<?php echo $label;?>
+          				</p>
+          			</div>
+
+            <?php endwhile;
+        endif;
+        ?>
+
+		</div>
+		</div>
+
+      <?php if($show_buttons): ?>
+        <div class="pet-heroes--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
+          <?php if($iscategory): ?>
+            <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+          <?php elseif($go_products): ?>
+            <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+          <?php else: ?>
+            <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+          <?php endif;?>
+        </div>
+      <?php endif;?>
+
+	</section>
+<?php elseif($type == 'boxes'): ?>
+
+  <section class="wb-section-box">
+  	<div class="wb-section-box--flex">
+      <?php
+      if( have_rows('agr_sections_boxes') ):
+          while( have_rows('agr_sections_boxes') ) : the_row();
+              $icon = get_sub_field('agr_box_pic');
+              $title = get_sub_field('agr_box_title');
+              $subtitle = get_sub_field('agr_box_subtitle'); ?>
+
+              <div class="wb-section-box--item">
+          			<span class="wb-section-box--label"><span class="icon-<?php echo $icon;?>"></span></span>
+          			<h3 class="wb-section-box--title"><?php echo $title;?></h3>
+          			<p class="wb-section-box--text">
+          				<?php echo $subtitle;?>
+          			</p>
+          		</div>
+
+          <?php endwhile;
+      endif;
+      ?>
+  	</div>
+  </section>
+
+
 <?php elseif($type == 'columns'): ?>
 
   <?php if($small_columns):?>
@@ -156,6 +228,19 @@ if( have_rows('agr_sections') ):
         <div class="wb-section--container">
           <div class="wb-section--content">
             <div class="wb-section--content--flex">
+              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+                <?php if($video_file): ?>
+                  <video autoplay muted loop>
+                    <source src="<?php echo $video_file; ?>" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                <?php else: ?>
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
+                <?php endif;?>
+                <?php if($video_descr): ?>
+                <p class="wb-section--content--video-descr"><?php echo $video_descr;?></p>
+                <?php endif;?>
+              </div>
               <div class="wb-section--content--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
                 <div class="wb-section--content--top">
                   <?php if($title): ?>
@@ -169,9 +254,11 @@ if( have_rows('agr_sections') ):
                   <?php if($show_buttons): ?>
                     <div class="wb-section--content--buttons">
                       <?php if($iscategory): ?>
-                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                      <?php elseif($go_products): ?>
+                        <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                       <?php else: ?>
-                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                       <?php endif;?>
                     </div>
                   <?php endif;?>
@@ -182,16 +269,7 @@ if( have_rows('agr_sections') ):
                   </div>
                 <?php endif;?>
               </div>
-              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
-                <?php if($video_file): ?>
-                  <video autoplay muted loop>
-                    <source src="<?php echo $video_file; ?>" type="video/mp4">
-                      Your browser does not support the video tag.
-                  </video>
-                <?php else: ?>
-                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
-                <?php endif;?>
-              </div>
+
             </div>
           </div>
         </div>
@@ -203,16 +281,6 @@ if( have_rows('agr_sections') ):
         <div class="wb-section--container">
           <div class="wb-section--content">
             <div class="wb-section--content--flex">
-              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
-                <?php if($video_file): ?>
-                  <video autoplay muted loop>
-                    <source src="<?php echo $video_file; ?>" type="video/mp4">
-                      Your browser does not support the video tag.
-                  </video>
-                <?php else: ?>
-                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
-                <?php endif;?>
-              </div>
               <div class="wb-section--content--sx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="100">
                 <div class="wb-section--content--top">
                   <?php if($title): ?>
@@ -226,9 +294,11 @@ if( have_rows('agr_sections') ):
                   <?php if($show_buttons): ?>
                     <div class="wb-section--content--buttons">
                       <?php if($iscategory): ?>
-                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                        <a href="<?php echo $link; ?>" class="btn btn-primary" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                      <?php elseif($go_products): ?>
+                        <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                       <?php else: ?>
-                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                        <a href="<?php echo $url; ?>" class="btn btn-primary" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                       <?php endif;?>
                     </div>
                   <?php endif;?>
@@ -239,11 +309,25 @@ if( have_rows('agr_sections') ):
                   </div>
                 <?php endif;?>
               </div>
-
+              <div class="wb-section--content--dx" data-aos="fade-in" data-aos-duration="600" data-aos-delay="50">
+                <?php if($video_file): ?>
+                  <video autoplay muted loop>
+                    <source src="<?php echo $video_file; ?>" type="video/mp4">
+                      Your browser does not support the video tag.
+                  </video>
+                <?php else: ?>
+                  <img src="<?php echo $image; ?>" class="the-image" alt="<?php echo strip_tags($title); ?>" />
+                <?php endif;?>
+                <?php if($video_descr): ?>
+                <p class="wb-section--content--video-descr"><?php echo $video_descr;?></p>
+                <?php endif;?>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+
     <?php endif; ?>
 
   <?php elseif($no_images):?>
@@ -255,9 +339,11 @@ if( have_rows('agr_sections') ):
             <div class="agr-section--subtitle"><?php echo $text; ?></div>
             <?php if($show_buttons): ?>
               <?php if($iscategory): ?>
-                <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+              <?php elseif($go_products): ?>
+                <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
               <?php else: ?>
-                <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
               <?php endif;?>
             <?php endif;?>
   				</div>
@@ -268,9 +354,9 @@ if( have_rows('agr_sections') ):
             <div class="agr-section--subtitle"><?php echo $text_second; ?></div>
             <?php if($show_buttons_second): ?>
               <?php if($iscategory_second): ?>
-                <a href="<?php echo $link_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta_second; ?>"><?php echo $cta_second; ?></a>
+                <a href="<?php echo $link_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta_second); ?>"><?php echo $cta_second; ?></a>
               <?php else: ?>
-                <a href="<?php echo $url_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta_second; ?>"><?php echo $cta_second; ?></a>
+                <a href="<?php echo $url_second; ?>" class="btn <?php if($btn_secondary_second) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta_second); ?>"><?php echo $cta_second; ?></a>
               <?php endif;?>
             <?php endif;?>
           </div>
@@ -292,9 +378,11 @@ if( have_rows('agr_sections') ):
               <div class="agr-section--subtitle"><?php echo $text; ?></div>
               <?php if($show_buttons): ?>
                 <?php if($iscategory): ?>
-                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php elseif($go_products): ?>
+                  <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php else: ?>
-                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php endif;?>
               <?php endif;?>
             </div>
@@ -310,9 +398,11 @@ if( have_rows('agr_sections') ):
               <div class="agr-section--subtitle"><?php echo $text; ?></div>
               <?php if($show_buttons): ?>
                 <?php if($iscategory): ?>
-                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $link; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
+                <?php elseif($go_products): ?>
+                  <a href="#go-products" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?> scroll-to" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php else: ?>
-                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo $cta; ?>"><?php echo $cta; ?></a>
+                  <a href="<?php echo $url; ?>" class="btn <?php if($btn_secondary) { echo 'btn-white'; } else { echo 'btn-primary'; }?>" title="<?php echo strip_tags($cta); ?>"><?php echo $cta; ?></a>
                 <?php endif;?>
               <?php endif;?>
             </div>
