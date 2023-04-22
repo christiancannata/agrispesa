@@ -482,6 +482,7 @@
 .products-petfood {
 	display: flex;
 	flex-wrap: wrap;
+	margin-bottom: 40px;
 	@include breakpoint(mobile) {
 		padding: 0 16px;
 	}
