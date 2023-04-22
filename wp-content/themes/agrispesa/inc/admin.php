@@ -2354,22 +2354,22 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
-                $isSubscription = true;
+                $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
                     if (
-                        !$product->is_type("subscription") &&
-                        !$product->is_type("subscription_variation")
+                        $product->is_type("subscription") ||
+                        $product->is_type("subscription_variation")
                     ) {
-                        $isSubscription = false;
+                        $isSubscription = true;
                     }
                 }
-                if (!$isSubscription) {
+                if ($isSubscription) {
                     continue;
                 }
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
-                $ele1->nodeValue = 10000 + $order->get_id();
+                $ele1->nodeValue = 9000000 + $order->get_id();
                 $row->appendChild($ele1);
                 //check if has navision id
                 $navisionId = get_user_meta(
@@ -2377,14 +2377,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "navision_id",
                     true
                 );
-                if (!$navisionId) {
-                    $navisionId = 50000 + $order->get_customer_id();
-                    update_user_meta(
-                        $order->get_customer_id(),
-                        "navision_id",
-                        $navisionId
-                    );
-                }
+
+				if(!$navisionId){
+					continue;
+				}
+
+
                 $ele1 = $doc->createElement("id_codeclient");
                 $ele1->nodeValue = $navisionId;
                 $row->appendChild($ele1);
