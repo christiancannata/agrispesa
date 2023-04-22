@@ -1198,7 +1198,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ];
             $productsToExclude = new WP_Query($args);
             $idsToExclude = $productsToExclude->get_posts();
-
+			$idsToExclude[] = 17647;
             $wpdb->query(
                 "UPDATE wp_posts
 	SET post_status = 'draft'
@@ -1277,14 +1277,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $group;
             }, $allGroups);
 
+
             foreach ($products["ROW"] as $product) {
                 $product = (array) $product;
+
                 if (strstr((string) $product["offer_no"], "STCOMP") == false) {
                     continue;
                 }
 
-                $sku = explode("_", $product["id_product"]);
-                $sku = $sku[0];
+                $sku = $product["id_product"];
 
                 $isFoundGroup = array_filter($allGroups, function ($group) use (
                     $sku
@@ -1302,7 +1303,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
             }
-
             /* FINE ACTIVATE GRUPPI CATEGORIE */
 
             $productsSku = [];
@@ -1339,6 +1339,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
             ]);
+			$productsToInclude[] = 17647;
 
             $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
@@ -2346,29 +2347,32 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $args = ["status" => ["wc-completed"]];
+            $args = ["status" => "wc-completed", "limit" => -1];
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
-                $isSubscription = true;
+                $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
+					if(!$product){
+						continue;
+					}
                     if (
-                        !$product->is_type("subscription") &&
-                        !$product->is_type("subscription_variation")
+                        $product->is_type("subscription") ||
+                        $product->is_type("subscription_variation")
                     ) {
-                        $isSubscription = false;
+                        $isSubscription = true;
                     }
                 }
-                if (!$isSubscription) {
+                if ($isSubscription) {
                     continue;
                 }
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
-                $ele1->nodeValue = 10000 + $order->get_id();
+                $ele1->nodeValue = 9000000 + $order->get_id();
                 $row->appendChild($ele1);
                 //check if has navision id
                 $navisionId = get_user_meta(
@@ -2376,14 +2380,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "navision_id",
                     true
                 );
-                if (!$navisionId) {
-                    $navisionId = 50000 + $order->get_customer_id();
-                    update_user_meta(
-                        $order->get_customer_id(),
-                        "navision_id",
-                        $navisionId
-                    );
-                }
+
+				if(!$navisionId){
+					continue;
+				}
+
+
                 $ele1 = $doc->createElement("id_codeclient");
                 $ele1->nodeValue = $navisionId;
                 $row->appendChild($ele1);
@@ -2816,7 +2818,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
-    register_rest_route("agrispesa/v1", "subscription-blacklist", [
+
+
+	register_rest_route("agrispesa/v1", "subscription-blacklist", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
@@ -2865,6 +2869,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+
     register_rest_route("agrispesa/v1", "subscription-preference", [
         "methods" => "DELETE",
         "permission_callback" => function () {
