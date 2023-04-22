@@ -105,8 +105,9 @@ function checkoutRemoveCheckbox() {
 function landingSelectVariable() {
 
   //First load check
-  //let currentUrl = jQuery('#get_url').attr("href");
-  let currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
+  let currentUrl = jQuery('#get_url').attr("href");
+  console.log(currentUrl);
+  //let currentUrl = 'https://agrispesa.it/la-tua-scatola?&quantity=1&variation_id=60';
   let url = new URL(currentUrl);
   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
