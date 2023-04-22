@@ -12,6 +12,22 @@ $title_without_weight = preg_replace(
 	 array(''),
 	 $title
 );
+$the_weight_array = getNumbersFromString($title);
+$i = 1;
+$weigth_nav = "";
+if(isset($the_weight_array) && !empty($the_weight_array)) {
+	foreach ($the_weight_array as $the_weight) {
+		if(isset($the_weight[0])) {
+			$weigth_nav = $the_weight[0];
+		} else {
+			$weigth_nav = "";
+		}
+
+		if($i === 1) {
+			break;
+		}
+	}
+}
 ?>
 <article class="product-box">
   <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">
@@ -30,17 +46,7 @@ $title_without_weight = preg_replace(
     <div class="product-box--text--top">
       <h2 class="product-box--title"><a href="<?php the_permalink(); ?>" title="<?php echo $title_without_weight; ?>"><?php echo $title_without_weight; ?></a></h2>
       <div class="product-box--price--flex">
-        <?php if ( $product->has_weight() ) {
-        	if($product_data && $product_data != 'gr') {
-        		echo '<span class="product-info--quantity">' . $product->get_weight() . ' '.$product_data.'</span>';
-        	} else {
-            if($product->get_weight() == 1000) {
-        			echo '<span class="product-info--quantity">1 kg</span>';
-        		} else {
-        			echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span>';
-        		}
-        	}
-        } ?>
+        <?php echo '<span class="product-info--quantity">' . $weigth_nav . '</span>'; ?>
 
         <div class="product-box--price">
           <?php echo $product->get_price_html(); ?>

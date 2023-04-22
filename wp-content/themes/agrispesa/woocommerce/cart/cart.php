@@ -86,6 +86,22 @@ do_action( 'woocommerce_before_cart' ); ?>
 												 array(''),
 												 $title
 											);
+											$the_weight_array = getNumbersFromString($title);
+						        	$i = 1;
+											$weigth_nav = "";
+											if(isset($the_weight_array) && !empty($the_weight_array)) {
+							        	foreach ($the_weight_array as $the_weight) {
+							        		if(isset($the_weight[0])) {
+														$weigth_nav = $the_weight[0];
+													} else {
+														$weigth_nav = "";
+													}
+
+							        		if($i === 1) {
+							        			break;
+							        		}
+							        	}
+											}
 
 											if (!$product_permalink) {
 												echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $title_without_weight, $cart_item, $cart_item_key) . '&nbsp;');
@@ -114,7 +130,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 											?>
 										</div>
 										<div class="new-cart--details">
-											<?php if($_product->get_name() != 'Acquista saldo' && $_product->get_name() != 'Spesa Sospesa') {
+											<?php if($_product->get_name() != 'Acquisto credito' && $_product->get_name() != 'Spesa Sospesa') {
 															if ($_product->is_type('variation')) {
 															$dimensione = get_term_by( 'name', $_product->get_attribute( 'pa_dimensione' ), 'pa_dimensione' );
 															$tipologia = get_term_by( 'name', $_product->get_attribute( 'pa_tipologia' ), 'pa_tipologia' );
@@ -126,21 +142,12 @@ do_action( 'woocommerce_before_cart' ); ?>
 														} else {
 															// unità di misura personalizzata
 															$product_data = $_product->get_meta('_woo_uom_input');
-															if ( $_product->has_weight() ) {
-																if($product_data && $product_data != 'gr') {
-																		echo '<span class="product-info--quantity">' . $_product->get_weight() . ' '.$product_data.'</span>';
-															} else {
-																	if($_product->get_weight() == 1000) {
-											        			echo '<span class="product-info--quantity">1 kg</span>';
-											        		} else {
-											        			echo '<span class="product-info--quantity">' . $_product->get_weight() . ' gr</span>';
-											        		}
-																}
-															}
+
+															echo '<span class="product-info--quantity">' . $weigth_nav . '</span>';
+
+
 
 														}
-													} else {
-														echo 'ciaoo';
 													} ?>
 										</div>
 									</div>

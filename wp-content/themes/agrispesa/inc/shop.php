@@ -122,6 +122,12 @@ function jk_related_products_args($args)
 	return $args;
 }
 
+function getNumbersFromString($str) {
+	$matches = array();
+	preg_match_all('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/', $str, $matches);
+	return $matches;
+}
+
 //Cambia h2 a lista prodotti e aggiungi peso
 remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
 add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10);
@@ -137,22 +143,26 @@ function soChangeProductsTitle()
 	   $title
 	);
 
-	if ($product->has_weight()) {
-		if ($product_data && $product_data != 'gr') {
-			echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
-			echo '<span class="product-info--quantity">' . $product->get_weight() . ' ' . $product_data . '</span></div>';
-		} else {
-			if ($product->get_weight() == 1000) {
-				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
-				echo '<span class="product-info--quantity">1 kg</span></div>';
+	$the_weight_array = getNumbersFromString($title);
+	$i = 1;
+	$weigth_nav = "";
+	if(isset($the_weight_array) && !empty($the_weight_array)) {
+		foreach ($the_weight_array as $the_weight) {
+			if(isset($the_weight[0])) {
+				$weigth_nav = $the_weight[0];
 			} else {
-				echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
-				echo '<span class="product-info--quantity">' . $product->get_weight() . ' gr</span></div>';
+				$weigth_nav = "";
+			}
+
+			if($i === 1) {
+				break;
 			}
 		}
-	} else {
-		echo '<h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
 	}
+
+	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
+	echo '<span class="product-info--quantity">' . $weigth_nav . '</span></div>';
+
 }
 
 //Bottone minicart
@@ -215,7 +225,7 @@ function quantity_inputs_for_woocommerce_loop_add_to_cart_link($html, $product)
 		$html = '<div class="shop-buttons-flex"><form action="' . esc_url($product->add_to_cart_url()) . '" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button>';
 		$html .= woocommerce_quantity_input(array(), $product, false);
 		$html .= '<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="' . $product->get_id() . '" data-quantity="1" data-tip="Ciao" data-product_sku="' . esc_attr($product->get_sku()) . '" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">' . esc_html($product->add_to_cart_text()) . '</button>';
-		$html .= '</form></div>'; 
+		$html .= '</form></div>';
 	}
 	return $html;
 }
