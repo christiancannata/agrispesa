@@ -2142,6 +2142,14 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 						$scala = 'Scala '.$scala;
                     }
 
+					$orderNote = $order->get_customer_note();
+					if(empty($orderNote)){
+						$orderNote = get_user_meta($order->get_customer_id(),'');
+						if(!$orderNote){
+							$orderNote = '';
+						}
+					}
+
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
 
@@ -2272,7 +2280,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $row->appendChild($ele1);
 
                         $ele1 = $doc->createElement("comment_lines");
-                        $ele1->nodeValue = $order->get_customer_note();
+                        $ele1->nodeValue = $orderNote;
                         $row->appendChild($ele1);
 
                         $ele2 = $doc->createElement("sh_city");
@@ -2344,7 +2352,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$ele1->nodeValue = $piano.' '.$scala;
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("comment_lines");
-					$ele1->nodeValue = $order->get_customer_note();
+					$ele1->nodeValue = $orderNote;
 					$row->appendChild($ele1);
 					$ele2 = $doc->createElement("sh_city");
 					$ele2->nodeValue = $order->get_shipping_city();
