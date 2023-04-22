@@ -2374,6 +2374,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
 
+				$isAutomaticOrder = get_post_meta($order->get_id(),'_subscription_id',true);
+				$isAutomaticOrder = ($isAutomaticOrder>0);
+
                 $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
@@ -2388,7 +2391,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
 
-                if (!$isSubscription || $order->get_payment_method() == 'wallet') {
+
+
+                if ((!$isSubscription && $isAutomaticOrder) || $order->get_payment_method() == 'wallet') {
                     continue;
                 }
 
