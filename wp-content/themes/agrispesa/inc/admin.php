@@ -1529,6 +1529,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $arrayProducts = [];
                 foreach ($boxProducts as $boxProduct) {
+
+					if($boxProduct["id_product"] == 'TRASPORTO1'){
+						update_option('delivery_product_offer_no',(string) $boxProduct["offer_line_no"]);
+						continue;
+					}
+
                     $singleProduct = new WP_Query([
                         "post_type" => "product",
                         "meta_key" => "_navision_id",
@@ -2042,11 +2048,26 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
+				if($orderType != 'ST' && $orderType != 'FN'){
+					continue;
+				}
+
                 $isSubscription = get_post_meta(
                     $order->get_id(),
                     "_subscription_id",
                     true
                 );
+
+
+                        /* USER NAVISION ID */
+                        $userNavisionId = get_user_meta(
+                            $order->get_customer_id(),
+                            "navision_id",
+                            true
+                        );
+                        if (!$userNavisionId) {
+                           continue;
+                        }
 
                 if ($isSubscription) {
                     $subscription = new WC_Subscription($isSubscription);
@@ -2202,16 +2223,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         }
 
                         /* ORDER NAVISION ID */
-                        $navisionId = get_user_meta(
-                            $order->get_id(),
-                            "navision_id",
-                            true
-                        );
-                        if (!$navisionId) {
-                            $navisionId = 6000000 + $order->get_id();
-                        }
                         $navisionId = 6000000 + $order->get_id();
-
                         $ele1->nodeValue = $navisionId;
                         $row->appendChild($ele1);
 
@@ -2221,21 +2233,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $navisionId
                         );
 
-                        /* USER NAVISION ID */
-                        $userNavisionId = get_user_meta(
-                            $order->get_customer_id(),
-                            "navision_id",
-                            true
-                        );
-                        if (!$userNavisionId) {
-                            $userNavisionId =
-                                500000 + $order->get_customer_id();
-                            update_user_meta(
-                                $order->get_customer_id(),
-                                "navision_id",
-                                $userNavisionId
-                            );
-                        }
                         $ele1 = $doc->createElement("id_codeclient");
                         $ele1->nodeValue = $userNavisionId;
 
@@ -2300,7 +2297,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $root->appendChild($row);
                     }
                     $items++;
-                    /*
+
 				$shipping_method_total = 0;
 
 				foreach( $order->get_items( 'shipping' ) as $item_id => $item ){
@@ -2346,7 +2343,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$ele2->nodeValue = $order->get_shipping_state();
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("id_product");
-					$ele2->nodeValue = get_option();
+					$ele2->nodeValue = get_option('delivery_product_sku');
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("quantity");
 					$ele2->nodeValue = 1;
@@ -2365,7 +2362,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$row->appendChild($ele2);
 					$root->appendChild($row);
 
-				} */
+				}
                 }
             }
             header("Content-type: text/xml");
