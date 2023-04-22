@@ -252,7 +252,6 @@
 		width: 100%;
 		height: auto;
 		display: block;
-
 	}
 }
 
@@ -525,7 +524,6 @@
 		}
 		@include breakpoint(mobile) {
 			@include font-size(32);
-
 			margin: 0 20px 16px;
 		}
 	}
@@ -1447,6 +1445,101 @@ body.page-template-page-password-php {
 		}
 		@include breakpoint(container) {
 			padding: 24px 60px 0;
+		}
+	}
+}
+
+.wb-section-box {
+	@include container();
+
+	&--buttons {
+		display: flex;
+		justify-content: space-between;
+		position: relative;
+		z-index: 2;
+	}
+
+	&--label {
+		@include border-radius(50%);
+		position: absolute;
+		top: 24px;
+		left: 16px;
+		z-index: 2;
+		color: $black;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		@include font-size(70);
+		width: 80px;
+		height: 80px;
+	}
+
+	&--claim {
+		text-align: center;
+		@include font-size(14);
+		padding: 42px 0 0;
+		@include breakpoint(desktop) {
+			@include font-size(16);
+		}
+
+		a {
+			@include font-size(14);
+			color: $blue;
+			font-weight: 300;
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+			@include breakpoint(desktop) {
+				@include font-size(16);
+			}
+
+			&:after {
+				@include transition(all 0.2s linear);
+				background: $blue;
+				bottom: -2px;
+				content: '';
+				display: block;
+				height: 1px;
+				left: 0;
+				position: absolute;
+				width: 100%;
+			}
+
+			&:hover {
+				color: $blue;
+
+				&::after {
+					width: 0;
+				}
+			}
+		}
+	}
+
+	&--item {
+		@include border-radius(24px);
+		padding: 200px 32px 32px;
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+		margin: 0 20px;
+		background: rgba($beige, 0.6);
+
+	}
+
+	&--title {
+		@include font-size(32);
+		font-weight: 900;
+		line-height: 1;
+	}
+
+
+	&--text {
+		@include font-size(16);
+		margin: 24px 0 0;
+		@include breakpoint(desktop) {
+			@include font-size(18);
 		}
 	}
 }
