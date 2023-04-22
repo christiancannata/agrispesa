@@ -59,7 +59,7 @@ emptyCartSlider();
 accountProductsSlider();
 listCategories();
 moveCustomFieldsCheckout();
-//landingSelectVariable();
+landingSelectVariable();
 checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
@@ -102,54 +102,54 @@ function checkoutRemoveCheckbox() {
   }
 }
 
-// function landingSelectVariable() {
-//
-//   //First load check
-//   let currentUrl = jQuery('#get_url').attr("href");
-//   //let currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
-//   let url = new URL(currentUrl);
-//   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-//   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-//
-//   let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//   url.searchParams.set("variation_id", var_id); // setting your param
-//   let newUrl = url.href;
-//
-//   jQuery('#get_url').attr("href", newUrl);
-//
-//   jQuery('.change-price-box').hide();
-//   jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//
-//   jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
-//     const valSize = jQuery(this).filter(":checked").val();
-//     let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
-//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//     jQuery('.change-price-box').hide();
-//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//     url.searchParams.set("variation_id", var_id);
-//     let newUrl = url.href;
-//     jQuery('#get_url').attr("href", newUrl);
-//
-//   })
-//   jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
-//     const valType = jQuery(this).filter(":checked").val();
-//     let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-//     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-//
-//     jQuery('.change-price-box').hide();
-//     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-//
-//     url.searchParams.set("variation_id", var_id);
-//     let newUrl = url.href;
-//     jQuery('#get_url').attr("href", newUrl);
-//   })
-//
-//
-// }
+function landingSelectVariable() {
+
+  //First load check
+  //let currentUrl = jQuery('#get_url').attr("href");
+  let currentUrl = 'https://agrispesa.it/carrello?&quantity=1&variation_id=60';
+  let url = new URL(currentUrl);
+  const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+  const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+
+  let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+  url.searchParams.set("variation_id", var_id); // setting your param
+  let newUrl = url.href;
+
+  jQuery('#get_url').attr("href", newUrl);
+
+  jQuery('.change-price-box').hide();
+  jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
+    const valSize = jQuery(this).filter(":checked").val();
+    let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+    let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+    url.searchParams.set("variation_id", var_id);
+    let newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
+
+  })
+  jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
+    const valType = jQuery(this).filter(":checked").val();
+    let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+    let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+    jQuery('.change-price-box').hide();
+    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+    url.searchParams.set("variation_id", var_id);
+    let newUrl = url.href;
+    jQuery('#get_url').attr("href", newUrl);
+  })
+
+
+}
 
 function moveCustomFieldsCheckout() {
   if (jQuery('#shipping-custom-fields').length) {

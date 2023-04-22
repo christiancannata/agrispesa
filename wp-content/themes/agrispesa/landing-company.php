@@ -47,38 +47,6 @@ if($agr_landing_coupon){
 
 
 
-
-	<?php if(!get_field('landing_cat_hide_values')):?>
-
-	<section class="landing-category">
-		<div class="container-pg">
-			<div class="landing-category--values">
-				<div class="landing-category--values--image" data-aos="fade-in" data-aos-duration="800" data-aos-delay="0">
-					<img src="<?php echo the_field('landing_cat_values_image');?>" alt="Tutti i vantaggi di Agrispesa" />
-				</div>
-				<?php $i = 1; if( have_rows('landing_cat_values') ):
-						echo '<div class="landing-category--values--list">';
-				    while( have_rows('landing_cat_values') ) : the_row();
-				    $title = get_sub_field('landing_cat_values_title');
-				    $text = get_sub_field('landing_cat_values_subtitle');
-
-						$delay = 50 * $i;
-							?>
-
-					<div class="landing-category--values--list--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="<?php echo $delay; ?>">
-						<h3 class="landing-category--values--list--title"><?php echo $title; ?></h3>
-						<p class="landing-category--values--list--subtitle"><?php echo $text; ?></p>
-					</div>
-
-			<?php $i++; endwhile;
-					echo'</div>';
-				endif; ?>
-
-			</div>
-		</div>
-	</section>
-	<?php endif;?>
-
 <?php if(!get_field('landing_cat_hide_quote')): ?>
 	<section class="landing-category--quote">
 		<div class="container-pg">
@@ -167,9 +135,6 @@ if($agr_landing_coupon){
 							 </tr>
 					 <?php endforeach;
 					 ?>
-
-
-
 							<div class="landing-box--price--flex">
  				        <div class="landing-box--price">
  				          <?php
@@ -205,6 +170,7 @@ if($agr_landing_coupon){
 				 		            $attributes[] = $taxonomy_label.': '.$term_name;
 				 		        }
 										//print_r($variation['display_price']);
+										//print_r($variation_id);
 				 		        echo '<span class="change-price-box" data-id="'.$variation_id.'" data-type="'.$variation['attributes']['attribute_pa_tipologia'].'" data-size="'.$variation['attributes']['attribute_pa_dimensione'].'">'.$var_old_price.'<span class="landing-new-price"> '.$var_price.'</span></span>';
 				 		    }
 								 ?>
