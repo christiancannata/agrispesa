@@ -2358,7 +2358,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$ele2->nodeValue = $currentWeek.'-STCOMP';
 					$row->appendChild($ele2);
 					$ele2 = $doc->createElement("ref_offer_line_no");
-					$ele2->nodeValue = get_option('delivery_ref_offer_line_no');
+					$ele2->nodeValue = get_option('delivery_product_offer_no');
 					$row->appendChild($ele2);
 					$root->appendChild($row);
 
