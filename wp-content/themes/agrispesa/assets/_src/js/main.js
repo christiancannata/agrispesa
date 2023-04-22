@@ -59,7 +59,6 @@ emptyCartSlider();
 accountProductsSlider();
 listCategories();
 moveCustomFieldsCheckout();
-landingSelectVariable();
 checkoutRemoveCheckbox();
 petNameAnimation();
 sliderPetfood();
@@ -71,6 +70,10 @@ sliderPetValues();
 removeP();
 sliderBoxLanding();
 //changeShippingLabel();
+
+if(jQuery('body.page-template-landing-company').length) {
+  landingSelectVariable();
+}
 
 
 function removeP() {
