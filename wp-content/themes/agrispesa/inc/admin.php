@@ -2347,7 +2347,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $args = ["status" => ["wc-completed"],"limit" => -1];
+            $args = ["status" => "wc-completed", "limit" => -1];
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
             $doc->formatOutput = true;
@@ -2357,6 +2357,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
+					if(!$product){
+						continue;
+					}
                     if (
                         $product->is_type("subscription") ||
                         $product->is_type("subscription_variation")
