@@ -135,7 +135,6 @@ if($what_category_ID) {
 		</div>
 	</section>
 
-	<?php endif;?>
 
 
 <?php if($what_category != 'Petfood'):?>
