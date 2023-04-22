@@ -1771,9 +1771,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele1);
                 $ele2 = $doc->createElement("business_name");
                 $ele2->nodeValue =
-                    $order->get_shipping_first_name() .
+                    $order->get_shipping_last_name().
                     " " .
-                    $order->get_shipping_last_name();
+                    $order->get_shipping_first_name() ;
                 $row->appendChild($ele2);
                 $taxCode = get_post_meta(
                     $order->get_id,
