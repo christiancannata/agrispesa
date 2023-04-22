@@ -1674,7 +1674,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            $lastWeek = (new \DateTime())->sub(new DateInterval("P30D"));
             $args = [
                 "limit" => -1,
                 "orderby" => "date",
@@ -1794,6 +1794,26 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 if (!$vatCode) {
                     $vatCode = "";
                 }
+
+				$phone = $order->get_shipping_phone();
+
+				if(empty($phone)){
+					$phone = $order->get_billing_phone();
+				}
+
+				if(empty($phone)){
+					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
+					if(!$phone){
+						$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
+					}
+					if(!$phone){
+						$phone = get_user_meta($order->get_customer_id(),'billing_cellulare',true);
+						update_user_meta($order->get_customer_id(),'billing_phone',$phone);
+						update_user_meta($order->get_customer_id(),'shipping_phone',$phone);
+
+					}
+				}
+
                 $ele2 = $doc->createElement("vat_number");
                 $ele2->nodeValue = $vatCode;
                 $row->appendChild($ele2);
@@ -1816,7 +1836,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = $order->get_billing_email();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("phone");
-                $ele2->nodeValue = $order->get_shipping_phone();
+                $ele2->nodeValue = $phone;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("phoneoffice");
                 $ele2->nodeValue = "";
