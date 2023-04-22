@@ -20,7 +20,14 @@ function call_order_status_completed($orderId)
                 $orderType = "FN";
             }
         }
+
+		if($item->get_name() == 'Acquisto credito'){
+			$orderType = "CREDITO";
+		}
+
     }
+
+
 
     update_post_meta($orderId, "_order_type", $orderType);
 }
@@ -2103,6 +2110,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
+
+						if(!$product){
+							continue;
+						}
 
                         $productNavisionId = get_post_meta(
                             $product->get_id(),
