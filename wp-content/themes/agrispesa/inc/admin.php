@@ -2127,6 +2127,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     );
                     if (!$piano) {
                         $piano = "";
+                    }else{
+						$piano = 'Piano '.$piano;
+                    }
+
+					$scala = get_post_meta(
+                        $order->get_id(),
+                        "shipping_scala",
+                        true
+                    );
+                    if (!$scala) {
+                        $scala = "";
+                    }else{
+						$scala = 'Scala '.$scala;
                     }
 
                     foreach ($order->get_items() as $item_id => $item) {
@@ -2255,7 +2268,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $ele1->nodeValue = $order->get_shipping_address_1();
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_description1");
-                        $ele1->nodeValue = $piano;
+                        $ele1->nodeValue = $piano.' ' .$scala;
                         $row->appendChild($ele1);
 
                         $ele1 = $doc->createElement("comment_lines");
@@ -2328,7 +2341,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$ele1->nodeValue = $order->get_shipping_address_1();
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("sh_description1");
-					$ele1->nodeValue = $piano;
+					$ele1->nodeValue = $piano.' '.$scala;
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("comment_lines");
 					$ele1->nodeValue = $order->get_customer_note();
