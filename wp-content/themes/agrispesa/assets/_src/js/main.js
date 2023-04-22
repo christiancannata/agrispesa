@@ -70,10 +70,7 @@ sliderPetValues();
 removeP();
 sliderBoxLanding();
 //changeShippingLabel();
-
-if(jQuery('body.page-template-landing-company').length) {
-  landingSelectVariable();
-}
+landingSelectVariable();
 
 
 function removeP() {
@@ -106,11 +103,11 @@ function checkoutRemoveCheckbox() {
 }
 
 function landingSelectVariable() {
-
+  if(jQuery('body.page-template-landing-company').length) {
   //First load check
-  let currentUrl = jQuery('#get_url').attr("href");
+  //let currentUrl = jQuery('#get_url').attr("href");
   //console.log(currentUrl);
-  //let currentUrl = 'https://agrispesa.it/la-tua-scatola?&quantity=1&variation_id=60';
+  let currentUrl = 'https://www.agrispesa.it/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
   let url = new URL(currentUrl);
   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
@@ -151,7 +148,7 @@ function landingSelectVariable() {
     let newUrl = url.href;
     jQuery('#get_url').attr("href", newUrl);
   })
-
+}
 
 }
 
