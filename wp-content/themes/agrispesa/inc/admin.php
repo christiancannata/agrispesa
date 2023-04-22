@@ -661,30 +661,12 @@ add_action("rest_api_init", function () {
                     $employee_csv[] = array_combine($header_row, $row);
                 }
             }
-            $allSingleBox = get_all_single_box();
-            $allSingleBox = array_map(function ($box) {
-                $navId = get_post_meta($box->get_id(), "_navision_id", true);
-                if (!empty($navId)) {
-                    $box->_navision_id = $navId[0];
-                } else {
-                    $box->_navision_id = null;
-                }
-                return $box;
-            }, $allSingleBox);
-
-            $allSingleBox = array_filter($allSingleBox, function ($box) {
-                return $box->_navision_id != null;
-            });
-
-            global $wpdb;
-            $wpdb->query(
-                "delete FROM wp_usermeta where meta_key = '_wcs_subscription_ids_cache';"
-            );
 
             foreach ($employee_csv as $user) {
                 if (empty($user["id_utente"])) {
                     continue;
                 }
+
                 $wordpressUser = get_users([
                     "meta_key" => "navision_id",
                     "meta_value" => $user["id_utente"],
@@ -693,66 +675,13 @@ add_action("rest_api_init", function () {
                     $wordpressUser = reset($wordpressUser);
                 }
                 if (!$wordpressUser) {
-                    /*	//creo utente
-
-					$user_id = wp_create_user( $username, $password, $email_address );
-					$user = new WP_User( $user_id );
-					$user->set_role( 'customer' );
-
-					$wordpressUser = get_user_by('id', $userId);
-	*/
                     $usersSkipped[] = $user["id_utente"];
                     continue;
                 }
 
-                $hasSubscription = wcs_user_has_subscription(
-                    $wordpressUser->ID
-                );
-                if (!$hasSubscription) {
-                    // $wpdb->query("DELETE p from wp_posts p,wp_postmeta m  WHERE m.post_id = p.ID and p.post_type = 'shop_subscription' and m.meta_key = '_customer_user' and m.meta_value = " . $wordpressUser->ID);
+				update_user_meta($wordpressUser->ID,'shipping_piano',$user['automatismiSettimanali_indirizzoSpedizione::scala']);
+				update_user_meta($wordpressUser->ID,'shipping_scala',$user['automatismiSettimanali_indirizzoSpedizione::piano']);
 
-                    if (
-                        empty(
-                            $user[
-                                "automatismiSettimanali_utenze_tipoSpesa::codiceTipoSpesa"
-                            ]
-                        ) ||
-                        !isset($user["tipoSpesaCalcolato"])
-                    ) {
-                        continue;
-                    }
-
-                    $boxNavisionId = $user["tipoSpesaCalcolato"];
-                    $singleBox = array_filter($allSingleBox, function (
-                        $box
-                    ) use ($boxNavisionId) {
-                        return $box->_navision_id == $boxNavisionId;
-                    });
-                    if (count($singleBox) == 0) {
-                        continue;
-                    }
-                    $singleBox = reset($singleBox);
-                    $tipologia = get_post_meta(
-                        $singleBox->get_id(),
-                        "attribute_pa_tipologia",
-                        true
-                    );
-                    $dimensione = get_post_meta(
-                        $singleBox->get_id(),
-                        "attribute_pa_dimensione",
-                        true
-                    );
-                    $subscriptionProduct = get_subscription_box_from_attributes(
-                        $tipologia,
-                        $dimensione
-                    );
-                    $subscription = give_user_subscription(
-                        $subscriptionProduct,
-                        $wordpressUser,
-                        $user
-                    );
-                    $subscriptionCreated[] = $subscription->get_id();
-                }
             }
             $response = new WP_REST_Response([
                 "subscriptions_created" => $subscriptionCreated,
