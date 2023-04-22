@@ -2347,7 +2347,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $args = ["status" => ["wc-completed"]];
+            $args = ["status" => ["wc-completed"],"limit" => -1];
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
             $doc->formatOutput = true;
