@@ -2373,6 +2373,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
+
                 $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
@@ -2386,7 +2387,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $isSubscription = true;
                     }
                 }
-                if ($isSubscription || $order->get_payment_method() == 'wallet') {
+
+                if (!$isSubscription || $order->get_payment_method() == 'wallet') {
                     continue;
                 }
 
