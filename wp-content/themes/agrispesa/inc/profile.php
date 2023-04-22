@@ -230,7 +230,7 @@ add_action('woocommerce_account_personalizza-scatola_endpoint', 'settings_box_co
 
 function invoice_box_content()
 {
-	$navisionId = get_user_meta(get_current_user_id(), '_navision_id', true);
+	$navisionId = get_user_meta(get_current_user_id(), 'navision_id', true);
 
 	$userInvoices = get_posts([
 		"post_type" => "invoice",
