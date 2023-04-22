@@ -2347,7 +2347,26 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $args = ["status" => "wc-completed", "limit" => -1];
+
+
+            $args = [
+				"status" => "wc-completed",
+				"limit" => -1,
+				"meta_query" => [
+                    "relation" => "and",
+                    [
+                        "key" => "_payment_method",
+                        "value" => "wallet",
+                        "compare" => "!=",
+                    ],
+                    [
+						"key" => "_date_completed",
+						"meta_compare" => ">",
+               		    "meta_value" => (new \DateTime('2023-04-20'))->getTimestamp(),
+				 ]
+                ]
+				];
+
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
             $doc->formatOutput = true;
@@ -2367,9 +2386,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $isSubscription = true;
                     }
                 }
-                if ($isSubscription) {
+                if ($isSubscription || $order->get_payment_method() == 'wallet') {
                     continue;
                 }
+
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
                 $ele1->nodeValue = 9000000 + $order->get_id();
