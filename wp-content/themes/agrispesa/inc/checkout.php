@@ -215,59 +215,6 @@ function custom_dropdown_bulk_actions_shop_order($actions)
 }
 
 
-//Add custom fields to checkout
-function cloudways_custom_checkout_fields($fields)
-{
-	if (in_array('welovedenso', WC()->cart->get_applied_coupons())) {
-		$required = false;
-	} else {
-		$required = true;
-	}
-	$fields['cloudways_extra_fields'] = array(
-		'cloudways_scala_field' => array(
-			'type' => 'text',
-			'required' => false,
-			'label' => __('Scala'),
-			'placeholder' => __('In quale scala abiti?'),
-		),
-		'cloudways_piano_field' => array(
-			'type' => 'text',
-			'required' => $required,
-			'label' => __('Piano'),
-			'placeholder' => __('A che piano vivi?'),
-		),
-		'cloudways_citofono_field' => array(
-			'type' => 'textarea',
-			'required' => $required,
-			'label' => __('Citofono e indicazioni per il corriere'),
-			'placeholder' => __('Aiutaci a consegnare la tua scatola in modo più preciso.'),
-		),
-	);
-	return $fields;
-}
-
-//add_filter( 'woocommerce_checkout_fields', 'cloudways_custom_checkout_fields' );
-
-function cloudways_extra_checkout_fields()
-{
-	$checkout = WC()->checkout(); ?>
-	<div id="shipping-custom-fields" class="woocommerce-border-form w-bottom">
-		<?php if (in_array('welovedenso', WC()->cart->get_applied_coupons())): ?>
-			<h3 class="checkout--title company-shipping-label-get">Consegniamo nella tua azienda <span
-					class="ec ec-sparkles"></span></h3>
-		<?php else: ?>
-			<h3 class="checkout--title">Consegna a domicilio <span class="ec ec-sparkles"></span></h3>
-			<p class="woocommerce-border-form--info">Hai qualche informazione utile per il nostro corriere?</p>
-			<?php
-			foreach ($checkout->checkout_fields['cloudways_extra_fields'] as $key => $field) : ?>
-				<?php woocommerce_form_field($key, $field, $checkout->get_value($key)); ?>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</div>
-<?php }
-
-//add_action( 'woocommerce_checkout_after_customer_details' ,'cloudways_extra_checkout_fields' );
-
 
 //Add DOGS custom fields to checkout
 function cloudways_dog_custom_checkout_fields($fields)
@@ -316,16 +263,6 @@ add_action('woocommerce_checkout_after_customer_details', 'cloudways_dog_extra_c
 //Save data of WooCommerce Custom Checkout Fields
 function cloudways_save_extra_checkout_fields($order_id, $posted)
 {
-	// don't forget appropriate sanitization if you are using a different field type
-	// if( isset( $posted['cloudways_scala_field'] ) ) {
-	//     update_post_meta( $order_id, '_cloudways_scala_field', sanitize_text_field( $posted['cloudways_scala_field'] ) );
-	// }
-	// if( isset( $posted['cloudways_piano_field'] ) ) {
-	//     update_post_meta( $order_id, '_cloudways_piano_field', sanitize_text_field( $posted['cloudways_piano_field'] ) );
-	// }
-	// if( isset( $posted['cloudways_citofono_field'] ) ) {
-	//     update_post_meta( $order_id, '_cloudways_citofono_field', sanitize_text_field( $posted['cloudways_citofono_field'] ) );
-	// }
 	if (isset($posted['cloudways_dog_name_field'])) {
 		update_post_meta($order_id, '_cloudways_dog_name_field', sanitize_text_field($posted['cloudways_dog_name_field']));
 	}
@@ -334,36 +271,9 @@ function cloudways_save_extra_checkout_fields($order_id, $posted)
 
 add_action('woocommerce_checkout_update_order_meta', 'cloudways_save_extra_checkout_fields', 10, 2);
 
-//Display WooCommerce Admin Custom Order Fields
-// add_action( 'woocommerce_admin_order_data_after_shipping_address', 'admin_order_after_billing_address_callback', 10, 1 );
-// function admin_order_after_billing_address_callback( $order ){
-//     // if ( $tiva1  = $order->get_meta('_cloudways_scala_field') ) {
-//     //     echo '<p><strong>'. __("Scala") . ':</strong> ' . $tiva1 . '</p>';
-//     // } else {
-// 		// 	  echo '<p><strong>'. __("Scala") . ':</strong>-</p>';
-// 		// }
-//     // if ( $tfcarr = $order->get_meta('_cloudways_piano_field') ) {
-//     //     echo '<p><strong>'. __("Piano") . ':</strong> ' . $tfcarr . '</p>';
-//     // } else {
-// 		// 	  echo '<p><strong>'. __("Piano") . ':</strong>-</p>';
-// 		// }
-// 		// if ( $tfcitofono = $order->get_meta('_cloudways_citofono_field') ) {
-//     //     echo '<p><strong>'. __("Citofono e note") . ':</strong> ' . $tfcitofono . '</p>';
-//     // } else {
-// 		// 	  echo '<p><strong>'. __("Citofono e note") . ':</strong>-</p>';
-// 		// }
-// 		if ( $tfdogname = $order->get_meta('_cloudways_dog_name_field') ) {
-//         echo '<p><strong>'. __("Nome del cane") . ':</strong> ' . $tfdogname . '</p>';
-//     } else {
-// 			  echo '<p><strong>'. __("Nome del cane") . ':</strong>-</p>';
-// 		}
-// }
 
 function cloudways_save_extra_details($post_id, $post)
 {
-	// update_post_meta( $post_id, '_cloudways_piano_field', wc_clean( $_POST[ '_cloudways_piano_field' ] ) );
-	// update_post_meta( $post_id, '_cloudways_scala_field', wc_clean( $_POST[ '_cloudways_scala_field' ] ) );
-	// update_post_meta( $post_id, '_cloudways_citofono_field', wc_clean( $_POST[ '_cloudways_citofono_field' ] ) );
 	update_post_meta($post_id, '_cloudways_dog_name_field', wc_clean($_POST['_cloudways_dog_name_field']));
 }
 
@@ -496,12 +406,18 @@ add_filter('woocommerce_shipping_fields', 'display_shipping_piano_field', 20, 1)
 function display_shipping_piano_field($shipping_fields)
 {
 
+	if (in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+		$required = false;
+	} else {
+		$required = true;
+	}
+
 	$shipping_fields['shipping_piano'] = array(
 		'type' => 'text',
 		'label' => __('Piano'),
 		'class' => array('form-row-wide'),
 		'priority' => 25,
-		'required' => true,
+		'required' => $required,
 		'clear' => true,
 		'priority' => 101
 	);
