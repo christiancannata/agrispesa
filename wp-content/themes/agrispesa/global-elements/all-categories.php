@@ -26,8 +26,11 @@ $special_category = get_field('agr_special_category', 'option');
 $special_icon = get_field('agr_special_icon', 'option');
 $link = get_term_link( $special_category, 'product_cat' );
 $special = get_term_by('term_id', $special_category, 'product_cat');
-$special_name = $special->name;
-$special_slug = $special->slug;
+if($special) {
+  $special_name = $special->name;
+  $special_slug = $special->slug;
+}
+
 
 if( !empty($product_categories) ){
   $categoriesNumber = count($product_categories);
