@@ -2073,7 +2073,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 					$orderNote = $order->get_customer_note();
 					if(empty($orderNote)){
-						$orderNote = get_user_meta($order->get_customer_id(),'');
+						$orderNote = get_user_meta($order->get_customer_id(),'shipping_citofono',true);
 						if(!$orderNote){
 							$orderNote = '';
 						}
