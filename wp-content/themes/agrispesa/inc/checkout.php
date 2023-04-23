@@ -215,7 +215,6 @@ function custom_dropdown_bulk_actions_shop_order($actions)
 }
 
 
-
 //Add DOGS custom fields to checkout
 function cloudways_dog_custom_checkout_fields($fields)
 {
@@ -405,6 +404,10 @@ function wordpress_user_account_shipping_scala_field($fields)
 add_filter('woocommerce_shipping_fields', 'display_shipping_piano_field', 20, 1);
 function display_shipping_piano_field($shipping_fields)
 {
+
+	if (!WC()->cart) {
+		return $shipping_fields;
+	}
 
 	if (in_array('welovedenso', WC()->cart->get_applied_coupons())) {
 		$required = false;
