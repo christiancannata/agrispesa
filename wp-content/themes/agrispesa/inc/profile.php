@@ -48,7 +48,7 @@ add_action('init', 'add_settings_box_endpoint');
 function settings_box_query_vars($vars)
 {
 
-	$vars[] = 'personalizza-scatola';
+	//$vars[] = 'personalizza-scatola';
 	$vars[] = 'fatture';
 
 	return $vars;
