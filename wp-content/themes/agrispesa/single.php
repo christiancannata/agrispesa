@@ -14,8 +14,11 @@
           <div class="categories-list">
             <?php
             $category = get_the_category();
-            $first_category = $category[0];
-            echo sprintf( '<a href="%s">%s</a>', get_category_link( $first_category ), $first_category->name );
+			if(!empty($category)){
+				$first_category = $category[0];
+				echo sprintf( '<a href="%s">%s</a>', get_category_link( $first_category ), $first_category->name );
+			}
+
             ?>
           </div>
     			<h1><?php the_title(); ?></h1>
