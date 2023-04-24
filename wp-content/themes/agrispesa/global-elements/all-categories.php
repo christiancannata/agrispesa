@@ -24,11 +24,16 @@ $product_categories = get_terms( 'product_cat', $cat_args );
 
 $special_category = get_field('agr_special_category', 'option');
 $special_icon = get_field('agr_special_icon', 'option');
-$link = get_term_link( $special_category, 'product_cat' );
-$special = get_term_by('term_id', $special_category, 'product_cat');
-if($special) {
-  $special_name = $special->name;
-  $special_slug = $special->slug;
+  $special_name = null;
+  $special_slug = null;
+if($special_category){
+	$link = get_term_link( $special_category, 'product_cat' );
+	$special = get_term_by('term_id', $special_category, 'product_cat');
+	if($special){
+		$special_name = $special->name;
+		$special_slug = $special->slug;
+	}
+
 }
 
 
