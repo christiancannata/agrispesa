@@ -68,14 +68,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		<?php endif; ?>
 	<?php else : ?>
-		<div class="empty-states">
-			<div class="empty-states--image">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/ops.svg" />
-			</div>
-			<div class="empty-states--text">
-				<h4 class="empty-states--title">Niente di nuovo, qui.</h4>
-				<p class="empty-states--subtitle">Sembra che tu non abbia ancora provato Agrispesa.</p>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>box/facciamo-noi" class="btn btn-primary btn-small empty-states--button" title="Provala subito!" class="empty-states--subtitle">Provala subito!</a>
+		<div class="agr-memo">
+
+			<div class="agr-memo--flex">
+				<div class="agr-memo--text">
+					<h4 class="agr-memo--title">Facciamo noi o scegli tu?</h4>
+					<p class="agr-memo--subtitle">
+						Può capitare di avere fretta.<br/>
+						Per questo prepariamo noi la tua spesa, scegliendo tra i prodotti di stagione più freschi che
+						arriveranno a casa tua in una scatola su misura per te.
+						<br/><br/>Proviamo?
+					</p>
+					<a href="<?php echo esc_url(home_url('/')); ?>box/facciamo-noi" class="btn btn-primary agr-memo--button"
+					   title="Abbonati alla spesa" class="empty-states--subtitle">Sì, fate voi!</a>
+				</div>
+				<div class="agr-memo--image">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/box/banner-box.jpg"
+						 alt="Facciamo noi o scegli tu?"/>
+				</div>
 			</div>
 		</div>
 
