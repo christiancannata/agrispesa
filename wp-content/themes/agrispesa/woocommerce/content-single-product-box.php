@@ -87,6 +87,8 @@ if ( post_password_required() ) {
 </div>
 </div><!-- fine div.product-top in product-image.php -->
 
+<?php get_template_part( 'global-elements/home', 'sections' ); ?>
+
 <section class="agri-values" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/cosa-contiene.jpg);">
 	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Cosa c'è nella scatola Agrispesa?</h3>
 	<div class="container-big">
