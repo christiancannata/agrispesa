@@ -109,9 +109,9 @@ $box_4_image = get_field('box_4_image');
 
 ?>
 
-<section id="go-products" class="box-types" style="background-image:url(<?php echo $box_1_image;?>);">
+<section id="go-products" class="box-types">
 	<div class="box-types--flex">
-		<div class="box-types--item vegana">
+		<div class="box-types--item vegana" style="background-image:url(<?php echo $box_1_image;?>);">
 			<span class="box-types--label">Box<br/>per 2</span>
 			<?php if($box_1_title): ?>
 					<h3 class="box-types--title"><?php echo $box_1_title; ?></h3>

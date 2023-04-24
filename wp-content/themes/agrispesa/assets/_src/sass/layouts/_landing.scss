@@ -308,7 +308,7 @@
 .pet-heroes {
 	@include full-bg();
 	position: relative;
-	padding: 120px 0 300px;
+	padding: 120px 0 120px;
 	color: $panna;
 	@include breakpoint(mobile) {
 		padding: 42px 0;

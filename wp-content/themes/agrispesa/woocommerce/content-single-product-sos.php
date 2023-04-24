@@ -54,31 +54,11 @@ $short_description = apply_filters( 'woocommerce_short_description', $post->post
 	</div>
 </section>
 
-<section class="manifesto--hero">
-	<div class="manifesto--container">
+<?php get_template_part( 'global-elements/home', 'sections' ); ?>
 
-			<div class="manifesto--hero--title">
 
-			</div>
 
-			<div class="manifesto--hero--subtitle">
-				<p>Siamo le scelte che facciamo.<br/>
-Siamo il modo in cui trattiamo il pianeta.<br/>
-Siamo la scelta di ciò che acquistiamo e mangiamo.<br/>
-Siamo i rapporti che costruiamo l'uno con l'altro.<br/>
-<br/>
-Siamo le nostre scelte e abbiamo un potere.<br/>
-Ogni nostra scelta, infatti, modifica la società nella quale viviamo.<br/>
-<br/>
-Oggi ci siamo scoperti fragili a tanti livelli e, sia individualmente, sia come società, siamo chiamati a confrontarci con questa fragilità.<br/>
-Agrispesa sceglie di non rimanere indifferente e lancia una campagna di solidarietà per dare un aiuto concreto alle famiglie in difficoltà economica.<br/>
-Per questo nasce la spesa SOSpesa.</p>
-			</div>
-
-	</div>
-</section>
-
-<section class="sos-numbers">
+<section class="sos-numbers" style="display:none;">
 	<div class="sos-numbers--container">
 		<span class="icon-heart"></span>
 		<div class="sos-numbers--top">
