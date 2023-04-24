@@ -89,97 +89,101 @@ if ( post_password_required() ) {
 
 <?php get_template_part( 'global-elements/home', 'sections' ); ?>
 
-<section class="agri-values" style="background-image:url(<?php echo get_template_directory_uri(); ?>/assets/images/box/cosa-contiene.jpg);">
-	<h3 class="agri-values--title" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">Cosa c'è nella scatola Agrispesa?</h3>
-	<div class="container-big">
-	<div class="agri-values--flex">
+<?php
+//Campi Box
+$box_1_title = get_field('box_1_title');
+$box_1_text = get_field('box_1_text');
+$box_1_image = get_field('box_1_image');
 
-		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
-			<?php get_template_part( 'global-elements/icon', 'verdura' ); ?>
-			<p class="agri-values--descr">
-				Verdura<br/>
-				<span>appena raccolta</span>
-			</p>
-		</div>
-		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
-			<?php get_template_part( 'global-elements/icon', 'frutta' ); ?>
-			<p class="agri-values--descr">
-				Frutta fresca<br/>
-				<span>di stagione</span>
-			</p>
-		</div>
-		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
-			<?php get_template_part( 'global-elements/icon', 'latticini' ); ?>
-			<p class="agri-values--descr">
-				Uova e latticini<br/>
-				<span>da animali felici</span>
-			</p>
-		</div>
-		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
-			<?php get_template_part( 'global-elements/icon', 'carne-pesce' ); ?>
-			<p class="agri-values--descr">
-				Carne e pesce<br/>
-				<span>allevati con rispetto</span>
-			</p>
-		</div>
-		<div class="agri-values--item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
-			<?php get_template_part( 'global-elements/icon', 'pane-cereali' ); ?>
-			<p class="agri-values--descr">
-				Pane e cereali<br/>
-				<span>da farine italiane</span>
-			</p>
-		</div>
+$box_2_title = get_field('box_2_title');
+$box_2_text = get_field('box_2_text');
+$box_2_image = get_field('box_2_image');
 
-	</div>
-	</div>
-	<div class="agri-values--button" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
-		<a href="#select-box" class="btn btn-primary scroll-to" title="Prova Agrispesa">Prova Agrispesa</a>
-	</div>
+$box_3_title = get_field('box_3_title');
+$box_3_text = get_field('box_3_text');
+$box_3_image = get_field('box_3_image');
 
-</section>
+$box_4_title = get_field('box_4_title');
+$box_4_text = get_field('box_4_text');
+$box_4_image = get_field('box_4_image');
 
-<section id="select-box" class="box-types">
+?>
+
+<section id="go-products" class="box-types" style="background-image:url(<?php echo $box_1_image;?>);">
 	<div class="box-types--flex">
 		<div class="box-types--item vegana">
 			<span class="box-types--label">Box<br/>per 2</span>
-			<h3 class="box-types--title">Vegana</h3>
+			<?php if($box_1_title): ?>
+					<h3 class="box-types--title"><?php echo $box_1_title; ?></h3>
+				<?php else: ?>
+				<h3 class="box-types--title">Vegana</h3>
+			<?php endif;?>
+			<?php if($box_1_text): ?>
+				<?php echo $box_1_text; ?>
+			<?php else: ?>
 			<ul class="box-types--list">
 				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
 				<li><span class="icon-check"></span>Tisane con ingredienti naturali</li>
 				<li><span class="icon-check"></span>Amore per gli animali</li>
 			</ul>
+			<?php endif;?>
 			<div class="box-types--buttons">
 				<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18983'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 			</div>
 		</div>
-		<div class="box-types--item vegetariana">
+		<div class="box-types--item vegetariana" style="background-image:url(<?php echo $box_2_image;?>);">
 			<span class="box-types--label">Box<br/>per 2</span>
-			<h3 class="box-types--title">Vegetariana</h3>
+			<?php if($box_2_title): ?>
+					<h3 class="box-types--title"><?php echo $box_2_title; ?></h3>
+				<?php else: ?>
+					<h3 class="box-types--title">Vegetariana</h3>
+			<?php endif;?>
+			<?php if($box_2_text): ?>
+				<?php echo $box_2_text; ?>
+			<?php else: ?>
 			<ul class="box-types--list">
 				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
 				<li><span class="icon-check"></span>Latticini da allevamenti sostenibili</li>
 				<li><span class="icon-check"></span>Uova da galline felici</li>
 			</ul>
+			<?php endif;?>
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18984'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
-		<div class="box-types--item pescetariana">
+		<div class="box-types--item pescetariana" style="background-image:url(<?php echo $box_3_image;?>);">
 			<span class="box-types--label">Box<br/>per 2</span>
-			<h3 class="box-types--title">Pescetariana</h3>
+			<?php if($box_3_title): ?>
+					<h3 class="box-types--title"><?php echo $box_3_title; ?></h3>
+				<?php else: ?>
+					<h3 class="box-types--title">Pescetariana</h3>
+			<?php endif;?>
+
+			<?php if($box_3_text): ?>
+				<?php echo $box_3_text; ?>
+			<?php else: ?>
 			<ul class="box-types--list">
 				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
 				<li><span class="icon-check"></span>Uova e latticini da animali felici</li>
 				<li><span class="icon-check"></span>Pesce allevato senza antibiotici</li>
 			</ul>
+			<?php endif;?>
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18985'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
-		<div class="box-types--item onnivora">
+		<div class="box-types--item onnivora" style="background-image:url(<?php echo $box_4_image;?>);">
 			<span class="box-types--label">Box<br/>per 2</span>
-			<h3 class="box-types--title">Onnivora</h3>
+			<?php if($box_4_title): ?>
+					<h3 class="box-types--title"><?php echo $box_4_title; ?></h3>
+				<?php else: ?>
+					<h3 class="box-types--title">Onnivora</h3>
+			<?php endif;?>
+			<?php if($box_4_text): ?>
+				<?php echo $box_4_text; ?>
+			<?php else: ?>
 			<ul class="box-types--list">
 				<li><span class="icon-check"></span>Prodotti di agricoltura contadina</li>
 				<li><span class="icon-check"></span>Uova e latticini da animali felici</li>
 				<li><span class="icon-check"></span>Carne da allevamenti sostenibili</li>
 			</ul>
+			<?php endif;?>
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18986'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 	</div>
