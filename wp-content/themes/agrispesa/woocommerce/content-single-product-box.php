@@ -112,7 +112,7 @@ $box_4_image = get_field('box_4_image');
 <section id="go-products" class="box-types">
 	<div class="box-types--flex">
 		<div class="box-types--item vegana" style="background-image:url(<?php echo $box_1_image;?>);">
-			<span class="box-types--label">Box<br/>per 2</span>
+			<span class="box-types--label">per 2</span>
 			<?php if($box_1_title): ?>
 					<h3 class="box-types--title"><?php echo $box_1_title; ?></h3>
 				<?php else: ?>
@@ -132,7 +132,7 @@ $box_4_image = get_field('box_4_image');
 			</div>
 		</div>
 		<div class="box-types--item vegetariana" style="background-image:url(<?php echo $box_2_image;?>);">
-			<span class="box-types--label">Box<br/>per 2</span>
+			<span class="box-types--label">per 2</span>
 			<?php if($box_2_title): ?>
 					<h3 class="box-types--title"><?php echo $box_2_title; ?></h3>
 				<?php else: ?>
@@ -150,7 +150,7 @@ $box_4_image = get_field('box_4_image');
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18984'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item pescetariana" style="background-image:url(<?php echo $box_3_image;?>);">
-			<span class="box-types--label">Box<br/>per 2</span>
+			<span class="box-types--label">per 2</span>
 			<?php if($box_3_title): ?>
 					<h3 class="box-types--title"><?php echo $box_3_title; ?></h3>
 				<?php else: ?>
@@ -169,7 +169,7 @@ $box_4_image = get_field('box_4_image');
 			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18985'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item onnivora" style="background-image:url(<?php echo $box_4_image;?>);">
-			<span class="box-types--label">Box<br/>per 2</span>
+			<span class="box-types--label">per 2</span>
 			<?php if($box_4_title): ?>
 					<h3 class="box-types--title"><?php echo $box_4_title; ?></h3>
 				<?php else: ?>
