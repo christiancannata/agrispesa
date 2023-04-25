@@ -1604,6 +1604,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
 
 				$saldo = substr($user['balance'], 0, -2);
+
+				if($saldo == '-0'){
+					$saldo = 0;
+				}
 				$saldo = str_replace(",",".",$saldo);
 				$saldo = floatval($saldo);
 
