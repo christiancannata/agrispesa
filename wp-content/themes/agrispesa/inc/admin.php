@@ -1561,7 +1561,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
             $now = new DateTime();
-            $file = "box_" . $now->format("dmY_Hi") . ".xml";
+            $file = "fido_" . $now->format("dmY_Hi") . ".xml";
             $uploadDire = wp_upload_dir($now->format("Y/m"));
             file_put_contents(
                 $uploadDire["path"] . "/" . $file,
@@ -1595,12 +1595,23 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					continue;
 				}
 
+				$user['balance'] = substr($user['balance'], 0, -2);
+
                 update_user_meta(
                     $userObj[0],
                     "_saldo_navision",
-                    substr($user['balance'], 0, -2)
+                    $user['balance']
                 );
 
+				$saldo = substr($user['balance'], 0, -2);
+				$saldo = str_replace(",",".",$saldo);
+				$saldo = floatval($saldo);
+
+				if($saldo>=0){
+					update_user_meta($userObj[0],'_current_woo_wallet_balance',$saldo);
+				}else{
+					update_user_meta($userObj[0],'_current_woo_wallet_balance',0);
+				}
             }
 
             $response = new WP_REST_Response([]);
