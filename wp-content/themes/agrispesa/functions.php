@@ -119,6 +119,7 @@ $ag_includes = array(
 	'/orders.php',
 	//'/calendar.php', //lasciare disabilitato
 	'/denso.php',
+	'/dashboard.php'
 );
 
 foreach ($ag_includes as $file) {

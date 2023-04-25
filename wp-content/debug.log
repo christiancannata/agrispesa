@@ -5,3 +5,19 @@
 [22-Apr-2023 17:04:49 UTC] PHP Warning:  array_combine(): Both parameters should have an equal number of elements in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 661
 [22-Apr-2023 17:10:16 UTC] PHP Warning:  array_combine(): Both parameters should have an equal number of elements in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 661
 [22-Apr-2023 17:10:54 UTC] PHP Warning:  array_combine(): Both parameters should have an equal number of elements in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 661
+[25-Apr-2023 15:35:04 UTC] PHP Notice:  Undefined offset: 0 in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 70
+[25-Apr-2023 15:35:04 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_product_name() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php:70
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/template.php(1445): misha_dashboard_widget('', Array)
+#1 /shared/httpd/agrispesa/wp-admin/includes/dashboard.php(271): do_meta_boxes(Object(WP_Screen), 'normal', '')
+#2 /shared/httpd/agrispesa/wp-admin/index.php(203): wp_dashboard()
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 70
+[25-Apr-2023 15:35:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[25-Apr-2023 15:35:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[25-Apr-2023 15:38:27 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3832 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[25-Apr-2023 15:38:27 UTC] PHP Warning:  mysqli_real_connect(): Error while reading greeting packet. PID=3818 in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[25-Apr-2023 15:38:27 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[25-Apr-2023 15:38:27 UTC] PHP Warning:  mysqli_real_connect(): (HY000/2006): MySQL server has gone away in /shared/httpd/agrispesa/wp-includes/class-wpdb.php on line 2019
+[25-Apr-2023 15:38:28 UTC] PHP Notice:  La funzione wpdb è stata richiamata <strong>in maniera scorretta</strong>. wpdb deve impostare una connessione ad un database da utilizzare per l'escaping. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.6.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[25-Apr-2023 15:40:42 UTC] PHP Parse error:  syntax error, unexpected 'Jjj' (T_STRING), expecting ';' or ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 12
