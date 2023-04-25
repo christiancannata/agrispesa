@@ -1821,14 +1821,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $fido = get_user_meta(
                     $order->get_customer_id(),
-                    "_current_woo_wallet_balance",
+                    "_saldo_navision",
                     true
                 );
                 if (!$fido) {
                     $fido = 0;
+					$fido = number_format(floatval($fido), 4);
+                	$fido = str_replace(".", ",", $fido);
                 }
-                $fido = number_format(floatval($fido), 4);
-                $fido = str_replace(".", ",", $fido);
+
                 $ele2->nodeValue = $fido;
                 $row->appendChild($ele2);
                 $root->appendChild($row);
