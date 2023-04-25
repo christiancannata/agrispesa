@@ -253,7 +253,8 @@ function get_order_delivery_date_from_date(
     if (is_string($date)) {
         $date = new DateTime($date);
     }
-    $date->add(new DateInterval("P7D"));
+    //$date->add(new DateInterval("P7D"));
+    $date->add(new DateInterval("P1D"));
     //}
     $deliveryDay = get_post_meta($ids, "delivery_day", true);
     $deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());

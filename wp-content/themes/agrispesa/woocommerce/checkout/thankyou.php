@@ -35,6 +35,8 @@ foreach ($items as $item) {
 if ($box_in_order) {
 
 	$deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode());
+
+	//print_r($deliveryDate);
 //$shipping_date = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode())->format("l d M Y");
 	$shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
 	$shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
