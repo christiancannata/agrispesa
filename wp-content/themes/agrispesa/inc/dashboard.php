@@ -69,13 +69,13 @@ function misha_dashboard_widget()
 		<input type="hidden" name="activate_subscriptions" value="true">
 		<table class="table-subscription">
 			<thead>
-			<th align="left"><input id="select_all" type="checkbox" style="margin: 0 8px 0 0;">
+			<th style="width:80px" align="left"><input id="select_all" type="checkbox" style="margin: 0 8px 0 0;">
 				<label for="cb-select-all-1" style="font-size:16px;">
 					Seleziona tutti
 				</label></th>
-			<th align="left">Utente</th>
-			<th align="left">Credito</th>
-			<th align="left">Abbonamento</th>
+			<th style="width:300px" align="left">Utente</th>
+			<th style="width:100px" align="left">Credito</th>
+			<th style="width:300px"  align="left">Abbonamento</th>
 			</thead>
 			<tbody>
 			<?php foreach ($enabledSubscription as $subscription): ?>
