@@ -10,9 +10,24 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
+		body.page-template-landing-company & {
+			&:before {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: rgba(0,0,0,0.3);
+				z-index: 1;
+			}
+		}
 	}
 
 	&--flex {
+		position: relative;
+		z-index: 2;
 		height: 100vh;
 		height: calc(var(--vh, 1vh) * 100);
 		overflow: hidden;
@@ -293,7 +308,7 @@
 .pet-heroes {
 	@include full-bg();
 	position: relative;
-	padding: 120px 0 300px;
+	padding: 120px 0 120px;
 	color: $panna;
 	@include breakpoint(mobile) {
 		padding: 42px 0;

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $transactions = get_wallet_transactions();
 do_action( 'woo_wallet_before_transaction_details_content' );
 ?>
-<h3 class="my-account--minititle">Transazioni</h3>
+<h3 class="my-account--minititle">I miei pagamenti</h3>
 <div class="wallet-credit-header">
 	<a class="arrow-link" href="<?php echo is_account_page() ? esc_url( wc_get_account_endpoint_url( get_option( 'woocommerce_woo_wallet_endpoint', 'woo-wallet' ) ) ) : esc_url( get_permalink() ); ?>">Torna indietro</a>
 	<div><?php esc_html_e( 'Current balance :', 'woo-wallet' ); ?> <?php echo woo_wallet()->wallet->get_wallet_balance( get_current_user_id() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
