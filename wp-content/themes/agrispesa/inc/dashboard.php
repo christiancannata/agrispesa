@@ -33,6 +33,10 @@ function prefix_add_dashboard_widget()
 	);
 }
 
+add_action("activate_subscription", function ($subscriptionId) {
+	$subscription = new WC_Subscription($subscriptionId);
+	$subscription->update_status('active');
+});
 /*
  * Callback #1 function
  * Displays widget content
@@ -41,9 +45,10 @@ function misha_dashboard_widget()
 {
 	if (isset($_POST['activate_subscriptions'])) {
 		$subscriptionsIds = $_POST['subscriptions'];
-		foreach ($subscriptionsIds as $subscriptionsId) {
-			$subscription = new WC_Subscription($subscriptionsId);
+		foreach ($subscriptionsIds as $subscriptionId) {
+			$subscription = new WC_Subscription($subscriptionId);
 			$subscription->update_status('active');
+			//as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
 		}
 
 	}
@@ -59,7 +64,7 @@ function misha_dashboard_widget()
 
 		$hasWallet = str_replace(",", ".", $hasWallet);
 		$hasWallet = floatval($hasWallet);
-		if ($hasWallet <= 0) {
+		if ($hasWallet < 0) {
 			$subscription->wallet = $hasWallet;
 			$enabledSubscription[] = $subscription;
 		}
@@ -75,7 +80,7 @@ function misha_dashboard_widget()
 				</label></th>
 			<th style="width:300px" align="left">Utente</th>
 			<th style="width:100px" align="left">Credito</th>
-			<th style="width:300px"  align="left">Abbonamento</th>
+			<th style="width:300px" align="left">Abbonamento</th>
 			</thead>
 			<tbody>
 			<?php foreach ($enabledSubscription as $subscription): ?>
