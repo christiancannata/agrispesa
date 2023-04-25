@@ -379,6 +379,22 @@ body.woocommerce-account {
 	}
 }
 
+.account-addresses {
+	display: flex;
+	justify-content: space-between;
+	@include breakpoint(mobile) {
+		flex-wrap: wrap;
+	}
+
+	.woocommerce-Address {
+		width: 48%;
+		@include breakpoint(mobile) {
+			width: 100%;
+			margin-bottom: 32px;
+		}
+	}
+}
+
 .select2-container--default .select2-selection--single {
 	border: none !important;
 	height: 45px !important;
@@ -864,12 +880,23 @@ body.woocommerce-account {
 	margin-bottom: 32px;
 
 	.woocommerce-address-fields {
-		& > p:not(.form-buttons) {
-			@include border-radius(4px);
-			@include font-size(16);
-			background: $red;
-			color: $white;
-			padding: 10px !important;
+		#update_all_subscriptions_addresses_field {
+			margin-top: 24px;
+
+			label.checkbox {
+				position: relative;
+				display: block;
+				padding-left: 20px;
+				padding-top: 16px;
+
+				.input-checkbox {
+					position: absolute;
+					left: 0;
+					top: 18px;
+					display: block;
+					width: 14px;
+				}
+			}
 
 			&:before {
 				content: 'Nota: ';

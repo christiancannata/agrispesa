@@ -925,3 +925,89 @@ function filter_woocommerce_package_rates($rates, $package)
 }
 
 add_filter('woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2);
+
+
+//Sconto primo ordine
+//add_filter( 'woocommerce_package_rates', 'free_first_order_shipping', 20, 2 );
+function free_first_order_shipping( $rates, $package ) {
+    // New shipping cost (can be calculated)
+		$cart =WC()->cart;
+    $tax_rate = 0;
+
+
+    //If user is logged in
+    if(is_user_logged_in()) {
+        $user_id = get_current_user_id();
+        //We want to know how many completed orders customer have or remove status if you dont care.
+        $args = array(
+            'customer_id' => 1,
+            'status' => array('wc-completed'),
+        );
+        $orders = wc_get_orders($args);
+        //If there are no orders returned apply free shipping
+        if(!$orders) {
+					if ( ! empty( $cart->recurring_cart_key ) ) {
+						$new_cost = 0;
+					 	$label = '€5';
+					} else {
+						$new_cost = 1;
+						$label = 'Gratuita';
+					}
+            foreach( $rates as $rate_key => $rate ){
+
+                error_log(print_r($rate,true));
+                // Excluding free shipping methods
+                if( $rate->method_id != 'free_shipping'){
+
+                    // Set rate cost
+                    $rates[$rate_key]->cost = $new_cost;
+                    //Set shipping label
+                    $rates[$rate_key]->label = $label;
+
+                    // Set taxes rate cost (if enabled)
+                    $taxes = array();
+                    foreach ($rates[$rate_key]->taxes as $key => $tax){
+                        if( $rates[$rate_key]->taxes[$key] > 0 )
+                            $taxes[$key] = $new_cost * $tax_rate;
+                    }
+                    $rates[$rate_key]->taxes = $taxes;
+
+                }
+            }
+        }
+    } else {
+			if ( ! empty( $cart->recurring_cart_key ) ) {
+				$new_cost = 0;
+			 	$label = '€5';
+			} else {
+				$new_cost = 2;
+				$label = 'Gratuita';
+			}
+
+			foreach( $rates as $rate_key => $rate ){
+
+
+					error_log(print_r($rate,true));
+					// Excluding free shipping methods
+					if( $rate->method_id != 'free_shipping'){
+
+							// Set rate cost
+							$rates[$rate_key]->cost = $new_cost;
+							//Set shipping label
+							$rates[$rate_key]->label = $label;
+
+							// Set taxes rate cost (if enabled)
+							$taxes = array();
+							foreach ($rates[$rate_key]->taxes as $key => $tax){
+									if( $rates[$rate_key]->taxes[$key] > 0 )
+											$taxes[$key] = $new_cost * $tax_rate;
+							}
+							$rates[$rate_key]->taxes = $taxes;
+
+					}
+
+		}
+		}
+
+    return $rates;
+}

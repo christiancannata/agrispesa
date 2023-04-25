@@ -95,7 +95,7 @@ function misha_remove_my_account_links( $menu_links ){
 	unset( $menu_links['downloads'] ); // Disable Downloads
 
   $menu_links['gift-cards'] = __('Carte Regalo', 'textdomain');
-  $menu_links['edit-address'] = __('Indirizzo', 'woocommerce');
+  $menu_links['edit-address'] = __('Indirizzi', 'woocommerce');
   $menu_links['edit-account'] = __('Account', 'woocommerce');
   $menu_links['customer-logout'] = __('Esci', 'textdomain');
 
