@@ -176,7 +176,7 @@ if($agr_landing_coupon){
 								 ?>
  				        </div>
 								<div class="landing-box--button">
-									<a id="get_url" href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id().'&quantity=1&variation_id=18995'.$coupon ); ?>" class="btn btn-primary">Abbonati alla spesa</a>
+									<a id="get_url" href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart='.$product->get_id().'&quantity=1&variation_id=18995'); ?>" class="btn btn-primary">Abbonati alla spesa</a>
 								</div>
  				      </div>
 

@@ -71,7 +71,17 @@ removeP();
 sliderBoxLanding();
 //changeShippingLabel();
 landingSelectVariable();
+changeLabelRecurringShipping();
 
+
+function changeLabelRecurringShipping() {
+  jQuery('.cart_totals .shipping.recurring-total td').html('€5,00 / settimana');
+  jQuery('.woocommerce-checkout-review-order-table .shipping.recurring-total td').html('€5,00 / settimana');
+
+  jQuery( 'body' ).on( 'updated_checkout', function() {
+    jQuery('.woocommerce-checkout-review-order-table .shipping.recurring-total td').html('€5,00 / settimana');
+  });
+}
 
 function removeP() {
 

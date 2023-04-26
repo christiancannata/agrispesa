@@ -67,7 +67,7 @@ function settings_box_link_my_account($items)
 	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
 
 	$items = array_insert_after($items, 'subscriptions', [
-		'fatture' => 'Fatture'
+		'fatture' => 'Documenti contabili'
 	]);
 
 	if (count($subscriptions) > 0) {
@@ -250,7 +250,7 @@ function invoice_box_content()
 	<div class="woocommerce-Fatture-content">
 
 		<div class="woocommerce-notices-wrapper"></div>
-		<h3 class="my-account--minititle address-title">Fatture</h3>
+		<h3 class="my-account--minititle address-title">Documenti contabili</h3>
 
 		<div class="table-shadow-relative">
 			<table
@@ -258,12 +258,12 @@ function invoice_box_content()
 				<thead>
 				<tr>
 					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number">
-						<span class="nobr">Fattura</span></th>
+						<span class="nobr">Pagamento</span></th>
 					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-date">
 						<span class="nobr">Data</span></th>
 					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status">
 						<span class="nobr">Totale</span></th>
-					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
+					<th style="display:none;" class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
 						<span class="nobr">Azioni</span></th>
 				</tr>
 				</thead>
@@ -280,7 +280,7 @@ function invoice_box_content()
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							Fattura #<?php echo $navisionId; ?>
+							Pagamento #<?php echo $navisionId; ?>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">
@@ -290,7 +290,7 @@ function invoice_box_content()
 							data-title="Stato">
 							<?php echo substr($amount, 0, -2); ?>€
 						</td>
-						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
+						<td style="display:none;" class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
 							data-title="Azioni">
 							<a href="/wp-content/uploads/invoices/<?php echo $filename; ?>"
 							   target="_blank"

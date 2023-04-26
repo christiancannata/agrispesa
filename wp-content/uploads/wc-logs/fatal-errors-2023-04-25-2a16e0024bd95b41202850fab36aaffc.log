@@ -1,0 +1,13 @@
+2023-04-25T21:35:05+00:00 CRITICAL Uncaught Error: Call to a member function add_fee() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:981
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php(1263): WC_Shipping->calculate_shipping_for_package(Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/wcs-cart-functions.php(65): WC_Subscriptions_Cart::get_calculated_shipping_for_package(Array)
+#5 / in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 981
+
+2023-04-25T21:42:14+00:00 CRITICAL syntax error, unexpected '}' in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 939
+
+2023-04-25T22:15:19+00:00 CRITICAL syntax error, unexpected 'endforeach' (T_ENDFOREACH) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-address.php alla riga 117
+

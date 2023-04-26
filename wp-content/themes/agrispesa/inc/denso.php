@@ -33,12 +33,12 @@ function custom_checkout_billing_city_field($shipping_fields)
 		$shipping_fields['shipping_postcode']['custom_attributes']['readonly'] = 'readonly';
 		$shipping_fields['shipping_city']['custom_attributes']['readonly'] = 'readonly';
 		$shipping_fields['shipping_company']['custom_attributes']['readonly'] = 'readonly';
-		//$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
+		$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
 
-		// $shipping_fields['shipping_state']['type'] = 'select';
-		// $shipping_fields['shipping_state']['options'] = array( $state => $state );
-		// $shipping_fields['shipping_state']['default'] = $state;
-		//$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
+		$shipping_fields['shipping_state']['type'] = 'select';
+		$shipping_fields['shipping_state']['options'] = array( $state => $state );
+		$shipping_fields['shipping_state']['default'] = $state;
+		$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
 
 	}
 	return $shipping_fields;
