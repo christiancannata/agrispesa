@@ -263,7 +263,8 @@ function invoice_box_content()
 						<span class="nobr">Data</span></th>
 					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status">
 						<span class="nobr">Totale</span></th>
-					<th style="display:none;" class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
+					<th style="display:none;"
+						class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
 						<span class="nobr">Azioni</span></th>
 				</tr>
 				</thead>
@@ -275,12 +276,16 @@ function invoice_box_content()
 					$navisionId = get_post_meta($invoice, '_navision_id', true);
 					$date = get_post_meta($invoice, '_created_date', true);
 					$filename = get_post_meta($invoice, '_filename', true);
+					$type = 'FATTURA';
+					if (substr($filename, 0, 3) == 'VAB') {
+						$type = 'PAGAMENTO';
+					}
 					?>
 
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							Pagamento #<?php echo $navisionId; ?>
+							<?php echo $type; ?> #<?php echo $navisionId; ?>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">
@@ -290,11 +295,15 @@ function invoice_box_content()
 							data-title="Stato">
 							<?php echo substr($amount, 0, -2); ?>€
 						</td>
-						<td style="display:none;" class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
+						<td style="display:none;"
+							class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
 							data-title="Azioni">
-							<a href="/wp-content/uploads/invoices/<?php echo $filename; ?>"
-							   target="_blank"
-							   class="woocommerce-button button view">Visualizza</a></td>
+							<?php if ($type == 'FATTURA'): ?>
+								<a href="/wp-content/uploads/invoices/<?php echo $filename; ?>"
+								   target="_blank"
+								   class="woocommerce-button button view">Visualizza</a>
+							<?php endif; ?>
+						</td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
