@@ -1842,7 +1842,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$customerType = 'FNM';
 				}
 
-				if(in_array($customerType,['FNPESP','FNVEGAP','FNVEGEP'])){
+				if(in_array($customerType,['FNPESP','FNVEGAP','FNVEGEP','FNPESPP','FNPP','FNVEGEPP','FNVEGAPP'])){
 					$customerType = 'FNP';
 				}
 
