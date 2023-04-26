@@ -1737,14 +1737,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     " " .
                     $order->get_shipping_first_name() ;
                 $row->appendChild($ele2);
-                $taxCode = get_post_meta(
+
+				$taxCode = get_post_meta(
                     $order->get_id,
-                    "_codice_fiscale",
+                    "codice_fiscale",
                     true
                 );
+
                 if (!$taxCode) {
                     $taxCode = "";
                 }
+
                 $ele2 = $doc->createElement("tax_code");
                 $ele2->nodeValue = $taxCode;
                 $row->appendChild($ele2);
@@ -4281,13 +4284,18 @@ function custom_orders_list_column_content($column, $post_id)
 add_filter("manage_edit-shop_order_columns", "add_custom_shop_order_column");
 function add_custom_shop_order_column($columns)
 {
-    $order_actions = $columns["order_actions"];
-    unset($columns["order_actions"]);
+	if(isset($columns["order_actions"])){
+		 $order_actions = $columns["order_actions"];
+    	 unset($columns["order_actions"]);
+	}
+
     // add custom column
     $columns["type_shopping"] = __("Spesa", "woocommerce");
     $columns["type_notes"] = __("Note", "woocommerce");
     // Insert back 'order_actions' column
-    $columns["order_actions"] = $order_actions;
+    if(isset($columns["order_actions"])){
+		$columns["order_actions"] = $order_actions;
+    }
     return $columns;
 }
 // Custom column content
