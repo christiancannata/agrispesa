@@ -1835,12 +1835,20 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
-                $startDate = $subscription
+
+				$startDate = $subscription
                     ? $subscription->get_date("start")
-                    : "";
-                $startDate = new DateTime($startDate);
+                    : null;
+
+				$dataAbbonamento = '';
+				if($startDate){
+					  $startDate = new DateTime($startDate);
+				    $dataAbbonamento = $startDate->format("dmY");
+				}
+
+
                 $ele2 = $doc->createElement("dataabbonamento");
-                $ele2->nodeValue = $startDate->format("dmY");
+                $ele2->nodeValue = $dataAbbonamento;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("fido");
 
