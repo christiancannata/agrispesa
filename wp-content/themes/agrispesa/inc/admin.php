@@ -3807,6 +3807,12 @@ function register_my_custom_submenu_page()
         "my_custom_submenu_page_callback"
     );
 }
+
+add_action("create_order_subscription", function ($subscriptionId) {
+	create_order_from_subscription($subscriptionId);
+	update_post_meta($subscriptionId, '_is_order_creating', false);
+});
+
 function my_custom_submenu_page_callback()
 {
     $date = new DateTime();
@@ -3815,7 +3821,8 @@ function my_custom_submenu_page_callback()
     if (isset($_POST["generate_orders"])) {
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-            create_order_from_subscription($subscriptionId);
+			as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+			update_post_meta($subscriptionId, '_is_order_creating', true);
         }
     }
     if (isset($_GET["generate_fabbisogno"])) {
