@@ -973,7 +973,7 @@ add_filter( 'woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10,
 function add_recurring_postage_fees( $cart ) {
 
     if ( !empty( $cart->recurring_cart_key ) ) {
-			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
 				//$intervals = explode( '_', $cart->recurring_cart_key );
         $cart->add_fee( 'Consegna', 0, false, '' );
 			} else {
