@@ -1636,16 +1636,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P30D"));
-            $args = [
+            $limit = $request->get_param("limit");
+
+			$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+
+			$orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
-                "order" => "DESC",
+                "order" => "ASC",
                 "meta_key" => "_date_completed",
                 "meta_compare" => ">",
                 "meta_value" => $lastWeek->getTimestamp(),
-            ];
-            $orders = wc_get_orders($args);
+            ]);
+
             $doc = new DOMDocument();
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
@@ -1664,7 +1667,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-                $customerType = "STCOMP";
+                $customerType = "STP";
 
                 $subscription = null;
                 if ($isSubscription) {
@@ -1733,9 +1736,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele1);
                 $ele2 = $doc->createElement("business_name");
                 $ele2->nodeValue =
-                    $order->get_shipping_last_name().
+                    $order->get_billing_last_name().
                     " " .
-                    $order->get_shipping_first_name() ;
+                    $order->get_billing_first_name() ;
                 $row->appendChild($ele2);
 
 				$taxCode = get_post_meta(
@@ -1770,16 +1773,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $vatCode = "";
                 }
 
+				$phone = $order->get_billing_phone();
+				if(empty($phone)){
 				$phone = $order->get_shipping_phone();
 
-				if(empty($phone)){
-					$phone = $order->get_billing_phone();
 				}
 
 				if(empty($phone)){
-					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
+					$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
 					if(!$phone){
-						$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
+					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
+
 					}
 					if(!$phone){
 						$phone = get_user_meta($order->get_customer_id(),'billing_cellulare',true);
@@ -1793,16 +1797,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = $vatCode;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("address");
-                $ele2->nodeValue = $order->get_shipping_address_1();
+                $ele2->nodeValue = $order->get_billing_address_1();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("city");
-                $ele2->nodeValue = $order->get_shipping_city();
+                $ele2->nodeValue = $order->get_billing_city();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("postcode");
-                $ele2->nodeValue = $order->get_shipping_postcode();
+                $ele2->nodeValue = $order->get_billing_postcode();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("province");
-                $ele2->nodeValue = $order->get_shipping_state();
+                $ele2->nodeValue = $order->get_billing_state();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("nation");
                 $ele2->nodeValue = "IT";
@@ -1817,10 +1821,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "";
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("mobile");
-                $ele2->nodeValue = $order->get_shipping_phone();
+                $ele2->nodeValue = $order->get_billing_phone();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("mobile2");
-                $ele2->nodeValue = $order->get_shipping_phone();
+                $ele2->nodeValue = $order->get_billing_phone();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("fax");
                 $ele2->nodeValue = "";
@@ -1829,15 +1833,37 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
 
+
+				//FIX MAPPING
+				if(in_array($customerType,['FNPESG','FNVEGAG','FNVEGEG'])){
+					$customerType = 'FNG';
+				}
+
+				if(in_array($customerType,['FNPESM','FNVEGAM','FNVEGEM'])){
+					$customerType = 'FNM';
+				}
+
+				if(in_array($customerType,['FNPESP','FNVEGAP','FNVEGEP','FNPESPP','FNPP','FNVEGEPP','FNVEGAPP'])){
+					$customerType = 'FNP';
+				}
+
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
-                $startDate = $subscription
+
+				$startDate = $subscription
                     ? $subscription->get_date("start")
-                    : "";
-                $startDate = new DateTime($startDate);
+                    : null;
+
+				$dataAbbonamento = '';
+				if($startDate){
+					  $startDate = new DateTime($startDate);
+				    $dataAbbonamento = $startDate->format("dmY");
+				}
+
+
                 $ele2 = $doc->createElement("dataabbonamento");
-                $ele2->nodeValue = $startDate->format("dmY");
+                $ele2->nodeValue = $dataAbbonamento;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("fido");
 
@@ -1990,6 +2016,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
             foreach ($orders as $order) {
+
+				if($order->get_status() != 'completed'){
+					continue;
+				}
+
+				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P5D"));
+				if($order->get_date_paid() < $checkPaidDate){
+					continue;
+				}
+
+
                 if (
                     $order->get_shipping_first_name() .
                         " " .
@@ -2113,6 +2150,24 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 						}
 					}
 
+					$isAcquistoCredito = false;
+ 					foreach ($order->get_items() as $item_id => $item) {
+                        $product = $item->get_product();
+
+						if(!$product){
+							continue;
+						}
+
+						if($product->get_name() == 'Acquisto credito'){
+							$isAcquistoCredito = true;
+						}
+
+ 					}
+
+					 if($isAcquistoCredito){
+						 continue;
+					 }
+
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
 
@@ -2231,9 +2286,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_name");
                         $ele1->nodeValue =
-                            $order->get_shipping_first_name() .
+                    		$order->get_shipping_last_name() .
                             " " .
-                            $order->get_shipping_last_name();
+                            $order->get_shipping_first_name();
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_address");
                         $ele1->nodeValue = $order->get_shipping_address_1();
@@ -2292,7 +2347,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					//add shipping
 					$row = $doc->createElement("ROW");
 					$ele1 = $doc->createElement("id_order");
-					$ele1->nodeValue = 10000 + $order->get_id();
+
+					$navisionId = 6000000 + $order->get_id();
+                        $ele1->nodeValue = $navisionId;
+                        $row->appendChild($ele1);
+					$ele1->nodeValue = $navisionId;
 					$row->appendChild($ele1);
 					//check if has navision id
 					$navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
@@ -3656,6 +3715,9 @@ function create_order_from_subscription($id)
             );
         }
     }
+
+	//spedizione gratuita per primi ordini oppure asti cuneo
+
 
     //get all orders of same user
     /*$args = array(
