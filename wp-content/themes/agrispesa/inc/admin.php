@@ -1989,7 +1989,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "limit" => -1,
                 "orderby" => "date",
                 "order" => "ASC",
-                "meta_key" => "_date_completed",
+                "meta_key" => "_created_date",
                 "meta_compare" => ">",
                 "meta_value" => $lastWeek->getTimestamp(),
             ]);
