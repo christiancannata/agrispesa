@@ -1740,9 +1740,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 				$taxCode = get_post_meta(
                     $order->get_id,
+                    "_codice_fiscale",
+                    true
+                );
+
+				 if (!$taxCode) {
+					 	$taxCode = get_user_meta(
+                    $order->get_customer_id(),
                     "codice_fiscale",
                     true
                 );
+				 }
+
+
 
                 if (!$taxCode) {
                     $taxCode = "";
