@@ -1990,6 +1990,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
             foreach ($orders as $order) {
+				if($order->get_status() != 'completed'){
+					continue;
+				}
                 if (
                     $order->get_shipping_first_name() .
                         " " .
