@@ -1,0 +1,2 @@
+2023-04-26T15:14:05+00:00 CRITICAL syntax error, unexpected 'endforeach' (T_ENDFOREACH), expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php alla riga 122
+
