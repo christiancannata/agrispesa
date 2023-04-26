@@ -1738,7 +1738,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue =
                     $order->get_billing_last_name().
                     " " .
-                    $order->get_billing_last_name() ;
+                    $order->get_billing_first_name() ;
                 $row->appendChild($ele2);
 
 				$taxCode = get_post_meta(
