@@ -2346,7 +2346,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					//add shipping
 					$row = $doc->createElement("ROW");
 					$ele1 = $doc->createElement("id_order");
-					$ele1->nodeValue = 10000 + $order->get_id();
+
+					$navisionId = 6000000 + $order->get_id();
+                        $ele1->nodeValue = $navisionId;
+                        $row->appendChild($ele1);
+					$ele1->nodeValue = $navisionId;
 					$row->appendChild($ele1);
 					//check if has navision id
 					$navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
