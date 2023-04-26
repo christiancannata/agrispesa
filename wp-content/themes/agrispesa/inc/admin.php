@@ -3824,6 +3824,11 @@ function my_custom_submenu_page_callback()
 			as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
 			update_post_meta($subscriptionId, '_is_order_creating', true);
         }
+
+		?>
+		<br>
+		<h4 style="color:red;">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
+		<?php
     }
     if (isset($_GET["generate_fabbisogno"])) {
         //generate_fabbisogno();
