@@ -1636,16 +1636,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P30D"));
-            $args = [
+            $limit = $request->get_param("limit");
+
+			$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+
+			$orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
-                "order" => "DESC",
+                "order" => "ASC",
                 "meta_key" => "_date_completed",
                 "meta_compare" => ">",
                 "meta_value" => $lastWeek->getTimestamp(),
-            ];
-            $orders = wc_get_orders($args);
+            ]);
+
             $doc = new DOMDocument();
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
