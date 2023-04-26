@@ -2020,7 +2020,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					continue;
 				}
 
-				if($order->get_date_paid() < $lastWeek){
+				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P5D"));
+				if($order->get_date_paid() < $checkPaidDate){
 					continue;
 				}
 
