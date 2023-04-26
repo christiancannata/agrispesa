@@ -1667,7 +1667,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-                $customerType = "STCOMP";
+                $customerType = "STP";
 
                 $subscription = null;
                 if ($isSubscription) {
