@@ -1736,9 +1736,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele1);
                 $ele2 = $doc->createElement("business_name");
                 $ele2->nodeValue =
-                    $order->get_shipping_last_name().
+                    $order->get_billing_last_name().
                     " " .
-                    $order->get_shipping_first_name() ;
+                    $order->get_billing_last_name() ;
                 $row->appendChild($ele2);
 
 				$taxCode = get_post_meta(
@@ -1773,16 +1773,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $vatCode = "";
                 }
 
+				$phone = $order->get_billing_phone();
+				if(empty($phone)){
 				$phone = $order->get_shipping_phone();
 
-				if(empty($phone)){
-					$phone = $order->get_billing_phone();
 				}
 
 				if(empty($phone)){
-					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
+					$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
 					if(!$phone){
-						$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
+					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
+
 					}
 					if(!$phone){
 						$phone = get_user_meta($order->get_customer_id(),'billing_cellulare',true);
@@ -1796,16 +1797,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = $vatCode;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("address");
-                $ele2->nodeValue = $order->get_shipping_address_1();
+                $ele2->nodeValue = $order->get_billing_address_1();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("city");
-                $ele2->nodeValue = $order->get_shipping_city();
+                $ele2->nodeValue = $order->get_billing_city();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("postcode");
-                $ele2->nodeValue = $order->get_shipping_postcode();
+                $ele2->nodeValue = $order->get_billing_postcode();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("province");
-                $ele2->nodeValue = $order->get_shipping_state();
+                $ele2->nodeValue = $order->get_billing_state();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("nation");
                 $ele2->nodeValue = "IT";
@@ -1820,10 +1821,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "";
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("mobile");
-                $ele2->nodeValue = $order->get_shipping_phone();
+                $ele2->nodeValue = $order->get_billing_phone();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("mobile2");
-                $ele2->nodeValue = $order->get_shipping_phone();
+                $ele2->nodeValue = $order->get_billing_phone();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("fax");
                 $ele2->nodeValue = "";
@@ -2020,7 +2021,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					continue;
 				}
 
-				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P5D"));
+				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P7D"));
 				if($order->get_date_paid() < $checkPaidDate){
 					continue;
 				}
@@ -3714,6 +3715,9 @@ function create_order_from_subscription($id)
             );
         }
     }
+
+	//spedizione gratuita per primi ordini oppure asti cuneo
+
 
     //get all orders of same user
     /*$args = array(
