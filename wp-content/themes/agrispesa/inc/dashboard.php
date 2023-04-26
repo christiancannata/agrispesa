@@ -50,12 +50,11 @@ function misha_dashboard_widget()
 			update_post_meta($subscriptionId, '_is_working_activation', true);
 			as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
 		}
-
 	}
 
 	$enabledSubscription = [];
 
-	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => ['on-hold']]);
+	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'subscription_status' => ['on-hold', 'cancelled']]);
 	foreach ($subscriptions as $subscription) {
 		$hasWallet = get_user_meta($subscription->get_customer_id(), '_saldo_navision', true);
 		if (!$hasWallet) {
