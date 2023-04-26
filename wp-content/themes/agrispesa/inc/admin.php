@@ -1832,6 +1832,20 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
 
+
+				//FIX MAPPING
+				if(in_array($customerType,['FNPESG','FNVEGAG','FNVEGEG'])){
+					$customerType = 'FNG';
+				}
+
+				if(in_array($customerType,['FNPESM','FNVEGAM','FNVEGEM'])){
+					$customerType = 'FNM';
+				}
+
+				if(in_array($customerType,['FNPESP','FNVEGAP','FNVEGEP'])){
+					$customerType = 'FNP';
+				}
+
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
