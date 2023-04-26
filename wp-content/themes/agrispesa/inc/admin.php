@@ -2149,6 +2149,24 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 						}
 					}
 
+					$isAcquistoCredito = false;
+ 					foreach ($order->get_items() as $item_id => $item) {
+                        $product = $item->get_product();
+
+						if(!$product){
+							continue;
+						}
+
+						if($product->get_name() == 'Acquisto credito'){
+							$isAcquistoCredito = true;
+						}
+
+ 					}
+
+					 if($isAcquistoCredito){
+						 continue;
+					 }
+
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
 
