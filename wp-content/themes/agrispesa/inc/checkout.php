@@ -933,11 +933,13 @@ function free_first_order_shipping( $rates, $package ) {
 			$has_free_shipping = true;
 		} else if($loggedUser && !$orders) {
 			$has_free_shipping = true;
+		} else if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+			$has_free_shipping = true;
 		}
 
 
     if($has_free_shipping) {
-  
+
             foreach( $rates as $rate_key => $rate ){
 
                 error_log(print_r($rate,true));
@@ -971,8 +973,14 @@ add_filter( 'woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10,
 function add_recurring_postage_fees( $cart ) {
 
     if ( !empty( $cart->recurring_cart_key ) ) {
-
-        $intervals = explode( '_', $cart->recurring_cart_key );
+			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+				//$intervals = explode( '_', $cart->recurring_cart_key );
+        $cart->add_fee( 'Consegna', 0, false, '' );
+			} else {
+				//$intervals = explode( '_', $cart->recurring_cart_key );
         $cart->add_fee( 'Consegna', 5, false, '' );
+			}
+
+
     }
 }

@@ -60,3 +60,7 @@ Stack trace:
 #4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
 #5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart-totals.php(339): WC_Cart->calculat in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 924
 
+2023-04-26T19:46:40+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 975
+
+2023-04-26T19:46:42+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 975
+
