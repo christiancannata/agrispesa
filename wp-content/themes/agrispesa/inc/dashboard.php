@@ -36,6 +36,7 @@ function prefix_add_dashboard_widget()
 add_action("activate_subscription", function ($subscriptionId) {
 	$subscription = new WC_Subscription($subscriptionId);
 	$subscription->update_status('active');
+	update_post_meta($subscriptionId, '_is_working_activation', false);
 });
 /*
  * Callback #1 function
@@ -46,9 +47,8 @@ function misha_dashboard_widget()
 	if (isset($_POST['activate_subscriptions'])) {
 		$subscriptionsIds = $_POST['subscriptions'];
 		foreach ($subscriptionsIds as $subscriptionId) {
-			$subscription = new WC_Subscription($subscriptionId);
-			$subscription->update_status('active');
-			//as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
+			update_post_meta($subscriptionId, '_is_working_activation', true);
+			as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
 		}
 
 	}
