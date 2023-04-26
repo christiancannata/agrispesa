@@ -1989,9 +1989,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "limit" => -1,
                 "orderby" => "date",
                 "order" => "ASC",
-                "meta_key" => "_created_date",
-                "meta_compare" => ">=",
-                "meta_value" => $lastWeek->format('Y-m-d'),
+                "meta_key" => "_date_completed",
+                "meta_compare" => ">",
+                "meta_value" => $lastWeek->getTimestamp(),
             ]);
             $items = 0;
 
@@ -2015,9 +2015,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
             foreach ($orders as $order) {
+
 				if($order->get_status() != 'completed'){
 					continue;
 				}
+
+				if($order->get_date_paid() < $lastWeek){
+					continue;
+				}
+
+
                 if (
                     $order->get_shipping_first_name() .
                         " " .
