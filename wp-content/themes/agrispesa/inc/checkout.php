@@ -931,10 +931,12 @@ add_filter('woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 
 add_filter( 'woocommerce_package_rates', 'free_first_order_shipping', 20, 2 );
 function free_first_order_shipping( $rates, $package ) {
     // New shipping cost (can be calculated)
-		$cart =WC()->cart;
+		$cart = WC()->cart;
     $tax_rate = 0;
 		$new_cost = 0;
 		$label = 'Gratuita';
+
+		//print_r($cart->recurring_carts);
 
     //If user is logged in
     if(is_user_logged_in()) {
@@ -974,7 +976,6 @@ function free_first_order_shipping( $rates, $package ) {
 
 			foreach( $rates as $rate_key => $rate ){
 
-
 					error_log(print_r($rate,true));
 					// Excluding free shipping methods
 					if( $rate->method_id != 'free_shipping'){
@@ -998,4 +999,17 @@ function free_first_order_shipping( $rates, $package ) {
 		}
 
     return $rates;
+}
+
+//Aggiungi Spedizione solo se è recurrent
+add_filter( 'woocommerce_subscriptions_is_recurring_fee', '__return_true' );
+add_filter( 'woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10, 1 );
+
+function add_recurring_postage_fees( $cart ) {
+
+    if ( !empty( $cart->recurring_cart_key ) ) {
+
+        $intervals = explode( '_', $cart->recurring_cart_key );
+        $cart->add_fee( 'Consegna', 5, false, '' );
+    }
 }

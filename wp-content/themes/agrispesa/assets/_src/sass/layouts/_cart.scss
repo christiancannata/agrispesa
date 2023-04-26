@@ -537,3 +537,8 @@ ul#shipping_method .shipping-mode-cart--label {
 .cart-no-shipping-available {
 	@include font-size(13);
 }
+
+.woocommerce-checkout-review-order-table .shipping.recurring-total,
+.cart_totals .shipping.recurring-total {
+	display: none;
+}
