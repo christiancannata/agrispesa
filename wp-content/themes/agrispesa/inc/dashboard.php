@@ -71,51 +71,64 @@ function misha_dashboard_widget()
 	}
 	?>
 	<form action="/wp-admin/index.php" method="POST">
-		<input type="hidden" name="activate_subscriptions" value="true">
-		<table class="table-subscription">
-			<thead>
-			<th style="width:80px" align="left"><input id="select_all" type="checkbox" style="margin: 0 8px 0 0;">
-				<label for="cb-select-all-1" style="font-size:16px;">
-					Seleziona tutti
-				</label></th>
-			<th style="width:300px" align="left">Utente</th>
-			<th style="width:100px" align="left">Credito</th>
-			<th style="width:300px" align="left">Abbonamento</th>
-			</thead>
-			<tbody>
-			<?php foreach ($enabledSubscription as $subscription): ?>
-				<tr>
-					<td class="check-column"><input type="checkbox" name="subscriptions[]"
-													value="<?php echo $subscription->get_id(); ?>"></td>
-					<td>
-						<?php
-						$user = $subscription->get_user();
-						echo $user->last_name . ' ' . $user->first_name;
-						?>
-					</td>
-					<td>
-						<?php
-						echo $subscription->wallet . '€';
-						?>
-					</td>
-					<td>
-						<?php
-						$products = $subscription->get_items();
-						$product = reset($products);
-						echo $product['name'];
-						?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
+	<input type="hidden" name="activate_subscriptions" value="true">
+	<table class="table-subscription">
+	<thead>
+	<th style="width:80px" align="left"><input id="select_all" type="checkbox" style="margin: 0 8px 0 0;">
+		<label for="cb-select-all-1" style="font-size:16px;">
+			Seleziona tutti
+		</label></th>
+	<th style="width:300px" align="left">Utente</th>
+	<th style="width:100px" align="left">Credito</th>
+	<th style="width:300px" align="left">Abbonamento</th>
+	</thead>
+	<tbody>
+	<?php foreach ($enabledSubscription as $subscription): ?>
+	<?php
+	$isWorkingActivation = get_post_meta($subscription->get_id(), '_is_working_activation', true);
+	if (!$isWorkingActivation) {
+		$isWorkingActivation = false;
+	}
+	?>
+	<tr>
+	<td class="check-column">
+	<?php if ($isWorkingActivation): ?>
+		<i>Abilitazione in corso...</i>
+		<?php ?>
+		<input type="checkbox" name="subscriptions[]"
+			   value="<?php echo $subscription->get_id(); ?>">
+
+
+		</td>
+		<td>
+			<?php
+			$user = $subscription->get_user();
+			echo $user->last_name . ' ' . $user->first_name;
+			?>
+		</td>
+		<td>
+			<?php
+			echo $subscription->wallet . '€';
+			?>
+		</td>
+		<td>
+			<?php
+			$products = $subscription->get_items();
+			$product = reset($products);
+			echo $product['name'];
+			?>
+		</td>
+		</tr>
+		<?php endforeach; ?>
+		</tbody>
 		</table>
 		<br><br>
 		<button type="submit" class="button-primary">Attiva Abbonamenti</button>
-	</form>
+		</form>
 
-	<?php
+		<?php
 
-}
+	}
 
 /*
  * Callback #2 function
