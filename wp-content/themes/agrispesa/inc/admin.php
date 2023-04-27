@@ -3950,7 +3950,7 @@ $order_statuses = array(
 					<h1 class="wp-heading-inline">
 						Scegli Tu in sospeso</h1>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "FACCIAMO NOI" ancora in sospeso come COMPLETATO.<br>
+					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "SCEGLI TU" ancora in sospeso come COMPLETATO.<br>
 					In questo modo saranno importati su Navision.</p>
 
 
