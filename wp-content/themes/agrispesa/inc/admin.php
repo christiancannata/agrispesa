@@ -3914,7 +3914,7 @@ function scegli_tu_page()
 
 	$pendingOrders = wc_get_orders( array(
     'limit'    => -1,
-    'status'   => ['pending','on-hold'],
+    'status'   => ['pending','on-hold','processing'],
     "meta_key" => "_order_type",
     "meta_value" => "ST",
     "meta_compare" => "="
