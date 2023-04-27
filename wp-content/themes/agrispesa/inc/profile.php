@@ -277,7 +277,7 @@ function invoice_box_content()
 					$date = get_post_meta($invoice, '_created_date', true);
 					$filename = get_post_meta($invoice, '_filename', true);
 					$type = 'FATTURA';
-					if (substr($filename, 0, 3) == 'VAB') {
+					if (substr($filename, 0, 3) != 'VAB') {
 						$type = 'PAGAMENTO';
 					}
 					?>
