@@ -282,13 +282,15 @@ if (woocommerce_product_loop()) {
 
 	echo '</div>';
 	echo '<div class="negozio-sidebar">';
-	echo '<ul class="negozio-sidebar--list">';
-
 	if ($special_category) {
+		echo '<ul class="negozio-sidebar--list navigate">';
 		echo '<li class="cat-item cat-extra-special">';
 		echo '<a href="'.$link.'">'.$special_name.'</a>';
 		echo '</li>';
+		echo '</ul>';
 	}
+
+	echo '<ul class="negozio-sidebar--list">';
 
 	$my_walker = new Walker_Category_Custom();
 
