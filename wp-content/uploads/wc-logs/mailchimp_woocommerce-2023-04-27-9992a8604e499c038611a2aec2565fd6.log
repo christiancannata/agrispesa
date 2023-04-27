@@ -57,3 +57,4 @@
 
 2023-04-27T18:20:43+00:00 NOTICE order.member.updated :: Updated christian@christiancannata.com subscriber status to transactional and language to it
 2023-04-27T18:20:43+00:00 NOTICE order_submit.success :: addStoreOrder :: #38492 :: email: christian@christiancannata.com :: landing site https://agrispesa.loc/wp-admin/admin.php?page=wc-settings&tab=shipping&zone_id=2
+2023-04-27T23:23:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38415
