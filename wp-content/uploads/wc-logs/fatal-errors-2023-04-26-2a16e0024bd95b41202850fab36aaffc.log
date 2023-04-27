@@ -64,3 +64,79 @@ Stack trace:
 
 2023-04-26T19:46:42+00:00 CRITICAL syntax error, unexpected 'if' (T_IF) in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 975
 
+2023-04-26T21:28:09+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:147
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommer in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 147
+
+2023-04-26T21:28:19+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:118
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocomme in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 118
+
+2023-04-26T21:28:42+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:118
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocomme in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 118
+
+2023-04-26T21:29:29+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:118
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocomme in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 118
+
+2023-04-26T21:30:11+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:147
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommer in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 147
+
+2023-04-26T21:30:13+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:118
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/Users/nathalie...')
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocomme in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 118
+
+2023-04-26T21:32:16+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:147
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommer in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 147
+
+2023-04-26T21:32:44+00:00 CRITICAL Uncaught Error: Call to a member function format() on string in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:147
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#6 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommer in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 147
+

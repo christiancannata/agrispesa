@@ -976,6 +976,10 @@ function add_recurring_postage_fees( $cart ) {
 			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
 				//$intervals = explode( '_', $cart->recurring_cart_key );
         $cart->add_fee( 'Consegna', 0, false, '' );
+
+				// $coupon_code = 'SCONTODENSO';
+				// WC()->cart->apply_coupon( $coupon_code );
+
 			} else {
 				//$intervals = explode( '_', $cart->recurring_cart_key );
         $cart->add_fee( 'Consegna', 5, false, '' );

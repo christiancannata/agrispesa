@@ -57,6 +57,8 @@ function shop_page_empty_layout()
 	echo '<div class="negozio-sidebar">';
 	echo '<ul class="negozio-sidebar--list">';
 
+
+
 	$my_walker = new Walker_Category_Custom();
 	$special_category = get_field('agr_special_category', 'option');
 	$excludeSpecial = '';
@@ -64,6 +66,11 @@ function shop_page_empty_layout()
 		$excludeSpecial = '';
 	} else {
 		$excludeSpecial = $specialiID;
+	}
+	if ($special_category) {
+		echo '<li class="cat-item cat-extra-special">';
+		echo '<a href="'.$link.'">'.$special_name.'</a>';
+		echo '</li>';
 	}
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
@@ -306,6 +313,7 @@ class Walker_Category_Custom extends Walker_Category
 			}
 			$css_classes = array(
 				'cat-item',
+				'cat-item-' . $category->slug,
 				'cat-item-' . $category->term_id,
 				$cat_empty
 			);
@@ -359,10 +367,10 @@ class Walker_Category_Custom extends Walker_Category
 		$output .= "</li>\n";
 
 
-		if ($category->count > 0 && category_has_children($category->term_id)) {
-
-			$output .= "<li class='cat-item view-all'><a href='" . get_term_link($category->term_id) . "' title='Tutto " . $category->name . "' class='view-all--link'>Tutto " . $category->name . "</a></li>";
-
+		if ($category->count > 0 && category_has_children($category->term_id) ) {
+			if($category->name !== "Speciali") {
+				$output .= "<li class='cat-item view-all'><a href='" . get_term_link($category->term_id) . "' title='Tutto " . $category->name . "' class='view-all--link'>Tutto " . $category->name . "</a></li>";
+			}
 		}
 
 	}
