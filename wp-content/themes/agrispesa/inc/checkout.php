@@ -895,96 +895,98 @@ function codiceFiscale($cf)
 }
 
 
-
 //Sconto primo ordine
-add_filter( 'woocommerce_package_rates', 'free_first_order_shipping', 20, 2 );
-function free_first_order_shipping( $rates, $package ) {
-    // New shipping cost (can be calculated)
-		$cart = WC()->cart;
-		$has_free_shipping = false;
+add_filter('woocommerce_package_rates', 'free_first_order_shipping', 20, 2);
+function free_first_order_shipping($rates, $package)
+{
+	// New shipping cost (can be calculated)
+	$cart = WC()->cart;
+	$has_free_shipping = false;
 
-    $tax_rate = 0;
-		$new_cost = 0;
-		$label = 'Gratuita';
+	$tax_rate = 0;
+	$new_cost = 0;
+	$label = 'Gratuita';
 
-		$loggedUser = is_user_logged_in();
+	$loggedUser = is_user_logged_in();
+	$orders = [];
 
-		$has_sub = '';
-		if ($loggedUser) {
-			$current_user = wp_get_current_user();
-			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+	$has_sub = '';
+	if ($loggedUser) {
+		$current_user = wp_get_current_user();
+		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 
-			$user_id = get_current_user_id();
-			$args = array(
-					'customer_id' => 1,
-					'status' => array('wc-completed'),
-			);
-			$orders = wc_get_orders($args);
+		$user_id = get_current_user_id();
+		$args = array(
+			'customer_id' => $user_id,
+			'status' => array('wc-completed'),
+		);
+		$orders = wc_get_orders($args);
+	}
+	$buying_sub = false;
+	$box_product_id = 50;
+	if (in_array($box_product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
+		$buying_sub = true;
+	}
+
+	if (!$loggedUser) {
+		$has_free_shipping = true;
+	} else if ($loggedUser && $has_sub && $buying_sub == false) {
+		$has_free_shipping = true;
+	} else if ($loggedUser && empty($orders)) {
+		$has_free_shipping = true;
+	} else if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+		$has_free_shipping = true;
+	}
+
+
+	if ($has_free_shipping) {
+
+		foreach ($rates as $rate_key => $rate) {
+
+			error_log(print_r($rate, true));
+			// Excluding free shipping methods
+			if ($rate->method_id != 'free_shipping') {
+
+				// Set rate cost
+				$rates[$rate_key]->cost = $new_cost;
+				//Set shipping label
+				$rates[$rate_key]->label = $label;
+
+				// Set taxes rate cost (if enabled)
+				$taxes = array();
+				foreach ($rates[$rate_key]->taxes as $key => $tax) {
+					if ($rates[$rate_key]->taxes[$key] > 0)
+						$taxes[$key] = $new_cost * $tax_rate;
+				}
+				$rates[$rate_key]->taxes = $taxes;
+
+			}
 		}
-		$buying_sub = false;
-		$box_product_id = 50;
-		if( in_array( $box_product_id, array_column( WC()->cart->get_cart(), 'product_id' ) ) ) {
-			$buying_sub = true;
-		}
 
-		if(!$loggedUser) {
-			$has_free_shipping = true;
-		} else if($loggedUser && $has_sub && $buying_sub == false) {
-			$has_free_shipping = true;
-		} else if($loggedUser && !$orders) {
-			$has_free_shipping = true;
-		} else if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
-			$has_free_shipping = true;
-		}
-
-
-    if($has_free_shipping) {
-
-            foreach( $rates as $rate_key => $rate ){
-
-                error_log(print_r($rate,true));
-                // Excluding free shipping methods
-                if( $rate->method_id != 'free_shipping'){
-
-                    // Set rate cost
-                    $rates[$rate_key]->cost = $new_cost;
-                    //Set shipping label
-                    $rates[$rate_key]->label = $label;
-
-                    // Set taxes rate cost (if enabled)
-                    $taxes = array();
-                    foreach ($rates[$rate_key]->taxes as $key => $tax){
-                        if( $rates[$rate_key]->taxes[$key] > 0 )
-                            $taxes[$key] = $new_cost * $tax_rate;
-                    }
-                    $rates[$rate_key]->taxes = $taxes;
-
-                }
-            }
-
-    }
-    return $rates;
+	}
+	return $rates;
 }
 
 //Aggiungi Spedizione solo se è recurrent
-add_filter( 'woocommerce_subscriptions_is_recurring_fee', '__return_true' );
-add_filter( 'woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10, 1 );
+add_filter('woocommerce_subscriptions_is_recurring_fee', '__return_true');
+add_filter('woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10, 1);
 
-function add_recurring_postage_fees( $cart ) {
+function add_recurring_postage_fees($cart)
+{
 
-    if ( !empty( $cart->recurring_cart_key ) ) {
-			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
-				//$intervals = explode( '_', $cart->recurring_cart_key );
-        $cart->add_fee( 'Consegna', 0, false, '' );
+	if (!empty($cart->recurring_cart_key)) {
+		if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
+			//$intervals = explode( '_', $cart->recurring_cart_key );
+			$cart->add_fee('Consegna', 0, false, '');
 
-				// $coupon_code = 'SCONTODENSO';
-				// WC()->cart->apply_coupon( $coupon_code );
+			// $coupon_code = 'SCONTODENSO';
+			// WC()->cart->apply_coupon( $coupon_code );
 
-			} else {
-				//$intervals = explode( '_', $cart->recurring_cart_key );
-        $cart->add_fee( 'Consegna', 5, false, '' );
-			}
+		} else {
+			//$intervals = explode( '_', $cart->recurring_cart_key );
+			$cart->add_fee('Consegna', 5, false, '');
+		}
 
 
-    }
+	}
 }

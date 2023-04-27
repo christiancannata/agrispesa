@@ -3590,6 +3590,7 @@ function create_order_from_subscription($id)
         return false;
     }
 
+
 	//check products status
 	$week = get_post_meta($box->ID, "_week", true);
 
@@ -3689,6 +3690,31 @@ function create_order_from_subscription($id)
 		$item->set_name($item->get_name() . ' - Settimana ' . $week);
 		$item->save();
 		}*/
+
+
+/*
+if(!in_array($subscription->get_shipping_state(),['CN','AT'])){
+
+	// Set the array for tax calculations
+	$calculate_tax_for = array(
+    'country' => '',
+    'state' => $subscription->get_shipping_state(), // Can be set (optional)
+    'postcode' => '', // Can be set (optional)
+    'city' => '', // Can be set (optional)
+	);
+
+
+	$item = new WC_Order_Item_Shipping();
+
+	$item->set_method_title( "Consegna" );
+	$item->set_method_id( "flat_rate:1" ); // set an existing Shipping method rate ID
+	$item->set_total( 5 ); // (optional)
+	$item->calculate_taxes($calculate_tax_for);
+
+	$order->add_item( $item );
+}*/
+
+
     $order->calculate_totals();
     $order->update_status("completed", "Ordine generato in automatico", true);
     update_post_meta($order->get_id(), "_total_box_weight", $weight);
@@ -3734,7 +3760,6 @@ function create_order_from_subscription($id)
     }
 
 	//spedizione gratuita per primi ordini oppure asti cuneo
-
 
     //get all orders of same user
     /*$args = array(
@@ -4077,7 +4102,8 @@ function my_custom_submenu_page_callback()
     if (isset($_POST["generate_orders"])) {
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-			as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+			create_order_from_subscription($subscriptionId);
+			//as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
 			update_post_meta($subscriptionId, '_is_order_creating', true);
         }
 
@@ -4128,14 +4154,6 @@ function my_custom_submenu_page_callback()
 						<input type="hidden" name="generate_orders" value="1">
 						<div class="tablenav top">
 
-							<div class="alignleft actions bulkactions">
-								<label for="bulk-action-selector-top" class="screen-reader-text">Seleziona l'azione di
-									gruppo</label><select name="action" id="bulk-action-selector-top">
-									<option value="-1">Azioni di gruppo</option>
-									<option value="unapprove">Genera ordini</option>
-								</select>
-								<input type="submit" id="doaction" class="button action" value="Applica">
-							</div>
 
 							<div class="tablenav-pages one-page">
 								<span class="displaying-num">Abbonamenti attivi</span>
@@ -4472,7 +4490,12 @@ function custom_orders_list_column_content($column, $post_id)
         case "my-column1":
             // Get custom post meta data
             $orderType = get_post_meta($post_id, "_order_type", true);
-            $order = wc_get_order($post_id);
+
+			if($orderType){
+				return $orderType;
+			}
+
+            /*$order = wc_get_order($post_id);
             $box_in_order = false;
             $not_a_box = false;
             $items = $order->get_items();
@@ -4493,7 +4516,7 @@ function custom_orders_list_column_content($column, $post_id)
                 echo "ST";
             } else {
                 echo "FN + ST";
-            }
+            }*/
             break;
         case "my-column2":
             // Get custom post meta data

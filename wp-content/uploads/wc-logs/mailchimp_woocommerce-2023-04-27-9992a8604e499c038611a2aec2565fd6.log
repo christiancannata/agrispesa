@@ -1,0 +1,2 @@
+2023-04-27T17:34:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38434
+2023-04-27T17:36:54+00:00 NOTICE order_process :: Order #38434 skipped, user #1 user role is not in the list

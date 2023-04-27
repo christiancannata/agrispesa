@@ -29,12 +29,20 @@ get_header('shop');
 do_action('woocommerce_before_main_content');
 
 $description = get_the_archive_description();
+$specialiID = null;
+$negozioID = null;
 
 $current_cat = get_queried_object();
 $getIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
-$negozioID = $getIDbyNAME->term_id;
+if ($getIDbyNAME) {
+	$negozioID = $getIDbyNAME->term_id;
+}
+
 $getSpeciali = get_term_by('name', 'speciali', 'product_cat');
-$specialiID = $getSpeciali->term_id;
+if ($getSpeciali) {
+	$specialiID = $getSpeciali->term_id;
+
+}
 
 ?>
 	<header class="woocommerce-products-header">
@@ -151,7 +159,7 @@ if (woocommerce_product_loop()) {
 	$term_id = $term->term_id;
 	$parent_id = empty($term->term_id) ? 0 : $term->term_id;
 
-	if($negozioID == $term_id) {
+	if ($negozioID == $term_id) {
 		$orderby = 'meta_value';
 		$meta_key = 'categories_order_agr';
 	} else {
@@ -171,10 +179,9 @@ if (woocommerce_product_loop()) {
 	);
 
 
-
 	if (empty($loop_categories)) {
 		echo '<div class="products-list--header">';
-		if( $term->name == "Speciali") {
+		if ($term->name == "Speciali") {
 			echo '<h3 class="products-list--title">' . $special_name . '</h3>';
 		} else {
 			echo '<h3 class="products-list--title">' . $term->name . '</h3>';
@@ -192,7 +199,6 @@ if (woocommerce_product_loop()) {
 				 * @hooked WC_Structured_Data::generate_product_data() - 10
 				 */
 				do_action('woocommerce_shop_loop');
-
 
 
 				wc_get_template_part('content', 'product');
@@ -221,12 +227,12 @@ if (woocommerce_product_loop()) {
 				'orderby' => 'menu_order',
 				'order' => 'asc',
 				'post_status' => 'publish',
-				'meta_query'     => array(
+				'meta_query' => array(
 					array(
-            'key'        => '_is_active_shop',
+						'key' => '_is_active_shop',
 						'value' => '1',
-			      'compare' => '=='
-	        )
+						'compare' => '=='
+					)
 				),
 			);
 			$cat_query = new WP_Query($args);
@@ -238,7 +244,7 @@ if (woocommerce_product_loop()) {
 
 			if ($posts_per_cat != 0) {
 				echo '<div class="products-list--header">';
-				if($loop_category->name === "Speciali") {
+				if ($loop_category->name === "Speciali") {
 					echo '<h3 class="products-list--title">' . $special_name . '</h3>';
 				} else {
 					echo '<h3 class="products-list--title">' . $loop_category->name . '</h3>';
@@ -260,17 +266,17 @@ if (woocommerce_product_loop()) {
 
 				echo '<div class="products-list--footer">';
 
-				if($posts_per_cat == 1) {
+				if ($posts_per_cat == 1) {
 					$labelprodotti = ' prodotto';
 				} else {
 					$labelprodotti = ' prodotti';
 				}
 
-				if($posts_per_cat > 5) {
-					echo '<span>5 di ' . $posts_per_cat . $labelprodotti .'</span>';
-					echo '<a href="'.get_term_link($loop_category->term_id).'" title="Visualizza tutto '.$loop_category->name.'" class="arrow-link">Vedi tutto <span class="icon-arrow-right"></span></a>';
+				if ($posts_per_cat > 5) {
+					echo '<span>5 di ' . $posts_per_cat . $labelprodotti . '</span>';
+					echo '<a href="' . get_term_link($loop_category->term_id) . '" title="Visualizza tutto ' . $loop_category->name . '" class="arrow-link">Vedi tutto <span class="icon-arrow-right"></span></a>';
 				} else {
-					echo '<span>' . $posts_per_cat . $labelprodotti .'</span>';
+					echo '<span>' . $posts_per_cat . $labelprodotti . '</span>';
 				}
 
 
@@ -295,7 +301,7 @@ if (woocommerce_product_loop()) {
 	if ($special_category) {
 		echo '<ul class="negozio-sidebar--list">';
 		echo '<li class="cat-item cat-extra-special">';
-		echo '<a href="'.$link.'">'.$special_name.'</a>';
+		echo '<a href="' . $link . '">' . $special_name . '</a>';
 		echo '</li>';
 		echo '</ul>';
 	}
@@ -312,22 +318,22 @@ if (woocommerce_product_loop()) {
 	}
 
 	$sidebar = array(
-		'taxonomy'     => 'product_cat',
+		'taxonomy' => 'product_cat',
 		// 'orderby'  => 'name',
-		'orderby'  => 'meta_value',
+		'orderby' => 'meta_value',
 		'meta_key' => 'categories_order_agr',
-		'order'      => 'ASC',
-		'show_count'   => 0,
+		'order' => 'ASC',
+		'show_count' => 0,
 		'hierarchical' => 1,
-		'hide_empty'   => 1,
-		'title_li'     => '',
+		'hide_empty' => 1,
+		'title_li' => '',
 		'walker' => $my_walker,
 		'exclude' => $excludeSpecial,
 		'child_of' => $negozioID,
-		);
-		wp_list_categories($sidebar);
+	);
+	wp_list_categories($sidebar);
 
-		echo '</ul>';
+	echo '</ul>';
 	echo '</div>';
 } else {
 	/**
