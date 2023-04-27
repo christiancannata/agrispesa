@@ -1736,9 +1736,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele1);
                 $ele2 = $doc->createElement("business_name");
                 $ele2->nodeValue =
-                    $order->get_billing_first_name().
+                    ucwords(strtolower($order->get_billing_first_name().
                     " " .
-                    $order->get_billing_last_name() ;
+                    $order->get_billing_last_name())) ;
                 $row->appendChild($ele2);
 
 				$taxCode = get_post_meta(
@@ -2286,9 +2286,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_name");
                         $ele1->nodeValue =
-                    		$order->get_shipping_last_name() .
+                    		ucwords(strtolower($order->get_shipping_last_name() .
                             " " .
-                            $order->get_shipping_first_name();
+                            $order->get_shipping_first_name()));
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_address");
                         $ele1->nodeValue = $order->get_shipping_address_1();
@@ -2365,7 +2365,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("sh_name");
-					$ele1->nodeValue = $order->get_shipping_first_name() . " " . $order->get_shipping_last_name();
+					$ele1->nodeValue = ucwords(strtolower($order->get_shipping_first_name() . " " . $order->get_shipping_last_name()));
 					$row->appendChild($ele1);
 					$ele1 = $doc->createElement("sh_address");
 					$ele1->nodeValue = $order->get_shipping_address_1();
