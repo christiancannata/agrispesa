@@ -3609,7 +3609,7 @@ function create_order_from_subscription($id)
 	 foreach ($productsToAdd as $productToAdd) {
 		  $productObj = wc_get_product($productToAdd["id"]);
 
-        if (!$productObjToAdd) {
+        if (!$productObj) {
 			die("Prodotto ".$productsToAdd['name'].' con ID #'.$productsToAdd['id'].' non trovato!');
             continue;
         }
@@ -3925,7 +3925,8 @@ function scegli_tu_page()
     if (isset($_POST["complete_orders"])) {
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-			as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+			//as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+			create_order_from_subscription($subscriptionId);
 			update_post_meta($subscriptionId, '_is_order_creating', true);
         }
 
