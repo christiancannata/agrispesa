@@ -2343,7 +2343,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					$shipping_method_total = $item->get_total();
 				}
 
-				if($shipping_method_total > 0){
+				if($shipping_method_total > 0 && !in_array($order->get_shipping_state(),['CN','AT'])){
 					//add shipping
 					$row = $doc->createElement("ROW");
 					$ele1 = $doc->createElement("id_order");
