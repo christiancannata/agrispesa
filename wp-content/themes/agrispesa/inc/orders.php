@@ -21,7 +21,7 @@ add_filter('woocommerce_stock_amount', 'floatval');
 
 
 // Add custom column headers here
-add_action('woocommerce_admin_order_item_headers', 'my_woocommerce_admin_order_item_headers');
+//add_action('woocommerce_admin_order_item_headers', 'my_woocommerce_admin_order_item_headers');
 function my_woocommerce_admin_order_item_headers() {
     echo '<th style="width:80px;" class="item_weight sortable">Peso</th>';
     echo '<th style="width:120px;" class="item_producer sortable" data-sort="string-ins">Produttore</th>';
@@ -30,7 +30,7 @@ function my_woocommerce_admin_order_item_headers() {
 }
 
 // Add custom column values here
-add_action('woocommerce_admin_order_item_values', 'my_woocommerce_admin_order_item_values', 10, 3);
+//add_action('woocommerce_admin_order_item_values', 'my_woocommerce_admin_order_item_values', 10, 3);
 function my_woocommerce_admin_order_item_values($_product, $item, $item_id = null) {
   // Only for "line_item" items type, to avoid errors
     if( ! $item->is_type('line_item') ) return;
