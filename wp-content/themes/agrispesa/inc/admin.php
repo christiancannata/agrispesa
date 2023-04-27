@@ -4068,18 +4068,26 @@ add_action("create_order_subscription", function ($subscriptionId) {
     update_post_meta($subscriptionId, "_is_order_creating", false);
 });
 
+add_action("activate_order", function ($orderId) {
+    $order = wc_get_order($orderId);
+	$order->update_status("completed", "Ordine completato da admin", true);
+    update_post_meta($orderId, "_is_order_updating", false);
+});
+
 function scegli_tu_page()
 {
     if (isset($_POST["complete_orders"])) {
 
-        $subscriptionIds = $_POST["subscriptions"];
-        foreach ($subscriptionIds as $subscriptionId) {
-            as_enqueue_async_action("create_order_subscription", [
-                "subscriptionId" => $subscriptionId,
+        $orderIds = $_POST["orders"];
+        foreach ($orderIds as $orderId) {
+            update_post_meta($orderId, "_is_order_updating", true);
+            as_enqueue_async_action("activate_order", [
+                "orderId" => $orderId,
             ]);
-            update_post_meta($subscriptionId, "_is_order_creating", true);
         }
         ?>
+
+        <h3>Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h3>
 		<br>
 		<?php
     }
@@ -4169,9 +4177,19 @@ function scegli_tu_page()
 
 							<tbody>
 <?php foreach ($pendingOrders as $order): ?>
+<?php
+ $isUpdating = get_post_meta($order->get_id(),'_is_order_updating',true);
+ ?>
 <tr>
 <td>
-<input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>">
+<input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>"><br>
+<?php
+if($isUpdating == true):
+?>
+<i>Sto completando...</i>
+<?php
+endif;
+?>
 </td>
 <td>
  <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank"><?php echo $order->get_shipping_last_name() .
