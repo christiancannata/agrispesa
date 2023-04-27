@@ -4087,7 +4087,7 @@ function scegli_tu_page()
         }
         ?>
 
-        <h4 style="color:white;background:red;padding:15px;display:block">Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h4>
+        <h4 style="color:white;background:darkgreen;padding:15px;display:block">Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h4>
 		<br>
 		<?php
     }
@@ -4256,7 +4256,7 @@ function my_custom_submenu_page_callback()
         }
         ?>
 		<br>
-		<h4 style="color:white;background:red;padding:15px;display:block">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
+		<h4 style="color:white;background:darkgreen;padding:15px;display:block">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
 		<?php
     }
     if (isset($_GET["generate_fabbisogno"])) {

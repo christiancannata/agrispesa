@@ -19,3 +19,11 @@ Stack trace:
 #5 {main}
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 3838
 
+2023-04-27T23:27:23+00:00 CRITICAL Uncaught InvalidArgumentException: Unidentified action 227519 in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:1001
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Abstract_QueueRunner.php(70): ActionScheduler_DBStore->mark_failure(227519)
+#1 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php(166): ActionScheduler_Abstract_QueueRunner->process_action(227519, 'WP Cron')
+#2 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php(136): ActionScheduler_QueueRunner->do_batch(25, 'WP Cron')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): ActionScheduler_QueueRunner->run('WP Cron')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_ in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php alla riga 1001
+

@@ -60,3 +60,15 @@
 2023-04-27T23:23:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38415
 2023-04-27T23:26:16+00:00 NOTICE order.member.updated :: Updated labennymo@gmail.com subscriber status to subscribed and language to 
 2023-04-27T23:26:16+00:00 NOTICE order_submit.success :: addStoreOrder :: #38415 :: email: labennymo@gmail.com :: landing site https://www.agrispesa.it/bacheca/recupera-password/?show-reset-form=true&action :: abandoned cart deleted [913806a9ac1a2e65599b0a8324e34464]
+2023-04-27T23:26:54+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 35299
+2023-04-27T23:27:22+00:00 NOTICE debug :: Order ID 35299 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://www.agrispesa.it/wp-admin/post.php?post=35299&action=edit&message=1
+        )
+
+)
+
