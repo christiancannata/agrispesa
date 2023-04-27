@@ -3950,10 +3950,8 @@ $order_statuses = array(
 					<h1 class="wp-heading-inline">
 						Scegli Tu in sospeso</h1>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
-						per gli abbonamenti delle "Facciamo noi" attivi, in base
-						alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
-						prodotti che preferisci. Seleziona gli ordini che vuoi generare.</p>
+					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "FACCIAMO NOI" ancora in sospeso come COMPLETATO.<br>
+					In questo modo saranno importati su Navision.</p>
 
 
 					<hr class="wp-header-end">
