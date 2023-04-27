@@ -276,9 +276,9 @@ function invoice_box_content()
 					$navisionId = get_post_meta($invoice, '_navision_id', true);
 					$date = get_post_meta($invoice, '_created_date', true);
 					$filename = get_post_meta($invoice, '_filename', true);
-					$type = 'FATTURA';
-					if (substr($filename, 0, 3) != 'VAB') {
-						$type = 'PAGAMENTO';
+					$type = 'PAGAMENTO';
+					if (substr($filename, 0, 3) == 'VAB') {
+						$type = 'FATTURA';
 					}
 					?>
 
