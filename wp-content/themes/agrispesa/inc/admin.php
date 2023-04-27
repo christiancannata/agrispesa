@@ -4030,8 +4030,12 @@ foreach($pendingOrders as $order):
 							</tbody>
 						</table>
 						<br><br>
+						<select name="status">
+						<option value="completed">Aggiorna a COMPLETATO</option>
+						<!--<option value="trash">Sposta nel cestino</option>-->
+						</select>
 
-						<button type="submit" class="button-primary">Completa Ordini</button>
+						<button type="submit" class="button-primary">Aggiorna Ordini</button>
 					</form>
 
 					<br/>
