@@ -3548,36 +3548,31 @@ function generate_fabbisogno()
     }
 }
 
-add_filter(
-    "woocommerce_email_recipient_customer_on_hold_order",
-    "bbloomer_disable_customer_emails_if_disabled",
-    9999,
-    2
-);
-add_filter(
-    "woocommerce_email_recipient_customer_processing_order",
-    "bbloomer_disable_customer_emails_if_disabled",
-    9999,
-    2
-);
-add_filter(
-    "woocommerce_email_recipient_customer_completed_order",
-    "bbloomer_disable_customer_emails_if_disabled",
-    9999,
-    2
-);
+add_filter( 'woocommerce_email_enabled_new_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_cancelled_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_completed_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_invoice', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_note', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_on_hold_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_processing_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_customer_refunded_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter( 'woocommerce_email_enabled_failed_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
 
-function bbloomer_disable_customer_emails_if_disabled($recipient, $order)
-{
-    $page = $_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : "";
-    if ("wc-settings" === $page) {
-        return $recipient;
+
+function dcwd_conditionally_send_wc_email( $whether_enabled, $object ) {
+	if ( null == $object ) {
+        return $whether_enabled;
     }
-    if (get_post_meta($order->get_id(), "_disable_order_emails", true)) {
-        $recipient = "";
-    }
-    return $recipient;
+
+	//disable if is subscription order
+	$isSubscriptionOrder = get_post_meta($object->get_id(),'_disable_order_emails',true);
+	if($isSubscriptionOrder){
+		return false;
+	}
+
+	return $whether_enabled;
 }
+
 
 function create_order_from_subscription($id)
 {
