@@ -943,7 +943,6 @@ function free_first_order_shipping($rates, $package)
 
 		foreach ($rates as $rate_key => $rate) {
 
-			error_log(print_r($rate, true));
 			// Excluding free shipping methods
 			if ($rate->method_id != 'free_shipping') {
 
