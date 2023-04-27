@@ -55,10 +55,6 @@ function shop_page_empty_layout()
 	}
 	echo '</div>';
 	echo '<div class="negozio-sidebar">';
-	echo '<ul class="negozio-sidebar--list">';
-
-
-
 	$my_walker = new Walker_Category_Custom();
 	$special_category = get_field('agr_special_category', 'option');
 	$excludeSpecial = '';
@@ -68,12 +64,13 @@ function shop_page_empty_layout()
 		$excludeSpecial = $specialiID;
 	}
 	if ($special_category) {
-		echo '<ul class="negozio-sidebar--list navigate">';
+		echo '<ul class="negozio-sidebar--list">';
 		echo '<li class="cat-item cat-extra-special">';
 		echo '<a href="'.$link.'">'.$special_name.'</a>';
 		echo '</li>';
 		echo '</ul>';
 	}
+	echo '<ul class="negozio-sidebar--list navigate">';
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
 		'orderby' => 'meta_value',
