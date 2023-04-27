@@ -9,7 +9,7 @@ add_action("reload_terms_count", function ($productId) {
 });
 
 // define woocommerce_order_status_completed callback function
-function call_order_status_completed($orderId)
+function call_order_status_changed($orderId)
 {
     $order = wc_get_order($orderId);
 
@@ -36,8 +36,8 @@ function call_order_status_completed($orderId)
 
 // Call our custom function with the action hook
 add_action(
-    "woocommerce_order_status_completed",
-    "call_order_status_completed",
+    "woocommerce_order_status_changed",
+    "call_order_status_changed",
     10,
     1
 );
@@ -4007,7 +4007,7 @@ foreach($pendingOrders as $order):
 <input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>">
 </td>
 <td>
-<?php echo $order->get_shipping_last_name().' ' .$order->get_shipping_first_name(); ?>
+ <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank"><?php echo $order->get_shipping_last_name().' ' .$order->get_shipping_first_name(); ?></a>
 </td>
 <td>
 <div style="height: 80px; width:200px;overflow: scroll">
