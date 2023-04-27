@@ -37,6 +37,14 @@ add_action(
     1
 );
 
+add_action(
+    "woocommerce_order_status_pending",
+    "call_order_status_changed",
+    10,
+    1
+);
+
+
 function merge_orders($subscriptionOrder, $orders)
 {
     foreach ($orders as $order) {
@@ -4605,6 +4613,7 @@ function custom_shop_order_column($columns)
 }
 // Adding custom fields meta data for each new column (example)
 //add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
+/*
 function custom_orders_list_column_content($column, $post_id)
 {
     switch ($column) {
@@ -4637,7 +4646,7 @@ function custom_orders_list_column_content($column, $post_id)
                 echo "ST";
             } else {
                 echo "FN + ST";
-            }*/
+            }
             break;
         case "my-column2":
             // Get custom post meta data
@@ -4677,6 +4686,7 @@ function custom_orders_list_column_content($column, $post_id)
             break;
     }
 }
+*/
 // Add a custom column
 add_filter("manage_edit-shop_order_columns", "add_custom_shop_order_column");
 function add_custom_shop_order_column($columns)
@@ -4688,7 +4698,7 @@ function add_custom_shop_order_column($columns)
 
     // add custom column
     $columns["type_shopping"] = __("Spesa", "woocommerce");
-    $columns["type_notes"] = __("Note", "woocommerce");
+    //$columns["type_notes"] = __("Note", "woocommerce");
     // Insert back 'order_actions' column
     if (isset($columns["order_actions"])) {
         $columns["order_actions"] = $order_actions;
@@ -4702,11 +4712,13 @@ add_action(
 );
 function shop_order_column_meta_field_value($column)
 {
-    global $post, $the_order;
-    if (!is_a($the_order, "WC_Order")) {
+    global $post;
+	global $wpdb;
+
+  /*  if (!is_a($the_order, "WC_Order")) {
         $the_order = wc_get_order($post->ID);
-    }
-    if ($column == "type_notes") {
+    }*/
+    /*if ($column == "type_notes") {
         $order = wc_get_order($the_order);
         $items = $order->get_items();
         $i = 1;
@@ -4730,8 +4742,36 @@ function shop_order_column_meta_field_value($column)
             }
             $i++;
         }
-    }
+    }*/
     if ($column == "type_shopping") {
+
+		 $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
+		if($orderRenewal){
+				echo '<a href="/wp-admin/post.php?post='.$orderRenewal.'&action=edit" target="_blank">RINNOVO FN</a>';
+		}else{
+
+       $isParent = $wpdb->get_results(
+           "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = ".$post->ID,
+           ARRAY_A
+       );
+
+
+			if(!empty($isParent)){
+				echo '<a href="/wp-admin/post.php?post='.$isParent[0]['ID'].'&action=edit" target="_blank">ABBONAMENTO FN</a>';
+			}else{
+
+		  $orderType = get_post_meta($post->ID, "_order_type", true);
+            if ($orderType) {
+                echo $orderType;
+            }
+			}
+
+		}
+
+
+
+
+			/*
         $order = wc_get_order($the_order);
         $box_in_order = false;
         $not_a_box = false;
@@ -4753,7 +4793,7 @@ function shop_order_column_meta_field_value($column)
             echo "ST";
         } else {
             echo "FN + ST";
-        }
+        }*/
     }
 }
 // Make custom column sortable
