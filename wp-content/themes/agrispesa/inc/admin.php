@@ -4595,116 +4595,26 @@ function my_custom_submenu_page_callback()
 		<?php
 }
 add_action("admin_menu", "register_my_custom_submenu_page", 99);
-//add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
+add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
 function custom_shop_order_column($columns)
 {
     $reordered_columns = [];
+
     // Inserting columns to a specific location
     foreach ($columns as $key => $column) {
         $reordered_columns[$key] = $column;
         if ($key == "order_status") {
-            // Inserting after "Status" column
-            $reordered_columns["my-column1"] = "Spesa";
-            // $reordered_columns['my-column2'] = 'Data Consegna';
-            // $reordered_columns['my-column3'] = 'Preferenze';
+            $reordered_columns["type_shopping"] = "Spesa";
         }
     }
-    return $reordered_columns;
-}
-// Adding custom fields meta data for each new column (example)
-//add_action('manage_shop_order_posts_custom_column', 'custom_orders_list_column_content', 20, 2);
-/*
-function custom_orders_list_column_content($column, $post_id)
-{
-    switch ($column) {
-        case "my-column1":
-            // Get custom post meta data
-            $orderType = get_post_meta($post_id, "_order_type", true);
+	unset($reordered_columns['export_status']);
+	unset($reordered_columns['subscription_relationship']);
+	$columns = $reordered_columns;
 
-            if ($orderType) {
-                return $orderType;
-            }
-
-            /*$order = wc_get_order($post_id);
-            $box_in_order = false;
-            $not_a_box = false;
-            $items = $order->get_items();
-            foreach ($items as $item) {
-                $product_id = $item->get_product_id();
-                if (has_term("box", "product_cat", $product_id)) {
-                    $box_in_order = true;
-                    break;
-                }
-                if (!has_term("box", "product_cat", $product_id)) {
-                    $not_a_box = true;
-                    break;
-                }
-            }
-            if ($box_in_order == true && $not_a_box == false) {
-                echo "FN";
-            } elseif ($box_in_order == false && $not_a_box == true) {
-                echo "ST";
-            } else {
-                echo "FN + ST";
-            }
-            break;
-        case "my-column2":
-            // Get custom post meta data
-            $dataConsegna = get_post_meta($post_id, "_data_consegna", true);
-            if ($dataConsegna === "Nessuna data di consegna") {
-                echo "-";
-            } else {
-                $fixshippingdate = new DateTime($dataConsegna);
-                echo $fixshippingdate->format("d/m/Y");
-            }
-            break;
-        case "my-column3":
-            // Get custom post meta data
-            $orderType = get_post_meta($post_id, "_order_type", true);
-            $order = wc_get_order($post_id);
-            $box_in_order = false;
-            $items = $order->get_items();
-            foreach ($items as $item) {
-                $product_id = $item->get_product_id();
-                if (has_term("box", "product_cat", $product_id)) {
-                    $box_in_order = true;
-                    break;
-                }
-            }
-            if ($box_in_order) {
-                $boxPreferences = get_post_meta(
-                    $post_id,
-                    "_box_preferences",
-                    true
-                );
-                if (!empty($boxPreferences)) {
-                    echo "✅";
-                } else {
-                    echo "-";
-                }
-            }
-            break;
-    }
+	return $columns;
+    //return $reordered_columns;
 }
-*/
-// Add a custom column
-add_filter("manage_edit-shop_order_columns", "add_custom_shop_order_column");
-function add_custom_shop_order_column($columns)
-{
-    if (isset($columns["order_actions"])) {
-        $order_actions = $columns["order_actions"];
-        unset($columns["order_actions"]);
-    }
 
-    // add custom column
-    $columns["type_shopping"] = __("Spesa", "woocommerce");
-    //$columns["type_notes"] = __("Note", "woocommerce");
-    // Insert back 'order_actions' column
-    if (isset($columns["order_actions"])) {
-        $columns["order_actions"] = $order_actions;
-    }
-    return $columns;
-}
 // Custom column content
 add_action(
     "manage_shop_order_posts_custom_column",
@@ -4715,34 +4625,14 @@ function shop_order_column_meta_field_value($column)
     global $post;
 	global $wpdb;
 
-  /*  if (!is_a($the_order, "WC_Order")) {
-        $the_order = wc_get_order($post->ID);
-    }*/
-    /*if ($column == "type_notes") {
-        $order = wc_get_order($the_order);
-        $items = $order->get_items();
-        $i = 1;
-        foreach ($items as $item) {
-            $meta_data = $item->get_formatted_meta_data();
-            $meta_value = $item->get_meta("note");
-            if (
-                $meta_value == "ST" ||
-                $meta_value == "SF" ||
-                $meta_value == "SC"
-            ) {
-                if ($i == 1) {
-                    echo '<span style="line-height:1.2;display:block;">' .
-                        $meta_value .
-                        "</span>";
-                } else {
-                    echo '<span style="line-height:1.2;display:block;border-top: 1px solid #999;margin-top:5px;padding-top:5px;">' .
-                        $meta_value .
-                        "</span>";
-                }
-            }
-            $i++;
-        }
-    }*/
+  	if($column == 'export_status'){
+		  echo '';
+  	}
+
+	 if($column == 'subscription_relationship'){
+		  echo '';
+  	}
+
     if ($column == "type_shopping") {
 
 		 $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
