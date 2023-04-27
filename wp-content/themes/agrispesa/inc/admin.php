@@ -2021,7 +2021,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					continue;
 				}
 
-				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P5D"));
+				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P7D"));
 				if($order->get_date_paid() < $checkPaidDate){
 					continue;
 				}
