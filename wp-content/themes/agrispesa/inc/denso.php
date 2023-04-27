@@ -40,6 +40,7 @@ function custom_checkout_billing_city_field($shipping_fields)
 		$shipping_fields['shipping_state']['default'] = $state;
 		//$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
 
+
 	}
 	return $shipping_fields;
 
