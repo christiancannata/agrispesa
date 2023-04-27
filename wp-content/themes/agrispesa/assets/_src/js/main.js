@@ -176,11 +176,15 @@ function moveCustomFieldsCheckout() {
 
 
 function listCategories() {
-  if (jQuery('.negozio-sidebar--list').length) {
-    jQuery('.negozio-sidebar--list li.cat-item:has(ul.children) > a').addClass('i-have-kids');
-    jQuery('.negozio-sidebar--list > li.cat-item:has(ul.children) > a').addClass('first-item');
+  if(jQuery('.cat-item-speciali.current-cat-parent').length) {
+    jQuery('.negozio-sidebar--list.navigate').addClass('show-all-subs');
 
-    let _viewall = jQuery('.negozio-sidebar--list li.cat-item.view-all');
+  }
+  if (jQuery('.negozio-sidebar--list.navigate').length) {
+    jQuery('.negozio-sidebar--list.navigate li.cat-item:has(ul.children) > a').addClass('i-have-kids');
+    jQuery('.negozio-sidebar--list.navigate > li.cat-item:has(ul.children) > a').addClass('first-item');
+
+    let _viewall = jQuery('.negozio-sidebar--list.navigate li.cat-item.view-all');
     _viewall.each(function () {
       let _children = jQuery(this).prev('.cat-item').find('ul.children').first();
       //jQuery(this).addClass('test');
@@ -188,15 +192,15 @@ function listCategories() {
       console.log(_viewall);
     });
   }
-  if (jQuery('.negozio-sidebar--list .current-cat').length) {
-    jQuery('.negozio-sidebar--list').addClass('its-category');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > a, .negozio-sidebar--list .current-cat > a').addClass('opened');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').addClass('show-items');
-    jQuery('.negozio-sidebar--list .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').show();
-    jQuery('.negozio-sidebar--list .current-cat-ancestor, .negozio-sidebar--list .current-cat').siblings().hide();
+  if (jQuery('.negozio-sidebar--list.navigate .current-cat').length) {
+    jQuery('.negozio-sidebar--list.navigate').addClass('its-category');
+    jQuery('.negozio-sidebar--list.navigate .current-cat-ancestor > a, .negozio-sidebar--list .current-cat > a').addClass('opened');
+    jQuery('.negozio-sidebar--list.navigate .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').addClass('show-items');
+    jQuery('.negozio-sidebar--list.navigate .current-cat-ancestor > ul.children, .negozio-sidebar--list .current-cat > ul.children').show();
+    jQuery('.negozio-sidebar--list.navigate .current-cat-ancestor, .negozio-sidebar--list .current-cat').siblings().hide();
   }
 
-  jQuery('.negozio-sidebar--list .i-have-kids').on('click', function (e) {
+  jQuery('.negozio-sidebar--list.navigate .i-have-kids').on('click', function (e) {
     e.preventDefault();
     let _this = jQuery(this);
 

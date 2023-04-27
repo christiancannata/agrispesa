@@ -174,7 +174,12 @@ if (woocommerce_product_loop()) {
 
 	if (empty($loop_categories)) {
 		echo '<div class="products-list--header">';
-		echo '<h3 class="products-list--title">' . $term->name . '</h3>';
+		if( $term->name == "Speciali") {
+			echo '<h3 class="products-list--title">' . $special_name . '</h3>';
+		} else {
+			echo '<h3 class="products-list--title">' . $term->name . '</h3>';
+		}
+
 		echo '</div>';
 		woocommerce_product_loop_start();
 		if (wc_get_loop_prop('total')) {
@@ -233,7 +238,12 @@ if (woocommerce_product_loop()) {
 
 			if ($posts_per_cat != 0) {
 				echo '<div class="products-list--header">';
-				echo '<h3 class="products-list--title">' . $loop_category->name . '</h3>';
+				if($loop_category->name === "Speciali") {
+					echo '<h3 class="products-list--title">' . $special_name . '</h3>';
+				} else {
+					echo '<h3 class="products-list--title">' . $loop_category->name . '</h3>';
+				}
+
 				echo '</div>';
 				woocommerce_product_loop_start(); //open ul
 			}
@@ -282,13 +292,15 @@ if (woocommerce_product_loop()) {
 
 	echo '</div>';
 	echo '<div class="negozio-sidebar">';
-	echo '<ul class="negozio-sidebar--list">';
-
 	if ($special_category) {
+		echo '<ul class="negozio-sidebar--list">';
 		echo '<li class="cat-item cat-extra-special">';
 		echo '<a href="'.$link.'">'.$special_name.'</a>';
 		echo '</li>';
+		echo '</ul>';
 	}
+
+	echo '<ul class="negozio-sidebar--list navigate">';
 
 	$my_walker = new Walker_Category_Custom();
 
