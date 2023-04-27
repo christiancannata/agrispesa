@@ -263,7 +263,7 @@ function invoice_box_content()
 						<span class="nobr">Data</span></th>
 					<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status">
 						<span class="nobr">Totale</span></th>
-					<th style="display:none;"
+					<th
 						class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions">
 						<span class="nobr">Azioni</span></th>
 				</tr>
@@ -295,7 +295,7 @@ function invoice_box_content()
 							data-title="Stato">
 							<?php echo substr($amount, 0, -2); ?>€
 						</td>
-						<td style="display:none;"
+						<td
 							class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
 							data-title="Azioni">
 							<?php if ($type == 'FATTURA'): ?>
