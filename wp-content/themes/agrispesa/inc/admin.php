@@ -4,9 +4,7 @@ function dd($vars)
     die(var_dump($vars));
 }
 
-add_action("reload_terms_count", function ($productId) {
-
-});
+add_action("reload_terms_count", function ($productId) {});
 
 // define woocommerce_order_status_completed callback function
 function call_order_status_changed($orderId)
@@ -23,13 +21,10 @@ function call_order_status_changed($orderId)
             }
         }
 
-		if($item->get_name() == 'Acquisto credito'){
-			$orderType = "CREDITO";
-		}
-
+        if ($item->get_name() == "Acquisto credito") {
+            $orderType = "CREDITO";
+        }
     }
-
-
 
     update_post_meta($orderId, "_order_type", $orderType);
 }
@@ -367,7 +362,7 @@ add_action("woocommerce_product_options_advanced", function () {
 });
 add_action("woocommerce_product_options_general_product_data", function () {
     global $post;
-   /*
+    /*
     woocommerce_wp_text_input([
         "id" => "_prezzo_acquisto",
         "label" => "Prezzo di acquisto (€)",
@@ -444,7 +439,6 @@ add_action(
     "woocommerce_product_custom_fields_save1"
 );
 add_action("rest_api_init", function () {
-
     register_rest_route("agrispesa/v1", "import-preferences", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -682,9 +676,16 @@ add_action("rest_api_init", function () {
                     continue;
                 }
 
-				update_user_meta($wordpressUser->ID,'shipping_piano',$user['automatismiSettimanali_indirizzoSpedizione::scala']);
-				update_user_meta($wordpressUser->ID,'shipping_scala',$user['automatismiSettimanali_indirizzoSpedizione::piano']);
-
+                update_user_meta(
+                    $wordpressUser->ID,
+                    "shipping_piano",
+                    $user["automatismiSettimanali_indirizzoSpedizione::scala"]
+                );
+                update_user_meta(
+                    $wordpressUser->ID,
+                    "shipping_scala",
+                    $user["automatismiSettimanali_indirizzoSpedizione::piano"]
+                );
             }
             $response = new WP_REST_Response([
                 "subscriptions_created" => $subscriptionCreated,
@@ -695,16 +696,15 @@ add_action("rest_api_init", function () {
         },
     ]);
 
-	register_rest_route("agrispesa/v1", "fix-sku", [
+    register_rest_route("agrispesa/v1", "fix-sku", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
         },
         "callback" => function ($request) {
-
-		global $wpdb;
-		$duplicatedProducts = $wpdb->get_results(
-			"select meta_value,COUNT(meta_value),GROUP_CONCAT(DISTINCT post_id ORDER BY post_id SEPARATOR ',') post_id
+            global $wpdb;
+            $duplicatedProducts = $wpdb->get_results(
+                "select meta_value,COUNT(meta_value),GROUP_CONCAT(DISTINCT post_id ORDER BY post_id SEPARATOR ',') post_id
 FROM wp_postmeta
 JOIN wp_posts ON wp_posts.ID=wp_postmeta.post_id
 WHERE meta_key = '_sku'
@@ -713,24 +713,30 @@ AND post_type = 'product'
 GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
-		foreach($duplicatedProducts as $duplicatedPost){
-			$postIds = explode(",", $duplicatedPost->post_id);
+            foreach ($duplicatedProducts as $duplicatedPost) {
+                $postIds = explode(",", $duplicatedPost->post_id);
 
-			foreach($postIds as $postId){
-				//$content_post = get_post($postId);
-				//$content = $content_post->post_content;
-				$terms = get_the_terms($postId, 'product_cat' );
+                foreach ($postIds as $postId) {
+                    //$content_post = get_post($postId);
+                    //$content = $content_post->post_content;
+                    $terms = get_the_terms($postId, "product_cat");
 
-				if(count($terms) == 1){
-					update_post_meta($postId,'_sku','__'.$duplicatedPost->meta_value."__".time());
-					update_post_meta($postId,'_navision_id','__'.$duplicatedPost->meta_value."__".time());
-				}
-
-			}
-
-		}
-
-        }]);
+                    if (count($terms) == 1) {
+                        update_post_meta(
+                            $postId,
+                            "_sku",
+                            "__" . $duplicatedPost->meta_value . "__" . time()
+                        );
+                        update_post_meta(
+                            $postId,
+                            "_navision_id",
+                            "__" . $duplicatedPost->meta_value . "__" . time()
+                        );
+                    }
+                }
+            }
+        },
+    ]);
 
     register_rest_route("agrispesa/v1", "import-products", [
         "methods" => "POST",
@@ -760,10 +766,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productIds = [];
             $newProducts = [];
 
-
-
-			       $productsToExclude = get_posts([
-                "post_type" => ["product","product_variation"],
+            $productsToExclude = get_posts([
+                "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
@@ -808,8 +812,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
             }
 
-
-
             $arrotondamenti = array_filter($products["ROW"], function (
                 $product
             ) {
@@ -819,22 +821,22 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 ) == "arrotondamento spese";
             });
 
-			$productIds = [];
+            $productIds = [];
 
             foreach ($arrotondamenti as $arrotondamento) {
                 $arrotondamento = (array) $arrotondamento;
 
-				 $productId = get_posts([
-                        "post_type" => "product",
-                        "post_status" => ["publish", "draft","trash"],
-                        "fields" => "ids",
-                        "posts_per_page" => 1,
-                        "meta_key" => "_sku",
-                        "meta_value" => $arrotondamento["id_product"],
-                    ]);
+                $productId = get_posts([
+                    "post_type" => "product",
+                    "post_status" => ["publish", "draft", "trash"],
+                    "fields" => "ids",
+                    "posts_per_page" => 1,
+                    "meta_key" => "_sku",
+                    "meta_value" => $arrotondamento["id_product"],
+                ]);
 
-				 if(empty($productId)){
-					 $productObj = new WC_Product_Simple();
+                if (empty($productId)) {
+                    $productObj = new WC_Product_Simple();
                     $productObj->set_name(
                         (string) $arrotondamento["description"] .
                             " " .
@@ -857,32 +859,29 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         "product_cat"
                     );
 
+                    $price = floatval(
+                        str_replace(
+                            ",",
+                            ".",
+                            (string) $arrotondamento["unitprice"]
+                        )
+                    );
+                    update_post_meta($productId, "_regular_price", $price);
+                    update_post_meta($productId, "_price", $price);
+                    update_post_meta(
+                        $productId,
+                        "_navision_id",
+                        (string) $arrotondamento["id_product"]
+                    );
 
-                $price = floatval(
-                    str_replace(",", ".", (string) $arrotondamento["unitprice"])
-                );
-                update_post_meta(
-                    $productId,
-                    "_regular_price",
-                    $price
-                );
-                update_post_meta($productId, "_price", $price);
-                update_post_meta(
-                    $productId,
-                    "_navision_id",
-                    (string) $arrotondamento["id_product"]
-                );
-
-				update_post_meta(
-                    $productId,
-                    "_sku",
-                    (string) $arrotondamento["id_product"]
-                );
+                    update_post_meta(
+                        $productId,
+                        "_sku",
+                        (string) $arrotondamento["id_product"]
+                    );
 
                     $newProducts[] = $productObj;
-				 }
-
-
+                }
             }
 
             $activeProducts = array_filter($products["ROW"], function (
@@ -1017,10 +1016,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 }
             }
 
-
-
-
-
             foreach ($activeProducts as $product) {
                 $product = (array) $product;
 
@@ -1042,48 +1037,47 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     " " .
                     (string) $product["description2"];
 
-				 $productId = get_posts([
-                        "post_type" => "product",
-                        "post_status" => ["publish", "draft","trash"],
-                        "fields" => "ids",
-                        "posts_per_page" => 1,
-                        "meta_key" => "_sku",
-                        "meta_value" => $sku,
-                    ]);
+                $productId = get_posts([
+                    "post_type" => "product",
+                    "post_status" => ["publish", "draft", "trash"],
+                    "fields" => "ids",
+                    "posts_per_page" => 1,
+                    "meta_key" => "_sku",
+                    "meta_value" => $sku,
+                ]);
 
-				 if(!empty($productId)){
-					 $productId = reset($productId);
-				 }
+                if (!empty($productId)) {
+                    $productId = reset($productId);
+                }
 
                 $productObj = null;
 
                 if (empty($productId)) {
                     $productObj = new WC_Product_Simple();
-                            $productObj->set_name($productName);
-                            $productObj->save();
-                            $productId = $productObj->get_id();
+                    $productObj->set_name($productName);
+                    $productObj->save();
+                    $productId = $productObj->get_id();
 
-                            $term = get_term_by(
-                                "slug",
-                                "senza-categoria",
-                                "product_cat"
-                            );
-                            wp_set_object_terms(
-                                $productId,
-                                $term->term_id,
-                                "product_cat"
-                            );
+                    $term = get_term_by(
+                        "slug",
+                        "senza-categoria",
+                        "product_cat"
+                    );
+                    wp_set_object_terms(
+                        $productId,
+                        $term->term_id,
+                        "product_cat"
+                    );
 
                     $newProducts[] = $productObj;
                 } else {
-                   $productObj = wc_get_product($productId);
+                    $productObj = wc_get_product($productId);
                 }
-
 
                 $price = (string) $product["unitprice"];
                 $price = str_replace(",", ".", $price);
                 $price = floatval($price);
-				$productObj->set_price($price);
+                $productObj->set_price($price);
                 $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
                 //$productIds[] = $productObj->get_id();
@@ -1094,10 +1088,18 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$product->save();
 				*/
 
-                update_post_meta($productObj->get_id(), "_regular_price", $price);
+                update_post_meta(
+                    $productObj->get_id(),
+                    "_regular_price",
+                    $price
+                );
                 update_post_meta($productObj->get_id(), "_price", $price);
                 update_post_meta($productObj->get_id(), "_sku", $sku);
-                update_post_meta($productObj->get_id(), "_id_produttore_navision", (string)$product['id_producercard']);
+                update_post_meta(
+                    $productObj->get_id(),
+                    "_id_produttore_navision",
+                    (string) $product["id_producercard"]
+                );
 
                 update_post_meta(
                     $productObj->get_id(),
@@ -1112,7 +1114,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 } else {
                     $code = $code[0];
                 }
-                update_post_meta($productObj->get_id(), "_gruppo_prodotto", $code);
+                update_post_meta(
+                    $productObj->get_id(),
+                    "_gruppo_prodotto",
+                    $code
+                );
             }
 
             //Attivo i prodotti
@@ -1137,7 +1143,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ];
             $productsToExclude = new WP_Query($args);
             $idsToExclude = $productsToExclude->get_posts();
-			$idsToExclude[] = 17647;
+            $idsToExclude[] = 17647;
             $wpdb->query(
                 "UPDATE wp_posts
 	SET post_status = 'draft'
@@ -1216,7 +1222,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $group;
             }, $allGroups);
 
-
             foreach ($products["ROW"] as $product) {
                 $product = (array) $product;
 
@@ -1259,7 +1264,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productsSku = array_unique($productsSku);
 
             $productsToExclude = get_posts([
-                "post_type" => ["product","product_variation"],
+                "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
                 "post_status" => ["publish", "draft", "trash", "private"],
@@ -1290,10 +1295,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     ");"
             );
 
-			$productsToExclude[] = 17647;
+            $productsToExclude[] = 17647;
 
             if (!empty($productsToExclude)) {
-
                 $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
                         implode(",", $productsToExclude) .
@@ -1382,16 +1386,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 	WHERE wp.ID IS NULL");
 
             foreach ($boxes as $idBox => $boxProducts) {
+                $boxName =
+                    "Box settimana " . date("Y") . "_" . $week . " - " . $idBox;
 
-				$boxName = "Box settimana " .
-                        date("Y") .
-                        "_" .
-                        $week .
-                        " - " .
-                        $idBox;
-
-				// DELETE BOX FOR THE CURRENT WEEK
-				 $wpdb->query('DELETE from wp_posts WHERE post_title = "'.$boxName.'"');
+                // DELETE BOX FOR THE CURRENT WEEK
+                $wpdb->query(
+                    'DELETE from wp_posts WHERE post_title = "' . $boxName . '"'
+                );
 
                 $navisionId = explode("-", $idBox);
                 $navisionId = end($navisionId);
@@ -1463,11 +1464,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $arrayProducts = [];
                 foreach ($boxProducts as $boxProduct) {
-
-					if($boxProduct["id_product"] == 'TRASPORTO1'){
-						update_option('delivery_product_offer_no',(string) $boxProduct["offer_line_no"]);
-						continue;
-					}
+                    if ($boxProduct["id_product"] == "TRASPORTO1") {
+                        update_option(
+                            "delivery_product_offer_no",
+                            (string) $boxProduct["offer_line_no"]
+                        );
+                        continue;
+                    }
 
                     $singleProduct = new WP_Query([
                         "post_type" => "product",
@@ -1555,10 +1558,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-
-
-
-
     register_rest_route("agrispesa/v1", "import-fido", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -1584,43 +1583,51 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             foreach ($users as $key => $user) {
                 $user = (array) $user;
 
-				$args = [
+                $args = [
                     "fields" => "ids",
                     "meta_query" => [
                         [
                             "key" => "navision_id",
-                            "value" => $user['id_codeclient'],
+                            "value" => $user["id_codeclient"],
                             "compare" => "=",
                         ],
                     ],
                 ];
 
                 $userObj = get_users($args); //finds all users with this meta_key == 'member_id' and meta_value == $member_id passed in url
-				if(empty($userObj)){
-					continue;
-				}
+                if (empty($userObj)) {
+                    continue;
+                }
 
-				$user['balance'] = substr($user['balance'], 0, -2);
+                $user["balance"] = substr($user["balance"], 0, -2);
 
                 update_user_meta(
                     $userObj[0],
                     "_saldo_navision",
-                    $user['balance']
+                    $user["balance"]
                 );
 
-				$saldo = substr($user['balance'], 0, -2);
+                $saldo = substr($user["balance"], 0, -2);
 
-				if($saldo == '-0'){
-					$saldo = 0;
-				}
-				$saldo = str_replace(",",".",$saldo);
-				$saldo = floatval($saldo);
+                if ($saldo == "-0") {
+                    $saldo = 0;
+                }
+                $saldo = str_replace(",", ".", $saldo);
+                $saldo = floatval($saldo);
 
-				if($saldo>=0){
-					update_user_meta($userObj[0],'_current_woo_wallet_balance',$saldo);
-				}else{
-					update_user_meta($userObj[0],'_current_woo_wallet_balance',0);
-				}
+                if ($saldo >= 0) {
+                    update_user_meta(
+                        $userObj[0],
+                        "_current_woo_wallet_balance",
+                        $saldo
+                    );
+                } else {
+                    update_user_meta(
+                        $userObj[0],
+                        "_current_woo_wallet_balance",
+                        0
+                    );
+                }
             }
 
             $response = new WP_REST_Response([]);
@@ -1638,9 +1645,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $limit = $request->get_param("limit");
 
-			$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
 
-			$orders = wc_get_orders([
+            $orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
                 "order" => "ASC",
@@ -1735,27 +1742,28 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele1->nodeValue = $idNavision;
                 $row->appendChild($ele1);
                 $ele2 = $doc->createElement("business_name");
-                $ele2->nodeValue =
-                    ucwords(strtolower($order->get_billing_first_name().
-                    " " .
-                    $order->get_billing_last_name())) ;
+                $ele2->nodeValue = ucwords(
+                    strtolower(
+                        $order->get_billing_first_name() .
+                            " " .
+                            $order->get_billing_last_name()
+                    )
+                );
                 $row->appendChild($ele2);
 
-				$taxCode = get_post_meta(
+                $taxCode = get_post_meta(
                     $order->get_id,
                     "_codice_fiscale",
                     true
                 );
 
-				 if (!$taxCode) {
-					 	$taxCode = get_user_meta(
-                    $order->get_customer_id(),
-                    "codice_fiscale",
-                    true
-                );
-				 }
-
-
+                if (!$taxCode) {
+                    $taxCode = get_user_meta(
+                        $order->get_customer_id(),
+                        "codice_fiscale",
+                        true
+                    );
+                }
 
                 if (!$taxCode) {
                     $taxCode = "";
@@ -1773,25 +1781,42 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $vatCode = "";
                 }
 
-				$phone = $order->get_billing_phone();
-				if(empty($phone)){
-				$phone = $order->get_shipping_phone();
+                $phone = $order->get_billing_phone();
+                if (empty($phone)) {
+                    $phone = $order->get_shipping_phone();
+                }
 
-				}
-
-				if(empty($phone)){
-					$phone = get_user_meta($order->get_customer_id(),'billing_phone',true);
-					if(!$phone){
-					$phone = get_user_meta($order->get_customer_id(),'shipping_phone',true);
-
-					}
-					if(!$phone){
-						$phone = get_user_meta($order->get_customer_id(),'billing_cellulare',true);
-						update_user_meta($order->get_customer_id(),'billing_phone',$phone);
-						update_user_meta($order->get_customer_id(),'shipping_phone',$phone);
-
-					}
-				}
+                if (empty($phone)) {
+                    $phone = get_user_meta(
+                        $order->get_customer_id(),
+                        "billing_phone",
+                        true
+                    );
+                    if (!$phone) {
+                        $phone = get_user_meta(
+                            $order->get_customer_id(),
+                            "shipping_phone",
+                            true
+                        );
+                    }
+                    if (!$phone) {
+                        $phone = get_user_meta(
+                            $order->get_customer_id(),
+                            "billing_cellulare",
+                            true
+                        );
+                        update_user_meta(
+                            $order->get_customer_id(),
+                            "billing_phone",
+                            $phone
+                        );
+                        update_user_meta(
+                            $order->get_customer_id(),
+                            "shipping_phone",
+                            $phone
+                        );
+                    }
+                }
 
                 $ele2 = $doc->createElement("vat_number");
                 $ele2->nodeValue = $vatCode;
@@ -1833,34 +1858,42 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "ITPRIV";
                 $row->appendChild($ele2);
 
+                //FIX MAPPING
+                if (in_array($customerType, ["FNPESG", "FNVEGAG", "FNVEGEG"])) {
+                    $customerType = "FNG";
+                }
 
-				//FIX MAPPING
-				if(in_array($customerType,['FNPESG','FNVEGAG','FNVEGEG'])){
-					$customerType = 'FNG';
-				}
+                if (in_array($customerType, ["FNPESM", "FNVEGAM", "FNVEGEM"])) {
+                    $customerType = "FNM";
+                }
 
-				if(in_array($customerType,['FNPESM','FNVEGAM','FNVEGEM'])){
-					$customerType = 'FNM';
-				}
-
-				if(in_array($customerType,['FNPESP','FNVEGAP','FNVEGEP','FNPESPP','FNPP','FNVEGEPP','FNVEGAPP'])){
-					$customerType = 'FNP';
-				}
+                if (
+                    in_array($customerType, [
+                        "FNPESP",
+                        "FNVEGAP",
+                        "FNVEGEP",
+                        "FNPESPP",
+                        "FNPP",
+                        "FNVEGEPP",
+                        "FNVEGAPP",
+                    ])
+                ) {
+                    $customerType = "FNP";
+                }
 
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
                 $row->appendChild($ele2);
 
-				$startDate = $subscription
+                $startDate = $subscription
                     ? $subscription->get_date("start")
                     : null;
 
-				$dataAbbonamento = '';
-				if($startDate){
-					  $startDate = new DateTime($startDate);
-				    $dataAbbonamento = $startDate->format("dmY");
-				}
-
+                $dataAbbonamento = "";
+                if ($startDate) {
+                    $startDate = new DateTime($startDate);
+                    $dataAbbonamento = $startDate->format("dmY");
+                }
 
                 $ele2 = $doc->createElement("dataabbonamento");
                 $ele2->nodeValue = $dataAbbonamento;
@@ -1874,8 +1907,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
                 if (!$fido) {
                     $fido = 0;
-					$fido = number_format(floatval($fido), 4);
-                	$fido = str_replace(".", ",", $fido);
+                    $fido = number_format(floatval($fido), 4);
+                    $fido = str_replace(".", ",", $fido);
                 }
 
                 $ele2->nodeValue = $fido;
@@ -2016,16 +2049,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
             foreach ($orders as $order) {
+                if ($order->get_status() != "completed") {
+                    continue;
+                }
 
-				if($order->get_status() != 'completed'){
-					continue;
-				}
-
-				$checkPaidDate = (new \DateTime())->sub(new DateInterval("P7D"));
-				if($order->get_date_paid() < $checkPaidDate){
-					continue;
-				}
-
+                $checkPaidDate = (new \DateTime())->sub(
+                    new DateInterval("P7D")
+                );
+                if ($order->get_date_paid() < $checkPaidDate) {
+                    continue;
+                }
 
                 if (
                     $order->get_shipping_first_name() .
@@ -2048,9 +2081,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-				if($orderType != 'ST' && $orderType != 'FN'){
-					continue;
-				}
+                if ($orderType != "ST" && $orderType != "FN") {
+                    continue;
+                }
 
                 $isSubscription = get_post_meta(
                     $order->get_id(),
@@ -2058,16 +2091,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-
-                        /* USER NAVISION ID */
-                        $userNavisionId = get_user_meta(
-                            $order->get_customer_id(),
-                            "navision_id",
-                            true
-                        );
-                        if (!$userNavisionId) {
-                           continue;
-                        }
+                /* USER NAVISION ID */
+                $userNavisionId = get_user_meta(
+                    $order->get_customer_id(),
+                    "navision_id",
+                    true
+                );
+                if (!$userNavisionId) {
+                    continue;
+                }
 
                 if ($isSubscription) {
                     $subscription = new WC_Subscription($isSubscription);
@@ -2127,53 +2159,56 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     );
                     if (!$piano) {
                         $piano = "";
-                    }else{
-						$piano = 'Piano '.$piano;
+                    } else {
+                        $piano = "Piano " . $piano;
                     }
 
-					$scala = get_post_meta(
+                    $scala = get_post_meta(
                         $order->get_id(),
                         "shipping_scala",
                         true
                     );
                     if (!$scala) {
                         $scala = "";
-                    }else{
-						$scala = 'Scala '.$scala;
+                    } else {
+                        $scala = "Scala " . $scala;
                     }
 
-					$orderNote = $order->get_customer_note();
-					if(empty($orderNote)){
-						$orderNote = get_user_meta($order->get_customer_id(),'shipping_citofono',true);
-						if(!$orderNote){
-							$orderNote = '';
-						}
-					}
+                    $orderNote = $order->get_customer_note();
+                    if (empty($orderNote)) {
+                        $orderNote = get_user_meta(
+                            $order->get_customer_id(),
+                            "shipping_citofono",
+                            true
+                        );
+                        if (!$orderNote) {
+                            $orderNote = "";
+                        }
+                    }
 
-					$isAcquistoCredito = false;
- 					foreach ($order->get_items() as $item_id => $item) {
+                    $isAcquistoCredito = false;
+                    foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
 
-						if(!$product){
-							continue;
-						}
+                        if (!$product) {
+                            continue;
+                        }
 
-						if($product->get_name() == 'Acquisto credito'){
-							$isAcquistoCredito = true;
-						}
+                        if ($product->get_name() == "Acquisto credito") {
+                            $isAcquistoCredito = true;
+                        }
+                    }
 
- 					}
-
-					 if($isAcquistoCredito){
-						 continue;
-					 }
+                    if ($isAcquistoCredito) {
+                        continue;
+                    }
 
                     foreach ($order->get_items() as $item_id => $item) {
                         $product = $item->get_product();
 
-						if(!$product){
-							continue;
-						}
+                        if (!$product) {
+                            continue;
+                        }
 
                         $productNavisionId = get_post_meta(
                             $product->get_id(),
@@ -2285,16 +2320,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $ele1->nodeValue = "01011970";
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_name");
-                        $ele1->nodeValue =
-                    		ucwords(strtolower($order->get_shipping_last_name() .
-                            " " .
-                            $order->get_shipping_first_name()));
+                        $ele1->nodeValue = ucwords(
+                            strtolower(
+                                $order->get_shipping_last_name() .
+                                    " " .
+                                    $order->get_shipping_first_name()
+                            )
+                        );
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_address");
                         $ele1->nodeValue = $order->get_shipping_address_1();
                         $row->appendChild($ele1);
                         $ele1 = $doc->createElement("sh_description1");
-                        $ele1->nodeValue = $piano.' ' .$scala;
+                        $ele1->nodeValue = $piano . " " . $scala;
                         $row->appendChild($ele1);
 
                         $ele1 = $doc->createElement("comment_lines");
@@ -2337,78 +2375,107 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                     $items++;
 
-				$shipping_method_total = 0;
+                    $shipping_method_total = 0;
 
-				foreach( $order->get_items( 'shipping' ) as $item_id => $item ){
-					$shipping_method_total = $item->get_total();
-				}
+                    foreach (
+                        $order->get_items("shipping")
+                        as $item_id => $item
+                    ) {
+                        $shipping_method_total = $item->get_total();
+                    }
 
-				if($shipping_method_total > 0 && !in_array($order->get_shipping_state(),['CN','AT'])){
-					//add shipping
-					$row = $doc->createElement("ROW");
-					$ele1 = $doc->createElement("id_order");
+                    if (
+                        $shipping_method_total > 0 &&
+                        !in_array($order->get_shipping_state(), ["CN", "AT"])
+                    ) {
+                        //add shipping
+                        $row = $doc->createElement("ROW");
+                        $ele1 = $doc->createElement("id_order");
 
-					$navisionId = 6000000 + $order->get_id();
+                        $navisionId = 6000000 + $order->get_id();
                         $ele1->nodeValue = $navisionId;
                         $row->appendChild($ele1);
-					$ele1->nodeValue = $navisionId;
-					$row->appendChild($ele1);
-					//check if has navision id
-					$navisionId = get_user_meta($order->get_customer_id(), "navision_id", true);
-					$ele1 = $doc->createElement("id_codeclient");
-					$ele1->nodeValue = $navisionId;
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("date");
-					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("date_consegna");
-					$ele1->nodeValue = (new DateTime($order->get_date_paid()))->format("dmY");
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("sh_name");
-					$ele1->nodeValue = ucwords(strtolower($order->get_shipping_first_name() . " " . $order->get_shipping_last_name()));
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("sh_address");
-					$ele1->nodeValue = $order->get_shipping_address_1();
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("sh_description1");
-					$ele1->nodeValue = $piano.' '.$scala;
-					$row->appendChild($ele1);
-					$ele1 = $doc->createElement("comment_lines");
-					$ele1->nodeValue = $orderNote;
-					$row->appendChild($ele1);
-					$ele2 = $doc->createElement("sh_city");
-					$ele2->nodeValue = $order->get_shipping_city();
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("sh_postcode");
-					$ele2->nodeValue = $order->get_shipping_postcode();
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("sh_province");
-					$ele2->nodeValue = $order->get_shipping_state();
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("id_product");
-					$ele2->nodeValue = get_option('delivery_product_sku');
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("quantity");
-					$ele2->nodeValue = 1;
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("discount");
-					$ele2->nodeValue = "0";
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("unitprice");
-					$ele2->nodeValue = str_replace(".", ",", number_format(5, 4));
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("ref_offer_no");
-					$ele2->nodeValue = $currentWeek.'-STCOMP';
-					$row->appendChild($ele2);
-					$ele2 = $doc->createElement("ref_offer_line_no");
-					$ele2->nodeValue = get_option('delivery_product_offer_no');
-					$row->appendChild($ele2);
-					$root->appendChild($row);
-
-				}
+                        $ele1->nodeValue = $navisionId;
+                        $row->appendChild($ele1);
+                        //check if has navision id
+                        $navisionId = get_user_meta(
+                            $order->get_customer_id(),
+                            "navision_id",
+                            true
+                        );
+                        $ele1 = $doc->createElement("id_codeclient");
+                        $ele1->nodeValue = $navisionId;
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("date");
+                        $ele1->nodeValue = (new DateTime(
+                            $order->get_date_paid()
+                        ))->format("dmY");
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("date_consegna");
+                        $ele1->nodeValue = (new DateTime(
+                            $order->get_date_paid()
+                        ))->format("dmY");
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("sh_name");
+                        $ele1->nodeValue = ucwords(
+                            strtolower(
+                                $order->get_shipping_first_name() .
+                                    " " .
+                                    $order->get_shipping_last_name()
+                            )
+                        );
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("sh_address");
+                        $ele1->nodeValue = $order->get_shipping_address_1();
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("sh_description1");
+                        $ele1->nodeValue = $piano . " " . $scala;
+                        $row->appendChild($ele1);
+                        $ele1 = $doc->createElement("comment_lines");
+                        $ele1->nodeValue = $orderNote;
+                        $row->appendChild($ele1);
+                        $ele2 = $doc->createElement("sh_city");
+                        $ele2->nodeValue = $order->get_shipping_city();
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("sh_postcode");
+                        $ele2->nodeValue = $order->get_shipping_postcode();
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("sh_province");
+                        $ele2->nodeValue = $order->get_shipping_state();
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("id_product");
+                        $ele2->nodeValue = get_option("delivery_product_sku");
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("quantity");
+                        $ele2->nodeValue = 1;
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("discount");
+                        $ele2->nodeValue = "0";
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("unitprice");
+                        $ele2->nodeValue = str_replace(
+                            ".",
+                            ",",
+                            number_format(5, 4)
+                        );
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("ref_offer_no");
+                        $ele2->nodeValue = $currentWeek . "-STCOMP";
+                        $row->appendChild($ele2);
+                        $ele2 = $doc->createElement("ref_offer_line_no");
+                        $ele2->nodeValue = get_option(
+                            "delivery_product_offer_no"
+                        );
+                        $row->appendChild($ele2);
+                        $root->appendChild($row);
+                    }
                 }
 
-				update_post_meta($order->get_id(),'navision_last_export',(new \DateTime())->format("Y-m-d H:i"));
+                update_post_meta(
+                    $order->get_id(),
+                    "navision_last_export",
+                    (new \DateTime())->format("Y-m-d H:i")
+                );
             }
             header("Content-type: text/xml");
             die($doc->saveXml());
@@ -2420,12 +2487,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-
-
             $args = [
-				"status" => "wc-completed",
-				"limit" => -1,
-				"meta_query" => [
+                "status" => "wc-completed",
+                "limit" => -1,
+                "meta_query" => [
                     "relation" => "and",
                     [
                         "key" => "_payment_method",
@@ -2433,12 +2498,14 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         "compare" => "!=",
                     ],
                     [
-						"key" => "_date_completed",
-						"meta_compare" => ">",
-               		    "meta_value" => (new \DateTime('2023-04-20'))->getTimestamp(),
-				 ]
-                ]
-				];
+                        "key" => "_date_completed",
+                        "meta_compare" => ">",
+                        "meta_value" => (new \DateTime(
+                            "2023-04-20"
+                        ))->getTimestamp(),
+                    ],
+                ],
+            ];
 
             $orders = wc_get_orders($args);
             $doc = new DOMDocument();
@@ -2446,16 +2513,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
-
-				$isAutomaticOrder = get_post_meta($order->get_id(),'_subscription_id',true);
-				$isAutomaticOrder = ($isAutomaticOrder>0);
+                $isAutomaticOrder = get_post_meta(
+                    $order->get_id(),
+                    "_subscription_id",
+                    true
+                );
+                $isAutomaticOrder = $isAutomaticOrder > 0;
 
                 $isSubscription = false;
                 foreach ($order->get_items() as $item_id => $item) {
                     $product = $item->get_product();
-					if(!$product){
-						continue;
-					}
+                    if (!$product) {
+                        continue;
+                    }
                     if (
                         $product->is_type("subscription") ||
                         $product->is_type("subscription_variation")
@@ -2464,9 +2534,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
 
-
-
-                if ((!$isSubscription && $isAutomaticOrder) || $order->get_payment_method() == 'wallet') {
+                if (
+                    (!$isSubscription && $isAutomaticOrder) ||
+                    $order->get_payment_method() == "wallet"
+                ) {
                     continue;
                 }
 
@@ -2481,10 +2552,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-				if(!$navisionId){
-					continue;
-				}
-
+                if (!$navisionId) {
+                    continue;
+                }
 
                 $ele1 = $doc->createElement("id_codeclient");
                 $ele1->nodeValue = $navisionId;
@@ -2919,8 +2989,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-
-	register_rest_route("agrispesa/v1", "subscription-blacklist", [
+    register_rest_route("agrispesa/v1", "subscription-blacklist", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
@@ -2969,7 +3038,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
-
 
     register_rest_route("agrispesa/v1", "subscription-preference", [
         "methods" => "DELETE",
@@ -3332,7 +3400,6 @@ if (!function_exists("mv_add_other_fields_for_packaging")) {
 			global $wpdb;
 			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
 	*/
-
     }
 }
 function get_products_to_add_from_subscription(
@@ -3548,31 +3615,79 @@ function generate_fabbisogno()
     }
 }
 
-add_filter( 'woocommerce_email_enabled_new_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_cancelled_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_completed_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_invoice', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_note', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_on_hold_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_processing_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_customer_refunded_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
-add_filter( 'woocommerce_email_enabled_failed_order', 'dcwd_conditionally_send_wc_email', 10, 2 );
+add_filter(
+    "woocommerce_email_enabled_new_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_cancelled_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_completed_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_invoice",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_note",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_on_hold_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_processing_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_customer_refunded_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
+add_filter(
+    "woocommerce_email_enabled_failed_order",
+    "dcwd_conditionally_send_wc_email",
+    10,
+    2
+);
 
-
-function dcwd_conditionally_send_wc_email( $whether_enabled, $object ) {
-	if ( null == $object ) {
+function dcwd_conditionally_send_wc_email($whether_enabled, $object)
+{
+    if (null == $object) {
         return $whether_enabled;
     }
 
-	//disable if is subscription order
-	$isSubscriptionOrder = get_post_meta($object->get_id(),'_disable_order_emails',true);
-	if($isSubscriptionOrder){
-		return false;
-	}
+    //disable if is subscription order
+    $isSubscriptionOrder = get_post_meta(
+        $object->get_id(),
+        "_disable_order_emails",
+        true
+    );
+    if ($isSubscriptionOrder) {
+        return false;
+    }
 
-	return $whether_enabled;
+    return $whether_enabled;
 }
-
 
 function create_order_from_subscription($id)
 {
@@ -3580,6 +3695,7 @@ function create_order_from_subscription($id)
     if (!$subscription) {
         return false;
     }
+
     $weight = 0;
     /*    if (!empty($productData['weight'])) {
 		$weight = $productData['weight'];
@@ -3590,9 +3706,8 @@ function create_order_from_subscription($id)
         return false;
     }
 
-
-	//check products status
-	$week = get_post_meta($box->ID, "_week", true);
+    //check products status
+    $week = get_post_meta($box->ID, "_week", true);
 
     $productsToAdd = get_products_to_add_from_subscription(
         $subscription,
@@ -3600,25 +3715,27 @@ function create_order_from_subscription($id)
         true
     );
 
-
-	$productsToAddWoocommerce = [];
-	 foreach ($productsToAdd as $productToAdd) {
-		  $productObj = wc_get_product($productToAdd["id"]);
+    $productsToAddWoocommerce = [];
+    foreach ($productsToAdd as $productToAdd) {
+        $productObj = wc_get_product($productToAdd["id"]);
 
         if (!$productObj) {
-			error_log("Prodotto ".$productsToAdd['name'].' con ID #'.$productsToAdd['id'].' non trovato!');
+            error_log(
+                "Prodotto " .
+                    $productsToAdd["name"] .
+                    " con ID #" .
+                    $productsToAdd["id"] .
+                    " non trovato!"
+            );
             continue;
         }
 
-		$productsToAddWoocommerce[] = [
-		'product' => $productObj,
-		'quantity' =>  $productToAdd["quantity"],
-		'offer_line_no' => $productToAdd["offer_line_no"]
-];
-
-	 }
-
-
+        $productsToAddWoocommerce[] = [
+            "product" => $productObj,
+            "quantity" => $productToAdd["quantity"],
+            "offer_line_no" => $productToAdd["offer_line_no"],
+        ];
+    }
 
     $consegna = get_post_meta($box->ID, "_data_consegna", true);
     $boxNavisionId = get_post_meta($box->ID, "_navision_id", true);
@@ -3634,9 +3751,8 @@ function create_order_from_subscription($id)
     );
 
     foreach ($productsToAddWoocommerce as $productToAdd) {
-
         $itemId = $order->add_product(
-            $productToAdd['product'],
+            $productToAdd["product"],
             $productToAdd["quantity"]
         );
         wc_add_order_item_meta(
@@ -3645,7 +3761,6 @@ function create_order_from_subscription($id)
             $productToAdd["offer_line_no"]
         );
     }
-
 
     // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
     $order->set_address(
@@ -3690,30 +3805,37 @@ function create_order_from_subscription($id)
 		$item->set_name($item->get_name() . ' - Settimana ' . $week);
 		$item->save();
 		}*/
+    $args = [
+        "customer_id" => $subscription->get_customer_id(),
+        "status" => ["wc-completed"],
+    ];
+    $orders = wc_get_orders($args);
 
+    // Set the array for tax calculations
+    $calculate_tax_for = [
+        "country" => "",
+        "state" => $subscription->get_shipping_state(), // Can be set (optional)
+        "postcode" => "", // Can be set (optional)
+        "city" => "", // Can be set (optional)
+    ];
 
-/*
-if(!in_array($subscription->get_shipping_state(),['CN','AT'])){
+    $item = new WC_Order_Item_Shipping();
 
-	// Set the array for tax calculations
-	$calculate_tax_for = array(
-    'country' => '',
-    'state' => $subscription->get_shipping_state(), // Can be set (optional)
-    'postcode' => '', // Can be set (optional)
-    'city' => '', // Can be set (optional)
-	);
+    if (
+        !in_array($subscription->get_shipping_state(), ["CN", "AT"]) &&
+        count($orders) > 0
+    ) {
+        $item->set_method_title("Consegna");
+        $item->set_method_id("flat_rate:1"); // set an existing Shipping method rate ID
+        $item->set_total(5); // (optional)
+    } else {
+        $item->set_method_title("Consegna Gratuita");
+        $item->set_method_id("free_shipping:3"); // set an existing Shipping method rate ID
+        $item->set_total(0); // (optional)
+    }
 
-
-	$item = new WC_Order_Item_Shipping();
-
-	$item->set_method_title( "Consegna" );
-	$item->set_method_id( "flat_rate:1" ); // set an existing Shipping method rate ID
-	$item->set_total( 5 ); // (optional)
-	$item->calculate_taxes($calculate_tax_for);
-
-	$order->add_item( $item );
-}*/
-
+    $order->add_item($item);
+    $item->calculate_taxes($calculate_tax_for);
 
     $order->calculate_totals();
     $order->update_status("completed", "Ordine generato in automatico", true);
@@ -3759,7 +3881,7 @@ if(!in_array($subscription->get_shipping_state(),['CN','AT'])){
         }
     }
 
-	//spedizione gratuita per primi ordini oppure asti cuneo
+    //spedizione gratuita per primi ordini oppure asti cuneo
 
     //get all orders of same user
     /*$args = array(
@@ -3924,7 +4046,7 @@ function register_my_custom_submenu_page()
         "my_custom_submenu_page_callback"
     );
 
-	add_menu_page(
+    add_menu_page(
         "Scegli Tu in Sospeso",
         "Scegli Tu in Sospeso",
         "manage_options",
@@ -3934,54 +4056,53 @@ function register_my_custom_submenu_page()
 }
 
 add_action("create_order_subscription", function ($subscriptionId) {
-	create_order_from_subscription($subscriptionId);
-	update_post_meta($subscriptionId, '_is_order_creating', false);
+    create_order_from_subscription($subscriptionId);
+    update_post_meta($subscriptionId, "_is_order_creating", false);
 });
-
-
 
 function scegli_tu_page()
 {
     if (isset($_POST["complete_orders"])) {
+
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-			as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
-			update_post_meta($subscriptionId, '_is_order_creating', true);
+            as_enqueue_async_action("create_order_subscription", [
+                "subscriptionId" => $subscriptionId,
+            ]);
+            update_post_meta($subscriptionId, "_is_order_creating", true);
         }
-
-		?>
+        ?>
 		<br>
 		<?php
     }
 
-	$pendingOrders = wc_get_orders( array(
-    'limit'    => -1,
-    'status'   => ['pending','on-hold','processing'],
-    "meta_key" => "_order_type",
-    "meta_value" => "ST",
-    "meta_compare" => "="
-) );
+    $pendingOrders = wc_get_orders([
+        "limit" => -1,
+        "status" => ["pending", "on-hold", "processing"],
+        "meta_key" => "_order_type",
+        "meta_value" => "ST",
+        "meta_compare" => "=",
+    ]);
 
-	foreach ($pendingOrders as $key => $order ) {
-		$items = $order->get_items();
-		$pendingOrders[$key]->total_products = count($items);
-		$pendingOrders[$key]->products = [];
-    // Going through each current customer order items
-    foreach($items as $item_id => $item_values){
-		$product = $item_values->get_product();
-		$pendingOrders[$key]->products[] = $product->get_name();
+    foreach ($pendingOrders as $key => $order) {
+        $items = $order->get_items();
+        $pendingOrders[$key]->total_products = count($items);
+        $pendingOrders[$key]->products = [];
+        // Going through each current customer order items
+        foreach ($items as $item_id => $item_values) {
+            $product = $item_values->get_product();
+            $pendingOrders[$key]->products[] = $product->get_name();
+        }
     }
-}
-$order_statuses = array(
-    'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
-    'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
-    'wc-on-hold'    => _x( 'On hold', 'Order status', 'woocommerce' ),
-    'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
-    'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
-    'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
-    'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
-);
-
+    $order_statuses = [
+        "wc-pending" => _x("Pending payment", "Order status", "woocommerce"),
+        "wc-processing" => _x("Processing", "Order status", "woocommerce"),
+        "wc-on-hold" => _x("On hold", "Order status", "woocommerce"),
+        "wc-completed" => _x("Completed", "Order status", "woocommerce"),
+        "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
+        "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
+        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+    ];
     ?>
 
 		<div id="wpbody-content">
@@ -4039,28 +4160,28 @@ $order_statuses = array(
 							</thead>
 
 							<tbody>
-<?php
-foreach($pendingOrders as $order):
-?>
+<?php foreach ($pendingOrders as $order): ?>
 <tr>
 <td>
 <input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>">
 </td>
 <td>
- <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank"><?php echo $order->get_shipping_last_name().' ' .$order->get_shipping_first_name(); ?></a>
+ <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank"><?php echo $order->get_shipping_last_name() .
+    " " .
+    $order->get_shipping_first_name(); ?></a>
 </td>
 <td>
 <div style="height: 80px; width:200px;overflow: scroll">
-<?php echo implode("<br>",$order->products); ?>
+<?php echo implode("<br>", $order->products); ?>
 
 </div>
 </td>
 <td>
-<?php echo $order->get_total()."€"; ?>
+<?php echo $order->get_total() . "€"; ?>
 </td>
 <td>
 <mark class="order-status status-<?php echo $order->get_status(); ?> tips"><span>
-<?php echo $order_statuses['wc-'.$order->get_status()]; ?>
+<?php echo $order_statuses["wc-" . $order->get_status()]; ?>
 </span></mark>
 
 </td>
@@ -4100,14 +4221,14 @@ function my_custom_submenu_page_callback()
     $date->modify("+1 week");
     $week = $date->format("W");
     if (isset($_POST["generate_orders"])) {
+
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-			create_order_from_subscription($subscriptionId);
-			//as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
-			update_post_meta($subscriptionId, '_is_order_creating', true);
+            create_order_from_subscription($subscriptionId);
+            //as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+            update_post_meta($subscriptionId, "_is_order_creating", true);
         }
-
-		?>
+        ?>
 		<br>
 		<h4 style="color:red;">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
 		<?php
@@ -4491,9 +4612,9 @@ function custom_orders_list_column_content($column, $post_id)
             // Get custom post meta data
             $orderType = get_post_meta($post_id, "_order_type", true);
 
-			if($orderType){
-				return $orderType;
-			}
+            if ($orderType) {
+                return $orderType;
+            }
 
             /*$order = wc_get_order($post_id);
             $box_in_order = false;
@@ -4560,17 +4681,17 @@ function custom_orders_list_column_content($column, $post_id)
 add_filter("manage_edit-shop_order_columns", "add_custom_shop_order_column");
 function add_custom_shop_order_column($columns)
 {
-	if(isset($columns["order_actions"])){
-		 $order_actions = $columns["order_actions"];
-    	 unset($columns["order_actions"]);
-	}
+    if (isset($columns["order_actions"])) {
+        $order_actions = $columns["order_actions"];
+        unset($columns["order_actions"]);
+    }
 
     // add custom column
     $columns["type_shopping"] = __("Spesa", "woocommerce");
     $columns["type_notes"] = __("Note", "woocommerce");
     // Insert back 'order_actions' column
-    if(isset($columns["order_actions"])){
-		$columns["order_actions"] = $order_actions;
+    if (isset($columns["order_actions"])) {
+        $columns["order_actions"] = $order_actions;
     }
     return $columns;
 }

@@ -1,2 +1,57 @@
 2023-04-27T17:34:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38434
 2023-04-27T17:36:54+00:00 NOTICE order_process :: Order #38434 skipped, user #1 user role is not in the list
+2023-04-27T18:07:36+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38489
+2023-04-27T18:07:44+00:00 NOTICE debug :: Order ID 38489 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=38434&action=edit&message=1
+        )
+
+)
+
+2023-04-27T18:09:09+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-27T18:09:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38490
+2023-04-27T18:09:26+00:00 NOTICE debug :: Order ID 38490 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=38489&action=edit
+        )
+
+)
+
+2023-04-27T18:11:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38489
+2023-04-27T18:11:20+00:00 NOTICE debug :: Order ID 38489 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/admin.php?page=genera-ordini-box
+        )
+
+)
+
+2023-04-27T18:11:51+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-27T18:13:52+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-27T18:14:34+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38490
+2023-04-27T18:15:25+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38491
+2023-04-27T18:16:20+00:00 NOTICE order_submit.failure :: There is no real order number to use.
+2023-04-27T18:17:21+00:00 NOTICE order_submit :: #38491 has a financial status of pending and was skipped.
+2023-04-27T18:18:01+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38492
+2023-04-27T18:18:10+00:00 NOTICE debug :: Order ID 38492 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/admin.php?page=wc-settings&tab=shipping&zone_id=2
+        )
+
+)
+

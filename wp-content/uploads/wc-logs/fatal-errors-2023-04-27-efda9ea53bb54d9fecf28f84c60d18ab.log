@@ -9,3 +9,13 @@ Stack trace:
 #4 {main}
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 3929
 
+2023-04-27T18:15:26+00:00 CRITICAL Uncaught Error: Call to a member function calculate_taxes() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3838
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(4228): create_order_from_subscription('38431')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): my_custom_submenu_page_callback('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_g...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 3838
+
