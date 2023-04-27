@@ -150,6 +150,7 @@ body.tax-product_cat.archive {
 
 	&--list {
 		li {
+			&.cat-item-speciali,
 			&.cat-empty {
 				display: none !important;
 			}

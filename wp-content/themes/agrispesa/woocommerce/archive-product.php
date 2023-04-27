@@ -284,6 +284,12 @@ if (woocommerce_product_loop()) {
 	echo '<div class="negozio-sidebar">';
 	echo '<ul class="negozio-sidebar--list">';
 
+	if ($special_category) {
+		echo '<li class="cat-item cat-extra-special">';
+		echo '<a href="'.$link.'">'.$special_name.'</a>';
+		echo '</li>';
+	}
+
 	$my_walker = new Walker_Category_Custom();
 
 	$excludeSpecial = '';
@@ -308,6 +314,7 @@ if (woocommerce_product_loop()) {
 		'child_of' => $negozioID,
 		);
 		wp_list_categories($sidebar);
+
 		echo '</ul>';
 	echo '</div>';
 } else {

@@ -226,7 +226,7 @@ var x = setInterval(function() {
 
 ?>
 
-<?php if (in_array('welovedenso', $subscription_coupons)):?>
+<?php if (in_array('welovedenso', $subscription_coupons) || in_array('WELOVEDENSO', $subscription_coupons)):?>
 	<div class="top_banner">
 		<h3 class="top_banner--title">We love Denso.</h3>
 		<p class="top_banner--subtitle">Consegniamo gratuitamente nella tua azienda.</p>

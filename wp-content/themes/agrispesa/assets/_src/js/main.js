@@ -183,7 +183,7 @@ function listCategories() {
     let _viewall = jQuery('.negozio-sidebar--list li.cat-item.view-all');
     _viewall.each(function () {
       let _children = jQuery(this).prev('.cat-item').find('ul.children').first();
-      jQuery(this).addClass('test');
+      //jQuery(this).addClass('test');
       jQuery(this).prependTo(_children);
       console.log(_viewall);
     });
