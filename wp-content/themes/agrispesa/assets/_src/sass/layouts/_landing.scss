@@ -1,4 +1,10 @@
 /* stylelint-disable */
+body.page-template-landing-company {
+	.mini-menu--header {
+		display: none;
+	}
+}
+
 .hero-landing {
 	overflow: hidden;
 
@@ -10,6 +16,7 @@
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
+
 		body.page-template-landing-company & {
 			&:before {
 				content: '';
@@ -308,7 +315,7 @@
 .pet-heroes {
 	@include full-bg();
 	position: relative;
-	padding: 120px 0 120px;
+	padding: 120px 0;
 	color: $panna;
 	@include breakpoint(mobile) {
 		padding: 42px 0;
@@ -1541,7 +1548,6 @@ body.page-template-page-password-php {
 		box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
 		margin: 0 20px;
 		background: rgba($beige, 0.6);
-
 	}
 
 	&--title {
@@ -1549,7 +1555,6 @@ body.page-template-page-password-php {
 		font-weight: 900;
 		line-height: 1;
 	}
-
 
 	&--text {
 		@include font-size(16);
