@@ -176,6 +176,10 @@ function moveCustomFieldsCheckout() {
 
 
 function listCategories() {
+  if(jQuery('.cat-item-speciali.current-cat-parent').length) {
+    jQuery('.negozio-sidebar--list.navigate').addClass('show-all-subs');
+
+  }
   if (jQuery('.negozio-sidebar--list.navigate').length) {
     jQuery('.negozio-sidebar--list.navigate li.cat-item:has(ul.children) > a').addClass('i-have-kids');
     jQuery('.negozio-sidebar--list.navigate > li.cat-item:has(ul.children) > a').addClass('first-item');

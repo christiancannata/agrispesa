@@ -149,6 +149,14 @@ body.tax-product_cat.archive {
 	}
 
 	&--list {
+		&.show-all-subs {
+			& > li.cat-item {
+				display: block !important
+			}
+			& > li.cat-item-speciali, {
+				display: none !important
+			}
+		}
 		li {
 			&.cat-item-speciali,
 			&.cat-empty {
