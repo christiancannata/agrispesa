@@ -2407,6 +2407,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 				}
                 }
+
+				update_post_meta($order->get_id(),'navision_last_export',(new \DateTime())->format("Y-m-d H:i"));
             }
             header("Content-type: text/xml");
             die($doc->saveXml());
@@ -3593,7 +3595,35 @@ function create_order_from_subscription($id)
         return false;
     }
 
-    $week = get_post_meta($box->ID, "_week", true);
+	//check products status
+	$week = get_post_meta($box->ID, "_week", true);
+
+    $productsToAdd = get_products_to_add_from_subscription(
+        $subscription,
+        $week,
+        true
+    );
+
+
+	$productsToAddWoocommerce = [];
+	 foreach ($productsToAdd as $productToAdd) {
+		  $productObj = wc_get_product($productToAdd["id"]);
+
+        if (!$productObjToAdd) {
+			die("Prodotto ".$productsToAdd['name'].' con ID #'.$productsToAdd['id'].' non trovato!');
+            continue;
+        }
+
+		$productsToAddWoocommerce[] = [
+		'product' => $productObj,
+		'quantity' =>  $productToAdd["quantity"],
+		'offer_line_no' => $productToAdd["offer_line_no"]
+];
+
+	 }
+
+
+
     $consegna = get_post_meta($box->ID, "_data_consegna", true);
     $boxNavisionId = get_post_meta($box->ID, "_navision_id", true);
     $customerId = $subscription->get_user_id();
@@ -3607,20 +3637,10 @@ function create_order_from_subscription($id)
         true
     );
 
-    foreach ($productsToAdd as $productToAdd) {
-        $productObjToAdd = wc_get_product($productToAdd["id"]);
+    foreach ($productsToAddWoocommerce as $productToAdd) {
 
-        if (!$productObjToAdd) {
-            continue;
-        }
-
-        if (
-            $productToAdd["quantity"] > $productObjToAdd->get_stock_quantity()
-        ) {
-            //Non ho più disponibilità
-        }
         $itemId = $order->add_product(
-            $productObjToAdd,
+            $productToAdd['product'],
             $productToAdd["quantity"]
         );
         wc_add_order_item_meta(
@@ -3629,6 +3649,8 @@ function create_order_from_subscription($id)
             $productToAdd["offer_line_no"]
         );
     }
+
+
     // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
     $order->set_address(
         [
