@@ -40,6 +40,7 @@ function wc_minimum_order_amount()
 	} else if ($loggedUser && $allowedClients && in_array($loggedUser, $allowedClients)) {
 		//tolgo il limite se l'utente è autorizzato da backend
 		$minimum = 10;
+
 	}
 
 	// Loop through cart items
@@ -894,61 +895,50 @@ function codiceFiscale($cf)
 }
 
 
-//set free shipping if user has subscription
-function filter_woocommerce_package_rates($rates, $package)
-{
-	$loggedUser = is_user_logged_in();
-
-	$has_sub = '';
-	if ($loggedUser) {
-		$current_user = wp_get_current_user();
-		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
-	}
-
-
-	// Condition
-	if ($has_sub) {
-		// Set
-		$free = array();
-
-		// Loop
-		foreach ($rates as $rate_id => $rate) {
-			// Rate method id = free shipping
-			if ($rate->cost == 0) {
-				$free[$rate_id] = $rate;
-				break;
-			}
-		}
-	}
-
-	return !empty($free) ? $free : $rates;
-}
-
-add_filter('woocommerce_package_rates', 'filter_woocommerce_package_rates', 10, 2);
-
 
 //Sconto primo ordine
 add_filter( 'woocommerce_package_rates', 'free_first_order_shipping', 20, 2 );
 function free_first_order_shipping( $rates, $package ) {
     // New shipping cost (can be calculated)
 		$cart = WC()->cart;
+		$has_free_shipping = false;
+
     $tax_rate = 0;
 		$new_cost = 0;
 		$label = 'Gratuita';
 
-		//print_r($cart->recurring_carts);
+		$loggedUser = is_user_logged_in();
 
-    //If user is logged in
-    if(is_user_logged_in()) {
-        $user_id = get_current_user_id();
-        //We want to know how many completed orders customer have or remove status if you dont care.
-        $args = array(
-            'customer_id' => 1,
-            'status' => array('wc-completed'),
-        );
-        $orders = wc_get_orders($args);
-        //If there are no orders returned apply free shipping
-        if(!$orders) {
+		$has_sub = '';
+		if ($loggedUser) {
+			$current_user = wp_get_current_user();
+			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+
+			$user_id = get_current_user_id();
+			$args = array(
+					'customer_id' => 1,
+					'status' => array('wc-completed'),
+			);
+			$orders = wc_get_orders($args);
+		}
+		$buying_sub = false;
+		$box_product_id = 50;
+		if( in_array( $box_product_id, array_column( WC()->cart->get_cart(), 'product_id' ) ) ) {
+			$buying_sub = true;
+		}
+
+		if(!$loggedUser) {
+			$has_free_shipping = true;
+		} else if($loggedUser && $has_sub && $buying_sub == false) {
+			$has_free_shipping = true;
+		} else if($loggedUser && !$orders) {
+			$has_free_shipping = true;
+		} else if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+			$has_free_shipping = true;
+		}
+
+
+    if($has_free_shipping) {
 
             foreach( $rates as $rate_key => $rate ){
 
@@ -971,33 +961,8 @@ function free_first_order_shipping( $rates, $package ) {
 
                 }
             }
-        }
-    } else {
 
-			foreach( $rates as $rate_key => $rate ){
-
-					error_log(print_r($rate,true));
-					// Excluding free shipping methods
-					if( $rate->method_id != 'free_shipping'){
-
-							// Set rate cost
-							$rates[$rate_key]->cost = $new_cost;
-							//Set shipping label
-							$rates[$rate_key]->label = $label;
-
-							// Set taxes rate cost (if enabled)
-							$taxes = array();
-							foreach ($rates[$rate_key]->taxes as $key => $tax){
-									if( $rates[$rate_key]->taxes[$key] > 0 )
-											$taxes[$key] = $new_cost * $tax_rate;
-							}
-							$rates[$rate_key]->taxes = $taxes;
-
-					}
-
-		}
-		}
-
+    }
     return $rates;
 }
 
@@ -1008,8 +973,14 @@ add_filter( 'woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10,
 function add_recurring_postage_fees( $cart ) {
 
     if ( !empty( $cart->recurring_cart_key ) ) {
-
-        $intervals = explode( '_', $cart->recurring_cart_key );
+			if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
+				//$intervals = explode( '_', $cart->recurring_cart_key );
+        $cart->add_fee( 'Consegna', 0, false, '' );
+			} else {
+				//$intervals = explode( '_', $cart->recurring_cart_key );
         $cart->add_fee( 'Consegna', 5, false, '' );
+			}
+
+
     }
 }

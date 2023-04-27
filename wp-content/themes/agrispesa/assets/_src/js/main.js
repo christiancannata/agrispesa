@@ -117,6 +117,7 @@ function landingSelectVariable() {
   //First load check
   //let currentUrl = jQuery('#get_url').attr("href");
   let currentUrl = 'https://www.agrispesa.it/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
+  //let currentUrl = 'http://localhost:3000/agrispesa/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
   let url = new URL(currentUrl);
   const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
   const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
