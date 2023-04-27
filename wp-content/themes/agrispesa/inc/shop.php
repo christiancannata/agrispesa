@@ -68,9 +68,11 @@ function shop_page_empty_layout()
 		$excludeSpecial = $specialiID;
 	}
 	if ($special_category) {
+		echo '<ul class="negozio-sidebar--list navigate">';
 		echo '<li class="cat-item cat-extra-special">';
 		echo '<a href="'.$link.'">'.$special_name.'</a>';
 		echo '</li>';
+		echo '</ul>';
 	}
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
