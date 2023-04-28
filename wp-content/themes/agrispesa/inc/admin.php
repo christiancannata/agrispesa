@@ -1,449 +1,457 @@
 <?php
 function dd($vars)
 {
-    die(var_dump($vars));
+	die(var_dump($vars));
 }
 
-add_action("reload_terms_count", function ($productId) {});
+add_action("reload_terms_count", function ($productId) {
+});
 
 // define woocommerce_order_status_completed callback function
 function call_order_status_changed($orderId)
 {
-    $order = wc_get_order($orderId);
+	$order = wc_get_order($orderId);
 
-    $orderType = "ST";
+	$orderType = "ST";
 
-    foreach ($order->get_items() as $item_id => $item) {
-        $categories = get_the_terms($item->get_product_id(), "product_cat");
-        foreach ($categories as $term) {
-            if (in_array($term->slug, ["box"])) {
-                $orderType = "FN";
-            }
-        }
+	foreach ($order->get_items() as $item_id => $item) {
+		$categories = get_the_terms($item->get_product_id(), "product_cat");
+		foreach ($categories as $term) {
+			if (in_array($term->slug, ["box"])) {
+				$orderType = "FN";
+			}
+		}
 
-        if ($item->get_name() == "Acquisto credito") {
-            $orderType = "CREDITO";
-        }
-    }
+		if ($item->get_name() == "Acquisto credito") {
+			$orderType = "CREDITO";
+		}
+	}
 
-    update_post_meta($orderId, "_order_type", $orderType);
+	update_post_meta($orderId, "_order_type", $orderType);
 }
 
 // Call our custom function with the action hook
 add_action(
-    "woocommerce_order_status_changed",
-    "call_order_status_changed",
-    10,
-    1
+	"woocommerce_order_status_changed",
+	"call_order_status_changed",
+	10,
+	1
 );
 
 add_action(
-    "woocommerce_order_status_pending",
-    "call_order_status_changed",
-    10,
-    1
+	"woocommerce_order_status_pending",
+	"call_order_status_changed",
+	10,
+	1
 );
 
 function merge_orders($subscriptionOrder, $orders)
 {
-    foreach ($orders as $order) {
-        $first_order_id = $orders->get_id();
-        foreach ($order->get_items() as $item_id => $item) {
-            $product_id = $item->get_product_id();
-            $variation_id = $item->get_variation_id();
-            $product_quantity = $item->get_quantity();
+	foreach ($orders as $order) {
+		$first_order_id = $orders->get_id();
+		foreach ($order->get_items() as $item_id => $item) {
+			$product_id = $item->get_product_id();
+			$variation_id = $item->get_variation_id();
+			$product_quantity = $item->get_quantity();
 
-            //if product type is simple
-            if ($variation_id == 0) {
-                $product = wc_get_product($product_id);
-                $subscriptionOrder->add_product($product, $product_quantity);
-            }
-            //if product type is variable
-            else {
-                $variation = wc_get_product($variation_id);
-                $subscriptionOrder->add_product($variation, $product_quantity);
-            }
-        }
-        $subscriptionOrder->calculate_totals();
-        update_post_meta($order->get_id(), "is_merged_order", 1);
-        $order->update_status(
-            "cancelled",
-            "This order is cancelled since it is combined with order ID: " .
-                $subscriptionOrder->get_id()
-        );
-        $subscriptionOrder->add_order_note(
-            "Order ID: $first_order_id is cancelled and combined with this order."
-        );
-    }
+			//if product type is simple
+			if ($variation_id == 0) {
+				$product = wc_get_product($product_id);
+				$subscriptionOrder->add_product($product, $product_quantity);
+			} //if product type is variable
+			else {
+				$variation = wc_get_product($variation_id);
+				$subscriptionOrder->add_product($variation, $product_quantity);
+			}
+		}
+		$subscriptionOrder->calculate_totals();
+		update_post_meta($order->get_id(), "is_merged_order", 1);
+		$order->update_status(
+			"cancelled",
+			"This order is cancelled since it is combined with order ID: " .
+			$subscriptionOrder->get_id()
+		);
+		$subscriptionOrder->add_order_note(
+			"Order ID: $first_order_id is cancelled and combined with this order."
+		);
+	}
 }
+
 function give_user_subscription($product, $user, $row)
 {
-    $user_id = $user->ID;
-    // First make sure all required functions and classes exist
-    if (
-        !function_exists("wc_create_order") ||
-        !function_exists("wcs_create_subscription") ||
-        !class_exists("WC_Subscriptions_Product")
-    ) {
-        return false;
-    }
-    $payment_gateways = WC()->payment_gateways->payment_gateways();
-    $order = wc_create_order(["customer_id" => $user_id]);
-    update_post_meta($order->get_id(), "_disable_order_emails", true);
+	$user_id = $user->ID;
+	// First make sure all required functions and classes exist
+	if (
+		!function_exists("wc_create_order") ||
+		!function_exists("wcs_create_subscription") ||
+		!class_exists("WC_Subscriptions_Product")
+	) {
+		return false;
+	}
+	$payment_gateways = WC()->payment_gateways->payment_gateways();
+	$order = wc_create_order(["customer_id" => $user_id]);
+	update_post_meta($order->get_id(), "_disable_order_emails", true);
 
-    if (is_wp_error($order)) {
-        dd($order);
-        return false;
-    }
-    $user = get_user_by("ID", $user_id);
-    $fname = $user->first_name;
-    $lname = $user->last_name;
-    $email = $user->user_email;
-    /*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
+	if (is_wp_error($order)) {
+		dd($order);
+		return false;
+	}
+	$user = get_user_by("ID", $user_id);
+	$fname = $user->first_name;
+	$lname = $user->last_name;
+	$email = $user->user_email;
+	/*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
 		$address_2 = get_user_meta( $user_id, 'billing_address_2', true );
 		$city      = get_user_meta( $user_id, 'billing_city', true );
 		$postcode  = get_user_meta( $user_id, 'billing_postcode', true );
 		$country   = get_user_meta( $user_id, 'billing_country', true );
 		$state     = get_user_meta( $user_id, 'billing_state', true );
 		*/
-    $shippingAddress = [
-        "first_name" => $fname,
-        "last_name" => $lname,
-        "email" => $email,
-        "phone" => isset($row["automatismiSettimanali_utenze::telmobile"])
-            ? $row["automatismiSettimanali_utenze::telmobile"]
-            : "",
-        "address_1" =>
-            $row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] .
-            " " .
-            $row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"],
-        "city" => $row["automatismiSettimanali_indirizzoSpedizione::città"],
-        "state" => $row["automatismiSettimanali_speseSpedizione::provincia"],
-        "postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"],
-        "country" => "IT",
-    ];
-    $invoiceAddress = [
-        "first_name" =>
-            $row["automatismiSettimanali_intestazioneFattura::nome"],
-        "last_name" =>
-            $row["automatismiSettimanali_intestazioneFattura::cognome"],
-        "email" => $email,
-        "phone" => isset($row["automatismiSettimanali_utenze::telmobile"])
-            ? $row["automatismiSettimanali_utenze::telmobile"]
-            : "",
-        "address_1" =>
-            $row["automatismiSettimanali_intestazioneFattura::indirizzo"] .
-            " " .
-            $row["automatismiSettimanali_intestazioneFattura::numeroCivico"],
-        "city" => $row["automatismiSettimanali_intestazioneFattura::città"],
-        "state" => $row["automatismiSettimanali_speseSpedizione::provincia"],
-        "postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"],
-        "country" => "IT",
-    ];
-    $order->set_customer_id($user_id);
-    $order->set_address($invoiceAddress, "billing");
-    $order->set_address($shippingAddress, "shipping");
-    $order->add_product($product, 1);
-    $order->set_status("completed");
-    $order->set_payment_method($payment_gateways["wallet"]);
-    $order->calculate_totals();
-    update_post_meta(
-        $order->get_id(),
-        "_billing_partita_iva",
-        $row["automatismiSettimanali_intestazioneFattura::codiceFiscale"]
-    );
-    update_post_meta(
-        $order->get_id(),
-        "_billing_codice_fiscale",
-        $row["automatismiSettimanali_intestazioneFattura::partitaIva"]
-    );
-    $order->save();
-    $subscriptionParams = [
-        "order_id" => $order->get_id(),
-        "customer_id" => $user_id,
-        "status" => $row["riceveSpesa"] == 1 ? "active" : "on-hold",
-        "billing_period" => WC_Subscriptions_Product::get_period($product),
-        "billing_interval" => WC_Subscriptions_Product::get_interval($product),
-    ];
-    $sub = wcs_create_subscription($subscriptionParams);
-    update_post_meta($sub->get_id(), "_disable_order_emails", true);
-    if (is_wp_error($sub)) {
-        dd($sub);
-        return false;
-    }
-    $sub->set_payment_method($payment_gateways["wallet"]);
-    $sub->set_address($invoiceAddress, "billing");
-    $sub->set_address($shippingAddress, "shipping");
-    // Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
-    $start_date = gmdate("Y-m-d H:i:s");
-    // Add product to subscription
-    $sub->add_product($product, 1);
-    $dates = [
-        "trial_end" => WC_Subscriptions_Product::get_trial_expiration_date(
-            $product,
-            $start_date
-        ),
-        "next_payment" => WC_Subscriptions_Product::get_first_renewal_payment_date(
-            $product,
-            $start_date
-        ),
-        "end" => WC_Subscriptions_Product::get_expiration_date(
-            $product,
-            $start_date
-        ),
-    ];
-    $sub->update_dates($dates);
-    $sub->calculate_totals();
-    $sub->save();
-    // Update order status with custom note
-    $note = !empty($note)
-        ? $note
-        : __("Programmatically added order and subscription.");
-    //$order->update_status( 'completed', $note, true );
-    // Also update subscription status to active from pending (and add note)
-    //	$sub->update_status( 'active', $note, true );
-    return $sub;
+	$shippingAddress = [
+		"first_name" => $fname,
+		"last_name" => $lname,
+		"email" => $email,
+		"phone" => isset($row["automatismiSettimanali_utenze::telmobile"])
+			? $row["automatismiSettimanali_utenze::telmobile"]
+			: "",
+		"address_1" =>
+			$row["automatismiSettimanali_indirizzoSpedizione::indirizzo"] .
+			" " .
+			$row["automatismiSettimanali_indirizzoSpedizione::numeroCivico"],
+		"city" => $row["automatismiSettimanali_indirizzoSpedizione::città"],
+		"state" => $row["automatismiSettimanali_speseSpedizione::provincia"],
+		"postcode" => $row["automatismiSettimanali_indirizzoSpedizione::cap"],
+		"country" => "IT",
+	];
+	$invoiceAddress = [
+		"first_name" =>
+			$row["automatismiSettimanali_intestazioneFattura::nome"],
+		"last_name" =>
+			$row["automatismiSettimanali_intestazioneFattura::cognome"],
+		"email" => $email,
+		"phone" => isset($row["automatismiSettimanali_utenze::telmobile"])
+			? $row["automatismiSettimanali_utenze::telmobile"]
+			: "",
+		"address_1" =>
+			$row["automatismiSettimanali_intestazioneFattura::indirizzo"] .
+			" " .
+			$row["automatismiSettimanali_intestazioneFattura::numeroCivico"],
+		"city" => $row["automatismiSettimanali_intestazioneFattura::città"],
+		"state" => $row["automatismiSettimanali_speseSpedizione::provincia"],
+		"postcode" => $row["automatismiSettimanali_intestazioneFattura::cap"],
+		"country" => "IT",
+	];
+	$order->set_customer_id($user_id);
+	$order->set_address($invoiceAddress, "billing");
+	$order->set_address($shippingAddress, "shipping");
+	$order->add_product($product, 1);
+	$order->set_status("completed");
+	$order->set_payment_method($payment_gateways["wallet"]);
+	$order->calculate_totals();
+	update_post_meta(
+		$order->get_id(),
+		"_billing_partita_iva",
+		$row["automatismiSettimanali_intestazioneFattura::codiceFiscale"]
+	);
+	update_post_meta(
+		$order->get_id(),
+		"_billing_codice_fiscale",
+		$row["automatismiSettimanali_intestazioneFattura::partitaIva"]
+	);
+	$order->save();
+	$subscriptionParams = [
+		"order_id" => $order->get_id(),
+		"customer_id" => $user_id,
+		"status" => $row["riceveSpesa"] == 1 ? "active" : "on-hold",
+		"billing_period" => WC_Subscriptions_Product::get_period($product),
+		"billing_interval" => WC_Subscriptions_Product::get_interval($product),
+	];
+	$sub = wcs_create_subscription($subscriptionParams);
+	update_post_meta($sub->get_id(), "_disable_order_emails", true);
+	if (is_wp_error($sub)) {
+		dd($sub);
+		return false;
+	}
+	$sub->set_payment_method($payment_gateways["wallet"]);
+	$sub->set_address($invoiceAddress, "billing");
+	$sub->set_address($shippingAddress, "shipping");
+	// Modeled after WC_Subscriptions_Cart::calculate_subscription_totals()
+	$start_date = gmdate("Y-m-d H:i:s");
+	// Add product to subscription
+	$sub->add_product($product, 1);
+	$dates = [
+		"trial_end" => WC_Subscriptions_Product::get_trial_expiration_date(
+			$product,
+			$start_date
+		),
+		"next_payment" => WC_Subscriptions_Product::get_first_renewal_payment_date(
+			$product,
+			$start_date
+		),
+		"end" => WC_Subscriptions_Product::get_expiration_date(
+			$product,
+			$start_date
+		),
+	];
+	$sub->update_dates($dates);
+	$sub->calculate_totals();
+	$sub->save();
+	// Update order status with custom note
+	$note = !empty($note)
+		? $note
+		: __("Programmatically added order and subscription.");
+	//$order->update_status( 'completed', $note, true );
+	// Also update subscription status to active from pending (and add note)
+	//	$sub->update_status( 'active', $note, true );
+	return $sub;
 }
+
 function get_order_delivery_date($id)
 {
-    $order = wc_get_order($id);
-    if (!$order) {
-        return null;
-    }
-    $deliveryDate = get_post_meta($id, "_delivery_date", true);
-    if ($deliveryDate) {
-        return DateTime::createFromFormat("Y-m-d", $deliveryDate)->format(
-            "d/m/Y"
-        );
-    }
+	$order = wc_get_order($id);
+	if (!$order) {
+		return null;
+	}
+	$deliveryDate = get_post_meta($id, "_delivery_date", true);
+	if ($deliveryDate) {
+		return DateTime::createFromFormat("Y-m-d", $deliveryDate)->format(
+			"d/m/Y"
+		);
+	}
 }
+
 function get_order_delivery_date_from_date(
-    $date = null,
-    $group = null,
-    $cap = null
-) {
-    if (!$group && $cap) {
-        $groups = get_posts([
-            "post_type" => "delivery-group",
-            "post_status" => "publish",
-            "posts_per_page" => -1,
-        ]);
-        foreach ($groups as $singleGroup) {
-            $caps = get_post_meta($singleGroup->ID, "cap", true);
-            if (is_array($caps)) {
-                if (in_array($cap, $caps)) {
-                    $group = $singleGroup->post_title;
-                }
-            }
-        }
-    }
-    if (!$group) {
-        return null;
-    }
-    global $wpdb;
-    $ids = $wpdb->get_col(
-        "select ID from $wpdb->posts where post_title = '" .
-            $group .
-            "' AND post_status = 'publish'"
-    );
-    $ids = reset($ids);
-    $dowMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-    if (is_object($date) && get_class($date) != DateTime::class) {
-        $date = DateTime::createFromFormat("d-m-Y", $date);
-    }
-    //if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
-    if (is_string($date)) {
-        $date = new DateTime($date);
-    }
-    //$date->add(new DateInterval("P7D"));
-    $date->add(new DateInterval("P1D"));
-    //}
-    $deliveryDay = get_post_meta($ids, "delivery_day", true);
-    $deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());
-    $deliveryDate = DateTime::createFromFormat("U", $deliveryDate);
-    return $deliveryDate;
+	$date = null,
+	$group = null,
+	$cap = null
+)
+{
+	if (!$group && $cap) {
+		$groups = get_posts([
+			"post_type" => "delivery-group",
+			"post_status" => "publish",
+			"posts_per_page" => -1,
+		]);
+		foreach ($groups as $singleGroup) {
+			$caps = get_post_meta($singleGroup->ID, "cap", true);
+			if (is_array($caps)) {
+				if (in_array($cap, $caps)) {
+					$group = $singleGroup->post_title;
+				}
+			}
+		}
+	}
+	if (!$group) {
+		return null;
+	}
+	global $wpdb;
+	$ids = $wpdb->get_col(
+		"select ID from $wpdb->posts where post_title = '" .
+		$group .
+		"' AND post_status = 'publish'"
+	);
+	$ids = reset($ids);
+	$dowMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+	if (is_object($date) && get_class($date) != DateTime::class) {
+		$date = DateTime::createFromFormat("d-m-Y", $date);
+	}
+	//if (($date->format('w') > 5 && $date->format('H') >= 8) || $date->format('w') == 0) {
+	if (is_string($date)) {
+		$date = new DateTime($date);
+	}
+	//$date->add(new DateInterval("P7D"));
+	$date->add(new DateInterval("P1D"));
+	//}
+	$deliveryDay = get_post_meta($ids, "delivery_day", true);
+	$deliveryDate = strtotime($dowMap[$deliveryDay], $date->getTimestamp());
+	$deliveryDate = DateTime::createFromFormat("U", $deliveryDate);
+	return $deliveryDate;
 }
+
 function calculate_delivery_date_order($id, $updateWeek = true)
 {
-    $order = wc_get_order($id);
-    if (!$order) {
-        return null;
-    }
-    $gruppoConsegna = get_post_meta($id, "_gruppo_consegna", true);
-    if (!$gruppoConsegna) {
-        return null;
-    }
-    $order_date = $order->get_date_paid();
-    if ($order_date) {
-        if ($updateWeek) {
-            $week = $order_date->format("W");
-            if ($order->get_created_via() == "checkout") {
-                $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-            } else {
-                if (
-                    ($order_date->format("w") > 5 &&
-                        $order_date->format("H") >= 8) ||
-                    $order_date->format("w") == 0
-                ) {
-                    $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-                }
-            }
-            update_post_meta($order->get_id(), "_week", $week);
-        }
-        $deliveryDate = get_order_delivery_date_from_date(
-            $order_date->format("d-m-Y"),
-            $gruppoConsegna
-        );
-        update_post_meta(
-            $order->get_id(),
-            "_delivery_date",
-            $deliveryDate->format("Y-m-d")
-        );
-    }
+	$order = wc_get_order($id);
+	if (!$order) {
+		return null;
+	}
+	$gruppoConsegna = get_post_meta($id, "_gruppo_consegna", true);
+	if (!$gruppoConsegna) {
+		return null;
+	}
+	$order_date = $order->get_date_paid();
+	if ($order_date) {
+		if ($updateWeek) {
+			$week = $order_date->format("W");
+			if ($order->get_created_via() == "checkout") {
+				$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+			} else {
+				if (
+					($order_date->format("w") > 5 &&
+						$order_date->format("H") >= 8) ||
+					$order_date->format("w") == 0
+				) {
+					$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+				}
+			}
+			update_post_meta($order->get_id(), "_week", $week);
+		}
+		$deliveryDate = get_order_delivery_date_from_date(
+			$order_date->format("d-m-Y"),
+			$gruppoConsegna
+		);
+		update_post_meta(
+			$order->get_id(),
+			"_delivery_date",
+			$deliveryDate->format("Y-m-d")
+		);
+	}
 }
+
 add_action(
-    "woocommerce_new_order",
-    function ($order_id, $order) {
-        if ($order->get_created_via() == "checkout") {
-            $groups = get_posts([
-                "post_type" => "delivery-group",
-                "post_status" => "publish",
-                "posts_per_page" => -1,
-            ]);
-            foreach ($groups as $group) {
-                $caps = get_post_meta($group->ID, "cap", true);
-                if (in_array($order->get_shipping_postcode(), $caps)) {
-                    update_post_meta(
-                        $order->get_id(),
-                        "_gruppo_consegna",
-                        $group->post_title
-                    );
-                }
-            }
-            $gruppoConsegna = get_post_meta(
-                $order_id,
-                "_gruppo_consegna",
-                true
-            );
-            $order_date = $order->get_date_created();
-            //nathi
-            $order_date->modify("+1 week");
-            $week = $order_date->format("W");
-            $week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
-            update_post_meta($order->get_id(), "_week", $week);
-            if ($gruppoConsegna) {
-                $deliveryDate = get_order_delivery_date_from_date(
-                    $order_date->format("d-m-Y"),
-                    $gruppoConsegna
-                );
-                if ($deliveryDate) {
-                    update_post_meta(
-                        $order->get_id(),
-                        "_delivery_date",
-                        $deliveryDate->format("Y-m-d")
-                    );
-                }
-            }
-        }
-    },
-    10,
-    2
+	"woocommerce_new_order",
+	function ($order_id, $order) {
+		if ($order->get_created_via() == "checkout") {
+			$groups = get_posts([
+				"post_type" => "delivery-group",
+				"post_status" => "publish",
+				"posts_per_page" => -1,
+			]);
+			foreach ($groups as $group) {
+				$caps = get_post_meta($group->ID, "cap", true);
+				if (in_array($order->get_shipping_postcode(), $caps)) {
+					update_post_meta(
+						$order->get_id(),
+						"_gruppo_consegna",
+						$group->post_title
+					);
+				}
+			}
+			$gruppoConsegna = get_post_meta(
+				$order_id,
+				"_gruppo_consegna",
+				true
+			);
+			$order_date = $order->get_date_created();
+			//nathi
+			$order_date->modify("+1 week");
+			$week = $order_date->format("W");
+			$week = str_pad($week + 1, 2, 0, STR_PAD_LEFT);
+			update_post_meta($order->get_id(), "_week", $week);
+			if ($gruppoConsegna) {
+				$deliveryDate = get_order_delivery_date_from_date(
+					$order_date->format("d-m-Y"),
+					$gruppoConsegna
+				);
+				if ($deliveryDate) {
+					update_post_meta(
+						$order->get_id(),
+						"_delivery_date",
+						$deliveryDate->format("Y-m-d")
+					);
+				}
+			}
+		}
+	},
+	10,
+	2
 );
 add_action("woocommerce_product_options_advanced", function () {
-    woocommerce_wp_text_input([
-        "id" => "_codice_confezionamento",
-        "label" => "Codice Confezionamento",
-    ]);
-    woocommerce_wp_checkbox([
-        "id" => "_is_magazzino",
-        "label" => "È da Magazzino?",
-    ]);
-    woocommerce_wp_text_input([
-        "id" => "_qty_acquisto",
-        "label" => "Quantità (Acquisto)",
-    ]);
-    woocommerce_wp_text_input([
-        "id" => "_uom_acquisto",
-        "label" => "Cod. Unità di misura",
-    ]);
+	woocommerce_wp_text_input([
+		"id" => "_codice_confezionamento",
+		"label" => "Codice Confezionamento",
+	]);
+	woocommerce_wp_checkbox([
+		"id" => "_is_magazzino",
+		"label" => "È da Magazzino?",
+	]);
+	woocommerce_wp_text_input([
+		"id" => "_qty_acquisto",
+		"label" => "Quantità (Acquisto)",
+	]);
+	woocommerce_wp_text_input([
+		"id" => "_uom_acquisto",
+		"label" => "Cod. Unità di misura",
+	]);
 });
 add_action("woocommerce_product_options_general_product_data", function () {
-    global $post;
-    /*
-    woocommerce_wp_text_input([
-        "id" => "_prezzo_acquisto",
-        "label" => "Prezzo di acquisto (€)",
-        "placeholder" => "0.00",
-        "description" => __(
-            "I valori decimali sono separati con un punto. Es. €2.30",
-            "woocommerce"
-        ),
-    ]);
-    woocommerce_wp_checkbox([
-        "id" => "_tipo_percentuale_ricarico",
-        "label" => "Eredita percentuale ricarico dalla categoria",
-    ]);
-    woocommerce_wp_text_input([
-        "id" => "_percentuale_ricarico",
-        "label" => "Ricarico %",
-        "placeholder" => "0",
-        "description" => __("Valore della percentuale.", "woocommerce"),
-    ]);
+	global $post;
+	/*
+	woocommerce_wp_text_input([
+		"id" => "_prezzo_acquisto",
+		"label" => "Prezzo di acquisto (€)",
+		"placeholder" => "0.00",
+		"description" => __(
+			"I valori decimali sono separati con un punto. Es. €2.30",
+			"woocommerce"
+		),
+	]);
+	woocommerce_wp_checkbox([
+		"id" => "_tipo_percentuale_ricarico",
+		"label" => "Eredita percentuale ricarico dalla categoria",
+	]);
+	woocommerce_wp_text_input([
+		"id" => "_percentuale_ricarico",
+		"label" => "Ricarico %",
+		"placeholder" => "0",
+		"description" => __("Valore della percentuale.", "woocommerce"),
+	]);
    */
 });
 function woocommerce_product_custom_fields_save1($post_id)
 {
-    if (isset($_POST["_codice_confezionamento"])) {
-        update_post_meta(
-            $post_id,
-            "_codice_confezionamento",
-            esc_attr($_POST["_codice_confezionamento"])
-        );
-    }
-    if (isset($_POST["_is_magazzino"])) {
-        update_post_meta(
-            $post_id,
-            "_is_magazzino",
-            esc_attr($_POST["_is_magazzino"])
-        );
-    }
-    if (isset($_POST["_prezzo_acquisto"])) {
-        update_post_meta(
-            $post_id,
-            "_prezzo_acquisto",
-            esc_attr($_POST["_prezzo_acquisto"])
-        );
-    }
-    if (isset($_POST["_percentuale_ricarico"])) {
-        update_post_meta(
-            $post_id,
-            "_percentuale_ricarico",
-            esc_attr($_POST["_percentuale_ricarico"])
-        );
-    }
-    if (isset($_POST["_uom_acquisto"])) {
-        update_post_meta(
-            $post_id,
-            "_uom_acquisto",
-            esc_attr($_POST["_uom_acquisto"])
-        );
-    }
-    if (isset($_POST["_qty_acquisto"])) {
-        update_post_meta(
-            $post_id,
-            "_qty_acquisto",
-            esc_attr($_POST["_qty_acquisto"])
-        );
-    }
+	if (isset($_POST["_codice_confezionamento"])) {
+		update_post_meta(
+			$post_id,
+			"_codice_confezionamento",
+			esc_attr($_POST["_codice_confezionamento"])
+		);
+	}
+	if (isset($_POST["_is_magazzino"])) {
+		update_post_meta(
+			$post_id,
+			"_is_magazzino",
+			esc_attr($_POST["_is_magazzino"])
+		);
+	}
+	if (isset($_POST["_prezzo_acquisto"])) {
+		update_post_meta(
+			$post_id,
+			"_prezzo_acquisto",
+			esc_attr($_POST["_prezzo_acquisto"])
+		);
+	}
+	if (isset($_POST["_percentuale_ricarico"])) {
+		update_post_meta(
+			$post_id,
+			"_percentuale_ricarico",
+			esc_attr($_POST["_percentuale_ricarico"])
+		);
+	}
+	if (isset($_POST["_uom_acquisto"])) {
+		update_post_meta(
+			$post_id,
+			"_uom_acquisto",
+			esc_attr($_POST["_uom_acquisto"])
+		);
+	}
+	if (isset($_POST["_qty_acquisto"])) {
+		update_post_meta(
+			$post_id,
+			"_qty_acquisto",
+			esc_attr($_POST["_qty_acquisto"])
+		);
+	}
 }
+
 function wpse27856_set_content_type()
 {
-    return "text/html";
+	return "text/html";
 }
+
 add_filter("wp_mail_content_type", "wpse27856_set_content_type");
 add_action(
-    "woocommerce_process_product_meta",
-    "woocommerce_product_custom_fields_save1"
+	"woocommerce_process_product_meta",
+	"woocommerce_product_custom_fields_save1"
 );
 add_action("rest_api_init", function () {
     register_rest_route("agrispesa/v1", "import-preferences", [
@@ -2566,7 +2574,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $orderType = "ABBONAMENTO";
                 } else {
                     global $wpdb;
-                    $isParent = $wpdb->get_results(
+                  /*  $isParent = $wpdb->get_results(
                         "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
                             $order->get_id(),
 
@@ -2586,7 +2594,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 if($orderType == 'FN'){
 					continue;
-                }
+                } */
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
