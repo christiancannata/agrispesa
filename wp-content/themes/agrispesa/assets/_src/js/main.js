@@ -1138,13 +1138,17 @@ function quantityInput() {
 
         if (max && (currentVal >= max)) {
           $qty.val(max);
-          if (jQuery('.shop-buttons-flex').length) {
+          if (jQuery('.shop-buttons-flex').length && jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button')) {
             jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', max);
           }
         } else {
           $qty.val((currentVal + parseFloat(step)).toFixed(step.getDecimals()));
-          if (jQuery('.shop-buttons-flex').length) {
-            jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
+          if (jQuery('.shop-buttons-flex').length && jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button')) {
+            try {
+              jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
+            } catch (e) {
+
+            }
           }
         }
       } else {
