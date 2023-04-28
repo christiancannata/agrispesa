@@ -4106,6 +4106,16 @@ function register_my_custom_submenu_page()
         "pending-scegli-tu",
         "scegli_tu_page"
     );
+
+
+add_menu_page(
+	"Abbonamenti disattivi con debito",
+	"Abbonamenti disattivi con debito",
+	"manage_options",
+	"abbonamenti-debito",
+	"abbonamenti_debito_page"
+);
+
 }
 
 add_action("create_order_subscription", function ($subscriptionId) {

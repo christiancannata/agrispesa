@@ -22,16 +22,6 @@ add_action(
 	}
 );
 
-add_action('wp_dashboard_setup', 'prefix_add_dashboard_widget');
-function prefix_add_dashboard_widget()
-{
-	wp_add_dashboard_widget(
-		'misha_dashboard_widget', // widget ID
-		'Abbonamenti da attivare', // widget title
-		'misha_dashboard_widget', // callback #1 to display it
-		'misha_process_my_dashboard_widget' // callback #2 for settings
-	);
-}
 
 add_action("activate_subscription", function ($subscriptionId) {
 	$subscription = new WC_Subscription($subscriptionId);
@@ -42,7 +32,7 @@ add_action("activate_subscription", function ($subscriptionId) {
  * Callback #1 function
  * Displays widget content
  */
-function misha_dashboard_widget()
+function abbonamenti_debito_page()
 {
 	if (isset($_POST['activate_subscriptions'])) {
 		$subscriptionsIds = $_POST['subscriptions'];
