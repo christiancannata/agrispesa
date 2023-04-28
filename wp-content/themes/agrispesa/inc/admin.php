@@ -2345,7 +2345,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 							if ( $item->get_variation_id() ) {
 								$productId =  $item->get_variation_id() ;
 							} else {
-								$productId = $this->get_product_id();
+								$productId = $item->get_product_id();
 							}
 
                             $productNavisionId = get_post_meta(
