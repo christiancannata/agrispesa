@@ -2535,15 +2535,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "status" => "wc-completed",
                 "limit" => -1,
                 "meta_query" => [
-                    "relation" => "and",
-
-                    [
-                        "key" => "_date_completed",
-                        "meta_compare" => ">",
-                        "meta_value" => (new \DateTime(
-                            "2023-04-20"
-                        ))->getTimestamp(),
-                    ],
+                   'relation' => 'AND',
+        array(
+            'key'     => '_payment_method',
+            'value'   => 'wallet',
+            'compare' => '!=',
+        ),
+        array(
+            'key'     => '_payment_method',
+            'value'   => 'bacs',
+            'compare' => '!=',
+        ),
                 ],
             ];
 
