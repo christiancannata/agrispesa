@@ -1,0 +1,26 @@
+2023-04-28T14:47:34+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38493
+2023-04-28T14:47:49+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 37386
+2023-04-28T14:47:49+00:00 NOTICE debug :: Order ID 37386 was pending and is now cancelled :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-04-28T14:47:49+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 37390
+2023-04-28T14:47:50+00:00 NOTICE debug :: Order ID 37390 was pending and is now cancelled :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-04-28T14:47:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 37397
+2023-04-28T14:47:50+00:00 NOTICE debug :: Order ID 37397 was pending and is now cancelled :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-04-28T14:49:52+00:00 NOTICE order_submit :: #38493 has a financial status of pending and was skipped.
+2023-04-28T14:49:55+00:00 NOTICE order_submit :: #37386 has a financial status of cancelled and was skipped.
+2023-04-28T14:53:47+00:00 NOTICE order_submit :: #37390 has a financial status of cancelled and was skipped.
+2023-04-28T14:53:49+00:00 NOTICE order_submit :: #37397 has a financial status of cancelled and was skipped.

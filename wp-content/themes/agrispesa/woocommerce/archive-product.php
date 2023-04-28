@@ -105,7 +105,6 @@ if ($getSpeciali) {
 					$parentcats = get_ancestors($term_id, 'product_cat');
 				}
 
-
 				echo '<ul class="all-categories--list">';
 				if ($special_category) {
 					echo '<li style="min-width:' . $calcWidth . '%;">';
