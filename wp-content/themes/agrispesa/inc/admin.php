@@ -2546,6 +2546,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             'value'   => 'bacs',
             'compare' => '!=',
         ),
+         array(
+            'key'     => '_payment_method',
+            'value'   => '',
+            'compare' => '!=',
+        ),
                 ],
             ];
 
@@ -2556,6 +2561,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
             foreach ($orders as $order) {
 
+
+				if(empty($order->get_payment_method())){
+					continue;
+				}
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
