@@ -98,7 +98,12 @@ if ($getSpeciali) {
 				$taxonomy_name = 'product_cat';
 				$queried_object = get_queried_object();
 				$term_id = $queried_object->term_id;
-				$parentcats = get_ancestors($term_id, 'product_cat');
+
+				$parentcats = [];
+
+				if($term_id){
+					$parentcats = get_ancestors($term_id, 'product_cat');
+				}
 
 
 				echo '<ul class="all-categories--list">';
