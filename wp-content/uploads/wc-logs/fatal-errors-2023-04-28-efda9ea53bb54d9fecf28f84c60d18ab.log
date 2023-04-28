@@ -32,3 +32,5 @@
 
 2023-04-28T14:52:09+00:00 CRITICAL syntax error, unexpected '=>' (T_DOUBLE_ARROW), expecting ']' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2549
 
+2023-04-28T16:01:03+00:00 CRITICAL syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 59
+

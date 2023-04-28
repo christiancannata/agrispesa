@@ -92,8 +92,6 @@ function abbonamenti_debito_page()
 						<?php endif; ?>
 						<input type="checkbox" name="subscriptions[]"
 							   value="<?php echo $subscription->get_id() ?>">
-
-
 					</td>
 					<td>
 						<?php

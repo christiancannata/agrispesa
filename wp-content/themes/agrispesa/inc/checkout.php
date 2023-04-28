@@ -50,7 +50,15 @@ function wc_minimum_order_amount()
 		// Has category box
 		if (has_term($category, 'product_cat', $product_id)) {
 			$minimum = 10;
+			continue;
 		}
+
+		//ACQUISTO CREDITO
+		if($product_id == 17647){
+			$minimum = 0;
+			continue;
+		}
+
 	}
 
 	if (WC()->cart->total < $minimum) {
