@@ -2553,7 +2553,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				}
 
 
-				dd($order->get_payment_method());
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
