@@ -2534,24 +2534,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $args = [
                 "status" => "wc-completed",
                 "limit" => -1,
-                "meta_query" => [
-                   'relation' => 'AND',
-        array(
-            'key'     => '_payment_method',
-            'value'   => 'wallet',
-            'compare' => '!=',
-        ),
-        array(
-            'key'     => '_payment_method',
-            'value'   => 'bacs',
-            'compare' => '!=',
-        ),
-         array(
-            'key'     => '_payment_method',
-            'value'   => '',
-            'compare' => '!=',
-        ),
-                ],
+                'meta_key' => '_payment_method',
+                'meta_value' => ['bacs','wallet',''],
+                'meta_compare' => 'NOT IN',
             ];
 
             $orders = wc_get_orders($args);
@@ -2559,12 +2544,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
+
             foreach ($orders as $order) {
 
 
 				if(empty($order->get_payment_method())){
 					continue;
 				}
+
+
+				dd($order->get_payment_method());
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
