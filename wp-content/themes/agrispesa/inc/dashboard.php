@@ -26,6 +26,10 @@ add_action(
 add_action("activate_subscription", function ($subscriptionId) {
 	$subscription = new WC_Subscription($subscriptionId);
 	$subscription->update_status('active');
+	$lastOrder = $subscription->get_last_order();
+	$order = wc_get_order($lastOrder);
+	$order->update_status("completed", "Ordine completato da admin", true);
+
 	update_post_meta($subscriptionId, '_is_working_activation', false);
 });
 /*
@@ -37,14 +41,8 @@ function abbonamenti_debito_page()
 	if (isset($_POST['activate_subscriptions'])) {
 		$subscriptions = $_POST['subscriptions'];
 		foreach ($subscriptions as $subscriptionId) {
-			//update_post_meta($orderId, '_is_order_updating', true);
-			//as_enqueue_async_action('activate_order', ['orderId' => $orderId]);
-			$subscription = new WC_Subscription($subscriptionId);
-			$subscription->update_status('active');
-			$lastOrder = $subscription->get_last_order();
-			$order = wc_get_order($lastOrder);
-			$order->update_status("completed", "Ordine completato da admin", true);
-			//update_post_meta($orderId, "_is_order_updating", false);
+			update_post_meta($subscriptionId, '_is_working_activation', true);
+			as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
 		}
 	}
 
@@ -81,13 +79,11 @@ function abbonamenti_debito_page()
 			<tbody>
 			<?php foreach ($enabledSubscription as $subscription): ?>
 				<?php
-				$lastOrder = $subscription->get_last_order();
 
-				//$isWorkingActivation = get_post_meta($lastOrder, '_is_order_updating', true);
-				//if (!$isWorkingActivation) {
-				//	$isWorkingActivation = false;
-				//}
-				$isWorkingActivation = false;
+				$isWorkingActivation = get_post_meta($subscription->get_id(), '_is_working_activation', true);
+				if (!$isWorkingActivation) {
+					$isWorkingActivation = false;
+				}
 				?>
 				<tr>
 					<td class="check-column">
