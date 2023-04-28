@@ -5,6 +5,10 @@ window.baseurl = WPURL.siteurl
 window.userId = WPURL.userId
 
 
+jQuery(document).ready(function () {
+  jQuery(".input-text.qty").attr('readonly', true)
+})
+
 function setCookie(cName, cValue, expDays) {
   let date = new Date();
   date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
@@ -71,6 +75,7 @@ removeP();
 sliderBoxLanding();
 //changeShippingLabel();
 landingSelectVariable();
+
 //changeLabelRecurringShipping();
 
 
@@ -85,9 +90,9 @@ function changeLabelRecurringShipping() {
 
 function removeP() {
 
-  if(jQuery('body.search-results').length) {
-    jQuery('.woocommerce ul.products li.product.remove-last-p > p').each(function() {
-      jQuery( this ).remove();
+  if (jQuery('body.search-results').length) {
+    jQuery('.woocommerce ul.products li.product.remove-last-p > p').each(function () {
+      jQuery(this).remove();
     });
   }
 }
@@ -113,52 +118,52 @@ function checkoutRemoveCheckbox() {
 }
 
 function landingSelectVariable() {
-  if(jQuery('body.page-template-landing-company').length) {
-  //First load check
-  //let currentUrl = jQuery('#get_url').attr("href");
-  let currentUrl = 'https://www.agrispesa.it/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
-  //let currentUrl = 'http://localhost:3000/agrispesa/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
-  let url = new URL(currentUrl);
-  const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-  const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+  if (jQuery('body.page-template-landing-company').length) {
+    //First load check
+    //let currentUrl = jQuery('#get_url').attr("href");
+    let currentUrl = 'https://www.agrispesa.it/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
+    //let currentUrl = 'http://localhost:3000/agrispesa/la-tua-scatola/?add-to-cart=50&quantity=1&variation_id=18995';
+    let url = new URL(currentUrl);
+    const valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+    const valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
 
-  let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
-
-  url.searchParams.set("variation_id", var_id); // setting your param
-  let newUrl = url.href;
-
-  jQuery('#get_url').attr("href", newUrl);
-
-  jQuery('.change-price-box').hide();
-  jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
-
-
-  jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
-    const valSize = jQuery(this).filter(":checked").val();
-    let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
     let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+    url.searchParams.set("variation_id", var_id); // setting your param
+    let newUrl = url.href;
+
+    jQuery('#get_url').attr("href", newUrl);
 
     jQuery('.change-price-box').hide();
     jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
 
-    url.searchParams.set("variation_id", var_id);
-    let newUrl = url.href;
-    jQuery('#get_url').attr("href", newUrl);
 
-  })
-  jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
-    const valType = jQuery(this).filter(":checked").val();
-    let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
-    let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+    jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').on('change', function () {
+      const valSize = jQuery(this).filter(":checked").val();
+      let valType = jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').filter(":checked").val();
+      let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
 
-    jQuery('.change-price-box').hide();
-    jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+      jQuery('.change-price-box').hide();
+      jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
 
-    url.searchParams.set("variation_id", var_id);
-    let newUrl = url.href;
-    jQuery('#get_url').attr("href", newUrl);
-  })
-}
+      url.searchParams.set("variation_id", var_id);
+      let newUrl = url.href;
+      jQuery('#get_url').attr("href", newUrl);
+
+    })
+    jQuery('.landing-box .variation-radios input[name="attribute_pa_tipologia"]').on('change', function () {
+      const valType = jQuery(this).filter(":checked").val();
+      let valSize = jQuery('.landing-box .variation-radios input[name="attribute_pa_dimensione"]').filter(":checked").val();
+      let var_id = jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').attr('data-id');
+
+      jQuery('.change-price-box').hide();
+      jQuery('.change-price-box[data-size="' + valSize + '"][data-type="' + valType + '"]').show();
+
+      url.searchParams.set("variation_id", var_id);
+      let newUrl = url.href;
+      jQuery('#get_url').attr("href", newUrl);
+    })
+  }
 
 }
 
@@ -176,7 +181,7 @@ function moveCustomFieldsCheckout() {
 
 
 function listCategories() {
-  if(jQuery('.cat-item-speciali.current-cat-parent').length) {
+  if (jQuery('.cat-item-speciali.current-cat-parent').length) {
     jQuery('.negozio-sidebar--list.navigate').addClass('show-all-subs');
 
   }
@@ -189,7 +194,6 @@ function listCategories() {
       let _children = jQuery(this).prev('.cat-item').find('ul.children').first();
       //jQuery(this).addClass('test');
       jQuery(this).prependTo(_children);
-      console.log(_viewall);
     });
   }
   if (jQuery('.negozio-sidebar--list.navigate .current-cat').length) {
@@ -562,7 +566,6 @@ function galleryProduct() {
   jQuery('.pd-gallery-slider--link').on('click', function (e) {
     e.preventDefault();
     let varImg = jQuery(this).attr("href");
-    console.log(varImg);
 
     jQuery('.woocommerce-product-gallery__image').find('.wp-post-image').attr("src", varImg);
     jQuery('.woocommerce-product-gallery__image').find('.wp-post-image').attr("srcset", varImg);
@@ -643,6 +646,7 @@ function sliderBox() {
 
   });
 }
+
 function sliderBoxLanding() {
 
   let _carousel = jQuery(".wb-section-box--flex");
@@ -684,6 +688,7 @@ function sliderBoxLanding() {
 
   });
 }
+
 function sliderValues() {
 
   let _carousel = jQuery(".agri-values--flex");
@@ -725,6 +730,7 @@ function sliderValues() {
 
   });
 }
+
 function sliderHeroes() {
 
   let _carousel = jQuery(".pet-heroes--flex");
@@ -774,7 +780,7 @@ function sliderPetValues() {
   _carousel.slick({
     infinite: true,
     speed: 300,
-    slidesToShow:3,
+    slidesToShow: 3,
     slidesToScroll: 1,
     arrows: false,
     dots: false,
@@ -944,6 +950,7 @@ function emptyCartSlider() {
     }]
   });
 }
+
 function accountProductsSlider() {
 
   let _carousel = jQuery(".account-get-products--loop");
