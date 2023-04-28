@@ -246,6 +246,24 @@ function invoice_box_content()
 		],
 	]);
 
+	$args = [
+		"status" => "wc-completed",
+		"limit" => -1,
+
+		"meta_key" => "_payment_method",
+		"meta_value" => ["bacs", "wallet", ""],
+		"meta_compare" => "NOT IN",
+		'customer' => get_current_user_id(),
+	];
+
+	$payments = wc_get_orders($args);
+
+	$invoices = array_merge($userInvoices, $payments);
+
+	usort($invoices, function ($a, $b) {
+		return $a->ID < $b->ID;
+	});
+
 	?>
 	<div class="woocommerce-Fatture-content">
 
@@ -270,16 +288,32 @@ function invoice_box_content()
 				</thead>
 
 				<tbody>
-				<?php foreach ($userInvoices as $invoice): ?>
+				<?php foreach ($invoices as $invoice): ?>
 					<?php
-					$amount = get_post_meta($invoice, '_amount', true);
-					$navisionId = get_post_meta($invoice, '_navision_id', true);
-					$date = get_post_meta($invoice, '_created_date', true);
-					$filename = get_post_meta($invoice, '_filename', true);
-					$type = 'PAGAMENTO';
-					if (substr($filename, 0, 3) == 'VAB') {
-						$type = 'FATTURA';
+					$amount = 0;
+					$navisionId = null;
+					$date = null;
+					$filename = null;
+					$type = null;
+
+					if (get_class($invoice) == Automattic\WooCommerce\Admin\Overrides\Order::class) {
+						$amount = $invoice->get_total();
+						$date = $invoice->get_date_paid()->format('Y-m-d');
+						$type = 'PAGAMENTO';
+						$navisionId = $invoice->get_id();
+					} else {
+
+						$amount = get_post_meta($invoice, '_amount', true);
+						$amount = substr($amount, 0, -2);
+						$navisionId = get_post_meta($invoice, '_navision_id', true);
+						$date = get_post_meta($invoice, '_created_date', true);
+						$filename = get_post_meta($invoice, '_filename', true);
+						$type = 'PAGAMENTO';
+						if (substr($filename, 0, 3) == 'VAB') {
+							$type = 'FATTURA';
+						}
 					}
+
 					?>
 
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
@@ -293,7 +327,7 @@ function invoice_box_content()
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-status"
 							data-title="Stato">
-							<?php echo substr($amount, 0, -2); ?>€
+							<?php echo $amount; ?>€
 						</td>
 						<td
 							class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"

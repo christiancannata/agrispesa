@@ -38,8 +38,26 @@ do_action('woocommerce_before_account_orders', $has_orders); ?>
 
 			<tbody>
 			<?php
-			foreach ($customer_orders->orders as $customer_order) {
-				$order = wc_get_order($customer_order); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
+			$customer_orders = wc_get_orders(array(
+				'customer' => get_current_user_id(),
+				'limit' => -1,
+			));
+
+			foreach ($customer_orders as $customer_order) {
+				$order = wc_get_order($customer_order);
+
+				$orderType = get_post_meta($order->get_id(), '_order_type', true);
+
+				if (!$orderType) {
+					$orderType = get_order_type($customer_order->get_id());
+				}
+
+				if(!in_array($orderType,['ST','FN'])){
+					continue;
+				}
+
+				// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				$item_count = $order->get_item_count() - $order->get_item_count_refunded();
 
 				$isSubscription = get_post_meta($order->get_id(), '_subscription_id', true);

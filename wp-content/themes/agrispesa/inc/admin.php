@@ -2534,9 +2534,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $args = [
                 "status" => "wc-completed",
                 "limit" => -1,
-                'meta_key' => '_payment_method',
-                'meta_value' => ['bacs','wallet',''],
-                'meta_compare' => 'NOT IN',
+                "meta_key" => "_payment_method",
+                "meta_value" => ["bacs", "wallet", ""],
+                "meta_compare" => "NOT IN",
             ];
 
             $orders = wc_get_orders($args);
@@ -2546,13 +2546,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
 
             foreach ($orders as $order) {
-
-
-				if(empty($order->get_payment_method())){
-					continue;
-				}
-
-
+                if (empty($order->get_payment_method())) {
+                    continue;
+                }
 
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
@@ -4067,7 +4063,6 @@ function register_my_custom_submenu_page()
         "scegli_tu_page"
     );
 
-
     add_menu_page(
         "Rinnovi FN in Sospeso",
         "Rinnovi FN in Sospeso",
@@ -4096,14 +4091,11 @@ add_action("activate_order", function ($orderId) {
     update_post_meta($orderId, "_is_order_updating", false);
 });
 
-add_action("change_order_status", function ($orderId,$status) {
+add_action("change_order_status", function ($orderId, $status) {
     $order = wc_get_order($orderId);
     $order->update_status($status, "Ordine aggiornato da admin", true);
     update_post_meta($orderId, "_is_order_updating", false);
 });
-
-
-
 
 function rinnovi_fn_page()
 {
@@ -4111,11 +4103,15 @@ function rinnovi_fn_page()
 
         $orderIds = $_POST["orders"];
         foreach ($orderIds as $orderId) {
-           // update_post_meta($orderId, "_is_order_updating", true);
-			$order = wc_get_order($orderId);
-			$order->update_status($_POST["status"], "Ordine aggiornato da admin", true);
-   // update_post_meta($orderId, "_is_order_updating", false);
-			//change_order_status($orderId,$_POST["status"]);
+            // update_post_meta($orderId, "_is_order_updating", true);
+            $order = wc_get_order($orderId);
+            $order->update_status(
+                $_POST["status"],
+                "Ordine aggiornato da admin",
+                true
+            );
+            // update_post_meta($orderId, "_is_order_updating", false);
+            //change_order_status($orderId,$_POST["status"]);
             /*as_enqueue_async_action("change_order_status", [
                 "orderId" => $orderId,
                 "status" => $_POST["status"]
@@ -4130,44 +4126,43 @@ function rinnovi_fn_page()
 
     $pendingOrders = wc_get_orders([
         "limit" => -1,
-        "status" => ["pending", "on-hold", "processing"]
+        "status" => ["pending", "on-hold", "processing"],
     ]);
 
     foreach ($pendingOrders as $key => $order) {
+        $orderType = null;
+        $subscriptionId = null;
 
-		$orderType = null;
-		$subscriptionId = null;
-
-		$orderRenewal = get_post_meta(
+        $orderRenewal = get_post_meta(
+            $order->get_id(),
+            "_subscription_renewal",
+            true
+        );
+        if ($orderRenewal) {
+            $orderType = "RINNOVO SETTIMANALE";
+            $subscriptionId = $orderRenewal;
+        } else {
+            global $wpdb;
+            $isParent = $wpdb->get_results(
+                "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
                     $order->get_id(),
-                    "_subscription_renewal",
-                    true
-                );
-                if ($orderRenewal) {
-                    $orderType = "RINNOVO SETTIMANALE";
-					$subscriptionId = $orderRenewal;
-                } else {
-                    global $wpdb;
-                    $isParent = $wpdb->get_results(
-                        "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
-                            $order->get_id(),
 
-                        ARRAY_A
-                    );
+                ARRAY_A
+            );
 
-                    if (!empty($isParent)) {
-                        $orderType = "PRIMO PAGAMENTO";
-						$subscriptionId = $isParent[0]['ID'];
-                    }
-                }
+            if (!empty($isParent)) {
+                $orderType = "PRIMO PAGAMENTO";
+                $subscriptionId = $isParent[0]["ID"];
+            }
+        }
 
-				if(!$orderType){
-					unset($pendingOrders[$key]);
-					continue;
-				}
+        if (!$orderType) {
+            unset($pendingOrders[$key]);
+            continue;
+        }
 
-				 $pendingOrders[$key]->type = $orderType;
-				$pendingOrders[$key]->subscription_id = $subscriptionId;
+        $pendingOrders[$key]->type = $orderType;
+        $pendingOrders[$key]->subscription_id = $subscriptionId;
         $items = $order->get_items();
         $pendingOrders[$key]->total_products = count($items);
         $pendingOrders[$key]->products = [];
@@ -4263,18 +4258,15 @@ function rinnovi_fn_page()
 <td>
  <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank">
 
- <?php
-  if(!empty($order->get_shipping_last_name())){
-
-  echo $order->get_shipping_last_name() .
-    " " .
-    $order->get_shipping_first_name();
-  }else{
-	   echo $order->get_billing_last_name() .
-    " " .
-    $order->get_billing_first_name();
-  }
-  ?>
+ <?php if (!empty($order->get_shipping_last_name())) {
+     echo $order->get_shipping_last_name() .
+         " " .
+         $order->get_shipping_first_name();
+ } else {
+     echo $order->get_billing_last_name() .
+         " " .
+         $order->get_billing_first_name();
+ } ?>
 
     </a>
 </td>
@@ -4326,7 +4318,6 @@ function rinnovi_fn_page()
 		</div>
 		<?php
 }
-
 function scegli_tu_page()
 {
     if (isset($_POST["complete_orders"])) {
@@ -4344,7 +4335,6 @@ function scegli_tu_page()
 		<br>
 		<?php
     }
-
     $pendingOrders = wc_get_orders([
         "limit" => -1,
         "status" => ["pending", "on-hold", "processing"],
@@ -4352,12 +4342,10 @@ function scegli_tu_page()
         "meta_value" => "ST",
         "meta_compare" => "=",
     ]);
-
     foreach ($pendingOrders as $key => $order) {
         $items = $order->get_items();
         $pendingOrders[$key]->total_products = count($items);
-        $pendingOrders[$key]->products = [];
-        // Going through each current customer order items
+        $pendingOrders[$key]->products = []; // Going through each current customer order items
         foreach ($items as $item_id => $item_values) {
             $product = $item_values->get_product();
             $pendingOrders[$key]->products[] = $product->get_name();
@@ -4370,7 +4358,12 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+        "wc-failed" => _x(
+            "Failed",
+            "Order status",
+
+            "woocommerce"
+        ),
     ];
     ?>
 
@@ -4767,8 +4760,7 @@ function my_custom_submenu_page_callback()
                   $codiceConfezionamento = reset($codiceConfezionamento);
               }
               $unitaMisura =
-                  " " . get_post_meta($fabbisogno->ID, "weight_type", true);
-              //tabella riepilogo box
+                  " " . get_post_meta($fabbisogno->ID, "weight_type", true); //tabella riepilogo box
               $measureAcquisto = get_post_meta(
                   $fabbisogno->ID,
                   "quantity_type",
@@ -4885,6 +4877,36 @@ add_action(
     "manage_shop_order_posts_custom_column",
     "shop_order_column_meta_field_value"
 );
+function get_order_type($id)
+{
+    global $wpdb;
+    $isParent = $wpdb->get_results(
+        "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " . $id,
+        ARRAY_A
+    );
+    if (!empty($isParent)) {
+        return "ABBONAMENTO";
+    } else {
+        $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
+        if (!empty($orderRenewal)) {
+            return "ABBONAMENTO";
+        } //check in cart
+        $order = wc_get_order($id);
+        $orderType = "ST";
+        foreach ($order->get_items() as $item_id => $item) {
+            $categories = get_the_terms($item->get_product_id(), "product_cat");
+            foreach ($categories as $term) {
+                if (in_array($term->slug, ["box"])) {
+                    $orderType = "FN";
+                }
+            }
+            if ($item->get_name() == "Acquisto credito") {
+                $orderType = "CREDITO";
+            }
+        }
+        return $orderType;
+    }
+}
 function shop_order_column_meta_field_value($column)
 {
     global $post;
@@ -5376,8 +5398,7 @@ function consegne_ordini_pages()
             // 1 for yes, 0 for no
             $pad_counts = 0;
             // 1 for yes, 0 for no
-            $hierarchical = 1;
-            // 1 for yes, 0 for no
+            $hierarchical = 1; // 1 for yes, 0 for no
             $title = "";
             $empty = 0;
             $args = [
@@ -5513,8 +5534,7 @@ function consegne_ordini_pages()
 								<?php //new current week (= next week)
 
 
-        $date = new DateTime();
-        //$date->modify('+1 week');
+        $date = new DateTime(); //$date->modify('+1 week');
         $currentWeek = $date->format("W");
         ?>
 
@@ -5563,8 +5583,7 @@ function consegne_ordini_pages()
                 $type_code = substr($type, 0, 4);
             } else {
                 $type_code = substr($type, 0, 1);
-            }
-            //CODICE UNIVOCO BOX
+            } //CODICE UNIVOCO BOX
             $box_code =
                 "FN" .
                 $type_code .
@@ -5662,8 +5681,7 @@ function consegne_ordini_pages()
                  if (!empty($measureUnit)) {
                      $unitaMisura = " " . $measureUnit;
                  } else {
-                     $unitaMisura = " gr";
-                     //select prodotti
+                     $unitaMisura = " gr"; //select prodotti
                  }
                  $fornitoreString = "";
                  if (!empty($fornitore)) {
@@ -5732,8 +5750,7 @@ function consegne_ordini_pages()
          $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
          $negozioID = $getIDbyNAME->term_id;
          $loop_categories = get_categories([
-             "taxonomy" => "product_cat",
-             // 'orderby' => $orderby,
+             "taxonomy" => "product_cat", // 'orderby' => $orderby,
              // 'meta_key' => $meta_key,
              "hide_empty" => 1,
              "parent" => $negozioID,
@@ -6063,8 +6080,7 @@ function consegne_ordini_pages()
             ) {
                 $codiceConfezionamento = reset($codiceConfezionamento);
             }
-            $unitaMisura = " gr";
-            //tabella riepilogo box
+            $unitaMisura = " gr"; //tabella riepilogo box
             $measureUnit = get_post_meta(
                 $product["id"],
                 "_woo_uom_input",
@@ -6154,9 +6170,7 @@ function consegne_ordini_pages()
               $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
               $negozioID = $getIDbyNAME->term_id;
               $loop_categories = get_categories([
-                  "taxonomy" => "product_cat",
-                  // 'orderby' => $orderby,
-                  // 'meta_key' => $meta_key,
+                  "taxonomy" => "product_cat", // 'orderby' => $orderby, // 'meta_key' => $meta_key,
                   "hide_empty" => 1,
                   "parent" => $negozioID,
               ]);
@@ -6191,8 +6205,7 @@ function consegne_ordini_pages()
                       echo '<optgroup label="' . $loop_category->name . '">';
                   }
                   while ($cat_query->have_posts()):
-                      $cat_query->the_post();
-                      //Valori prodotto
+                      $cat_query->the_post(); //Valori prodotto
                       $productID = get_the_ID();
                       $price = get_post_meta(
                           $productID,
@@ -6244,7 +6257,8 @@ function consegne_ordini_pages()
                       }
                       if ($codiceConfezionamento) {
                           $codiceConfezionamento = $codiceConfezionamento;
-                      } //echo the_title() . ' '. $weight. ' <br>';
+                      }
+                      //echo the_title() . ' '. $weight. ' <br>';
                       echo '<option value="' .
                           $productID .
                           '"
@@ -6307,9 +6321,7 @@ function consegne_ordini_pages()
               $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
               $negozioID = $getIDbyNAME->term_id;
               $loop_categories = get_categories([
-                  "taxonomy" => "product_cat",
-                  // 'orderby' => $orderby,
-                  // 'meta_key' => $meta_key,
+                  "taxonomy" => "product_cat", // 'orderby' => $orderby, // 'meta_key' => $meta_key,
                   "hide_empty" => 1,
                   "parent" => $negozioID,
               ]);
@@ -6344,8 +6356,7 @@ function consegne_ordini_pages()
                       echo '<optgroup label="' . $loop_category->name . '">';
                   }
                   while ($cat_query->have_posts()):
-                      $cat_query->the_post();
-                      //Valori prodotto
+                      $cat_query->the_post(); //Valori prodotto
                       $productID = get_the_ID();
                       $price = get_post_meta(
                           $productID,
@@ -6397,7 +6408,8 @@ function consegne_ordini_pages()
                       }
                       if ($codiceConfezionamento) {
                           $codiceConfezionamento = $codiceConfezionamento;
-                      } //echo the_title() . ' '. $weight. ' <br>';
+                      }
+                      //echo the_title() . ' '. $weight. ' <br>';
                       echo '<option value="' .
                           $productID .
                           '"
@@ -6552,8 +6564,7 @@ function consegne_ordini_pages()
 									<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana
 										n°</label>
 									<?php
-         $date = new DateTime();
-         //	$date->modify('+1 week');
+         $date = new DateTime(); //	$date->modify('+1 week');
          $currentWeek = $date->format("W");
          ?>
 									<input class="change_week_print" name="week_print" id="week_print"
@@ -6668,8 +6679,7 @@ function consegne_ordini_pages()
 										<label
 											style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
 										<?php
-          $date = new DateTime();
-          //		$date->modify('+1 week');
+          $date = new DateTime(); //		$date->modify('+1 week');
           $currentWeek = $date->format("W");
           $allSettimaneFabbisogno = $wpdb->get_results(
               "select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value"
@@ -6825,7 +6835,8 @@ function woocommerce_wp_multi_select($field, $variation_id = 0)
 add_filter("manage_delivery-group_posts_columns", function ($columns) {
     $columns["week"] = "CSV";
     return $columns;
-}); // Add the data to the custom columns for the book post type:
+});
+// Add the data to the custom columns for the book post type:
 add_action(
     "manage_delivery-group_posts_custom_column",
     function ($column, $post_id) {
@@ -6840,11 +6851,9 @@ add_action(
                 $allDataConsegna = array_map(function ($val) {
                     return $val["meta_value"];
                 }, $allDataConsegna);
-                $date = new DateTime();
-                //	$date->modify('+1 week');
-                $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d');
+                $date = new DateTime(); //	$date->modify('+1 week');
+                $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d'); // //print_r($days);
                 // $dt = new DateTime();
-                // //print_r($days);
                 $allDataConsegna = array_unique($allDataConsegna);
                 sort($allDataConsegna);
                 ?>
