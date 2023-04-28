@@ -2343,14 +2343,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 
                         foreach ($order->get_items() as $item) {
-                            $product = $item->get_product();
 
-                            if (!$product) {
-                                continue;
-                            }
+							$productId = null;
+							if ( $item->get_variation_id() ) {
+								$productId =  $item->get_variation_id() ;
+							} else {
+								$productId = $this->get_product_id();
+							}
 
                             $productNavisionId = get_post_meta(
-                                $product->get_id(),
+                                $productId,
                                 "_navision_id",
                                 true
                             );
@@ -2362,9 +2364,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $productNavisionId = $productNavisionId[0];
                             }
 
+							if(!$productNavisionId){
+								continue;
+							}
+
                             $offerLineNo = $item->get_meta("offer_line_no");
 
                             if (!$offerLineNo && $order->order_type == "ST") {
+								$product = wc_get_product($productId);
+
+								if(!$product){
+									continue;
+								}
+
                                 //lo vado a prendere nella lista di prodotti dalla scegli tu
                                 $foundProductInSt = array_filter(
                                     $productsScegliTu,
