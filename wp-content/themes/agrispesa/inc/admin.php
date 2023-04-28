@@ -2009,7 +2009,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $doc,
         $root,
         $navisionId,
-        $userNavisionId,
         $order,
         $piano,
         $scala,
@@ -2018,9 +2017,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $item,
         $currentWeek,
         $offerLineNo,
-        $product
+        $product,
+        $boxCode = null
     ) {
-        $boxCode = $order->box_code;
+
+		$userNavisionId = $order->user_navision_id;
+
+		if(!$boxCode){
+			$boxCode = $order->box_code;
+		}
+
         $row = $doc->createElement("ROW");
         $ele1 = $doc->createElement("id_order");
         $ele1->nodeValue = $navisionId;
@@ -2069,19 +2075,32 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("id_product");
         $ele2->nodeValue = $productNavisionId;
+
+		$quantity = 1;
+		if($item){
+			$quantity = $item->get_quantity();
+		}
+
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("quantity");
-        $ele2->nodeValue = $item->get_quantity();
+        $ele2->nodeValue = $quantity;
+
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("discount");
         $ele2->nodeValue = "0";
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("unitprice");
-        $ele2->nodeValue = str_replace(
+
+		$price = "5,0000";
+		if($product){
+			$price = str_replace(
             ".",
             ",",
             number_format(floatval($product->get_price()), 4)
         );
+		}
+
+        $ele2->nodeValue = $price;
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("ref_offer_no");
 
@@ -2255,16 +2274,47 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $order->box_code = $boxCode;
                 $order->is_subscription = $isSubscription;
                 $order->order_type = $orderType;
+                $order->user_navision_id = $userNavisionId;
 
-                if (!isset($customersOrders[$userNavisionId])) {
-                    $customersOrders[$userNavisionId] = [];
+				$recipient = $order->get_shipping_last_name() ."-" .$order->get_shipping_first_name();
+
+                if (!isset($customersOrders[$recipient])) {
+                    $customersOrders[$recipient] = [];
                 }
 
-                $customersOrders[$userNavisionId][] = $order;
+                $customersOrders[$recipient][] = $order;
             }
 
-            foreach ($customersOrders as $userNavisionId => $orders) {
+            foreach ($customersOrders as $orders) {
+
                 $navisionId = 6000000 + $orders[0]->get_id();
+
+				$boxCode = 'ST';
+				$notes = [];
+
+				foreach($orders as $order){
+					if($order->box_code != 'ST'){
+						$boxCode = $order->box_code;
+					}
+
+					 $orderNote = $order->get_customer_note();
+                        if (empty($orderNote)) {
+                            $orderNote = get_user_meta(
+                                $order->get_customer_id(),
+                                "shipping_citofono",
+                                true
+                            );
+                            if (!$orderNote) {
+                                $orderNote = "";
+                            }
+                        }
+
+						$notes[] = $orderNote;
+
+				}
+
+				$notes = array_unique($notes);
+				$notes = implode(" - ",$notes);
 
                 foreach ($orders as $order) {
                     if ($order->order_type == "ST" || $order->is_subscription) {
@@ -2290,17 +2340,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $scala = "Scala " . $scala;
                         }
 
-                        $orderNote = $order->get_customer_note();
-                        if (empty($orderNote)) {
-                            $orderNote = get_user_meta(
-                                $order->get_customer_id(),
-                                "shipping_citofono",
-                                true
-                            );
-                            if (!$orderNote) {
-                                $orderNote = "";
-                            }
-                        }
+
 
                         foreach ($order->get_items() as $item) {
                             $product = $item->get_product();
@@ -2400,98 +2440,25 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $doc,
                                 $root,
                                 $navisionId,
-                                $userNavisionId,
                                 $order,
                                 $piano,
                                 $scala,
-                                $orderNote,
+                                $notes,
                                 $productNavisionId,
                                 $item,
                                 $currentWeek,
                                 $offerLineNo,
-                                $product
+                                $product,
+                                $boxCode
                             );
 
-                            /*
-						$row = $doc->createElement("ROW");
-                        $ele1 = $doc->createElement("id_order");
-                        $ele1->nodeValue = $navisionId;
-                        $row->appendChild($ele1);
-
-
-                        $ele1 = $doc->createElement("id_codeclient");
-                        $ele1->nodeValue = $userNavisionId;
-
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("date");
-                        $ele1->nodeValue = (new DateTime(
-                            $order->get_date_paid()
-                        ))->format("dmY");
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("date_consegna");
-                        $ele1->nodeValue = "01011970";
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_name");
-                        $ele1->nodeValue = ucwords(
-                            strtolower(
-                                $order->get_shipping_last_name() .
-                                    " " .
-                                    $order->get_shipping_first_name()
-                            )
-                        );
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_address");
-                        $ele1->nodeValue = $order->get_shipping_address_1();
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_description1");
-                        $ele1->nodeValue = $piano . " " . $scala;
-                        $row->appendChild($ele1);
-
-                        $ele1 = $doc->createElement("comment_lines");
-                        $ele1->nodeValue = $orderNote;
-                        $row->appendChild($ele1);
-
-                        $ele2 = $doc->createElement("sh_city");
-                        $ele2->nodeValue = $order->get_shipping_city();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("sh_postcode");
-                        $ele2->nodeValue = $order->get_shipping_postcode();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("sh_province");
-                        $ele2->nodeValue = $order->get_shipping_state();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("id_product");
-                        $ele2->nodeValue = $productNavisionId;
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("quantity");
-                        $ele2->nodeValue = $item->get_quantity();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("discount");
-                        $ele2->nodeValue = "0";
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("unitprice");
-                        $ele2->nodeValue = str_replace(
-                            ".",
-                            ",",
-                            number_format(floatval($product->get_price()), 4)
-                        );
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("ref_offer_no");
-
-                        $ele2->nodeValue = $currentWeek . "-" . $boxCode;
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("ref_offer_line_no");
-                        $ele2->nodeValue = $offerLineNo;
-                        $row->appendChild($ele2);
-                        $root->appendChild($row);*/
                         }
-                        $items++;
 
                         $shipping_method_total = 0;
 
                         foreach (
                             $order->get_items("shipping")
-                            as $item_id => $item
+                            as $item
                         ) {
                             $shipping_method_total = $item->get_total();
                         }
@@ -2503,88 +2470,31 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 "AT",
                             ])
                         ) {
-                            //add shipping
-                            $row = $doc->createElement("ROW");
-                            $ele1 = $doc->createElement("id_order");
 
-                            $navisionId = 6000000 + $order->get_id();
-                            $ele1->nodeValue = $navisionId;
-                            $row->appendChild($ele1);
-                            $ele1->nodeValue = $navisionId;
-                            $row->appendChild($ele1);
-                            //check if has navision id
-                            $navisionId = get_user_meta(
-                                $order->get_customer_id(),
-                                "navision_id",
-                                true
-                            );
-                            $ele1 = $doc->createElement("id_codeclient");
-                            $ele1->nodeValue = $navisionId;
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("date");
-                            $ele1->nodeValue = (new DateTime(
-                                $order->get_date_paid()
-                            ))->format("dmY");
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("date_consegna");
-                            $ele1->nodeValue = (new DateTime(
-                                $order->get_date_paid()
-                            ))->format("dmY");
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("sh_name");
-                            $ele1->nodeValue = ucwords(
-                                strtolower(
-                                    $order->get_shipping_first_name() .
-                                        " " .
-                                        $order->get_shipping_last_name()
-                                )
-                            );
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("sh_address");
-                            $ele1->nodeValue = $order->get_shipping_address_1();
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("sh_description1");
-                            $ele1->nodeValue = $piano . " " . $scala;
-                            $row->appendChild($ele1);
-                            $ele1 = $doc->createElement("comment_lines");
-                            $ele1->nodeValue = $orderNote;
-                            $row->appendChild($ele1);
-                            $ele2 = $doc->createElement("sh_city");
-                            $ele2->nodeValue = $order->get_shipping_city();
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("sh_postcode");
-                            $ele2->nodeValue = $order->get_shipping_postcode();
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("sh_province");
-                            $ele2->nodeValue = $order->get_shipping_state();
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("id_product");
-                            $ele2->nodeValue = get_option(
+							$productNavisionId  = get_option(
                                 "delivery_product_sku"
                             );
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("quantity");
-                            $ele2->nodeValue = 1;
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("discount");
-                            $ele2->nodeValue = "0";
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("unitprice");
-                            $ele2->nodeValue = str_replace(
-                                ".",
-                                ",",
-                                number_format(5, 4)
-                            );
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("ref_offer_no");
-                            $ele2->nodeValue = $currentWeek . "-STCOMP";
-                            $row->appendChild($ele2);
-                            $ele2 = $doc->createElement("ref_offer_line_no");
-                            $ele2->nodeValue = get_option(
+
+							$offerLineNo =get_option(
                                 "delivery_product_offer_no"
                             );
-                            $row->appendChild($ele2);
-                            $root->appendChild($row);
+
+							  addItemToOrder(
+                                $doc,
+                                $root,
+                                $navisionId,
+                                $order,
+                                $piano,
+                                $scala,
+                                $notes,
+                                $productNavisionId,
+                                null,
+                                $currentWeek,
+                                $offerLineNo,
+                                null,
+                                $boxCode
+                            );
+
                         }
                     }
 
