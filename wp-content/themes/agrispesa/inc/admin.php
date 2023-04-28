@@ -2017,7 +2017,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $item,
         $currentWeek,
         $offerLineNo,
-        $product,
+        $productPrice,
         $boxCode = null
     ) {
 
@@ -2091,16 +2091,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("unitprice");
 
-		$price = "5,0000";
-		if($product){
-			$price = str_replace(
+		$productPrice = str_replace(
             ".",
             ",",
-            number_format(floatval($product->get_price()), 4)
+            number_format(floatval($productPrice), 4)
         );
-		}
 
-        $ele2->nodeValue = $price;
+        $ele2->nodeValue = $productPrice;
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("ref_offer_no");
 
@@ -2357,6 +2354,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 true
                             );
 
+							$productPrice = get_post_meta(
+                                $productId,
+                                "_regular_price",
+                                true
+                            );
+
+							if(!$productPrice){
+								continue;
+							}
+
                             if (
                                 is_array($productNavisionId) &&
                                 !empty($productNavisionId)
@@ -2460,7 +2467,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $item,
                                 $currentWeek,
                                 $offerLineNo,
-                                $product,
+                                $productPrice,
                                 $boxCode
                             );
 
@@ -2503,7 +2510,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 null,
                                 $currentWeek,
                                 $offerLineNo,
-                                null,
+                                5,
                                 $boxCode
                             );
 
