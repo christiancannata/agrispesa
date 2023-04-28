@@ -44,7 +44,6 @@ add_action(
     1
 );
 
-
 function merge_orders($subscriptionOrder, $orders)
 {
     foreach ($orders as $order) {
@@ -2005,6 +2004,95 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+    function addItemToOrder(
+        $doc,
+        $root,
+        $navisionId,
+        $userNavisionId,
+        $order,
+        $piano,
+        $scala,
+        $orderNote,
+        $productNavisionId,
+        $item,
+        $currentWeek,
+        $offerLineNo,
+        $product
+    ) {
+        $boxCode = $order->box_code;
+        $row = $doc->createElement("ROW");
+        $ele1 = $doc->createElement("id_order");
+        $ele1->nodeValue = $navisionId;
+        $row->appendChild($ele1);
+
+        $ele1 = $doc->createElement("id_codeclient");
+        $ele1->nodeValue = $userNavisionId;
+
+        $row->appendChild($ele1);
+        $ele1 = $doc->createElement("date");
+        $ele1->nodeValue = (new DateTime($order->get_date_paid()))->format(
+            "dmY"
+        );
+        $row->appendChild($ele1);
+        $ele1 = $doc->createElement("date_consegna");
+        $ele1->nodeValue = "01011970";
+        $row->appendChild($ele1);
+        $ele1 = $doc->createElement("sh_name");
+        $ele1->nodeValue = ucwords(
+            strtolower(
+                $order->get_shipping_last_name() .
+                    " " .
+                    $order->get_shipping_first_name()
+            )
+        );
+        $row->appendChild($ele1);
+        $ele1 = $doc->createElement("sh_address");
+        $ele1->nodeValue = $order->get_shipping_address_1();
+        $row->appendChild($ele1);
+        $ele1 = $doc->createElement("sh_description1");
+        $ele1->nodeValue = $piano . " " . $scala;
+        $row->appendChild($ele1);
+
+        $ele1 = $doc->createElement("comment_lines");
+        $ele1->nodeValue = $orderNote;
+        $row->appendChild($ele1);
+
+        $ele2 = $doc->createElement("sh_city");
+        $ele2->nodeValue = $order->get_shipping_city();
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("sh_postcode");
+        $ele2->nodeValue = $order->get_shipping_postcode();
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("sh_province");
+        $ele2->nodeValue = $order->get_shipping_state();
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("id_product");
+        $ele2->nodeValue = $productNavisionId;
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("quantity");
+        $ele2->nodeValue = $item->get_quantity();
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("discount");
+        $ele2->nodeValue = "0";
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("unitprice");
+        $ele2->nodeValue = str_replace(
+            ".",
+            ",",
+            number_format(floatval($product->get_price()), 4)
+        );
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("ref_offer_no");
+
+        $ele2->nodeValue = $currentWeek . "-" . $boxCode;
+        $row->appendChild($ele2);
+        $ele2 = $doc->createElement("ref_offer_line_no");
+        $ele2->nodeValue = $offerLineNo;
+        $row->appendChild($ele2);
+        $root->appendChild($row);
+    }
+
     register_rest_route("agrispesa/v1", "export-orders", [
         "methods" => "GET",
         "permission_callback" => function () {
@@ -2056,6 +2144,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
             }
 
+            $customersOrders = [];
+
             foreach ($orders as $order) {
                 if ($order->get_status() != "completed") {
                     continue;
@@ -2068,16 +2158,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-                if (
-                    $order->get_shipping_first_name() .
-                        " " .
-                        $order->get_shipping_last_name() ==
-                    "Alberto Alessandria"
-                ) {
+                if ($limit && $items > $limit) {
                     continue;
                 }
 
-                if ($limit && $items > $limit) {
+                /* USER NAVISION ID */
+                $userNavisionId = get_user_meta(
+                    $order->get_customer_id(),
+                    "navision_id",
+                    true
+                );
+                if (!$userNavisionId) {
                     continue;
                 }
 
@@ -2099,13 +2190,20 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-                /* USER NAVISION ID */
-                $userNavisionId = get_user_meta(
-                    $order->get_customer_id(),
-                    "navision_id",
-                    true
-                );
-                if (!$userNavisionId) {
+                $isAcquistoCredito = false;
+                foreach ($order->get_items() as $item_id => $item) {
+                    $product = $item->get_product();
+
+                    if (!$product) {
+                        continue;
+                    }
+
+                    if ($product->get_name() == "Acquisto credito") {
+                        $isAcquistoCredito = true;
+                    }
+                }
+
+                if ($isAcquistoCredito) {
                     continue;
                 }
 
@@ -2152,168 +2250,174 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
 
                     $boxCode = $navisionIdBox[0];
-
-                    //$navisionId = get_post_meta($order->get_id(), "_box_navision_id", true);
-                    //if (!$navisionId) {
-                    //	continue;
-                    //}
                 }
 
-                if ($orderType == "ST" || $isSubscription) {
-                    $piano = get_post_meta(
-                        $order->get_id(),
-                        "shipping_piano",
-                        true
-                    );
-                    if (!$piano) {
-                        $piano = "";
-                    } else {
-                        $piano = "Piano " . $piano;
-                    }
+                $order->box_code = $boxCode;
+                $order->is_subscription = $isSubscription;
+                $order->order_type = $orderType;
 
-                    $scala = get_post_meta(
-                        $order->get_id(),
-                        "shipping_scala",
-                        true
-                    );
-                    if (!$scala) {
-                        $scala = "";
-                    } else {
-                        $scala = "Scala " . $scala;
-                    }
+                if (!isset($customersOrders[$userNavisionId])) {
+                    $customersOrders[$userNavisionId] = [];
+                }
 
-                    $orderNote = $order->get_customer_note();
-                    if (empty($orderNote)) {
-                        $orderNote = get_user_meta(
-                            $order->get_customer_id(),
-                            "shipping_citofono",
+                $customersOrders[$userNavisionId][] = $order;
+            }
+
+            foreach ($customersOrders as $userNavisionId => $orders) {
+                $navisionId = 6000000 + $orders[0]->get_id();
+
+                foreach ($orders as $order) {
+                    if ($order->order_type == "ST" || $order->is_subscription) {
+                        $piano = get_post_meta(
+                            $order->get_id(),
+                            "shipping_piano",
                             true
                         );
-                        if (!$orderNote) {
-                            $orderNote = "";
-                        }
-                    }
-
-                    $isAcquistoCredito = false;
-                    foreach ($order->get_items() as $item_id => $item) {
-                        $product = $item->get_product();
-
-                        if (!$product) {
-                            continue;
+                        if (!$piano) {
+                            $piano = "";
+                        } else {
+                            $piano = "Piano " . $piano;
                         }
 
-                        if ($product->get_name() == "Acquisto credito") {
-                            $isAcquistoCredito = true;
-                        }
-                    }
-
-                    if ($isAcquistoCredito) {
-                        continue;
-                    }
-
-                    foreach ($order->get_items() as $item_id => $item) {
-                        $product = $item->get_product();
-
-                        if (!$product) {
-                            continue;
-                        }
-
-                        $productNavisionId = get_post_meta(
-                            $product->get_id(),
-                            "_navision_id",
+                        $scala = get_post_meta(
+                            $order->get_id(),
+                            "shipping_scala",
                             true
                         );
-
-                        if (
-                            is_array($productNavisionId) &&
-                            !empty($productNavisionId)
-                        ) {
-                            $productNavisionId = $productNavisionId[0];
+                        if (!$scala) {
+                            $scala = "";
+                        } else {
+                            $scala = "Scala " . $scala;
                         }
 
-                        $row = $doc->createElement("ROW");
-                        $ele1 = $doc->createElement("id_order");
+                        $orderNote = $order->get_customer_note();
+                        if (empty($orderNote)) {
+                            $orderNote = get_user_meta(
+                                $order->get_customer_id(),
+                                "shipping_citofono",
+                                true
+                            );
+                            if (!$orderNote) {
+                                $orderNote = "";
+                            }
+                        }
 
-                        $offerLineNo = $item->get_meta("offer_line_no");
+                        foreach ($order->get_items() as $item) {
+                            $product = $item->get_product();
 
-                        if (!$offerLineNo && $orderType == "ST") {
-                            //lo vado a prendere nella lista di prodotti dalla scegli tu
-                            $foundProductInSt = array_filter(
-                                $productsScegliTu,
-                                function ($stProduct) use ($product) {
-                                    return $stProduct["name"] ==
-                                        $product->get_name();
-                                }
+                            if (!$product) {
+                                continue;
+                            }
+
+                            $productNavisionId = get_post_meta(
+                                $product->get_id(),
+                                "_navision_id",
+                                true
                             );
 
-                            if (empty($foundProductInSt)) {
-                                // provo a cercare il nome
-                                $explodedProductName = explode(
-                                    " ",
-                                    $product->get_name()
+                            if (
+                                is_array($productNavisionId) &&
+                                !empty($productNavisionId)
+                            ) {
+                                $productNavisionId = $productNavisionId[0];
+                            }
+
+                            $offerLineNo = $item->get_meta("offer_line_no");
+
+                            if (!$offerLineNo && $order->order_type == "ST") {
+                                //lo vado a prendere nella lista di prodotti dalla scegli tu
+                                $foundProductInSt = array_filter(
+                                    $productsScegliTu,
+                                    function ($stProduct) use ($product) {
+                                        return $stProduct["name"] ==
+                                            $product->get_name();
+                                    }
                                 );
 
-                                if (count($explodedProductName) > 0) {
-                                    while (count($explodedProductName) > 0) {
-                                        array_pop($explodedProductName);
-                                        if (empty($foundProductInSt)) {
-                                            $newProductName = implode(
-                                                " ",
-                                                $explodedProductName
-                                            );
-                                            $foundProductInSt = array_filter(
-                                                $productsScegliTu,
-                                                function ($stProduct) use (
-                                                    $newProductName
-                                                ) {
-                                                    return $stProduct["name"] ==
-                                                        $newProductName;
-                                                }
-                                            );
+                                if (empty($foundProductInSt)) {
+                                    // provo a cercare il nome
+                                    $explodedProductName = explode(
+                                        " ",
+                                        $product->get_name()
+                                    );
+
+                                    if (count($explodedProductName) > 0) {
+                                        while (
+                                            count($explodedProductName) > 0
+                                        ) {
+                                            array_pop($explodedProductName);
+                                            if (empty($foundProductInSt)) {
+                                                $newProductName = implode(
+                                                    " ",
+                                                    $explodedProductName
+                                                );
+                                                $foundProductInSt = array_filter(
+                                                    $productsScegliTu,
+                                                    function ($stProduct) use (
+                                                        $newProductName
+                                                    ) {
+                                                        return $stProduct[
+                                                            "name"
+                                                        ] == $newProductName;
+                                                    }
+                                                );
+                                            }
                                         }
+                                    }
+
+                                    if (empty($foundProductInSt)) {
+                                        $response = new WP_REST_Response([
+                                            "order_id" => $order->get_id(),
+                                            "error" =>
+                                                "Prodotto non trovato nella scegli tu: " .
+                                                $product->get_name(),
+                                            "scegli_tu" => $productsScegliTu,
+                                        ]);
+                                        $response->set_status(500);
+                                        return $response;
                                     }
                                 }
 
-                                if (empty($foundProductInSt)) {
-                                    $response = new WP_REST_Response([
-                                        "order_id" => $order->get_id(),
-                                        "error" =>
-                                            "Prodotto non trovato nella scegli tu: " .
-                                            $product->get_name(),
-                                        "scegli_tu" => $productsScegliTu,
-                                    ]);
-                                    $response->set_status(500);
-                                    return $response;
-                                }
+                                $foundProductInSt = reset($foundProductInSt);
+                                $offerLineNo =
+                                    $foundProductInSt["offer_line_no"];
                             }
 
-                            $foundProductInSt = reset($foundProductInSt);
-                            $offerLineNo = $foundProductInSt["offer_line_no"];
-                        }
+                            if (!$offerLineNo) {
+                                $response = new WP_REST_Response([
+                                    "order_id" => $order->get_id(),
+                                    "error" =>
+                                        "Offer Line No non trovato per: " .
+                                        $product->get_name() .
+                                        " SKU " .
+                                        $product->get_sku(),
+                                ]);
+                                $response->set_status(500);
+                                return $response;
+                            }
 
-                        if (!$offerLineNo) {
-                            $response = new WP_REST_Response([
-                                "order_id" => $order->get_id(),
-                                "error" =>
-                                    "Offer Line No non trovato per: " .
-                                    $product->get_name() .
-                                    " SKU " .
-                                    $product->get_sku(),
-                            ]);
-                            $response->set_status(500);
-                            return $response;
-                        }
+                            addItemToOrder(
+                                $doc,
+                                $root,
+                                $navisionId,
+                                $userNavisionId,
+                                $order,
+                                $piano,
+                                $scala,
+                                $orderNote,
+                                $productNavisionId,
+                                $item,
+                                $currentWeek,
+                                $offerLineNo,
+                                $product
+                            );
 
-                        /* ORDER NAVISION ID */
-                        $navisionId = 6000000 + $order->get_id();
+                            /*
+						$row = $doc->createElement("ROW");
+                        $ele1 = $doc->createElement("id_order");
                         $ele1->nodeValue = $navisionId;
                         $row->appendChild($ele1);
 
-                        update_post_meta(
-                            $order->get_id(),
-                            "navision_id",
-                            $navisionId
-                        );
 
                         $ele1 = $doc->createElement("id_codeclient");
                         $ele1->nodeValue = $userNavisionId;
@@ -2379,111 +2483,123 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $ele2 = $doc->createElement("ref_offer_line_no");
                         $ele2->nodeValue = $offerLineNo;
                         $row->appendChild($ele2);
-                        $root->appendChild($row);
+                        $root->appendChild($row);*/
+                        }
+                        $items++;
+
+                        $shipping_method_total = 0;
+
+                        foreach (
+                            $order->get_items("shipping")
+                            as $item_id => $item
+                        ) {
+                            $shipping_method_total = $item->get_total();
+                        }
+
+                        if (
+                            $shipping_method_total > 0 &&
+                            !in_array($order->get_shipping_state(), [
+                                "CN",
+                                "AT",
+                            ])
+                        ) {
+                            //add shipping
+                            $row = $doc->createElement("ROW");
+                            $ele1 = $doc->createElement("id_order");
+
+                            $navisionId = 6000000 + $order->get_id();
+                            $ele1->nodeValue = $navisionId;
+                            $row->appendChild($ele1);
+                            $ele1->nodeValue = $navisionId;
+                            $row->appendChild($ele1);
+                            //check if has navision id
+                            $navisionId = get_user_meta(
+                                $order->get_customer_id(),
+                                "navision_id",
+                                true
+                            );
+                            $ele1 = $doc->createElement("id_codeclient");
+                            $ele1->nodeValue = $navisionId;
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("date");
+                            $ele1->nodeValue = (new DateTime(
+                                $order->get_date_paid()
+                            ))->format("dmY");
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("date_consegna");
+                            $ele1->nodeValue = (new DateTime(
+                                $order->get_date_paid()
+                            ))->format("dmY");
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("sh_name");
+                            $ele1->nodeValue = ucwords(
+                                strtolower(
+                                    $order->get_shipping_first_name() .
+                                        " " .
+                                        $order->get_shipping_last_name()
+                                )
+                            );
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("sh_address");
+                            $ele1->nodeValue = $order->get_shipping_address_1();
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("sh_description1");
+                            $ele1->nodeValue = $piano . " " . $scala;
+                            $row->appendChild($ele1);
+                            $ele1 = $doc->createElement("comment_lines");
+                            $ele1->nodeValue = $orderNote;
+                            $row->appendChild($ele1);
+                            $ele2 = $doc->createElement("sh_city");
+                            $ele2->nodeValue = $order->get_shipping_city();
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("sh_postcode");
+                            $ele2->nodeValue = $order->get_shipping_postcode();
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("sh_province");
+                            $ele2->nodeValue = $order->get_shipping_state();
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("id_product");
+                            $ele2->nodeValue = get_option(
+                                "delivery_product_sku"
+                            );
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("quantity");
+                            $ele2->nodeValue = 1;
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("discount");
+                            $ele2->nodeValue = "0";
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("unitprice");
+                            $ele2->nodeValue = str_replace(
+                                ".",
+                                ",",
+                                number_format(5, 4)
+                            );
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("ref_offer_no");
+                            $ele2->nodeValue = $currentWeek . "-STCOMP";
+                            $row->appendChild($ele2);
+                            $ele2 = $doc->createElement("ref_offer_line_no");
+                            $ele2->nodeValue = get_option(
+                                "delivery_product_offer_no"
+                            );
+                            $row->appendChild($ele2);
+                            $root->appendChild($row);
+                        }
                     }
-                    $items++;
 
-                    $shipping_method_total = 0;
+                    update_post_meta(
+                        $order->get_id(),
+                        "navision_last_export",
+                        (new \DateTime())->format("Y-m-d H:i")
+                    );
 
-                    foreach (
-                        $order->get_items("shipping")
-                        as $item_id => $item
-                    ) {
-                        $shipping_method_total = $item->get_total();
-                    }
-
-                    if (
-                        $shipping_method_total > 0 &&
-                        !in_array($order->get_shipping_state(), ["CN", "AT"])
-                    ) {
-                        //add shipping
-                        $row = $doc->createElement("ROW");
-                        $ele1 = $doc->createElement("id_order");
-
-                        $navisionId = 6000000 + $order->get_id();
-                        $ele1->nodeValue = $navisionId;
-                        $row->appendChild($ele1);
-                        $ele1->nodeValue = $navisionId;
-                        $row->appendChild($ele1);
-                        //check if has navision id
-                        $navisionId = get_user_meta(
-                            $order->get_customer_id(),
-                            "navision_id",
-                            true
-                        );
-                        $ele1 = $doc->createElement("id_codeclient");
-                        $ele1->nodeValue = $navisionId;
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("date");
-                        $ele1->nodeValue = (new DateTime(
-                            $order->get_date_paid()
-                        ))->format("dmY");
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("date_consegna");
-                        $ele1->nodeValue = (new DateTime(
-                            $order->get_date_paid()
-                        ))->format("dmY");
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_name");
-                        $ele1->nodeValue = ucwords(
-                            strtolower(
-                                $order->get_shipping_first_name() .
-                                    " " .
-                                    $order->get_shipping_last_name()
-                            )
-                        );
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_address");
-                        $ele1->nodeValue = $order->get_shipping_address_1();
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("sh_description1");
-                        $ele1->nodeValue = $piano . " " . $scala;
-                        $row->appendChild($ele1);
-                        $ele1 = $doc->createElement("comment_lines");
-                        $ele1->nodeValue = $orderNote;
-                        $row->appendChild($ele1);
-                        $ele2 = $doc->createElement("sh_city");
-                        $ele2->nodeValue = $order->get_shipping_city();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("sh_postcode");
-                        $ele2->nodeValue = $order->get_shipping_postcode();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("sh_province");
-                        $ele2->nodeValue = $order->get_shipping_state();
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("id_product");
-                        $ele2->nodeValue = get_option("delivery_product_sku");
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("quantity");
-                        $ele2->nodeValue = 1;
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("discount");
-                        $ele2->nodeValue = "0";
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("unitprice");
-                        $ele2->nodeValue = str_replace(
-                            ".",
-                            ",",
-                            number_format(5, 4)
-                        );
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("ref_offer_no");
-                        $ele2->nodeValue = $currentWeek . "-STCOMP";
-                        $row->appendChild($ele2);
-                        $ele2 = $doc->createElement("ref_offer_line_no");
-                        $ele2->nodeValue = get_option(
-                            "delivery_product_offer_no"
-                        );
-                        $row->appendChild($ele2);
-                        $root->appendChild($row);
-                    }
+                    update_post_meta(
+                        $order->get_id(),
+                        "navision_id",
+                        $navisionId
+                    );
                 }
-
-                update_post_meta(
-                    $order->get_id(),
-                    "navision_last_export",
-                    (new \DateTime())->format("Y-m-d H:i")
-                );
             }
             header("Content-type: text/xml");
             die($doc->saveXml());
@@ -4070,7 +4186,7 @@ add_action("create_order_subscription", function ($subscriptionId) {
 
 add_action("activate_order", function ($orderId) {
     $order = wc_get_order($orderId);
-	$order->update_status("completed", "Ordine completato da admin", true);
+    $order->update_status("completed", "Ordine completato da admin", true);
     update_post_meta($orderId, "_is_order_updating", false);
 });
 
@@ -4177,19 +4293,17 @@ function scegli_tu_page()
 
 							<tbody>
 <?php foreach ($pendingOrders as $order): ?>
-<?php
- $isUpdating = get_post_meta($order->get_id(),'_is_order_updating',true);
- ?>
+<?php $isUpdating = get_post_meta(
+    $order->get_id(),
+    "_is_order_updating",
+    true
+); ?>
 <tr>
 <td>
 <input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>"><br>
-<?php
-if($isUpdating == true):
-?>
+<?php if ($isUpdating == true): ?>
 <i>Sto completando...</i>
-<?php
-endif;
-?>
+<?php endif; ?>
 </td>
 <td>
  <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank"><?php echo $order->get_shipping_last_name() .
@@ -4240,7 +4354,6 @@ endif;
 		</div>
 		<?php
 }
-
 function my_custom_submenu_page_callback()
 {
     $date = new DateTime();
@@ -4252,7 +4365,9 @@ function my_custom_submenu_page_callback()
         foreach ($subscriptionIds as $subscriptionId) {
             //create_order_from_subscription($subscriptionId);
             update_post_meta($subscriptionId, "_is_order_creating", true);
-            as_enqueue_async_action('create_order_subscription', ['subscriptionId' => $subscriptionId]);
+            as_enqueue_async_action("create_order_subscription", [
+                "subscriptionId" => $subscriptionId,
+            ]);
         }
         ?>
 		<br>
@@ -4269,7 +4384,6 @@ function my_custom_submenu_page_callback()
         "subscriptions_per_page" => -1,
         "subscription_status" => "active",
     ]);
-
     $groupedFabbisogno = [];
     ?>
 
@@ -4421,8 +4535,9 @@ function my_custom_submenu_page_callback()
 									<td class="response column-response" data-colname="In risposta a"
 										style="padding: 16px;">
 										<span>
-										<?php
-          // fix nathi per errore data di consegna
+										<?php // fix nathi per errore data di consegna
+
+
           $fixdate = $subscription->get_date_created();
           $fixdate = new DateTime($fixdate);
           echo $fixdate->format("d/m/Y");
@@ -4515,7 +4630,8 @@ function my_custom_submenu_page_callback()
                   $codiceConfezionamento = reset($codiceConfezionamento);
               }
               $unitaMisura =
-                  " " . get_post_meta($fabbisogno->ID, "weight_type", true); //tabella riepilogo box
+                  " " . get_post_meta($fabbisogno->ID, "weight_type", true);
+              //tabella riepilogo box
               $measureAcquisto = get_post_meta(
                   $fabbisogno->ID,
                   "quantity_type",
@@ -4613,27 +4729,23 @@ function my_custom_submenu_page_callback()
 		<?php
 }
 add_action("admin_menu", "register_my_custom_submenu_page", 99);
-add_filter('manage_edit-shop_order_columns', 'custom_shop_order_column', 20);
+add_filter("manage_edit-shop_order_columns", "custom_shop_order_column", 20);
 function custom_shop_order_column($columns)
 {
-    $reordered_columns = [];
-
-    // Inserting columns to a specific location
+    $reordered_columns = []; // Inserting columns to a specific location
     foreach ($columns as $key => $column) {
         $reordered_columns[$key] = $column;
         if ($key == "order_status") {
             $reordered_columns["type_shopping"] = "Spesa";
         }
     }
-	unset($reordered_columns['export_status']);
-	unset($reordered_columns['subscription_relationship']);
-	$columns = $reordered_columns;
+    unset($reordered_columns["export_status"]);
+    unset($reordered_columns["subscription_relationship"]);
 
-	return $columns;
+    $columns = $reordered_columns;
+    return $columns;
     //return $reordered_columns;
-}
-
-// Custom column content
+} // Custom column content
 add_action(
     "manage_shop_order_posts_custom_column",
     "shop_order_column_meta_field_value"
@@ -4641,45 +4753,37 @@ add_action(
 function shop_order_column_meta_field_value($column)
 {
     global $post;
-	global $wpdb;
-
-  	if($column == 'export_status'){
-		  echo '';
-  	}
-
-	 if($column == 'subscription_relationship'){
-		  echo '';
-  	}
-
+    global $wpdb;
+    if ($column == "export_status") {
+        echo "";
+    }
+    if ($column == "subscription_relationship") {
+        echo "";
+    }
     if ($column == "type_shopping") {
+        $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
+        if ($orderRenewal) {
+            echo '<a href="/wp-admin/post.php?post=' .
+                $orderRenewal .
+                '&action=edit" target="_blank">RINNOVO FN</a>';
+        } else {
+            $isParent = $wpdb->get_results(
+                "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
+                    $post->ID,
 
-		 $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
-		if($orderRenewal){
-				echo '<a href="/wp-admin/post.php?post='.$orderRenewal.'&action=edit" target="_blank">RINNOVO FN</a>';
-		}else{
-
-       $isParent = $wpdb->get_results(
-           "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = ".$post->ID,
-           ARRAY_A
-       );
-
-
-			if(!empty($isParent)){
-				echo '<a href="/wp-admin/post.php?post='.$isParent[0]['ID'].'&action=edit" target="_blank">ABBONAMENTO FN</a>';
-			}else{
-
-		  $orderType = get_post_meta($post->ID, "_order_type", true);
-            if ($orderType) {
-                echo $orderType;
+                ARRAY_A
+            );
+            if (!empty($isParent)) {
+                echo '<a href="/wp-admin/post.php?post=' .
+                    $isParent[0]["ID"] .
+                    '&action=edit" target="_blank">ABBONAMENTO FN</a>';
+            } else {
+                $orderType = get_post_meta($post->ID, "_order_type", true);
+                if ($orderType) {
+                    echo $orderType;
+                }
             }
-			}
-
-		}
-
-
-
-
-			/*
+        } /*
         $order = wc_get_order($the_order);
         $box_in_order = false;
         $not_a_box = false;
@@ -4703,21 +4807,13 @@ function shop_order_column_meta_field_value($column)
             echo "FN + ST";
         }*/
     }
-}
+} // add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' ); // function shop_order_column_meta_field_sortable( $columns ) // { //     $meta_key = 'name'; //     return wp_parse_args( array('type_notes' => $meta_key), $columns ); //     return wp_parse_args( array('type_shopping' => $meta_key), $columns ); // }
 // Make custom column sortable
-// add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' );
-// function shop_order_column_meta_field_sortable( $columns )
-// {
-//     $meta_key = 'name';
-//     return wp_parse_args( array('type_notes' => $meta_key), $columns );
-//     return wp_parse_args( array('type_shopping' => $meta_key), $columns );
-// }
 function cptui_register_my_cpts_delivery_group()
 {
     /**
      * Post Type: Gruppi di Consegna.
-     */
-    $labels = [
+     */ $labels = [
         "name" => esc_html__("Gruppi di Consegna", "custom-post-type-ui"),
         "singular_name" => esc_html__(
             "Gruppo di consegna",
@@ -4782,8 +4878,7 @@ function cptui_register_my_cpts_delivery_group()
         "supports" => ["title", "editor"],
         "show_in_graphql" => false,
     ];
-    register_post_type("gruppo-prodotto", $args);
-    /**
+    register_post_type("gruppo-prodotto", $args); /**
      * Post Type: Gruppi di Consegna.
      */
     $labels = [
@@ -5143,9 +5238,12 @@ function consegne_ordini_pages()
             ]);
             $taxonomy = "product_cat";
             $orderby = "name";
-            $show_count = 0; // 1 for yes, 0 for no
-            $pad_counts = 0; // 1 for yes, 0 for no
-            $hierarchical = 1; // 1 for yes, 0 for no
+            $show_count = 0;
+            // 1 for yes, 0 for no
+            $pad_counts = 0;
+            // 1 for yes, 0 for no
+            $hierarchical = 1;
+            // 1 for yes, 0 for no
             $title = "";
             $empty = 0;
             $args = [
@@ -5204,7 +5302,8 @@ function consegne_ordini_pages()
                                     "_weight",
                                     true
                                 );
-                                $unitaMisura = ""; //tabella prodotti selezionati
+                                $unitaMisura = "";
+                                //tabella prodotti selezionati
                                 $measureUnit = get_post_meta(
                                     $categoryProduct->ID,
                                     "_woo_uom_input",
@@ -5277,8 +5376,9 @@ function consegne_ordini_pages()
 							<div style="margin-right:24px;">
 								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
 									n°</label>
-								<?php
-        //new current week (= next week)
+								<?php //new current week (= next week)
+
+
         $date = new DateTime();
         //$date->modify('+1 week');
         $currentWeek = $date->format("W");
@@ -5428,7 +5528,8 @@ function consegne_ordini_pages()
                  if (!empty($measureUnit)) {
                      $unitaMisura = " " . $measureUnit;
                  } else {
-                     $unitaMisura = " gr"; //select prodotti
+                     $unitaMisura = " gr";
+                     //select prodotti
                  }
                  $fornitoreString = "";
                  if (!empty($fornitore)) {
@@ -5455,8 +5556,7 @@ function consegne_ordini_pages()
                  }
                  if ($codiceConfezionamento) {
                      $codiceConfezionamento = $codiceConfezionamento;
-                 }
-                 //echo the_title() . ' '. $weight. ' <br>';
+                 } //echo the_title() . ' '. $weight. ' <br>';
                  echo '<option value="' .
                      $productID .
                      '" data-sku="' .
@@ -5473,7 +5573,8 @@ function consegne_ordini_pages()
                      '">' .
                      get_the_title() .
                      "</option>";
-             endwhile; // end of the loop.
+             endwhile;
+             // end of the loop.
              wp_reset_postdata();
              echo "</optgroup>";
          }
@@ -5596,7 +5697,8 @@ function consegne_ordini_pages()
                      '">' .
                      get_the_title() .
                      "</option>";
-             endwhile; // end of the loop.
+             endwhile;
+             // end of the loop.
              wp_reset_postdata();
              echo "</optgroup>";
          }
@@ -5739,8 +5841,7 @@ function consegne_ordini_pages()
            $dataConsegna = get_post_meta($box->ID, "_data_consegna", true);
            $productsAlreadyInBox = array_map(function ($p) {
                return $p["id"];
-           }, $products);
-           // fix nathi per errore data di consegna
+           }, $products); // fix nathi per errore data di consegna
            $fixdate = new DateTime($dataConsegna);
            ?>
 
@@ -5828,7 +5929,8 @@ function consegne_ordini_pages()
             ) {
                 $codiceConfezionamento = reset($codiceConfezionamento);
             }
-            $unitaMisura = " gr"; //tabella riepilogo box
+            $unitaMisura = " gr";
+            //tabella riepilogo box
             $measureUnit = get_post_meta(
                 $product["id"],
                 "_woo_uom_input",
@@ -5978,7 +6080,8 @@ function consegne_ordini_pages()
                       if (!empty($measureUnit)) {
                           $unitaMisura = " " . $measureUnit;
                       } else {
-                          $unitaMisura = " gr"; //select prodotti
+                          $unitaMisura = " gr";
+                          //select prodotti
                       }
                       $fornitoreString = "";
                       if (!empty($fornitore)) {
@@ -6007,8 +6110,7 @@ function consegne_ordini_pages()
                       }
                       if ($codiceConfezionamento) {
                           $codiceConfezionamento = $codiceConfezionamento;
-                      }
-                      //echo the_title() . ' '. $weight. ' <br>';
+                      } //echo the_title() . ' '. $weight. ' <br>';
                       echo '<option value="' .
                           $productID .
                           '"
@@ -6028,7 +6130,8 @@ function consegne_ordini_pages()
                           '">' .
                           get_the_title() .
                           "</option>";
-                  endwhile; // end of the loop.
+                  endwhile;
+                  // end of the loop.
                   wp_reset_postdata();
                   echo "</optgroup>";
               }
@@ -6130,7 +6233,8 @@ function consegne_ordini_pages()
                       if (!empty($measureUnit)) {
                           $unitaMisura = " " . $measureUnit;
                       } else {
-                          $unitaMisura = " gr"; //select prodotti
+                          $unitaMisura = " gr";
+                          //select prodotti
                       }
                       $fornitoreString = "";
                       if (!empty($fornitore)) {
@@ -6159,8 +6263,7 @@ function consegne_ordini_pages()
                       }
                       if ($codiceConfezionamento) {
                           $codiceConfezionamento = $codiceConfezionamento;
-                      }
-                      //echo the_title() . ' '. $weight. ' <br>';
+                      } //echo the_title() . ' '. $weight. ' <br>';
                       echo '<option value="' .
                           $productID .
                           '"
@@ -6180,7 +6283,8 @@ function consegne_ordini_pages()
                           '">' .
                           get_the_title() .
                           "</option>";
-                  endwhile; // end of the loop.
+                  endwhile;
+                  // end of the loop.
                   wp_reset_postdata();
                   echo "</optgroup>";
               }
@@ -6587,8 +6691,7 @@ function woocommerce_wp_multi_select($field, $variation_id = 0)
 add_filter("manage_delivery-group_posts_columns", function ($columns) {
     $columns["week"] = "CSV";
     return $columns;
-});
-// Add the data to the custom columns for the book post type:
+}); // Add the data to the custom columns for the book post type:
 add_action(
     "manage_delivery-group_posts_custom_column",
     function ($column, $post_id) {
@@ -6605,23 +6708,9 @@ add_action(
                 }, $allDataConsegna);
                 $date = new DateTime();
                 //	$date->modify('+1 week');
-                $currentWeek = $date->format("W");
+                $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d');
                 // $dt = new DateTime();
-                // // create DateTime object with current time
-                //
-                // $dt->setISODate($dt->format('o'), $dt->format('W') + 1);
-                // // set object to Monday on next week
-                //
-                // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6);
-                // // get all 1day periods from Monday to +6 days
-                //
-                // $days = iterator_to_array($periods);
-                // // convert DatePeriod object to array
-                //
                 // //print_r($days);
-                // $currentWeek = $days[0]->format("W");
-                // echo '<br/>Mon:' . $days[0]->format('Y-m-d');
-                // echo '<br/>Sun:' . $days[6]->format('Y-m-d');
                 $allDataConsegna = array_unique($allDataConsegna);
                 sort($allDataConsegna);
                 ?>
@@ -6749,8 +6838,7 @@ function my_saved_post($post_id, $json, $is_update)
         $product->set_regular_price($price);
         $product->set_price($price);
         $product->save();
-        wc_delete_product_transients($product->get_id());
-        // Do something.
+        wc_delete_product_transients($product->get_id()); // Do something.
     }
 }
 add_action("pmxi_saved_post", "my_saved_post", 10, 3);
