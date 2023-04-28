@@ -4099,6 +4099,15 @@ function register_my_custom_submenu_page()
         "scegli_tu_page"
     );
 
+
+    add_menu_page(
+        "Rinnovi FN in Sospeso",
+        "Rinnovi FN in Sospeso",
+        "manage_options",
+        "pending-rinnovi",
+        "rinnovi_fn_page"
+    );
+
     add_menu_page(
         "Abbonamenti disattivi con debito",
         "Abbonamenti disattivi con debito",
@@ -4118,6 +4127,237 @@ add_action("activate_order", function ($orderId) {
     $order->update_status("completed", "Ordine completato da admin", true);
     update_post_meta($orderId, "_is_order_updating", false);
 });
+
+add_action("change_order_status", function ($orderId,$status) {
+    $order = wc_get_order($orderId);
+    $order->update_status($status, "Ordine aggiornato da admin", true);
+    update_post_meta($orderId, "_is_order_updating", false);
+});
+
+
+
+
+function rinnovi_fn_page()
+{
+    if (isset($_POST["complete_orders"])) {
+
+        $orderIds = $_POST["orders"];
+        foreach ($orderIds as $orderId) {
+           // update_post_meta($orderId, "_is_order_updating", true);
+			$order = wc_get_order($orderId);
+			$order->update_status($_POST["status"], "Ordine aggiornato da admin", true);
+   // update_post_meta($orderId, "_is_order_updating", false);
+			//change_order_status($orderId,$_POST["status"]);
+            /*as_enqueue_async_action("change_order_status", [
+                "orderId" => $orderId,
+                "status" => $_POST["status"]
+            ]);*/
+        }
+        ?>
+
+        <!--<h4 style="color:white;background:darkgreen;padding:15px;display:block">Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h4>
+		<br>-->
+		<?php
+    }
+
+    $pendingOrders = wc_get_orders([
+        "limit" => -1,
+        "status" => ["pending", "on-hold", "processing"]
+    ]);
+
+    foreach ($pendingOrders as $key => $order) {
+
+		$orderType = null;
+		$subscriptionId = null;
+
+		$orderRenewal = get_post_meta(
+                    $order->get_id(),
+                    "_subscription_renewal",
+                    true
+                );
+                if ($orderRenewal) {
+                    $orderType = "RINNOVO SETTIMANALE";
+					$subscriptionId = $orderRenewal;
+                } else {
+                    global $wpdb;
+                    $isParent = $wpdb->get_results(
+                        "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
+                            $order->get_id(),
+
+                        ARRAY_A
+                    );
+
+                    if (!empty($isParent)) {
+                        $orderType = "PRIMO PAGAMENTO";
+						$subscriptionId = $isParent[0]['ID'];
+                    }
+                }
+
+				if(!$orderType){
+					unset($pendingOrders[$key]);
+					continue;
+				}
+
+				 $pendingOrders[$key]->type = $orderType;
+				$pendingOrders[$key]->subscription_id = $subscriptionId;
+        $items = $order->get_items();
+        $pendingOrders[$key]->total_products = count($items);
+        $pendingOrders[$key]->products = [];
+        // Going through each current customer order items
+        foreach ($items as $item_id => $item_values) {
+            $product = $item_values->get_product();
+            $pendingOrders[$key]->products[] = $product->get_name();
+        }
+    }
+    $order_statuses = [
+        "wc-pending" => _x("Pending payment", "Order status", "woocommerce"),
+        "wc-processing" => _x("Processing", "Order status", "woocommerce"),
+        "wc-on-hold" => _x("On hold", "Order status", "woocommerce"),
+        "wc-completed" => _x("Completed", "Order status", "woocommerce"),
+        "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
+        "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
+        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+    ];
+    ?>
+
+		<div id="wpbody-content">
+
+			<div class="wrap">
+				<div class="agr-create-new-orders">
+
+					<h1 class="wp-heading-inline">
+						Rinnovi FN in sospeso</h1>
+
+					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "FACCIAMO NOI" ancora in sospeso come COMPLETATO.<br>
+					In questo modo gli abbonamenti si riattiveranno.</p>
+
+
+					<hr class="wp-header-end">
+
+					<br>
+
+					<form id="comments-form" method="POST"
+						  action="">
+
+						<input type="hidden" name="complete_orders" value="1">
+
+
+						<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+							<thead>
+
+							<th id="cb" class="manage-column column-cb check-column"
+								style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+								<span style="display:flex;align-items:center;">
+									<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+									<label for="cb-select-all-1" style="font-size:16px;">
+										Seleziona tutti
+									</label>
+								</span>
+							</th>
+							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+								scope="col" id="author" class="manage-column column-author sortable desc">
+								<span>Cliente</span>
+							</th>
+							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+								<span>Prodotti</span>
+							</th>
+							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+								<span>Totale</span>
+							</th>
+							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+								scope="col" id="comment" class="manage-column column-comment column-primary">
+								<span>Stato</span>
+							</th>
+<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+								scope="col" id="comment" class="manage-column column-comment column-primary">
+								<span>Tipo</span>
+							</th>
+<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+								<span>Creato Il</span>
+							</th>
+
+							</thead>
+
+							<tbody>
+<?php foreach ($pendingOrders as $order): ?>
+<?php $isUpdating = get_post_meta(
+    $order->get_id(),
+    "_is_order_updating",
+    true
+); ?>
+<tr>
+<td>
+<input type="checkbox" name="orders[]" value="<?php echo $order->get_id(); ?>"><br>
+<?php if ($isUpdating == true): ?>
+<i>Sto completando...</i>
+<?php endif; ?>
+</td>
+<td>
+ <a href="/wp-admin/post.php?post=<?php echo $order->get_id(); ?>&action=edit" target="_blank">
+
+ <?php
+  if(!empty($order->get_shipping_last_name())){
+
+  echo $order->get_shipping_last_name() .
+    " " .
+    $order->get_shipping_first_name();
+  }else{
+	   echo $order->get_billing_last_name() .
+    " " .
+    $order->get_billing_first_name();
+  }
+  ?>
+
+    </a>
+</td>
+<td>
+<div style="height: 80px; width:200px;overflow: scroll">
+<?php echo implode("<br>", $order->products); ?>
+
+</div>
+</td>
+<td>
+<?php echo $order->get_total() . "€"; ?>
+</td>
+<td>
+<mark class="order-status status-<?php echo $order->get_status(); ?> tips"><span>
+<?php echo $order_statuses["wc-" . $order->get_status()]; ?>
+</span></mark>
+
+</td>
+<td>
+<a href="/wp-admin/post.php?post=<?php echo $order->subscription_id; ?>&action=edit" target="_blank"><?php echo $order->type; ?></a>
+
+</td>
+<td>
+<?php echo $order->get_date_created()->format("d/m/Y H:i"); ?>
+</td>
+</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+						<br><br>
+						<select name="status">
+						<option value="completed">Aggiorna a COMPLETATO</option>
+						<option value="cancelled">Aggiorna a CANCELLATO</option>
+						</select>
+
+						<button type="submit" class="button-primary">Aggiorna Ordini</button>
+					</form>
+
+					<br/>
+
+				</div>
+
+
+			</div>
+
+			<div id="ajax-response"></div>
+
+			<div class="clear"></div>
+		</div>
+		<?php
+}
 
 function scegli_tu_page()
 {

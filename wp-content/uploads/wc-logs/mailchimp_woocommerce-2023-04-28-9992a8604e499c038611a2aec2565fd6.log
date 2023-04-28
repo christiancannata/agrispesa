@@ -24,3 +24,17 @@
 2023-04-28T14:49:55+00:00 NOTICE order_submit :: #37386 has a financial status of cancelled and was skipped.
 2023-04-28T14:53:47+00:00 NOTICE order_submit :: #37390 has a financial status of cancelled and was skipped.
 2023-04-28T14:53:49+00:00 NOTICE order_submit :: #37397 has a financial status of cancelled and was skipped.
+2023-04-28T15:16:20+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38168
+2023-04-28T15:16:21+00:00 NOTICE debug :: Order ID 38168 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/
+        )
+
+)
+
+2023-04-28T15:18:20+00:00 NOTICE order.member.updated :: Updated marta.monaco@gmail.com subscriber status to subscribed and language to 
+2023-04-28T15:18:20+00:00 NOTICE order_submit.success :: addStoreOrder :: #38168 :: email: marta.monaco@gmail.com :: landing site https://agrispesa.loc/wp-admin/
