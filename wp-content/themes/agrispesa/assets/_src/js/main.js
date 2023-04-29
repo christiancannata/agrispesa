@@ -315,11 +315,13 @@ function giftCardCheckout() {
         success: function (res) {
 
           data.coupon_code = 'WELOVEDENSO'
-          jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+          jQuery(document.body).trigger('applied_coupon_in_checkout', []);
           jQuery(document.body).trigger('update_checkout', {
             update_shipping_method: false
           });
 
+
+          $form.removeClass('processing');
           /* res.coupon_code.forEach(function(coupon_code){
 
              data.coupon_code = coupon_code
