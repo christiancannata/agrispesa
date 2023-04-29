@@ -21,10 +21,26 @@ function wc_minimum_order_amount()
 {
 
 	$category = 'box';
-	$minimum = get_field('agr_minimun_amount', 'option');
+	$minimum = get_option('agr_minimun_amount');
+
+	/*
+	 * FATTO. € 43 per chi fa acquisti unicamente dal negozio (ST)
+
+FATTO. Non c'è minimo ordine per ST che fa ulteriori ordini oltre al primo per quella settimana.
+a. Per questi secondi ordini ST, se l'indirizzo di consegna è uguale a quello del primo ordine, non c'è costo di spedizione.
+b. Per questi secondi ordini ST, se l'indirizzo di consegna è diverso a quello del primo ordine, c'è costo di spedizione
+
+FATTO. Non c'è minimo ordine per clienti FN che acquistano prodotti aggiuntivi.
+a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quello del primo ordine, non c'è costo di spedizione.
+
+	 */
+
+	if (!$minimum) {
+		$minimum = 43;
+	}
 
 	$loggedUser = is_user_logged_in();
-	$allowedClients = get_field('agr_clients_no_limits', 'option');
+	$allowedClients = get_option('agr_clients_no_limits');
 
 	$has_sub = '';
 	if ($loggedUser) {
@@ -32,15 +48,32 @@ function wc_minimum_order_amount()
 		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 	}
 
+	$orderLastWeek = 0;
+	if ($loggedUser) {
+		$lastWeek = (new \DateTime())->sub(new DateInterval("P5D"));
+		$orders = wc_get_orders([
+			"limit" => -1,
+			'customer' => get_current_user_id(),
+			"meta_key" => "_date_completed",
+			"meta_compare" => ">",
+			"meta_value" => $lastWeek->getTimestamp()
+		]);
 
+		$orderLastWeek = count($orders);
+	}
+
+
+	// NO MINIMO ORDINE SE HA FN ATTIVA
 	if ($loggedUser && $has_sub) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
 		echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-check is-icon green"></span>Hai già una Facciamo noi!</span><span class="is-description">Aggiungeremo questi prodotti alla tua prossima scatola.</span></div></div>';
-	} else if ($loggedUser && $allowedClients && in_array($loggedUser, $allowedClients)) {
-		//tolgo il limite se l'utente è autorizzato da backend
-		$minimum = 10;
+	}
 
+	if ($loggedUser && !$has_sub && $orderLastWeek > 0) {
+		//tolgo il limite se l'utente ha un abbonamento attivo
+		$minimum = 0;
+		//echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-check is-icon green"></span>Hai già una Facciamo noi!</span><span class="is-description">Aggiungeremo questi prodotti alla tua prossima scatola.</span></div></div>';
 	}
 
 	// Loop through cart items
@@ -54,7 +87,7 @@ function wc_minimum_order_amount()
 		}
 
 		//ACQUISTO CREDITO
-		if($product_id == 17647){
+		if ($product_id == 17647) {
 			$minimum = 0;
 			continue;
 		}
