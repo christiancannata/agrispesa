@@ -2126,11 +2126,14 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $orderType = "ST";
 
-			$items  = WC()->session->get( 'cart', null );
+            $items = WC()->session->get("cart", null);
 
-			WC()->session->set( 'applied_coupons',[]);
+            WC()->session->set("applied_coupons", []);
 
-			$coupons = [];
+            $coupons = [];
+
+            $hasProducts = false;
+            $hasBox = false;
 
             foreach ($items as $cart_item) {
                 // Product id
@@ -2139,13 +2142,18 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $categories = get_the_terms($product_id, "product_cat");
                 foreach ($categories as $term) {
                     if (in_array($term->slug, ["box"])) {
-						$coupons[] = 'WELOVEDENSO';
+                        $hasBox = true;
+                    } else {
+                        $hasProducts = true;
                     }
                 }
             }
 
-            if ($orderType == "ST") {
+            if ($hasProducts) {
                 $coupons[] = "WELOVEDENSO10";
+            }
+            if ($hasBox) {
+                $coupons[] = "WELOVEDENSO";
             }
 
             $response = new WP_REST_Response([
@@ -4406,7 +4414,12 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+        "wc-failed" => _x(
+            "Failed",
+            "Order status",
+
+            "woocommerce"
+        ),
     ];
     ?>
 
