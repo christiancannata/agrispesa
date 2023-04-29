@@ -37,7 +37,7 @@ $orderType = get_post_meta($order->get_id(), '_order_type', true);
 	);
 	?>
 </p>
-
+<!--
 <?php if ($orderType == 'BOX'):
 	$shippingDate = get_post_meta($order->get_id(), '_delivery_date', true);
 	?>
@@ -50,7 +50,7 @@ $orderType = get_post_meta($order->get_id(), '_order_type', true);
 
 	</section>
 <?php endif; ?>
-
+ -->
 <?php if ($notes) : ?>
 	<h2 class="my-account--minititle"><?php esc_html_e('Order updates', 'woocommerce'); ?></h2>
 	<ol class="woocommerce-OrderUpdates commentlist notes">

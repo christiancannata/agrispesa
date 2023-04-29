@@ -62,24 +62,41 @@ if ($show_downloads) {
 			do_action('woocommerce_order_details_before_order_table_items', $order);
 
 			foreach ($order_items as $item_id => $item) {
+
 				$product = $item->get_product();
 
-				$fornitore = get_post_meta($product->get_id(), 'product_producer', true);
+				$productName = null;
+
+				if (!$product) {
+					$productName = $item['name'];
+				} else {
+					$productName = $product->get_name();
+				}
+
+				$fornitore = null;
 				$fornitoreString = '';
-				if (!empty($fornitore)) {
-					$fornitore = reset($fornitore);
-					$fornitore = get_post($fornitore);
-					$fornitoreString = $fornitore->post_title;
-				}
-
-
 				$unitaMisura = ' gr';
-				$measureUnit = get_post_meta($product->get_id(), '_woo_uom_input', true);
-				if (!empty($measureUnit)) {
-					$unitaMisura = ' ' . $measureUnit;
+				$weight = '';
+
+				if ($product) {
+
+					$fornitore = get_post_meta($product->get_id(), 'product_producer', true);
+
+					if (!empty($fornitore)) {
+						$fornitore = reset($fornitore);
+						$fornitore = get_post($fornitore);
+						$fornitoreString = $fornitore->post_title;
+					}
+
+
+					$measureUnit = get_post_meta($product->get_id(), '_woo_uom_input', true);
+					if (!empty($measureUnit)) {
+						$unitaMisura = ' ' . $measureUnit;
+					}
+
+					$weight = get_post_meta($product->get_id(), '_weight', true);
 				}
 
-				$weight = get_post_meta($product->get_id(), '_weight', true);
 
 				if (!$isSubscription) {
 					wc_get_template(
@@ -91,6 +108,7 @@ if ($show_downloads) {
 							'show_purchase_note' => $show_purchase_note,
 							'purchase_note' => $product ? $product->get_purchase_note() : '',
 							'product' => $product,
+							'product_name' => $productName
 						)
 					);
 				} else {
