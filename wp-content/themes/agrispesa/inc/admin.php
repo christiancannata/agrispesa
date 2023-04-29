@@ -2156,6 +2156,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $coupons[] = "WELOVEDENSO";
             }
 
+			 WC()->session->set("applied_coupons", $coupons);
+
             $response = new WP_REST_Response([
                 "coupon_code" => $coupons,
             ]);

@@ -49,9 +49,6 @@ defined('ABSPATH') || exit;
 			<th>Codice sconto:<span class="checkout-coupon-name">
 						<?php
 						$coupon = $coupon->get_code();
-						if (strtolower($coupon) == 'welovedenso10') {
-							$coupon = 'SCONTO 10% SUL CARRELLO';
-						}
 						echo $coupon; ?>
 
 					</span></th>
