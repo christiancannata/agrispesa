@@ -975,7 +975,7 @@ function free_first_order_shipping($rates, $package)
 		//$has_free_shipping = true;
 	} else if ($loggedUser && empty($orders)) {
 		$has_free_shipping = true;
-	} else if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons())) {
+	} else if (WC()->cart && (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons())) ) {
 		$has_free_shipping = true;
 	}
 
