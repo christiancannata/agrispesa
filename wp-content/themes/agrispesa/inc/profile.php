@@ -256,13 +256,13 @@ function invoice_box_content()
 		'customer' => get_current_user_id(),
 	];
 
-	$payments = wc_get_orders($args);
+	//$payments = wc_get_orders($args);
 
-	$invoices = array_merge($userInvoices, $payments);
+	//$invoices = array_merge($userInvoices, $payments);
 
-	usort($invoices, function ($a, $b) {
+	/*usort($invoices, function ($a, $b) {
 		return $a->ID < $b->ID;
-	});
+	});*/
 
 	?>
 	<div class="woocommerce-Fatture-content">
