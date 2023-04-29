@@ -2126,9 +2126,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $orderType = "ST";
 
-			 global $woocommerce;
-
 			$items  = WC()->session->get( 'cart', null );
+
+			WC()->session->set( 'applied_coupons',[]);
 
 			$coupons = [];
 
