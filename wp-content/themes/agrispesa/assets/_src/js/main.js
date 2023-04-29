@@ -314,14 +314,16 @@ function giftCardCheckout() {
         url: '/wp-json/agrispesa/v1/check-cart-coupon?coupon_code=' + data.coupon_code,
         success: function (res) {
 
-          data.coupon_code = 'WELOVEDENSO'
+
+          location.href=''
+          /*data.coupon_code = 'WELOVEDENSO'
           jQuery(document.body).trigger('applied_coupon_in_checkout', []);
           jQuery(document.body).trigger('update_checkout', {
             update_shipping_method: false
           });
 
 
-          $form.removeClass('processing');
+          $form.removeClass('processing');*/
           /* res.coupon_code.forEach(function(coupon_code){
 
              data.coupon_code = coupon_code
