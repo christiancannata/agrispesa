@@ -2108,6 +2108,52 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $root->appendChild($row);
     }
 
+    register_rest_route("agrispesa/v1", "check-cart-coupon", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $couponCode = $request->get_param("coupon_code");
+
+            if (strtolower($couponCode) != "welovedenso") {
+                $response = new WP_REST_Response([
+                    "coupon_code" => $couponCode,
+                ]);
+                $response->set_status(200);
+                return $response;
+            }
+
+            $orderType = "ST";
+
+			 global $woocommerce;
+
+			$items  = WC()->session->get( 'cart', null );
+
+            foreach ($items as $cart_item) {
+                // Product id
+                $product_id = $cart_item["product_id"];
+
+                $categories = get_the_terms($product_id, "product_cat");
+                foreach ($categories as $term) {
+                    if (in_array($term->slug, ["box"])) {
+                        $orderType = "FN";
+                    }
+                }
+            }
+
+            if ($orderType == "ST") {
+                $couponCode = "WELOVEDENSO10";
+            }
+
+            $response = new WP_REST_Response([
+                "coupon_code" => $couponCode,
+            ]);
+            $response->set_status(200);
+            return $response;
+        },
+    ]);
+
     register_rest_route("agrispesa/v1", "export-orders", [
         "methods" => "GET",
         "permission_callback" => function () {
@@ -4358,12 +4404,7 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x(
-            "Failed",
-            "Order status",
-
-            "woocommerce"
-        ),
+        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
     ];
     ?>
 
@@ -5394,10 +5435,8 @@ function consegne_ordini_pages()
             ]);
             $taxonomy = "product_cat";
             $orderby = "name";
-            $show_count = 0;
-            // 1 for yes, 0 for no
-            $pad_counts = 0;
-            // 1 for yes, 0 for no
+            $show_count = 0; // 1 for yes, 0 for no
+            $pad_counts = 0; // 1 for yes, 0 for no
             $hierarchical = 1; // 1 for yes, 0 for no
             $title = "";
             $empty = 0;
@@ -6170,7 +6209,8 @@ function consegne_ordini_pages()
               $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
               $negozioID = $getIDbyNAME->term_id;
               $loop_categories = get_categories([
-                  "taxonomy" => "product_cat", // 'orderby' => $orderby, // 'meta_key' => $meta_key,
+                  "taxonomy" => "product_cat",
+                  // 'orderby' => $orderby, // 'meta_key' => $meta_key,
                   "hide_empty" => 1,
                   "parent" => $negozioID,
               ]);
@@ -6321,7 +6361,8 @@ function consegne_ordini_pages()
               $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
               $negozioID = $getIDbyNAME->term_id;
               $loop_categories = get_categories([
-                  "taxonomy" => "product_cat", // 'orderby' => $orderby, // 'meta_key' => $meta_key,
+                  "taxonomy" => "product_cat",
+                  // 'orderby' => $orderby, // 'meta_key' => $meta_key,
                   "hide_empty" => 1,
                   "parent" => $negozioID,
               ]);
@@ -6852,8 +6893,7 @@ add_action(
                     return $val["meta_value"];
                 }, $allDataConsegna);
                 $date = new DateTime(); //	$date->modify('+1 week');
-                $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d'); // //print_r($days);
-                // $dt = new DateTime();
+                $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d'); // //print_r($days); // $dt = new DateTime();
                 $allDataConsegna = array_unique($allDataConsegna);
                 sort($allDataConsegna);
                 ?>

@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
 			</th>
 		</tr>
 	</thead>
-	
+
 	<tfoot>
 
 		<tr class="cart-subtotal">
@@ -42,7 +42,15 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-				<th>Codice sconto:<span class="checkout-coupon-name"><?php echo $coupon->get_code(); ?></span></th>
+				<th>Codice sconto:<span class="checkout-coupon-name">
+						<?php
+						$coupon = $coupon->get_code();
+						if(strtolower($coupon) == 'welovedenso10'){
+							$coupon = 'WELOVEDENSO';
+						}
+						echo $coupon; ?>
+
+					</span></th>
 				<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 			</tr>
 		<?php endforeach; ?>

@@ -76,17 +76,6 @@ sliderBoxLanding();
 //changeShippingLabel();
 landingSelectVariable();
 
-//changeLabelRecurringShipping();
-
-
-function changeLabelRecurringShipping() {
-  // jQuery('.cart_totals .shipping.recurring-total td').html('€5,00 / settimana');
-  // jQuery('.woocommerce-checkout-review-order-table .shipping.recurring-total td').html('€5,00 / settimana');
-
-  // jQuery( 'body' ).on( 'updated_checkout', function() {
-  //   //jQuery('.woocommerce-checkout-review-order-table .shipping.recurring-total td').html('€5,00 / settimana');
-  // });
-}
 
 function removeP() {
 
@@ -296,23 +285,60 @@ function giftCardCheckout() {
       coupon_code: $form.find('input[name="coupon_code"]').val()
     };
 
-    jQuery.ajax({
-      type: 'POST',
-      url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
-      data: data,
-      success: function (code) {
-        jQuery('.woocommerce-error, .woocommerce-message').remove();
-        $form.removeClass('processing').unblock();
-        if (code) {
-          jQuery(".coupon-form").before(code)
-          jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
-          jQuery(document.body).trigger('update_checkout', {
-            update_shipping_method: false
+    let button = jQuery(this)
+
+    if (data.coupon_code.toLowerCase() != 'welovedenso') {
+      jQuery.ajax({
+        type: 'POST',
+        url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+        data: data,
+        success: function (code) {
+          jQuery('.woocommerce-error, .woocommerce-message').remove();
+          $form.removeClass('processing').unblock();
+          if (code) {
+            jQuery(".coupon-form").before(code)
+            button.closest('.woocommerce-coupons-section').find('.woocommerce-error').show()
+
+            jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+            jQuery(document.body).trigger('update_checkout', {
+              update_shipping_method: false
+            });
+          }
+        },
+        dataType: 'html'
+      });
+    } else {
+
+      jQuery.ajax({
+        type: 'GET',
+        url: '/wp-json/agrispesa/v1/check-cart-coupon?coupon_code=' + data.coupon_code,
+        success: function (res) {
+
+          data.coupon_code = res.coupon_code
+
+          jQuery.ajax({
+            type: 'POST',
+            url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+            data: data,
+            success: function (code) {
+              jQuery('.woocommerce-error, .woocommerce-message').remove();
+              $form.removeClass('processing').unblock();
+              if (code) {
+                jQuery(".coupon-form").before(code)
+                button.closest('.woocommerce-coupons-section').find('.woocommerce-error').show()
+
+                jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+                jQuery(document.body).trigger('update_checkout', {
+                  update_shipping_method: false
+                });
+              }
+            },
+            dataType: 'html'
           });
         }
-      },
-      dataType: 'html'
-    });
+      });
+    }
+
 
   })
 
@@ -1147,7 +1173,7 @@ function quantityInput() {
             try {
               jQuery(this).closest('.shop-buttons-flex').find('.add_to_cart_button').attr('data-quantity', currentVal + parseFloat(step)).toFixed(step.getDecimals());
             } catch (e) {
-
+              console.log(e)
             }
           }
         }

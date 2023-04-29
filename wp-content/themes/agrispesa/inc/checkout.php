@@ -962,6 +962,7 @@ function free_first_order_shipping($rates, $package)
 		);
 		$orders = wc_get_orders($args);
 	}
+
 	$buying_sub = false;
 	$box_product_id = 50;
 	if (in_array($box_product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
@@ -1029,3 +1030,58 @@ function add_recurring_postage_fees($cart)
 
 	}
 }
+
+/*
+function my_woocommerce_apply_cart_coupon_in_url()
+{
+	// Return early if WooCommerce or sessions aren't available.
+	if (!function_exists('WC') || !WC()->session) {
+		return;
+	}
+
+	// Return if there is no coupon in the URL, otherwise set the variable.
+	if (empty($_REQUEST['coupon'])) {
+		return;
+	} else {
+		$coupon_code = esc_attr($_REQUEST['coupon']);
+	}
+
+	// Set a session cookie to remember the coupon if they continue shopping.
+	WC()->session->set_customer_session_cookie(true);
+
+	foreach (WC()->cart->get_coupons() as $code => $coupon) {
+		WC()->cart->remove_coupon($code);
+	}
+
+
+	// Apply the coupon to the cart if necessary.
+	WC()->cart->add_discount($coupon_code);
+
+	$buying_sub = false;
+	$box_product_id = 50;
+	if (in_array($box_product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
+		$buying_sub = true;
+	}
+
+	if (!$buying_sub) {
+		WC()->cart->add_discount($coupon_code . '10');
+	}
+
+}*/
+
+//add_action('wp_loaded', 'my_woocommerce_apply_cart_coupon_in_url', 30);
+//add_action('woocommerce_add_to_cart', 'my_woocommerce_apply_cart_coupon_in_url');
+
+
+function storeapps_wc_sc_max_url_coupons_limit($limit = 5)
+{
+	$limit = 10;
+	return $limit;
+}
+
+function storeapps_handle_smart_coupons_hooks()
+{
+	add_filter('wc_sc_max_url_coupons_limit', 'storeapps_wc_sc_max_url_coupons_limit', 11);
+}
+
+add_action('wp_loaded', 'storeapps_handle_smart_coupons_hooks');
