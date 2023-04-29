@@ -45,7 +45,7 @@ $menu_items                = apply_filters(
 );
 ?>
 
-<h3 class="my-account--minititle">I miei pagamenti</h3>
+<h3 class="my-account--minititle">Acquista credito: carta di credito, Satispay</h3>
 
 <div class="woo-wallet-my-wallet-container">
 	<div class="woo-wallet-sidebar">

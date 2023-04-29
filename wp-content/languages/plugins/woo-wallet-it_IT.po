@@ -643,7 +643,7 @@ msgstr ""
 #: includes/class-woo-wallet-frontend.php:287
 #: templates/wc-endpoint-wallet.php:50
 msgid "My Wallet"
-msgstr "Pagamenti"
+msgstr "Acquista credito"
 
 #: includes/class-woo-wallet-admin.php:899
 msgid "Endpoint for the \"My account &rarr; My Wallet\" page."
