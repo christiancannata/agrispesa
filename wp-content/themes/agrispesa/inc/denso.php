@@ -5,6 +5,9 @@ add_filter('woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 
 function custom_checkout_billing_city_field($shipping_fields)
 {
 
+	if(!WC()->cart){
+		return $shipping_fields;
+	}
 	$coupons = WC()->cart->get_applied_coupons();
 	$coupons = array_map(function ($coupon) {
 		return strtolower($coupon);
@@ -32,7 +35,6 @@ function custom_checkout_billing_city_field($shipping_fields)
 		$shipping_fields['shipping_postcode']['default'] = $postcode;
 		$shipping_fields['shipping_city']['default'] = $city;
 		$shipping_fields['shipping_company']['default'] = $company;
-		$shipping_fields['shipping_state']['default'] = $state;
 
 		$shipping_fields['shipping_address_1']['custom_attributes']['readonly'] = 'readonly';
 		$shipping_fields['shipping_postcode']['custom_attributes']['readonly'] = 'readonly';
