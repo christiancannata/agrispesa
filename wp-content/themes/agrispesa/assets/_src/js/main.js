@@ -314,27 +314,30 @@ function giftCardCheckout() {
         url: '/wp-json/agrispesa/v1/check-cart-coupon?coupon_code=' + data.coupon_code,
         success: function (res) {
 
-          data.coupon_code = res.coupon_code
+          res.coupon_code.forEach(function(coupon_code){
 
-          jQuery.ajax({
-            type: 'POST',
-            url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
-            data: data,
-            success: function (code) {
-              jQuery('.woocommerce-error, .woocommerce-message').remove();
-              $form.removeClass('processing').unblock();
-              if (code) {
-                jQuery(".coupon-form").before(code)
-                button.closest('.woocommerce-coupons-section').find('.woocommerce-error').show()
+            data.coupon_code = coupon_code
+            jQuery.ajax({
+              type: 'POST',
+              url: wc_checkout_params.wc_ajax_url.toString().replace('%%endpoint%%', 'apply_coupon'),
+              data: data,
+              success: function (code) {
+                jQuery('.woocommerce-error, .woocommerce-message').remove();
+                $form.removeClass('processing').unblock();
+                if (code) {
+                  jQuery(".coupon-form").before(code)
+                  button.closest('.woocommerce-coupons-section').find('.woocommerce-error').show()
 
-                jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
-                jQuery(document.body).trigger('update_checkout', {
-                  update_shipping_method: false
-                });
-              }
-            },
-            dataType: 'html'
-          });
+                  jQuery(document.body).trigger('applied_coupon_in_checkout', [data.coupon_code]);
+                  jQuery(document.body).trigger('update_checkout', {
+                    update_shipping_method: false
+                  });
+                }
+              },
+              dataType: 'html'
+            });
+          })
+
         }
       });
     }

@@ -2130,6 +2130,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			$items  = WC()->session->get( 'cart', null );
 
+			$coupons = [];
+
             foreach ($items as $cart_item) {
                 // Product id
                 $product_id = $cart_item["product_id"];
@@ -2137,17 +2139,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $categories = get_the_terms($product_id, "product_cat");
                 foreach ($categories as $term) {
                     if (in_array($term->slug, ["box"])) {
-                        $orderType = "FN";
+						$coupons[] = 'WELOVEDENSO';
                     }
                 }
             }
 
             if ($orderType == "ST") {
-                $couponCode = "WELOVEDENSO10";
+                $coupons[] = "WELOVEDENSO10";
             }
 
             $response = new WP_REST_Response([
-                "coupon_code" => $couponCode,
+                "coupon_code" => $coupons,
             ]);
             $response->set_status(200);
             return $response;
