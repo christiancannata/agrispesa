@@ -246,7 +246,7 @@ function invoice_box_content()
 		],
 	]);
 
-	$args = [
+	/*$args = [
 		"status" => "wc-completed",
 		"limit" => -1,
 
@@ -255,7 +255,7 @@ function invoice_box_content()
 		"meta_compare" => "NOT IN",
 		'customer' => get_current_user_id(),
 	];
-
+*/
 	//$payments = wc_get_orders($args);
 
 	//$invoices = array_merge($userInvoices, $payments);
