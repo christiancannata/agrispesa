@@ -5,7 +5,12 @@ add_filter('woocommerce_shipping_fields', 'custom_checkout_billing_city_field', 
 function custom_checkout_billing_city_field($shipping_fields)
 {
 
-	if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
+	$coupons = WC()->cart->get_applied_coupons();
+	$coupons = array_map(function ($coupon) {
+		return strtolower($coupon);
+	}, $coupons);
+
+	if (WC()->cart && (in_array('welovedenso', $coupons) || in_array('welovedenso10', $coupons))) {
 		add_filter('woocommerce_ship_to_different_address_checked', '__return_true');
 		global $woocommerce;
 
@@ -36,7 +41,7 @@ function custom_checkout_billing_city_field($shipping_fields)
 		$shipping_fields['shipping_state']['custom_attributes']['readonly'] = 'readonly';
 
 		$shipping_fields['shipping_state']['type'] = 'select';
-		$shipping_fields['shipping_state']['options'] = array( $state => $state );
+		$shipping_fields['shipping_state']['options'] = array($state => $state);
 		$shipping_fields['shipping_state']['default'] = $state;
 		//$shipping_fields['shipping_state']['custom_attributes']['disabled'] = 'disabled';
 
