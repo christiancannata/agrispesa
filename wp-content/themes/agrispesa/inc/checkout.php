@@ -14,8 +14,8 @@ function bbloomer_remove_shipping_label($label, $method)
 }
 
 //Minimo ordine checkout
-add_action('woocommerce_checkout_process', 'wc_minimum_order_amount_checkout');
-add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
+//add_action('woocommerce_checkout_process', 'wc_minimum_order_amount_checkout');
+//add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
 
 
 function getMinimumOrder()
@@ -118,6 +118,18 @@ function wc_minimum_order_amount()
 		}
 	}
 
+}
+
+add_action('woocommerce_check_cart_items', 'required_min_cart_subtotal_amount');
+function required_min_cart_subtotal_amount()
+{
+
+
+	$minOrder = getMinimumOrder();
+
+	if ($minOrder['diff'] > 0) {
+		wc_add_notice('Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti! Ti mancano ' . wc_price($minOrder['diff']), 'error');
+	}
 }
 
 
