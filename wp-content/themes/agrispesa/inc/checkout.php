@@ -918,7 +918,7 @@ function free_first_order_shipping($rates, $package)
 		$user_id = get_current_user_id();
 		$args = array(
 			'customer_id' => $user_id,
-			'status' => array('wc-completed'),
+			'status' => "completed",
 		);
 		$orders = wc_get_orders($args);
 	} else {
@@ -973,6 +973,26 @@ function free_first_order_shipping($rates, $package)
 		$has_free_shipping = true;
 		$label = 'Prima consegna Gratuita';
 	}
+
+
+	if (!empty($orders)) {
+		//check spedizione gratuita se ha già fatto un ordine quella settimana
+
+		$today = new \DateTime();
+		$today->add(new \DateInterval("P7D"));
+		$week = $today->format("W");
+		$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+
+		foreach ($orders as $order) {
+			$orderWeek = get_post_meta($order->get_id(), '_week', true);
+			if ($orderWeek == $currentWeek) {
+				$has_free_shipping = true;
+			}
+		}
+
+
+	}
+
 
 	if (WC()->cart && (in_array('WELOVEDENSO', WC()->cart->get_applied_coupons()) || in_array('WELOVEDENSO10', WC()->cart->get_applied_coupons()))) {
 		$has_free_shipping = true;
