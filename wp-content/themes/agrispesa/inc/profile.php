@@ -288,7 +288,7 @@ function invoice_box_content()
 				</thead>
 
 				<tbody>
-				<?php foreach ($invoices as $invoice): ?>
+				<?php foreach ($userInvoices as $invoice): ?>
 					<?php
 					$amount = 0;
 					$navisionId = null;
