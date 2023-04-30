@@ -450,10 +450,9 @@ function display_shipping_piano_field($shipping_fields)
 		return $shipping_fields;
 	}
 
-	if (in_array('welovedenso', WC()->cart->get_applied_coupons())) {
-		$required = false;
-	} else {
-		$required = true;
+	$default = '';
+	if (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons())) {
+		$default = 'TERRA';
 	}
 
 	$shipping_fields['shipping_piano'] = array(
@@ -461,8 +460,9 @@ function display_shipping_piano_field($shipping_fields)
 		'label' => __('Piano'),
 		'class' => array('form-row-wide'),
 		'priority' => 25,
-		'required' => $required,
+		'required' => true,
 		'clear' => true,
+		'default' => $default,
 		'priority' => 101
 	);
 	return $shipping_fields;
@@ -940,7 +940,6 @@ add_filter('woocommerce_package_rates', 'free_first_order_shipping', 20, 2);
 function free_first_order_shipping($rates, $package)
 {
 	// New shipping cost (can be calculated)
-	$cart = WC()->cart;
 	$has_free_shipping = false;
 
 	$tax_rate = 0;
@@ -961,21 +960,58 @@ function free_first_order_shipping($rates, $package)
 			'status' => array('wc-completed'),
 		);
 		$orders = wc_get_orders($args);
+	} else {
+		//check old orders
+		$orderData = $_POST;
+
+		$capOrdersQuery = wc_get_orders([
+			"limit" => -1,
+			"status" => ["completed"],
+			"meta_key" => "_shipping_postcode",
+			"meta_value" => $orderData['s_postcode'],
+			"meta_compare" => "=",
+		]);
+
+		$ordersByPostcode = wc_get_orders($capOrdersQuery);
+
+		foreach ($ordersByPostcode as $order) {
+
+			$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
+			$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
+
+			if ($newOrderAddress == $oldOrderAddress) {
+				$orders[] = $order;
+			}
+
+		}
 	}
 
 	$buying_sub = false;
-	$box_product_id = 50;
-	if (in_array($box_product_id, array_column(WC()->cart->get_cart(), 'product_id'))) {
-		$buying_sub = true;
+
+
+	if (WC()->cart) {
+		$productsCart = array_column(WC()->cart->get_cart(), 'product_id');
+
+		foreach ($productsCart as $item) {
+			$categories = get_the_terms($item, "product_cat");
+			foreach ($categories as $term) {
+				if (in_array($term->slug, ["box"])) {
+					$buying_sub = true;
+				}
+			}
+		}
 	}
 
-	if (!$loggedUser) {
+	if ($loggedUser && $has_sub && !$buying_sub) {
 		$has_free_shipping = true;
-	} else if ($loggedUser && $has_sub && $buying_sub == false) {
-		//$has_free_shipping = true;
-	} else if ($loggedUser && empty($orders)) {
+	}
+
+	if (empty($orders)) {
 		$has_free_shipping = true;
-	} else if (WC()->cart && (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons())) ) {
+		$label = 'Prima consegna Gratuita';
+	}
+
+	if (WC()->cart && (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons()))) {
 		$has_free_shipping = true;
 	}
 
