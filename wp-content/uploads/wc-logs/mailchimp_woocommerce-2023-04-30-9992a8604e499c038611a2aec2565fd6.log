@@ -17,3 +17,6 @@
     [tracking] => 
 )
 
+2023-04-30T23:03:14+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 86251430842dbf4be26b6efd5e945815
+2023-04-30T23:06:26+00:00 NOTICE abandoned_cart.success :: email: asdasdasd@asdasd.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=86251430842dbf4be26b6efd5e945815
+2023-04-30T23:06:27+00:00 NOTICE cart.member.updated :: Updated asdasdasd@asdasd.com subscriber status to transactional and language to it

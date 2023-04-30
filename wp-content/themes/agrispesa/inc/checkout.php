@@ -14,14 +14,15 @@ function bbloomer_remove_shipping_label($label, $method)
 }
 
 //Minimo ordine checkout
-add_action('woocommerce_checkout_process', 'wc_minimum_order_amount');
+add_action('woocommerce_checkout_process', 'wc_minimum_order_amount_checkout');
 add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
 
-function wc_minimum_order_amount()
-{
 
+function getMinimumOrder()
+{
 	$category = 'box';
 	$minimum = get_option('agr_minimun_amount');
+
 
 	/*
 	 * FATTO. € 43 per chi fa acquisti unicamente dal negozio (ST)
@@ -40,16 +41,17 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 	}
 
 	$loggedUser = is_user_logged_in();
-	$allowedClients = get_option('agr_clients_no_limits');
+	//$allowedClients = get_option('agr_clients_no_limits');
 
-	$has_sub = '';
-	if ($loggedUser) {
-		$current_user = wp_get_current_user();
-		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
-	}
+	$has_sub = false;
 
 	$orderLastWeek = 0;
+
 	if ($loggedUser) {
+
+		$current_user = wp_get_current_user();
+		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+
 		$lastWeek = (new \DateTime())->sub(new DateInterval("P5D"));
 		$orders = wc_get_orders([
 			"limit" => -1,
@@ -67,13 +69,11 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 	if ($loggedUser && $has_sub) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
-		echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-check is-icon green"></span>Hai già una Facciamo noi!</span><span class="is-description">Aggiungeremo questi prodotti alla tua prossima scatola.</span></div></div>';
 	}
 
 	if ($loggedUser && !$has_sub && $orderLastWeek > 0) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
-		//echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-check is-icon green"></span>Hai già una Facciamo noi!</span><span class="is-description">Aggiungeremo questi prodotti alla tua prossima scatola.</span></div></div>';
 	}
 
 	// Loop through cart items
@@ -94,22 +94,40 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 	}
 
-	if (WC()->cart->total < $minimum) {
-		$cartTotal = WC()->cart->total;
-		$addPrice = $minimum - $cartTotal;
+	return ['minimum' => $minimum, 'diff' => WC()->cart->total - $minimum];
 
+}
+
+function wc_minimum_order_amount()
+{
+
+	$minOrder = getMinimumOrder();
+
+	if ($minOrder['diff'] > 0) {
 		if (is_cart()) {
 
-			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minimum) . '. Scegli altri prodotti!<br/>Ti mancano ' . wc_price($addPrice) . '.</span></div></div>';
+			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!<br/>Ti mancano ' . wc_price($minOrder['diff']) . '.</span></div></div>';
 			// Remove proceed to checkout button
 			remove_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
 
 		} else {
-			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minimum) . '. Scegli altri prodotti!<br/>Ti mancano ' . wc_price($addPrice) . '.</span></div></div>';
+			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!<br/>Ti mancano ' . wc_price($minOrder['diff']) . '.</span></div></div>';
 			// Remove proceed to checkout button
 			remove_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
 
 		}
+	}
+
+}
+
+
+function wc_minimum_order_amount_checkout()
+{
+
+	$minOrder = getMinimumOrder();
+
+	if ($minOrder['diff'] > 0) {
+		wc_add_notice('Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti! Ti mancano ' . wc_price($minOrder['diff']), 'error');
 	}
 }
 

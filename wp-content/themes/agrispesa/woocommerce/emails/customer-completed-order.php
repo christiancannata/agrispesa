@@ -87,7 +87,7 @@ if ($shipping_date_weekday === 'Monday') {
 }
 
 if($deliveryDate) {
-	echo 'La consegna è prevista per ' . $shipping_weekday_it . ' ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year . '. ';
+	//echo 'La consegna è prevista per ' . $shipping_weekday_it . ' ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year . '. ';
 }
 echo 'Controlla il tuo account per tenere tutto sotto controllo.';
 
