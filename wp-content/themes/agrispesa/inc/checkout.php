@@ -123,47 +123,6 @@ function add_free_shipping_label($label, $method)
 	return $label;
 }
 
-//coupon con consegna gratuita
-add_filter('woocommerce_package_rates', 'coupon_free_shipping_customization', 20, 2);
-function coupon_free_shipping_customization($rates, $package)
-{
-	$has_free_shipping = false;
-
-	$applied_coupons = WC()->cart->get_applied_coupons();
-	foreach ($applied_coupons as $coupon_code) {
-		$coupon = new WC_Coupon($coupon_code);
-		if ($coupon->get_free_shipping()) {
-			$has_free_shipping = true;
-
-			break;
-		}
-	}
-
-	foreach ($rates as $rate_key => $rate) {
-		if ($has_free_shipping) {
-			// For "free shipping" method (enabled), remove it
-			if ($rate->method_id == 'free_shipping') {
-				unset($rates[$rate_key]);
-			} // For other shipping methods
-			else {
-				// Append rate label titles (free)
-				$rates[$rate_key]->label .= ' ' . __('Gratuita', 'woocommerce');
-
-				// Set rate cost
-				$rates[$rate_key]->cost = 0;
-
-				// Set taxes rate cost (if enabled)
-				$taxes = array();
-				foreach ($rates[$rate_key]->taxes as $key => $tax) {
-					if ($rates[$rate_key]->taxes[$key] > 0)
-						$taxes[$key] = 0;
-				}
-				$rates[$rate_key]->taxes = $taxes;
-			}
-		}
-	}
-	return $rates;
-}
 
 //Sposta bottoni di pagamento prima del bottone di default
 //add_action('init', 'change_payments_buttons_position', 11);
@@ -451,7 +410,7 @@ function display_shipping_piano_field($shipping_fields)
 	}
 
 	$default = '';
-	if (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons())) {
+	if (in_array('WELOVEDENSO', WC()->cart->get_applied_coupons()) || in_array('WELOVEDENSO10', WC()->cart->get_applied_coupons())) {
 		$default = 'TERRA';
 	}
 
@@ -964,26 +923,29 @@ function free_first_order_shipping($rates, $package)
 		//check old orders
 		$orderData = $_POST;
 
-		$capOrdersQuery = wc_get_orders([
-			"limit" => -1,
-			"status" => ["completed"],
-			"meta_key" => "_shipping_postcode",
-			"meta_value" => $orderData['s_postcode'],
-			"meta_compare" => "=",
-		]);
+		if(isset($orderData['s_postcode'])){
+			$capOrdersQuery = wc_get_orders([
+				"limit" => -1,
+				"status" => ["completed"],
+				"meta_key" => "_shipping_postcode",
+				"meta_value" => $orderData['s_postcode'],
+				"meta_compare" => "=",
+			]);
 
-		$ordersByPostcode = wc_get_orders($capOrdersQuery);
+			$ordersByPostcode = wc_get_orders($capOrdersQuery);
 
-		foreach ($ordersByPostcode as $order) {
+			foreach ($ordersByPostcode as $order) {
 
-			$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
-			$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
+				$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
+				$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
 
-			if ($newOrderAddress == $oldOrderAddress) {
-				$orders[] = $order;
+				if ($newOrderAddress == $oldOrderAddress) {
+					$orders[] = $order;
+				}
+
 			}
-
 		}
+
 	}
 
 	$buying_sub = false;
@@ -1011,7 +973,7 @@ function free_first_order_shipping($rates, $package)
 		$label = 'Prima consegna Gratuita';
 	}
 
-	if (WC()->cart && (in_array('welovedenso', WC()->cart->get_applied_coupons()) || in_array('welovedenso10', WC()->cart->get_applied_coupons()))) {
+	if (WC()->cart && (in_array('WELOVEDENSO', WC()->cart->get_applied_coupons()) || in_array('WELOVEDENSO10', WC()->cart->get_applied_coupons()))) {
 		$has_free_shipping = true;
 	}
 
@@ -1051,7 +1013,7 @@ function add_recurring_postage_fees($cart)
 {
 
 	if (!empty($cart->recurring_cart_key)) {
-		if (WC()->cart && in_array('welovedenso', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons())) {
+		if (WC()->cart && in_array('WELOVEDENSO', WC()->cart->get_applied_coupons()) || WC()->cart && in_array('WELOVEDENSO10', WC()->cart->get_applied_coupons())) {
 			//$intervals = explode( '_', $cart->recurring_cart_key );
 			$cart->add_fee('Consegna', 0, false, '');
 
