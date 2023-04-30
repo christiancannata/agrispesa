@@ -29,6 +29,39 @@ function call_order_status_changed($orderId)
     update_post_meta($orderId, "_order_type", $orderType);
 }
 
+function call_order_status_pending($orderId)
+{
+    $order = wc_get_order($orderId);
+
+    $orderType = "ST";
+
+    foreach ($order->get_items() as $item_id => $item) {
+        $categories = get_the_terms($item->get_product_id(), "product_cat");
+        foreach ($categories as $term) {
+            if (in_array($term->slug, ["box"])) {
+                $orderType = "FN";
+            }
+        }
+
+        if ($item->get_name() == "Acquisto credito") {
+            $orderType = "CREDITO";
+        }
+    }
+
+    update_post_meta($orderId, "_order_type", $orderType);
+
+	//generate settimana
+	$today = new \DateTime();
+	if($today->format("w") == 3 && $today->fromat("H") >=12){
+		$today->add(new \DateInterval("P7D"));
+	}
+		$week = $today->format("W");
+		$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+
+	update_post_meta($orderId,'_week',$currentWeek);
+}
+
+
 // Call our custom function with the action hook
 add_action(
     "woocommerce_order_status_changed",
@@ -39,10 +72,11 @@ add_action(
 
 add_action(
     "woocommerce_order_status_pending",
-    "call_order_status_changed",
+    "call_order_status_pending",
     10,
     1
 );
+
 
 function merge_orders($subscriptionOrder, $orders)
 {
