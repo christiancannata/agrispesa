@@ -114,14 +114,14 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 }
 
 //Free shipping label
-add_filter('woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2);
-function add_free_shipping_label($label, $method)
+//add_filter('woocommerce_cart_shipping_method_full_label', 'add_free_shipping_label', 10, 2);
+/*function add_free_shipping_label($label, $method)
 {
 	if ($method->cost == 0) {
 		$label = 'Gratuita'; //not quite elegant hard coded string
 	}
 	return $label;
-}
+}*/
 
 
 //Sposta bottoni di pagamento prima del bottone di default
@@ -273,7 +273,9 @@ add_action('woocommerce_checkout_update_order_meta', 'cloudways_save_extra_check
 
 function cloudways_save_extra_details($post_id, $post)
 {
-	update_post_meta($post_id, '_cloudways_dog_name_field', wc_clean($_POST['_cloudways_dog_name_field']));
+	if (isset($_POST['_cloudways_dog_name_field'])) {
+		update_post_meta($post_id, '_cloudways_dog_name_field', wc_clean($_POST['_cloudways_dog_name_field']));
+	}
 }
 
 add_action('woocommerce_process_shop_order_meta', 'cloudways_save_extra_details', 45, 2);
@@ -923,18 +925,17 @@ function free_first_order_shipping($rates, $package)
 		//check old orders
 		$orderData = $_POST;
 
-		if(isset($orderData['s_postcode'])){
+		if (isset($orderData['s_postcode'])) {
+
 			$capOrdersQuery = wc_get_orders([
 				"limit" => -1,
-				"status" => ["completed"],
+				"status" => "completed",
 				"meta_key" => "_shipping_postcode",
 				"meta_value" => $orderData['s_postcode'],
 				"meta_compare" => "=",
 			]);
 
-			$ordersByPostcode = wc_get_orders($capOrdersQuery);
-
-			foreach ($ordersByPostcode as $order) {
+			foreach ($capOrdersQuery as $order) {
 
 				$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
 				$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
