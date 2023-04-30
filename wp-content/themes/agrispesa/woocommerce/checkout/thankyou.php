@@ -167,7 +167,7 @@ if ($next_week_month === '01') {
 					<br/>Il tempo di raccogliere,<br class="only-desktop"/> e siamo da te.</h1>
 				<p class="thankyou--subtitle">Riceverai presto una mail con i dettagli del tuo ordine.</p>
 				<div class="thankyou--details">
-					<?php if ($box_in_order): ?>
+					<?php if ($box_in_order && $shipping_weekday_it): ?>
 						<div class="thankyou--details--item">
 							<span class="icon-consegna"></span>
 							<div class="thankyou--details--text">
