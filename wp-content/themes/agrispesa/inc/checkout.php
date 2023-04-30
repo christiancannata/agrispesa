@@ -971,7 +971,7 @@ function free_first_order_shipping($rates, $package)
 
 	if (empty($orders)) {
 		$has_free_shipping = true;
-		$label = 'Prima consegna Gratuita';
+		$label = 'Gratuita';
 	}
 
 
