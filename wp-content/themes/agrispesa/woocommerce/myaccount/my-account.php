@@ -76,7 +76,7 @@ if ($reg_month === '01') {
 				Ciao<?php if ($current_user->first_name): ?>, <span
 					style="text-transform: capitalize;"><?php echo esc_html($current_user->first_name); ?></span><?php endif; ?>
 				.</h2>
-			<p class="user-profile--registered">Fai parte di Agrispesa
+			<p class="user-profile--registered" style="display: none;">Fai parte di Agrispesa
 				dal <?php echo $reg_day . ' ' . $reg_month . ' ' . $reg_year; ?> <span class="ec ec-green-heart"></span>
 				<span class="ec ec-sparkles"></span></p>
 
@@ -148,7 +148,7 @@ if ($reg_month === '01') {
 			?>
 
 
-			<div class="user-profile--details--item subscriptions">
+			<div class="user-profile--details--item subscriptions" style="display: none;">
 				<?php
 				$has_sub = wcs_user_has_subscription($user_id, '', 'active');
 				$subscriptions = wcs_get_users_subscriptions($user_id, $has_sub);
@@ -173,7 +173,7 @@ if ($reg_month === '01') {
 				}
 				?>
 			</div>
-			<div class="user-profile--details--item">
+			<div class="user-profile--details--item" style="display: none;">
 				<?php
 				$args = array(
 					'customer_id' => $user_id,
