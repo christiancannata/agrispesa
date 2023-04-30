@@ -94,7 +94,7 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 	}
 
-	return ['minimum' => $minimum, 'diff' => WC()->cart->total - $minimum];
+	return ['minimum' => $minimum, 'diff' => $minimum - WC()->cart->total];
 
 }
 
@@ -123,7 +123,6 @@ function wc_minimum_order_amount()
 add_action('woocommerce_check_cart_items', 'required_min_cart_subtotal_amount');
 function required_min_cart_subtotal_amount()
 {
-
 
 	$minOrder = getMinimumOrder();
 
