@@ -307,7 +307,7 @@ function invoice_box_content()
 						$filename = get_post_meta($invoice, '_filename', true);
 						$invoiceName = explode('.', $filename);
 						$invoiceName = $invoiceName[0];
-						$invoiceName = str_replace("-", '/', $invoiceName);
+						$invoiceName = str_replace("_", '/', $invoiceName);
 
 						$type = 'PAGAMENTO';
 						if (substr($filename, 0, 3) == 'VAB') {
