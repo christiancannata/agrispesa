@@ -171,7 +171,7 @@ if ($next_week_month === '01') {
 						<div class="thankyou--details--item">
 							<span class="icon-consegna"></span>
 							<div class="thankyou--details--text">
-								<h3 class="thankyou--details--title"></h3>
+								<h3 class="thankyou--details--title">Consegnamo la tua scatola</h3>
 								<p class="thankyou--details--info">
 									Ti invieremo una mail con giorno e orario di consegna previsti
 								<!--	<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>-->
@@ -182,7 +182,7 @@ if ($next_week_month === '01') {
 					<div class="thankyou--details--item">
 						<span class="icon-ordine"></span>
 						<div class="thankyou--details--text">
-							<h3 class="thankyou--details--title">Sul tuo ordine</h3>
+							<h3 class="thankyou--details--title">Il tuo ordine</h3>
 							<p class="thankyou--details--info"><?php echo 'È il numero #' . $order->get_order_number(); ?>
 								— grazie!</p>
 						</div>
