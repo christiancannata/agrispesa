@@ -933,7 +933,6 @@ function free_first_order_shipping($rates, $package)
 {
 
 	$lastDayCreatedOrdersFN = getLastDeliveryDay();
-
 	// New shipping cost (can be calculated)
 	$has_free_shipping = false;
 
@@ -952,7 +951,7 @@ function free_first_order_shipping($rates, $package)
 		$user_id = get_current_user_id();
 		$args = array(
 			'customer_id' => $user_id,
-			'limit' => -1,
+			'limit' => 1,
 			'status' => "completed",
 			"meta_key" => "_date_completed",
 			"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
