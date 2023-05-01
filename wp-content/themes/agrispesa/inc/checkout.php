@@ -1135,3 +1135,26 @@ function storeapps_handle_smart_coupons_hooks()
 }
 
 add_action('wp_loaded', 'storeapps_handle_smart_coupons_hooks');
+
+
+add_filter('woocommerce_available_payment_gateways', 'bbloomer_unset_gateway_by_category');
+
+function bbloomer_unset_gateway_by_category($available_gateways)
+{
+	if (is_admin()) return $available_gateways;
+	if (!is_checkout()) return $available_gateways;
+	$unset = false;
+
+	$isBonificoEnabled = false;
+
+	foreach (WC()->cart->get_cart_contents() as $key => $values) {
+		$categories = get_the_terms($values['product_id'], 'product_cat');
+		foreach ($categories as $term) {
+			if (in_array($term->slug, ["box"])) {
+				$isBonificoEnabled = true;
+			}
+		}
+	}
+	if (!$isBonificoEnabled) unset($available_gateways['bacs']); // DISABLE COD IF CATEGORY IS IN THE CART
+	return $available_gateways;
+}
