@@ -52,7 +52,8 @@ function call_order_status_pending($orderId)
 
 	//generate settimana
 	$today = new \DateTime();
-	if($today->format("w") == 3 && $today->fromat("H") >=12){
+	$today->add(new \DateInterval("P7D"));
+	if($today->format("w") >= 3 && $today->fromat("H") >=12){
 		$today->add(new \DateInterval("P7D"));
 	}
 		$week = $today->format("W");

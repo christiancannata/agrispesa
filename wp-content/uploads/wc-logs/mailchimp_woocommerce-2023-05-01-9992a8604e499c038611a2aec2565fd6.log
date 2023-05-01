@@ -1,0 +1,30 @@
+2023-05-01T00:48:09+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38672
+2023-05-01T00:49:24+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_User_Submit queued :: obj_id 1
+2023-05-01T00:49:28+00:00 NOTICE debug :: Order ID 38665 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/edit.php?post_type=shop_order
+        )
+
+)
+
+2023-05-01T00:49:28+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38665
+2023-05-01T00:51:42+00:00 NOTICE member.sync :: Updated Member christiancannata@gmail.com :: Array
+(
+    [previous_status] => transactional
+    [status] => 0
+    [language] => 
+    [merge_fields] => Array
+        (
+            [FNAME] => Christian
+            [LNAME] => Cannata
+        )
+
+    [gdpr_fields] => 
+)
+
+2023-05-01T00:51:42+00:00 NOTICE order_process :: Order #38672 skipped, user #1 user role is not in the list
+2023-05-01T00:51:42+00:00 NOTICE order_process :: Order #38665 skipped, user #1 user role is not in the list

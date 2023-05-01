@@ -1143,7 +1143,6 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 {
 	if (is_admin()) return $available_gateways;
 	if (!is_checkout()) return $available_gateways;
-	$unset = false;
 
 	$isBonificoEnabled = false;
 
