@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - WooCommerce - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-23 00:05+0100\n"
+"PO-Revision-Date: 2023-05-01 14:18-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -29858,7 +29858,7 @@ msgstr "Endpoint per la pagina \"Riepilogo ordine &rarr; Aggiungi metodo di paga
 #: templates/myaccount/form-add-payment-method.php:54
 #: templates/myaccount/payment-methods.php:77
 msgid "Add payment method"
-msgstr "Aggiungi metodo di pagamento"
+msgstr "Aggiungi carta di credito"
 
 #: includes/admin/settings/class-wc-settings-advanced.php:191
 msgid "Endpoint for the \"Checkout &rarr; Order received\" page."

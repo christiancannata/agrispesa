@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-04-13 20:58+0200\n"
+"PO-Revision-Date: 2023-05-01 14:18-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -6978,7 +6978,7 @@ msgstr "Cambia metodo di pagamento"
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:49
 msgctxt "text on button on checkout page"
 msgid "Add payment method"
-msgstr "Aggiungi metodo di pagamento"
+msgstr "Aggiungi carta di credito"
 
 #: vendor/woocommerce/subscriptions-core/templates/checkout/form-change-payment-method.php:83
 msgid ""
