@@ -17,7 +17,7 @@ function call_order_status_changed($orderId)
         $categories = get_the_terms($item->get_product_id(), "product_cat");
         foreach ($categories as $term) {
             if (in_array($term->slug, ["box"])) {
-                $orderType = "FN";
+                $orderType = "ABBONAMENTO FN";
             }
         }
 

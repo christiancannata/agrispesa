@@ -42,19 +42,25 @@ $customer_orders = wc_get_orders([
 	"limit" => 1,
 	"status" => ["completed"],
 	"customer" => get_current_user_id(),
-	"meta_key" => '_week',
-	"meta_value" => $currentWeek,
-	"meta_compare" => "=",
+	"meta_key" => "_order_type",
+	"meta_value" => ["ST", "FN"],
+	"meta_compare" => "IN",
 ]);
-
-dd($customer_orders);
-
 $count = count($customer_orders);
-
 
 $subscriptions = wcs_get_users_subscriptions($current_user->ID);
 
 foreach ($subscriptions as $subscription) {
+
+
+	$customer_orders = wc_get_orders([
+		"limit" => 1,
+		"status" => ["completed"],
+		"customer" => get_current_user_id(),
+		"meta_key" => "_subscription_id",
+		"meta_value" => $subscription->get_id(),
+		"meta_compare" => "=",
+	]);
 
 
 	//Prendi il cap della spedizione, se non esiste quello della fatturazione
