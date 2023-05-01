@@ -195,7 +195,7 @@ if ($next_week_month === '01') {
 							</div>
 						</div>
 					<?php endif; ?>
-					<div class="thankyou--details--item">
+				<!--	<div class="thankyou--details--item">
 						<span class="icon-totale"></span>
 						<div class="thankyou--details--text">
 							<h3 class="thankyou--details--title">Totale</h3>
@@ -205,7 +205,7 @@ if ($next_week_month === '01') {
 								Tramite <?php echo wp_kses_post($order->get_payment_method_title()); ?>
 							</p>
 						</div>
-					</div>
+					</div>-->
 					<div class="thankyou--details--item">
 
 						<?php
