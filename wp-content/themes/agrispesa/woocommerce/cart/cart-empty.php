@@ -25,7 +25,7 @@ do_action( 'woocommerce_cart_is_empty' );
 if ( wc_get_page_id( 'shop' ) > 0 ) :
 
 ?>
-
+<!--
 <div class="emptycart">
 	<div class="emptycart--intro">
 		<div class="emptycart--top">
@@ -97,5 +97,5 @@ if ( wc_get_page_id( 'shop' ) > 0 ) :
 		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/empty-box.svg" />
 	</div>
 </div>
-
+ -->
 <?php endif; ?>
