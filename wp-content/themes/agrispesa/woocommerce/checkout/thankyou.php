@@ -206,7 +206,7 @@ if ($next_week_month === '01') {
 							</p>
 						</div>
 					</div>-->
-					<div class="thankyou--details--item">
+				<!--	<div class="thankyou--details--item">
 
 						<?php
 						/*
@@ -232,13 +232,13 @@ if ($next_week_month === '01') {
 						echo '</div>';
 						?>
 
-					</div>
-					<div class="thankyou--details--item buttons">
+					</div>-->
+				<!--	<div class="thankyou--details--item buttons">
 						<a href="<?php echo esc_url(home_url('/')); ?>bacheca" title="Vai alla tua bacheca"
 						   class="btn btn-primary">
 							Vai alla tua bacheca
 						</a>
-					</div>
+					</div>-->
 				</div>
 			</div>
 			<div class="thankyou--image">
