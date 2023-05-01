@@ -1145,7 +1145,7 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 	if (!is_checkout()) return $available_gateways;
 
 	if (get_site_url() != 'https://www.agrispesa.it') {
-		return $available_gateways;
+		//return $available_gateways;
 	}
 
 	$isBonificoEnabled = false;
