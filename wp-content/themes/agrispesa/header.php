@@ -101,7 +101,7 @@ global $woocommerce;
 						</div>
 					</div>
 				<?php else: ?>
-					<a href="<?php echo wc_get_page_permalink('myaccount'); ?>" class="link-icon top-user__login"><span
+					<a href="/bacheca/ordini" class="link-icon top-user__login"><span
 							class="icon-account"></span>Accedi</a>
 				<?php endif; ?>
 
