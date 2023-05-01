@@ -1150,7 +1150,7 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 
 	$isBonificoEnabled = false;
 
-	foreach (WC()->cart->get_cart_contents() as $key => $values) {
+	foreach (WC()->cart->get_cart_contents() as $values) {
 		$categories = get_the_terms($values['product_id'], 'product_cat');
 		foreach ($categories as $term) {
 			if (in_array($term->slug, ["box"])) {

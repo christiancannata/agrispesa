@@ -209,11 +209,11 @@ if ($next_week_month === '01') {
 					<div class="thankyou--details--item">
 
 						<?php if ($box_in_order) {
-							echo '<span class="icon-prossimo-pagamento"></span>';
-							echo '<div class="thankyou--details--text">';
-							echo '<h3 class="thankyou--details--title">Prossimo pagamento</h3>';
-							echo '<p class="thankyou--details--info">' . $weekday_it . ', ' . $next_week_day . ' ' . $month_it . ' ' . $next_week_year . '</p>';
-							echo '</div>';
+							//echo '<span class="icon-prossimo-pagamento"></span>';
+							//echo '<div class="thankyou--details--text">';
+							//echo '<h3 class="thankyou--details--title">Prossimo pagamento</h3>';
+							//echo '<p class="thankyou--details--info">' . $weekday_it . ', ' . $next_week_day . ' ' . $month_it . ' ' . $next_week_year . '</p>';
+							//echo '</div>';
 						} else {
 							echo '<span class="icon-email"></span>';
 							echo '<div class="thankyou--details--text">';
