@@ -45,6 +45,21 @@ function add_settings_box_endpoint()
 add_action('init', 'add_settings_box_endpoint');
 
 
+function ts_redirect_login($redirect)
+{
+	$redirect_page_id = url_to_postid($redirect);
+	$checkout_page_id = wc_get_page_id('checkout');
+
+	if ($redirect_page_id == $checkout_page_id) {
+		return $redirect;
+	}
+
+	return '/negozio';
+}
+
+add_filter('woocommerce_login_redirect', 'ts_redirect_login');
+
+
 function settings_box_query_vars($vars)
 {
 
@@ -320,7 +335,7 @@ function invoice_box_content()
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							<?php echo $type; ?> <?php echo $invoiceName; ?>
+							<?php echo $type; ?><?php echo $invoiceName; ?>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">

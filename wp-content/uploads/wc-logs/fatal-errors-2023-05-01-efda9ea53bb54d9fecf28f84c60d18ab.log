@@ -59,3 +59,25 @@ Stack trace:
 #5 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-subscription.php(23): do_action('woocommerce_sub...', Object(WC_Subscription))
 #6 /shared/httpd/agrispesa/ in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 163
 
+2023-05-01T13:51:47+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function ts_redirect_login(), 1 passed in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 310 and exactly 2 expected in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:48
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(310): ts_redirect_login('/bacheca/')
+#1 /shared/httpd/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters('/bacheca/', Array)
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-form-handler.php(979): apply_filters('woocommerce_log...', '/bacheca/', Object(WP_User))
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WC_Form_Handler::process_login('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-settings.php(645): do_action('wp_loaded')
+#7 /shared/httpd/agrispesa/wp-config.php(96): r in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 48
+
+2023-05-01T13:52:33+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function ts_redirect_login(), 1 passed in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 310 and exactly 2 expected in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:48
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(310): ts_redirect_login('/bacheca/')
+#1 /shared/httpd/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters('/bacheca/', Array)
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-form-handler.php(979): apply_filters('woocommerce_log...', '/bacheca/', Object(WP_User))
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WC_Form_Handler::process_login('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-settings.php(645): do_action('wp_loaded')
+#7 /shared/httpd/agrispesa/wp-config.php(96): r in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 48
+
