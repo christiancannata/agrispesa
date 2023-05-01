@@ -305,6 +305,10 @@ function invoice_box_content()
 						$navisionId = get_post_meta($invoice, '_navision_id', true);
 						$date = get_post_meta($invoice, '_created_date', true);
 						$filename = get_post_meta($invoice, '_filename', true);
+						$invoiceName = explode('.', $filename);
+						$invoiceName = $invoiceName[0];
+						$invoiceName = str_replace("-", '/', $invoiceName);
+
 						$type = 'PAGAMENTO';
 						if (substr($filename, 0, 3) == 'VAB') {
 							$type = 'FATTURA';
@@ -316,7 +320,7 @@ function invoice_box_content()
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							<?php echo $type; ?> #<?php echo $navisionId; ?>
+							<?php echo $type; ?> <?php echo $invoiceName; ?>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">
