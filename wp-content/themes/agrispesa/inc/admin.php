@@ -328,7 +328,7 @@ function calculate_delivery_date_order($id, $updateWeek = true)
     }
     $order_date = $order->get_date_paid();
     if (!$order_date) {
-        $order_date = $order->get_date_paid();
+        $order_date = new DateTime();
     }
 
     if ($order_date) {

@@ -101,3 +101,6 @@
 2023-05-01T01:52:42+00:00 NOTICE order_submit :: #38704 has a financial status of pending and was skipped.
 2023-05-01T01:52:47+00:00 NOTICE order_submit :: #38705 has a financial status of pending and was skipped.
 2023-05-01T01:53:01+00:00 NOTICE order_submit :: #38706 has a financial status of pending and was skipped.
+2023-05-01T01:54:46+00:00 NOTICE order_process :: Order #38672 skipped, user #1 user role is not in the list
+2023-05-01T01:54:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38708
+2023-05-01T01:54:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38709
