@@ -79,3 +79,25 @@
 2023-05-01T01:26:41+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38698
 2023-05-01T01:28:44+00:00 NOTICE order_submit :: #38698 has a financial status of pending and was skipped.
 2023-05-01T01:33:20+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38699
+2023-05-01T01:35:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38700
+2023-05-01T01:35:49+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38701
+2023-05-01T01:36:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38702
+2023-05-01T01:36:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38703
+2023-05-01T01:36:20+00:00 NOTICE order_submit :: #38699 has a financial status of pending and was skipped.
+2023-05-01T01:38:20+00:00 NOTICE order_submit :: #38700 has a financial status of pending and was skipped.
+2023-05-01T01:38:23+00:00 NOTICE order_submit :: #38701 has a financial status of pending and was skipped.
+2023-05-01T01:38:25+00:00 NOTICE order_submit :: #38702 has a financial status of pending and was skipped.
+2023-05-01T01:38:27+00:00 NOTICE order_submit :: #38703 has a financial status of pending and was skipped.
+2023-05-01T01:50:46+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38704
+2023-05-01T01:50:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38705
+2023-05-01T01:50:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38706
+2023-05-01T01:52:05+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38672
+2023-05-01T01:52:11+00:00 NOTICE debug :: Order ID 38672 was pending and is now on-hold :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-05-01T01:52:42+00:00 NOTICE order_submit :: #38704 has a financial status of pending and was skipped.
+2023-05-01T01:52:47+00:00 NOTICE order_submit :: #38705 has a financial status of pending and was skipped.
+2023-05-01T01:53:01+00:00 NOTICE order_submit :: #38706 has a financial status of pending and was skipped.

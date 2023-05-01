@@ -1144,6 +1144,10 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 	if (is_admin()) return $available_gateways;
 	if (!is_checkout()) return $available_gateways;
 
+	if (get_site_url() != 'https://www.agrispesa.it') {
+		return $available_gateways;
+	}
+
 	$isBonificoEnabled = false;
 
 	foreach (WC()->cart->get_cart_contents() as $key => $values) {
@@ -1154,6 +1158,7 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 			}
 		}
 	}
+
 	if (!$isBonificoEnabled) unset($available_gateways['bacs']); // DISABLE COD IF CATEGORY IS IN THE CART
 	return $available_gateways;
 }

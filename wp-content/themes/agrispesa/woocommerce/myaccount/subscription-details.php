@@ -246,13 +246,15 @@ $user_id = $current_user->ID;
 
 			<div class="top_banner orange m-t">
 				<p class="top_banner--advice">Sospendi l'abbonamento
-					<strong>entro <?php echo getLabelDay($nextThursday); ?> ore <?php echo $nextThursday->format("H"); ?></strong>
+					<strong>entro <?php echo getLabelDay($nextThursday); ?>
+						ore <?php echo $nextThursday->format("H"); ?></strong>
 					se non vuoi ricevere questa scatola.</p>
 			</div>
 		<?php endif; ?>
 	<?php else: ?>
 		<div class="top_banner">
-			<p class="top_banner--advice">Riattiva <strong>entro <?php echo getLabelDay($nextThursday); ?> ore <?php echo $nextThursday->format("H"); ?></strong> se vuoi ricevere
+			<p class="top_banner--advice">Riattiva <strong>entro <?php echo getLabelDay($nextThursday); ?>
+					ore <?php echo $nextThursday->format("H"); ?></strong> se vuoi ricevere
 				la scatola della prossima settimana.</p>
 		</div>
 	<?php endif; ?>
@@ -333,12 +335,12 @@ $user_id = $current_user->ID;
 				<?php
 
 				//remove renew when subscription is active
-				if($subscription->get_status() == 'active'){
+				if ($subscription->get_status() == 'active') {
 					unset($actions['subscription_renewal_early']);
 				}
 
 				foreach ($actions as $key => $action) :
-					if($action['name'] == 'Elimina'){
+					if ($action['name'] == 'Elimina') {
 						$action['name'] = 'Sospendi';
 					}
 					?>

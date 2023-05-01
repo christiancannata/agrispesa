@@ -11,22 +11,42 @@ function call_order_status_changed($orderId)
 {
     $order = wc_get_order($orderId);
 
-    $orderType = "ST";
+    if ($order->get_created_via() == "checkout") {
+        $orderType = "ST";
 
-    foreach ($order->get_items() as $item_id => $item) {
-        $categories = get_the_terms($item->get_product_id(), "product_cat");
-        foreach ($categories as $term) {
-            if (in_array($term->slug, ["box"])) {
-                $orderType = "ABBONAMENTO FN";
+        foreach ($order->get_items() as $item_id => $item) {
+            $categories = get_the_terms($item->get_product_id(), "product_cat");
+            foreach ($categories as $term) {
+                if (in_array($term->slug, ["box"])) {
+                    $orderType = "ABBONAMENTO FN";
+                }
+            }
+
+            if ($item->get_name() == "Acquisto credito") {
+                $orderType = "CREDITO";
             }
         }
 
-        if ($item->get_name() == "Acquisto credito") {
-            $orderType = "CREDITO";
-        }
-    }
+        update_post_meta($orderId, "_order_type", $orderType);
 
-    update_post_meta($orderId, "_order_type", $orderType);
+        $groups = get_posts([
+            "post_type" => "delivery-group",
+            "post_status" => "publish",
+            "posts_per_page" => -1,
+        ]);
+        foreach ($groups as $group) {
+            $caps = get_post_meta($group->ID, "cap", true);
+            if (in_array($order->get_shipping_postcode(), $caps)) {
+                update_post_meta(
+                    $order->get_id(),
+                    "_gruppo_consegna",
+                    $group->post_title
+                );
+            }
+        }
+
+        calculate_delivery_date_order($order->get_id(), false);
+    }
 }
 
 function call_order_status_pending($orderId)
@@ -50,18 +70,17 @@ function call_order_status_pending($orderId)
 
     update_post_meta($orderId, "_order_type", $orderType);
 
-	//generate settimana
-	$today = new \DateTime();
-	$today->add(new \DateInterval("P7D"));
-	if($today->format("w") >= 3 && $today->fromat("H") >=12){
-		$today->add(new \DateInterval("P7D"));
-	}
-		$week = $today->format("W");
-		$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+    //generate settimana
+    $today = new \DateTime();
+    $today->add(new \DateInterval("P7D"));
+    if ($today->format("w") >= 3 && $today->fromat("H") >= 12) {
+        $today->add(new \DateInterval("P7D"));
+    }
+    $week = $today->format("W");
+    $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
 
-	update_post_meta($orderId,'_week',$currentWeek);
+    update_post_meta($orderId, "_week", $currentWeek);
 }
-
 
 // Call our custom function with the action hook
 add_action(
@@ -77,7 +96,6 @@ add_action(
     10,
     1
 );
-
 
 function merge_orders($subscriptionOrder, $orders)
 {
@@ -309,6 +327,10 @@ function calculate_delivery_date_order($id, $updateWeek = true)
         return null;
     }
     $order_date = $order->get_date_paid();
+    if (!$order_date) {
+        $order_date = $order->get_date_paid();
+    }
+
     if ($order_date) {
         if ($updateWeek) {
             $week = $order_date->format("W");
@@ -336,6 +358,7 @@ function calculate_delivery_date_order($id, $updateWeek = true)
         );
     }
 }
+/*
 add_action(
     "woocommerce_new_order",
     function ($order_id, $order) {
@@ -384,6 +407,8 @@ add_action(
     10,
     2
 );
+
+*/
 add_action("woocommerce_product_options_advanced", function () {
     woocommerce_wp_text_input([
         "id" => "_codice_confezionamento",
@@ -2191,7 +2216,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $coupons[] = "WELOVEDENSO";
             }
 
-			 WC()->session->set("applied_coupons", $coupons);
+            WC()->session->set("applied_coupons", $coupons);
 
             $response = new WP_REST_Response([
                 "coupon_code" => $coupons,
@@ -3993,6 +4018,7 @@ function create_order_from_subscription($id)
 		);
 		$orders = wc_get_orders($args);
 	*/
+
     calculate_delivery_date_order($order->get_id(), false);
 }
 function get_all_single_box()
@@ -7077,25 +7103,37 @@ function my_saved_post($post_id, $json, $is_update)
     }
 }
 add_action("pmxi_saved_post", "my_saved_post", 10, 3);
-
-
-function getLabelDay(DateTime $date){
-
-$mesi = array(1=>'gennaio', 'febbraio', 'marzo', 'aprile',
-               'maggio', 'giugno', 'luglio', 'agosto',
-               'settembre', 'ottobre', 'novembre','dicembre');
-
-$giorni = array('domenica','lunedì','marted','mercoledì',
-               'giovedì','venerdì','sabato');
-
-list($sett,$giorno,$mese,$anno) = explode('-',$date->format('w-d-n-Y'));
-
-return ucwords($giorni[$sett].' '.$giorno.' '.$mesi[$mese]);
+function getLabelDay(DateTime $date)
+{
+    $mesi = [
+        1 => "gennaio",
+        "febbraio",
+        "marzo",
+        "aprile",
+        "maggio",
+        "giugno",
+        "luglio",
+        "agosto",
+        "settembre",
+        "ottobre",
+        "novembre",
+        "dicembre",
+    ];
+    $giorni = [
+        "domenica",
+        "lunedì",
+        "marted",
+        "mercoledì",
+        "giovedì",
+        "venerdì",
+        "sabato",
+    ];
+    list($sett, $giorno, $mese, $anno) = explode("-", $date->format("w-d-n-Y"));
+    return ucwords($giorni[$sett] . " " . $giorno . " " . $mesi[$mese]);
 }
-
-
-function getNextLimitDate(){
-	$nextThursday = (new DateTime())->modify("next Wednesday");
-	$nextThursday->setTime(12,0);
-	return $nextThursday;
+function getNextLimitDate()
+{
+    $nextThursday = (new DateTime())->modify("next Wednesday");
+    $nextThursday->setTime(12, 0);
+    return $nextThursday;
 }
