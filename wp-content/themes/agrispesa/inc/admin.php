@@ -7137,3 +7137,24 @@ function getNextLimitDate()
     $nextThursday->setTime(12, 0);
     return $nextThursday;
 }
+
+function getLastDeliveryDay()
+{
+	//get last time I generated FN orders
+	 $orders = wc_get_orders([
+                "limit" => 1,
+				"status" => "completed",
+                "orderby" => "date",
+                "order" => "DESC",
+                "meta_key" => "_subscription_id",
+                "meta_compare" => "EXISTS",
+            ]);
+
+	 $lastDay = null;
+
+	 foreach($orders as $order){
+		 $lastDay = $order->get_date_completed();
+	 }
+
+    return $lastDay;
+}

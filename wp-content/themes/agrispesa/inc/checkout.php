@@ -931,6 +931,9 @@ function codiceFiscale($cf)
 add_filter('woocommerce_package_rates', 'free_first_order_shipping', 20, 2);
 function free_first_order_shipping($rates, $package)
 {
+
+	$lastDayCreatedOrdersFN = getLastDeliveryDay();
+
 	// New shipping cost (can be calculated)
 	$has_free_shipping = false;
 
@@ -949,7 +952,11 @@ function free_first_order_shipping($rates, $package)
 		$user_id = get_current_user_id();
 		$args = array(
 			'customer_id' => $user_id,
+			'limit' => -1,
 			'status' => "completed",
+			"meta_key" => "_date_completed",
+			"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
+			"meta_compare" => ">",
 		);
 		$orders = wc_get_orders($args);
 	} else {
@@ -970,6 +977,10 @@ function free_first_order_shipping($rates, $package)
 
 				$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
 				$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
+
+				if ($order->get_date_completed() < $lastDayCreatedOrdersFN) {
+					continue;
+				}
 
 				if ($newOrderAddress == $oldOrderAddress) {
 					$orders[] = $order;
@@ -1003,25 +1014,6 @@ function free_first_order_shipping($rates, $package)
 	if (empty($orders)) {
 		$has_free_shipping = true;
 		$label = 'Gratuita';
-	}
-
-
-	if (!empty($orders)) {
-		//check spedizione gratuita se ha già fatto un ordine quella settimana
-
-		$today = new \DateTime();
-		$today->add(new \DateInterval("P7D"));
-		$week = $today->format("W");
-		$currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
-
-		foreach ($orders as $order) {
-			$orderWeek = get_post_meta($order->get_id(), '_week', true);
-			if ($orderWeek == $currentWeek) {
-				$has_free_shipping = true;
-			}
-		}
-
-
 	}
 
 
@@ -1148,6 +1140,7 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 		return $available_gateways;
 	}
 
+	/*
 	$isBonificoEnabled = false;
 
 	foreach (WC()->cart->get_cart_contents() as $values) {
@@ -1160,5 +1153,6 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 	}
 
 	if (!$isBonificoEnabled) unset($available_gateways['bacs']); // DISABLE COD IF CATEGORY IS IN THE CART
+	*/
 	return $available_gateways;
 }
