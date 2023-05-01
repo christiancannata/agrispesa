@@ -63,21 +63,18 @@ add_filter('query_vars', 'settings_box_query_vars', 0);
 
 function settings_box_link_my_account($items)
 {
+	$newMenu = [];
+	$newMenu['orders'] = 'Ordini';
+	$newMenu['fatture'] = 'Documenti contabili';
+	$newMenu['woo-wallet'] = 'Acquista Credito';
+	$newMenu['payment-methods'] = 'Metodi di pagamento';
+	$newMenu['edit-account'] = 'Account';
+	$newMenu['edit-address'] = 'Indirizzi';
+	$newMenu['gift-cards'] = 'Carte Regalo';
+	$newMenu['subscriptions'] = 'Facciamo Noi';
+	$newMenu['customer-logout'] = 'Esci';
 
-	$subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1, 'customer_id' => get_current_user_id(), 'subscription_status' => 'active']);
-
-	$items = array_insert_after($items, 'subscriptions', [
-		'fatture' => 'Documenti contabili'
-	]);
-
-	if (count($subscriptions) > 0) {
-
-		/*	$items = array_insert_after($items, 'subscriptions', [
-				'personalizza-scatola' => 'Personalizza la scatola'
-			]);*/
-	}
-
-	return $items;
+	return $newMenu;
 
 }
 

@@ -253,7 +253,7 @@ $user_id = $current_user->ID;
 		<?php endif; ?>
 	<?php else: ?>
 		<div class="top_banner">
-			<p class="top_banner--advice">Riattiva <strong>entro <?php echo getLabelDay($nextThursday); ?>
+			<p class="top_banner--advice">Sospendi <strong>entro <?php echo getLabelDay($nextThursday); ?>
 					ore <?php echo $nextThursday->format("H"); ?></strong> se vuoi ricevere
 				la scatola della prossima settimana.</p>
 		</div>

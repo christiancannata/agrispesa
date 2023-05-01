@@ -195,7 +195,7 @@ if ($next_week_month === '01') {
 							</div>
 						</div>
 					<?php endif; ?>
-				<!--	<div class="thankyou--details--item">
+					<!--	<div class="thankyou--details--item">
 						<span class="icon-totale"></span>
 						<div class="thankyou--details--text">
 							<h3 class="thankyou--details--title">Totale</h3>
@@ -206,34 +206,34 @@ if ($next_week_month === '01') {
 							</p>
 						</div>
 					</div>-->
-				<!--	<div class="thankyou--details--item">
+					<!--	<div class="thankyou--details--item">
 
 						<?php
-						/*
-						if ($box_in_order) {
-							echo '<span class="icon-prossimo-pagamento"></span>';
-							echo '<div class="thankyou--details--text">';
-							echo '<h3 class="thankyou--details--title">Prossimo pagamento</h3>';
-							echo '<p class="thankyou--details--info">' . $weekday_it . ', ' . $next_week_day . ' ' . $month_it . ' ' . $next_week_year . '</p>';
-							echo '</div>';
-						} else {
-							echo '<span class="icon-email"></span>';
-							echo '<div class="thankyou--details--text">';
-							echo '<h3 class="thankyou--details--title">Controlla la tua mail</h3>';
-							echo $order->get_billing_email();
-							echo '</div>';
-						} */ ?>
-
-						<?php
+					/*
+					if ($box_in_order) {
+						echo '<span class="icon-prossimo-pagamento"></span>';
+						echo '<div class="thankyou--details--text">';
+						echo '<h3 class="thankyou--details--title">Prossimo pagamento</h3>';
+						echo '<p class="thankyou--details--info">' . $weekday_it . ', ' . $next_week_day . ' ' . $month_it . ' ' . $next_week_year . '</p>';
+						echo '</div>';
+					} else {
 						echo '<span class="icon-email"></span>';
 						echo '<div class="thankyou--details--text">';
 						echo '<h3 class="thankyou--details--title">Controlla la tua mail</h3>';
 						echo $order->get_billing_email();
 						echo '</div>';
-						?>
+					} */ ?>
+
+						<?php
+					echo '<span class="icon-email"></span>';
+					echo '<div class="thankyou--details--text">';
+					echo '<h3 class="thankyou--details--title">Controlla la tua mail</h3>';
+					echo $order->get_billing_email();
+					echo '</div>';
+					?>
 
 					</div>-->
-				<!--	<div class="thankyou--details--item buttons">
+					<!--	<div class="thankyou--details--item buttons">
 						<a href="<?php echo esc_url(home_url('/')); ?>bacheca" title="Vai alla tua bacheca"
 						   class="btn btn-primary">
 							Vai alla tua bacheca
