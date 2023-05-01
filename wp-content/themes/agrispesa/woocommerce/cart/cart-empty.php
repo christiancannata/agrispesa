@@ -30,9 +30,9 @@ if ( wc_get_page_id( 'shop' ) > 0 ) :
 		<div class="emptycart--top">
 
 			<h1 class="emptycart--title">Ops, la tua scatola <br class="only-mobile" />è vuota.</h1>
-			<!--
-		<p class="emptycart--subtitle">Questi sono alcuni dei prodotti più amati dai nostri clienti. Speriamo piacciano anche a te!</p>
-	--></div>
+
+		<p class="emptycart--subtitle">Vai al negozio per fare la spesa.</p>
+	</div>
 		<!--
 	<div class="emptycart--loop">
 			<?php
