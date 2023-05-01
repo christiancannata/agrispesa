@@ -144,3 +144,10 @@
 2023-05-01T13:16:21+00:00 NOTICE order_submit :: #38726 has a financial status of pending and was skipped.
 2023-05-01T13:16:23+00:00 NOTICE order_submit :: #38727 has a financial status of pending and was skipped.
 2023-05-01T13:16:25+00:00 NOTICE order_submit :: #38728 has a financial status of pending and was skipped.
+2023-05-01T13:31:09+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38729
+2023-05-01T13:31:16+00:00 NOTICE debug :: Order ID 38729 was pending and is now on-hold :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+

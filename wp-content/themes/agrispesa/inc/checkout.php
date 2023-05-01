@@ -52,16 +52,18 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		$current_user = wp_get_current_user();
 		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 
-		$lastWeek = (new \DateTime())->sub(new DateInterval("P5D"));
-		$orders = wc_get_orders([
-			"limit" => -1,
-			'customer' => get_current_user_id(),
+		$lastDayCreatedOrdersFN = getLastDeliveryDay();
+		$args = array(
+			'customer_id' => get_current_user_id(),
+			'limit' => 1,
+			'status' => "completed",
 			"meta_key" => "_date_completed",
+			"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
 			"meta_compare" => ">",
-			"meta_value" => $lastWeek->getTimestamp()
-		]);
-
+		);
+		$orders = wc_get_orders($args);
 		$orderLastWeek = count($orders);
+
 	}
 
 
