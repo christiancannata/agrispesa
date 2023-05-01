@@ -52,6 +52,9 @@ $count = count($customer_orders);
 foreach ($customer_orders as $key => $order) {
 	foreach ($order->get_items() as $item_id => $item) {
 		$categories = get_the_terms($item->get_product_id(), "product_cat");
+		if(!is_array($categories)){
+			continue;
+		}
 		foreach ($categories as $term) {
 			if (in_array($term->slug, ["box"])) {
 				unset($customer_orders[$key]);

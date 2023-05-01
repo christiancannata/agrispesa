@@ -92,44 +92,34 @@ class WCS_Customer_Store_Cached_CPT extends WCS_Customer_Store_CPT implements WC
 	 * @param int $user_id The id of the user whose subscriptions you want.
 	 * @return array
 	 */
-    public function get_users_subscription_ids($user_id)
-    {
+	public function get_users_subscription_ids( $user_id ) {
 
-        $subscription_ids = $this->get_users_subscription_ids_from_cache($user_id);
+		$subscription_ids = $this->get_users_subscription_ids_from_cache( $user_id );
 
-        // get user meta returns an empty string when no matching row is found for the given key, meaning it's not set yet
-        if ('' === $subscription_ids) {
+		// get user meta returns an empty string when no matching row is found for the given key, meaning it's not set yet
+		if ( '' === $subscription_ids ) {
 
-            $transient_key = "wcs_user_subscriptions_{$user_id}";
+			$transient_key = "wcs_user_subscriptions_{$user_id}";
 
-            // We do this here rather than in get_users_subscription_ids_from_cache(), because we want to make sure the new persistent cache is updated too
-            $subscription_ids = get_transient($transient_key);
+			// We do this here rather than in get_users_subscription_ids_from_cache(), because we want to make sure the new persistent cache is updated too
+			$subscription_ids = get_transient( $transient_key );
 
-            if (false === $subscription_ids) {
-                $subscription_ids = parent::get_users_subscription_ids($user_id); // no data in transient, query directly
-            } else {
-                delete_transient($transient_key); // migrate the data to our new cache
-            }
+			if ( false === $subscription_ids ) {
+				$subscription_ids = parent::get_users_subscription_ids( $user_id ); // no data in transient, query directly
+			} else {
+				delete_transient( $transient_key ); // migrate the data to our new cache
+			}
 
+			$this->update_subscription_id_cache( $user_id, $subscription_ids );
+		}
 
-            if(!is_array($subscription_ids)){
-               // $subscription_ids = [];
-            }
+		// Sort results in order to keep consistency between cached results and queried results.
+		rsort( $subscription_ids );
 
-            $this->update_subscription_id_cache($user_id, $subscription_ids);
-        }
+		return $subscription_ids;
+	}
 
-        if(!is_array($subscription_ids)){
-           // $subscription_ids = [];
-        }
-        // Sort results in order to keep consistency between cached results and queried results.
-        rsort($subscription_ids);
-
-        return $subscription_ids;
-    }
-
-
-    /* Internal methods for managing the cache */
+	/* Internal methods for managing the cache */
 
 	/**
 	 * Find subscriptions for a given user from the cache.
