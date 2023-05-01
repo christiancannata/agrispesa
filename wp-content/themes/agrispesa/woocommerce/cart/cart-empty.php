@@ -25,14 +25,15 @@ do_action( 'woocommerce_cart_is_empty' );
 if ( wc_get_page_id( 'shop' ) > 0 ) :
 
 ?>
-<!--
 <div class="emptycart">
 	<div class="emptycart--intro">
 		<div class="emptycart--top">
 
 			<h1 class="emptycart--title">Ops, la tua scatola <br class="only-mobile" />è vuota.</h1>
+			<!--
 		<p class="emptycart--subtitle">Questi sono alcuni dei prodotti più amati dai nostri clienti. Speriamo piacciano anche a te!</p>
-	</div>
+	--></div>
+		<!--
 	<div class="emptycart--loop">
 			<?php
 			$args = array(
@@ -91,11 +92,11 @@ if ( wc_get_page_id( 'shop' ) > 0 ) :
         <?php endforeach; ?>
     <?php endif; ?>
 		</div>
-
+ -->
 	</div>
 	<div class="emptycart--image">
 		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/elements/empty-box.svg" />
 	</div>
 </div>
- -->
+
 <?php endif; ?>
