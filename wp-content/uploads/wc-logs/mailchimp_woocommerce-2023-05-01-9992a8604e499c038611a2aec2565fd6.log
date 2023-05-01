@@ -28,3 +28,54 @@
 
 2023-05-01T00:51:42+00:00 NOTICE order_process :: Order #38672 skipped, user #1 user role is not in the list
 2023-05-01T00:51:42+00:00 NOTICE order_process :: Order #38665 skipped, user #1 user role is not in the list
+2023-05-01T01:07:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38349
+2023-05-01T01:09:44+00:00 NOTICE order_process :: Order #38349 skipped, user #1 user role is not in the list
+2023-05-01T01:09:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38675
+2023-05-01T01:11:29+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38676
+2023-05-01T01:11:31+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38677
+2023-05-01T01:11:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38678
+2023-05-01T01:11:33+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38679
+2023-05-01T01:11:35+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38680
+2023-05-01T01:11:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38681
+2023-05-01T01:11:38+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38682
+2023-05-01T01:11:41+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38683
+2023-05-01T01:11:43+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38684
+2023-05-01T01:11:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38685
+2023-05-01T01:11:49+00:00 NOTICE order_submit :: #38675 has a financial status of pending and was skipped.
+2023-05-01T01:11:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38686
+2023-05-01T01:12:01+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38687
+2023-05-01T01:12:03+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38688
+2023-05-01T01:12:04+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38689
+2023-05-01T01:12:06+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38690
+2023-05-01T01:12:07+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38691
+2023-05-01T01:13:43+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38692
+2023-05-01T01:13:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38693
+2023-05-01T01:13:47+00:00 NOTICE order_submit :: #38676 has a financial status of pending and was skipped.
+2023-05-01T01:13:48+00:00 NOTICE order_submit :: #38677 has a financial status of pending and was skipped.
+2023-05-01T01:13:50+00:00 NOTICE order_submit :: #38678 has a financial status of pending and was skipped.
+2023-05-01T01:13:52+00:00 NOTICE order_submit :: #38679 has a financial status of pending and was skipped.
+2023-05-01T01:13:54+00:00 NOTICE order_submit :: #38680 has a financial status of pending and was skipped.
+2023-05-01T01:15:54+00:00 NOTICE order_submit :: #38681 has a financial status of pending and was skipped.
+2023-05-01T01:15:56+00:00 NOTICE order_submit :: #38682 has a financial status of pending and was skipped.
+2023-05-01T01:15:58+00:00 NOTICE order_submit :: #38683 has a financial status of pending and was skipped.
+2023-05-01T01:15:59+00:00 NOTICE order_submit :: #38684 has a financial status of pending and was skipped.
+2023-05-01T01:16:01+00:00 NOTICE order_submit :: #38685 has a financial status of pending and was skipped.
+2023-05-01T01:16:03+00:00 NOTICE order_submit :: #38686 has a financial status of pending and was skipped.
+2023-05-01T01:16:05+00:00 NOTICE order_submit :: #38687 has a financial status of pending and was skipped.
+2023-05-01T01:16:07+00:00 NOTICE order_submit :: #38688 has a financial status of pending and was skipped.
+2023-05-01T01:16:17+00:00 NOTICE order_submit :: #38689 has a financial status of pending and was skipped.
+2023-05-01T01:16:19+00:00 NOTICE order_submit :: #38690 has a financial status of pending and was skipped.
+2023-05-01T01:16:20+00:00 NOTICE order_submit :: #38691 has a financial status of pending and was skipped.
+2023-05-01T01:16:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38694
+2023-05-01T01:16:23+00:00 NOTICE order_submit :: #38692 has a financial status of pending and was skipped.
+2023-05-01T01:16:25+00:00 NOTICE order_submit :: #38693 has a financial status of pending and was skipped.
+2023-05-01T01:18:38+00:00 NOTICE order_submit :: #38694 has a financial status of pending and was skipped.
+2023-05-01T01:18:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38695
+2023-05-01T01:21:46+00:00 NOTICE order_submit :: #38695 has a financial status of pending and was skipped.
+2023-05-01T01:21:46+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38696
+2023-05-01T01:21:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38697
+2023-05-01T01:23:32+00:00 NOTICE order_submit :: #38696 has a financial status of pending and was skipped.
+2023-05-01T01:23:33+00:00 NOTICE order_submit :: #38697 has a financial status of pending and was skipped.
+2023-05-01T01:26:41+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38698
+2023-05-01T01:28:44+00:00 NOTICE order_submit :: #38698 has a financial status of pending and was skipped.
+2023-05-01T01:33:20+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38699

@@ -39,7 +39,7 @@ $week = $date->format("W");
 $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
 
 $customer_orders = wc_get_orders([
-	"limit" => 1,
+	"limit" => -1,
 	"status" => ["completed"],
 	"customer" => get_current_user_id(),
 	"meta_key" => "_order_type",
@@ -48,228 +48,182 @@ $customer_orders = wc_get_orders([
 ]);
 $count = count($customer_orders);
 
-$subscriptions = wcs_get_users_subscriptions($current_user->ID);
+//clean orders remove subscriptions
+foreach ($customer_orders as $key => $order) {
+	foreach ($order->get_items() as $item_id => $item) {
+		$categories = get_the_terms($item->get_product_id(), "product_cat");
+		foreach ($categories as $term) {
+			if (in_array($term->slug, ["box"])) {
+				unset($customer_orders[$key]);
+				continue;
+			}
+		}
 
-foreach ($subscriptions as $subscription) {
-
-
-	$customer_orders = wc_get_orders([
-		"limit" => 1,
-		"status" => ["completed"],
-		"customer" => get_current_user_id(),
-		"meta_key" => "_subscription_id",
-		"meta_value" => $subscription->get_id(),
-		"meta_compare" => "=",
-	]);
-
-
-	//Prendi il cap della spedizione, se non esiste quello della fatturazione
-	$subscription_postcode = $subscription->get_billing_postcode();
-	if ($subscription->get_shipping_postcode()) {
-		$subscription_postcode = $subscription->get_shipping_postcode();
-	} else {
-		$subscription_postcode = $subscription->get_billing_postcode();
+		if ($item->get_name() == "Acquisto credito") {
+			unset($customer_orders[$key]);
+			continue;
+		}
 	}
-
-
-//Robe di date di consegna
-	$current_date = date('Y-m-d');
-//$current_date_hour = date('Y-m-d H:i:s' );
-	$current_date_hour = new DateTime("now", new DateTimeZone("Europe/Rome"));
-	$current_date_hour->format('d-m-Y H:i:s');
-
-	$deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $subscription_postcode);
-
-	$shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
-	$shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
-	$shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
-	$shipping_date_day = ($deliveryDate) ? $deliveryDate->format("d") : '';
-
-	$shipping_month_it = '';
-	if ($shipping_date_month === '01') {
-		$shipping_month_it = 'Gennaio';
-	} else if ($shipping_date_month === '02') {
-		$shipping_month_it = 'Febbraio';
-	} else if ($shipping_date_month === '03') {
-		$shipping_month_it = 'Marzo';
-	} else if ($shipping_date_month === '04') {
-		$shipping_month_it = 'Aprile';
-	} else if ($shipping_date_month === '05') {
-		$shipping_month_it = 'Maggio';
-	} else if ($shipping_date_month === '06') {
-		$shipping_month_it = 'Giugno';
-	} else if ($shipping_date_month === '07') {
-		$shipping_month_it = 'Luglio';
-	} else if ($shipping_date_month === '08') {
-		$shipping_month_it = 'Agosto';
-	} else if ($shipping_date_month === '09') {
-		$shipping_month_it = 'Settembre';
-	} else if ($shipping_date_month === '10') {
-		$shipping_month_it = 'Ottobre';
-	} else if ($shipping_date_month === '11') {
-		$shipping_month_it = 'Novembre';
-	} else if ($shipping_date_month === '12') {
-		$shipping_month_it = 'Dicembre';
-	}
-
-	$next_date = "";
-	$thurs_next_date = "";
-	$shipping_weekday_it = '';
-	if ($shipping_date_weekday === 'Monday') {
-		$shipping_weekday_it = 'Lunedì';
-		$next_shipping_weekday_it = 'Lunedì';
-		$next_date = new DateTime('next Monday');
-		$thurs_next_date = new DateTime('next Monday');
-
-	} else if ($shipping_date_weekday === 'Tuesday') {
-		$shipping_weekday_it = 'Martedì';
-		$next_shipping_weekday_it = 'Martedì';
-		$next_date = new DateTime('next Tuesday');
-		$thurs_next_date = new DateTime('next Tuesday');
-	} else if ($shipping_date_weekday === 'Wednesday') {
-		$weekday_it = 'Mercoledì';
-		$shipping_weekday_it = 'Mercoledì';
-		$next_shipping_weekday_it = 'Mercoledì';
-		$next_date = new DateTime('next Wednesday');
-		$thurs_next_date = new DateTime('next Wednesday');
-	} else if ($shipping_date_weekday === 'Thursday') {
-		$shipping_weekday_it = 'Giovedì';
-		$next_shipping_weekday_it = 'Giovedì';
-		$next_date = new DateTime('next Thursday');
-		$thurs_next_date = new DateTime('next Thursday');
-	} else if ($shipping_date_weekday === 'Friday') {
-		$next_shipping_weekday_it = 'Venerdì';
-		$next_shipping_weekday_it = 'Venerdì';
-		$next_date = new DateTime('next Friday');
-		$thurs_next_date = new DateTime('next Friday');
-	} else if ($shipping_date_weekday === 'Saturday') {
-		$shipping_weekday_it = 'Sabato';
-		$next_shipping_weekday_it = 'Sabato';
-		$next_date = new DateTime('next Saturday');
-		$thurs_next_date = new DateTime('next Saturday');
-	} else if ($shipping_date_weekday === 'Sunday') {
-		$shipping_weekday_it = 'Domenica';
-		$next_shipping_weekday_it = 'Domenica';
-		$next_date = new DateTime('next Sunday');
-		$thurs_next_date = new DateTime('next Sunday');
-	}
-
-	$next_shipping_month_it = '';
-	if ($next_date->format("m") === '01') {
-		$next_shipping_month_it = 'Gennaio';
-	} else if ($next_date->format("m") === '02') {
-		$next_shipping_month_it = 'Febbraio';
-	} else if ($next_date->format("m") === '03') {
-		$next_shipping_month_it = 'Marzo';
-	} else if ($next_date->format("m") === '04') {
-		$next_shipping_month_it = 'Aprile';
-	} else if ($next_date->format("m") === '05') {
-		$next_shipping_month_it = 'Maggio';
-	} else if ($next_date->format("m") === '06') {
-		$next_shipping_month_it = 'Giugno';
-	} else if ($next_date->format("m") === '07') {
-		$next_shipping_month_it = 'Luglio';
-	} else if ($next_date->format("m") === '08') {
-		$next_shipping_month_it = 'Agosto';
-	} else if ($next_date->format("m") === '09') {
-		$next_shipping_month_it = 'Settembre';
-	} else if ($next_date->format("m") === '10') {
-		$next_shipping_month_it = 'Ottobre';
-	} else if ($next_date->format("m") === '11') {
-		$next_shipping_month_it = 'Novembre';
-	} else if ($next_date->format("m") === '12') {
-		$next_shipping_month_it = 'Dicembre';
-	}
-
-//Quanti giorni mancano alla consegna?
-	if ($current_date < $deliveryDate) {
-		$date1 = new DateTime($current_date);
-		$date2 = $deliveryDate;
-		$diff = $date2->diff($date1)->format("%a");
-		$days_until = intval($diff);
-
-		$previousThursday = $deliveryDate->modify("Thursday ago")->format('M d, Y');
-
-	} else {
-		$date1 = new DateTime($current_date);
-		$date2 = $next_date;
-		$diff = $date2->diff($date1)->format("%a");
-		$days_until = intval($diff);
-
-		$previousThursday = $thurs_next_date->modify("Thursday ago")->format('M d, Y');
-
-	}
-
 }
 
+$current_date = new DateTime();
 
 ?>
 
-<?php if ($has_sub):
-	foreach ($subscriptions as $subscription):
+<?php if (!empty($customer_orders)):
+	foreach ($customer_orders as $order):
 
-		if ($subscription->get_status() == 'active'):?>
+		$dataConsegna = get_post_meta($order->get_id(), '_data_consegna', true);
+		$gruppoConsegna = get_post_meta($order->get_id(), '_gruppo_consegna', true);
+		$orderDate = $order->get_date_completed();
 
-			<?php //Se la data di consegna è più avanti di oggi
-			if ($current_date > $deliveryDate):?>
+		if (!$dataConsegna) {
+			continue;
+		}
 
-				<div class="top_banner">
-					<div class="top_banner--flex">
-						<div class="top_banner--text">
-							<?php if ($days_until > 3): ?>
-								<h3 class="top_banner--title">Agrispesa si sta preparando!</h3>
-							<?php else: ?>
-								<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
-							<?php endif; ?>
-							<?php if ($days_until > 1): ?>
-								<p class="top_banner--subtitle">Il corriere busserà alla tua porta
-									tra <?php echo $days_until; ?> giorni.</p>
-							<?php else: ?>
-								<p class="top_banner--subtitle">Il corriere arriverà oggi. Iu-uh!</p>
-							<?php endif; ?>
+		$deliveryDate = new DateTime($dataConsegna);
 
-						</div>
-						<div class="top_banner--calendar">
-							<div class="mini-cal">
-								<span class="mini-cal--weekday"><?php echo $next_shipping_weekday_it; ?></span>
-								<span class="mini-cal--day"><?php echo $next_date->format("d"); ?></span>
-								<span class="mini-cal--month"><?php echo $next_shipping_month_it; ?></span>
-							</div>
-						</div>
+		$current_date->setTime(23, 59, 59);
+		$deliveryDate->setTime(23, 59, 59);
+
+		if ($current_date > $deliveryDate) {
+			continue;
+		}
+
+		$shipping_date_weekday = ($deliveryDate) ? $deliveryDate->format("l") : '';
+		$shipping_date_year = ($deliveryDate) ? $deliveryDate->format("Y") : '';
+		$shipping_date_month = ($deliveryDate) ? $deliveryDate->format("m") : '';
+		$shipping_date_day = ($deliveryDate) ? $deliveryDate->format("d") : '';
+
+		$shipping_month_it = '';
+		if ($shipping_date_month === '01') {
+			$shipping_month_it = 'Gennaio';
+		} else if ($shipping_date_month === '02') {
+			$shipping_month_it = 'Febbraio';
+		} else if ($shipping_date_month === '03') {
+			$shipping_month_it = 'Marzo';
+		} else if ($shipping_date_month === '04') {
+			$shipping_month_it = 'Aprile';
+		} else if ($shipping_date_month === '05') {
+			$shipping_month_it = 'Maggio';
+		} else if ($shipping_date_month === '06') {
+			$shipping_month_it = 'Giugno';
+		} else if ($shipping_date_month === '07') {
+			$shipping_month_it = 'Luglio';
+		} else if ($shipping_date_month === '08') {
+			$shipping_month_it = 'Agosto';
+		} else if ($shipping_date_month === '09') {
+			$shipping_month_it = 'Settembre';
+		} else if ($shipping_date_month === '10') {
+			$shipping_month_it = 'Ottobre';
+		} else if ($shipping_date_month === '11') {
+			$shipping_month_it = 'Novembre';
+		} else if ($shipping_date_month === '12') {
+			$shipping_month_it = 'Dicembre';
+		}
+
+		$next_date = "";
+		$thurs_next_date = "";
+		$shipping_weekday_it = '';
+		if ($shipping_date_weekday === 'Monday') {
+			$shipping_weekday_it = 'Lunedì';
+			$next_shipping_weekday_it = 'Lunedì';
+			$next_date = new DateTime('next Monday');
+			$thurs_next_date = new DateTime('next Monday');
+
+		} else if ($shipping_date_weekday === 'Tuesday') {
+			$shipping_weekday_it = 'Martedì';
+			$next_shipping_weekday_it = 'Martedì';
+			$next_date = new DateTime('next Tuesday');
+			$thurs_next_date = new DateTime('next Tuesday');
+		} else if ($shipping_date_weekday === 'Wednesday') {
+			$weekday_it = 'Mercoledì';
+			$shipping_weekday_it = 'Mercoledì';
+			$next_shipping_weekday_it = 'Mercoledì';
+			$next_date = new DateTime('next Wednesday');
+			$thurs_next_date = new DateTime('next Wednesday');
+		} else if ($shipping_date_weekday === 'Thursday') {
+			$shipping_weekday_it = 'Giovedì';
+			$next_shipping_weekday_it = 'Giovedì';
+			$next_date = new DateTime('next Thursday');
+			$thurs_next_date = new DateTime('next Thursday');
+		} else if ($shipping_date_weekday === 'Friday') {
+			$next_shipping_weekday_it = 'Venerdì';
+			$next_shipping_weekday_it = 'Venerdì';
+			$next_date = new DateTime('next Friday');
+			$thurs_next_date = new DateTime('next Friday');
+		} else if ($shipping_date_weekday === 'Saturday') {
+			$shipping_weekday_it = 'Sabato';
+			$next_shipping_weekday_it = 'Sabato';
+			$next_date = new DateTime('next Saturday');
+			$thurs_next_date = new DateTime('next Saturday');
+		} else if ($shipping_date_weekday === 'Sunday') {
+			$shipping_weekday_it = 'Domenica';
+			$next_shipping_weekday_it = 'Domenica';
+			$next_date = new DateTime('next Sunday');
+			$thurs_next_date = new DateTime('next Sunday');
+		}
+
+		$next_shipping_month_it = '';
+		if ($next_date->format("m") === '01') {
+			$next_shipping_month_it = 'Gennaio';
+		} else if ($next_date->format("m") === '02') {
+			$next_shipping_month_it = 'Febbraio';
+		} else if ($next_date->format("m") === '03') {
+			$next_shipping_month_it = 'Marzo';
+		} else if ($next_date->format("m") === '04') {
+			$next_shipping_month_it = 'Aprile';
+		} else if ($next_date->format("m") === '05') {
+			$next_shipping_month_it = 'Maggio';
+		} else if ($next_date->format("m") === '06') {
+			$next_shipping_month_it = 'Giugno';
+		} else if ($next_date->format("m") === '07') {
+			$next_shipping_month_it = 'Luglio';
+		} else if ($next_date->format("m") === '08') {
+			$next_shipping_month_it = 'Agosto';
+		} else if ($next_date->format("m") === '09') {
+			$next_shipping_month_it = 'Settembre';
+		} else if ($next_date->format("m") === '10') {
+			$next_shipping_month_it = 'Ottobre';
+		} else if ($next_date->format("m") === '11') {
+			$next_shipping_month_it = 'Novembre';
+		} else if ($next_date->format("m") === '12') {
+			$next_shipping_month_it = 'Dicembre';
+		}
+
+		$diff = $deliveryDate->diff($current_date)->format("%a");
+		$days_until = intval($diff);
+		$days_until += 1;
+		?>
+
+		<div class="top_banner">
+			<div class="top_banner--flex">
+				<div class="top_banner--text">
+					<?php if ($days_until > 3): ?>
+						<h3 class="top_banner--title">Agrispesa si sta preparando!</h3>
+					<?php else: ?>
+						<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
+					<?php endif; ?>
+					<?php if ($days_until > 1): ?>
+						<p class="top_banner--subtitle">Il corriere busserà alla tua porta
+							tra <?php echo $days_until; ?> giorni.</p>
+					<?php else: ?>
+						<p class="top_banner--subtitle">Il corriere arriverà oggi. Iu-uh!</p>
+					<?php endif; ?>
+
+				</div>
+				<div class="top_banner--calendar">
+					<div class="mini-cal">
+						<span class="mini-cal--weekday"><?php echo $next_shipping_weekday_it; ?></span>
+						<span class="mini-cal--day"><?php echo $next_date->format("d"); ?></span>
+						<span class="mini-cal--month"><?php echo $next_shipping_month_it; ?></span>
 					</div>
 				</div>
+			</div>
+		</div>
 
-			<?php
-			//Se la data di consegna è più indietro di oggi
-			else: ?>
 
-				<div class="top_banner">
-					<div class="top_banner--flex">
-						<div class="top_banner--text">
-							<?php if ($days_until > 3): ?>
-								<h3 class="top_banner--title">Agrispesa si sta preparando!</h3>
-							<?php else: ?>
-								<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
-							<?php endif; ?>
-							<?php if ($days_until > 1): ?>
-								<p class="top_banner--subtitle">Il corriere busserà alla tua porta
-									tra <?php echo $days_until; ?> giorni.</p>
-							<?php else: ?>
-								<p class="top_banner--subtitle">Il corriere arriverà oggi. Iu-uh!</p>
-							<?php endif; ?>
-
-						</div>
-						<div class="top_banner--calendar">
-							<div class="mini-cal">
-								<span class="mini-cal--weekday"><?php echo $shipping_weekday_it; ?></span>
-								<span class="mini-cal--day"><?php echo $shipping_date_day; ?></span>
-								<span class="mini-cal--month"><?php echo $shipping_month_it; ?></span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			<?php endif;endif; endforeach; ?>
+	<?php endforeach; ?>
 
 	<div class="account-get-products">
 		<h3 class="account-get-products--title">Aggiungi prodotti alla tua scatola</h3>

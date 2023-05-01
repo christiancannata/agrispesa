@@ -1,0 +1,61 @@
+2023-05-01T01:11:31+00:00 CRITICAL Uncaught TypeError: DateTime::__construct() expects parameter 1 to be string, object given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:190
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php(190): DateTime->__construct(Object(DateTime))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#7 /shared/h in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 190
+
+2023-05-01T01:12:04+00:00 CRITICAL Uncaught TypeError: DateTime::__construct() expects parameter 1 to be string, object given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:190
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php(190): DateTime->__construct(Object(DateTime))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#7 /shared/h in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 190
+
+2023-05-01T01:12:34+00:00 CRITICAL Uncaught TypeError: DateTime::__construct() expects parameter 1 to be string, object given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php:190
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php(190): DateTime->__construct(Object(DateTime))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3197): wc_get_template('myaccount/dashb...', Array)
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#7 /shared/h in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/dashboard.php alla riga 190
+
+2023-05-01T01:29:02+00:00 CRITICAL Uncaught TypeError: Argument 1 passed to getLabelDay() must be an instance of DateTime, string given, called in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php on line 300 and defined in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:7082
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php(300): getLabelDay('2023-05-03')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->ap in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 7082
+
+2023-05-01T01:29:22+00:00 CRITICAL Uncaught Error: Object of class DateTime could not be converted to string in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:166
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-subscription.php(23): do_action('woocommerce_sub...', Object(WC_Subscription))
+#6 /shared/http in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 166
+
+2023-05-01T01:31:10+00:00 CRITICAL Uncaught Error: Call to undefined function getNextLimitDate() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php:163
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(119): wc_get_template('myaccount/subsc...', Array, '', '/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_details_template(Object(WC_Subscription))
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-subscription.php(23): do_action('woocommerce_sub...', Object(WC_Subscription))
+#6 /shared/httpd/agrispesa/ in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-details.php alla riga 163
+

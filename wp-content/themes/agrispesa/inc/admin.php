@@ -7077,3 +7077,25 @@ function my_saved_post($post_id, $json, $is_update)
     }
 }
 add_action("pmxi_saved_post", "my_saved_post", 10, 3);
+
+
+function getLabelDay(DateTime $date){
+
+$mesi = array(1=>'gennaio', 'febbraio', 'marzo', 'aprile',
+               'maggio', 'giugno', 'luglio', 'agosto',
+               'settembre', 'ottobre', 'novembre','dicembre');
+
+$giorni = array('domenica','lunedì','marted','mercoledì',
+               'giovedì','venerdì','sabato');
+
+list($sett,$giorno,$mese,$anno) = explode('-',$date->format('w-d-n-Y'));
+
+return ucwords($giorni[$sett].' '.$giorno.' '.$mesi[$mese]);
+}
+
+
+function getNextLimitDate(){
+	$nextThursday = (new DateTime())->modify("next Wednesday");
+	$nextThursday->setTime(12,0);
+	return $nextThursday;
+}
