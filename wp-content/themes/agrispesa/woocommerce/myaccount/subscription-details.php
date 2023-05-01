@@ -185,64 +185,11 @@ $user_id = $current_user->ID;
 	<?php if ($subscription->get_status() == 'active'): ?>
 		<?php //Se la data di consegna è più avanti di oggi
 		if ($current_date > $deliveryDate):?>
-			<!--
-	<div class="top_banner">
-		<div class="top_banner--flex">
-			<div class="top_banner--text">
-				<?php if ($days_until > 3): ?>
-					<h3 class="top_banner--title">Agrispesa si sta preparando!</h3>
-				<?php else: ?>
-					<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
-				<?php endif; ?>
-				<?php if ($days_until > 1): ?>
-					<p class="top_banner--subtitle">Il corriere busserà alla tua porta tra <?php echo $days_until; ?> giorni.</p>
-				<?php else: ?>
-					<p class="top_banner--subtitle">Il corriere arriverà oggi. Iu-uh!</p>
-				<?php endif; ?>
-
-			</div>
-			<div class="top_banner--calendar">
-				<div class="mini-cal">
-					<span class="mini-cal--weekday"><?php echo $next_shipping_weekday_it; ?></span>
-					<span class="mini-cal--day"><?php echo $next_date->format("d"); ?></span>
-					<span class="mini-cal--month"><?php echo $next_shipping_month_it; ?></span>
-				</div>
-			</div>
-		</div>
-	</div> -->
 
 			<div class="top_banner orange m-t">
 				<p class="top_banner--advice">Sospendi l'abbonamento <strong>entro </strong>
 					se non vuoi ricevere questa spesa.</p>
 			</div>
-		<?php
-		//Se la data di consegna è più indietro di oggi
-		else: ?>
-			<!--
-		<div class="top_banner">
-			<div class="top_banner--flex">
-				<div class="top_banner--text">
-					<?php if ($days_until > 3): ?>
-						<h3 class="top_banner--title">Agrispesa si sta preparando!</h3>
-					<?php else: ?>
-						<h3 class="top_banner--title">Agrispesa sta arrivando!</h3>
-					<?php endif; ?>
-					<?php if ($days_until > 1): ?>
-						<p class="top_banner--subtitle">Il corriere busserà alla tua porta tra <?php echo $days_until; ?> giorni.</p>
-					<?php else: ?>
-						<p class="top_banner--subtitle">Il corriere arriverà oggi. Iu-uh!</p>
-					<?php endif; ?>
-
-				</div>
-				<div class="top_banner--calendar">
-					<div class="mini-cal">
-						<span class="mini-cal--weekday"><?php echo $shipping_weekday_it; ?></span>
-						<span class="mini-cal--day"><?php echo $shipping_date_day; ?></span>
-						<span class="mini-cal--month"><?php echo $shipping_month_it; ?></span>
-					</div>
-				</div>
-			</div>
-		</div> -->
 
 			<div class="top_banner orange m-t">
 				<p class="top_banner--advice">Sospendi l'abbonamento
@@ -253,7 +200,7 @@ $user_id = $current_user->ID;
 		<?php endif; ?>
 	<?php else: ?>
 		<div class="top_banner">
-			<p class="top_banner--advice">Sospendi <strong>entro <?php echo getLabelDay($nextThursday); ?>
+			<p class="top_banner--advice">Riattiva <strong>entro <?php echo getLabelDay($nextThursday); ?>
 					ore <?php echo $nextThursday->format("H"); ?></strong> se vuoi ricevere
 				la scatola della prossima settimana.</p>
 		</div>
@@ -340,7 +287,7 @@ $user_id = $current_user->ID;
 				}
 
 				foreach ($actions as $key => $action) :
-					if ($action['name'] == 'Elimina') {
+					if ($action['name'] == 'Elimina' && $subscription->get_status() == 'active') {
 						$action['name'] = 'Sospendi';
 					}
 					?>
