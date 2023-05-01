@@ -128,3 +128,19 @@
 2023-05-01T13:03:43+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38726
 2023-05-01T13:03:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38727
 2023-05-01T13:03:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 38728
+2023-05-01T13:14:26+00:00 NOTICE order_submit :: #38713 has a financial status of pending and was skipped.
+2023-05-01T13:14:28+00:00 NOTICE order_submit :: #38714 has a financial status of pending and was skipped.
+2023-05-01T13:14:29+00:00 NOTICE order_submit :: #38715 has a financial status of pending and was skipped.
+2023-05-01T13:14:31+00:00 NOTICE order_submit :: #38716 has a financial status of pending and was skipped.
+2023-05-01T13:14:33+00:00 NOTICE order_submit :: #38717 has a financial status of pending and was skipped.
+2023-05-01T13:16:08+00:00 NOTICE order_submit :: #38718 has a financial status of pending and was skipped.
+2023-05-01T13:16:10+00:00 NOTICE order_submit :: #38719 has a financial status of pending and was skipped.
+2023-05-01T13:16:11+00:00 NOTICE order_submit :: #38720 has a financial status of pending and was skipped.
+2023-05-01T13:16:13+00:00 NOTICE order_submit :: #38721 has a financial status of pending and was skipped.
+2023-05-01T13:16:15+00:00 NOTICE order_submit :: #38722 has a financial status of pending and was skipped.
+2023-05-01T13:16:17+00:00 NOTICE order_submit :: #38723 has a financial status of pending and was skipped.
+2023-05-01T13:16:18+00:00 NOTICE order_submit :: #38724 has a financial status of pending and was skipped.
+2023-05-01T13:16:20+00:00 NOTICE order_submit :: #38725 has a financial status of pending and was skipped.
+2023-05-01T13:16:21+00:00 NOTICE order_submit :: #38726 has a financial status of pending and was skipped.
+2023-05-01T13:16:23+00:00 NOTICE order_submit :: #38727 has a financial status of pending and was skipped.
+2023-05-01T13:16:25+00:00 NOTICE order_submit :: #38728 has a financial status of pending and was skipped.

@@ -943,6 +943,8 @@ function free_first_order_shipping($rates, $package)
 	$loggedUser = is_user_logged_in();
 	$orders = [];
 
+	$totalOrders = 0;
+
 	$has_sub = '';
 	if ($loggedUser) {
 		$current_user = wp_get_current_user();
@@ -958,6 +960,16 @@ function free_first_order_shipping($rates, $package)
 			"meta_compare" => ">",
 		);
 		$orders = wc_get_orders($args);
+
+
+		$args = array(
+			'customer_id' => $user_id,
+			'limit' => 1,
+			'status' => "completed",
+		);
+		$totalOrders = wc_get_orders($args);
+		$totalOrders = count($totalOrders);
+
 	} else {
 		//check old orders
 		$orderData = $_POST;
@@ -977,12 +989,15 @@ function free_first_order_shipping($rates, $package)
 				$newOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($orderData['s_address'])));
 				$oldOrderAddress = trim(str_replace(['via', 'piazza'], "", strtolower($order->get_shipping_address_1())));
 
-				if ($order->get_date_completed() < $lastDayCreatedOrdersFN) {
-					continue;
-				}
 
 				if ($newOrderAddress == $oldOrderAddress) {
-					$orders[] = $order;
+
+					$totalOrders++;
+
+					if ($order->get_date_completed() >= $lastDayCreatedOrdersFN) {
+						$orders[] = $order;
+
+					}
 				}
 
 			}
@@ -1010,7 +1025,7 @@ function free_first_order_shipping($rates, $package)
 		$has_free_shipping = true;
 	}
 
-	if (empty($orders)) {
+	if (empty($orders) && $totalOrders == 0) {
 		$has_free_shipping = true;
 		$label = 'Gratuita';
 	}
