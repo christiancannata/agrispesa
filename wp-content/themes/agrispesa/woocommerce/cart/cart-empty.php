@@ -31,7 +31,7 @@ if ( wc_get_page_id( 'shop' ) > 0 ) :
 
 			<h1 class="emptycart--title">Ops, la tua scatola <br class="only-mobile" />è vuota.</h1>
 
-		<p class="emptycart--subtitle">Vai al negozio per fare la spesa.</p>
+			<p class="emptycart--subtitle"><a href="/negozio">Vai al negozio</a> per fare la spesa.</p>
 	</div>
 		<!--
 	<div class="emptycart--loop">
