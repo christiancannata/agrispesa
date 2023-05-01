@@ -94,7 +94,9 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 	}
 
-	return ['minimum' => $minimum, 'diff' => $minimum - WC()->cart->get_cart_total()];
+	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax() + WC()->cart->get_shipping_total();
+
+	return ['minimum' => $minimum, 'diff' => $minimum - $totalCart];
 
 }
 
