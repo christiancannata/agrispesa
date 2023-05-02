@@ -321,11 +321,18 @@ if (woocommerce_product_loop()) {
 		$excludeSpecial = $specialiID;
 	}
 
+	$carneID = null;
+
+	$getCarneIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+	if ($getCarneIDbyNAME) {
+		$carneID = $getCarneIDbyNAME->term_id;
+	}
+
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
-		// 'orderby'  => 'name',
-		'orderby' => 'meta_value',
-		'meta_key' => 'categories_order_agr',
+		 'orderby'  => 'name',
+		// 'orderby' => 'meta_value',
+		// 'meta_key' => 'categories_order_agr',
 		'order' => 'ASC',
 		'show_count' => 0,
 		'hierarchical' => 1,
@@ -333,7 +340,7 @@ if (woocommerce_product_loop()) {
 		'title_li' => '',
 		'walker' => $my_walker,
 		'exclude' => $excludeSpecial,
-		'child_of' => $negozioID,
+		'child_of' => $carneID,
 	);
 	wp_list_categories($sidebar);
 
