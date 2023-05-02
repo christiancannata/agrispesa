@@ -1632,12 +1632,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
             $now = new DateTime();
-            $file = "fido_" . $now->format("dmY_Hi") . ".xml";
+           /*   $file = "fido_" . $now->format("dmY_Hi") . ".xml";
             $uploadDire = wp_upload_dir($now->format("Y/m"));
-            file_put_contents(
+          file_put_contents(
                 $uploadDire["path"] . "/" . $file,
                 $request->get_body()
-            );
+            );*/
 
             ($xml = simplexml_load_string($request->get_body())) or
                 die("Error: Cannot create object");
