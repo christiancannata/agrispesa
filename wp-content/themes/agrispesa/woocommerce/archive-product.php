@@ -321,6 +321,13 @@ if (woocommerce_product_loop()) {
 		$excludeSpecial = $specialiID;
 	}
 
+	$carneID = null;
+
+	$getCarneIDbyNAME = get_term_by('name', 'negozio', 'product_cat');
+	if ($getCarneIDbyNAME) {
+		$carneID = $getCarneIDbyNAME->term_id;
+	}
+
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
 		// 'orderby'  => 'name',
