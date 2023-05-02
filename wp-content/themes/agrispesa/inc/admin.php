@@ -2277,6 +2277,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
             }
 
+
             $customersOrders = [];
 
             foreach ($orders as $order) {
@@ -2493,6 +2494,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $offerLineNo = $item->get_meta("offer_line_no");
 
                             if (!$offerLineNo && $order->order_type == "ST") {
+
                                 $product = wc_get_product($productId);
 
                                 if (!$product) {
@@ -2500,6 +2502,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 }
 
                                 //lo vado a prendere nella lista di prodotti dalla scegli tu
+
+                                $foundProductInSt = array_filter(
+                                    $productsScegliTu,
+                                    function ($stProduct) use ($product) {
+                                        return $stProduct["id"] ==
+                                            $product->get_id();
+                                    }
+                                );
+
+								if(empty($foundProductInSt)){
+
                                 $foundProductInSt = array_filter(
                                     $productsScegliTu,
                                     function ($stProduct) use ($product) {
@@ -2507,9 +2520,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                             $product->get_name();
                                     }
                                 );
-
-                                if (empty($foundProductInSt)) {
-                                    // provo a cercare il nome
+								 if (empty($foundProductInSt)) {
+									   // provo a cercare il nome
                                     $explodedProductName = explode(
                                         " ",
                                         $product->get_name()
@@ -2539,12 +2551,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                         }
                                     }
 
+								 }
+
+								}
+
+
+                                if (empty($foundProductInSt)) {
+
                                     if (empty($foundProductInSt)) {
                                         $response = new WP_REST_Response([
                                             "order_id" => $order->get_id(),
                                             "error" =>
                                                 "Prodotto non trovato nella scegli tu: " .
-                                                $product->get_name(),
+                                                $product->get_name().' ID: '.$product->get_id(),
                                             "scegli_tu" => $productsScegliTu,
                                         ]);
                                         $response->set_status(500);
