@@ -2245,7 +2245,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
             $customers = [];
 
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            //$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+			$lastWeek = getLastDeliveryDay();
 
             $orders = wc_get_orders([
                 "limit" => -1,
