@@ -1647,7 +1647,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $users = $users["ROW"];
 
-            foreach ($users as $key => $user) {
+            foreach ($users as $user) {
                 $user = (array) $user;
 
                 $args = [
@@ -1674,15 +1674,14 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $user["balance"]
                 );
 
-                $saldo = substr($user["balance"], 0, -2);
-
+                $saldo = $user["balance"];
                 if ($saldo == "-0") {
                     $saldo = 0;
                 }
                 $saldo = str_replace(",", ".", $saldo);
                 $saldo = floatval($saldo);
 
-                if ($saldo >= 0) {
+                if ($saldo > 0) {
                     update_user_meta(
                         $userObj[0],
                         "_current_woo_wallet_balance",
