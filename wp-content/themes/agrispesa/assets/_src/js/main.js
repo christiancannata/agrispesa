@@ -263,6 +263,19 @@ function scrollTo() {
   });
 }
 
+jQuery(document).ready(function () {
+  if (jQuery('form.woocommerce-checkout').length > 0) {
+    let form = window.localStorage.getItem('form')
+    if (form) {
+      form = JSON.parse(form)
+      for (let field in form) {
+        jQuery('input[name="' + field + '"]').val(form[field])
+      }
+
+    }
+  }
+})
+
 function giftCardCheckout() {
   jQuery('button[name="apply_coupon"]').click(function (e) {
     e.preventDefault();
@@ -287,6 +300,7 @@ function giftCardCheckout() {
 
     let button = jQuery(this)
 
+
     if (data.coupon_code.toLowerCase() != 'welovedenso') {
       jQuery.ajax({
         type: 'POST',
@@ -309,13 +323,20 @@ function giftCardCheckout() {
       });
     } else {
 
+      let dataForm = {}
+
+      jQuery("form.woocommerce-checkout input").each(function () {
+        dataForm[jQuery(this).attr('name')] = jQuery(this).val()
+      })
+
+      window.localStorage.setItem('form', JSON.stringify(dataForm))
+
       jQuery.ajax({
         type: 'GET',
         url: '/wp-json/agrispesa/v1/check-cart-coupon?coupon_code=' + data.coupon_code,
         success: function (res) {
 
-
-          location.href=''
+          location.href = ''
           /*data.coupon_code = 'WELOVEDENSO'
           jQuery(document.body).trigger('applied_coupon_in_checkout', []);
           jQuery(document.body).trigger('update_checkout', {
