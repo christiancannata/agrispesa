@@ -65,8 +65,8 @@ if ($getSpeciali) {
 			<?php
 
 			$cat_args = array(
-				'orderby' => 'meta_value',
-				'meta_key' => 'categories_order_agr',
+				'orderby' => 'name',
+				//'meta_key' => 'categories_order_agr',
 				'order' => 'ASC',
 				'hide_empty' => false,
 				'parent' => $negozioID,
