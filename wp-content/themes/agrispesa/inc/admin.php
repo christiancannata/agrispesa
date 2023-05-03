@@ -2715,6 +2715,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
+				$isExported = get_post_meta($order->get_id(),'_payment_exported',true);
+
+				if($isExported){
+					continue;
+				}
+
                 $row = $doc->createElement("ROW");
                 $ele1 = $doc->createElement("id_payment");
                 $ele1->nodeValue = 9000000 + $order->get_id();
@@ -2752,6 +2758,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
                 $row->appendChild($ele1);
                 $root->appendChild($row);
+				update_post_meta($order->get_id(),'_payment_exported',true);
             }
             header("Content-type: text/xml");
             die($doc->saveXml());
