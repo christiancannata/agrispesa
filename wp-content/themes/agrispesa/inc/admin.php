@@ -831,7 +831,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
-                "post_status" => ["publish", "draft", "trash", "private"],
+                "post_status" => "any",
                 "tax_query" => [
                     [
                         "taxonomy" => "product_cat",
@@ -856,7 +856,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_type" => "product",
                 "numberposts" => -1,
                 "fields" => "ids",
-                "post_status" => ["publish", "draft", "trash", "private"],
+                "post_status" => "any",
             ]);
 
             $wpdb->query(
@@ -1203,7 +1203,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );*/
 
             $args = [
-                "post_status" => ["publish", "draft", "trash", "private"],
+                "post_status" => "any",
                 "fields" => "ids",
                 "tax_query" => [
                     [
@@ -1217,6 +1217,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productsToExclude = new WP_Query($args);
             $idsToExclude = $productsToExclude->get_posts();
             $idsToExclude[] = 17647;
+
             $wpdb->query(
                 "UPDATE wp_posts
 	SET post_status = 'draft'
@@ -1300,7 +1301,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
-                "post_status" => ["publish", "draft", "trash", "private"],
+                "post_status" => "any",
                 "tax_query" => [
                     [
                         "taxonomy" => "product_cat",
@@ -1369,10 +1370,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productsSku = array_unique($productsSku);
 
             $productsToInclude = get_posts([
-                "post_type" => "product",
+                "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
-                "post_status" => ["publish", "draft", "trash", "private"],
+                "post_status" => "any",
             ]);
 
             $wpdb->query(
