@@ -2270,11 +2270,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-            //$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            $lastWeek = (new \DateTime())->setTime(18,0)->sub(new DateInterval("P7D"));
 			//$lastWeek = getLastDeliveryDay();
 
-			$dates = getAllDeliveryDates();
-			$lastWeek = $dates[1];
+			/*$dates = getAllDeliveryDates();
+			$lastWeek = $dates[1];*/
 
             $orders = wc_get_orders([
                 "limit" => -1,
@@ -2315,7 +2315,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-                $checkPaidDate = (new \DateTime())->sub(
+                $checkPaidDate = (new \DateTime())->setTime(18,00)->sub(
                     new DateInterval("P7D")
                 );
                 if ($order->get_date_paid() < $checkPaidDate) {
