@@ -868,7 +868,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             if (!empty($productsToExclude)) {
                 $wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
                 );
@@ -1621,7 +1621,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             if (!empty($productsToExclude)) {
                 $wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
                 );
