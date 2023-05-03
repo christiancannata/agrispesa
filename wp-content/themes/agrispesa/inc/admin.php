@@ -1248,7 +1248,24 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 (new DateTime())->format("Y-m-d H:i:s")
             );
 
+
+
+
+            if (!empty($productsToExclude)) {
+                $wpdb->query(
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+                $wpdb->query(
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" .
+                        implode(",", $productsToExclude) .
+                        ");"
+                );
+            }
+
             wc_recount_all_terms();
+
 
             $response = new WP_REST_Response($newIdsProducts);
             $response->set_status(201);
