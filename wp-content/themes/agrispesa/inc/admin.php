@@ -73,7 +73,7 @@ function call_order_status_pending($orderId)
     //generate settimana
     $today = new \DateTime();
     $today->add(new \DateInterval("P7D"));
-    if ($today->format("w") >= 3 && $today->fromat("H") >= 12) {
+    if ($today->format("w") >= 3 && $today->format("H") >= 12) {
         $today->add(new \DateInterval("P7D"));
     }
     $week = $today->format("W");
@@ -2243,7 +2243,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
-            $customers = [];
 
             //$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
 			$lastWeek = getLastDeliveryDay();
