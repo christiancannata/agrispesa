@@ -1645,7 +1645,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
             }
 
+			$lastOrderWeek = get_option('current_order_week');
+
 			update_option('current_order_week',date("Y") . "_" . $week);
+			update_option('last_order_week',$lastOrderWeek);
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
