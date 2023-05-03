@@ -14,7 +14,7 @@ function call_order_status_changed($orderId)
     if ($order->get_created_via() == "checkout") {
         $orderType = "ST";
 
-        foreach ($order->get_items() as $item_id => $item) {
+        foreach ($order->get_items() as $item) {
             $categories = get_the_terms($item->get_product_id(), "product_cat");
             foreach ($categories as $term) {
                 if (in_array($term->slug, ["box"])) {
