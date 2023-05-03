@@ -2109,7 +2109,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $boxCode = $order->box_code;
         }
 
-		$offerLineNo = str_replace("__","",$offerLineNo);
+		$productNavisionId = str_replace("__","",$productNavisionId);
 
         $row = $doc->createElement("ROW");
         $ele1 = $doc->createElement("id_order");
