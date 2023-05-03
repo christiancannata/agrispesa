@@ -2268,8 +2268,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-            //$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
-			$lastWeek = getLastDeliveryDay();
+            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+			//$lastWeek = getLastDeliveryDay();
 
             $orders = wc_get_orders([
                 "limit" => -1,
