@@ -1253,15 +1253,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 
 
-            if (!empty($productsToExclude)) {
+            if (!empty($idsToExclude)) {
                 $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                        implode(",", $productsToExclude) .
+                        implode(",", $idsToExclude) .
                         ");"
                 );
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $productsToExclude) .
+                        implode(",", $idsToExclude) .
                         ");"
                 );
             }
