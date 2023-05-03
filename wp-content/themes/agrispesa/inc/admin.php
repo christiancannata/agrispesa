@@ -2586,8 +2586,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                                 if (empty($foundProductInSt)) {
 
-                                    if (empty($foundProductInSt)) {
-                                        $response = new WP_REST_Response([
+                                       /* $response = new WP_REST_Response([
                                             "order_id" => $order->get_id(),
                                             "error" =>
                                                 "Prodotto non trovato nella scegli tu: " .
@@ -2595,8 +2594,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                             "scegli_tu" => $productsScegliTu,
                                         ]);
                                         $response->set_status(500);
-                                        return $response;
-                                    }
+                                        return $response;*/
+                                        continue;
                                 }
 
                                 $foundProductInSt = reset($foundProductInSt);
@@ -4670,7 +4669,7 @@ function my_custom_submenu_page_callback()
             update_post_meta($subscriptionId, "_is_order_creating", true);
             as_enqueue_async_action("create_order_subscription", [
                 "subscriptionId" => $subscriptionId,
-            ]);
+            ],'create_subscription');
         }
         ?>
 		<br>
