@@ -70,6 +70,7 @@ function call_order_status_pending($orderId)
 
     update_post_meta($orderId, "_order_type", $orderType);
 
+
     //generate settimana
     $today = new \DateTime();
     $today->add(new \DateInterval("P7D"));
@@ -77,7 +78,9 @@ function call_order_status_pending($orderId)
         $today->add(new \DateInterval("P7D"));
     }
     $week = $today->format("W");
-    $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+    $defaultWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+
+	$currentWeek = get_option('current_order_week',$defaultWeek);
 
     update_post_meta($orderId, "_week", $currentWeek);
 }
@@ -1641,6 +1644,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         ");"
                 );
             }
+
+			update_option('current_order_week',date("Y") . "_" . $week);
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
