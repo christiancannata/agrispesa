@@ -2268,7 +2268,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
+            //$lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
 			//$lastWeek = getLastDeliveryDay();
 
 			$dates = getAllDeliveryDates();
@@ -2282,6 +2282,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "meta_compare" => ">",
                 "meta_value" => $lastWeek->getTimestamp(),
             ]);
+
+
             $items = 0;
 
             $productsScegliTu = [];

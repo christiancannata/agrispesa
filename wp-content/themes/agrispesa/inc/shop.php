@@ -66,7 +66,9 @@ function shop_page_empty_layout()
 	if ($special_category) {
 		echo '<ul class="negozio-sidebar--list">';
 		echo '<li class="cat-item cat-extra-special">';
-		echo '<a href="'.$link.'">'.$special_name.'</a>';
+		if (isset($link) && isset($special_name)) {
+			echo '<a href="' . $link . '">' . $special_name . '</a>';
+		}
 		echo '</li>';
 		echo '</ul>';
 	}
@@ -128,7 +130,8 @@ function jk_related_products_args($args)
 	return $args;
 }
 
-function getNumbersFromString($str) {
+function getNumbersFromString($str)
+{
 	$matches = array();
 	preg_match_all('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/', $str, $matches);
 	return $matches;
@@ -144,23 +147,23 @@ function soChangeProductsTitle()
 
 	$title = get_the_title();
 	$title_without_weight = preg_replace(
-	   array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
-	   array(''),
-	   $title
+		array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+		array(''),
+		$title
 	);
 
 	$the_weight_array = getNumbersFromString($title);
 	$i = 1;
 	$weigth_nav = "";
-	if(isset($the_weight_array) && !empty($the_weight_array)) {
+	if (isset($the_weight_array) && !empty($the_weight_array)) {
 		foreach ($the_weight_array as $the_weight) {
-			if(isset($the_weight[0])) {
+			if (isset($the_weight[0])) {
 				$weigth_nav = $the_weight[0];
 			} else {
 				$weigth_nav = "";
 			}
 
-			if($i === 1) {
+			if ($i === 1) {
 				break;
 			}
 		}
@@ -366,8 +369,8 @@ class Walker_Category_Custom extends Walker_Category
 		$output .= "</li>\n";
 
 
-		if ($category->count > 0 && category_has_children($category->term_id) ) {
-			if($category->name !== "Speciali") {
+		if ($category->count > 0 && category_has_children($category->term_id)) {
+			if ($category->name !== "Speciali") {
 				$output .= "<li class='cat-item view-all'><a href='" . get_term_link($category->term_id) . "' title='Tutto " . $category->name . "' class='view-all--link'>Tutto " . $category->name . "</a></li>";
 			}
 		}
