@@ -1,5 +1,17 @@
 <?php
 
+
+add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
+
+function wpdesk_set_completed_for_paid_orders($order_id)
+{
+
+	$order = wc_get_order($order_id);
+	$order->update_status('completed');
+
+}
+
+
 //Remove payments from resume table
 remove_action('woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20);
 //Add payments methods after shipping address

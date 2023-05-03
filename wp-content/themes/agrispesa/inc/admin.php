@@ -4508,7 +4508,7 @@ function scegli_tu_page()
 
         $orderIds = $_POST["orders"];
         foreach ($orderIds as $orderId) {
-            update_post_meta($orderId, "_is_order_updating", true);
+            update_post_meta($orderId, "_is_order_updating", 1);
             as_enqueue_async_action("activate_order", [
                 "orderId" => $orderId,
             ]);
