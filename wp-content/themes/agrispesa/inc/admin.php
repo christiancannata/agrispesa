@@ -2271,6 +2271,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
 			//$lastWeek = getLastDeliveryDay();
 
+			$dates = getAllDeliveryDates();
+			$lastWeek = $dates[1];
+
             $orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
@@ -7180,6 +7183,27 @@ function getNextLimitDate()
     return $nextThursday;
 }
 
+
+function getAllDeliveryDates(){
+	//get last time I generated FN orders
+	 $orders = wc_get_orders([
+                "limit" => -1,
+				"status" => "completed",
+                "orderby" => "date",
+                "order" => "DESC",
+                "meta_key" => "_subscription_id",
+                "meta_compare" => "EXISTS",
+            ]);
+
+	 $days = [];
+
+	 foreach($orders as $order){
+		 $days[] = $order->get_date_completed()->setTime(13,0);
+	 }
+
+	 $days = array_unique($days);
+	 return $days;
+}
 function getLastDeliveryDay()
 {
 	//get last time I generated FN orders
