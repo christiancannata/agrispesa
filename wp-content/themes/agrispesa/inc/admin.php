@@ -826,14 +826,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             //create categories blacklist
             $categories = [];
             global $wpdb;
-            $wpdb->query("UPDATE wp_posts
-			SET post_status = 'draft'
-			WHERE post_type = 'gruppo-prodotto';");
 
-            $productIds = [];
-            $newProducts = [];
-
-            $productsToExclude = get_posts([
+			         $productsToExclude = get_posts([
                 "post_type" => ["product", "product_variation"],
                 "numberposts" => -1,
                 "fields" => "ids",
@@ -847,6 +841,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     ],
                 ],
             ]);
+
+
+            $wpdb->query("UPDATE wp_posts
+			SET post_status = 'draft'
+			WHERE post_type = 'gruppo-prodotto';");
+
+            $productIds = [];
+            $newProducts = [];
+
+
 
             $productsToInclude = get_posts([
                 "post_type" => "product",
@@ -1272,6 +1276,21 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $boxes = [];
             global $wpdb;
 
+
+			 $productsToExclude = get_posts([
+                "post_type" => ["product", "product_variation"],
+                "numberposts" => -1,
+                "fields" => "ids",
+                "post_status" => ["publish", "draft", "trash", "private"],
+                "tax_query" => [
+                    [
+                        "taxonomy" => "product_cat",
+                        "field" => "slug",
+                        "terms" => ["box", "sos", "box-singola", "gift-card"],
+                        "operator" => "IN",
+                    ],
+                ],
+            ]);
             /* ACTIVATE GRUPPI CATEGORIE */
 
             $allGroups = get_posts([
@@ -1330,20 +1349,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
             $productsSku = array_unique($productsSku);
 
-            $productsToExclude = get_posts([
-                "post_type" => ["product", "product_variation"],
-                "numberposts" => -1,
-                "fields" => "ids",
-                "post_status" => ["publish", "draft", "trash", "private"],
-                "tax_query" => [
-                    [
-                        "taxonomy" => "product_cat",
-                        "field" => "slug",
-                        "terms" => ["box", "sos", "box-singola", "gift-card"],
-                        "operator" => "IN",
-                    ],
-                ],
-            ]);
             $productsToInclude = get_posts([
                 "post_type" => "product",
                 "numberposts" => -1,
@@ -1366,7 +1371,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             if (!empty($productsToExclude)) {
                 $wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id NOT IN (" .
+                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
                 );
