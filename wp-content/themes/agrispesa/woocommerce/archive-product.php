@@ -330,9 +330,9 @@ if (woocommerce_product_loop()) {
 
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
-		// 'orderby'  => 'name',
-		'orderby' => 'meta_value',
-		'meta_key' => 'categories_order_agr',
+		'orderby'  => 'name',
+		//'orderby' => 'meta_value',
+		//'meta_key' => 'categories_order_agr',
 		'order' => 'ASC',
 		'show_count' => 0,
 		'hierarchical' => 1,

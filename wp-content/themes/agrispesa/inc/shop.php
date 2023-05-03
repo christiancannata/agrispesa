@@ -75,8 +75,8 @@ function shop_page_empty_layout()
 	echo '<ul class="negozio-sidebar--list navigate">';
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
-		'orderby' => 'meta_value',
-		'meta_key' => 'categories_order_agr',
+		'orderby'  => 'name',
+		//'meta_key' => 'categories_order_agr',
 		'show_count' => 0,
 		'hierarchical' => 1,
 		'title_li' => '',
