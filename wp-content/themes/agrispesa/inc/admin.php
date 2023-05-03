@@ -1202,27 +1202,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     ")"
             );*/
 
-            $args = [
-                "post_status" => "any",
-                "fields" => "ids",
-                "tax_query" => [
-                    [
-                        "taxonomy" => "product_cat",
-                        "field" => "slug",
-                        "terms" => ["box", "sos", "box-singola", "gift-card"],
-                        "operator" => "IN",
-                    ],
-                ],
-            ];
-            $productsToExclude = new WP_Query($args);
-            $idsToExclude = $productsToExclude->get_posts();
-            $idsToExclude[] = 17647;
+
 
             $wpdb->query(
                 "UPDATE wp_posts
 	SET post_status = 'draft'
 	WHERE post_type = 'product' AND ID NOT IN (" .
-                    implode(",", $idsToExclude) .
+                    implode(",", $productsToExclude) .
                     ")"
             );
 
@@ -1253,16 +1239,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 
 
-
-            if (!empty($idsToExclude)) {
+            if (!empty($productsToExclude)) {
                 $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                        implode(",", $idsToExclude) .
+                        implode(",", $productsToExclude) .
                         ");"
                 );
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $idsToExclude) .
+                        implode(",", $productsToExclude) .
                         ");"
                 );
             }
