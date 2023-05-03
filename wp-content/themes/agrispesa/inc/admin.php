@@ -7204,6 +7204,8 @@ function getAllDeliveryDates(){
 	 }
 
 	 $days = array_unique($days);
+	 $days = array_values($days);
+
 	 return $days;
 }
 function getLastDeliveryDay()
