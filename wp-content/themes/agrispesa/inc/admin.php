@@ -1741,17 +1741,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-            $limit = $request->get_param("limit");
-
-            $lastWeek = (new \DateTime())->sub(new DateInterval("P7D"));
-
             $orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
-                "order" => "ASC",
-                "meta_key" => "_date_completed",
-                "meta_compare" => ">",
-                "meta_value" => $lastWeek->getTimestamp(),
+                "order" => "DESC"
             ]);
 
             $doc = new DOMDocument();
@@ -1916,6 +1909,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
 
+				$user = get_userdata($order->get_customer_id());
+
                 $ele2 = $doc->createElement("vat_number");
                 $ele2->nodeValue = $vatCode;
                 $row->appendChild($ele2);
@@ -1935,7 +1930,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = "IT";
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("email");
-                $ele2->nodeValue = $order->get_billing_email();
+                $ele2->nodeValue = $user->user_email;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("phone");
                 $ele2->nodeValue = $phone;
