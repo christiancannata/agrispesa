@@ -1757,6 +1757,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
+				$user = get_userdata($order->get_customer_id());
+
+				if(!$user){
+					continue;
+				}
                 $customers[] = $order->get_customer_id();
 
                 $isSubscription = get_post_meta(
@@ -1909,7 +1914,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     }
                 }
 
-				$user = get_userdata($order->get_customer_id());
 
                 $ele2 = $doc->createElement("vat_number");
                 $ele2->nodeValue = $vatCode;
