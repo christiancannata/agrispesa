@@ -327,6 +327,11 @@ function invoice_box_content()
 							$type = 'FATTURA';
 						}
 
+						$invoiceType = get_post_meta($invoice, '_invoice_type', true);
+						if ($invoiceType == 'NOTA_CREDITO') {
+							$type = 'NOTA DI CREDITO';
+						}
+
 
 					}
 
