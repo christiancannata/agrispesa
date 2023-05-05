@@ -332,7 +332,7 @@ function invoice_box_content()
 
 					//find same invoices
 					if (new DateTime($invoice->date) < new DateTime('2023-05-05')) {
-						$isDuplicated = array_filter($invoces, function ($invoiceTmp, $invoice) {
+						$isDuplicated = array_filter($invoices, function ($invoiceTmp, $invoice) {
 							return $invoiceTmp->date == $invoice->date && $invoiceTmp->amount == $invoice->amount;
 						});
 						if (!empty($isDuplicated)) {
@@ -341,12 +341,14 @@ function invoice_box_content()
 					}
 
 
-					$invoice->type = $type;
-					$invoice->date = $date;
-					$invoice->filename = $filename;
-					$invoice->invoiceName = $invoiceName;
-					$invoice->amount = $amount;
-					$invoices[] = $invoice;
+					$invoiceObj = new stdClass();
+
+					$invoiceObj->type = $type;
+					$invoiceObj->date = $date;
+					$invoiceObj->filename = $filename;
+					$invoiceObj->invoiceName = $invoiceName;
+					$invoiceObj->amount = $amount;
+					$invoices[] = $invoiceObj;
 				endforeach;
 				?>
 				<?php foreach ($invoices as $invoice): ?>
