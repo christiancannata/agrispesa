@@ -326,6 +326,8 @@ function invoice_box_content()
 						if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 1) == 'VV') {
 							$type = 'FATTURA';
 						}
+
+
 					}
 
 					?>

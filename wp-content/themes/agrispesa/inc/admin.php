@@ -2073,6 +2073,18 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "_order_id",
                     trim(str_replace("Ordine ", "", $invoice["reasoncode"]))
                 );
+
+				$type = 'ORDINE';
+				if(strstr(strtolower($invoice["reasoncode"]),'nota') !== false){
+					$type = 'NOTA_CREDITO';
+				}
+
+				update_post_meta(
+                    $postId,
+                    "_invoice_type",
+                    $type
+                );
+
                 update_post_meta(
                     $postId,
                     "_filename",
