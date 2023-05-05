@@ -1,7 +1,7 @@
 <?php
 
 
-add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
+//add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
 
 function wpdesk_set_completed_for_paid_orders($order_id)
 {
@@ -229,7 +229,6 @@ function quadlayers_custom_add_to_cart_message()
 //Sposta login al checkout
 remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10);
 //add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_login_form' );
-
 
 //Cambia label stato ordini nella lista e dettaglio
 add_filter('wc_order_statuses', 'rename_order_statuses', 20, 1);
