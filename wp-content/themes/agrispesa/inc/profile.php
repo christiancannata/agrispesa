@@ -302,7 +302,7 @@ function invoice_box_content()
 				<tbody>
 				<?php
 				//CLEAN DUPLICATED
-				$invoces = [];
+				$invoices = [];
 
 				foreach ($userInvoices as $invoice):
 					$amount = 0;
@@ -346,10 +346,10 @@ function invoice_box_content()
 					$invoice->filename = $filename;
 					$invoice->invoiceName = $invoiceName;
 					$invoice->amount = $amount;
-					$invoces[] = $invoice;
+					$invoices[] = $invoice;
 				endforeach;
 				?>
-				<?php foreach ($invoces as $invoice): ?>
+				<?php foreach ($invoices as $invoice): ?>
 
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
