@@ -2724,6 +2724,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
 
             foreach ($orders as $order) {
+
 				if($order->get_id() <= 39319){
 					continue;
 				}
@@ -2776,7 +2777,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele1);
                 $root->appendChild($row);
 				update_post_meta($order->get_id(),'_payment_exported',true);
+
             }
+
             header("Content-type: text/xml");
             die($doc->saveXml());
         },
