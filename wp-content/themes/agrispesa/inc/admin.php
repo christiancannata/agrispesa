@@ -2277,6 +2277,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
             $limit = $request->get_param("limit");
+            $week = $request->get_param("week");
 
             $today = new \DateTime();
             $today->add(new \DateInterval("P7D"));
@@ -2296,6 +2297,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 			$lastWeek = $dates[1];*/
 
 			$lastOrderWeek = get_option('last_order_week');
+
+			if(!empty($week)){
+				$lastOrderWeek = $week;
+			}
 
             $orders = wc_get_orders([
                 "limit" => -1,
