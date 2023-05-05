@@ -2706,7 +2706,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return true;
         },
         "callback" => function ($request) {
-		return true;
+			//ORDER ID MINIMO
+			//39319
+
             $args = [
                 "status" => "wc-completed",
                 "limit" => -1,
@@ -2722,6 +2724,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
 
             foreach ($orders as $order) {
+				if($order->get_id() <= 39319){
+					continue;
+				}
+
                 if (empty($order->get_payment_method())) {
                     continue;
                 }
