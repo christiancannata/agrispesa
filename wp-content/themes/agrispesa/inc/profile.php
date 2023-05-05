@@ -312,12 +312,10 @@ function invoice_box_content()
 						$amount = $invoice->get_total();
 						$date = $invoice->get_date_paid()->format('Y-m-d');
 						$type = 'PAGAMENTO';
-						$navisionId = $invoice->get_id();
 					} else {
 
 						$amount = get_post_meta($invoice, '_amount', true);
 						$amount = substr($amount, 0, -2);
-						$navisionId = get_post_meta($invoice, '_navision_id', true);
 						$date = get_post_meta($invoice, '_created_date', true);
 						$filename = get_post_meta($invoice, '_filename', true);
 						$invoiceName = explode('.', $filename);
@@ -325,7 +323,7 @@ function invoice_box_content()
 						$invoiceName = str_replace("_", '/', $invoiceName);
 
 						$type = 'PAGAMENTO';
-						if (substr($filename, 0, 3) == 'VAB') {
+						if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 1) == 'VV') {
 							$type = 'FATTURA';
 						}
 					}
