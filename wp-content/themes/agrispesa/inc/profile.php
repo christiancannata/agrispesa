@@ -300,62 +300,76 @@ function invoice_box_content()
 				</thead>
 
 				<tbody>
-				<?php foreach ($userInvoices as $invoice): ?>
-					<?php
+				<?php
+				//CLEAN DUPLICATED
+				$invoces = [];
+
+				foreach ($userInvoices as $invoice):
 					$amount = 0;
 					$navisionId = null;
 					$date = null;
 					$filename = null;
 					$type = null;
 
-					if (get_class($invoice) == Automattic\WooCommerce\Admin\Overrides\Order::class) {
-						$amount = $invoice->get_total();
-						$date = $invoice->get_date_paid()->format('Y-m-d');
-						$type = 'PAGAMENTO';
-					} else {
 
-						$amount = get_post_meta($invoice, '_amount', true);
-						$amount = substr($amount, 0, -2);
-						$date = get_post_meta($invoice, '_created_date', true);
-						$filename = get_post_meta($invoice, '_filename', true);
-						$invoiceName = explode('.', $filename);
-						$invoiceName = $invoiceName[0];
-						$invoiceName = str_replace("_", '/', $invoiceName);
+					$amount = get_post_meta($invoice, '_amount', true);
+					$amount = substr($amount, 0, -2);
+					$date = get_post_meta($invoice, '_created_date', true);
+					$filename = get_post_meta($invoice, '_filename', true);
+					$invoiceName = explode('.', $filename);
+					$invoiceName = $invoiceName[0];
+					$invoiceName = str_replace("_", '/', $invoiceName);
 
-						$type = 'PAGAMENTO';
-						if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 1) == 'VV') {
-							$type = 'FATTURA';
-						}
-
-						$invoiceType = get_post_meta($invoice, '_invoice_type', true);
-						if ($invoiceType == 'NOTA_CREDITO') {
-							$type = 'NOTA DI CREDITO';
-						}
-
-
+					$type = 'PAGAMENTO';
+					if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 1) == 'VV') {
+						$type = 'FATTURA';
 					}
 
-					?>
+					$invoiceType = get_post_meta($invoice, '_invoice_type', true);
+					if ($invoiceType == 'NOTA_CREDITO') {
+						$type = 'NOTA DI CREDITO';
+					}
+
+					//find same invoices
+					if (new DateTime($invoice->date) < new DateTime('2023-05-05')) {
+						$isDuplicated = array_filter($invoces, function ($invoiceTmp, $invoice) {
+							return $invoiceTmp->date == $invoice->date && $invoiceTmp->amount == $invoice->amount;
+						});
+						if (!empty($isDuplicated)) {
+							continue;
+						}
+					}
+
+
+					$invoice->type = $type;
+					$invoice->date = $date;
+					$invoice->filename = $filename;
+					$invoice->invoiceName = $invoiceName;
+					$invoice->amount = $amount;
+					$invoces[] = $invoice;
+				endforeach;
+				?>
+				<?php foreach ($invoces as $invoice): ?>
 
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							<span class="document-type"><?php echo $type; ?></span>
-							<p><?php echo $invoiceName; ?></p>
+							<span class="document-type"><?php echo $invoice->type; ?></span>
+							<p><?php echo $invoice->invoiceName; ?></p>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">
-							<?php echo (new DateTime($date))->format("d-m-Y"); ?>
+							<?php echo (new DateTime($invoice->date))->format("d-m-Y"); ?>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-status"
 							data-title="Stato">
-							<?php echo $amount; ?>€
+							<?php echo $invoice->amount; ?>€
 						</td>
 						<td
 							class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
 							data-title="Azioni">
-							<?php if ($type == 'FATTURA'): ?>
-								<a href="/wp-content/uploads/invoices/<?php echo $filename; ?>"
+							<?php if ($invoice->type == 'FATTURA'): ?>
+								<a href="/wp-content/uploads/invoices/<?php echo $invoice->filename; ?>"
 								   target="_blank"
 								   class="woocommerce-button button view">Visualizza</a>
 							<?php endif; ?>
