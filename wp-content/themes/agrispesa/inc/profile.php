@@ -335,7 +335,8 @@ function invoice_box_content()
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"
 							data-title="Ordine">
-							<span class="document-type"><?php echo $type; ?></span><?php echo $invoiceName; ?>
+							<span class="document-type"><?php echo $type; ?></span>
+							<p><?php echo $invoiceName; ?></p>
 						</td>
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date"
 							data-title="Data">
