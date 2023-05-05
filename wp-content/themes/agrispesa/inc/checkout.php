@@ -1,7 +1,7 @@
 <?php
 
 
-//add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
+add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
 
 function wpdesk_set_completed_for_paid_orders($order_id)
 {
