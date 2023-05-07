@@ -321,7 +321,7 @@ function invoice_box_content()
 					$invoiceName = str_replace("_", '/', $invoiceName);
 
 					$type = 'PAGAMENTO';
-					if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 1) == 'VV') {
+					if (substr($filename, 0, 3) == 'VAB' || substr($filename, 0, 2) == 'VV') {
 						$type = 'FATTURA';
 					}
 
@@ -340,7 +340,7 @@ function invoice_box_content()
 
 					//find same invoices
 					if (new DateTime($invoiceObj->date) < new DateTime('2023-05-05')) {
-						$isDuplicated = array_filter($invoices, function ($invoiceTmp) use($invoiceObj) {
+						$isDuplicated = array_filter($invoices, function ($invoiceTmp) use ($invoiceObj) {
 							return $invoiceTmp->date == $invoiceObj->date && $invoiceTmp->amount == $invoiceObj->amount;
 						});
 						if (!empty($isDuplicated)) {
