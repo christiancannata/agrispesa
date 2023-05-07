@@ -330,17 +330,6 @@ function invoice_box_content()
 						$type = 'NOTA DI CREDITO';
 					}
 
-					//find same invoices
-					if (new DateTime($invoice->date) < new DateTime('2023-05-05')) {
-						$isDuplicated = array_filter($invoices, function ($invoiceTmp, $invoice) {
-							return $invoiceTmp->date == $invoice->date && $invoiceTmp->amount == $invoice->amount;
-						});
-						if (!empty($isDuplicated)) {
-							continue;
-						}
-					}
-
-
 					$invoiceObj = new stdClass();
 
 					$invoiceObj->type = $type;
@@ -348,10 +337,22 @@ function invoice_box_content()
 					$invoiceObj->filename = $filename;
 					$invoiceObj->invoiceName = $invoiceName;
 					$invoiceObj->amount = $amount;
+
+					//find same invoices
+					if (new DateTime($invoiceObj->date) < new DateTime('2023-05-05')) {
+						$isDuplicated = array_filter($invoices, function ($invoiceTmp) use($invoiceObj) {
+							return $invoiceTmp->date == $invoiceObj->date && $invoiceTmp->amount == $invoiceObj->amount;
+						});
+						if (!empty($isDuplicated)) {
+							continue;
+						}
+					}
+
 					$invoices[] = $invoiceObj;
 				endforeach;
 				?>
-				<?php foreach ($invoices as $invoice): ?>
+				<?php foreach ($invoices as $invoice):
+					?>
 
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-processing order">
 						<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number"

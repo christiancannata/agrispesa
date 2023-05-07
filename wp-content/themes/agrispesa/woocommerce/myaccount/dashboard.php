@@ -199,7 +199,7 @@ $current_date = new DateTime();
 		$days_until += 1;
 		?>
 
-		<div class="top_banner">
+		<!--<div class="top_banner">
 			<div class="top_banner--flex">
 				<div class="top_banner--text">
 					<?php if ($days_until > 3): ?>
@@ -223,7 +223,7 @@ $current_date = new DateTime();
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 
 	<?php endforeach; ?>
