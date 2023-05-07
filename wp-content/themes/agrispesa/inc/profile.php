@@ -350,6 +350,15 @@ function invoice_box_content()
 
 					$invoices[] = $invoiceObj;
 				endforeach;
+
+
+				usort($invoices, function ($a, $b) {
+					$dateA = DateTime::createFromFormat('Y-m-d', $a->date);
+					$dateB = DateTime::createFromFormat('Y-m-d', $b->date);
+					if ($dateA == $dateB) return 0;
+					return $dateA < $dateB ? 1 : -1;
+				});
+
 				?>
 				<?php foreach ($invoices as $invoice):
 					?>
