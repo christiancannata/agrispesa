@@ -1848,7 +1848,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele2);
 
                 $taxCode = get_post_meta(
-                    $order->get_id,
+                    $order->get_id(),
                     "_codice_fiscale",
                     true
                 );
