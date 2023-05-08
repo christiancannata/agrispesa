@@ -1754,6 +1754,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
             $customers = [];
             foreach ($orders as $order) {
+
+				if(get_class($order) == \Automattic\WooCommerce\Admin\Overrides\OrderRefund::class){
+					continue;
+				}
+
                 if (in_array($order->get_customer_id(), $customers)) {
                     continue;
                 }
