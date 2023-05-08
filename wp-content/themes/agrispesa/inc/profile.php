@@ -380,7 +380,7 @@ function invoice_box_content()
 						<td
 							class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions"
 							data-title="Azioni">
-							<?php if ($invoice->type == 'FATTURA'): ?>
+							<?php if ($invoice->type == 'FATTURA' || $invoice->type == 'NOTA DI CREDITO'): ?>
 								<a href="/wp-content/uploads/invoices/<?php echo $invoice->filename; ?>"
 								   target="_blank"
 								   class="woocommerce-button button view">Visualizza</a>
