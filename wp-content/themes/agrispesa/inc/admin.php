@@ -1743,6 +1743,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $orders = wc_get_orders([
                 "limit" => -1,
+				"status" => "completed",
                 "orderby" => "date",
                 "order" => "DESC"
             ]);
