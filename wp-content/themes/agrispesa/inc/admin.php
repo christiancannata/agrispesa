@@ -2762,11 +2762,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 					continue;
 				}
 
-                $row = $doc->createElement("ROW");
-                $ele1 = $doc->createElement("id_payment");
-                $ele1->nodeValue = 9000000 + $order->get_id();
-                $row->appendChild($ele1);
-                //check if has navision id
+				   //check if has navision id
                 $navisionId = get_user_meta(
                     $order->get_customer_id(),
                     "navision_id",
@@ -2776,6 +2772,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 if (!$navisionId) {
                     continue;
                 }
+
+
+                $row = $doc->createElement("ROW");
+                $ele1 = $doc->createElement("id_payment");
+                $ele1->nodeValue = 9000000 + $order->get_id();
+                $row->appendChild($ele1);
+
 
                 $ele1 = $doc->createElement("id_codeclient");
                 $ele1->nodeValue = $navisionId;
@@ -2799,7 +2802,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
                 $row->appendChild($ele1);
                 $root->appendChild($row);
-				update_post_meta($order->get_id(),'_payment_exported',true);
+				update_post_meta($order->get_id(),'_payment_exported',(new \DateTime())->format("Y-m-d H:i:s"));
 
             }
 
