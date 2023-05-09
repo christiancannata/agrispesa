@@ -1726,6 +1726,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 }
             }
 
+
+			   update_option(
+                "last_import_fido",
+                (new DateTime())->format("Y-m-d H:i:s")
+            );
+
             $response = new WP_REST_Response([]);
             $response->set_status(204);
 
