@@ -2031,10 +2031,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ($xml = simplexml_load_string($request->get_body())) or
                 die("Error: Cannot create object");
             $invoices = (array) $xml;
+
             $invoices = $invoices["ROW"];
+
+			if(!is_array($invoices)){
+				$invoices = [$invoices];
+			}
+
             $newInvoices = [];
             foreach ($invoices as $key => $invoice) {
                 $invoice = (array) $invoice;
+
                 $alreadyExists = get_posts([
                     "post_type" => "invoice",
                     "fields" => "ids",
