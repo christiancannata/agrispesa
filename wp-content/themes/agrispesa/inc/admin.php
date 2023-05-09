@@ -2043,7 +2043,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "meta_query" => [
                         [
                             "key" => "_navision_id",
-                            "value" => $invoice["entry_id"],
+                            "value" => $invoice["documentno"],
                             "compare" => "=",
                         ],
                     ],
@@ -2052,7 +2052,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
                 $my_post = [
-                    "post_title" => "Fattura #" . $invoice["entry_id"],
+                    "post_title" => $invoice["documentno"],
                     "post_content" => "",
                     "post_status" => "publish",
                     "post_type" => "invoice",
@@ -2063,7 +2063,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "dmY",
                     $invoice["postingdate"]
                 );
-                update_post_meta($postId, "_navision_id", $invoice["entry_id"]);
+                update_post_meta($postId, "_navision_id", $invoice["documentno"]);
                 update_post_meta(
                     $postId,
                     "_customer_id",
