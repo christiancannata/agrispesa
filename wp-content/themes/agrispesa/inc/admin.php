@@ -3853,6 +3853,18 @@ function generate_fabbisogno()
     }
 }
 
+
+add_filter('woo_wallet_current_balance',
+function($wallet_balance,$user_id){
+
+	$customWallet = get_user_meta($user_id,'_current_woo_wallet_balance',true);
+	if($customWallet){
+		$wallet_balance = $customWallet;
+	}
+
+	return $wallet_balance;
+},10,2);
+
 add_filter(
     "woocommerce_email_enabled_new_order",
     "dcwd_conditionally_send_wc_email",
