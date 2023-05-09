@@ -32,8 +32,11 @@ function bbloomer_remove_shipping_label($label, $method)
 
 function getMinimumOrder()
 {
+	$current_user = wp_get_current_user();
+
 	$category = 'box';
-	$minimum = get_option('agr_minimun_amount');
+	$minimum = get_option('options_agr_minimun_amount');
+	$usersToEsclude = get_option('options_agr_clients_no_limits');
 
 
 	/*
@@ -52,16 +55,15 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		$minimum = 43;
 	}
 
-	$loggedUser = is_user_logged_in();
+
 	//$allowedClients = get_option('agr_clients_no_limits');
 
 	$has_sub = false;
 
 	$orderLastWeek = 0;
 
-	if ($loggedUser) {
+	if ($current_user) {
 
-		$current_user = wp_get_current_user();
 		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 
 		$lastDayCreatedOrdersFN = getLastDeliveryDay();
@@ -80,15 +82,21 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 
 	// NO MINIMO ORDINE SE HA FN ATTIVA
-	if ($loggedUser && $has_sub) {
+	if ($current_user && $has_sub) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
 	}
 
-	if ($loggedUser && !$has_sub && $orderLastWeek > 0) {
+	if ($current_user && !$has_sub && $orderLastWeek > 0) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
 	}
+
+
+	if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
+		$minimum = 0;
+	}
+
 
 	// Loop through cart items
 	foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
@@ -107,6 +115,7 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		}
 
 	}
+
 
 	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax();
 
