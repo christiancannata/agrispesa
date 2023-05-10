@@ -2313,7 +2313,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 			/*$dates = getAllDeliveryDates();
 			$lastWeek = $dates[1];*/
 
-			$lastOrderWeek = get_option('last_order_week');
+			$lastOrderWeek = get_option('last_order_week',true);
 
 			if(!empty($week)){
 				$lastOrderWeek = $week;
@@ -2327,7 +2327,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "meta_compare" => "=",
                 "meta_value" => $lastOrderWeek,
             ]);
-
 
             $items = 0;
 
@@ -2358,12 +2357,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-                $checkPaidDate = (new \DateTime())->setTime(18,00)->sub(
+              /*  $checkPaidDate = (new \DateTime())->setTime(18,00)->sub(
                     new DateInterval("P7D")
                 );
                 if ($order->get_date_paid() < $checkPaidDate) {
                     continue;
-                }
+                } */
 
                 if ($limit && $items > $limit) {
                     continue;
