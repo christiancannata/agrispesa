@@ -1,0 +1,36 @@
+2023-05-10T07:34:17+00:00 CRITICAL Uncaught Error: Call to a member function getTimestamp() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:974
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(260): WC_Shipping->calculate_shipping_for_package(Array, 0)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart-totals.php(339): WC_Cart->calculate_shippi in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 974
+
+2023-05-10T07:34:17+00:00 CRITICAL Uncaught Error: Call to a member function getTimestamp() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:974
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(260): WC_Shipping->calculate_shipping_for_package(Array, 0)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart-totals.php(339): WC_Cart->calculate_shippi in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 974
+
+2023-05-10T07:34:18+00:00 CRITICAL Uncaught Error: Call to a member function getTimestamp() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:974
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(260): WC_Shipping->calculate_shipping_for_package(Array, 0)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart-totals.php(339): WC_Cart->calculate_shippi in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 974
+
+2023-05-10T07:34:18+00:00 CRITICAL Uncaught Error: Call to a member function getTimestamp() on null in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:974
+Stack trace:
+#0 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /Users/nathalie/Sites/localhost/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(260): WC_Shipping->calculate_shipping_for_package(Array, 0)
+#4 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
+#5 /Users/nathalie/Sites/localhost/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart-totals.php(339): WC_Cart->calculate_shippi in /Users/nathalie/Sites/localhost/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 974
+
