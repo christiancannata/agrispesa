@@ -2541,9 +2541,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $notes = array_unique($notes);
                 $notes = implode(" - ", $notes);
 
-                foreach ($orders as $order) {
-                    if ($order->order_type == "ST" || $order->is_subscription) {
-                        $piano = get_post_meta(
+				$piani = [];
+				$scale = [];
+				foreach ($orders as $order) {
+					 $piano = get_post_meta(
                             $order->get_id(),
                             "shipping_piano",
                             true
@@ -2553,6 +2554,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         } else {
                             $piano = "Piano " . $piano;
                         }
+
 
                         $scala = get_post_meta(
                             $order->get_id(),
@@ -2564,6 +2566,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         } else {
                             $scala = "Scala " . $scala;
                         }
+
+						$piani[] = $piano;
+						$scale[] = $scala;
+				}
+
+				$piani = array_unique($piani);
+				$scale = array_unique($scale);
+
+				$piano = implode(" ",$piani);
+				$scala = implode(" ",$scale);
+
+                foreach ($orders as $order) {
+                    if ($order->order_type == "ST" || $order->is_subscription) {
 
 
                         foreach ($order->get_items() as $item) {
