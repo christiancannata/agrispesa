@@ -72,18 +72,25 @@ function call_order_status_pending($orderId)
 
 
     //generate settimana
-    $today = new \DateTime();
+   /* $today = new \DateTime();
     $today->add(new \DateInterval("P7D"));
     if ($today->format("w") >= 3 && $today->format("H") >= 12) {
         $today->add(new \DateInterval("P7D"));
     }
-    $week = $today->format("W");
-    $defaultWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
+    $week = $today->format("W");*/
+    //$defaultWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
 
 	$currentWeek = get_option('current_order_week',true);
 
     update_post_meta($orderId, "_week", $currentWeek);
 }
+
+function wp_kama_woocommerce_new_order_action( $order_id, $order ){
+
+	$currentWeek = get_option('current_order_week',true);
+    update_post_meta($order_id, "_week", $currentWeek);
+}
+add_action( 'woocommerce_new_order', 'wp_kama_woocommerce_new_order_action', 10, 2 );
 
 // Call our custom function with the action hook
 add_action(
@@ -2186,8 +2193,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 		$city = $order->get_shipping_city();
 		$city = str_replace("-"," ",$order->get_shipping_city());
-		$city = strtolower($city);
-		$city = ucwords($city);
+		$city = strtoupper($city);
 
         $ele2 = $doc->createElement("sh_city");
         $ele2->nodeValue = $city;
