@@ -602,6 +602,7 @@
 	&--sx {
 		@include breakpoint(mobile) {
 			width: 100%;
+			overflow-y: scroll;
 		}
 	}
 
