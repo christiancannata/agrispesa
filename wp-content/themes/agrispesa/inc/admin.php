@@ -80,9 +80,8 @@ function call_order_status_pending($orderId)
     $week = $today->format("W");*/
     //$defaultWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
 
-	$currentWeek = get_option('current_order_week',true);
-
-    update_post_meta($orderId, "_week", $currentWeek);
+	//$currentWeek = get_option('current_order_week',true);
+    //update_post_meta($orderId, "_week", $currentWeek);
 }
 
 function wp_kama_woocommerce_new_order_action( $order_id, $order ){
@@ -2483,10 +2482,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $order->order_type = $orderType;
                 $order->user_navision_id = $userNavisionId;
 
-                $recipient =
-                    $order->get_shipping_last_name() .
-                    "-" .
-                    $order->get_shipping_first_name();
+                $recipient = $userNavisionId;
 
                 if (!isset($customersOrders[$recipient])) {
                     $customersOrders[$recipient] = [];
