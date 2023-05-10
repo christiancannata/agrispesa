@@ -2184,8 +2184,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $ele1->nodeValue = $orderNote;
         $row->appendChild($ele1);
 
+		$city = $order->get_shipping_city();
+		$city = str_replace("-"," ",$order->get_shipping_city());
+		$city = strtolower($city);
+		$city = ucwords($city);
+
         $ele2 = $doc->createElement("sh_city");
-        $ele2->nodeValue = $order->get_shipping_city();
+        $ele2->nodeValue = $city;
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("sh_postcode");
         $ele2->nodeValue = $order->get_shipping_postcode();
