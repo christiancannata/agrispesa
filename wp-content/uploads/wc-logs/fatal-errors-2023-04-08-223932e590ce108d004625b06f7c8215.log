@@ -1,9 +1,0 @@
-2023-04-08T12:58:47+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function give_user_subscription(), 3 passed in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 494 and exactly 4 expected in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:7
-Stack trace:
-#0 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(494): give_user_subscription(Object(WC_Product_Subscription_Variation), Object(WP_User), Array)
-#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
-#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/i...', Array, NULL)
-#3 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
-#4 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/i...')
-#5 /shared/httpd/agrispesa/wp-includes/class-wp- in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 7
-

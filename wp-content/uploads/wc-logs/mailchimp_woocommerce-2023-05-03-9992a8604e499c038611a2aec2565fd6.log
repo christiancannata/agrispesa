@@ -1,0 +1,32 @@
+2023-05-03T12:19:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 39229
+2023-05-03T12:19:53+00:00 NOTICE debug :: Order ID 39229 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/
+        )
+
+)
+
+2023-05-03T12:19:59+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 39319
+2023-05-03T12:20:02+00:00 NOTICE debug :: Order ID 39319 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 82ea75dbf0
+            [landing_site] => https://agrispesa.loc/wp-admin/
+        )
+
+)
+
+2023-05-03T12:21:55+00:00 NOTICE order.member.updated :: Updated stefania.re@dierresrl.com subscriber status to subscribed and language to 
+2023-05-03T12:21:55+00:00 NOTICE order_submit.success :: addStoreOrder :: #39229 :: email: stefania.re@dierresrl.com :: landing site https://agrispesa.loc/wp-admin/
+2023-05-03T12:22:43+00:00 NOTICE order.member.updated :: Updated giulia.narisano@outlook.it subscriber status to subscribed and language to 
+2023-05-03T12:22:43+00:00 NOTICE order_submit.success :: addStoreOrder :: #39319 :: email: giulia.narisano@outlook.it :: campaign id 82ea75dbf0 :: landing site https://agrispesa.loc/wp-admin/ :: abandoned cart deleted [b0b44b28c81c453a5c0d5811bc461035]
+2023-05-03T14:44:03+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 39354
+2023-05-03T14:44:05+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 39355
+2023-05-03T14:46:03+00:00 NOTICE order_submit :: #39354 has a financial status of pending and was skipped.
+2023-05-03T14:46:06+00:00 NOTICE order_submit :: #39355 has a financial status of pending and was skipped.
