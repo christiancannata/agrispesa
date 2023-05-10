@@ -5732,10 +5732,7 @@ function consegne_ordini_pages()
 									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 									<span style="padding-right:16px;">Box</span>
 								</th>
-								<th scope="col" id="comment" class="manage-column column-comment column-primary"
-									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Data consegna</span>
-								</th>
+
 								<th scope="col" id="comment" class="manage-column column-comment column-primary"
 									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 									<span style="padding-right:16px;">Prodotti</span>
@@ -5790,14 +5787,6 @@ function consegne_ordini_pages()
 										data-colname="Commento" style="padding:25px 10px 10px;">
 										<span
 											class="create-box-table--span-item the-product"><?php echo $productBox->post_excerpt; ?></span>
-									</td>
-									<td class="comment column-comment has-row-actions column-primary"
-										data-colname="Commento" style="padding:25px 10px 10px;">
-										<span
-											class="create-box-table--span-item delivery"><?php echo $dataConsegna
-               ? $fixdate->format("d/m/Y")
-               : "-"; ?></span>
-
 									</td>
 									<td class="response column-response">
 										<table style="max-width: 100%;border-collapse: collapse">
