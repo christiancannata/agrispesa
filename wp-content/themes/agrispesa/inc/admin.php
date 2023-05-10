@@ -2419,7 +2419,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-                if ($orderType != "ST" && $orderType != "FN") {
+                if ($orderType != "ST" && $orderType != "FN" && $orderType != "ABBONAMENTO FN + ST") {
                     continue;
                 }
 
