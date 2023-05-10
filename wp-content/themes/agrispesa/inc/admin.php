@@ -5227,21 +5227,24 @@ function shop_order_column_meta_field_value($column)
                 $orderRenewal .
                 '&action=edit" target="_blank">RINNOVO FN</a>';
         } else {
+
             $isParent = $wpdb->get_results(
                 "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
                     $post->ID,
                 ARRAY_A
             );
-            if (!empty($isParent)) {
-                echo '<a href="/wp-admin/post.php?post=' .
-                    $isParent[0]["ID"] .
-                    '&action=edit" target="_blank">ABBONAMENTO FN</a>';
-            } else {
-                $orderType = get_post_meta($post->ID, "_order_type", true);
+
+			 $orderType = get_post_meta($post->ID, "_order_type", true);
                 if ($orderType) {
                     echo $orderType;
                 }
+
+            if (!empty($isParent)) {
+                echo '<br><a href="/wp-admin/post.php?post=' .
+                    $isParent[0]["ID"] .
+                    '&action=edit" target="_blank">Vedi abbonamento</a>';
             }
+
         } /*
         $order = wc_get_order($the_order);
         $box_in_order = false;
