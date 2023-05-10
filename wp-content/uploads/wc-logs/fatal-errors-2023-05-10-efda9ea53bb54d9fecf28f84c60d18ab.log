@@ -9,3 +9,31 @@ Stack trace:
 #6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
 #7 /shared/httpd/agrispesa/wp-includes/cl in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 2565
 
+2023-05-10T18:59:13+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:14+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:14+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:15+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:16+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:17+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:18+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:19+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:21+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:22+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:24+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:25+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:32+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+
+2023-05-10T18:59:33+00:00 CRITICAL syntax error, unexpected ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php alla riga 5698
+

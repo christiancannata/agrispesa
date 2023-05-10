@@ -3489,13 +3489,13 @@ function my_enqueue($hook)
             "1.0",
             "all"
         );
-        wp_enqueue_script(
+       /* wp_enqueue_script(
             "agrispesa-admin-js",
             get_theme_file_uri("assets/js/admin.js"),
             ["jquery", "select2"],
             null,
             true
-        );
+        );*/
         wp_localize_script("agrispesa-admin-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
             "userId" => get_current_user_id(),
@@ -5687,151 +5687,23 @@ function consegne_ordini_pages()
         "manage_options",
         "box-settimanali",
         function () {
-            if (isset($_GET["delete_box"])) {
-                wp_delete_post($_GET["delete_box"]);
-            }
+
+			$lastOrderBox = get_option('last_order_week',true);
+
             $boxs = get_posts([
                 "post_type" => "weekly-box",
                 "post_status" => "publish",
                 "posts_per_page" => -1,
-                "orderby" => "meta_value_num",
                 "meta_key" => "_week",
+				"meta_value" => $lastOrderBox,
+				"meta_compare" => "=",
                 "order" => "DESC",
             ]);
+
             $date = new DateTime();
             $currentWeek = $date->format("W");
-            $products = get_posts([
-                "post_type" => "product",
-                "numberposts" => -1,
-                "post_status" => "publish",
-                "tax_query" => [
-                    [
-                        "taxonomy" => "product_cat",
-                        "field" => "slug",
-                        "terms" => "box singola",
-                        "operator" => "IN",
-                    ],
-                ],
-            ]);
-            $taxonomy = "product_cat";
-            $orderby = "name";
-            $show_count = 0; // 1 for yes, 0 for no
-            $pad_counts = 0; // 1 for yes, 0 for no
-            $hierarchical = 1; // 1 for yes, 0 for no
-            $title = "";
-            $empty = 0;
-            $args = [
-                "taxonomy" => $taxonomy,
-                "orderby" => $orderby,
-                "show_count" => $show_count,
-                "pad_counts" => $pad_counts,
-                "hierarchical" => $hierarchical,
-                "title_li" => $title,
-                "hide_empty" => $empty,
-            ];
-            $all_categories = get_categories($args);
-            $jsonProducts = [];
-            foreach ($all_categories as $cat) {
-                if ($cat->category_parent == 0) {
-                    $category_id = $cat->term_id;
-                    $args2 = [
-                        "taxonomy" => $taxonomy,
-                        "child_of" => 0,
-                        "parent" => $category_id,
-                        "orderby" => $orderby,
-                        "show_count" => $show_count,
-                        "pad_counts" => $pad_counts,
-                        "hierarchical" => $hierarchical,
-                        "title_li" => $title,
-                        "hide_empty" => $empty,
-                    ];
-                    $sub_cats = get_categories($args2);
-                    if ($sub_cats) {
-                        foreach ($sub_cats as $sub_category) {
-                            $categoryProducts = get_posts([
-                                "post_type" => "product",
-                                "numberposts" => -1,
-                                "post_status" => "publish",
-                                "tax_query" => [
-                                    [
-                                        "taxonomy" => "product_cat",
-                                        "field" => "slug",
-                                        "terms" => $sub_category->slug,
-                                        "operator" => "IN",
-                                    ],
-                                ],
-                            ]);
-                            $categories[$sub_category->term_id] = [
-                                "name" => $sub_category->name,
-                                "products" => $categoryProducts,
-                            ];
-                            foreach ($categoryProducts as $categoryProduct) {
-                                $price = get_post_meta(
-                                    $categoryProduct->ID,
-                                    "_price",
-                                    true
-                                );
-                                $weight = get_post_meta(
-                                    $categoryProduct->ID,
-                                    "_weight",
-                                    true
-                                );
-                                $unitaMisura = "";
-                                //tabella prodotti selezionati
-                                $measureUnit = get_post_meta(
-                                    $categoryProduct->ID,
-                                    "_woo_uom_input",
-                                    true
-                                );
-                                if (!empty($measureUnit)) {
-                                    $unitaMisura = " " . $measureUnit;
-                                } else {
-                                    $unitaMisura = " gr";
-                                }
-                                $fornitore = get_post_meta(
-                                    $categoryProduct->ID,
-                                    "product_producer",
-                                    true
-                                );
-                                $fornitoreString = "";
-                                if (!empty($fornitore)) {
-                                    $fornitore = reset($fornitore);
-                                    $fornitore = get_post($fornitore);
-                                    $fornitoreString = $fornitore->post_title;
-                                }
-                                $jsonProducts[] = [
-                                    "id" => $categoryProduct->ID,
-                                    "name" => $categoryProduct->post_title,
-                                    "weight" => $weight,
-                                    "sku" => get_post_meta(
-                                        $categoryProduct->ID,
-                                        "_sku",
-                                        true
-                                    ),
-                                    "fornitore" => $fornitoreString,
-                                    "unit_measure" => $unitaMisura,
-                                    "codice_confezionamento" => get_post_meta(
-                                        $categoryProduct->ID,
-                                        "_codice_confezionamento",
-                                        true
-                                    ),
-                                    "unit_measure_print" => get_post_meta(
-                                        $categoryProduct->ID,
-                                        "_uom_acquisto",
-                                        true
-                                    ),
-                                    "price" => floatval($price),
-                                ];
-                            }
-                        }
-                    }
-                }
-            }
             ?>
 
-			<script>
-				let productIds = <?php echo json_encode($jsonProducts); ?>
-			</script>
 			<div id="wpbody-content">
 
 				<div class="wrap" id="box-app">
@@ -5841,423 +5713,7 @@ function consegne_ordini_pages()
 							Box Settimanali</h1>
 
 						<hr class="wp-header-end">
-	<!--
-						<p v-text="message"></p>
 
-						<p style="font-size:16px;margin-bottom:24px;">Qui puoi preparare le offerte della settimana.</p>
-
-						<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-							<div style="margin-right:24px;">
-								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Settimana
-									n°</label>
-								<?php //new current week (= next week)
-
-
-        $date = new DateTime(); //$date->modify('+1 week');
-        $currentWeek = $date->format("W");
-        ?>
-
-								<input class="change_week" name="week" id="week" value="<?php echo $currentWeek; ?>"
-									   type="number" style="width:150px;">
-							</div>
-							<div>
-
-								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Data
-									Consegna</label>
-								<?php $wednesday = date("Y-m-d", strtotime("wednesday next week")); ?>
-								<input class="change_shipping_date" name="data_consegna" id="data_consegna"
-									   value="<?php echo $wednesday; ?>" required type="date" style="width:150px;">
-							</div>
-						</div>
-						<br><br>
-
-						<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-							<div style="margin-right:24px;">
-
-								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">Seleziona
-									la Box</label>
-
-								<select name="box_id" id="box_id" class="select2">
-									<option disabled selected value="">-- Scegli la box --</option>
-									<?php foreach ($products as $product): ?>
-										<?php
-          $product = wc_get_product($product->ID);
-          if ($product->get_type() == "variable-subscription") {
-              continue;
-          }
-          $children = $product->get_children();
-          ?>
-										<optgroup label="<?php echo $product->get_name(); ?>">
-											<?php foreach ($children as $child): ?>
-												<?php
-            $child = wc_get_product($child);
-            $child_id = $child->get_id();
-            $type = $child->get_attribute("pa_tipologia");
-            $type_code = "";
-            $size = $child->get_attribute("pa_dimensione");
-            $size_code = substr($size, 0, 1);
-            $year = date("Y");
-            $year_code = substr($year, 2, 4);
-            if ($type == "Vegana" || $type == "Vegetariana") {
-                $type_code = substr($type, 0, 4);
-            } else {
-                $type_code = substr($type, 0, 1);
-            } //CODICE UNIVOCO BOX
-            $box_code =
-                "FN" .
-                $type_code .
-                $size_code .
-                "-" .
-                $year_code .
-                $currentWeek;
-            ?>
-												<option
-													value="<?php echo $child->get_id(); ?>"><?php echo $child->get_attribute(
-    "pa_dimensione"
-) .
-    " - " .
-    $child->get_attribute("pa_tipologia"); ?></option>
-											<?php endforeach; ?>
-										</optgroup>
-									<?php endforeach; ?>
-								</select>
-
-							</div>
-							<div style="width:40%; padding-top: 24px;">
-								<button class="button-secondary add-product" @click="copyFromLastWeek">Copia dalla settimana
-									passata
-								</button>
-							</div>
-
-						</div>
-
-						<br><br>
-
-
-						<div style="display: flex; align-items: flex-start; justify-content:flex-start;">
-							<div style="width:40%;">
-
-
-								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-									Prodotti in negozio</label>
-								<select name="products_id" id="products_id" class="select2 agr-select" style="width: 100%">
-									<option disabled selected value="">Scegli un prodotto</option>
-									<?php
-         $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
-         $negozioID = $getIDbyNAME->term_id;
-         $loop_categories = get_categories([
-             "taxonomy" => "product_cat",
-             "hide_empty" => 1,
-             "parent" => $negozioID,
-         ]);
-         foreach ($loop_categories as $loop_category) {
-             $args = [
-                 "posts_per_page" => -1,
-                 "tax_query" => [
-                     "relation" => "AND",
-                     "hide_empty" => 1,
-                     "paged" => false,
-                     [
-                         "taxonomy" => "product_cat",
-                         "field" => "slug",
-                         "terms" => $loop_category->slug,
-                     ],
-                 ],
-                 "post_type" => "product",
-                 "orderby" => "menu_order",
-                 "order" => "asc",
-                 "meta_query" => [
-                     [
-                         "key" => "_is_active_shop",
-                         "value" => "1",
-                         "compare" => "==",
-                     ],
-                 ],
-             ];
-             $cat_query = new WP_Query($args);
-             $count_posts = new WP_Query($args);
-             $posts_per_cat = $count_posts->found_posts;
-             if ($posts_per_cat != 0) {
-                 echo '<optgroup label="' . $loop_category->name . '">';
-             }
-             while ($cat_query->have_posts()):
-                 $cat_query->the_post();
-                 //Valori prodotto
-                 $productID = get_the_ID();
-                 $price = get_post_meta($productID, "_regular_price", true);
-                 $weight = get_post_meta($productID, "_weight", true);
-                 $sku = get_post_meta($productID, "_sku", true);
-                 $fornitore = get_post_meta(
-                     $productID,
-                     "product_producer",
-                     true
-                 );
-                 $measureUnit = get_post_meta(
-                     $productID,
-                     "_woo_uom_input",
-                     true
-                 );
-                 if (!empty($measureUnit)) {
-                     $unitaMisura = " " . $measureUnit;
-                 } else {
-                     $unitaMisura = " gr"; //select prodotti
-                 }
-                 $fornitoreString = "";
-                 if (!empty($fornitore)) {
-                     $fornitore = reset($fornitore);
-                     $fornitore = get_post($fornitore);
-                     $fornitoreString = $fornitore->post_title;
-                 }
-                 $codiceConfezionamento = get_post_meta(
-                     $productID,
-                     "_codice_confezionamento",
-                     true
-                 );
-                 if (
-                     is_array($codiceConfezionamento) &&
-                     empty($codiceConfezionamento)
-                 ) {
-                     $codiceConfezionamento = "";
-                 }
-                 if (
-                     is_array($codiceConfezionamento) &&
-                     !empty($codiceConfezionamento)
-                 ) {
-                     $codiceConfezionamento = reset($codiceConfezionamento);
-                 }
-                 if ($codiceConfezionamento) {
-                     $codiceConfezionamento = $codiceConfezionamento;
-                 } //echo the_title() . ' '. $weight. ' <br>';
-                 echo '<option value="' .
-                     $productID .
-                     '" data-sku="' .
-                     $sku .
-                     '" data-producer="' .
-                     $fornitoreString .
-                     '" data-conf="' .
-                     $codiceConfezionamento .
-                     '" data-weight="' .
-                     $weight .
-                     $unitaMisura .
-                     '" data-price="' .
-                     $price .
-                     '">' .
-                     get_the_title() .
-                     "</option>";
-             endwhile;
-             // end of the loop.
-             wp_reset_postdata();
-             echo "</optgroup>";
-         }
-         //endforeach category
-            ?>
-								</select>
-								<div style="display:block;width:100%;margin-top:16px;">
-									<button class="button-primary add-product" @click="addProduct('products_id')">
-										Aggiungi alla box
-									</button>
-								</div>
-							</div>
-							<div style="width:40%;margin-left:40px;">
-
-								<label style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-									Prodotti non in negozio</label>
-								<select name="products_id" id="products_id_unavailable" class="select2 agr-select"
-										style="width:100%;">
-									<option disabled selected value="">Scegli un prodotto</option>
-									<?php
-         $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
-         $negozioID = $getIDbyNAME->term_id;
-         $loop_categories = get_categories([
-             "taxonomy" => "product_cat", // 'orderby' => $orderby,
-             // 'meta_key' => $meta_key,
-             "hide_empty" => 1,
-             "parent" => $negozioID,
-         ]);
-         foreach ($loop_categories as $loop_category) {
-             $args = [
-                 "posts_per_page" => -1,
-                 "tax_query" => [
-                     "relation" => "AND",
-                     "hide_empty" => 1,
-                     "paged" => false,
-                     [
-                         "taxonomy" => "product_cat",
-                         "field" => "slug",
-                         "terms" => $loop_category->slug,
-                     ],
-                 ],
-                 "post_type" => "product",
-                 "orderby" => "menu_order",
-                 "order" => "asc",
-                 "meta_query" => [
-                     [
-                         "key" => "_is_active_shop",
-                         "value" => "1",
-                         "compare" => "!=",
-                     ],
-                 ],
-             ];
-             $cat_query = new WP_Query($args);
-             $count_posts = new WP_Query($args);
-             $posts_per_cat = $count_posts->found_posts;
-             if ($posts_per_cat != 0) {
-                 echo '<optgroup label="' . $loop_category->name . '">';
-             }
-             while ($cat_query->have_posts()):
-                 $cat_query->the_post();
-                 //Valori prodotto
-                 $productID = get_the_ID();
-                 $price = get_post_meta($productID, "_regular_price", true);
-                 $weight = get_post_meta($productID, "_weight", true);
-                 $sku = get_post_meta($productID, "_sku", true);
-                 $fornitore = get_post_meta(
-                     $productID,
-                     "product_producer",
-                     true
-                 );
-                 $unitaMisura = " gr";
-                 $measureUnit = get_post_meta(
-                     $productID,
-                     "_woo_uom_input",
-                     true
-                 );
-                 if (!empty($measureUnit)) {
-                     $unitaMisura = " " . $measureUnit;
-                 }
-                 $fornitoreString = "";
-                 if (!empty($fornitore)) {
-                     $fornitore = reset($fornitore);
-                     $fornitore = get_post($fornitore);
-                     $fornitoreString = $fornitore->post_title;
-                 }
-                 $codiceConfezionamento = get_post_meta(
-                     $productID,
-                     "_codice_confezionamento",
-                     true
-                 );
-                 if (
-                     is_array($codiceConfezionamento) &&
-                     empty($codiceConfezionamento)
-                 ) {
-                     $codiceConfezionamento = "";
-                 }
-                 if (
-                     is_array($codiceConfezionamento) &&
-                     !empty($codiceConfezionamento)
-                 ) {
-                     $codiceConfezionamento = reset($codiceConfezionamento);
-                 }
-                 if ($codiceConfezionamento) {
-                     $codiceConfezionamento = $codiceConfezionamento;
-                 }
-                 echo '<option value="' .
-                     $productID .
-                     '" data-sku="' .
-                     $sku .
-                     '" data-producer="' .
-                     $fornitoreString .
-                     '" data-conf="' .
-                     $codiceConfezionamento .
-                     '" data-weight="' .
-                     $weight .
-                     $unitaMisura .
-                     '" data-price="' .
-                     $price .
-                     '">' .
-                     get_the_title() .
-                     "</option>";
-             endwhile;
-             // end of the loop.
-             wp_reset_postdata();
-             echo "</optgroup>";
-         }
-         //endforeach category
-            ?>
-								</select>
-								<div style="display:block;width:100%;margin-top:16px;">
-									<button class="button-primary add-product"
-											@click="addProduct('products_id_unavailable')">
-										Aggiungi alla box
-									</button>
-								</div>
-							</div>
-						</div>
-						<br><br>
-
-						<table id="new-products" class="dataTable" style="border-collapse: collapse; width: 100%;">
-							<thead>
-							<th>Descrizione</th>
-							<th>Codice</th>
-							<th style="width: 70px;">Peso</th>
-							<th>Fornitore</th>
-							<th>Prezzo</th>
-							<th>Un. Misura</th>
-							<th>Quantità</th>
-							<th>Cod. Conf.</th>
-							<th>Azioni</th>
-							</thead>
-							<tbody>
-							<tr v-for="(product,index) of products">
-								<td>
-									<span v-html="product.name"></span>
-								</td>
-								<td>
-									<span v-html="product.sku"></span>
-								</td>
-								<td style="width: 80px;">
-									<span v-html="product.weight"></span>
-									<span v-html="product.unit_measure"></span>
-								</td>
-								<td>
-									<span v-html="product.fornitore"></span>
-								</td>
-								<td>
-									€<span v-html="product.price"></span>
-								</td>
-								<td>
-									<span v-html="product.unit_measure_print"></span>
-								</td>
-								<td>
-									<input style="width:70px;float:left" type="number" v-model="product.quantity">
-								</td>
-								<td>
-									<span v-html="product.codice_confezionamento"></span>
-								</td>
-								<td>
-									<a href="#" @click="deleteProduct(index)">Elimina</a>
-								</td>
-							</tr>
-							</tbody>
-							<tfoot>
-							<tr>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="width: 80px;border-top: 2px solid #000; border-bottom:none;">
-									<b>Peso Totale</b><br/><b v-html="totalWeight"></b>
-								</td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"
-									style="border-top: 2px solid #000; border-bottom:none;">
-									<b>Totale</b><br/><b v-html="totalPrice"></b>
-								</td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-								<td style="border-top: 2px solid #000; border-bottom:none;"></td>
-
-							</tr>
-							</tfoot>
-						</table>
-
-						<br/><br/>
-						<button class="button-primary add-product" @click="createBox" v-if="products.length>0">Crea Box
-							Settimanale
-						</button>
-
-					</div>
-	-->
 
 					<form id="comments-form" method="POST"
 						  action="" style="margin-top:100px;width:100%;">
@@ -6284,8 +5740,7 @@ function consegne_ordini_pages()
 									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
 									<span style="padding-right:16px;">Prodotti</span>
 								</th>
-								<th style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Azioni</span></th>
+
 							</tr>
 							</thead>
 
@@ -6349,13 +5804,9 @@ function consegne_ordini_pages()
 											<thead>
 											<th>Descrizione</th>
 											<th>Codice</th>
-											<th style="width: 70px;">Peso</th>
 											<th>Fornitore</th>
 											<th>Prezzo</th>
-											<th>Un. Misura</th>
 											<th>Quantità</th>
-											<th>Cod. Conf.</th>
-											<th>Azioni</th>
 											</thead>
 											<tbody>
 											<?php
@@ -6365,12 +5816,11 @@ function consegne_ordini_pages()
 											<?php foreach ($products as $key => $product): ?>
 												<?php
             $sku = get_post_meta($product["id"], "_sku", true);
-            $weight = get_post_meta($product["id"], "_weight", true);
-            if (!isset($product["price"])) {
-                $product["price"] = 0;
-            }
-            $totalWeight += $product["quantity"] * $weight;
-            $totalPrice += $product["price"] * $product["quantity"];
+                $product["price"] = get_post_meta(
+                $product["id"],
+                "_regular_price",
+                true
+            );
             $fornitore = get_post_meta(
                 $product["id"],
                 "product_producer",
@@ -6382,48 +5832,9 @@ function consegne_ordini_pages()
                 $fornitore = get_post($fornitore);
                 $fornitoreString = $fornitore->post_title;
             }
-            $codiceConfezionamento = get_post_meta(
-                $product["id"],
-                "_codice_confezionamento",
-                true
-            );
-            if (
-                is_array($codiceConfezionamento) &&
-                empty($codiceConfezionamento)
-            ) {
-                $codiceConfezionamento = "";
-            }
-            if (
-                is_array($codiceConfezionamento) &&
-                !empty($codiceConfezionamento)
-            ) {
-                $codiceConfezionamento = reset($codiceConfezionamento);
-            }
-            $unitaMisura = " gr"; //tabella riepilogo box
-            $measureUnit = get_post_meta(
-                $product["id"],
-                "_woo_uom_input",
-                true
-            );
-            if (!empty($measureUnit)) {
-                $unitaMisura = " " . $measureUnit;
-            }
-            if (!empty($measureUnit)) {
-                $unitaMisura = " " . $measureUnit;
-            }
-            $measureAcquisto = get_post_meta(
-                $product["id"],
-                "_uom_acquisto",
-                true
-            );
-            $misura_acquisto = "-";
-            if (!empty($measureAcquisto)) {
-                $misura_acquisto = get_post_meta(
-                    $product["id"],
-                    "_uom_acquisto",
-                    true
-                );
-            }
+
+            $unitaMisura = ""; //tabella riepilogo box
+
             ?>
 
 												<tr class="create-box-table--row">
@@ -6437,9 +5848,6 @@ function consegne_ordini_pages()
 													<td>
 														<?php echo $sku; ?>
 													</td>
-													<td class="create-box-table--weight" style="width: 70px;">
-														<?php echo $weight . $unitaMisura; ?>
-													</td>
 													<td class="create-box-table--producer">
 														<?php if ($fornitoreString): ?>
 															<?php echo $fornitoreString; ?>
@@ -6450,371 +5858,19 @@ function consegne_ordini_pages()
 													<td class="create-box-table--price">
 														€<?php echo number_format($product["price"] * $product["quantity"], 2); ?>
 													</td>
-													<td class="create-box-table--misura">
-														<?php echo $misura_acquisto; ?>
-													</td>
+
 													<td class="create-box-table--quantity">
-														<input style="width:70px;" readonly
-															   value="<?php echo $product["quantity"]; ?>"
-															<?php if ($week < $currentWeek): ?> disabled <?php endif; ?>
-															   type="number"
-															   name="quantity[<?php echo $key; ?>][]">
+<?php echo $product["quantity"]; ?>
 													</td>
-													<td class="create-box-table--conf">
-														<?php if ($codiceConfezionamento): ?>
-															<?php echo $codiceConfezionamento; ?>
-														<?php else: ?>
-															<?php echo "-"; ?>
-														<?php endif; ?>
-													</td>
-													<td class="create-box-table--actions">
-														<a class="delete-product-box" data-box-id="<?php echo $box->ID; ?>"
-														   data-index="<?php echo $key; ?>"
-														   href="#">Elimina</a>
-													</td>
+
 												</tr>
 											<?php endforeach; ?>
 
-											<tr class="create-box-table--add-product-row">
-												<td colspan="4" class="create-box-table--add-product-item"
-													style="border-left: 2px solid #000;border-top: 2px solid #000;">
-													<label
-														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-														Aggiungi un prodotto in negozio</label>
-													<select data-box-id="<?php echo $box->ID; ?>"
-															class="agr-select new-product-box" style="width:100%;">
-														<option disabled selected value="">Seleziona un prodotto
-														</option>
-														<?php
-              $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
-              $negozioID = $getIDbyNAME->term_id;
-              $loop_categories = get_categories([
-                  "taxonomy" => "product_cat",
-                  // 'orderby' => $orderby, // 'meta_key' => $meta_key,
-                  "hide_empty" => 1,
-                  "parent" => $negozioID,
-              ]);
-              foreach ($loop_categories as $loop_category) {
-                  $args = [
-                      "posts_per_page" => -1,
-                      "tax_query" => [
-                          "relation" => "AND",
-                          "hide_empty" => 1,
-                          "paged" => false,
-                          [
-                              "taxonomy" => "product_cat",
-                              "field" => "slug",
-                              "terms" => $loop_category->slug,
-                          ],
-                      ],
-                      "post_type" => "product",
-                      "orderby" => "menu_order",
-                      "order" => "asc",
-                      "meta_query" => [
-                          [
-                              "key" => "_is_active_shop",
-                              "value" => "1",
-                              "compare" => "==",
-                          ],
-                      ],
-                  ];
-                  $cat_query = new WP_Query($args);
-                  $count_posts = new WP_Query($args);
-                  $posts_per_cat = $count_posts->found_posts;
-                  if ($posts_per_cat != 0) {
-                      echo '<optgroup label="' . $loop_category->name . '">';
-                  }
-                  while ($cat_query->have_posts()):
-                      $cat_query->the_post(); //Valori prodotto
-                      $productID = get_the_ID();
-                      $price = get_post_meta(
-                          $productID,
-                          "_regular_price",
-                          true
-                      );
-                      $sku = get_post_meta($productID, "_sku", true);
-                      $weight = get_post_meta($productID, "_weight", true);
-                      $fornitore = get_post_meta(
-                          $productID,
-                          "product_producer",
-                          true
-                      );
-                      $measureUnit = get_post_meta(
-                          $productID,
-                          "_woo_uom_input",
-                          true
-                      );
-                      if (!empty($measureUnit)) {
-                          $unitaMisura = " " . $measureUnit;
-                      } else {
-                          $unitaMisura = " gr";
-                          //select prodotti
-                      }
-                      $fornitoreString = "";
-                      if (!empty($fornitore)) {
-                          $fornitore = reset($fornitore);
-                          $fornitore = get_post($fornitore);
-                          $fornitoreString = $fornitore->post_title;
-                      }
-                      $codiceConfezionamento = get_post_meta(
-                          $productID,
-                          "_codice_confezionamento",
-                          true
-                      );
-                      if (
-                          is_array($codiceConfezionamento) &&
-                          empty($codiceConfezionamento)
-                      ) {
-                          $codiceConfezionamento = "";
-                      }
-                      if (
-                          is_array($codiceConfezionamento) &&
-                          !empty($codiceConfezionamento)
-                      ) {
-                          $codiceConfezionamento = reset(
-                              $codiceConfezionamento
-                          );
-                      }
-                      if ($codiceConfezionamento) {
-                          $codiceConfezionamento = $codiceConfezionamento;
-                      }
-                      //echo the_title() . ' '. $weight. ' <br>';
-                      echo '<option value="' .
-                          $productID .
-                          '"
-																	data-name="' .
-                          get_the_title() .
-                          '" data-sku="' .
-                          $sku .
-                          '" data-producer="' .
-                          $fornitoreString .
-                          '" data-conf="' .
-                          $codiceConfezionamento .
-                          '" data-weight="' .
-                          $weight .
-                          $unitaMisura .
-                          '" data-price="' .
-                          $price .
-                          '">' .
-                          get_the_title() .
-                          "</option>";
-                  endwhile;
-                  // end of the loop.
-                  wp_reset_postdata();
-                  echo "</optgroup>";
-              }
 
-           //endforeach category
-           ?>
-
-													</select>
-
-												</td>
-												<td style="border-top: 2px solid #000;"></td>
-												<td style="border-top: 2px solid #000;"></td>
-												<td colspan="2" class="create-box-table--add-product-qty"
-													style="border-top: 2px solid #000;">
-													<label
-														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-														Quantità</label>
-													<input
-														style="width:70px"
-														type="number"
-														name="quantity" class="new-quantity">
-												</td>
-												<td class="create-box-table--add-product-actions"
-													style="border-right: 2px solid #000;border-top: 2px solid #000;">
-													<br><a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
-														   href="#">Aggiungi</a>
-												</td>
-											</tr>
-											<tr class="create-box-table--add-product-row">
-												<td colspan="4" class="create-box-table--add-product-item"
-													style="border-bottom:none;border-left: 2px solid #000;">
-													<label
-														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-														Aggiungi un prodotto non in negozio</label>
-													<select data-box-id="<?php echo $box->ID; ?>"
-															class="agr-select new-product-box" style="width:100%;">
-														<option disabled selected value="">Scegli un prodotto</option>
-														<?php
-              $getIDbyNAME = get_term_by("name", "negozio", "product_cat");
-              $negozioID = $getIDbyNAME->term_id;
-              $loop_categories = get_categories([
-                  "taxonomy" => "product_cat",
-                  // 'orderby' => $orderby, // 'meta_key' => $meta_key,
-                  "hide_empty" => 1,
-                  "parent" => $negozioID,
-              ]);
-              foreach ($loop_categories as $loop_category) {
-                  $args = [
-                      "posts_per_page" => -1,
-                      "tax_query" => [
-                          "relation" => "AND",
-                          "hide_empty" => 1,
-                          "paged" => false,
-                          [
-                              "taxonomy" => "product_cat",
-                              "field" => "slug",
-                              "terms" => $loop_category->slug,
-                          ],
-                      ],
-                      "post_type" => "product",
-                      "orderby" => "menu_order",
-                      "order" => "asc",
-                      "meta_query" => [
-                          [
-                              "key" => "_is_active_shop",
-                              "value" => "1",
-                              "compare" => "!=",
-                          ],
-                      ],
-                  ];
-                  $cat_query = new WP_Query($args);
-                  $count_posts = new WP_Query($args);
-                  $posts_per_cat = $count_posts->found_posts;
-                  if ($posts_per_cat != 0) {
-                      echo '<optgroup label="' . $loop_category->name . '">';
-                  }
-                  while ($cat_query->have_posts()):
-                      $cat_query->the_post(); //Valori prodotto
-                      $productID = get_the_ID();
-                      $price = get_post_meta(
-                          $productID,
-                          "_regular_price",
-                          true
-                      );
-                      $sku = get_post_meta($productID, "_sku", true);
-                      $weight = get_post_meta($productID, "_weight", true);
-                      $fornitore = get_post_meta(
-                          $productID,
-                          "product_producer",
-                          true
-                      );
-                      $measureUnit = get_post_meta(
-                          $productID,
-                          "_woo_uom_input",
-                          true
-                      );
-                      if (!empty($measureUnit)) {
-                          $unitaMisura = " " . $measureUnit;
-                      } else {
-                          $unitaMisura = " gr";
-                          //select prodotti
-                      }
-                      $fornitoreString = "";
-                      if (!empty($fornitore)) {
-                          $fornitore = reset($fornitore);
-                          $fornitore = get_post($fornitore);
-                          $fornitoreString = $fornitore->post_title;
-                      }
-                      $codiceConfezionamento = get_post_meta(
-                          $productID,
-                          "_codice_confezionamento",
-                          true
-                      );
-                      if (
-                          is_array($codiceConfezionamento) &&
-                          empty($codiceConfezionamento)
-                      ) {
-                          $codiceConfezionamento = "";
-                      }
-                      if (
-                          is_array($codiceConfezionamento) &&
-                          !empty($codiceConfezionamento)
-                      ) {
-                          $codiceConfezionamento = reset(
-                              $codiceConfezionamento
-                          );
-                      }
-                      if ($codiceConfezionamento) {
-                          $codiceConfezionamento = $codiceConfezionamento;
-                      }
-                      //echo the_title() . ' '. $weight. ' <br>';
-                      echo '<option value="' .
-                          $productID .
-                          '"
-																	data-sku="' .
-                          $sku .
-                          '" data-name="' .
-                          get_the_title() .
-                          '" data-producer="' .
-                          $fornitoreString .
-                          '" data-conf="' .
-                          $codiceConfezionamento .
-                          '" data-weight="' .
-                          $weight .
-                          $unitaMisura .
-                          '" data-price="' .
-                          $price .
-                          '">' .
-                          get_the_title() .
-                          "</option>";
-                  endwhile;
-                  // end of the loop.
-                  wp_reset_postdata();
-                  echo "</optgroup>";
-              }
-
-           //endforeach category
-           ?>
-
-
-													</select>
-												</td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"></td>
-												<td colspan="2" class="create-box-table--add-product-qty">
-													<label
-														style="font-size: 14px; font-weight: bold; margin-bottom:6px;display:block;">
-														Quantità</label>
-													<input
-														style="width:70px"
-														type="number"
-														name="quantity" class="new-quantity">
-												</td>
-
-												<td class="create-box-table--add-product-actions"
-													style="border-bottom:none;border-right: 2px solid #000;">
-													<br>
-													<a class="add-product-box" data-box-id="<?php echo $box->ID; ?>"
-													   href="#">Aggiungi</a>
-												</td>
-											</tr>
-
-
-											<tr class="create-box-table--totals">
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"><strong>Peso
-														Box</strong></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;">
-													<strong>Totale</strong></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-												<td style="border-top:2px solid #000;border-bottom:none;"></td>
-											</tr>
-											<tr>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"><?php echo $totalWeight; ?> gr</td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;">€<?php echo $totalPrice; ?></td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"></td>
-												<td style="border-bottom:none;"></td>
-											</tr>
 											</tbody>
 										</table>
 										<span>
 									</span>
-									</td>
-									<td style="padding:25px 10px 10px;">
-										<a href="/wp-admin/admin.php?page=box-settimanali&delete_box=<?php echo $box->ID; ?>">Elimina
-											box settimanale</a>
 									</td>
 
 								</tr>
