@@ -12,22 +12,26 @@ function call_order_status_changed($orderId)
     $order = wc_get_order($orderId);
 
     if ($order->get_created_via() == "checkout") {
-        $orderType = "ST";
+        $ordersType = [];
 
         foreach ($order->get_items() as $item) {
-            $categories = get_the_terms($item->get_product_id(), "product_cat");
-            foreach ($categories as $term) {
-                if (in_array($term->slug, ["box"])) {
-                    $orderType = "ABBONAMENTO FN";
-                }
-            }
 
             if ($item->get_name() == "Acquisto credito") {
-                $orderType = "CREDITO";
+                $ordersType[] = "CREDITO";
+            }else{
+				$categories = get_the_terms($item->get_product_id(), "product_cat");
+				foreach ($categories as $term) {
+                if (in_array($term->slug, ["box"])) {
+                    $ordersType[] = "ABBONAMENTO FN";
+                }else{
+					$ordersType[] = "ST";
+                }
+            	}
+
             }
         }
 
-        update_post_meta($orderId, "_order_type", $orderType);
+        update_post_meta($orderId, "_order_type", implode(" + ",$ordersType));
 
         $groups = get_posts([
             "post_type" => "delivery-group",
