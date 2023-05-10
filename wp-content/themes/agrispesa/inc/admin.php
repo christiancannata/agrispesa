@@ -2484,11 +2484,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $recipient = $userNavisionId;
 
-                if (!isset($customersOrders[$recipient])) {
-                    $customersOrders[$recipient] = [];
+				$address = base64_encode(strtolower($order->get_shipping_address_1()));
+
+                if (!isset($customersOrders[$recipient.$address])) {
+                    $customersOrders[$recipient.$address] = [];
                 }
 
-                $customersOrders[$recipient][] = $order;
+                $customersOrders[$recipient.$address][] = $order;
             }
 
             foreach ($customersOrders as $orders) {
