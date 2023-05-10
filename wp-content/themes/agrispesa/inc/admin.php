@@ -2324,13 +2324,22 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$lastOrderWeek = $week;
 			}*/
 
+/*
+ *            "meta_key" => "_date_completed",
+                "meta_compare" => ">",
+                "meta_value" => $lastWeek->getTimestamp(),
+ */
+
             $orders = wc_get_orders([
                 "limit" => -1,
                 "orderby" => "date",
                 "order" => "ASC",
-                "meta_key" => "_week",
-                "meta_compare" => "=",
-                "meta_value" => $lastOrderWeek,
+			    "meta_key" => "_date_completed",
+                "meta_compare" => ">",
+                "meta_value" => 1683195289,
+             //   "meta_key" => "_week",
+             //  "meta_compare" => "=",
+             //   "meta_value" => $lastOrderWeek,
             ]);
 
             $items = 0;
