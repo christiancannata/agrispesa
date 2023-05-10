@@ -1550,6 +1550,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 $arrayProducts = [];
                 foreach ($boxProducts as $boxProduct) {
+
+					if(is_array($boxProduct["id_product"])){
+						$boxProduct["id_product"] = $boxProduct["id_product"][0];
+					}
+
+					$boxProduct["id_product"] = (string)$boxProduct["id_product"];
+
                     if ($boxProduct["id_product"] == "TRASPORTO1") {
                         update_option(
                             "delivery_product_offer_no",
@@ -1571,19 +1578,27 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         "order" => "ASC",
                         "posts_per_page" => 1,
                     ]);
+					$productId = null;
+					$productName = null;
 
-                    if (!$singleProduct->have_posts()) {
-                        continue;
-                    }
+                    if ($singleProduct->have_posts()) {
+                       // continue;
+
                     $singleProduct = $singleProduct->get_posts();
-
                     $singleProduct = reset($singleProduct);
+					$productId = $singleProduct->ID;
+					$productName = $singleProduct->post_title;
+
+
+                    }
+
                     //update_post_meta($singleProduct->ID,'_is_active_shop',1);
 
                     $arrayProducts[] = [
-                        "id" => $singleProduct->ID,
+                        "id" => $productId,
+                        "navision_id" => $boxProduct["id_product"],
                         "quantity" => 1,
-                        "name" => $singleProduct->post_title,
+                        "name" => $productName,
                         "offer_line_no" =>
                             (string) $boxProduct["offer_line_no"],
                     ];
