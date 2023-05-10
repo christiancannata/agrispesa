@@ -2577,7 +2577,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 				$piano = implode(" ",$piani);
 				$scala = implode(" ",$scale);
 
-				$piano = str_replace('Piano Piano','Piano');
+				$piano = str_replace('Piano Piano','Piano',$piano);
 
                 foreach ($orders as $order) {
                     if ($order->order_type == "ST" || $order->is_subscription) {
