@@ -3998,7 +3998,15 @@ function create_order_from_subscription($id)
     );
 
     $productsToAddWoocommerce = [];
+
+	global $wpdb;
     foreach ($productsToAdd as $productToAdd) {
+
+       /*$productId = $wpdb->get_results(
+           "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_navision_id' AND meta_value='". $productsToAdd["navision_id"]."' order by post_id DESC LIMIT 1",
+           ARRAY_A
+       );*/
+
         $productObj = wc_get_product($productToAdd["id"]);
 
         if (!$productObj) {
