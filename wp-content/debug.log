@@ -5209,3 +5209,6 @@ Stack trace:
 [10-May-2023 19:03:16 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5824
 [10-May-2023 19:03:16 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5824
 [10-May-2023 19:03:16 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 5824
+[10-May-2023 19:10:47 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[10-May-2023 19:10:50 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[10-May-2023 19:10:51 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1

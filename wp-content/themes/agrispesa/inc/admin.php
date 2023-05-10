@@ -4792,13 +4792,13 @@ function my_custom_submenu_page_callback()
 
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-            create_order_from_subscription($subscriptionId);
-          /*  update_post_meta($subscriptionId, "_is_order_creating", true);
+            //create_order_from_subscription($subscriptionId);
+           update_post_meta($subscriptionId, "_is_order_creating", true);
             as_enqueue_async_action(
                 "create_order_subscription",
                 ["subscriptionId" => $subscriptionId],
                 "create_subscription"
-            );*/
+            );
         }
         ?>
 		<br>
