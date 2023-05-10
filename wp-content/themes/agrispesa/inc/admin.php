@@ -2307,7 +2307,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-            $lastWeek = (new \DateTime())->setTime(18,0)->sub(new DateInterval("P7D"));
+            //$lastWeek = (new \DateTime())->setTime(18,0)->sub(new DateInterval("P7D"));
 			//$lastWeek = getLastDeliveryDay();
 
 			/*$dates = getAllDeliveryDates();
@@ -2315,9 +2315,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			$lastOrderWeek = get_option('last_order_week',true);
 
-			if(!empty($week)){
+			/*if(!empty($week)){
 				$lastOrderWeek = $week;
-			}
+			}*/
 
             $orders = wc_get_orders([
                 "limit" => -1,
