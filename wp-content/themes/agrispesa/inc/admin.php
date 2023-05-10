@@ -5166,32 +5166,49 @@ add_action(
 function get_order_type($id)
 {
     global $wpdb;
+
+
+	$orderType = get_post_meta('_order_type',$id,true);
+	if($orderType){
+		return $orderType;
+	}
+
+
+	$orderTypes = [];
+
     $isParent = $wpdb->get_results(
         "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " . $id,
         ARRAY_A
     );
-    if (!empty($isParent)) {
-        return "ABBONAMENTO";
-    } else {
-        $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
+
+	if(!empty($isParent)){
+		$orderTypes[] = 'ABBONAMENTO';
+	}
+
+	 $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
         if (!empty($orderRenewal)) {
-            return "ABBONAMENTO";
+            $orderTypes[] = 'ABBONAMENTO';
         } //check in cart
+
         $order = wc_get_order($id);
-        $orderType = "ST";
+
         foreach ($order->get_items() as $item_id => $item) {
-            $categories = get_the_terms($item->get_product_id(), "product_cat");
+
+            if ($item->get_name() == "Acquisto credito") {
+                $orderTypes[] = "CREDITO";
+            }else{
+				$categories = get_the_terms($item->get_product_id(), "product_cat");
             foreach ($categories as $term) {
                 if (in_array($term->slug, ["box"])) {
-                    $orderType = "FN";
+                    $orderTypes[] =  "FN";
+                }else{
+					$orderTypes[] = "ST";
                 }
             }
-            if ($item->get_name() == "Acquisto credito") {
-                $orderType = "CREDITO";
             }
         }
-        return $orderType;
-    }
+
+	return implode(" + ",$orderTypes);
 }
 function shop_order_column_meta_field_value($column)
 {
