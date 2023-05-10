@@ -2158,7 +2158,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $currentWeek,
         $offerLineNo,
         $productPrice,
-        $boxCode = null
+        $boxCode = null,
+        $shippingName = null
     ) {
         $userNavisionId = $order->user_navision_id;
 
@@ -2186,13 +2187,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $ele1->nodeValue = "01011970";
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_name");
-        $ele1->nodeValue = ucwords(
-            strtolower(
+
+		if(!$shippingName){
+			$shippingName =
                 $order->get_shipping_last_name() .
                     " " .
                     $order->get_shipping_first_name()
-            )
-        );
+            ;
+		}
+        $ele1->nodeValue =  ucwords(strtolower($shippingName));
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_address");
         $ele1->nodeValue = $order->get_shipping_address_1();
@@ -2708,7 +2711,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 $item->get_total(),
-                                $boxCode
+                                $boxCode,
+                                $orders[0]->get_shipping_last_name() .
+                    " " .
+                    $orders[0]->get_shipping_first_name()
                             );
                         }
 
@@ -2746,7 +2752,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 5,
-                                $boxCode
+                                $boxCode,
+                                $orders[0]->get_shipping_last_name() .
+                    " " .
+                    $orders[0]->get_shipping_first_name()
                             );
                         }
                     }
