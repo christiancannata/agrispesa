@@ -80,7 +80,7 @@ function call_order_status_pending($orderId)
     $week = $today->format("W");
     $defaultWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
 
-	$currentWeek = get_option('current_order_week',$defaultWeek);
+	$currentWeek = get_option('current_order_week',true);
 
     update_post_meta($orderId, "_week", $currentWeek);
 }
@@ -1645,7 +1645,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 );
             }
 
-			$lastOrderWeek = get_option('current_order_week');
+			$lastOrderWeek = get_option('current_order_week',true);
 
 			update_option('current_order_week',date("Y") . "_" . $week);
 			update_option('last_order_week',$lastOrderWeek);
