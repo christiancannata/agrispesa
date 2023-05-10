@@ -2562,6 +2562,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $scala = "Scala " . $scala;
                         }
 
+
                         foreach ($order->get_items() as $item) {
                             $productId = null;
                             if ($item->get_variation_id()) {
@@ -2570,21 +2571,23 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $productId = $item->get_product_id();
                             }
 
+
                             $productNavisionId = get_post_meta(
                                 $productId,
                                 "_navision_id",
                                 true
                             );
 
-                            $productPrice = get_post_meta(
+
+                         /*   $productPrice = get_post_meta(
                                 $productId,
                                 "_regular_price",
                                 true
                             );
 
                             if (!$productPrice) {
-                                continue;
-                            }
+                               // continue;
+                            }*/
 
                             if (
                                 is_array($productNavisionId) &&
@@ -2596,6 +2599,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             if (!$productNavisionId) {
                                 continue;
                             }
+
 
                             $offerLineNo = $item->get_meta("offer_line_no");
 
@@ -2703,7 +2707,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $item,
                                 $currentWeek,
                                 $offerLineNo,
-                                $productPrice,
+                                $item->get_total(),
                                 $boxCode
                             );
                         }
@@ -4009,12 +4013,23 @@ function create_order_from_subscription($id)
 
     global $wpdb;
     foreach ($productsToAdd as $productToAdd) {
-        /*$productId = $wpdb->get_results(
-           "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_navision_id' AND meta_value='". $productsToAdd["navision_id"]."' order by post_id DESC LIMIT 1",
-           ARRAY_A
-       );*/
 
-        $productObj = wc_get_product($productToAdd["id"]);
+
+
+
+		if(isset($productToAdd["navision_id"])){
+			   $productId = $wpdb->get_results(
+           "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_navision_id' AND meta_value='". $productToAdd["navision_id"]."' order by post_id DESC LIMIT 1",
+           ARRAY_A
+       );
+			   if(!empty($productId)){
+				   $productId = $productId[0]['post_id'];
+			   }
+		}else{
+				$productId = $productToAdd["id"];
+		}
+
+        $productObj = wc_get_product($productId);
 
         if (!$productObj) {
             error_log(
@@ -4777,13 +4792,13 @@ function my_custom_submenu_page_callback()
 
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
-            //create_order_from_subscription($subscriptionId);
-            update_post_meta($subscriptionId, "_is_order_creating", true);
+            create_order_from_subscription($subscriptionId);
+          /*  update_post_meta($subscriptionId, "_is_order_creating", true);
             as_enqueue_async_action(
                 "create_order_subscription",
                 ["subscriptionId" => $subscriptionId],
                 "create_subscription"
-            );
+            );*/
         }
         ?>
 		<br>
