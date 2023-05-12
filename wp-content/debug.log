@@ -5325,3 +5325,15 @@ Stack trace:
 [10-May-2023 19:30:07 UTC] PHP Warning:  str_replace() expects at least 3 parameters, 2 given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2580
 [10-May-2023 19:30:07 UTC] PHP Warning:  str_replace() expects at least 3 parameters, 2 given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2580
 [10-May-2023 19:30:07 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:2580) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2793
+[10-May-2023 19:32:05 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:31:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[12-May-2023 14:31:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[12-May-2023 14:31:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[12-May-2023 14:31:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[12-May-2023 14:31:53 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[12-May-2023 14:37:46 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:37:48 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:37:49 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:37:51 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:37:53 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1
+[12-May-2023 14:37:54 UTC] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/global-elements/logo-pawer.php on line 1

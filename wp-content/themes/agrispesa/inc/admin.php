@@ -2832,6 +2832,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
+
                 if ($isExported) {
                     continue;
                 }
@@ -5193,6 +5194,7 @@ function custom_shop_order_column($columns)
         $reordered_columns[$key] = $column;
         if ($key == "order_status") {
             $reordered_columns["type_shopping"] = "Spesa";
+			$reordered_columns["payment_method"] = "Metodo di pagamento";
         }
     }
     unset($reordered_columns["export_status"]);
@@ -5260,6 +5262,10 @@ function shop_order_column_meta_field_value($column)
     }
     if ($column == "subscription_relationship") {
         echo "";
+    }
+	 if ($column == "payment_method") {
+		$paymentMethod =  get_post_meta( $post->ID, '_payment_method', true );
+        echo $paymentMethod;
     }
     if ($column == "type_shopping") {
         $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
