@@ -5264,8 +5264,7 @@ function shop_order_column_meta_field_value($column)
         echo "";
     }
 	 if ($column == "payment_method") {
-		$paymentMethod =  get_post_meta( $post->ID, '_payment_method', true );
-        echo $paymentMethod;
+
     }
     if ($column == "type_shopping") {
         $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
@@ -5292,29 +5291,22 @@ function shop_order_column_meta_field_value($column)
                     '&action=edit" target="_blank">Vedi abbonamento</a>';
             }
 
-        } /*
-        $order = wc_get_order($the_order);
-        $box_in_order = false;
-        $not_a_box = false;
-        $items = $order->get_items();
-        foreach ($items as $item) {
-            $product_id = $item->get_product_id();
-            if (has_term("box", "product_cat", $product_id)) {
-                $box_in_order = true;
-                break;
-            }
-            if (!has_term("box", "product_cat", $product_id)) {
-                $not_a_box = true;
-                break;
-            }
         }
-        if ($box_in_order == true && $not_a_box == false) {
-            echo "FN";
-        } elseif ($box_in_order == false && $not_a_box == true) {
-            echo "ST";
-        } else {
-            echo "FN + ST";
-        }*/
+
+        $paymentMethod =  get_post_meta( $post->ID, '_payment_method', true );
+
+		if($paymentMethod == 'bacs'){
+			echo "<br> Bonifico Bancario";
+		}
+
+		if($paymentMethod == 'woocommerce_payments'){
+			echo "<br> Carta di credito / debito";
+		}
+
+		if($paymentMethod == 'satispay'){
+			echo "<br> Satispay";
+		}
+
     }
 } // add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' ); // function shop_order_column_meta_field_sortable( $columns ) // { //     $meta_key = 'name'; //     return wp_parse_args( array('type_notes' => $meta_key), $columns ); //     return wp_parse_args( array('type_shopping' => $meta_key), $columns ); // }
 // Make custom column sortable
