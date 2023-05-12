@@ -5193,8 +5193,8 @@ function custom_shop_order_column($columns)
     foreach ($columns as $key => $column) {
         $reordered_columns[$key] = $column;
         if ($key == "order_status") {
-            $reordered_columns["type_shopping"] = "Spesa";
 			$reordered_columns["payment_method"] = "Metodo di pagamento";
+			$reordered_columns["type_shopping"] = "Spesa";
         }
     }
     unset($reordered_columns["export_status"]);
