@@ -5300,11 +5300,15 @@ function shop_order_column_meta_field_value($column)
 		}
 
 		if($paymentMethod == 'woocommerce_payments'){
-			echo "<br> Carta di credito / debito";
+			echo "<br> Pagamento con carta";
 		}
 
 		if($paymentMethod == 'satispay'){
 			echo "<br> Satispay";
+		}
+
+		if($paymentMethod == 'wallet'){
+			echo "<br> Credito utente";
 		}
 
     }
