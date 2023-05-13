@@ -1185,3 +1185,65 @@ function bbloomer_unset_gateway_by_category($available_gateways)
 	*/
 	return $available_gateways;
 }
+
+
+add_filter('woocommerce_add_to_cart_validation', 'filter_wc_add_to_cart_validation', 10, 3);
+function filter_wc_add_to_cart_validation($passed, $product_id, $quantity)
+{
+	$is_virtual = $is_physical = false;
+	$product = wc_get_product($product_id);
+
+	if ($product->is_virtual()) {
+		$is_virtual = true;
+	} else {
+		$is_physical = true;
+	}
+
+	// Loop though cart items
+	foreach (WC()->cart->get_cart() as $cart_item) {
+		// Check for specific product categories
+		if (($cart_item['data']->is_virtual() && $is_physical)
+			|| (!$cart_item['data']->is_virtual() && $is_virtual)) {
+			wc_add_notice(__("You can't combine physical and virtual products together.", "woocommerce"), 'error');
+			return false;
+		}
+	}
+
+	return $passed;
+}
+
+// For security: check cart items and avoid checkout
+add_action('woocommerce_check_cart_items', 'filter_wc_check_cart_items');
+function filter_wc_check_cart_items()
+{
+	$cart = WC()->cart;
+	$canBuySubscription = true;
+
+	$current_user = wp_get_current_user();
+
+	if ($current_user) {
+		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+		if (!$has_sub) {
+			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'on-hold');
+		}
+
+		if ($has_sub) {
+			foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+				$categories = get_the_terms($cart_item['product_id'], "product_cat");
+				foreach ($categories as $term) {
+					if (in_array($term->slug, ["box"]) && $has_sub) {
+						$canBuySubscription = false;
+						WC()->cart->remove_cart_item($cart_item_key);
+					}
+				}
+
+			}
+		}
+
+		if (!$canBuySubscription) {
+			wc_add_notice('Hai già un abbonamento, elimina il vecchio abbonamento dalla tua area riservata per poterne effettuare uno nuovo.', 'error');
+		}
+	}
+
+}
