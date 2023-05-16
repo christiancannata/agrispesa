@@ -13,11 +13,22 @@ function enqueue_box_js()
 {
 	global $wp_query;
 
-	if (isset($wp_query->query_vars['personalizza-scatola'])) {
 
+
+	if (isset($wp_query->query_vars['calendar'])) {
+		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);
+		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar'), null, true);
+
+
+		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
+		wp_enqueue_script('swal');
+	}
+
+	if (isset($wp_query->query_vars['personalizza-scatola'])) {
 
 		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
 		wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+
 
 		wp_enqueue_style('select2css');
 		wp_enqueue_script('select2');
@@ -408,7 +419,7 @@ function disable_subscription($subscriptionId, $enableDate, $week)
 		"subscriptionId" => $subscription->get_id(),
 		"enableDate" => $enableDate
 	], 'enable_subscription_' . $subscription->get_id() . '_' . $week);
-	
+
 }
 
 add_action('woocommerce_account_fatture_endpoint', 'invoice_box_content');
@@ -433,7 +444,6 @@ function get_first_and_last_day_of_week($year_number, $week_number)
 
 function calendar_content()
 {
-	$calendar = new Calendar();
 
 	if (isset($_GET['schedule'])) {
 
@@ -492,7 +502,7 @@ function calendar_content()
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
 		<div class="table-shadow-relative">
-			<?php echo $calendar->show(); ?>
+			<div id="calendar"></div>
 			<div class="table-shadow"></div>
 		</div>
 

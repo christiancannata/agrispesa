@@ -5395,3 +5395,53 @@ Stack trace:
 #6 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
 #7 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
 #8 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-co in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 418
+[16-May-2023 16:45:48 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[16-May-2023 16:45:48 UTC] PHP Deprecated:  La funzione get_page_by_title è <strong>deprecata</strong> dalla versione 6.2.0! Utilizza al suo posto WP_Query. in /shared/httpd/agrispesa/wp-includes/functions.php on line 5413
+[16-May-2023 16:45:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/plugins/yith-woocommerce-gift-cards/includes/class-yith-ywgc-cart-checkout.php on line 237
+[16-May-2023 16:45:49 UTC] PHP Warning:  A non-numeric value encountered in /shared/httpd/agrispesa/wp-content/plugins/yith-woocommerce-gift-cards/includes/class-yith-ywgc-cart-checkout.php on line 237
+[16-May-2023 16:45:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[16-May-2023 16:45:52 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[16-May-2023 16:46:15 UTC] PHP Fatal error:  Uncaught Error: Class 'Calendar' not found in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:436
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): calendar_content('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3187): do_action('woocommerce_acc...', '')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#8 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 436
+[16-May-2023 17:07:47 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[16-May-2023 17:43:53 UTC] PHP Fatal error:  Uncaught Error: Class 'Carbon' not found in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3206
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('parse_request',  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3206
+[16-May-2023 17:45:44 UTC] PHP Warning:  require_once(/shared/httpd/agrispesa/wp-content/themes/agrispesa/libraries/carbon/autoload.inc.php): failed to open stream: No such file or directory in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3207
+[16-May-2023 17:45:44 UTC] PHP Fatal error:  require_once(): Failed opening required '/shared/httpd/agrispesa/wp-content/themes/agrispesa/libraries/carbon/autoload.inc.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3207
+[16-May-2023 17:47:48 UTC] PHP Fatal error:  Uncaught Error: Class 'Carbon' not found in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3209
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('parse_request',  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3209
+[16-May-2023 17:48:17 UTC] PHP Fatal error:  Uncaught Error: Class 'Carbon' not found in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3209
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array('parse_request',  in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3209
