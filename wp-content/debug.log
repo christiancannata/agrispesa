@@ -5369,3 +5369,29 @@ Stack trace:
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[13-May-2023 23:51:00 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[13-May-2023 23:51:00 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[13-May-2023 23:51:00 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[14-May-2023 00:19:39 UTC] PHP Parse error:  syntax error, unexpected 'as_schedule_single_action' (T_STRING), expecting variable (T_VARIABLE) or '{' or '$' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 397
+[14-May-2023 00:21:42 UTC] PHP Parse error:  syntax error, unexpected 'as_schedule_single_action' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 410
+[14-May-2023 00:21:42 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[14-May-2023 00:21:42 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[14-May-2023 00:21:58 UTC] PHP Parse error:  syntax error, unexpected 'as_schedule_single_action' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 410
+[14-May-2023 00:26:48 UTC] PHP Fatal error:  Uncaught Exception: DateTime::__construct(): Failed to parse time string (disable_subscription) at position 0 (d): The timezone could not be found in the database in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php:421
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php(421): DateTime->__construct('disable_subscri...', Object(DateTimeZone))
+#1 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_ActionFactory.php(111): as_get_datetime_object('disable_subscri...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php(81): ActionScheduler_ActionFactory->single_unique(Array, Array, 'disable_subscri...', '', false)
+#3 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php(413): as_schedule_single_action('disable_subscri...', Array)
+#4 /shared/h in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php on line 421
+[14-May-2023 00:34:40 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:418
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): calendar_content('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3187): do_action('woocommerce_acc...', '')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#8 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-co in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php on line 418
