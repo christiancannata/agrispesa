@@ -5369,3 +5369,8 @@ Stack trace:
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
 [13-May-2023 23:48:44 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[17-May-2023 12:51:49 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_full_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[17-May-2023 12:51:49 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[17-May-2023 12:56:51 UTC] PHP Parse error:  syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4862
+[17-May-2023 12:56:51 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[17-May-2023 12:56:51 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368

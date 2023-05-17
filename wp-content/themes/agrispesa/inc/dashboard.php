@@ -87,9 +87,9 @@ function abbonamenti_debito_page()
 				?>
 				<tr>
 					<td class="check-column">
-						<?php if ($isWorkingActivation): ?>
+					<!--	<?php if ($isWorkingActivation): ?>
 							<i>Abilitazione in corso...</i>
-						<?php endif; ?>
+						<?php endif; ?>-->
 						<input type="checkbox" name="subscriptions[]"
 							   value="<?php echo $subscription->get_id() ?>">
 					</td>

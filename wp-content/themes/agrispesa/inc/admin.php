@@ -4843,6 +4843,26 @@ function my_custom_submenu_page_callback()
         "subscription_status" => "active",
     ]);
     $groupedFabbisogno = [];
+
+	 $lastOrderWeek = get_option("last_order_week", true);
+            $orders = wc_get_orders([
+                "limit" => -1,
+                "orderby" => "date",
+                "order" => "ASC",
+                   "meta_key" => "_week",
+                  "meta_compare" => "=",
+                   "meta_value" => $lastOrderWeek,
+            ]);
+			foreach($orders as $key => $order){
+				if($order->get_status() != 'completed'){
+					unset($orders[$key]);
+				}
+
+				$orderType = get_post_meta($order->get_id(),'_order_type',true);
+				if(strstr($orderType,'ST') === false){
+						unset($orders[$key]);
+				}
+			}
     ?>
 
 		<div id="wpbody-content">
@@ -4866,6 +4886,9 @@ function my_custom_submenu_page_callback()
 					<hr class="wp-header-end">
 
 					<br>
+
+					<h3>Facciamo Noi: <?php echo count($subscriptions); ?></h3>
+					<h3>Scegli Tu: <?php echo count($orders); ?></h3>
 
 					<form id="comments-form" method="POST"
 						  action="">
