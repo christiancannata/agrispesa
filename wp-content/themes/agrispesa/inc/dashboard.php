@@ -41,8 +41,11 @@ function abbonamenti_debito_page()
 	if (isset($_POST['activate_subscriptions'])) {
 		$subscriptions = $_POST['subscriptions'];
 		foreach ($subscriptions as $subscriptionId) {
-			update_post_meta($subscriptionId, '_is_working_activation', true);
-			as_enqueue_async_action('activate_subscription', ['subscriptionId' => $subscriptionId]);
+			$subscription = new WC_Subscription($subscriptionId);
+			$subscription->update_status('active');
+			$lastOrder = $subscription->get_last_order();
+			$order = wc_get_order($lastOrder);
+			$order->update_status("completed", "Ordine completato da admin", true);
 		}
 	}
 
@@ -87,7 +90,7 @@ function abbonamenti_debito_page()
 				?>
 				<tr>
 					<td class="check-column">
-					<!--	<?php if ($isWorkingActivation): ?>
+						<!--	<?php if ($isWorkingActivation): ?>
 							<i>Abilitazione in corso...</i>
 						<?php endif; ?>-->
 						<input type="checkbox" name="subscriptions[]"
