@@ -2201,7 +2201,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $ele1->nodeValue = $order->get_shipping_address_1();
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_description1");
-        $ele1->nodeValue = $scala." ".$piano;
+        $ele1->nodeValue = $scala." | ".$piano;
         $row->appendChild($ele1);
 
         $ele1 = $doc->createElement("comment_lines");
