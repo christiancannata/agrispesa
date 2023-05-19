@@ -2210,6 +2210,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $city = $order->get_shipping_city();
         $city = str_replace("-", " ", $order->get_shipping_city());
+
+		$cities = explode(" ",$city);
+		foreach($cities as $key => $city){
+			if(ctype_lower($city[0]) && ctype_upper($city[1])){
+				$city = substr_replace($city, "'", 1, 0);
+			}
+			$cities[$key] = $city;
+		}
+
+		$city = implode(" ",$cities);
         $city = strtoupper($city);
 
         $ele2 = $doc->createElement("sh_city");

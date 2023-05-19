@@ -4,12 +4,14 @@ namespace ACP\Search;
 
 use AC;
 use AC\Asset\Location;
+use AC\ListScreenFactoryInterface;
 use AC\ListScreenRepository\Storage;
 use AC\Registerable;
 use ACP;
 use ACP\Bookmark\SegmentRepository;
 use ACP\Bookmark\Setting\PreferredSegment;
 use ACP\Settings\ListScreen\HideOnScreenCollection;
+use ACP\Type\HideOnScreen\Group;
 
 final class Addon implements Registerable {
 
@@ -38,10 +40,16 @@ final class Addon implements Registerable {
 	 */
 	private $hide_smart_filters;
 
-	public function __construct( Storage $storage, Location $location, SegmentRepository $segment_repository ) {
+	/**
+	 * @var ListScreenFactoryInterface
+	 */
+	private $list_screen_factory;
+
+	public function __construct( Storage $storage, Location $location, SegmentRepository $segment_repository, ListScreenFactoryInterface $list_screen_factory ) {
 		$this->storage = $storage;
 		$this->location = $location;
 		$this->segment_repository = $segment_repository;
+		$this->list_screen_factory = $list_screen_factory;
 		$this->table_preference = new Preferences\SmartFiltering();
 		$this->hide_smart_filters = new Settings\HideOnScreen\SmartFilters();
 	}
@@ -85,8 +93,8 @@ final class Addon implements Registerable {
 			return;
 		}
 
-		$collection->add( $this->hide_smart_filters, 40 )
-		           ->add( new Settings\HideOnScreen\SavedFilters(), 41 );
+		$collection->add( $this->hide_smart_filters, new Group( Group::FEATURE ), 40 )
+		           ->add( new Settings\HideOnScreen\SavedFilters(), new Group( Group::FEATURE ), 41 );
 	}
 
 	public function comparison_request() {
@@ -96,7 +104,8 @@ final class Addon implements Registerable {
 
 		$comparison = new RequestHandler\Comparison(
 			$this->storage,
-			$request
+			$request,
+			$this->list_screen_factory
 		);
 
 		$comparison->dispatch( $request->get( 'method' ) );

@@ -42,7 +42,7 @@ class InlineValues implements RequestHandler {
 			$response->error();
 		}
 
-		$list_screen = $this->storage->find( new ListScreenId( $list_id ) );
+		$list_screen = $this->storage->find_by_user( new ListScreenId( $list_id ), wp_get_current_user() );
 
 		if ( ! $list_screen instanceof ListScreen ) {
 			$response->error();
@@ -51,7 +51,7 @@ class InlineValues implements RequestHandler {
 		$strategy = $list_screen->editing();
 
 		foreach ( $ids as $k => $id ) {
-			if ( ! $strategy->user_can_edit_item( $id ) ) {
+			if ( ! $strategy->user_can_edit_item( (int) $id ) ) {
 				unset( $ids[ $k ] );
 			}
 		}

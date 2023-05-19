@@ -20,7 +20,7 @@ class ColumnOrderUser implements RequestAjaxHandler {
 		$this->user_storage = $user_storage;
 	}
 
-	public function handle() {
+	public function handle(): void {
 		$request = new Request();
 
 		if ( ! ( new Nonce\Ajax() )->verify( $request ) ) {
@@ -33,10 +33,13 @@ class ColumnOrderUser implements RequestAjaxHandler {
 			wp_send_json_error();
 		}
 
-		$this->user_storage->save(
-			$id,
-			(array) $request->get( 'column_names' )
-		);
+		$column_names = $request->get( 'column_names' );
+
+		if ( ! $column_names ) {
+			wp_send_json_error();
+		}
+
+		$this->user_storage->save( $id, $column_names );
 
 		wp_send_json_success();
 	}

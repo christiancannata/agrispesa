@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="ac-setbox__row">
 			<div class="ac-setbox__row__th">
 				<label><?= __( 'Conditionals', 'codepress-admin-columns' ); ?></label>
-				<small><?= __( 'Make this column set available only for specific users or roles.', 'codepress-admin-columns' ); ?></small>
+				<small><?= __( 'Make this table view available only for specific users or roles.', 'codepress-admin-columns' ); ?></small>
 			</div>
 			<div class="ac-setbox__row__fields">
 				<div class="ac-setbox__row__fields__inner">
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="ac-setbox__row" id="hide-on-screen">
 			<div class="ac-setbox__row__th">
-				<label><?= __( 'Toggle Elements', 'codepress-admin-columns' ); ?></label>
+				<label><?= __( 'Table Elements', 'codepress-admin-columns' ); ?></label>
 				<small><?= __( 'Show or hide elements from the table list screen.', 'codepress-admin-columns' ); ?></small>
 			</div>
 			<div class="ac-setbox__row__fields">

@@ -7,10 +7,6 @@ use AC\ListScreenCollection;
 use AC\Type\ListScreenId;
 use AC\Type\Url;
 
-/**
- * @since 3.0
- */
-// TODO David remove the singleton, make a factory with a shared instance for AC this should be no issue
 if ( ! function_exists( 'AC' ) ) {
 	function AC(): AC\AdminColumns {
 		static $ac = null;
@@ -51,7 +47,7 @@ if ( ! function_exists( 'ac_get_list_screen' ) ) {
  */
 if ( ! function_exists( 'ac_get_list_screens' ) ) {
 	function ac_get_list_screens( $key ) {
-		return AC()->get_storage()->find_all( [ 'key' => $key ] );
+		return AC()->get_storage()->find_all_by_key( $key );
 	}
 }
 

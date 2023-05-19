@@ -3,9 +3,9 @@ Contributors: webtoffee, cookieyesdev
 Donate link: https://www.cookieyes.com/ 
 Tags: GDPR, CPRA, cookie notice, DSGVO, RGPD, LGPD, PIPEDA, POPIA, cookies , cookie law, cookie consent, Opt-in, cookie policy, privacy, compliance
 Requires at least: 5.0.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -160,6 +160,10 @@ For every update of the plugin, you will be notified of the installed plugins pa
 9. Privacy policy generator and cookie policy generator
 
 == Changelog ==
+
+= 3.0.9 = 
+
+Tested OK with WordPress version 6.2
 
 = 3.0.8 = 
 
@@ -586,8 +590,6 @@ For every update of the plugin, you will be notified of the installed plugins pa
 
 == Upgrade Notice ==
 
-= 3.0.8 = 
+= 3.0.9 = 
 
-[Enhancement] - Support for CPRA ( Do Not Sell or Share My Personal Information )
-[Enhancement] - Option to edit show more/less texts
-[Enhancement] - Compatibility with Bedrock WordPress boilerplate
+Tested OK with WordPress version 6.2
