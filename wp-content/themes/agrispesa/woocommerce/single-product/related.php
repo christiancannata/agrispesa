@@ -112,7 +112,7 @@ if (in_array('box', $categories)): ?>
 
 	<?php if ($related_products) : ?>
 
-
+<!--
 		<section class="section-hero small">
 			<div class="section-hero--container">
 				<h4 class="section-hero--subtitle ">
@@ -140,6 +140,7 @@ if (in_array('box', $categories)): ?>
 				<?php //woocommerce_product_loop_end(); ?>
 			</div>
 		</section>
+		-->
 	<?php
 	endif; ?>
 
