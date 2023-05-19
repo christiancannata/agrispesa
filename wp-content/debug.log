@@ -5374,3 +5374,9 @@ Stack trace:
 [17-May-2023 12:56:51 UTC] PHP Parse error:  syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 4862
 [17-May-2023 12:56:51 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
 [17-May-2023 12:56:51 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[17-May-2023 13:06:54 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[17-May-2023 13:06:54 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[17-May-2023 13:06:54 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[17-May-2023 13:06:54 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[17-May-2023 13:06:54 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[19-May-2023 14:40:19 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336

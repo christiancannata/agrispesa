@@ -2242,7 +2242,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $productPrice = str_replace(
             ".",
             ",",
-            number_format(floatval($productPrice), 4)
+            number_format(floatval($productPrice)/$quantity, 4)
         );
 
         $ele2->nodeValue = $productPrice;
