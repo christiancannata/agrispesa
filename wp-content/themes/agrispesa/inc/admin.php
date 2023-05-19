@@ -2201,7 +2201,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $ele1->nodeValue = $order->get_shipping_address_1();
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_description1");
-        $ele1->nodeValue = $piano . " " . $scala;
+        $ele1->nodeValue = $scala." ".$piano;
         $row->appendChild($ele1);
 
         $ele1 = $doc->createElement("comment_lines");
@@ -4194,7 +4194,7 @@ function create_order_from_subscription($id)
     $piano = get_user_meta($customerId, "shipping_piano", true);
     $pianoValue = "";
     if ($piano) {
-        $pianoValue = "Piano/Scala " . $piano;
+        $pianoValue = "Piano " . $piano;
     }
     update_post_meta($order->get_id(), "shipping_piano", $pianoValue);
     /*

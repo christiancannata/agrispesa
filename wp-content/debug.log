@@ -5436,3 +5436,11 @@ Stack trace:
 #6 /shared/httpd/agrispesa/wp-content/plugins/ad in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/ListScreenFactory.php on line 9
 [19-May-2023 15:11:21 UTC] PHP Warning:  require(/shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns//settings/translations/global.php): failed to open stream: No such file or directory in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php on line 67
 [19-May-2023 15:11:21 UTC] PHP Fatal error:  require(): Failed opening required '/shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns//settings/translations/global.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php on line 67
+[19-May-2023 15:33:50 UTC] PHP Fatal error:  Uncaught Error: Class 'CookieYes\Lite\Admin\Modules\Settings\Includes\Controller' not found in /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/admin/modules/settings/class-settings.php:30
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/includes/class-modules.php(54): CookieYes\Lite\Admin\Modules\Settings\Settings->init()
+#1 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/admin/class-admin.php(179): CookieYes\Lite\Includes\Modules->__construct('settings')
+#2 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/admin/class-admin.php(79): CookieYes\Lite\Admin\Admin->load_modules()
+#3 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/includes/class-cli.php(153): CookieYes\Lite\Admin\Admin->__construct('cookie-law-info', '3.0.9')
+#4 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/includes/class-cli.php(95): CookieYes\Lite\Includes\CLI->define_admin_hooks()
+#5 /shared/httpd/agrispesa/wp-content/plugins/cookie-la in /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/admin/modules/settings/class-settings.php on line 30
