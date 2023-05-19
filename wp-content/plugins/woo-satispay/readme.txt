@@ -3,7 +3,7 @@ Contributors: satispay
 Tags: woocommerce, satispay, payment method
 Requires at least: 4.6
 Tested up to: 6.1
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -15,7 +15,7 @@ Satispay is a mobile payment system that allows users to pay in physical and onl
 
 The plugin allows you to accept digital payments from Satispay users in a really cheap and secure way making it the ideal solution for your business. Customers make purchases by simply scanning the QR Code generated or inserting their phone number and confirming the payment request from their smartphone. The simplified process reduces the barriers for consumers resulting in fewer abandoned carts at checkout.
 
-In order to activate the service, you must complete the signup for Satispay Business at https://business.satispay.com/signup. Joining is free as there are no activation costs, monthly fees or deactivation charges.
+In order to activate the service, you must complete the signup for Satispay Business at https://dashboard.satispay.com/signup. Joining is free as there are no activation costs, monthly fees or deactivation charges.
 
 The only fee is a commission of:
 - **1,5%** on payments less than €10
@@ -36,6 +36,9 @@ Manage all of your refund requests directly with the Refund function integrated 
 As soon as the customer confirms the payment, the transaction is completed, thus eliminating the possibility of chargeback.
 
 == Changelog ==
+= 2.1.6 =
+* Updated Dashboard link with the new one 
+
 = 2.1.5 =
 * Updated the Online fees on the Changelog 
 

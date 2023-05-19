@@ -90,6 +90,8 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 
 			add_action( 'ywgc_empty_table_state_action_customer', array( $this, 'display_empty_gift_cards_table_state_view_customer' ) );
 
+			add_filter( 'woocommerce_get_price_html', array( $this, 'get_price_html_for_gift_cards' ), 10, 2 );
+
 		}
 
 		/**
@@ -241,7 +243,7 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 			 *
 			 * @return string
 			 */
-			$items_part1['gift-cards'] = apply_filters( 'yith_wcgc_my_account_menu_item_title', esc_html__( 'Gift Cards', 'yith-woocommerce-gift-cards' ) );
+			$items_part1['gift-cards'] = apply_filters( 'yith_wcgc_my_account_menu_item_title', esc_html_x( 'Gift Cards', 'my account endpoint title', 'yith-woocommerce-gift-cards' ) );
 			$items                     = array_merge( $items_part1, $items_part2 );
 
 			return $items;
@@ -252,19 +254,14 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 		 *  Add content to the new endpoint.
 		 */
 		public function yith_ywgc_gift_cards_content() {
-			wc_get_template(
-				'myaccount/my-giftcards.php',
-				array(),
-				'',
-				trailingslashit( YITH_YWGC_TEMPLATES_DIR )
-			);
+			echo do_shortcode( '[yith_wcgc_show_gift_card_list]' );
 		}
 
 		/**
 		 * Show the gift card code under the order item, in the order admin page
 		 *
-		 * @param int $item_id
-		 * @param array $item
+		 * @param int        $item_id
+		 * @param array      $item
 		 * @param WC_product $_product
 		 *
 		 * @throws Exception
@@ -308,13 +305,13 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 								$message      = sprintf( esc_html__( 'Sent on %s', 'yith-woocommerce-gift-cards' ), $gc->get_formatted_date( $gc->delivery_send_date ) );
 							} elseif ( $gc->delivery_date >= current_time( 'timestamp' ) ) {//phpcs:ignore --timestamp is discouraged
 								$status_class = 'scheduled';
-								$message      = esc_html__( 'Scheduled', 'yith-woocommerce-gift-cards' );
+								$message      = esc_html_x( 'Scheduled', 'gift card delivery status label', 'yith-woocommerce-gift-cards' );
 							} elseif ( $gc->has_been_sent() === '' ) {
 								$status_class = 'not-sent';
-								$message      = esc_html__( 'Not yet sent', 'yith-woocommerce-gift-cards' );
+								$message      = esc_html_x( 'Not yet sent', 'gift card delivery status label', 'yith-woocommerce-gift-cards' );
 							} else {
 								$status_class = 'failed';
-								$message      = esc_html__( 'Failed', 'yith-woocommerce-gift-cards' );
+								$message      = esc_html_x( 'Failed', 'gift card delivery status label', 'yith-woocommerce-gift-cards' );
 							}
 							?>
 
@@ -347,7 +344,7 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 
 				$product = wc_get_product( get_the_ID() );
 
-				if ( is_object( $product ) && $product->is_type( 'gift-card' ) && $product->is_virtual() ) {
+				if ( is_object( $product ) && $product->is_type( 'gift-card' ) ) {
 
 					wc_get_template(
 						'single-product/form-preview.php',
@@ -687,6 +684,77 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 
 			yith_ywgc_get_view( 'empty-gift-cards-table-state-customer.php', compact( 'args' ) );
 
+		}
+
+		/**
+		 * Show HTML prices for gift cards
+		 *
+		 * @param string     $price_html Price HTML.
+		 * @param WC_Product $product    The product.
+		 *
+		 * @return string
+		 * @since 2.1.9
+		 */
+		public function get_price_html_for_gift_cards( $price_html, $product ) {
+
+			if ( 'gift-card' === $product->get_type() ) {
+
+				$amounts       = $product->get_amounts_to_be_shown();
+				$on_sale       = $product->get_add_discount_settings_status();
+				$on_sale_value = get_post_meta( $product->get_id(), '_ywgc_sale_discount_value', true );
+				$on_sale_value = str_replace( ',', '.', $on_sale_value );
+				$on_sale_text  = get_post_meta( $product->get_id(), '_ywgc_sale_discount_text', true );
+
+				// No price for current gift card.
+				if ( ! count( $amounts ) ) {
+					/**
+					 * APPLY_FILTERS: yith_woocommerce_gift_cards_empty_price_html
+					 *
+					 * Filter the empty price HTML for the gift cards.
+					 *
+					 * @param string empty string
+					 * @param object $this gift card product instance
+					 *
+					 * @return string
+					 */
+					$price_html = apply_filters( 'yith_woocommerce_gift_cards_empty_price_html', '', $this );
+				} else {
+					ksort( $amounts, SORT_NUMERIC );
+
+					$min_price_array = current( $amounts );
+					$min_price       = wc_price( $min_price_array['price'] );
+					$max_price_array = end( $amounts );
+					$max_price       = wc_price( $max_price_array['price'] );
+
+					/**
+					 * APPLY_FILTERS: yith_woocommerce_gift_cards_amount_range
+					 *
+					 * Filter the price range of a gift card product.
+					 *
+					 * @param string $price_html price range of the gift card
+					 * @param object $this gift card product instance
+					 * @param float $min_price minimum amount of the gift card
+					 * @param float $max_price maximum amount of the gift card
+					 *
+					 * @return string
+					 */
+					$price_html = apply_filters( 'yith_woocommerce_gift_cards_amount_range', $min_price !== $max_price ? wc_format_price_range( $min_price, $max_price ) : $min_price, $this, $min_price, $max_price );
+
+					if ( $on_sale && $on_sale_value && apply_filters( 'ywgc_show_discounted_gift_card_product_price', true ) ) {
+
+						$min_price_discounted = $min_price_array['price'] - ( ( $min_price_array['price'] * (float) $on_sale_value ) / 100 );
+						$max_price_discounted = $max_price_array['price'] - ( ( $max_price_array['price'] * (float) $on_sale_value ) / 100 );
+
+						$price_html = wc_format_sale_price( wc_format_price_range( $min_price, $max_price ), wc_format_price_range( $min_price_discounted, $max_price_discounted ) );
+
+						if ( '' !== $on_sale_text && is_product() ) {
+							$price_html .= '<br><p class="ywgc-on-sale-text">' . $on_sale_text . '</p>';
+						}
+					}
+				}
+			}
+
+			return $price_html;
 		}
 	}
 }

@@ -7,7 +7,7 @@
  * It is also available through the world-wide-web at this URL:
  * http://www.gnu.org/licenses/gpl-3.0.txt
  *
- * @package yith-woocommerce-gift-cards\third-party\elementor\
+ * @package YITH\GiftCards\Classes\Compatibilities\Elementor
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,7 +63,7 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 				add_action( 'elementor/elements/categories_registered', array( $this, 'add_elementor_yith_widget_category' ) );
 
 				$register_widget_hook = version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ? 'elementor/widgets/register' : 'elementor/widgets/widgets_registered';
-				// register widgets.
+
 				add_action( $register_widget_hook, array( $this, 'elementor_init_widgets' ) );
 			}
 
@@ -75,6 +75,7 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 		public function load_frontend_styles() {
 
 		}
+
 		/**
 		 * Add_elementor_yith_widget_category
 		 *
@@ -91,6 +92,7 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 			);
 
 		}
+
 		/**
 		 * Elementor_init_widgets
 		 *
@@ -101,12 +103,14 @@ if ( ! class_exists( 'YWGC_Elementor' ) ) {
 			// Include Widget files.
 			require_once YITH_YWGC_DIR . 'includes/compatibilities/elementor/class-ywgc-form-widget.php';
 
-			// Register widget.
+
+			// Register widget
 			$widgets_manager = \Elementor\Plugin::instance()->widgets_manager;
+
 			if ( is_callable( array( $widgets_manager, 'register' ) ) ) {
-				\Elementor\Plugin::instance()->widgets_manager->register( new \YWGC_Elementor_Form_Widget() );
+				$widgets_manager->register( new \YWGC_Elementor_Form_Widget() );
 			} else {
-				\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \YWGC_Elementor_Form_Widget() );
+				$widgets_manager->register_widget_type( new \YWGC_Elementor_Form_Widget() );
 			}
 
 		}

@@ -1,4 +1,10 @@
-<?php // phpcs:ignore WordPress.NamingConventions
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+/**
+ * Class YITH_YWGC_Backend
+ *
+ * @package YITH\GiftCards\Includes\Admin
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -137,7 +143,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			/**
 			 * Add filters on the Gift Card Post Type page
 			 */
-			add_filter( 'views_edit-gift_card', array( $this, 'add_gift_cards_filters' ) );
 			add_action( 'pre_get_posts', array( $this, 'filter_gift_card_page_query' ) );
 
 			/**
@@ -166,9 +171,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 			add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages' ), 10, 2 );
 
-			add_filter( 'manage_edit-' . YWGC_CATEGORY_TAXONOMY . '_columns', array( $this, 'gift_card_categories_taxonomy_columns' ), 15 );
-			add_filter( 'manage_' . YWGC_CATEGORY_TAXONOMY . '_custom_column', array( $this, 'gift_card_categories_taxonomy_custom_column' ), 15, 3 );
-			add_filter( 'manage_edit-' . YWGC_CATEGORY_TAXONOMY . '_sortable_columns', array( $this, 'add_sortable_columns' ) );
 		}
 
 		/**
@@ -210,7 +212,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @return void
 		 */
 		public function enqueue_backend_files( $hook ) {
-			global $post_type;
 
 			$screen = get_current_screen();
 
@@ -228,7 +229,9 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 				wp_enqueue_script( 'yith-plugin-fw-fields' );
 			}
 
-			if ( ( 'product' === $post_type ) || ( 'gift_card' === $post_type ) || ( 'shop_order' === $post_type ) || ( isset( $_REQUEST['page'] ) && 'yith_woocommerce_gift_cards_panel' === $_REQUEST['page'] ) || 'edit-giftcard-category' === $screen->id ) {//phpcs:ignore WordPress.Security.NonceVerification
+			$if_shop_order = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop-order' ) === $screen->id : 'shop-order' === $screen->id;
+
+			if ( is_admin() && ( in_array( $screen->id, array( 'product', 'edit-product' ), true ) ) || ( 'gift_card' === $screen->id ) || $if_shop_order || isset( $_REQUEST['page'] ) && 'yith_woocommerce_gift_cards_panel' === $_REQUEST['page'] || 'edit-gift_card' === $screen->id ) {//phpcs:ignore WordPress.Security.NonceVerification
 
 				// Add style and scripts.
 				wp_enqueue_style(
@@ -265,6 +268,15 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 				wp_enqueue_script( 'ywgc-backend' );
 			}
 
+			if ( ( isset( $_REQUEST['page'] ) && 'yith_woocommerce_gift_cards_panel' === $_REQUEST['page'] ) || 'edit-giftcard-category' === $screen->id || 'product' === $screen->id || 'edit-gift_card' === $screen->id ) {//phpcs:ignore WordPress.Security.NonceVerification
+				wp_enqueue_style(
+					'ywgc_gift_cards_admin_panel_css',
+					YITH_YWGC_ASSETS_URL . '/css/ywgc-gift-cards-admin-panel.css',
+					array(),
+					YITH_YWGC_VERSION
+				);
+			}
+
 			if ( 'upload' === $screen->id ) {
 
 				wp_register_script(
@@ -287,8 +299,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					array(
 						'loader'                => apply_filters( 'yith_gift_cards_loader', YITH_YWGC_ASSETS_URL . '/images/loading.gif' ),
 						'ajax_url'              => admin_url( 'admin-ajax.php' ),
-						'set_category_action'   => esc_html__( 'Set gift card image category', 'yith-woocommerce-gift-cards' ),
-						'unset_category_action' => esc_html__( 'Unset gift card image category', 'yith-woocommerce-gift-cards' ),
+						'set_category_action'   => esc_html__( 'Set gift card category', 'yith-woocommerce-gift-cards' ),
+						'unset_category_action' => esc_html__( 'Unset gift card category', 'yith-woocommerce-gift-cards' ),
 						'categories1'           => $this->get_category_select( $categories1_id ),
 						'categories1_id'        => $categories1_id,
 						'categories2'           => $this->get_category_select( $categories2_id ),
@@ -395,7 +407,13 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			/**
 			 * Save gift card amounts
 			 */
-			$amounts = isset( $_POST['gift-card-amounts'] ) ? $_POST['gift-card-amounts'] : array();//phpcs:ignore
+			$amounts = $_POST['gift-card-amounts'] ?? array();
+			$amount  = $_POST['gift_card-amount'] ?? '';
+
+			if ( '' !== $amount ) {
+				$amounts[] = $amount;
+			}
+
 			$product->save_amounts( $amounts, '' );
 
 		}
@@ -404,7 +422,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		/**
 		 * Save gift card amount when a product is saved
 		 *
-		 * @param int $post_id
+		 * @param int    $post_id
 		 * @param object $post
 		 *
 		 * @return mixed|void
@@ -414,10 +432,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			$product = wc_get_product( $post_id );
 
 			if ( ! is_object( $product ) ) {
-				return;
-			}
-
-			if ( ! $product instanceof WC_Product_Gift_Card ) {
 				return;
 			}
 
@@ -443,7 +457,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			 * @param int $post_id the gift card ID
 			 * @param object $post the post object
 			 * @param object $product the product object
-			 *
 			 */
 			do_action( 'yith_gift_cards_after_product_save', $post_id, $post, $product );
 		}
@@ -497,8 +510,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * When the order is completed, generate a card number for every gift card product
 		 *
 		 * @param int|WC_Order $order The order which status is changing.
-		 * @param string $old_status Current order status.
-		 * @param string $new_status New order status.
+		 * @param string       $old_status Current order status.
+		 * @param string       $new_status New order status.
 		 *
 		 * @throws Exception
 		 */
@@ -695,9 +708,9 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					$attempts = 100;
 					do {
 						$code       = apply_filters( 'yith_wcgc_generated_code', YITH_YWGC()->generate_gift_card_code(), $order, $gift_card );
-						$check_code = get_page_by_title( $code, OBJECT, YWGC_CUSTOM_POST_TYPE_NAME );
+						$check_code = YITH_YWGC()->get_gift_card_by_code( $code );
 
-						if ( ! $check_code ) {
+						if ( is_object( $check_code ) && ! $check_code->ID ) {
 							$gift_card->gift_card_number = $code;
 							break;
 						}
@@ -855,7 +868,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 */
 		public function set_gift_card_category_to_product( $post_id ) {
 
-			if ( isset( $_REQUEST['product-type'] ) && 'gift-card' !== $_REQUEST['product-type'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			if ( isset( $_REQUEST['product-type'] ) && 'gift-card' !== $_REQUEST['product-type'] ) {
 				return;
 			}
 
@@ -967,9 +980,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @return mixed|void
 		 */
 		public function set_gift_card_category_to_media() {
-
-			// @codingStandardsIgnoreStart WordPress.Security.NonceVerification
-
 			// Skip all request without an action.
 			if ( ! isset( $_REQUEST['action'] ) && ! isset( $_REQUEST['action2'] ) ) {
 				return;
@@ -999,8 +1009,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 
 			// Retrieve the category to be applied to the selected media.
 			$category_id = '-1' !== $_REQUEST['action'] ? intval( $_REQUEST['categories1_id'] ) : intval( $_REQUEST['categories2_id'] );
-
-			// @codingStandardsIgnoreEnd
 
 			foreach ( $media_ids as $media_id ) {
 
@@ -1089,30 +1097,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 				endforeach;
 			endif;
 		}
-
-		/**
-		 * Add filters on the Gift Card Post Type page
-		 *
-		 * @param $views
-		 *
-		 * @return mixed
-		 */
-		public function add_gift_cards_filters( $views ) {
-			global $wpdb;
-			$args = array(
-				'post_status' => 'published',
-				'post_type'   => 'gift_card',
-				'balance'     => 'active',
-			);
-
-			$count_used   = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( post_id ) ) FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON p.ID = pm.post_id WHERE meta_key = %s AND ROUND(meta_value, %d) = 0 AND p.post_type= %s", '_ywgc_balance_total', wc_get_price_decimals(), 'gift_card' ) );//phpcs:ignore --Direct call to Database is discouraged.
-
-			$args['balance'] = 'used';
-			$views['used']   = sprintf( '<a href="%s">%s <span class="count">(%d)</span></a>', add_query_arg( $args, admin_url( 'edit.php' ) ), esc_html__( 'Used', 'yith-woocommerce-gift-cards' ), $count_used );
-
-			return $views;
-		}
-
 
 		/**
 		 * Add filters on the Gift Card Post Type page
@@ -1220,6 +1204,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 */
 		public function update_gift_card_amount_on_order_status_change( $order_id, $from_status, $to_status, $order = false ) {
 			if ( $order && $order instanceof WC_Order ) {
+				$created_via                  = get_post_meta( $order_id, '_created_via', true );
 				$is_gift_card_amount_refunded = $order->get_meta( '_ywgc_is_gift_card_amount_refunded' );
 				if ( ( 'cancelled' === $to_status || ( 'refunded' === $to_status ) || ( 'failed' === $to_status ) ) && 'yes' !== $is_gift_card_amount_refunded ) {
 					$gift_card_applied = $order->get_meta( '_ywgc_applied_gift_cards' );
@@ -1247,7 +1232,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 						 *
 						 * @return bool
 						 */
-						if ( apply_filters( 'yith_ywgc_restore_gift_card_balance', true, $gift_card ) ) {
+						if ( apply_filters( 'yith_ywgc_restore_gift_card_balance', true, $gift_card ) && ( ! $created_via || 'yith_wcmv_vendor_suborder' != $created_via ) ) {
 							$gift_card->update_balance( $new_amount );
 						}
 					}
@@ -1261,8 +1246,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		/**
 		 * Update_totals_on_save_order_items
 		 *
-		 * @param  mixed $order order.
-		 * @param  mixed $data_store data_store.
+		 * @param  WC_Order $order order.
+		 * @param  mixed    $data_store data_store.
 		 * @return void
 		 */
 		public function update_totals_on_save_order_items( $data_store, $order ) {
@@ -1271,10 +1256,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 				return;
 			}
 
-			$order_id = $order->get_id();
-
-			$used_gift_cards       = get_post_meta( $order_id, '_ywgc_applied_gift_cards', true );
-			$used_gift_cards_total = get_post_meta( $order_id, '_ywgc_applied_gift_cards_totals', true );
+			$used_gift_cards       = $order->get_meta( '_ywgc_applied_gift_cards' );
+			$used_gift_cards_total = $order->get_meta( '_ywgc_applied_gift_cards_totals' );
 
 			if ( ! $used_gift_cards ) {
 				return;
@@ -1288,10 +1271,11 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			$applied_codes_string = implode( ', ', $applied_codes );
 
 			$order_total     = $order->get_total();
-			$order_aux_total = get_post_meta( $order_id, '_ywgc_applied_gift_cards_order_total', true );
+			$order_aux_total = $order->get_meta( '_ywgc_applied_gift_cards_order_total' );
+			$updated_as_fee  = $order->get_meta( 'ywgc_gift_card_updated_as_fee' );
 
 			// When the order status changes, WC avoid the gift card value, so we create here a negative fee with the gift card value, to apply it to the order.
-			if ( ! get_post_meta( $order_id, 'ywgc_gift_card_updated_as_fee', true ) && ! empty( $order_aux_total ) && $order_total !== $order_aux_total ) {
+			if ( ! $updated_as_fee && ! empty( $order_aux_total ) && $order_total !== $order_aux_total ) {
 
 				$item = new WC_Order_Item_Fee();
 
@@ -1303,15 +1287,14 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 						'id'       => '_ywgc_fee',
 						'name'     => 'Gift Card (' . $applied_codes_string . ')',
 						'total'    => floatval( $amount ),
-						'order_id' => $order_id,
+						'order_id' => $order->get_id(),
 					)
 				);
 
 				$order->add_item( $item );
 				$order_total = $order_total + $amount;
 				$order->set_total( $order_total );
-
-				update_post_meta( $order_id, 'ywgc_gift_card_updated_as_fee', true );
+				$order->update_meta_data( 'ywgc_gift_card_updated_as_fee', true );
 			}
 
 		}
@@ -1426,72 +1409,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			return $classes;
 		}
 
-		/**
-		 * Register custom columns for the Image Categories table
-		 *
-		 * @param mixed $columns Columns.
-		 *
-		 * @return array
-		 */
-		public function gift_card_categories_taxonomy_columns( $columns ) {
-			if ( isset( $columns['posts'] ) ) {
-				unset( $columns['posts'] );
-			}
-
-			$columns['count'] = _x( 'Count', 'Column heading in the image categories table', 'yith-woocommerce-gift-cards' );
-
-			return $columns;
-		}
-
-		/**
-		 * Prints custom columns for the Image Categories table
-		 *
-		 * @param string $content Custom column output.
-		 * @param string $column  Current column.
-		 * @param int    $id      Term ID.
-		 *
-		 * @return string
-		 */
-		public function gift_card_categories_taxonomy_custom_column( $content, $column, $id ) {
-			switch ( $column ) {
-				case 'count':
-					$term     = get_term( $id );
-					$taxonomy = get_taxonomy( $term->taxonomy );
-					$count    = number_format_i18n( $term->count );
-
-					if ( $taxonomy->query_var ) {
-						$args = array( $taxonomy->query_var => $term->slug );
-					} else {
-						$args = array(
-							'taxonomy' => $taxonomy->name,
-							'term'     => $term->slug,
-						);
-					}
-
-					$args['post_type'] = 'attachment';
-
-					$count_url = add_query_arg( $args, 'upload.php' );
-
-					$content = '<a href="' . $count_url . '">' . $count . '</a>';
-
-					break;
-			}
-
-			return $content;
-		}
-
-		/**
-		 * Manage sortable columns in brands table
-		 *
-		 * @param array $sortable_columns Sortable columns.
-		 *
-		 * @return array
-		 */
-		public function add_sortable_columns( $sortable_columns ) {
-			$sortable_columns['count'] = 'count';
-
-			return $sortable_columns;
-		}
 	}
 }
 

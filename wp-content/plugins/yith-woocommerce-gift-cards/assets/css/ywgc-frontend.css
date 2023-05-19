@@ -7,7 +7,7 @@
 }
 
 .product-type-gift-card .product_meta {
-  display: none;
+    display: none;
 }
 
 .product-type-gift-card .woocommerce-product-gallery__wrapper {
@@ -171,14 +171,14 @@ a.add-recipient {
 }
 
 .ywgc-gift-card-content fieldset {
-  border: none;
+    border: none;
 }
 
 .ywgc-main-image {
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
-  display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 .ywgc-single-recipient {
@@ -821,25 +821,6 @@ Responsive
 
 .dashicons-arrow-down-alt2{
   font-size: 16px;
-}
-
-.ywgc-calendar-icon {
-  content: url("../images/calendar.png");
-  position: absolute;
-  right: 0;
-  padding: 5px;
-  height: 35px;
-}
-
-a.ywgc-remove-recipient{
-  content: url("../images/close_recipient.png");
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 25px;
-  padding: 8px;
-  margin-right: -25px;
-  margin-top: 7px;
 }
 
 .ywgc-custom-image-modal-submit-link

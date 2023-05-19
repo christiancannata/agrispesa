@@ -4,8 +4,8 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-gift-cards.php.
  *
- * @author  YIThemes
- * @package yith-woocommerce-gift-cards\templates\checkout
+ * @author YITH
+ * @package YITH\GiftCards\Templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

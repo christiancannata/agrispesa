@@ -1,0 +1,323 @@
+.yith_wc_gift_card_blank_brightness {
+    background: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    height: 70%;
+    width: 96%;
+    z-index: 1;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding: 10px 0 10px 0;
+    top: -1px;
+    left: -1px;
+}
+
+.yith_wc_gift_card_blank_brightness_hidden{
+    display: none;
+}
+
+.yith-plugin-fw span.yith_wc_gift_card_admin_menu_additional_description{
+    display: block;
+    font-size: 12px;
+    color: #777;
+    font-style: italic;
+    clear: both;
+    height: 0;
+}
+
+.yith-plugin-fw span.yith_wc_gift_card_admin_menu_additional_description_margin_top{
+    margin-top: -18px;
+}
+
+.yith-plugin-fw span.yith_wc_gift_card_admin_menu_additional_description_margin_higher_top{
+    margin-top: -26px;
+}
+
+#ywgc_gift_this_product_email_button{
+    display: none;
+}
+
+.yith_wc_gift_card_admin_menu_red_note{
+    color: red;
+}
+
+.ywgc-disabled-option{
+    display: none;
+}
+
+.yith-plugin-ui--giftcard-category-taxonomy .ywgc-category-images-main-container{
+    width: 49%;
+    margin-left: 16.7em;
+    margin-bottom: 2em;
+    height: 15em;
+    overflow: auto;
+}
+
+.ywgc-category-image{
+    margin: 6px;
+    position: relative;
+    display: inline-block;
+}
+
+.yith-plugin-ui--giftcard-category-taxonomy form#edittag{
+    max-width: unset;
+}
+
+.yith-plugin-ui--giftcard-category-taxonomy .form-table input#name{
+    width: 57%;
+}
+
+
+
+@media only screen and (max-width: 782px) {
+  .ywgc-category-images-main-container{
+    margin-left: 0;
+  }
+  #ywgc-image-cat-upload-button{
+    margin-left: 0;
+  }
+  .ywgc-category-image-description{
+    margin-left: 0;
+  }
+  .ywgc-category-image-title{
+    position: relative;
+  }
+}
+
+.ywgc-category-image{
+  margin: 6px;
+  position: relative;
+}
+
+#ywgc-image-cat-upload-button{
+  margin-left: 17em;
+  margin-top: 1em;
+}
+
+.ywgc-category-image-delete{
+  background-color: white;
+  color: red;
+  font-size: 11px;
+  position: absolute;
+  top: -1px;
+  right: -5px;
+  border-radius: 50%;
+  height: 12px;
+  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+  width: 12px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+ul#ywgc-upload-images-cat-creation-extra-images li{
+  display: inline-block;
+}
+
+ul#ywgc-upload-images-cat-creation-extra-images ul.actions{
+  float: right;
+  position: relative;
+  right: 19px;
+}
+
+ul#ywgc-upload-images-cat-creation-extra-images ul.actions a.delete{
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0px;
+  border-radius: 50%;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  text-align: center;
+}
+
+
+ul#ywgc-upload-images-cat-creation-extra-images ul.actions a.delete:before  {
+  font-family: "dashicons";
+  content: "\f158";
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  position: relative;
+  top: -4px;
+  right: -7px;
+  border-radius: 50%;
+  height: 12px;
+  box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+  width: 12px;
+  font-weight: lighter;
+}
+
+#addtag .yith-plugin-fw-image-gallery-field-wrapper{
+  margin-bottom: 1em;
+}
+
+ul#ywgc-upload-images-cat-edit-extra-images {
+  display: none;
+}
+
+#ywgc-upload-images-cat-edit-button{
+  margin-left: 17em;
+}
+
+.ywgc-category-image-title{
+  position: absolute;
+  text-align: left;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #23282d;
+  font-size: 14px;
+}
+
+p.ywgc-category-image-description.description{
+  margin-left: 16.7em;
+}
+
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+
+#ywgc_gift_this_product_fixed_shipping_value{
+  width: 5em;
+}
+
+.wp-list-table .column-count {
+  width: 10%;
+}
+
+#ywgc-gift-card-generator-button{
+    height: 38px;
+    margin-left: 1em;
+}
+
+.ywgc-gift-card-generator-amount-span{
+    margin-left: 1em;
+}
+
+#ywgc-gift-card-generator-amount, ywgc-gift-card-generator-number{
+    margin-left: 5px;
+}
+
+.ywgc-generator-successful-message{
+    color: green;
+    display: none;
+    margin-left: 5px;
+}
+
+.ywgc-generator-failed-message{
+    color: red;
+    display: none;
+    margin-left: 5px;
+}
+
+.yith-plugin-ui--giftcard-category-taxonomy .term-slug-wrap, .yith-plugin-ui--giftcard-category-taxonomy .term-parent-wrap, .yith-plugin-ui--giftcard-category-taxonomy .term-description-wrap, .yith-plugin-ui--giftcard-category-taxonomy .search-form  {
+    display: none;
+}
+
+.yith-plugin-ui--giftcard-category-taxonomy #col-left {
+    width: 50%;
+}
+
+
+.edit-php.post-type-gift_card .subsubsub li {
+    color: #fff;
+    margin-right: 10px;
+    display: flex;
+}
+
+.edit-php.post-type-gift_card .subsubsub {
+    border-bottom: 1px solid #f1f1f1;
+    margin: 25px 0;
+    display: flex;
+}
+
+.edit-php.post-type-gift_card .subsubsub li a.current {
+    border-bottom: 2px solid #00799f;
+    color: #00799f;
+}
+
+.edit-php.post-type-gift_card .subsubsub li a {
+    text-transform: capitalize;
+    color: #666;
+    font-size: 14px;
+    display: block;
+    padding: 7px 5px;
+    line-height: 1em;
+    font-weight: 600;
+}
+
+.ywgc_usage_expiration_months_span{
+    position: absolute;
+    margin-top: -37px;
+    margin-left: 79px;
+}
+
+.post-type-gift_card .yith-plugin-fw__modal__wrap{
+    z-index: 9999;
+}
+
+.manage-column.column-code{
+    width: 20%;
+}
+
+.yith-ywgc-modules .module header h3, .yith-ywgc-modules .module .module__description, .yith-ywgc-modules .module .module__activation {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+    user-select: none;
+}
+
+.export-import-custom-button{
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.export-import-custom-button:hover{
+    background: unset !important;
+    color: unset !important;
+    cursor: default !important;
+}
+
+.yith-plugin-ui--post_type-type .export-import-premium-tag{
+    display: inline-block;
+    position: absolute;
+    margin-left: -27px;
+    margin-top: -12px;
+    background-color: white;
+}
+
+#yith-ywgc-table-emails .yith-premium{
+    pointer-events: none;
+}
+
+.yith-premium .email-title,
+.yith-premium .yith-ywgc-column.status,
+.yith-premium .yith-ywgc-column.recipient,
+tr.yith-premium label span,
+tr.yith-premium textarea, .yith-premium .description{
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+    user-select: none;
+}
+
+.premium-badge{
+    --yith-fw-tag-border-color: #e76400;
+    --yith-fw-tag-color: #cd501f;
+    font-size: 10px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: var(--yith-fw-tag-color);
+    border: 1px solid var(--yith-fw-tag-border-color);
+    line-height: 14px;
+    margin-left: 10px;
+}

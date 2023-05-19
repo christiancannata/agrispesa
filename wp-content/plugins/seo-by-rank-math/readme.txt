@@ -5,7 +5,7 @@ Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
 Tested up to: 6.2
 Requires at least: 5.6
 Requires PHP: 7.4
-Stable tag: 1.0.111
+Stable tag: 1.0.114
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -583,13 +583,12 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.111 [Apr 05, 2023] =
-- Improved: Disabled the [Role Manager](https://rankmath.com/kb/role-manager/) option for the Administrator user role to prevent accidental disabling
-- Fixed: WordPress 6.2 compatibility issue where the editor would crash after clicking on the [Content AI button](https://rankmath.com/kb/how-to-use-content-ai/#open-content-ai-panel) while Post settings were still loading
-- Fixed: Embedded Google map was being counted as a [video in Content AI](https://rankmath.com/kb/how-to-use-content-ai/#media-count)
-- Fixed: [Content Analysis](https://rankmath.com/kb/score-100-in-tests/#use-of-media-in-your-posts) was not recognizing the self-hosted URLs used in the `video` tag
-- Fixed: [Sitemap](https://rankmath.com/kb/url-not-in-sitemap/#cached) was not updating when it was cached using the Transient method
-- Fixed: Deprecated warning with PHP 8.1 on the [Setup Wizard page](https://rankmath.com/kb/how-to-access-setup-wizard/)
-- Fixed: Console error related to [Schema](https://rankmath.com/kb/schema-generator/) with WordPress 6.2
+= 1.0.114 [May 03, 2023] =
+- Added: New filter to exclude certain post types from [Analytics Index](https://rankmath.com/kb/filters-hooks-api-developer/#exclude-post-types-analytics-index)
+- Improved: Optimized [Sitemap caching](https://rankmath.com/kb/exclude-sitemaps-from-caching/) code to skip auto-draft posts and to run the Varnish cache function only on the sites where it is enabled
+- Fixed: Invalid Purge cache request warning on `https` sites with Varnish cache enabled
+- Fixed: [Index Status](https://rankmath.com/kb/analytics/#index-status) issue on subdirectory installations
+- Fixed: PHP warning when the [Capitalize Title option](https://rankmath.com/kb/titles-and-meta/#capitalize-titles) is enabled
+- Fixed: PHP warning related to [Schema](https://rankmath.com/kb/schema-generator/) when the image attachment ID is missing
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

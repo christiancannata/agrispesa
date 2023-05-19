@@ -19,7 +19,7 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 	 * @since 0.1
 	 * @extends \WC_Email
 	 */
-	class YITH_YWGC_Email_Send_Gift_Card extends WC_Email {
+	class YITH_YWGC_Email_Send_Gift_Card extends YITH_YWGC_Mail {
 
 		/**
 		 * An introductory message from the shop owner
@@ -54,15 +54,7 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 			$this->introductory_text = __( 'Hi {recipient_name}, you have received this gift card from {sender}, use it on our online shop.', 'yith-woocommerce-gift-cards' );
 
 			// Trigger on specific action call.
-			add_action(
-				'ywgc_email_send_gift_card_notification',
-				array(
-					$this,
-					'trigger',
-				),
-				10,
-				2
-			);
+			add_action( 'ywgc_email_send_gift_card_notification', array( $this, 'trigger', ), 10, 2 );
 
 			parent::__construct();
 
@@ -230,7 +222,7 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 		}
 
 		/**
-		 * Get_content_html function.
+		 * get_content_html function.
 		 *
 		 * @since 0.1
 		 * @return string
@@ -263,31 +255,36 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 		 * @since 0.1
 		 */
 		public function init_form_fields() {
+
 			$this->form_fields = array(
 				'enabled'           => array(
 					'title'   => esc_html__( 'Enable/Disable', 'woocommerce' ),
-					'type'    => 'checkbox',
+					'type'                 => 'yith_ywgc_field',
+					'yith_ywgc_field_type' => 'onoff',
 					'label'   => esc_html__( 'Enable this email notification', 'woocommerce' ),
 					'default' => 'yes',
 				),
 				'subject'           => array(
 					'title'       => esc_html__( 'Subject', 'woocommerce' ),
-					'type'        => 'text',
-					'description' => /* translators: %s: Subject */sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->subject ),
+					'type'                 => 'yith_ywgc_field',
+					'yith_ywgc_field_type' => 'text',
+					'description' => sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->subject ),
 					'placeholder' => '',
 					'default'     => '',
 				),
 				'heading'           => array(
 					'title'       => esc_html__( 'Email Heading', 'woocommerce' ),
-					'type'        => 'text',
-					'description' => /* translators: %s: Heading */sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->heading ),
+					'type'                 => 'yith_ywgc_field',
+					'yith_ywgc_field_type' => 'text',
+					'description' => sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->heading ),
 					'placeholder' => '',
 					'default'     => '',
 				),
 				'introductory_text' => array(
 					'title'       => esc_html__( 'Introductive message', 'yith-woocommerce-gift-cards' ),
-					'type'        => 'textarea',
-					'description' => /* translators: %s: Introductory_text */ sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->introductory_text ),
+					'type'                 => 'yith_ywgc_field',
+					'yith_ywgc_field_type' => 'textarea',
+					'description' => sprintf( esc_html__( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->introductory_text ),
 					'placeholder' => '',
 					'default'     => '',
 				),

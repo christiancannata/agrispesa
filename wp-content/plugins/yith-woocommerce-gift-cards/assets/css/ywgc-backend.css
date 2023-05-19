@@ -3,14 +3,9 @@ p.form-field._gift_card_amount_field span.variation-amount span.amount {
     color: #838383;
 }
 
-
-/*span.variation-amount{*/
-
-
-/*  width: 20em;*/
-
-
-/*}*/
+.yith-plugin-ui--gift_card-post_type #post #yith-plugin-fw__back-to-wp-list__wrapper{
+    display: none;
+}
 
 a.remove-amount {
     color: #a0a5aa;
@@ -225,7 +220,7 @@ th#taxonomy-giftcard-category {
 }
 
 input.hasDatepicker {
-    background-image: url(../images/calendar.png);
+    background-image: url(../images/calendar.svg);
     background-position: calc(100% - 7px) 50%;
     background-repeat: no-repeat;
     background-size: 15px;
@@ -245,21 +240,6 @@ label.ywgc-form-field__label {
 
 tr.type-gift_card td {
     vertical-align: middle;
-}
-
-.ywgc_import_result {
-    position: fixed;
-    left: 45%;
-    top: 45%;
-    width: 10%;
-    z-index: 99999;
-    background-color: white;
-    height: auto;
-    padding: 10px;
-    text-align: center;
-    -webkit-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.4);
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.4);
 }
 
 #plugin-fw-wc .ywbc-export-button-tr .forminp a.ywbc-export-button {
@@ -428,6 +408,676 @@ tr.type-gift_card td {
     content: unset;
 }
 
-.wp-list-table .column-count {
+#gift-card-generator-radio-modal div.yith-plugin-fw-radio__row{
+    padding: 15px;
+    background-color: #F4F8FA;
+    border: 1px solid #f6f7f7;
+    border-radius: 5px;
+}
+
+#ywgc-gift-card-generator-container{
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 36px;
+}
+
+#gift-card-generator-radio-modal div.yith-plugin-fw-radio__row:first-child{
+    margin-bottom: 15px;
+}
+
+#gift-card-generator-radio-modal{
+    margin-top: 3em;
+}
+
+#yith-gift-card-generator-modal-button{
+    float: right;
+}
+
+#ywgc-gift-card-generator-quantity, #ywgc-gift-card-generator-amount{
+    width: 90px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.yith-plugin-ui--gift_card-post_type #yith-ywgc-gift-card-options-metabox .postbox-header{
+    display: none;
+}
+
+.yith-plugin-ui--gift_card-post_type #yith-ywgc-gift-card-options-metabox{
+    border: 0;
+}
+
+.yith-plugin-ui--gift_card-post_type #yith-ywgc-gift-card-options-metabox .media.no-label{
+    margin-left: 242px;
+}
+
+/***********************************************
+	IMPORTER
+***********************************************/
+
+#ywgc-gift-card-export-import-container .import-configuration, #ywgc-gift-card-export-import-container .export-configuration, #step-upload .yith-plugin-fw-radio-field-wrapper {
+    padding: 15px;
+}
+
+#ywgc_import_gift_cards, .ywgc-export-button{
+    float: right;
+}
+#ywgc-gift-card-export-import-container ul.steps li {
+    display: inline-block;
+    border-color: #0e87b8;
+    color: #aaa;
+    margin-right: 30px;
+    padding-bottom: 5px;
+}
+
+#ywgc-gift-card-export-import-container .steps li.active {
+    font-weight: 700;
+    border-bottom: 4px solid #0e87b8;
+    color: #0073aa;
+}
+
+#ywgc-gift-card-export-import-container .steps-content h2 {
+    border: none !important;
+    padding-left: 0 !important;
+    padding: 5px 0;
+}
+
+#ywgc-gift-card-export-import-container .steps-content table {
+    border: none!important;
+}
+
+#ywgc-gift-card-export-import-container .single-step {
+    display: none;
+}
+
+#ywgc-gift-card-export-import-container .single-step.active {
+    display: block;
+}
+
+.yith-sl-content-wrapper-modal .single-step label {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#ywgc-gift-card-export-import-container .wrap-buttons{
+    margin-top: 20px;
+}
+
+#ywgc-gift-card-export-import-container .alert-notice {
+    margin-left: 15px;
+    color: #ff0000;
+    display: none;
+}
+
+#ywgc-gift-card-export-import-container .field-description{
+    font-size: 13px;
+}
+
+
+#step-completed.completed ul.steps {
+    display: none;
+}
+
+#step-completed.completed .yith-plugin-fw__modal__title {
+    display: none;
+}
+
+#step-completed.completed .steps-content {
+    border: none;
+}
+
+#step-completed.completed {
+    text-align: center;
+}
+
+#step-completed.completed {
+    width: auto!important;
+    padding: 40px 100px;
+}
+
+#step-completed.completed img {
+    width: 50px;
+}
+
+#step-completed.completed p {
+    color: #000;
+    font-size: 17px;
+    margin: 15px 0 30px 0;
+}
+
+button#close-modal {
+    padding: 0 40px;
+}
+
+button.try-again{
+    background: var(--yith-outline-bg);
+    border: 1px solid var(--yith-outline-border);
+    color: var(--yith-outline-text);
+}
+
+#ywgc-gift-card-export-import-container footer{
+    margin-top: 3em;
+}
+
+#ywgc-gift-card-export-import-container .single-step.configuration input {
+    margin: 8px 0;
+}
+
+#ywgc-gift-card-export-import-container label.ywgc_csv_delimiter input#ywgc_csv_delimiter{
+    width: 90px;
+}
+
+#ywgc-gift-card-export-import-container label.ywgc_csv_delimiter{
+    display: inline-flex;
+    width: 100%;
+}
+
+#ywgc-gift-card-export-import-container label.ywgc_csv_delimiter span{
+    margin: 3% 3% 0 0;
+}
+
+.ywgc-date-from-to-date-selectors input{
+    width: 40%;
+}
+
+.export-configuration-settings-group{
+    min-height: 17em;
+}
+
+#step-configuration-data .export-configuration-settings-group label div.yith-plugin-fw-checkbox-field-wrapper{
+    float: left;
     width: 10%;
+}
+
+#step-configuration-data .export-configuration-settings-group label{
+    margin-bottom: 6px;
+}
+
+
+.export-configuration-settings-group label.left{
+    float: left;
+    width: 50%;
+}
+
+.export-configuration-settings-group label.right{
+    float: right;
+    width: 50%;
+}
+
+#ywgc-gift-card-export-import-container .single-step .import-configuration .field-label {
+    flex: 0 0 25%;
+}
+
+#ywgc-gift-card-export-import-container .single-step .import-configuration .field-description {
+    margin-left: 10em;
+}
+
+#ywgc-gift-card-export-import-container .single-step .import-configuration .yith-plugin-fw-field-wrapper {
+    width: 72%;
+    float: right;
+    margin-right: 3%;
+    margin-bottom: 10px;
+}
+
+.ywbc-date-from-to-date-selectors .to_datepicker{
+    margin-left: 10px;
+}
+
+.yith-plugin-ui.yith-plugin-fw-wp-page-wrapper.yith-plugin-ui--gift_card-post_type .page-title-action.export-import-custom-button{
+    background: var(--yith-primary-text);
+    color: var(--yith-primary);
+}
+
+.yith-plugin-ui--gift_card-post_type div#titlediv{
+    width: 50em;
+}
+
+.yith-plugin-ui--gift_card-post_type .yith-plugin-ui.metaboxes-tab .the-metabox{
+    margin-left: 242px;
+}
+
+.yith-plugin-ui--gift_card-post_type .yith-plugin-fw span.description {
+    font-style: normal;
+}
+
+/**
+ * Admin Modules
+ */
+.yith-ywgc-modules {
+    max-width: 1152px;
+}
+
+.yith-ywgc-modules .modules {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 24px;
+}
+
+.yith-ywgc-modules .modules .module {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+.yith-ywgc-modules .modules .module header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.yith-ywgc-modules .modules .module header h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.yith-ywgc-modules .modules .module .module__description {
+    margin: 10px 0;
+    flex: 1;
+}
+
+.yith-ywgc-modules .modules .module .module__activation {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #cbd5e1;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.yith-ywgc-modules .modules .module .module__activation .module__activation__label {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+@media (max-width: 1800px) {
+    .yith-ywgc-modules .modules {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1400px) {
+    .yith-ywgc-modules .modules {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1000px) {
+    .yith-ywgc-modules .modules {
+        grid-template-columns: 1fr;
+    }
+}
+
+.yith-ywgc-modules .premium-modules {
+    background: #fafafa;
+    margin: 60px -20px -20px;
+    padding: 60px 20px 20px;
+}
+
+.yith-ywgc-modules .premium-modules .premium-modules__header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.yith-ywgc-modules .premium-modules .premium-modules__title {
+    color: #c33c1d;
+    font-size: 1.3em;
+    font-weight: 600;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+
+.yith-ywgc-modules .premium-modules .premium-modules__description {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin-bottom: 20px;
+}
+
+.yith-ywgc-modules .premium-modules .modules {
+    margin-bottom: 0;
+}
+
+@media (max-width: 1000px) {
+    .yith-ywgc-modules .premium-modules .modules {
+        grid-template-columns: 1fr;
+    }
+}
+
+.yith-ywgc-modules .premium-modules .modules .module {
+    border-color: #eeeeee;
+    box-shadow: none;
+}
+
+.yith-ywgc-modules .premium-modules .modules .module i {
+    color: #0087c4;
+}
+
+/**
+ * Admin Integrations
+ */
+.yith-ywgc-integrations {
+    max-width: 1152px;
+}
+
+.yith-ywgc-integrations .integrations {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 24px;
+}
+
+.yith-ywgc-integrations .integrations .integration {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+.yith-ywgc-integrations .integrations .integration:not(.integration--enabled) header img {
+    filter: grayscale(100%);
+}
+
+.yith-ywgc-integrations .integrations .integration header {
+    position: relative;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    overflow: hidden;
+    margin: -24px -24px 8px;
+}
+
+.yith-ywgc-integrations .integrations .integration header img {
+    display: block;
+    height: auto;
+    width: 50px;
+    margin: 24px 24px 16px;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__badges {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__badge {
+    padding: 4px 8px;
+    line-height: 1em;
+    font-size: 11px;
+    border-radius: 40px;
+    background: #fcb900;
+    color: #000;
+}
+
+.yith-ywgc-integrations .integrations .integration h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__description {
+    margin: 8px 0 auto;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__needs {
+    font-size: .85em;
+    margin: 16px 0 8px;
+}
+
+.yith-ywgc-integrations .integrations .integration a.integration__learn-more__link {
+    color: var(--yith-primary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.yith-ywgc-integrations .integrations .integration a.integration__learn-more__link svg {
+    width: 16px;
+    margin-left: 4px;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__activation {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #cbd5e1;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.yith-ywgc-integrations .integrations .integration .integration__activation .integration__activation__label {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+@media (max-width: 1800px) {
+    .yith-ywgc-integrations .integrations {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1400px) {
+    .yith-ywgc-integrations .integrations {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1000px) {
+    .yith-ywgc-integrations .integrations {
+        grid-template-columns: 1fr;
+    }
+}
+
+/**
+Product layout radio
+ */
+
+#ywgc-page-layout-version {
+    top: -10px;
+    position: relative;
+}
+
+#ywgc_page_layout_version:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+#ywgc_page_layout_version label {
+    border: 1px solid #d8d8d8;
+    display: inline-block;
+    float: left;
+    padding: 8px 30px;
+}
+
+#ywgc_page_layout_version input:checked + label {
+    background-color: #1b7c9e;
+    color: #fff;
+}
+
+#ywgc_page_layout_version label:before,
+#ywgc_page_layout_version label:after {
+    display: none;
+}
+
+label[for=ywgc_page_layout_version-v1] {
+    border-right: none!important;
+    border-radius: 20px 0 0 20px;
+}
+
+label[for=ywgc_page_layout_version-v2] {
+    border-left: none!important;
+    border-radius: 0 20px 20px 0;
+}
+
+
+/* Email options */
+
+#yith-ywgc-emails-wrapper table{
+    padding: 0 40px;
+}
+
+#yith-ywgc-emails-wrapper h2{
+    padding-bottom: 15px;
+}
+
+#yith-ywgc-emails-wrapper .description{
+    margin: 15px 0 40px 0;
+    font-size: 13px;
+}
+
+#yith-ywgc-emails-wrapper h2,
+#yith-ywgc-emails-wrapper table{
+    border: none;
+}
+
+#yith-ywgc-table-emails .heading-table,
+#yith-ywgc-table-emails .yith-ywgc-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column:nth-child(1) {
+    flex-basis: 40%;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column:nth-child(2) {
+    flex-basis: 40%;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column:nth-child(3) {
+    flex-basis: 10%;
+    text-align: right;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column:nth-child(4) {
+    flex-basis: 10%;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column.status {
+    text-align: right;
+    box-sizing: border-box;
+}
+
+#yith-ywgc-table-emails .heading-table .yith-ywgc-column.status{
+    padding-right: 40px;
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-column.status{
+    padding-right: 30px;
+    padding-top: 5px;
+}
+
+#yith-ywgc-table-emails .heading-table {
+    margin-bottom: 20px;
+}
+
+#yith-ywgc-table-emails .yith-ywgc-column.email {
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+
+#yith-ywgc-table-emails .heading-table .yith-ywgc-column {
+    font-size: 14px;
+    color: #2c3338;
+    font-weight: 600;
+}
+
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-row {
+    background: var(--yith-content-bg);
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px var(--yith-light-border-color), 0 3px 11px 6px var(--yith-light-shadow);
+    transition: background-color .2s ease-in-out;
+    margin-bottom: 30px;
+    padding: 20px 0;
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-column {
+    line-height: 30px;
+    box-sizing: border-box;
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-row:hover{
+    background: var(--yith-table-row-highlight);
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-column.action{
+    opacity: 0;
+    pointer-events: none;
+    position: relative;
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-row:hover .yith-ywgc-column.action{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#yith-ywgc-table-emails .email-settings{
+    flex-basis: 100%;
+    display: none;
+    margin-top: 15px;
+}
+
+#yith-ywgc-table-emails .email-settings #template{
+    display: none;
+}
+
+#yith-ywgc-table-emails .email-settings form{
+    background: #ffffff;
+    margin-bottom: 0;
+}
+
+#yith-ywgc-table-emails .email-settings .yit-admin-panel-container{
+    margin-right: 0;
+}
+
+#yith-ywgc-table-emails  .email-settings h2,
+#yith-ywgc-table-emails  .email-settings h2 + p{
+    display: none;
+}
+
+
+#yith-ywgc-table-emails  .email-settings table {
+    border: none!important;
+}
+
+#yith-ywgc-table-emails .content-table .yith-ywgc-row.active{
+    background: var(--yith-table-row-highlight);
+    padding-bottom: 0;
+}
+
+#yith-ywgc-table-emails .email-settings form tr:first-child {
+    display: none;
+}
+
+#yith-ywgc-table-emails .woocommerce-help-tip{
+    display: none;
+}
+
+#yith-ywgc-table-emails .email-settings .submit{
+    text-align: right;
+    margin-right: 20px;
 }

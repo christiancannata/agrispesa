@@ -371,7 +371,7 @@ class Walker_Category_Custom extends Walker_Category
 
 		if ($category->count > 0 && category_has_children($category->term_id)) {
 			if ($category->name !== "Speciali") {
-				$output .= "<li class='cat-item view-all'><a href='" . get_term_link($category->term_id) . "' title='Tutto " . $category->name . "' class='view-all--link'>Tutto " . $category->name . "</a></li>";
+				$output .= "<li class='cat-item view-all'><a href='" . get_term_link($category->term_id) . "' title='" . $category->name . "' class='view-all--link'>" . $category->name . "</a></li>";
 			}
 		}
 

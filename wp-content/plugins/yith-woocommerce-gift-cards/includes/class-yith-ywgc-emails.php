@@ -338,7 +338,7 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 				array(
 					'email'      => $email,
 					'shop_name'  => $shop_name,
-					'$shop_link' => $shop_link,
+					'shop_link' => $shop_link,
 				),
 				'',
 				YITH_YWGC_TEMPLATES_DIR
@@ -389,8 +389,19 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 * @return mixed
 		 */
 		public function add_woocommerce_email_classes( $email_classes ) {
-			// add the email class to the list of email classes that WooCommerce loads.
-			$email_classes['ywgc-email-send-gift-card'] = include 'emails/class-yith-ywgc-email-send-gift-card.php';
+
+			include 'emails/class.yith-ywgc-mail.php';
+
+			if ( isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] ) {
+				// add the email class to the list of email classes that WooCommerce loads.
+				$email_classes['ywgc-email-send-gift-card']      = include 'emails/class-yith-ywgc-email-send-gift-card.php';
+			} else{
+				// add the email class to the list of email classes that WooCommerce loads.
+				$email_classes['ywgc-email-send-gift-card']      = include 'emails/class-yith-ywgc-email-send-gift-card.php';
+				$email_classes['ywgc-email-notify-customer']     = include 'emails/class-yith-ywgc-email-notify-customer.php';
+				$email_classes['ywgc-email-delivered-gift-card'] = include 'emails/class-yith-ywgc-email-delivered-gift-card.php';
+			}
+
 
 			return $email_classes;
 		}

@@ -2,13 +2,22 @@
 /**
  * My gift cards
  *
- * @package yith-woocommerce-gift-cards\templates\myaccount
+ * @package YITH\GiftCards\Templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * APPLY_FILTERS: yith_ywgc_my_gift_cards_columns
+ *
+ * Filter the columns to display in the gift card table in "My account".
+ *
+ * @param array the columns
+ *
+ * @return array
+ */
 $gift_card_columns = apply_filters(
 	'yith_ywgc_my_gift_cards_columns',
 	array(
@@ -21,12 +30,21 @@ $gift_card_columns = apply_filters(
 
 $user = wp_get_current_user();
 
+/**
+ * APPLY_FILTERS: yith_ywgc_woocommerce_my_account_my_orders_query
+ *
+ * Filter the query to display in the gift cards table in "My account".
+ *
+ * @param array the gift cards query
+ *
+ * @return array
+ */
 $gift_cards_args = apply_filters(
 	'yith_ywgc_woocommerce_my_account_my_orders_query',
 	array(
 		'numberposts' => - 1,
 		'fields'      => 'ids',
-		'meta_query'  => array(//phpcs:ignore slow query ok.
+		'meta_query'  => array(  // phpcs:ignore WordPress.DB.SlowDBQuery
 			'relation' => 'OR',
 			array(
 				'key'   => YWGC_META_GIFT_CARD_CUSTOMER_USER,
@@ -137,8 +155,14 @@ if ( $ids ) : ?>
 		</tbody>
 	</table>
 <?php else : ?>
-	<br>
-	<br>
-	<br>
-	<?php esc_html_e( 'No gift cards found.', 'yith-woocommerce-gift-cards' ); ?>
+	<div style="margin-top: 5em">
+		<?php
+		/**
+		 * DO_ACTION: ywgc_empty_table_state_action_customer
+		 *
+		 * Trigger the empty table state.
+		 */
+		do_action( 'ywgc_empty_table_state_action_customer' );
+		?>
+	</div>
 <?php endif; ?>

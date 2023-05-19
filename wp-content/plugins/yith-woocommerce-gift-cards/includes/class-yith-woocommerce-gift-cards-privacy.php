@@ -1,8 +1,8 @@
-<?php // phpcs:ignore WordPress.NamingConventions
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * YITH_WooCommerce_Gift_Cards_Privacy class
  *
- * @package yith-woocommerce-gift-cards\lib
+ * @package YITH\GiftCards\Classes
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -254,8 +254,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards_Privacy' ) ) {
 				$guid = wp_privacy_anonymize_data( 'url', $gift_card->guid );
 
 				// Update post.
-				$result = $wpdb->query( //phpcs:ignore --Direct call to Database is discouraged.
-                    // @codingStandardsIgnoreStart Placeholder Problem
+				$result = $wpdb->query(
 					$wpdb->prepare(
 						"
                     UPDATE $wpdb->posts 
@@ -265,7 +264,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards_Privacy' ) ) {
                     ",
 						$gift_card->ID
 					)
-				);// @codingStandardsIgnoreEnd
+				);
 
 				if ( $result ) {
 

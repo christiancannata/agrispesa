@@ -1,4 +1,4 @@
-<?php // phpcs:ignore WordPress.NamingConventions
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * This file belongs to the YIT Plugin Framework.
  *
@@ -7,7 +7,7 @@
  * It is also available through the world-wide-web at this URL:
  * http://www.gnu.org/licenses/gpl-3.0.txt
  *
- * @package yith-woocommerce-gift-cards\third-party\elementor\
+ * @package YITH\GiftCards\Classes\Compatibilities\Elementor
  */
 
 use Elementor\Controls_Manager;
@@ -44,7 +44,7 @@ if ( ! class_exists( 'YWGC_Elementor_Form_Widget' ) ) {
 		 * Get widget icon.
 		 */
 		public function get_icon() {
-			return 'fa fa-code';
+			return 'fas fa-address-card';
 		}
 
 		/**
@@ -57,7 +57,7 @@ if ( ! class_exists( 'YWGC_Elementor_Form_Widget' ) ) {
 		/**
 		 * Register widget controls.
 		 */
-		protected function _register_controls() {// phpcs:ignore
+		protected function register_controls() {
 
 			$this->start_controls_section(
 				'content_section',
@@ -92,24 +92,12 @@ if ( ! class_exists( 'YWGC_Elementor_Form_Widget' ) ) {
 
 			echo '<div class="ywgc-form-widget-elementor-widget">';
 
-			echo wp_kses( ( $html ) ? $html : $settings['section-title'], 'post' );
+			echo ( $html ) ? $html : $settings['section-title'];
 
 			echo do_shortcode( '[yith_ywgc_display_gift_card_form]' );
 
 			echo '</div>';
 
 		}
-
 	}
-
-
-
-
-
-
-
-
-
-
-
 }

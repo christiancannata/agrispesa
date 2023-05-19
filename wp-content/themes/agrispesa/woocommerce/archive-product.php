@@ -101,7 +101,7 @@ if ($getSpeciali) {
 
 				$parentcats = [];
 
-				if($term_id){
+				if ($term_id) {
 					$parentcats = get_ancestors($term_id, 'product_cat');
 				}
 
@@ -330,7 +330,7 @@ if (woocommerce_product_loop()) {
 
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
-		'orderby'  => 'name',
+		'orderby' => 'name',
 		//'orderby' => 'meta_value',
 		//'meta_key' => 'categories_order_agr',
 		'order' => 'ASC',
@@ -342,6 +342,8 @@ if (woocommerce_product_loop()) {
 		'exclude' => $excludeSpecial,
 		'child_of' => $negozioID,
 	);
+
+
 	wp_list_categories($sidebar);
 
 	echo '</ul>';

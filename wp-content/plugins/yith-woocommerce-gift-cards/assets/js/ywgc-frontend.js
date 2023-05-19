@@ -1,4 +1,4 @@
-;(function ($) {
+(function ($) {
 
     if (typeof ywgc_data === "undefined") {
         return;
@@ -192,103 +192,6 @@
             set_giftcard_value(price_html);
 
         }
-    });
-
-
-    function show_edit_gift_cards(element, visible) {
-        var container = $(element).closest("div.ywgc-gift-card-content");
-        var edit_container = container.find("div.ywgc-gift-card-edit-details");
-        var details_container = container.find("div.ywgc-gift-card-details");
-
-        if (visible) {
-            //go to edit
-            edit_container.removeClass("ywgc-hide");
-            edit_container.addClass("ywgc-show");
-
-            details_container.removeClass("ywgc-show");
-            details_container.addClass("ywgc-hide");
-        }
-        else {
-            //go to details
-            edit_container.removeClass("ywgc-show");
-            edit_container.addClass("ywgc-hide");
-
-            details_container.removeClass("ywgc-hide");
-            details_container.addClass("ywgc-show");
-        }
-    }
-
-    $(document).on('click', 'button.ywgc-apply-edit', function (e) {
-
-        var clicked_element = $(this);
-
-        var container = clicked_element.closest("div.ywgc-gift-card-content");
-
-        var sender = container.find('input[name="ywgc-edit-sender"]').val();
-        var recipient = container.find('input[name="ywgc-edit-recipient"]').val();
-        var message = container.find('textarea[name="ywgc-edit-message"]').val();
-        var item_id = container.find('input[name="ywgc-item-id"]').val();
-
-        var gift_card_element = container.find('input[name="ywgc-gift-card-id"]');
-        var gift_card_id = gift_card_element.val();
-
-        //  Apply changes, if apply button was clicked
-        if (clicked_element.hasClass("apply")) {
-            var data = {
-                'action': 'edit_gift_card',
-                'gift_card_id': gift_card_id,
-                'item_id': item_id,
-                'sender': sender,
-                'recipient': recipient,
-                'message': message
-            };
-
-            container.block({
-                message: null,
-                overlayCSS: {
-                    background: "#fff url(" + ywgc_data.loader + ") no-repeat center",
-                    opacity: .6
-                }
-            });
-
-            $.post(ywgc_data.ajax_url, data, function (response) {
-                if (response.code > 0) {
-                    container.find("span.ywgc-sender").text(sender);
-                    container.find("span.ywgc-recipient").text(recipient);
-                    container.find("span.ywgc-message").text(message);
-
-                    if (response.code == 2) {
-                        gift_card_element.val(response.values.new_id);
-                    }
-                }
-
-                container.unblock();
-
-                //go to details
-                show_edit_gift_cards(clicked_element, false);
-            });
-        }
-    });
-
-    $(document).on('click', 'button.ywgc-cancel-edit', function (e) {
-
-        var clicked_element = $(this);
-
-        //go to details
-        show_edit_gift_cards(clicked_element, false);
-    });
-
-    $(document).on('click', 'button.ywgc-do-edit', function (e) {
-
-        var clicked_element = $(this);
-        //go to edit
-        show_edit_gift_cards(clicked_element, true);
-    });
-
-    $(document).on('click', '.ywgc-gift-card-content a.edit-details', function (e) {
-        e.preventDefault();
-        $(this).addClass('ywgc-hide');
-        $('div.ywgc-gift-card-details').toggleClass('ywgc-hide');
     });
 
 

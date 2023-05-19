@@ -75,8 +75,9 @@ class Assets {
 	 *
 	 * @param string $script_handle Script handle.
 	 */
-	public function add_async_script( $script_handle ) {
-		$this->defer_script_handles[] = $script_handle;
+	public static function add_async_script( $script_handle ) {
+		$assets_instance                         = self::instance();
+		$assets_instance->defer_script_handles[] = $script_handle;
 	}
 
 	/**
@@ -92,7 +93,8 @@ class Assets {
 		}
 
 		if ( in_array( $handle, $this->defer_script_handles, true ) ) {
-			return preg_replace( '/^<script /i', '<script defer ', $tag );
+			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			return preg_replace( '/<script( [^>]*)? src=/i', '<script defer$1 src=', $tag );
 		}
 
 		return $tag;
@@ -277,7 +279,7 @@ class Assets {
 			} elseif ( '..' === $pp[ $i ] ) {
 				array_splice( $pp, --$i, 2 );
 			} else {
-				$i++;
+				++$i;
 			}
 		}
 		$ret .= join( '/', $pp );

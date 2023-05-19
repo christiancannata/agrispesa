@@ -2,8 +2,8 @@
 /**
  * Form preview on product page
  *
- * @author  Yithemes
- * @package  yith-woocommerce-gift-cards\templates\single-product
+ * @author YITH
+ * @package YITH\GiftCards\Templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

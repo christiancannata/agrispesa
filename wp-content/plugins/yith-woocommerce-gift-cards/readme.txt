@@ -1,134 +1,83 @@
 ﻿=== YITH WooCommerce Gift Cards ===
 
-Contributors: yithemes
-Tags: gift card, gift certificate, certificate, gift, woocommerce
+Contributors: YITH
+Tags: gift card, gift cards, coupon, gift, discount
 Requires at least: 6.0
 Tested up to: 6.2
-Stable tag: 2.19.0
+Stable tag: 4.0.0
+Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allow your users to purchase and send gift cards, an easy and direct way to encourage new sales.
+= The easy way to sell gift cards in your shop  =
 
-== Description ==
+According to a study by Allied Market Research, gift cards turnover will register a record of $16 billion by 2028. And, by 2030, gift cards sold online will reach the $1.1 trillion threshold.
 
-**[Free live demo >](https://plugins.yithemes.com/yith-woocommerce-gift-card-free/)**
+Gift cards are a powerful marketing tool to increase sales (especially during the holidays) and build customer loyalty over time.
 
-The projected market, of the last years’ trends, expects that in 2024 gift card sales will hit an income of 698 billion dollars to companies all over the world.
+Think about it: it could be a Christmas gift for a friend, a birthday gift for a family member, or Christmas bonuses for your employees… a gift card is always the best choice!
 
-It's a staggering amount of money, yet we are not surprised. Who wouldn't prefer a gift card to an item purchased carelessly by someone who maybe doesn't even really know what you would like to receive on our birthday or at Christmas?
+By offering your customers the opportunity to purchase a gift card that can be redeemed in your store, you can gain new customers (those who receive the gift card will know about your products and place an order, which means you will be able to push them to buy again and build their loyalty over time) and significantly increase your revenue.
 
-Gift cards are also appreciated by people buying them. What a waste of time looking for the right gift risking to buy something they might not like or that could be of the wrong size or color!
-
-A Christmas gift for a friend, a present for a relative's birthday, a Christmas bonus for employees: a gift card is always the best choice. For that reason, all the biggest e-commerce shops offer their customers the possibility to purchase gift cards.
-
-By offering your users the possibility to purchase a gift card to spend on your shop, you will be able to gain new customers (the person receiving the gift card will know about your products, will place an order and will be encouraged to buy again so you can loyalize him/her) and considerably increase your earnings.
-
-The new version of our YITH WooCommerce Gift Card is the free and easy solution to start selling gift cards on your e-commerce. We have updated the plugin to make it even more effective, innovative and easier to use.
-
+YITH WooCommerce Gift Cards is an easy and free solution to start selling gift cards in your e-commerce store.
 
 = How does it work? =
 
 You only have to install the plugin, create your first gift card and publish it: a few-minutes process that will let you start offering gift cards immediately to your customers.
 
-The user's interface is very easy and based on Amazon's one: your customers can choose one of the amounts you set, select an image to customize the gift card (our plugin is the only one that lets you upload an unlimited image gallery!), insert the receiver's details, add a message and, finally, purchase the gift card like any other product on your e-commerce store.
-
+The user's interface is very easy and inspired by Amazon's one: your customers can choose one of the amounts you set, select an image to customize the gift card (our plugin is the only one that lets you upload an unlimited image gallery!), insert the receiver's details, add a message and, finally, purchase the gift card like any other product on your ecommerce store.
 
 = Main features =
 
-* A new product type, Gift-card, to configure your own gift cards.
-* Set the amount you want to use for each Gift Card.
-* Dashboard with all gift cards (to check balance, related orders and so on)
-* Create and edit Gift Cards from the Gift Cards dashboard
-* Create and sell Virtual Gift Cards
-* Create unlimited physical or virtual gift cards;
-* Let the customer fill the recipient’s data and send the gift card via email
-* Email the gift card to the recipient once the order has been completed.
-* Create a gallery of images and allow customers to choose one for the gift card layout
-* Customize the Gift Card code pattern
+* Create unlimited virtual gift cards. A virtual gift card will be sent to the recipient email address
+* Create unlimited physical gift cards with one or multiple fixed amounts. Physical gift cards can be printed and shipped to the customers
+* The admin can create, edit and disable the gift cards manually from the backend
+* Create a gallery of images to assign to specific gift cards or specific categories of gift cards. (Example: Christmas, Thanksgiving, Wedding, etc.)
+* The user can enter the sender’s name and a customized message
+* The user can choose one of the images available in the gallery
+* Send automatically the gift card via email to the recipient
+* The admin can verify the email sending status of the gift code
+* Show the 'apply gift card code' form in Cart and Checkout pages
+* Allow user to use the gift card to pay the order even if its balance doesn't cover the total amount
+* Allow user to use the gift card as many times as they want, based on the available balance
+* Allow the user  to verify the status and the amount of the gift cards he/she owns
+* The admin can update the gift card balance from the backend without creating a new order
+* The admin has access to a table with all gift cards (to check balance, related orders and so on)
 
+**[Check the live demo >](https://plugins.yithemes.com/yith-woocommerce-gift-card-free/)**
 
-= Free Live Demo =
-
-Do you want to discover all plugin features offered on this version? Would you like to try it?
-
-Visit our **[test sandbox](https://plugins.yithemes.com/yith-woocommerce-gift-card-free/)**
-By accessing our testing platform, you will be able to discover all plugin features and test them as your prefer, both in back end and in front end.
-
-What are you waiting for? Open the official plugin "**[live demo](https://plugins.yithemes.com/yith-woocommerce-gift-card-free/)**" and click on the "LAUNCH ADMIN DEMO" link that you find on the top bar to test the plugin right now.
-
-
-= Languages =
-
-Also available in:
-
-* English
-* Italian
-* Spanish
-* Japanese
- and [much more](https://translate.wordpress.org/locale/it/default/wp-plugins/yith-woocommerce-gift-cards "Translating WordPress").
-
-= WPML =
-
-Take advantage of [WPML](https://wpml.org/?aid=24889&affiliate_key=Qn1wDeBNTcZV) compatibility.
-You are free to translate your plugin easily with the most popular and powerful tool for multi-language sites, [WPML](https://wpml.org/?aid=24889&affiliate_key=Qn1wDeBNTcZV).
-
-= PREMIUM FEATURES of YITH WooCommerce Gift Cards =
+= Need more? Get premium! =
 
 Free version of our plugin works like a charm, but the premium one is a very powerful tool to increase sales and conversions.
 
+**With the premium version you can:**
 
-As an admin with the premium version you can:
-
-* Allow users to insert the gift card amount and set a minimum amount for that;
-* Choose a different image for each gift card
-* Customize the gift card with your shop’s logo
-* Offer a percentage discount on the gift card price (for example the user will pay 50$ for a gift card that contains 60$)
-* Choose the action to trigger when the gift card order gets the “Cancelled” status or it is refunded:
-* Suspend the gift card
-* Disable the gift card (in this case, it cannot be used for any other purchases)
-* Create a gallery of images that could be associated with gift cards during the purchase (like Christmas, Birthday and so on)
-* Sell physical gift cards (pre-printed)
-* Show the 'apply gift card code' form on different places like the Cart and Checkout page
-* Allow users to enter the gift card code into the standard coupon code field (instead of showing two different forms in cart and checkout)
+* Generate and send multiple gift cards through a bulk action
+* Import and export gift cards into a CSV file
+* Set an optional expiration date for the gift card (gift card will expire on a specific date, like January 01, or after a specific time after the purchase, like 3 months after)
+* Manage stock of each gift card product
 * Enable an optional QR code in gift cards
-* Verify the email sending status of the gift code
-* Send the gift card code or a link manually in case of error
-* Attach a printable PDF to gift card email (useful for users that wants to print the gift card)
-* Disable the gift card manually
-* Verify the original amount and current balance of each gift card
-* Enable the “Gift this product” option: the user can buy a gift card related to a specific product of the shop: the coupon will be of the same value and the product will be recommended in the email
-* Create and edit the gift cards from the backend
-* Update the gift card balance from the backend without creating a new order
-* Manage the stock of “Gift Card” products
-* Override the default templates of the gift card sent by email
-* Set an expiration date for the gift card
-* Set a minimum requested amount in the cart to apply to the gift card
-* Show the email address linked to each gift card on the Cart page
+* Allow users to specify more recipients for the same gift card (an email with a code of the same amount will be sent to each recipient)
+* Allow users to choose a delivery date and time for the gift card
+* Allow users to upload or drag & drop a custom image or photo to customize the gift card in the modal window
+* Allow users to enter a custom gift card amount (and optionally set the minimum amount that users can enter)
+* Attach a PDF to gift card email (and customize the PDF name)
+* Notify the sender via email when the gift card is delivered to recipient
+* Notify the sender via email when the recipient uses the gift card for a purchase in your shop
+* Choose the position of form in Cart and Checkout pages
+* Allow users to enter the gift card code into the standard coupon code field (instead of showing two different forms in cart and checkout)
+* Set a minimum requested amount in the cart to apply the gift card and exclude specific categories from gift card redemption
+* Create and sell a gift card linked to a specific product of the shop: the gift card will be of the same value of the product that will be recommended in the email
+* Choose the action to trigger when the gift card order gets the “Cancelled” status or it is refunded: suspend or disable the gift card (in this case, it cannot be used for any other purchases)
+
+= Integrations =
+
+* Compatibility with YITH WooCommerce Multi Vendor: users can apply the gift card codes only on products of vendors to which the gift cards have been assigned by the global admin
 * Integration with WC Smart Coupons: convert Store Credit / Gift Certificate coupons created with it into new Gift Cards
-
-Your customer can:
-
-* Enter the sender’s name and a customized message
-* Specify more recipients for the same gift card type (an email with a code of the same amount will be sent to each recipient)
-* Choose a delivery date for the gift card
-* Choose the gift card image from the gallery
-* Upload a custom image or photo to customize the gift card
-* Receive an email when the purchased gift card is used
-* Purchase a gift coupon, suggesting a specific product from the shop: the coupon will be of the same value as the product and it will be recommended in the email
-* Verify the status and the amount of the gift cards he/she owns
-
+* Integration with YITH Multi Currency Switcher for WooCommerce
+* Integration with YITH Booking and Appointment for WooCommerce
 
  **[GET PREMIUM VERSION HERE with a 100% Money Back guarantee >](https://yithemes.com/themes/plugins/yith-woocommerce-gift-cards)**
-
-= Premium Live Demo =
-
-Do you want to discover all the premium plugin features? Would you like to try it?
-
-Visit our **[test sandbox](http://plugins.yithemes.com/yith-woocommerce-gift-cards)**
-By accessing our testing platform, you will be able to discover all plugin features and test them as your prefer, both in back end and in front end.
-
-What are you waiting for? Open the official plugin "**[live demo](http://plugins.yithemes.com/yith-woocommerce-gift-cards)**" and click on the "LAUNCH ADMIN DEMO" link that you find on the top bar to test the plugin right now.
 
 = Documentation =
 
@@ -182,16 +131,27 @@ Each time the gift card is used, the available credit is updated and if there's 
 
 YITH WooCommerce Gift Cards will add a new tab called "Gift Cards" in "YITH Plugins" menu item. There, you will find all YITH plugins with quick access to the plugin settings page.
 
-== Suggestions ==
-
-If you have suggestions about how to improve YITH WooCommerce Gift Cards, you can [write us](mailto:plugins@yithemes.com "Your Inspiration Themes") so we can bundle them into YITH WooCommerce Gift Cards.
-
 == Translators ==
 
 Want to add a new language to our YITH WooCommerce Gift Cards? Learn how to contribute [in this page](https://translate.wordpress.org/projects/wp-plugins/yith-woocommerce-gift-cards/).
 
 
 == Changelog ==
+
+= 4.0.0 - Released on 17 May 2023 =
+
+* New: support for WooCommerce 7.7
+* New: support for PHP 8.1
+* New: HPOS Compatibility
+* Tweak: improved the settings panel
+* Tweak: improved the gift cards dashboard table
+* Tweak: improved the gift cards code edit page
+* Tweak: improved the gift card categories taxonomy configuration
+* Tweak: minor style changes
+* Update: YITH plugin framework
+* Fix: fixed the previous categories removed from an image assigned to a new category on creation
+* Dev: different changes and improvements in the plugin code
+
 
 = 2.19.0 - Released on 14 March 2023 =
 

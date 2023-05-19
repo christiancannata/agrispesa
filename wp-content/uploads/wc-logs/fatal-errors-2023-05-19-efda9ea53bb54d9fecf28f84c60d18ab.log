@@ -61,3 +61,86 @@ Stack trace:
 
 2023-05-19T15:11:21+00:00 CRITICAL require(): Failed opening required '/shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns//settings/translations/global.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php alla riga 67
 
+2023-05-19T15:58:37+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:00:37+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:02:37+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:04:37+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:06:37+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:07:38+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:09:39+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:11:39+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:12:40+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:13:39+00:00 CRITICAL Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php alla riga 322
+
+2023-05-19T16:16:41+00:00 CRITICAL Uncaught Error: Class 'WC_Integration_MaxMind_Geolocation' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-integrations.php:41
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-woocommerce.php(659): WC_Integrations->__construct()
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WooCommerce->init('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-settings.php(623): do_action('init')
+#5 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#6 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#7 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#8 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-integrations.php alla riga 41
+

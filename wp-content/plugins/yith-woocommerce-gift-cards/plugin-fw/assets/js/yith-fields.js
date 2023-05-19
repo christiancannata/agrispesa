@@ -977,6 +977,7 @@
 				};
 
 				options.closeAfterConfirm = false;
+				options.confirmButtonLoadingAfterConfirm = true;
 
 				yith.ui.confirm( options );
 
@@ -1056,8 +1057,49 @@
 	 * Media field
 	 */
 	( function () {
-		var mediaUploader,
-			isDragging = false;
+		var isDragging = false,
+			uploader   = {
+				instance: null,
+				wrapper : null,
+				init    : function ( wrapper ) {
+					uploader.wrapper = wrapper;
+
+					if ( !uploader.instance ) {
+						var mediaUploaderStates = [
+							new wp.media.controller.Library(
+								{
+									library   : wp.media.query(),
+									multiple  : false,
+									priority  : 20,
+									filterable: 'uploaded'
+								}
+							)
+						];
+
+						uploader.instance = wp.media.frames.downloadable_file = wp.media(
+							{
+								library : { type: '' },
+								multiple: false,
+								states  : mediaUploaderStates
+							}
+						);
+
+						// When a file is selected, grab the URL and set it as the text field's value.
+						uploader.instance.on( 'select', function () {
+							var attachment = uploader.instance.state().get( 'selection' ).first().toJSON();
+
+							triggerMediaChange( uploader.wrapper, attachment );
+						} );
+					}
+				},
+				open    : function ( wrapper ) {
+					uploader.init( wrapper );
+					uploader.instance.open();
+				},
+				destroy : function () {
+					uploader.instance = null;
+				}
+			};
 
 		/**
 		 * Get the wrapper of the media field.
@@ -1218,8 +1260,8 @@
 								triggerMediaChange( wrapper, data[ 0 ] );
 								onFinish();
 
-								// To allow re-loading media files on the next opening of the mediaUploader.
-								mediaUploader = null;
+								// To allow re-loading media files on the next opening of the uploader.
+								uploader.destroy();
 							}
 						},
 						onError     : function ( data ) {
@@ -1243,39 +1285,7 @@
 			var button  = $( this ),
 				wrapper = getWrapper( button );
 
-			// If the uploader object has already been created, reopen the dialog
-			if ( mediaUploader ) {
-				mediaUploader.open();
-				return;
-			}
-
-			var mediaUploaderStates = [
-				new wp.media.controller.Library(
-					{
-						library   : wp.media.query(),
-						multiple  : false,
-						priority  : 20,
-						filterable: 'uploaded'
-					}
-				)
-			];
-
-			mediaUploader = wp.media.frames.downloadable_file = wp.media(
-				{
-					library : { type: '' },
-					multiple: false,
-					states  : mediaUploaderStates
-				}
-			);
-
-			// When a file is selected, grab the URL and set it as the text field's value
-			mediaUploader.on( 'select', function () {
-				var attachment = mediaUploader.state().get( 'selection' ).first().toJSON();
-
-				triggerMediaChange( wrapper, attachment );
-			} );
-
-			mediaUploader.open();
+			uploader.open( wrapper );
 		}
 
 		$( document )

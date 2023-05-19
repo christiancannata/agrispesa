@@ -26,13 +26,13 @@ window.yith = window.yith || {};
 	 */
 	yith.ui.confirm = function ( options ) {
 		var defaults = {
-				title                     : false,
-				message                   : false,
-				onCreate                  : false,
-				onConfirm                 : false,
-				onCancel                  : false,
-				onClose                   : false,
-				classes                   : {
+				title                           : false,
+				message                         : false,
+				onCreate                        : false,
+				onConfirm                       : false,
+				onCancel                        : false,
+				onClose                         : false,
+				classes                         : {
 					wrap   : '',
 					content: '',
 					title  : '',
@@ -41,15 +41,16 @@ window.yith = window.yith || {};
 					cancel : '',
 					confirm: ''
 				},
-				confirmButtonType         : 'confirm',
-				cancelButton              : yith_plugin_fw_ui.i18n.cancel,
-				confirmButton             : yith_plugin_fw_ui.i18n.confirm,
-				width                     : 350,
-				closeAfterConfirm         : true,
-				allowWpMenu               : false,
-				allowWpMenuInMobile       : false,
-				showClose                 : true,
-				closeWhenClickingOnOverlay: false
+				confirmButtonType               : 'confirm',
+				cancelButton                    : yith_plugin_fw_ui.i18n.cancel,
+				confirmButton                   : yith_plugin_fw_ui.i18n.confirm,
+				width                           : 350,
+				closeAfterConfirm               : true,
+				allowWpMenu                     : false,
+				allowWpMenuInMobile             : false,
+				showClose                       : true,
+				confirmButtonLoadingAfterConfirm: false,
+				closeWhenClickingOnOverlay      : false
 			},
 			self     = {};
 
@@ -87,7 +88,6 @@ window.yith = window.yith || {};
 				dom.cancel  = $( '<span class="' + classes.cancel + '">' + options.cancelButton + '</span>' );
 				dom.confirm = $( '<span class="' + classes.confirm + '">' + options.confirmButton + '</span>' );
 
-
 				if ( options.message ) {
 					dom.message.html( options.message );
 				}
@@ -122,8 +122,16 @@ window.yith = window.yith || {};
 				handleClose();
 			},
 			handleConfirm = function () {
+				if ( dom.confirm.hasClass( 'yith-plugin-fw__confirm__button--is-loading' ) ) {
+					return;
+				}
+
 				if ( typeof options.onConfirm === 'function' ) {
 					options.onConfirm();
+				}
+
+				if ( options.confirmButtonLoadingAfterConfirm ) {
+					dom.confirm.addClass( 'yith-plugin-fw__confirm__button--is-loading' );
 				}
 
 				if ( options.closeAfterConfirm ) {

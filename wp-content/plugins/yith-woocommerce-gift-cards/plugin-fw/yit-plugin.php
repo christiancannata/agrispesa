@@ -115,20 +115,20 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 		$slug              = $new_row_meta_args['slug'] ?? '';
 		$is_extended       = $new_row_meta_args['is_extended'] ?? ( false !== strpos( $plugin_file, '-extended' ) );
 		$is_premium        = $new_row_meta_args['is_premium'] ?? ( false !== strpos( $plugin_file, '-premium' ) );
-		$utm_campaign      = 'plugin-version-author-uri';
+		$utm_campaign      = 'plugin-row-meta';
 
 		if ( $is_premium ) {
-			$utm_source = 'wp-premium-dashboard';
-			$to_remove  = array( 'premium_version' );
+			$plugin_version = 'premium';
+			$to_remove      = array( 'premium_version' );
 		} elseif ( $is_extended ) {
-			$utm_source = 'wp-extended-dashboard';
-			$to_remove  = array( 'live_demo' );
+			$plugin_version = 'extended';
+			$to_remove      = array( 'live_demo' );
 
 			// set custom base uri.
-			$base_uri['documentation'] = 'https://www.bluehost.com/help/article/';
-			$base_uri['free_support']  = add_query_arg( array( 'page' => 'bluehost' ), admin_url( 'admin.php' ) ) . '#/help';
+			$base_uri['documentation'] = 'https://docs.yithemes.com/';
+			$base_uri['free_support']  = 'https://docs.yithemes.com/';
 		} else {
-			$utm_source = 'wp-free-dashboard';
+			$plugin_version = 'free';
 		}
 
 		// remove meta not required for current plugin.
@@ -172,12 +172,22 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 							$url = $base_uri[ $support_field ];
 						}
 
-						if ( 'free_support' === $support_field && ! $is_extended ) {
+						if ( 'free_support' === $support_field ) {
 							$url = $url . $slug;
+
+							if ( $is_extended ) {
+								$url .= '-extended/overview/need-support/';
+							}
 						}
 					} else {
 						if ( isset( $base_uri[ $field ] ) ) {
-							$url = apply_filters( "yith_plugin_row_meta_{$field}_url", $base_uri[ $field ] . $slug, $field, $slug, $base_uri );
+							$url = $base_uri[ $field ] . $slug;
+
+							if ( 'documentation' === $field && $is_extended ) {
+								$url .= '-extended';
+							}
+
+							$url = apply_filters( "yith_plugin_row_meta_{$field}_url", $url, $field, $slug, $base_uri );
 						}
 					}
 				}
@@ -185,7 +195,7 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 
 			if ( ! empty( $url ) && ! empty( $label ) ) {
 				if ( ! ( $is_extended && in_array( $field, array( 'support', 'documentation' ), true ) ) ) {
-					$url = yith_plugin_fw_add_utm_data( $url, $slug, $utm_campaign, $utm_source );
+					$url = yith_plugin_fw_add_utm_data( $url, $slug, $utm_campaign, $plugin_version );
 				}
 
 				$plugin_meta[] = sprintf( '<a href="%s" target="_blank"><span class="%s"></span>%s</a>', $url, $icon, $label );
@@ -193,7 +203,7 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 		}
 
 		if ( isset( $plugin_meta[1] ) ) {
-			$utm_author_uri = yith_plugin_fw_add_utm_data( $plugin_data['AuthorURI'], $slug, $utm_campaign, $utm_source );
+			$utm_author_uri = yith_plugin_fw_add_utm_data( $plugin_data['AuthorURI'], $slug, $utm_campaign, $plugin_version );
 			$plugin_meta[1] = str_replace( $plugin_data['AuthorURI'], $utm_author_uri, $plugin_meta[1] );
 		}
 
@@ -201,7 +211,7 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 			if ( $is_extended ) {
 				unset( $plugin_meta[2] );
 			} else {
-				$utm_plugin_uri = yith_plugin_fw_add_utm_data( $plugin_data['PluginURI'], $slug, $utm_campaign, $utm_source );
+				$utm_plugin_uri = yith_plugin_fw_add_utm_data( $plugin_data['PluginURI'], $slug, $utm_campaign, $plugin_version );
 				$plugin_meta[2] = str_replace( $plugin_data['PluginURI'], $utm_plugin_uri, $plugin_meta[2] );
 			}
 		}

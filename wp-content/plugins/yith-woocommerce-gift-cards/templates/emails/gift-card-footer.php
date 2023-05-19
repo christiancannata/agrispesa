@@ -2,8 +2,8 @@
 /**
  * Add a footer for the gift card email
  *
- * @author YITHEMES
- * @package yith-woocommerce-gift-cards\templates\emails
+ * @author YITH
+ * @package YITH\GiftCards\Templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,6 +18,5 @@ if ( ! $shop_name || ! $shop_link ) {
 ?>
 
 <div class="ywgc-footer">
-	<a target="_blank" class="center-email"
-	href="<?php echo esc_attr( $shop_link ); ?>"><?php echo wp_kses( $shop_name, 'post' ); ?></a>
+	<a target="_blank" class="center-email" href="<?php echo esc_url( $shop_link ); ?>"><?php echo wp_kses_post( $shop_name ); ?></a>
 </div>

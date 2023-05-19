@@ -1,16 +1,20 @@
 <?php
-if ( ! defined ( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+/**
+ * Class to handle the gift card object
+ *
+ * @package YITH\GiftCards\Classes
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
-
+if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 	/**
-	 *
-	 * @class   YITH_YWGC_Gift_Card
+	 * YITH_YWGC_Gift_Card class
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH
 	 */
 	class YITH_YWGC_Gift_Card {
 
@@ -53,7 +57,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		const STATUS_PRE_PRINTED    = 'ywgc-pre-printed';
 		const STATUS_DISABLED       = 'ywgc-disabled';
 		const STATUS_CODE_NOT_VALID = 'ywgc-code-not-valid';
-
 
 		/**
 		 * ID
@@ -200,7 +203,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 */
 		public $is_digital = false;
 
-
 		/**
 		 * Expiration
 		 *
@@ -220,34 +222,33 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * Initialize plugin and registers actions and filters to be used
 		 *
-		 * @param  array $args the arguments
+		 * @param array $args The arguments.
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 */
 		public function __construct( $args = array() ) {
-
+			
 			if ( isset( $args['ID'] ) ) {
 				$post = get_post( $args['ID'] );
 			} elseif ( isset( $args['gift_card_number'] ) ) {
 				$this->gift_card_number = $args['gift_card_number'];
 
-				/**
-				 * APPLY_FILTERS: yith_ywgc_gift_card_post
-				 *
-				 * Filter the gift card post retrieved by the post name.
-				 *
-				 * @param object the gift card post object
-				 * @param array $args array with the arguments
-				 *
-				 * @return object
-				 */
-				$post = apply_filters( 'yith_ywgc_gift_card_post', get_page_by_title( $args['gift_card_number'], OBJECT, YWGC_CUSTOM_POST_TYPE_NAME ), $args );
+				$post = get_posts(
+					array(
+						'title'      => $args['gift_card_number'],
+						'post_type' => YWGC_CUSTOM_POST_TYPE_NAME
+					)
+				);
+
+				if ( is_array( $post ) && isset( $post[0] ) ) {
+					$post = $post[0];
+				}
 			}
 
 			if ( isset( $post ) ) {
-
 				$this->ID = $post->ID;
+
 				/**
 				 * APPLY_FILTERS: yith_ywgc_gift_card_number
 				 *
@@ -260,8 +261,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 				 */
 				$this->gift_card_number = apply_filters( 'yith_ywgc_gift_card_number', $post->post_title, $post );
 				$this->product_id       = $post->post_parent;
+
 				// Backward compatibility check with gift cards created with free version.
 				$old_order_id = get_post_meta( $post->ID, '_gift_card_order_id', true );
+
 				if ( ! empty( $old_order_id ) ) {
 					$this->order_id = $old_order_id;
 				} else {
@@ -269,6 +272,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 				}
 
 				$total_amount = get_post_meta( $post->ID, self::META_AMOUNT_TOTAL, true );
+
 				if ( ! empty( $total_amount ) ) {
 					$this->total_amount = $total_amount;
 				} else {
@@ -324,13 +328,12 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 			}
 		}
 
-
 		/**
 		 * Register the order in the list of orders where the gift card was used
 		 *
 		 * @param int $order_id the order ID.
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function register_order( $order_id ) {
@@ -353,7 +356,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @param int $user_id user_id.
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_registered_user( $user_id ) {
@@ -367,12 +370,11 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param int $user_id user_id.
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function register_user( $user_id ) {
-
-			if ( 0 == $user_id ) {//phpcs:ignore
+			if ( 0 == $user_id ) {
 				return;
 			}
 
@@ -388,7 +390,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the list of orders where the gift cards was used
 		 *
 		 * @return array|mixed
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_registered_orders() {
@@ -396,6 +398,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 			if ( $this->ID ) {
 				$orders = get_post_meta( $this->ID, YWGC_META_GIFT_CARD_ORDERS, true );
+
 				if ( ! $orders ) {
 					$orders = array();
 				}
@@ -408,7 +411,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the history of the gift card redemption using the shortcode
 		 *
 		 * @return array|mixed
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_redemption_history() {
@@ -416,6 +419,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 			if ( $this->ID ) {
 				$redemptions = get_post_meta( $this->ID, 'ywgc_redemption_history', true );
+
 				if ( ! $redemptions ) {
 					$redemptions = array();
 				}
@@ -423,7 +427,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 			return array_unique( $redemptions );
 		}
-
 
 		/**
 		 * Check if the gift card has enough balance to cover the amount requested
@@ -440,7 +443,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the gift card code
 		 *
 		 * @return string
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_code() {
@@ -451,7 +454,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * The gift card exists
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function exists() {
@@ -462,11 +465,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve if a gift card is enabled
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_enabled() {
-
 			return self::STATUS_ENABLED === $this->status;
 		}
 
@@ -474,11 +476,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve if a gift card is disabled
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_disabled() {
-
 			return self::STATUS_DISABLED === $this->status;
 		}
 
@@ -496,6 +497,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 		/**
 		 * Check if the gift card can be used
+		 *
 		 * @return bool
 		 */
 		public function can_be_used() {
@@ -521,6 +523,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 */
 		public function update_balance( $new_amount ) {
 			$this->total_balance = $new_amount;
+
 			if ( $this->ID ) {
 				update_post_meta( $this->ID, self::META_BALANCE_TOTAL, $this->total_balance );
 			}
@@ -533,6 +536,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 */
 		public function update_amount( $new_amount ) {
 			$this->total_amount = $new_amount;
+
 			if ( $this->ID ) {
 				update_post_meta( $this->ID, self::META_AMOUNT_TOTAL, $this->total_amount );
 			}
@@ -562,7 +566,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * The gift card product is virtual
 		 */
 		public function is_virtual() {
-
 			return $this->is_digital;
 		}
 
@@ -577,30 +580,43 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 			switch ( $err_code ) {
 				case self::E_GIFT_CARD_NOT_EXIST:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'The gift card code %s does not exist!', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_NOT_YOURS:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'Sorry, it seems that the gift card code "%s" is not yours and cannot be used for this order.', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_ALREADY_APPLIED:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'The gift card code %s has already been applied!', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_EXPIRED:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'Sorry, the gift card code %s is expired and cannot be used.', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_DISABLED:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'Sorry, the gift card code %s is currently disabled and cannot be used.', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_DISMISSED:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'Sorry, the gift card code %s is no longer valid!', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::E_GIFT_CARD_INVALID_REMOVED:
+					// translators: %s is the gift card code.
 					$err = sprintf( esc_html__( 'Sorry, it seems that the gift card code %s is invalid - it has been removed from your cart.', 'yith-woocommerce-gift-cards' ), $this->gift_card_number );
 					break;
+
 				case self::GIFT_CARD_NOT_ALLOWED_FOR_PURCHASING_GIFT_CARD:
 					$err = esc_html__( 'Gift card codes cannot be used to purchase other gift cards', 'yith-woocommerce-gift-cards' );
 					break;
-
 			}
 
 			/**
@@ -625,14 +641,13 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @return string
 		 */
 		public function get_gift_card_message( $err_code ) {
-
 			$err = '';
 
 			switch ( $err_code ) {
-
 				case self::GIFT_CARD_SUCCESS:
 					$err = esc_html__( 'Gift card code successfully applied.', 'yith-woocommerce-gift-cards' );
 					break;
+
 				case self::GIFT_CARD_REMOVED:
 					$err = esc_html__( 'Gift card code successfully removed.', 'yith-woocommerce-gift-cards' );
 					break;
@@ -665,7 +680,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 
 		/**
 		 * Set the gift card as sent
-		 * @throws Exception
 		 */
 		public function set_as_sent() {
 			$this->delivery_send_date = current_time( 'timestamp' ); //phpcs:ignore --timestamp is discouraged
@@ -680,7 +694,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		public function set_as_code_not_valid() {
 			$this->gift_card_number = 'NOT VALID';
 			$this->set_status( self::STATUS_CODE_NOT_VALID );
-
 		}
 
 		/**
@@ -694,7 +707,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Check if the gift card is pre-printed
 		 */
 		public function is_pre_printed() {
-
 			return self::STATUS_PRE_PRINTED === $this->status;
 		}
 
@@ -702,7 +714,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Check if the gift card is expired
 		 */
 		public function is_expired() {
-
 			if ( ! $this->expiration ) {
 				return false;
 			}
@@ -715,11 +726,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param bool|false $enabled enabled.
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_enabled_status( $enabled = false ) {
-
 			$current_status = $this->is_enabled();
 
 			if ( $current_status === $enabled ) {
@@ -739,11 +749,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param string $status status.
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_status( $status ) {
-
 			$this->status = $status;
 
 			if ( $this->ID ) {
@@ -760,7 +769,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Save the current object
 		 */
 		public function save() {
-
 			// Create post object args.
 			$args = array(
 				'post_title'  => $this->gift_card_number,
@@ -769,10 +777,9 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 				'post_parent' => $this->product_id,
 			);
 
-			if ( 0 == $this->ID ) {//phpcs:ignore
+			if ( 0 == $this->ID ) {
 				// Insert the post into the database.
 				$this->ID = wp_insert_post( $args );
-
 			} else {
 				$args['ID'] = $this->ID;
 				$this->ID   = wp_update_post( $args );
@@ -790,6 +797,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 			 * @return float
 			 */
 			$total_balance_rounded = apply_filters( 'ywgc_save_total_balance', round( (float) $this->total_balance, wc_get_price_decimals() ), $this->total_balance, $this );
+
 			/**
 			 * APPLY_FILTERS: ywgc_save_total_amount
 			 *
@@ -835,7 +843,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 			update_post_meta( $this->ID, self::META_INTERNAL_NOTES, $this->internal_notes );
 
 			return $this->ID;
-
 		}
 
 		/**
@@ -850,9 +857,11 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 				case self::STATUS_DISABLED:
 					$label = esc_html__( 'The gift card has been disabled', 'yith-woocommerce-gift-cards' );
 					break;
+
 				case self::STATUS_ENABLED:
 					$label = esc_html__( 'Valid', 'yith-woocommerce-gift-cards' );
 					break;
+
 				case self::STATUS_DISMISSED:
 					$label = esc_html__( 'No longer valid, replaced by another code', 'yith-woocommerce-gift-cards' );
 					break;
@@ -864,7 +873,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * The gift card is nulled and no more usable
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_dismissed_status() {
@@ -874,7 +883,7 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * The gift card code is duplicate and the gift card is not usable until a new, valid, code is set
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_duplicated_status() {
@@ -884,11 +893,10 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * Check if the gift card is dismissed
 		 *
-		 * @author Lorenzo Giuffrida
+		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_dismissed() {
-
 			return self::STATUS_DISMISSED === $this->status;
 		}
 
@@ -899,7 +907,6 @@ if ( ! class_exists ( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @return string
 		 */
 		public function get_formatted_date( $date ) {
-
 			$date_format = apply_filters( 'yith_wcgc_date_format', 'Y-m-d' );
 
 			$date = ! is_numeric( $date ) ? strtotime( $date ) : $date;

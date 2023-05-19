@@ -432,9 +432,9 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 *
 		 * Show the image chosen for a gift card
 		 *
-		 * @param string    $product_image    the product title HTML
-		 * @param array     $cart_item        the cart item array
-		 * @param bool      $cart_item_key    The cart item key
+		 * @param string $product_image    the product title HTML
+		 * @param array  $cart_item        the cart item array
+		 * @param bool   $cart_item_key    The cart item key
 		 *
 		 * @since    2.0.1
 		 * @author  Daniel Sanchez <daniel.sanchez@yithemes.com>
@@ -523,9 +523,8 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 */
 		public function show_gift_cards_total_applied_to_order( $total_rows, $order ) {
 
-			$gift_cards = $order->get_meta( '_ywgc_applied_gift_cards' );
-
-			$updated_as_fee = get_post_meta( $order->get_id(), 'ywgc_gift_card_updated_as_fee', true );
+			$gift_cards     = $order->get_meta( '_ywgc_applied_gift_cards' );
+			$updated_as_fee = $order->get_meta( 'ywgc_gift_card_updated_as_fee' );
 
 			if ( $gift_cards && $updated_as_fee == false ) {
 				$row_totals = $total_rows['order_total'];
@@ -959,13 +958,16 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 			/**
 			 * Adding two race condition fields to the order
 			 */
-			update_post_meta( $order_id, YWGC_RACE_CONDITION_BLOCKED, 'no' );
-			update_post_meta( $order_id, YWGC_RACE_CONDITION_UNIQUID, 'none' );
+			$order = wc_get_order( $order_id );
+
+			$order->update_meta_data( YWGC_RACE_CONDITION_BLOCKED, 'no' );
+			$order->update_meta_data( YWGC_RACE_CONDITION_UNIQUID, 'none' );
 
 			$applied_gift_cards = array();
 			$applied_discount   = 0.00;
 
 			$applied_gift_cards_amount = isset( WC()->cart ) ? WC()->cart->applied_gift_cards_amounts : array();
+			$created_via               = get_post_meta( $order_id, '_created_via', true );
 
 			if ( isset( $applied_gift_cards_amount ) && is_array( $applied_gift_cards_amount ) ) {
 				foreach ( $applied_gift_cards_amount as $code => $amount ) {
@@ -986,26 +988,29 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 						$applied_gift_cards[ $code ] = $amount;
 						$applied_discount           += $amount;
 
-						/**
-						 * APPLY_FILTERS: yith_ywgc_new_balance_before_update_balance
-						 *
-						 * Filter the gift card new balance before update it.
-						 *
-						 * @param string the new gift card balance
-						 * @param object $gift the gift card object
-						 * @param string $amount the amount to be deducted
-						 *
-						 * @return string
-						 */
-						$new_balance = apply_filters( 'yith_ywgc_new_balance_before_update_balance', max( 0.00, $gift->get_balance() - $amount ), $gift, $amount );
+						// Avoid charging twice if there is a YITH Multi Vendor suborder
+						if ( ! $created_via || 'yith_wcmv_vendor_suborder' != $created_via ) {
+							/**
+							 * APPLY_FILTERS: yith_ywgc_new_balance_before_update_balance
+							 *
+							 * Filter the gift card new balance before update it.
+							 *
+							 * @param string the new gift card balance
+							 * @param object $gift the gift card object
+							 * @param string $amount the amount to be deducted
+							 *
+							 * @return string
+							 */
+							$new_balance = apply_filters( 'yith_ywgc_new_balance_before_update_balance', max( 0.00, $gift->get_balance() - $amount ), $gift, $amount );
 
-						$gift->update_balance( $new_balance );
-						$gift->register_order( $order_id );
+							$gift->update_balance( $new_balance );
+							$gift->register_order( $order_id );
+						}
 					}
 				}
 			}
 
-			if ( $applied_gift_cards ) {
+			if ( $applied_gift_cards && ( ! $created_via || 'yith_wcmv_vendor_suborder' != $created_via ) ) {
 				$order       = wc_get_order( $order_id );
 				$order_total = $order->get_total();
 
@@ -1017,6 +1022,10 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 
 				$order->add_order_note( sprintf( esc_html__( 'Order paid with gift cards for a total amount of %s.', 'yith-woocommerce-gift-cards' ), wc_price( $applied_discount ) ) );
 
+				$order->save();
+			} elseif ( ! ! $created_via && 'yith_wcmv_vendor_suborder' == $created_via ) {
+				$applied_discount = apply_filters( 'ywgc_gift_card_amount_order_total_item', $applied_discount, $gift );
+				$order->add_order_note( sprintf( esc_html__( 'Order paid with gift cards for a total amount of %s.', 'yith-woocommerce-gift-cards' ), wc_price( $applied_discount ) ) );
 				$order->save();
 			}
 
@@ -1304,6 +1313,7 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 
 					$cart_item['data']->update_meta_data( 'price', $cart_item['ywgc_amount'] );
 					$cart_item['data']->save_meta_data();
+					$cart_item['data']->set_price( $cart_item['ywgc_amount'] );
 				}
 			}
 
@@ -1398,7 +1408,7 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		/**
 		 * Append data to order item
 		 *
-		 * @param int $item_id
+		 * @param int   $item_id
 		 * @param array $values
 		 *
 		 * @throws Exception

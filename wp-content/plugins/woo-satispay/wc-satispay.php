@@ -101,7 +101,7 @@ class WC_Satispay extends WC_Payment_Gateway {
       'activationCode' => array(
         'title' => __('Activation Code', 'woo-satispay'),
         'type' => 'text',
-        'description' => sprintf(__('Get a six characters Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>.', 'woo-satispay'), 'https://business.satispay.com')
+        'description' => sprintf(__('Get a six characters Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>.', 'woo-satispay'), 'https://dashboard.satispay.com')
       ),
       
       // 'advanced' => array(
@@ -223,7 +223,7 @@ class WC_Satispay extends WC_Payment_Gateway {
       \SatispayGBusiness\Payment::all();
     } catch (\Exception $ex) {
       echo '<div class="notice-error notice">';
-      echo '<p>'.sprintf(__('Satispay is not correctly configured, get an Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>', 'woo-satispay'), 'https://business.satispay.com').'</p>';
+      echo '<p>'.sprintf(__('Satispay is not correctly configured, get an Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>', 'woo-satispay'), 'https://dashboard.satispay.com').'</p>';
       echo '</div>';
     }
     

@@ -5444,3 +5444,123 @@ Stack trace:
 #3 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/includes/class-cli.php(153): CookieYes\Lite\Admin\Admin->__construct('cookie-law-info', '3.0.9')
 #4 /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/includes/class-cli.php(95): CookieYes\Lite\Includes\CLI->define_admin_hooks()
 #5 /shared/httpd/agrispesa/wp-content/plugins/cookie-la in /shared/httpd/agrispesa/wp-content/plugins/cookie-law-info/lite/admin/modules/settings/class-settings.php on line 30
+[19-May-2023 15:58:37 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 15:58:37 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 15:58:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:00:37 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:00:37 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:00:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:02:37 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:02:37 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:02:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:04:37 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:04:37 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:04:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:06:37 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:06:37 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:06:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:07:38 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:07:38 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:07:38 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:09:39 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:09:39 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:09:39 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:11:39 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:11:39 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:11:39 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:12:39 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:12:39 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:12:39 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:13:39 UTC] PHP Notice:  Undefined index: file in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:13:39 UTC] PHP Notice:  Undefined index: line in /shared/httpd/agrispesa/wp-content/plugins/query-monitor/collectors/php_errors.php on line 367
+[19-May-2023 16:13:39 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\WooCommerce\Blocks\Domain\Services\Notices' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php:322
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php(42): Automattic\WooCommerce\Blocks\Domain\Bootstrap->Automattic\WooCommerce\Blocks\Domain\{closure}(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php(28): Automattic\WooCommerce\Blocks\Registry\AbstractDependencyType->resolve_value(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php(96): Automattic\WooCommerce\Blocks\Registry\SharedType->get(Object(Automattic\WooCommerce\Blocks\Registry\Container))
+#3 /shared/httpd/agrispesa/wp-content/p in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php on line 322
+[19-May-2023 16:14:39 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\Jetpack\Autoloader\jp53b7d0bfd873df4bbb1d211a2c208330\Autoloader' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/vendor/autoload_packages.php:13
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/src/Autoloader.php(37): require()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/woocommerce.php(27): Automattic\WooCommerce\Autoloader::init()
+#2 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#6 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/vendor/autoload_packages.php on line 13
+[19-May-2023 16:16:41 UTC] PHP Fatal error:  Uncaught Error: Class 'WC_Integration_MaxMind_Geolocation' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-integrations.php:41
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-woocommerce.php(659): WC_Integrations->__construct()
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WooCommerce->init('')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#3 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /shared/httpd/agrispesa/wp-settings.php(623): do_action('init')
+#5 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#6 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#7 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#8 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-integrations.php on line 41
+[19-May-2023 16:26:01 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\Jetpack\Autoloader\jp1cf5744e4a1fde30757253934a90e041\Autoloader' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/autoload_packages.php:13
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/woocommerce-payments.php(27): require_once()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/autoload_packages.php on line 13
+[19-May-2023 16:27:01 UTC] PHP Fatal error:  Uncaught Error: Class 'Automattic\Jetpack\Autoloader\jp1cf5744e4a1fde30757253934a90e041\Autoloader' not found in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/autoload_packages.php:13
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/woocommerce-payments.php(27): require_once()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/autoload_packages.php on line 13

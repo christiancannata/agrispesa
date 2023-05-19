@@ -2,8 +2,8 @@
 /**
  * Gift Card product add to cart
  *
- * @author  Yithemes
- * @package yith-woocommerce-gift-cards\templates\yith-gift-cards\
+ * @author YITH
+ * @package YITH\GiftCards\Templates
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -123,7 +123,7 @@ $expiration_date = ! is_numeric( $object->expiration ) ? strtotime( $object->exp
 		</tr>
 
 		<tr>
-			<td colspan="2" class="ywgc-expiration-message" style="text-align: center"><?php echo wp_kses( apply_filters( 'yith_ywgc_email_description_text', get_option( 'ywgc_description_template_email_text', esc_html__( 'To use this gift card, you can either enter the code in the gift card field on the cart page or click on the following link to automatically get the discount.', 'yith-woocommerce-gift-cards' ) ) ), 'post' ); ?></td>
+			<td colspan="2" class="ywgc-description-template-email-message" style="text-align: center"><?php echo wp_kses( apply_filters( 'yith_ywgc_email_description_text', get_option( 'ywgc_description_template_email_text', esc_html__( 'To use this gift card, you can either enter the code in the gift card field on the cart page or click on the following link to automatically get the discount.', 'yith-woocommerce-gift-cards' ) ) ), 'post' ); ?></td>
 		</tr>
 
 </table>

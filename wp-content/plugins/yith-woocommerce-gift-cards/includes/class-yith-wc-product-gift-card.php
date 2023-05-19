@@ -105,7 +105,7 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		 */
 		public function is_purchasable() {
 
-			$purchasable = $this->get_amounts_count() > 0 || $this->is_manual_amount_enabled() ? 1 : 0;
+			$purchasable = $this->get_amounts_count() > 0 || $this->is_manual_amount_enabled() ? true : false;
 
 			return apply_filters( 'woocommerce_is_purchasable', $purchasable, $this );
 		}
@@ -122,7 +122,7 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		/**
 		 * Save current gift card amounts
 		 *
-		 * @param array $amounts
+		 * @param array  $amounts
 		 * @param string $currency_id
 		 */
 		public function save_amounts( $amounts = array(), $currency_id = '' ) {
@@ -281,6 +281,57 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		public function update_excluded_categories( $status ) {
 			$this->update_meta_data( self::YWGC_EXCLUDED_CATEGORIES, $status );
 			$this->save_meta_data();
+		}
+
+		/**
+		 * Returns the price in html format
+		 *
+		 * @access public
+		 *
+		 * @param string $price (default: '')
+		 *
+		 * @return string
+		 */
+		public function get_price_html( $price = '' ) {
+			$amounts = $this->get_amounts_to_be_shown();
+
+			// No price for current gift card.
+			if ( ! count( $amounts ) ) {
+				/**
+				 * APPLY_FILTERS: yith_woocommerce_gift_cards_empty_price_html
+				 *
+				 * Filter the empty price HTML for the gift cards.
+				 *
+				 * @param string empty string
+				 * @param object $this gift card product instance
+				 *
+				 * @return string
+				 */
+				$price = apply_filters( 'yith_woocommerce_gift_cards_empty_price_html', '', $this );
+			} else {
+				ksort( $amounts, SORT_NUMERIC );
+
+				$min_price = current( $amounts );
+				$min_price = wc_price( $min_price['price'] );
+				$max_price = end( $amounts );
+				$max_price = wc_price( $max_price['price'] );
+
+				/**
+				 * APPLY_FILTERS: yith_woocommerce_gift_cards_amount_range
+				 *
+				 * Filter the price range of a gift card product.
+				 *
+				 * @param string $price price range of the gift card
+				 * @param object $this gift card product instance
+				 * @param string $min_price minimum amount of the gift card
+				 * @param string $max_price maximum amount of the gift card
+				 *
+				 * @return string
+				 */
+				$price = apply_filters( 'yith_woocommerce_gift_cards_amount_range', $min_price !== $max_price ? wc_format_price_range( $min_price, $max_price ) : $min_price, $this, $min_price, $max_price );
+			}
+
+			return apply_filters( 'woocommerce_get_price_html', $price, $this );
 		}
 
 		/**
