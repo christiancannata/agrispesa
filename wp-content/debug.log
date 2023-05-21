@@ -5564,3 +5564,10 @@ Stack trace:
 #4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
 #5 {main}
   thrown in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/autoload_packages.php on line 13
+[21-May-2023 21:36:04 UTC] PHP Fatal error:  Uncaught Exception: Subscription #40110: The cancelled date must occur after the next payment date. The end date must occur after the next payment date. in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php:2471
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php(1273): WC_Subscription->validate_date_updates(Array, 'gmt')
+#1 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php(746): WC_Subscription->update_dates(Array)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/f...', Array, NULL)
+#4 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispat in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php on line 2471

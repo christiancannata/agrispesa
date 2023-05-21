@@ -725,58 +725,34 @@ add_action("rest_api_init", function () {
             return $response;
         },
     ]);
-    register_rest_route("agrispesa/v1", "import-subscriptions", [
-        "methods" => "POST",
+
+
+
+	register_rest_route("agrispesa/v1", "fix-subscriptions", [
+        "methods" => "GET",
         "permission_callback" => function () {
             return true;
         },
         "callback" => function ($request) {
-            $lines = explode(PHP_EOL, $request->get_body());
-            $users = [];
-            foreach ($lines as $line) {
-                $users[] = str_getcsv($line, ";");
-            }
-            $usersSkipped = [];
-            $subscriptionCreated = [];
-            $header_row = array_shift($users);
-            $employee_csv = [];
-            foreach ($users as $row) {
-                if (!empty($row)) {
-                    $employee_csv[] = array_combine($header_row, $row);
-                }
-            }
 
-            foreach ($employee_csv as $user) {
-                if (empty($user["id_utente"])) {
-                    continue;
-                }
+		    $subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1,'subscription_status' => ['active','on-hold']]);
 
-                $wordpressUser = get_users([
-                    "meta_key" => "navision_id",
-                    "meta_value" => $user["id_utente"],
-                ]);
-                if (count($wordpressUser) > 0) {
-                    $wordpressUser = reset($wordpressUser);
-                }
-                if (!$wordpressUser) {
-                    $usersSkipped[] = $user["id_utente"];
-                    continue;
-                }
+			foreach($subscriptions as $subscription){
+				$paymentMethod = $subscription->get_payment_method();
+				if($paymentMethod == 'bacs'){
+					$subscription->set_status('active');
 
-                update_user_meta(
-                    $wordpressUser->ID,
-                    "shipping_piano",
-                    $user["automatismiSettimanali_indirizzoSpedizione::scala"]
-                );
-                update_user_meta(
-                    $wordpressUser->ID,
-                    "shipping_scala",
-                    $user["automatismiSettimanali_indirizzoSpedizione::piano"]
-                );
-            }
+					$subscription->update_dates([
+						'next_payment' => '2100-01-01 00:00:00'
+					]);
+					$subscription->set_requires_manual_renewal(true);
+
+				}
+
+			}
+
+
             $response = new WP_REST_Response([
-                "subscriptions_created" => $subscriptionCreated,
-                "users_skipped" => $usersSkipped,
             ]);
             $response->set_status(201);
             return $response;

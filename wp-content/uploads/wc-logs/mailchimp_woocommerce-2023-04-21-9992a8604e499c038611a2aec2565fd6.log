@@ -1,2 +1,0 @@
-2023-04-21T14:38:05+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 37730
-2023-04-21T14:40:08+00:00 NOTICE order_submit :: #37730 has a financial status of pending and was skipped.

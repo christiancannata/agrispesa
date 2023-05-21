@@ -112,7 +112,7 @@ if (in_array('box', $categories)): ?>
 
 	<?php if ($related_products) : ?>
 
-<!--
+		<!--
 		<section class="section-hero small">
 			<div class="section-hero--container">
 				<h4 class="section-hero--subtitle ">
@@ -123,13 +123,13 @@ if (in_array('box', $categories)): ?>
 		<section class="products-carousel--container">
 			<div class="products-carousel">
 				<?php $i = 1;
-				foreach ($related_products as $related_product) : ?>
+		foreach ($related_products as $related_product) : ?>
 
 					<?php
-					$post_object = get_post($related_product->get_id());
+			$post_object = get_post($related_product->get_id());
 
-					setup_postdata($GLOBALS['post'] =& $post_object); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-					?>
+			setup_postdata($GLOBALS['post'] =& $post_object); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
+			?>
 
 
 					<?php get_template_part('template-parts/loop', 'shop'); ?>
