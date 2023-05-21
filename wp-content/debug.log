@@ -5573,3 +5573,12 @@ Stack trace:
 #4 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispat in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php on line 2471
 [21-May-2023 21:42:34 UTC] PHP Parse error:  syntax error, unexpected ')' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 744
 [21-May-2023 21:42:34 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[21-May-2023 22:00:59 UTC] PHP Parse error:  syntax error, unexpected '=', expecting ';' or ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 7
+[21-May-2023 22:00:59 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[21-May-2023 22:01:27 UTC] PHP Parse error:  syntax error, unexpected '=', expecting ';' or ',' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 7
+[21-May-2023 22:01:27 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[21-May-2023 22:06:38 UTC] PHP Warning:  strtotime() expects parameter 2 to be int, string given in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 1258
+[21-May-2023 22:09:50 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 1262
+[21-May-2023 22:09:50 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[21-May-2023 22:10:04 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 1262
+[21-May-2023 22:10:04 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0

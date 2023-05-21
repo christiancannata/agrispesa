@@ -4,6 +4,7 @@ function dd($vars)
     die(var_dump($vars));
 }
 
+
 add_action("reload_terms_count", function ($productId) {});
 
 // define woocommerce_order_status_completed callback function

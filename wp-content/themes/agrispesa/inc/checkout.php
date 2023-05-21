@@ -1247,3 +1247,44 @@ function filter_wc_check_cart_items()
 	}
 
 }
+
+
+add_action('woocommerce_checkout_subscription_created', function ($subscription) {
+	$paymentMethod = $subscription->get_payment_method();
+
+	//change reneval date
+	// get next $consegneNameDay from today
+
+
+	$nextRenew = new DateTime("next Wednesday");
+	$now = new DateTime();
+	if ($now->format('D') != 'Wed') {
+		$nextRenew->add(new DateInterval('P1W'));
+	}
+
+	$nextRenew->setTimezone(new DateTimeZone('Europe/Rome'));
+	$nextRenew->setTime(12, 0, 0);
+
+	$nextPayment = $nextRenew->format('Y-m-d H:i:s');
+	$paymentInterval = 1;
+	$paymentPeriod = 'week';
+
+	if ($paymentMethod == 'bacs') {
+		$subscription->set_status('active');
+		$subscription->set_billing_period('year');
+		$subscription->set_billing_interval(100);
+		$subscription->update_dates([
+			'next_payment' => '2100-01-01 00:00:00'
+		]);
+
+		$subscription->set_requires_manual_renewal(true);
+	} else {
+		$subscription->set_billing_period($paymentPeriod);
+		$subscription->set_billing_interval($paymentInterval);
+		$subscription->update_dates([
+			'next_payment' => $nextPayment
+		]);
+	}
+	$subscription->save();
+
+}, 100);
