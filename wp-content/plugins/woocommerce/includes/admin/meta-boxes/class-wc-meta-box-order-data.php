@@ -279,7 +279,7 @@ class WC_Meta_Box_Order_Data {
 								}
 								?>
 							</label>
-							<select id="order_status" name="order_status" class="wc-enhanced-select">
+							<select autocomplete="off" id="order_status" name="order_status" class="wc-enhanced-select">
 								<?php
 								$statuses = wc_get_order_statuses();
 								foreach ( $statuses as $status => $status_name ) {

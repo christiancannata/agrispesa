@@ -739,14 +739,18 @@ add_action("rest_api_init", function () {
 
 			foreach($subscriptions as $subscription){
 				$paymentMethod = $subscription->get_payment_method();
+
 				if($paymentMethod == 'bacs'){
+
 					$subscription->set_status('active');
+					$subscription->set_billing_period('year');
+					$subscription->set_billing_interval(100);
 
 					$subscription->update_dates([
 						'next_payment' => '2100-01-01 00:00:00'
 					]);
 					$subscription->set_requires_manual_renewal(true);
-
+					$subscription->save();
 				}
 
 			}
