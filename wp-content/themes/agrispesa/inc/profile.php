@@ -13,11 +13,22 @@ function enqueue_box_js()
 {
 	global $wp_query;
 
-	if (isset($wp_query->query_vars['personalizza-scatola'])) {
 
+
+	if (isset($wp_query->query_vars['calendar'])) {
+		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);
+		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar'), null, true);
+
+
+		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
+		wp_enqueue_script('swal');
+	}
+
+	if (isset($wp_query->query_vars['personalizza-scatola'])) {
 
 		wp_register_style('select2css', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', false, '1.0', 'all');
 		wp_register_script('select2', '//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '1.0', true);
+
 
 		wp_enqueue_style('select2css');
 		wp_enqueue_script('select2');
@@ -39,6 +50,7 @@ function add_settings_box_endpoint()
 {
 	add_rewrite_endpoint('personalizza-scatola', EP_ROOT | EP_PAGES);
 	add_rewrite_endpoint('fatture', EP_ROOT | EP_PAGES);
+	add_rewrite_endpoint('calendar', EP_ROOT | EP_PAGES);
 
 }
 
@@ -65,6 +77,7 @@ function settings_box_query_vars($vars)
 
 	//$vars[] = 'personalizza-scatola';
 	$vars[] = 'fatture';
+	$vars[] = 'calendar';
 
 	return $vars;
 
@@ -87,6 +100,7 @@ function settings_box_link_my_account($items)
 	$newMenu['edit-address'] = 'Indirizzi';
 	$newMenu['gift-cards'] = 'Carte Regalo';
 	$newMenu['subscriptions'] = 'Facciamo Noi';
+	$newMenu['calendar'] = 'Calendario';
 	$newMenu['customer-logout'] = 'Esci';
 
 	return $newMenu;
@@ -258,23 +272,6 @@ function invoice_box_content()
 		],
 	]);
 
-	/*$args = [
-		"status" => "wc-completed",
-		"limit" => -1,
-
-		"meta_key" => "_payment_method",
-		"meta_value" => ["bacs", "wallet", ""],
-		"meta_compare" => "NOT IN",
-		'customer' => get_current_user_id(),
-	];
-*/
-	//$payments = wc_get_orders($args);
-
-	//$invoices = array_merge($userInvoices, $payments);
-
-	/*usort($invoices, function ($a, $b) {
-		return $a->ID < $b->ID;
-	});*/
 
 	?>
 	<div class="woocommerce-Fatture-content">
@@ -398,4 +395,119 @@ function invoice_box_content()
 	<?php
 }
 
+function enable_subscription($subscriptionId, $enableDate)
+{
+	$subscription = wcs_get_subscription($subscriptionId);
+	$subscription->update_status('active', 'Abbonamento riattivato da calendario.', true);
+	$nextPaymentDate = $enableDate->add(new DateInterval('PT2H'));
+
+	$subscription->update_dates([
+		'next_payment' => $nextPaymentDate->getTimestamp()
+	]);
+	$subscription->save();
+
+}
+
+function disable_subscription($subscriptionId, $enableDate, $week)
+{
+	$subscription = wcs_get_subscription($subscriptionId);
+	$subscription->update_status('on-hold', 'Abbonamento sospeso da calendario.', true);
+
+	enable_subscription($subscriptionId, $enableDate);
+
+	as_schedule_single_action($enableDate->getTimestamp(), "enable_subscription", [
+		"subscriptionId" => $subscription->get_id(),
+		"enableDate" => $enableDate
+	], 'enable_subscription_' . $subscription->get_id() . '_' . $week);
+
+}
+
 add_action('woocommerce_account_fatture_endpoint', 'invoice_box_content');
+
+
+function get_first_and_last_day_of_week($year_number, $week_number)
+{
+	// we need to specify 'today' otherwise datetime constructor uses 'now' which includes current time
+	$today = new DateTime();
+
+	return [
+		clone $today->setISODate($year_number, $week_number, 0)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 1)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 2)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 3)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 4)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 5)->add(new \DateInterval('P1D')),
+		clone $today->setISODate($year_number, $week_number, 6)->add(new \DateInterval('P1D')),
+	];
+}
+
+
+function calendar_content()
+{
+
+	if (isset($_GET['schedule'])) {
+
+		$week = $_GET['week'];
+
+		$subscription = wcs_get_subscriptions([
+			"subscriptions_per_page" => 1,
+			'orderby' => 'ID',
+			'order' => 'DESC',
+			"customer_id" => get_current_user_id()
+		]);
+		$subscription = reset($subscription);
+
+
+		$dayToSchedule = null;
+
+		$weekDays = get_first_and_last_day_of_week(2023, $week);
+		$disableDate = $weekDays[1]->setTime(18, 0);
+
+		$enableDate = clone $disableDate->add(new DateInterval('P1W'));
+		$enableDate = $enableDate->setTime(15, 0);
+
+		/*$subscription->update_dates([
+			'next_payment' =>
+		]);
+		$subscription->save();
+*/
+		//schedule on the day before generating order in the specified week
+
+		disable_subscription($subscription->get_id(), $enableDate);
+
+		as_schedule_single_action($disableDate->getTimestamp(), "disable_subscription", [
+			"subscriptionId" => $subscription->get_id(),
+			"enableDate" => $enableDate,
+			"week" => $week
+		],
+			'disable_subscription_' . $subscription->get_id() . '_' . $week);
+
+		$disableWeeks = get_post_meta($subscription->get_id(), 'disable_weeks', true);
+		if (!$disableWeeks) {
+			$disableWeeks = [];
+		}
+
+		$disableWeeks[] = $week;
+
+		sort($disableWeeks);
+
+		update_post_meta($subscription->get_id(), 'disable_weeks', $disableWeeks);
+
+	}
+
+	?>
+	<div class="woocommerce-Fatture-content">
+
+		<div class="woocommerce-notices-wrapper"></div>
+		<h3 class="my-account--minititle address-title">Calendario</h3>
+
+		<div class="table-shadow-relative">
+			<div id="calendar"></div>
+			<div class="table-shadow"></div>
+		</div>
+
+	</div>
+	<?php
+}
+
+add_action('woocommerce_account_calendar_endpoint', 'calendar_content');

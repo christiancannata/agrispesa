@@ -1,0 +1,24 @@
+2023-05-14T00:19:39+00:00 CRITICAL syntax error, unexpected 'as_schedule_single_action' (T_STRING), expecting variable (T_VARIABLE) or '{' or '$' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 397
+
+2023-05-14T00:21:58+00:00 CRITICAL syntax error, unexpected 'as_schedule_single_action' (T_STRING) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 410
+
+2023-05-14T00:26:49+00:00 CRITICAL Uncaught Exception: DateTime::__construct(): Failed to parse time string (disable_subscription) at position 0 (d): The timezone could not be found in the database in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php:421
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php(421): DateTime->__construct('disable_subscri...', Object(DateTimeZone))
+#1 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_ActionFactory.php(111): as_get_datetime_object('disable_subscri...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php(81): ActionScheduler_ActionFactory->single_unique(Array, Array, 'disable_subscri...', '', false)
+#3 /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php(413): as_schedule_single_action('disable_subscri...', Array)
+#4 /shared/h in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/functions.php alla riga 421
+
+2023-05-14T00:34:40+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php:418
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): calendar_content('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-template-functions.php(3187): do_action('woocommerce_acc...', '')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): woocommerce_account_content('')
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/my-account.php(205): do_action('woocommerce_acc...')
+#8 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-co in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/profile.php alla riga 418
+

@@ -527,6 +527,8 @@ add_action(
     "woocommerce_product_custom_fields_save1"
 );
 add_action("rest_api_init", function () {
+
+
     register_rest_route("agrispesa/v1", "import-preferences", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -3124,6 +3126,113 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+
+
+	register_rest_route("agrispesa/v1", "add-user-blocked-weeks", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $loggedUser = $_POST["userId"];
+
+			$day = $_POST['day'];
+			$day = new DateTime($day);
+			$week = $day->format("W");
+
+		$subscription = wcs_get_subscriptions([
+			"subscriptions_per_page" => 1,
+			'orderby' => 'ID',
+			'order' => 'DESC',
+			"customer_id" =>$loggedUser
+		]);
+		$subscription = reset($subscription);
+
+			$disabledWeeks = get_post_meta($subscription->get_id(),'disable_weeks_'.$day->format("Y"),true);
+			if(!$disabledWeeks || !is_array($disabledWeeks)){
+				$disabledWeeks = [];
+			}
+
+			if(in_array($week,$disabledWeeks)){
+				if (($key = array_search($week, $disabledWeeks)) !== false) {
+    				unset($disabledWeeks[$key]);
+				}
+			}else{
+				$disabledWeeks[] = $week;
+			}
+
+			update_post_meta($subscription->get_id(),'disable_weeks_'.$day->format("Y"),$disabledWeeks);
+
+            $response = new WP_REST_Response($disabledWeeks);
+            $response->set_status(201);
+            return $response;
+        },
+    ]);
+
+
+	register_rest_route("agrispesa/v1", "user-blocked-weeks", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $loggedUser = $_GET["userId"];
+
+			$startDate = $_GET['start'];
+			$startDate = new DateTime($startDate);
+
+			$endDate = $_GET['end'];
+			$endDate = new DateTime($endDate);
+
+
+		$subscription = wcs_get_subscriptions([
+			"subscriptions_per_page" => 1,
+			'orderby' => 'ID',
+			'order' => 'DESC',
+			"customer_id" =>$loggedUser
+		]);
+		$subscription = reset($subscription);
+
+		require_once get_template_directory() .
+                    "/libraries/carbon/autoload.php";
+
+		$fromDate = new Carbon\Carbon($startDate);
+
+		$fromDate = $fromDate->dayOfWeek == Carbon\Carbon::THURSDAY
+    	? $fromDate
+   	    : $fromDate->copy()->modify('next Thursday');
+
+		$toDate = new Carbon\Carbon($endDate);
+		$dates = [];
+
+		$events = [];
+
+		$disabledWeeks = get_post_meta($subscription->get_id(),'disable_weeks_'.$startDate->format("Y"),true);
+		if(is_array($disabledWeeks)){
+				for($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
+			if(in_array($date->format("W"),$disabledWeeks)){
+				$events[] = [
+				    "start" => 	$date->format("Y-m-d 00:00:00"),
+				    "end" => $date->format("Y-m-d 23:59:59"),
+				    "title" => "Non riceverai la box"
+				];
+			}
+		}
+
+		}
+
+
+
+
+            $response = new WP_REST_Response($events);
+            $response->set_status(200);
+            return $response;
+        },
+    ]);
+
+
+
     register_rest_route("agrispesa/v1", "user-subscriptions", [
         "methods" => "GET",
         "permission_callback" => function () {

@@ -5,3 +5,4 @@ wp-content/themes/agrispesa/node_modules/
 .htaccess
 /.idea/
 /.devilbox/
+wp-content/debug.log
