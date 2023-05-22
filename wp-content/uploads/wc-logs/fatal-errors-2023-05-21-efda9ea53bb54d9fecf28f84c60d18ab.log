@@ -6,3 +6,7 @@ Stack trace:
 #3 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/f...', Array, NULL)
 #4 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispat in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wc-subscription.php alla riga 2471
 
+2023-05-21T23:46:11+00:00 CRITICAL Cannot redeclare codice_fiscale() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 605
+
+2023-05-21T23:46:12+00:00 CRITICAL Cannot redeclare codice_fiscale() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 605
+

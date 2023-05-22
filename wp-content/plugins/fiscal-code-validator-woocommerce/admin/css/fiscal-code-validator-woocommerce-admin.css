@@ -1,0 +1,25 @@
+
+.plugin-container {
+    margin: 5px 15px 2px;
+    background: white;
+    padding: 20px;
+}
+
+.container-text h5 {
+    margin-top: 20px;
+    margin-bottom: 2px;
+    font-size: 15px;
+}
+
+.plugin-container form {
+    margin-top: 30px;
+}
+
+.container-text .button {
+    margin-top: 20px;
+}
+
+.button.button-primary {
+    color: white;
+    background: #2271b1;
+}

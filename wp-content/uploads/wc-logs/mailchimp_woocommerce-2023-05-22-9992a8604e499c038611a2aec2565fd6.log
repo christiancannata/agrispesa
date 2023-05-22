@@ -1,0 +1,51 @@
+2023-05-22T01:11:28+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41122
+2023-05-22T01:11:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41123
+2023-05-22T01:13:26+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41124
+2023-05-22T01:13:47+00:00 NOTICE order.member.updated :: Updated entoni.santoro@gmail.com subscriber status to transactional and language to it
+2023-05-22T01:13:47+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41122 :: email: entoni.santoro@gmail.com
+2023-05-22T01:14:32+00:00 NOTICE order.member.updated :: Updated valentina.pasquali@evonik.com subscriber status to transactional and language to it
+2023-05-22T01:14:32+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41123 :: email: valentina.pasquali@evonik.com
+2023-05-22T01:15:49+00:00 NOTICE order.member.updated :: Updated ale.ale.bitetti@gmail.com subscriber status to transactional and language to it
+2023-05-22T01:15:49+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41124 :: email: ale.ale.bitetti@gmail.com
+2023-05-22T01:17:35+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41125
+2023-05-22T01:17:36+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41126
+2023-05-22T01:17:36+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41127
+2023-05-22T01:18:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41128
+2023-05-22T01:18:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41129
+2023-05-22T01:18:51+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41130
+2023-05-22T01:18:51+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41131
+2023-05-22T01:18:51+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41132
+2023-05-22T01:20:12+00:00 NOTICE order.member.updated :: Updated chianale.fabio@gmail.com subscriber status to transactional and language to it
+2023-05-22T01:20:12+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41125 :: email: chianale.fabio@gmail.com
+2023-05-22T01:20:28+00:00 NOTICE order.member.updated :: Updated marco.pitto@alice.it subscriber status to transactional and language to it
+2023-05-22T01:20:28+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41126 :: email: marco.pitto@alice.it
+2023-05-22T01:22:51+00:00 NOTICE order.member.updated :: Updated chiara.boschetto@yahoo.it subscriber status to transactional and language to it
+2023-05-22T01:22:51+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41127 :: email: chiara.boschetto@yahoo.it
+2023-05-22T01:24:20+00:00 NOTICE order.member.updated :: Updated bluevelvetchristine@outlook.com subscriber status to subscribed and language to it
+2023-05-22T01:24:20+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41128 :: email: bluevelvetchristine@outlook.com
+2023-05-22T01:25:21+00:00 NOTICE order.member.updated :: Updated nataliepaul2000@yahoo.it subscriber status to subscribed and language to it
+2023-05-22T01:25:21+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41129 :: email: nataliepaul2000@yahoo.it
+2023-05-22T01:26:18+00:00 NOTICE order.member.updated :: Updated stefano.erzegovesi@gmail.com subscriber status to transactional and language to it
+2023-05-22T01:26:18+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41130 :: email: stefano.erzegovesi@gmail.com
+2023-05-22T01:27:21+00:00 NOTICE order.member.updated :: Updated cinzia.calcagno@sella.it subscriber status to transactional and language to it
+2023-05-22T01:27:21+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41131 :: email: cinzia.calcagno@sella.it
+2023-05-22T01:28:18+00:00 NOTICE order.member.updated :: Updated Micol.scabbia00@gmail.com subscriber status to transactional and language to it
+2023-05-22T01:28:18+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41132 :: email: Micol.scabbia00@gmail.com
+2023-05-22T01:46:34+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41133
+2023-05-22T01:48:30+00:00 NOTICE order.member.updated :: Updated giuseppe.caiafa@gmail.com subscriber status to subscribed and language to it
+2023-05-22T01:48:30+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41133 :: email: giuseppe.caiafa@gmail.com
+2023-05-22T01:50:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41134
+2023-05-22T01:52:46+00:00 NOTICE order.member.updated :: Updated annalisa.gaglio@fastwebnet.it subscriber status to subscribed and language to it
+2023-05-22T01:52:46+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41134 :: email: annalisa.gaglio@fastwebnet.it
+2023-05-22T01:56:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41135
+2023-05-22T01:58:45+00:00 NOTICE order.member.updated :: Updated silviaplebani84@libero.it subscriber status to subscribed and language to it
+2023-05-22T01:58:45+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41135 :: email: silviaplebani84@libero.it
+2023-05-22T02:03:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41136
+2023-05-22T02:05:38+00:00 NOTICE order.member.updated :: Updated cristina@fabio.net subscriber status to subscribed and language to it
+2023-05-22T02:05:38+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41136 :: email: cristina@fabio.net
+2023-05-22T02:06:23+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41137
+2023-05-22T02:08:25+00:00 NOTICE order.member.updated :: Updated cesareg@studiogirello.it subscriber status to subscribed and language to it
+2023-05-22T02:08:25+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41137 :: email: cesareg@studiogirello.it
+2023-05-22T02:14:15+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41138
+2023-05-22T02:16:35+00:00 NOTICE order.member.updated :: Updated airaudi.ivo@airgreen.it subscriber status to subscribed and language to it
+2023-05-22T02:16:35+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41138 :: email: airaudi.ivo@airgreen.it

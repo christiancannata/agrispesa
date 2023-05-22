@@ -5582,3 +5582,100 @@ Stack trace:
 [21-May-2023 22:09:50 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
 [21-May-2023 22:10:04 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 1262
 [21-May-2023 22:10:04 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[21-May-2023 23:46:11 UTC] PHP Fatal error:  Cannot redeclare codice_fiscale() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 605
+[21-May-2023 23:46:12 UTC] PHP Fatal error:  Cannot redeclare codice_fiscale() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 605
+[21-May-2023 23:46:40 UTC] PHP Fatal error:  Cannot redeclare codice_fiscale() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 605
+[21-May-2023 23:46:40 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[21-May-2023 23:46:40 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[21-May-2023 23:47:25 UTC] PHP Notice:  Undefined index: shipping in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 230
+[21-May-2023 23:47:38 UTC] PHP Notice:  Undefined index: shipping in /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-checkout.php on line 230
+[22-May-2023 00:08:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Fiscal_Code_Validator_Woocommerce::addRestRoutes() in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php(82): Fiscal_Code_Validator_Woocommerce->define_public_hooks()
+#1 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(81): Fiscal_Code_Validator_Woocommerce->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(86): run_fiscal_code_validator_woocommerce()
+#3 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#6 /shar in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php on line 184
+[22-May-2023 00:10:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Fiscal_Code_Validator_Woocommerce::addRestRoutes() in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php(82): Fiscal_Code_Validator_Woocommerce->define_public_hooks()
+#1 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(81): Fiscal_Code_Validator_Woocommerce->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(86): run_fiscal_code_validator_woocommerce()
+#3 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#6 /shar in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php on line 184
+[22-May-2023 00:10:31 UTC] PHP Notice:  La funzione is_embed è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:10:31 UTC] PHP Notice:  La funzione is_search è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:10:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method Fiscal_Code_Validator_Woocommerce::addRestRoutes() in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:184
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php(82): Fiscal_Code_Validator_Woocommerce->define_public_hooks()
+#1 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(81): Fiscal_Code_Validator_Woocommerce->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/fiscal-code-validator-woocommerce.php(86): run_fiscal_code_validator_woocommerce()
+#3 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#6 /shar in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php on line 184
+[22-May-2023 00:11:52 UTC] PHP Notice:  Function register_rest_route was called <strong>incorrectly</strong>. REST API routes must be registered on the <code>rest_api_init</code> action. Please see <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 5.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:11:52 UTC] PHP Fatal error:  Uncaught Error: Call to a member function using_index_permalinks() on null in /shared/httpd/agrispesa/wp-includes/rest-api.php:459
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api.php(520): get_rest_url(NULL, '/wp/v2/posts/{i...', 'rest')
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2641): rest_url('wp/v2/posts/{id...')
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2586): WP_REST_Posts_Controller->get_schema_links()
+#3 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(388): WP_REST_Posts_Controller->get_item_schema()
+#4 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(343): WP_REST_Controller->get_context_param()
+#5 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2768): WP_REST_Controller->get_collection_params()
+#6 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-contr in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 459
+[22-May-2023 00:11:52 UTC] PHP Notice:  La funzione is_embed è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:11:52 UTC] PHP Notice:  La funzione is_search è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:11:55 UTC] PHP Notice:  Function register_rest_route was called <strong>incorrectly</strong>. REST API routes must be registered on the <code>rest_api_init</code> action. Please see <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 5.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:11:55 UTC] PHP Fatal error:  Uncaught Error: Call to a member function using_index_permalinks() on null in /shared/httpd/agrispesa/wp-includes/rest-api.php:459
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api.php(520): get_rest_url(NULL, '/wp/v2/posts/{i...', 'rest')
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2641): rest_url('wp/v2/posts/{id...')
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2586): WP_REST_Posts_Controller->get_schema_links()
+#3 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(388): WP_REST_Posts_Controller->get_item_schema()
+#4 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(343): WP_REST_Controller->get_context_param()
+#5 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2768): WP_REST_Controller->get_collection_params()
+#6 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-contr in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 459
+[22-May-2023 00:11:55 UTC] PHP Notice:  La funzione is_embed è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:11:55 UTC] PHP Notice:  La funzione is_search è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:12:36 UTC] PHP Notice:  Function register_rest_route was called <strong>incorrectly</strong>. REST API routes must be registered on the <code>rest_api_init</code> action. Please see <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 5.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:12:36 UTC] PHP Fatal error:  Uncaught Error: Call to a member function using_index_permalinks() on null in /shared/httpd/agrispesa/wp-includes/rest-api.php:459
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api.php(520): get_rest_url(NULL, '/wp/v2/posts/{i...', 'rest')
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2641): rest_url('wp/v2/posts/{id...')
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2586): WP_REST_Posts_Controller->get_schema_links()
+#3 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(388): WP_REST_Posts_Controller->get_item_schema()
+#4 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(343): WP_REST_Controller->get_context_param()
+#5 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2768): WP_REST_Controller->get_collection_params()
+#6 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-contr in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 459
+[22-May-2023 00:12:36 UTC] PHP Notice:  La funzione is_embed è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:12:36 UTC] PHP Notice:  La funzione is_search è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:12:50 UTC] PHP Notice:  Function register_rest_route was called <strong>incorrectly</strong>. REST API routes must be registered on the <code>rest_api_init</code> action. Please see <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> for more information. (This message was added in version 5.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[22-May-2023 00:12:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function using_index_permalinks() on null in /shared/httpd/agrispesa/wp-includes/rest-api.php:459
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api.php(520): get_rest_url(NULL, '/wp/v2/posts/{i...', 'rest')
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2641): rest_url('wp/v2/posts/{id...')
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2586): WP_REST_Posts_Controller->get_schema_links()
+#3 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(388): WP_REST_Posts_Controller->get_item_schema()
+#4 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-controller.php(343): WP_REST_Controller->get_context_param()
+#5 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php(2768): WP_REST_Controller->get_collection_params()
+#6 /shared/httpd/agrispesa/wp-includes/rest-api/endpoints/class-wp-rest-posts-contr in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 459
+[22-May-2023 00:32:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function update_options() in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php:269
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): Fiscal_Code_Validator_Woocommerce->{closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/fiscal-code/va...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/fiscal-code/va...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_H in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/includes/class-fiscal-code-validator-woocommerce.php on line 269
+[22-May-2023 01:22:02 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ':' in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php on line 155
+[22-May-2023 01:22:02 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[22-May-2023 01:22:36 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php on line 154
+[22-May-2023 01:23:02 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php on line 154
+[22-May-2023 01:23:02 UTC] PHP Notice:  Array to string conversion in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php on line 154
+[22-May-2023 01:42:47 UTC] PHP Notice:  Undefined index: domain in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php on line 154

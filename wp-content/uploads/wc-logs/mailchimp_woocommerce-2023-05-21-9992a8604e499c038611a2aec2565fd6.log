@@ -59,3 +59,5 @@
     [tracking] => 
 )
 
+2023-05-21T22:19:04+00:00 NOTICE order.member.updated :: Updated yocesac112@jwsuns.com subscriber status to subscribed and language to it
+2023-05-21T22:19:04+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41119 :: email: yocesac112@jwsuns.com :: abandoned cart deleted [7ee78fd1d83b03e64dae26d921575c67]

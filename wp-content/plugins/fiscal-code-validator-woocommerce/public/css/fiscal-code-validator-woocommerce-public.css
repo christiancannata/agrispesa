@@ -1,0 +1,23 @@
+.alert.alert-danger {
+    font-size: 16px;
+    color: #d31e1e;
+    border: 1px solid #d31e1e;
+    display: block;
+    padding: 5px;
+}
+
+.alert.alert-success {
+    font-size: 16px;
+    color: #3f913f;
+    border: 1px solid #3f913f;
+    display: block;
+    padding: 5px;
+}
+
+#is_fiscal_code_valid_field {
+    margin: 0px !important;
+}
+
+#is_fiscal_code_valid_field::before, #is_fiscal_code_valid_field::after {
+    content: none !important;
+}
