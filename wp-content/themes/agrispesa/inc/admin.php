@@ -4,7 +4,6 @@ function dd($vars)
     die(var_dump($vars));
 }
 
-
 add_action("reload_terms_count", function ($productId) {});
 
 // define woocommerce_order_status_completed callback function
@@ -33,7 +32,7 @@ function call_order_status_changed($orderId)
             }
         }
 
-		$ordersType = array_unique($ordersType);
+        $ordersType = array_unique($ordersType);
 
         update_post_meta($orderId, "_order_type", implode(" + ", $ordersType));
 
@@ -527,8 +526,6 @@ add_action(
     "woocommerce_product_custom_fields_save1"
 );
 add_action("rest_api_init", function () {
-
-
     register_rest_route("agrispesa/v1", "import-preferences", [
         "methods" => "POST",
         "permission_callback" => function () {
@@ -729,38 +726,34 @@ add_action("rest_api_init", function () {
         },
     ]);
 
-
-
-	register_rest_route("agrispesa/v1", "fix-subscriptions", [
+    register_rest_route("agrispesa/v1", "fix-subscriptions", [
         "methods" => "GET",
         "permission_callback" => function () {
             return true;
         },
         "callback" => function ($request) {
-
-		    $subscriptions = wcs_get_subscriptions(['subscriptions_per_page' => -1,'subscription_status' => ['active','on-hold']]);
-
-			foreach($subscriptions as $subscription){
-				$paymentMethod = $subscription->get_payment_method();
-
-				if($paymentMethod == 'bacs'){
-
-					$subscription->set_status('active');
-					$subscription->set_billing_period('year');
-					$subscription->set_billing_interval(100);
-
-					$subscription->update_dates([
-						'next_payment' => '2100-01-01 00:00:00'
-					]);
-					$subscription->set_requires_manual_renewal(true);
-					$subscription->save();
-				}
-
-			}
-
-
-            $response = new WP_REST_Response([
+            $subscriptions = wcs_get_subscriptions([
+                "subscriptions_per_page" => -1,
+                "subscription_status" => ["active", "on-hold"],
             ]);
+
+            foreach ($subscriptions as $subscription) {
+                $paymentMethod = $subscription->get_payment_method();
+
+                if ($paymentMethod == "bacs") {
+                    $subscription->set_status("active");
+                    $subscription->set_billing_period("year");
+                    $subscription->set_billing_interval(100);
+
+                    $subscription->update_dates([
+                        "next_payment" => "2100-01-01 00:00:00",
+                    ]);
+                    $subscription->set_requires_manual_renewal(true);
+                    $subscription->save();
+                }
+            }
+
+            $response = new WP_REST_Response([]);
             $response->set_status(201);
             return $response;
         },
@@ -2171,28 +2164,27 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_name");
 
-		if(!$shippingName){
-			$shippingName =
+        if (!$shippingName) {
+            $shippingName =
                 $order->get_shipping_last_name() .
-                    " " .
-                    $order->get_shipping_first_name()
-            ;
-		}
-        $ele1->nodeValue =  ucwords(strtolower($shippingName));
+                " " .
+                $order->get_shipping_first_name();
+        }
+        $ele1->nodeValue = ucwords(strtolower($shippingName));
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_address");
         $ele1->nodeValue = $order->get_shipping_address_1();
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("sh_description1");
 
-		$details = [];
-		if(!empty($scala)){
-			$details[] = $scala;
-		}
-		if(!empty($piano)){
-			$details[] = $piano;
-		}
-        $ele1->nodeValue = trim(implode(' | ',$details));
+        $details = [];
+        if (!empty($scala)) {
+            $details[] = $scala;
+        }
+        if (!empty($piano)) {
+            $details[] = $piano;
+        }
+        $ele1->nodeValue = trim(implode(" | ", $details));
         $row->appendChild($ele1);
 
         $ele1 = $doc->createElement("comment_lines");
@@ -2201,19 +2193,26 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $city = str_replace("-", " ", $order->get_shipping_city());
 
-		$cities = explode(" ",$city);
-		foreach($cities as $key => $city){
-			foreach($city as $keyChar => $cityChar){
-				if(isset($city[$keyChar+1])){
-				if(ctype_lower($city[$keyChar]) && ctype_upper($city[$keyChar+1])){
-					$city = substr_replace($city, "'", $keyChar+1, 0);
-				}
-				}
-				}
-			$cities[$key] = $city;
+		$isToUpdate = false;
+
+        $cities = explode(" ", $city);
+        foreach ($cities as $key => $city) {
+            for ($i = 0; $i < strlen($city); $i++) {
+                if (isset($city[$i + 1])) {
+                    if (ctype_lower($city[$i]) && ctype_upper($city[$i + 1])) {
+                        $city = substr_replace($city, "'", $i + 1, 0);
+						$isToUpdate = true;
+                    }
+                }
+            }
+            $cities[$key] = $city;
+        }
+
+		if($isToUpdate){
+
 		}
 
-		$city = implode(" ",$cities);
+        $city = implode(" ", $cities);
         $city = strtoupper($city);
 
         $ele2 = $doc->createElement("sh_city");
@@ -2246,7 +2245,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $productPrice = str_replace(
             ".",
             ",",
-            number_format(floatval($productPrice)/$quantity, 4)
+            number_format(floatval($productPrice) / $quantity, 4)
         );
 
         $ele2->nodeValue = $productPrice;
@@ -2364,9 +2363,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 //"meta_key" => "_date_completed",
                 //"meta_compare" => ">",
                 //"meta_value" => 1683195289,
-                   "meta_key" => "_week",
-                  "meta_compare" => "=",
-                   "meta_value" => $lastOrderWeek,
+                "meta_key" => "_week",
+                "meta_compare" => "=",
+                "meta_value" => $lastOrderWeek,
             ]);
 
             $items = 0;
@@ -2426,7 +2425,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-                if ($orderType != "ST" && $orderType != "FN" && $orderType != "ABBONAMENTO FN + ST") {
+                if (
+                    $orderType != "ST" &&
+                    $orderType != "FN" &&
+                    $orderType != "ABBONAMENTO FN + ST"
+                ) {
                     continue;
                 }
 
@@ -2545,48 +2548,45 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $notes = array_unique($notes);
                 $notes = implode(" - ", $notes);
 
-				$piani = [];
-				$scale = [];
-				foreach ($orders as $order) {
-					 $piano = get_post_meta(
-                            $order->get_id(),
-                            "shipping_piano",
-                            true
-                        );
-                        if (!$piano) {
-                            $piano = "";
-                        } else {
-                            $piano = "Piano " . $piano;
-                        }
+                $piani = [];
+                $scale = [];
+                foreach ($orders as $order) {
+                    $piano = get_post_meta(
+                        $order->get_id(),
+                        "shipping_piano",
+                        true
+                    );
+                    if (!$piano) {
+                        $piano = "";
+                    } else {
+                        $piano = "Piano " . $piano;
+                    }
 
+                    $scala = get_post_meta(
+                        $order->get_id(),
+                        "shipping_scala",
+                        true
+                    );
+                    if (!$scala) {
+                        $scala = "";
+                    } else {
+                        $scala = "Scala " . $scala;
+                    }
 
-                        $scala = get_post_meta(
-                            $order->get_id(),
-                            "shipping_scala",
-                            true
-                        );
-                        if (!$scala) {
-                            $scala = "";
-                        } else {
-                            $scala = "Scala " . $scala;
-                        }
+                    $piani[] = $piano;
+                    $scale[] = $scala;
+                }
 
-						$piani[] = $piano;
-						$scale[] = $scala;
-				}
+                $piani = array_unique($piani);
+                $scale = array_unique($scale);
 
-				$piani = array_unique($piani);
-				$scale = array_unique($scale);
+                $piano = implode(" ", $piani);
+                $scala = implode(" ", $scale);
 
-				$piano = implode(" ",$piani);
-				$scala = implode(" ",$scale);
-
-				$piano = str_replace('Piano Piano','Piano',$piano);
+                $piano = str_replace("Piano Piano", "Piano", $piano);
 
                 foreach ($orders as $order) {
                     if ($order->order_type == "ST" || $order->is_subscription) {
-
-
                         foreach ($order->get_items() as $item) {
                             $productId = null;
                             if ($item->get_variation_id()) {
@@ -2595,15 +2595,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $productId = $item->get_product_id();
                             }
 
-
                             $productNavisionId = get_post_meta(
                                 $productId,
                                 "_navision_id",
                                 true
                             );
 
-
-                         /*   $productPrice = get_post_meta(
+                            /*   $productPrice = get_post_meta(
                                 $productId,
                                 "_regular_price",
                                 true
@@ -2623,7 +2621,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             if (!$productNavisionId) {
                                 continue;
                             }
-
 
                             $offerLineNo = $item->get_meta("offer_line_no");
 
@@ -2734,8 +2731,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $item->get_total(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
-                    " " .
-                    $orders[0]->get_shipping_first_name()
+                                    " " .
+                                    $orders[0]->get_shipping_first_name()
                             );
                         }
 
@@ -2775,8 +2772,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 5,
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
-                    " " .
-                    $orders[0]->get_shipping_first_name()
+                                    " " .
+                                    $orders[0]->get_shipping_first_name()
                             );
                         }
                     }
@@ -2835,7 +2832,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "_payment_exported",
                     true
                 );
-
 
                 if ($isExported) {
                     continue;
@@ -3138,9 +3134,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-
-
-	register_rest_route("agrispesa/v1", "add-user-blocked-weeks", [
+    register_rest_route("agrispesa/v1", "add-user-blocked-weeks", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
@@ -3148,32 +3142,40 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $loggedUser = $_POST["userId"];
 
-			$day = $_POST['day'];
-			$day = new DateTime($day);
-			$week = $day->format("W");
+            $day = $_POST["day"];
+            $day = new DateTime($day);
+            $week = $day->format("W");
 
-		$subscription = wcs_get_subscriptions([
-			"subscriptions_per_page" => 1,
-			'orderby' => 'ID',
-			'order' => 'DESC',
-			"customer_id" =>$loggedUser
-		]);
-		$subscription = reset($subscription);
+            $subscription = wcs_get_subscriptions([
+                "subscriptions_per_page" => 1,
+                "orderby" => "ID",
+                "order" => "DESC",
+                "customer_id" => $loggedUser,
+            ]);
+            $subscription = reset($subscription);
 
-			$disabledWeeks = get_post_meta($subscription->get_id(),'disable_weeks_'.$day->format("Y"),true);
-			if(!$disabledWeeks || !is_array($disabledWeeks)){
-				$disabledWeeks = [];
-			}
+            $disabledWeeks = get_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $day->format("Y"),
+                true
+            );
+            if (!$disabledWeeks || !is_array($disabledWeeks)) {
+                $disabledWeeks = [];
+            }
 
-			if(in_array($week,$disabledWeeks)){
-				if (($key = array_search($week, $disabledWeeks)) !== false) {
-    				unset($disabledWeeks[$key]);
-				}
-			}else{
-				$disabledWeeks[] = $week;
-			}
+            if (in_array($week, $disabledWeeks)) {
+                if (($key = array_search($week, $disabledWeeks)) !== false) {
+                    unset($disabledWeeks[$key]);
+                }
+            } else {
+                $disabledWeeks[] = $week;
+            }
 
-			update_post_meta($subscription->get_id(),'disable_weeks_'.$day->format("Y"),$disabledWeeks);
+            update_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $day->format("Y"),
+                $disabledWeeks
+            );
 
             $response = new WP_REST_Response($disabledWeeks);
             $response->set_status(201);
@@ -3181,8 +3183,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-
-	register_rest_route("agrispesa/v1", "user-blocked-weeks", [
+    register_rest_route("agrispesa/v1", "user-blocked-weeks", [
         "methods" => "GET",
         "permission_callback" => function () {
             return true;
@@ -3190,59 +3191,57 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $loggedUser = $_GET["userId"];
 
-			$startDate = $_GET['start'];
-			$startDate = new DateTime($startDate);
+            $startDate = $_GET["start"];
+            $startDate = new DateTime($startDate);
 
-			$endDate = $_GET['end'];
-			$endDate = new DateTime($endDate);
+            $endDate = $_GET["end"];
+            $endDate = new DateTime($endDate);
 
+            $subscription = wcs_get_subscriptions([
+                "subscriptions_per_page" => 1,
+                "orderby" => "ID",
+                "order" => "DESC",
+                "customer_id" => $loggedUser,
+            ]);
+            $subscription = reset($subscription);
 
-		$subscription = wcs_get_subscriptions([
-			"subscriptions_per_page" => 1,
-			'orderby' => 'ID',
-			'order' => 'DESC',
-			"customer_id" =>$loggedUser
-		]);
-		$subscription = reset($subscription);
+            require_once get_template_directory() .
+                "/libraries/carbon/autoload.php";
 
-		require_once get_template_directory() .
-                    "/libraries/carbon/autoload.php";
+            $fromDate = new Carbon\Carbon($startDate);
 
-		$fromDate = new Carbon\Carbon($startDate);
+            $fromDate =
+                $fromDate->dayOfWeek == Carbon\Carbon::THURSDAY
+                    ? $fromDate
+                    : $fromDate->copy()->modify("next Thursday");
 
-		$fromDate = $fromDate->dayOfWeek == Carbon\Carbon::THURSDAY
-    	? $fromDate
-   	    : $fromDate->copy()->modify('next Thursday');
+            $toDate = new Carbon\Carbon($endDate);
+            $dates = [];
 
-		$toDate = new Carbon\Carbon($endDate);
-		$dates = [];
+            $events = [];
 
-		$events = [];
-
-		$disabledWeeks = get_post_meta($subscription->get_id(),'disable_weeks_'.$startDate->format("Y"),true);
-		if(is_array($disabledWeeks)){
-				for($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
-			if(in_array($date->format("W"),$disabledWeeks)){
-				$events[] = [
-				    "start" => 	$date->format("Y-m-d 00:00:00"),
-				    "end" => $date->format("Y-m-d 23:59:59"),
-				    "title" => "Non riceverai la box"
-				];
-			}
-		}
-
-		}
-
-
-
+            $disabledWeeks = get_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $startDate->format("Y"),
+                true
+            );
+            if (is_array($disabledWeeks)) {
+                for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
+                    if (in_array($date->format("W"), $disabledWeeks)) {
+                        $events[] = [
+                            "start" => $date->format("Y-m-d 00:00:00"),
+                            "end" => $date->format("Y-m-d 23:59:59"),
+                            "title" => "Non riceverai la box",
+                        ];
+                    }
+                }
+            }
 
             $response = new WP_REST_Response($events);
             $response->set_status(200);
             return $response;
         },
     ]);
-
-
 
     register_rest_route("agrispesa/v1", "user-subscriptions", [
         "methods" => "GET",
@@ -3627,7 +3626,7 @@ function my_enqueue($hook)
             "1.0",
             "all"
         );
-       /* wp_enqueue_script(
+        /* wp_enqueue_script(
             "agrispesa-admin-js",
             get_theme_file_uri("assets/js/admin.js"),
             ["jquery", "select2"],
@@ -4151,21 +4150,19 @@ function create_order_from_subscription($id)
 
     global $wpdb;
     foreach ($productsToAdd as $productToAdd) {
-
-
-
-
-		if(isset($productToAdd["navision_id"])){
-			   $productId = $wpdb->get_results(
-           "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_navision_id' AND meta_value='". $productToAdd["navision_id"]."' order by post_id DESC LIMIT 1",
-           ARRAY_A
-       );
-			   if(!empty($productId)){
-				   $productId = $productId[0]['post_id'];
-			   }
-		}else{
-				$productId = $productToAdd["id"];
-		}
+        if (isset($productToAdd["navision_id"])) {
+            $productId = $wpdb->get_results(
+                "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_navision_id' AND meta_value='" .
+                    $productToAdd["navision_id"] .
+                    "' order by post_id DESC LIMIT 1",
+                ARRAY_A
+            );
+            if (!empty($productId)) {
+                $productId = $productId[0]["post_id"];
+            }
+        } else {
+            $productId = $productToAdd["id"];
+        }
 
         $productObj = wc_get_product($productId);
 
@@ -4800,7 +4797,12 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+        "wc-failed" => _x(
+            "Failed",
+            "Order status",
+
+            "woocommerce"
+        ),
     ];
     ?>
 
@@ -4931,7 +4933,7 @@ function my_custom_submenu_page_callback()
         $subscriptionIds = $_POST["subscriptions"];
         foreach ($subscriptionIds as $subscriptionId) {
             //create_order_from_subscription($subscriptionId);
-           update_post_meta($subscriptionId, "_is_order_creating", true);
+            update_post_meta($subscriptionId, "_is_order_creating", true);
             as_enqueue_async_action(
                 "create_order_subscription",
                 ["subscriptionId" => $subscriptionId],
@@ -4954,26 +4956,24 @@ function my_custom_submenu_page_callback()
         "subscription_status" => "active",
     ]);
     $groupedFabbisogno = [];
-
-	 $lastOrderWeek = get_option("last_order_week", true);
-            $orders = wc_get_orders([
-                "limit" => -1,
-                "orderby" => "date",
-                "order" => "ASC",
-                   "meta_key" => "_week",
-                  "meta_compare" => "=",
-                   "meta_value" => $lastOrderWeek,
-            ]);
-			foreach($orders as $key => $order){
-				if($order->get_status() != 'completed'){
-					unset($orders[$key]);
-				}
-
-				$orderType = get_post_meta($order->get_id(),'_order_type',true);
-				if(strstr($orderType,'ST') === false){
-						unset($orders[$key]);
-				}
-			}
+    $lastOrderWeek = get_option("last_order_week", true);
+    $orders = wc_get_orders([
+        "limit" => -1,
+        "orderby" => "date",
+        "order" => "ASC",
+        "meta_key" => "_week",
+        "meta_compare" => "=",
+        "meta_value" => $lastOrderWeek,
+    ]);
+    foreach ($orders as $key => $order) {
+        if ($order->get_status() != "completed") {
+            unset($orders[$key]);
+        }
+        $orderType = get_post_meta($order->get_id(), "_order_type", true);
+        if (strstr($orderType, "ST") === false) {
+            unset($orders[$key]);
+        }
+    }
     ?>
 
 		<div id="wpbody-content">
@@ -5327,8 +5327,8 @@ function custom_shop_order_column($columns)
     foreach ($columns as $key => $column) {
         $reordered_columns[$key] = $column;
         if ($key == "order_status") {
-			$reordered_columns["payment_method"] = "Metodo di pagamento";
-			$reordered_columns["type_shopping"] = "Spesa";
+            $reordered_columns["payment_method"] = "Metodo di pagamento";
+            $reordered_columns["type_shopping"] = "Spesa";
         }
     }
     unset($reordered_columns["export_status"]);
@@ -5343,49 +5343,41 @@ add_action(
 function get_order_type($id)
 {
     global $wpdb;
+    $orderType = get_post_meta("_order_type", $id, true);
 
-
-	$orderType = get_post_meta('_order_type',$id,true);
-	if($orderType){
-		return $orderType;
-	}
-
-
-	$orderTypes = [];
-
+    if ($orderType) {
+        return $orderType;
+    }
+    $orderTypes = [];
     $isParent = $wpdb->get_results(
         "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " . $id,
         ARRAY_A
     );
+    if (!empty($isParent)) {
+        $orderTypes[] = "ABBONAMENTO";
+    }
+    $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
+    if (!empty($orderRenewal)) {
+        $orderTypes[] = "ABBONAMENTO";
+    }
+    //check in cart
+    $order = wc_get_order($id);
 
-	if(!empty($isParent)){
-		$orderTypes[] = 'ABBONAMENTO';
-	}
-
-	 $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
-        if (!empty($orderRenewal)) {
-            $orderTypes[] = 'ABBONAMENTO';
-        } //check in cart
-
-        $order = wc_get_order($id);
-
-        foreach ($order->get_items() as $item_id => $item) {
-
-            if ($item->get_name() == "Acquisto credito") {
-                $orderTypes[] = "CREDITO";
-            }else{
-				$categories = get_the_terms($item->get_product_id(), "product_cat");
+    foreach ($order->get_items() as $item_id => $item) {
+        if ($item->get_name() == "Acquisto credito") {
+            $orderTypes[] = "CREDITO";
+        } else {
+            $categories = get_the_terms($item->get_product_id(), "product_cat");
             foreach ($categories as $term) {
                 if (in_array($term->slug, ["box"])) {
-                    $orderTypes[] =  "FN";
-                }else{
-					$orderTypes[] = "ST";
+                    $orderTypes[] = "FN";
+                } else {
+                    $orderTypes[] = "ST";
                 }
             }
-            }
         }
-
-	return implode(" + ",$orderTypes);
+    }
+    return implode(" + ", $orderTypes);
 }
 function shop_order_column_meta_field_value($column)
 {
@@ -5397,8 +5389,7 @@ function shop_order_column_meta_field_value($column)
     if ($column == "subscription_relationship") {
         echo "";
     }
-	 if ($column == "payment_method") {
-
+    if ($column == "payment_method") {
     }
     if ($column == "type_shopping") {
         $orderRenewal = get_post_meta($post->ID, "_subscription_renewal", true);
@@ -5407,44 +5398,34 @@ function shop_order_column_meta_field_value($column)
                 $orderRenewal .
                 '&action=edit" target="_blank">RINNOVO FN</a>';
         } else {
-
             $isParent = $wpdb->get_results(
                 "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent = " .
                     $post->ID,
                 ARRAY_A
             );
-
-			 $orderType = get_post_meta($post->ID, "_order_type", true);
-                if ($orderType) {
-                    echo $orderType;
-                }
-
+            $orderType = get_post_meta($post->ID, "_order_type", true);
+            if ($orderType) {
+                echo $orderType;
+            }
             if (!empty($isParent)) {
                 echo '<br><a href="/wp-admin/post.php?post=' .
                     $isParent[0]["ID"] .
                     '&action=edit" target="_blank">Vedi abbonamento</a>';
             }
-
         }
-
-        $paymentMethod =  get_post_meta( $post->ID, '_payment_method', true );
-
-		if($paymentMethod == 'bacs'){
-			echo "<br> Bonifico Bancario";
-		}
-
-		if($paymentMethod == 'woocommerce_payments'){
-			echo "<br> Pagamento con carta";
-		}
-
-		if($paymentMethod == 'satispay'){
-			echo "<br> Satispay";
-		}
-
-		if($paymentMethod == 'wallet'){
-			echo "<br> Credito utente";
-		}
-
+        $paymentMethod = get_post_meta($post->ID, "_payment_method", true);
+        if ($paymentMethod == "bacs") {
+            echo "<br> Bonifico Bancario";
+        }
+        if ($paymentMethod == "woocommerce_payments") {
+            echo "<br> Pagamento con carta";
+        }
+        if ($paymentMethod == "satispay") {
+            echo "<br> Satispay";
+        }
+        if ($paymentMethod == "wallet") {
+            echo "<br> Credito utente";
+        }
     }
 } // add_filter( "manage_edit-shop_order_sortable_columns", 'shop_order_column_meta_field_sortable' ); // function shop_order_column_meta_field_sortable( $columns ) // { //     $meta_key = 'name'; //     return wp_parse_args( array('type_notes' => $meta_key), $columns ); //     return wp_parse_args( array('type_shopping' => $meta_key), $columns ); // }
 // Make custom column sortable
@@ -5849,20 +5830,18 @@ function consegne_ordini_pages()
         "manage_options",
         "box-settimanali",
         function () {
-
-			$lastOrderBox = get_option('last_order_week',true);
-
+            $lastOrderBox = get_option("last_order_week", true);
             $boxs = get_posts([
                 "post_type" => "weekly-box",
                 "post_status" => "publish",
                 "posts_per_page" => -1,
                 "meta_key" => "_week",
-				"meta_value" => $lastOrderBox,
-				"meta_compare" => "=",
+                "meta_value" => $lastOrderBox,
+                "meta_compare" => "=",
                 "order" => "DESC",
             ]);
-
             $date = new DateTime();
+
             $currentWeek = $date->format("W");
             ?>
 
@@ -5967,7 +5946,7 @@ function consegne_ordini_pages()
 											<?php foreach ($products as $key => $product): ?>
 												<?php
             $sku = get_post_meta($product["id"], "_sku", true);
-                $product["price"] = get_post_meta(
+            $product["price"] = get_post_meta(
                 $product["id"],
                 "_regular_price",
                 true
@@ -5983,10 +5962,10 @@ function consegne_ordini_pages()
                 $fornitore = get_post($fornitore);
                 $fornitoreString = $fornitore->post_title;
             }
+            $unitaMisura = "";
 
-            $unitaMisura = ""; //tabella riepilogo box
-
-            ?>
+               //tabella riepilogo box
+               ?>
 
 												<tr class="create-box-table--row">
 													<td class="create-box-table--name">
@@ -6561,7 +6540,6 @@ function getAllDeliveryDates()
     foreach ($orders as $order) {
         $days[] = $order->get_date_completed()->setTime(13, 0);
     }
-
     $days = array_unique($days);
     $days = array_values($days);
     return $days;
