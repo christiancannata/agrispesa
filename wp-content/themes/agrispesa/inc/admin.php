@@ -2203,9 +2203,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 		$cities = explode(" ",$city);
 		foreach($cities as $key => $city){
-			if(ctype_lower($city[0]) && ctype_upper($city[1])){
-				$city = substr_replace($city, "'", 1, 0);
-			}
+			foreach($city as $keyChar => $cityChar){
+				if(isset($city[$keyChar+1])){
+				if(ctype_lower($city[$keyChar]) && ctype_upper($city[$keyChar+1])){
+					$city = substr_replace($city, "'", $keyChar+1, 0);
+				}
+				}
+				}
 			$cities[$key] = $city;
 		}
 
