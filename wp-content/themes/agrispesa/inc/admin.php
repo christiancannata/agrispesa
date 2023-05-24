@@ -2731,7 +2731,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 $item->get_total(),
-								 $orders[0]->get_paid_date(),
+								 $orders[0]->get_date_paid(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
                                     " " .
@@ -2773,7 +2773,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 5,
-                                $orders[0]->get_paid_date(),
+                                $orders[0]->get_date_paid(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
                                     " " .
