@@ -2134,8 +2134,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $currentWeek,
         $offerLineNo,
         $productPrice,
+		$datePaid = null,
         $boxCode = null,
-        $shippingName = null
+        $shippingName = null,
+
     ) {
         $userNavisionId = $order->user_navision_id;
 
@@ -2155,7 +2157,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("date");
-        $ele1->nodeValue = (new DateTime($order->get_date_paid()))->format(
+        $ele1->nodeValue = (new DateTime($datePaid))->format(
             "dmY"
         );
         $row->appendChild($ele1);
@@ -2729,6 +2731,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 $item->get_total(),
+								 $orders[0]->get_paid_date(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
                                     " " .
@@ -2770,6 +2773,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 5,
+                                $orders[0]->get_paid_date(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
                                     " " .
