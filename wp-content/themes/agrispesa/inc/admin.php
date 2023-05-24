@@ -2192,7 +2192,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 		if(!empty($piano)){
 			$details[] = $piano;
 		}
-        $ele1->nodeValue = implode(' | ',$details);
+        $ele1->nodeValue = trim(implode(' | ',$details));
         $row->appendChild($ele1);
 
         $ele1 = $doc->createElement("comment_lines");
