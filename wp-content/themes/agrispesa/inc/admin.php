@@ -2136,7 +2136,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $productPrice,
 		$datePaid = null,
         $boxCode = null,
-        $shippingName = null,
+        $shippingName = null
 
     ) {
         $userNavisionId = $order->user_navision_id;
