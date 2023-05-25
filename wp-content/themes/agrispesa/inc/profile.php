@@ -502,8 +502,9 @@ function calendar_content()
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
 		<div class="table-shadow-relative">
-			<div id="calendar"></div>
-			<div class="table-shadow"></div>
+		<!--	<div id="calendar"></div>
+			<div class="table-shadow"></div>-->
+			<p>Questa funzionalità sarà presto attiva.</p>
 		</div>
 
 	</div>
