@@ -49,3 +49,15 @@
 2023-05-22T02:14:15+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41138
 2023-05-22T02:16:35+00:00 NOTICE order.member.updated :: Updated airaudi.ivo@airgreen.it subscriber status to subscribed and language to it
 2023-05-22T02:16:35+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41138 :: email: airaudi.ivo@airgreen.it
+2023-05-22T13:49:20+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41139
+2023-05-22T13:49:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41140
+2023-05-22T13:49:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41141
+2023-05-22T13:49:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41142
+2023-05-22T13:51:24+00:00 NOTICE order.member.updated :: Updated info@trikego.com subscriber status to transactional and language to it
+2023-05-22T13:51:24+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41139 :: email: info@trikego.com
+2023-05-22T13:51:47+00:00 NOTICE order.member.updated :: Updated giulia.narisano@outlook.it subscriber status to subscribed and language to it
+2023-05-22T13:51:47+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41140 :: email: giulia.narisano@outlook.it
+2023-05-22T13:52:07+00:00 NOTICE order.member.updated :: Updated dario.totaro@agentitoro.it subscriber status to subscribed and language to it
+2023-05-22T13:52:07+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41141 :: email: dario.totaro@agentitoro.it
+2023-05-22T13:52:28+00:00 NOTICE order.member.updated :: Updated carlotta.bolelli@bolellieassociati.it subscriber status to subscribed and language to it
+2023-05-22T13:52:28+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41142 :: email: carlotta.bolelli@bolellieassociati.it
