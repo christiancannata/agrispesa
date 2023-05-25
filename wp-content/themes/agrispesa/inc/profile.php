@@ -456,30 +456,7 @@ function calendar_content()
 
 		$week = $_GET['week'];
 
-
-		$dayToSchedule = null;
-
-		$weekDays = get_first_and_last_day_of_week(2023, $week);
-		$disableDate = $weekDays[1]->setTime(18, 0);
-
-		$enableDate = clone $disableDate->add(new DateInterval('P1W'));
-		$enableDate = $enableDate->setTime(15, 0);
-
-		/*$subscription->update_dates([
-			'next_payment' =>
-		]);
-		$subscription->save();
-*/
 		//schedule on the day before generating order in the specified week
-
-		disable_subscription($subscription->get_id(), $enableDate);
-
-		as_schedule_single_action($disableDate->getTimestamp(), "disable_subscription", [
-			"subscriptionId" => $subscription->get_id(),
-			"enableDate" => $enableDate,
-			"week" => $week
-		],
-			'disable_subscription_' . $subscription->get_id() . '_' . $week);
 
 		$disableWeeks = get_post_meta($subscription->get_id(), 'disable_weeks_' . date('Y'), true);
 		if (!$disableWeeks) {
