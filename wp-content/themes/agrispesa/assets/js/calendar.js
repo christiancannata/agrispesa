@@ -13,7 +13,6 @@ jQuery(document).ready(function ($) {
     dateClick: function (info) {
       let date = info.date
 
-      if (date.getDay() == 4) {
         Swal.fire({
           title: 'Non vuoi ricevere la box?',
           text: "Se confermi la tua scelta non riceverai la box per la settimana che hai selezionato.",
@@ -35,7 +34,6 @@ jQuery(document).ready(function ($) {
               });
           }
         })
-      }
       // change the day's background color just for fun
       //info.dayEl.style.backgroundColor = 'red';
     }
