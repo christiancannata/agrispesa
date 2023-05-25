@@ -478,7 +478,8 @@ function calendar_content()
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
 		<?php if ($subscription): ?>
-			<div class="table-shadow-relative">
+			<p>In questa pagina puoi gestire il calendario della consegna della tua box, cliccando sul giorno del calendario verde sarà possibile decidere se non vuoi ricevere la box per quella settimana.</p>
+			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
 				<div class="table-shadow"></div>
 			</div>
