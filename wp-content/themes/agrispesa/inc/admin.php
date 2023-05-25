@@ -102,6 +102,7 @@ add_action(
     2
 );
 
+
 // Call our custom function with the action hook
 add_action(
     "woocommerce_order_status_changed",
@@ -3232,10 +3233,20 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             if (is_array($disabledWeeks)) {
                 for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
                     if (in_array($date->format("W"), $disabledWeeks)) {
+
+						$timestamp = mktime( 0, 0, 0, 1, 1,  date('Y') ) + ( $date->format("W") * 7 * 24 * 60 * 60 );
+        				$timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
+
+						$monday = new DateTime();
+						$monday->setTimestamp($timestamp_for_monday);
+
+						$sunday = clone $monday;
+						$sunday->modify('next sunday');
+
                         $events[] = [
-                            "start" => $date->format("Y-m-d 00:00:00"),
-                            "end" => $date->format("Y-m-d 23:59:59"),
-                            "title" => "Non riceverai la box",
+                            "start" => $monday->format("Y-m-d 00:00:00"),
+                            "end" => $sunday->format("Y-m-d 23:59:59"),
+                            "title" => "Questa settimana non riceverai la box",
                         ];
                     }
                 }

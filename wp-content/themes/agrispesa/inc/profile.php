@@ -14,7 +14,6 @@ function enqueue_box_js()
 	global $wp_query;
 
 
-
 	if (isset($wp_query->query_vars['calendar'])) {
 		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);
 		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar'), null, true);
@@ -445,17 +444,17 @@ function get_first_and_last_day_of_week($year_number, $week_number)
 function calendar_content()
 {
 
+	$subscription = wcs_get_subscriptions([
+		"subscriptions_per_page" => 1,
+		'orderby' => 'ID',
+		'order' => 'DESC',
+		"customer_id" => get_current_user_id()
+	]);
+	$subscription = reset($subscription);
+
 	if (isset($_GET['schedule'])) {
 
 		$week = $_GET['week'];
-
-		$subscription = wcs_get_subscriptions([
-			"subscriptions_per_page" => 1,
-			'orderby' => 'ID',
-			'order' => 'DESC',
-			"customer_id" => get_current_user_id()
-		]);
-		$subscription = reset($subscription);
 
 
 		$dayToSchedule = null;
@@ -482,7 +481,7 @@ function calendar_content()
 		],
 			'disable_subscription_' . $subscription->get_id() . '_' . $week);
 
-		$disableWeeks = get_post_meta($subscription->get_id(), 'disable_weeks', true);
+		$disableWeeks = get_post_meta($subscription->get_id(), 'disable_weeks_' . date('Y'), true);
 		if (!$disableWeeks) {
 			$disableWeeks = [];
 		}
@@ -491,7 +490,7 @@ function calendar_content()
 
 		sort($disableWeeks);
 
-		update_post_meta($subscription->get_id(), 'disable_weeks', $disableWeeks);
+		update_post_meta($subscription->get_id(), 'disable_weeks_' . date('Y'), $disableWeeks);
 
 	}
 
@@ -501,13 +500,40 @@ function calendar_content()
 		<div class="woocommerce-notices-wrapper"></div>
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
-		<div class="table-shadow-relative">
-			<div id="calendar"></div>
-			<div class="table-shadow"></div>
-		</div>
-
+		<?php if ($subscription): ?>
+			<div class="table-shadow-relative">
+				<div id="calendar"></div>
+				<div class="table-shadow"></div>
+			</div>
+		<?php else: ?>
+			<h2 class="error-404--title">Nessun abbonamento attivo.</h2>
+			<p class="error-404--subtitle">Puoi gestire il tuo calendario solamente con un abbonamento attivo.</p>
+			<a href="/box/facciamo-noi/" class="btn btn-primary">Scopri gli abbonamenti</a>
+		<?php endif; ?>
 	</div>
 	<?php
 }
 
 add_action('woocommerce_account_calendar_endpoint', 'calendar_content');
+
+
+//Check if subscription is blocked
+add_action("woocommerce_scheduled_subscription_payment", function ($subscription_id) {
+
+	$date = new DateTime();
+	$week = $date->format("W");
+
+	$disabledWeeks = get_post_meta(
+		$subscription_id,
+		"disable_weeks_" . date('Y'),
+		true
+	);
+
+	if ($disabledWeeks && is_array($disabledWeeks)) {
+		if (in_array($week, $disabledWeeks)) {
+			$subscription = wcs_get_subscription($subscription_id);
+			$subscription->update_status('on-hold', 'Abbonamento sospeso prima del rinnovo per blocco calendario');
+		}
+	}
+
+}, 0, 1);

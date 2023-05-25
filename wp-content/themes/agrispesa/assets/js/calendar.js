@@ -15,13 +15,15 @@ jQuery(document).ready(function ($) {
 
       if (date.getDay() == 4) {
         Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          title: 'Non vuoi ricevere la box?',
+          text: "Se confermi la tua scelta non riceverai la box per la settimana che hai selezionato.",
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          confirmButtonColor: '#3c21ff',
+          cancelButtonColor: '#f8f5f1',
+          confirmButtonText: 'Si, non voglio ricevere la box',
+          cancelButtonText: 'Torna indietro',
+          reverseButtons: true
         }).then((result) => {
           if (result.isConfirmed) {
             $.post(window.baseurl + '/wp-json/agrispesa/v1/add-user-blocked-weeks',

@@ -25,6 +25,7 @@
 		outline: none;
 	}
 }
+
 @mixin buttonprimary() {
 	color: $white;
 	border: none;
@@ -36,6 +37,7 @@
 		margin-right: 4px;
 	}
 }
+
 @mixin buttonwhite() {
 	color: $blue;
 	border: none;
@@ -51,6 +53,7 @@
 		color: $white;
 	}
 }
+
 @mixin buttonsecondary() {
 	color: $blue;
 	border: none;
@@ -62,18 +65,21 @@
 		border: 2px solid transparent;
 	}
 }
+
 @mixin buttonsmall() {
 	@include font-size(16);
 	padding: 0 24px;
 	@include line-height(42);
 	min-width: 0;
 }
+
 @mixin buttonxsmall() {
 	@include font-size(14);
 	padding: 0 10px;
 	@include line-height(32);
 	min-width: 0;
 }
+
 @mixin buttonbig() {
 	@include font-size(20);
 	@include line-height(60);
@@ -310,4 +316,44 @@
 
 #wpbody-content {
 	background: red !important;
+}
+
+.swal2-container button, .swal2-html-container {
+	font-size: 18px !important;
+}
+
+.swal2-title {
+	font-size: 24px !important;
+}
+
+.swal2-icon {
+	width: 80px !important;
+	height: 80px !important;
+}
+
+.swal2-popup {
+	width: 500px !important;
+}
+
+.swal2-icon .swal2-icon-content {
+	font-size: 60px !important;
+}
+
+.swal2-styled.swal2-cancel {
+	color: #697478 !important;
+}
+
+.fc-event-time, .fc-daygrid-event-dot {
+	display: none;
+}
+
+.fc-event, .fc-event:hover {
+	color: #fff;
+	background: #b02525;
+	padding: 5px;
+	height: 30px;
+	line-height: 14px;
+	text-align: center;
+	border: none;
+	cursor: pointer;
 }
