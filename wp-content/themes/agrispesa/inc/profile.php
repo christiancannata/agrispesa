@@ -471,6 +471,7 @@ function calendar_content()
 
 	}
 
+	$testoCalendario = get_option('calendar_text');
 	?>
 	<div class="woocommerce-Fatture-content">
 
@@ -478,9 +479,12 @@ function calendar_content()
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
 		<?php if ($subscription): ?>
-			<p>In questa pagina puoi gestire il calendario della consegna della tua box, cliccando sul giorno del calendario verde sarà possibile decidere se non vuoi ricevere la box per quella settimana.</p>
+			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
+
+				<button class="single_add_to_cart_button btn btn-primary alt wp-element-button">Conferma la selezione</button>
+
 				<div class="table-shadow"></div>
 			</div>
 		<?php else: ?>

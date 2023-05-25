@@ -1,4 +1,48 @@
-.fc-day-thu.fc-day-future {
-	background: #efffd9;
+.fc-day-future {
 	cursor: pointer;
+}
+
+.fc-day-thu {
+	background: #efffd9;
+}
+
+
+.fc-event-time, .fc-daygrid-event-dot {
+	display: none;
+}
+
+.fc-event, .fc-event:hover {
+	background: #b02525;
+	border: 0;
+	color: #fff;
+	cursor: pointer;
+	height: 30px;
+	line-height: 14px;
+	padding: 5px;
+	text-align: center;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+	background: none !important;
+}
+
+.fc-today-button {
+	display: none !important;
+}
+
+.fc .fc-daygrid-day.fc-day-today.fc-day-thu {
+	background: #efffd9 !important;
+}
+
+
+.fc .fc-daygrid-day-number {
+	font-weight: bold;
+}
+
+.temp-event {
+	background: #f99090 !important;
+}
+
+.temp-event .fc-event-title{
+	color: #5d2929 !important;
 }

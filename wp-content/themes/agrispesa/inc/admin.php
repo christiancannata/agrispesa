@@ -3246,7 +3246,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $events[] = [
                             "start" => $monday->format("Y-m-d 00:00:00"),
                             "end" => $sunday->format("Y-m-d 23:59:59"),
-                            "title" => "Questa settimana non riceverai la box",
+                            "title" => "Questa settimana non ricevi la Facciamo Noi",
                         ];
                     }
                 }
