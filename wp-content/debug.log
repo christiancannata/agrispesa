@@ -7421,3 +7421,141 @@ Stack trace:
 #7 /shared/httpd/agrispesa/wp-inc in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 2734
 [25-May-2023 02:42:59 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_full_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
 [25-May-2023 02:42:59 UTC] Errore nell'evento Cron di riprogrammazione per l'hook: jetpack_sync_cron, codice di errore: invalid_schedule, messaggio di errore: L'evento programmato non esiste., dati: {"schedule":"jetpack_sync_interval","args":[],"interval":300}
+[25-May-2023 02:47:20 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:47:22 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:47:23 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:47:27 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:49:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:50:34 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:51:45 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:52:04 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:53:23 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:55:25 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:55:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:57:22 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3228
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/u...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/u...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3228
+[25-May-2023 02:57:30 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_id() on bool in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3162
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1181): {closure}(Object(WP_REST_Request))
+#1 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(1028): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/agrispesa/v1/a...', Array, NULL)
+#2 /shared/httpd/agrispesa/wp-includes/rest-api/class-wp-rest-server.php(442): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 /shared/httpd/agrispesa/wp-includes/rest-api.php(410): WP_REST_Server->serve_request('/agrispesa/v1/a...')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rest_api_loaded(Object(WP))
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#6 /shared/httpd/agrispesa/wp-includes/plugin.php(565): WP_Hook->do_action(Array)
+#7 /shared/httpd/agrispesa/wp-includes/class-wp.php(399): do_action_ref_array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php on line 3162
+[25-May-2023 03:03:47 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[25-May-2023 03:03:47 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[25-May-2023 03:03:47 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[25-May-2023 03:47:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[25-May-2023 04:03:15 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[25-May-2023 04:03:15 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[25-May-2023 04:03:15 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[25-May-2023 04:08:51 UTC] Provo a rinnovare #41813
