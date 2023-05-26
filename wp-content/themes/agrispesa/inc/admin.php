@@ -3230,7 +3230,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
 			sort($disabledWeeks);
-
+			array_unique($disabledWeeks);
             update_post_meta(
                 $subscription->get_id(),
                 "disable_weeks_" . $day->format("Y"),
