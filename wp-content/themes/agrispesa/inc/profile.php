@@ -483,7 +483,7 @@ function calendar_content()
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
 
-				<button class="single_add_to_cart_button btn btn-primary alt wp-element-button">Conferma la selezione</button>
+				<button class=" btn btn-primary alt wp-element-button confirm-calendar" style="display: none">Conferma</button>
 
 				<div class="table-shadow"></div>
 			</div>

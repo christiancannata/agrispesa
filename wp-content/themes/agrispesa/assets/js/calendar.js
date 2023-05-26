@@ -7,16 +7,36 @@ jQuery(document).ready(function ($) {
 
   window.events = []
 
-  var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    locale: 'it',
-    firstDay: 1,
-    events: window.baseurl + '/wp-json/agrispesa/v1/user-blocked-weeks?userId=' + window.userId,
-    dateClick: function (info) {
-      let date = info.date
+  let calendarEl = document.getElementById('calendar');
+  window.calendar = new FullCalendar.Calendar(calendarEl, {
 
-      let curr = date; // get current date
+    eventClick: function (info) {
+
+      let week = info.event.week
+
+      if (info.event.id.includes('week_')) {
+
+        window.events = window.events.filter(function (event) {
+          return event.id != info.event.id;
+        })
+
+        info.event.remove()
+
+      } else {
+
+        $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
+          {
+            userId: window.userId,
+            day: info.event.start.toISOString()
+          });
+
+        info.event.remove()
+
+      }
+    },
+    dateClick: function (info) {
+      let curr = info.date
+
       let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
       let last = first + 7; // last day is the first day + 6
 
@@ -26,33 +46,60 @@ jQuery(document).ready(function ($) {
       var year = new Date(curr.getFullYear(), 0, 1);
       var days = Math.floor((curr - year) / (24 * 60 * 60 * 1000));
       let week = Math.ceil((curr.getDay() + 1 + days) / 7);
+      week -= 1
 
-      calendar.addEvent({
-        title: 'Questa settimana non ricevi la Facciamo Noi',
-        start: firstday,
-        end: lastday,
-        allDay: true,
-        classNames: ['temp-event']
-      });
-
-      window.events.push({
-        week: week,
-        start: firstday,
-        end: lastday,
+      let hasEvent = window.events.filter(function (event) {
+        return event.week == week;
       })
 
-      // change the day's background color just for fun
-      //info.dayEl.style.backgroundColor = 'red';
-    }
+      if (hasEvent.length > 0) {
+
+        window.events = window.events.filter(function (event) {
+          return event.id != 'week_' + week;
+        })
+
+        let event = window.calendar.getEventById(hasEvent[0].id)
+        event.remove()
+
+      } else {
+        window.calendar.addEvent({
+          title: 'Questa settimana non ricevi la Facciamo Noi',
+          start: firstday,
+          end: lastday,
+          allDay: true,
+          classNames: ['temp-event'],
+          id: 'week_' + week,
+          week: week
+        });
+
+        window.events.push({
+          week: week,
+          start: firstday.toISOString(),
+          end: lastday.toISOString(),
+          id: 'week_' + week
+        })
+
+        $(".confirm-calendar").show()
+      }
+    },
+    eventSources: [
+      {
+        id: 'api',
+        url: window.baseurl + '/wp-json/agrispesa/v1/user-blocked-weeks?userId=' + window.userId
+      }
+    ],
+    firstDay: 1,
+    initialView: 'dayGridMonth',
+    locale: 'it'
   });
-  calendar.render();
+  window.calendar.render();
 
 
-  $(".confirm-button").click(function () {
+  $(".confirm-calendar").click(function () {
 
     Swal.fire({
       title: 'Non vuoi ricevere la box?',
-      text: "Se confermi la tua scelta non riceverai la box per la settimana che hai selezionato.",
+      text: "Se confermi la tua scelta non riceverai la box per le settimane che hai selezionato.",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3c21ff',
@@ -64,10 +111,16 @@ jQuery(document).ready(function ($) {
       if (result.isConfirmed) {
         $.post(window.baseurl + '/wp-json/agrispesa/v1/add-user-blocked-weeks',
           {
-            userId: window.userId,
-            day: info.dateStr
+            events: window.events
           }, function (data) {
-            calendar.refetchEvents()
+
+            let events = window.calendar.getEvents()
+            events.forEach(function (event) {
+              if (event.id != '') {
+                event.remove()
+              }
+            })
+            window.calendar.refetchEvents()
           });
       }
     })

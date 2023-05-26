@@ -34,6 +34,9 @@
 	background: #efffd9 !important;
 }
 
+.fc-day {
+	cursor: pointer !important;
+}
 
 .fc .fc-daygrid-day-number {
 	font-weight: bold;
@@ -43,6 +46,13 @@
 	background: #f99090 !important;
 }
 
-.temp-event .fc-event-title{
+.temp-event .fc-event-title {
 	color: #5d2929 !important;
+}
+
+
+.confirm-calendar {
+	float: right;
+	margin-top: 20px;
+
 }
