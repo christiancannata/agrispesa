@@ -5,15 +5,53 @@
 jQuery(document).ready(function ($) {
 
 
+  function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
+  function addDays(date, days) {
+    const dateCopy = new Date(date);
+    dateCopy.setDate(date.getDate() + days);
+    return dateCopy;
+  }
+
   window.events = []
+
+  let today = new Date();
+  /*
+    var year = new Date(today.getFullYear(), 0, 1);
+    var days = Math.floor((today - year) / (24 * 60 * 60 * 1000));
+    let currentWeek = Math.ceil((today.getDay() + 1 + days) / 7);*/
+  //currentWeek -= 1
+
+  //const dateCopy = new Date(today.getTime());
+
+  /*const nextAvailableMonday = new Date(
+    dateCopy.setDate(
+      dateCopy.getDate() + ((7 - dateCopy.getDay() + 1) % 7 || 7),
+    ),
+  );*/
+
+  if (today.getDay() > 2) {
+    today = addDays(today, 7)
+  }
+
+  let nextAvailableMonday = getMonday(today)
+
+
+  //let deliveryDay = 4
 
   let calendarEl = document.getElementById('calendar');
   window.calendar = new FullCalendar.Calendar(calendarEl, {
-
+    validRange: {
+      start: nextAvailableMonday
+    },
     eventClick: function (info) {
 
-      let week = info.event.week
-
+      //let week = info.event.week
       if (info.event.id.includes('week_')) {
 
         window.events = window.events.filter(function (event) {
@@ -21,6 +59,10 @@ jQuery(document).ready(function ($) {
         })
 
         info.event.remove()
+
+        if (window.events.length == 0) {
+          $(".confirm-calendar").hide()
+        }
 
       } else {
 
@@ -34,19 +76,35 @@ jQuery(document).ready(function ($) {
 
       }
     },
+    /*select: function (start, end, allDay) {
+      var check = $.fullCalendar.formatDate(start, 'yyyy-MM-dd');
+      var today = $.fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
+      if (check < today) {
+        // Previous Day. show message if you want otherwise do nothing.
+        // So it will be unselectable
+      } else {
+        // Its a right date
+        // Do something
+      }
+    },*/
+    weekNumbers: true,
+    weekText: 'Settimana ',
     dateClick: function (info) {
+
+
       let curr = info.date
 
-      let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
-      let last = first + 7; // last day is the first day + 6
+      //let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
+      //let last = first + 7; // last day is the first day + 6
 
-      let firstday = new Date(curr.setDate(first));
-      let lastday = new Date(curr.setDate(last));
+      let firstday = getMonday(curr);
+      let lastday = addDays(firstday, 7)
 
       var year = new Date(curr.getFullYear(), 0, 1);
       var days = Math.floor((curr - year) / (24 * 60 * 60 * 1000));
       let week = Math.ceil((curr.getDay() + 1 + days) / 7);
-      week -= 1
+      //week -= 1
+
 
       let hasEvent = window.events.filter(function (event) {
         return event.week == week;
@@ -59,7 +117,9 @@ jQuery(document).ready(function ($) {
         })
 
         let event = window.calendar.getEventById(hasEvent[0].id)
-        event.remove()
+        if (event) {
+          event.remove()
+        }
 
       } else {
         window.calendar.addEvent({
@@ -116,7 +176,7 @@ jQuery(document).ready(function ($) {
 
             let events = window.calendar.getEvents()
             events.forEach(function (event) {
-              if (event.id != '') {
+              if (event && event.id != '') {
                 event.remove()
               }
             })
