@@ -5044,6 +5044,18 @@ function my_custom_submenu_page_callback()
             unset($orders[$key]);
         }
     }
+
+	foreach($subscriptions as $key => $subscription){
+		$disabledWeeks = get_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $date->format("Y"),
+                true
+            );
+
+		if(is_array($disabledWeeks) && in_array($week,$disabledWeeks)){
+			unset($subscriptions[$key]);
+		}
+	}
     ?>
 
 		<div id="wpbody-content">

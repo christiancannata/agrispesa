@@ -100,9 +100,10 @@ jQuery(document).ready(function ($) {
       let firstday = getMonday(curr);
       let lastday = addDays(firstday, 7)
 
-      var year = new Date(curr.getFullYear(), 0, 1);
-      var days = Math.floor((curr - year) / (24 * 60 * 60 * 1000));
-      let week = Math.ceil((curr.getDay() + 1 + days) / 7);
+      var year = new Date(firstday.getFullYear(), 0, 1);
+      var days = Math.floor((firstday - year) / (24 * 60 * 60 * 1000));
+      let week = Math.ceil((firstday.getDay() + 1 + days) / 7);
+      console.log(week)
       //week -= 1
 
 
