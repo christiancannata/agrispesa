@@ -5,6 +5,30 @@
 jQuery(document).ready(function ($) {
 
 
+  function isAnOverlapEvent(eventStartDay, eventEndDay) {
+    // Events
+    var events = window.calendar.getEvents()
+
+    for (let i = 0; i < events.length; i++) {
+      const eventA = events[i];
+
+      // start-time in between any of the events
+      if (eventStartDay > eventA.start && eventStartDay < eventA.end) {
+        return true;
+      }
+      //end-time in between any of the events
+      if (eventEndDay > eventA.start && eventEndDay < eventA.end) {
+        return true;
+      }
+      //any of the events in between/on the start-time and end-time
+      if (eventStartDay <= eventA.start && eventEndDay >= eventA.end) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   function getMonday(d) {
     d = new Date(d);
     var day = d.getDay(),
@@ -94,6 +118,11 @@ jQuery(document).ready(function ($) {
 
       let curr = info.date
 
+
+      const hasAlreadyServerEvent = isAnOverlapEvent(curr, curr)
+      if (hasAlreadyServerEvent) {
+        return false
+      }
       //let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
       //let last = first + 7; // last day is the first day + 6
 
@@ -103,7 +132,6 @@ jQuery(document).ready(function ($) {
       var year = new Date(firstday.getFullYear(), 0, 1);
       var days = Math.floor((firstday - year) / (24 * 60 * 60 * 1000));
       let week = Math.ceil((firstday.getDay() + 1 + days) / 7);
-      console.log(week)
       //week -= 1
 
 
