@@ -200,6 +200,7 @@ jQuery(document).ready(function ($) {
       if (result.isConfirmed) {
         $.post(window.baseurl + '/wp-json/agrispesa/v1/add-user-blocked-weeks',
           {
+            userId: window.userId,
             events: window.events
           }, function (data) {
 

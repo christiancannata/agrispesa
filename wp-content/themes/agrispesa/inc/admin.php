@@ -3174,7 +3174,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			 	$disabledWeeks[] = $event['week'];
 
-			array_unique($disabledWeeks);
+			$disabledWeeks = array_unique($disabledWeeks);
 
             update_post_meta(
                 $subscription->get_id(),
