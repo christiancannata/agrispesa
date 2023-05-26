@@ -1,0 +1,16 @@
+2023-05-25T02:49:58+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41811
+2023-05-25T02:51:47+00:00 NOTICE order.member.updated :: Updated Marqo@tiscali.it subscriber status to transactional and language to it
+2023-05-25T02:51:47+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41811 :: email: Marqo@tiscali.it
+2023-05-25T03:02:23+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41812
+2023-05-25T03:03:51+00:00 NOTICE debug :: Order ID 41812 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/
+        )
+
+)
+
+2023-05-25T03:06:20+00:00 NOTICE order_process :: Order #41812 skipped, user #1 user role is not in the list

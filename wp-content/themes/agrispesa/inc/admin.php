@@ -102,6 +102,7 @@ add_action(
     2
 );
 
+
 // Call our custom function with the action hook
 add_action(
     "woocommerce_order_status_changed",
@@ -3146,6 +3147,58 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $loggedUser = $_POST["userId"];
 
+			$events = $_POST['events'];
+
+            $subscription = wcs_get_subscriptions([
+                "subscriptions_per_page" => 1,
+                "orderby" => "ID",
+                "order" => "DESC",
+                "customer_id" => $loggedUser,
+            ]);
+            $subscription = reset($subscription);
+
+
+			foreach($events as $event){
+
+				$day = new \DateTime($event['start']);
+
+             $disabledWeeks = get_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $day->format("Y"),
+                true
+            );
+
+            if (!$disabledWeeks || !is_array($disabledWeeks)) {
+                $disabledWeeks = [];
+            }
+
+			 	$disabledWeeks[] = $event['week'];
+
+
+            update_post_meta(
+                $subscription->get_id(),
+                "disable_weeks_" . $day->format("Y"),
+                $disabledWeeks
+            );
+
+			}
+
+
+            $response = new WP_REST_Response($disabledWeeks);
+            $response->set_status(201);
+            return $response;
+        },
+    ]);
+
+
+	register_rest_route("agrispesa/v1", "delete-user-blocked-weeks", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $loggedUser = $_POST["userId"];
+
             $day = $_POST["day"];
             $day = new DateTime($day);
             $week = $day->format("W");
@@ -3167,13 +3220,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $disabledWeeks = [];
             }
 
+
             if (in_array($week, $disabledWeeks)) {
-                if (($key = array_search($week, $disabledWeeks)) !== false) {
+				$key = array_search($week, $disabledWeeks);
+                if ($key !== false) {
                     unset($disabledWeeks[$key]);
                 }
-            } else {
-                $disabledWeeks[] = $week;
             }
+
+			sort($disabledWeeks);
 
             update_post_meta(
                 $subscription->get_id(),
@@ -3232,10 +3287,21 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             if (is_array($disabledWeeks)) {
                 for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
                     if (in_array($date->format("W"), $disabledWeeks)) {
+
+						$timestamp = mktime( 0, 0, 0, 1, 1,  date('Y') ) + ( $date->format("W") * 7 * 24 * 60 * 60 );
+        				$timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
+
+						$monday = new DateTime();
+						$monday->setTimestamp($timestamp_for_monday);
+
+						$sunday = clone $monday;
+						$sunday->modify('next sunday');
+
                         $events[] = [
-                            "start" => $date->format("Y-m-d 00:00:00"),
-                            "end" => $date->format("Y-m-d 23:59:59"),
-                            "title" => "Non riceverai la box",
+                            "start" => $monday->format("Y-m-d 00:00:00"),
+                            "end" => $sunday->format("Y-m-d 23:59:59"),
+                            "title" => "Questa settimana non ricevi la Facciamo Noi",
+                            "week" => $sunday->format("W")
                         ];
                     }
                 }
