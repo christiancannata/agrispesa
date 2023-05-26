@@ -1256,19 +1256,6 @@ add_action('woocommerce_checkout_subscription_created', function ($subscription)
 	// get next $consegneNameDay from today
 
 
-	$nextRenew = new DateTime("next Wednesday");
-	$now = new DateTime();
-	if ($now->format('D') != 'Wed') {
-		$nextRenew->add(new DateInterval('P1W'));
-	}
-
-	$nextRenew->setTimezone(new DateTimeZone('Europe/Rome'));
-	$nextRenew->setTime(12, 0, 0);
-
-	$nextPayment = $nextRenew->format('Y-m-d H:i:s');
-	$paymentInterval = 1;
-	$paymentPeriod = 'week';
-
 	if ($paymentMethod == 'bacs') {
 		$subscription->set_status('active');
 		$subscription->set_billing_period('year');
@@ -1279,6 +1266,20 @@ add_action('woocommerce_checkout_subscription_created', function ($subscription)
 
 		$subscription->set_requires_manual_renewal(true);
 	} else {
+
+		$nextRenew = new DateTime("next Wednesday");
+		$now = new DateTime();
+		if ($now->format('D') != 'Wed') {
+			$nextRenew->add(new DateInterval('P1W'));
+		}
+
+		$nextRenew->setTimezone(new DateTimeZone('Europe/Rome'));
+		$nextRenew->setTime(12, 0, 0);
+
+		$nextPayment = $nextRenew->format('Y-m-d H:i:s');
+		$paymentInterval = 1;
+		$paymentPeriod = 'week';
+
 		$subscription->set_billing_period($paymentPeriod);
 		$subscription->set_billing_interval($paymentInterval);
 		$subscription->update_dates([
