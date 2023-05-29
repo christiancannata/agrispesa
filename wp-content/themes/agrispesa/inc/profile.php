@@ -471,7 +471,7 @@ function calendar_content()
 
 	}
 
-	$testoCalendario = get_option('calendar_text');
+	$testoCalendario = get_option('options_calendar_text');
 	?>
 	<div class="woocommerce-Fatture-content">
 
@@ -483,7 +483,8 @@ function calendar_content()
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
 
-				<button class=" btn btn-primary alt wp-element-button confirm-calendar" style="display: none">Conferma</button>
+				<button class=" btn btn-primary alt wp-element-button confirm-calendar" style="display: none">Conferma
+				</button>
 
 				<div class="table-shadow"></div>
 			</div>

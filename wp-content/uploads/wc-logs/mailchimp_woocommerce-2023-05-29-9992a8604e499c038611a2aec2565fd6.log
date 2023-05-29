@@ -1,0 +1,20 @@
+2023-05-29T22:55:57+00:00 NOTICE order_submit :: #41911 has a financial status of pending and was skipped.
+2023-05-29T22:55:58+00:00 NOTICE order_submit :: #41912 has a financial status of pending and was skipped.
+2023-05-29T22:56:11+00:00 NOTICE order.member.updated :: Updated marco.pitto@alice.it subscriber status to transactional and language to it
+2023-05-29T22:56:11+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41913 :: email: marco.pitto@alice.it
+2023-05-29T22:57:24+00:00 NOTICE order_submit :: #41914 has a financial status of pending and was skipped.
+2023-05-29T22:57:26+00:00 NOTICE order_submit :: #41915 has a financial status of pending and was skipped.
+2023-05-29T22:57:28+00:00 NOTICE order_submit :: #41916 has a financial status of pending and was skipped.
+2023-05-29T22:57:29+00:00 NOTICE order_submit :: #41917 has a financial status of pending and was skipped.
+2023-05-29T22:57:30+00:00 NOTICE order_submit :: #41918 has a financial status of pending and was skipped.
+2023-05-29T22:57:32+00:00 NOTICE order_submit :: #41919 has a financial status of pending and was skipped.
+2023-05-29T22:57:43+00:00 NOTICE order.member.updated :: Updated Micol.scabbia00@gmail.com subscriber status to transactional and language to it
+2023-05-29T22:57:43+00:00 NOTICE order_submit.success :: updateStoreOrder :: #41920 :: email: Micol.scabbia00@gmail.com
+2023-05-29T22:57:44+00:00 NOTICE order_submit :: #41921 has a financial status of pending and was skipped.
+2023-05-29T22:59:08+00:00 NOTICE order_submit :: #41922 has a financial status of pending and was skipped.
+2023-05-29T22:59:09+00:00 NOTICE order_submit :: #41923 has a financial status of pending and was skipped.
+2023-05-29T22:59:11+00:00 NOTICE order_submit :: #41924 has a financial status of pending and was skipped.
+2023-05-29T22:59:12+00:00 NOTICE order_submit :: #41925 has a financial status of pending and was skipped.
+2023-05-29T22:59:14+00:00 NOTICE order_submit :: #41926 has a financial status of pending and was skipped.
+2023-05-29T22:59:16+00:00 NOTICE order_submit :: #41927 has a financial status of pending and was skipped.
+2023-05-29T22:59:16+00:00 NOTICE order_process :: Order #41928 skipped, user #2 user role is not in the list

@@ -59,9 +59,9 @@ jQuery(document).ready(function ($) {
     ),
   );*/
 
-  if (today.getDay() > 2) {
-    today = addDays(today, 7)
-  }
+  //if (today.getDay() > 2) {
+  today = addDays(today, 7)
+  //}
 
   let nextAvailableMonday = getMonday(today)
 
