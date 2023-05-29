@@ -7665,3 +7665,81 @@ Stack trace:
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 732
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 733
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 734
+[29-May-2023 23:17:42 UTC] PHP Parse error:  syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 143
+[29-May-2023 23:17:42 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[29-May-2023 23:18:49 UTC] PHP Parse error:  syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 143
+[29-May-2023 23:18:49 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[29-May-2023 23:23:09 UTC] PHP Parse error:  syntax error, unexpected '}' in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 147
+[29-May-2023 23:23:09 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Notice:  Undefined index: subscription in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:29:44 UTC] PHP Warning:  Invalid argument supplied for foreach() in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 185
+[29-May-2023 23:30:05 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_user() on array in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php:186
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): sospensioni_abbonamento_page('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_s...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 186
+[29-May-2023 23:30:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[29-May-2023 23:30:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368

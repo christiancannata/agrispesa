@@ -4588,6 +4588,14 @@ function register_my_custom_submenu_page()
         "abbonamenti-debito",
         "abbonamenti_debito_page"
     );
+
+	  add_menu_page(
+        "Sospensioni Abbonamento",
+        "Sospensioni Abbonamento",
+        "manage_options",
+        "sospensioni-abbonamento",
+        "sospensioni_abbonamento_page"
+    );
 }
 
 add_action("create_order_subscription", function ($subscriptionId) {

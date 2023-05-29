@@ -127,4 +127,117 @@ function abbonamenti_debito_page()
 
 }
 
+
+function sospensioni_abbonamento_page()
+{
+
+	global $wpdb;
+
+	$today = new DateTime();
+
+	$subscriptionsDatabase = $wpdb->get_results(
+		"SELECT * from wp_postmeta where meta_key LIKE 'disable_weeks_" . $today->format('Y') . "'",
+		ARRAY_A
+	);
+
+	$subscriptions = [];
+	foreach ($subscriptionsDatabase as $record) {
+		$subscription = wcs_get_subscription($record['post_id']);
+		if (!$subscription) {
+			return false;
+		}
+		$subscriptions[$subscription->get_id()] = [
+			'subscription' => $subscription,
+			'weeks' => unserialize($record['meta_value'])
+		];
+	}
+
+	$currentWeek = $today->format("W");
+
+	$weeksArray = [];
+
+	for ($i = $currentWeek;
+		 $i <= 52;
+		 $i++) {
+
+		$weeksArray[] = [
+			'week' => $i,
+			'from' => '',
+			'to' => '',
+			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i) {
+				return in_array($i, $subscription['weeks']);
+			})
+		];
+
+	}
+
+
+	?>
+	<h1>Sospensioni Abbonamento</h1>
+
+	<?php
+	foreach ($weeksArray as $week):
+		?>
+		<h3>Settimana <?php echo $week['week'] ?></h3>
+		<table class="table-admin-subscriptions">
+			<thead></thead>
+			<tbody>
+			<?php foreach ($week['subscriptions'] as $subscription):
+				$items = $subscription['subscription']->get_items();
+				?>
+				<tr>
+					<td><?php echo $subscription['subscription']->get_shipping_first_name() . ' ' . $subscription['subscription']->get_shipping_last_name() ?></td>
+					<td>
+						<?php
+						foreach ($items as $item) {
+							echo $item->get_name();
+						}
+						?>
+					</td>
+					<td>
+						<a target="_blank"
+						   href="/wp-admin/post.php?post=<?php echo $subscription['subscription']->get_id(); ?>&action=edit">Vai
+							all'abbonamento</a>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+
+		<style>
+
+
+			.table-admin-subscriptions {
+				border-collapse: collapse;
+				width: 100%;
+			}
+
+			.table-admin-subscriptions td, #customers th {
+				border: 1px solid #ddd;
+				width: 33%;
+				padding: 8px;
+			}
+
+			.table-admin-subscriptions tr:nth-child(even) {
+				background-color: #f2f2f2;
+			}
+
+			.table-admin-subscriptions tr:hover {
+				background-color: #ddd;
+			}
+
+			.table-admin-subscriptions th {
+				background-color: #04AA6D;
+				color: white;
+				padding-bottom: 12px;
+				padding-top: 12px;
+				text-align: left;
+			}
+		</style>
+	<?php endforeach; ?>
+
+	<?php
+
+}
+
 ?>
