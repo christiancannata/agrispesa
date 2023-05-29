@@ -186,9 +186,15 @@ jQuery(document).ready(function ($) {
 
   $(".confirm-calendar").click(function () {
 
+    let weeks = []
+    window.events.forEach(function (event) {
+      weeks.push(event.week)
+    })
+
+
     Swal.fire({
-      title: 'Non vuoi ricevere la box?',
-      text: "Se confermi la tua scelta non riceverai la box per le settimane che hai selezionato.",
+      title: 'Vuoi sospendere la consegna della settimana ' + weeks.join(', ') + '?',
+      text: "",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3c21ff',
