@@ -163,6 +163,7 @@ class Fiscal_Code_Validator_Woocommerce
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
         $plugin_admin->addAdminPages();
+        $plugin_admin->addAdminOrderField();
     }
 
     /**

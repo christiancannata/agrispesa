@@ -600,7 +600,7 @@ function wordpress_user_account_billing_cellulare_field($fields)
 
 
 //creo il campo codice fiscale
-add_filter('woocommerce_checkout_fields', 'codice_fiscale');
+//add_filter('woocommerce_checkout_fields', 'codice_fiscale');
 
 function codice_fiscale($fields)
 {
@@ -616,7 +616,7 @@ function codice_fiscale($fields)
 	return $fields;
 }
 
-add_action('woocommerce_checkout_update_order_meta', 'codice_fiscale_order_meta');
+//add_action('woocommerce_checkout_update_order_meta', 'codice_fiscale_order_meta');
 
 function codice_fiscale_order_meta($order_id)
 {

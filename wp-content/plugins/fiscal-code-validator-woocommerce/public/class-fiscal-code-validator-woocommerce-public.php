@@ -110,8 +110,8 @@ class Fiscal_Code_Validator_Woocommerce_Public
         add_filter('woocommerce_checkout_fields', function ($fields) {
 
             $fields['billing']['fiscal_code'] = array(
-                'label' => __('Fiscal Code', 'fiscal-code-validator'),
-                'placeholder' => _x('Fiscal Code', 'placeholder', 'fiscal-code-validator'),
+                'label' => __('Codice Fiscale', 'fiscal-code-validator'),
+                'placeholder' => _x('Codice Fiscale', 'placeholder', 'fiscal-code-validator'),
                 'required' => true,
                 'maxlength' => 16,
                 'minlength' => 16,

@@ -155,8 +155,8 @@ class Fiscal_Code_Validator_Woocommerce_Admin
                                 qui la tua chiave API</a>
                         </div>
                         <form
-                            class="api-key-form"
-                                <?php if(!$apiKey): ?> style="display:none" <?php endif; ?>
+                                class="api-key-form"
+                            <?php if (!$apiKey): ?> style="display:none" <?php endif; ?>
                                 method="POST" action="/wp-admin/admin.php?page=validatore-codice-fiscale">
                             <input type="password" name="api_key" placeholder="*********">
                             <button class="button button-primary">Aggiorna la chiave API</button>
@@ -212,6 +212,28 @@ class Fiscal_Code_Validator_Woocommerce_Admin
                 <?php
             });
         });
+    }
+
+    public function addAdminOrderField()
+    {
+        // Admin orders Billing codice_fiscale editable field and display
+        add_filter('woocommerce_admin_billing_fields', function ($fields) {
+            $fields['_billing_fiscal_code'] = array('label' => __('Codice Fiscale', 'woocommerce'));
+            return $fields;
+        });
+
+        //inserisco il codice fiscale nel back end
+        add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
+            echo '<p><strong>' . __('Codice Fiscale') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_fiscal_code', true) . '</p>';
+        }, 10, 1);
+
+//inserisco il codice fiscale nella mail dell'ordine
+        add_filter('woocommerce_email_order_meta_keys', function ($keys) {
+            $keys[] = 'Codice Fiscale';
+            return $keys;
+        });
+
+
     }
 
 }

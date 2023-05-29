@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.2.x - Development - Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-03-29 20:05:55+0000\n"
+"PO-Revision-Date: 2023-05-12 13:09:27+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,7 +51,7 @@ msgstr "Continua"
 #: wp-admin/export.php:60 wp-admin/includes/class-custom-background.php:101
 #: wp-admin/includes/class-custom-image-header.php:138 wp-admin/index.php:133
 #: wp-admin/link-manager.php:80 wp-admin/media-new.php:62 wp-admin/media.php:98
-#: wp-admin/my-sites.php:53 wp-admin/nav-menus.php:687
+#: wp-admin/my-sites.php:53 wp-admin/nav-menus.php:690
 #: wp-admin/options-discussion.php:33 wp-admin/options-general.php:61
 #: wp-admin/options-media.php:42 wp-admin/options-permalink.php:67
 #: wp-admin/options-reading.php:54 wp-admin/options-writing.php:54
@@ -188,122 +188,122 @@ msgstr "<a href=\"https://wordpress.org/documentation/article/understand-comment
 msgid "<a href=\"https://wordpress.org/documentation/article/customizer/\">Documentation on Customizer</a>"
 msgstr "<a href=\"https://wordpress.org/documentation/article/customizer/\">Documentazione su Personalizza</a>"
 
-#: wp-admin/about.php:204
+#: wp-admin/about.php:261
 msgid "Default WordPress themes offer better privacy with Google Fonts now included."
 msgstr "I temi predefiniti di WordPress offrono una miglior gestione della privacy ed ora includono i Google Fonts."
 
-#: wp-admin/about.php:203
+#: wp-admin/about.php:260
 msgid "Local fonts in themes"
 msgstr "Font in locale nei temi"
 
-#: wp-admin/about.php:194
+#: wp-admin/about.php:251
 msgid "Options to import your favorite widgets from Classic themes to Block themes."
 msgstr "Opzioni per importare i tuoi widget preferiti dai temi classici nei temi a blocchi."
 
-#: wp-admin/about.php:193
+#: wp-admin/about.php:250
 msgid "Importing widgets"
 msgstr "Importazione widget"
 
-#: wp-admin/about.php:184
+#: wp-admin/about.php:241
 msgid "Choose to keep top-level group blocks fixed to the top of a page as visitors scroll."
 msgstr "Sceglilo per mantenere fissi all'inizio della pagina dei gruppi di blocchi quando la si scorre."
 
-#: wp-admin/about.php:183
+#: wp-admin/about.php:240
 msgid "Sticky positioning"
 msgstr "Posizionamento in evidenza"
 
-#: wp-admin/about.php:171
+#: wp-admin/about.php:228
 msgid "Power up your site any way you wish. Add CSS to your site, or your blocks, for another level of control over your site&#8217;s look and feel."
 msgstr "Migliora il tuo sito nel modo che preferisci. Aggiungi CSS al tuo sito o ai tuoi blocchi, per ottenere un maggior controllo sull'aspetto del tuo sito."
 
-#: wp-admin/about.php:164
+#: wp-admin/about.php:221
 msgid "Perfect the design on one type of block, then copy and paste those styles to other blocks to get just the look you want."
 msgstr "Perfeziona il design di un tipo di blocco, quindi copia e incolla gli stili su altri blocchi per dare loro l'aspetto che desideri."
 
-#: wp-admin/about.php:163
+#: wp-admin/about.php:220
 msgid "Copy and paste styles"
 msgstr "Copia e incolla stili"
 
-#: wp-admin/about.php:157
+#: wp-admin/about.php:214
 msgid "Use the new Style Book to get a complete overview of how every block in your site&#8217;s library looks. All in one place, all at a glance."
 msgstr "Usa il nuovo Catalogo degli stili per avere una visione d'insieme di come ogni blocco apparirà nel tuo sito. Tutto in un posto, tutto a colpo d'occhio."
 
-#: wp-admin/about.php:147
+#: wp-admin/about.php:204
 msgid "Stable and ready for you to dive in and explore: 6.2 is your personal invitation to discover what the next generation of WordPress—and Block themes—can do."
 msgstr "Stabile e pronto per farti buttare a capofitto nell'esplorazione della 6.2: un invito personale alla scoperta di cosa la prossima generazione di WordPress e dei temi a blocchi potranno fare."
 
-#: wp-admin/about.php:146
+#: wp-admin/about.php:203
 msgid "Experience the Site Editor, now out of beta"
 msgstr "Sperimenta l'editor del sito, ora che è uscito dalla beta"
 
-#: wp-admin/about.php:140
+#: wp-admin/about.php:197
 msgid "For those times you want to be alone with your ideas. You can now hide all your panels and controls, leaving you free to bring your content to life."
 msgstr "Per quei momenti in cui vuoi essere solo tu e le tue idee. Ora puoi nascondere tutti i pannelli e i controlli, concentrarti e dare vita ai tuoi contenuti."
 
-#: wp-admin/about.php:139
+#: wp-admin/about.php:196
 msgid "Focus on writing with Distraction Free mode"
 msgstr "Concentrati sulla scrittura con la modalità Senza distrazioni"
 
-#: wp-admin/about.php:130
+#: wp-admin/about.php:187
 msgid "Openverse&#8217;s library catalogs over 600 million free, openly licensed stock images and audio—and now it&#8217;s directly integrated into the Editor."
 msgstr "La libreria di Openverse cataloga più di 600 milioni di immagini e audio con licenza aperta ed è ora direttamente integrata nell'editor."
 
-#: wp-admin/about.php:129
+#: wp-admin/about.php:186
 msgid "Explore Openverse media right from the Editor"
 msgstr "Esplora i media di Openverse direttamente dall'editor"
 
-#: wp-admin/about.php:123
+#: wp-admin/about.php:180
 msgid "Discover a new collection of header and footer patterns to choose from. Use them with any block theme as a quick, high-quality starting point for your site&#8217;s templates."
 msgstr "Scopri una nuova collezione di pattern in cui scegliere header e footer. Usali in qualsiasi tema a blocchi come base di partenza immediata e di alta qualità per i template del tuo sito."
 
-#: wp-admin/about.php:122
+#: wp-admin/about.php:179
 msgid "Build faster with headers and footers for block themes"
 msgstr "Crea più velocemente grazie a header e footer per i temi a blocchi"
 
-#: wp-admin/about.php:108
+#: wp-admin/about.php:165
 msgid "Your block settings sidebar is better organized with tabs for Settings and Styles. So the tools you need are easy to identify and access."
 msgstr "La barra laterale con le impostazioni dei blocchi è meglio organizzata con le schede per Impostazioni e Stili. In questo modo è più facile identificare gli strumenti di cui hai bisogno e accedervi."
 
-#: wp-admin/about.php:107
+#: wp-admin/about.php:164
 msgid "Find the controls you want when you need them"
 msgstr "Trova i controlli necessari quando ti servono"
 
-#: wp-admin/about.php:101
+#: wp-admin/about.php:158
 msgid "A refreshed design gives you more visibility and easier access to the content you need. Use the Media tab to drag and drop content from your existing Media Library quickly. Find patterns faster with a split view that lets you navigate categories and see previews all at once."
 msgstr "Un rinnovato design ti dà maggiore visibilità e un accesso più semplice al contenuto di cui hai bisogno. Utilizza la scheda Media per trascinare e rilasciare contenuti dalla Libreria dei media in modo rapido. Trova velocemente i pattern con una vista che ti permette di navigare tra le loro categorie e vederne le anteprime contemporaneamente."
 
-#: wp-admin/about.php:100
+#: wp-admin/about.php:157
 msgid "Discover a smoother experience for the Block Inserter"
-msgstr "Sperimenta un'esperienza d'uso più fluida dello strumento di inserimento dei blocchi"
+msgstr "Scopri un'esperienza d'uso più fluida del pannello di inserimento dei blocchi"
 
-#: wp-admin/about.php:84
+#: wp-admin/about.php:141
 msgid "A new sidebar experience makes it easier to edit your site&#8217;s navigation. Add, remove, and reorder menu items faster—no matter how complex your menus are."
 msgstr "La nuova gestione tramite barra laterale semplifica la modifica del menu di navigazione del tuo sito. Aggiungi, rimuovi e riordina le voci dei tuoi menu più velocemente, non importa quanto sono complessi."
 
-#: wp-admin/about.php:83
+#: wp-admin/about.php:140
 msgid "Manage your menu in more ways with the Navigation block"
 msgstr "Gestisci il tuo menu in più modi con il blocco di navigazione"
 
-#: wp-admin/about.php:77
+#: wp-admin/about.php:134
 msgid "An updated interface gives you more control over your site editing experience. Browse through full previews of your templates and template parts, then jump into editing your site from wherever you choose."
 msgstr "L'aggiornamento dell'interfaccia ti permette di avere un maggior controllo sulla modifica del tuo sito. Naviga tra le anteprime complete dei tuoi template e parti di template, quindi inizia a modificare il tuo sito da qualunque punto tu scelga."
 
-#: wp-admin/about.php:76
+#: wp-admin/about.php:133
 msgid "Explore and edit your site from the Site Editor"
 msgstr "Esplora e modifica il tuo sito dall'editor del sito"
 
 #. translators: 1: Count of enhancements, 2: Count of bug fixes.
-#: wp-admin/about.php:60
+#: wp-admin/about.php:117
 msgid "WordPress 6.2 includes more than %1$s enhancements and %2$s bug fixes. This page highlights the latest features since the November 2022 release of WordPress 6.1. From quick highlights to developer resources, there&#8217;s a lot to explore."
 msgstr "WordPress 6.2 include oltre %1$s migliorie e %2$s correzioni di bug. Questa pagina evidenzia le ultime funzionalità introdotte dopo la versione di WordPress 6.1 di novembre 2022. Dai punti salienti alle risorse per chi sviluppa c&#8217;è molto da esplorare."
 
 #. translators: The localized WordPress download URL.
-#: wp-admin/about.php:343
+#: wp-admin/about.php:400
 msgid "https://wordpress.org/download/"
 msgstr "https://it.wordpress.org/download/"
 
 #. translators: %s: The major version of WordPress for this branch.
-#: wp-admin/about.php:340
+#: wp-admin/about.php:397
 msgid "This is the final release of WordPress %s"
 msgstr "Questa è l'ultima versione di WordPress %s"
 
@@ -312,7 +312,7 @@ msgid "Site Editor"
 msgstr "Editor del sito"
 
 #. translators: 1: Learn WordPress link.
-#: wp-admin/about.php:228
+#: wp-admin/about.php:285
 msgid "Explore <a href=\"%s\">learn.wordpress.org</a> for tutorial videos, online workshops, courses, and lesson plans for Meetup organizers, including new features in WordPress."
 msgstr "Esplora <a href=\"%s\">learn.wordpress.org</a> per video tutorial, workshop online, corsi e piani di lezione per gli organizzatori di Meetup, incluse le nuove funzionalità di WordPress."
 
@@ -644,31 +644,31 @@ msgid "Reach out to WordPress Core developers to ensure you'll never have this p
 msgstr "Contatta gli sviluppatori di WordPress Core per assicurarti di non avere più questo problema."
 
 #. translators: 1: WordPress version number, 2: Link to update WordPress
-#: wp-admin/about.php:337
+#: wp-admin/about.php:394
 msgid "Important! Your version of WordPress (%1$s) will stop receiving security updates in the near future. To keep your site secure, please <a href=\"%2$s\">update to the latest version of WordPress</a>."
 msgstr "Importante! La tua versione di WordPress (%1$s) non riceverà più aggiornamenti di sicurezza nel prossimo futuro. Per mantenere il tuo sito sicuro, <a href=\"%2$s\">aggiorna alla versione più recente di WordPress</a>."
 
 #. translators: 1: WordPress version number, 2: Link to update WordPress
-#: wp-admin/about.php:334
+#: wp-admin/about.php:391
 msgid "Important! Your version of WordPress (%1$s) is no longer supported, you will not receive any security updates for your website. To keep your site secure, please <a href=\"%2$s\">update to the latest version of WordPress</a>."
 msgstr "Importante! La tua versione di WordPress (%1$s) non è più supportata, e non riceverai più aggiornamenti di sicurezza per il tuo sito. Per mantenere il tuo sito sicuro, <a href=\"%2$s\">aggiorna alla versione più recente di WordPress</a>."
 
-#: wp-admin/about.php:249
+#: wp-admin/about.php:306
 msgid "https://make.wordpress.org/core/2023/03/09/wordpress-6-2-field-guide/"
 msgstr "https://make.wordpress.org/core/2023/03/09/wordpress-6-2-field-guide/"
 
 #. translators: 1: WordPress Release Notes link, 2: WordPress version number.
-#: wp-admin/about.php:266
+#: wp-admin/about.php:323
 msgid "<a href=\"%1$s\">Read the WordPress %2$s Release Notes</a> for more information on the included enhancements and issues fixed, installation information, developer notes and resources, release contributors, and the list of file changes in this release."
 msgstr "<a href=\"%1$s\">Leggi le note di rilascio di WordPress %2$s</a> per maggiori informazioni sui miglioramenti e le correzioni, l'installazione, le note e le risorse per chi sviluppa, chi ha contribuito al rilascio della nuova versione e l'elenco delle modifiche ai file di questa versione."
 
 #. translators: %s: WordPress Field Guide link.
-#: wp-admin/about.php:248
+#: wp-admin/about.php:305
 msgid "Check out the latest version of the <a href=\"%s\">WordPress Field Guide</a>. It is overflowing with detailed developer notes to help you build with WordPress."
 msgstr "Leggi l'ultima versione di <a href=\"%s\">WordPress Field Guide</a>. È ricca di note dettagliate per chi sviluppa con WordPress."
 
 #. translators: %s: Version number.
-#: wp-admin/about.php:219
+#: wp-admin/about.php:276
 msgid "Learn more about WordPress %s"
 msgstr "Approfondisci su WordPress %s"
 
@@ -716,13 +716,13 @@ msgstr "Dopo aver impostato la pagina sulla Privacy policy, devi modificarla."
 #. translators: 1: .htaccess, 2: Documentation URL, 3: Ctrl + A, 4: ⌘ + A
 #: wp-admin/options-permalink.php:534
 msgid "<strong>Error:</strong> Your %1$s file is not <a href=\"%2$s\">writable</a>, so updating it automatically was not possible. These are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s (or %4$s on Mac) to select all."
-msgstr "<strong>Errore:</strong> il tuo file %1$s non è <a href=\"%2$s\">modificabile</a>, quindi aggiornarlo in automatico non è possibile. Queste sono le regole mod_rewrite che dovresti avere nel tuo file %1$s. Fai clic nel campo e premi %3$s (o %4$s nel Mac) per selezionarle tutte."
+msgstr "<strong>Errore:</strong> il tuo file %1$s non è <a href=\"%2$s\">modificabile</a>, non è quindi possibile aggiornarlo in automatico. Queste sono le regole mod_rewrite che dovresti avere nel tuo file %1$s. Fai clic nel campo e premi %3$s (o %4$s su Mac) per selezionarle tutte."
 
 #. translators: 1: web.config, 2: Documentation URL, 3: Ctrl + A, 4: ⌘ + A,
 #. 5: Element code.
 #: wp-admin/options-permalink.php:466
 msgid "<strong>Error:</strong> Your %1$s file is not <a href=\"%2$s\">writable</a>, so updating it automatically was not possible. This is the URL rewrite rule you should have in your %1$s file. Click in the field and press %3$s (or %4$s on Mac) to select all. Then insert this rule inside of the %5$s element in %1$s file."
-msgstr "<strong>Errore:</strong> il tuo file %1$s non è <a href=\"%2$s\">modificabile</a>, quindi aggiornarlo in automatico non è possibile. Questa è la regola di riscrittura degli URL che dovresti avere nel tuo file %1$s. Fai clic nel campo e premi %3$s (o %4$s nel Mac) per selezionarla. Quindi inserisci questa regola all’interno dell'elemento %5$s del file %1$s."
+msgstr "<strong>Errore:</strong> il tuo file %1$s non è <a href=\"%2$s\">modificabile</a>, non è quindi possibile aggiornarlo in automatico. Questa è la regola di riscrittura degli URL che dovresti avere nel tuo file %1$s. Fai clic nel campo e premi %3$s (o %4$s su Mac) per selezionarla. Quindi inserisci questa regola all’interno dell'elemento %5$s del file %1$s."
 
 #: wp-admin/options-discussion.php:252
 msgid "An avatar is an image that can be associated with a user across multiple websites. In this area, you can choose to display avatars of users who interact with the site."
@@ -976,11 +976,11 @@ msgstr "La schermata Privacy ti consente di creare una nuova pagina di informati
 msgid "Individual posts may override these settings. Changes here will only be applied to new posts."
 msgstr "I singoli articoli possono sovrascrivere queste impostazioni. Le modifiche verranno applicate solo ai nuovi articoli."
 
-#: wp-admin/nav-menus.php:522
+#: wp-admin/nav-menus.php:525
 msgid "Menu item moved to the top"
 msgstr "Voce di menu spostata in alto"
 
-#: wp-admin/nav-menus.php:519
+#: wp-admin/nav-menus.php:522
 msgid "Menu item removed"
 msgstr "Voce di menu rimossa"
 
@@ -1080,7 +1080,7 @@ msgstr "Le quattro libertà"
 #. translators: %s: Version number.
 #: wp-admin/credits.php:35
 msgid "WordPress %s was created by a worldwide team of passionate individuals"
-msgstr "WordPress  %s è stato realizzato da un team internazionale di persone appassionate"
+msgstr "WordPress %s è stato realizzato da un team internazionale di persone appassionate"
 
 #. translators: %s: Theme name.
 #: wp-admin/themes.php:1175
@@ -1127,25 +1127,25 @@ msgstr "Devi rendere il file %1$s scrivibile per poter salvare le tue modifiche.
 msgid "Rewrite rules:"
 msgstr "Regole di riscrittura:"
 
-#: wp-admin/nav-menus.php:1081
+#: wp-admin/nav-menus.php:1084
 msgid "List of menu items selected for deletion:"
 msgstr "Elenco delle voci del menu selezionate per l'eliminazione:"
 
-#: wp-admin/nav-menus.php:1079
+#: wp-admin/nav-menus.php:1082
 msgid "Remove Selected Items"
 msgstr "Rimuovi gli elementi selezionati"
 
-#: wp-admin/nav-menus.php:1042 wp-admin/nav-menus.php:1077
+#: wp-admin/nav-menus.php:1045 wp-admin/nav-menus.php:1080
 msgid "Bulk Select"
-msgstr "Selezione di massa"
+msgstr "Selezione multipla"
 
 #. translators: %s: Item name.
-#: wp-admin/nav-menus.php:517
+#: wp-admin/nav-menus.php:520
 msgid "Deleted menu item: %s."
 msgstr "Voce di menu eliminata: %s."
 
 #. translators: %s: Item name.
-#: wp-admin/nav-menus.php:515
+#: wp-admin/nav-menus.php:518
 msgid "item %s"
 msgstr "Elemento %s"
 
@@ -1265,7 +1265,7 @@ msgstr "Gli URL del sito non possono essere convertiti in HTTPS."
 
 #: wp-admin/site-health.php:109
 msgid "Site URLs switched to HTTPS."
-msgstr "Url del sito convertiti in HTTPS."
+msgstr "URL del sito convertiti in HTTPS."
 
 #: wp-admin/site-health.php:66
 msgid "It looks like HTTPS is not supported for your website at this point."
@@ -1392,11 +1392,11 @@ msgid "Want more events? <a href=\"%s\">Help organize the next one</a>!"
 msgstr "Vuoi più eventi? <a href=\"%s\">Aiutaci ad organizzare il prossimo</a>!"
 
 #. translators: %s: User's display name.
-#: wp-admin/includes/ajax-actions.php:5553
+#: wp-admin/includes/ajax-actions.php:5557
 msgid "A password reset link was emailed to %s."
 msgstr "Un link per la reimpostazione della password è stato inviato a %s."
 
-#: wp-admin/includes/ajax-actions.php:5543
+#: wp-admin/includes/ajax-actions.php:5547
 msgid "Cannot send password reset, permission denied."
 msgstr "Impossibile inviare il link per la reimpostazione della password, autorizzazione negata."
 
@@ -1598,7 +1598,7 @@ msgstr "Aggiungi la nuova password dell'applicazione"
 msgid "Required to create an Application Password, but not to update the user."
 msgstr "Necessario per creare una password dell'applicazione, ma non per aggiornare l'utente."
 
-#: wp-admin/about.php:284
+#: wp-admin/about.php:341
 msgid "Go to Updates"
 msgstr "Vai agli Aggiornamenti"
 
@@ -1759,10 +1759,10 @@ msgstr "Ultimo utilizzo"
 
 #. translators: 1: The Site Health action that is no longer used by core. 2:
 #. The new function that replaces it.
-#: wp-admin/includes/ajax-actions.php:5281
-#: wp-admin/includes/ajax-actions.php:5314
-#: wp-admin/includes/ajax-actions.php:5347
-#: wp-admin/includes/ajax-actions.php:5397
+#: wp-admin/includes/ajax-actions.php:5285
+#: wp-admin/includes/ajax-actions.php:5318
+#: wp-admin/includes/ajax-actions.php:5351
+#: wp-admin/includes/ajax-actions.php:5401
 msgid "The Site Health check for %1$s has been replaced with %2$s."
 msgstr "La verifica di Salute del sito %1$s è stata sostituita da %2$s."
 
@@ -2001,7 +2001,7 @@ msgctxt "theme"
 msgid "Activate &#8220;%s&#8221;"
 msgstr "Attiva &#8220;%s&#8221;"
 
-#: wp-admin/includes/ajax-actions.php:5487
+#: wp-admin/includes/ajax-actions.php:5491
 msgid "Sorry, you are not allowed to modify plugins."
 msgstr "Non hai i permessi per modificare i plugin."
 
@@ -2233,36 +2233,36 @@ msgstr "Completato"
 #: wp-admin/includes/plugin.php:1175
 msgctxt "plugin"
 msgid "<strong>Error:</strong> Current WordPress version (%1$s) does not meet minimum requirements for %2$s. The plugin requires WordPress %3$s."
-msgstr "<strong>Errore:</strong> L'attuale versione di WordPress (%1$s) non soddisfa i requisiti minimi per %2$s. Il plugin richiede WordPress %3$s."
+msgstr "<strong>Errore:</strong> l'attuale versione di WordPress (%1$s) non soddisfa i requisiti minimi per %2$s. Il plugin richiede WordPress %3$s."
 
 #. translators: 1: Current PHP version, 2: Plugin name, 3: Required PHP
 #. version.
 #: wp-admin/includes/plugin.php:1164
 msgctxt "plugin"
 msgid "<strong>Error:</strong> Current PHP version (%1$s) does not meet minimum requirements for %2$s. The plugin requires PHP %3$s."
-msgstr "<strong>Errore:</strong> L'attuale versione di PHP (%1$s) non soddisfa i requisiti minimi per %2$s. Il plugin richiede PHP %3$s."
+msgstr "<strong>Errore:</strong> l'attuale versione di PHP (%1$s) non soddisfa i requisiti minimi per %2$s. Il plugin richiede PHP %3$s."
 
 #. translators: 1: Current WordPress version, 2: Current PHP version, 3: Plugin
 #. name, 4: Required WordPress version, 5: Required PHP version.
 #: wp-admin/includes/plugin.php:1151
 msgctxt "plugin"
 msgid "<strong>Error:</strong> Current versions of WordPress (%1$s) and PHP (%2$s) do not meet minimum requirements for %3$s. The plugin requires WordPress %4$s and PHP %5$s."
-msgstr "<strong>Errore:</strong> Le attuali versioni di WordPress (%1$s) e PHP (%2$s) non soddisfano i requisiti minimi per %3$s. Il plugin richiede WordPress %4$s e PHP %5$s."
+msgstr "<strong>Errore:</strong> le attuali versioni di WordPress (%1$s) e PHP (%2$s) non soddisfano i requisiti minimi per %3$s. Il plugin richiede WordPress %4$s e PHP %5$s."
 
-#: wp-admin/includes/ajax-actions.php:5509
+#: wp-admin/includes/ajax-actions.php:5513
 msgid "Invalid data. The item does not exist."
 msgstr "Dati non validi. L'elemento non esiste."
 
-#: wp-admin/includes/ajax-actions.php:5480
-#: wp-admin/includes/ajax-actions.php:5505
+#: wp-admin/includes/ajax-actions.php:5484
+#: wp-admin/includes/ajax-actions.php:5509
 msgid "Invalid data. Unknown type."
 msgstr "Dati non validi. Tipo sconosciuto."
 
-#: wp-admin/includes/ajax-actions.php:5475
+#: wp-admin/includes/ajax-actions.php:5479
 msgid "Invalid data. Unknown state."
 msgstr "Dati non validi. Stato sconosciuto."
 
-#: wp-admin/includes/ajax-actions.php:5469
+#: wp-admin/includes/ajax-actions.php:5473
 msgid "Invalid data. No selected item."
 msgstr "Dati non validi. Nessun elemento selezionato."
 
@@ -3017,7 +3017,7 @@ msgstr "<a href=\"https://wordpress.org/documentation/article/settings-permalink
 msgid "<a href=\"https://wordpress.org/documentation/article/dashboard-updates-screen/\">Documentation on Updating WordPress</a>"
 msgstr "<a href=\"https://wordpress.org/documentation/article/dashboard-updates-screen/\">Documentazione sull'aggiornamento di WordPress</a>"
 
-#: wp-admin/nav-menus.php:686
+#: wp-admin/nav-menus.php:689
 msgid "<a href=\"https://wordpress.org/documentation/article/appearance-menus-screen/\">Documentation on Menus</a>"
 msgstr "<a href=\"https://wordpress.org/documentation/article/appearance-menus-screen/\">Documentazione sui menu</a>"
 
@@ -3057,7 +3057,7 @@ msgstr "Il tempo universale è %s."
 #. translators: %s: UTC abbreviation
 #: wp-admin/options-general.php:260
 msgid "Choose either a city in the same timezone as you or a %s (Coordinated Universal Time) time offset."
-msgstr "Scegli o una città nella tua stessa timezone o un  %s (Coordinated Universal Time) time offset."
+msgstr "Scegli o una città nella tua stessa timezone o un %s (Coordinated Universal Time) time offset."
 
 #: wp-admin/options-general.php:131
 msgid "Administration Email Address"
@@ -3301,7 +3301,7 @@ msgstr "Permetti l'invio di commenti per i nuovi articoli"
 #. translators: Hidden accessibility text.
 #: wp-admin/options-discussion.php:47 wp-admin/options-discussion.php:51
 msgid "Default post settings"
-msgstr "Impostazioni predefinite per la pubblicazione."
+msgstr "Impostazioni predefinite per gli articoli"
 
 #. translators: %s: Gravatar URL.
 #: wp-admin/user-edit.php:599
@@ -3558,17 +3558,17 @@ msgid "The authenticity of %s could not be verified as signature verification is
 msgstr "L'autenticità di %s non può essere verificata perché la verifica della firma non è disponibile su questo sistema."
 
 #. translators: %s: Eraser friendly name.
-#: wp-admin/includes/ajax-actions.php:5156
+#: wp-admin/includes/ajax-actions.php:5160
 msgid "Eraser callback is not valid: %s."
 msgstr "La callback eraser non è valida: %s."
 
 #. translators: %s: Eraser friendly name.
-#: wp-admin/includes/ajax-actions.php:5146
+#: wp-admin/includes/ajax-actions.php:5150
 msgid "Eraser does not include a callback: %s."
 msgstr "Eraser non ha una callback: %s."
 
-#: wp-admin/includes/ajax-actions.php:4868
-#: wp-admin/includes/ajax-actions.php:5059
+#: wp-admin/includes/ajax-actions.php:4872
+#: wp-admin/includes/ajax-actions.php:5063
 msgid "Sorry, you are not allowed to perform this action."
 msgstr "Non hai i permessi per eseguire questa azione."
 
@@ -3761,7 +3761,7 @@ msgid "Great job!"
 msgstr "Ottimo lavoro!"
 
 #: wp-admin/about.php:38 wp-admin/credits.php:42 wp-admin/freedoms.php:39
-#: wp-admin/includes/ms.php:1119 wp-admin/nav-menus.php:724
+#: wp-admin/includes/ms.php:1119 wp-admin/nav-menus.php:727
 #: wp-admin/options-privacy.php:161 wp-admin/privacy-policy-guide.php:44
 #: wp-admin/privacy.php:33 wp-admin/site-health.php:131
 msgid "Secondary menu"
@@ -4332,7 +4332,7 @@ msgstr "Versione %1$s di %2$s"
 #: wp-admin/includes/class-wp-debug-data.php:982
 #: wp-admin/includes/class-wp-debug-data.php:1304
 msgid "No version or author information is available."
-msgstr "Non è disponibile nessuna informazione sulla versione o sull'autore,"
+msgstr "Non sono disponibili informazioni sulla versione o sull'autore."
 
 #: wp-admin/includes/class-wp-debug-data.php:873
 msgid "Server version"
@@ -4398,7 +4398,7 @@ msgstr "Variabile PHP max input"
 #: wp-admin/includes/class-wp-debug-data.php:539
 #: wp-admin/includes/class-wp-debug-data.php:731
 msgid "Unable to determine some settings, as the %s function has been disabled."
-msgstr "Impossibile determinare alcune impostazioni, perché la funzione  %s è stata disabilitata."
+msgstr "Impossibile determinare alcune impostazioni, perché la funzione %s è stata disabilitata."
 
 #: wp-admin/includes/class-wp-debug-data.php:728
 msgid "Server settings"
@@ -4753,31 +4753,31 @@ msgstr "Non puoi eseguire l'aggiornamento perché <a href=\"%1$s\">WordPress %2$
 msgid "You cannot update because <a href=\"%1$s\">WordPress %2$s</a> requires PHP version %3$s or higher. You are running version %4$s."
 msgstr "Non puoi eseguire l'aggiornamento perché <a href=\"%1$s\">WordPress %2$s</a> richiede la versione di PHP %3$s o superiore, invece tu stai eseguendo la versione %4$s."
 
-#: wp-admin/nav-menus.php:980
+#: wp-admin/nav-menus.php:983
 msgid "Add menu items"
 msgstr "Aggiungi voci del menu"
 
 #. translators: %s: URL to create a new menu.
-#: wp-admin/nav-menus.php:941
+#: wp-admin/nav-menus.php:944
 msgid "or <a href=\"%s\">create a new menu</a>. Do not forget to save your changes!"
 msgstr "oppure <a href=\"%s\">crea un nuovo menu</a>. Non dimenticarti di salvare le tue modifiche!"
 
 #. translators: Hidden accessibility text.
-#: wp-admin/nav-menus.php:886 wp-admin/nav-menus.php:956
+#: wp-admin/nav-menus.php:889 wp-admin/nav-menus.php:959
 msgid "Click the Save Menu button to save your changes."
 msgstr "Fai clic sul pulsante Salva menu per salvare le modifiche."
 
 #. translators: %s: URL to create a new menu.
-#: wp-admin/nav-menus.php:871
+#: wp-admin/nav-menus.php:874
 msgid "Edit your menu below, or <a href=\"%s\">create a new menu</a>. Do not forget to save your changes!"
 msgstr "Modifica il menu sottostante oppure <a href=\"%s\">crea un nuovo menu</a>. Non dimenticarti di salvare le tue modifiche!"
 
 #. translators: Hidden accessibility text.
-#: wp-admin/nav-menus.php:862
+#: wp-admin/nav-menus.php:865
 msgid "Fill in the Menu Name and click the Create Menu button to create your first menu."
 msgstr "Per creare il tuo primo menu compila il Nome del menu e fai clic sul pulsante Crea menu."
 
-#: wp-admin/nav-menus.php:858
+#: wp-admin/nav-menus.php:861
 msgid "Create your first menu below."
 msgstr "Crea il tuo primo menu qui sotto."
 
@@ -4892,11 +4892,11 @@ msgctxt "plugin"
 msgid "Cannot Install"
 msgstr "Impossibile installare"
 
-#. translators: %s: WordPress version number.
 #. translators: %s: WordPress version.
-#: wp-admin/about.php:269 wp-admin/includes/update.php:306
-#: wp-admin/index.php:119 wp-admin/install.php:247 wp-admin/update-core.php:94
-#: wp-admin/upgrade.php:81
+#. translators: %s: WordPress version number.
+#: wp-admin/about.php:67 wp-admin/about.php:93 wp-admin/about.php:326
+#: wp-admin/includes/update.php:306 wp-admin/index.php:119
+#: wp-admin/install.php:247 wp-admin/update-core.php:94 wp-admin/upgrade.php:81
 msgid "https://wordpress.org/support/wordpress-version/version-%s/"
 msgstr "https://wordpress.org/support/wordpress-version/version-%s/"
 
@@ -5501,7 +5501,7 @@ msgid "Report generated for"
 msgstr "Rapporto generato per"
 
 #. translators: %s: Exporter array index.
-#: wp-admin/includes/ajax-actions.php:4952
+#: wp-admin/includes/ajax-actions.php:4956
 msgid "Exporter array at index %s does not include a friendly name."
 msgstr "L'array dell'esportatore nell'indice %s non contiene un nome amichevole."
 
@@ -5513,72 +5513,72 @@ msgstr "Non hai i permessi per cancellare dati personali su questo sito."
 msgid "Sorry, you are not allowed to export personal data on this site."
 msgstr "Non hai i permessi per esportare i dati su questo sito."
 
-#: wp-admin/includes/ajax-actions.php:5119
+#: wp-admin/includes/ajax-actions.php:5123
 msgid "Eraser index is out of range."
 msgstr "Indice da cancellare fuori dall'intervallo."
 
-#: wp-admin/includes/ajax-actions.php:5078
+#: wp-admin/includes/ajax-actions.php:5082
 msgid "Missing eraser index."
 msgstr "Indice da cancellare mancante."
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:5003
+#: wp-admin/includes/ajax-actions.php:5007
 msgid "Expected done (boolean) in response array from exporter: %s."
 msgstr "Previsto eseguito (booleano) nell'array di risposta dell'esportatore: %s."
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:4996
+#: wp-admin/includes/ajax-actions.php:5000
 msgid "Expected data array in response array from exporter: %s."
 msgstr "Array di dati previsto nell'array di risposta dall'esportatore: %s."
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:4989
+#: wp-admin/includes/ajax-actions.php:4993
 msgid "Expected data in response array from exporter: %s."
 msgstr "Dati previsti nell'array di risposta dall'esportatore: %s."
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:4982
+#: wp-admin/includes/ajax-actions.php:4986
 msgid "Expected response as an array from exporter: %s."
 msgstr "Risposta prevista come array dall'esportatore: %s."
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:4968
+#: wp-admin/includes/ajax-actions.php:4972
 msgid "Exporter callback is not a valid callback: %s."
 msgstr "La callback dell'esportatore non è una callback valida: %s"
 
 #. translators: %s: Exporter friendly name.
-#: wp-admin/includes/ajax-actions.php:4961
+#: wp-admin/includes/ajax-actions.php:4965
 msgid "Exporter does not include a callback: %s."
-msgstr "L'esportatore non include una callback: %s"
+msgstr "L'esportatore non include una callback: %s."
 
 #. translators: %s: Exporter array index.
-#: wp-admin/includes/ajax-actions.php:4945
+#: wp-admin/includes/ajax-actions.php:4949
 msgid "Expected an array describing the exporter at index %s."
 msgstr "Era previsto un array che descrivesse l'esportatore nell'indice %s."
 
-#: wp-admin/includes/ajax-actions.php:4931
+#: wp-admin/includes/ajax-actions.php:4935
 msgid "Exporter index is out of range."
 msgstr "Indice dell'esportatore fuori dall'intervallo."
 
-#: wp-admin/includes/ajax-actions.php:4927
+#: wp-admin/includes/ajax-actions.php:4931
 msgid "Exporter index cannot be negative."
 msgstr "L'indice dell'esportatore non può essere negativo."
 
-#: wp-admin/includes/ajax-actions.php:4921
+#: wp-admin/includes/ajax-actions.php:4925
 msgid "An exporter has improperly used the registration filter."
 msgstr "Un esportatore ha usato in modo improprio il filtro di registrazione."
 
-#: wp-admin/includes/ajax-actions.php:4892
-#: wp-admin/includes/ajax-actions.php:5084
+#: wp-admin/includes/ajax-actions.php:4896
+#: wp-admin/includes/ajax-actions.php:5088
 msgid "Missing page index."
 msgstr "Indice della pagina mancante."
 
-#: wp-admin/includes/ajax-actions.php:4886
+#: wp-admin/includes/ajax-actions.php:4890
 msgid "Missing exporter index."
 msgstr "Indice dell'esportatore mancante."
 
-#: wp-admin/includes/ajax-actions.php:4877
-#: wp-admin/includes/ajax-actions.php:5068
+#: wp-admin/includes/ajax-actions.php:4881
+#: wp-admin/includes/ajax-actions.php:5072
 msgid "Invalid request type."
 msgstr "Tipologia di richiesta non valida."
 
@@ -5709,7 +5709,7 @@ msgstr "Esportazione dati personali"
 msgid "Personal Data Export for %s"
 msgstr "Esportazione dati personali per %s"
 
-#: wp-admin/includes/ajax-actions.php:4882
+#: wp-admin/includes/ajax-actions.php:4886
 msgid "A valid email address must be given."
 msgstr "È necessario fornire un indirizzo email valido."
 
@@ -5780,61 +5780,61 @@ msgstr "Richiesta di conferma nuovamente inviata correttamente."
 msgid "Unable to initiate confirmation request."
 msgstr "Impossibile avviare la richiesta di conferma."
 
-#: wp-admin/includes/ajax-actions.php:4864
-#: wp-admin/includes/ajax-actions.php:5054
+#: wp-admin/includes/ajax-actions.php:4868
+#: wp-admin/includes/ajax-actions.php:5058
 msgid "Invalid request ID."
 msgstr "ID richiesta non valido."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5228
+#: wp-admin/includes/ajax-actions.php:5232
 msgid "Expected done flag in response array from %1$s eraser (index %2$d)."
 msgstr "Era prevista l'etichetta fatto nell'array di risposta dal eraser %1$s (indice %2$d)."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5217
+#: wp-admin/includes/ajax-actions.php:5221
 msgid "Expected messages key to reference an array in response array from %1$s eraser (index %2$d)."
 msgstr "&Egrave; prevista una chiave dei messaggi per fare riferimento a un array nell'array di risposta dai %1$s da cancellare (indice %2$d)."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5206
+#: wp-admin/includes/ajax-actions.php:5210
 msgid "Expected messages key in response array from %1$s eraser (index %2$d)."
 msgstr "&Egrave; prevista una chiave dei messaggi in risposta a un array dai %1$s da cancellare (indice %2$d)."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5195
+#: wp-admin/includes/ajax-actions.php:5199
 msgid "Expected items_retained key in response array from %1$s eraser (index %2$d)."
 msgstr "&Egrave; prevista una chiave degli oggetti conservati in risposta a un array dai %1$s da cancellare (indice %2$d)."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5184
+#: wp-admin/includes/ajax-actions.php:5188
 msgid "Expected items_removed key in response array from %1$s eraser (index %2$d)."
 msgstr "&Egrave; prevista una chiave degli oggetti rimossi in risposta a un array dai %1$s da cancellare (indice %2$d)."
 
 #. translators: 1: Eraser friendly name, 2: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5173
+#: wp-admin/includes/ajax-actions.php:5177
 msgid "Did not receive array from %1$s eraser (index %2$d)."
 msgstr "Non è stata ricevuto l'array da %1$s eraser (indice %2$d)."
 
 #. translators: %d: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5137
+#: wp-admin/includes/ajax-actions.php:5141
 msgid "Eraser array at index %d does not include a friendly name."
 msgstr "L'array da cancellare nell'indice %d non include un nome descrittivo."
 
 #. translators: %d: Eraser array index.
-#: wp-admin/includes/ajax-actions.php:5132
+#: wp-admin/includes/ajax-actions.php:5136
 msgid "Expected an array describing the eraser at index %d."
 msgstr "&Egrave; previsto un array che descriva la cancellazione nell'indice %d."
 
-#: wp-admin/includes/ajax-actions.php:4935
-#: wp-admin/includes/ajax-actions.php:5123
+#: wp-admin/includes/ajax-actions.php:4939
+#: wp-admin/includes/ajax-actions.php:5127
 msgid "Page index cannot be less than one."
 msgstr "L'indice della pagina non può essere inferiore a uno."
 
-#: wp-admin/includes/ajax-actions.php:5115
+#: wp-admin/includes/ajax-actions.php:5119
 msgid "Eraser index cannot be less than one."
 msgstr "L'indice da cancellare non può essere inferiore a uno."
 
-#: wp-admin/includes/ajax-actions.php:5074
+#: wp-admin/includes/ajax-actions.php:5078
 msgid "Invalid email address in request."
 msgstr "Indirizzo email non valido nella richiesta."
 
@@ -5884,7 +5884,7 @@ msgstr "WordPress non sta notificando alcun <a href=\"%1$s\">Servizio di Aggiorn
 #. translators: 1: Documentation URL, 2: web.config, 3: Ctrl + A, 4: ⌘ + A
 #: wp-admin/options-permalink.php:499
 msgid "<strong>Error:</strong> The root directory of your site is not <a href=\"%1$s\">writable</a>, so creating a file automatically was not possible. This is the URL rewrite rule you should have in your %2$s file. Create a new file called %2$s in the root directory of your site. Click in the field and press %3$s (or %4$s on Mac) to select all. Then insert this code into the %2$s file."
-msgstr "<strong>Errore:</strong> La directory principale del tuo sito non è <a href=\"%1$s\">scrivibile</a>, per cui non è possible creare il file in modo automatico. Questa è la regola di riscrittura degli URL da inserire nel file %2$s. Crea un nuovo file chiamato %2$s nella directory principale del sito. Fai clic sul campo e premi %3$s (o %4$s su Mac) per selezionare tutto.Poi inserisci questo codice nel file %2$s. "
+msgstr "<strong>Errore:</strong> la directory principale del tuo sito non è <a href=\"%1$s\">scrivibile</a>, per cui non è possible creare il file in modo automatico. Questa è la regola di riscrittura degli URL da inserire nel file %2$s. Crea un nuovo file chiamato %2$s nella directory principale del sito. Fai clic sul campo e premi %3$s (o %4$s su Mac) per selezionare tutto. Poi inserisci questo codice nel file %2$s."
 
 #. translators: %s: Documentation URL.
 #: wp-admin/options-general.php:119
@@ -6127,7 +6127,7 @@ msgstr "<strong>Temi</strong> &mdash; Questa area visualizza i temi non ancora a
 
 #: wp-admin/includes/ms.php:1138
 msgid "<strong>Users</strong> &mdash; This displays the users associated with this site. You can also change their role, reset their password, or remove them from the site. Removing the user from the site does not remove the user from the network."
-msgstr "<strong>Utenti</strong> &mdash; Qui vengono visualizzati gli utenti associati a questo sito. Puoi cambiare il loro ruolo, azzerare la loro password o rimuoverli dal sito. Rimuovendo un utente dal sito non si rimuove l'utente da tutto il network."
+msgstr "<strong>Utenti</strong> &mdash; Qui vengono visualizzati gli utenti associati a questo sito. Puoi cambiare il loro ruolo, reimpostare la loro password o rimuoverli dal sito. Rimuovendo un utente dal sito non si rimuove l'utente da tutto il network."
 
 #: wp-admin/includes/ms.php:1137
 msgid "<strong>Info</strong> &mdash; The site URL is rarely edited as this can cause the site to not work properly. The Registered date and Last Updated date are displayed. Network admins can mark a site as archived, spam, deleted and mature, to remove from public listings or disable."
@@ -6325,7 +6325,7 @@ msgstr "Nascondi i controlli"
 msgid "Expand Sidebar"
 msgstr "Espandi la barra laterale"
 
-#: wp-admin/nav-menus.php:1113
+#: wp-admin/nav-menus.php:1116
 msgid "Display location"
 msgstr "Posizione di visualizzazione"
 
@@ -6531,7 +6531,7 @@ msgstr "Non hai il permesso di aggiungere utenti a questo network."
 msgid "Sorry, you are not allowed to edit this changeset."
 msgstr "Non hai il permesso di modificare questo changeset."
 
-#: wp-admin/includes/ajax-actions.php:4282 wp-admin/update.php:207
+#: wp-admin/includes/ajax-actions.php:4286 wp-admin/update.php:207
 #: wp-admin/update.php:230
 msgid "Sorry, you are not allowed to update themes for this site."
 msgstr "Non hai il permesso di aggiornare i temi per questo sito."
@@ -6581,7 +6581,7 @@ msgstr "Non hai il permesso di modificare le impostazioni non registrate per que
 msgid "Sorry, you are not allowed to manage options for this site."
 msgstr "Non hai il permesso di gestire le opzioni di questo sito."
 
-#: wp-admin/nav-menus.php:709 wp-admin/widgets-form.php:393
+#: wp-admin/nav-menus.php:712 wp-admin/widgets-form.php:393
 msgid "Manage with Live Preview"
 msgstr "Gestisci con l'anteprima in tempo reale"
 
@@ -6752,37 +6752,37 @@ msgstr "Non hai il permesso di modificare i link in questo sito."
 msgid "Sorry, you are not allowed to manage privacy options on this site."
 msgstr "Non hai il permesso di gestire le opzioni di privacy su questo sito."
 
-#: wp-admin/includes/ajax-actions.php:4707
+#: wp-admin/includes/ajax-actions.php:4711
 msgid "Plugin could not be deleted."
 msgstr "Il plugin non può essere eliminato."
 
-#: wp-admin/includes/ajax-actions.php:4561 wp-admin/update.php:29
+#: wp-admin/includes/ajax-actions.php:4565 wp-admin/update.php:29
 #: wp-admin/update.php:57 wp-admin/update.php:80
 msgid "Sorry, you are not allowed to update plugins for this site."
 msgstr "Non hai il permesso di aggiornare i plugin di questo sito."
 
-#: wp-admin/includes/ajax-actions.php:4437
-#: wp-admin/includes/ajax-actions.php:4546
-#: wp-admin/includes/ajax-actions.php:4654
+#: wp-admin/includes/ajax-actions.php:4441
+#: wp-admin/includes/ajax-actions.php:4550
+#: wp-admin/includes/ajax-actions.php:4658
 msgid "No plugin specified."
 msgstr "Nessun plugin specificato."
 
-#: wp-admin/includes/ajax-actions.php:4413
+#: wp-admin/includes/ajax-actions.php:4417
 msgid "Theme could not be deleted."
 msgstr "Il tema non può essere eliminato."
 
-#: wp-admin/includes/ajax-actions.php:4375
+#: wp-admin/includes/ajax-actions.php:4379
 msgid "Sorry, you are not allowed to delete themes on this site."
 msgstr "Non hai il permesso di eliminare temi in questo sito."
 
-#: wp-admin/includes/ajax-actions.php:4155 wp-admin/theme-install.php:16
+#: wp-admin/includes/ajax-actions.php:4159 wp-admin/theme-install.php:16
 #: wp-admin/update.php:258 wp-admin/update.php:300 wp-admin/update.php:334
 msgid "Sorry, you are not allowed to install themes on this site."
 msgstr "Non hai il permesso di installare temi in questo sito."
 
-#: wp-admin/includes/ajax-actions.php:4142
-#: wp-admin/includes/ajax-actions.php:4268
-#: wp-admin/includes/ajax-actions.php:4363
+#: wp-admin/includes/ajax-actions.php:4146
+#: wp-admin/includes/ajax-actions.php:4272
+#: wp-admin/includes/ajax-actions.php:4367
 msgid "No theme specified."
 msgstr "Tema non specificato."
 
@@ -6805,7 +6805,7 @@ msgstr "Chiudi Personalizza e torna alla pagina precedente"
 
 #: wp-admin/includes/class-custom-image-header.php:1105
 msgid "Sorry, you are not allowed to customize headers."
-msgstr "Non hai il permesso di personalizzare gli header. "
+msgstr "Non hai il permesso di personalizzare gli header."
 
 #: wp-admin/credits.php:140
 msgid "Release Deputy"
@@ -7255,13 +7255,13 @@ msgid "Send User Notification"
 msgstr "Invia notifica all'utente"
 
 #. translators: %s: Menu name.
-#: wp-admin/nav-menus.php:1133
+#: wp-admin/nav-menus.php:1136
 msgctxt "menu location"
 msgid "(Currently set to: %s)"
 msgstr "(Attualmente impostato a: %s)"
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:308
+#: wp-admin/about.php:365
 msgid "<strong>Version %s</strong> addressed one security issue."
 msgstr "La <strong>versione %s</strong> corregge un problema di sicurezza."
 
@@ -7273,15 +7273,15 @@ msgstr "https://it.gravatar.com/"
 msgid "Profile Picture"
 msgstr "Immagine profilo"
 
-#: wp-admin/about.php:305
+#: wp-admin/about.php:47 wp-admin/about.php:362
 msgid "Maintenance and Security Releases"
 msgstr "Versioni di manutenzione e sicurezza"
 
-#: wp-admin/about.php:302
+#: wp-admin/about.php:359
 msgid "Security Releases"
 msgstr "Versioni di sicurezza"
 
-#: wp-admin/about.php:299
+#: wp-admin/about.php:356
 msgid "Maintenance Releases"
 msgstr "Versioni di manutenzione"
 
@@ -7292,7 +7292,7 @@ msgstr "Semplice"
 #. translators: %s: Documentation URL.
 #: wp-admin/options-permalink.php:226
 msgid "WordPress offers you the ability to create a custom URL structure for your permalinks and archives. Custom URL structures can improve the aesthetics, usability, and forward-compatibility of your links. A <a href=\"%s\">number of tags are available</a>, and here are some examples to get you started."
-msgstr "WordPress ti offre la possibilità di creare una struttura di URL personalizzati per i tuoi permalink ed i tuoi archivi. Le strutture di URL personalizzate possono migliorare l'estetica, l'usabilità e la compatibilità dei link in futuro. Un certo <a href=\"https://codex.wordpress.org/Using_Permalinks\">numero di tag è disponibile</a>, e qui ci sono alcuni esempi per iniziare."
+msgstr "WordPress ti offre la possibilità di creare una struttura di URL personalizzati per i tuoi permalink e i tuoi archivi. Le strutture di URL personalizzate possono migliorare l'estetica, l'usabilità e la compatibilità dei link in futuro. Un certo <a href=\"%s\">numero di tag è disponibile</a> e qui ci sono alcuni esempi per iniziare."
 
 #: wp-admin/options-permalink.php:34
 msgid "Permalinks can contain useful information, such as the post date, title, or other elements. You can choose from any of the suggested permalink formats, or you can craft your own if you select Custom Structure."
@@ -7501,7 +7501,7 @@ msgstr "Modifica di %s (attivo)"
 #. translators: %s: Local time.
 #: wp-admin/options-general.php:281
 msgid "Local time is %s."
-msgstr "L'ora locale è %s"
+msgstr "L'ora locale è %s."
 
 #: wp-admin/my-sites.php:73 wp-admin/network/menu.php:53
 #: wp-admin/network/sites.php:370
@@ -7807,11 +7807,11 @@ msgstr "Filtra elenco commenti"
 
 #: wp-admin/edit-comments.php:203
 msgid "In the <strong>Submitted on</strong> column, the date and time the comment was left on your site appears. Clicking on the date/time link will take you to that comment on your live site."
-msgstr "Nella colonna <strong>Inviato il</strong>, appare la data e l'ora in cui il commento è stato scritto. Facendo clic sul link data/ora ti sarai portato a quel commento sul tuo sito."
+msgstr "Nella colonna <strong>Inviato il</strong>, appare la data e l'ora in cui il commento è stato scritto. Facendo clic sul link data/ora sarai portato a quel commento sul tuo sito."
 
 #: wp-admin/edit-comments.php:201
 msgid "In the <strong>Comment</strong> column, hovering over any comment gives you options to approve, reply (and approve), quick edit, edit, spam mark, or trash that comment."
-msgstr "Nella colonna <strong>Commento</strong>, spostare il mouse sopra ogni commento  ti da le opzioni per approvare, rispondere (e approvare), modificare velocemente, modificare, segnalare come spam, o spostare nel cestino quel commento."
+msgstr "Nella colonna <strong>Commento</strong>, al passaggio del mouse sopra ogni commento ti da le opzioni per approvare, rispondere (e approvare), modificare velocemente, modificare, segnalare come spam, o spostare nel cestino quel commento."
 
 #. translators: %s: Comments count.
 #: wp-admin/edit-comments.php:175 wp-admin/js/edit-comments.js:196
@@ -7824,7 +7824,7 @@ msgstr "Commenti (%s)"
 msgid "Comments (%1$s) on &#8220;%2$s&#8221;"
 msgstr "(%1$s) commenti per &#8220;%2$s&#8221;"
 
-#: wp-admin/includes/ajax-actions.php:5497
+#: wp-admin/includes/ajax-actions.php:5501
 msgid "Sorry, you are not allowed to modify themes."
 msgstr "Non sei autorizzato a modificare i temi."
 
@@ -7900,7 +7900,7 @@ msgid_plural "%s approved comments"
 msgstr[0] "%s commento approvato"
 msgstr[1] "%s commenti approvati"
 
-#: wp-admin/includes/ajax-actions.php:3966
+#: wp-admin/includes/ajax-actions.php:3970
 msgid "Image could not be processed."
 msgstr "L'immagine non può essere elaborata."
 
@@ -7912,7 +7912,7 @@ msgstr "Conferma password"
 #. translators: 1: wp-config.php, 2: Secret key service URL.
 #: wp-admin/maint/repair.php:85
 msgid "While you are editing your %1$s file, take a moment to make sure you have all 8 keys and that they are unique. You can generate these using the <a href=\"%2$s\">WordPress.org secret key service</a>."
-msgstr "Mentre stai modificando il file %1$s, cogli l'occasione per verificare che di avere tutte le 8 chiavi e che queste siano univoche. Puoi generarle utilizzando il servizio <a href=\"%2$s\">Secret Key Generator di WordPress.org</a>"
+msgstr "Mentre stai modificando il file %1$s, prenditi del tempo per verificare di avere tutte le 8 chiavi e che queste siano univoche. Puoi generarle utilizzando il servizio <a href=\"%2$s\">Secret Key Generator di WordPress.org</a>."
 
 #. translators: Hidden accessibility text.
 #: wp-admin/includes/class-wp-application-passwords-list-table.php:258
@@ -7924,7 +7924,7 @@ msgid "Show more details"
 msgstr "Mostra più dettagli"
 
 #. translators: %s: Number of menus.
-#: wp-admin/nav-menus.php:753
+#: wp-admin/nav-menus.php:756
 msgid "Your theme supports %s menu. Select which menu appears in each location."
 msgid_plural "Your theme supports %s menus. Select which menu appears in each location."
 msgstr[0] "Il tuo tema supporta %s menu. Scegli la posizione per ogni menu."
@@ -8134,7 +8134,7 @@ msgctxt "timezone date format"
 msgid "Y-m-d H:i:s"
 msgstr "d-m-Y H:i.s"
 
-#: wp-admin/nav-menus.php:658
+#: wp-admin/nav-menus.php:661
 msgid "To add a custom link, <strong>expand the Custom Links section, enter a URL and link text, and click Add to Menu</strong>"
 msgstr "Per aggiungere un link personalizzato, <strong>espandi la sezione link personalizzati, inserisci un indirizzo e il testo del link, quindi fai clic su aggiungi al menu</strong>"
 
@@ -8356,19 +8356,19 @@ msgid "Filter by comment type"
 msgstr "Filtra per tipo di commento"
 
 #. translators: %s: User's display name.
-#: wp-admin/includes/ajax-actions.php:3941
+#: wp-admin/includes/ajax-actions.php:3945
 msgid "%s has been logged out."
 msgstr "%s è stato disconnesso."
 
-#: wp-admin/includes/ajax-actions.php:3937
+#: wp-admin/includes/ajax-actions.php:3941
 msgid "You are now logged out everywhere else."
 msgstr "Ora sei scollegato dappertutto."
 
-#: wp-admin/includes/ajax-actions.php:3928
+#: wp-admin/includes/ajax-actions.php:3932
 msgid "Could not log out user sessions. Please try again."
 msgstr "Non è possibile scollegare le sessioni utente. Riprova."
 
-#: wp-admin/includes/ajax-actions.php:3815
+#: wp-admin/includes/ajax-actions.php:3819
 msgid "This preview is unavailable in the editor."
 msgstr "Questa anteprima non è disponibile nell'editor."
 
@@ -8434,11 +8434,11 @@ msgstr "Facendo clic su un elemento verrà visualizzata la finestra di dialogo c
 
 #: wp-admin/upload.php:142
 msgid "To delete media items, click the Bulk Select button at the top of the screen. Select any items you wish to delete, then click the Delete Selected button. Clicking the Cancel Selection button takes you back to viewing your media."
-msgstr "Per eliminare elementi media, fare clic sul pulsante «Selezione di massa» in cima all'elenco. Seleziona gli elementi che desideri eliminare e quindi fai clic sul pulsante «Elimina definitivamente». Facendo clic sul pulsante «Annulla» si tornerà alla visualizzazione degli elementi media."
+msgstr "Per eliminare elementi media, fai clic sul pulsante «Selezione multipla» in cima all'elenco. Seleziona gli elementi che desideri eliminare e quindi fai clic sul pulsante «Elimina definitivamente». Facendo clic sul pulsante «Annulla» si tornerà alla visualizzazione degli elementi media."
 
 #: wp-admin/upload.php:141 wp-admin/upload.php:323
 msgid "You can view your media in a simple visual grid or a list with columns. Switch between these views using the icons to the left above the media."
-msgstr "Puoi visualizzare gli elementi media in una semplice vista a griglia o in una lista a colonne. Per passare da una vista all'altra utilizzare le icone poste a sinistra sopra gli elementi media."
+msgstr "Puoi visualizzare gli elementi media in una semplice vista a griglia o in una lista a colonne. Per passare da una vista all'altra utilizza le icone poste a sinistra sopra gli elementi media."
 
 #: wp-admin/upload.php:140
 msgid "All the files you&#8217;ve uploaded are listed in the Media Library, with the most recent uploads listed first."
@@ -8556,7 +8556,7 @@ msgid "Beta Testing"
 msgstr "Beta test"
 
 #. translators: %s: URL that could not be embedded.
-#: wp-admin/includes/ajax-actions.php:3781
+#: wp-admin/includes/ajax-actions.php:3785
 msgid "%s failed to embed."
 msgstr "%s ha fallito l'incorporamento."
 
@@ -8591,7 +8591,7 @@ msgstr "Puoi scalare proporzionalmente l&#8217;immagine originale. Per un miglio
 #. translators: %s: Alt + F10
 #: wp-admin/edit-form-advanced.php:300
 msgid "Keyboard users: When you are working in the visual editor, you can use %s to access the toolbar."
-msgstr "Per gli utenti che utilizzano la tastiera: mentre lavori nell&#8217;editor visuale, puoi utilizzare  %s per accedere alla barra degli strumenti."
+msgstr "Per gli utenti che utilizzano la tastiera: mentre lavori nell&#8217;editor visuale, puoi utilizzare %s per accedere alla barra degli strumenti."
 
 #: wp-admin/edit-comments.php:199
 msgid "A red bar on the left means the comment is waiting for you to moderate it."
@@ -9091,7 +9091,7 @@ msgstr "[%1$s] URGENTE: Il tuo sito potrebbe essere giù a causa di un aggiornam
 #. WordPress version.
 #: wp-admin/includes/class-wp-automatic-updater.php:774
 msgid "[%1$s] WordPress %2$s is available. Please update!"
-msgstr "[%1$s] &Egrave; disponibile  WordPress %2$s. Aggiorna!"
+msgstr "[%1$s] è disponibile WordPress %2$s. Aggiorna!"
 
 #. translators: Site updated notification email subject. 1: Site title, 2:
 #. WordPress version.
@@ -9162,18 +9162,18 @@ msgstr "Le dimensioni elencate di seguito determinano le dimensioni massime in p
 msgid "Comment must be manually approved"
 msgstr "Il commento deve essere approvato manualmente"
 
-#: wp-admin/nav-menus.php:656
+#: wp-admin/nav-menus.php:659
 msgid "<strong>Clicking the arrow to the right of any menu item</strong> in the editor will reveal a standard group of settings. Additional settings such as link target, CSS classes, link relationships, and link descriptions can be enabled and disabled via the Screen Options tab."
 msgstr "<strong>Facendo clic sulla freccia a destra di qualsiasi voce di menu</strong> all'interno dell'editor apparirà un gruppo di impostazioni standard. Ulteriori impostazioni quali ad esempio la destinazione del link, le classi CSS, la relazione fra i link e la descrizione del link possono venir abilitate o disabilitate tramite la scheda impostazioni schermata."
 
 #. translators: 1: URL to Widgets screen, 2 and 3: The names of the default
 #. themes.
-#: wp-admin/nav-menus.php:625
+#: wp-admin/nav-menus.php:628
 msgid "Menus can be displayed in locations defined by your theme, even used in sidebars by adding a &#8220;Navigation Menu&#8221; widget on the <a href=\"%1$s\">Widgets</a> screen. If your theme does not support the navigation menus feature (the default themes, %2$s and %3$s, do), you can learn about adding this support by following the documentation link to the side."
 msgstr "I menu possono essere visualizzati in posizioni definite dal tema, o anche utilizzati nelle barre laterali aggiungendo un widget &#8220;Menu di navigazione&#8221; nella schermata <a href=\"%1$s\">Widget</a>. Se il tuo tema non supporta la funzione dei menu di navigazione (i temi predefiniti, %2$s e %3$s, lo fanno), puoi imparare ad aggiungere questo supporto seguendo il link di documentazione a lato."
 
 #. translators: %s: URL to Widgets screen.
-#: wp-admin/nav-menus.php:616
+#: wp-admin/nav-menus.php:619
 msgid "Your theme does not natively support menus, but you can use them in sidebars by adding a &#8220;Navigation Menu&#8221; widget on the <a href=\"%s\">Widgets</a> screen."
 msgstr "Il tuo tema non supporta nativamente i menu, ma puoi utilizzare i menu nelle barre laterali aggiungendo un widget &#8220;Menu personalizzato&#8221; tramite la schermata <a href=\"%s\">Widget</a>."
 
@@ -9433,7 +9433,7 @@ msgstr "I plugin estendono ed espandono le funzionalità di WordPress. Puoi inst
 
 #. Plugin URI of the plugin
 msgid "http://wordpress.org/plugins/hello-dolly/"
-msgstr "https://it.wordpress.org/plugins/hello-dolly/ "
+msgstr "https://it.wordpress.org/plugins/hello-dolly/"
 
 #: wp-admin/includes/class-theme-upgrader.php:80
 msgid "The theme contains no files."
@@ -9464,11 +9464,11 @@ msgstr "L'elemento che stai tentando di ripristinare dal cestino non esiste più
 msgid "The item you are trying to move to the Trash no longer exists."
 msgstr "L'elemento che stai provando a spostare nel cestino non esiste più."
 
-#: wp-admin/nav-menus.php:1031
+#: wp-admin/nav-menus.php:1034
 msgid "Drag the items into the order you prefer. Click the arrow on the right of the item to reveal additional configuration options."
 msgstr "Trascina ciascun elemento nell'ordine che preferisci. Fai clic sulla freccia a destra dell'elemento per mostrare ulteriori opzioni di configurazione."
 
-#: wp-admin/nav-menus.php:644
+#: wp-admin/nav-menus.php:647
 msgid "If you have not yet created any menus, <strong>click the &#8217;create a new menu&#8217; link</strong> to get started"
 msgstr "Se non hai ancora creato un menu, per iniziare <strong>fai clic sul link &#8217;crea un nuovo menu&#8217;</strong>"
 
@@ -9508,105 +9508,105 @@ msgctxt "Followed by post revision info"
 msgid "From:"
 msgstr "Da:"
 
-#: wp-admin/nav-menus.php:832
+#: wp-admin/nav-menus.php:835
 msgctxt "menu"
 msgid "Use new menu"
 msgstr "Utilizza un nuovo menu"
 
-#: wp-admin/nav-menus.php:808
+#: wp-admin/nav-menus.php:811
 msgctxt "menu"
 msgid "Edit"
 msgstr "Modifica"
 
-#: wp-admin/nav-menus.php:777
+#: wp-admin/nav-menus.php:780
 msgid "Select a Menu"
 msgstr "Seleziona un menu"
 
-#: wp-admin/nav-menus.php:768
+#: wp-admin/nav-menus.php:771
 msgid "Assigned Menu"
 msgstr "Menu assegnati"
 
-#: wp-admin/nav-menus.php:767
+#: wp-admin/nav-menus.php:770
 msgid "Theme Location"
 msgstr "Posizioni del tema"
 
-#: wp-admin/nav-menus.php:736
+#: wp-admin/nav-menus.php:739
 msgid "Manage Locations"
 msgstr "Gestione posizioni"
 
-#: wp-admin/nav-menus.php:725
+#: wp-admin/nav-menus.php:728
 msgid "Edit Menus"
 msgstr "Modifica menu"
 
-#: wp-admin/nav-menus.php:673
+#: wp-admin/nav-menus.php:676
 msgid "To add a new menu instead of assigning an existing one, <strong>click the &#8217;Use new menu&#8217; link</strong>. Your new menu will be automatically assigned to that theme location"
 msgstr "Per aggiungere un nuovo menu anziché assegnarne uno esistente, <strong>fai clic sul link &#8217;Utilizza un nuovo menu&#8217;</strong>. Il tuo nuovo menu verrà assegnato automaticamente a questa posizione all'interno del tema"
 
-#: wp-admin/nav-menus.php:672
+#: wp-admin/nav-menus.php:675
 msgid "To edit a menu currently assigned to a theme location, <strong>click the adjacent &#8217;Edit&#8217; link</strong>"
 msgstr "Per modificare un menu assegnato ad una posizione del tema, <strong>fai clic sul link &#8217;Modifica&#8217; adiacente</strong>"
 
-#: wp-admin/nav-menus.php:671
+#: wp-admin/nav-menus.php:674
 msgid "To assign menus to one or more theme locations, <strong>select a menu from each location&#8217;s dropdown</strong>. When you are finished, <strong>click Save Changes</strong>"
 msgstr "Per assegnare i menu ad una o più posizioni all'interno del tema, <strong>seleziona un menu dall'elenco a discesa di ciascuna posizione.</strong> Una volta terminato <strong>fai clic su Salva le modifiche</strong>"
 
-#: wp-admin/nav-menus.php:670
+#: wp-admin/nav-menus.php:673
 msgid "This screen is used for globally assigning menus to locations defined by your theme."
 msgstr "Questa schermata serve ad assegnare i menu alle posizioni definite dal tema in uso."
 
-#: wp-admin/nav-menus.php:665
+#: wp-admin/nav-menus.php:668
 msgid "Editing Menus"
 msgstr "Modificare i menu"
 
-#: wp-admin/nav-menus.php:660
+#: wp-admin/nav-menus.php:663
 msgid "Delete a menu item by <strong>expanding it and clicking the Remove link</strong>"
 msgstr "Per eliminare una voce di menu, <strong>espandila e fai clic su Rimuovi</strong>"
 
-#: wp-admin/nav-menus.php:659
+#: wp-admin/nav-menus.php:662
 msgid "To reorganize menu items, <strong>drag and drop items with your mouse or use your keyboard</strong>. Drag or move a menu item a little to the right to make it a submenu"
 msgstr "Per riorganizzare le voci dei menu, <strong>trascina e rilascia gli elementi con il mouse o utilizza la tastiera</strong>. Trascina o sposta leggermente verso destra una voce di menu per renderla un sottomenu"
 
-#: wp-admin/nav-menus.php:657
+#: wp-admin/nav-menus.php:660
 msgid "Add one or several items at once by <strong>selecting the checkbox next to each item and clicking Add to Menu</strong>"
 msgstr "Aggiungi uno o più elementi in una volta sola <strong>selezionando la casella vicino a ciascun elemento e facendo clic su Aggiungi al menu</strong>"
 
-#: wp-admin/nav-menus.php:655
+#: wp-admin/nav-menus.php:658
 msgid "Each navigation menu may contain a mix of links to pages, categories, custom URLs or other content types. Menu links are added by selecting items from the expanding boxes in the left-hand column below."
 msgstr "Ciascun menu personalizzato può contenere un insieme di link a pagine, categorie, URL personalizzate ed altri tipi di contenuto. I link ai menu vengono aggiunti selezionando gli elementi dai riquadri espandibili nella colonna di sinistra qua sotto."
 
-#: wp-admin/nav-menus.php:650
+#: wp-admin/nav-menus.php:653
 msgid "Menu Management"
 msgstr "Gestione menu"
 
-#: wp-admin/nav-menus.php:645
+#: wp-admin/nav-menus.php:648
 msgid "You can assign theme locations to individual menus by <strong>selecting the desired settings</strong> at the bottom of the menu editor. To assign menus to all theme locations at once, <strong>visit the Manage Locations tab</strong> at the top of the screen."
 msgstr "Puoi assegnare le posizioni del tema a singoli menu <strong>selezionando le impostazioni opportune</strong> in fondo all'editor dei menu. Per assegnare in una sola volta i vari menu alle varie posizioni del tema <strong>vai alla scheda gestione posizioni</strong> in cima a questa schermata."
 
-#: wp-admin/nav-menus.php:643
+#: wp-admin/nav-menus.php:646
 msgid "To edit an existing menu, <strong>choose a menu from the dropdown and click Select</strong>"
 msgstr "Per modificare un menu esistente, <strong>selezionalo dal menu a discesa e fai clic su Seleziona</strong>"
 
-#: wp-admin/nav-menus.php:642
+#: wp-admin/nav-menus.php:645
 msgid "The menu management box at the top of the screen is used to control which menu is opened in the editor below."
 msgstr "Il box gestione menu in alto è utilizzato per controllare quale menu è aperto nell'editor sotto."
 
-#: wp-admin/nav-menus.php:632
+#: wp-admin/nav-menus.php:635
 msgid "Add, organize, and modify individual menu items"
 msgstr "Aggiungere, organizzare e modificare singole voci di menu"
 
-#: wp-admin/nav-menus.php:631
+#: wp-admin/nav-menus.php:634
 msgid "Create, edit, and delete menus"
 msgstr "Creare, modificare ed eliminare menu"
 
-#: wp-admin/nav-menus.php:630 wp-admin/themes.php:133
+#: wp-admin/nav-menus.php:633 wp-admin/themes.php:133
 msgid "From this screen you can:"
 msgstr "Tramite questa schermata puoi:"
 
-#: wp-admin/nav-menus.php:622
+#: wp-admin/nav-menus.php:625
 msgid "This screen is used for managing your navigation menus."
 msgstr "Questa schermata viene utilizzata per gestire i menu di navigazione personalizzati."
 
-#: wp-admin/nav-menus.php:468
+#: wp-admin/nav-menus.php:471
 msgid "Menu locations updated."
 msgstr "Posizioni dei menu aggiornate."
 
@@ -9656,11 +9656,11 @@ msgstr "Non permesso: %s"
 msgid "Capabilities"
 msgstr "Capacità"
 
-#: wp-admin/nav-menus.php:1088 wp-admin/network/settings.php:501
+#: wp-admin/nav-menus.php:1091 wp-admin/network/settings.php:501
 msgid "Menu Settings"
 msgstr "Impostazioni del menu"
 
-#: wp-admin/nav-menus.php:988
+#: wp-admin/nav-menus.php:991
 msgid "Menu structure"
 msgstr "Struttura del menu"
 
@@ -9695,7 +9695,7 @@ msgstr "Non puoi spostare questo elemento nel cestino. %s lo sta modificando in 
 msgid "%s has taken over and is currently editing."
 msgstr "%s ha preso il controllo e sta attualmente modificando."
 
-#: wp-admin/nav-menus.php:893
+#: wp-admin/nav-menus.php:896
 msgid "Select a menu to edit:"
 msgstr "Seleziona un menu da modificare:"
 
@@ -9712,19 +9712,19 @@ msgstr "Ottimo lavoro! Hai completato questa parte dell'installazione. Ora WordP
 msgid "Client version"
 msgstr "Versione del client"
 
-#: wp-admin/nav-menus.php:1104
+#: wp-admin/nav-menus.php:1107
 msgid "Auto add pages"
 msgstr "Aggiungi automaticamente le pagine"
 
-#: wp-admin/nav-menus.php:1058
+#: wp-admin/nav-menus.php:1061
 msgid "Give your menu a name, then click Create Menu."
 msgstr "Assegna un nome al menu, quindi fai clic su Crea menu."
 
-#: wp-admin/nav-menus.php:1029
+#: wp-admin/nav-menus.php:1032
 msgid "Edit your default menu by adding or removing items. Drag the items into the order you prefer. Click Create Menu to save your changes."
 msgstr "Modifica il tuo menu predefinito aggiungendo o rimuovendo elementi. Trascina ciascun elemento nell'ordine che preferisci. Fai clic su Crea Menu per salvare le tue modifiche."
 
-#: wp-admin/nav-menus.php:326
+#: wp-admin/nav-menus.php:329
 msgid "Selected menus have been successfully deleted."
 msgstr "Gli elementi del menu sono stati correttamente eliminati."
 
@@ -9765,7 +9765,7 @@ msgstr "Se stai cercando di utilizzare il gestore dei link installa il plugin <a
 
 #: wp-admin/widgets-form.php:65
 msgid "When changing themes, there is often some variation in the number and setup of widget areas/sidebars and sometimes these conflicts make the transition a bit less smooth. If you changed themes and seem to be missing widgets, scroll down on this screen to the Inactive Widgets area, where all of your widgets and their settings will have been saved."
-msgstr "Quando si cambiano i temi vi sono spesso della variazioni sul numero e sulle impostazioni della barre laterali e delle aree widget ed a volte questi conflitti rendono il cambio meno semplice e lineare. Se cambi tema e ti sembra che manchino dei widget, scorri in basso a questa schermata nella sezione Widget inattivi dove sono stati salvati tutti  i widget e le relative impostazioni."
+msgstr "Quando si cambiano i temi vi sono spesso della variazioni sul numero e sulle impostazioni della barre laterali e delle aree widget ed a volte questi conflitti rendono il cambio meno semplice e lineare. Se cambi tema e ti sembra che manchino dei widget, scorri in basso a questa schermata nella sezione Widget inattivi dove sono stati salvati tutti i widget e le relative impostazioni."
 
 #: wp-admin/edit-tags.php:286
 msgid "<strong>Parent</strong> &mdash; Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have child categories for Bebop and Big Band. Totally optional. To create a subcategory, just choose another category from the Parent dropdown."
@@ -9794,7 +9794,7 @@ msgstr "Per utilizzare una immagine di sfondo basta semplicemente caricarla o se
 #. translators: 1: URL to browser uploader, 2: Additional link attributes.
 #: wp-admin/includes/media.php:3032
 msgid "You are using the multi-file uploader. Problems? Try the <a href=\"%1$s\" %2$s>browser uploader</a> instead."
-msgstr "Stai utilizzando l'uploader multiplo. Problemi? Prova al suo posto <a href=\"%1$s\" %2$s>l'uploader del browser</a>."
+msgstr "Stai utilizzando l'uploader multifile. Problemi? Prova al suo posto l'<a href=\"%1$s\" %2$s>uploader del browser</a>."
 
 #: wp-admin/async-upload.php:77
 msgctxt "media item"
@@ -9828,7 +9828,7 @@ msgstr "Scegliere l'immagine di sfondo"
 
 #: wp-admin/includes/class-custom-image-header.php:130
 msgid "In the Header Text section of this page, you can choose whether to display this text or hide it. You can also choose a color for the text by clicking the Select Color button and either typing in a legitimate HTML hex value, e.g. &#8220;#ff0000&#8221; for red, or by choosing a color using the color picker."
-msgstr "Nella sezione Testo testata di questa pagina puoi scegliere se visualizzare o meno questo testo. Puoi anche scegliere il colore del testo facendo clic sul pulsante Seleziona un colore e quindi inserire un valore HTML esadecimale legittimo, es. &#8220;#ff0000&#8221; per il rosso oppure impostare il colore tramite il selezionatore dei colori."
+msgstr "Nella sezione Testo dell'header di questa pagina puoi scegliere se visualizzare o meno questo testo. Puoi anche scegliere il colore del testo facendo clic sul pulsante Seleziona un colore e quindi inserire un valore HTML esadecimale legittimo, es. &#8220;#ff0000&#8221; per il rosso oppure impostare il colore tramite il selettore colore."
 
 #: wp-admin/includes/class-custom-background.php:93
 msgid "You can also choose a background color by clicking the Select Color button and either typing in a legitimate HTML hex value, e.g. &#8220;#ff0000&#8221; for red, or by choosing a color using the color picker."
@@ -9932,7 +9932,7 @@ msgstr "Preferiti"
 
 #: wp-admin/theme-install.php:131
 msgid "To install the theme so you can preview it with your site&#8217;s content and customize its theme options, click the \"Install\" button at the top of the left-hand pane. The theme files will be downloaded to your website automatically. When this is complete, the theme is now available for activation, which you can do by clicking the \"Activate\" link, or by navigating to your Manage Themes screen and clicking the \"Live Preview\" link under any installed theme&#8217;s thumbnail image."
-msgstr "Per installare il tema così da poterne vedere una anteprima con il contenuto del proprio sito e con la possibilità di personalizzarne le impostazioni fai clic sul pulsante \"Installa\" in alto a destra del pannello di sinistra. I file del tema verranno scaricati automaticamente sul tuo sito. Una volta terminato il tema sarà ora disponibile per l'attivazione che potrai effettuare facendo clic sul link \"Attiva\" oppure navigando alla schermata di Gestione temi e facendo clic sul link  \"Anteprima in tempo reale\" posto sotto la miniatura di qualsiasi tema installato."
+msgstr "Per installare il tema, così da poterne vedere una anteprima con il contenuto del proprio sito e con la possibilità di personalizzarne le impostazioni, fai clic sul pulsante \"Installa\" in alto a destra del pannello di sinistra. I file del tema verranno scaricati automaticamente sul tuo sito. Una volta terminato il tema sarà ora disponibile per l'attivazione che potrai effettuare facendo clic sul link \"Attiva\" oppure navigando alla schermata di Gestione temi e facendo clic sul link \"Anteprima in tempo reale\" posto sotto la miniatura di qualsiasi tema installato."
 
 #: wp-admin/includes/widgets.php:262
 msgctxt "widget"
@@ -10059,7 +10059,7 @@ msgstr "Una volta generato un elenco di temi puoi vedere in anteprima ed install
 
 #: wp-admin/includes/media.php:3049
 msgid "You are using the browser&#8217;s built-in file uploader. The WordPress uploader includes multiple file selection and drag and drop capability. <a href=\"#\">Switch to the multi-file uploader</a>."
-msgstr "Stai utilizzando l'uploader incorporato del browser. L'uploader di WordPress include la selezione di file multipli e le funzionalità di drag&drop. <a href=\"#\">Passa all'uploader multifile</a>."
+msgstr "Stai utilizzando l'uploader incorporato del browser. L'uploader di WordPress include la selezione di file multipli e le funzionalità di trascina e rilascia. <a href=\"#\">Passa all'uploader multifile</a>."
 
 #. translators: %s: Theme name.
 #: wp-admin/includes/class-wp-theme-install-list-table.php:345
@@ -10101,7 +10101,7 @@ msgstr "Errore di configurazione"
 
 #: wp-admin/media-new.php:55
 msgid "Revert to the <strong>Browser Uploader</strong> by clicking the link below the drag and drop box."
-msgstr "Tornare al <strong>Caricamento browser</strong> facendo clic sul link sottostante il riquadro di trascina e rilascia."
+msgstr "Torna all' <strong>Uploader del browser</strong> facendo clic sul link sottostante il riquadro di trascina e rilascia."
 
 #: wp-admin/users.php:539 wp-admin/network/users.php:262
 msgid "User deleted."
@@ -10270,7 +10270,7 @@ msgstr "Visualizza il testo dell'header con una tua immagine."
 #: wp-admin/includes/class-custom-image-header.php:744
 #: wp-admin/includes/class-custom-image-header.php:749
 msgid "Header Text"
-msgstr "Testo della testata"
+msgstr "Testo dell'header"
 
 #. translators: 1: Theme name, 2: Theme details URL, 3: Additional link
 #. attributes, 4: Version number, 5: Update URL, 6: Additional link attributes.
@@ -10622,48 +10622,51 @@ msgstr "Immettere l'indirizzo email di un utente esistente di questo network per
 msgid "Show Toolbar when viewing site"
 msgstr "Mostra la barra degli strumenti quando si visualizza il sito"
 
+#. translators: %s: HelpHub URL.
 #. translators: %s: Documentation URL.
-#: wp-admin/about.php:331
+#: wp-admin/about.php:64 wp-admin/about.php:90 wp-admin/about.php:388
 msgid "For more information, see <a href=\"%s\">the release notes</a>."
 msgstr "Per ulteriori informazioni consulta <a href=\"%s\">le note di versione</a>."
 
 #. translators: 1: WordPress version number, 2: Plural number of bugs. More
 #. than one security issue.
-#: wp-admin/about.php:325
+#: wp-admin/about.php:78 wp-admin/about.php:382
 msgid "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs."
 msgstr[0] "La <strong>versione %1$s</strong> corregge alcuni problemi di sicurezza e %2$s bug."
 msgstr[1] "La <strong>versione %1$s</strong> corregge alcuni problemi di sicurezza e %2$s bug."
 
+#. translators: 1: WordPress version number, 2: Plural number of bugs. More
+#. than one security issue.
 #. translators: 1: WordPress version number, 2: Plural number of bugs. Singular
 #. security issue.
-#: wp-admin/about.php:319
+#: wp-admin/about.php:52 wp-admin/about.php:376
 msgid "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs."
 msgstr[0] "La <strong>versione %1$s</strong> corregge un problema di sicurezza e %2$s bug."
 msgstr[1] "La <strong>versione %1$s</strong> corregge un problema di sicurezza e %2$s bug."
 
 #. translators: 1: WordPress version number, 2: Plural number of bugs.
-#: wp-admin/about.php:313
+#: wp-admin/about.php:370
 msgid "<strong>Version %1$s</strong> addressed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed %2$s bugs."
 msgstr[0] "La <strong>versione %1$s</strong> corregge %2$s bug."
 msgstr[1] "La <strong>versione %1$s</strong> corregge %2$s bug."
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:310
+#: wp-admin/about.php:367
 msgid "<strong>Version %s</strong> addressed some security issues."
 msgstr "La <strong>versione %s</strong> corregge alcuni problemi di sicurezza."
 
-#: wp-admin/about.php:304
+#: wp-admin/about.php:361
 msgid "Maintenance and Security Release"
 msgstr "Aggiornamento di sicurezza e manutenzione"
 
-#: wp-admin/about.php:301
+#: wp-admin/about.php:358
 msgid "Security Release"
 msgstr "Aggiornamento di sicurezza"
 
-#: wp-admin/about.php:298
+#: wp-admin/about.php:355
 msgid "Maintenance Release"
 msgstr "Aggiornamento di manutenzione"
 
@@ -10829,7 +10832,7 @@ msgstr "Barra laterale inattiva (non utilizzata)"
 
 #: wp-admin/media-new.php:54
 msgid "Clicking <strong>Select Files</strong> opens a navigation window showing you files in your operating system. Selecting <strong>Open</strong> after clicking on the file you want activates a progress bar on the uploader screen."
-msgstr "Facendo clic su <strong>Seleziona file</strong> si apre una finestra di navigazione che elenca i file nel tuo sistema operativo. Selezionando <strong>Apri</strong> dopo aver fatto clic sul file che desideri si attiverà una barra di avanzamento sulla schermata di caricamento."
+msgstr "Facendo clic su <strong>Seleziona i file</strong> si apre una finestra di navigazione che elenca i file nel tuo sistema operativo. Selezionando <strong>Apri</strong> dopo aver fatto clic sul file che desideri si attiverà una barra di avanzamento sulla schermata dell'uploader."
 
 #: wp-admin/media-new.php:53
 msgid "<strong>Drag and drop</strong> your files into the area below. Multiple files are allowed."
@@ -10865,11 +10868,11 @@ msgstr "Puoi anche eseguire lo stesso tipo di azioni, compresa la riduzione dell
 
 #: wp-admin/edit.php:315
 msgid "Managing pages is very similar to managing posts, and the screens can be customized in the same way."
-msgstr "La gestione delle pagine &egrave; molto simile alla gestione articoli e le schermate possono essere  personalizzate nello stesso modo."
+msgstr "La gestione delle pagine &egrave; molto simile alla gestione articoli e le schermate possono essere personalizzate nello stesso modo."
 
 #: wp-admin/edit-form-advanced.php:323 wp-admin/edit.php:307
 msgid "Pages are similar to posts in that they have a title, body text, and associated metadata, but they are different in that they are not part of the chronological blog stream, kind of like permanent posts. Pages are not categorized or tagged, but can have a hierarchy. You can nest pages under other pages by making one the &#8220;Parent&#8221; of the other, creating a group of pages."
-msgstr "La pagine sono simili agli articoli nel senso che hanno un titolo, un corpo e dei metadati associati, ma la differenza &egrave; che non entrano nel flusso cronologico del blog. Sono una specie di articoli permanenti. Le pagine non sono categorizzate o taggate, ma possono avere una gerarchia. &Egrave; possibile annidare una pagina dentro un&#8217;altra rendendo una  &#8220;genitore&#8221; dell&#8217;altra, creando in effetti un gruppo di pagine."
+msgstr "La pagine sono simili agli articoli nel senso che hanno un titolo, un corpo e dei metadati associati, ma la differenza &egrave; che non entrano nel flusso cronologico del blog. Sono una specie di articoli permanenti. Le pagine non sono categorizzate o taggate, ma possono avere una gerarchia. &Egrave; possibile annidare una pagina dentro un&#8217;altra rendendo una &#8220;genitore&#8221; dell&#8217;altra, creando in effetti un gruppo di pagine."
 
 #: wp-admin/edit-comments.php:204
 msgid "Many people take advantage of keyboard shortcuts to moderate their comments more quickly. Use the link to the side to learn more."
@@ -10889,11 +10892,11 @@ msgstr "I link nella barra degli strumenti in cima alla schermata collegano la b
 
 #: wp-admin/link-manager.php:71
 msgid "Deleting Links"
-msgstr "Eliminazione di collegamenti"
+msgstr "Eliminazione dei link in corso..."
 
 #: wp-admin/link-manager.php:64
 msgid "Links may be separated into Link Categories; these are different than the categories used on your posts."
-msgstr "I link possono essere raggruppati in Categorie, che sono differenti dalle categorie utilizzate nei post."
+msgstr "I link possono essere raggruppati in categorie, che sono differenti da quelle utilizzate nei post."
 
 #. translators: 1: URL to About screen, 2: WordPress version.
 #: wp-admin/update-core.php:293
@@ -10941,15 +10944,15 @@ msgid "Because this is a multisite installation, you may add accounts that alrea
 msgstr "Poiché si tratta di un'installazione multisito, è possibile aggiungere gli account già esistenti sul network, specificando un nome utente o email e la definizione di un ruolo. Per ulteriori opzioni, come specificare una password, è necessario essere un amministratore del network e utilizzare il link di azione sotto il nome di un utente esistente per modificare il profilo utente sotto Gestione network > Tutti gli utenti."
 
 #. translators: %s: Version number.
-#: wp-admin/about.php:51
+#: wp-admin/about.php:108
 msgid "Welcome to WordPress %s"
 msgstr "Ti diamo il benvenuto in WordPress %s."
 
-#: wp-admin/about.php:287
+#: wp-admin/about.php:344
 msgid "Go to Dashboard &rarr; Home"
 msgstr "Vai alla bacheca &rarr; Home"
 
-#: wp-admin/about.php:284
+#: wp-admin/about.php:341
 msgid "Go to Dashboard &rarr; Updates"
 msgstr "Ritorna alla bacheca &rarr; Aggiornamenti"
 
@@ -11077,7 +11080,7 @@ msgstr "È possibile utilizzare i seguenti controlli per organizzare la propria 
 
 #: wp-admin/index.php:51
 msgid "The left-hand navigation menu provides links to all of the WordPress administration screens, with submenu items displayed on hover. You can minimize this menu to a narrow icon strip by clicking on the Collapse Menu arrow at the bottom."
-msgstr "Il menu di navigazione di sinistra offre collegamenti a tutte le schermate di amministrazione di WordPress, con voci di sottomenu visualizzate al passaggio del mouse. È possibile ridurre questo menu ad una colonna di icone, facendo clic sulla freccia \"Riduci menu\" alla base del menu."
+msgstr "Il menu di navigazione di sinistra offre i link a tutte le schermate di amministrazione di WordPress, con voci di sottomenu visualizzate al passaggio del mouse. Puoi ridurre questo menu a una colonna di icone, facendo clic sulla freccia \"Riduci menu\" alla base del menu."
 
 #: wp-admin/comment.php:62 wp-admin/edit-comments.php:189
 #: wp-admin/edit-form-advanced.php:344 wp-admin/edit-link-form.php:66
@@ -11088,8 +11091,8 @@ msgstr "Il menu di navigazione di sinistra offre collegamenti a tutte le scherma
 #: wp-admin/includes/class-custom-image-header.php:100
 #: wp-admin/includes/class-wp-screen.php:856 wp-admin/includes/ms.php:1134
 #: wp-admin/index.php:44 wp-admin/link-manager.php:57 wp-admin/media-new.php:49
-#: wp-admin/media.php:86 wp-admin/my-sites.php:44 wp-admin/nav-menus.php:637
-#: wp-admin/nav-menus.php:678 wp-admin/options-discussion.php:24
+#: wp-admin/media.php:86 wp-admin/my-sites.php:44 wp-admin/nav-menus.php:640
+#: wp-admin/nav-menus.php:681 wp-admin/options-discussion.php:24
 #: wp-admin/options-general.php:53 wp-admin/options-media.php:34
 #: wp-admin/options-permalink.php:23 wp-admin/options-privacy.php:38
 #: wp-admin/options-reading.php:25 wp-admin/options-writing.php:23
@@ -11195,8 +11198,8 @@ msgstr "Super Admin"
 #. translators: %s: Theme version number.
 #. translators: %s: WordPress version.
 #. translators: %s: Theme version.
-#: wp-admin/includes/ajax-actions.php:4571
-#: wp-admin/includes/ajax-actions.php:4614
+#: wp-admin/includes/ajax-actions.php:4575
+#: wp-admin/includes/ajax-actions.php:4618
 #: wp-admin/includes/class-wp-debug-data.php:951
 #: wp-admin/includes/class-wp-debug-data.php:998
 #: wp-admin/includes/class-wp-debug-data.php:1320
@@ -11248,7 +11251,7 @@ msgstr "Impostazioni salvate."
 #: wp-admin/includes/class-custom-image-header.php:136
 #: wp-admin/includes/ms.php:1156 wp-admin/index.php:131
 #: wp-admin/link-manager.php:78 wp-admin/media-new.php:60 wp-admin/media.php:96
-#: wp-admin/my-sites.php:51 wp-admin/nav-menus.php:685
+#: wp-admin/my-sites.php:51 wp-admin/nav-menus.php:688
 #: wp-admin/options-discussion.php:31 wp-admin/options-general.php:59
 #: wp-admin/options-media.php:40 wp-admin/options-permalink.php:59
 #: wp-admin/options-privacy.php:46 wp-admin/options-reading.php:52
@@ -11389,12 +11392,12 @@ msgstr "Puoi trovare temi aggiuntivi per il tuo sito utilizzando il browser/inst
 #. translators: %s: WordPress Plugin Directory URL.
 #: wp-admin/plugins.php:550
 msgid "If you would like to see more plugins to choose from, click on the &#8220;Add New&#8221; button and you will be able to browse or search for additional plugins from the <a href=\"%s\">WordPress Plugin Directory</a>. Plugins in the WordPress Plugin Directory are designed and developed by third parties, and are compatible with the license WordPress uses. Oh, and they&#8217;re free!"
-msgstr "Se desideri visualizzare più plugin tra cui scegliere, fai clic sul pulsante \"Aggiungi nuovo\"  e potrai sfogliare o cercare nuovi plugin nella <a href=\"%s\">Directory dei plugin di WordPress.org</a>. I plugin presenti nella directory dei plugin di WordPress sono progettati e sviluppati da terze parti, e sono compatibili con la licenza che utilizza WordPress. Oh, e sono gratuiti!"
+msgstr "Se desideri visualizzare più plugin tra cui scegliere, fai clic sul pulsante \"Aggiungi nuovo\" e potrai sfogliare o cercare nuovi plugin nella <a href=\"%s\">Directory dei plugin di WordPress.org</a>. I plugin presenti nella directory dei plugin di WordPress sono progettati e sviluppati da terze parti, e sono compatibili con la licenza che utilizza WordPress. Oh, e sono gratuiti!"
 
 #. translators: %s: MAX_FILE_SIZE
 #: wp-admin/includes/file.php:875
 msgid "The uploaded file exceeds the %s directive that was specified in the HTML form."
-msgstr "Il file caricato eccede la direttiva %s  che è stata indicata nel modulo HTML."
+msgstr "Il file caricato eccede la direttiva %s che è stata indicata nel modulo HTML."
 
 #: wp-admin/credits.php:142
 msgid "External Libraries"
@@ -11507,7 +11510,7 @@ msgstr "%1$s di %2$s"
 msgid "%s Page Template"
 msgstr "%s template di pagina"
 
-#: wp-admin/includes/ajax-actions.php:4676 wp-admin/plugins.php:624
+#: wp-admin/includes/ajax-actions.php:4680 wp-admin/plugins.php:624
 msgid "You cannot delete a plugin while it is active on the main site."
 msgstr "Non è possibile eliminare un plugin mentre è attivato sul sito principale."
 
@@ -11530,11 +11533,11 @@ msgstr "Ogni modifica ai file di questa schermata verrà applicata su tutti i si
 
 #: wp-admin/users.php:35
 msgid "This screen lists all the existing users for your site. Each user has one of five defined roles as set by the site admin: Site Administrator, Editor, Author, Contributor, or Subscriber. Users with roles other than Administrator will see fewer options in the dashboard navigation when they are logged in, based on their role."
-msgstr "Questa schermata elenca tutti gli utenti del sito. Ciascun utente ha uno dei cinque possibili ruoli predefiniti come impostato dall'amministratore del sito: Amministratore del sito, Editore, Autore, Contribuente o Sottoscrittore. Utenti autenticati con ruoli diversi da quello di Amministratore vedranno meno opzioni nel menu di navigazione della bacheca in base al loro ruolo."
+msgstr "Questa schermata elenca tutti gli utenti del sito. Ciascun utente ha uno dei cinque possibili ruoli predefiniti come impostato dall'amministratore del sito: Amministratore del sito, Editore, Autore, Contributore o Sottoscrittore. Utenti autenticati con ruoli diversi da quello di Amministratore vedranno meno opzioni nel menu di navigazione della bacheca in base al loro ruolo."
 
 #: wp-admin/plugin-editor.php:136
 msgid "If you want to make changes but do not want them to be overwritten when the plugin is updated, you may be ready to think about writing your own plugin. For information on how to edit plugins, write your own from scratch, or just better understand their anatomy, check out the links below."
-msgstr "Se vuoi fare delle modifiche che non siano sovrascritte quando il plugin verrà aggiornato, dovresti valutare di scrivere un tuo plugin. Per informazioni sulla modifica di un plugin, sulla loro scrittura da zero o solo capire meglio la loro struttura, clicca sui link sotto."
+msgstr "Se vuoi fare delle modifiche che non siano sovrascritte quando il plugin verrà aggiornato, dovresti valutare di scrivere un tuo plugin. Per informazioni sulla modifica di un plugin, sulla loro scrittura da zero o solo capire meglio la loro struttura, fai clic sui link sotto."
 
 #: wp-admin/index.php:75
 msgid "The boxes on your Dashboard screen are:"
@@ -11649,7 +11652,7 @@ msgstr "Aggiorna il plugin"
 msgid "Theme updated successfully."
 msgstr "Il tema è stato aggiornato correttamente."
 
-#: wp-admin/includes/ajax-actions.php:4342
+#: wp-admin/includes/ajax-actions.php:4346
 #: wp-admin/includes/class-theme-upgrader.php:63
 #: wp-admin/includes/class-theme-upgrader.php:100
 msgid "Theme update failed."
@@ -11660,7 +11663,7 @@ msgstr "L'aggiornamento del tema non è riuscito."
 msgid "Plugin updated successfully."
 msgstr "Il plugin è stato aggiornato con successo."
 
-#: wp-admin/includes/ajax-actions.php:4633
+#: wp-admin/includes/ajax-actions.php:4637
 #: wp-admin/includes/class-plugin-upgrader.php:64
 #: wp-admin/includes/class-plugin-upgrader.php:91
 msgid "Plugin update failed."
@@ -11919,7 +11922,7 @@ msgstr "È possibile decidere cosa deve essere visualizzato nella pagina princip
 
 #: wp-admin/options-permalink.php:54
 msgid "The Optional fields let you customize the &#8220;category&#8221; and &#8220;tag&#8221; base names that will appear in archive URLs. For example, the page listing all posts in the &#8220;Uncategorized&#8221; category could be <code>/topics/uncategorized</code> instead of <code>/category/uncategorized</code>."
-msgstr "Le impostazioni aggiuntive permettono di personalizzare le strutture dei permalink delle &#8220;categorie&#8221; e dei  &#8220;tag&#8221; utilizzando degli argomenti come base che appariranno negli indirizzi nell'archivio. Per esempio la pagina che visualizza tutti gli articoli nella categoria &#8220;senza categoria&#8221; potrebbe essere <code>/topics/senza-categoria</code> invece di  <code>/categoria/senza-categoria</code>."
+msgstr "I campi Facoltativi permettono di personalizzare il nome di base delle &#8220;categorie&#8221; e dei &#8220;tag&#8221; che appariranno negli URL degli archivi. Per esempio la pagina che visualizza tutti gli articoli nella categoria &#8220;senza categoria&#8221; potrebbe essere <code>/argomenti/senza-categoria</code> invece di <code>/categoria/senza-categoria</code>."
 
 #. translators: 1: %category%, 2: %tag%
 #: wp-admin/options-permalink.php:42
@@ -11978,7 +11981,7 @@ msgstr "<strong>Invia trackback</strong> &mdash; I trackback sono un metodo per 
 
 #: wp-admin/user-new.php:291
 msgid "Contributors can write and manage their posts but not publish posts or upload media files."
-msgstr "I collaboratori possono scrivere e gestire i propri articoli ma non possono pubblicare articoli o caricare file."
+msgstr "I contributori possono scrivere e gestire i propri articoli ma non possono pubblicare articoli o caricare file."
 
 #: wp-admin/user-new.php:294
 msgid "Administrators have access to all the administration features."
@@ -12068,7 +12071,7 @@ msgstr "Le sezioni del nome del link, dell'indirizzo web e della descrizione han
 
 #: wp-admin/update-core.php:628
 msgid "Your themes are all up to date."
-msgstr "Tutti i  temi sono aggiornati."
+msgstr "Tutti i temi sono aggiornati."
 
 #: wp-admin/update-core.php:459
 msgid "Your plugins are all up to date."
@@ -12145,7 +12148,7 @@ msgstr "Dopo aver effettuato le modifiche, fai clic su aggiorna file."
 
 #: wp-admin/theme-editor.php:31
 msgid "Begin by choosing a theme to edit from the dropdown menu and clicking the Select button. A list then appears of the theme&#8217;s template files. Clicking once on any file name causes the file to appear in the large Editor box."
-msgstr "Comincia selezionando  un tema da modificare dal menu a discesa e fai clic sul pulsante Seleziona. Verrà mostrato l'elenco di tutti i file del tema. Facendo clic una volta sul nome di uno dei file, questo verrà aperto nell'editor dei temi."
+msgstr "Comincia selezionando un tema da modificare dal menu a discesa e fai clic sul pulsante Seleziona. Verrà mostrato l'elenco di tutti i file del tema. Facendo clic una volta sul nome di uno dei file, questo verrà aperto nell'editor dei temi."
 
 #: wp-admin/theme-editor.php:30
 msgid "You can use the theme file editor to edit the individual CSS and PHP files which make up your theme."
@@ -12278,7 +12281,7 @@ msgstr "Puoi personalizzare la visualizzazione di questa schermata in diversi mo
 msgid "Search Installed Plugins"
 msgstr "Ricerca plugin installati"
 
-#: wp-admin/nav-menus.php:749
+#: wp-admin/nav-menus.php:752
 msgid "Your theme supports one menu. Select which menu you would like to use."
 msgstr "Il tuo tema supporta un menu. Seleziona quale menu vuoi utilizzare."
 
@@ -12414,14 +12417,14 @@ msgstr "Nessun elemento."
 #. translators: %s: Asterisk symbol (*).
 #: wp-admin/includes/schema.php:1125
 msgid "To use a subdomain configuration, you must have a wildcard entry in your DNS. This usually means adding a %s hostname record pointing at your web server in your DNS configuration tool."
-msgstr "Per utilizzare la configurazione con i sottodomini devi inserire una wildcard nel DNS. Normalmente significa aggiungere un record nome host %s  che punti al web server negli strumenti di configurazione dei DNS."
+msgstr "Per utilizzare la configurazione con i sottodomini devi inserire una voce wildcard nel DNS. Normalmente significa aggiungere un record nome host %s che punti al web server negli strumenti di configurazione dei DNS."
 
 #. translators: %s: Host name.
 #: wp-admin/includes/schema.php:1114
 msgid "The installer attempted to contact a random hostname (%s) on your domain."
-msgstr "L'installatore ha tentato di contattare un nome host a caso  %s nel tuo dominio."
+msgstr "L'installatore ha tentato di contattare un nome host a caso (%s) nel tuo dominio."
 
-#: wp-admin/nav-menus.php:281
+#: wp-admin/nav-menus.php:284
 msgid "The menu item has been successfully deleted."
 msgstr "La voce di menu è stata eliminata."
 
@@ -12596,7 +12599,7 @@ msgstr "Il nome utente non può essere modificato."
 msgid "items"
 msgstr "elementi"
 
-#: wp-admin/nav-menus.php:304
+#: wp-admin/nav-menus.php:307
 msgid "The menu has been successfully deleted."
 msgstr "Il menu è stato eliminato."
 
@@ -12619,7 +12622,7 @@ msgstr "Classi CSS (opzionale)"
 msgid "Link Target"
 msgstr "Destinazione link"
 
-#: wp-admin/nav-menus.php:1014 wp-admin/nav-menus.php:1179
+#: wp-admin/nav-menus.php:1017 wp-admin/nav-menus.php:1182
 msgid "Save Menu"
 msgstr "Salva menu"
 
@@ -12671,7 +12674,7 @@ msgstr "Aggiornamento di %s non riuscito."
 #. plugins being updated.
 #: wp-admin/includes/class-bulk-plugin-upgrader-skin.php:33
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
-msgstr "Aggiornamento del plugin %1$s (%2$d/%3$d)"
+msgstr "Aggiornamento del plugin %1$s (%2$d/%3$d) in corso"
 
 #: wp-admin/includes/upgrade.php:117
 msgid "The password you chose during installation."
@@ -12711,7 +12714,7 @@ msgstr "Aggiornamenti di WordPress"
 msgid "Edit menu item"
 msgstr "Modifica voce di menu"
 
-#: wp-admin/about.php:287 wp-admin/includes/network.php:148
+#: wp-admin/about.php:344 wp-admin/includes/network.php:148
 msgid "Go to Dashboard"
 msgstr "Vai alla bacheca"
 
@@ -12765,7 +12768,7 @@ msgstr "Questo indirizzo è utilizzato a scopi amministrativi. Se lo cambi ti ve
 msgid "View All"
 msgstr "Mostra tutti"
 
-#: wp-admin/nav-menus.php:400 wp-admin/nav-menus.php:422
+#: wp-admin/nav-menus.php:403 wp-admin/nav-menus.php:425
 msgid "Please enter a valid menu name."
 msgstr "Inserisci un nome di menu valido."
 
@@ -13188,7 +13191,7 @@ msgstr[1] "Inattivi <span class=\"count\">(%s)</span>"
 msgid "Recently Active <span class=\"count\">(%s)</span>"
 msgid_plural "Recently Active <span class=\"count\">(%s)</span>"
 msgstr[0] "Attivo di recente <span class=\"count\">(%s)</span>"
-msgstr[1] "Attivi di recente  <span class=\"count\">(%s)</span>"
+msgstr[1] "Attivi di recente <span class=\"count\">(%s)</span>"
 
 #. translators: %s: Number of plugins.
 #: wp-admin/includes/class-wp-plugins-list-table.php:505
@@ -13282,7 +13285,7 @@ msgstr "File di plugin"
 msgid "Select plugin to edit:"
 msgstr "Selezionare il plugin da modificare:"
 
-#: wp-admin/includes/ajax-actions.php:4844 wp-admin/plugin-editor.php:187
+#: wp-admin/includes/ajax-actions.php:4848 wp-admin/plugin-editor.php:187
 #: wp-admin/theme-editor.php:194
 msgid "File edited successfully."
 msgstr "File modificato con successo."
@@ -13607,7 +13610,7 @@ msgstr "Quando un commento contiene una qualsiasi di queste parole, nel testo, n
 
 #: wp-admin/options-discussion.php:227
 msgid "When a comment contains any of these words in its content, author name, URL, email, IP address, or browser&#8217;s user agent string, it will be held in the <a href=\"edit-comments.php?comment_status=moderated\">moderation queue</a>. One word or IP address per line. It will match inside words, so &#8220;press&#8221; will match &#8220;WordPress&#8221;."
-msgstr "Quando un commento contiene una di queste parole, nel testo, nel nome, nell'URL, nella email, nell'indirizzo IP o nello user agent del browser, verrà messo in <a href=\"edit-comments.php?comment_status=moderated\">coda di moderazione</a>. Inserisci una singola parola o indirizzo IP per ciascuna riga. Verranno cercate corrispondenze anche all'interno delle parole, quindi &#8220;press&#8221;  troverà una corrispondenza in &#8220;WordPress&#8221;."
+msgstr "Quando un commento contiene una di queste parole, nel testo, nel nome, nell'URL, nella email, nell'indirizzo IP o nello user agent del browser, verrà messo in <a href=\"edit-comments.php?comment_status=moderated\">coda di moderazione</a>. Inserisci una singola parola o indirizzo IP per ciascuna riga. Verranno cercate corrispondenze anche all'interno delle parole, quindi &#8220;press&#8221; troverà una corrispondenza in &#8220;WordPress&#8221;."
 
 #. translators: %s: Number of links.
 #: wp-admin/options-discussion.php:221
@@ -14121,6 +14124,11 @@ msgstr "Metti questo articolo in evidenza"
 msgid "Not Sticky"
 msgstr "Non in evidenza"
 
+#: wp-admin/includes/class-wp-posts-list-table.php:1959
+#: wp-admin/includes/class-wp-posts-list-table.php:1962
+msgid "Sticky"
+msgstr "In evidenza"
+
 #: wp-admin/includes/class-wp-posts-list-table.php:1921
 msgid "Allow Pings"
 msgstr "Permetti i ping"
@@ -14597,7 +14605,7 @@ msgstr "Anteprima modifiche"
 
 #: wp-admin/includes/media.php:2961
 msgid "Link text, e.g. &#8220;Ransom Demands (PDF)&#8221;"
-msgstr "Testo link, es.  &#8220;Richiesta di riscatto (PDF)&#8221;"
+msgstr "Testo link, es. &#8220;Richiesta di riscatto (PDF)&#8221;"
 
 #: wp-admin/includes/media.php:2992
 msgid "Link to image"
@@ -14947,7 +14955,7 @@ msgstr "Non è stato caricato alcun file."
 
 #: wp-admin/includes/file.php:878
 msgid "The uploaded file was only partially uploaded."
-msgstr "Il file <code>%s</code> è stato caricato solo parzialmente."
+msgstr "Il file è stato caricato solo parzialmente."
 
 #: wp-admin/includes/file.php:415 wp-admin/includes/file.php:476
 #: wp-admin/includes/file.php:723 wp-admin/includes/file.php:729
@@ -15503,7 +15511,7 @@ msgstr "Aggiorna commento"
 
 #. translators: 1: Post edited date, 2: Post edited time.
 #. translators: 1: Date of last edit, 2: Time of last edit.
-#: wp-admin/edit-form-advanced.php:630 wp-admin/includes/ajax-actions.php:2864
+#: wp-admin/edit-form-advanced.php:630 wp-admin/includes/ajax-actions.php:2868
 msgid "Last edited on %1$s at %2$s"
 msgstr "Ultima modifica il giorno %1$s alle ore %2$s"
 
@@ -15511,7 +15519,7 @@ msgstr "Ultima modifica il giorno %1$s alle ore %2$s"
 #. Post edited time.
 #. translators: 1: User's display name, 2: Date of last edit, 3: Time of last
 #. edit.
-#: wp-admin/edit-form-advanced.php:627 wp-admin/includes/ajax-actions.php:2861
+#: wp-admin/edit-form-advanced.php:627 wp-admin/includes/ajax-actions.php:2865
 msgid "Last edited by %1$s on %2$s at %3$s"
 msgstr "Ultima modifica di %1$s il giorno %2$s alle ore %3$s"
 
@@ -15697,7 +15705,7 @@ msgid "Custom Header"
 msgstr "Header personalizzato"
 
 #: wp-admin/includes/dashboard.php:251 wp-admin/includes/template.php:2592
-#: wp-admin/nav-menus.php:841 wp-admin/options.php:413
+#: wp-admin/nav-menus.php:844 wp-admin/options.php:413
 msgid "Save Changes"
 msgstr "Salva le modifiche"
 

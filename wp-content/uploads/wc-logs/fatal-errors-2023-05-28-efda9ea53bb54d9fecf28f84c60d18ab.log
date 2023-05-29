@@ -1,0 +1,120 @@
+2023-05-28T00:02:26+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(131): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php alla riga 433
+
+2023-05-28T00:11:57+00:00 CRITICAL Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_request","error_description":"The device code must be a string."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/ve in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php alla riga 113
+
+2023-05-28T00:13:45+00:00 CRITICAL Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php alla riga 113
+
+2023-05-28T00:14:17+00:00 CRITICAL Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php alla riga 113
+
+2023-05-28T00:14:29+00:00 CRITICAL Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php alla riga 113
+
+2023-05-28T00:17:10+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(149): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php alla riga 433
+
+2023-05-28T00:17:54+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(149): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php alla riga 433
+
+2023-05-28T00:19:40+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(153): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php alla riga 433
+
+2023-05-28T00:29:04+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/c/false/info/payment_methods` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php:2754
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php(2726): FattureInCloud\Api\InfoApi->listPaymentMethodsWithHttpInfo(false, NULL, NULL, NULL, 'application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(675): FattureInCloud\Api\InfoApi->listPaymentMethods(false)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_payments_methods('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php alla riga 2754
+
+2023-05-28T00:31:02+00:00 CRITICAL Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/c/false/info/payment_methods` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php:2754
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php(2726): FattureInCloud\Api\InfoApi->listPaymentMethodsWithHttpInfo(false, NULL, NULL, NULL, 'application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(677): FattureInCloud\Api\InfoApi->listPaymentMethods(false)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_payments_methods('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php alla riga 2754
+
+2023-05-28T00:31:59+00:00 CRITICAL Uncaught Error: Call to a member function getId() on null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:160
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 160
+
+2023-05-28T00:45:43+00:00 CRITICAL Uncaught Error: Class 'WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:979
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_vat('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woofic_page_woo...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 979
+

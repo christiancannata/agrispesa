@@ -7665,3 +7665,685 @@ Stack trace:
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 732
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 733
 [26-May-2023 22:50:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/admin.php:3148) in /shared/httpd/agrispesa/wp-includes/rest-api.php on line 734
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:09 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 21:50:33 UTC] PHP Notice:  La funzione WP_Object_Cache::add è stata richiamata <strong>in maniera scorretta</strong>. La chiave della cache non deve essere una stringa vuota. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 6.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 22:08:07 UTC] PHP Fatal error:  Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 640
+[27-May-2023 22:08:07 UTC] PHP Fatal error:  Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 640
+[27-May-2023 22:08:08 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
+[27-May-2023 22:08:08 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[27-May-2023 22:08:10 UTC] PHP Fatal error:  Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 640
+[27-May-2023 22:08:18 UTC] PHP Fatal error:  Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php on line 640
+[27-May-2023 22:57:50 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php on line 24
+[27-May-2023 22:58:36 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php on line 24
+[27-May-2023 22:59:04 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php on line 24
+[27-May-2023 22:59:50 UTC] PHP Fatal error:  Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('woofic/woofic.p...', 'https://agrispe...', false)
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php on line 12
+[27-May-2023 22:59:56 UTC] PHP Fatal error:  Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php on line 12
+[27-May-2023 22:59:58 UTC] PHP Fatal error:  Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php on line 12
+[27-May-2023 23:02:55 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php on line 24
+[27-May-2023 23:03:12 UTC] PHP Fatal error:  Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('woofic/woofic.p...', 'https://agrispe...', false)
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php on line 77
+[27-May-2023 23:03:18 UTC] PHP Fatal error:  Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php on line 77
+[27-May-2023 23:03:20 UTC] PHP Fatal error:  Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php on line 77
+[27-May-2023 23:12:01 UTC] PHP Fatal error:  Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-settings.php(453): include_once()
+#1 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php on line 77
+[27-May-2023 23:14:01 UTC] PHP Fatal error:  Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php on line 7
+[27-May-2023 23:15:29 UTC] PHP Fatal error:  Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php on line 7
+[27-May-2023 23:16:28 UTC] PHP Fatal error:  Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php on line 7
+[27-May-2023 23:17:28 UTC] PHP Fatal error:  Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php on line 7
+[27-May-2023 23:22:28 UTC] PHP Fatal error:  Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/__woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/__woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('__woofic/woofic...')
+#3 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('__woofic/woofic...', 'https://agrispe...', false)
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/__woofic/vendor/autoload.php on line 7
+[27-May-2023 23:25:04 UTC] PHP Notice:  Undefined variable: apiKey in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:25:04 UTC] PHP Notice:  Undefined variable: isApiKeyValid in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 122
+[27-May-2023 23:25:04 UTC] PHP Notice:  Undefined variable: apiKey in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 137
+[27-May-2023 23:26:04 UTC] PHP Warning:  include(/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php): failed to open stream: No such file or directory in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:26:04 UTC] PHP Warning:  include(): Failed opening '/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php' for inclusion (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 124
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 127
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 132
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 139
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 142
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 150
+[27-May-2023 23:26:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 162
+[27-May-2023 23:26:06 UTC] PHP Warning:  include(/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php): failed to open stream: No such file or directory in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:26:06 UTC] PHP Warning:  include(): Failed opening '/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php' for inclusion (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 124
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 127
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 132
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 139
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 142
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 150
+[27-May-2023 23:26:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 162
+[27-May-2023 23:27:17 UTC] PHP Warning:  include(/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php): failed to open stream: No such file or directory in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:27:17 UTC] PHP Warning:  include(): Failed opening '/shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php' for inclusion (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 120
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 124
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 127
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 132
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 139
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 142
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 150
+[27-May-2023 23:27:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 162
+[27-May-2023 23:29:08 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[27-May-2023 23:29:08 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[27-May-2023 23:29:08 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[27-May-2023 23:29:08 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[27-May-2023 23:31:31 UTC] PHP Fatal error:  Uncaught Error: Class 'FattureInCloud\OAuth2\OAuth2AuthorizationCodeManager' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:184
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 184
+[27-May-2023 23:32:38 UTC] PHP Fatal error:  Uncaught Error: Class 'WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:33:06 UTC] PHP Fatal error:  Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:34:25 UTC] PHP Fatal error:  Uncaught Error: Class 'Christiancannata\Woofic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:34:59 UTC] PHP Fatal error:  Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:36:22 UTC] PHP Fatal error:  Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:36:55 UTC] PHP Fatal error:  Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:37:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:118
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/includes/class-woofic.php(164): Woofic_Admin->addAdminPages()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/includes/class-woofic.php(81): Woofic->define_admin_hooks()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(78): Woofic->__construct()
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(82): run_woofic()
+#4 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#5 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#6 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#7 /shared/httpd/agrispesa/wp-admin/admin.php(34): require_once('/shared/httpd/a...')
+#8 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 118
+[27-May-2023 23:37:08 UTC] PHP Notice:  La funzione is_embed è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 23:37:08 UTC] PHP Notice:  La funzione is_search è stata richiamata <strong>in maniera scorretta</strong>. I tag condizionali di una query non funzionano prima che la query sia stata eseguita. Prima dell'esecuzione restituiscono sempre il valore False. Leggi <a href="https://wordpress.org/documentation/article/debugging-in-wordpress/">Debugging in WordPress</a> per maggiori informazioni. (Questo messaggio è stato aggiunto nella versione 3.1.0.) in /shared/httpd/agrispesa/wp-includes/functions.php on line 5865
+[27-May-2023 23:37:29 UTC] PHP Fatal error:  Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 245
+[27-May-2023 23:38:02 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[27-May-2023 23:38:02 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[27-May-2023 23:38:02 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[27-May-2023 23:38:02 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[27-May-2023 23:38:02 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 283
+[27-May-2023 23:38:02 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 283
+[27-May-2023 23:38:02 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 343
+[27-May-2023 23:38:02 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 343
+[27-May-2023 23:46:31 UTC] errore nella connessione con fattureincloud =>
+[27-May-2023 23:46:31 UTC] invalid_token
+[27-May-2023 23:46:31 UTC] il refresh token wfic NON è presente
+[27-May-2023 23:46:32 UTC] il device code wfic è presente e attivo
+[27-May-2023 23:46:32 UTC] The token is expired.
+[27-May-2023 23:46:37 UTC] connessione non attiva, attivo la procedura di riconnessione
+[27-May-2023 23:48:52 UTC] PHP Parse error:  syntax error, unexpected 'V34bAZi48zalpm4VJVpXdoUrFyIm5I' (T_STRING) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 265
+[27-May-2023 23:48:52 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[27-May-2023 23:52:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[27-May-2023 23:52:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[27-May-2023 23:52:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[27-May-2023 23:52:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[27-May-2023 23:52:25 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 341
+[27-May-2023 23:52:25 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 341
+[27-May-2023 23:52:25 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 401
+[27-May-2023 23:52:25 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 401
+[27-May-2023 23:52:31 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[27-May-2023 23:52:31 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[27-May-2023 23:52:31 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[27-May-2023 23:52:31 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[27-May-2023 23:52:31 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 341
+[27-May-2023 23:52:31 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 341
+[27-May-2023 23:52:31 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 401
+[27-May-2023 23:52:31 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 401
+[27-May-2023 23:59:46 UTC] connessione non attiva, attivo la procedura di riconnessione
+[28-May-2023 00:00:25 UTC] errore nella connessione con fattureincloud =>
+[28-May-2023 00:00:25 UTC] invalid_token
+[28-May-2023 00:00:25 UTC] il refresh token wfic NON è presente
+[28-May-2023 00:00:26 UTC] il device code wfic è presente e attivo
+[28-May-2023 00:00:27 UTC] token e refresh token creati
+[28-May-2023 00:00:27 UTC] Connessione attivata wfic_api_key_fattureincloud aggiornata
+[28-May-2023 00:01:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:01:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:01:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:01:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:01:54 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 342
+[28-May-2023 00:01:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 342
+[28-May-2023 00:01:54 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 402
+[28-May-2023 00:01:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 402
+[28-May-2023 00:02:26 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(131): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php on line 433
+[28-May-2023 00:11:57 UTC] PHP Fatal error:  Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_request","error_description":"The device code must be a string."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/ve in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php on line 113
+[28-May-2023 00:12:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:12:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:12:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:12:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:12:16 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 356
+[28-May-2023 00:12:16 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 356
+[28-May-2023 00:12:16 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 416
+[28-May-2023 00:12:16 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 416
+[28-May-2023 00:13:45 UTC] PHP Fatal error:  Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php on line 113
+[28-May-2023 00:14:17 UTC] PHP Fatal error:  Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php on line 113
+[28-May-2023 00:14:29 UTC] PHP Fatal error:  Uncaught GuzzleHttp\Exception\ClientException: Client error: `POST https://api-v2.fattureincloud.it/oauth/token` resulted in a `400 Bad Request` response:
+{"error":"invalid_grant","error_description":"Invalid token."}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php:113
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Middleware.php(72): GuzzleHttp\Exception\RequestException::create(Object(GuzzleHttp\Psr7\Request), Object(GuzzleHttp\Psr7\Response), NULL, Array, NULL)
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(209): GuzzleHttp\Middleware::GuzzleHttp\{closure}(Object(GuzzleHttp\Psr7\Response))
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promises/src/Promise.php(158): GuzzleHttp\Promise\Promise::callHandler(1, Object(GuzzleHttp\Psr7\Response), NULL)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/promi in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/guzzlehttp/guzzle/src/Exception/RequestException.php on line 113
+[28-May-2023 00:15:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:15:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:15:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:15:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:15:06 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 356
+[28-May-2023 00:15:06 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 356
+[28-May-2023 00:15:06 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 416
+[28-May-2023 00:15:06 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 416
+[28-May-2023 00:15:28 UTC] PHP Notice:  Object of class DateTime could not be converted to int in /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php on line 603
+[28-May-2023 00:17:10 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(149): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php on line 433
+[28-May-2023 00:17:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:17:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:17:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:17:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:17:37 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 360
+[28-May-2023 00:17:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 360
+[28-May-2023 00:17:37 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 420
+[28-May-2023 00:17:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 420
+[28-May-2023 00:17:54 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(149): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php on line 433
+[28-May-2023 00:19:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:19:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:19:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:19:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:19:19 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:19:19 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:19:19 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:19:19 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:19:40 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/user/companies` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php:433
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php(409): FattureInCloud\Api\UserApi->listUserCompaniesWithHttpInfo('application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/src/Services/WooficSender.php(65): FattureInCloud\Api\UserApi->listUserCompanies()
+#2 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(153): WooFic\Services\WooficSender->getUserCompanies()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#5 /shared/httpd/agrispesa/wp- in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/UserApi.php on line 433
+[28-May-2023 00:20:21 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:20:21 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:20:21 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:20:21 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:20:21 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:20:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:20:21 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:20:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:20:40 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:20:40 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:20:40 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:20:40 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:20:40 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:20:40 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 364
+[28-May-2023 00:20:40 UTC] PHP Notice:  Undefined variable: args in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:20:40 UTC] PHP Notice:  Trying to access array offset on value of type null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 424
+[28-May-2023 00:22:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:22:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:22:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:22:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 527
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 527
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 527
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 534
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 545
+[28-May-2023 00:24:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 556
+[28-May-2023 00:24:08 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Woofic_Admin' does not have a method 'display_sync_payments_methods' in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 533
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 544
+[28-May-2023 00:25:58 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 555
+[28-May-2023 00:25:59 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Woofic_Admin' does not have a method 'display_sync_payments_methods' in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 533
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 544
+[28-May-2023 00:26:17 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 555
+[28-May-2023 00:26:18 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Woofic_Admin' does not have a method 'display_sync_payments_methods' in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[28-May-2023 00:27:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:27:07 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:27:07 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:27:08 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Woofic_Admin' does not have a method 'display_sync_payments_methods' in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[28-May-2023 00:28:03 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:28:03 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:28:03 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:28:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:28:49 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:28:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:29:01 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:29:01 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:29:01 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 526
+[28-May-2023 00:29:04 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/c/false/info/payment_methods` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php:2754
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php(2726): FattureInCloud\Api\InfoApi->listPaymentMethodsWithHttpInfo(false, NULL, NULL, NULL, 'application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(675): FattureInCloud\Api\InfoApi->listPaymentMethods(false)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_payments_methods('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php on line 2754
+[28-May-2023 00:30:48 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:30:48 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:30:48 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:00 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:00 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:00 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:02 UTC] PHP Fatal error:  Uncaught FattureInCloud\ApiException: [401] Client error: `GET https://api-v2.fattureincloud.it/c/false/info/payment_methods` resulted in a `401 Unauthorized` response:
+{"error":{"message":"Unauthorized."}}
+ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php:2754
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php(2726): FattureInCloud\Api\InfoApi->listPaymentMethodsWithHttpInfo(false, NULL, NULL, NULL, 'application/jso...')
+#1 /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php(677): FattureInCloud\Api\InfoApi->listPaymentMethods(false)
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_payments_methods('')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/ in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/fattureincloud/fattureincloud-php-sdk/lib/Api/InfoApi.php on line 2754
+[28-May-2023 00:31:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:19 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:19 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:36 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:36 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:36 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:38 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:31:38 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:31:38 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:31:38 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:31:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:54 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 528
+[28-May-2023 00:31:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getId() on null in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:160
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 160
+[28-May-2023 00:33:30 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:30 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:30 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:33 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:33:33 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:33:33 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:33:33 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:33:42 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:42 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:42 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:33:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:33:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:33:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:33:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:37:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:37:52 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:37:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:37:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:37:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:37:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:37:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:38:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:38:26 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:38:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:38:29 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:38:29 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:38:29 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:38:29 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:39:53 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:39:53 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:39:53 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:39:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:39:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:39:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:39:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:40:24 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:40:24 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:40:24 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:40:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:40:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:40:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:40:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:41:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:25 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:25 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:41:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:41:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:41:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:41:50 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:50 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:50 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:41:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:41:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:41:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:41:52 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:42:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:42:18 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:42:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:42:20 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:42:20 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:42:20 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:42:20 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:44:29 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:44:30 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:44:30 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:44:31 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Woofic_Admin' does not have a method 'display_sync_vat' in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308
+[28-May-2023 00:45:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:45:39 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:45:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:45:42 UTC] PHP Fatal error:  Uncaught Error: Class 'WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:979
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->display_sync_vat('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('woofic_page_woo...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 979
+[28-May-2023 00:46:10 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:10 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:10 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:12 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:46:12 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:46:12 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:46:12 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:46:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:54 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:54 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:46:56 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:46:56 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:46:56 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:46:56 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:47:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:47:04 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:47:04 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:47:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:47:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:47:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:47:06 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:47:06 UTC] PHP Notice:  Undefined index: woofic_suffix in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 899
+[28-May-2023 00:49:15 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:15 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:15 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:49:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:49:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:49:18 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:49:18 UTC] PHP Notice:  Undefined index: woofic_suffix in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 899
+[28-May-2023 00:49:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:44 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:44 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:49:46 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:49:46 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:49:46 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:49:46 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:49:46 UTC] PHP Notice:  Undefined index: woofic_suffix in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 899
+[28-May-2023 00:50:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:26 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:26 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:49 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:49 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:50:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:50:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:50:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:50:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:50:51 UTC] PHP Notice:  Undefined index: woofic_suffix in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 900
+[28-May-2023 00:51:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:51:39 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:51:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:51:43 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 6
+[28-May-2023 00:51:43 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 11
+[28-May-2023 00:51:43 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 16
+[28-May-2023 00:51:43 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/partials/menu.php on line 21
+[28-May-2023 00:51:43 UTC] PHP Notice:  Undefined index: woofic_suffix in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 900
+[28-May-2023 00:51:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:51:51 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:51:51 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:52:03 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:52:03 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:52:03 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 532
+[28-May-2023 00:53:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:53:39 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:53:39 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:28 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:28 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:50 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:50 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:50 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:53 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:53 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:54:53 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:56:11 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:56:11 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[28-May-2023 00:56:11 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:51:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:51:37 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:51:37 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:32 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:32 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:32 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:55 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:52:55 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:13 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:13 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:13 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:14 UTC] PHP Notice:  Undefined index: apply_on_all_products in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 370
+[29-May-2023 22:53:14 UTC] PHP Notice:  Undefined index: enable_zipcode_form in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 374
+[29-May-2023 22:53:14 UTC] PHP Notice:  Undefined index: enable_product_avalibility in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-delivery-area-pro/woocommerce-delivery-area-pro.php on line 375
+[29-May-2023 22:53:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:16 UTC] PHP Warning:  Use of undefined constant W_NAME - assumed 'W_NAME' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563
+[29-May-2023 22:53:16 UTC] PHP Warning:  Use of undefined constant W_TEXTDOMAIN - assumed 'W_TEXTDOMAIN' (this will throw an Error in a future version of PHP) in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php on line 563

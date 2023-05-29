@@ -1,0 +1,17 @@
+{
+  "name": "christiancannata/woofic",
+  "autoload": {
+    "psr-4": {
+      "WooFic\\Services\\": "src/Services"
+    }
+  },
+  "authors": [
+    {
+      "name": "christian cannata",
+      "email": "christian1488@hotmail.it"
+    }
+  ],
+  "require": {
+    "fattureincloud/fattureincloud-php-sdk": "^2.0"
+  }
+}

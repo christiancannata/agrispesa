@@ -1,0 +1,191 @@
+2023-05-27T22:08:08+00:00 CRITICAL Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 640
+
+2023-05-27T22:08:10+00:00 CRITICAL Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 640
+
+2023-05-27T22:08:18+00:00 CRITICAL Cannot redeclare admin_order_codice_fiscale_editable_field() (previously declared in /shared/httpd/agrispesa/wp-content/plugins/fiscal-code-validator-woocommerce/admin/class-fiscal-code-validator-woocommerce-admin.php:221) in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 640
+
+2023-05-27T22:57:50+00:00 CRITICAL Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php alla riga 24
+
+2023-05-27T22:58:37+00:00 CRITICAL Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php alla riga 24
+
+2023-05-27T22:59:04+00:00 CRITICAL Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php alla riga 24
+
+2023-05-27T22:59:50+00:00 CRITICAL Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('woofic/woofic.p...', 'https://agrispe...', false)
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php alla riga 12
+
+2023-05-27T22:59:56+00:00 CRITICAL Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php alla riga 12
+
+2023-05-27T22:59:58+00:00 CRITICAL Uncaught Error: Class 'WPBP_Debug' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php:12
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(73): require_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/functions/debug.php alla riga 12
+
+2023-05-27T23:02:55+00:00 CRITICAL Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.20. in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/composer/platform_check.php alla riga 24
+
+2023-05-27T23:03:12+00:00 CRITICAL Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('woofic/woofic.p...', 'https://agrispe...', false)
+#3 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php alla riga 77
+
+2023-05-27T23:03:18+00:00 CRITICAL Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php alla riga 77
+
+2023-05-27T23:03:20+00:00 CRITICAL Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once()
+#1 /shared/httpd/agrispesa/wp-admin/plugins.php(192): plugin_sandbox_scrape('woofic/woofic.p...')
+#2 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php alla riga 77
+
+2023-05-27T23:12:01+00:00 CRITICAL Uncaught Error: Class 'Micropackage\Requirements\Requirements' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php:77
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-settings.php(453): include_once()
+#1 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php alla riga 77
+
+2023-05-27T23:14:01+00:00 CRITICAL Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php alla riga 7
+
+2023-05-27T23:15:29+00:00 CRITICAL Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php alla riga 7
+
+2023-05-27T23:16:28+00:00 CRITICAL Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php alla riga 7
+
+2023-05-27T23:17:28+00:00 CRITICAL Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-settings.php(453): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#3 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#4 /shared/httpd/agrispesa/wp-admin/admin-ajax.php(22): require_once('/shared/httpd/a...')
+#5 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/vendor/autoload.php alla riga 7
+
+2023-05-27T23:22:28+00:00 CRITICAL Uncaught Error: Class 'ComposerAutoloaderInitc838167241dc2efdc5f760f261573427' not found in /shared/httpd/agrispesa/wp-content/plugins/__woofic/vendor/autoload.php:7
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/__woofic/woofic.php(70): require()
+#1 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(2314): include_once('/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-admin/includes/plugin.php(661): plugin_sandbox_scrape('__woofic/woofic...')
+#3 /shared/httpd/agrispesa/wp-admin/plugins.php(58): activate_plugin('__woofic/woofic...', 'https://agrispe...', false)
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/__woofic/vendor/autoload.php alla riga 7
+
+2023-05-27T23:31:31+00:00 CRITICAL Uncaught Error: Class 'FattureInCloud\OAuth2\OAuth2AuthorizationCodeManager' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:184
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 184
+
+2023-05-27T23:32:38+00:00 CRITICAL Uncaught Error: Class 'WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:33:06+00:00 CRITICAL Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:34:25+00:00 CRITICAL Uncaught Error: Class 'Christiancannata\Woofic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:34:59+00:00 CRITICAL Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:36:23+00:00 CRITICAL Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:36:55+00:00 CRITICAL Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+
+2023-05-27T23:37:29+00:00 CRITICAL Uncaught Error: Class 'WooFic\Services\WooficSender' not found in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php:245
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): Woofic_Admin->{closure}('')
+#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /shared/httpd/agrispesa/wp-admin/admin.php(259): do_action('toplevel_page_w...')
+#4 {main}
+  thrown in /shared/httpd/agrispesa/wp-content/plugins/woofic/admin/class-woofic-admin.php alla riga 245
+

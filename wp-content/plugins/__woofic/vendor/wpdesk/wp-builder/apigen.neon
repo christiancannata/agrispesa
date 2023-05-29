@@ -1,0 +1,27 @@
+destination: docs
+templateConfig: /app/theme-woocommerce/config.neon
+extensions: [php]
+source:
+    - src
+exclude:
+    - vendor
+    - tests
+    - languages
+
+charset: [UTF-8]
+main: Library wp-builder
+title: Library that provides basic info how build a plugin and what a plugin is
+baseUrl: "/"
+
+templateTheme: default
+php: false
+sourceCode: false
+tree: true
+deprecated: false
+todo: false
+download: false
+
+accessLevels:
+    - public
+    - private
+    - protected
