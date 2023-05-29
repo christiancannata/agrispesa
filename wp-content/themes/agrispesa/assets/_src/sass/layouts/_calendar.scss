@@ -2,10 +2,6 @@
 	cursor: pointer;
 }
 
-.fc-day-thu {
-	background: #efffd9;
-}
-
 
 .fc-event-time, .fc-daygrid-event-dot {
 	display: none;
@@ -28,10 +24,6 @@
 
 .fc-today-button {
 	display: none !important;
-}
-
-.fc .fc-daygrid-day.fc-day-today.fc-day-thu {
-	background: #efffd9 !important;
 }
 
 .fc-day {
