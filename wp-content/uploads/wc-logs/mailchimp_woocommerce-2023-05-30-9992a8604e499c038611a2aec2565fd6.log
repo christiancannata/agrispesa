@@ -1,0 +1,5 @@
+2023-05-30T19:53:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41932
+2023-05-30T19:53:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41933
+2023-05-30T19:53:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41934
+2023-05-30T19:53:48+00:00 NOTICE member.sync :: user_my_account_opt_in_save 0
+2023-05-30T19:53:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_User_Submit queued :: obj_id 1

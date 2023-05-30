@@ -520,3 +520,24 @@ add_action("woocommerce_scheduled_subscription_payment", function ($subscription
 	}
 
 }, 0, 1);
+
+
+add_action('profile_update', 'my_profile_update', 10, 2);
+function my_profile_update($user_id, $old_user_data)
+{
+
+	$user = get_user_by('ID', $user_id);
+
+	$subscriptions = wcs_get_subscriptions([
+		"subscriptions_per_page" => -1,
+		"customer_id" => $user_id,
+	]);
+
+	foreach ($subscriptions as $subscription) {
+		update_post_meta(
+			$subscription->get_id(),
+			"_billing_email",
+			$user->user_email
+		);
+	}
+}

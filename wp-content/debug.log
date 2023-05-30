@@ -7743,3 +7743,18 @@ Stack trace:
   thrown in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/dashboard.php on line 186
 [29-May-2023 23:30:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 367
 [29-May-2023 23:30:05 UTC] PHP Notice:  Trying to access array offset on value of type bool in /shared/httpd/agrispesa/wp-includes/class-wp-recovery-mode-email-service.php on line 368
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
+[30-May-2023 19:53:32 UTC] PHP Notice:  Undefined property: WC_Order_Item_Fee::$legacy_fee_key in /shared/httpd/agrispesa/wp-content/plugins/woo-wallet/includes/class-woo-wallet.php on line 336
