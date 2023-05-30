@@ -102,13 +102,13 @@
 <?php wp_footer(); ?>
 <script>
 //jQuery('select').niceSelect();
-	AOS.init({
-    easing: 'ease-in-out-sine',
-		disable: function() {
-	    var maxWidth = 800;
-	    return window.innerWidth < maxWidth;
-	  }
-  });
+	// AOS.init({
+  //   easing: 'ease-in-out-sine',
+	// 	disable: function() {
+	//     var maxWidth = 800;
+	//     return window.innerWidth < maxWidth;
+	//   }
+  // });
 </script>
 </body>
 </html>
