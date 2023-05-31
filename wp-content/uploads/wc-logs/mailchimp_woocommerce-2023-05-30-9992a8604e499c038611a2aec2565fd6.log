@@ -3,3 +3,20 @@
 2023-05-30T19:53:32+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 41934
 2023-05-30T19:53:48+00:00 NOTICE member.sync :: user_my_account_opt_in_save 0
 2023-05-30T19:53:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_User_Submit queued :: obj_id 1
+2023-05-30T19:55:09+00:00 NOTICE member.sync :: Updated Member christiancannata@gmail.coma :: Array
+(
+    [previous_status] => transactional
+    [status] => 0
+    [language] => 
+    [merge_fields] => Array
+        (
+            [FNAME] => Christian
+            [LNAME] => Cannata
+        )
+
+    [gdpr_fields] => 
+)
+
+2023-05-30T19:55:10+00:00 NOTICE order_submit :: #41932 has a financial status of pending and was skipped.
+2023-05-30T19:55:12+00:00 NOTICE order_submit :: #41933 has a financial status of pending and was skipped.
+2023-05-30T19:55:13+00:00 NOTICE order_submit :: #41934 has a financial status of pending and was skipped.

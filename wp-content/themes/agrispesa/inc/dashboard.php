@@ -140,11 +140,13 @@ function sospensioni_abbonamento_page()
 		ARRAY_A
 	);
 
+
 	$subscriptions = [];
 	foreach ($subscriptionsDatabase as $record) {
+
 		$subscription = wcs_get_subscription($record['post_id']);
 		if (!$subscription) {
-			return false;
+			continue;
 		}
 		$subscriptions[$subscription->get_id()] = [
 			'subscription' => $subscription,
