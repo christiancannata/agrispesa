@@ -755,6 +755,13 @@ add_action("rest_api_init", function () {
                     $subscription->save();*/
                 }else{
 					$subscriptionsArray[] = $subscription->get_id();
+					$today = new DateTime();
+					$today->add(new DateInterval('P7D'));
+					$today->setTime(12,00);
+					  $subscription->update_dates([
+                        "next_payment" => $today->format("Y-m-d H:i:s"),
+                    ]);
+					  $subscription->save();
                 }
             }
 
