@@ -72,9 +72,9 @@ jQuery(document).ready(function ($) {
 
   let calendarEl = document.getElementById('calendar');
   window.calendar = new FullCalendar.Calendar(calendarEl, {
-    validRange: {
-      start: nextAvailableMonday
-    },
+    /* validRange: {
+       start: nextAvailableMonday
+     },*/
     eventClick: function (info) {
 
       //let week = info.event.week
@@ -91,6 +91,17 @@ jQuery(document).ready(function ($) {
         }
 
       } else {
+
+        if (info.event.start.getTime() < nextAvailableMonday.getTime()) {
+          Swal.fire({
+            title: 'Non puoi rimuovere una settimana di consegna passata.',
+            text: "",
+            icon: 'warning',
+            confirmButtonColor: '#3c21ff',
+            confirmButtonText: 'Ok',
+          })
+          return false
+        }
 
         $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
           {
@@ -120,6 +131,9 @@ jQuery(document).ready(function ($) {
 
       let curr = info.date
 
+      if (curr.getTime() < nextAvailableMonday.getTime()) {
+        return false
+      }
 
       const hasAlreadyServerEvent = isAnOverlapEvent(curr, curr)
       if (hasAlreadyServerEvent) {
