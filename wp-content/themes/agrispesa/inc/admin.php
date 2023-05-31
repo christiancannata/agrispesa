@@ -738,11 +738,13 @@ add_action("rest_api_init", function () {
                 "subscription_status" => ["active", "on-hold"],
             ]);
 
+			$subscriptionsArray = [];
+
             foreach ($subscriptions as $subscription) {
                 $paymentMethod = $subscription->get_payment_method();
 
                 if ($paymentMethod == "bacs") {
-                    $subscription->set_status("active");
+                 /*   $subscription->set_status("active");
                     $subscription->set_billing_period("year");
                     $subscription->set_billing_interval(100);
 
@@ -750,12 +752,14 @@ add_action("rest_api_init", function () {
                         "next_payment" => "2100-01-01 00:00:00",
                     ]);
                     $subscription->set_requires_manual_renewal(true);
-                    $subscription->save();
+                    $subscription->save();*/
+                }else{
+					$subscriptionsArray[] = $subscription->get_id();
                 }
             }
 
-            $response = new WP_REST_Response([]);
-            $response->set_status(201);
+            $response = new WP_REST_Response($subscriptionsArray);
+            $response->set_status(200);
             return $response;
         },
     ]);
