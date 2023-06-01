@@ -103,13 +103,29 @@ jQuery(document).ready(function ($) {
           return false
         }
 
-        $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
-          {
-            userId: window.userId,
-            day: info.event.start.toISOString()
-          });
 
-        info.event.remove()
+        Swal.fire({
+          title: 'Vuoi riattivare la consegna della settimana ' + info.event.extendedProps.week + '?',
+          text: "",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3c21ff',
+          cancelButtonColor: '#f8f5f1',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'Torna indietro',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
+              {
+                userId: window.userId,
+                day: info.event.start.toISOString()
+              });
+
+            info.event.remove()
+          }
+        })
+
 
       }
     },
