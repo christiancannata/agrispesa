@@ -1256,7 +1256,7 @@ add_action('woocommerce_checkout_subscription_created', function ($subscription)
 	// get next $consegneNameDay from today
 
 
-	if ($paymentMethod == 'bacs') {
+	if ($paymentMethod == 'bacs' || $paymentMethod == 'satispay') {
 		$subscription->set_status('active');
 		$subscription->set_billing_period('year');
 		$subscription->set_billing_interval(100);
