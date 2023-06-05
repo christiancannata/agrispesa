@@ -480,6 +480,8 @@ function calendar_content()
 		"wc-expired" => 'Scaduto',
 		"wc-pending-cancel" => 'Eliminato',
 		"wc-active" => 'Attivo',
+		"wc-cancelled" => 'Eliminato',
+
 	];
 
 	?>
