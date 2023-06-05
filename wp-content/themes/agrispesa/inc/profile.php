@@ -495,7 +495,7 @@ function calendar_content()
 			<?php
 			$subscriptionStatus = $order_statuses["wc-" . $subscription->get_status()];
 			?>
-			<span>Stato abbonamento: <?php echo $subscriptionStatus; ?></span>
+			<span style="display: block;">Stato abbonamento: <?php echo $subscriptionStatus; ?></span>
 			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
