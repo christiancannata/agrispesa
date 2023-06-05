@@ -19,7 +19,7 @@ get_header(); ?>
 	  'post_status'    => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-		'category_name' => 'storie',
+		//'category_name' => 'storie',
 	]);
  if($wp_query->have_posts()): ?>
 
