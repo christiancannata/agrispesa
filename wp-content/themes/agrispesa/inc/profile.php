@@ -480,8 +480,7 @@ function calendar_content()
 		"wc-expired" => 'Scaduto',
 		"wc-pending-cancel" => 'Eliminato',
 		"wc-active" => 'Attivo',
-		"wc-cancelled" => 'Eliminato',
-
+		"wc-cancelled" => 'Eliminato'
 	];
 
 	?>
@@ -494,7 +493,7 @@ function calendar_content()
 			<?php
 			$subscriptionStatus = $order_statuses["wc-" . $subscription->get_status()];
 			?>
-			<span style="display: block;">Stato abbonamento: <?php echo $subscriptionStatus; ?></span>
+			<span style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b></span>
 			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
