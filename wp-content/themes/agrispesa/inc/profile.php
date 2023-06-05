@@ -475,13 +475,10 @@ function calendar_content()
 	$testoCalendario = get_option('options_calendar_text');
 
 	$order_statuses = [
-		"wc-pending" => _x("Pending payment", "Order status", "woocommerce"),
-		"wc-processing" => _x("Processing", "Order status", "woocommerce"),
+		"wc-pending" => 'In attesa',
 		"wc-on-hold" => 'Sospeso',
-		"wc-completed" => _x("Completed", "Order status", "woocommerce"),
-		"wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
-		"wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-		"wc-failed" => _x("Failed", "Order status", "woocommerce"),
+		"wc-expired" => 'Scaduto',
+		"wc-pending-cancel" => 'Eliminato',
 		"wc-active" => 'Attivo',
 	];
 
