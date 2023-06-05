@@ -471,6 +471,7 @@ function calendar_content()
 
 	}
 
+
 	$testoCalendario = get_option('options_calendar_text');
 	?>
 	<div class="woocommerce-Fatture-content">
@@ -479,6 +480,10 @@ function calendar_content()
 		<h3 class="my-account--minititle address-title">Calendario</h3>
 
 		<?php if ($subscription): ?>
+			<?php
+			$subscriptionStatus = $subscription->get_status();
+			?>
+			<span>Stato abbonamento: <?php echo $subscriptionStatus; ?></span>
 			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
