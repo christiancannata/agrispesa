@@ -194,9 +194,9 @@ jQuery(document).ready(function ($) {
 
       //if current date > mercoledì alle 12
 
-      /*if (selectedDeliveryDate < nextAvailableWednesday) {
+      if (selectedWeek == currentWeek && moment() > selectedDeliveryDate) {
         return false
-      }*/
+      }
 
 
       const hasAlreadyServerEvent = isAnOverlapEvent(curr, curr)
