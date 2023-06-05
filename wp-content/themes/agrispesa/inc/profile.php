@@ -473,6 +473,18 @@ function calendar_content()
 
 
 	$testoCalendario = get_option('options_calendar_text');
+
+	$order_statuses = [
+		"wc-pending" => _x("Pending payment", "Order status", "woocommerce"),
+		"wc-processing" => _x("Processing", "Order status", "woocommerce"),
+		"wc-on-hold" => 'Sospeso',
+		"wc-completed" => _x("Completed", "Order status", "woocommerce"),
+		"wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
+		"wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
+		"wc-failed" => _x("Failed", "Order status", "woocommerce"),
+		"wc-active" => 'Attivo',
+	];
+
 	?>
 	<div class="woocommerce-Fatture-content">
 
@@ -481,7 +493,7 @@ function calendar_content()
 
 		<?php if ($subscription): ?>
 			<?php
-			$subscriptionStatus = $subscription->get_status();
+			$subscriptionStatus = $order_statuses["wc-" . $subscription->get_status()];
 			?>
 			<span>Stato abbonamento: <?php echo $subscriptionStatus; ?></span>
 			<p><?php echo $testoCalendario; ?></p>
