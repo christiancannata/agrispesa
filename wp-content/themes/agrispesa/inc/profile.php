@@ -495,10 +495,11 @@ function calendar_content()
 
 
 			?>
-			<span style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b> <?php if ($subscription->get_status() != 'active'): ?>
-				(<a href="/bacheca/visualizza-abbonamento/<?php echo $subscription->get_id(); ?>">Riattiva</a>)
+			<span
+				style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b> <?php if ($subscription->get_status() != 'active'): ?>
+					(<a style="text-decoration: underline; color: #3c21ff"
+						href="/bacheca/visualizza-abbonamento/<?php echo $subscription->get_id(); ?>">Riattiva qui</a>)
 				<?php endif; ?></span>
-
 
 
 			<p><?php echo $testoCalendario; ?></p>
