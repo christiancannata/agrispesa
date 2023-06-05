@@ -28,7 +28,7 @@ global $woocommerce;
 	<meta name="theme-color" content="#ffffff">
 
 
-	<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/aos.css">
+	<!-- link rel="stylesheet" type="text/css" href="<?php //echo get_template_directory_uri(); ?>/assets/css/aos.css" -->
 	<link rel="stylesheet" type="text/css"
 		  href="<?php echo get_template_directory_uri(); ?>/assets/fonts/emoji/emoji.min.css">
 
