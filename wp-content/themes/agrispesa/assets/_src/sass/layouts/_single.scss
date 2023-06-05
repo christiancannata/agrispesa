@@ -229,3 +229,19 @@
 		}
 	}
 }
+
+.single--picture {
+	width: 100%;
+	content: '';
+	display: block;
+	height: 240px;
+	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	@include breakpoint(desktop) {
+		height: 400px;
+	}
+}
