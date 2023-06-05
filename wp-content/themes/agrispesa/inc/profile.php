@@ -496,7 +496,7 @@ function calendar_content()
 
 			?>
 			<span style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b> <?php if ($subscription->get_status() != 'active'): ?>
-				(<a href="/bacheca/visualizza-abbonamento/<?php echo $subscription->getId(); ?>">Riattiva</a>)
+				(<a href="/bacheca/visualizza-abbonamento/<?php echo $subscription->get_id(); ?>">Riattiva</a>)
 				<?php endif; ?></span>
 
 
