@@ -16,7 +16,7 @@ function enqueue_box_js()
 
 	if (isset($wp_query->query_vars['calendar'])) {
 		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);
-		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar','moment'), null, true);
+		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar', 'moment'), null, true);
 
 
 		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
@@ -515,7 +515,9 @@ add_action("woocommerce_scheduled_subscription_payment", function ($subscription
 	if ($disabledWeeks && is_array($disabledWeeks)) {
 		if (in_array($week, $disabledWeeks)) {
 			$subscription = wcs_get_subscription($subscription_id);
-			$subscription->update_status('on-hold', 'Abbonamento sospeso prima del rinnovo per blocco calendario');
+			if ($subscription->get_payment_method() != "bacs") {
+				$subscription->update_status('on-hold', 'Abbonamento sospeso prima del rinnovo per blocco calendario');
+			}
 		}
 	}
 
