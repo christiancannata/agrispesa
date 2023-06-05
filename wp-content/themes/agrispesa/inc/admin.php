@@ -742,8 +742,8 @@ add_action("rest_api_init", function () {
 
             foreach ($subscriptions as $subscription) {
                 $paymentMethod = $subscription->get_payment_method();
-
-                if ($paymentMethod == "bacs") {
+				$manualRenew = get_post_meta($subscription->get_id(),'_requires_manual_renewal',true);
+                if ($paymentMethod == "bacs" || $manualRenew) {
                   $subscription->set_status("active");
                     $subscription->set_billing_period("year");
                     $subscription->set_billing_interval(100);
