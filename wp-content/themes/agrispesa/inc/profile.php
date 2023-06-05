@@ -492,8 +492,15 @@ function calendar_content()
 		<?php if ($subscription): ?>
 			<?php
 			$subscriptionStatus = $order_statuses["wc-" . $subscription->get_status()];
+
+
 			?>
-			<span style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b></span>
+			<span style="display: block;">Stato abbonamento: <b><?php echo $subscriptionStatus; ?></b> <?php if ($subscription->get_status() != 'active'): ?>
+				(<a href="/bacheca/visualizza-abbonamento/<?php echo $subscription->getId(); ?>">Riattiva</a>)
+				<?php endif; ?></span>
+
+
+
 			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
 				<div id="calendar"></div>
