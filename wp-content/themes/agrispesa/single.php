@@ -2,7 +2,11 @@
 
 
 <?php if ( have_posts() ) : ?>
-    <?php while ( have_posts() ) : the_post();?>
+    <?php while ( have_posts() ) : the_post();
+    $thumb_id = get_post_thumbnail_id();
+    $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
+    $thumb_url = $thumb_url_array[0];
+    ?>
 
         <div class="single-article--flex">
 
@@ -10,15 +14,16 @@
         <div class="container-pg">
         <div class="fogliospesa-bg">
 
+        <div class="single--picture" style="background-image: url(<?php echo $thumb_url;?>);">
+        </div>
         <div class="single--header">
           <div class="categories-list">
             <?php
             $category = get_the_category();
-			if(!empty($category)){
-				$first_category = $category[0];
-				echo sprintf( '<a href="%s">%s</a>', get_category_link( $first_category ), $first_category->name );
-			}
-
+        			if(!empty($category)){
+        				$first_category = $category[0];
+        				echo sprintf( '<a href="%s">%s</a>', get_category_link( $first_category ), $first_category->name );
+        			}
             ?>
           </div>
     			<h1><?php the_title(); ?></h1>
