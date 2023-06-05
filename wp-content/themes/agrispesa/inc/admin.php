@@ -744,7 +744,7 @@ add_action("rest_api_init", function () {
                 $paymentMethod = $subscription->get_payment_method();
 
                 if ($paymentMethod == "bacs") {
-                 /*   $subscription->set_status("active");
+                  $subscription->set_status("active");
                     $subscription->set_billing_period("year");
                     $subscription->set_billing_interval(100);
 
@@ -752,16 +752,16 @@ add_action("rest_api_init", function () {
                         "next_payment" => "2100-01-01 00:00:00",
                     ]);
                     $subscription->set_requires_manual_renewal(true);
-                    $subscription->save();*/
+                    $subscription->save();
                 }else{
-					$subscriptionsArray[] = $subscription->get_id();
+				/*	$subscriptionsArray[] = $subscription->get_id();
 					$today = new DateTime();
 					$today->add(new DateInterval('P7D'));
 					$today->setTime(12,00);
 					  $subscription->update_dates([
                         "next_payment" => $today->format("Y-m-d H:i:s"),
                     ]);
-					  $subscription->save();
+					  $subscription->save();*/
                 }
             }
 
