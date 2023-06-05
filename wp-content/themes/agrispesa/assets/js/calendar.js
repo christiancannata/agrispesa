@@ -1,5 +1,5 @@
 /* global FullCalendar:readonly */
-
+/* global moment:readonly */
 /* global Swal:readonly */
 
 jQuery(document).ready(function ($) {
@@ -28,9 +28,24 @@ jQuery(document).ready(function ($) {
     return false;
   }
 
+  function getNextWednesday(date = new Date()) {
+    const dateCopy = new Date(date.getTime());
+
+    const nextFriday = new Date(
+      dateCopy.setDate(
+        dateCopy.getDate() + ((7 - dateCopy.getDay() + 3) % 7 || 7),
+      ),
+    );
+
+    return nextFriday;
+  }
 
   function getMonday(d) {
-    d = new Date(d);
+    if (d) {
+      d = new Date(d);
+    } else {
+      d = new Date()
+    }
     var day = d.getDay(),
       diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
     return new Date(d.setDate(diff));
@@ -65,8 +80,10 @@ jQuery(document).ready(function ($) {
     today = addDays(today, 7)
   }
 
-  let nextAvailableMonday = getMonday(today)
-
+  let currentMonday = getMonday(null);
+  currentMonday = moment(currentMonday)
+  let nextAvailableWednesday = currentMonday.add(2, 'd')
+  nextAvailableWednesday.set({"hour": 12, "minute": 0});
 
   //let deliveryDay = 4
 
@@ -92,7 +109,13 @@ jQuery(document).ready(function ($) {
 
       } else {
 
-        if (info.event.start.getTime() < nextAvailableMonday.getTime()) {
+        let today = new Date()
+
+        let deliveryDaySelected = info.event.start
+        deliveryDaySelected.setDate(deliveryDaySelected.getDate() + 2)
+        deliveryDaySelected.setHours(12, 0, 0);
+
+        if (today > deliveryDaySelected.getTime()) {
           Swal.fire({
             title: 'Non puoi rimuovere una settimana di consegna passata.',
             text: "",
@@ -147,34 +170,51 @@ jQuery(document).ready(function ($) {
 
       let curr = info.date
 
-      if (curr.getTime() < nextAvailableMonday.getTime()) {
+      let firstday = getMonday(curr);
+      firstday = moment(firstday)
+      firstday.set({'hour': 0, 'minute': 0});
+
+      let lastday = firstday.clone();
+      lastday.add(6, 'd')
+
+      let firstdayCurrentWeek = getMonday(null);
+      firstdayCurrentWeek = moment(firstdayCurrentWeek)
+      firstdayCurrentWeek.set({'hour': 0, 'minute': 0});
+
+      let selectedDeliveryDate = firstday.clone()
+      selectedDeliveryDate.add(2, 'd')
+
+      let selectedWeek = selectedDeliveryDate.week()
+      let currentWeek = nextAvailableWednesday.week()
+
+
+      if (selectedWeek < currentWeek) {
         return false
       }
 
+      //if current date > mercoledì alle 12
+
+      /*if (selectedDeliveryDate < nextAvailableWednesday) {
+        return false
+      }*/
+
+
       const hasAlreadyServerEvent = isAnOverlapEvent(curr, curr)
+
       if (hasAlreadyServerEvent) {
         return false
       }
       //let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
       //let last = first + 7; // last day is the first day + 6
 
-      let firstday = getMonday(curr);
-      let lastday = addDays(firstday, 7)
-
-      var year = new Date(firstday.getFullYear(), 0, 1);
-      var days = Math.floor((firstday - year) / (24 * 60 * 60 * 1000));
-      let week = Math.ceil((firstday.getDay() + 1 + days) / 7);
-      //week -= 1
-
-
       let hasEvent = window.events.filter(function (event) {
-        return event.week == week;
+        return event.week == selectedWeek;
       })
 
       if (hasEvent.length > 0) {
 
         window.events = window.events.filter(function (event) {
-          return event.id != 'week_' + week;
+          return event.id != 'week_' + selectedWeek;
         })
 
         let event = window.calendar.getEventById(hasEvent[0].id)
@@ -183,21 +223,22 @@ jQuery(document).ready(function ($) {
         }
 
       } else {
+
         window.calendar.addEvent({
           title: 'Questa settimana non ricevi la Facciamo Noi',
-          start: firstday,
-          end: lastday,
+          start: firstday.toDate(),
+          end: lastday.toDate(),
           allDay: true,
           classNames: ['temp-event'],
-          id: 'week_' + week,
-          week: week
+          id: 'week_' + selectedWeek,
+          week: selectedWeek
         });
 
         window.events.push({
-          week: week,
+          week: selectedWeek,
           start: firstday.toISOString(),
           end: lastday.toISOString(),
-          id: 'week_' + week
+          id: 'week_' + selectedWeek
         })
 
         $(".confirm-calendar").show()

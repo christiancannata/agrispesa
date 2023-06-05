@@ -85,9 +85,11 @@ add_action('wp_enqueue_scripts', function () {
 	wp_enqueue_script('aos', get_template_directory_uri() . '/assets/js/aos.js', ['jquery'], null, true);
 	wp_enqueue_script('slick', get_template_directory_uri() . '/assets/js/slick.min.js', ['jquery'], null, true);
 	wp_enqueue_script('nice-select', get_template_directory_uri() . '/assets/js/jquery.nice-select.min.js', ['jquery'], null, true);
-	wp_enqueue_script('calendar-js', get_theme_file_uri('assets/js/jsCalendar.js'), array(), null, true);
-	wp_enqueue_script('calendar-lang-js', get_theme_file_uri('assets/js/jsCalendar.lang.it.js'), array(), null, true);
+	//wp_enqueue_script('calendar-js', get_theme_file_uri('assets/js/jsCalendar.js'), array(), null, true);
+	//wp_enqueue_script('calendar-lang-js', get_theme_file_uri('assets/js/jsCalendar.lang.it.js'), array(), null, true);
 	wp_enqueue_script('agrispesa-js', get_theme_file_uri('assets/_src/js/main.js'), array(), time(), true);
+
+	//wp_enqueue_script('moment', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js', array(), null, true);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
