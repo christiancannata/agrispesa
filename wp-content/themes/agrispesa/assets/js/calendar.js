@@ -175,7 +175,7 @@ jQuery(document).ready(function ($) {
       firstday.set({'hour': 0, 'minute': 0});
 
       let lastday = firstday.clone();
-      lastday.add(6, 'd')
+      lastday.add(7, 'd')
 
       let firstdayCurrentWeek = getMonday(null);
       firstdayCurrentWeek = moment(firstdayCurrentWeek)
