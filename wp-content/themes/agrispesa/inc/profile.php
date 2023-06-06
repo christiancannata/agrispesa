@@ -484,6 +484,7 @@ function calendar_content()
 	];
 
 	?>
+
 	<div class="woocommerce-Fatture-content">
 
 		<div class="woocommerce-notices-wrapper"></div>
@@ -504,6 +505,9 @@ function calendar_content()
 
 			<p><?php echo $testoCalendario; ?></p>
 			<div class="table-shadow-relative" style="margin-top:20px">
+				<div class="loading">
+					<span>Caricamento in corso, attendere...</span></div>
+
 				<div id="calendar"></div>
 
 				<button class=" btn btn-primary alt wp-element-button confirm-calendar" style="display: none">Conferma

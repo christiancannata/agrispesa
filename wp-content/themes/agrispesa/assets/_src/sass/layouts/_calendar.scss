@@ -52,3 +52,11 @@
 .fc .fc-daygrid-week-number {
 	font-size: 12px !important;
 }
+
+.loading {
+	display: none;
+	position: absolute;
+	text-align: center;
+	top: 210px;
+	width: 100%;
+}

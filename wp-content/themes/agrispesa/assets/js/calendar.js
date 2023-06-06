@@ -139,11 +139,16 @@ jQuery(document).ready(function ($) {
           reverseButtons: true
         }).then((result) => {
           if (result.isConfirmed) {
+            $("#calendar").css('opacity', '.3')
+            $(".loading").show()
             $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
               {
                 userId: window.userId,
                 day: info.event.start.toISOString()
-              });
+              }, function (data) {
+                $("#calendar").css('opacity', '1')
+                $(".loading").hide()
+              })
 
             info.event.remove()
           }
@@ -289,6 +294,7 @@ jQuery(document).ready(function ($) {
                 event.remove()
               }
             })
+            window.events = []
             window.calendar.refetchEvents()
           });
       }
