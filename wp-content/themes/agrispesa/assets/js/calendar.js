@@ -144,7 +144,8 @@ jQuery(document).ready(function ($) {
             $.post(window.baseurl + '/wp-json/agrispesa/v1/delete-user-blocked-weeks',
               {
                 userId: window.userId,
-                day: info.event.start.toISOString()
+                day: info.event.start.toISOString(),
+                week: info.event.extendedProps.week
               }, function (data) {
                 $("#calendar").css('opacity', '1')
                 $(".loading").hide()

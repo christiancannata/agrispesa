@@ -3213,7 +3213,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $day = $_POST["day"];
             $day = new DateTime($day);
-            $week = $day->format("W");
+			$week = $_POST["week"];
 
             $subscription = wcs_get_subscriptions([
                 "subscriptions_per_page" => 1,
