@@ -16,7 +16,7 @@ function enqueue_box_js()
 
 	if (isset($wp_query->query_vars['calendar'])) {
 		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);
-		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar', 'moment'), null, true);
+		wp_enqueue_script('agrispesa-calendar-js', get_theme_file_uri('assets/js/calendar.js'), array('jquery', 'fullcalendar', 'moment'), time(), true);
 
 
 		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
