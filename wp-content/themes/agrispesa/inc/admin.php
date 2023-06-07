@@ -3411,7 +3411,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
             $f = fopen("php://memory", "w");
             foreach ($csv as $line) {
-                fputcsv($f, $line);
+                fputcsv($f, $line,';');
             }
             fseek($f, 0);
             header("Content-Type: text/csv");
