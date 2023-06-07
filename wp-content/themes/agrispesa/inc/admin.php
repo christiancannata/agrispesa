@@ -3384,10 +3384,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "subscriptions_per_page" => -1,
             ]);
 
+            $f = fopen("php://memory", "w");
 
             $csv = [
 				'ID','Stato','ID NAVISION UTENTE','PRODOTTO','NOME SPEDIZIONE','COGNOME SPEDIZIONE','NOME FATTURAZIONE','COGNOME FATTURAZIONE'
 ];
+			  fputcsv($f, $csv,';');
             foreach ($subscriptions as $subscription) {
 
 				$navisionId = get_user_meta($subscription->get_customer_id(),'navision_id',true);
@@ -3409,7 +3411,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 ];
 
             }
-            $f = fopen("php://memory", "w");
             foreach ($csv as $line) {
                 fputcsv($f, $line,';');
             }
