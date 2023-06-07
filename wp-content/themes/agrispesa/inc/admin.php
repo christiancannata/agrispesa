@@ -3372,6 +3372,58 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+	    register_rest_route("agrispesa/v1", "export-subscription", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+
+            $subscriptions = wcs_get_subscriptions([
+                "subscriptions_per_page" => -1,
+            ]);
+
+
+            $csv = [
+				'ID','Stato','ID NAVISION UTENTE','PRODOTTO','NOME SPEDIZIONE','COGNOME SPEDIZIONE','NOME FATTURAZIONE','COGNOME FATTURAZIONE'
+];
+            foreach ($subscriptions as $subscription) {
+
+				$navisionId = get_user_meta($subscription->get_customer_id(),'_navision_id',true);
+
+				$product = [];
+				foreach($subscription->get_items() as $item){
+					$product[] = $item->get_name();
+				}
+
+                $csv[] = [
+                    $subscription->get_id(),
+                    $subscription->get_status(),
+                    $navisionId,
+                    implode(", ",$product),
+                    $subscription->get_shipping_first_name(),
+                    $subscription->get_shipping_last_name(),
+ 					$subscription->get_billing_first_name(),
+                    $subscription->get_billing_last_name(),
+                ];
+
+            }
+            $f = fopen("php://memory", "w");
+            foreach ($csv as $line) {
+                fputcsv($f, $line);
+            }
+            fseek($f, 0);
+            header("Content-Type: text/csv");
+            header(
+                'Content-Disposition: attachment; filename="Abbonamenti.csv";'
+            );
+            fpassthru($f);
+            die();
+        },
+    ]);
+
+
     register_rest_route("agrispesa/v1", "delivery-group-csv", [
         "methods" => "GET",
         "permission_callback" => function () {
