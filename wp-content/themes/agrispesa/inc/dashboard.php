@@ -114,6 +114,8 @@ function abbonamenti_debito_page()
 							$product = reset($products);
 							echo $product['name'];
 							?></a>
+<br>
+						<span><?php echo $subscription->get_payment_method(); ?></span>
 					</td>
 				</tr>
 			<?php endforeach; ?>
