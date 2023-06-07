@@ -3390,7 +3390,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 ];
             foreach ($subscriptions as $subscription) {
 
-				$navisionId = get_user_meta($subscription->get_customer_id(),'_navision_id',true);
+				$navisionId = get_user_meta($subscription->get_customer_id(),'navision_id',true);
 
 				$product = [];
 				foreach($subscription->get_items() as $item){
