@@ -3288,6 +3288,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "subscriptions_per_page" => 1,
                 "orderby" => "ID",
                 "order" => "DESC",
+				"subscription_status" => ["active", "on-hold"],
                 "customer_id" => $loggedUser,
             ]);
             $subscription = reset($subscription);
