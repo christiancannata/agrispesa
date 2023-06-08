@@ -787,10 +787,9 @@ body.rtl .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__action
   font-size: 1.1em;
 }
 
-#yith-plugin-fw__panel__your-store-tools-tab .items .item .recommended {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+#yith-plugin-fw__panel__your-store-tools-tab .items .item .header .recommended {
+  align-self: flex-start;
+  margin: -8px -8px 0 -4px;
   padding: 2px 10px;
   font-size: .75em;
   font-weight: 800;
@@ -798,6 +797,7 @@ body.rtl .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__action
   background: #c49100;
   color: #fff;
   border-radius: 40px;
+  white-space: nowrap;
 }
 
 #yith-plugin-fw__panel__your-store-tools-tab .items .item .description {

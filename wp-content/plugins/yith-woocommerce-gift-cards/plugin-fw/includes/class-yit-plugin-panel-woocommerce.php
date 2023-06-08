@@ -372,6 +372,10 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						}
 						$field['value'] = $value;
 
+						if ( 'radio' === $field['type'] && $field['id'] && ! isset( $field['labelled_by'] ) ) {
+							$field['labelled_by'] = $field['id'] . '__label';
+						}
+
 						$field = apply_filters( 'yith_plugin_fw_wc_panel_field_data', $field );
 
 						$this->get_template(
@@ -866,6 +870,10 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 					}
 				}
 				$field['value'] = $value;
+
+				if ( 'radio' === $field['type'] && $field['id'] && ! isset( $field['labelled_by'] ) ) {
+					$field['labelled_by'] = $field['id'] . '__label';
+				}
 
 				// Let's filter field data just before print.
 				$field = apply_filters( 'yith_plugin_fw_wc_panel_field_data', $field );

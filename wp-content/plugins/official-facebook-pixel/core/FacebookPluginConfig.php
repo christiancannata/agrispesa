@@ -20,7 +20,7 @@ namespace FacebookPixelPlugin\Core;
 defined('ABSPATH') or die('Direct access not allowed');
 
 class FacebookPluginConfig {
-  const PLUGIN_VERSION = '3.0.10';
+  const PLUGIN_VERSION = '3.0.11';
   const SOURCE = 'wordpress';
   const TEXT_DOMAIN = 'official-facebook-pixel';
   const PLUGIN_NAME = 'Meta for WordPress';
@@ -98,7 +98,6 @@ class FacebookPluginConfig {
       'CONTACT_FORM_7' => 'FacebookWordpressContactForm7',
       'EASY_DIGITAL_DOWNLOAD' => 'FacebookWordpressEasyDigitalDownloads',
       'FORMIDABLE_FORM' => 'FacebookWordpressFormidableForm',
-      'GRAVITY_FORMS' => 'FacebookWordpressGravityForms',
       'MAILCHIMP_FOR_WP' => 'FacebookWordpressMailchimpForWp',
       'NINJA_FORMS' => 'FacebookWordpressNinjaForms',
       'WPFORMS' => 'FacebookWordpressWPForms',

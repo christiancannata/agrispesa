@@ -3,7 +3,7 @@
 Plugin Name: WP Sort Order
 Plugin URI: http://androidbubble.com/blog/wordpress/plugins/wp-sort-order
 Description: Order plugins, terms (Users, Posts, Pages, Custom Post Types and Custom Taxonomies) using a Drag and Drop with jQuery ui Sortable.
-Version: 1.3.0
+Version: 1.3.1
 Author: Fahad Mahmood 
 Author URI: http://www.androidbubble.com
 Text Domain: wpso-sort-order

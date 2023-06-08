@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-05-16 06:06:55+00:00\n"
+"POT-Creation-Date: 2023-05-29 09:56:30+00:00\n"
 "PO-Revision-Date: 2021-12-13 12:45:02+0000\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -95,15 +95,15 @@ msgid "There was an error with your request; please try again later."
 msgstr ""
 "Er is een fout opgetreden met je verzoek, probeer het later opnieuw a.u.b."
 
-#: includes/class-yit-plugin-panel-woocommerce.php:517
+#: includes/class-yit-plugin-panel-woocommerce.php:521
 msgid "Options saved correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:571
+#: includes/class-yit-plugin-panel-woocommerce.php:575
 msgid "Options reset correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:625
+#: includes/class-yit-plugin-panel-woocommerce.php:629
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "Als je deze pagina verlaat zullen alle wijzigingen verloren gaan."
 

@@ -1409,6 +1409,7 @@ table.yith-plugin-fw__classic-table.wp-list-table th.sortable a:hover, table.yit
 
 table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator {
   visibility: visible;
+  height: 8px;
 }
 
 table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator:before {
@@ -1521,6 +1522,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table th.sortable a:hover, table.yith-
 
 table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator {
   visibility: visible;
+  height: 8px;
 }
 
 table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator:before {
@@ -1621,6 +1623,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator {
   visibility: visible;
+  height: 8px;
 }
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator:before {
@@ -1747,6 +1750,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator {
   visibility: visible;
+  height: 8px;
 }
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator:before {

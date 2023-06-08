@@ -3,13 +3,13 @@
  * Plugin Name: Kadence WooCommerce Email Designer
  * Plugin URI: http://kadencewp.com/products/woocommerce-email-designer/
  * Description: Customize the default woocommerce email templates design and text through the native WordPress customizer. Preview emails and send test emails.
- * Version: 1.5.10
+ * Version: 1.5.11
  * Author: Kadence WP
  * Author URI: http://kadencewp.com/
  * License: GPLv2 or later
  * Text Domain: kadence-woocommerce-email-designer
  * WC requires at least: 5.6.0
- * WC tested up to: 7.5
+ * WC tested up to: 7.7
  *
  * @package Kadence Woocommerce Email Designer
  */
@@ -474,7 +474,7 @@ class Kadence_Woomail_Designer {
 				$order_language = WCML_Orders::getLanguage( $order_id );
 				if ( $order_language ) {
 					if ( isset( $email ) && is_object( $email ) && isset( $email->id ) ) {
-						$setting_key = $email->id;
+						$setting_key = $email->id . '_subtitle';
 						$name   = '[kt_woomail]' . $setting_key;
 						$subtitle = apply_filters( 'wpml_translate_single_string', $subtitle, 'admin_texts_kt_woomail', $name, $order_language );
 					}

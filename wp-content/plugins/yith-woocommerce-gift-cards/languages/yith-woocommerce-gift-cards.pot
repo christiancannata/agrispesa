@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the YITH WooCommerce Gift Cards package.
 msgid ""
 msgstr ""
-"Project-Id-Version: YITH WooCommerce Gift Cards 4.0.0\n"
+"Project-Id-Version: YITH WooCommerce Gift Cards 4.1.0\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-05-17 08:15:26+00:00\n"
+"POT-Creation-Date: 2023-06-05 15:32:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -669,67 +669,67 @@ msgstr ""
 msgid "Please enter a valid email address"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:584
+#: includes/class-yith-ywgc-gift-card.php:585
 #. translators: %s is the gift card code.
 msgid "The gift card code %s does not exist!"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:589
+#: includes/class-yith-ywgc-gift-card.php:590
 #. translators: %s is the gift card code.
 msgid ""
 "Sorry, it seems that the gift card code \"%s\" is not yours and cannot be "
 "used for this order."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:594
+#: includes/class-yith-ywgc-gift-card.php:595
 #. translators: %s is the gift card code.
 msgid "The gift card code %s has already been applied!"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:599
+#: includes/class-yith-ywgc-gift-card.php:600
 #. translators: %s is the gift card code.
 msgid "Sorry, the gift card code %s is expired and cannot be used."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:604
+#: includes/class-yith-ywgc-gift-card.php:605
 #. translators: %s is the gift card code.
 msgid "Sorry, the gift card code %s is currently disabled and cannot be used."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:609
+#: includes/class-yith-ywgc-gift-card.php:610
 #. translators: %s is the gift card code.
 msgid "Sorry, the gift card code %s is no longer valid!"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:614
+#: includes/class-yith-ywgc-gift-card.php:615
 #. translators: %s is the gift card code.
 msgid ""
 "Sorry, it seems that the gift card code %s is invalid - it has been removed "
 "from your cart."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:618
-#: includes/class-yith-ywgc-gift-card.php:656
+#: includes/class-yith-ywgc-gift-card.php:619
+#: includes/class-yith-ywgc-gift-card.php:657
 msgid "Gift card codes cannot be used to purchase other gift cards"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:648
+#: includes/class-yith-ywgc-gift-card.php:649
 msgid "Gift card code successfully applied."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:652
+#: includes/class-yith-ywgc-gift-card.php:653
 msgid "Gift card code successfully removed."
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:858
+#: includes/class-yith-ywgc-gift-card.php:859
 msgid "The gift card has been disabled"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:862
+#: includes/class-yith-ywgc-gift-card.php:863
 msgid "Valid"
 msgstr ""
 
-#: includes/class-yith-ywgc-gift-card.php:866
+#: includes/class-yith-ywgc-gift-card.php:867
 msgid "No longer valid, replaced by another code"
 msgstr ""
 

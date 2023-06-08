@@ -228,7 +228,8 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @author YITH
 		 */
 		public function __construct( $args = array() ) {
-			
+			$post = false;
+
 			if ( isset( $args['ID'] ) ) {
 				$post = get_post( $args['ID'] );
 			} elseif ( isset( $args['gift_card_number'] ) ) {
@@ -236,8 +237,8 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 
 				$post = get_posts(
 					array(
-						'title'      => $args['gift_card_number'],
-						'post_type' => YWGC_CUSTOM_POST_TYPE_NAME
+						'title'     => $args['gift_card_number'],
+						'post_type' => YWGC_CUSTOM_POST_TYPE_NAME,
 					)
 				);
 
@@ -246,7 +247,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 				}
 			}
 
-			if ( isset( $post ) ) {
+			if ( $post && is_object( $post ) ) {
 				$this->ID = $post->ID;
 
 				/**

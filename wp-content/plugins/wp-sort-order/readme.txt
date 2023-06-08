@@ -2,8 +2,8 @@
 Contributors: fahadmahmood, kiranzehra
 Tags: taxonomy order, user order, plugins order, post order
 Requires at least: 3.5.0
-Tested up to: 6.1
-Stable tag: 1.3.0
+Tested up to: 6.2
+Stable tag: 1.3.1
 Requires PHP: 7.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,6 +103,8 @@ add_action( 'pre_get_posts', 'my_filter' );
 `
 
 == Changelog ==
+= 1.3.1 =
+* Updated version for WordPress. [24/05/2023]
 = 1.3.0 =
 * Fix: WP Sort Order messing with posts date/order. [Thanks to Gonzalo/@jamposta][11/11/2022]
 = 1.2.9 =
@@ -144,6 +146,8 @@ add_action( 'pre_get_posts', 'my_filter' );
 Initial Release
 
 == Upgrade Notice ==
+= 1.3.1 =
+Updated version for WordPress.
 = 1.3.0 =
 Fix: WP Sort Order was messing with posts date/order.
 = 1.2.9 =

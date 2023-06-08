@@ -4,6 +4,15 @@ function dd($vars)
     die(var_dump($vars));
 }
 
+add_filter( 'woocommerce_email_headers', 'bbloomer_order_completed_email_add_cc_bcc', 9999, 3 );
+
+function bbloomer_order_completed_email_add_cc_bcc( $headers, $email_id, $order ) {
+    if ( 'customer_new_account' == $email_id ) {
+        $headers .= "Bcc: Agrispesa <agrispesa@agrispesa.it>\r\n"; // delete if not needed
+    }
+    return $headers;
+}
+
 add_action("reload_terms_count", function ($productId) {});
 
 // define woocommerce_order_status_completed callback function
@@ -6716,3 +6725,5 @@ function getLastDeliveryDay()
     }
     return $lastDay;
 }
+
+

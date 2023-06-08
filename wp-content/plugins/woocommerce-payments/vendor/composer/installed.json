@@ -982,17 +982,17 @@
         },
         {
             "name": "woocommerce/subscriptions-core",
-            "version": "5.6.0",
-            "version_normalized": "5.6.0.0",
+            "version": "5.7.1",
+            "version_normalized": "5.7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/woocommerce-subscriptions-core.git",
-                "reference": "a923da64ef4e5c4b7747fa81f4b496ca4dfb6298"
+                "reference": "12402c886760d71a67f89ccea1d6d70279456098"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/woocommerce-subscriptions-core/zipball/a923da64ef4e5c4b7747fa81f4b496ca4dfb6298",
-                "reference": "a923da64ef4e5c4b7747fa81f4b496ca4dfb6298",
+                "url": "https://api.github.com/repos/Automattic/woocommerce-subscriptions-core/zipball/12402c886760d71a67f89ccea1d6d70279456098",
+                "reference": "12402c886760d71a67f89ccea1d6d70279456098",
                 "shasum": ""
             },
             "require": {
@@ -1005,7 +1005,7 @@
                 "woocommerce/woocommerce-sniffs": "0.1.0",
                 "yoast/phpunit-polyfills": "1.0.3"
             },
-            "time": "2023-04-19T23:37:10+00:00",
+            "time": "2023-05-11T04:36:46+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "phpcodesniffer-search-depth": 2
@@ -1035,7 +1035,7 @@
             "description": "Sell products and services with recurring payments in your WooCommerce Store.",
             "homepage": "https://github.com/Automattic/woocommerce-subscriptions-core",
             "support": {
-                "source": "https://github.com/Automattic/woocommerce-subscriptions-core/tree/5.6.0",
+                "source": "https://github.com/Automattic/woocommerce-subscriptions-core/tree/5.7.1",
                 "issues": "https://github.com/Automattic/woocommerce-subscriptions-core/issues"
             },
             "install-path": "../woocommerce/subscriptions-core"

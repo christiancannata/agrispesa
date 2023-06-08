@@ -238,6 +238,7 @@ ul.yit-icons-manager-list li.active {
 .yith-plugin-fw-onoff-container {
     display    : inline-block;
     text-align : left;
+    position   : relative;
 }
 
 .yith-plugin-fw-onoff-container input {
@@ -1001,7 +1002,10 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
 /** RADIO BUTTON **/
 .yith-plugin-ui [type="radio"]:checked,
 .yith-plugin-ui [type="radio"]:not(:checked) {
-    display : none !important;
+    position : absolute !important;
+    display  : block !important;
+    opacity  : 0 !important;
+    z-index  : -1;
 }
 
 .yith-plugin-ui [type="radio"]:checked + label,
@@ -1026,6 +1030,8 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
     background    : #fff;
     box-sizing    : border-box;
     margin        : 2px;
+    transition    : all .2s ease-in-out;
+
 }
 
 .yith-plugin-ui [type="radio"]:checked + label:before {
@@ -1057,6 +1063,11 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
     opacity           : 1;
     -webkit-transform : scale(1);
     transform         : scale(1);
+}
+
+.yith-plugin-ui [type="radio"]:focus + label:before,
+.yith-plugin-ui [type="radio"]:focus-visible + label:before {
+    box-shadow : 0 0 0 2px #fff, 0 0 0 4px var(--yith-primary);
 }
 
 .rtl .yith-plugin-ui [type="radio"]:checked + label,
@@ -1120,7 +1131,12 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
 
 /** ONOFF **/
 .yith-plugin-ui .yith-plugin-fw-onoff-container input[type="checkbox"] {
-    display : none;
+    display  : block;
+    position : absolute;
+    width    : 100%;
+    height   : 100%;
+    opacity  : 0;
+    z-index  : -1;
 }
 
 .yith-plugin-ui .yith-plugin-fw-onoff-container input + span {
@@ -1131,6 +1147,11 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
     line-height      : 14px;
     padding          : 4px;
     box-sizing       : border-box;
+}
+
+.yith-plugin-ui .yith-plugin-fw-onoff-container input:focus + span,
+.yith-plugin-ui .yith-plugin-fw-onoff-container input:focus-visible + span {
+    box-shadow : 0 0 0 2px #fff, 0 0 0 4px #98aa36;
 }
 
 .yith-plugin-ui .yith-plugin-fw-onoff__icon {
