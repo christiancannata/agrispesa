@@ -448,6 +448,7 @@ function calendar_content()
 		"subscriptions_per_page" => 1,
 		'orderby' => 'ID',
 		'order' => 'DESC',
+		'subscription_status' => ['active', 'on-hold'],
 		"customer_id" => get_current_user_id()
 	]);
 	$subscription = reset($subscription);
