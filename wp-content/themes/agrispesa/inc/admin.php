@@ -4,14 +4,19 @@ function dd($vars)
     die(var_dump($vars));
 }
 
-add_filter( 'woocommerce_email_headers', 'bbloomer_order_completed_email_add_cc_bcc', 9999, 3 );
 
-function bbloomer_order_completed_email_add_cc_bcc( $headers, $email_id, $order ) {
-    if ( 'customer_new_account' == $email_id ) {
-        $headers .= "Bcc: Agrispesa <agrispesa@agrispesa.it>\r\n"; // delete if not needed
-    }
-    return $headers;
+add_action( 'user_register', 'myplugin_registration_save', 10, 1 );
+
+function myplugin_registration_save( $user_id ) {
+
+	  wp_mail(
+                    "agrispesa@agrispesa.it",
+                    "Nuovo utente registrato",
+                    "Un nuovo utente si è registrato con la mail: ".$_POST['email']
+                );
+
 }
+
 
 add_action("reload_terms_count", function ($productId) {});
 
