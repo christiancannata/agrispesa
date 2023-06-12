@@ -23,15 +23,10 @@ $next_week_day = date("d", strtotime("+1 week"));
 $next_week_month = date("m", strtotime("+1 week"));
 $next_week_year = date("Y", strtotime("+1 week"));
 
-$box_in_order = false;
-$items = $order->get_items();
-foreach ($items as $item) {
-	$product_id = $item->get_product_id();
-	if (has_term('box', 'product_cat', $product_id) || has_term('negozio', 'product_cat', $product_id)) {
-		$box_in_order = true;
-		break;
-	}
-}
+$orderType = get_post_meta($order->get_id(), '_order_type', true);
+
+$box_in_order = ($orderType == 'ABBONAMENTO FN');
+
 if ($box_in_order) {
 
 	$deliveryDate = get_order_delivery_date_from_date(new \DateTime(), null, $order->get_shipping_postcode());
@@ -174,7 +169,7 @@ if ($next_week_month === '01') {
 								<h3 class="thankyou--details--title">Consegniamo la tua scatola</h3>
 								<p class="thankyou--details--info">
 									Ti invieremo una mail con giorno e orario di consegna previsti
-								<!--	<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>-->
+									<!--	<?php echo $shipping_weekday_it . ', ' . $shipping_date_day . ' ' . $shipping_month_it . ' ' . $shipping_date_year; ?>-->
 								</p>
 							</div>
 						</div>
