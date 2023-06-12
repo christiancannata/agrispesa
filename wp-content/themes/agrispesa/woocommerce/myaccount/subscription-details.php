@@ -15,7 +15,6 @@ global $current_user;
 $user_id = $current_user->ID;
 ?>
 <table class="shop_table subscription_details">
-
 	<?php
 	$subscription_coupons = $subscription->get_coupon_codes();
 	if (in_array('welovedenso', $subscription_coupons)) {
