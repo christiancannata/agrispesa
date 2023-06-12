@@ -162,7 +162,7 @@ if ($next_week_month === '01') {
 							style="text-transform: capitalize;"><?php echo $order->get_billing_first_name(); ?></span>!
 						<br/>Il tuo acquisto di credito numero #<?php echo $order->get_order_number(); ?> è andato a
 						buon fine.</h1>
-					<p class="thankyou--subtitle">Riceverai presto una mail con i dettagli del tuo ordine.</p>
+					<p class="thankyou--subtitle">Riceverai presto una mail di conferma.</p>
 
 				<?php else: ?>
 					<h1 class="thankyou--title">
