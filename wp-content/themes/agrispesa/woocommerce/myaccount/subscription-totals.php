@@ -37,7 +37,7 @@ if ($hasDelivery && $hasGratis) {
 			$totals[$index]['label'] = 'Prima consegna:';
 		}
 		if ($total['label'] == 'Consegna:' && $total['value'] != 'Gratuita') {
-			$totals[$index]['label'] = 'Consegna dalla seconda settimana:';
+			$totals[$index]['label'] = 'Dalla seconda consegna:';
 		}
 	}
 }
