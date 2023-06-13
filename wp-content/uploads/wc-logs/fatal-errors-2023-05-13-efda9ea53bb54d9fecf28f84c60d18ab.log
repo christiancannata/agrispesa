@@ -1,9 +1,0 @@
-2023-05-13T23:40:39+00:00 CRITICAL Uncaught TypeError: Argument 2 passed to MailChimp_Service::handleProductUpdated() must be an instance of WP_Post, null given, called in /shared/httpd/agrispesa/wp-includes/class-wp-hook.php on line 308 and defined in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/class-mailchimp-woocommerce-service.php:349
-Stack trace:
-#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): MailChimp_Service->handleProductUpdated(40474, NULL, Object(WP_Post))
-#1 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
-#2 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
-#3 /shared/httpd/agrispesa/wp-includes/post.php(4684): do_action('post_updated', 40474, NULL, Object(WP_Post))
-#4 /shared/httpd/agrispesa/wp-includes/post.php(4817): wp_insert_post(Array, false, true)
-#5 /shared/httpd/agrispesa/wp-content/plugins/yith-woocommerce-recover-abandoned-cart-premium/includes/class-yith-wc-abandoned-cart.php(499): wp_update_post in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/class-mailchimp-woocommerce-service.php alla riga 349
-
