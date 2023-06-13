@@ -114,7 +114,7 @@ function abbonamenti_debito_page()
 							$product = reset($products);
 							echo $product['name'];
 							?></a>
-<br>
+						<br>
 						<span><?php echo $subscription->get_payment_method(); ?></span>
 					</td>
 				</tr>
@@ -186,11 +186,17 @@ function sospensioni_abbonamento_page()
 		<table class="table-admin-subscriptions">
 			<thead></thead>
 			<tbody>
-			<?php foreach ($week['subscriptions'] as $subscription):
+			<?php
+
+			usort($week['subscriptions'], function ($a, $b) {
+				return strcmp($a['subscription']->get_shipping_last_name(), $b['subscription']->get_shipping_last_name());
+			});
+
+			foreach ($week['subscriptions'] as $subscription):
 				$items = $subscription['subscription']->get_items();
 				?>
 				<tr>
-					<td><?php echo $subscription['subscription']->get_shipping_first_name() . ' ' . $subscription['subscription']->get_shipping_last_name() ?></td>
+					<td><?php echo $subscription['subscription']->get_shipping_last_name() . " " . $subscription['subscription']->get_shipping_first_name() ?></td>
 					<td>
 						<?php
 						foreach ($items as $item) {
