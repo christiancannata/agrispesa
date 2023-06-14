@@ -90,6 +90,7 @@ final class WC_Cart_Fees {
 			return new WP_Error( 'fee_exists', __( 'Fee has already been added.', 'woocommerce' ) );
 		}
 
+
 		$this->fees[ $fee_props->id ] = $fee_props;
 
 		return $this->fees[ $fee_props->id ];
