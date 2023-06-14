@@ -282,7 +282,9 @@ final class WC_Cart_Totals {
 
 			// Negative fees should not make the order total go negative.
 			if ( 0 > $fee->total ) {
-				$max_discount = NumberUtil::round( $this->get_total( 'items_total', true ) + $fee_running_total + $this->get_total( 'shipping_total', true ) ) * -1;
+				//$max_discount = NumberUtil::round( $this->get_total( 'items_total', true ) + $fee_running_total + $this->get_total( 'shipping_total', true ) ) * -1;
+
+                $max_discount = round( $this->get_total( 'items_total', true ) + $fee_running_total + $this->get_total( 'shipping_total', true ) + array_sum( $this->get_tax_class_costs() ) ) * -1;
 
 				if ( $fee->total < $max_discount ) {
 					$fee->total = $max_discount;
