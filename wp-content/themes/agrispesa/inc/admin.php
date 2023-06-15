@@ -2659,7 +2659,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                             $offerLineNo = $item->get_meta("offer_line_no");
 
-                            if (!$offerLineNo && $order->order_type == "ST") {
+                            if (!$offerLineNo && strstr($order->order_type,"ST") !== false ) {
                                 $product = wc_get_product($productId);
 
                                 if (!$product) {
@@ -2745,7 +2745,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                         "Offer Line No non trovato per: " .
                                         $product->get_name() .
                                         " SKU " .
-                                        $product->get_sku(),
+                                        $product->get_sku().' Ordine: '.$order->get_id(),
                                 ]);
                                 $response->set_status(500);
                                 return $response;
