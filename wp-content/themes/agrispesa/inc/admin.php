@@ -2420,6 +2420,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $customersOrders = [];
 
             foreach ($orders as $order) {
+
+
                 if ($order->get_status() != "completed") {
                     continue;
                 }
@@ -2452,6 +2454,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     "_order_type",
                     true
                 );
+
 
                 if (
                     $orderType != "ST" &&
@@ -2544,8 +2547,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $customersOrders[$recipient . $address] = [];
                 }
 
+
+
                 $customersOrders[$recipient . $address][] = $order;
             }
+
 
             foreach ($customersOrders as $orders) {
                 $navisionId = 6000000 + $orders[0]->get_id();
@@ -2614,7 +2620,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $piano = str_replace("Piano Piano", "Piano", $piano);
 
                 foreach ($orders as $order) {
-                    if ($order->order_type == "ST" || $order->is_subscription) {
+
+                    if (strstr($order->order_type,"ST") !== false || $order->is_subscription) {
                         foreach ($order->get_items() as $item) {
                             $productId = null;
                             if ($item->get_variation_id()) {
