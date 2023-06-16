@@ -39,7 +39,7 @@ if ( ! empty( $subscriptions ) ) :
 						</tr>
 						<tr>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
-								<p style="margin-bottom: 0"><strong>Data inizio</strong></p>
+								<p style="margin-bottom: 0"><strong>Data attivazione</strong></p>
 								<p style="margin-bottom: 0"><?php echo esc_html( date_i18n( wc_date_format(), $subscription->get_time( 'date_created', 'site' ) ) ); ?></p>
 							</td>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
@@ -58,10 +58,10 @@ if ( ! empty( $subscriptions ) ) :
 			<table class="td" cellspacing="0" cellpadding="6" style="width: 100%;" border="1">
 				<thead>
 					<tr>
-						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php esc_html_e( 'Subscription', 'kadence-woocommerce-email-designer' ); ?></th>
-						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo esc_html_x( 'Start Date', 'table heading',  'kadence-woocommerce-email-designer' ); ?></th>
-						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo esc_html_x( 'End Date', 'table heading',  'kadence-woocommerce-email-designer' ); ?></th>
-						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo esc_html_x( 'Price',  'table heading', 'kadence-woocommerce-email-designer' ); ?></th>
+						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;">Abbonamento</th>
+						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;">Data attivazione</th>
+						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;">Scadenza</th>
+						<th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;">Prezzo</th>
 					</tr>
 				</thead>
 				<tbody>
