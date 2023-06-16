@@ -6427,6 +6427,10 @@ add_action(
     10,
     2
 );
+
+add_filter('woocommerce_get_formatted_subscription_total',function($formatted_order_total){
+	return str_replace("every anni",'/settimana',$formatted_order_total);
+});
 add_filter("woocommerce_available_variation", "load_variation_settings_fields");
 function variation_settings_fields($loop, $variation_data, $variation)
 {

@@ -8,3 +8,11 @@ Stack trace:
 #5 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-subscription.php(30): do_action('woocommerce_sub...', Object(WC_Subscription))
 #6 /shared/httpd/agrispesa/wp-content/plugins/wooc in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-totals.php alla riga 48
 
+2023-06-16T21:52:32+00:00 CRITICAL Uncaught InvalidArgumentException: The group "rocket-rucss" does not exist. in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php:907
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php(799): ActionScheduler_DBStore->claim_actions(194134, 25, NULL, '', 'rocket-rucss')
+#1 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php(157): ActionScheduler_DBStore->stake_claim(25)
+#2 /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php(136): ActionScheduler_QueueRunner->do_batch(25, 'WP Cron')
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): ActionScheduler_QueueRunner->run('WP Cron')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332):  in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php alla riga 907
+
