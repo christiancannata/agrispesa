@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-05-01 14:18-0500\n"
+"PO-Revision-Date: 2023-06-16 17:54-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -7333,13 +7333,13 @@ msgstr "Attivazione: %s"
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:31
 msgctxt "Used as end date for an indefinite subscription"
 msgid "When Cancelled"
-msgstr ""
+msgstr "Senza Scadenza"
 
 #. translators: placeholder is localised end date, or "when cancelled"
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:33
 msgctxt "in plain emails for subscription information"
 msgid "End date: %s"
-msgstr ""
+msgstr "Scadenza: %s"
 
 #. translators: placeholder is the formatted order total for the subscription
 #: vendor/woocommerce/subscriptions-core/templates/emails/plain/subscription-info.php:35
@@ -7393,7 +7393,7 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/templates/emails/subscription-info.php:37
 msgctxt "Used as end date for an indefinite subscription"
 msgid "When cancelled"
-msgstr ""
+msgstr "Senza Scadenza"
 
 #. Translators: Placeholders are opening and closing My Account link tags.
 #: vendor/woocommerce/subscriptions-core/templates/emails/subscription-info.php:58

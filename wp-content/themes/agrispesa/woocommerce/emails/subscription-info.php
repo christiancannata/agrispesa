@@ -29,21 +29,21 @@ if ( ! empty( $subscriptions ) ) :
 					<tbody>
 						<tr>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
-								<p style="margin-bottom: 0"><strong><?php esc_html_e( 'Subscription', 'kadence-woocommerce-email-designer' ); ?></strong></p>
+								<p style="margin-bottom: 0"><strong>Abbonamento</strong></p>
 								<p style="margin-bottom: 0"><a href="<?php echo esc_url( ( $is_admin_email ) ? wcs_get_edit_post_link( $subscription->get_id() ) : $subscription->get_view_order_url() ); ?>"><?php echo sprintf( esc_html_x( '#%s', 'subscription number in email table. (eg: #106)', 'kadence-woocommerce-email-designer' ), esc_html( $subscription->get_order_number() ) ); ?></a></p>
 							</td>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
-								<p style="margin-bottom: 0"><strong><?php echo esc_html_x( 'Price', 'table heading', 'kadence-woocommerce-email-designer' ); ?></strong></p>
+								<p style="margin-bottom: 0"><strong>Prezzo</strong></p>
 								<p style="margin-bottom: 0"><?php echo wp_kses_post( $subscription->get_formatted_order_total() ); ?></p>
 							</td>
 						</tr>
 						<tr>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
-								<p style="margin-bottom: 0"><strong><?php echo esc_html_x( 'Start Date', 'table heading', 'kadence-woocommerce-email-designer' ); ?></strong></p>
+								<p style="margin-bottom: 0"><strong>Data inizio</strong></p>
 								<p style="margin-bottom: 0"><?php echo esc_html( date_i18n( wc_date_format(), $subscription->get_time( 'date_created', 'site' ) ) ); ?></p>
 							</td>
 							<td class="td" scope="row" style="text-align:<?php echo esc_attr( $text_align ); ?>;">
-								<p style="margin-bottom: 0"><strong><?php echo esc_html_x( 'End Date', 'table heading', 'kadence-woocommerce-email-designer' ); ?></strong></p>
+								<p style="margin-bottom: 0"><strong>Scadenza</strong></p>
 								<p style="margin-bottom: 0"><?php echo esc_html( ( 0 < $subscription->get_time( 'end' ) ) ? date_i18n( wc_date_format(), $subscription->get_time( 'end', 'site' ) ) : _x( 'When Cancelled', 'Used as end date for an indefinite subscription', 'kadence-woocommerce-email-designer' ) ); ?></p>
 							</td>
 						</tr>
