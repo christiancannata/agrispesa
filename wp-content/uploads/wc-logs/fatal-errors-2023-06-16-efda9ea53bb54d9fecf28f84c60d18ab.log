@@ -1,0 +1,10 @@
+2023-06-16T13:49:08+00:00 CRITICAL Uncaught Error: Cannot unset string offsets in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-totals.php:48
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/wc-core-functions.php(345): include()
+#1 /shared/httpd/agrispesa/wp-content/plugins/woocommerce-subscriptions/vendor/woocommerce/subscriptions-core/includes/class-wcs-template-loader.php(129): wc_get_template('myaccount/subsc...', Array, '', '/shared/httpd/a...')
+#2 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WCS_Template_Loader::get_subscription_totals_template(Object(WC_Subscription))
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters('', Array)
+#4 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#5 /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/view-subscription.php(30): do_action('woocommerce_sub...', Object(WC_Subscription))
+#6 /shared/httpd/agrispesa/wp-content/plugins/wooc in /shared/httpd/agrispesa/wp-content/themes/agrispesa/woocommerce/myaccount/subscription-totals.php alla riga 48
+

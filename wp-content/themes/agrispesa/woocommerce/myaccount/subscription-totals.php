@@ -41,6 +41,12 @@ if ($hasDelivery && $hasGratis) {
 		}
 	}
 }
+
+if ($hasDelivery) {
+	$totals['order_total']['value'] = ($subscription->get_total() - 5) . '€ / Settimana';
+
+}
+
 ?>
 
 
