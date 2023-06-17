@@ -12,8 +12,7 @@ function myplugin_registration_save( $user_id ) {
 	  wp_mail(
                     "agrispesa@agrispesa.it",
                     "Nuovo utente registrato",
-                    "Un nuovo utente si è registrato con la mail: ".$_POST['email'],
-                    $headers
+                    "Un nuovo utente si è registrato con la mail: ".$_POST['email']
                 );
 
 }
