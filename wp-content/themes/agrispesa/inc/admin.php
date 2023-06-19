@@ -8,11 +8,11 @@ function dd($vars)
 add_action( 'user_register', 'myplugin_registration_save', 10, 1 );
 
 function myplugin_registration_save( $user_id ) {
-
+	  $user = get_user_by( 'id', $user_id );
 	  wp_mail(
                     "agrispesa@agrispesa.it",
                     "Nuovo utente registrato",
-                    "Un nuovo utente si è registrato con la mail: ".$_POST['email']
+                    "Un nuovo utente si è registrato con la mail: ".$user->user_email
                 );
 
 }
