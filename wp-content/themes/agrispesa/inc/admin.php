@@ -2174,6 +2174,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $boxCode = $order->box_code;
         }
 
+		$couponPercent = 0;
+		foreach( $order->get_coupon_codes() as $coupon_code ){
+				$coupon = new WC_Coupon($coupon_code);
+				if($coupon->get_discount_type() == 'percent'){
+					$couponPercent+=$coupon->get_amount();
+				}
+		}
         $productNavisionId = str_replace("__", "", $productNavisionId);
 
         $row = $doc->createElement("ROW");
@@ -2269,7 +2276,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("discount");
-        $ele2->nodeValue = "0";
+        $ele2->nodeValue = "".$couponPercent;
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("unitprice");
 
