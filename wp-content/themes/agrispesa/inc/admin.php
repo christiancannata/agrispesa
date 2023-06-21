@@ -881,11 +881,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_status" => "any",
             ]);
 
-            $wpdb->query(
+          /*  $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                     implode(",", $productsToInclude) .
                     ");"
-            );
+            );*/
             $wpdb->query(
                 "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
                     implode(",", $productsToInclude) .
@@ -893,11 +893,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-                $wpdb->query(
+              /*  $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
-                );
+                );*/
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
                         implode(",", $productsToExclude) .
@@ -1256,11 +1256,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-                $wpdb->query(
+               /* $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
-                );
+                );*/
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
                         implode(",", $productsToExclude) .
@@ -1375,12 +1375,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_status" => "any",
             ]);
 
-            $wpdb->query(
+           /* $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                     implode(",", $productsToInclude) .
                     ");"
             );
-            $wpdb->query(
+            $wpdb->*/query(
                 "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
                     implode(",", $productsToInclude) .
                     ");"
@@ -1389,11 +1389,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productsToExclude[] = 17647;
 
             if (!empty($productsToExclude)) {
-                $wpdb->query(
+               /* $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
-                );
+                );*/
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
                         implode(",", $productsToExclude) .
@@ -1444,11 +1444,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         implode(",", $postIds) .
                         ")"
                 );
-                $wpdb->query(
+                /*$wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $postIds) .
                         ")"
-                );
+                );*/
             }
 
             $boxIds = [];
@@ -1657,11 +1657,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-                $wpdb->query(
+              /*  $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
-                );
+                );*/
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
                         implode(",", $productsToExclude) .
