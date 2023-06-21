@@ -76,7 +76,7 @@ add_action('widgets_init', function () {
 /**
  * Enqueue scripts and styles.
  */
-add_action('wp_enqueue_scripts', function () {
+add_action('wp_enqueue_scripts', function ($hook) {
 
 
 	wp_enqueue_style('bathe-main', get_theme_file_uri('assets/css/main.css'));
@@ -94,6 +94,20 @@ add_action('wp_enqueue_scripts', function () {
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
+
+	if (is_checkout()) {
+
+		global $wpdb;
+
+		$coupons = $wpdb->get_results("SELECT p.post_title FROM $wpdb->posts p, wp_postmeta m WHERE p.ID = m.post_id AND m.meta_key = 'coupon_parent_id' AND m.meta_value != '' AND p.post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
+		$coupons = array_map(function ($coupon) {
+			return strtolower($coupon->post_title);
+		}, $coupons);
+
+		wp_localize_script('agrispesa-js', 'WPCoupons', array('coupons' => $coupons));
+
+	}
+
 
 	wp_localize_script('agrispesa-js', 'WPURL', array('siteurl' => get_option('siteurl'), 'userId' => get_current_user_id()));
 

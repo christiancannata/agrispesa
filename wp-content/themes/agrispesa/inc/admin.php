@@ -4,22 +4,56 @@ function dd($vars)
     die(var_dump($vars));
 }
 
+add_action("user_register", "myplugin_registration_save", 10, 1);
 
-add_action( 'user_register', 'myplugin_registration_save', 10, 1 );
-
-function myplugin_registration_save( $user_id ) {
-	  $user = get_user_by( 'id', $user_id );
-	  if($user){
-		wp_mail(
-                    "agrispesa@agrispesa.it",
-                    "Nuovo utente registrato",
-                    "Un nuovo utente si è registrato con la mail: ".$user->user_email
-                );
-	  }
-
-
+function myplugin_registration_save($user_id)
+{
+    $user = get_user_by("id", $user_id);
+    if ($user) {
+        wp_mail(
+            "agrispesa@agrispesa.it",
+            "Nuovo utente registrato",
+            "Un nuovo utente si è registrato con la mail: " . $user->user_email
+        );
+    }
 }
 
+add_action("woocommerce_coupon_options", "add_coupon_text_field", 10);
+function add_coupon_text_field()
+{
+    global $wpdb;
+
+    $coupons = $wpdb->get_results(
+        "SELECT p.post_title FROM $wpdb->posts p, wp_postmeta m WHERE p.ID = m.post_id AND m.meta_key = 'discount_type' AND m.meta_value = 'percent' AND p.post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC"
+    );
+
+    $couponsArray = [
+        "" => "-- Seleziona un coupon --",
+    ];
+    foreach ($coupons as $coupon) {
+        $couponsArray[$coupon->post_title] = $coupon->post_title;
+    }
+
+    woocommerce_wp_select([
+        "id" => "coupon_parent_id",
+        "label" => 'Coupon "Scegli tu" collegato',
+        "description" => 'Seleziona il coupon "Scegli Tu" collegato.',
+        "options" => $couponsArray,
+    ]);
+}
+
+// Save the custom field value from Admin coupon settings pages
+add_action("woocommerce_coupon_options_save", "save_coupon_text_field", 10, 2);
+function save_coupon_text_field($post_id, $coupon)
+{
+    if (isset($_POST["coupon_parent_id"])) {
+        $coupon->update_meta_data(
+            "coupon_parent_id",
+            sanitize_text_field($_POST["coupon_parent_id"])
+        );
+        $coupon->save();
+    }
+}
 
 add_action("reload_terms_count", function ($productId) {});
 
@@ -118,7 +152,6 @@ add_action(
     10,
     2
 );
-
 
 // Call our custom function with the action hook
 add_action(
@@ -595,7 +628,7 @@ add_action("rest_api_init", function () {
                     $productsBlacklistIds = $wpdb->get_results(
                         "SELECT p.ID,p.post_title,m.meta_value FROM wp_posts p," .
                             $wpdb->postmeta .
-                            ' m WHERE p.ID = m.post_id AND m.meta_key = "codice_gruppo_prodotto" AND m.meta_value IN ("' .
+                            ' m WHERE p.ID = m.post_id and m.meta_key = "codice_gruppo_prodotto" and m.meta_value IN ("' .
                             implode('","', $userPreference) .
                             '")'
                     );
@@ -755,13 +788,17 @@ add_action("rest_api_init", function () {
                 "subscription_status" => ["active", "on-hold"],
             ]);
 
-			$subscriptionsArray = [];
+            $subscriptionsArray = [];
 
             foreach ($subscriptions as $subscription) {
                 $paymentMethod = $subscription->get_payment_method();
-				$manualRenew = get_post_meta($subscription->get_id(),'_requires_manual_renewal',true);
+                $manualRenew = get_post_meta(
+                    $subscription->get_id(),
+                    "_requires_manual_renewal",
+                    true
+                );
                 if ($paymentMethod == "bacs" || $manualRenew) {
-                  $subscription->set_status("active");
+                    $subscription->set_status("active");
                     $subscription->set_billing_period("year");
                     $subscription->set_billing_interval(100);
 
@@ -770,8 +807,8 @@ add_action("rest_api_init", function () {
                     ]);
                     $subscription->set_requires_manual_renewal(true);
                     $subscription->save();
-                }else{
-				/*	$subscriptionsArray[] = $subscription->get_id();
+                } else {
+                    /*	$subscriptionsArray[] = $subscription->get_id();
 					$today = new DateTime();
 					$today->add(new DateInterval('P7D'));
 					$today->setTime(12,00);
@@ -881,7 +918,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_status" => "any",
             ]);
 
-          /*  $wpdb->query(
+            /*  $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                     implode(",", $productsToInclude) .
                     ");"
@@ -893,7 +930,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-              /*  $wpdb->query(
+                /*  $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
@@ -1256,7 +1293,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-               /* $wpdb->query(
+                /* $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
@@ -1375,7 +1412,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "post_status" => "any",
             ]);
 
-           /* $wpdb->query(
+            /* $wpdb->query(
                 "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                     implode(",", $productsToInclude) .
                     ");"
@@ -1389,7 +1426,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $productsToExclude[] = 17647;
 
             if (!empty($productsToExclude)) {
-               /* $wpdb->query(
+                /* $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
@@ -1408,7 +1445,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
  			$importedPosts = $wpdb->get_results(
                 "SELECT post_id,meta_value FROM " .
                     $wpdb->postmeta .
-                    ' WHERE meta_key = "_navision_id" AND meta_value IN ("' .
+                    ' WHERE meta_key = "_navision_id" and meta_value IN ("' .
                     implode('","', $productsSku) .
                     '")'
             );
@@ -1657,7 +1694,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );
 
             if (!empty($productsToExclude)) {
-              /*  $wpdb->query(
+                /*  $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
                         implode(",", $productsToExclude) .
                         ");"
@@ -2163,10 +2200,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         $currentWeek,
         $offerLineNo,
         $productPrice,
-		$datePaid = null,
+        $datePaid = null,
         $boxCode = null,
         $shippingName = null
-
     ) {
         $userNavisionId = $order->user_navision_id;
 
@@ -2174,13 +2210,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $boxCode = $order->box_code;
         }
 
-		$couponPercent = 0;
-		foreach( $order->get_coupon_codes() as $coupon_code ){
-				$coupon = new WC_Coupon($coupon_code);
-				if($coupon->get_discount_type() == 'percent'){
-					$couponPercent+=$coupon->get_amount();
-				}
-		}
+        $couponPercent = 0;
+        foreach ($order->get_coupon_codes() as $coupon_code) {
+            $coupon = new WC_Coupon($coupon_code);
+            if ($coupon->get_discount_type() == "percent") {
+                $couponPercent += $coupon->get_amount();
+            }
+        }
         $productNavisionId = str_replace("__", "", $productNavisionId);
 
         $row = $doc->createElement("ROW");
@@ -2193,9 +2229,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("date");
-        $ele1->nodeValue = (new DateTime($datePaid))->format(
-            "dmY"
-        );
+        $ele1->nodeValue = (new DateTime($datePaid))->format("dmY");
         $row->appendChild($ele1);
         $ele1 = $doc->createElement("date_consegna");
         $ele1->nodeValue = "01011970";
@@ -2231,7 +2265,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $city = str_replace("-", " ", $order->get_shipping_city());
 
-		$isToUpdate = false;
+        $isToUpdate = false;
 
         $cities = explode(" ", $city);
         foreach ($cities as $key => $city) {
@@ -2239,16 +2273,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 if (isset($city[$i + 1])) {
                     if (ctype_lower($city[$i]) && ctype_upper($city[$i + 1])) {
                         $city = substr_replace($city, "'", $i + 1, 0);
-						$isToUpdate = true;
+                        $isToUpdate = true;
                     }
                 }
             }
             $cities[$key] = $city;
         }
 
-		if($isToUpdate){
-
-		}
+        if ($isToUpdate) {
+        }
 
         $city = implode(" ", $cities);
         $city = strtoupper($city);
@@ -2276,7 +2309,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("discount");
-        $ele2->nodeValue = "".$couponPercent;
+        $ele2->nodeValue = "" . $couponPercent;
         $row->appendChild($ele2);
         $ele2 = $doc->createElement("unitprice");
 
@@ -2306,7 +2339,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $couponCode = $request->get_param("coupon_code");
 
-            if (strtolower($couponCode) != "welovedenso") {
+            global $wpdb;
+            $postid = $wpdb->get_var(
+                "SELECT ID FROM $wpdb->posts WHERE post_title = '" .
+                    $couponCode .
+                    "'"
+            );
+
+            $relatedCouponId = get_post_meta($postid, "coupon_parent_id", true);
+
+            if (!$relatedCouponId && strtolower($couponCode) != "welovedenso") {
                 $response = new WP_REST_Response([
                     "coupon_code" => $couponCode,
                 ]);
@@ -2314,7 +2356,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $response;
             }
 
-            $orderType = "ST";
 
             $items = WC()->session->get("cart", null);
 
@@ -2339,11 +2380,23 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 }
             }
 
-            if ($hasProducts) {
-                $coupons[] = "WELOVEDENSO10";
-            }
-            if ($hasBox) {
-                $coupons[] = "WELOVEDENSO";
+            if (strtolower($couponCode) == "welovedenso") {
+                if ($hasProducts) {
+                    $coupons[] = "WELOVEDENSO10";
+                }
+                if ($hasBox) {
+                    $coupons[] = "WELOVEDENSO";
+                }
+            }else{
+            $couponCodeForScegliTu = $relatedCouponId;
+
+			 if ($hasProducts) {
+                    $coupons[] = $couponCodeForScegliTu;
+                }
+                if ($hasBox) {
+                    $coupons[] = $couponCode;
+                }
+
             }
 
             WC()->session->set("applied_coupons", $coupons);
@@ -2430,8 +2483,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $customersOrders = [];
 
             foreach ($orders as $order) {
-
-
                 if ($order->get_status() != "completed") {
                     continue;
                 }
@@ -2465,11 +2516,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     true
                 );
 
-
                 if (
                     $orderType != "ST" &&
-                    $orderType != "FN" &&
-                    $orderType != "ABBONAMENTO FN + ST"
+                    $orderType != "fn" &&
+                    $orderType != "ABBONAMENTO fn + ST"
                 ) {
                     continue;
                 }
@@ -2557,11 +2607,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $customersOrders[$recipient . $address] = [];
                 }
 
-
-
                 $customersOrders[$recipient . $address][] = $order;
             }
-
 
             foreach ($customersOrders as $orders) {
                 $navisionId = 6000000 + $orders[0]->get_id();
@@ -2630,8 +2677,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $piano = str_replace("Piano Piano", "Piano", $piano);
 
                 foreach ($orders as $order) {
-
-                    if (strstr($order->order_type,"ST") !== false || $order->is_subscription) {
+                    if (
+                        strstr($order->order_type, "ST") !== false ||
+                        $order->is_subscription
+                    ) {
                         foreach ($order->get_items() as $item) {
                             $productId = null;
                             if ($item->get_variation_id()) {
@@ -2669,7 +2718,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                             $offerLineNo = $item->get_meta("offer_line_no");
 
-                            if (!$offerLineNo && strstr($order->order_type,"ST") !== false ) {
+                            if (
+                                !$offerLineNo &&
+                                strstr($order->order_type, "ST") !== false
+                            ) {
                                 $product = wc_get_product($productId);
 
                                 if (!$product) {
@@ -2755,7 +2807,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                         "Offer Line No non trovato per: " .
                                         $product->get_name() .
                                         " SKU " .
-                                        $product->get_sku().' Ordine: '.$order->get_id(),
+                                        $product->get_sku() .
+                                        " Ordine: " .
+                                        $order->get_id(),
                                 ]);
                                 $response->set_status(500);
                                 return $response;
@@ -2774,7 +2828,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 $currentWeek,
                                 $offerLineNo,
                                 $item->get_total(),
-								 $orders[0]->get_date_paid(),
+                                $orders[0]->get_date_paid(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
                                     " " .
@@ -3189,44 +3243,40 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         "callback" => function ($request) {
             $loggedUser = $_POST["userId"];
 
-			$events = $_POST['events'];
+            $events = $_POST["events"];
 
             $subscription = wcs_get_subscriptions([
                 "subscriptions_per_page" => 1,
                 "orderby" => "ID",
                 "order" => "DESC",
-				'subscription_status' => ['active', 'on-hold'],
+                "subscription_status" => ["active", "on-hold"],
                 "customer_id" => $loggedUser,
             ]);
             $subscription = reset($subscription);
 
+            foreach ($events as $event) {
+                $day = new \DateTime($event["start"]);
 
-			foreach($events as $event){
+                $disabledWeeks = get_post_meta(
+                    $subscription->get_id(),
+                    "disable_weeks_" . $day->format("Y"),
+                    true
+                );
 
-				$day = new \DateTime($event['start']);
+                if (!$disabledWeeks || !is_array($disabledWeeks)) {
+                    $disabledWeeks = [];
+                }
 
-             $disabledWeeks = get_post_meta(
-                $subscription->get_id(),
-                "disable_weeks_" . $day->format("Y"),
-                true
-            );
+                $disabledWeeks[] = $event["week"];
 
-            if (!$disabledWeeks || !is_array($disabledWeeks)) {
-                $disabledWeeks = [];
+                $disabledWeeks = array_unique($disabledWeeks);
+
+                update_post_meta(
+                    $subscription->get_id(),
+                    "disable_weeks_" . $day->format("Y"),
+                    $disabledWeeks
+                );
             }
-
-			 	$disabledWeeks[] = $event['week'];
-
-			$disabledWeeks = array_unique($disabledWeeks);
-
-            update_post_meta(
-                $subscription->get_id(),
-                "disable_weeks_" . $day->format("Y"),
-                $disabledWeeks
-            );
-
-			}
-
 
             $response = new WP_REST_Response($disabledWeeks);
             $response->set_status(201);
@@ -3234,8 +3284,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-
-	register_rest_route("agrispesa/v1", "delete-user-blocked-weeks", [
+    register_rest_route("agrispesa/v1", "delete-user-blocked-weeks", [
         "methods" => "POST",
         "permission_callback" => function () {
             return true;
@@ -3245,13 +3294,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $day = $_POST["day"];
             $day = new DateTime($day);
-			$week = $_POST["week"];
+            $week = $_POST["week"];
 
             $subscription = wcs_get_subscriptions([
                 "subscriptions_per_page" => 1,
                 "orderby" => "ID",
                 "order" => "DESC",
-				'subscription_status' => ['active', 'on-hold'],
+                "subscription_status" => ["active", "on-hold"],
                 "customer_id" => $loggedUser,
             ]);
             $subscription = reset($subscription);
@@ -3265,16 +3314,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $disabledWeeks = [];
             }
 
-
             if (in_array($week, $disabledWeeks)) {
-				$key = array_search($week, $disabledWeeks);
+                $key = array_search($week, $disabledWeeks);
                 if ($key !== false) {
                     unset($disabledWeeks[$key]);
                 }
             }
 
-			sort($disabledWeeks);
-			array_unique($disabledWeeks);
+            sort($disabledWeeks);
+            array_unique($disabledWeeks);
             update_post_meta(
                 $subscription->get_id(),
                 "disable_weeks_" . $day->format("Y"),
@@ -3305,7 +3353,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "subscriptions_per_page" => 1,
                 "orderby" => "ID",
                 "order" => "DESC",
-				"subscription_status" => ["active", "on-hold"],
+                "subscription_status" => ["active", "on-hold"],
                 "customer_id" => $loggedUser,
             ]);
             $subscription = reset($subscription);
@@ -3333,21 +3381,24 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             if (is_array($disabledWeeks)) {
                 for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
                     if (in_array($date->format("W"), $disabledWeeks)) {
+                        $timestamp =
+                            mktime(0, 0, 0, 1, 1, date("Y")) +
+                            $date->format("W") * 7 * 24 * 60 * 60;
+                        $timestamp_for_monday =
+                            $timestamp - 86400 * (date("N", $timestamp) - 1);
 
-						$timestamp = mktime( 0, 0, 0, 1, 1,  date('Y') ) + ( $date->format("W") * 7 * 24 * 60 * 60 );
-        				$timestamp_for_monday = $timestamp - 86400 * ( date( 'N', $timestamp ) - 1 );
+                        $monday = new DateTime();
+                        $monday->setTimestamp($timestamp_for_monday);
 
-						$monday = new DateTime();
-						$monday->setTimestamp($timestamp_for_monday);
-
-						$sunday = clone $monday;
-						$sunday->modify('next sunday');
+                        $sunday = clone $monday;
+                        $sunday->modify("next sunday");
 
                         $events[] = [
                             "start" => $monday->format("Y-m-d 00:00:00"),
                             "end" => $sunday->format("Y-m-d 23:59:59"),
-                            "title" => "Questa settimana non ricevi la Facciamo Noi",
-                            "week" => $sunday->format("W")
+                            "title" =>
+                                "Questa settimana non ricevi la Facciamo Noi",
+                            "week" => $sunday->format("W"),
                         ];
                     }
                 }
@@ -3407,13 +3458,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-	    register_rest_route("agrispesa/v1", "export-subscription", [
+    register_rest_route("agrispesa/v1", "export-subscription", [
         "methods" => "GET",
         "permission_callback" => function () {
             return true;
         },
         "callback" => function ($request) {
-
             $subscriptions = wcs_get_subscriptions([
                 "subscriptions_per_page" => -1,
             ]);
@@ -3421,32 +3471,41 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $f = fopen("php://memory", "w");
 
             $csv = [
-				'ID','Stato','ID NAVISION UTENTE','PRODOTTO','NOME SPEDIZIONE','COGNOME SPEDIZIONE','NOME FATTURAZIONE','COGNOME FATTURAZIONE'
-];
-			  fputcsv($f, $csv,';');
+                "ID",
+                "Stato",
+                "ID NAVISION UTENTE",
+                "PRODOTTO",
+                "NOME SPEDIZIONE",
+                "COGNOME SPEDIZIONE",
+                "NOME FATTURAZIONE",
+                "COGNOME FATTURAZIONE",
+            ];
+            fputcsv($f, $csv, ";");
             foreach ($subscriptions as $subscription) {
+                $navisionId = get_user_meta(
+                    $subscription->get_customer_id(),
+                    "navision_id",
+                    true
+                );
 
-				$navisionId = get_user_meta($subscription->get_customer_id(),'navision_id',true);
-
-				$product = [];
-				foreach($subscription->get_items() as $item){
-					$product[] = $item->get_name();
-				}
+                $product = [];
+                foreach ($subscription->get_items() as $item) {
+                    $product[] = $item->get_name();
+                }
 
                 $csv[] = [
                     $subscription->get_id(),
                     $subscription->get_status(),
                     $navisionId,
-                    implode(", ",$product),
+                    implode(", ", $product),
                     $subscription->get_shipping_first_name(),
                     $subscription->get_shipping_last_name(),
- 					$subscription->get_billing_first_name(),
+                    $subscription->get_billing_first_name(),
                     $subscription->get_billing_last_name(),
                 ];
-
             }
             foreach ($csv as $line) {
-                fputcsv($f, $line,';');
+                fputcsv($f, $line, ";");
             }
             fseek($f, 0);
             header("Content-Type: text/csv");
@@ -3457,7 +3516,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             die();
         },
     ]);
-
 
     register_rest_route("agrispesa/v1", "delivery-group-csv", [
         "methods" => "GET",
@@ -3802,6 +3860,7 @@ function my_enqueue($hook)
             null,
             true
         );*/
+
         wp_localize_script("agrispesa-admin-js", "WPURL", [
             "siteurl" => get_option("siteurl"),
             "userId" => get_current_user_id(),
@@ -4687,7 +4746,7 @@ function register_my_custom_submenu_page()
         "abbonamenti_debito_page"
     );
 
-	  add_menu_page(
+    add_menu_page(
         "Sospensioni Abbonamento",
         "Sospensioni Abbonamento",
         "manage_options",
@@ -4974,12 +5033,7 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x(
-            "Failed",
-            "Order status",
-
-            "woocommerce"
-        ),
+        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
     ];
     ?>
 
@@ -5151,18 +5205,16 @@ function my_custom_submenu_page_callback()
             unset($orders[$key]);
         }
     }
-
-	foreach($subscriptions as $key => $subscription){
-		$disabledWeeks = get_post_meta(
-                $subscription->get_id(),
-                "disable_weeks_" . $date->format("Y"),
-                true
-            );
-
-		if(is_array($disabledWeeks) && in_array($week,$disabledWeeks)){
-			unset($subscriptions[$key]);
-		}
-	}
+    foreach ($subscriptions as $key => $subscription) {
+        $disabledWeeks = get_post_meta(
+            $subscription->get_id(),
+            "disable_weeks_" . $date->format("Y"),
+            true
+        );
+        if (is_array($disabledWeeks) && in_array($week, $disabledWeeks)) {
+            unset($subscriptions[$key]);
+        }
+    }
     ?>
 
 		<div id="wpbody-content">
@@ -5533,7 +5585,6 @@ function get_order_type($id)
 {
     global $wpdb;
     $orderType = get_post_meta("_order_type", $id, true);
-
     if ($orderType) {
         return $orderType;
     }
@@ -5548,10 +5599,8 @@ function get_order_type($id)
     $orderRenewal = get_post_meta($id, "_subscription_renewal", true);
     if (!empty($orderRenewal)) {
         $orderTypes[] = "ABBONAMENTO";
-    }
-    //check in cart
+    } //check in cart
     $order = wc_get_order($id);
-
     foreach ($order->get_items() as $item_id => $item) {
         if ($item->get_name() == "Acquisto credito") {
             $orderTypes[] = "CREDITO";
@@ -6030,7 +6079,6 @@ function consegne_ordini_pages()
                 "order" => "DESC",
             ]);
             $date = new DateTime();
-
             $currentWeek = $date->format("W");
             ?>
 
@@ -6437,9 +6485,10 @@ add_action(
     10,
     2
 );
-
-add_filter('woocommerce_get_formatted_subscription_total',function($formatted_order_total){
-	return str_replace("every anni",'/settimana',$formatted_order_total);
+add_filter("woocommerce_get_formatted_subscription_total", function (
+    $formatted_order_total
+) {
+    return str_replace("every anni", "/settimana", $formatted_order_total);
 });
 add_filter("woocommerce_available_variation", "load_variation_settings_fields");
 function variation_settings_fields($loop, $variation_data, $variation)
@@ -6754,5 +6803,3 @@ function getLastDeliveryDay()
     }
     return $lastDay;
 }
-
-

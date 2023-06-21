@@ -47,10 +47,24 @@ defined('ABSPATH') || exit;
 	<?php foreach (WC()->cart->get_coupons() as $code => $coupon) : ?>
 		<tr class="cart-discount coupon-<?php echo esc_attr(sanitize_title($code)); ?>">
 			<th>Codice sconto:<span class="checkout-coupon-name">
-						<?php
-						$coupon = $coupon->get_code();
-						echo $coupon; ?>
+					<?php
+					$couponName = $coupon->get_code();
 
+					if (strtolower($couponName) == 'welovedenso10') {
+						$couponName = 'WELOVEDENSO';
+					} else {
+						//check if is related coupon
+						global $wpdb;
+
+						$parentCoupon = $wpdb->get_var(
+							"SELECT p.post_title FROM wp_posts p, wp_postmeta m WHERE m.post_id = p.ID AND m.meta_key = 'coupon_parent_id' AND meta_value ='" . $couponName . "'"
+						);
+						if ($parentCoupon) {
+							$couponName = $parentCoupon;
+						}
+					}
+
+					echo $couponName; ?>
 					</span></th>
 			<td><?php wc_cart_totals_coupon_html($coupon); ?></td>
 		</tr>

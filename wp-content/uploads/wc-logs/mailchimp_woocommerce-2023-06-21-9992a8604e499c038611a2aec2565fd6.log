@@ -1,0 +1,37 @@
+2023-06-21T21:43:58+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 43724
+2023-06-21T21:43:58+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 43725
+2023-06-21T21:43:59+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 43726
+2023-06-21T21:45:28+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 43041
+2023-06-21T21:45:29+00:00 NOTICE debug :: Order ID 43041 was completed and is now processing :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-06-21T21:46:03+00:00 NOTICE debug :: Order ID 43041 was processing and is now pending :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-06-21T21:46:04+00:00 NOTICE order_submit :: #43726 has a financial status of pending and was skipped.
+2023-06-21T21:46:07+00:00 NOTICE order_submit :: #43725 has a financial status of pending and was skipped.
+2023-06-21T21:46:13+00:00 NOTICE order_submit :: #43724 has a financial status of pending and was skipped.
+2023-06-21T21:47:34+00:00 NOTICE debug :: Order ID 43041 was pending and is now completed :: Array
+(
+    [new_order] => 1
+    [tracking] => Array
+        (
+            [campaign_id] => 
+            [landing_site] => https://agrispesa.loc/wp-admin/post.php?post=43041&action=edit&message=1
+        )
+
+)
+
+2023-06-21T21:49:22+00:00 NOTICE order.member.updated :: Updated lorena.boasso@gmail.com subscriber status to subscribed and language to 
+2023-06-21T21:49:22+00:00 NOTICE order_submit.success :: updateStoreOrder :: #43041 :: email: lorena.boasso@gmail.com
+2023-06-21T22:08:48+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_SingleCoupon queued :: obj_id 43736
+2023-06-21T22:09:28+00:00 NOTICE promo_code_submit.success :: #43736 :: code: codicericorrente10
+2023-06-21T22:09:43+00:00 NOTICE promo_code.delete_fail :: Unable to delete promo code 43735
+2023-06-21T22:10:22+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_SingleCoupon queued :: obj_id 43737
+2023-06-21T22:10:23+00:00 ERROR promo_code_submit.error :: error updating promo rule #43737 :: code codicericorrente :: Error Code 400 :: <p>: Required fields were not provided: type, target</p> on 2438 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php
