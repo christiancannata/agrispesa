@@ -18,6 +18,29 @@ function myplugin_registration_save($user_id)
     }
 }
 
+
+// Add a Header
+function filter_manage_edit_shop_coupon_columns( $columns ) {
+    // Add new column
+    $columns['coupon_parent'] = 'Coupon Correlato';
+
+    return $columns;
+}
+add_filter( 'manage_edit-shop_coupon_columns', 'filter_manage_edit_shop_coupon_columns', 10, 1 );
+
+// Populate the Column
+function action_manage_shop_coupon_posts_custom_column( $column, $post_id ) {
+    // Compare
+    if ( $column == 'coupon_parent' ) {
+        // Author ID
+        $relatedCoupon = get_post_meta( $post_id, 'coupon_parent_id',true );
+		if(!empty($relatedCoupon)){
+			echo $relatedCoupon;
+		}
+    }
+}
+add_action( 'manage_shop_coupon_posts_custom_column' , 'action_manage_shop_coupon_posts_custom_column', 10, 2 );
+
 add_action("woocommerce_coupon_options", "add_coupon_text_field", 10);
 function add_coupon_text_field()
 {
