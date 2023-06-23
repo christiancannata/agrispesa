@@ -2411,6 +2411,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $coupons[] = "WELOVEDENSO";
                 }
             }else{
+
             $couponCodeForScegliTu = $relatedCouponId;
 
 			 if ($hasProducts) {
@@ -2421,6 +2422,17 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 }
 
             }
+
+			foreach($coupons as $coupon){
+				    $coupon_object = new WC_Coupon($coupon);
+					if(!$coupon_object->is_valid_for_cart()){
+						 $response = new WP_REST_Response([
+             			   "error" => 'Non puoi applicare questo codice sconto.',
+          				  ]);
+           				 $response->set_status(500);
+						return $response;
+					}
+			}
 
             WC()->session->set("applied_coupons", $coupons);
 
