@@ -351,7 +351,7 @@ function giftCardCheckout() {
 
       jQuery.ajax({
         type: 'GET',
-        url: '/wp-json/agrispesa/v1/check-cart-coupon?coupon_code=' + data.coupon_code,
+        url: '/wp-json/agrispesa/v1/check-cart-coupon?user_id=' + window.userId + '&email=' + jQuery("#billing_email").val() + '&coupon_code=' + data.coupon_code,
         error: function (e) {
           $form.removeClass('processing').unblock();
           alert(e.responseJSON.error)

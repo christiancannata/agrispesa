@@ -1,0 +1,8 @@
+2023-06-24T13:54:24+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 44475
+2023-06-24T13:54:30+00:00 NOTICE debug :: Order ID 44475 was pending and is now on-hold :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+
+2023-06-24T13:56:34+00:00 NOTICE order_process :: Order #44475 skipped, user #1 user role is not in the list

@@ -2423,17 +2423,29 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             }
 
+			$userId = $request->get_param("user_id");
+			if($userId==0){
+				$email = $request->get_param("email");
+			if($email){
+				$user = get_user_by('email', $email);
+				$userId = $user->ID;
+				}
+			}
+
 			foreach($coupons as $coupon){
 				    $coupon_object = new WC_Coupon($coupon);
-					$discounts = new WC_Discounts( WC()->cart );
-					$valid     = $discounts->is_coupon_valid( $coupon_object );
-					if(!$valid){
+					$discountChecker = new \AgrispesaDiscountChecker( WC()->cart );
+					$valid = $discountChecker->is_coupon_valid($coupon_object,intval($userId));
+
+					if(is_object($valid)){
 						 $response = new WP_REST_Response([
-             			   "error" => 'Non puoi applicare questo codice sconto.',
-          				  ]);
-           				 $response->set_status(500);
-						return $response;
+             			   "error" => 'Non puoi utilizzare questo coupon.',
+           				 ]);
+          				  $response->set_status(500);
+          			  return $response;
+
 					}
+
 			}
 
             WC()->session->set("applied_coupons", $coupons);

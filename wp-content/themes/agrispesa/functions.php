@@ -128,6 +128,7 @@ $ag_includes = array(
 	'/post-dog-ingredients.php',
 	'/box.php',
 	'/shop.php',
+	'/my-discount-class.php',
 	'/profile.php',
 	'/admin.php',
 	'/checkout.php',
