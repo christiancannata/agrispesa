@@ -355,6 +355,7 @@ function giftCardCheckout() {
         error: function (e) {
           $form.removeClass('processing').unblock();
           alert(e.responseJSON.error)
+          jQuery('#coupon_code').val('')
         },
         success: function (res) {
 
