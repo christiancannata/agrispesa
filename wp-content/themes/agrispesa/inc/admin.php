@@ -18,28 +18,39 @@ function myplugin_registration_save($user_id)
     }
 }
 
-
 // Add a Header
-function filter_manage_edit_shop_coupon_columns( $columns ) {
+function filter_manage_edit_shop_coupon_columns($columns)
+{
     // Add new column
-    $columns['coupon_parent'] = 'Coupon Correlato';
+    $columns["coupon_parent"] = "Coupon Correlato";
 
     return $columns;
 }
-add_filter( 'manage_edit-shop_coupon_columns', 'filter_manage_edit_shop_coupon_columns', 10, 1 );
+add_filter(
+    "manage_edit-shop_coupon_columns",
+    "filter_manage_edit_shop_coupon_columns",
+    10,
+    1
+);
 
 // Populate the Column
-function action_manage_shop_coupon_posts_custom_column( $column, $post_id ) {
+function action_manage_shop_coupon_posts_custom_column($column, $post_id)
+{
     // Compare
-    if ( $column == 'coupon_parent' ) {
+    if ($column == "coupon_parent") {
         // Author ID
-        $relatedCoupon = get_post_meta( $post_id, 'coupon_parent_id',true );
-		if(!empty($relatedCoupon)){
-			echo $relatedCoupon;
-		}
+        $relatedCoupon = get_post_meta($post_id, "coupon_parent_id", true);
+        if (!empty($relatedCoupon)) {
+            echo $relatedCoupon;
+        }
     }
 }
-add_action( 'manage_shop_coupon_posts_custom_column' , 'action_manage_shop_coupon_posts_custom_column', 10, 2 );
+add_action(
+    "manage_shop_coupon_posts_custom_column",
+    "action_manage_shop_coupon_posts_custom_column",
+    10,
+    2
+);
 
 add_action("woocommerce_coupon_options", "add_coupon_text_field", 10);
 function add_coupon_text_field()
@@ -1231,6 +1242,35 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $price = str_replace(",", ".", $price);
                 $price = floatval($price);
                 $productObj->set_price($price);
+/*
+                $the_weight_array = getNumbersFromString($productName);
+                $i = 1;
+                $weigth_nav = "";
+                if (isset($the_weight_array) && !empty($the_weight_array)) {
+                    foreach ($the_weight_array as $the_weight) {
+                        if (isset($the_weight[0])) {
+                            $weigth_nav = $the_weight[0];
+                        } else {
+                            $weigth_nav = "";
+                        }
+
+                        if ($i === 1) {
+                            break;
+                        }
+                    }
+                }
+
+                $weigth_nav = explode(" ", $weigth_nav);
+
+                if (count($weigth_nav) == 2) {
+                    $productObj->set_weight(intval($weigth_nav[1]));
+                    update_post_meta(
+                        $productObj->get_id(),
+                        "_woo_uom_input",
+                        $weigth_nav[0]
+                    );
+                }
+ 				*/
                 $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
                 //$productIds[] = $productObj->get_id();
@@ -1678,7 +1718,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $scegliTuProducts[] = $singleProduct->ID;
                     }
 
-                   /* update_post_meta(
+                    /* update_post_meta(
                         $singleProduct->ID,
                         "_is_active_shop",
                         $isActive
@@ -1733,6 +1773,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             update_option("current_order_week", date("Y") . "_" . $week);
             update_option("last_order_week", $lastOrderWeek);
+
+			wc_recount_all_terms();
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
@@ -2379,7 +2421,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $response;
             }
 
-
             $items = WC()->session->get("cart", null);
 
             WC()->session->set("applied_coupons", []);
@@ -2410,43 +2451,42 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 if ($hasBox) {
                     $coupons[] = "WELOVEDENSO";
                 }
-            }else{
+            } else {
+                $couponCodeForScegliTu = $relatedCouponId;
 
-            $couponCodeForScegliTu = $relatedCouponId;
-
-			 if ($hasProducts) {
+                if ($hasProducts) {
                     $coupons[] = $couponCodeForScegliTu;
                 }
                 if ($hasBox) {
                     $coupons[] = $couponCode;
                 }
-
             }
 
-			$userId = $request->get_param("user_id");
-			if($userId==0){
-				$email = $request->get_param("email");
-			if($email){
-				$user = get_user_by('email', $email);
-				$userId = $user->ID;
-				}
-			}
+            $userId = $request->get_param("user_id");
+            if ($userId == 0) {
+                $email = $request->get_param("email");
+                if ($email) {
+                    $user = get_user_by("email", $email);
+                    $userId = $user->ID;
+                }
+            }
 
-			foreach($coupons as $coupon){
-				    $coupon_object = new WC_Coupon($coupon);
-					$discountChecker = new \AgrispesaDiscountChecker( WC()->cart );
-					$valid = $discountChecker->is_coupon_valid($coupon_object,intval($userId));
+            foreach ($coupons as $coupon) {
+                $coupon_object = new WC_Coupon($coupon);
+                $discountChecker = new \AgrispesaDiscountChecker(WC()->cart);
+                $valid = $discountChecker->is_coupon_valid(
+                    $coupon_object,
+                    intval($userId)
+                );
 
-					if(is_object($valid)){
-						 $response = new WP_REST_Response([
-             			   "error" => 'Non puoi utilizzare questo coupon.',
-           				 ]);
-          				  $response->set_status(500);
-          			  return $response;
-
-					}
-
-			}
+                if (is_object($valid)) {
+                    $response = new WP_REST_Response([
+                        "error" => "Non puoi utilizzare questo coupon.",
+                    ]);
+                    $response->set_status(500);
+                    return $response;
+                }
+            }
 
             WC()->session->set("applied_coupons", $coupons);
 
@@ -5082,7 +5122,12 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
+        "wc-failed" => _x(
+            "Failed",
+            "Order status",
+
+            "woocommerce"
+        ),
     ];
     ?>
 
@@ -6128,6 +6173,7 @@ function consegne_ordini_pages()
                 "order" => "DESC",
             ]);
             $date = new DateTime();
+
             $currentWeek = $date->format("W");
             ?>
 
