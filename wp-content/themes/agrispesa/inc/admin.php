@@ -2425,7 +2425,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			foreach($coupons as $coupon){
 				    $coupon_object = new WC_Coupon($coupon);
-					if(!$coupon_object->is_valid_for_cart()){
+					$discounts = new WC_Discounts( WC()->cart );
+					$valid     = $discounts->is_coupon_valid( $coupon_object );
+					if(!$valid){
 						 $response = new WP_REST_Response([
              			   "error" => 'Non puoi applicare questo codice sconto.',
           				  ]);
