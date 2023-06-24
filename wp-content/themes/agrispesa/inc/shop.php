@@ -170,7 +170,8 @@ function soChangeProductsTitle()
 	}
 
 	if (empty($weigth_nav)) {
-		$weigth_nav = 'g ' . $product->get_weight();
+		$product_data = $product->get_meta('_woo_uom_input');
+		$weigth_nav = $product_data.' ' . $product->get_weight();
 	}
 
 	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';

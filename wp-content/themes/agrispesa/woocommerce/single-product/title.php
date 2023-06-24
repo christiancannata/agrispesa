@@ -29,8 +29,7 @@ foreach ($terms as $term) $categories[] = $term->slug;
 $produttori = get_field('product_producer');
 $attributes = $product->get_attributes();
 
-// unità di misura personalizzata
-$product_data = $product->get_meta('_woo_uom_input');
+
 wc_print_notices();
 
 if (in_array('petfood', $categories)) {
@@ -63,7 +62,9 @@ if (isset($the_weight_array) && !empty($the_weight_array)) {
 }
 
 if (empty($weigth_nav)) {
-	$weigth_nav = $product->get_weight() . ' g';
+	// unità di misura personalizzata
+	$product_data = $product->get_meta('_woo_uom_input');
+	$weigth_nav = $product_data . ' ' . $product->get_weight();
 }
 
 

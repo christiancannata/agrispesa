@@ -115,7 +115,6 @@ if ($search_posts->have_posts()) :
 							$thumb_id = get_post_thumbnail_id();
 							$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
 							$thumb_url = $thumb_url_array[0];
-							$product_data = $product->get_meta('_woo_uom_input');
 							$title = get_the_title();
 							$title_without_weight = preg_replace(
 								array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
@@ -141,7 +140,8 @@ if ($search_posts->have_posts()) :
 
 
 							if (empty($weigth_nav)) {
-								$weigth_nav = $product->get_weight() . ' g';
+								$product_data = $product->get_meta('_woo_uom_input');
+								$weigth_nav = $product_data . ' ' . $product->get_weight();
 							}
 							?>
 
