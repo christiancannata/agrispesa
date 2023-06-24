@@ -19,11 +19,12 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
+
 global $product;
 
 global $post;
-$terms = wp_get_post_terms( $post->ID, 'product_cat' );
-foreach ( $terms as $term ) $categories[] = $term->slug;
+$terms = wp_get_post_terms($post->ID, 'product_cat');
+foreach ($terms as $term) $categories[] = $term->slug;
 
 $produttori = get_field('product_producer');
 $attributes = $product->get_attributes();
@@ -32,7 +33,7 @@ $attributes = $product->get_attributes();
 $product_data = $product->get_meta('_woo_uom_input');
 wc_print_notices();
 
-if( in_array( 'petfood', $categories ) ) {
+if (in_array('petfood', $categories)) {
 	echo '<div class="pawer-logo-badge">';
 	echo get_template_part('global-elements/logo', 'pawer');
 	echo '</div>';
@@ -40,28 +41,33 @@ if( in_array( 'petfood', $categories ) ) {
 
 $title = get_the_title();
 $title_without_weight = preg_replace(
-	 array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
-	 array(''),
-	 $title
+	array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
+	array(''),
+	$title
 );
 $the_weight_array = getNumbersFromString($title);
 $i = 1;
 $weigth_nav = "";
-if(isset($the_weight_array) && !empty($the_weight_array)) {
+if (isset($the_weight_array) && !empty($the_weight_array)) {
 	foreach ($the_weight_array as $the_weight) {
-		if(isset($the_weight[0])) {
+		if (isset($the_weight[0])) {
 			$weigth_nav = $the_weight[0];
 		} else {
 			$weigth_nav = "";
 		}
 
-		if($i === 1) {
+		if ($i === 1) {
 			break;
 		}
 	}
 }
 
-echo '<h1 class="product_title entry-title">'. $title_without_weight . '</h1>';
+if (empty($weigth_nav)) {
+	$weigth_nav = $product->get_weight() . ' g';
+}
+
+
+echo '<h1 class="product_title entry-title">' . $title_without_weight . '</h1>';
 echo '<div class="product-info">';
 echo '<span class="product-info--quantity">' . $weigth_nav . '</span>';
 

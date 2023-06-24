@@ -138,6 +138,11 @@ if ($search_posts->have_posts()) :
 									}
 								}
 							}
+
+
+							if (empty($weigth_nav)) {
+								$weigth_nav = $product->get_weight() . ' g';
+							}
 							?>
 
 

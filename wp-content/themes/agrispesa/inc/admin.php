@@ -1678,11 +1678,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $scegliTuProducts[] = $singleProduct->ID;
                     }
 
-                    update_post_meta(
+                   /* update_post_meta(
                         $singleProduct->ID,
                         "_is_active_shop",
                         $isActive
-                    );
+                    );*/
                     update_post_meta(
                         $singleProduct->ID,
                         "_sku",

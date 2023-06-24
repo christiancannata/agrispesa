@@ -28,6 +28,7 @@ if(isset($the_weight_array) && !empty($the_weight_array)) {
 		}
 	}
 }
+die("nnn");
 ?>
 <article class="product-box">
   <a href="<?php the_permalink(); ?>" class="product-box--link" title="<?php echo the_title(); ?>">

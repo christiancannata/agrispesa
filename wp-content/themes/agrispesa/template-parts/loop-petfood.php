@@ -28,6 +28,7 @@ if(isset($the_weight_array) && !empty($the_weight_array)) {
 		}
 	}
 }
+
 ?>
 <article class="petfood-box" style="background-image:url(<?php echo $thumb_url;?>);">
   <?php if (str_contains(get_the_title(), 'Puppy')) {

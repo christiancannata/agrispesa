@@ -231,13 +231,13 @@ if (woocommerce_product_loop()) {
 				'orderby' => 'menu_order',
 				'order' => 'asc',
 				'post_status' => 'publish',
-				'meta_query' => array(
+				/*'meta_query' => array(
 					array(
 						'key' => '_is_active_shop',
 						'value' => '1',
 						'compare' => '=='
 					)
-				),
+				),*/
 			);
 			$cat_query = new WP_Query($args);
 

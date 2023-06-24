@@ -61,15 +61,14 @@ if( $related_products ): ?>
         $thumb_url_array = wp_get_attachment_image_src($thumb_id, 'large', true);
         $thumb_url = $thumb_url_array[0];
         //print_r($thumb_url);
-
         ?>
 
         <article class="product-box">
           <a href="<?php the_permalink($related_product->ID); ?>" class="product-box--link" title="<?php echo esc_html( $title ); ?>">
             <?php if($thumb_url):?>
-              <img src="<?php $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+              <img lazy src="<?php $thumb_url; ?>" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
             <?php else: ?>
-              <img src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
+              <img lazy src="https://agrispesa.it/wp-content/uploads/2023/02/default.png" class="product-box--thumb" alt="<?php echo esc_html( $title ); ?>" />
             <?php endif;?>
           </a>
           <div class="product-box--text">

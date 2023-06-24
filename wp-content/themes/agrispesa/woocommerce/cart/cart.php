@@ -103,6 +103,10 @@ do_action( 'woocommerce_before_cart' ); ?>
 							        	}
 											}
 
+											if (empty($weigth_nav)) {
+												$weigth_nav = $_product->get_weight() . ' g';
+											}
+
 											if (!$product_permalink) {
 												echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $title_without_weight, $cart_item, $cart_item_key) . '&nbsp;');
 											} else {

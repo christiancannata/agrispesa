@@ -75,7 +75,7 @@ function shop_page_empty_layout()
 	echo '<ul class="negozio-sidebar--list navigate">';
 	$sidebar = array(
 		'taxonomy' => 'product_cat',
-		'orderby'  => 'name',
+		'orderby' => 'name',
 		//'meta_key' => 'categories_order_agr',
 		'show_count' => 0,
 		'hierarchical' => 1,
@@ -143,7 +143,7 @@ add_action('woocommerce_shop_loop_item_title', 'soChangeProductsTitle', 10);
 function soChangeProductsTitle()
 {
 	global $product;
-	$product_data = $product->get_meta('_woo_uom_input');
+	//$product_data = $product->get_meta('_woo_uom_input');
 
 	$title = get_the_title();
 	$title_without_weight = preg_replace(
@@ -167,6 +167,10 @@ function soChangeProductsTitle()
 				break;
 			}
 		}
+	}
+
+	if (empty($weigth_nav)) {
+		$weigth_nav = 'g ' . $product->get_weight();
 	}
 
 	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
@@ -403,11 +407,11 @@ function new_loop_shop_per_page($cols)
 //Modifica loop negozio per avere solo prodotti con check _is_product_active
 function custom_meta_query($meta_query)
 {
-	$meta_query[] = array(
+	/*$meta_query[] = array(
 		'key' => '_is_active_shop',
 		'value' => '1',
 		'compare' => '=='
-	);
+	);*/
 	return $meta_query;
 }
 
