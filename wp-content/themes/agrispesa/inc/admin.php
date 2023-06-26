@@ -6739,7 +6739,7 @@ add_action(
 );
 function my_saved_post($post_id, $json, $is_update)
 {
-    $product = wc_get_product($post_id);
+    /*$product = wc_get_product($post_id);
     if ($product) {
         // Retrieve the import ID.
         // Convert SimpleXml object to array for easier use.
@@ -6785,7 +6785,7 @@ function my_saved_post($post_id, $json, $is_update)
                 (string) $json->_qty_acquisto
             );
         }
-        $product->set_manage_stock(true);
+       // $product->set_manage_stock(true);
         if (isset($json->scorte)) {
             $product->set_stock_quantity((string) $json->scorte);
         }
@@ -6825,9 +6825,11 @@ function my_saved_post($post_id, $json, $is_update)
         $product->set_price($price);
         $product->save();
         wc_delete_product_transients($product->get_id()); // Do something.
-    }
+    }*/
 }
-add_action("pmxi_saved_post", "my_saved_post", 10, 3);
+//add_action("pmxi_saved_post", "my_saved_post", 10, 3);
+
+
 function getLabelDay(DateTime $date)
 {
     $mesi = [
