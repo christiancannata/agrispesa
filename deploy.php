@@ -40,7 +40,7 @@ after('deploy:prepare', 'ssh:permission');
 
 task('reload:php', function () {
     run('chown -R root:www-data {{deploy_path}}');
-    run('sudo /usr/sbin/service php7.4-fpm restart');
+    run('sudo /usr/sbin/service php8.0-fpm restart');
     run('sudo /usr/sbin/service nginx restart');
 });
 

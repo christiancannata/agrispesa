@@ -2607,8 +2607,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 if (
                     $orderType != "ST" &&
-                    $orderType != "fn" &&
-                    $orderType != "ABBONAMENTO fn + ST"
+                    $orderType != "FN" &&
+                    $orderType != "ABBONAMENTO FN + ST"
                 ) {
                     continue;
                 }
