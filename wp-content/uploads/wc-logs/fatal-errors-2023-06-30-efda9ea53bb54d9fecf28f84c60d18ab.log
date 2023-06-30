@@ -46,3 +46,14 @@ Stack trace:
 #3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): ActionScheduler_QueueRunner->run('WP Cron')
 #4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332):  in /shared/httpd/agrispesa/wp-content/plugins/seo-by-rank-math/vendor/woocommerce/action-scheduler/classes/data-stores/ActionScheduler_DBStore.php alla riga 907
 
+2023-06-30T01:21:03+00:00 CRITICAL Uncaught Error: Call to a member function format() on null in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php:979
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): free_first_order_shipping(Array, Array)
+#1 /shared/httpd/agrispesa/wp-includes/plugin.php(205): WP_Hook->apply_filters(Array, Array)
+#2 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(368): apply_filters('woocommerce_pac...', Array, Array)
+#3 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-shipping.php(260): WC_Shipping->calculate_shipping_for_package(Array, 0)
+#4 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-cart.php(1423): WC_Shipping->calculate_shipping(Array)
+#5 /shared/httpd/agrispesa/wp-content/plugins/woocommerce/includes/class-wc-ajax.php(377): WC_Cart->calculate_shipping()
+#6 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): WC_AJAX::update_order_review('')
+#7 /shared/httpd/agrispesa/wp-includes in /shared/httpd/agrispesa/wp-content/themes/agrispesa/inc/checkout.php alla riga 979
+

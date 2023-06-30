@@ -39,3 +39,7 @@
     [tracking] => 
 )
 
+2023-06-30T01:15:46+00:00 NOTICE ac.cart_swap :: Deleted cart [qweqwe@asdbb.com] :: ID [3155fdaf61a017102a0e0bc0ae021f60]
+2023-06-30T01:15:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id a84adf10d322d9f17338226f4b3b2aea
+2023-06-30T01:16:46+00:00 NOTICE abandoned_cart.success :: email: anna.pizzoccaro@hotmail.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=a84adf10d322d9f17338226f4b3b2aea
+2023-06-30T01:16:47+00:00 NOTICE cart.member.updated :: Updated anna.pizzoccaro@hotmail.com subscriber status to subscribed and language to it

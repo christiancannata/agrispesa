@@ -961,10 +961,33 @@ function free_first_order_shipping($rates, $package)
 	$totalOrders = 0;
 	$orderData = $_POST;
 
-	$has_sub = '';
+	$has_sub = null;
+
 	if ($loggedUser) {
 		$current_user = wp_get_current_user();
-		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+
+		$has_sub = wcs_get_subscriptions([
+			"subscriptions_per_page" => 1,
+			"orderby" => "ID",
+			"order" => "DESC",
+			"subscription_status" => ["active"],
+			"customer_id" => $current_user->ID,
+		]);
+		$has_sub = reset($has_sub);
+
+		if ($has_sub) {
+			//check if calendar enabled
+			$lastOrderWeek = get_option("current_order_week", true);
+			$lastOrderWeek = explode("_",$lastOrderWeek);
+			$lastOrderWeek = end($lastOrderWeek);
+
+			$disabledWeeks = get_post_meta($has_sub->get_id(), "disable_weeks_" . (new \DateTime())->format("Y"), true);
+
+			if (is_array($disabledWeeks) && in_array($lastOrderWeek, $disabledWeeks)) {
+				$has_sub = null;
+			}
+
+		}
 
 		$user_id = get_current_user_id();
 		$args = array(
@@ -1035,6 +1058,7 @@ function free_first_order_shipping($rates, $package)
 			}
 		}
 	}
+
 
 	if ($loggedUser && $has_sub && !$buying_sub) {
 		$has_free_shipping = true;
