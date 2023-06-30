@@ -1,0 +1,14 @@
+2023-06-30T00:07:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 44677
+2023-06-30T00:07:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 44678
+2023-06-30T00:07:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 44679
+2023-06-30T00:09:47+00:00 NOTICE order_submit :: #44679 has a financial status of pending and was skipped.
+2023-06-30T00:09:48+00:00 NOTICE order_submit :: #44678 has a financial status of pending and was skipped.
+2023-06-30T00:09:50+00:00 NOTICE order_submit :: #44677 has a financial status of pending and was skipped.
+2023-06-30T00:34:52+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 6da954595eb16da51e499636af3272ea
+2023-06-30T00:34:57+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id d70d848f53c068d99feb5102b1463d48
+2023-06-30T00:35:32+00:00 NOTICE abandoned_cart.success :: email: christiancannata@gmail.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=6da954595eb16da51e499636af3272ea
+2023-06-30T00:35:33+00:00 NOTICE cart.member.updated :: Updated christiancannata@gmail.com subscriber status to transactional and language to it
+2023-06-30T00:35:34+00:00 NOTICE abandoned_cart.success :: email: robertobaggio@gmail.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=d70d848f53c068d99feb5102b1463d48
+2023-06-30T00:35:35+00:00 NOTICE cart.member.updated :: Updated robertobaggio@gmail.com subscriber status to transactional and language to it
+2023-06-30T00:38:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_SingleCoupon queued :: obj_id 44949
+2023-06-30T00:39:14+00:00 ERROR promo_code_submit.error :: error updating promo rule #44949 :: code primaconsegnagratis :: Error Code 400 :: <p>: Required fields were not provided: type, target</p> on 2438 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php

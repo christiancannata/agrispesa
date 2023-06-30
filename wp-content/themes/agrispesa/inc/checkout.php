@@ -959,6 +959,7 @@ function free_first_order_shipping($rates, $package)
 	$orders = [];
 
 	$totalOrders = 0;
+	$orderData = $_POST;
 
 	$has_sub = '';
 	if ($loggedUser) {
@@ -987,7 +988,6 @@ function free_first_order_shipping($rates, $package)
 
 	} else {
 		//check old orders
-		$orderData = $_POST;
 
 		if (isset($orderData['s_postcode'])) {
 
@@ -1042,7 +1042,12 @@ function free_first_order_shipping($rates, $package)
 
 	if (empty($orders) && $totalOrders == 0) {
 		$has_free_shipping = true;
-		$label = 'Gratuita';
+		$label = 'Gratuita per il primo ordine';
+
+		if (isset($orderData['s_state']) && !in_array($orderData['s_state'], ['AT', 'CN'])) {
+			$label .= ', poi 5€';
+		}
+
 	}
 
 
@@ -1075,6 +1080,8 @@ function free_first_order_shipping($rates, $package)
 		}
 
 	}
+
+
 	return $rates;
 }
 

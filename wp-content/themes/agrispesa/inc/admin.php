@@ -2985,6 +2985,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             die($doc->saveXml());
         },
     ]);
+
     register_rest_route("agrispesa/v1", "export-payments", [
         "methods" => "GET",
         "permission_callback" => function () {
