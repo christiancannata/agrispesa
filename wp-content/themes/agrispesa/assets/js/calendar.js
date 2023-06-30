@@ -189,6 +189,7 @@ jQuery(document).ready(function ($) {
 
       let selectedDeliveryDate = firstday.clone()
       selectedDeliveryDate.add(2, 'd')
+      selectedDeliveryDate.set({'hour': 12, 'minute': 0});
 
       let selectedWeek = selectedDeliveryDate.week()
       let currentWeek = nextAvailableWednesday.week()
@@ -200,6 +201,7 @@ jQuery(document).ready(function ($) {
 
       //if current date > mercoledì alle 12
 
+      console.log(selectedDeliveryDate)
       if (selectedWeek == currentWeek && moment() > selectedDeliveryDate) {
         return false
       }
