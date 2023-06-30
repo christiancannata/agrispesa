@@ -84,7 +84,7 @@ jQuery(document).ready(function ($) {
   currentMonday = moment(currentMonday)
   let nextAvailableWednesday = currentMonday.add(2, 'd')
   nextAvailableWednesday.set({"hour": 12, "minute": 0});
-
+  nextAvailableWednesday.add(7, 'd')
   //let deliveryDay = 4
 
   let calendarEl = document.getElementById('calendar');
@@ -191,9 +191,17 @@ jQuery(document).ready(function ($) {
       selectedDeliveryDate.add(2, 'd')
       selectedDeliveryDate.set({'hour': 12, 'minute': 0});
 
+      let limitDate = selectedDeliveryDate.clone()
+      limitDate.subtract(7, 'd')
+      limitDate.set({'hour': 12, 'minute': 0});
+
       let selectedWeek = selectedDeliveryDate.week()
+
       let currentWeek = nextAvailableWednesday.week()
 
+      if (moment() > limitDate) {
+        return false
+      }
 
       if (selectedWeek < currentWeek) {
         return false
@@ -201,7 +209,6 @@ jQuery(document).ready(function ($) {
 
       //if current date > mercoledì alle 12
 
-      console.log(selectedDeliveryDate)
       if (selectedWeek == currentWeek && moment() > selectedDeliveryDate) {
         return false
       }
