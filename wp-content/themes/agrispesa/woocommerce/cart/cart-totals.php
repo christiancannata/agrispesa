@@ -33,7 +33,7 @@ defined('ABSPATH') || exit;
 					</div>
 					<div class="checkout--preview--items product-number">
 						<span><?php echo WC()->cart->get_cart_contents_count(); ?><?php if (WC()->cart->get_cart_contents_count() == 1) {
-								echo 'prodotto';
+								echo ' prodotto';
 							} else {
 								echo ' prodotti';
 							} ?></span>

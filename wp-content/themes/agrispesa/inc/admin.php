@@ -4573,6 +4573,9 @@ function create_order_from_subscription($id)
     $args = [
         "customer_id" => $subscription->get_customer_id(),
         "status" => ["wc-completed"],
+        "meta_key" => "_order_type",
+		"meta_value" => ["FN", "ST"],
+        "meta_compare" => "IN",
     ];
     $orders = wc_get_orders($args);
 

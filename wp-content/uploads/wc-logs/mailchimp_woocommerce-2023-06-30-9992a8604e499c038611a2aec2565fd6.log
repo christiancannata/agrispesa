@@ -12,3 +12,30 @@
 2023-06-30T00:35:35+00:00 NOTICE cart.member.updated :: Updated robertobaggio@gmail.com subscriber status to transactional and language to it
 2023-06-30T00:38:44+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_SingleCoupon queued :: obj_id 44949
 2023-06-30T00:39:14+00:00 ERROR promo_code_submit.error :: error updating promo rule #44949 :: code primaconsegnagratis :: Error Code 400 :: <p>: Required fields were not provided: type, target</p> on 2438 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php
+2023-06-30T00:53:50+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 6da954595eb16da51e499636af3272ea
+2023-06-30T00:53:53+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 3155fdaf61a017102a0e0bc0ae021f60
+2023-06-30T00:54:17+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_User_Submit queued :: obj_id 8374
+2023-06-30T00:54:20+00:00 NOTICE abandoned_cart.success :: email: christiancannata@gmail.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=6da954595eb16da51e499636af3272ea
+2023-06-30T00:54:20+00:00 NOTICE abandoned_cart.success :: email: qweqwe@asdbb.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=3155fdaf61a017102a0e0bc0ae021f60
+2023-06-30T00:54:21+00:00 NOTICE cart.member.updated :: Updated qweqwe@asdbb.com subscriber status to transactional and language to it
+2023-06-30T00:54:21+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 44951
+2023-06-30T00:54:22+00:00 NOTICE member.sync :: Updated Member qweqwe@asdbb.com :: Array
+(
+    [previous_status] => transactional
+    [status] => 1
+    [language] => 
+    [merge_fields] => Array
+        (
+            [FNAME] => asdasd
+            [LNAME] => asdasd
+        )
+
+    [gdpr_fields] => 
+)
+
+2023-06-30T00:54:26+00:00 NOTICE debug :: Order ID 44951 was pending and is now on-hold :: Array
+(
+    [new_order] => 
+    [tracking] => 
+)
+

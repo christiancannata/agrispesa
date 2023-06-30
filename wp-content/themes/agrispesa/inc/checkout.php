@@ -1044,7 +1044,7 @@ function free_first_order_shipping($rates, $package)
 		$has_free_shipping = true;
 		$label = 'Gratuita per il primo ordine';
 
-		if (isset($orderData['s_state']) && !in_array($orderData['s_state'], ['AT', 'CN'])) {
+		if ($buying_sub && isset($orderData['s_state']) && !in_array($orderData['s_state'], ['AT', 'CN'])) {
 			$label .= ', poi 5€';
 		}
 
