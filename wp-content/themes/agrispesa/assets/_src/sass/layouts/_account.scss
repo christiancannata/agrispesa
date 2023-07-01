@@ -282,7 +282,7 @@ body.woocommerce-account {
 }
 
 .subscription_details,
-.woocommerce-orders-table__cell-order-actions {
+.woocommerce-orders-table__cell-order-actions, .woocommerce-MyAccount-content {
 	a.button {
 		@include button();
 		@include buttonprimary();
@@ -530,6 +530,7 @@ body.woocommerce-account {
 .table-shadow-relative {
 	position: relative;
 }
+
 //
 // .table-shadow {
 // 	@include border-radius(4px);
@@ -829,6 +830,7 @@ body.woocommerce-account {
 		margin-top: 24px;
 	}
 }
+
 // .woocommerce div.shop_table {
 // 	background: #fff;
 // 	border: none;
@@ -1004,7 +1006,7 @@ body.woocommerce-account {
 	background: $white;
 	padding: 24px 32px;
 	text-align: center;
-	box-shadow: 0 5px 5px 0 rgba(0,0,0,.15);
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .15);
 
 	&--day {
 		@include font-size(50);

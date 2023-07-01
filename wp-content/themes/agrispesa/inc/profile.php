@@ -9,10 +9,25 @@ function array_insert_after(array $array, $key, array $new)
 }
 
 
+// Initiate the WooCommerce Sessions manually for guest users.
+add_action('woocommerce_init', function () {
+
+	if (is_user_logged_in() && isset($_GET['skipCheckSubscription'])) {
+		WC()->session->set('skip_check_subscription', true);
+	}
+
+});
+
 function enqueue_box_js()
 {
 	global $wp_query;
 
+
+	if (isset($wp_query->query_vars['view-subscription'])) {
+		wp_enqueue_script('agrispesa-change-subscription-js', get_theme_file_uri('assets/js/change-subscription.js'), array('jquery'), time(), true);
+		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
+		wp_enqueue_script('swal');
+	}
 
 	if (isset($wp_query->query_vars['calendar'])) {
 		wp_register_script('fullcalendar', '//cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js', array('jquery'), '1.0', true);

@@ -978,7 +978,7 @@ function free_first_order_shipping($rates, $package)
 		if ($has_sub) {
 			//check if calendar enabled
 			$lastOrderWeek = get_option("current_order_week", true);
-			$lastOrderWeek = explode("_",$lastOrderWeek);
+			$lastOrderWeek = explode("_", $lastOrderWeek);
 			$lastOrderWeek = end($lastOrderWeek);
 
 			$disabledWeeks = get_post_meta($has_sub->get_id(), "disable_weeks_" . (new \DateTime())->format("Y"), true);
@@ -1247,40 +1247,74 @@ function filter_wc_add_to_cart_validation($passed, $product_id, $quantity)
 add_action('woocommerce_check_cart_items', 'filter_wc_check_cart_items');
 function filter_wc_check_cart_items()
 {
-	$cart = WC()->cart;
 	$canBuySubscription = true;
 
-	$current_user = wp_get_current_user();
+	$skipSubscriptionCheck = WC()->session->get('skip_check_subscription');
 
-	if ($current_user) {
-		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
-		if (!$has_sub) {
-			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'on-hold');
-		}
+	if (!$skipSubscriptionCheck) {
+		$current_user = wp_get_current_user();
 
-		if ($has_sub) {
-			foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
 
-				$categories = get_the_terms($cart_item['product_id'], "product_cat");
-				foreach ($categories as $term) {
-					if (in_array($term->slug, ["box"]) && $has_sub) {
-						$canBuySubscription = false;
-						WC()->cart->remove_cart_item($cart_item_key);
+		if ($current_user) {
+			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+			if (!$has_sub) {
+				$has_sub = wcs_user_has_subscription($current_user->ID, '', 'on-hold');
+			}
+
+			if ($has_sub) {
+				foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+					$categories = get_the_terms($cart_item['product_id'], "product_cat");
+					foreach ($categories as $term) {
+						if (in_array($term->slug, ["box"]) && $has_sub) {
+							$canBuySubscription = false;
+							WC()->cart->remove_cart_item($cart_item_key);
+						}
 					}
-				}
 
+				}
+			}
+
+
+			if (!$canBuySubscription) {
+				wc_add_notice('Hai già un abbonamento, elimina il vecchio abbonamento dalla tua area riservata per poterne effettuare uno nuovo.', 'error');
 			}
 		}
-
-		if (!$canBuySubscription) {
-			wc_add_notice('Hai già un abbonamento, elimina il vecchio abbonamento dalla tua area riservata per poterne effettuare uno nuovo.', 'error');
-		}
 	}
+
 
 }
 
 
 add_action('woocommerce_checkout_subscription_created', function ($subscription) {
+
+	//suspend all old subscription of the customer
+	$subscriptions = wcs_get_subscriptions([
+		"subscriptions_per_page" => -1,
+		"orderby" => "ID",
+		"order" => "ASC",
+		'customer_id' => $subscription->get_customer_id(),
+		"subscription_status" => "any"]);
+
+	if (!empty($subscriptions)) {
+		foreach ($subscriptions as $oldSubscription) {
+			if ($oldSubscription->get_id() != $subscription->get_id()) {
+				$oldSubscription->set_status('cancelled');
+				$oldSubscription->save();
+
+				$years = [date('Y'), date('Y') + 1];
+
+				foreach ($years as $year) {
+					$disableWeeks = get_post_meta($oldSubscription->get_id(), 'disable_weeks_' . $year, true);
+					if ($disableWeeks) {
+						update_post_meta($subscription->get_id(), 'disable_weeks_' . $year, $disableWeeks);
+					}
+				}
+
+			}
+		}
+	}
+
 	$paymentMethod = $subscription->get_payment_method();
 
 	//change reneval date

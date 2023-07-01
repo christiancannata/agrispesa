@@ -52,5 +52,7 @@ if ($hasDelivery) {
 
 
 <h3 class="my-account--minititle"><?php esc_html_e('Subscription totals', 'woocommerce-subscriptions'); ?></h3>
-
+<br>
+<a href="#" class="button change_subscription">Cambia tipo di Facciamo noi</a>
+<br><br>
 <?php do_action('woocommerce_subscription_totals', $subscription, $include_item_removal_links, $totals, $include_switch_links); ?>
