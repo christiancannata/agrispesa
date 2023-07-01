@@ -29,7 +29,7 @@ jQuery(document).ready(function ($) {
         axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/subscription/' + subscription + '/change-status', {})
           .then((response) => {
             Swal.fire({
-              title: 'Il tuo abbonamento è stato aggiornato con successo.',
+              title: 'Facciamo noi aggiornata con successo.',
               text: "",
               icon: '',
               confirmButtonColor: '#3c21ff',
