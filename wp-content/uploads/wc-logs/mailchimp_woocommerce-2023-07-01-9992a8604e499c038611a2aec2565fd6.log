@@ -21,3 +21,4 @@
     [tracking] => 
 )
 
+2023-07-01T22:30:13+00:00 NOTICE order_process :: Order #44961 skipped, user #1 user role is not in the list

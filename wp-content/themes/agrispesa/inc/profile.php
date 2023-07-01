@@ -24,9 +24,20 @@ function enqueue_box_js()
 
 
 	if (isset($wp_query->query_vars['view-subscription'])) {
-		wp_enqueue_script('agrispesa-change-subscription-js', get_theme_file_uri('assets/js/change-subscription.js'), array('jquery'), time(), true);
+
+		wp_enqueue_script('agrispesa-change-subscription-js', get_theme_file_uri('assets/js/change-subscription.js'), array('jquery','axios'), time(), true);
 		wp_register_script('swal', 'https://cdn.jsdelivr.net/npm/sweetalert2@11', array('jquery'), '1.0', true);
 		wp_enqueue_script('swal');
+
+
+		wp_register_script('axios', '//cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js', array(), null, true);
+		wp_enqueue_script('axios');
+
+		wp_localize_script("agrispesa-change-subscription-js", "WPURL", [
+			"siteurl" => get_option("siteurl"),
+			"userId" => get_current_user_id(),
+		]);
+
 	}
 
 	if (isset($wp_query->query_vars['calendar'])) {

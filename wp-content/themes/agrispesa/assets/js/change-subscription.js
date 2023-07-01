@@ -1,6 +1,36 @@
 /* global Swal:readonly */
+/* global WPURL:readonly */
+/* global axios:readonly */
 
 jQuery(document).ready(function ($) {
+
+  $(".change_subscription_status").click(function (e) {
+    e.preventDefault()
+
+    let subscription = $(this).data('id')
+
+    axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/subscription/' + subscription + '/change-status', {})
+      .then((response) => {
+        Swal.fire({
+          title: 'Il tuo abbonamento è stato aggiornato con successo.',
+          text: "",
+          icon: '',
+          confirmButtonColor: '#3c21ff',
+          confirmButtonText: 'Continua',
+        }).then(function () {
+          location.href = '';
+        })
+      })
+      .catch((error) => {
+        if (error.response.status == 404) {
+          alert(error.response.data.message)
+          return false
+        }
+        console.log(error)
+      })
+
+
+  })
 
   $(".change_subscription").click(function (e) {
 

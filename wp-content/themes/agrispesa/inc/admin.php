@@ -3325,6 +3325,36 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
+	  register_rest_route("agrispesa/v1", "subscription/(?P<id>\d+)/change-status", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+            $subscriptionId = $request["id"];
+
+			$subscription = wcs_get_subscription($subscriptionId);
+
+			if(!$subscription){
+				$response = new WP_REST_Response([]);
+            	$response->set_status(404);
+            	return $response;
+			}
+
+			if($subscription->get_status() == 'active'){
+				$subscription->set_status('on-hold');
+			}else{
+				$subscription->set_status('active');
+			}
+
+			$subscription->save();
+
+            $response = new WP_REST_Response([]);
+            $response->set_status(204);
+            return $response;
+        },
+    ]);
+
     register_rest_route("agrispesa/v1", "add-user-blocked-weeks", [
         "methods" => "POST",
         "permission_callback" => function () {

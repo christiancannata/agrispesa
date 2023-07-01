@@ -288,11 +288,25 @@ $user_id = $current_user->ID;
 				foreach ($actions as $key => $action) :
 					if ($action['name'] == 'Elimina' && $subscription->get_status() == 'active') {
 						$action['name'] = 'Sospendi';
+						unset($actions[$key]);
+						continue;
 					}
 					?>
 					<a href="<?php echo esc_url($action['url']); ?>"
 					   class="button <?php echo sanitize_html_class($key) ?>"><?php echo esc_html($action['name']); ?></a>
 				<?php endforeach; ?>
+
+
+				<a href="#" class="button change_subscription_status"
+				   data-current-status="<?php echo $subscription->get_status(); ?>"
+				   data-id="<?php echo $subscription->get_id(); ?>">
+					<?php if ($subscription->get_status() == 'active'): ?>
+						Disattiva Facciamo Noi
+					<?php else: ?>
+						Attiva Facciamo Noi
+					<?php endif; ?>
+				</a>
+
 			</td>
 		</tr>
 	<?php endif; ?>
