@@ -9,25 +9,44 @@ jQuery(document).ready(function ($) {
 
     let subscription = $(this).data('id')
 
-    axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/subscription/' + subscription + '/change-status', {})
-      .then((response) => {
-        Swal.fire({
-          title: 'Il tuo abbonamento è stato aggiornato con successo.',
-          text: "",
-          icon: '',
-          confirmButtonColor: '#3c21ff',
-          confirmButtonText: 'Continua',
-        }).then(function () {
-          location.href = '';
-        })
-      })
-      .catch((error) => {
-        if (error.response.status == 404) {
-          alert(error.response.data.message)
-          return false
-        }
-        console.log(error)
-      })
+    let status = 'attivare'
+    if ($(this).data('current-status') == 'active') {
+      status = 'disattivare'
+    }
+
+    Swal.fire({
+      title: 'Vuoi ' + status + ' la Facciamo noi?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3c21ff',
+      cancelButtonColor: '#f8f5f1',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post(WPURL.siteurl + '/wp-json/agrispesa/v1/subscription/' + subscription + '/change-status', {})
+          .then((response) => {
+            Swal.fire({
+              title: 'Il tuo abbonamento è stato aggiornato con successo.',
+              text: "",
+              icon: '',
+              confirmButtonColor: '#3c21ff',
+              confirmButtonText: 'Continua',
+            }).then(function () {
+              location.href = '';
+            })
+          })
+          .catch((error) => {
+            if (error.response.status == 404) {
+              alert(error.response.data.message)
+              return false
+            }
+            console.log(error)
+          })
+      }
+    })
 
 
   })
