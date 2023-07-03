@@ -283,7 +283,7 @@ function scrollTo() {
 
 jQuery(document).ready(function () {
   if (jQuery('form.woocommerce-checkout').length > 0) {
-    let form = window.localStorage.getItem('form')
+    let form = window.localStorage.getItem('form_' + window.userId)
     if (form) {
       form = JSON.parse(form)
       for (let field in form) {
@@ -347,7 +347,7 @@ function giftCardCheckout() {
         dataForm[jQuery(this).attr('name')] = jQuery(this).val()
       })
 
-      window.localStorage.setItem('form', JSON.stringify(dataForm))
+      window.localStorage.setItem('form_' + window.userId, JSON.stringify(dataForm))
 
       jQuery.ajax({
         type: 'GET',
