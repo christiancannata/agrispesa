@@ -113,33 +113,6 @@ $user_id = $current_user->ID;
 		$thurs_next_date = new DateTime('next Sunday');
 	}
 
-	$next_shipping_month_it = '';
-	if ($next_date->format("m") === '01') {
-		$next_shipping_month_it = 'Gennaio';
-	} else if ($next_date->format("m") === '02') {
-		$next_shipping_month_it = 'Febbraio';
-	} else if ($next_date->format("m") === '03') {
-		$next_shipping_month_it = 'Marzo';
-	} else if ($next_date->format("m") === '04') {
-		$next_shipping_month_it = 'Aprile';
-	} else if ($next_date->format("m") === '05') {
-		$next_shipping_month_it = 'Maggio';
-	} else if ($next_date->format("m") === '06') {
-		$next_shipping_month_it = 'Giugno';
-	} else if ($next_date->format("m") === '07') {
-		$next_shipping_month_it = 'Luglio';
-	} else if ($next_date->format("m") === '08') {
-		$next_shipping_month_it = 'Agosto';
-	} else if ($next_date->format("m") === '09') {
-		$next_shipping_month_it = 'Settembre';
-	} else if ($next_date->format("m") === '10') {
-		$next_shipping_month_it = 'Ottobre';
-	} else if ($next_date->format("m") === '11') {
-		$next_shipping_month_it = 'Novembre';
-	} else if ($next_date->format("m") === '12') {
-		$next_shipping_month_it = 'Dicembre';
-	}
-
 	//Quanti giorni mancano alla consegna?
 	/*if($current_date < $deliveryDate) {
 		$date1 = new DateTime($current_date);
@@ -184,11 +157,6 @@ $user_id = $current_user->ID;
 	<?php if ($subscription->get_status() == 'active'): ?>
 		<?php //Se la data di consegna è più avanti di oggi
 		if ($current_date > $deliveryDate):?>
-
-			<div class="top_banner orange m-t">
-				<p class="top_banner--advice">Sospendi l'abbonamento <strong>entro </strong>
-					se non vuoi ricevere questa spesa.</p>
-			</div>
 
 			<div class="top_banner orange m-t">
 				<p class="top_banner--advice">Sospendi l'abbonamento
