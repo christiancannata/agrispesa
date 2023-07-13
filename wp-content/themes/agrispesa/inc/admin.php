@@ -819,41 +819,20 @@ add_action("rest_api_init", function () {
         "callback" => function ($request) {
             $subscriptions = wcs_get_subscriptions([
                 "subscriptions_per_page" => -1,
-                "subscription_status" => ["active", "on-hold"],
+			   "subscription_status" => "any",
+               // "subscription_status" => ["active", "on-hold"],
             ]);
 
-            $subscriptionsArray = [];
 
             foreach ($subscriptions as $subscription) {
-                $paymentMethod = $subscription->get_payment_method();
-                $manualRenew = get_post_meta(
-                    $subscription->get_id(),
-                    "_requires_manual_renewal",
-                    true
-                );
-                if ($paymentMethod == "bacs" || $manualRenew) {
-                    $subscription->set_status("active");
-                    $subscription->set_billing_period("year");
-                    $subscription->set_billing_interval(100);
-
-                    $subscription->update_dates([
-                        "next_payment" => "2100-01-01 00:00:00",
-                    ]);
-                    $subscription->set_requires_manual_renewal(true);
-                    $subscription->save();
-                } else {
-                    /*	$subscriptionsArray[] = $subscription->get_id();
-					$today = new DateTime();
-					$today->add(new DateInterval('P7D'));
-					$today->setTime(12,00);
-					  $subscription->update_dates([
-                        "next_payment" => $today->format("Y-m-d H:i:s"),
-                    ]);
-					  $subscription->save();*/
-                }
+               $shippings = $subscription->get_items("shipping");
+			   dd($shippings);
+			   if(count($shippings) > 1){
+				   dd($shippings);
+			   }
             }
 
-            $response = new WP_REST_Response($subscriptionsArray);
+            $response = new WP_REST_Response([]);
             $response->set_status(200);
             return $response;
         },

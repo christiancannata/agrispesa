@@ -4,6 +4,26 @@
 
 jQuery(document).ready(function ($) {
 
+  window.blockedWeeks = [
+    30, 31, 32, 33, 34, 35, 36
+  ];
+
+  function getDatesBetween(startDate, endDate) {
+    const currentDate = new Date(startDate.getTime());
+    const dates = [];
+    while (currentDate <= endDate) {
+      let appoDate = new Date(currentDate)
+      appoDate.setHours(0, 0, 0)
+      dates.push(appoDate);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+  }
+
+  const date1 = new Date('2023-07-24');
+  const date2 = new Date('2023-08-10');
+
+  let allDates = getDatesBetween(date1, date2);
 
   function isAnOverlapEvent(eventStartDay, eventEndDay) {
     // Events
@@ -92,6 +112,16 @@ jQuery(document).ready(function ($) {
     /* validRange: {
        start: nextAvailableMonday
      },*/
+    dayCellDidMount: function (date) {
+      let appoDate = date.date
+      appoDate.setHours(0, 0, 0)
+
+      if (moment(appoDate) >= moment(allDates[0]) && moment(appoDate) <= moment(allDates[allDates.length - 1])) {
+        date.el.style.backgroundColor = "#74df7478";
+        date.el.style.color = 'darkgreen'
+      }
+
+    },
     eventClick: function (info) {
 
       //let week = info.event.week
@@ -196,6 +226,11 @@ jQuery(document).ready(function ($) {
       limitDate.set({'hour': 12, 'minute': 0});
 
       let selectedWeek = selectedDeliveryDate.week()
+
+      if (window.blockedWeeks.includes(selectedWeek)) {
+
+        return false
+      }
 
       let currentWeek = nextAvailableWednesday.week()
 
