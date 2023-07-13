@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
   }
 
   const date1 = new Date('2023-07-24');
-  const date2 = new Date('2023-08-10');
+  const date2 = new Date('2023-09-10');
 
   let allDates = getDatesBetween(date1, date2);
 
@@ -117,8 +117,8 @@ jQuery(document).ready(function ($) {
       appoDate.setHours(0, 0, 0)
 
       if (moment(appoDate) >= moment(allDates[0]) && moment(appoDate) <= moment(allDates[allDates.length - 1])) {
-        date.el.style.backgroundColor = "#74df7478";
-        date.el.style.color = 'darkgreen'
+        date.el.style.backgroundColor = "#f99090";
+        date.el.style.color = '#5d2929'
       }
 
     },
@@ -227,6 +227,7 @@ jQuery(document).ready(function ($) {
 
       let selectedWeek = selectedDeliveryDate.week()
 
+      console.log(window.blockedWeeks.includes(selectedWeek))
       if (window.blockedWeeks.includes(selectedWeek)) {
 
         return false
