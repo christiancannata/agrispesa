@@ -5,7 +5,7 @@
 jQuery(document).ready(function ($) {
 
   window.blockedWeeks = [
-    30, 31, 32, 33, 34, 35, 36
+    30, 31, 32, 33, 34, 35
   ];
 
   function getDatesBetween(startDate, endDate) {
