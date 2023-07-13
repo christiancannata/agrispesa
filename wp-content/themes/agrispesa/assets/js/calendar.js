@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
   }
 
   const date1 = new Date('2023-07-24');
-  const date2 = new Date('2023-09-06');
+  const date2 = new Date('2023-09-10');
 
   let allDates = getDatesBetween(date1, date2);
 
