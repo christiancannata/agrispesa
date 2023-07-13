@@ -5,7 +5,7 @@
 jQuery(document).ready(function ($) {
 
   window.blockedWeeks = [
-    30, 31, 32, 33, 34, 35
+    30, 31, 32, 33, 34, 35, 36
   ];
 
   function getDatesBetween(startDate, endDate) {
@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
   }
 
   const date1 = new Date('2023-07-24');
-  const date2 = new Date('2023-09-13');
+  const date2 = new Date('2023-09-06');
 
   let allDates = getDatesBetween(date1, date2);
 
