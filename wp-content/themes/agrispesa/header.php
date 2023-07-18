@@ -15,6 +15,22 @@ global $woocommerce;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+	<!-- Facebook Meta Tags -->
+  <meta property="og:url" content="https://www.agrispesa.it/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Agrispesa - Agricoltura contadina, a casa tua.">
+  <meta property="og:description" content="Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone.">
+  <meta property="og:image" content="https://www.agrispesa.it/wp-content/themes/agrispesa/assets/images/brand/agrispesa-sc.png">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="agrispesa.it">
+  <meta property="twitter:url" content="https://www.agrispesa.it/">
+  <meta name="twitter:title" content="Agrispesa - Agricoltura contadina, a casa tua.">
+  <meta name="twitter:description" content="Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone.">
+  <meta name="twitter:image" content="https://www.agrispesa.it/wp-content/themes/agrispesa/assets/images/brand/agrispesa-sc.png">
+
+	<!-- Favicon -->
 	<link rel="apple-touch-icon" sizes="180x180"
 		  href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32"
