@@ -23,7 +23,7 @@ $next_week_day = date("d", strtotime("+1 week"));
 $next_week_month = date("m", strtotime("+1 week"));
 $next_week_year = date("Y", strtotime("+1 week"));
 
-$orderType = get_post_meta($order->get_id(), '_order_type', true);
+$orderType = get_order_type($order->get_id());
 
 $box_in_order = ($orderType == 'ABBONAMENTO FN');
 

@@ -1,3 +1,0 @@
-2023-06-14T12:28:39+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 93df63d33cb676bd0d6f64fc38d2fa06
-2023-06-14T12:35:50+00:00 NOTICE abandoned_cart.success :: email: elena@stanislaoborghi.it :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=93df63d33cb676bd0d6f64fc38d2fa06
-2023-06-14T12:35:50+00:00 NOTICE cart.member.updated :: Updated elena@stanislaoborghi.it subscriber status to transactional and language to it

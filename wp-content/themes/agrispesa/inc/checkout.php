@@ -1354,3 +1354,18 @@ add_action('woocommerce_checkout_subscription_created', function ($subscription)
 	$subscription->save();
 
 }, 100);
+
+
+add_action('woocommerce_email_after_order_table', 'mm_email_after_order_table', 10, 4);
+function mm_email_after_order_table($order, $sent_to_admin, $plain_text, $email)
+{
+	$orderType = get_order_type($order->get_id());
+	if ($orderType != 'CREDITO') {
+		echo "<p>Ricorda che questa mail e il documento che trovi all'interno della tua scatola non sono la Fattura ma la Conferma d'ordine.<br>
+<u>Potrai quindi riscontrare differenze tra gli importi previsti dalla Conferma d'ordine e quelli della Fattura.</u><br>
+Questo perchè, quando riempiremo la scatola, peseremo ad uno ad uno i diversi prodotti e verificheremo il peso esatto di ciascuno di essi.<br>
+Poi perfezioneremo l’ordine ed emetteremo la Fattura in modo che tu possa pagare esattamente quanto ricevuto.<br>
+<u>È dunque probabile che l’importo effettivo della Fattura si possa discostare un po' da quanto ti propone la Conferma d'ordine.</u> </p>";
+	}
+
+}
