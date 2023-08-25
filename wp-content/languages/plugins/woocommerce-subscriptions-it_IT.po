@@ -4265,7 +4265,7 @@ msgstr[1] ""
 #. translators: billing period (e.g. "every week").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-product.php:379
 msgid "every %s"
-msgstr ""
+msgstr "ogni %s"
 
 #. translators: 1$: subscription string (e.g. "$10 up front then $5 on March 23rd every 3rd year"), 2$: length (e.g. "4 years").
 #. translators: 1$: subscription string (e.g. "$10 up front then $5 on March 23rd every 3rd year"), 2$: length (e.g. "4 years")
