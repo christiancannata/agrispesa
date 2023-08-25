@@ -7,6 +7,7 @@ global $woocommerce;
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+	<?php wp_head(); ?>
 	<!-- TrustBox script -->
 	<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
 	<!-- End TrustBox script -->
@@ -48,7 +49,7 @@ global $woocommerce;
 	<link rel="stylesheet" type="text/css"
 		  href="<?php echo get_template_directory_uri(); ?>/assets/fonts/emoji/emoji.min.css">
 
-	<?php wp_head(); ?>
+
 	<!-- Hotjar Tracking Code for https://www.agrispesa.it/ -->
 <script>
     (function(h,o,t,j,a,r){
