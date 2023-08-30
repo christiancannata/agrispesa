@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce Subscriptions 4.7.0\n"
 "Report-Msgid-Bugs-To: https://woocommerce.com/contact-us\n"
 "POT-Creation-Date: 2022-12-06T00:10:38+00:00\n"
-"PO-Revision-Date: 2023-08-25 11:28+0200\n"
+"PO-Revision-Date: 2023-08-29 10:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -3438,7 +3438,7 @@ msgstr "il %1$s %2$s ogni anno"
 #. translators: 1$: month (e.g. "March"), 2$: day of the month (e.g. "23rd), 3$: interval year (r.g  March 23rd every 2nd year").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2461
 msgid "on %1$s %2$s every %3$s year"
-msgstr "Il %1$s %2$s ogni %3$s anno"
+msgstr "il %1$s %2$s ogni %3$s anno"
 
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-cart.php:2493
 msgid "Sign up fee"
@@ -3840,8 +3840,8 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-extend-store-endpoint.php:301
 msgid "Shipment every %d week"
 msgid_plural "Shipment every %d weeks"
-msgstr[0] "Consegna ogni %d settimana"
-msgstr[1] "Consegna ogni %d settimane"
+msgstr[0] "Consegna ogni 15 giorni"
+msgstr[1] "Consegna ogni 15 giorni"
 
 #. translators: %d subscription interval.
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-extend-store-endpoint.php:301
@@ -4259,8 +4259,8 @@ msgstr ""
 #: vendor/woocommerce/subscriptions-core/includes/wcs-formatting-functions.php:198
 msgid "%1$s / %2$s"
 msgid_plural "%1$s every %2$s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1$s / %2$s"
+msgstr[1] "%1$s ogni %2$s"
 
 #. translators: billing period (e.g. "every week").
 #: vendor/woocommerce/subscriptions-core/includes/class-wc-subscriptions-product.php:379
@@ -6717,7 +6717,7 @@ msgctxt "Subscription billing period."
 msgid "week"
 msgid_plural "%s weeks"
 msgstr[0] "settimana"
-msgstr[1] "settimane"
+msgstr[1] "%s settimane"
 
 #. translators: placeholder is number of months. (e.g. "Bill this every month / 4 months")
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:35
@@ -6738,7 +6738,7 @@ msgstr[1] "anni"
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:88
 msgctxt "Subscription length"
 msgid "Never expire"
-msgstr "non scade mai"
+msgstr "Non scade mai"
 
 #: vendor/woocommerce/subscriptions-core/includes/wcs-time-functions.php:93
 msgctxt "Subscription lengths. e.g. \"For 1 day...\""
@@ -7660,7 +7660,7 @@ msgctxt ""
 msgid "year"
 msgid_plural "years"
 msgstr[0] "anno"
-msgstr[1] "anni "
+msgstr[1] "anni"
 
 #. translators: %1$s is the price of the product. %2$s is the separator used e.g "every" or "/", %3$d is the length, %4$s is week, month, year
 #: vendor/woocommerce/subscriptions-core/build/index.js:6

@@ -40,5 +40,5 @@ global $product;
 	<input type="hidden" name="variation_id" class="variation_id" value="0"/>
 </div>
 <div class="shipping-info">
-	<p><span class="icon-heart"></span> Arriva ogni settimana — Disdici quando vuoi
+	<p><span class="icon-heart"></span> Arriva ogni 15 giorni — Disdici quando vuoi
 </div>
