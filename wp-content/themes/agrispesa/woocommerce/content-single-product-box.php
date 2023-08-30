@@ -128,7 +128,7 @@ $box_4_image = get_field('box_4_image');
 			</ul>
 			<?php endif;?>
 			<div class="box-types--buttons">
-				<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18983'); ?>" class="btn btn-primary btn-small">Provala ora</a>
+				<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18995'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 			</div>
 		</div>
 		<div class="box-types--item vegetariana" style="background-image:url(<?php echo $box_2_image;?>);">
@@ -147,7 +147,7 @@ $box_4_image = get_field('box_4_image');
 				<li><span class="icon-check"></span>Uova da galline felici</li>
 			</ul>
 			<?php endif;?>
-			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18984'); ?>" class="btn btn-primary btn-small">Provala ora</a>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18996'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item pescetariana" style="background-image:url(<?php echo $box_3_image;?>);">
 
@@ -166,10 +166,10 @@ $box_4_image = get_field('box_4_image');
 				<li><span class="icon-check"></span>Pesce allevato senza antibiotici</li>
 			</ul>
 			<?php endif;?>
-			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18985'); ?>" class="btn btn-primary btn-small">Provala ora</a>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18997'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 		<div class="box-types--item onnivora" style="background-image:url(<?php echo $box_4_image;?>);">
-			
+
 			<?php if($box_4_title): ?>
 					<h3 class="box-types--title"><?php echo $box_4_title; ?></h3>
 				<?php else: ?>
@@ -184,7 +184,7 @@ $box_4_image = get_field('box_4_image');
 				<li><span class="icon-check"></span>Carne da allevamenti sostenibili</li>
 			</ul>
 			<?php endif;?>
-			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18986'); ?>" class="btn btn-primary btn-small">Provala ora</a>
+			<a href="<?php echo esc_url(wc_get_cart_url().'?add-to-cart=18998'); ?>" class="btn btn-primary btn-small">Provala ora</a>
 		</div>
 	</div>
 
