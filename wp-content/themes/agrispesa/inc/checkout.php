@@ -943,7 +943,7 @@ function codiceFiscale($cf)
 
 
 //Sconto primo ordine
-add_filter('woocommerce_package_rates', 'free_first_order_shipping', 20, 2);
+//add_filter('woocommerce_package_rates', 'free_first_order_shipping', 20, 2);
 function free_first_order_shipping($rates, $package)
 {
 
