@@ -2489,6 +2489,18 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $today = new \DateTime();
             $today->add(new \DateInterval("P7D"));
             $week = $today->format("W");
+
+			//check if the week is enabled
+
+			$ENABLED_WEEKS = ENABLED_WEEKS;
+
+			$enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
+
+			if(!in_array($week,$enabledWeeksList)){
+				header("Content-type: text/xml");
+				die($doc->saveXml());
+			}
+
             $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
             $currentWeek = date("y") . $currentWeek;
 

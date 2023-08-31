@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * - 2023 Settimana 38, 40, 42, 44, 46, 48, 50
+- 2024 Settimana 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30
+ */
+$enabledWeeks = [
+	2023 => [38, 40, 42, 44, 46, 48, 50],
+	2024 => [1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+];
+
+define('ENABLED_WEEKS', $enabledWeeks);
+
 //Aggiungi funzionalità Woocommerce
 add_theme_support('woocommerce');
 
