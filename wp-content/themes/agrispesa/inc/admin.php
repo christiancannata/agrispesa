@@ -2496,18 +2496,20 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			$enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
 
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = true;
+            $root = $doc->createElement("ROOT");
+            $root = $doc->appendChild($root);
+
 			if(!in_array($week,$enabledWeeksList)){
+
 				header("Content-type: text/xml");
 				die($doc->saveXml());
 			}
 
             $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
             $currentWeek = date("y") . $currentWeek;
-
-            $doc = new DOMDocument();
-            $doc->formatOutput = true;
-            $root = $doc->createElement("ROOT");
-            $root = $doc->appendChild($root);
 
             //$lastWeek = (new \DateTime())->setTime(18,0)->sub(new DateInterval("P7D"));
             //$lastWeek = getLastDeliveryDay();
