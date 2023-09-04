@@ -3,32 +3,40 @@
 namespace ACP\Sorting\Model\Comment\Author;
 
 use ACP;
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class FullName extends AbstractModel {
+class FullName extends AbstractModel implements ACP\Sorting\Model\QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'comments_clauses', [ $this, 'comments_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	public function comments_clauses_callback( $clauses ) {
-		remove_filter( 'comments_clauses', [ $this, __FUNCTION__ ] );
+        $alias_firstname = $bindings->get_unique_alias('fname');
+        $alias_lastname = $bindings->get_unique_alias('lname');
 
-		global $wpdb;
+        $bindings->join(
+            "
+			INNER JOIN $wpdb->usermeta AS $alias_firstname ON $wpdb->comments.user_id = $alias_firstname.user_id 
+				AND $alias_firstname.meta_key = 'first_name'
+			INNER JOIN $wpdb->usermeta AS $alias_lastname ON $wpdb->comments.user_id = $alias_lastname.user_id 
+				AND $alias_lastname.meta_key = 'last_name'
+		"
+        );
+        $bindings->group_by("$wpdb->comments.comment_ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_concat(
+                ["$alias_firstname.meta_value", "$alias_lastname.meta_value"],
+                (string)$order
+            )
+        );
 
-		$clauses['join'] .= "
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta1 ON $wpdb->comments.user_id = acsort_usermeta1.user_id 
-				AND acsort_usermeta1.meta_key = 'first_name'
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta2 ON $wpdb->comments.user_id = acsort_usermeta2.user_id 
-				AND acsort_usermeta2.meta_key = 'last_name'
-		";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_concat( [ 'acsort_usermeta1.meta_value', 'acsort_usermeta2.meta_value' ], $this->get_order() );
-		$clauses['groupby'] = "$wpdb->comments.comment_ID";
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

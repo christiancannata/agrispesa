@@ -2,36 +2,38 @@
 
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
+use ACP\Sorting\Type\Order;
 
-class Status extends AbstractModel {
+class Status extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_orderby', [ $this, 'orderby_status' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	private function get_stati(): array {
-		$translated_stati = [];
+        $fields = implode("','", array_map('esc_sql', $this->get_stati()));
 
-		foreach ( get_post_stati( null, 'objects' ) as $key => $post_status ) {
-			$translated_stati[ $key ] = $post_status->label;
-		}
+        return $bindings->order_by(
+            sprintf("FIELD( $wpdb->posts.post_status, '%s' ) %s", $fields, $order)
+        );
+    }
 
-		natcasesort( $translated_stati );
+    private function get_stati(): array
+    {
+        $translated_stati = [];
 
-		return array_keys( $translated_stati );
-	}
+        foreach (get_post_stati(null, 'objects') as $key => $post_status) {
+            $translated_stati[$key] = $post_status->label;
+        }
 
-	public function orderby_status() {
-		global $wpdb;
+        natcasesort($translated_stati);
 
-		remove_filter( 'posts_orderby', [ $this, __FUNCTION__ ] );
-
-		$fields = implode( "','", array_map( 'esc_sql', $this->get_stati() ) );
-
-		return sprintf( "FIELD( $wpdb->posts.post_status, '%s' ) %s", $fields, $this->get_order() );
-	}
+        return array_keys($translated_stati);
+    }
 
 }

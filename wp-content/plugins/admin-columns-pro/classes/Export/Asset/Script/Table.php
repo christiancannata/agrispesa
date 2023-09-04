@@ -20,11 +20,14 @@ final class Table extends Script {
 	 */
 	private $columns;
 
-	public function __construct( string $handle, Location $location, Export\Strategy $strategy, array $columns ) {
+	private $show_button;
+
+	public function __construct( string $handle, Location $location, Export\Strategy $strategy, array $columns, bool $show_button ) {
 		parent::__construct( $handle, $location, [ 'jquery' ] );
 
 		$this->strategy = $strategy;
 		$this->columns = $columns;
+		$this->show_button = $show_button;
 	}
 
 	public function register(): void {
@@ -35,11 +38,13 @@ final class Table extends Script {
 			'num_iterations'  => $this->strategy->get_num_items_per_iteration(),
 			'nonce'           => wp_create_nonce( self::NONCE_ACTION ),
 			'columns'         => $this->columns,
+			'show_button'     => $this->show_button,
 		] );
 
 		wp_localize_script( $this->get_handle(), 'ACP_Export_i18n', [
 			'dismiss'          => __( 'Dismiss this notice.' ),
 			'export'           => __( 'Export', 'codepress-admin-columns' ),
+			'export_to_csv'    => __( 'Export to CSV', 'codepress-admin-columns' ),
 			'export_error'     => __( 'Something went wrong during exporting. Please try again.', 'codepress-admin-columns' ),
 			'processed'        => __( 'Processed {0} of {1} items ({2}%).', 'codepress-admin-columns' ),
 			'exporting'        => __( 'Exporting current list of items.', 'codepress-admin-columns' ),

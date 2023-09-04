@@ -9,7 +9,8 @@ class Request implements AC\Middleware {
 	/**
 	 * @param AC\Request $request
 	 */
-	public function handle( AC\Request $request ) {
+	public function handle( AC\Request $request ): void
+    {
 		$rules_key = 'rules';
 
 		if ( $request->get_method() === AC\Request::METHOD_GET ) {

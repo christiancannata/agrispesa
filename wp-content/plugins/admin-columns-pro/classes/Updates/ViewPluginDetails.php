@@ -2,58 +2,61 @@
 
 namespace ACP\Updates;
 
+use AC\Entity\Plugin;
 use AC\Registerable;
 use ACP\API\Request;
-use ACP\RequestDispatcher;
+use ACP\ApiFactory;
 use WP_Error;
 
 /**
  * Show changelog when "click view details".
  */
-class ViewPluginDetails implements Registerable {
+class ViewPluginDetails implements Registerable
+{
 
-	/**
-	 * @var string
-	 */
-	private $slug;
+    private $plugin;
 
-	/**
-	 * @var RequestDispatcher
-	 */
-	private $api;
+    private $api_factory;
 
-	public function __construct( $slug, RequestDispatcher $api ) {
-		$this->slug = (string) $slug;
-		$this->api = $api;
-	}
+    public function __construct(Plugin $plugin, ApiFactory $api_factory)
+    {
+        $this->plugin = $plugin;
+        $this->api_factory = $api_factory;
+    }
 
-	public function register() {
-		add_filter( 'plugins_api', [ $this, 'get_plugin_information' ], 10, 3 );
-	}
+    public function register(): void
+    {
+        add_filter('plugins_api', [$this, 'get_plugin_information'], 10, 3);
+    }
 
-	/**
-	 * @param mixed  $result
-	 * @param string $action
-	 * @param object $args
-	 *
-	 * @return object|WP_Error
-	 */
-	public function get_plugin_information( $result, $action, $args ) {
-		if ( 'plugin_information' !== $action ) {
-			return $result;
-		}
+    /**
+     * @param mixed  $result
+     * @param string $action
+     * @param object $args
+     *
+     * @return object|WP_Error
+     */
+    public function get_plugin_information($result, $action, $args)
+    {
+        if ('plugin_information' !== $action) {
+            return $result;
+        }
 
-		if ( $this->slug !== $args->slug ) {
-			return $result;
-		}
+        $slug = $this->plugin->get_dirname();
 
-		$response = $this->api->dispatch( new Request\ProductInformation( $this->slug ) );
+        if ($slug !== $args->slug) {
+            return $result;
+        }
 
-		if ( $response->has_error() ) {
-			return $response;
-		}
+        $response = $this->api_factory->create()->dispatch(
+            new Request\ProductInformation($slug)
+        );
 
-		return $response->get_body();
-	}
+        if ($response->has_error()) {
+            return $response->get_error();
+        }
+
+        return $response->get_body();
+    }
 
 }

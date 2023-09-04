@@ -5,81 +5,78 @@ namespace ACP\Search;
 use AC\Config;
 use LogicException;
 
-final class Operators extends Config {
+final class Operators extends Config
+{
 
-	const EQ = '=';
-	const NEQ = '!=';
-	const GT = '>';
-	const GTE = '>=';
-	const LT = '<';
-	const LTE = '<=';
-	const CONTAINS = 'CONTAINS';
-	const NOT_CONTAINS = 'NOT CONTAINS';
-	const BEGINS_WITH = 'BEGINS WITH';
-	const ENDS_WITH = 'ENDS WITH';
-	const IN = 'IN';
-	const NOT_IN = 'NOT IN';
-	const BETWEEN = 'BETWEEN';
-	const IS_EMPTY = 'IS EMPTY';
-	const NOT_IS_EMPTY = 'NOT IS EMPTY';
-	const TODAY = 'TODAY';
-	const PAST = 'PAST';
-	const FUTURE = 'FUTURE';
-	const LT_DAYS_AGO = 'LT_DAYS_AGO';
-	const GT_DAYS_AGO = 'GT_DAYS_AGO';
-	const WITHIN_DAYS = 'WITHIN_DAYS';
-	const CURRENT_USER = 'CURRENT_USER';
+    public const EQ = '=';
+    public const NEQ = '!=';
+    public const GT = '>';
+    public const GTE = '>=';
+    public const LT = '<';
+    public const LTE = '<=';
+    public const CONTAINS = 'CONTAINS';
+    public const NOT_CONTAINS = 'NOT CONTAINS';
+    public const BEGINS_WITH = 'BEGINS WITH';
+    public const ENDS_WITH = 'ENDS WITH';
+    public const IN = 'IN';
+    public const NOT_IN = 'NOT IN';
+    public const BETWEEN = 'BETWEEN';
+    public const IS_EMPTY = 'IS EMPTY';
+    public const NOT_IS_EMPTY = 'NOT IS EMPTY';
+    public const TODAY = 'TODAY';
+    public const PAST = 'PAST';
+    public const FUTURE = 'FUTURE';
+    public const LT_DAYS_AGO = 'LT_DAYS_AGO';
+    public const GT_DAYS_AGO = 'GT_DAYS_AGO';
+    public const WITHIN_DAYS = 'WITHIN_DAYS';
+    public const CURRENT_USER = 'CURRENT_USER';
 
-	/**
-	 * @param array $operators
-	 * @param bool  $order
-	 */
-	public function __construct( array $operators, $order = true ) {
-		if ( $order ) {
-			$operators = array_intersect( $this->get_operators(), $operators );
-		}
+    public function __construct(array $operators, bool $order = true)
+    {
+        if ($order) {
+            $operators = array_intersect($this->get_operators(), $operators);
+        }
 
-		parent::__construct( $operators );
-	}
+        parent::__construct($operators);
+    }
 
-	/**
-	 * @return array
-	 */
-	protected function get_operators() {
-		return [
-			self::EQ,
-			self::NEQ,
-			self::GT,
-			self::GTE,
-			self::LT,
-			self::LTE,
-			self::CONTAINS,
-			self::NOT_CONTAINS,
-			self::BEGINS_WITH,
-			self::ENDS_WITH,
-			self::IN,
-			self::NOT_IN,
-			self::BETWEEN,
-			self::IS_EMPTY,
-			self::NOT_IS_EMPTY,
-			self::TODAY,
-			self::PAST,
-			self::FUTURE,
-			self::LT_DAYS_AGO,
-			self::GT_DAYS_AGO,
-			self::WITHIN_DAYS,
-			self::CURRENT_USER,
-		];
-	}
+    protected function get_operators(): array
+    {
+        return [
+            self::EQ,
+            self::NEQ,
+            self::GT,
+            self::GTE,
+            self::LT,
+            self::LTE,
+            self::CONTAINS,
+            self::NOT_CONTAINS,
+            self::BEGINS_WITH,
+            self::ENDS_WITH,
+            self::IN,
+            self::NOT_IN,
+            self::BETWEEN,
+            self::IS_EMPTY,
+            self::NOT_IS_EMPTY,
+            self::TODAY,
+            self::PAST,
+            self::FUTURE,
+            self::LT_DAYS_AGO,
+            self::GT_DAYS_AGO,
+            self::WITHIN_DAYS,
+            self::CURRENT_USER,
+        ];
+    }
 
-	protected function validate_config() {
-		$operators = $this->get_operators();
+    protected function validate_config(): void
+    {
+        $operators = $this->get_operators();
 
-		foreach ( $this as $operator ) {
-			if ( ! in_array( $operator, $operators ) ) {
-				throw new LogicException( 'Invalid operator found.' );
-			}
-		}
-	}
+        foreach ($this as $operator) {
+            if ( ! in_array($operator, $operators, true)) {
+                throw new LogicException('Invalid operator found.');
+            }
+        }
+    }
 
 }

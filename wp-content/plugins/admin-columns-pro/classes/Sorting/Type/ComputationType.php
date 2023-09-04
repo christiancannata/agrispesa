@@ -1,45 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Type;
 
 use LogicException;
 
 /**
  * SQL cast type e.g. AVG, MIN, MAX
- * @since 6.0
  */
-class ComputationType {
+class ComputationType
+{
 
-	public const AVG = 'AVG';
-	public const COUNT = 'COUNT';
-	public const MIN = 'MIN';
-	public const MAX = 'MAX';
-	public const ROUND = 'ROUND';
-	public const SUM = 'SUM';
+    public const AVG = 'AVG';
+    public const COUNT = 'COUNT';
+    public const MIN = 'MIN';
+    public const MAX = 'MAX';
+    public const ROUND = 'ROUND';
+    public const SUM = 'SUM';
 
-	/**
-	 * @var string
-	 */
-	private $value;
+    private $value;
 
-	public function __construct( string $value ) {
-		if ( ! self::is_valid( $value ) ) {
-			throw new LogicException( 'Invalid Computation type.' );
-		}
+    public function __construct(string $value)
+    {
+        if ( ! self::is_valid($value)) {
+            throw new LogicException('Invalid Computation type.');
+        }
 
-		$this->value = $value;
-	}
+        $this->value = $value;
+    }
 
-	public function __toString() {
-		return $this->get_value();
-	}
+    public function __toString(): string
+    {
+        return $this->get_value();
+    }
 
-	public function get_value(): string {
-		return $this->value;
-	}
+    public function get_value(): string
+    {
+        return $this->value;
+    }
 
-	public static function is_valid( string $value ): bool {
-		return in_array( $value, [ self::AVG, self::COUNT, self::MIN, self::MAX, self::ROUND, self::SUM ], true );
-	}
+    public static function is_valid(string $value): bool
+    {
+        return in_array($value, [self::AVG, self::COUNT, self::MIN, self::MAX, self::ROUND, self::SUM], true);
+    }
 
 }

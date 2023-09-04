@@ -3,7 +3,7 @@
  * Service Taxonomy class
  * Manage Service taxonomy
  *
- * @author  Leanza Francesco <leanzafrancesco@gmail.com>
+ * @author  YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Modules\Services
  */
 

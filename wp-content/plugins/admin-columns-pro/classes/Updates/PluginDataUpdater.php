@@ -1,45 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Updates;
 
 use ACP\API;
+use ACP\ApiFactory;
 use ACP\Storage;
 use ACP\Type\ActivationToken;
 use ACP\Type\SiteUrl;
 
-class PluginDataUpdater {
+class PluginDataUpdater
+{
 
-	/**
-	 * @var API
-	 */
-	private $api;
+    private $api_factory;
 
-	/**
-	 * @var SiteUrl
-	 */
-	private $site_url;
+    private $site_url;
 
-	/**
-	 * @var Storage\PluginsData
-	 */
-	private $storage;
+    private $storage_factory;
 
-	public function __construct( API $api, SiteUrl $site_url, Storage\PluginsData $storage ) {
-		$this->api = $api;
-		$this->site_url = $site_url;
-		$this->storage = $storage;
-	}
+    public function __construct(ApiFactory $api_factory, SiteUrl $site_url, Storage\PluginsDataFactory $storage_factory)
+    {
+        $this->api_factory = $api_factory;
+        $this->site_url = $site_url;
+        $this->storage_factory = $storage_factory;
+    }
 
-	public function update( ActivationToken $token = null ) {
-		$response = $this->api->dispatch(
-			new API\Request\ProductsUpdate( $this->site_url, $token )
-		);
+    public function update(ActivationToken $token = null): void
+    {
+        $response = $this->api_factory->create()->dispatch(
+            new API\Request\ProductsUpdate($this->site_url, $token)
+        );
 
-		if ( ! $response || $response->has_error() ) {
-			return;
-		}
+        if ($response->has_error()) {
+            return;
+        }
 
-		$this->storage->save( (array) $response->get_body() );
-	}
+        $this->storage_factory->create()->save((array)$response->get_body());
+    }
 
 }

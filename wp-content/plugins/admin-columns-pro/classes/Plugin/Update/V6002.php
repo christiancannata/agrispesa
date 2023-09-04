@@ -11,7 +11,8 @@ class V6002 extends Update {
 		parent::__construct( new Version( '6.0.2' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		global $wpdb;
 
 		$sql = $wpdb->prepare( "

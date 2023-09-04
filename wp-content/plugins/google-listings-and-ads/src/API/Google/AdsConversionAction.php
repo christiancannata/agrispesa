@@ -8,18 +8,18 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Google\Ads\GoogleAdsClient;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Exception;
-use Google\Ads\GoogleAds\V12\Common\TagSnippet;
-use Google\Ads\GoogleAds\V12\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
-use Google\Ads\GoogleAds\V12\Enums\ConversionActionStatusEnum\ConversionActionStatus;
-use Google\Ads\GoogleAds\V12\Enums\ConversionActionTypeEnum\ConversionActionType;
-use Google\Ads\GoogleAds\V12\Enums\TrackingCodePageFormatEnum\TrackingCodePageFormat;
-use Google\Ads\GoogleAds\V12\Enums\TrackingCodeTypeEnum\TrackingCodeType;
-use Google\Ads\GoogleAds\V12\Resources\ConversionAction;
-use Google\Ads\GoogleAds\V12\Resources\ConversionAction\ValueSettings;
-use Google\Ads\GoogleAds\V12\Services\ConversionActionOperation;
-use Google\Ads\GoogleAds\V12\Services\ConversionActionServiceClient;
-use Google\Ads\GoogleAds\V12\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V12\Services\MutateConversionActionResult;
+use Google\Ads\GoogleAds\V14\Common\TagSnippet;
+use Google\Ads\GoogleAds\V14\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
+use Google\Ads\GoogleAds\V14\Enums\ConversionActionStatusEnum\ConversionActionStatus;
+use Google\Ads\GoogleAds\V14\Enums\ConversionActionTypeEnum\ConversionActionType;
+use Google\Ads\GoogleAds\V14\Enums\TrackingCodePageFormatEnum\TrackingCodePageFormat;
+use Google\Ads\GoogleAds\V14\Enums\TrackingCodeTypeEnum\TrackingCodeType;
+use Google\Ads\GoogleAds\V14\Resources\ConversionAction;
+use Google\Ads\GoogleAds\V14\Resources\ConversionAction\ValueSettings;
+use Google\Ads\GoogleAds\V14\Services\ConversionActionOperation;
+use Google\Ads\GoogleAds\V14\Services\ConversionActionServiceClient;
+use Google\Ads\GoogleAds\V14\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V14\Services\MutateConversionActionResult;
 use Google\ApiCore\ApiException;
 
 /**
@@ -29,7 +29,7 @@ use Google\ApiCore\ApiException;
  */
 class AdsConversionAction implements OptionsAwareInterface {
 
-	use ApiExceptionTrait;
+	use ExceptionTrait;
 	use OptionsAwareTrait;
 
 	/**

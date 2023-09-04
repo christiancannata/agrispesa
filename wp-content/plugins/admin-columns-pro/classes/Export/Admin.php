@@ -4,13 +4,13 @@ namespace ACP\Export;
 
 use AC;
 use AC\Registerable;
-use ACP\Export\HideOnScreen;
 use ACP\Settings\ListScreen\HideOnScreenCollection;
 use ACP\Type\HideOnScreen\Group;
 
 class Admin implements Registerable {
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'acp/admin/settings/hide_on_screen', [ $this, 'add_hide_on_screen' ], 10, 2 );
 	}
 

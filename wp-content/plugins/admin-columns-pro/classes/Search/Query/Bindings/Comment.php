@@ -4,29 +4,21 @@ namespace ACP\Search\Query\Bindings;
 
 use ACP\Search\Query\Bindings;
 
-class Comment extends Bindings {
+class Comment extends Bindings
+{
 
-	/**
-	 * @var int
-	 */
-	protected $parent;
+    protected $parent = 0;
 
-	/**
-	 * @return int
-	 */
-	public function get_parent() {
-		return $this->parent;
-	}
+    public function get_parent(): int
+    {
+        return $this->parent;
+    }
 
-	/**
-	 * @param int $id
-	 *
-	 * @return $this
-	 */
-	public function parent( $id ) {
-		$this->parent = absint( $id );
+    public function parent(int $id): self
+    {
+        $this->parent = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
 }

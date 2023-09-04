@@ -13,7 +13,8 @@ class V5201 extends Update {
 		parent::__construct( new Version( '5.2.1' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		global $wpdb;
 
 		$sql = "

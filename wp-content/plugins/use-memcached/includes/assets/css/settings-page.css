@@ -1,0 +1,9 @@
+#adminmenu #toplevel_page_use-memcached .wp-menu-image img{
+    width: 20px;
+    height: 20px;
+}
+img.logo-slika {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}

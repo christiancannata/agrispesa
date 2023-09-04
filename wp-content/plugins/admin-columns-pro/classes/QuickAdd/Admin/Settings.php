@@ -4,7 +4,6 @@ namespace ACP\QuickAdd\Admin;
 
 use AC\ListScreen;
 use AC\Registerable;
-use ACP\QuickAdd\Admin\HideOnScreen;
 use ACP\QuickAdd\Filter;
 use ACP\QuickAdd\Model\Factory;
 use ACP\Settings\ListScreen\HideOnScreenCollection;
@@ -21,7 +20,8 @@ class Settings implements Registerable {
 		$this->filter = $filter;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'acp/admin/settings/hide_on_screen', [ $this, 'add_hide_on_screen' ], 10, 2 );
 	}
 

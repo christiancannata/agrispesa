@@ -18,7 +18,8 @@ class Settings
 		$this->assets = $assets;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/column/settings', [ $this, 'column_settings' ] );
 		add_action( 'ac/admin_scripts/columns', [ $this, 'admin_scripts' ] );
 	}

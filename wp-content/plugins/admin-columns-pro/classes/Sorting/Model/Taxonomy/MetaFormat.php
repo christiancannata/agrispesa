@@ -1,89 +1,89 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Taxonomy;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\FormatValue;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Sorter;
-use ACP\Sorting\Strategy\Taxonomy;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-/**
- * @property Taxonomy $strategy
- */
-class MetaFormat extends AbstractModel {
+class MetaFormat extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var FormatValue
-	 */
-	private $formatter;
+    private $taxonomy;
 
-	/**
-	 * @var string
-	 */
-	private $meta_key;
+    private $formatter;
 
-	public function __construct( FormatValue $formatter, $meta_key, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    private $meta_key;
 
-		$this->formatter = $formatter;
-		$this->meta_key = $meta_key;
-	}
+    protected $data_type;
 
-	public function get_sorting_vars() {
-		add_filter( 'terms_clauses', [ $this, 'pre_term_query_callback' ] );
+    public function __construct(string $taxonomy, FormatValue $formatter, string $meta_key, DataType $data_type = null)
+    {
+        parent::__construct();
 
-		return [];
-	}
+        $this->taxonomy = $taxonomy;
+        $this->formatter = $formatter;
+        $this->meta_key = $meta_key;
+        $this->data_type = $data_type ?: new DataType(DataType::STRING);
+    }
 
-	public function pre_term_query_callback( $clauses ) {
-		remove_filter( 'terms_clauses', [ $this, __FUNCTION__ ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        $bindings = new Bindings();
 
-		if ( 'COUNT(*)' === $clauses['fields'] ) {
-			return $clauses;
-		}
+        $bindings->group_by("t.term_id");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_ids(
+                "t.term_id",
+                $this->get_sorted_ids(),
+                (string)$order
+            )
+        );
 
-		$clauses['orderby'] = sprintf( 'GROUP BY t.term_id ORDER BY %s, t.term_id',
-			SqlOrderByFactory::create_with_ids( "t.term_id", $this->get_sorted_ids(), $this->get_order() ) ?: $clauses['orderby']
-		);
-		$clauses['order'] = '';
+        return $bindings;
+    }
 
-		return $clauses;
-	}
+    private function get_sorted_ids(): array
+    {
+        global $wpdb;
 
-	/**
-	 * @return array
-	 */
-	private function get_sorted_ids() {
-		global $wpdb;
-
-		$sql = $wpdb->prepare( "
+        $sql = $wpdb->prepare(
+            "
 			SELECT terms.term_id AS id, tm.meta_value AS value
-			FROM {$wpdb->terms} AS terms
-			LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tt.term_id = terms.term_id
+			FROM $wpdb->terms AS terms
+			LEFT JOIN $wpdb->term_taxonomy AS tt ON tt.term_id = terms.term_id
 			    AND tt.taxonomy = %s
-			LEFT JOIN {$wpdb->termmeta} AS tm ON tm.term_id = terms.term_id
+			LEFT JOIN $wpdb->termmeta AS tm ON tm.term_id = terms.term_id
 				AND tm.meta_key = %s AND tm.meta_value <> ''
-		", $this->strategy->get_taxonomy(), $this->meta_key );
+		",
+            $this->taxonomy,
+            $this->meta_key
+        );
 
-		$results = $wpdb->get_results( $sql );
+        $results = $wpdb->get_results($sql);
 
-		if ( ! $results ) {
-			return [];
-		}
+        if ( ! $results) {
+            return [];
+        }
 
-		$values = [];
+        $values = [];
 
-		foreach ( $results as $object ) {
-			$values[ $object->id ][] = $this->formatter->format_value( $object->value );
-		}
+        foreach ($results as $object) {
+            $values[$object->id][] = $this->formatter->format_value($object->value);
+        }
 
-		foreach ( $values as $id => $meta_values ) {
-			$values[ $id ] = trim( implode( ' ', $meta_values ) );
-		}
+        foreach ($values as $id => $meta_values) {
+            $values[$id] = trim(implode(' ', $meta_values));
+        }
 
-		return ( new Sorter() )->sort( $values, $this->data_type );
-	}
+        return (new Sorter())->sort($values, $this->data_type);
+    }
 
 }

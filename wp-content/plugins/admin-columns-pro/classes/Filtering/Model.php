@@ -4,262 +4,269 @@ namespace ACP\Filtering;
 
 use AC;
 use AC\Request;
-use AC\Table\TableFormView;
-use ACP;
-use ACP\Bookmark\SegmentRepository;
-use ACP\Filtering\Bookmark\PreferredFilter;
 use ACP\Filtering\Markup\Dropdown;
 
-abstract class Model {
+abstract class Model
+{
 
-	/**
-	 * @var AC\Column
-	 */
-	protected $column;
+    /**
+     * @var AC\Column
+     */
+    protected $column;
 
-	/**
-	 * @var string
-	 */
-	private $data_type = 'string';
+    /**
+     * @var string
+     */
+    private $data_type = 'string';
 
-	/**
-	 * @var Strategy
-	 */
-	protected $strategy;
+    /**
+     * @var Strategy
+     */
+    protected $strategy;
 
-	/**
-	 * @var bool
-	 */
-	private $ranged;
+    /**
+     * @var bool
+     */
+    private $ranged;
 
-	/**
-	 * Get the query vars to filter on
-	 *
-	 * @param array $vars
-	 *
-	 * @return array
-	 */
-	abstract public function get_filtering_vars( $vars );
+    /**
+     * @var Request
+     */
+    private $request;
 
-	/**
-	 * Return the data required to generate the filtering gui on a list screen
-	 * @return array
-	 */
-	abstract public function get_filtering_data();
+    /**
+     * Get the query vars to filter on
+     *
+     * @param array $vars
+     *
+     * @return array
+     */
+    abstract public function get_filtering_vars($vars);
 
-	public function __construct( AC\Column $column ) {
-		$this->column = $column;
-	}
+    /**
+     * Return the data required to generate the filtering gui on a list screen
+     * @return array
+     */
+    abstract public function get_filtering_data();
 
-	/**
-	 * @return AC\Column
-	 */
-	public function get_column() {
-		return $this->column;
-	}
+    public function __construct(AC\Column $column)
+    {
+        $this->column = $column;
+    }
 
-	/**
-	 * @param string $data_type
-	 *
-	 * @return $this
-	 */
-	public function set_data_type( $data_type ) {
-		$data_type = strtolower( $data_type );
+    /**
+     * @return AC\Column
+     */
+    public function get_column()
+    {
+        return $this->column;
+    }
 
-		if ( in_array( $data_type, [ 'string', 'numeric', 'date' ] ) ) {
-			$this->data_type = $data_type;
-		}
+    /**
+     * @param string $data_type
+     *
+     * @return $this
+     */
+    public function set_data_type($data_type)
+    {
+        $data_type = strtolower($data_type);
 
-		return $this;
-	}
+        if (in_array($data_type, ['string', 'numeric', 'date'])) {
+            $this->data_type = $data_type;
+        }
 
-	/**
-	 * @return string
-	 */
-	public function get_data_type() {
-		return $this->data_type;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param Strategy $strategy
-	 */
-	public function set_strategy( Strategy $strategy ) {
-		$this->strategy = $strategy;
-	}
+    /**
+     * @return string
+     */
+    public function get_data_type()
+    {
+        return $this->data_type;
+    }
 
-	/**
-	 * @return Strategy
-	 */
-	public function get_strategy() {
-		return $this->strategy;
-	}
+    /**
+     * @param Strategy $strategy
+     */
+    public function set_strategy(Strategy $strategy)
+    {
+        $this->strategy = $strategy;
+    }
 
-	/**
-	 * @param bool $is_ranged
-	 */
-	public function set_ranged( $is_ranged ) {
-		$this->ranged = (bool) $is_ranged;
-	}
+    /**
+     * @return Strategy
+     */
+    public function get_strategy()
+    {
+        return $this->strategy;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function is_ranged() {
-		if ( null === $this->ranged ) {
-			$setting = $this->column->get_setting( 'filter' );
-			$is_ranged = $setting instanceof Settings\Ranged && $setting->is_ranged();
+    public function set_request(Request $request)
+    {
+        $this->request = $request;
+    }
 
-			$this->set_ranged( $is_ranged );
-		}
+    public function get_request(): Request
+    {
+        return $this->request;
+    }
 
-		return $this->ranged;
-	}
+    /**
+     * @param bool $is_ranged
+     */
+    public function set_ranged($is_ranged)
+    {
+        $this->ranged = (bool)$is_ranged;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function is_active() {
-		$setting = $this->column->get_setting( 'filter' );
+    /**
+     * @return bool
+     */
+    public function is_ranged()
+    {
+        if (null === $this->ranged) {
+            $setting = $this->column->get_setting('filter');
+            $is_ranged = $setting instanceof Settings\Ranged && $setting->is_ranged();
 
-		if ( ! $setting instanceof Settings ) {
-			return false;
-		}
+            $this->set_ranged($is_ranged);
+        }
 
-		return $setting->is_active();
-	}
+        return $this->ranged;
+    }
 
-	/**
-	 * Register column settings
-	 */
-	public function register_settings() {
-		$this->column->add_setting( new Settings( $this->column ) );
-	}
+    /**
+     * @return bool
+     */
+    public function is_active()
+    {
+        $setting = $this->column->get_setting('filter');
 
-	/**
-	 * @return string|array
-	 */
-	public function get_filter_value() {
-		if ( $this->is_ranged() ) {
-			$value = [
-				'min' => $this->get_request_var( 'min' ),
-				'max' => $this->get_request_var( 'max' ),
-			];
+        if ( ! $setting instanceof Settings) {
+            return false;
+        }
 
-			return false !== $value['min'] || false !== $value['max'] ? $value : false;
-		}
+        return $setting->is_active();
+    }
 
-		return $this->get_request_var();
-	}
+    /**
+     * Register column settings
+     */
+    public function register_settings()
+    {
+        $this->column->add_setting(new Settings($this->column));
+    }
 
-	/**
-	 * Validate a value: can it be used to filter results?
-	 *
-	 * @param string|integer $value
-	 * @param string         $filters Options: all, serialize, length and empty. Use a | to use a selection of filters e.g. length|empty
-	 *
-	 * @return bool
-	 */
-	protected function validate_value( $value, $filters = 'all' ) {
-		$available = [ 'serialize', 'length', 'empty' ];
+    /**
+     * @return string|array
+     */
+    public function get_filter_value()
+    {
+        if ($this->is_ranged()) {
+            $value = [
+                'min' => $this->get_request_var('min'),
+                'max' => $this->get_request_var('max'),
+            ];
 
-		switch ( $filters ) {
-			case 'all':
-				$applied = $available;
+            return false !== $value['min'] || false !== $value['max'] ? $value : false;
+        }
 
-				break;
-			default:
-				$applied = array_intersect( $available, explode( '|', $filters ) );
+        return $this->get_request_var();
+    }
 
-				if ( empty( $applied ) ) {
-					$applied = $available;
-				}
-		}
+    /**
+     * Validate a value: can it be used to filter results?
+     *
+     * @param string|integer $value
+     * @param string         $filters Options: all, serialize, length and empty. Use a | to use a selection of filters e.g. length|empty
+     *
+     * @return bool
+     */
+    protected function validate_value($value, $filters = 'all')
+    {
+        $available = ['serialize', 'length', 'empty'];
 
-		foreach ( $applied as $filter ) {
-			switch ( $filter ) {
-				case 'serialize':
-					if ( is_serialized( $value ) ) {
-						return false;
-					}
+        switch ($filters) {
+            case 'all':
+                $applied = $available;
 
-					break;
-				case 'length':
-					if ( strlen( $value ) > 1024 ) {
-						return false;
-					}
+                break;
+            default:
+                $applied = array_intersect($available, explode('|', $filters));
 
-					break;
-				case 'empty':
-					if ( empty( $value ) && 0 !== $value ) {
-						return false;
-					}
+                if (empty($applied)) {
+                    $applied = $available;
+                }
+        }
 
-					break;
-			}
-		}
+        foreach ($applied as $filter) {
+            switch ($filter) {
+                case 'serialize':
+                    if (is_serialized($value)) {
+                        return false;
+                    }
 
-		return true;
-	}
+                    break;
+                case 'length':
+                    if (strlen($value) > 1024) {
+                        return false;
+                    }
 
-	/**
-	 * @param string $label
-	 *
-	 * @return array
-	 */
-	protected function get_empty_labels( $label = '' ) {
-		if ( ! $label ) {
-			$label = strtolower( $this->column->get_label() );
-		}
+                    break;
+                case 'empty':
+                    if (empty($value) && 0 !== $value) {
+                        return false;
+                    }
 
-		return [
-			sprintf( __( "Without %s", 'codepress-admin-columns' ), $label ),
-			sprintf( __( "Has %s", 'codepress-admin-columns' ), $label ),
-		];
-	}
+                    break;
+            }
+        }
 
-	/**
-	 * @param string $request_key
-	 *
-	 * @return array
-	 */
-	private function get_preferred_filters( $request_key ) {
-		return ( new PreferredFilter( new SegmentRepository() ) )->findFilters( $this->column->get_list_screen(), $request_key );
-	}
+        return true;
+    }
 
-	/**
-	 * Get a request var for all columns
-	 *
-	 * @param string $suffix
-	 *
-	 * @return string|false
-	 */
-	public function get_request_var( $suffix = '' ) {
-		$request = new Request();
+    protected function get_empty_labels( string $label = ''): array
+    {
+        if ( ! $label) {
+            $label = strtolower($this->column->get_label());
+        }
 
-		$request_key = Dropdown::OPTION_FILTER;
+        return [
+            sprintf(__("Without %s", 'codepress-admin-columns'), $label),
+            sprintf(__("Has %s", 'codepress-admin-columns'), $label),
+        ];
+    }
 
-		if ( $suffix ) {
-			$request_key .= '-' . ltrim( $suffix, '-' );
-		}
+    /**
+     * Get a request var for all columns
+     *
+     * @param string $suffix
+     *
+     * @return string|false
+     */
+    public function get_request_var($suffix = '')
+    {
+        $request = $this->get_request();
 
-		$values = $request->filter( $request_key, [], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+        $request_key = Dropdown::OPTION_FILTER;
 
-		// Ignore when switching to another segment or when the filter form is submitted.
-		if ( ! $values && ! $request->filter( 'ac-segment' ) && null === $request->get( TableFormView::PARAM_ACTION ) ) {
-			$values = $this->get_preferred_filters( $request_key );
-		}
+        if ($suffix) {
+            $request_key .= '-' . ltrim($suffix, '-');
+        }
 
-		if ( ! isset( $values[ $this->column->get_name() ] ) ) {
-			return false;
-		}
+        $values = $request->filter($request_key, [], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-		$value = $values[ $this->column->get_name() ];
+        if ( ! isset($values[$this->column->get_name()])) {
+            return false;
+        }
 
-		if ( ! is_scalar( $value ) || mb_strlen( $value ) < 1 ) {
-			return false;
-		}
+        $value = $values[$this->column->get_name()];
 
-		return $value;
-	}
+        if ( ! is_scalar($value) || mb_strlen($value) < 1) {
+            return false;
+        }
+
+        return $value;
+    }
 
 }

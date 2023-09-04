@@ -1,52 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Comment;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
 /**
  * Sort the comment list table on the number of times the meta_key is used by a comment.
- * @since 5.2
  */
-class MetaCount extends AbstractModel {
+class MetaCount extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $meta_key;
+    private $meta_key;
 
-	/**
-	 * @param string $meta_key
-	 */
-	public function __construct( $meta_key ) {
-		parent::__construct();
+    public function __construct(string $meta_key)
+    {
+        parent::__construct();
 
-		$this->meta_key = $meta_key;
-	}
+        $this->meta_key = $meta_key;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'comments_clauses', [ $this, 'comments_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('metacount');
 
-	public function comments_clauses_callback( $clauses ) {
-		remove_filter( 'comments_clauses', [ $this, __FUNCTION__ ] );
+        $bindings->join(
+            $wpdb->prepare(
+                "LEFT JOIN $wpdb->commentmeta AS $alias ON $wpdb->comments.comment_ID = $alias.comment_id AND $alias.meta_key = %s",
+                $this->meta_key
+            )
+        );
+        $bindings->group_by("$wpdb->comments.comment_ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_count("$alias.meta_key", (string)$order)
+        );
 
-		global $wpdb;
-
-		$order = esc_sql( $this->get_order() );
-
-		$clauses['join'] .= $wpdb->prepare( "
-			LEFT JOIN $wpdb->commentmeta AS acsort_commentmeta ON $wpdb->comments.comment_ID = acsort_commentmeta.comment_id
-			AND acsort_commentmeta.meta_key = %s
-		", $this->meta_key );
-
-		$clauses['groupby'] = "$wpdb->comments.comment_ID";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_count( "acsort_commentmeta.meta_key", $order );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

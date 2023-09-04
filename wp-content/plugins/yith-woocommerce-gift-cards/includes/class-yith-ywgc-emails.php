@@ -10,7 +10,7 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 	 * @class   YITH_YWGC_Emails
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Emails {
 
@@ -41,7 +41,6 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function __construct() {
 
@@ -94,7 +93,6 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 * @param YITH_YWGC_Gift_Card|int $gift_card the gift card.
 		 * @param bool                            $only_new  choose if only never sent gift card should be used.
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function send_gift_card_email( $gift_card, $only_new = true ) {
@@ -181,7 +179,6 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 *
 		 * @param YITH_YWGC_Gift_Card $gift_card gift_card.
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function show_link_for_cart_discount( $gift_card ) {
@@ -209,7 +206,6 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 * @param string              $text
 		 * @param YITH_YWGC_Gift_Card $gift_card
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function show_introductory_text( $text, $gift_card ) {
@@ -280,7 +276,6 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 		 * @param array $emails current emails.
 		 *
 		 * @return array
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function resend_gift_card_code( $emails ) {

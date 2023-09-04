@@ -64,10 +64,14 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
    * @var string
    */
   public $canonicalLink;
+  protected $certificationsType = ProductCertification::class;
+  protected $certificationsDataType = 'array';
   /**
    * @var string
    */
   public $channel;
+  protected $cloudExportAdditionalPropertiesType = CloudExportAdditionalProperties::class;
+  protected $cloudExportAdditionalPropertiesDataType = 'array';
   /**
    * @var string
    */
@@ -108,6 +112,10 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
    * @var string
    */
   public $description;
+  /**
+   * @var string
+   */
+  public $disclosureDate;
   /**
    * @var string
    */
@@ -349,6 +357,10 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
   protected $unitPricingBaseMeasureDataType = '';
   protected $unitPricingMeasureType = ProductUnitPricingMeasure::class;
   protected $unitPricingMeasureDataType = '';
+  /**
+   * @var string
+   */
+  public $virtualModelLink;
 
   /**
    * @param string[]
@@ -505,6 +517,20 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
     return $this->canonicalLink;
   }
   /**
+   * @param ProductCertification[]
+   */
+  public function setCertifications($certifications)
+  {
+    $this->certifications = $certifications;
+  }
+  /**
+   * @return ProductCertification[]
+   */
+  public function getCertifications()
+  {
+    return $this->certifications;
+  }
+  /**
    * @param string
    */
   public function setChannel($channel)
@@ -517,6 +543,20 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
   public function getChannel()
   {
     return $this->channel;
+  }
+  /**
+   * @param CloudExportAdditionalProperties[]
+   */
+  public function setCloudExportAdditionalProperties($cloudExportAdditionalProperties)
+  {
+    $this->cloudExportAdditionalProperties = $cloudExportAdditionalProperties;
+  }
+  /**
+   * @return CloudExportAdditionalProperties[]
+   */
+  public function getCloudExportAdditionalProperties()
+  {
+    return $this->cloudExportAdditionalProperties;
   }
   /**
    * @param string
@@ -671,6 +711,20 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
   public function getDescription()
   {
     return $this->description;
+  }
+  /**
+   * @param string
+   */
+  public function setDisclosureDate($disclosureDate)
+  {
+    $this->disclosureDate = $disclosureDate;
+  }
+  /**
+   * @return string
+   */
+  public function getDisclosureDate()
+  {
+    return $this->disclosureDate;
   }
   /**
    * @param string
@@ -1645,6 +1699,20 @@ class Product extends \Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google
   public function getUnitPricingMeasure()
   {
     return $this->unitPricingMeasure;
+  }
+  /**
+   * @param string
+   */
+  public function setVirtualModelLink($virtualModelLink)
+  {
+    $this->virtualModelLink = $virtualModelLink;
+  }
+  /**
+   * @return string
+   */
+  public function getVirtualModelLink()
+  {
+    return $this->virtualModelLink;
   }
 }
 

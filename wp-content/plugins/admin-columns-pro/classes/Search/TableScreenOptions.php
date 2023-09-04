@@ -4,8 +4,6 @@ namespace ACP\Search;
 
 use AC;
 use AC\Asset\Enqueueable;
-use ACP;
-use ACP\Search\Preferences;
 
 class TableScreenOptions {
 

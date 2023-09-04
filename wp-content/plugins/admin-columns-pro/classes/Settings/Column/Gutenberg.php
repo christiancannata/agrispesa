@@ -4,7 +4,6 @@ namespace ACP\Settings\Column;
 
 use AC;
 use AC\View;
-use ACP;
 
 class Gutenberg extends AC\Settings\Column {
 

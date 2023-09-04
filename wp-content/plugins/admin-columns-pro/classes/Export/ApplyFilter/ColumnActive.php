@@ -2,22 +2,21 @@
 
 namespace ACP\Export\ApplyFilter;
 
-use AC\ApplyFilter;
 use AC\Column;
 
-class ColumnActive implements ApplyFilter {
+class ColumnActive
+{
 
-	/**
-	 * @var Column
-	 */
-	private $column;
+    private $column;
 
-	public function __construct( Column $column ) {
-		$this->column = $column;
-	}
+    public function __construct(Column $column)
+    {
+        $this->column = $column;
+    }
 
-	public function apply_filters( $is_enabled ) {
-		return ! apply_filters( 'ac/export/column/disable', ! $is_enabled, $this->column );
-	}
+    public function apply_filters(bool $is_enabled): bool
+    {
+        return ! apply_filters('ac/export/column/disable', ! $is_enabled, $this->column);
+    }
 
 }

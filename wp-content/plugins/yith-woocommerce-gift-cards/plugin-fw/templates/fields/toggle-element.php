@@ -55,15 +55,15 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 
 ?>
 <div class="yith-toggle_wrapper <?php echo esc_attr( $wrapper_class ); ?>" id="<?php echo esc_attr( $field_id ); ?>"
-     data-nonce="<?php echo esc_attr( $ajax_nonce ); ?>" <?php yith_plugin_fw_html_data_to_string( $data, true ); ?> >
+	data-nonce="<?php echo esc_attr( $ajax_nonce ); ?>" <?php yith_plugin_fw_html_data_to_string( $data, true ); ?> >
 	<?php if ( ! empty( $label ) ) : ?>
 		<label for="<?php esc_attr( $field_id ); ?>"><?php echo esc_html( $label ); ?></label>
 	<?php endif; ?>
 	<?php if ( $show_add_button ) : ?>
 		<button class="yith-add-button yith-add-box-button"
-		        data-box_id="<?php echo esc_attr( $field_id ); ?>_add_box"
-		        data-closed_label="<?php echo esc_attr( $add_button_closed ); ?>"
-		        data-opened_label="<?php echo esc_attr( $add_button ); ?>"><?php echo esc_html( $add_button ); ?></button>
+			data-box_id="<?php echo esc_attr( $field_id ); ?>_add_box"
+			data-closed_label="<?php echo esc_attr( $add_button_closed ); ?>"
+			data-opened_label="<?php echo esc_attr( $add_button ); ?>"><?php echo esc_html( $add_button ); ?></button>
 		<div id="<?php echo esc_attr( $field_id ); ?>_add_box" class="yith-add-box"></div>
 		<script type="text/template" id="tmpl-yith-toggle-element-add-box-content-<?php echo esc_attr( $field_id ); ?>">
 			<?php foreach ( $elements as $element ) : ?>
@@ -121,17 +121,17 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 				$subtitle_element = apply_filters( 'yith_plugin_fw_toggle_element_subtitle_' . $field_id, $subtitle_element, $elements, $value );
 				?>
 				<div id="<?php echo esc_attr( $field_id ); ?>_<?php echo esc_attr( $i ); ?>"
-				     class="yith-toggle-row <?php echo ! empty( $subtitle ) ? 'with-subtitle' : ''; ?> <?php echo esc_attr( $class ); ?>"
-				     data-item_key="<?php echo esc_attr( $i ); ?>"
+					class="yith-toggle-row <?php echo ! empty( $subtitle ) ? 'with-subtitle' : ''; ?> <?php echo esc_attr( $class ); ?>"
+					data-item_key="<?php echo esc_attr( $i ); ?>"
 					<?php yith_plugin_fw_html_attributes_to_string( $custom_attributes, true ); ?>
 				>
 					<div class="yith-toggle-title">
 						<h3>
 							<span class="title"
-							      data-title_format="<?php echo esc_attr( $the_title ); ?>"><?php echo wp_kses_post( $title_element ); ?></span>
+								data-title_format="<?php echo esc_attr( $the_title ); ?>"><?php echo wp_kses_post( $title_element ); ?></span>
 							<?php if ( ! empty( $subtitle_element ) ) : ?>
 								<div class="subtitle"
-								     data-subtitle_format="<?php echo esc_attr( $subtitle ); ?>"><?php echo wp_kses_post( $subtitle_element ); ?></div>
+									data-subtitle_format="<?php echo esc_attr( $subtitle ); ?>"><?php echo wp_kses_post( $subtitle_element ); ?></div>
 							<?php endif; ?>
 						</h3>
 						<span class="yith-toggle"><span
@@ -200,7 +200,7 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 								$save_button_name  = isset( $save_button['name'] ) ? $save_button['name'] : '';
 								?>
 								<button id="<?php echo esc_attr( $save_button['id'] ); ?>"
-								        class="button-primary yith-save-button <?php echo esc_attr( $save_button_class ); ?>">
+									class="button-primary yith-save-button <?php echo esc_attr( $save_button_class ); ?>">
 									<?php echo esc_html( $save_button_name ); ?>
 								</button>
 							<?php endif; ?>
@@ -210,7 +210,7 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 								$delete_button_name  = isset( $delete_button['name'] ) ? $delete_button['name'] : '';
 								?>
 								<button id="<?php echo esc_attr( $delete_button['id'] ); ?>"
-								        class="button-secondary yith-delete-button <?php echo esc_attr( $delete_button_class ); ?>">
+									class="button-secondary yith-delete-button <?php echo esc_attr( $delete_button_class ); ?>">
 									<?php echo esc_html( $delete_button_name ); ?>
 								</button>
 							<?php endif; ?>
@@ -223,16 +223,16 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 	</div>
 	<script type="text/template" id="tmpl-yith-toggle-element-item-<?php echo esc_attr( $field_id ); ?>">
 		<div id="<?php echo esc_attr( $field_id ); ?>_{{{data.index}}}"
-		     class="yith-toggle-row highlight <?php echo ! empty( $subtitle ) ? 'with-subtitle' : ''; ?> <?php echo esc_attr( $class ); ?>"
-		     data-item_key="{{{data.index}}}"
+			class="yith-toggle-row highlight <?php echo ! empty( $subtitle ) ? 'with-subtitle' : ''; ?> <?php echo esc_attr( $class ); ?>"
+			data-item_key="{{{data.index}}}"
 			<?php yith_plugin_fw_html_attributes_to_string( $custom_attributes, true ); ?>
 		>
 			<div class="yith-toggle-title">
 				<h3>
 					<span class="title"
-					      data-title_format="<?php echo esc_attr( $the_title ); ?>"><?php echo wp_kses_post( $the_title ); ?></span>
+						data-title_format="<?php echo esc_attr( $the_title ); ?>"><?php echo wp_kses_post( $the_title ); ?></span>
 					<div class="subtitle"
-					     data-subtitle_format="<?php echo esc_attr( $subtitle ); ?>"><?php echo wp_kses_post( $subtitle ); ?></div>
+						data-subtitle_format="<?php echo esc_attr( $subtitle ); ?>"><?php echo wp_kses_post( $subtitle ); ?></div>
 				</h3>
 				<span class="yith-toggle"><span class="yith-icon yith-icon-arrow_right"></span></span>
 				<?php if ( ! empty( $onoff_field ) && is_array( $onoff_field ) ) : ?>
@@ -298,7 +298,7 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 						$save_button_name  = isset( $save_button['name'] ) ? $save_button['name'] : '';
 						?>
 						<button id="<?php echo esc_attr( $save_button['id'] ); ?>"
-						        class="yith-save-button <?php echo esc_attr( $save_button_class ); ?>">
+							class="yith-save-button <?php echo esc_attr( $save_button_class ); ?>">
 							<?php echo esc_html( $save_button_name ); ?>
 						</button>
 					<?php endif; ?>
@@ -308,7 +308,7 @@ if ( empty( $values ) && ! $show_add_button && $elements ) {
 						$delete_button_name  = isset( $delete_button['name'] ) ? $delete_button['name'] : '';
 						?>
 						<button id="<?php echo esc_attr( $delete_button['id'] ); ?>"
-						        class="button-secondary yith-delete-button <?php echo esc_attr( $delete_button_class ); ?>">
+							class="button-secondary yith-delete-button <?php echo esc_attr( $delete_button_class ); ?>">
 							<?php echo esc_html( $delete_button_name ); ?>
 						</button>
 					<?php endif; ?>

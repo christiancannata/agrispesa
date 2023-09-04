@@ -13,7 +13,7 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 	/**
 	 * YITH_System_Status class.
 	 *
-	 * @author     Alberto Ruggiero
+	 * @author     YITH <plugins@yithemes.com>
 	 */
 	class YITH_System_Status {
 		/**
@@ -55,7 +55,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Main plugin Instance
 		 *
-		 * @author Alberto Ruggiero
 		 * @return YITH_System_Status
 		 * @since  1.0.0
 		 */
@@ -70,7 +69,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -100,7 +98,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Set requirements labels
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -127,7 +124,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Add "System Information" submenu page under YITH Plugins
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -156,7 +152,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Add "System Information" page template under YITH Plugins
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -171,7 +166,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Perform system status check
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -272,7 +266,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 * @param string $plugin_name  The name of the plugin.
 		 * @param array  $requirements Array of plugin requirements.
 		 *
-		 * @author Alberto Ruggiero
 		 * @return void
 		 * @since  1.0.0
 		 */
@@ -292,7 +285,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Manages notice dismissing
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -317,7 +309,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Show system notice
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -355,7 +346,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Get system information
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  array
 		 * @since   1.0.0
 		 */
@@ -402,7 +392,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		/**
 		 * Get log file
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -454,7 +443,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 *
 		 * @param string $memory_size Memory size to convert.
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  integer
 		 * @since   1.0.0
 		 */
@@ -485,7 +473,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 * @param string $key   Requirement Key.
 		 * @param mixed  $value Requirement value.
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -512,7 +499,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 * @param array  $item  Requirement item.
 		 * @param string $label Requirement label.
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -546,7 +532,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 * @param array  $item  Requirement item.
 		 * @param string $label Requirement label.
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -593,7 +578,6 @@ if ( ! class_exists( 'YITH_System_Status' ) ) {
 		 *
 		 * @param string $key Requirement Key.
 		 *
-		 * @author  Alberto Ruggiero
 		 * @return  void
 		 * @since   1.0.0
 		 */
@@ -808,7 +792,6 @@ if ( ! function_exists( 'YITH_System_Status' ) ) {
 	/**
 	 * Single instance of YITH_System_Status
 	 *
-	 * @author Alberto Ruggiero
 	 * @return YITH_System_Status
 	 * @since  1.0
 	 */

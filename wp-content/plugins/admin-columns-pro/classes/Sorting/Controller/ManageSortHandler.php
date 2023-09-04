@@ -4,52 +4,59 @@ namespace ACP\Sorting\Controller;
 
 use AC\ListScreen;
 use ACP\Sorting;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\ModelFactory;
 
-class ManageSortHandler {
+/**
+ * Handles sorting based on `QueryVars` only
+ * @depecated 6.3
+ */
+class ManageSortHandler
+{
 
-	/**
-	 * @var ListScreen
-	 */
-	private $list_screen;
+    private $list_screen;
 
-	/**
-	 * @var ModelFactory
-	 */
-	private $model_factory;
+    private $model_factory;
 
-	public function __construct( ListScreen $list_screen, ModelFactory $model_factory ) {
-		$this->list_screen = $list_screen;
-		$this->model_factory = $model_factory;
-	}
+    public function __construct(ListScreen $list_screen, ModelFactory $model_factory)
+    {
+        $this->list_screen = $list_screen;
+        $this->model_factory = $model_factory;
+    }
 
-	public function handle( $request ) {
-		$list_screen = $this->list_screen;
+    public function handle(): void
+    {
+        $column_name = $_GET['orderby'] ?? null;
 
-		if ( ! $list_screen instanceof Sorting\ListScreen ) {
-			return;
-		}
+        if ( ! $column_name) {
+            return;
+        }
 
-		if ( ! isset( $request['orderby'] ) ) {
-			return;
-		}
+        $list_screen = $this->list_screen;
 
-		$column = $this->list_screen->get_column_by_name( $request['orderby'] );
+        if ( ! $list_screen instanceof Sorting\ListScreen) {
+            return;
+        }
 
-		if ( ! $column ) {
-			return;
-		}
+        $column = $this->list_screen->get_column_by_name($column_name);
 
-		$model = $this->model_factory->create( $column );
+        if ( ! $column) {
+            return;
+        }
 
-		if ( ! $model ) {
-			return;
-		}
+        $model = $this->model_factory->create($column);
 
-		$strategy = $list_screen->sorting( $model );
-		$model->set_strategy( $strategy );
+        if ( ! $model) {
+            return;
+        }
 
-		$strategy->manage_sorting();
-	}
+        // these are handled by a different controller
+        if ($model instanceof QueryBindings) {
+            return;
+        }
+
+        $list_screen->sorting($model)
+                    ->manage_sorting();
+    }
 
 }

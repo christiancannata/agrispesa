@@ -4,7 +4,6 @@ namespace ACP\Editing\Settings;
 
 use AC;
 use AC\View;
-use ACP;
 
 class BulkEditing extends AC\Settings\Column implements AC\Settings\Header {
 

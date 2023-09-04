@@ -11,105 +11,107 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class V4301 extends Update {
+class V4301 extends Update
+{
 
-	public function __construct() {
-		parent::__construct( new Version( '4.3.1' ) );
-	}
+    private $plugin_dir;
 
-	/**
-	 * @throws Exception
-	 */
-	public function apply_update() {
-		$this->uppercase_class_files( ACP()->get_dir() . '/classes' );
-		$this->update_notice_preference_renewal();
-	}
+    public function __construct(string $plugin_dir)
+    {
+        parent::__construct(new Version('4.3.1'));
 
-	/**
-	 * Set all files to the proper case
-	 *
-	 * @param string Directory
-	 */
-	protected function uppercase_class_files( $directory ) {
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator( $directory, FilesystemIterator::SKIP_DOTS )
-		);
+        $this->plugin_dir = $plugin_dir;
+    }
 
-		/** @var DirectoryIterator $leaf */
-		foreach ( $iterator as $leaf ) {
-			$file = $leaf->getFilename();
+    /**
+     * @throws Exception
+     */
+    public function apply_update(): void
+    {
+        $this->uppercase_class_files($this->plugin_dir . 'classes');
+        $this->update_notice_preference_renewal();
+    }
 
-			if ( $leaf->isFile() && 'php' === $leaf->getExtension() && $file == strtolower( $file ) ) {
-				@rename( $leaf->getPathname(), trailingslashit( $leaf->getPath() ) . ucfirst( $file ) );
-			}
-		}
-	}
+    /**
+     * Set all files to the proper case
+     */
+    protected function uppercase_class_files(string $directory): void
+    {
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS)
+        );
 
-	/**
-	 * @param string $key
-	 *
-	 * @return array ID's
-	 */
-	protected function get_users_by_meta_key( $key ) {
-		$user_ids = get_users( [
-			'fields'     => 'ids',
-			'meta_query' => [
-				[
-					'key'     => $key,
-					'compare' => 'EXISTS',
-				],
-			],
-		] );
+        /** @var DirectoryIterator $leaf */
+        foreach ($iterator as $leaf) {
+            $file = $leaf->getFilename();
 
-		if ( ! $user_ids ) {
-			return [];
-		}
+            if ($leaf->isFile() && 'php' === $leaf->getExtension() && $file == strtolower($file)) {
+                @rename($leaf->getPathname(), trailingslashit($leaf->getPath()) . ucfirst($file));
+            }
+        }
+    }
 
-		return $user_ids;
-	}
+    protected function get_users_by_meta_key(string $key): array
+    {
+        $user_ids = get_users([
+            'fields'     => 'ids',
+            'meta_query' => [
+                [
+                    'key'     => $key,
+                    'compare' => 'EXISTS',
+                ],
+            ],
+        ]);
 
-	/**
-	 * @throws Exception
-	 */
-	private function update_notice_preference_renewal() {
-		$phase_key = 'cpac_hide_license_notice_phase';
-		$timeout_key = 'cpac_hide_license_notice_timeout';
+        if ( ! $user_ids) {
+            return [];
+        }
 
-		foreach ( $this->get_users_by_meta_key( $phase_key ) as $user_id ) {
+        return $user_ids;
+    }
 
-			$phase = get_user_meta( $user_id, $phase_key, true );
-			$timeout = get_user_meta( $user_id, $timeout_key, true );
+    /**
+     * @throws Exception
+     */
+    private function update_notice_preference_renewal(): void
+    {
+        $phase_key = 'cpac_hide_license_notice_phase';
+        $timeout_key = 'cpac_hide_license_notice_timeout';
 
-			if ( ! $timeout ) {
-				$timeout = time();
-			}
+        foreach ($this->get_users_by_meta_key($phase_key) as $user_id) {
+            $phase = get_user_meta($user_id, $phase_key, true);
+            $timeout = get_user_meta($user_id, $timeout_key, true);
 
-			switch ( $phase ) {
-				case '0':
-					$option = new Storage\Timestamp(
-						new Storage\UserMeta( 'ac_notice_dismiss_renewal_1', $user_id )
-					);
-					$option->save( time() + ( MONTH_IN_SECONDS * 3 ) );
+            if ( ! $timeout) {
+                $timeout = time();
+            }
 
-					break;
-				case '1':
-					$option = new Storage\Timestamp(
-						new Storage\UserMeta( 'ac_notice_dismiss_renewal_2', $user_id )
-					);
-					$option->save( time() + ( MONTH_IN_SECONDS * 3 ) );
+            switch ($phase) {
+                case '0':
+                    $option = new Storage\Timestamp(
+                        new Storage\UserMeta('ac_notice_dismiss_renewal_1', $user_id)
+                    );
+                    $option->save(time() + (MONTH_IN_SECONDS * 3));
 
-					break;
-				default: // completed or not set
-					$option = new Storage\Timestamp(
-						new Storage\UserMeta( 'ac_notice_dismiss_expired', $user_id )
-					);
+                    break;
+                case '1':
+                    $option = new Storage\Timestamp(
+                        new Storage\UserMeta('ac_notice_dismiss_renewal_2', $user_id)
+                    );
+                    $option->save(time() + (MONTH_IN_SECONDS * 3));
 
-					$option->save( $timeout + ( MONTH_IN_SECONDS * 3 ) );
-			}
+                    break;
+                default: // completed or not set
+                    $option = new Storage\Timestamp(
+                        new Storage\UserMeta('ac_notice_dismiss_expired', $user_id)
+                    );
 
-			delete_user_meta( $user_id, $phase_key );
-			delete_user_meta( $user_id, $timeout_key );
-		}
-	}
+                    $option->save($timeout + (MONTH_IN_SECONDS * 3));
+            }
+
+            delete_user_meta($user_id, $phase_key);
+            delete_user_meta($user_id, $timeout_key);
+        }
+    }
 
 }

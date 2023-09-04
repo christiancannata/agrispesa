@@ -1,10 +1,10 @@
 === TeraWallet – Best WooCommerce Wallet System With Cashback Rewards, Partial Payment, Wallet Refunds ===
 Contributors: standalonetech, subratamal, moumitaadak
 Tags: woo wallet, woocommerce wallet, digital wallet, user wallet, refund, cashback, partial payment, wallet, wc wallet, woocommerce credits
-Requires PHP: 7.2
-Requires at least: 5.8
-Tested up to: 6.2
-Stable tag: 1.4.7
+Requires PHP: 7.3
+Requires at least: 6.0
+Tested up to: 6.3
+Stable tag: 1.4.9
 Donate link: https://donate.stripe.com/fZeaFydax6NNfjWeVc
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -13,16 +13,16 @@ A powerful, extendable WooCommerce wallet system which support payment, partial 
 
 == Description ==
 
-TeraWallet is a powerful digital wallet and credit system designed for WooCommerce. With TeraWallet, you can allow your customers to deposit funds into their accounts, transfer funds to other users, and pay for purchases using their wallet balance.
+TeraWallet is an advanced digital wallet and credit system specially designed for WooCommerce. It empowers you to offer your customers a seamless payment experience by allowing them to deposit funds into their accounts, transfer money to other users, and make purchases using their wallet balance.
 
-In addition to its core wallet functionality, TeraWallet also includes a cashback rewards system that lets you offer discounts and rewards to your customers for their purchases. You can set cashback rates for individual products or categories, and even offer bonus cashback for specific promotions or events.
+Beyond its core wallet functionality, TeraWallet introduces an enticing cashback rewards system that enables you to provide discounts and rewards to your customers based on their purchases. You have the flexibility to set cashback rates for specific products or categories, and even offer bonus cashback during promotions or special events.
 
-TeraWallet is fully customizable, with TeraWallet, you can create a seamless and convenient payment experience for your customers while also boosting loyalty and repeat purchases through cashback rewards. Try TeraWallet today and streamline your WooCommerce payment system!
+TeraWallet puts you in control with extensive customization options. By implementing TeraWallet, you can effortlessly enhance customer loyalty and drive repeat purchases through the attractive cashback rewards. Discover the power of TeraWallet today and optimize your WooCommerce payment system for maximum efficiency!
 
 [youtube https://www.youtube.com/watch?v=Fnpp8qxAWBw]
 
 = Use case of TeraWallet =
-With this extension, the customers won't have to fill in the payment details every time. They can simply log in and pay for products using the wallet money. The customers will also get the advantage for earning cashback using the wallet money. The admin can process refund to the customer wallet. 
+With this plugin, your customers no longer need to repeatedly enter payment details. They can conveniently log in and use their wallet funds to make purchases. Additionally, customers can earn cashback by utilizing their wallet balance. The admin also has the ability to process refunds directly to the customer's wallet.
 
 = Features of TeraWallet =
 - Wallet system works just like any other payment method.
@@ -43,13 +43,16 @@ With this extension, the customers won't have to fill in the payment details eve
 - Built with a REST API
 - Convert WooCommerce coupon into cashback.
 - Support WordPress Multisite Network
-- Supports multiple languages translations.
-- Supports WooCommerce Subscriptions.
-- Supports WooCommerce Multivendor Marketplace by WC Lovers.
-- Supports WC Marketplace.
-- Supports Dokan Multivendor Marketplace.
+- Support multiple languages translations.
+- Support [CURCY – Multi Currency for WooCommerce](https://wordpress.org/plugins/woo-multi-currency/)
+- Support [FOX – Currency Switcher Professional for WooCommerce](https://wordpress.org/plugins/woocommerce-currency-switcher/)
+- Support WooCommerce block checkout.
+- Support WooCommerce Subscriptions.
+- Support WooCommerce Multivendor Marketplace by WC Lovers.
+- Support WC Marketplace.
+- Support Dokan Multivendor Marketplace.
 
-> Take a step forward and try our [demo](https://standalonetech.com/).
+> Experience the future of payments by trying our [demo](https://demo.standalonetech.com/).
 
 = Workflow of TeraWallet =
 After the plugin installation, the admin needs to do the payment method configuration. Set the title and select allowed payments for adding money.
@@ -71,10 +74,10 @@ On the front-end, the customers can log in to the store and go to wallet page fr
 
 = Minimum Requirements =
 
-* PHP version 5.2.4 or greater (PHP 5.6 or greater is recommended)
-* MySQL version 5.0 or greater (MySQL 5.6 or greater is recommended)
-* WordPress 5.8+
-* WooCommerce 6.0+
+* PHP 7.3 or greater is required (PHP 8.0 or greater is recommended)
+* MySQL 5.6 or greater, OR MariaDB version 10.1 or greater, is required
+* WordPress 6.0 or greater is required
+* WooCommerce 7.2 or greater is required
 
 = Automatic installation =
 
@@ -135,6 +138,19 @@ Yes you can! Join in on our [GitHub repository](https://github.com/malsubrata/wo
 9. Wallet actions.
 
 == Changelog ==
+= 1.4.9 - 2023-08-17 =
+* New - Added sell your content action ( Using this action you can sell your site content using wallet balance).
+* New - Export user wallet balance ( Now site admin also export only user balance of the website in CSV file).
+* Fix - Compatibility issue with digits plugin.
+* Fix - Wallet transactions details table.
+* Add - Support for WordPress 6.3 and WooCommerce 8.0
+
+= 1.4.8 - 2023-06-22 =
+* New - Redesign wallet admin panel.
+* New - Added support for WooCommerce block checkout.
+* New - Added support for FOX – Currency Switcher Professional for WooCommerce
+* Fix - PHP 8.2 issues.
+
 = 1.4.7 - 2023-04-05 =
 * Fix - Refund issue.
 * Fix - WooCommerce add to cart notice.

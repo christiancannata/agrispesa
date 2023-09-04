@@ -5,15 +5,17 @@ namespace ACP\Search\Middleware\Mapping;
 use ACP\Search\Middleware\Mapping;
 use ACP\Search\Value;
 
-class ValueType extends Mapping {
+class ValueType extends Mapping
+{
 
-	protected function get_properties() {
-		return [
-			Value::STRING  => 'string',
-			Value::INT     => 'integer',
-			Value::DATE    => 'date',
-			Value::DECIMAL => 'double',
-		];
-	}
+    protected function get_properties(): array
+    {
+        return [
+            Value::STRING  => 'string',
+            Value::INT     => 'integer',
+            Value::DATE    => 'date',
+            Value::DECIMAL => 'double',
+        ];
+    }
 
 }

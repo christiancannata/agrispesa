@@ -2,57 +2,79 @@
 
 namespace ACP\ListScreen;
 
+use AC;
+use AC\Column;
+use AC\ColumnRepository;
+use AC\MetaType;
+use AC\Type\Uri;
 use AC\Type\Url;
+use AC\Type\Url\EditorNetworkColumns;
 use AC\WpListTableFactory;
-use ACP\ListScreen;
-use WP_MS_Users_List_Table;
 
-class MSUser extends ListScreen\User {
+class MSUser extends AC\ListScreen
+{
 
-	public function __construct() {
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct('wp-ms_users', 'users-network');
 
-		$this->set_label( __( 'Network Users' ) )
-		     ->set_singular_label( __( 'Network User' ) )
-		     ->set_key( 'wp-ms_users' )
-		     ->set_screen_base( 'users-network' )
-		     ->set_screen_id( 'users-network' )
-		     ->set_group( 'network' )
-		     ->set_network_only( true );
-	}
+        $this->label = __('Network Users');
+        $this->singular_label = __('Network User');
+        $this->group = 'network';
 
-	/**
-	 * @return WP_MS_Users_List_Table
-	 */
-	protected function get_list_table() {
-		return ( new WpListTableFactory() )->create_network_user_table( $this->get_screen_id() );
-	}
+        $this->set_meta_type(MetaType::USER);
+    }
 
-	protected function get_admin_url() {
-		return network_admin_url( 'users.php' );
-	}
+    public function manage_value(): AC\Table\ManageValue
+    {
+        return new AC\Table\ManageValue\User(new ColumnRepository($this));
+    }
 
-	public function get_edit_link() {
-		$url = new Url\EditorNetwork( 'columns' );
-		$url->add( [
-			'list_screen' => $this->get_key(),
-			'layout_id'   => $this->get_layout_id(),
-		] );
+    public function list_table(): AC\ListTable
+    {
+        return new AC\ListTable\NetworkUser(
+            (new WpListTableFactory())->create_network_user_table($this->get_screen_id())
+        );
+    }
 
-		return $url->get_url();
-	}
+    public function get_editor_url(): Uri
+    {
+        return new EditorNetworkColumns($this->key, $this->has_id() ? $this->get_id() : null);
+    }
 
-	/**
-	 * @param int $id
-	 *
-	 * @return string HTML
-	 * @since 4.0
-	 */
-	public function get_single_row( $id ) {
-		ob_start();
-		$this->get_list_table()->single_row( $this->get_object( $id ) );
+    public function get_table_url(): Uri
+    {
+        return new Url\ListTableNetwork('users.php', $this->has_id() ? $this->get_id() : null);
+    }
 
-		return ob_get_clean();
-	}
+    protected function register_column_types(): void
+    {
+        $this->register_column_types_from_list([
+            Column\CustomField::class,
+            Column\Actions::class,
+            Column\User\CommentCount::class,
+            Column\User\Description::class,
+            Column\User\DisplayName::class,
+            Column\User\Email::class,
+            Column\User\FirstName::class,
+            Column\User\FirstPost::class,
+            Column\User\FullName::class,
+            Column\User\ID::class,
+            Column\User\LastName::class,
+            Column\User\LastPost::class,
+            Column\User\Login::class,
+            Column\User\Name::class,
+            Column\User\Nicename::class,
+            Column\User\Nickname::class,
+            Column\User\PostCount::class,
+            Column\User\Posts::class,
+            Column\User\Registered::class,
+            Column\User\RichEditing::class,
+            Column\User\Role::class,
+            Column\User\ShowToolbar::class,
+            Column\User\Url::class,
+            Column\User\Username::class,
+        ]);
+    }
 
 }

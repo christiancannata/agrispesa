@@ -59,7 +59,7 @@ if ( ! function_exists( 'ywgc_get_order_item_giftcards' ) ) {
 	 * @param int $order_item_id Order item ID.
 	 *
 	 * @return string|void
-	 * @author Lorenzo Giuffrida
+	 * @author YITH <plugins@yithemes.com>
 	 * @since  1.0.0
 	 */
 	function ywgc_get_order_item_giftcards( $order_item_id ) {
@@ -89,7 +89,6 @@ if ( ! function_exists( 'ywgc_set_order_item_giftcards' ) ) {
 	 * @param array $ids           the array of gift card ids associated to the order item.
 	 *
 	 * @return string|void
-	 * @author Lorenzo Giuffrida
 	 * @since  1.0.0
 	 */
 	function ywgc_set_order_item_giftcards( $order_item_id, $ids ) {

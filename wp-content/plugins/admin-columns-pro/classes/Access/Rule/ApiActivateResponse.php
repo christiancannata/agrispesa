@@ -18,7 +18,8 @@ class ApiActivateResponse implements Rule {
 		$this->response = $response;
 	}
 
-	public function get_permissions() {
+	public function get_permissions(): Permissions
+    {
 		$permissions = new Permissions( $this->response->get( 'permissions' ) ?: [] );
 
 		if ( $this->response->has_error() ) {

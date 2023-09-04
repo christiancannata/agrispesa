@@ -3,7 +3,7 @@
  * Class YITH_YWGC_Module
  * Handle a single module.
  *
- * @author  YITH
+ * @author  YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Classes
  */
 
@@ -13,7 +13,6 @@ if ( ! class_exists( 'YITH_YWGC_Module' ) ) {
 	/**
 	 * YITH_YWGC_Module class.
 	 *
-	 * @author  Leanza Francesco <leanzafrancesco@gmail.com>
 	 * @since   4.0
 	 */
 	abstract class YITH_YWGC_Module {

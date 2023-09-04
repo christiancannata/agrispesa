@@ -3,13 +3,13 @@
  * Plugin Name: YITH WooCommerce Gift Cards
  * Plugin URI: https://yithemes.com/themes/plugins/yith-woocommerce-gift-cards
  * Description: <code><strong>YITH WooCommerce Gift Cards</strong></code> allows your users to purchase and give gift cards. In this way, you will increase the spread of your brand, your sales, and average spend, especially during the holidays. <a href="https://yithemes.com/" target="_blank">Get more plugins for your e-commerce shop on <strong>YITH</strong></a>.
- * Version: 4.1.0
+ * Version: 4.3.0
  * Author: YITH
  * Author URI: https://yithemes.com/
  * Text Domain: yith-woocommerce-gift-cards
  * Domain Path: /languages/
- * WC requires at least: 7.6
- * WC tested up to: 7.8
+ * WC requires at least: 7.8
+ * WC tested up to: 8.0
  **/
 
 /*
@@ -60,12 +60,13 @@ register_activation_hook( __FILE__, 'yith_plugin_registration_hook' );
 
 // region    ****    Define constants.
 
+defined( 'YITH_YWGC_FREE' ) || define( 'YITH_YWGC_FREE', '1' );
 defined( 'YITH_YWGC_SLUG' ) || define( 'YITH_YWGC_SLUG', 'yith-woocommerce-gift-cards' );
 defined( 'YITH_YWGC_FREE_INIT' ) || define( 'YITH_YWGC_FREE_INIT', plugin_basename( __FILE__ ) );
 defined( 'YITH_YWGC_SECRET_KEY' ) || define( 'YITH_YWGC_SECRET_KEY', 'GcGTnx2i0Qdavxe9b9by' );
 defined( 'YITH_YWGC_PLUGIN_NAME' ) || define( 'YITH_YWGC_PLUGIN_NAME', 'YITH WooCommerce Gift Cards' );
 defined( 'YITH_YWGC_INIT' ) || define( 'YITH_YWGC_INIT', plugin_basename( __FILE__ ) );
-defined( 'YITH_YWGC_VERSION' ) || define( 'YITH_YWGC_VERSION', '4.1.0' );
+defined( 'YITH_YWGC_VERSION' ) || define( 'YITH_YWGC_VERSION', '4.3.0' );
 defined( 'YITH_YWGC_DB_CURRENT_VERSION' ) || define( 'YITH_YWGC_DB_CURRENT_VERSION', '1.0.1' );
 defined( 'YITH_YWGC_FILE' ) || define( 'YITH_YWGC_FILE', __FILE__ );
 defined( 'YITH_YWGC_DIR' ) || define( 'YITH_YWGC_DIR', plugin_dir_path( __FILE__ ) );
@@ -92,7 +93,7 @@ if ( ! function_exists( 'yith_ywgc_init' ) ) {
 	/**
 	 * Init the plugin
 	 *
-	 * @author Lorenzo Giuffrida
+	 * @author YITH <plugins@yithemes.com>
 	 * @since  1.0.0
 	 */
 	function yith_ywgc_init() {
@@ -136,7 +137,6 @@ if ( ! function_exists( 'YITH_YWGC' ) ) {
 	/**
 	 * Get the main plugin class
 	 *
-	 * @author Lorenzo Giuffrida
 	 * @since  1.0.0
 	 */
 	function YITH_YWGC() {// phpcs:ignore WordPress.NamingConventions
@@ -148,7 +148,6 @@ if ( ! function_exists( 'yith_ywgc_install' ) ) {
 	/**
 	 * Install the plugin
 	 *
-	 * @author Lorenzo Giuffrida
 	 * @since  1.0.0
 	 */
 	function yith_ywgc_install() {

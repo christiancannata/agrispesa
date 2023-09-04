@@ -2,7 +2,7 @@
 
 use AC\Form\Element\Select;
 use AC\Form\Element\Toggle;
-use ACP\Bookmark\Setting\PreferredSegment;
+use ACP\Search\ListScreenPreferences;
 use ACP\Sorting\Settings\ListScreen\PreferredSort;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -134,7 +134,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 						$segments = $this->segments;
 
-						$selected_filter_segment = $this->preferences[ PreferredSegment::FIELD_SEGMENT ] ?? '';
+						$selected_filter_segment = $this->preferences[ ListScreenPreferences::DEFAULT_SEGMENT ] ?? '';
 						?>
 
 						<div class="ac-setbox__row -sub -predefinedfilters" data-setting="filter-segment-preference">
@@ -147,7 +147,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="ac-setbox__row__fields__inner">
 									<?php if ( ! empty( $segments ) ): ?>
 										<?php
-										$select = new Select( PreferredSegment::FIELD_SEGMENT, [ '' => __( 'Default', 'codepress-admin-columns' ) ] + $segments );
+										$select = new Select( ListScreenPreferences::DEFAULT_SEGMENT, ['' => __( 'Default', 'codepress-admin-columns' ) ] + $segments );
 										echo $select->set_value( $selected_filter_segment );
 										?>
 									<?php else: ?>

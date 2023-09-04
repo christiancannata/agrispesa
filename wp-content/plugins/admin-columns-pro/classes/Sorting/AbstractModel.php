@@ -2,75 +2,77 @@
 
 namespace ACP\Sorting;
 
-use ACP;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Type\DataType;
 
-abstract class AbstractModel {
+/**
+ * Backwards compatible model for version older then 6.3
+ * @deprecated 6.3
+ */
+class AbstractModel
+{
 
-	/**
-	 * @var DataType
-	 */
-	protected $data_type;
+    public function __construct()
+    {
+    }
 
-	/**
-	 * @var Strategy\Comment|Strategy\Post|Strategy\User
-	 */
-	protected $strategy;
+    /**
+     * @var DataType
+     */
+    protected $data_type;
 
-	public function __construct( DataType $data_type = null ) {
-		if ( null === $data_type ) {
-			$data_type = new DataType( DataType::STRING );
-		}
+    /**
+     * @var Strategy
+     */
+    protected $strategy;
 
-		$this->data_type = $data_type;
-	}
+    /**
+     * @var string
+     */
+    protected $order;
 
-	/**
-	 * @return array
-	 */
-	public abstract function get_sorting_vars();
+    /**
+     * @depecated 6.3
+     */
+    public function set_strategy(Strategy $strategy): void
+    {
+        _deprecated_function(__FUNCTION__, '6.3');
 
-	/**
-	 * @param Strategy $strategy
-	 */
-	public function set_strategy( Strategy $strategy ) {
-		$this->strategy = $strategy;
-	}
+        $this->strategy = $strategy;
+    }
 
-	/**
-	 * @return DataType
-	 */
-	public function get_data_type() {
-		return $this->data_type;
-	}
+    public function get_sorting_vars()
+    {
+        _deprecated_function(__FUNCTION__, '6.3', QueryBindings::class);
 
-	/**
-	 * Return the default or set order from the strategy.
-	 * Falls back to ASC if an invalid order is found
-	 * @return string ASC|DESC
-	 */
-	public function get_order() {
-		$order = strtoupper( $this->strategy->get_order() );
+        return [];
+    }
 
-		if ( 'ASC' !== $order ) {
-			$order = 'DESC';
-		}
+    public function get_order(): string
+    {
+        _deprecated_function(__FUNCTION__, '6.3');
 
-		return $order;
-	}
+        return $this->order;
+    }
 
-	/**
-	 * Sorts an array ascending, maintains index association and returns keys
-	 *
-	 * @param array $array
-	 *
-	 * @return array Returns the array keys of the sorted array
-	 * @deprecated 5.2
-	 */
-	public function sort( array $array ) {
-		_deprecated_function( __METHOD__, '6.0' );
+    /**
+     * @depecated 6.3
+     */
+    public function set_order(string $order): void
+    {
+        _deprecated_function(__FUNCTION__, '6.3');
 
-		return ( new Sorter() )->sort( $array, $this->data_type );
-	}
+        $this->order = $order;
+    }
+
+    /**
+     * Sorts an array ascending, maintains index association and returns keys
+     */
+    public function sort(array $array): array
+    {
+        _deprecated_function(__METHOD__, '5.2');
+
+        return (new Sorter())->sort($array, new DataType(DataType::STRING));
+    }
 
 }

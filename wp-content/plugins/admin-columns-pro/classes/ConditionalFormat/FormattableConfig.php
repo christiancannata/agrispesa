@@ -4,23 +4,26 @@ namespace ACP\ConditionalFormat;
 
 use ACP\ConditionalFormat\Formatter\StringFormatter;
 
-final class FormattableConfig {
+final class FormattableConfig
+{
 
-	/**
-	 * @var Formatter
-	 */
-	private $formatter;
+    /**
+     * @var Formatter
+     */
+    private $formatter;
 
-	public function __construct( Formatter $formatter = null ) {
-		if ( null === $formatter ) {
-			$formatter = new StringFormatter();
-		}
+    public function __construct(Formatter $formatter = null)
+    {
+        if (null === $formatter) {
+            $formatter = new StringFormatter();
+        }
 
-		$this->formatter = $formatter;
-	}
+        $this->formatter = $formatter;
+    }
 
-	public function get_value_formatter(): Formatter {
-		return $this->formatter;
-	}
+    public function get_value_formatter(): Formatter
+    {
+        return $this->formatter;
+    }
 
 }

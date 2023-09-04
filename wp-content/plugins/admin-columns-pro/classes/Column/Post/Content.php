@@ -23,11 +23,9 @@ class Content extends AC\Column\Post\Content
 	}
 
 	public function editing() {
-		$view = EditableType\Content::TYPE_WYSIWYG === $this->get_inline_editable_type()
-			? new Editing\View\Wysiwyg()
-			: new Editing\View\TextArea();
-
-		return new Editing\Service\Post\Content( $view );
+		return EditableType\Content::TYPE_WYSIWYG === $this->get_inline_editable_type()
+			? new Editing\Service\Post\ContentWysiwyg()
+			: new Editing\Service\Post\Content();
 	}
 
 	public function filtering() {

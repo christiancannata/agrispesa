@@ -42,7 +42,7 @@ if ( ! class_exists( 'YITH_YWGC_Shortcodes' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author YITH
+		 * @author YITH <plugins@yithemes.com>
 		 */
 		protected function __construct() {
 			add_shortcode( 'yith_ywgc_display_gift_card_form', array( $this, 'yith_ywgc_display_gift_card_form' ) );

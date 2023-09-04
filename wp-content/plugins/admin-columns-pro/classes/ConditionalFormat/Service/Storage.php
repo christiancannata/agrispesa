@@ -17,7 +17,8 @@ final class Storage implements Registerable {
 		$this->rules_repository_factory = $rules_repository_factory;
 	}
 
-	public function register(): void {
+	public function register(): void
+    {
 		add_action( 'acp/list_screen/deleted', [ $this, 'list_screen_deleted' ] );
 	}
 

@@ -8,17 +8,17 @@ use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Query\AdsListingGroup
 use Automattic\WooCommerce\GoogleListingsAndAds\Google\Ads\GoogleAdsClient;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
-use Google\Ads\GoogleAds\Util\V12\ResourceNames;
-use Google\Ads\GoogleAds\V12\Enums\AssetGroupStatusEnum\AssetGroupStatus;
-use Google\Ads\GoogleAds\V12\Enums\ListingGroupFilterTypeEnum\ListingGroupFilterType;
-use Google\Ads\GoogleAds\V12\Enums\ListingGroupFilterVerticalEnum\ListingGroupFilterVertical;
-use Google\Ads\GoogleAds\V12\Resources\AssetGroup;
-use Google\Ads\GoogleAds\V12\Resources\AssetGroupListingGroupFilter;
-use Google\Ads\GoogleAds\V12\Services\AssetGroupListingGroupFilterOperation;
-use Google\Ads\GoogleAds\V12\Services\AssetGroupOperation;
-use Google\Ads\GoogleAds\V12\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V12\Services\MutateOperation;
-use Google\Ads\GoogleAds\V12\Services\AssetGroupServiceClient;
+use Google\Ads\GoogleAds\Util\V14\ResourceNames;
+use Google\Ads\GoogleAds\V14\Enums\AssetGroupStatusEnum\AssetGroupStatus;
+use Google\Ads\GoogleAds\V14\Enums\ListingGroupFilterTypeEnum\ListingGroupFilterType;
+use Google\Ads\GoogleAds\V14\Enums\ListingGroupFilterVerticalEnum\ListingGroupFilterVertical;
+use Google\Ads\GoogleAds\V14\Resources\AssetGroup;
+use Google\Ads\GoogleAds\V14\Resources\AssetGroupListingGroupFilter;
+use Google\Ads\GoogleAds\V14\Services\AssetGroupListingGroupFilterOperation;
+use Google\Ads\GoogleAds\V14\Services\AssetGroupOperation;
+use Google\Ads\GoogleAds\V14\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V14\Services\MutateOperation;
+use Google\Ads\GoogleAds\V14\Services\AssetGroupServiceClient;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 use Google\Protobuf\FieldMask;
@@ -38,8 +38,8 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Exception\ExceptionWithResponseD
  */
 class AdsAssetGroup implements OptionsAwareInterface {
 
+	use ExceptionTrait;
 	use OptionsAwareTrait;
-	use ApiExceptionTrait;
 
 	/**
 	 * Temporary ID to use within a batch job.
@@ -116,7 +116,7 @@ class AdsAssetGroup implements OptionsAwareInterface {
 			$data    = [];
 
 			if ( $e instanceof ApiException ) {
-				$errors = $this->get_api_exception_errors( $e );
+				$errors = $this->get_exception_errors( $e );
 				/* translators: %s Error message */
 				$message = sprintf( __( 'Error creating asset group: %s', 'google-listings-and-ads' ), reset( $errors ) );
 				$code    = $this->map_grpc_code_to_http_status_code( $e );
@@ -303,7 +303,7 @@ class AdsAssetGroup implements OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error retrieving asset groups: %s', 'google-listings-and-ads' ), reset( $errors ) ),
@@ -372,7 +372,7 @@ class AdsAssetGroup implements OptionsAwareInterface {
 				$errors = [ 'Request entity too large' ];
 				$code   = $e->getCode();
 			} else {
-				$errors = $this->get_api_exception_errors( $e );
+				$errors = $this->get_exception_errors( $e );
 				$code   = $this->map_grpc_code_to_http_status_code( $e );
 				if ( array_key_exists( 'DUPLICATE_ASSETS_WITH_DIFFERENT_FIELD_VALUE', $errors ) ) {
 					$errors['DUPLICATE_ASSETS_WITH_DIFFERENT_FIELD_VALUE'] = __( 'Each image type (landscape, square, portrait or logo) cannot contain duplicated images.', 'google-listings-and-ads' );

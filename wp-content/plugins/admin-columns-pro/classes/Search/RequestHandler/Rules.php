@@ -59,7 +59,7 @@ class Rules {
 				$message = sprintf( '%s %s', $message, __( 'Try to re-apply the filter.', 'codepress-admin-columns' ) );
 
 				( new AC\Message\Notice( $message ) )
-					->set_type( AC\Message\Notice::WARNING )
+					->set_type( AC\Message::WARNING )
 					->register();
 
 				continue;

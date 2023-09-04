@@ -4,19 +4,19 @@ namespace ACP\Editing\ApplyFilter;
 
 use AC;
 
-class PostStatus implements AC\ApplyFilter {
+class PostStatus
+{
 
-	/**
-	 * @var AC\Column
-	 */
-	private $column;
+    private $column;
 
-	public function __construct( AC\Column $column ) {
-		$this->column = $column;
-	}
+    public function __construct(AC\Column $column)
+    {
+        $this->column = $column;
+    }
 
-	public function apply_filters( $value ) {
-		return (array) apply_filters( 'acp/editing/post_statuses', $value, $this->column );
-	}
+    public function apply_filters(array $stati): array
+    {
+        return (array)apply_filters('acp/editing/post_statuses', $stati, $this->column);
+    }
 
 }

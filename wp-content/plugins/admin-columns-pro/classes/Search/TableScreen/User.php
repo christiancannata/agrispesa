@@ -7,7 +7,8 @@ use ACP\Search\TableScreen;
 
 class User extends TableScreen {
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'restrict_manage_users', [ $this, 'filters_markup' ], 1 );
 
 		$filter_button = FilterButtonFactory::create( FilterButtonFactory::SCREEN_USERS );

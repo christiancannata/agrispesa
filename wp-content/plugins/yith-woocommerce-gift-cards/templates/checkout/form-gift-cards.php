@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-gift-cards.php.
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Templates
  */
 

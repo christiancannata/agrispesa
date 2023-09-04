@@ -14,7 +14,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 	 * YITH_YWGC_Gift_Card class
 	 *
 	 * @since   1.0.0
-	 * @author  YITH
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Gift_Card {
 
@@ -225,7 +225,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @param array $args The arguments.
 		 *
 		 * @since  1.0
-		 * @author YITH
 		 */
 		public function __construct( $args = array() ) {
 			$post = false;
@@ -334,7 +333,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param int $order_id the order ID.
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function register_order( $order_id ) {
@@ -357,7 +355,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * @param int $user_id user_id.
 		 *
 		 * @return bool
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_registered_user( $user_id ) {
@@ -371,7 +368,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param int $user_id user_id.
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function register_user( $user_id ) {
@@ -391,7 +387,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the list of orders where the gift cards was used
 		 *
 		 * @return array|mixed
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_registered_orders() {
@@ -412,7 +407,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the history of the gift card redemption using the shortcode
 		 *
 		 * @return array|mixed
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_redemption_history() {
@@ -444,7 +438,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve the gift card code
 		 *
 		 * @return string
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function get_code() {
@@ -455,7 +448,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * The gift card exists
 		 *
 		 * @return bool
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function exists() {
@@ -466,7 +458,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve if a gift card is enabled
 		 *
 		 * @return bool
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_enabled() {
@@ -477,7 +468,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 * Retrieve if a gift card is disabled
 		 *
 		 * @return bool
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_disabled() {
@@ -727,7 +717,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param bool|false $enabled enabled.
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_enabled_status( $enabled = false ) {
@@ -750,7 +739,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		 *
 		 * @param string $status status.
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_status( $status ) {
@@ -874,7 +862,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * The gift card is nulled and no more usable
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_dismissed_status() {
@@ -884,7 +871,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * The gift card code is duplicate and the gift card is not usable until a new, valid, code is set
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function set_duplicated_status() {
@@ -894,7 +880,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		/**
 		 * Check if the gift card is dismissed
 		 *
-		 * @author YITH
 		 * @since  1.0.0
 		 */
 		public function is_dismissed() {

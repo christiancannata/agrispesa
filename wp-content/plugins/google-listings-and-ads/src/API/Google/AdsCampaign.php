@@ -16,15 +16,15 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\Util\V12\ResourceNames;
-use Google\Ads\GoogleAds\V12\Common\MaximizeConversionValue;
-use Google\Ads\GoogleAds\V12\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V12\Resources\Campaign;
-use Google\Ads\GoogleAds\V12\Resources\Campaign\ShoppingSetting;
-use Google\Ads\GoogleAds\V12\Services\CampaignServiceClient;
-use Google\Ads\GoogleAds\V12\Services\CampaignOperation;
-use Google\Ads\GoogleAds\V12\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V12\Services\MutateOperation;
+use Google\Ads\GoogleAds\Util\V14\ResourceNames;
+use Google\Ads\GoogleAds\V14\Common\MaximizeConversionValue;
+use Google\Ads\GoogleAds\V14\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V14\Resources\Campaign;
+use Google\Ads\GoogleAds\V14\Resources\Campaign\ShoppingSetting;
+use Google\Ads\GoogleAds\V14\Services\CampaignServiceClient;
+use Google\Ads\GoogleAds\V14\Services\CampaignOperation;
+use Google\Ads\GoogleAds\V14\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V14\Services\MutateOperation;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 use Exception;
@@ -43,8 +43,8 @@ use Exception;
  */
 class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 
-	use ApiExceptionTrait;
 	use ContainerAwareTrait;
+	use ExceptionTrait;
 	use OptionsAwareTrait;
 	use MicroTrait;
 
@@ -126,7 +126,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error retrieving campaigns: %s', 'google-listings-and-ads' ), reset( $errors ) ),
@@ -169,7 +169,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error retrieving campaign: %s', 'google-listings-and-ads' ), reset( $errors ) ),
@@ -229,7 +229,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			/* translators: %s Error message */
 			$message = sprintf( __( 'Error creating campaign: %s', 'google-listings-and-ads' ), reset( $errors ) );
 
@@ -284,7 +284,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error editing campaign: %s', 'google-listings-and-ads' ), reset( $errors ) ),
@@ -318,7 +318,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			/* translators: %s Error message */
 			$message = sprintf( __( 'Error deleting campaign: %s', 'google-listings-and-ads' ), reset( $errors ) );
 

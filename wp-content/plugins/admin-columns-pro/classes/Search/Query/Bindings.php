@@ -2,116 +2,91 @@
 
 namespace ACP\Search\Query;
 
-class Bindings {
+class Bindings
+{
 
-	/**
-	 * @var int
-	 */
-	private static $aliases = [];
+    /**
+     * @var int[]
+     */
+    private static $aliases = [];
 
-	/**
-	 * @var string
-	 */
-	protected $where = '';
+    protected $where = '';
 
-	/**
-	 * @var string
-	 */
-	protected $join = '';
+    protected $join = '';
 
-	/**
-	 * @var string
-	 */
-	protected $group_by = '';
+    protected $group_by = '';
 
-	/**
-	 * @var array
-	 */
-	protected $meta_query = [];
+    protected $order_by = '';
 
-	/**
-	 * @param string $column
-	 *
-	 * @return string
-	 */
-	public function get_unique_alias( $column ) {
-		if ( ! isset( self::$aliases[ $column ] ) ) {
-			self::$aliases[ $column ] = 0;
-		}
+    protected $meta_query = [];
 
-		return $column . '_ac' . self::$aliases[ $column ]++;
-	}
+    public function get_unique_alias(string $column): string
+    {
+        if ( ! isset(self::$aliases[$column])) {
+            self::$aliases[$column] = 0;
+        }
 
-	/**
-	 * @return string
-	 */
-	public function get_where() {
-		return $this->where;
-	}
+        return $column . '_ac' . self::$aliases[$column]++;
+    }
 
-	/**
-	 * @param string $where
-	 *
-	 * @return $this
-	 */
-	public function where( $where ) {
-		$this->where = $where;
+    public function get_where(): string
+    {
+        return $this->where;
+    }
 
-		return $this;
-	}
+    public function where(string $where): self
+    {
+        $this->where = $where;
 
-	/**
-	 * @return string
-	 */
-	public function get_join() {
-		return $this->join;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $join
-	 *
-	 * @return $this
-	 */
-	public function join( $join ) {
-		$this->join = $join;
+    public function get_join(): string
+    {
+        return $this->join;
+    }
 
-		return $this;
-	}
+    public function join(string $join): self
+    {
+        $this->join = $join;
 
-	/**
-	 * @return string
-	 */
-	public function get_group_by() {
-		return $this->group_by;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $column
-	 *
-	 * @return $this
-	 */
-	public function group_by( $column ) {
-		$this->group_by = $column;
+    public function get_group_by(): string
+    {
+        return $this->group_by;
+    }
 
-		return $this;
-	}
+    public function group_by(string $group): self
+    {
+        $this->group_by = $group;
 
-	/**
-	 * @return array
-	 */
-	public function get_meta_query() {
-		return $this->meta_query;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param array $args
-	 *
-	 * @return $this
-	 */
-	public function meta_query( array $args ) {
-		$this->meta_query = $args;
+    public function get_order_by(): string
+    {
+        return $this->order_by;
+    }
 
-		return $this;
-	}
+    public function order_by(string $order_by): self
+    {
+        $this->order_by = $order_by;
+
+        return $this;
+    }
+
+    public function get_meta_query(): array
+    {
+        return $this->meta_query;
+    }
+
+    public function meta_query(array $args): self
+    {
+        $this->meta_query = $args;
+
+        return $this;
+    }
 
 }

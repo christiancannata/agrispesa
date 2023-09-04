@@ -1,40 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
+use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-abstract class Featured extends AbstractModel {
+abstract class Featured extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @return int[]
-	 */
-	abstract protected function get_featured_ids();
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+        return (new Bindings())->order_by(
+            SqlOrderByFactory::create_with_ids("$wpdb->posts.ID", $this->get_featured_ids(), (string)$order)
+        );
+    }
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
-
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
-
-		global $wpdb;
-
-		$featured_ids = $this->get_featured_ids();
-
-		if ( $featured_ids ) {
-			$ids = implode( ",", array_map( 'intval', $featured_ids ) );
-
-			$clauses['fields'] .= sprintf( ", $wpdb->posts.ID IN ( %s ) AS acsort_featured", $ids );
-			$clauses['groupby'] = "$wpdb->posts.ID";
-			$clauses['orderby'] = sprintf( "acsort_featured %s, $wpdb->posts.post_date", esc_sql( $this->get_order() ) );
-		}
-
-		return $clauses;
-	}
+    abstract protected function get_featured_ids(): array;
 
 }

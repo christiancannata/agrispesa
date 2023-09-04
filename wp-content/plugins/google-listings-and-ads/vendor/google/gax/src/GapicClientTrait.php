@@ -80,6 +80,7 @@ trait GapicClientTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
+    private bool $isNewClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
@@ -385,6 +386,12 @@ trait GapicClientTrait
             $options['restVersion'] = Version::getApiCoreVersion();
         }
 
+        // Set "client_library_name" depending on client library surface being used
+        $userAgentHeader = sprintf(
+            'gcloud-php-%s/%s',
+            $this->isNewClientSurface() ? 'new' : 'legacy',
+            $options['gapicVersion']
+        );
         $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
                 'libName',
@@ -392,6 +399,8 @@ trait GapicClientTrait
                 'gapicVersion'
             ], $options)
         );
+        $this->agentHeader['User-Agent'] = [$userAgentHeader];
+
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
@@ -425,9 +434,7 @@ trait GapicClientTrait
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig);
         } elseif ($credentials instanceof FetchAuthTokenInterface) {
-            $authHttpHandler = isset($credentialsConfig['authHttpHandler'])
-                ? $credentialsConfig['authHttpHandler']
-                : null;
+            $authHttpHandler = $credentialsConfig['authHttpHandler'] ?? null;
             return new CredentialsWrapper($credentials, $authHttpHandler);
         } elseif ($credentials instanceof CredentialsWrapper) {
             return $credentials;
@@ -467,12 +474,18 @@ trait GapicClientTrait
                 implode(', ', $supportedTransports)
             ));
         }
-        $configForSpecifiedTransport = isset($transportConfig[$transport])
-            ? $transportConfig[$transport]
-            : [];
+        $configForSpecifiedTransport = $transportConfig[$transport] ?? [];
         $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
         switch ($transport) {
             case 'grpc':
+                // Setting the user agent for gRPC requires special handling
+                if (isset($this->agentHeader['User-Agent'])) {
+                    if ($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] ??= '') {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
+                    }
+                    $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
+                        $this->agentHeader['User-Agent'][0];
+                }
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
                 return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
@@ -706,9 +719,7 @@ trait GapicClientTrait
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
 
-        $descriptor = isset($this->descriptors[$methodName]['grpcStreaming'])
-            ? $this->descriptors[$methodName]['grpcStreaming']
-            : null;
+        $descriptor = $this->descriptors[$methodName]['grpcStreaming'] ?? null;
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -1056,5 +1067,13 @@ trait GapicClientTrait
     protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * @internal
+     */
+    private function isNewClientSurface(): bool
+    {
+        return $this->isNewClient ?? $this->isNewClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }

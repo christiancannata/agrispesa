@@ -4,7 +4,7 @@
  *
  * Handles the "Classic" post type on admin side.
  *
- * @author  Leanza Francesco <leanzafrancesco@gmail.com>
+ * @author  YITH <plugins@yithemes.com>
  * @package YITH\PluginFrameworkTestPlugin\Classes
  */
 

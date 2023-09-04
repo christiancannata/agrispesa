@@ -1,30 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class PostParent extends AbstractModel {
+class PostParent extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('pparent');
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $bindings->join("LEFT JOIN $wpdb->posts AS $alias ON $wpdb->posts.post_parent = $alias.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create("$alias.post_title", (string)$order)
+        );
 
-		global $wpdb;
-
-		$clauses['join'] .= "LEFT JOIN $wpdb->posts AS acsort_posts ON $wpdb->posts.post_parent = acsort_posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create( "acsort_posts.post_title", $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.post_date %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

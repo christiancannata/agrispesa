@@ -5,52 +5,47 @@ namespace ACP;
 use AC\Request;
 use LogicException;
 
-class RequestHandlerFactory {
+class RequestHandlerFactory
+{
 
-	/**
-	 * @var RequestHandler[]
-	 */
-	private $request_handlers;
+    /**
+     * @var RequestHandler[]
+     */
+    private $request_handlers;
 
-	/**
-	 * @var Request
-	 */
-	private $request;
+    private $request;
 
-	public function __construct( Request $request ) {
-		$this->request = $request;
-	}
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 
-	public function add( $action, RequestHandler $request_handler ) {
-		$this->request_handlers[ $action ] = $request_handler;
+    public function add(string $action, RequestHandler $request_handler): self
+    {
+        $this->request_handlers[$action] = $request_handler;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function is_request() {
-		return null !== $this->get_request_handler();
-	}
+    public function is_request(): bool
+    {
+        return null !== $this->get_request_handler();
+    }
 
-	/**
-	 * @return RequestHandler|null
-	 */
-	private function get_request_handler() {
-		$action = $this->request->get( 'action' );
+    private function get_request_handler(): ?RequestHandler
+    {
+        $action = $this->request->get('action');
 
-		return isset( $this->request_handlers[ $action ] )
-			? $this->request_handlers[ $action ]
-			: null;
-	}
+        return $this->request_handlers[$action] ?? null;
+    }
 
-	/**
-	 * @return RequestHandler
-	 */
-	public function create() {
-		if ( ! $this->is_request() ) {
-			throw new LogicException( 'Invalid request.' );
-		}
+    public function create(): RequestHandler
+    {
+        if ( ! $this->is_request()) {
+            throw new LogicException('Invalid request.');
+        }
 
-		return $this->get_request_handler();
-	}
+        return $this->get_request_handler();
+    }
 
 }

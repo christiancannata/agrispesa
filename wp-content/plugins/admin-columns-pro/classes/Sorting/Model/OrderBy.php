@@ -2,28 +2,29 @@
 
 namespace ACP\Sorting\Model;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Type\Order;
 
-class OrderBy extends AbstractModel {
+class OrderBy extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	protected $orderby;
+    protected $orderby;
 
-	public function __construct( $orderby ) {
-		parent::__construct();
+    public function __construct(string $orderby)
+    {
+        parent::__construct();
 
-		$this->orderby = (string) $orderby;
-	}
+        $this->orderby = $orderby;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function get_sorting_vars() {
-		return [
-			'orderby' => $this->orderby,
-		];
-	}
+    public function create_query_bindings(Order $order): Bindings
+    {
+        return (new Bindings\QueryArguments())->query_arguments(
+            [
+                'orderby' => $this->orderby,
+            ]
+        );
+    }
 
 }

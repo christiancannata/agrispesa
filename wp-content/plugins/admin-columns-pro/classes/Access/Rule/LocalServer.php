@@ -8,7 +8,8 @@ use ACP\Access\Platform;
 
 class LocalServer implements ACP\Access\Rule {
 
-	public function get_permissions() {
+	public function get_permissions(): Permissions
+    {
 		$permissions = new Permissions();
 
 		if ( Platform::is_local() ) {

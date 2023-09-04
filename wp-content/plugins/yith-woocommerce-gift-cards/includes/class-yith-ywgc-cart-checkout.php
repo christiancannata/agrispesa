@@ -10,7 +10,7 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 	 * @class   YITH_YWGC_Cart_Checkout
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Cart_Checkout {
 
@@ -40,7 +40,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		protected function __construct() {
 
@@ -131,7 +130,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 * @param string $code       the gift card code
 		 *
 		 * @return array
-		 * @author Daniel Sanchez
 		 * @since  2.0.4
 		 */
 		public function verify_coupon_code( $return_val, $code ) {
@@ -262,7 +260,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 *
 		 * @param WC_Cart $cart the WC cart object.
 		 *
-		 * @author Fran Mendoza
 		 * @since  3.0.0
 		 */
 		public function ywgc_allow_shipping_in_coupons( $cart ) {
@@ -382,7 +379,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		/**
 		 * Add the remaining cart amount to the gift card added as coupon
 		 *
-		 * @author Fran Mendoza
 		 * @since  3.0.0
 		 */
 		function ywgc_charge_other_amounts_on_coupons( $remaining_amount ) {
@@ -437,7 +433,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 * @param bool   $cart_item_key    The cart item key
 		 *
 		 * @since    2.0.1
-		 * @author  Daniel Sanchez <daniel.sanchez@yithemes.com>
 		 * @return  string  The product title HTML
 		 * @use     woocommerce_cart_item_thumbnail hook
 		 */
@@ -1413,7 +1408,6 @@ if ( ! class_exists( 'YITH_YWGC_Cart_Checkout' ) ) {
 		 *
 		 * @throws Exception
 		 * @since  1.5.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function append_gift_card_data_to_order_item( $item_id, $values ) {
 

@@ -8,8 +8,8 @@ use LogicException;
 use OutOfBoundsException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Http\Client\ClientInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Http\Message\RequestFactoryInterface;
 use RuntimeException;
 use UnexpectedValueException;
 
@@ -178,6 +178,16 @@ class CachedKeySet implements ArrayAccess
             }
             $request = $this->httpFactory->createRequest('GET', $this->jwksUri);
             $jwksResponse = $this->httpClient->sendRequest($request);
+            if ($jwksResponse->getStatusCode() !== 200) {
+                throw new UnexpectedValueException(
+                    sprintf('HTTP Error: %d %s for URI "%s"',
+                        $jwksResponse->getStatusCode(),
+                        $jwksResponse->getReasonPhrase(),
+                        $this->jwksUri,
+                    ),
+                    $jwksResponse->getStatusCode()
+                );
+            }
             $this->keySet = $this->formatJwksForCache((string) $jwksResponse->getBody());
 
             if (!isset($this->keySet[$keyId])) {

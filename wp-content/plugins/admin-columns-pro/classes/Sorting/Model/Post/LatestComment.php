@@ -1,59 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Type\ComputationType;
+use ACP\Sorting\Type\Order;
 
-class LatestComment extends AbstractModel {
+class LatestComment extends AbstractModel implements QueryBindings
+{
 
-	public const STATUS_APPROVED = '1';
-	public const STATUS_SPAM = 'spam';
-	public const STATUS_TRASH = 'trash';
-	public const STATUS_PENDING = '0';
+    public const STATUS_APPROVED = '1';
+    public const STATUS_SPAM = 'spam';
+    public const STATUS_TRASH = 'trash';
+    public const STATUS_PENDING = '0';
 
-	/**
-	 * @var array
-	 */
-	private $stati;
+    private $stati;
 
-	public function __construct( array $stati = [] ) {
-		parent::__construct();
+    public function __construct(array $stati = [])
+    {
+        parent::__construct();
 
-		if ( empty( $stati ) ) {
-			$stati = [ self::STATUS_APPROVED, self::STATUS_PENDING ];
-		}
+        if (empty($stati)) {
+            $stati = [self::STATUS_APPROVED, self::STATUS_PENDING];
+        }
 
-		$this->stati = $stati;
-	}
+        $this->stati = $stati;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'posts_fields_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('lcomment');
 
-	public function posts_fields_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $join = "LEFT JOIN $wpdb->comments AS $alias ON $alias.comment_post_ID = $wpdb->posts.ID";
 
-		global $wpdb;
+        if ($this->stati) {
+            $join .= sprintf(
+                "\nAND $alias.comment_approved IN ( '%s' )",
+                implode("','", array_map('esc_sql', $this->stati))
+            );
+        }
 
-		$clauses['join'] .= " 
-			LEFT JOIN $wpdb->comments AS acsort_comments ON acsort_comments.comment_post_ID = $wpdb->posts.ID
-		";
+        $bindings->join($join);
+        $bindings->group_by("$wpdb->posts.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_computation(
+                new ComputationType(ComputationType::MAX),
+                "$alias.comment_date",
+                (string)$order
+            )
+        );
 
-		if ( $this->stati ) {
-			$clauses['where'] .= sprintf( " AND acsort_comments.comment_approved IN ( '%s' )", implode( "','", array_map( 'esc_sql', $this->stati ) ) );
-		}
-
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_computation( new ComputationType( ComputationType::MAX ), "acsort_comments.comment_date", $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.post_date %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

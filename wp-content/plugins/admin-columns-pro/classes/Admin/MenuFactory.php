@@ -3,6 +3,7 @@
 namespace ACP\Admin;
 
 use AC;
+use AC\Admin\Menu;
 use AC\Asset\Location;
 use ACP\ActivationTokenFactory;
 use ACP\Admin\Page\License;
@@ -25,7 +26,8 @@ class MenuFactory extends AC\Admin\MenuFactory {
 		$this->activation_token_factory = $activation_token_factory;
 	}
 
-	public function create( $current ) {
+	public function create( string $current ): Menu
+    {
 		$menu = parent::create( $current );
 
 		$menu->remove_item( 'pro' );

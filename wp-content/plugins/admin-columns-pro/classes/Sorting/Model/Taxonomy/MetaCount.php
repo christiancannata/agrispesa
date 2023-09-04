@@ -2,51 +2,52 @@
 
 namespace ACP\Sorting\Model\Taxonomy;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Type\ComputationType;
+use ACP\Sorting\Type\Order;
 
-class MetaCount extends AbstractModel {
+class MetaCount extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	protected $meta_key;
+    protected $meta_key;
 
-	public function __construct( $meta_key ) {
-		parent::__construct();
+    public function __construct(string $meta_key)
+    {
+        parent::__construct();
 
-		$this->meta_key = $meta_key;
-	}
+        $this->meta_key = $meta_key;
+    }
 
-	public function get_sorting_vars() {
-		add_action( 'terms_clauses', [ $this, 'pre_term_query_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	public function pre_term_query_callback( $clauses ) {
-		global $wpdb;
+        $alias = $bindings->get_unique_alias('metacount');
 
-		remove_action( 'terms_clauses', [ $this, __FUNCTION__ ] );
+        $orderby = SqlOrderByFactory::create_with_computation(
+            new ComputationType(ComputationType::COUNT),
+            "$alias.meta_key",
+            $order,
+            true
+        );
 
-		if ( 'COUNT(*)' === $clauses['fields'] ) {
-			return $clauses;
-		}
+        $join = $wpdb->prepare(
+            "
+			    LEFT JOIN $wpdb->termmeta AS $alias ON t.term_id = $alias.term_id
+				AND $alias.meta_key = %s
+		    ",
+            $this->meta_key
+        );
 
-		$clauses['join'] .= $wpdb->prepare( "
-			LEFT JOIN {$wpdb->termmeta} AS acsort_termmeta 
-				ON t.term_id = acsort_termmeta.term_id
-				AND acsort_termmeta.meta_key = %s
-		", $this->meta_key );
-
-		$clauses['orderby'] = sprintf( "
-			GROUP BY t.term_id 
-			ORDER BY %s
-		", SqlOrderByFactory::create_with_computation( new ComputationType( ComputationType::COUNT ), 'acsort_termmeta.meta_key', $this->get_order(), true ) );
-		$clauses['order'] = '';
-
-		return $clauses;
-	}
+        return $bindings
+            ->join($join)
+            ->group_by("t.term_id")
+            ->order_by($orderby);
+    }
 
 }

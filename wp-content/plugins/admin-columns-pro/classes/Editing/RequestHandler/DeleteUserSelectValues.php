@@ -5,7 +5,6 @@ namespace ACP\Editing\RequestHandler;
 use AC;
 use AC\Request;
 use AC\Response;
-use ACP;
 use ACP\Editing\PaginatedOptions;
 use ACP\Editing\RequestHandler;
 

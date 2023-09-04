@@ -2,6 +2,7 @@
 /**
  * Define constants and include Plugin Framework files.
  *
+ * @author  YITH <plugins@yithemes.com>
  * @package YITH\PluginFramework
  */
 
@@ -63,7 +64,6 @@ if ( ! function_exists( 'yit_plugin_fw_row_meta' ) ) {
 	 * @param string   $status      Status filter currently applied to the plugin list.
 	 *
 	 * @return string[] array of the plugin's metadata.
-	 * @author Andrea Grillo <andrea.grillo@yithemes.com>
 	 * @since  3.0.17
 	 */
 	function yit_plugin_fw_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
@@ -230,7 +230,6 @@ if ( ! function_exists( 'yith_add_action_links' ) ) {
 	 * @param string $plugin_slug The plugin slug.
 	 *
 	 * @return   array
-	 * @author   Andrea Grillo <andrea.grillo@yithemes.com>
 	 * @since    1.6.5
 	 */
 	function yith_add_action_links( $links, $panel_page = '', $is_premium = false, $plugin_slug = '' ) {
@@ -296,3 +295,8 @@ if ( ! function_exists( 'yith_plugin_fw_print_deactivation_message' ) ) {
 }
 
 add_action( 'admin_notices', 'yith_plugin_fw_print_deactivation_message' );
+
+/**
+ * Action triggered after the Plugin Framework initialization finishes.
+ */
+do_action( 'yith_plugin_fw_loaded' );

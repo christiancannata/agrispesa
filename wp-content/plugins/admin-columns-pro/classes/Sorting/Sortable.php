@@ -2,11 +2,12 @@
 
 namespace ACP\Sorting;
 
-interface Sortable {
+interface Sortable
+{
 
-	/**
-	 * @return AbstractModel
-	 */
-	public function sorting();
+    /**
+     * @return AbstractModel|null
+     */
+    public function sorting();
 
 }

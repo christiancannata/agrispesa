@@ -2,62 +2,60 @@
 
 namespace ACP;
 
+use AC\Asset\Location\Absolute;
 use AC\Registerable;
 
-class Localize implements Registerable {
+class Localize implements Registerable
+{
 
-	const TEXTDOMAIN = 'codepress-admin-columns';
+    private const TEXTDOMAIN = 'codepress-admin-columns';
 
-	/**
-	 * @var string
-	 */
-	private $plugin_dir;
+    private $location;
 
-	public function __construct( $plugin_dir ) {
-		$this->plugin_dir = $plugin_dir;
-	}
+    public function __construct(Absolute $location)
+    {
+        $this->location = $location;
+    }
 
-	public function register() {
-		add_action( 'init', [ $this, 'localize' ] );
-	}
+    public function register(): void
+    {
+        add_action('init', [$this, 'localize']);
+    }
 
-	public function localize() {
-		// prevent the loading of existing translations within the 'wp-content/languages' folder.
-		unload_textdomain( self::TEXTDOMAIN );
+    public function localize(): void
+    {
+        // prevent the loading of existing translations within the 'wp-content/languages' folder.
+        unload_textdomain(self::TEXTDOMAIN);
 
-		$local = $this->get_local();
+        $local = $this->get_local();
 
-		$this->load_textdomain( $this->plugin_dir . 'admin-columns/languages', $local );
-		$this->load_textdomain( $this->plugin_dir . 'languages', $local );
-	}
+        $this->load_textdomain($this->location->with_suffix('admin-columns/languages')->get_path(), $local);
+        $this->load_textdomain($this->location->with_suffix('languages')->get_path(), $local);
+    }
 
-	/**
-	 * @return string
-	 */
-	private function get_local() {
-		$local = function_exists( 'determine_locale' )
-			? determine_locale()
-			: get_user_locale();
+    private function get_local(): string
+    {
+        $local = function_exists('determine_locale')
+            ? determine_locale()
+            : get_user_locale();
 
-		return (string) apply_filters( 'plugin_locale', $local, self::TEXTDOMAIN );
-	}
+        return (string)apply_filters('plugin_locale', $local, self::TEXTDOMAIN);
+    }
 
-	/**
-	 * Do no use `load_plugin_textdomain()` because it could prevent
-	 * pro languages from loading when core translation files are found.
-	 *
-	 * @param string $language_dir
-	 * @param string $local
-	 */
-	private function load_textdomain( $language_dir, $local ) {
-		$mofile = sprintf(
-			'%s/%s-%s.mo',
-			$language_dir,
-			self::TEXTDOMAIN,
-			$local
-		);
+    /**
+     * Do no use `load_plugin_textdomain()` because it could prevent
+     * pro languages from loading when core translation files are found.
+     */
+    private function load_textdomain(string $language_dir, string $local): void
+    {
+        $mofile = sprintf(
+            '%s/%s-%s.mo',
+            $language_dir,
+            self::TEXTDOMAIN,
+            $local
+        );
 
-		load_textdomain( self::TEXTDOMAIN, $mofile );
-	}
+        load_textdomain(self::TEXTDOMAIN, $mofile);
+    }
 
 }

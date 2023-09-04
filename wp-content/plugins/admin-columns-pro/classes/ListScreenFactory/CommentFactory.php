@@ -1,15 +1,19 @@
 <?php
-declare( strict_types=1 );
+
+declare(strict_types=1);
 
 namespace ACP\ListScreenFactory;
 
 use AC;
+use AC\ListScreen;
 use ACP\ListScreen\Comment;
 
-class CommentFactory extends AC\ListScreenFactory\CommentFactory {
+class CommentFactory extends AC\ListScreenFactory\CommentFactory
+{
 
-	protected function create_list_screen(): AC\ListScreen\Comment {
-		return new Comment();
-	}
+    protected function create_list_screen(string $key): ListScreen
+    {
+        return new Comment();
+    }
 
 }

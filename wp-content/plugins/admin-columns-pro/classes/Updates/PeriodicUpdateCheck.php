@@ -24,7 +24,8 @@ class PeriodicUpdateCheck implements Registerable {
 		$this->cache = $cache;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 

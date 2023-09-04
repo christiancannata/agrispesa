@@ -2,8 +2,6 @@
 
 namespace ACP\Editing;
 
-use ACP;
-
 interface Strategy {
 
 	public function user_can_edit_item( int $id ): bool;

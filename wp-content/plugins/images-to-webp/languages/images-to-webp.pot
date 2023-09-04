@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Images to WebP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-07 22:17+0000\n"
+"POT-Creation-Date: 2023-08-02 21:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.1; wp-5.3"
 
-#: images-to-webp.php:218
+#: images-to-webp.php:299
 #, php-format
 msgid "%d converted"
 msgstr ""
@@ -24,13 +24,13 @@ msgstr ""
 msgid "(Of course, you can activate it back to fix this problem.)"
 msgstr ""
 
-#: tests/configs.php:102
+#: tests/configs.php:107
 msgid ""
 "Add the following code to your <code>.htaccess</code> file above <code># "
-"BEGIN WordPress</code>"
+"BEGIN WordPress</code>,"
 msgstr ""
 
-#: tests/configs.php:96
+#: tests/configs.php:101
 msgid "and the most important: RESTART YOUR SERVER after these changes!"
 msgstr ""
 
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Conversion method"
 msgstr ""
 
-#: images-to-webp.php:126
+#: images-to-webp.php:130
 msgid "Convert existing images"
 msgstr ""
 
@@ -62,33 +62,37 @@ msgstr ""
 msgid "Delete original images after conversion"
 msgstr ""
 
-#: images-to-webp.php:39
+#: images-to-webp.php:42
 msgid "Error {{ERROR}}, trying to continue with missing images... "
 msgstr ""
 
-#: tabs/tab-convert.php:42
+#: tabs/tab-convert.php:18
 msgid "Find and convert ALL images"
 msgstr ""
 
-#: tabs/tab-convert.php:40
+#: tabs/tab-convert.php:16
 msgid "Find and convert MISSING images"
 msgstr ""
 
-#: tests/server.php:34
-msgid "GD"
+#: images-to-webp.php:129
+msgid "General"
 msgstr ""
 
-#: images-to-webp.php:125
-msgid "General"
+#: tests/configs.php:112
+msgid ""
+"If you have a proxy setup or some combination of NGiNX and Apache on your "
+"server, you may probably need to disable NGiNX direct processing of image "
+"static files."
+msgstr ""
+
+#: tests/configs.php:114
+msgid ""
+"If you have these lines in .htaccess and you still see this message, then "
+"there is some other problem with your server configuration."
 msgstr ""
 
 #: tabs/tab-general.php:71
 msgid "Images quality"
-msgstr ""
-
-#. Name of the plugin
-#: images-to-webp.php:114 images-to-webp.php:115 images-to-webp.php:170
-msgid "Images to WebP"
 msgstr ""
 
 #: tests/server.php:21
@@ -117,36 +121,40 @@ msgid ""
 "<strong>Images to WebP</strong> again."
 msgstr ""
 
-#: images-to-webp.php:39
+#: images-to-webp.php:42
 msgid "Please wait, converting your images is in progress..."
 msgstr ""
 
-#: tabs/tab-convert.php:35
+#: tabs/tab-convert.php:13
 msgid "Select folders you want to scan for images and convert them to WebP:"
 msgstr ""
 
-#: tests/configs.php:111
+#: tests/configs.php:120
 #, php-format
 msgid ""
 "Testing file <code>%1$s</code> is not accessible, but returns HTTP response "
 "code <code>%2$d</code>. Contact your hosting provider or developer."
 msgstr ""
 
-#: tests/configs.php:98 tests/configs.php:105
+#: tests/configs.php:103
 msgid "Then try to activate Images to WebP again ;)"
 msgstr ""
 
-#: tests/configs.php:87
+#: tests/configs.php:109
+msgid "then try to activate Images to WebP again:"
+msgstr ""
+
+#: tests/configs.php:92
 msgid ""
 "then you need to add this to your server block, usually site.conf or "
 "/nginx/sites-enabled/default ( inside of the server{} section ):"
 msgstr ""
 
-#: tabs/tab-convert.php:28
+#: tabs/tab-convert.php:6
 msgid "This operation will NOT alter your original images."
 msgstr ""
 
-#: tabs/tab-convert.php:26
+#: tabs/tab-convert.php:4
 msgid ""
 "This operation will PERMANENTLY DELETE original images, because you set this "
 "in general settings. It is a good idea to create some backup."

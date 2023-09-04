@@ -16,7 +16,7 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 	 * @class   YITH_YWGC_Admin
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Admin {
 
@@ -80,7 +80,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 * @param  array $args the arguments
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function __construct() {
 
@@ -118,10 +117,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 						'title' => _x( 'Settings', 'Settings tab name', 'yith-woocommerce-gift-cards' ),
 						'icon'  => 'settings',
 					),
-					'configuration' => array(
-						'title' => _x( 'Configuration', 'Settings tab name', 'yith-woocommerce-gift-cards' ),
-						'icon'  => 'configuration',
-					),
 					'email'         => array(
 						'title' => __( 'Email Settings', 'yith-woocommerce-gift-cards' ),
 						'icon'  => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>',
@@ -140,7 +135,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 *
 		 * @return   void
 		 * @since    1.0
-		 * @author   Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @use      /Yit_Plugin_Panel class
 		 * @see      plugin-fw/lib/yit-plugin-panel.php
 		 */
@@ -200,6 +194,7 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 						),
 					),
 				),
+				'is_free'          => defined( 'YITH_YWGC_FREE' ),
 				'is_premium'       => defined( 'YITH_YWGC_PREMIUM' ),
 				'is_extended'      => defined( 'YITH_YWGC_EXTENDED' ),
 			);
@@ -239,7 +234,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 *
 		 * @return   void
 		 * @since    1.0
-		 * @author   Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @return void
 		 */
 		public function premium_tab() {
@@ -253,7 +247,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 * Get the premium landing uri
 		 *
 		 * @since   1.0.0
-		 * @author  Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @return  string The premium landing link
 		 */
 		public function get_premium_landing_uri() {
@@ -265,7 +258,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 * This method based on query string load single email options or the general table
 		 *
 		 * @since  1.5.0
-		 * @author Francesco Licandro
 		 */
 		public function email_settings() {
 
@@ -373,7 +365,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 		 *
 		 * @return string
 		 * @since  1.5.0
-		 * @author Francesco Licandro
 		 */
 		public function build_single_email_settings_url( $email_key ) {
 			return admin_url( "admin.php?page={$this->panel_page}&tab=email&section=" . strtolower( $email_key ) );

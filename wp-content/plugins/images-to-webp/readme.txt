@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/jakubnovaksl
 Tags: webp, images, pictures, optimize, convert, media
 Requires at least: 3.0.1
 Requires PHP: 5.6
-Tested up to: 6.1
-Stable tag: 4.2
+Tested up to: 6.3
+Stable tag: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,14 @@ function modify_itw_htaccess( $rewrite_rules ){
 	return $rewrite_rules;
 }`
 
+#### itw_abspath
+Maybe you use roots.io/bedrock or other custom folder structure
+
+`add_filter( 'itw_abspath', 'modify_itw_abspath', 10, 2 );
+function modify_itw_abspath( $abspath ){
+	return trailingslashit( WP_CONTENT_DIR );
+}`
+
 #### $images_to_webp->convert_image()
 Maybe you want to automatically generate WebP for other plugins
 
@@ -106,6 +114,10 @@ When you have installed plugin and converted all images, follow these steps:
 3. Refresh your website page.
 4. Check list of loaded images. Note `Type` column.
 5. If value of `webp` is there, then everything works fine.
+
+= NGiNX and Apache together =
+
+If you have some proxy setup or some other combination of NGiNX and Apache on your server, then probably .htaccess changes won't work and you will need to ask your hosting provider to disable NGiNX direct processing of image static files.
 
 = Apache .htaccess =
 
@@ -157,6 +169,15 @@ Are you using ISP Manager? Then it's probably not working for you, but no worrie
 
 
 == Changelog ==
+
+= 4.4 =
+* Tested on WP 6.3
+* added FAQ section "NGiNX and Apache together"
+* make configs error messages more descriptive
+
+= 4.3 =
+* Tested on WP 6.2
+* new filter itw_abspath for WP installations with customized folder structure like Bedrock
 
 = 4.2 =
 * make convert old works also for local installations

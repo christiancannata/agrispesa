@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-05-29 09:56:30+00:00\n"
+"POT-Creation-Date: 2023-08-09 08:27:27+00:00\n"
 "PO-Revision-Date: 2021-12-13 12:45:02+0000\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -13,130 +13,131 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 
-#: includes/class-yit-assets.php:138
+#: includes/class-yit-assets.php:137
 msgid "No file provided."
 msgstr ""
 
-#: includes/class-yit-assets.php:139
+#: includes/class-yit-assets.php:138
 msgid "You cannot drop files here."
 msgstr ""
 
-#: includes/class-yit-assets.php:161 yit-functions.php:2007
+#: includes/class-yit-assets.php:160 yit-functions.php:1982
 msgid "Confirm trash"
 msgstr "Verplaatsen naar prullenbak bevestigen"
 
-#: includes/class-yit-assets.php:162
+#: includes/class-yit-assets.php:161
 msgid "Are you sure you want to trash the selected items?"
 msgstr ""
 "Weet je zeker dat je het geselecteerde item naar de prullenbak wilt "
 "verplaatsen?"
 
-#: includes/class-yit-assets.php:164 includes/class-yit-assets.php:168
+#: includes/class-yit-assets.php:163 includes/class-yit-assets.php:167
 #: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
-#: yit-functions.php:2009 yit-functions.php:2027
+#: yit-functions.php:1984 yit-functions.php:2002
 msgid "No"
 msgstr "Nee"
 
-#: includes/class-yit-assets.php:165 yit-functions.php:2025
-#: yit-functions.php:2152
+#: includes/class-yit-assets.php:164 yit-functions.php:2000
+#: yit-functions.php:2127
 msgid "Confirm delete"
 msgstr "Verwijderen bevestigen"
 
-#: includes/class-yit-assets.php:166
+#: includes/class-yit-assets.php:165
 msgid "Are you sure you want to delete the selected items?"
 msgstr "Weet je zeker dat je de geselecteerde items wilt verwijderen?"
 
-#: includes/class-yit-assets.php:166 yit-functions.php:1941
-#: yit-functions.php:2100
+#: includes/class-yit-assets.php:165 yit-functions.php:1916
+#: yit-functions.php:2075
 msgid ""
 "This action cannot be undone and you will not be able to recover this data."
 msgstr ""
 "Deze actie kan niet ongedaan gemaakt worden en je zult deze gegevens niet "
 "kunnen herstellen."
 
-#: includes/class-yit-assets.php:186 includes/class-yit-plugin-subpanel.php:140
+#: includes/class-yit-assets.php:185 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
-#: includes/class-yit-assets.php:187 includes/class-yit-plugin-subpanel.php:140
+#: includes/class-yit-assets.php:186 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid ""
 "If you continue with this action, you will reset all options in this page."
 msgstr ""
 "Als je doorgaat met deze actie, zal je alle opties op deze pagina resetten."
 
-#: includes/class-yit-assets.php:198
+#: includes/class-yit-assets.php:197
 msgid "Clear"
 msgstr "Wissen"
 
-#: includes/class-yit-assets.php:199
+#: includes/class-yit-assets.php:198
 msgid "Clear color"
 msgstr "Kleur wissen"
 
-#: includes/class-yit-assets.php:200
+#: includes/class-yit-assets.php:199
 msgid "Default"
 msgstr "Standaard"
 
-#: includes/class-yit-assets.php:201
+#: includes/class-yit-assets.php:200
 msgid "Select default color"
 msgstr "Standaardkleur selecteren"
 
-#: includes/class-yit-assets.php:202
+#: includes/class-yit-assets.php:201
 msgid "Select Color"
 msgstr "Kleur selecteren"
 
-#: includes/class-yit-assets.php:203
+#: includes/class-yit-assets.php:202
 msgid "Color value"
 msgstr "Kleurwaarde"
 
-#: includes/class-yit-help-desk.php:152
+#: includes/class-yit-help-desk.php:148
 msgid "There was an error with your request; please try again later."
 msgstr ""
 "Er is een fout opgetreden met je verzoek, probeer het later opnieuw a.u.b."
 
-#: includes/class-yit-plugin-panel-woocommerce.php:521
-msgid "Options saved correctly!"
+#: includes/class-yit-plugin-panel-woocommerce.php:501
+#: includes/class-yit-plugin-panel.php:1546
+msgid "Options saved!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:575
+#: includes/class-yit-plugin-panel-woocommerce.php:555
 msgid "Options reset correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:629
+#: includes/class-yit-plugin-panel-woocommerce.php:605
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "Als je deze pagina verlaat zullen alle wijzigingen verloren gaan."
 
-#: includes/class-yit-plugin-panel.php:90
+#: includes/class-yit-plugin-panel.php:89
 msgid "Plugin Settings"
 msgstr "Plugin instellingen"
 
-#: includes/class-yit-plugin-panel.php:91
+#: includes/class-yit-plugin-panel.php:90
 msgid "Settings"
 msgstr "Instellingen"
 
-#: includes/class-yit-plugin-panel.php:557
-#: includes/class-yit-plugin-panel.php:560
+#: includes/class-yit-plugin-panel.php:544
+#: includes/class-yit-plugin-panel.php:547
 msgid "How to install premium version"
 msgstr "Hoe installeer ik de premium versie"
 
-#: includes/class-yit-plugin-panel.php:1138
+#: includes/class-yit-plugin-panel.php:1158
 msgid "Read the <mark>plugin documentation</mark>"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1139
+#: includes/class-yit-plugin-panel.php:1159
 msgid "Learn what you can really do with this powerful tool"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1149
+#: includes/class-yit-plugin-panel.php:1169
 msgid "Watch our <mark>\"First Steps\" video</mark>"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1150
+#: includes/class-yit-plugin-panel.php:1170
 msgid "See how it works before you start using it"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1273
+#: includes/class-yit-plugin-panel.php:1290
 msgid ""
 "At first, I was hesitant to buy the premium version so I started with the "
 "free option.\n"
@@ -147,54 +148,53 @@ msgid ""
 "kind of work and just buy whatever plugin you need from YITH."
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1536
+#: includes/class-yit-plugin-panel.php:1541
 msgid ""
 "The element you have entered already exists. Please, enter another name."
 msgstr "Het element dat je hebt ingevoerd bestaat al. Voer een andere naam in."
 
-#: includes/class-yit-plugin-panel.php:1537
+#: includes/class-yit-plugin-panel.php:1542
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
-#: includes/class-yit-plugin-panel.php:1538
+#: includes/class-yit-plugin-panel.php:1543
 msgid "Settings reset"
 msgstr "Instellingen resetten"
 
-#: includes/class-yit-plugin-panel.php:1539
+#: includes/class-yit-plugin-panel.php:1544
 msgid "Element deleted correctly."
 msgstr "Element juist verwijderd."
 
-#: includes/class-yit-plugin-panel.php:1540
-#: includes/class-yit-plugin-panel.php:1541
+#: includes/class-yit-plugin-panel.php:1545
 msgid "Element updated correctly."
 msgstr "Element juist geüpdatet."
 
-#: includes/class-yit-plugin-panel.php:1542
+#: includes/class-yit-plugin-panel.php:1547
 msgid "Database imported correctly."
 msgstr "Database juist geïmporteerd."
 
-#: includes/class-yit-plugin-panel.php:1543
+#: includes/class-yit-plugin-panel.php:1548
 msgid "An error has occurred during import. Please try again."
 msgstr "Er is een fout opgetreden tijdens importeren. Probeer opnieuw."
 
-#: includes/class-yit-plugin-panel.php:1544
+#: includes/class-yit-plugin-panel.php:1549
 msgid "The added file is not valid."
 msgstr "Het toegevoegde bestand is niet geldig."
 
-#: includes/class-yit-plugin-panel.php:1545
+#: includes/class-yit-plugin-panel.php:1550
 msgid "Sorry, import is disabled."
 msgstr "Sorry, importeren is uitgeschakeld."
 
-#: includes/class-yit-plugin-panel.php:1546
+#: includes/class-yit-plugin-panel.php:1551
 msgid "Sorting successful."
 msgstr "Succesvol gesorteerd."
 
-#: includes/class-yit-plugin-subpanel.php:133
+#: includes/class-yit-plugin-subpanel.php:127
 #: templates/panel/panel-content-page.php:29
 msgid "Save Changes"
 msgstr "Wijzigingen opslaan"
 
-#: includes/class-yit-plugin-subpanel.php:143
+#: includes/class-yit-plugin-subpanel.php:137
 #: templates/panel/panel-content-page.php:38
 msgid "Reset to default"
 msgstr "Resetten naar standaard"
@@ -269,78 +269,78 @@ msgstr "Terug naar \"%s\""
 msgid "Back to the list"
 msgstr "Terug naar de lijst"
 
-#: includes/class-yith-system-status.php:110
+#: includes/class-yith-system-status.php:107
 msgid "WordPress Version"
 msgstr "WordPress Versie"
 
-#: includes/class-yith-system-status.php:111
+#: includes/class-yith-system-status.php:108
 msgid "WooCommerce Version"
 msgstr "WooCommerce Versie"
 
-#: includes/class-yith-system-status.php:112
+#: includes/class-yith-system-status.php:109
 msgid "Available Memory"
 msgstr "Beschikbaar geheugen"
 
-#: includes/class-yith-system-status.php:113
+#: includes/class-yith-system-status.php:110
 msgid "PHP Version"
 msgstr "PHP Versie"
 
-#: includes/class-yith-system-status.php:114
+#: includes/class-yith-system-status.php:111
 msgid "TLS Version"
 msgstr "TLS Versie"
 
-#: includes/class-yith-system-status.php:115
+#: includes/class-yith-system-status.php:112
 msgid "WordPress Cron"
 msgstr "WordPress Cron"
 
-#: includes/class-yith-system-status.php:116
+#: includes/class-yith-system-status.php:113
 msgid "SimpleXML"
 msgstr "SimpleXML"
 
-#: includes/class-yith-system-status.php:117
+#: includes/class-yith-system-status.php:114
 msgid "MultiByte String"
 msgstr "MultiByte String"
 
-#: includes/class-yith-system-status.php:118
+#: includes/class-yith-system-status.php:115
 msgid "ImageMagick Version"
 msgstr "ImageMagick Versie"
 
-#: includes/class-yith-system-status.php:119
+#: includes/class-yith-system-status.php:116
 msgid "GD Library"
 msgstr "GD Library"
 
-#: includes/class-yith-system-status.php:120
+#: includes/class-yith-system-status.php:117
 msgid "Iconv Module"
 msgstr "Verzendmodule inschakelen"
 
-#: includes/class-yith-system-status.php:121
+#: includes/class-yith-system-status.php:118
 msgid "OPCache Save Comments"
 msgstr "OPCache Opmerkingen opslaan"
 
-#: includes/class-yith-system-status.php:122
+#: includes/class-yith-system-status.php:119
 msgid "URL FOpen"
 msgstr "URL FOpen"
 
-#: includes/class-yith-system-status.php:140
-#: includes/class-yith-system-status.php:141
+#: includes/class-yith-system-status.php:136
+#: includes/class-yith-system-status.php:137
 #: templates/sysinfo/system-information-panel.php:11
 msgid "System Status"
 msgstr "Systeem Status"
 
-#: includes/class-yith-system-status.php:183
+#: includes/class-yith-system-status.php:177
 msgid "YITH Plugins"
 msgstr "YITH Plugins"
 
-#: includes/class-yith-system-status.php:191
+#: includes/class-yith-system-status.php:185
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: includes/class-yith-system-status.php:341
+#: includes/class-yith-system-status.php:332
 msgid "Warning!"
 msgstr "Waarschuwing!"
 
 #. translators: %1$s open link tag, %2$s open link tag
-#: includes/class-yith-system-status.php:345
+#: includes/class-yith-system-status.php:336
 msgid ""
 "The system check has detected some compatibility issues on your installation."
 "%1$sClick here%2$s to know more"
@@ -348,34 +348,34 @@ msgstr ""
 "Het systeem heeft enkele compatibiliteitsproblemen gevonden op uw "
 "installatie.%1$sklik hier%2$s om meer te weten te komen"
 
-#: includes/class-yith-system-status.php:495
+#: includes/class-yith-system-status.php:482
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
-#: includes/class-yith-system-status.php:495
+#: includes/class-yith-system-status.php:482
 msgid "Disabled"
 msgstr "Uitgeschakeld"
 
-#: includes/class-yith-system-status.php:500
+#: includes/class-yith-system-status.php:487
 msgid "N/A"
 msgstr "N.v.t"
 
 #. translators: %1$s plugin name, %2$s requirement name
-#: includes/class-yith-system-status.php:527
+#: includes/class-yith-system-status.php:513
 msgid "%1$s needs %2$s enabled"
 msgstr "%1$s heeft nodig %2$s ingeschakeld"
 
 #. translators: %1$s plugin name, %2$s required memory amount
-#: includes/class-yith-system-status.php:530
+#: includes/class-yith-system-status.php:516
 msgid "%1$s needs at least %2$s of available memory"
 msgstr "%1$ss heeft ten minste %2$s beschikbaar geheugen nodig"
 
 #. translators: %1$s plugin name, %2$s version number
-#: includes/class-yith-system-status.php:533
+#: includes/class-yith-system-status.php:519
 msgid "%1$s needs at least %2$s version"
 msgstr "%1$s heeft minstens %2$s versie nodig"
 
-#: includes/class-yith-system-status.php:557
+#: includes/class-yith-system-status.php:542
 msgid ""
 "Update it to the latest version in order to benefit of all new features and "
 "security updates."
@@ -383,27 +383,27 @@ msgstr ""
 "Bijwerken naar de laatste versie, om te profiteren van alle nieuwe opties en "
 "veiligheidsupdates."
 
-#: includes/class-yith-system-status.php:561
-#: includes/class-yith-system-status.php:567
+#: includes/class-yith-system-status.php:546
+#: includes/class-yith-system-status.php:552
 msgid "Contact your hosting company in order to update it."
 msgstr "Neem contact op met uw hosting provider om het bij te werken."
 
-#: includes/class-yith-system-status.php:565
+#: includes/class-yith-system-status.php:550
 msgid "Contact your hosting company in order to install it."
 msgstr "Neem contact op met je hostingbedrijf om het te installeren."
 
 #. translators: %1$s code, %2$s file name
-#: includes/class-yith-system-status.php:572
+#: includes/class-yith-system-status.php:557
 msgid "Remove %1$s from %2$s file"
 msgstr "Verwijder %1$s uit %2$s bestand"
 
-#: includes/class-yith-system-status.php:580
+#: includes/class-yith-system-status.php:565
 msgid "Contact your hosting company in order to enable it."
 msgstr "Neem contact op met uw hosting provider om het in te schakelen."
 
 #. translators: %1$s opening link tag, %2$s closing link tag
-#: includes/class-yith-system-status.php:584
-#: includes/class-yith-system-status.php:607
+#: includes/class-yith-system-status.php:569
+#: includes/class-yith-system-status.php:591
 msgid ""
 "Read more %1$shere%2$s or contact your hosting company in order to increase "
 "it."
@@ -412,7 +412,7 @@ msgstr ""
 "het te verhogen."
 
 #. translators: %s recommended memory amount
-#: includes/class-yith-system-status.php:604
+#: includes/class-yith-system-status.php:588
 msgid ""
 "For optimal functioning of our plugins, we suggest setting at least %s of "
 "available memory"
@@ -421,7 +421,7 @@ msgstr ""
 "beschikbaar geheugen"
 
 #. translators: %1$s TLS label, %2$s cURL label
-#: includes/class-yith-system-status.php:612
+#: includes/class-yith-system-status.php:596
 msgid ""
 "The system check cannot determine which %1$s version is installed because "
 "%2$s module is disabled. Ask your hosting company to enable it."
@@ -430,7 +430,7 @@ msgstr ""
 "module is uitgeschakeld. Vraag je hostingmaatschappij om het in te schakelen."
 
 #. translators: %1$s TLS label
-#: includes/class-yith-system-status.php:615
+#: includes/class-yith-system-status.php:599
 msgid ""
 "The system check cannot determine which %1$s version is installed due to a "
 "connection issue between your site and our server."
@@ -438,7 +438,7 @@ msgstr ""
 "De systeemcontrole kan niet bepalen welke versie van %1$s is geïnstalleerd "
 "vanwege een verbindingsprobleem tussen je site en onze server."
 
-#: templates/bh-onboarding/onboarding-tabs.php:63
+#: templates/bh-onboarding/onboarding-tabs.php:60
 msgid "Save"
 msgstr ""
 
@@ -516,25 +516,25 @@ msgstr ""
 msgid "Set Default"
 msgstr "Op standaard instellen"
 
-#: templates/fields/image-gallery.php:29 templates/fields/image-gallery.php:40
-msgid "Delete image"
-msgstr "Afbeelding verwijderen"
+#: templates/fields/image-gallery.php:26 templates/fields/image-gallery.php:37
+msgid "Delete"
+msgstr "Verwijderen"
 
-#: templates/fields/image-gallery.php:37
+#: templates/fields/image-gallery.php:33
 msgid "Add Images to Gallery"
 msgstr "Afbeeldingen toevoegen aan galerij"
 
-#: templates/fields/image-gallery.php:38
+#: templates/fields/image-gallery.php:34
 msgid "Add to gallery"
 msgstr "Aan galerij toevoegen"
 
-#: templates/fields/image-gallery.php:39
+#: templates/fields/image-gallery.php:35
 msgid "Add images"
 msgstr "Voeg images toe"
 
-#: templates/fields/image-gallery.php:41
-msgid "Delete"
-msgstr "Verwijderen"
+#: templates/fields/image-gallery.php:36
+msgid "Delete image"
+msgstr "Afbeelding verwijderen"
 
 #: templates/fields/media.php:47
 msgid "Upload file"
@@ -792,25 +792,25 @@ msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
 msgstr "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1939
+#: yit-functions.php:1914
 msgid "Are you sure you want to move \"%s\" to trash?"
 msgstr "Weet je zeker dat je \"%s\" naar de prullenbak wilt verplaatsen?"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1941 yit-functions.php:2100
+#: yit-functions.php:1916 yit-functions.php:2075
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Weet je zeker dat je \"%s\" wilt verwijderen?"
 
-#: yit-functions.php:2039 yit-functions.php:2047 yit-functions.php:2163
+#: yit-functions.php:2014 yit-functions.php:2022 yit-functions.php:2138
 msgid "Further actions"
 msgstr "Verdere acties"
 
-#: yit-plugin.php:243
+#: yit-plugin.php:242
 msgid "License"
 msgstr "Licentie"
 
 #. translators: 1. Plugin(s) name(s).
-#: yit-plugin.php:282
+#: yit-plugin.php:281
 msgid ""
 "%s was deactivated as you're running an higher tier version of the same "
 "plugin."
@@ -830,86 +830,86 @@ msgctxt "Elementor Widget - section title"
 msgid "%s - Options"
 msgstr "%s - Opties"
 
-#: includes/builders/gutenberg/class-yith-gutenberg.php:152
+#: includes/builders/gutenberg/class-yith-gutenberg.php:156
 msgctxt "[gutenberg]: Category Name"
 msgid "YITH"
 msgstr "YITH"
 
-#: includes/class-yit-assets.php:121
+#: includes/class-yit-assets.php:120
 msgctxt "Enhanced select"
 msgid "No matches found"
 msgstr ""
 
-#: includes/class-yit-assets.php:122
+#: includes/class-yit-assets.php:121
 msgctxt "Enhanced select"
 msgid "Please enter 1 or more characters"
 msgstr ""
 
 #. translators: %s is the number of characters.
-#: includes/class-yit-assets.php:124
+#: includes/class-yit-assets.php:123
 msgctxt "Enhanced select"
 msgid "Please enter %s or more characters"
 msgstr ""
 
-#: includes/class-yit-assets.php:125
+#: includes/class-yit-assets.php:124
 msgctxt "Enhanced select"
 msgid "Searching&hellip;"
 msgstr ""
 
-#: includes/class-yit-assets.php:137
+#: includes/class-yit-assets.php:136
 msgctxt "Title"
 msgid "Error"
 msgstr ""
 
-#: includes/class-yit-assets.php:149
+#: includes/class-yit-assets.php:148
 msgctxt "Button text"
 msgid "Confirm"
 msgstr "Bevestigen"
 
-#: includes/class-yit-assets.php:150
+#: includes/class-yit-assets.php:149
 msgctxt "Button text"
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: includes/class-yit-assets.php:163 yit-functions.php:2010
+#: includes/class-yit-assets.php:162 yit-functions.php:1985
 msgctxt "Trash confirmation action"
 msgid "Yes, move to trash"
 msgstr "Ja, verplaatsen naar prullenbak"
 
-#: includes/class-yit-assets.php:167 yit-functions.php:2028
-#: yit-functions.php:2154
+#: includes/class-yit-assets.php:166 yit-functions.php:2003
+#: yit-functions.php:2129
 msgctxt "Delete confirmation action"
 msgid "Yes, delete"
 msgstr "Ja, verwijderen"
 
 #. translators: 1. Plugin name.
-#: includes/class-yit-plugin-panel.php:876
+#: includes/class-yit-plugin-panel.php:905
 msgctxt "Help tab default title"
 msgid "Thank you for purchasing %s!"
 msgstr "Bedankt voor het kopen van %s!"
 
-#: includes/class-yit-plugin-panel.php:876
+#: includes/class-yit-plugin-panel.php:905
 msgctxt "Help tab default title"
 msgid "Thank you for using %s!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:885
+#: includes/class-yit-plugin-panel.php:914
 msgctxt "Help tab default description"
 msgid ""
 "We want to help you enjoy a wonderful experience with all of our products."
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:934
+#: includes/class-yit-plugin-panel.php:962
 msgctxt "Premium tab name"
 msgid "Get premium"
 msgstr "Neem premium"
 
-#: includes/class-yit-plugin-panel.php:950
+#: includes/class-yit-plugin-panel.php:977
 msgctxt "Panel tab name"
 msgid "Your Store Tools"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:966
+#: includes/class-yit-plugin-panel.php:992
 msgctxt "Help tab name"
 msgid "Help"
 msgstr "Help"
@@ -1209,57 +1209,57 @@ msgctxt "Plugin in \"Your Store Tools\" tab"
 msgid "Get it"
 msgstr ""
 
-#: yit-functions.php:1953
+#: yit-functions.php:1928
 msgctxt "Post action"
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: yit-functions.php:1962
+#: yit-functions.php:1937
 msgctxt "Post action"
 msgid "View"
 msgstr "Bekijken"
 
-#: yit-functions.php:1973
+#: yit-functions.php:1948
 msgctxt "Post action"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: yit-functions.php:1981
+#: yit-functions.php:1956
 msgctxt "Post action"
 msgid "Duplicate"
 msgstr "Dupliceren"
 
-#: yit-functions.php:1993
+#: yit-functions.php:1968
 msgctxt "Post action"
 msgid "Restore"
 msgstr "Herstellen"
 
-#: yit-functions.php:2001
+#: yit-functions.php:1976
 msgctxt "Post action"
 msgid "Trash"
 msgstr "Prullenbak"
 
-#: yit-functions.php:2018
+#: yit-functions.php:1993
 msgctxt "Post action"
 msgid "Delete Permanently"
 msgstr "Permanent verijwderen"
 
-#: yit-functions.php:2114
+#: yit-functions.php:2089
 msgctxt "Term action"
 msgid "View"
 msgstr "Bekijken"
 
-#: yit-functions.php:2124
+#: yit-functions.php:2099
 msgctxt "Term action"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: yit-functions.php:2132
+#: yit-functions.php:2107
 msgctxt "Term action"
 msgid "Duplicate"
 msgstr "Dupliceren"
 
-#: yit-functions.php:2145
+#: yit-functions.php:2120
 msgctxt "Term action"
 msgid "Delete"
 msgstr "Verwijderen"
@@ -1284,7 +1284,7 @@ msgctxt "Plugin Row Meta"
 msgid "Premium version"
 msgstr "Premium versie"
 
-#: yit-plugin.php:239
+#: yit-plugin.php:238
 msgctxt "Action links"
 msgid "Settings"
 msgstr "Instellingen"

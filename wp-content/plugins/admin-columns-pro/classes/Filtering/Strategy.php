@@ -3,7 +3,6 @@
 namespace ACP\Filtering;
 
 use AC;
-use ACP;
 
 abstract class Strategy {
 

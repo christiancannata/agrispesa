@@ -3,7 +3,7 @@
 	Plugin Name: Images to WebP
 	Plugin URI: https://www.paypal.me/jakubnovaksl
 	Description: Convert JPG, PNG and GIF images to WEBP, speed up your web
-	Version: 4.2
+	Version: 4.4
 	Author: KubiQ
 	Author URI: https://kubiq.sk
 	Text Domain: images-to-webp
@@ -204,7 +204,7 @@ class images_to_webp{
 		if( defined('DOING_AJAX') && DOING_AJAX ){
 			if( current_user_can('administrator') ){
 				if( check_ajax_referer('itw_convert') ){
-					$ABSPATH = str_replace( '\\', '/', ABSPATH );
+					$ABSPATH = str_replace( '\\', '/', $this->get_abspath() );
 
 					if( $_REQUEST['folder'] == '#' ){
 						$dir = $ABSPATH;
@@ -234,7 +234,9 @@ class images_to_webp{
 		exit();
 	}
 
-	function get_all_subdirectories( $folders, $base = ABSPATH ){
+	function get_all_subdirectories( $folders, $base = false ){
+		$ABSPATH = $this->get_abspath();
+		if( $base === false ) $base = $ABSPATH;
 		$all_folders = array();
 		if( is_array( $folders ) ){
 			foreach( $folders as $folder ){
@@ -242,10 +244,10 @@ class images_to_webp{
 					$folder = sanitize_text_field( $folder );
 					$folder = realpath( $base . $folder );
 					if( is_dir( $folder ) ){
-						$secure_path = realpath( ABSPATH );
+						$secure_path = realpath( $ABSPATH );
 						$secure_path_len = strlen( $secure_path );
 						if( substr( $folder, 0, $secure_path_len ) === $secure_path ){
-							$all_folders[] = str_replace( ABSPATH, '', $folder );
+							$all_folders[] = str_replace( $ABSPATH, '', $folder );
 							$subfolders = scandir( $folder );
 							$subfolders = $this->get_all_subdirectories( $subfolders, $folder . '/' );
 							$all_folders = array_merge( $all_folders, $subfolders );
@@ -278,7 +280,7 @@ class images_to_webp{
 					if( $only_missing !== 0 ){
 						$only_missing = 1;
 					}
-					$ABSPATH = str_replace( '\\', '/', ABSPATH );
+					$ABSPATH = str_replace( '\\', '/', $this->get_abspath() );
 					$folder = str_replace( ':\\\\', ':/', $_POST['folder'] );
 					$folder = str_replace( '\\\\', '/', $folder );
 					$folder = preg_replace( '#^' . $ABSPATH . '#', '', $folder );
@@ -340,6 +342,10 @@ class images_to_webp{
 
 	function bis_images_to_webp( $attachment_id, $bis_file_path ){
 		$this->convert_image( $bis_file_path );
+	}
+
+	function get_abspath(){
+		return apply_filters( 'itw_abspath', ABSPATH );
 	}
 }
 

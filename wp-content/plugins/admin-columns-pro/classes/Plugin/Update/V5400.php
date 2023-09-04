@@ -12,7 +12,8 @@ class V5400 extends Update {
 		parent::__construct( new Version( '5.4.0' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$upload_dir = wp_upload_dir();
 		$export_dir = trailingslashit( $upload_dir['basedir'] ) . 'admin-columns/export/';
 

@@ -1,88 +1,85 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Sorter;
-use ACP\Sorting\Strategy\Post;
+use ACP\Sorting\Type\Order;
 
-/**
- * @property Post $strategy
- */
-class Menu extends AbstractModel {
+class Menu extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'posts_fields_callback' ] );
+    private $post_type;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+    public function __construct(string $post_type)
+    {
+        parent::__construct();
 
-	public function posts_fields_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $this->post_type = $post_type;
+    }
 
-		global $wpdb;
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		$clauses['orderby'] = SqlOrderByFactory::create_with_ids( "$wpdb->posts.ID", $this->get_sorted_ids(), $this->get_order() );
+        return (new Bindings())->order_by(
+            SqlOrderByFactory::create_with_ids(
+                "$wpdb->posts.ID",
+                $this->get_sorted_ids(),
+                (string)$order
+            )
+        );
+    }
 
-		return $clauses;
-	}
+    private function get_sorted_ids(): array
+    {
+        global $wpdb;
 
-	/**
-	 * @return array
-	 */
-	private function get_sorted_ids() {
-		global $wpdb;
-
-		$sql = $wpdb->prepare( "
+        $sql = $wpdb->prepare(
+            "
 			SELECT p.ID AS id, menu.ID AS menu_item_id
-				FROM {$wpdb->posts} AS p
-				INNER JOIN {$wpdb->postmeta} AS pm1 ON pm1.meta_value = p.ID
+				FROM $wpdb->posts AS p
+				INNER JOIN $wpdb->postmeta AS pm1 ON pm1.meta_value = p.ID
 					AND pm1.meta_key = '_menu_item_object_id'
-				INNER JOIN {$wpdb->posts} AS menu ON menu.ID = pm1.post_id
+				INNER JOIN $wpdb->posts AS menu ON menu.ID = pm1.post_id
 					AND menu.post_type = 'nav_menu_item'
-				INNER JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = menu.ID
-					AND pm2.meta_key = '_menu_item_type' AND pm2.meta_value = %s
+				INNER JOIN $wpdb->postmeta AS pm2 ON pm2.post_id = menu.ID
+					AND pm2.meta_key = '_menu_item_type' AND pm2.meta_value = 'post_type'
 				WHERE p.post_type = %s
-			", 'post_type', $this->strategy->get_post_type() );
+			",
+            $this->post_type
+        );
 
-		$values = [];
+        $values = [];
 
-		foreach ( $wpdb->get_results( $sql ) as $object ) {
-			$values[ $object->id ][] = $this->get_menu_label( $object->menu_item_id );
-		}
+        foreach ($wpdb->get_results($sql) as $object) {
+            $values[$object->id][] = $this->get_menu_label((int)$object->menu_item_id);
+        }
 
-		// natural sort multiple assigned menu's
-		foreach ( $values as $id => $_values ) {
-			natcasesort( $_values );
+        // natural sort multiple assigned menu's
+        foreach ($values as $id => $_values) {
+            natcasesort($_values);
 
-			$values[ $id ] = implode( ' ', $_values );
-		}
+            $values[$id] = implode(' ', $_values);
+        }
 
-		return ( new Sorter() )->sort( $values, $this->data_type );
-	}
+        return (new Sorter())->sort($values, $this->data_type);
+    }
 
-	/**
-	 * @param int $menu_item_id
-	 *
-	 * @return string|null
-	 */
-	private function get_menu_label( $menu_item_id ) {
-		global $wpdb;
+    private function get_menu_label(int $menu_item_id): string
+    {
+        static $menu_labels = [];
 
-		$sql = $wpdb->prepare( "
-			SELECT t.name
-				FROM $wpdb->terms AS t
-				INNER JOIN $wpdb->term_taxonomy AS tt ON tt.term_id = t.term_id
-				INNER JOIN $wpdb->term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
-				INNER JOIN $wpdb->posts AS menu ON menu.ID = tr.object_id
-				    AND menu.post_type = 'nav_menu_item'
-    			WHERE menu.ID = %d
-			", $menu_item_id );
+        if ( ! isset($menu_labels[$menu_item_id])) {
+            $menu_labels[$menu_item_id] = ac_helper()->menu->get_menu_label($menu_item_id);
+        }
 
-		return $wpdb->get_var( $sql );
-	}
+        return $menu_labels[$menu_item_id];
+    }
 
 }

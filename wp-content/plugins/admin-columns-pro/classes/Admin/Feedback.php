@@ -21,14 +21,16 @@ class Feedback implements Renderable, Enqueueables {
 		$this->location = $location;
 	}
 
-	public function get_assets() {
+	public function get_assets(): Assets
+    {
 		return new Assets( [
 			new Style( 'acp-feedback', $this->location->with_suffix( 'assets/core/css/feedback.css' ) ),
 			new Script( 'acp-feedback', $this->location->with_suffix( 'assets/core/js/feedback.js' ) ),
 		] );
 	}
 
-	public function render() {
+	public function render(): string
+    {
 		$feedback = new View( [
 			'nonce' => wp_create_nonce( 'ac-ajax' ),
 			'email' => wp_get_current_user()->user_email,

@@ -1,34 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class Attachment extends AbstractModel {
+class Attachment extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('attachment');
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $bindings->join(
+            "LEFT JOIN $wpdb->posts AS $alias ON $alias.post_parent = $wpdb->posts.ID AND $alias.post_type = 'attachment'"
+        );
+        $bindings->group_by("$wpdb->posts.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_count("$alias.ID", (string)$order)
+        );
 
-		global $wpdb;
-
-		$clauses['join'] .= "
-			LEFT JOIN $wpdb->posts AS acsort_attachments ON acsort_attachments.post_parent = $wpdb->posts.ID
-				AND acsort_attachments.post_type = 'attachment'
-		";
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_count( "acsort_attachments.ID", $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.ID %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

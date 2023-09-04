@@ -7,7 +7,8 @@ use AC\View;
 
 class Import implements Renderable {
 
-	public function render() {
+	public function render(): string
+    {
 		$view = new View();
 		$view->set_template( 'admin/section-import' );
 

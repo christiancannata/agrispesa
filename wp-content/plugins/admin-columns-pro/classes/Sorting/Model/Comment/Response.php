@@ -1,26 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Comment;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
+use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class Response extends AbstractModel {
+class Response extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'comments_clauses', [ $this, 'comments_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	public function comments_clauses_callback( $pieces ) {
-		global $wpdb;
+        $alias = $bindings->get_unique_alias('response');
 
-		$pieces['join'] .= " INNER JOIN $wpdb->posts acsort_posts ON acsort_posts.ID = $wpdb->comments.comment_post_ID ";
-		$pieces['orderby'] = "acsort_posts.post_title " . esc_sql( $this->get_order() );
+        $bindings->join("INNER JOIN $wpdb->posts $alias ON $alias.ID = $wpdb->comments.comment_post_ID ");
+        $bindings->order_by(
+            SqlOrderByFactory::create("$alias.post_title ", (string)$order)
+        );
 
-		remove_filter( 'comments_clauses', [ $this, __FUNCTION__ ] );
-
-		return $pieces;
-	}
+        return $bindings;
+    }
 
 }

@@ -2,11 +2,9 @@
 
 namespace ACP\Access;
 
-interface Rule {
+interface Rule
+{
 
-	/**
-	 * @return Permissions
-	 */
-	public function get_permissions();
+    public function get_permissions(): Permissions;
 
 }

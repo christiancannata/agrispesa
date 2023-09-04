@@ -26,8 +26,8 @@ function bbloomer_remove_shipping_label($label, $method)
 }
 
 //Minimo ordine checkout
-//add_action('woocommerce_checkout_process', 'wc_minimum_order_amount_checkout');
-//add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
+add_action('woocommerce_checkout_process', 'wc_minimum_order_amount_checkout');
+add_action('woocommerce_before_cart', 'wc_minimum_order_amount');
 
 
 function getMinimumOrder()

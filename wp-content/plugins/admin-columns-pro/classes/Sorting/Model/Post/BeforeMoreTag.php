@@ -1,34 +1,32 @@
 <?php
-declare( strict_types=1 );
+
+declare(strict_types=1);
 
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
+use ACP\Sorting\Type\Order;
 
-class BeforeMoreTag extends AbstractModel {
+class BeforeMoreTag extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_orderby', [ $this, 'posts_orderby_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $field = "$wpdb->posts.post_content";
 
-	public function posts_orderby_callback() {
-		remove_filter( 'posts_orderby', [ $this, __FUNCTION__ ] );
-
-		global $wpdb;
-
-		$field = "$wpdb->posts.`post_content`";
-		$order = $this->get_order();
-
-		return "
-			CASE WHEN $field LIKE '%--more--%' THEN 0 
-				ELSE 1
-			END,
-			$field $order
-		";
-	}
+        return (new Bindings())->order_by(
+            sprintf(
+                "CASE WHEN %s LIKE '%s' THEN 0 ELSE 1 END, %s %s",
+                $field,
+                '%--more--%',
+                $field,
+                $order
+            )
+        );
+    }
 
 }

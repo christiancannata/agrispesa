@@ -18,7 +18,8 @@ final class ListScreenSettings implements Registerable {
 		$this->hide_on_screen_factory = $hide_on_screen_factory;
 	}
 
-	public function register(): void {
+	public function register(): void
+    {
 		add_action( 'acp/admin/settings/hide_on_screen', [ $this, 'add_hide_on_screen' ] );
 	}
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Automattic\WooCommerce\GoogleListingsAndAds\Vendor\GuzzleHttp\Psr7;
 
-use Psr\Http\Message\StreamInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Http\Message\StreamInterface;
 
 /**
  * Provides a read only stream that pumps data from a PHP callable.
@@ -60,6 +60,7 @@ final class PumpStream implements StreamInterface
                 throw $e;
             }
             trigger_error(sprintf('%s::__toString exception: %s', self::class, (string) $e), E_USER_ERROR);
+
             return '';
         }
     }
@@ -169,6 +170,7 @@ final class PumpStream implements StreamInterface
                 $data = call_user_func($this->source, $length);
                 if ($data === false || $data === null) {
                     $this->source = null;
+
                     return;
                 }
                 $this->buffer->write($data);

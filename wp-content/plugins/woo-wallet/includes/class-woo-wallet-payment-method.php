@@ -30,9 +30,8 @@ if ( class_exists( 'WC_Payment_Gateway' ) ) {
 			$this->init_form_fields();
 			$this->init_settings();
 			// Get settings.
-			$this->title        = $this->get_option( 'title' );
-			$this->description  = $this->get_option( 'description' );
-			$this->instructions = $this->get_option( 'instructions' );
+			$this->title       = $this->get_option( 'title' );
+			$this->description = $this->get_option( 'description' );
 
 			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 			/* support for woocommerce subscription plugin */
@@ -105,6 +104,7 @@ if ( class_exists( 'WC_Payment_Gateway' ) ) {
 		 */
 		public function get_icon() {
 			$current_balance = woo_wallet()->wallet->get_wallet_balance( get_current_user_id() );
+			/* translators: 1: wallet amount */
 			return apply_filters( 'woocommerce_gateway_icon', sprintf( __( ' | Current Balance: <strong>%s</strong>', 'woo-wallet' ), $current_balance ), $this->id );
 		}
 
@@ -127,6 +127,7 @@ if ( class_exists( 'WC_Payment_Gateway' ) ) {
 		public function process_payment( $order_id ) {
 			$order = wc_get_order( $order_id );
 			if ( ( $order->get_total( 'edit' ) > woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) ) && apply_filters( 'woo_wallet_disallow_negative_transaction', ( woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) <= 0 || $order->get_total( 'edit' ) > woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) ), $order->get_total( 'edit' ), woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) ) ) {
+				/* translators: 1: wallet amount */
 				wc_add_notice( __( 'Payment error: ', 'woo-wallet' ) . sprintf( __( 'Your wallet balance is low. Please add %s to proceed with this transaction.', 'woo-wallet' ), wc_price( $order->get_total( 'edit' ) - woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ), woo_wallet_wc_price_args( $order->get_customer_id() ) ) ), 'error' );
 				return;
 			}
@@ -155,7 +156,7 @@ if ( class_exists( 'WC_Payment_Gateway' ) ) {
 		public function woocommerce_pre_payment_complete( $order_id ) {
 			$order = wc_get_order( $order_id );
 			if ( 'wallet' === $order->get_payment_method( 'edit' ) && ! $order->get_transaction_id( 'edit' ) && $order->has_status( apply_filters( 'woocommerce_valid_order_statuses_for_payment_complete', array( 'on-hold', 'pending', 'failed', 'cancelled' ), $order ) ) ) {
-				$wallet_response = woo_wallet()->wallet->debit( $order->get_customer_id( 'edit' ), $order->get_total( 'edit' ), apply_filters( 'woo_wallet_order_payment_description', __( 'For order payment #', 'woo-wallet' ) . $order->get_order_number(), $order ) );
+				$wallet_response = woo_wallet()->wallet->debit( $order->get_customer_id( 'edit' ), $order->get_total( 'edit' ), apply_filters( 'woo_wallet_order_payment_description', __( 'For order payment #', 'woo-wallet' ) . $order->get_order_number(), $order ), array( 'for' => 'purchase' ) );
 				if ( $wallet_response ) {
 					$order->set_transaction_id( $wallet_response );
 					do_action( 'woo_wallet_payment_processed', $order_id, $wallet_response );
@@ -178,7 +179,7 @@ if ( class_exists( 'WC_Payment_Gateway' ) ) {
 		public function process_refund( $order_id, $amount = null, $reason = '' ) {
 			$order          = wc_get_order( $order_id );
 			$refund_reason  = $reason ? $reason : __( 'Wallet refund #', 'woo-wallet' ) . $order->get_order_number();
-			$transaction_id = woo_wallet()->wallet->credit( $order->get_customer_id(), $amount, $refund_reason );
+			$transaction_id = woo_wallet()->wallet->credit( $order->get_customer_id(), $amount, $refund_reason, array( 'currency' => $order->get_currency( 'edit' ) ) );
 			if ( ! $transaction_id ) {
 				throw new Exception( __( 'Refund not credited to customer', 'woo-wallet' ) );
 			}

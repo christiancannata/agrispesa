@@ -17,7 +17,8 @@ class ApiDetailsResponse implements Rule {
 		$this->response = $response;
 	}
 
-	public function get_permissions() {
+	public function get_permissions(): Permissions
+    {
 		return new Permissions( $this->response->get( 'permissions' ) ?: [] );
 	}
 

@@ -3,12 +3,12 @@
  * Plugin Name: Permalink Manager for WooCommerce
  * Plugin URI: https://wordpress.org/plugins/permalink-manager-for-woocommerce/
  * Description: Permalink Manager for WooCommerce
- * Version: 1.0.8
+ * Version: 1.0.8.1
  * Author: BeRocket
  * Requires at least: 5.0
  * Author URI: https://woocommerce-permalink-manager.com/
  * Text Domain: permalink-manager-for-woocommerce
- * WC tested up to: 7.1
+ * WC tested up to: 7.8
  */
 define( "BWLM_file", __FILE__ );
 
@@ -49,6 +49,7 @@ class BeRocketLinkManager {
         add_filter( 'query_vars', array( $this, 'query_vars' ) );
         add_action( 'wp', array( $this, 'redirect_301' ) );
         add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules' ), 99 );
+        add_action( 'before_woocommerce_init', array($this, 'hpos_compatible'));
 
         foreach (
             array(
@@ -543,12 +544,21 @@ class BeRocketLinkManager {
             $ID    = intval( $wpdb->get_var( $query ) );
 
             if ( $ID > 0 ) {
-	            $path = explode( "?", $_SERVER["REQUEST_URI"] );
+	            $path           = explode( "?", $_SERVER["REQUEST_URI"] );
+	            $post_url       = urldecode( get_the_permalink( $ID ) );
+	            $request_scheme = explode( '://', $post_url, 2 );
+
+                if ( ! empty( $request_scheme[0] ) )
+		            $request_scheme = $request_scheme[0];
+	            else
+		            $request_scheme = $_SERVER['REQUEST_SCHEME'];
+
 	            if (
-                    "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]" . urldecode( $path[0] ) != urldecode( get_the_permalink( $ID ) )
+                    "$request_scheme://$_SERVER[HTTP_HOST]" . urldecode( $path[0] ) != $post_url
                     and
-                    "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]" . urldecode( $_SERVER["REQUEST_URI"] ) != urldecode( get_the_permalink( $ID ) )
+                    "$request_scheme://$_SERVER[HTTP_HOST]" . urldecode( $_SERVER["REQUEST_URI"] ) != $post_url
                 ) {
+                    add_filter('do_redirect_guess_404_permalink', '__return_true', 99999999);
 		            return $request;
 	            }
 
@@ -629,6 +639,11 @@ class BeRocketLinkManager {
         }
 
         return $crumbs;
+    }
+    public function hpos_compatible() {
+        if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+        }
     }
 }
 

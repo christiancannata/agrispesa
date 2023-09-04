@@ -4,13 +4,9 @@ namespace ACP;
 
 use AC\Request;
 
-interface RequestHandler {
+interface RequestHandler
+{
 
-	/**
-	 * @param Request $request
-	 *
-	 * @return void
-	 */
-	public function handle( Request $request );
+    public function handle(Request $request): void;
 
 }

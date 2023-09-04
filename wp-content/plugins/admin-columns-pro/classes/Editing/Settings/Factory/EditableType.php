@@ -3,7 +3,6 @@
 namespace ACP\Editing\Settings\Factory;
 
 use AC;
-use ACP;
 use ACP\Editing;
 use LogicException;
 

@@ -3,34 +3,42 @@
 namespace ACP\Sorting\Model\Post\Author;
 
 use ACP;
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class FullName extends AbstractModel {
+class FullName extends AbstractModel implements ACP\Sorting\Model\QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $alias_firstname = $bindings->get_unique_alias('firstname');
+        $alias_lastname = $bindings->get_unique_alias('lastname');
 
-		global $wpdb;
+        $bindings->join(
+            "
+            INNER JOIN $wpdb->usermeta AS $alias_firstname ON $wpdb->posts.post_author = $alias_firstname.user_id 
+				AND $alias_firstname.meta_key = 'first_name'
+			INNER JOIN $wpdb->usermeta AS $alias_lastname ON $wpdb->posts.post_author = $alias_lastname.user_id 
+				AND $alias_lastname.meta_key = 'last_name'
+		    "
+        );
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_concat(
+                [
+                    "$alias_firstname.meta_value",
+                    "$alias_lastname.meta_value",
+                ],
+                (string)$order
+            )
+        );
 
-		$clauses['join'] .= "
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta1 ON $wpdb->posts.post_author = acsort_usermeta1.user_id 
-				AND acsort_usermeta1.meta_key = 'first_name'
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta2 ON $wpdb->posts.post_author = acsort_usermeta2.user_id 
-				AND acsort_usermeta2.meta_key = 'last_name'
-		";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_concat( [ 'acsort_usermeta1.meta_value', 'acsort_usermeta2.meta_value' ], $this->get_order() );
-		$clauses['orderby'] .= sprintf( "\n, $wpdb->posts.ID %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

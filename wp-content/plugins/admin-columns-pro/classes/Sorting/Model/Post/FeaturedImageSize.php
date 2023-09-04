@@ -1,53 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\FormatValue;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Model\WarningAware;
 use ACP\Sorting\Sorter;
-use ACP\Sorting\Strategy\Post;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-/**
- * @property Post $strategy
- */
-class FeaturedImageSize extends AbstractModel implements WarningAware {
+class FeaturedImageSize extends AbstractModel implements WarningAware, QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $meta_key;
+    use PostRequestTrait;
 
-	public function __construct( $meta_key ) {
-		parent::__construct( new DataType( DataType::NUMERIC ) );
+    private $meta_key;
 
-		$this->meta_key = $meta_key;
-	}
+    private $post_type;
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function __construct(string $meta_key, string $post_type)
+    {
+        parent::__construct();
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $this->meta_key = $meta_key;
+        $this->post_type = $post_type;
+    }
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		global $wpdb;
+        return (new Bindings())->order_by(
+            SqlOrderByFactory::create_with_ids(
+                "$wpdb->posts.ID",
+                $this->get_sorted_ids(),
+                (string)$order
+            )
+        );
+    }
 
-		$clauses['orderby'] = SqlOrderByFactory::create_with_ids( "$wpdb->posts.ID", $this->get_sorted_ids(), $this->get_order() ) ?: $clauses['orderby'];
+    private function get_sorted_ids(): array
+    {
+        global $wpdb;
 
-		return $clauses;
-	}
-
-	private function get_sorted_ids() {
-		global $wpdb;
-
-		$sql = $wpdb->prepare( "
+        $sql = $wpdb->prepare(
+            "
 			SELECT pp.ID AS id, pm2.meta_value AS file_path 
 			FROM $wpdb->posts AS pp
 			LEFT JOIN $wpdb->postmeta AS pm1 ON pm1.post_id = pp.ID 
@@ -57,29 +59,29 @@ class FeaturedImageSize extends AbstractModel implements WarningAware {
 			WHERE pp.post_type = %s
 				AND pm2.meta_value != ''
 		",
-			$this->meta_key,
-			$this->strategy->get_post_type()
-		);
+            $this->meta_key,
+            $this->post_type
+        );
 
-		$status = $this->strategy->get_post_status();
+        $status = $this->get_var_post_status();
 
-		if ( $status ) {
-			$sql .= sprintf( " AND pp.post_status IN ( '%s' )", implode( "','", array_map( 'esc_sql', $status ) ) );
-		}
+        if ($status) {
+            $sql .= $wpdb->prepare("\nAND pp.post_status = %s", $status);
+        }
 
-		$results = $wpdb->get_results( $sql );
+        $results = $wpdb->get_results($sql);
 
-		if ( ! $results ) {
-			return [];
-		}
+        if ( ! $results) {
+            return [];
+        }
 
-		$values = [];
+        $values = [];
 
-		foreach ( $results as $row ) {
-			$values[ $row->id ] = ( new FormatValue\FileSize() )->format_value( $row->file_path );
-		}
+        foreach ($results as $row) {
+            $values[$row->id] = (new FormatValue\FileSize())->format_value($row->file_path);
+        }
 
-		return ( new Sorter() )->sort( $values, $this->data_type );
-	}
+        return (new Sorter())->sort($values, new DataType(DataType::NUMERIC));
+    }
 
 }

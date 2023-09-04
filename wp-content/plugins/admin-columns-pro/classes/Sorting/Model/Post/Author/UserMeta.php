@@ -3,43 +3,59 @@
 namespace ACP\Sorting\Model\Post\Author;
 
 use ACP;
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Type\CastType;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-class UserMeta extends ACP\Sorting\AbstractModel {
+class UserMeta extends ACP\Sorting\AbstractModel implements ACP\Sorting\Model\QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $meta_key;
+    private $meta_key;
 
-	public function __construct( $meta_key, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    protected $data_type;
 
-		$this->meta_key = $meta_key;
-	}
+    public function __construct(string $meta_key, DataType $data_type = null)
+    {
+        parent::__construct();
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+        $this->meta_key = $meta_key;
+        $this->data_type = $data_type ?: new DataType(DataType::STRING);
+    }
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $bindings = new Bindings();
 
-		global $wpdb;
+        $alias = $bindings->get_unique_alias('usermeta');
 
-		$clauses['join'] .= "\nLEFT JOIN $wpdb->usermeta AS acsort_usermeta ON $wpdb->posts.post_author = acsort_usermeta.user_id";
-		$clauses['where'] .= $wpdb->prepare( "\nAND acsort_usermeta.meta_key = %s", $this->meta_key );
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create( "acsort_usermeta.meta_value", $this->get_order(), [ 'cast_type' => (string) CastType::create_from_data_type( $this->data_type ) ] );
-		$clauses['orderby'] .= sprintf( "\n, $wpdb->posts.ID %s", esc_sql( $this->get_order() ) );
+        $bindings->join(
+            $wpdb->prepare(
+                "INNER JOIN $wpdb->usermeta AS $alias ON $wpdb->posts.post_author = $alias.user_id AND $alias.meta_key = %s",
+                $this->meta_key
+            )
+        );
+        $bindings->order_by(
+            SqlOrderByFactory::create(
+                "$alias.meta_value",
+                (string)$order,
+                [
+                    'cast_type' => $this->get_cast_type(),
+                ]
+            )
+        );
 
-		return $clauses;
-	}
+        return $bindings;
+    }
+
+    private function get_cast_type(): ?CastType
+    {
+        return DataType::STRING !== (string)$this->data_type
+            ? CastType::create_from_data_type($this->data_type)
+            : null;
+    }
 
 }

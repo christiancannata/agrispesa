@@ -2,7 +2,6 @@
 
 namespace ACP\Settings\ListScreen\HideOnScreen;
 
-use ACP;
 use ACP\Settings\ListScreen\HideOnScreen;
 
 class FilterCommentType extends HideOnScreen {

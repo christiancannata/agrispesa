@@ -2,7 +2,7 @@
 /**
  * Gift Card product add to cart
  *
- * @author  Yithemes
+ * @author  YITH <plugins@yithemes.com>
  * @package  yith-woocommerce-gift-cards\templates\single-product\add-to-cart
  */
 

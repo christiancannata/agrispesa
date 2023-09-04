@@ -1,40 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Comment\Author;
 
 use ACP;
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
-use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-class UserMeta extends ACP\Sorting\AbstractModel {
+class UserMeta extends ACP\Sorting\AbstractModel implements ACP\Sorting\Model\QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $meta_field;
+    private $meta_field;
 
-	public function __construct( $meta_field, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    public function __construct(string $meta_field)
+    {
+        parent::__construct();
 
-		$this->meta_field = $meta_field;
-	}
+        $this->meta_field = $meta_field;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'comments_clauses', [ $this, 'comments_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('usermeta');
 
-	public function comments_clauses_callback( $clauses ) {
-		remove_filter( 'comments_clauses', [ $this, __FUNCTION__ ] );
+        $bindings->join(
+            $wpdb->prepare(
+                "LEFT JOIN $wpdb->usermeta AS $alias ON $wpdb->comments.user_id = $alias.user_id AND $alias.meta_key = %s",
+                $this->meta_field
+            )
+        );
 
-		global $wpdb;
+        $bindings->order_by(
+            SqlOrderByFactory::create("$alias.meta_value", (string)$order)
+        );
 
-		$clauses['join'] .= $wpdb->prepare( " LEFT JOIN $wpdb->usermeta AS acsort_usermeta ON $wpdb->comments.user_id = acsort_usermeta.user_id AND acsort_usermeta.meta_key = %s", $this->meta_field );
-		$clauses['orderby'] = SqlOrderByFactory::create( "acsort_usermeta.meta_value", $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->comments.comment_ID %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

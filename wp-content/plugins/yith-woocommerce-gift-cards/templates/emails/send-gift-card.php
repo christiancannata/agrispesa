@@ -2,7 +2,7 @@
 /**
  * Send the gift card code email
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Templates
  */
 

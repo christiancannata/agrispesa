@@ -3,7 +3,6 @@
 namespace ACP\Editing;
 
 use AC\Column;
-use ACP\Editing\ApplyFilter;
 use ACP\Editing\Factory\BulkEditFactory;
 use ACP\Editing\Factory\InlineEditFactory;
 

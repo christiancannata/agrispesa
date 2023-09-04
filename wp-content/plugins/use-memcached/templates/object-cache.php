@@ -326,7 +326,25 @@ if (
 
 
 				} else {
-					$buckets = array( '127.0.0.1:11211' );
+				    // Load the wp-config.php file
+require_once('../wp-config.php');
+
+// Check if the constants are defined and not empty
+if (defined('USE_MEMCACHED_SERVER') && !empty(USE_MEMCACHED_SERVER)) {
+    $server = USE_MEMCACHED_SERVER;
+} else {
+    $server = '127.0.0.1';
+}
+
+if (defined('USE_MEMCACHED_PORT') && !empty(USE_MEMCACHED_PORT)) {
+    $port = USE_MEMCACHED_PORT;
+} else {
+    $port = '11211';
+}
+
+// Create the array with the server and port
+$buckets = array($server . ':' . $port);
+				
 				}
 			}
 

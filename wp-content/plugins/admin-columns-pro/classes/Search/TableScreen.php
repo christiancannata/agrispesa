@@ -5,7 +5,6 @@ namespace ACP\Search;
 use AC;
 use AC\Asset\Enqueueable;
 use AC\Registerable;
-use ACP;
 use ACP\Search\Settings\HideOnScreen;
 
 abstract class TableScreen implements Registerable {
@@ -25,7 +24,8 @@ abstract class TableScreen implements Registerable {
 		$this->assets = $assets;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/table_scripts', [ $this, 'scripts' ] );
 		add_action( 'admin_head', [ $this, 'hide_segments' ] );
 		add_action( 'admin_footer', [ $this, 'add_segment_modal' ] );

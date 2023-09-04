@@ -4,34 +4,52 @@ namespace ACP\Sorting\FormatValue;
 
 use ACP\Sorting\FormatValue;
 
-class Roles implements FormatValue {
+class Roles implements FormatValue
+{
 
-	private function get_role_label( $capability ) {
-		global $wp_roles;
+    private function get_role_label(string $capability): ?string
+    {
+        static $labels = [];
 
-		return isset( $wp_roles->roles[ $capability ] )
-			? translate_user_role( $wp_roles->roles[ $capability ]['name'] )
-			: false;
-	}
+        if ( ! isset($labels[$capability])) {
+            $labels[$capability] = $this->get_translated_role_label($capability);
+        }
 
-	public function format_value( $value ) {
-		$caps = maybe_unserialize( $value );
+        return $labels[$capability];
+    }
 
-		if ( ! $caps || ! is_array( $caps ) ) {
-			return false;
-		}
+    private function get_translated_role_label(string $capability): ?string
+    {
+        global $wp_roles;
 
-		$capabilities = array_keys( array_filter( $caps ) );
+        $role = $wp_roles->roles[$capability]['name'] ?? null;
 
-		foreach ( $capabilities as $capability ) {
-			$role = $this->get_role_label( $capability );
+        if ( ! $role) {
+            return null;
+        }
 
-			if ( $role ) {
-				return $role;
-			}
-		}
+        return translate_user_role($role) ?: null;
+    }
 
-		return false;
-	}
+    public function format_value($value)
+    {
+        $caps = maybe_unserialize($value);
+
+        if ( ! $caps || ! is_array($caps)) {
+            return false;
+        }
+
+        $capabilities = array_keys(array_filter($caps));
+
+        foreach ($capabilities as $capability) {
+            $role = $this->get_role_label((string)$capability);
+
+            if ($role) {
+                return $role;
+            }
+        }
+
+        return false;
+    }
 
 }

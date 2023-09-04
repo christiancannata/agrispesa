@@ -10,130 +10,136 @@ use AC\Response;
 use AC\Type\ListScreenId;
 use ACP\Editing\ApplyFilter\EditValue;
 use ACP\Editing\Editable;
-use ACP\Editing\ListScreen;
 use ACP\Editing\RequestHandler;
 use ACP\Editing\Service;
 use ACP\Editing\Service\Editability;
 use ACP\Editing\Settings;
 
-class InlineValues implements RequestHandler {
+class InlineValues implements RequestHandler
+{
 
-	/**
-	 * @var Storage
-	 */
-	private $storage;
+    /**
+     * @var Storage
+     */
+    private $storage;
 
-	public function __construct( Storage $storage ) {
-		$this->storage = $storage;
-	}
+    public function __construct(Storage $storage)
+    {
+        $this->storage = $storage;
+    }
 
-	public function handle( Request $request ) {
-		$response = new Response\Json();
+    public function handle(Request $request)
+    {
+        $response = new Response\Json();
 
-		$ids = $request->filter( 'ids', [], FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY );
+        $ids = $request->filter('ids', [], FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
 
-		if ( empty( $ids ) ) {
-			$response->error();
-		}
+        if (empty($ids)) {
+            $response->error();
+        }
 
-		$list_id = $request->get( 'layout' );
+        $list_id = $request->get('layout');
 
-		if ( ! ListScreenId::is_valid_id( $list_id ) ) {
-			$response->error();
-		}
+        if ( ! ListScreenId::is_valid_id($list_id)) {
+            $response->error();
+        }
 
-		$list_screen = $this->storage->find_by_user( new ListScreenId( $list_id ), wp_get_current_user() );
+        $list_screen = $this->storage->find(new ListScreenId($list_id));
 
-		if ( ! $list_screen instanceof ListScreen ) {
-			$response->error();
-		}
+        if ( ! $list_screen || ! $list_screen->is_user_allowed(wp_get_current_user())) {
+            $response->error();
+        }
 
-		$strategy = $list_screen->editing();
+        $strategy = $list_screen->editing();
 
-		foreach ( $ids as $k => $id ) {
-			if ( ! $strategy->user_can_edit_item( (int) $id ) ) {
-				unset( $ids[ $k ] );
-			}
-		}
+        foreach ($ids as $k => $id) {
+            if ( ! $strategy->user_can_edit_item((int)$id)) {
+                unset($ids[$k]);
+            }
+        }
 
-		$column = $list_screen->get_column_by_name( $request->get( 'column' ) );
+        $column = $list_screen->get_column_by_name($request->get('column'));
 
-		$values = $column
-			? $this->get_values_by_column( $column, $ids )
-			: $this->get_values_by_list_screen( $list_screen, $ids );
+        $values = $column
+            ? $this->get_values_by_column($column, $ids)
+            : $this->get_values_by_list_screen($list_screen, $ids);
 
-		$response
-			->set_parameter( 'editable_values', $values )
-			->success();
-	}
+        $response
+            ->set_parameter('editable_values', $values)
+            ->success();
+    }
 
-	/**
-	 * @param AC\ListScreen $list_screen
-	 * @param array         $ids
-	 *
-	 * @return array
-	 */
-	private function get_values_by_list_screen( AC\ListScreen $list_screen, array $ids ) {
-		$values = [];
+    /**
+     * @param AC\ListScreen $list_screen
+     * @param array         $ids
+     *
+     * @return array
+     */
+    private function get_values_by_list_screen(AC\ListScreen $list_screen, array $ids)
+    {
+        $values = [];
 
-		foreach ( $list_screen->get_columns() as $column ) {
-			$values[] = $this->get_values_by_column( $column, $ids );
-		}
+        foreach ($list_screen->get_columns() as $column) {
+            $values[] = $this->get_values_by_column($column, $ids);
+        }
 
-		return array_merge( ...$values );
-	}
+        return array_merge(...$values);
+    }
 
-	/**
-	 * @param Column $column
-	 * @param array  $ids
-	 *
-	 * @return array
-	 */
-	private function get_values_by_column( Column $column, array $ids ) {
-		if ( ! $column instanceof Editable ) {
-			return [];
-		}
+    /**
+     * @param Column $column
+     * @param array  $ids
+     *
+     * @return array
+     */
+    private function get_values_by_column(Column $column, array $ids)
+    {
+        if ( ! $column instanceof Editable) {
+            return [];
+        }
 
-		$setting = $column->get_setting( Settings::NAME );
+        $setting = $column->get_setting(Settings::NAME);
 
-		if ( ! $setting instanceof Settings || ! $setting->is_active() ) {
-			return [];
-		}
+        if ( ! $setting instanceof Settings || ! $setting->is_active()) {
+            return [];
+        }
 
-		$service = $column->editing();
+        $service = $column->editing();
 
-		if ( ! $service instanceof Service ) {
-			return [];
-		}
+        if ( ! $service instanceof Service) {
+            return [];
+        }
 
-		$values = [];
+        $values = [];
 
-		foreach ( $ids as $id ) {
-			if ( $service instanceof Editability && ! $service->is_editable( $id ) ) {
-				continue;
-			}
+        foreach ($ids as $id) {
+            $id = (int)$id;
 
-			$filter = new EditValue( $id, $column );
-			$value = $filter->apply_filters( $service->get_value( $id ) );
+            if ($service instanceof Editability && ! $service->is_editable($id)) {
+                continue;
+            }
 
-			// Not editable. Backwards compatibility.
-			if ( null === $value ) {
-				continue;
-			}
+            $filter = new EditValue($id, $column);
+            $value = $filter->apply_filters($service->get_value($id));
 
-			// Some non-existing values can be set to false
-			if ( false === $value ) {
-				$value = '';
-			}
+            // Not editable. Backwards compatibility.
+            if (null === $value) {
+                continue;
+            }
 
-			$values[] = [
-				'id'          => $id,
-				'column_name' => $column->get_name(),
-				'value'       => $value,
-			];
-		}
+            // Some non-existing values can be set to false
+            if (false === $value) {
+                $value = '';
+            }
 
-		return $values;
-	}
+            $values[] = [
+                'id'          => $id,
+                'column_name' => $column->get_name(),
+                'value'       => $value,
+            ];
+        }
+
+        return $values;
+    }
 
 }

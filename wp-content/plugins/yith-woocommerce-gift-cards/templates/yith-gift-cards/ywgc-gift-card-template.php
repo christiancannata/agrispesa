@@ -2,7 +2,7 @@
 /**
  * Gift Card product add to cart
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Templates
  */
 

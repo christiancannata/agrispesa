@@ -21,7 +21,8 @@ class Beta
 		$this->feedback = $feedback;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/screen', [ $this, 'register_notice' ] );
 	}
 

@@ -1,56 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Taxonomy;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Type\CastType;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-class Meta extends AbstractModel {
+class Meta extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	protected $meta_key;
+    protected $meta_key;
 
-	public function __construct( string $meta_key, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    protected $data_type;
 
-		$this->meta_key = $meta_key;
-	}
+    public function __construct(string $meta_key, DataType $data_type = null)
+    {
+        parent::__construct();
 
-	public function get_sorting_vars() {
-		add_filter( 'terms_clauses', [ $this, 'pre_term_query_callback' ] );
+        $this->meta_key = $meta_key;
+        $this->data_type = $data_type ?: new DataType(DataType::STRING);
+    }
 
-		return [];
-	}
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-	public function pre_term_query_callback( $clauses ) {
-		remove_filter( 'terms_clauses', [ $this, __FUNCTION__ ] );
+        $bindings = new Bindings();
 
-		global $wpdb;
+        $alias = $bindings->get_unique_alias('meta');
 
-		if ( 'COUNT(*)' === $clauses['fields'] ) {
-			return $clauses;
-		}
+        $bindings->join(
+            $wpdb->prepare(
+                "LEFT JOIN $wpdb->termmeta AS $alias ON t.term_id = $alias.term_id AND $alias.meta_key = %s",
+                $this->meta_key
+            )
+        );
 
-		$clauses['join'] .= $wpdb->prepare( "
-			LEFT JOIN $wpdb->termmeta AS acsort_termmeta ON t.term_id = acsort_termmeta.term_id
-				AND acsort_termmeta.meta_key = %s
-		", $this->meta_key );
+        $bindings->group_by("t.term_id");
+        $bindings->order_by($this->get_order_by($alias, $order));
 
-		if ( 't.term_id' === $clauses['fields'] ) {
-			$clauses['orderby'] = "GROUP BY t.term_id";
-			$clauses['orderby'] .= "\nORDER BY " . $this->get_order_by();
-			$clauses['order'] = '';
-		}
+        return $bindings;
+    }
 
-		return $clauses;
-	}
-
-	protected function get_order_by(): string {
-		return SqlOrderByFactory::create( "acsort_termmeta.`meta_value`", $this->get_order(), [ 'cast_type' => (string) CastType::create_from_data_type( $this->data_type ) ] );
-	}
+    protected function get_order_by(string $alias, Order $order): string
+    {
+        return SqlOrderByFactory::create(
+            "$alias.`meta_value`",
+            (string)$order,
+            [
+                'cast_type' => (string)CastType::create_from_data_type($this->data_type),
+            ]
+        );
+    }
 
 }

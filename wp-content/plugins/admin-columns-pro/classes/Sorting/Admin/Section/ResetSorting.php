@@ -13,7 +13,8 @@ class ResetSorting extends Section {
 		parent::__construct( self::NAME );
 	}
 
-	public function render() {
+	public function render(): string
+    {
 		$form = ( new View() )->set_template( 'admin/page/settings-section-sorting' );
 
 		$view = new View( [

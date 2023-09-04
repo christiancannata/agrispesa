@@ -2,55 +2,52 @@
 
 namespace ACP\Sorting\Model\User\RelatedMeta;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
-use ACP\Sorting\Type\DataType;
-use WP_User_Query;
+use ACP\Sorting\Type\Order;
 
-class UserField extends AbstractModel {
+class UserField extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $field;
+    private $field;
 
-	/**
-	 * @var string
-	 */
-	private $meta_key;
+    private $meta_key;
 
-	public function __construct( $field, $meta_key, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    public function __construct(string $field, string $meta_key)
+    {
+        parent::__construct();
 
-		$this->field = $field;
-		$this->meta_key = (string) $meta_key;
-	}
+        $this->field = $field;
+        $this->meta_key = $meta_key;
+    }
 
-	public function get_sorting_vars() {
-		add_action( 'pre_user_query', [ $this, 'pre_user_query_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	public function pre_user_query_callback( WP_User_Query $query ) {
-		remove_action( 'pre_user_query', [ $this, __FUNCTION__ ] );
+        $alias_meta = $bindings->get_unique_alias('ufield');
+        $alias_user = $bindings->get_unique_alias('ufield');
 
-		global $wpdb;
+        $bindings->join(
+            $wpdb->prepare(
+                "
+			    LEFT JOIN $wpdb->usermeta AS $alias_meta ON $alias_meta.user_id = $wpdb->users.ID
+				    AND $alias_meta.meta_key = %s
+			    LEFT JOIN $wpdb->users AS $alias_user ON $alias_user.ID = $alias_meta.meta_value
+		        ",
+                $this->meta_key
+            )
+        );
+        $bindings->group_by("$wpdb->users.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create("$alias_user.`$this->field`", (string)$order)
+        );
 
-		$query->query_from .= $wpdb->prepare( "
-			LEFT JOIN $wpdb->usermeta AS acsort_usermeta ON acsort_usermeta.user_id = $wpdb->users.ID
-				AND acsort_usermeta.meta_key = %s
-			LEFT JOIN $wpdb->users AS acsort_users ON acsort_users.ID = acsort_usermeta.meta_value
-		", $this->meta_key );
-
-		$query->query_orderby = sprintf( "
-			GROUP BY $wpdb->users.ID
-			ORDER BY %s, $wpdb->users.ID %s
-		",
-			SqlOrderByFactory::create( "acsort_users.`$this->field`", $this->get_order() ),
-			esc_sql( $this->get_order() )
-		);
-
-	}
+        return $bindings;
+    }
 
 }

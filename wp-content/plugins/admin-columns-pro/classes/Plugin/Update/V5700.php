@@ -11,7 +11,8 @@ class V5700 extends Update {
 		parent::__construct( new Version( '5.7' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$this->update_subscription_details();
 		$this->update_permissions();
 		$this->clear_cache_api();

@@ -2,32 +2,29 @@
 
 namespace ACP\Service;
 
+use AC\Asset\Location\Absolute;
 use AC\Registerable;
 
-class Templates implements Registerable {
+class Templates implements Registerable
+{
 
-	/**
-	 * @var string
-	 */
-	private $dir;
+    private $location;
 
-	public function __construct( $dir ) {
-		$this->dir = (string) $dir;
-	}
+    public function __construct(Absolute $location)
+    {
+        $this->location = $location;
+    }
 
-	public function register() {
-		add_filter( 'ac/view/templates', [ $this, 'templates' ] );
-	}
+    public function register(): void
+    {
+        add_filter('ac/view/templates', [$this, 'templates']);
+    }
 
-	/**
-	 * @param array $templates
-	 *
-	 * @return array
-	 */
-	public function templates( $templates ) {
-		$templates[] = $this->dir . 'templates';
+    public function templates(array $templates): array
+    {
+        $templates[] = $this->location->with_suffix('templates')->get_path();
 
-		return $templates;
-	}
+        return $templates;
+    }
 
 }

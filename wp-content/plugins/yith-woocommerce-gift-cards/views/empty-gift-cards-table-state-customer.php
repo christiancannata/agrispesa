@@ -2,7 +2,7 @@
 /**
  * Admin View: Report EU VAT taxes
  *
- * @author  Your Inspiration Themes
+ * @author  YITH <plugins@yithemes.com>
  * @package YITH\yith-woocommerce-eu-vat\templates\report
  */
 

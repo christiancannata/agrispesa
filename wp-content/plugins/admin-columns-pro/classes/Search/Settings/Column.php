@@ -4,7 +4,6 @@ namespace ACP\Search\Settings;
 
 use AC;
 use AC\View;
-use ACP;
 
 class Column extends AC\Settings\Column implements AC\Settings\Header {
 

@@ -5,52 +5,46 @@ namespace ACP\QuickAdd;
 use AC;
 use AC\Asset\Location;
 use AC\ListScreenRepository\Storage;
+use AC\Services;
 use ACP\QuickAdd\Admin\HideOnScreen;
 use ACP\QuickAdd\Model\Factory;
 use ACP\QuickAdd\Model\PostFactory;
-use ACP\QuickAdd\Table;
 
-class Addon implements AC\Registerable {
+class Addon implements AC\Registerable
+{
 
-	/**
-	 * @var Storage
-	 */
-	private $storage;
+    private $storage;
 
-	/**
-	 * @var Location
-	 */
-	private $location;
+    private $location;
 
-	/**
-	 * @var AC\Request
-	 */
-	private $request;
+    private $request;
 
-	public function __construct( Storage $storage, Location $location, AC\Request $request ) {
-		$this->storage = $storage;
-		$this->location = $location;
-		$this->request = $request;
-	}
+    public function __construct(Storage $storage, Location\Absolute $location, AC\Request $request)
+    {
+        $this->storage = $storage;
+        $this->location = $location;
+        $this->request = $request;
+    }
 
-	public function register() {
-		$preference = new Table\Preference\ShowButton();
-		$filter = new Filter();
+    public function register(): void
+    {
+        Factory::add_factory(new PostFactory());
 
-		Factory::add_factory( new PostFactory() );
+        $this->create_services()
+             ->register();
+    }
 
-		$services = [
-			new Controller\AjaxNewItem( $this->storage, $this->request ),
-			new Controller\AjaxScreenOption( $this->storage, $preference ),
-			new Table\Loader( $this->location, new HideOnScreen\QuickAdd(), $preference, $filter ),
-			new Admin\Settings( $filter ),
-		];
+    private function create_services(): Services
+    {
+        $preference = new Table\Preference\ShowButton();
+        $filter = new Filter();
 
-		foreach ( $services as $service ) {
-			if ( $service instanceof AC\Registerable ) {
-				$service->register();
-			}
-		}
-	}
+        return new Services([
+            new Controller\AjaxNewItem($this->storage, $this->request),
+            new Controller\AjaxScreenOption($this->storage, $preference),
+            new Table\Loader($this->location, new HideOnScreen\QuickAdd(), $preference, $filter),
+            new Admin\Settings($filter),
+        ]);
+    }
 
 }

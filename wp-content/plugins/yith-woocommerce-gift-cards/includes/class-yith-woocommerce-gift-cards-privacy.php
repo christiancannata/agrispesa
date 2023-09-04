@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @class   YITH_WooCommerce_Gift_Cards_Privacy
  * @package Yithemes
  * @since   1.8.5
- * @author  Daniel Sanchez Saez
+ * @author  YITH <plugins@yithemes.com>
  */
 if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards_Privacy' ) ) {
 

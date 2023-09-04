@@ -19,12 +19,13 @@ class UpdateCheckTransientHourly implements Expirable {
 	}
 
 	/**
-	 * @param int|null $time
+	 * @param int|null $value
 	 *
 	 * @return bool
 	 */
-	public function is_expired( $time = null ) {
-		return $this->timestamp->is_expired( $time );
+	public function is_expired( int $value = null ): bool
+    {
+		return $this->timestamp->is_expired( $value );
 	}
 
 	public function delete() {

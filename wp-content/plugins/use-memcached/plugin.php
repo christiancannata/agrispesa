@@ -4,13 +4,13 @@
  * Plugin Name: Use Memcached
  * Plugin URI: https://github.com/palasthotel/use-memcached
  * Description: Adds memcached support for WP_Object_Cache.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Text Domain: use-memcached
  * Domain Path: /languages
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Edward Bock)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 5.0
- * Tested up to: 5.3.2
+ * Tested up to: 6.2
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *
  * @copyright Copyright (c) 2019, Palasthotel
@@ -23,6 +23,11 @@ namespace Palasthotel\WordPress\UseMemcached;
 // plugin domain
 // ------------------------------------------------------------------------
 const DOMAIN = "use-memcached";
+
+
+
+
+
 
 //------------------------------------------------------------------------
 // remember to always update version in object-cache.php too
@@ -123,3 +128,9 @@ class Plugin {
 Plugin::instance();
 
 require_once dirname( __FILE__ ) . "/cli/wp-cli.php";
+
+
+// Include plugin Settings pages
+require_once plugin_dir_path( __FILE__ ) . 'includes/use_memcached_main_page.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/use_memcached_info_page.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/use_memcached_warmer_page.php';

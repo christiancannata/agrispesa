@@ -1,124 +1,107 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Comment;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\FormatValue;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Sorter;
-use ACP\Sorting\Strategy;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-/**
- * @property Strategy\Comment $strategy
- * @since 5.2
- */
-class FieldFormat extends AbstractModel {
+class FieldFormat extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @param string $field
-	 */
-	protected $field;
+    protected $field;
 
-	/**
-	 * @var FormatValue
-	 */
-	protected $formatter;
+    protected $formatter;
 
-	/**
-	 * Save memory by limiting the value lenght of the field
-	 * @var int
-	 */
-	protected $value_length;
+    protected $value_length;
 
-	public function __construct( $field, FormatValue $formatter, DataType $data_type = null, $value_length = null ) {
-		parent::__construct( $data_type );
+    public function __construct(
+        string $field,
+        FormatValue $formatter,
+        DataType $data_type = null,
+        int $value_length = null
+    ) {
+        parent::__construct();
 
-		$this->field = (string) $field;
-		$this->formatter = $formatter;
-		$this->value_length = (int) $value_length;
-	}
+        $this->field = $field;
+        $this->formatter = $formatter;
+        $this->value_length = $value_length;
+        $this->data_type = $data_type;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'comments_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        return (new Bindings())->order_by(
+            SqlOrderByFactory::create_with_ids(
+                "$wpdb->comments.comment_ID",
+                $this->get_sorted_ids(),
+                (string)$order
+            )
+        );
+    }
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'comments_clauses', [ $this, __FUNCTION__ ] );
+    private function get_comment_status(): string
+    {
+        global $comment_status;
 
-		global $wpdb;
+        switch ($comment_status) {
+            case 'moderated' :
+                return '0';
+            case 'spam' :
+                return 'spam';
+            case 'trash' :
+                return 'trash';
+            case 'approved' :
+                return '1';
+            default:
+                return '';
+        }
+    }
 
-		$clauses['orderby'] = SqlOrderByFactory::create_with_ids( "$wpdb->comments.comment_ID", $this->get_sorted_ids(), $this->get_order() ) ?: $clauses['orderby'];
+    private function get_sorted_ids(): array
+    {
+        global $wpdb;
 
-		return $clauses;
-	}
+        $field = $this->value_length
+            ? sprintf("LEFT( cc.%s, %s )", esc_sql($this->field), $this->value_length)
+            : sprintf("cc.%s", esc_sql($this->field));
 
-	/**
-	 * @param string $var
-	 *
-	 * @return string|null
-	 */
-	private function get_query_var( $var ) {
-		$query = $this->strategy->get_query();
-
-		if ( ! $query || ! isset( $query->query_vars[ $var ] ) ) {
-			return null;
-		}
-
-		return $query->query_vars[ $var ];
-	}
-
-	private function get_comment_status() {
-		switch ( $this->get_query_var( 'status' ) ) {
-			case 'hold' :
-				return 0;
-			case 'spam' :
-				return 'spam';
-			case 'trash' :
-				return 'trash';
-			case 'approve' :
-				return 1;
-			default:
-				return null;
-		}
-	}
-
-	/**
-	 * @return array
-	 */
-	private function get_sorted_ids() {
-		global $wpdb;
-
-		$field = $this->value_length
-			? sprintf( "LEFT( cc.%s, %s )", esc_sql( $this->field ), $this->value_length )
-			: sprintf( "cc.%s", esc_sql( $this->field ) );
-
-		$sql = sprintf( "
+        $sql = sprintf(
+            "
 			SELECT cc.comment_ID AS id, %s AS value 
 			FROM $wpdb->comments AS cc
-		", $field );
+		",
+            $field
+        );
 
-		$status = $this->get_comment_status();
+        $status = $this->get_comment_status();
 
-		if ( $status ) {
-			$sql .= $wpdb->prepare( " WHERE cc.comment_approved = %s", $status );
-		}
+        if ($status) {
+            $sql .= $wpdb->prepare(" WHERE cc.comment_approved = %s", $status);
+        }
 
-		$results = $wpdb->get_results( $sql );
+        $results = $wpdb->get_results($sql);
 
-		if ( ! $results ) {
-			return [];
-		}
+        if ( ! $results) {
+            return [];
+        }
 
-		$values = [];
+        $values = [];
 
-		foreach ( $results as $object ) {
-			$values[ $object->id ] = $this->formatter->format_value( $object->value );
-		}
+        foreach ($results as $object) {
+            $values[$object->id] = $this->formatter->format_value($object->value);
+        }
 
-		return ( new Sorter() )->sort( $values, $this->data_type );
-	}
+        return (new Sorter())->sort($values, $this->data_type);
+    }
 
 }

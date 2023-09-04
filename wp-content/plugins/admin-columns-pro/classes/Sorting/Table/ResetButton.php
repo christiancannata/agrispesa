@@ -14,30 +14,22 @@ class ResetButton {
 
 	private $setting_sort_default;
 
-	private $setting_segment_default;
-
 	private $default_sort_filter;
 
 	public function __construct(
 		ColumnRepository $column_repository,
 		Sorting\Settings\ListScreen\PreferredSort $setting_sort_default,
-		Sorting\Settings\ListScreen\PreferredSegmentSort $setting_segment_default,
 		ApplyFilter\DefaultSort $default_sort_filter
 	) {
 		$this->column_repository = $column_repository;
 		$this->setting_sort_default = $setting_sort_default;
-		$this->setting_segment_default = $setting_segment_default;
 		$this->default_sort_filter = $default_sort_filter;
 	}
 
 	private function is_default( SortType $request_sort_type ): bool {
-		$sort_type = $this->setting_sort_default->get();
-
-		if ( ! $sort_type ) {
-			$sort_type = $this->setting_segment_default->get();
-		}
-
-		$sort_type = $this->default_sort_filter->apply_filters( $sort_type );
+		$sort_type = $this->default_sort_filter->apply_filters(
+            $this->setting_sort_default->get()
+        );
 
 		if ( ! $sort_type ) {
 			return false;

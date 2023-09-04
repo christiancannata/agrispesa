@@ -8,7 +8,7 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 	 * @class   YITH_YWGC_Frontend
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Frontend {
 
@@ -38,7 +38,6 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		protected function __construct() {
 
@@ -266,7 +265,6 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 		 *
 		 * @throws Exception
 		 * @since  1.0.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function show_gift_card_code_on_order_item( $item_id, $item, $_product ) {
 
@@ -426,7 +424,6 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 		 * Add frontend style to gift card product page
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function enqueue_frontend_script() {
 
@@ -520,7 +517,6 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 		 * Add frontend style to gift card product page
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function enqueue_frontend_style() {
 

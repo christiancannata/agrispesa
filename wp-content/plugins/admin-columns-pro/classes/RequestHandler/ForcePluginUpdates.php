@@ -26,7 +26,8 @@ class ForcePluginUpdates implements RequestHandler {
 		$this->token_factory = $token_factory;
 	}
 
-	public function handle( Request $request ) {
+	public function handle( Request $request ): void
+    {
 		if ( ! current_user_can( Capabilities::MANAGE ) ) {
 			return;
 		}

@@ -1,27 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Exception;
 
-use RuntimeException;
+use LogicException;
 
-final class DecoderNotFoundException extends RuntimeException {
+final class DecoderNotFoundException extends LogicException
+{
 
-	/**
-	 * @var array
-	 */
-	private $encoded_list_screen;
+    private $encoded_data;
 
-	public function __construct( array $encoded_list_screen, $code = 0 ) {
-		$this->encoded_list_screen = $encoded_list_screen;
+    public function __construct(array $encoded_data, $code = 0)
+    {
+        $this->encoded_data = $encoded_data;
 
-		parent::__construct( 'Could not find a decoder for this ListScreen.', $code );
-	}
+        parent::__construct('Could not find a suitable decoder.', $code);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function get_encoded_list_screen() {
-		return $this->encoded_list_screen;
-	}
+    public function get_encoded_data(): array
+    {
+        return $this->encoded_data;
+    }
 
 }

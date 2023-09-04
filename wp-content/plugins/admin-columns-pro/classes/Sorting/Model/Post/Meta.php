@@ -2,51 +2,62 @@
 
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Type\CastType;
 use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-class Meta extends AbstractModel {
+class Meta extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	protected $meta_key;
+    protected $meta_key;
 
-	public function __construct( string $meta_key, DataType $data_type = null ) {
-		parent::__construct( $data_type );
+    protected $data_type;
 
-		$this->meta_key = $meta_key;
-	}
+    public function __construct(string $meta_key, DataType $data_type = null)
+    {
+        parent::__construct();
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+        $this->meta_key = $meta_key;
+        $this->data_type = $data_type ?: new DataType(DataType::STRING);
+    }
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $bindings = new Bindings();
 
-		global $wpdb;
+        $bindings->join(
+            $wpdb->prepare(
+                "LEFT JOIN $wpdb->postmeta AS acsort_postmeta ON $wpdb->posts.ID = acsort_postmeta.post_id
+                    AND acsort_postmeta.meta_key = %s
+                ",
+                $this->meta_key
+            )
+        );
+        $bindings->group_by("$wpdb->posts.ID");
+        $bindings->order_by($this->get_order_by($order));
 
-		$clauses['join'] .= $wpdb->prepare( "
-			LEFT JOIN $wpdb->postmeta AS acsort_postmeta ON $wpdb->posts.ID = acsort_postmeta.post_id
-			AND acsort_postmeta.meta_key = %s
-		", $this->meta_key );
+        return $bindings;
+    }
 
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = $this->get_order_by();
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.ID %s", $this->get_order() );
+    protected function get_order_by(Order $order): string
+    {
+        $cast_type = DataType::STRING !== (string)$this->data_type
+            ? (string)CastType::create_from_data_type($this->data_type)
+            : null;
 
-		return $clauses;
-	}
-
-	protected function get_order_by(): string {
-		return SqlOrderByFactory::create( "acsort_postmeta.`meta_value`", $this->get_order(), [ 'cast_type' => (string) CastType::create_from_data_type( $this->data_type ) ] );
-	}
+        return SqlOrderByFactory::create(
+            "acsort_postmeta.`meta_value`",
+            (string)$order,
+            [
+                'cast_type' => $cast_type,
+            ]
+        );
+    }
 
 }

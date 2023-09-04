@@ -3,7 +3,6 @@
 namespace ACP\Export;
 
 use AC\Column;
-use ACP;
 
 /**
  * Exportability model, which can be attached as an extension to a column. It handles custom

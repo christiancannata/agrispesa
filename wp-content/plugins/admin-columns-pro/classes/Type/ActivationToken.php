@@ -2,16 +2,11 @@
 
 namespace ACP\Type;
 
-interface ActivationToken {
+interface ActivationToken
+{
 
-	/**
-	 * @return string
-	 */
-	public function get_token();
+    public function get_token(): string;
 
-	/**
-	 * @return string
-	 */
-	public function get_type();
+    public function get_type(): string;
 
 }

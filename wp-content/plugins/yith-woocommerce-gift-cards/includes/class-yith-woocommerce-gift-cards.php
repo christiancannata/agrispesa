@@ -12,7 +12,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 	 * @class   YITH_WooCommerce_Gift_Cards
 	 * @package Yithemes
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_WooCommerce_Gift_Cards {
 
@@ -53,7 +53,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		protected function __construct() {
 
@@ -247,6 +246,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 				'priority' => 'high',
 				'tabs'     => array(
 					'General' => array(
+						'label'  => '',
 						'fields' => apply_filters(
 							'yith_ywgc_gift_card_instance_metabox_custom_fields',
 							array(
@@ -372,7 +372,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @param string $code the gift card code to search for.
 		 *
 		 * @return YITH_YWGC_Gift_Card
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function get_gift_card_by_code( $code ) {
@@ -386,7 +385,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Generate a new gift card code
 		 *
 		 * @return string
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function generate_gift_card_code() {
@@ -427,7 +425,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Init an array of plugin emails
 		 *
 		 * @since  1.5.0
-		 * @author Francesco Licandro
 		 */
 		public function init_plugin_emails_array() {
 			/**
@@ -453,7 +450,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Get plugin emails array
 		 *
 		 * @since  1.0.0
-		 * @author Francesco Licandro
 		 * @return array
 		 */
 		public function get_emails() {
@@ -487,7 +483,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		/**
 		 * Register all the custom post statuses of gift cards
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function register_custom_post_statuses() {
@@ -551,7 +546,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @param array $array
 		 *
 		 * @return mixed
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function add_type_option( $array ) {
@@ -681,7 +675,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 *
 		 * @return string
 		 * @since  2.0.5
-		 * @author Francisco Mendoza
 		 */
 		public function yith_ywgc_date_format_callback() {
 
@@ -710,7 +703,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Getter option mandatory recipient
 		 *
 		 * @return bool
-		 * @author Carlos Rodríguez
 		 * @since  2.2.6
 		 */
 		public function mandatory_recipient() {
@@ -722,7 +714,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Retrieve if the gift cards should be updated on order refunded
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function change_status_on_refund() {
@@ -733,7 +724,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Retrieve if the gift cards should be updated on order cancelled
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function change_status_on_cancelled() {
@@ -745,7 +735,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * to refunded
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function dismiss_on_refund() {
@@ -757,7 +746,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * to refunded
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function disable_on_refund() {
@@ -769,7 +757,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * to cancelled
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function dismiss_on_cancelled() {
@@ -781,7 +768,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * to cancelled
 		 *
 		 * @return bool
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function disable_on_cancelled() {

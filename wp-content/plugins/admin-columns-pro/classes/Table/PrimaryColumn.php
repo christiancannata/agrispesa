@@ -12,7 +12,8 @@ class PrimaryColumn implements Registerable {
 	 */
 	private $list_screen;
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/table', [ $this, 'init' ] );
 	}
 

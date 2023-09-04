@@ -9,7 +9,8 @@ use ACP\Settings\ListScreen\HideOnScreen;
 
 final class HideElements implements Registerable {
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/table_scripts', [ $this, 'hide_elements' ] );
 	}
 

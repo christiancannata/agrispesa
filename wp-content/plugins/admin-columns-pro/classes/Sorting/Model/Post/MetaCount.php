@@ -1,53 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
 /**
  * Sort a user list table on the number of times the meta_key is used by a user.
- * @since 5.2
  */
-class MetaCount extends AbstractModel {
+class MetaCount extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	protected $meta_key;
+    protected $meta_key;
 
-	/**
-	 * @param string
-	 */
-	public function __construct( $meta_key ) {
-		parent::__construct();
+    public function __construct(string $meta_key)
+    {
+        parent::__construct();
 
-		$this->meta_key = $meta_key;
-	}
+        $this->meta_key = $meta_key;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
+        $alias = $bindings->get_unique_alias('mcount');
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $bindings->join(
+            $wpdb->prepare(
+                "LEFT JOIN $wpdb->postmeta AS $alias ON $wpdb->posts.ID = $alias.post_id AND $alias.meta_key = %s",
+                $this->meta_key
+            )
+        );
+        $bindings->group_by("$wpdb->posts.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_count("$alias.meta_key", (string)$order)
+        );
 
-		global $wpdb;
-
-		$clauses['join'] .= $wpdb->prepare( "
-			LEFT JOIN $wpdb->postmeta AS acsort_postmeta ON $wpdb->posts.ID = acsort_postmeta.post_id
-			AND acsort_postmeta.meta_key = %s
-		", $this->meta_key );
-
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_count( "acsort_postmeta.meta_key", $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.post_date %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

@@ -6,7 +6,8 @@ use ACP\Helper\FilterButton;
 
 final class Taxonomy extends FilterButton {
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'in_admin_footer', $this->get_callback(), 2 );
 	}
 

@@ -45,14 +45,12 @@ class HasReplies extends Comparison
 	private function get_comments_with_replies() {
 		global $wpdb;
 
-		$ids = $wpdb->get_col( "
+		return $wpdb->get_col( "
 			SELECT comment_parent
 			FROM {$wpdb->comments}
 			WHERE comment_parent != 0
 			GROUP BY comment_parent"
 		);
-
-		return $ids;
 	}
 
 }

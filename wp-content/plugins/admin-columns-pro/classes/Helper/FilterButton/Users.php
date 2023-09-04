@@ -6,7 +6,8 @@ use ACP\Helper\FilterButton;
 
 final class Users extends FilterButton {
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'restrict_manage_users', $this->get_callback(), 2 );
 	}
 

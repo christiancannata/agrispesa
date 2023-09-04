@@ -1,0 +1,46 @@
+2023-09-04T09:38:07+00:00 CRITICAL Uncaught Error: Call to undefined function WP_Rocket\Engine\Optimization\rocket_direct_filesystem() in /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Engine/Optimization/ServiceProvider.php:51
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Dependencies/League/Container/ServiceProvider/ServiceProviderAggregate.php(102): WP_Rocket\Engine\Optimization\ServiceProvider->register()
+#1 /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Dependencies/League/Container/Container.php(172): WP_Rocket\Dependencies\League\Container\ServiceProvider\ServiceProviderAggregate->register('buffer_subscrib...')
+#2 /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Plugin.php(146): WP_Rocket\Dependencies\League\Container\Container->get('buffer_subscrib...')
+#3 /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/main.php(50): WP_Rocket\Plugin->load()
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): rocket_init('')
+#5 /shared/httpd/agrispesa/wp-includes/class-wp-hook.p in /shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/Engine/Optimization/ServiceProvider.php alla riga 51
+
+2023-09-04T09:47:46+00:00 CRITICAL Uncaught Error: Class 'AC\Container' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php:193
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php(65): ACP\AdminColumnsPro->create_container()
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/api.php(10): ACP\AdminColumnsPro->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns-pro.php(58): ACP()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-settings.php(601): do_action('after_setup_the...')
+#7 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#8 /shared/httpd/agrispesa/wp-load.php(50): require_once('/shared/httpd/a...')
+#9 /shared/httpd/agrisp in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php alla riga 193
+
+2023-09-04T09:49:55+00:00 CRITICAL Uncaught Error: Class 'AC\ListScreenFactory\Aggregate' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php:115
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php(30): AC\AdminColumns->create_container()
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/api.php(21): AC\AdminColumns->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/codepress-admin-columns.php(32): AC()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-settings.php(601): do_action('after_setup_the...')
+#7 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#8 /shared/httpd/agrispesa/wp-load.ph in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php alla riga 115
+
+2023-09-04T09:49:56+00:00 CRITICAL Uncaught Error: Class 'AC\ListScreenFactory\Aggregate' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php:115
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php(30): AC\AdminColumns->create_container()
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/api.php(21): AC\AdminColumns->__construct()
+#2 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/codepress-admin-columns.php(32): AC()
+#3 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(308): {closure}('')
+#4 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php(332): WP_Hook->apply_filters(NULL, Array)
+#5 /shared/httpd/agrispesa/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#6 /shared/httpd/agrispesa/wp-settings.php(601): do_action('after_setup_the...')
+#7 /shared/httpd/agrispesa/wp-config.php(96): require_once('/shared/httpd/a...')
+#8 /shared/httpd/agrispesa/wp-load.ph in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/AdminColumns.php alla riga 115
+

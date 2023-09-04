@@ -4,22 +4,24 @@ namespace ACP\Type;
 
 use AC\Type\Url;
 
-class SiteUrl implements Url {
+class SiteUrl implements Url
+{
 
-	/**
-	 * @var string
-	 */
-	private $url;
+    private $url;
 
-	public function __construct( $url ) {
-		$this->url = (string) $url;
-	}
+    public function __construct(string $url)
+    {
+        $this->url = $url;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function get_url() {
-		return $this->url;
-	}
+    public function get_url(): string
+    {
+        return $this->url;
+    }
+
+    public function __toString(): string
+    {
+        return $this->get_url();
+    }
 
 }

@@ -4,7 +4,7 @@ namespace ACP\Search\RequestHandler;
 
 use AC;
 use AC\Exception;
-use AC\ListScreenFactoryInterface;
+use AC\ListScreenFactory;
 use AC\ListScreenRepository\Storage;
 use AC\Request;
 use AC\Response;
@@ -21,7 +21,7 @@ class Comparison extends Controller {
 	 */
 	protected $list_screen;
 
-	public function __construct( Storage $storage, Request $request, ListScreenFactoryInterface $list_screen_factory ) {
+	public function __construct( Storage $storage, Request $request, ListScreenFactory $list_screen_factory ) {
 		parent::__construct( $request );
 
 		$id = $request->get( 'layout' );

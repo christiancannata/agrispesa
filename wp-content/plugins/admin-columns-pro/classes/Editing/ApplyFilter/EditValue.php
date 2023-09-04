@@ -4,7 +4,7 @@ namespace ACP\Editing\ApplyFilter;
 
 use AC;
 
-class EditValue implements AC\ApplyFilter {
+class EditValue {
 
 	/**
 	 * @var int
@@ -16,8 +16,8 @@ class EditValue implements AC\ApplyFilter {
 	 */
 	private $column;
 
-	public function __construct( $id, AC\Column $column ) {
-		$this->id = (int) $id;
+	public function __construct( int $id, AC\Column $column ) {
+		$this->id = $id;
 		$this->column = $column;
 	}
 

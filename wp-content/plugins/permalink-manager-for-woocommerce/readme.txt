@@ -5,7 +5,7 @@ Donate link: https://berocket.com/?utm_source=wordpress_org&utm_medium=donate&ut
 Tags: woocommerce url, remove product, remove product_category, remove product_cat, woocommerce permalink, permalink manager, permalink editor, woocommerce url, remove product_tag, woocommerce permalink, woocommerce, woocommerce seo
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 1.0.8
+Stable tag: 1.0.8.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,11 @@ Please open site admin -> Settings -> Permalinks and scroll down to Permalink Ma
 
 
 == Changelog ==
+
+= 1.0.8.1 =
+* Fix - fix issue with WooCommerce redirect to the right product page
+* Enhancement - Compatibility version: WordPress 6.2 and WooCommerce 7.8
+* Enhancement - WooCommerce High-Performance Order Storage support enable
 
 = 1.0.8 =
 * Enhancement - Compatibility version: WordPress 6.1 and WooCommerce 7.1

@@ -13,11 +13,11 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsInterface;
 use Exception;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\Util\V12\ResourceNames;
-use Google\Ads\GoogleAds\V12\Enums\AccessRoleEnum\AccessRole;
-use Google\Ads\GoogleAds\V12\Enums\MerchantCenterLinkStatusEnum\MerchantCenterLinkStatus;
-use Google\Ads\GoogleAds\V12\Resources\MerchantCenterLink;
-use Google\Ads\GoogleAds\V12\Services\MerchantCenterLinkOperation;
+use Google\Ads\GoogleAds\Util\V14\ResourceNames;
+use Google\Ads\GoogleAds\V14\Enums\AccessRoleEnum\AccessRole;
+use Google\Ads\GoogleAds\V14\Enums\MerchantCenterLinkStatusEnum\MerchantCenterLinkStatus;
+use Google\Ads\GoogleAds\V14\Resources\MerchantCenterLink;
+use Google\Ads\GoogleAds\V14\Services\MerchantCenterLinkOperation;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 
@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Ads implements OptionsAwareInterface {
 
-	use ApiExceptionTrait;
+	use ExceptionTrait;
 	use OptionsAwareTrait;
 
 	/**
@@ -72,7 +72,7 @@ class Ads implements OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 
 			// Return an empty list if the user has not signed up to ads yet.
 			if ( isset( $errors['NOT_ADS_USER'] ) ) {

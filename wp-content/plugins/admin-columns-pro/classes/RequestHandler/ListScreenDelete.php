@@ -21,7 +21,8 @@ class ListScreenDelete implements RequestHandler {
 		$this->storage = $storage;
 	}
 
-	public function handle( Request $request ) {
+	public function handle( Request $request ): void
+    {
 		if ( ! current_user_can( Capabilities::MANAGE ) ) {
 			return;
 		}

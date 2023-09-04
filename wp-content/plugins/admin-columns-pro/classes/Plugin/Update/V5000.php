@@ -23,7 +23,8 @@ class V5000 extends Update {
 	/**
 	 * @throws Exception
 	 */
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$this->migrate_license();
 	}
 

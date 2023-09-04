@@ -3,7 +3,6 @@
 namespace ACP\Editing;
 
 use AC\Column;
-use ACP;
 use WP_Error;
 
 /**

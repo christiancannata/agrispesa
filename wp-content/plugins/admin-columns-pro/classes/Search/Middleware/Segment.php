@@ -1,54 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Search\Middleware;
 
 use AC;
 use AC\Middleware;
 use AC\Table\TableFormView;
-use ACP\Bookmark\Setting\PreferredSegment;
+use ACP\Search\DefaultSegmentTrait;
+use ACP\Search\SegmentRepository;
 
-class Segment implements Middleware {
+final class Segment implements Middleware
+{
 
-	/**
-	 * @var PreferredSegment
-	 */
-	private $preferred_segment;
+    use DefaultSegmentTrait;
 
-	public function __construct( PreferredSegment $preferred_segment ) {
-		$this->preferred_segment = $preferred_segment;
-	}
+    private $list_screen;
 
-	public function handle( AC\Request $request ) {
-		$rules_key = 'rules';
+    public function __construct(AC\ListScreen $list_screen, SegmentRepository $segment_repository)
+    {
+        $this->list_screen = $list_screen;
+        $this->segment_repository = $segment_repository;
+    }
 
-		if ( $request->get_method() === AC\Request::METHOD_GET ) {
-			$rules_key = 'ac-' . $rules_key;
-		}
+    public function handle(AC\Request $request): void
+    {
+        $rules_key = 'rules';
 
-		// When rules request is empty and the action form has not been submitted we will insert the preferred segment into the request.
-		if ( $request->get( $rules_key ) ) {
-			return;
-		}
+        if ($request->get_method() === AC\Request::METHOD_GET) {
+            $rules_key = 'ac-' . $rules_key;
+        }
 
-		if ( null !== $request->get( TableFormView::PARAM_ACTION ) ) {
-			return;
-		}
+        // If rules request is empty and action form is not submitted, insert the preferred segment into the request
+        if ($request->get($rules_key)) {
+            return;
+        }
 
-		$segment = $this->preferred_segment->get_segment();
+        if (null !== $request->get(TableFormView::PARAM_ACTION)) {
+            return;
+        }
 
-		if ( ! $segment ) {
-			return;
-		}
+        $segment = $this->get_default_segment($this->list_screen);
 
-		$url_parameters = $segment->get_url_parameters();
+        if ( ! $segment) {
+            return;
+        }
 
-		if ( ! isset( $url_parameters['ac-rules'] ) ) {
-			return;
-		}
+        $url_parameters = $segment->get_url_parameters();
 
-		$request->get_parameters()->merge( [
-			$rules_key => $url_parameters['ac-rules'],
-		] );
-	}
+        if (isset($url_parameters['ac-rules'])) {
+            $request->get_parameters()->merge([
+                $rules_key => $url_parameters['ac-rules'],
+            ]);
+        }
+
+        if (isset($url_parameters['acp_filter'])) {
+            $request->get_parameters()->merge([
+                'acp_filter' => $url_parameters['acp_filter'],
+            ]);
+        }
+    }
 
 }

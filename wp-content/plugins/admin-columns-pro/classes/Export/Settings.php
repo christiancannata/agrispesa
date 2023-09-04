@@ -17,7 +17,8 @@ class Settings implements Registerable {
 		$this->location = $location;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/column/settings', [ $this, 'column_settings' ], 9 );
 		add_action( 'ac/admin_scripts/columns', [ $this, 'admin_scripts' ] );
 	}

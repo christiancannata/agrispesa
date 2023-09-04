@@ -2,7 +2,7 @@
 
 namespace ACP\Plugin\Update;
 
-use AC\ListScreenFactoryInterface;
+use AC\ListScreenFactory;
 use AC\ListScreenRepository\Database;
 use AC\Plugin\Update;
 use AC\Plugin\Version;
@@ -10,17 +10,18 @@ use AC\Plugin\Version;
 class V5104 extends Update {
 
 	/**
-	 * @var ListScreenFactoryInterface
+	 * @var ListScreenFactory
 	 */
 	private $list_screen_factory;
 
-	public function __construct( ListScreenFactoryInterface $list_screen_factory ) {
+	public function __construct( ListScreenFactory $list_screen_factory ) {
 		parent::__construct( new Version( '5.1.4' ) );
 
 		$this->list_screen_factory = $list_screen_factory;
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$this->set_default_export_option();
 	}
 

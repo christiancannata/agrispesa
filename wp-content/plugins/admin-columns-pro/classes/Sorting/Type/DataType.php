@@ -4,45 +4,39 @@ namespace ACP\Sorting\Type;
 
 use LogicException;
 
-class DataType {
+class DataType
+{
 
-	const STRING = 'string';
-	const NUMERIC = 'numeric';
-	const DATE = 'date';
-	const DATETIME = 'datetime';
-	const DECIMAL = 'decimal';
+    public const STRING = 'string';
+    public const NUMERIC = 'numeric';
+    public const DATE = 'date';
+    public const DATETIME = 'datetime';
+    public const DECIMAL = 'decimal';
 
-	/**
-	 * @var string
-	 */
-	private $value;
+    private $value;
 
-	public function __construct( $value ) {
-		if ( ! self::is_valid( $value ) ) {
-			throw new LogicException( 'Invalid data type.' );
-		}
+    public function __construct(string $value)
+    {
+        if ( ! self::is_valid($value)) {
+            throw new LogicException('Invalid data type.');
+        }
 
-		$this->value = $value;
-	}
+        $this->value = $value;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function get_value() {
-		return $this->value;
-	}
+    public function get_value(): string
+    {
+        return $this->value;
+    }
 
-	/**
-	 * @param string $value
-	 *
-	 * @return bool
-	 */
-	public static function is_valid( $value ) {
-		return in_array( $value, [ self::STRING, self::NUMERIC, self::DATE, self::DATETIME, self::DECIMAL ], true );
-	}
+    public static function is_valid(string $value): bool
+    {
+        return in_array($value, [self::STRING, self::NUMERIC, self::DATE, self::DATETIME, self::DECIMAL], true);
+    }
 
-	public function __toString() {
-		return $this->value;
-	}
+    public function __toString()
+    {
+        return $this->value;
+    }
 
 }

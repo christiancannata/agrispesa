@@ -97,7 +97,7 @@ class AdminNotices {
 			$this->plugin->memcache->isEnabled()
 		) {
 			$this->enqueue(
-				__( "Some memcache servers are not reachable. Please check memcached service and connection settings.", DOMAIN )
+				__( "Some memcache servers are not reachable. Please check <a href='/wp-admin/admin.php?page=use-memcached'>memcached service and connection settings</a>.", DOMAIN )
 			);
 		} else if(
 			!$this->plugin->memcache->isEnabled()

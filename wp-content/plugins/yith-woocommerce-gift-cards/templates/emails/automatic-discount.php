@@ -2,7 +2,7 @@
 /**
  * Show a section for the automatic discount link and description
  *
- * @author YITHEMES
+ * @author YITH <plugins@yithemes.com>
  * @package yith-woocommerce-gift-cards\templates\emails
  */
 

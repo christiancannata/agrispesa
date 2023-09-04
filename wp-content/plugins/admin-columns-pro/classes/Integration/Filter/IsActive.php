@@ -8,7 +8,8 @@ use AC\Integrations;
 
 class IsActive implements Filter {
 
-	public function filter( Integrations $integrations ) {
+	public function filter( Integrations $integrations ): Integrations
+    {
 		return new Integrations( array_filter( $integrations->all(), [ $this, 'is_active' ] ) );
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Form preview on product page
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Templates
  */
 

@@ -104,10 +104,14 @@ if( $code == 200 ){
 			);
 		}else{
 			wp_die(
-				__( 'Add the following code to your <code>.htaccess</code> file above <code># BEGIN WordPress</code>', 'images-to-webp' ) . 
+				__( 'Add the following code to your <code>.htaccess</code> file above <code># BEGIN WordPress</code>,', 'images-to-webp' ) . 
+				'<br>' . 
+				__( 'then try to activate Images to WebP again:', 'images-to-webp' ) . 
 				'<pre><code style="user-select:all">' . htmlentities( $this->generate_mod_rewrite_rules() ) . '</code></pre>' . 
 				'<br>' . 
-				__( 'Then try to activate Images to WebP again ;)', 'images-to-webp' )
+				__( "If you have a proxy setup or some combination of NGiNX and Apache on your server, you may probably need to disable NGiNX direct processing of image static files.", 'images-to-webp' ) . 
+				'<br><br>' . 
+				__( "If you have these lines in .htaccess and you still see this message, then there is some other problem with your server configuration.", 'images-to-webp' )
 			);
 		}
 	}

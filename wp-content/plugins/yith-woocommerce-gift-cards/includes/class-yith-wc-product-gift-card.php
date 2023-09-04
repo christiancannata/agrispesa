@@ -10,7 +10,7 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 	 * @class   YITH_YWGC_Gift_Card
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class WC_Product_Gift_Card extends WC_Product {
 
@@ -62,7 +62,6 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		 * Retrieve the number of current amounts for this product
 		 *
 		 * @return int
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function get_amounts_count() {
@@ -338,7 +337,6 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		 * Retrieve an array of gift cards amounts with the corrected value to be shown(inclusive or not inclusive taxes)
 		 *
 		 * @return array
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function get_amounts_to_be_shown() {

@@ -1,51 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class CommentCount extends AbstractModel {
+class CommentCount extends AbstractModel implements QueryBindings
+{
 
-	public const STATUS_APPROVED = '1';
-	public const STATUS_SPAM = 'spam';
-	public const STATUS_TRASH = 'trash';
-	public const STATUS_PENDING = '0';
+    public const STATUS_APPROVED = '1';
+    public const STATUS_SPAM = 'spam';
+    public const STATUS_TRASH = 'trash';
+    public const STATUS_PENDING = '0';
 
-	/**
-	 * @var array
-	 */
-	private $stati;
+    /**
+     * @var array
+     */
+    private $stati;
 
-	public function __construct( array $stati = [] ) {
-		parent::__construct();
+    public function __construct(array $stati = [])
+    {
+        parent::__construct();
 
-		$this->stati = $stati;
-	}
+        $this->stati = $stati;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'posts_fields_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
 
-	public function posts_fields_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $alias = $bindings->get_unique_alias('ccount');
 
-		global $wpdb;
+        $join = "\nLEFT JOIN $wpdb->comments AS $alias ON $alias.comment_post_ID = $wpdb->posts.ID";
 
-		$clauses['join'] .= "\nLEFT JOIN $wpdb->comments AS acsort_comments ON acsort_comments.comment_post_ID = $wpdb->posts.ID";
+        if ($this->stati) {
+            $join .= sprintf(
+                "\nAND $alias.comment_approved IN ( '%s' )",
+                implode("','", array_map('esc_sql', $this->stati))
+            );
+        }
 
-		if ( $this->stati ) {
-			$clauses['join'] .= sprintf( "\nAND acsort_comments.comment_approved IN ( '%s' )", implode( "','", array_map( 'esc_sql', $this->stati ) ) );
-		}
+        $bindings->join($join);
+        $bindings->group_by("$wpdb->posts.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_count("$alias.comment_ID", (string)$order)
+        );
 
-		$clauses['groupby'] = "$wpdb->posts.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create_with_count( "acsort_comments.comment_ID", $this->get_order() );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

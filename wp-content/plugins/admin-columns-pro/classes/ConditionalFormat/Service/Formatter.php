@@ -42,7 +42,8 @@ final class Formatter implements Registerable {
 		$this->rules_repository_factory = $rules_repository_factory;
 	}
 
-	public function register(): void {
+	public function register(): void
+    {
 		// Do not format on export
 		if ( did_action( 'acp/export/before_batch' ) ) {
 			return;
@@ -72,10 +73,6 @@ final class Formatter implements Registerable {
 	 * Comparisons are done case-insensitive
 	 */
 	public function format( string $value, int $id, AC\Column $column ): string {
-		if ( $column->get_empty_char() === $value ) {
-			return $value;
-		}
-
 		if ( ! $column->get_list_screen()->has_id() ) {
 			return $value;
 		}

@@ -103,7 +103,9 @@
 		}
 	};
 
-	uploadHandler.initOnce();
+	$( function () {
+		uploadHandler.initOnce();
+	} );
 
 	var imageGallery = {
 		selectors: {
@@ -150,7 +152,7 @@
 							if ( attachment.id ) {
 								attachmentIDs           = attachmentIDs ? attachmentIDs + "," + attachment.id : attachment.id;
 								var attachmentImageData = attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.large || attachment.sizes.full;
-								wrapper.append( '<li class="image" data-attachment_id="' + attachment.id + '"><img src="' + attachmentImageData.url + '"/><ul class="actions"><li><a href="#" class="delete" title="' + button.data( 'delete' ) + '">x</a></li></ul></li>' );
+								wrapper.append( '<li class="image" data-attachment_id="' + attachment.id + '"><img src="' + attachmentImageData.url + '"/><i href="#" class="delete yith-icon yith-icon-trash" title="' + button.data( 'delete' ) + '"></i></li>' );
 							}
 						} );
 
@@ -200,7 +202,7 @@
 					} );
 
 					// Remove images
-					slideWrappers.on( 'click', 'a.delete', function ( e ) {
+					slideWrappers.on( 'click', '.delete', function ( e ) {
 						e.preventDefault();
 						var _wrapper              = $( this ).closest( imageGallery.selectors.gallery ),
 							_slideWrapper         = _wrapper.find( 'ul.slides-wrapper' ),
@@ -220,7 +222,9 @@
 			}
 		}
 	};
-	imageGallery.initOnce();
+	$( function () {
+		imageGallery.initOnce();
+	} );
 
 
 	// Codemirror.
@@ -423,7 +427,7 @@
 						array_keys[ i ] = $( keys[ i ] ).data( 'item_key' );
 					}
 					if ( array_keys.length > 0 ) {
-						var toggle = $( this ).closest( '.toggle-element' );
+						var toggle = $( this ).closest( '.toggle-element,.yith-plugin-fw__panel__option--toggle-element' );
 						toggle.saveToggleElement( null, array_keys );
 					}
 				}
@@ -492,12 +496,13 @@
 
 	//TOGGLE ELEMENT
 	$.fn.saveToggleElement = function ( spinner, array_keys ) {
-		var toggle      = $( this ),
-			action      = 'yith_plugin_fw_save_toggle_element',
-			formdata    = toggle.serializeToggleElement(),
-			wrapper     = toggle.find( '.yith-toggle_wrapper' ),
-			id          = wrapper.attr( 'id' ),
-			current_tab = $.urlParam( 'tab' );
+		var toggle          = $( this ),
+			action          = 'yith_plugin_fw_save_toggle_element',
+			formdata        = toggle.serializeToggleElement(),
+			wrapper         = toggle.find( '.yith-toggle_wrapper' ),
+			id              = wrapper.attr( 'id' ),
+			current_tab     = $.urlParam( 'tab' ),
+			current_sub_tab = $.urlParam( 'sub_tab' );
 
 		formdata.append( 'security', wrapper.data( 'nonce' ) );
 
@@ -517,7 +522,7 @@
 								  "&toggle_id=" + id +
 								  "&metabox_tab=" + metabox_tab;
 		} else {
-			url = yith_framework_fw_fields.admin_url + '?action=' + action + '&tab=' + current_tab + "&toggle_id=" + id;
+			url = yith_framework_fw_fields.admin_url + '?action=' + action + '&tab=' + current_tab + '&sub_tab=' + current_sub_tab + "&toggle_id=" + id;
 		}
 
 		$.ajax( {
@@ -649,7 +654,7 @@
 		var add_box        = $( this ).parents( '.yith-add-box' ),
 			id             = $( this ).closest( '.yith-toggle_wrapper' ).attr( 'id' ),
 			spinner        = add_box.find( '.spinner' ),
-			toggle_element = $( this ).parents( '.toggle-element' ),
+			toggle_element = $( this ).closest( '.toggle-element,.yith-plugin-fw__panel__option--toggle-element' ),
 			fields         = add_box.find( ':input' ),
 			counter        = 0,
 			hidden_obj     = $( '<input type="hidden">' );
@@ -727,7 +732,7 @@
 
 	$( document ).on( 'click', '.yith-toggle-row .yith-save-button', function ( event ) {
 		event.preventDefault();
-		var toggle     = $( this ).closest( '.toggle-element' ),
+		var toggle     = $( this ).closest( '.toggle-element,.yith-plugin-fw__panel__option--toggle-element' ),
 			toggle_row = $( this ).closest( '.yith-toggle-row' ),
 			spinner    = toggle_row.find( '.spinner' );
 		toggle_row.formatToggleTitle();
@@ -743,7 +748,7 @@
 	//register remove the dome and save the toggle
 	$( document ).on( 'click', '.yith-toggle-row .yith-delete-button', function ( event ) {
 		event.preventDefault();
-		var toggle     = $( this ).closest( '.toggle-element' ),
+		var toggle     = $( this ).closest( '.toggle-element,.yith-plugin-fw__panel__option--toggle-element' ),
 			toggle_row = $( this ).closest( '.yith-toggle-row' );
 		toggle_row.remove();
 		toggle.saveToggleElement();
@@ -752,7 +757,7 @@
 	//register onoff status
 	$( document ).on( 'click', '.yith-toggle-onoff', function ( event ) {
 		event.preventDefault();
-		var toggle = $( this ).closest( '.toggle-element' );
+		var toggle = $( this ).closest( '.toggle-element,.yith-plugin-fw__panel__option--toggle-element' );
 		toggle.saveToggleElement();
 	} );
 
@@ -976,7 +981,7 @@
 					window.location.href = url;
 				};
 
-				options.closeAfterConfirm = false;
+				options.closeAfterConfirm                = false;
 				options.confirmButtonLoadingAfterConfirm = true;
 
 				yith.ui.confirm( options );
@@ -1116,37 +1121,46 @@
 		 * @param media
 		 */
 		function triggerMediaChange( wrapper, media ) {
-			var preview         = wrapper.find( '.yith-plugin-fw-media__preview' ),
-				previewImage    = preview.find( '.yith-plugin-fw-media__preview__image' ),
-				previewFileName = preview.find( '.yith-plugin-fw-media__preview__file__name' ),
-				urlField        = wrapper.find( '.yith-plugin-fw-media__url-value' ),
-				idField         = wrapper.find( '.yith-plugin-fw-media__id-value' );
+			var urlField = wrapper.find( '.yith-plugin-fw-media__url-value' ),
+				idField  = wrapper.find( '.yith-plugin-fw-media__id-value' );
 
 			if ( !media ) {
-				urlField.length && urlField.val( '' );
-				idField.length && idField.val( '' );
-				previewImage.attr( 'src', '' );
-				preview.attr( 'data-type', 'upload' );
+				urlField.length && urlField.val( '' ).trigger( 'change' );
+				idField.length && idField.val( '' ).trigger( 'change' );
+				updatePreview( wrapper, '' );
 			} else {
-				if ( typeof media.url !== 'undefined' && urlField.length ) {
-					urlField.val( media.url );
+				if ( typeof media.url !== 'undefined' && urlField.length && media.url !== urlField.val() ) {
+					urlField.val( media.url ).trigger( 'change' );
 				}
 
-				if ( typeof media.id !== 'undefined' && idField.length ) {
-					idField.val( media.id );
+				if ( typeof media.id !== 'undefined' && idField.length && media.id !== idField.val() ) {
+					idField.val( media.id ).trigger( 'change' );
 				}
 
 				if ( typeof media.url !== 'undefined' ) {
-					var isImage   = new RegExp( '(jpg|jpeg|png|gif|ico|svg|jpe|webp)$' ).test( media.url ),
-						mediaType = isImage ? 'image' : 'file';
+					updatePreview( wrapper, media.url );
+				}
+			}
+		}
 
-					preview.attr( 'data-type', mediaType );
-					if ( 'image' === mediaType ) {
-						previewImage.attr( 'src', media.url );
-					} else {
-						var filename = media.url.substring( media.url.lastIndexOf( '/' ) + 1 );
-						previewFileName.html( filename );
-					}
+		function updatePreview( wrapper, mediaUrl ) {
+			var preview         = wrapper.find( '.yith-plugin-fw-media__preview' ),
+				previewImage    = preview.find( '.yith-plugin-fw-media__preview__image' ),
+				previewFileName = preview.find( '.yith-plugin-fw-media__preview__file__name' );
+
+			if ( !mediaUrl ) {
+				previewImage.attr( 'src', '' );
+				preview.attr( 'data-type', 'upload' );
+			} else {
+				var isImage   = new RegExp( '(jpg|jpeg|png|gif|ico|svg|jpe|webp)$' ).test( mediaUrl ),
+					mediaType = isImage ? 'image' : 'file';
+
+				preview.attr( 'data-type', mediaType );
+				if ( 'image' === mediaType ) {
+					previewImage.attr( 'src', mediaUrl );
+				} else {
+					var filename = mediaUrl.substring( mediaUrl.lastIndexOf( '/' ) + 1 );
+					previewFileName.html( filename );
 				}
 			}
 		}
@@ -1186,7 +1200,7 @@
 		function onImageChange( event ) {
 			var field   = $( event.target ),
 				wrapper = getWrapper( field );
-			triggerMediaChange( wrapper, { url: field.val(), id: '' } );
+			updatePreview( wrapper, field.val() );
 		}
 
 		function onDragEnter( event ) {

@@ -7,7 +7,7 @@
  * It is also available through the world-wide-web at this URL:
  * http://www.gnu.org/licenses/gpl-3.0.txt
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

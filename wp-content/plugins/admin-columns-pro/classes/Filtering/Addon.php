@@ -5,6 +5,7 @@ namespace ACP\Filtering;
 use AC;
 use AC\Asset;
 use AC\Asset\Location;
+use AC\ListScreenRepository\Storage;
 use AC\Registerable;
 use AC\Request;
 use AC\Type\ListScreenId;
@@ -13,182 +14,196 @@ use ACP;
 /**
  * @since 4.0
  */
-class Addon implements Registerable {
+class Addon implements Registerable
+{
 
-	/**
-	 * @var AC\ListScreenRepository\Storage
-	 */
-	private $storage;
+    private $storage;
 
-	/**
-	 * @var Location
-	 */
-	private $location;
+    private $location;
 
-	/**
-	 * @var Request
-	 */
-	private $request;
+    private $request;
 
-	public function __construct( AC\ListScreenRepository\Storage $storage, Location $location, Request $request ) {
-		$this->storage = $storage;
-		$this->location = $location;
-		$this->request = $request;
-	}
+    public function __construct(Storage $storage, Location\Absolute $location, Request $request)
+    {
+        $this->storage = $storage;
+        $this->location = $location;
+        $this->request = $request;
+    }
 
-	public function register() {
-		add_action( 'ac/column/settings', [ $this, 'settings' ] );
-		add_action( 'ac/admin_scripts', [ $this, 'settings_scripts' ] );
-		add_action( 'ac/table/list_screen', [ $this, 'table_screen' ] );
-		add_action( 'ac/table/list_screen', [ $this, 'handle_filtering' ] );
-		add_action( 'wp_ajax_acp_update_filtering_cache', [ $this, 'ajax_update_dropdown_cache' ] );
-	}
+    public function register(): void
+    {
+        add_action('ac/column/settings', [$this, 'settings']);
+        add_action('ac/admin_scripts', [$this, 'settings_scripts']);
+        add_action('ac/table/list_screen', [$this, 'table_screen']);
+        add_action('ac/table/list_screen', [$this, 'handle_filtering']);
+        add_action('wp_ajax_acp_update_filtering_cache', [$this, 'ajax_update_dropdown_cache']);
+    }
 
-	public function ajax_update_dropdown_cache() {
-		check_ajax_referer( 'ac-ajax' );
+    public function ajax_update_dropdown_cache()
+    {
+        check_ajax_referer('ac-ajax');
 
-		$layout_id = $this->request->get( 'layout' );
+        $layout_id = $this->request->get('layout');
 
-		if ( ! $layout_id ) {
-			exit;
-		}
+        if ( ! $layout_id) {
+            exit;
+        }
 
-		$list_screen = $this->storage->find( new ListScreenId( $this->request->get( 'layout' ) ) );
+        $list_screen = $this->storage->find(new ListScreenId($this->request->get('layout')));
 
-		if ( ! $list_screen ) {
-			exit;
-		}
+        if ( ! $list_screen) {
+            exit;
+        }
 
-		$table_screen = $this->table_screen( $list_screen );
+        $table_screen = $this->table_screen($list_screen);
 
-		if ( ! $table_screen ) {
-			exit;
-		}
+        if ( ! $table_screen) {
+            exit;
+        }
 
-		wp_send_json_success( $table_screen->update_dropdown_cache() );
-	}
+        wp_send_json_success($table_screen->update_dropdown_cache());
+    }
 
-	/**
-	 * @return Helper
-	 */
-	public function helper() {
-		return new Helper();
-	}
+    /**
+     * @return Helper
+     */
+    public function helper()
+    {
+        return new Helper();
+    }
 
-	/**
-	 * @param AC\Column $column
-	 *
-	 * @return Model|false
-	 */
-	public function get_filtering_model( $column ) {
-		if ( ! $column instanceof Filterable ) {
-			return false;
-		}
+    /**
+     * @param AC\Column $column
+     *
+     * @return Model|false
+     */
+    public function get_filtering_model($column)
+    {
+        if ( ! $column instanceof Filterable) {
+            return false;
+        }
 
-		$list_screen = $column->get_list_screen();
+        $list_screen = $column->get_list_screen();
 
-		if ( ! $list_screen instanceof ListScreen ) {
-			return false;
-		}
+        if ( ! $list_screen instanceof ListScreen) {
+            return false;
+        }
 
-		$model = $column->filtering();
-		$model->set_strategy( $list_screen->filtering( $model ) );
+        $model = $column->filtering();
+        $model->set_strategy($list_screen->filtering($model));
+        $model->set_request($this->request);
 
-		return $model;
-	}
+        return $model;
+    }
 
-	/**
-	 * @param AC\ListScreen $list_screen
-	 *
-	 * @return array|false
-	 */
-	private function get_models( AC\ListScreen $list_screen ) {
-		if ( ! $list_screen instanceof ListScreen ) {
-			return false;
-		}
+    /**
+     * @param AC\ListScreen $list_screen
+     *
+     * @return array|false
+     */
+    private function get_models(AC\ListScreen $list_screen)
+    {
+        if ( ! $list_screen instanceof ListScreen) {
+            return false;
+        }
 
-		$models = [];
+        $models = [];
 
-		foreach ( $list_screen->get_columns() as $column ) {
-			$model = $this->get_filtering_model( $column );
+        foreach ($list_screen->get_columns() as $column) {
+            $model = $this->get_filtering_model($column);
 
-			if ( $model ) {
-				$models[] = $model;
-			}
-		}
+            if ($model) {
+                $models[] = $model;
+            }
+        }
 
-		return $models;
-	}
+        return $models;
+    }
 
-	/**
-	 * @param AC\ListScreen $list_screen
-	 *
-	 * @return TableScreen|false
-	 */
-	public function table_screen( AC\ListScreen $list_screen ) {
-		$models = $this->get_models( $list_screen );
+    /**
+     * @param AC\ListScreen $list_screen
+     *
+     * @return TableScreen|false
+     */
+    public function table_screen(AC\ListScreen $list_screen)
+    {
+        $models = $this->get_models($list_screen);
 
-		if ( ! $models ) {
-			return false;
-		}
+        if ( ! $models) {
+            return false;
+        }
 
-		$assets[] = new Asset\Style( 'acp-filtering-table', $this->location->with_suffix( 'assets/filtering/css/table.css' ) );
-		$assets[] = new Asset\Script( 'acp-filtering-table', $this->location->with_suffix( 'assets/filtering/js/table.js' ), [ 'jquery', 'jquery-ui-datepicker' ] );
+        $assets[] = new Asset\Style(
+            'acp-filtering-table',
+            $this->location->with_suffix('assets/filtering/css/table.css')
+        );
+        $assets[] = new Asset\Script(
+            'acp-filtering-table',
+            $this->location->with_suffix('assets/filtering/js/table.js'),
+            ['jquery', 'jquery-ui-datepicker']
+        );
 
-		switch ( true ) {
-			case $list_screen instanceof ACP\ListScreen\MSUser :
-				return new TableScreen\MSUser( $models, $assets );
+        switch (true) {
+            case $list_screen instanceof ACP\ListScreen\MSUser :
+                return new TableScreen\MSUser($models, $assets);
 
-			case $list_screen instanceof ACP\ListScreen\User :
-				return new TableScreen\User( $models, $assets );
+            case $list_screen instanceof ACP\ListScreen\User :
+                return new TableScreen\User($models, $assets);
 
-			case $list_screen instanceof ACP\ListScreen\Post :
-			case $list_screen instanceof ACP\ListScreen\Media :
-				return new TableScreen\Post( $models, $assets );
+            case $list_screen instanceof ACP\ListScreen\Post :
+            case $list_screen instanceof ACP\ListScreen\Media :
+                return new TableScreen\Post($models, $assets);
 
-			case $list_screen instanceof ACP\ListScreen\Comment :
-				return new TableScreen\Comment( $models, $assets );
+            case $list_screen instanceof ACP\ListScreen\Comment :
+                return new TableScreen\Comment($models, $assets);
 
-			case $list_screen instanceof ACP\ListScreen\Taxonomy :
-				return new TableScreen\Taxonomy( $models, $assets );
-		}
+            case $list_screen instanceof ACP\ListScreen\Taxonomy :
+                return new TableScreen\Taxonomy($models, $assets);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public function settings_scripts( $page ) {
-		if( $page instanceof AC\Admin\Page\Columns ){
-			$script = new Asset\Script( 'acp-filtering-settings', $this->location->with_suffix( 'assets/filtering/js/settings.js' ), [ 'jquery' ] );
-			$script->enqueue();
-		}
-	}
+    public function settings_scripts($page)
+    {
+        if ($page instanceof AC\Admin\Page\Columns) {
+            $script = new Asset\Script(
+                'acp-filtering-settings',
+                $this->location->with_suffix('assets/filtering/js/settings.js'),
+                ['jquery']
+            );
+            $script->enqueue();
+        }
+    }
 
-	/**
-	 * Register field settings for filtering
-	 *
-	 * @param AC\Column $column
-	 */
-	public function settings( $column ) {
-		$model = $this->get_filtering_model( $column );
+    /**
+     * Register field settings for filtering
+     *
+     * @param AC\Column $column
+     */
+    public function settings($column)
+    {
+        $model = $this->get_filtering_model($column);
 
-		if ( $model ) {
-			$model->register_settings();
-		}
-	}
+        if ($model) {
+            $model->register_settings();
+        }
+    }
 
-	/**
-	 * Handle filtering request
-	 *
-	 * @param AC\ListScreen $list_screen
-	 */
-	public function handle_filtering( AC\ListScreen $list_screen ) {
-		foreach ( $list_screen->get_columns() as $column ) {
-			$model = $this->get_filtering_model( $column );
+    /**
+     * Handle filtering request
+     *
+     * @param AC\ListScreen $list_screen
+     */
+    public function handle_filtering(AC\ListScreen $list_screen)
+    {
+        foreach ($list_screen->get_columns() as $column) {
+            $model = $this->get_filtering_model($column);
 
-			if ( $model && $model->is_active() && false !== $model->get_filter_value() ) {
-				$model->get_strategy()->handle_request();
-			}
-		}
-	}
+            if ($model && $model->is_active() && false !== $model->get_filter_value()) {
+                $model->get_strategy()->handle_request();
+            }
+        }
+    }
 
 }

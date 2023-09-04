@@ -7,13 +7,13 @@ use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Query\AdsAssetGroupAs
 use Automattic\WooCommerce\GoogleListingsAndAds\Google\Ads\GoogleAdsClient;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
-use Google\Ads\GoogleAds\V12\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V12\Resources\AssetGroupAsset;
+use Google\Ads\GoogleAds\V14\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V14\Resources\AssetGroupAsset;
 use Google\ApiCore\ApiException;
 use Automattic\WooCommerce\GoogleListingsAndAds\Exception\ExceptionWithResponseData;
-use Google\Ads\GoogleAds\V12\Services\MutateOperation;
-use Google\Ads\GoogleAds\V12\Services\AssetGroupAssetOperation;
-use Google\Ads\GoogleAds\Util\V12\ResourceNames;
+use Google\Ads\GoogleAds\V14\Services\MutateOperation;
+use Google\Ads\GoogleAds\V14\Services\AssetGroupAssetOperation;
+use Google\Ads\GoogleAds\Util\V14\ResourceNames;
 
 
 
@@ -22,7 +22,7 @@ use Google\Ads\GoogleAds\Util\V12\ResourceNames;
  * Class AdsAssetGroupAsset
  *
  * Use to get assets group assets for specific asset groups.
- * https://developers.google.com/google-ads/api/fields/v12/asset_group_asset
+ * https://developers.google.com/google-ads/api/fields/v14/asset_group_asset
  *
  * @since 2.4.0
  *
@@ -30,8 +30,8 @@ use Google\Ads\GoogleAds\Util\V12\ResourceNames;
  */
 class AdsAssetGroupAsset implements OptionsAwareInterface {
 
+	use ExceptionTrait;
 	use OptionsAwareTrait;
-	use ApiExceptionTrait;
 
 	/**
 	 * The Google Ads Client.
@@ -134,7 +134,7 @@ class AdsAssetGroupAsset implements OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error retrieving asset groups assets: %s', 'google-listings-and-ads' ), reset( $errors ) ),
@@ -201,7 +201,7 @@ class AdsAssetGroupAsset implements OptionsAwareInterface {
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
 
-			$errors = $this->get_api_exception_errors( $e );
+			$errors = $this->get_exception_errors( $e );
 			throw new ExceptionWithResponseData(
 				/* translators: %s Error message */
 				sprintf( __( 'Error retrieving asset groups assets by final url: %s', 'google-listings-and-ads' ), reset( $errors ) ),

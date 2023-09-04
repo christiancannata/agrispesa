@@ -2,137 +2,78 @@
 
 namespace ACP\Sorting\Strategy;
 
-use ACP;
 use ACP\Sorting\AbstractModel;
 use ACP\Sorting\Strategy;
+use ACP\Sorting\Type\Order;
 use ACP\TermQueryInformation;
 use WP_Term_Query;
 
-class Taxonomy extends Strategy {
+/**
+ * Use `QueryBindings` instead of `QueryVars` for the sorting models
+ * @depecated 6.3
+ */
+class Taxonomy extends Strategy
+{
 
-	/**
-	 * @var WP_Term_Query
-	 */
-	private $term_query;
+    use TermResultsTrait;
 
-	/**
-	 * @var string
-	 */
-	private $taxonomy;
+    public function __construct(AbstractModel $model, string $taxonomy)
+    {
+        parent::__construct($model);
 
-	public function __construct( AbstractModel $model, $taxonomy ) {
-		parent::__construct( $model );
+        $this->taxonomy = $taxonomy;
+    }
 
-		$this->taxonomy = $taxonomy;
-	}
+    public function manage_sorting(): void
+    {
+        add_action('pre_get_terms', [$this, 'alter_query_vars']);
+    }
 
-	public function manage_sorting() {
-		add_action( 'pre_get_terms', [ $this, 'handle_sorting_request' ] );
-	}
+    protected function get_order(WP_Term_Query $query): Order
+    {
+        return Order::create_by_string($query->query_vars['order'] ?? '');
+    }
 
-	/**
-	 * @param array $args
-	 *
-	 * @return array
-	 */
-	public function get_results( array $args = [] ) {
-		return $this->get_terms( $args );
-	}
+    private function is_main_query(WP_Term_Query $query): bool
+    {
+        if ( ! isset($query->query_vars['orderby']) || ! TermQueryInformation::is_main_query($query)) {
+            return false;
+        }
 
-	/**
-	 * @param array $args
-	 *
-	 * @return int[]
-	 */
-	protected function get_terms( array $args = [] ) {
-		$defaults = [
-			'fields'     => 'ids',
-			'taxonomy'   => $this->taxonomy,
-			'hide_empty' => false,
-		];
+        $taxonomies = $query->query_vars['taxonomy'] ?? [];
 
-		$args = array_merge( $defaults, $args );
+        return $taxonomies && in_array($this->taxonomy, $taxonomies, true);
+    }
 
-		$query = new WP_Term_Query( $args );
+    public function alter_query_vars(WP_Term_Query $query): void
+    {
+        if ( ! $this->is_main_query($query)) {
+            return;
+        }
 
-		return (array) $query->get_terms();
-	}
+        $this->model->set_strategy($this);
+        $this->model->set_order((string)$this->get_order($query));
 
-	/**
-	 * @return string
-	 */
-	public function get_order() {
-		return $this->get_query_var( 'order' );
-	}
+        $vars = $this->model->get_sorting_vars();
 
-	/**
-	 * @param WP_Term_Query $term_query
-	 */
-	private function set_term_query( WP_Term_Query $term_query ) {
-		$this->term_query = $term_query;
-	}
+        if ( ! $vars) {
+            return;
+        }
 
-	/**
-	 * return boolean
-	 */
-	private function is_main_query() {
-		$term_query = new TermQueryInformation();
+        foreach ($vars as $key => $value) {
+            if (self::is_universal_id($key)) {
+                $key = 'include';
+            }
 
-		if ( ! $this->get_query_var( 'orderby' ) || ! $term_query->is_main_query( $this->term_query ) ) {
-			return false;
-		}
+            $query->query_vars[$key] = $value;
+        }
 
-		$taxonomies = $this->get_query_var( 'taxonomy' );
+        $include = $query->query_vars['include'] ?? null;
 
-		return ! ( empty( $taxonomies ) || ! in_array( $this->taxonomy, $taxonomies ) );
-	}
-
-	/**
-	 * @param WP_Term_Query $query
-	 *
-	 * @return void
-	 */
-	public function handle_sorting_request( WP_Term_Query $query ) {
-		$this->set_term_query( $query );
-
-		if ( ! $this->is_main_query() ) {
-			return;
-		}
-
-		foreach ( $this->model->get_sorting_vars() as $key => $value ) {
-			if ( $this->is_universal_id( $key ) ) {
-				$key = 'include';
-			}
-
-			$query->query_vars[ $key ] = $value;
-		}
-
-		// pre-sorting done with an array
-		$include = $query->query_vars['include'];
-
-		if ( ! empty( $include ) ) {
-			$query->query_vars['orderby'] = 'include';
-		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_taxonomy() {
-		$taxonomy = $this->get_query_var( 'taxonomy' );
-
-		return (string) $taxonomy[0];
-	}
-
-	/**
-	 * @param string $var
-	 *
-	 * @return string|array|null
-	 */
-	protected function get_query_var( $var ) {
-		return $this->term_query instanceof WP_Term_Query && isset( $this->term_query->query_vars[ $var ] )
-			? $this->term_query->query_vars[ $var ]
-			: null;
-	}
+        if ( ! empty($include)) {
+            $query->query_vars['order'] = 'desc';
+            $query->query_vars['orderby'] = 'include';
+        }
+    }
 
 }

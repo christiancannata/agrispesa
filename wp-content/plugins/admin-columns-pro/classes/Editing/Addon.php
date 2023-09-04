@@ -7,7 +7,6 @@ use AC\Asset\Location;
 use AC\ListScreenRepository\Storage;
 use AC\Registerable;
 use AC\Request;
-use ACP;
 use ACP\Editing\Ajax\TableRowsFactory;
 use ACP\Editing\Factory\BulkEditFactory;
 use ACP\Editing\Factory\InlineEditFactory;
@@ -37,7 +36,8 @@ class Addon implements Registerable {
 		$this->request = $request;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/table/list_screen', [ $this, 'load_table' ] );
 		add_action( 'ac/table/list_screen', [ $this, 'handle_request_rows' ] );
 		add_action( 'ac/table/list_screen', [ $this, 'handle_request_query' ] );

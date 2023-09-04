@@ -14,7 +14,8 @@ class V5300 extends Update {
 		parent::__construct( new Version( '5.3.0' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$this->create_table();
 		$this->migrate_bookmarks();
 	}

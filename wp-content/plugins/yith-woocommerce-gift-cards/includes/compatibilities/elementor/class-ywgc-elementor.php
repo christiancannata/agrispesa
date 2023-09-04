@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @class   YWGC_Elementor
  * @package YITH
  * @since   1.2.2
- * @author  YITH
+ * @author  YITH <plugins@yithemes.com>
  */
 if ( ! class_exists( 'YWGC_Elementor' ) ) {
 

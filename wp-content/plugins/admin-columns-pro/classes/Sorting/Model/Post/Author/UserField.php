@@ -1,42 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Sorting\Model\Post\Author;
 
-use ACP;
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
+use ACP\Sorting\Type\Order;
 
-class UserField extends AbstractModel {
+class UserField extends AbstractModel implements QueryBindings
+{
 
-	/**
-	 * @var string
-	 */
-	private $user_field;
+    private $user_field;
 
-	public function __construct( $user_field ) {
-		parent::__construct();
+    public function __construct(string $user_field)
+    {
+        parent::__construct();
 
-		$this->user_field = (string) $user_field;
-	}
+        $this->user_field = $user_field;
+    }
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_clauses', [ $this, 'sorting_clauses_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [
-			'suppress_filters' => false,
-		];
-	}
+        $bindings = new Bindings();
 
-	public function sorting_clauses_callback( $clauses ) {
-		remove_filter( 'posts_clauses', [ $this, __FUNCTION__ ] );
+        $alias = $bindings->get_unique_alias('userfield');
 
-		global $wpdb;
+        $bindings->join("INNER JOIN $wpdb->users AS $alias ON $wpdb->posts.post_author = $alias.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create(
+                sprintf("$alias.%s", $this->user_field),
+                (string)$order
+            )
+        );
 
-		$clauses['join'] .= " LEFT JOIN $wpdb->users AS acsort_users ON $wpdb->posts.post_author = acsort_users.ID";
-		$clauses['orderby'] = SqlOrderByFactory::create( sprintf( "acsort_users.%s", $this->user_field ), $this->get_order() );
-		$clauses['orderby'] .= sprintf( ", $wpdb->posts.ID %s", esc_sql( $this->get_order() ) );
-
-		return $clauses;
-	}
+        return $bindings;
+    }
 
 }

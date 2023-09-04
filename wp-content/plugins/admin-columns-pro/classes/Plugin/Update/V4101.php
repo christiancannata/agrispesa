@@ -12,7 +12,8 @@ class V4101 extends Update {
 		parent::__construct( new Version( '4.1.1' ) );
 	}
 
-	public function apply_update() {
+	public function apply_update(): void
+    {
 		$this->migrate_site_and_user_specific_settings();
 		$this->rename_user_specific_settings();
 		$this->delete_deprecated_settings();

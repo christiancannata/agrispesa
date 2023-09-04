@@ -7,8 +7,8 @@
 # David Arpin <darpin@equipelebleu.com>, 2019
 # Eddy BOELS <eddy@e-labo.biz>, 2016
 # Maxence RICHARD <richard.maxence@free.fr>, 2021
-# Mohamed-Younès BOUMEDIENE <m-boumediene@live.fr>, 2014
-# Mohamed-Younès BOUMEDIENE <m-boumediene@live.fr>, 2014
+# MYB, 2014
+# MYB, 2014
 # pipoo couert <p.couret@iloop.fr>, 2019
 # Spin On <support@spin-on.fr>, 2021
 # Stefan van den Dungen Gronovius <dungengronovius@gmail.com>, 2016

@@ -2,7 +2,6 @@
 
 namespace ACP\Editing\Service;
 
-use ACP;
 use ACP\Editing\PaginatedOptions;
 use ACP\Editing\PaginatedOptionsFactory;
 use ACP\Editing\Service;

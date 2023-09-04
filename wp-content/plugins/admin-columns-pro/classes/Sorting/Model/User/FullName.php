@@ -2,36 +2,45 @@
 
 namespace ACP\Sorting\Model\User;
 
+use ACP\Search\Query\Bindings;
 use ACP\Sorting\AbstractModel;
+use ACP\Sorting\Model\QueryBindings;
 use ACP\Sorting\Model\SqlOrderByFactory;
-use WP_User_Query;
+use ACP\Sorting\Type\Order;
 
-class FullName extends AbstractModel {
+class FullName extends AbstractModel implements QueryBindings
+{
 
-	public function get_sorting_vars() {
-		add_action( 'pre_user_query', [ $this, 'pre_user_query_callback' ] );
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		return [];
-	}
+        $bindings = new Bindings();
 
-	public function pre_user_query_callback( WP_User_Query $query ) {
-		remove_action( 'pre_user_query', [ $this, __FUNCTION__ ] );
+        $alias_meta1 = $bindings->get_unique_alias('fullname');
+        $alias_meta2 = $bindings->get_unique_alias('fullname');
 
-		global $wpdb;
+        $bindings->join(
+            "
+			INNER JOIN $wpdb->usermeta AS $alias_meta1 ON $wpdb->users.ID = $alias_meta1.user_id
+				AND $alias_meta1.meta_key = 'first_name'
+			INNER JOIN $wpdb->usermeta AS $alias_meta2 ON $wpdb->users.ID = $alias_meta2.user_id
+				AND $alias_meta2.meta_key = 'last_name'
+		    "
+        );
 
-		$query->query_from .= "
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta1 ON $wpdb->users.ID = acsort_usermeta1.user_id
-				AND acsort_usermeta1.meta_key = 'first_name'
-			INNER JOIN $wpdb->usermeta AS acsort_usermeta2 ON $wpdb->users.ID = acsort_usermeta2.user_id
-				AND acsort_usermeta2.meta_key = 'last_name'
-		";
+        $bindings->group_by("$wpdb->users.ID");
+        $bindings->order_by(
+            SqlOrderByFactory::create_with_concat(
+                [
+                    "$alias_meta1.meta_value",
+                    "$alias_meta2.meta_value",
+                ],
+                (string)$order
+            ) . ", $wpdb->users.ID " . $order
+        );
 
-		$query->query_orderby = sprintf( "
-			GROUP BY $wpdb->users.ID
-			ORDER BY %s, $wpdb->users.ID %s",
-			SqlOrderByFactory::create_with_concat( [ 'acsort_usermeta1.meta_value', 'acsort_usermeta2.meta_value' ], $this->get_order() ),
-			esc_sql( $this->get_order() )
-		);
-	}
+        return $bindings;
+    }
 
 }

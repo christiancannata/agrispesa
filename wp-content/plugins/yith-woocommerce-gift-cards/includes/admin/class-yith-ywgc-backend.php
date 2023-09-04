@@ -17,7 +17,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 	 * @class   YITH_YWGC_Backend
 	 *
 	 * @since   1.0.0
-	 * @author  Lorenzo Giuffrida
+	 * @author  YITH <plugins@yithemes.com>
 	 */
 	class YITH_YWGC_Backend {
 
@@ -66,7 +66,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * Initialize plugin and registers actions and filters to be used
 		 *
 		 * @since  1.0
-		 * @author Lorenzo Giuffrida
 		 */
 		protected function __construct() {
 
@@ -180,7 +179,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @param array      $item item.
 		 * @param WC_product $_product _product.
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function show_gift_card_code_on_order_item( $item_id, $item, $_product ) {
@@ -364,7 +362,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @param array $types current type array.
 		 *
 		 * @return mixed
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function add_gift_card_product_type( $types ) {
@@ -561,7 +558,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 *
 		 * @throws Exception
 		 * @since  1.0.0
-		 * @author Lorenzo Giuffrida
 		 */
 		public function generate_gift_card_for_order( $order ) {
 			if ( is_numeric( $order ) ) {
@@ -589,7 +585,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @param WC_Order $order order.
 		 * @return boolean
 		 *
-		 * @author Daniel Sanchez <daniel.sanchez@yithemes.com>
 		 * @since  2.0.6
 		 */
 		public function ywgc_custom_condition_to_create_gift_card_call_back( $cond, $order ) {
@@ -761,7 +756,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 *
 		 * @param int $order_id
 		 *
-		 * @author Daniel Sanchez <daniel.sanchez@yithemes.com>
 		 * @since  2.0.3
 		 * @return bool
 		 */
@@ -820,7 +814,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 *
 		 * @param int order_id
 		 *
-		 * @author Daniel Sanchez <daniel.sanchez@yithemes.com>
 		 * @since  2.0.3
 		 */
 		public function end_race_condition( $order_id ) {
@@ -908,7 +901,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @param int    $post_id
 		 *
 		 * @return array|mixed|void
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function add_cpt_table_class( $classes, $class, $post_id ) {
@@ -941,7 +933,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		/**
 		 * Make some redirect based on the current action being performed
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function redirect_gift_cards_link() {
@@ -1030,7 +1021,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		 * @param $term_id
 		 * @param $taxonomy_name
 		 *
-		 * @author Lorenzo Giuffrida
 		 * @since  1.0.0
 		 */
 		public function update_taxonomy_count( $term_id, $taxonomy_name ) {
@@ -1384,7 +1374,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		/**
 		 * Add a special class to force show specific postbox only for Gift Card products.
 		 *
-		 * @author Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @since 3.15.0
 		 * @param $classes array postbox classes
 		 *
@@ -1398,7 +1387,6 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 		/**
 		 * Add a special class to hide specific postbox only for Gift Card products.
 		 *
-		 * @author Andrea Grillo <andrea.grillo@yithemes.com>
 		 * @since 3.15.0
 		 * @param $classes array postbox classes
 		 *

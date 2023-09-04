@@ -2,7 +2,7 @@
 /**
  * Add a footer for the gift card email
  *
- * @author YITH
+ * @author YITH <plugins@yithemes.com>
  * @package YITH\GiftCards\Templates
  */
 

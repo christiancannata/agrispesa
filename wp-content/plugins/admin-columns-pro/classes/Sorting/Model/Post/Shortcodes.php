@@ -2,30 +2,79 @@
 
 namespace ACP\Sorting\Model\Post;
 
+use ACP\Search\Query\Bindings;
+use ACP\Sorting\AbstractModel;
 use ACP\Sorting\FormatValue\ShortCodeCount;
+use ACP\Sorting\Model\QueryBindings;
+use ACP\Sorting\Model\SqlOrderByFactory;
 use ACP\Sorting\Model\WarningAware;
-use ACP\Sorting\Type\DataType;
+use ACP\Sorting\Type\Order;
 
-class Shortcodes extends FieldFormat implements WarningAware {
+class Shortcodes extends AbstractModel implements WarningAware, QueryBindings
+{
 
-	public function __construct() {
-		parent::__construct( 'post_content', new ShortCodeCount(), new DataType( DataType::NUMERIC ) );
-	}
+    use PostResultsTrait;
 
-	public function get_sorting_vars() {
-		add_filter( 'posts_where', [ $this, 'posts_where_callback' ] );
+    public function __construct()
+    {
+        parent::__construct();
 
-		return parent::get_sorting_vars();
-	}
+        $this->formatter = new ShortCodeCount();
+    }
 
-	public function posts_where_callback( $where ) {
-		global $wpdb;
+    public function create_query_bindings(Order $order): Bindings
+    {
+        global $wpdb;
 
-		remove_filter( 'posts_where', [ $this, __FUNCTION__ ] );
+        return (new Bindings())->order_by(
+            SqlOrderByFactory::create_with_ids(
+                "$wpdb->posts.ID",
+                $this->get_post_ids(),
+                (string)$order
+            )
+        );
+    }
 
-		$where .= " AND $wpdb->posts.post_content LIKE '%[%' AND $wpdb->posts.post_content LIKE '%]%' ";
+    public function get_post_ids(): array
+    {
+        $ids = [];
 
-		return $where;
-	}
+        foreach ($this->get_query_results() as $row) {
+            $ids[$row->id] = $this->formatter->format_value($row->value);
+        }
+
+        $ids = array_filter($ids);
+
+        asort($ids);
+
+        return array_keys($ids);
+    }
+
+    private function get_query_results(): array
+    {
+        global $wpdb;
+
+        $where = '';
+
+        $status = $this->get_var_post_status();
+
+        if ($status) {
+            $where = $wpdb->prepare("\nAND $wpdb->posts.post_status = %s", $status);
+        }
+
+        $sql = $wpdb->prepare(
+            "
+            SELECT $wpdb->posts.ID AS id, $wpdb->posts.post_content AS value
+            FROM $wpdb->posts
+            WHERE $wpdb->posts.post_type = %s
+                AND $wpdb->posts.post_content LIKE '%[%' 
+                AND $wpdb->posts.post_content LIKE '%]%'
+                $where
+            ",
+            $this->get_var_post_type()
+        );
+
+        return $wpdb->get_results($sql);
+    }
 
 }

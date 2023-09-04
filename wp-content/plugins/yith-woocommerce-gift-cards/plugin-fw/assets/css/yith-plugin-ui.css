@@ -1401,6 +1401,9 @@ table.yith-plugin-fw__classic-table.wp-list-table .check-column {
 table.yith-plugin-fw__classic-table.wp-list-table th.sortable a, table.yith-plugin-fw__classic-table.wp-list-table th.sorted a {
   padding: 0 8px 0 0;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 table.yith-plugin-fw__classic-table.wp-list-table th.sortable a:hover, table.yith-plugin-fw__classic-table.wp-list-table th.sorted a:hover {
@@ -1409,7 +1412,7 @@ table.yith-plugin-fw__classic-table.wp-list-table th.sortable a:hover, table.yit
 
 table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator {
   visibility: visible;
-  height: 8px;
+  margin-top: 0;
 }
 
 table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator:before {
@@ -1421,6 +1424,10 @@ table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator:before {
   left: 0;
 }
 
+table.yith-plugin-fw__classic-table.wp-list-table .sorting-indicator.asc {
+  display: none;
+}
+
 table.yith-plugin-fw__classic-table.wp-list-table th.sorted.asc .sorting-indicator:before,
 table.yith-plugin-fw__classic-table.wp-list-table th.desc:hover span.sorting-indicator:before,
 table.yith-plugin-fw__classic-table.wp-list-table th.desc a:focus span.sorting-indicator:before {
@@ -1428,11 +1435,35 @@ table.yith-plugin-fw__classic-table.wp-list-table th.desc a:focus span.sorting-i
   font-weight: 600;
 }
 
+table.yith-plugin-fw__classic-table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+table.yith-plugin-fw__classic-table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+table.yith-plugin-fw__classic-table.wp-list-table th.desc a:focus span.sorting-indicator.asc {
+  display: block;
+}
+
+table.yith-plugin-fw__classic-table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+table.yith-plugin-fw__classic-table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+table.yith-plugin-fw__classic-table.wp-list-table th.desc a:focus span.sorting-indicator.desc {
+  display: none;
+}
+
 table.yith-plugin-fw__classic-table.wp-list-table th.sorted.desc .sorting-indicator:before,
 table.yith-plugin-fw__classic-table.wp-list-table th.asc:hover span.sorting-indicator:before,
 table.yith-plugin-fw__classic-table.wp-list-table th.asc a:focus span.sorting-indicator:before {
   content: "\f110";
   font-weight: 600;
+}
+
+table.yith-plugin-fw__classic-table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+table.yith-plugin-fw__classic-table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+table.yith-plugin-fw__classic-table.wp-list-table th.asc a:focus span.sorting-indicator.desc {
+  display: block;
+}
+
+table.yith-plugin-fw__classic-table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+table.yith-plugin-fw__classic-table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+table.yith-plugin-fw__classic-table.wp-list-table th.asc a:focus span.sorting-indicator.asc {
+  display: none;
 }
 
 table.yith-plugin-fw__classic-table.wp-list-table thead th.column-actions, table.yith-plugin-fw__classic-table.wp-list-table tfoot th.column-actions {
@@ -1514,6 +1545,9 @@ table.yith-plugin-fw__boxed-table.wp-list-table .check-column {
 table.yith-plugin-fw__boxed-table.wp-list-table th.sortable a, table.yith-plugin-fw__boxed-table.wp-list-table th.sorted a {
   padding: 0 8px 0 0;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 table.yith-plugin-fw__boxed-table.wp-list-table th.sortable a:hover, table.yith-plugin-fw__boxed-table.wp-list-table th.sorted a:hover {
@@ -1522,7 +1556,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table th.sortable a:hover, table.yith-
 
 table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator {
   visibility: visible;
-  height: 8px;
+  margin-top: 0;
 }
 
 table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator:before {
@@ -1534,6 +1568,10 @@ table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator:before {
   left: 0;
 }
 
+table.yith-plugin-fw__boxed-table.wp-list-table .sorting-indicator.asc {
+  display: none;
+}
+
 table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.asc .sorting-indicator:before,
 table.yith-plugin-fw__boxed-table.wp-list-table th.desc:hover span.sorting-indicator:before,
 table.yith-plugin-fw__boxed-table.wp-list-table th.desc a:focus span.sorting-indicator:before {
@@ -1541,11 +1579,35 @@ table.yith-plugin-fw__boxed-table.wp-list-table th.desc a:focus span.sorting-ind
   font-weight: 600;
 }
 
+table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.desc a:focus span.sorting-indicator.asc {
+  display: block;
+}
+
+table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.desc a:focus span.sorting-indicator.desc {
+  display: none;
+}
+
 table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.desc .sorting-indicator:before,
 table.yith-plugin-fw__boxed-table.wp-list-table th.asc:hover span.sorting-indicator:before,
 table.yith-plugin-fw__boxed-table.wp-list-table th.asc a:focus span.sorting-indicator:before {
   content: "\f110";
   font-weight: 600;
+}
+
+table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.asc a:focus span.sorting-indicator.desc {
+  display: block;
+}
+
+table.yith-plugin-fw__boxed-table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+table.yith-plugin-fw__boxed-table.wp-list-table th.asc a:focus span.sorting-indicator.asc {
+  display: none;
 }
 
 table.yith-plugin-fw__boxed-table.wp-list-table thead th.column-actions, table.yith-plugin-fw__boxed-table.wp-list-table tfoot th.column-actions {
@@ -1615,6 +1677,9 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sortable a, .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted a, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sortable a, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted a {
   padding: 0 8px 0 0;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sortable a:hover, .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted a:hover, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sortable a:hover, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted a:hover {
@@ -1623,7 +1688,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator {
   visibility: visible;
-  height: 8px;
+  margin-top: 0;
 }
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator:before {
@@ -1635,6 +1700,10 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
   left: 0;
 }
 
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table .sorting-indicator.asc {
+  display: none;
+}
+
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator:before,
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator:before,
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator:before,
@@ -1644,6 +1713,22 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
   font-weight: 600;
 }
 
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.asc {
+  display: block;
+}
+
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.desc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.desc {
+  display: none;
+}
+
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator:before,
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator:before,
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator:before,
@@ -1651,6 +1736,22 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator:before {
   content: "\f110";
   font-weight: 600;
+}
+
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.desc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.desc {
+  display: block;
+}
+
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+.yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.asc {
+  display: none;
 }
 
 .yith-plugin-ui--classic-wp-list-style table.wp-list-table thead th.column-actions, .yith-plugin-ui--classic-wp-list-style table.wp-list-table tfoot th.column-actions, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table thead th.column-actions, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--classic-wp-list-style table.wp-list-table tfoot th.column-actions {
@@ -1742,6 +1843,9 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sortable a, .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted a, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sortable a, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted a {
   padding: 0 8px 0 0;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sortable a:hover, .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted a:hover, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sortable a:hover, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted a:hover {
@@ -1750,7 +1854,7 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator {
   visibility: visible;
-  height: 8px;
+  margin-top: 0;
 }
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator:before {
@@ -1762,6 +1866,10 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
   left: 0;
 }
 
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table .sorting-indicator.asc {
+  display: none;
+}
+
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator:before,
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator:before,
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator:before,
@@ -1771,6 +1879,22 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
   font-weight: 600;
 }
 
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.asc {
+  display: block;
+}
+
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.desc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.asc .sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc:hover span.sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.desc a:focus span.sorting-indicator.desc {
+  display: none;
+}
+
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator:before,
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator:before,
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator:before, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator:before,
@@ -1778,6 +1902,22 @@ table.yith-plugin-fw__boxed-table.wp-list-table tbody tr:hover .yith-plugin-fw__
 .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator:before {
   content: "\f110";
   font-weight: 600;
+}
+
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.desc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.desc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.desc {
+  display: block;
+}
+
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+.yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.asc, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.sorted.desc .sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc:hover span.sorting-indicator.asc,
+.yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table th.asc a:focus span.sorting-indicator.asc {
+  display: none;
 }
 
 .yith-plugin-ui--boxed-wp-list-style table.wp-list-table thead th.column-actions, .yith-plugin-ui--boxed-wp-list-style table.wp-list-table tfoot th.column-actions, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table thead th.column-actions, .yith-plugin-ui #plugin-fw-wc .yith-plugin-ui--boxed-wp-list-style table.wp-list-table tfoot th.column-actions {

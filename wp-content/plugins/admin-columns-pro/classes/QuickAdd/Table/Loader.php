@@ -9,7 +9,6 @@ use ACP\QuickAdd\Admin\HideOnScreen;
 use ACP\QuickAdd\Filter;
 use ACP\QuickAdd\Model;
 use ACP\QuickAdd\Table\Checkbox\ShowButton;
-use ACP\QuickAdd\Table\Preference;
 
 class Loader implements Registerable {
 
@@ -40,7 +39,8 @@ class Loader implements Registerable {
 		$this->filter = $filter;
 	}
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'ac/table', [ $this, 'load' ] );
 	}
 

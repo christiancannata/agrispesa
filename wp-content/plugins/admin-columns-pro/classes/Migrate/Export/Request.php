@@ -6,6 +6,9 @@ use AC;
 use AC\Capabilities;
 use AC\ListScreenRepository\Storage;
 use AC\Type\ListScreenId;
+use ACP\Search\SegmentCollection;
+use ACP\Search\SegmentRepository;
+use ACP\Search\Type\SegmentKey;
 
 final class Request implements AC\Registerable {
 
@@ -22,12 +25,19 @@ final class Request implements AC\Registerable {
 	 */
 	private $response_factory;
 
-	public function __construct( Storage $storage, ResponseFactory $response_factory ) {
+    /**
+     * @var SegmentRepository\Storage
+     */
+    private $segment_storage;
+
+    public function __construct( Storage $storage, SegmentRepository\Storage $segment_storage, ResponseFactory $response_factory ) {
 		$this->storage = $storage;
 		$this->response_factory = $response_factory;
-	}
+        $this->segment_storage = $segment_storage;
+    }
 
-	public function register() {
+	public function register(): void
+    {
 		add_action( 'admin_init', [ $this, 'handle_request' ] );
 	}
 
@@ -41,6 +51,10 @@ final class Request implements AC\Registerable {
 				'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 				'flags'  => FILTER_REQUIRE_ARRAY,
 			],
+            'segments' => [
+                'filter' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+                'flags'  => FILTER_REQUIRE_ARRAY,
+            ],
 			self::NONCE_NAME  => FILTER_DEFAULT,
 		] );
 
@@ -61,7 +75,8 @@ final class Request implements AC\Registerable {
 		}
 
 		$response = $this->response_factory->create(
-			$this->get_list_screens_from_request( $data->list_screen_ids )
+			$this->get_list_screens_from_request( $data->list_screen_ids ),
+            $this->get_segments_from_request( $data->segments ?? [] )
 		);
 
 		$response->send();
@@ -85,5 +100,20 @@ final class Request implements AC\Registerable {
 
 		return $list_screens;
 	}
+
+    protected function get_segments_from_request( array $keys ): SegmentCollection {
+        $segments = [];
+
+        foreach ( $keys as $key ) {
+            $segment = $this->segment_storage->find( new SegmentKey( $key ) );
+
+            if ( $segment ) {
+                $segments[] = $segment;
+            }
+        }
+
+        return new SegmentCollection( $segments );
+    }
+
 
 }

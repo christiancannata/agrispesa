@@ -2,64 +2,52 @@
 
 namespace ACP\Access;
 
-final class Permissions {
+final class Permissions
+{
 
-	const UPDATE = 'update';
-	const USAGE = 'usage';
+    public const UPDATE = 'update';
+    public const USAGE = 'usage';
 
-	/**
-	 * @var array
-	 */
-	private $permissions;
+    /**
+     * @var array
+     */
+    private $permissions;
 
-	public function __construct( array $permissions = [] ) {
-		$this->permissions = $permissions;
-	}
+    public function __construct(array $permissions = [])
+    {
+        $this->permissions = $permissions;
+    }
 
-	/**
-	 * @param string $permission
-	 *
-	 * @return self
-	 */
-	public function with_permission( $permission ) {
-		$permissions = $this->to_array();
-		$permissions[] = $permission;
+    public function with_permission(string $permission): self
+    {
+        $permissions = $this->to_array();
+        $permissions[] = $permission;
 
-		return new self( $permissions );
-	}
+        return new self($permissions);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function to_array() {
-		$permissions = array_unique( $this->permissions );
+    public function to_array(): array
+    {
+        $permissions = array_unique($this->permissions);
 
-		return array_filter( $permissions, function ( $permission ) {
-			return in_array( $permission, [ self::USAGE, self::UPDATE ], true );
-		} );
-	}
+        return array_filter($permissions, static function ($permission): bool {
+            return in_array($permission, [self::USAGE, self::UPDATE], true);
+        });
+    }
 
-	/**
-	 * @param string $permission
-	 *
-	 * @return bool
-	 */
-	public function has_permission( $permission ) {
-		return in_array( (string) $permission, $this->permissions, true );
-	}
+    public function has_permission(string $permission): bool
+    {
+        return in_array($permission, $this->permissions, true);
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function has_usage_permission() {
-		return $this->has_permission( self::USAGE );
-	}
+    public function has_usage_permission(): bool
+    {
+        return $this->has_permission(self::USAGE);
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function has_updates_permission() {
-		return $this->has_permission( self::UPDATE );
-	}
+    public function has_updates_permission(): bool
+    {
+        return $this->has_permission(self::UPDATE);
+    }
 
 }

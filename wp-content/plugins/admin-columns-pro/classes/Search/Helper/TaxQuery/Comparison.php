@@ -43,14 +43,12 @@ class Comparison {
 	 * @return array
 	 */
 	public function get_expression() {
-		$args = [
+		return [
 			'taxonomy' => $this->taxonomy,
 			'terms'    => $this->terms->get_value(),
 			'operator' => $this->operator,
 			'field'    => $this->field,
 		];
-
-		return $args;
 	}
 
 }

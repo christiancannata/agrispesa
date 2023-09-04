@@ -4,37 +4,37 @@ namespace ACP\RequestHandler\Ajax;
 
 use AC\Nonce;
 use AC\Request;
-use ACP\Preference;
+use AC\Storage\TableListOrder;
 use ACP\RequestAjaxHandler;
 
-class ListScreenOrderUser implements RequestAjaxHandler {
+class ListScreenOrderUser implements RequestAjaxHandler
+{
 
-	/**
-	 * @var Preference\User\TableListOrder
-	 */
-	private $preference_user;
+    private $preference_user;
 
-	public function __construct( Preference\User\TableListOrder $preference_user ) {
-		$this->preference_user = $preference_user;
-	}
+    public function __construct(TableListOrder $preference_user)
+    {
+        $this->preference_user = $preference_user;
+    }
 
-	public function handle(): void {
-		$request = new Request();
+    public function handle(): void
+    {
+        $request = new Request();
 
-		if ( ! ( new Nonce\Ajax() )->verify( $request ) ) {
-			wp_send_json_error();
-		}
+        if ( ! (new Nonce\Ajax())->verify($request)) {
+            wp_send_json_error();
+        }
 
-		$list_screen_key = $request->get( 'list_screen' );
-		$order = $request->filter( 'order', [], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+        $list_screen_key = $request->get('list_screen');
+        $order = $request->filter('order', [], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-		if ( ! $order || ! $list_screen_key ) {
-			wp_send_json_error();
-		}
+        if ( ! $order || ! $list_screen_key) {
+            wp_send_json_error();
+        }
 
-		$this->preference_user->set( $list_screen_key, $order );
+        $this->preference_user->set($list_screen_key, $order);
 
-		wp_send_json_success();
-	}
+        wp_send_json_success();
+    }
 
 }

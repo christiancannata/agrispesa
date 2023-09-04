@@ -1,46 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACP\Migrate\Export;
 
 use AC\ListScreenCollection;
 use ACP\Migrate\Export\Response\File;
-use ACP\Storage\ListScreen\Encoder;
-use ACP\Storage\ListScreen\SerializerTypes;
-use LogicException;
+use ACP\Search\SegmentCollection;
+use ACP\Storage\EncoderFactory;
+use ACP\Storage\Serializer\JsonSerializer;
 
-final class ResponseFactory {
+final class ResponseFactory
+{
 
-	const FILE = 'file';
+    private $encoder_factory;
 
-	/**
-	 * @var Encoder
-	 */
-	private $encoder;
+    private $json_serializer;
 
-	public function __construct( Encoder $encoder ) {
-		$this->encoder = $encoder;
-	}
+    public function __construct(
+        EncoderFactory $encoder_factory,
+        JsonSerializer $json_serializer
+    ) {
+        $this->encoder_factory = $encoder_factory;
+        $this->json_serializer = $json_serializer;
+    }
 
-	/**
-	 * @param ListScreenCollection $list_screens
-	 * @param string|null          $type
-	 *
-	 * @return Response
-	 */
-	public function create( ListScreenCollection $list_screens, $type = null ) {
-		if ( null === $type ) {
-			$type = self::FILE;
-		}
-
-		if ( $type === self::FILE ) {
-			return new File(
-				SerializerTypes::JSON,
-				$list_screens,
-				$this->encoder
-			);
-		}
-
-		throw new LogicException( 'Invalid response type found.' );
-	}
+    public function create(ListScreenCollection $list_screens, SegmentCollection $segments): Response
+    {
+        return new File(
+            $list_screens,
+            $segments,
+            $this->encoder_factory,
+            $this->json_serializer
+        );
+    }
 
 }
