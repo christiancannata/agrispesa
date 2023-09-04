@@ -42,7 +42,7 @@ if ($hasDelivery && $hasGratis) {
 	}
 }
 
-$totals['order_total']['value'] = str_replace('every anni', ' / 2 Settiman3', $totals['order_total']['value']);
+$totals['order_total']['value'] = str_replace('every anni', ' / 2 Settimane', $totals['order_total']['value']);
 if ($hasDelivery) {
 	$totals['order_total']['value'] = ($subscription->get_total() - 5) . '€ / 2 Settimane';
 

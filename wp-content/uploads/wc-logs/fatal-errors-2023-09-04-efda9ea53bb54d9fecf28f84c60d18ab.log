@@ -58,3 +58,47 @@ Stack trace:
 
 2023-09-04T10:12:50+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
 
+2023-09-04T10:42:46+00:00 CRITICAL Uncaught Error: Class 'ACA\ACF\AdvancedCustomFields' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php:36
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/Service/Addon.php(48): ACP\AddonFactory->create('acf')
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(31): ACP\Service\Addon->register()
+#2 [internal function]: AC\Services->register_service(Object(ACP\Service\Addon))
+#3 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(26): array_map(Array, Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php(90): AC\Services->register()
+#5 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/api.php(10): ACP\AdminColumnsPro->__construct()
+#6 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns-pro.php(58): ACP()
+#7 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php alla riga 36
+
+2023-09-04T10:43:18+00:00 CRITICAL Uncaught Error: Class 'ACA\ACF\AdvancedCustomFields' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php:36
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/Service/Addon.php(48): ACP\AddonFactory->create('acf')
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(31): ACP\Service\Addon->register()
+#2 [internal function]: AC\Services->register_service(Object(ACP\Service\Addon))
+#3 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(26): array_map(Array, Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php(90): AC\Services->register()
+#5 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/api.php(10): ACP\AdminColumnsPro->__construct()
+#6 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns-pro.php(58): ACP()
+#7 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php alla riga 36
+
+2023-09-04T10:46:07+00:00 CRITICAL Uncaught Error: Class 'ACA\ACF\AdvancedCustomFields' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php:36
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/Service/Addon.php(48): ACP\AddonFactory->create('acf')
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(31): ACP\Service\Addon->register()
+#2 [internal function]: AC\Services->register_service(Object(ACP\Service\Addon))
+#3 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(26): array_map(Array, Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php(90): AC\Services->register()
+#5 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/api.php(10): ACP\AdminColumnsPro->__construct()
+#6 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns-pro.php(58): ACP()
+#7 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php alla riga 36
+
+2023-09-04T10:46:27+00:00 CRITICAL Uncaught Error: Class 'ACA\ACF\AdvancedCustomFields' not found in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php:36
+Stack trace:
+#0 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/Service/Addon.php(48): ACP\AddonFactory->create('acf')
+#1 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(31): ACP\Service\Addon->register()
+#2 [internal function]: AC\Services->register_service(Object(ACP\Service\Addon))
+#3 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns/classes/Services.php(26): array_map(Array, Array)
+#4 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AdminColumnsPro.php(90): AC\Services->register()
+#5 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/api.php(10): ACP\AdminColumnsPro->__construct()
+#6 /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/admin-columns-pro.php(58): ACP()
+#7 /shared/httpd/agrispesa/wp-includes/class-wp-hook.php in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/classes/AddonFactory.php alla riga 36
+

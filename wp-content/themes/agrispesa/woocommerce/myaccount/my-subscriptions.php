@@ -64,7 +64,7 @@ if (!defined('ABSPATH')) {
 						<?php
 						if (strstr(wp_kses_post($subscription->get_formatted_order_total()), 'ann') !== 'false'):
 							?>
-							<?php echo $subscription->get_total() ?>€/settimana
+							<?php echo $subscription->get_total() ?>€ ogni 2 settimane
 						<?php else: ?>
 							<?php echo wp_kses_post($subscription->get_formatted_order_total()); ?>
 						<?php endif; ?>
