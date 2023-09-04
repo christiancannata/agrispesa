@@ -93,11 +93,14 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		}
 
 
-		if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
-			$minimum = 0;
-		}
 
 	*/
+
+
+	if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
+		$minimum = 0;
+	}
+
 	// Loop through cart items
 	foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
 		// Product id
