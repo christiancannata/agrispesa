@@ -4,9 +4,14 @@
 
 jQuery(document).ready(function ($) {
 
-  window.blockedWeeks = [
-    30, 31, 32, 33, 34, 35, 36
-  ];
+  window.blockedWeeks = {
+    2023: [
+      38, 40, 42, 44, 46, 48, 50
+    ],
+    2024: [
+      1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30
+    ]
+  }
 
   function getDatesBetween(startDate, endDate) {
     const currentDate = new Date(startDate.getTime());
@@ -116,7 +121,8 @@ jQuery(document).ready(function ($) {
       let appoDate = date.date
       appoDate.setHours(0, 0, 0)
 
-      if (moment(appoDate) >= moment(allDates[0]) && moment(appoDate) <= moment(allDates[allDates.length - 1])) {
+      if (window.blockedWeeks[moment(appoDate).year()].includes(moment(appoDate).week())) {
+        //if (moment(appoDate) >= moment(allDates[0]) && moment(appoDate) <= moment(allDates[allDates.length - 1])) {
         date.el.style.backgroundColor = "#f99090";
         date.el.style.color = '#5d2929'
       }
@@ -227,8 +233,7 @@ jQuery(document).ready(function ($) {
 
       let selectedWeek = selectedDeliveryDate.week()
 
-      console.log(window.blockedWeeks.includes(selectedWeek))
-      if (window.blockedWeeks.includes(selectedWeek)) {
+      if (window.blockedWeeks[selectedDeliveryDate.year()].includes(selectedWeek)) {
 
         return false
       }
