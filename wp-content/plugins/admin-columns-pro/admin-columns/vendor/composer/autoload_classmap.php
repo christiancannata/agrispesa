@@ -340,6 +340,7 @@ return array(
     'AC\\ListScreenRepository\\Filter\\ListKey' => $baseDir . '/classes/ListScreenRepository/Filter/ListKey.php',
     'AC\\ListScreenRepository\\Filter\\ListKeys' => $baseDir . '/classes/ListScreenRepository/Filter/ListKeys.php',
     'AC\\ListScreenRepository\\Filter\\Network' => $baseDir . '/classes/ListScreenRepository/Filter/Network.php',
+    'AC\\ListScreenRepository\\Filter\\Site' => $baseDir . '/classes/ListScreenRepository/Filter/Site.php',
     'AC\\ListScreenRepository\\Filter\\UserAssigned' => $baseDir . '/classes/ListScreenRepository/Filter/UserAssigned.php',
     'AC\\ListScreenRepository\\ListScreenRepositoryTrait' => $baseDir . '/classes/ListScreenRepository/ListScreenRepositoryTrait.php',
     'AC\\ListScreenRepository\\Rule' => $baseDir . '/classes/ListScreenRepository/Rule.php',

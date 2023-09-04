@@ -46,3 +46,15 @@ Stack trace:
 
 2023-09-04T09:58:23+00:00 CRITICAL require(): Failed opening required '/shared/httpd/agrispesa/wp-content/plugins/google-listings-and-ads/vendor/googleads/google-ads-php/src/Google/Ads/GoogleAds/Util/V14/GoogleAdsFailures.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/jetpack-autoloader/class-php-autoloader.php alla riga 90
 
+2023-09-04T10:11:46+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+
+2023-09-04T10:12:31+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+
+2023-09-04T10:12:33+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+
+2023-09-04T10:12:34+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+
+2023-09-04T10:12:35+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+
+2023-09-04T10:12:50+00:00 CRITICAL Declaration of ACA\ACF\AdvancedCustomFields::register() must be compatible with AC\Registerable::register(): void in /shared/httpd/agrispesa/wp-content/plugins/admin-columns-pro/addons/acf/classes/AdvancedCustomFields.php alla riga 27
+

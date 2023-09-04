@@ -385,6 +385,7 @@ class ComposerStaticInitAdminColumns
         'AC\\ListScreenRepository\\Filter\\ListKey' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Filter/ListKey.php',
         'AC\\ListScreenRepository\\Filter\\ListKeys' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Filter/ListKeys.php',
         'AC\\ListScreenRepository\\Filter\\Network' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Filter/Network.php',
+        'AC\\ListScreenRepository\\Filter\\Site' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Filter/Site.php',
         'AC\\ListScreenRepository\\Filter\\UserAssigned' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Filter/UserAssigned.php',
         'AC\\ListScreenRepository\\ListScreenRepositoryTrait' => __DIR__ . '/../..' . '/classes/ListScreenRepository/ListScreenRepositoryTrait.php',
         'AC\\ListScreenRepository\\Rule' => __DIR__ . '/../..' . '/classes/ListScreenRepository/Rule.php',
