@@ -52,17 +52,17 @@
         },
         {
             "name": "automattic/jetpack-admin-ui",
-            "version": "v0.2.19",
-            "version_normalized": "0.2.19.0",
+            "version": "v0.2.20",
+            "version_normalized": "0.2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-admin-ui.git",
-                "reference": "ae3c7f7a3bd564172ce48f72447ecea2c7508a5a"
+                "reference": "90f4de6c9d936bbf161f1c2356d98b00ba33576f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-admin-ui/zipball/ae3c7f7a3bd564172ce48f72447ecea2c7508a5a",
-                "reference": "ae3c7f7a3bd564172ce48f72447ecea2c7508a5a",
+                "url": "https://api.github.com/repos/Automattic/jetpack-admin-ui/zipball/90f4de6c9d936bbf161f1c2356d98b00ba33576f",
+                "reference": "90f4de6c9d936bbf161f1c2356d98b00ba33576f",
                 "shasum": ""
             },
             "require-dev": {
@@ -74,7 +74,7 @@
             "suggest": {
                 "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
             },
-            "time": "2023-04-10T11:44:03+00:00",
+            "time": "2023-04-25T15:05:53+00:00",
             "type": "jetpack-library",
             "extra": {
                 "autotagger": true,
@@ -102,30 +102,30 @@
             ],
             "description": "Generic Jetpack wp-admin UI elements",
             "support": {
-                "source": "https://github.com/Automattic/jetpack-admin-ui/tree/v0.2.19"
+                "source": "https://github.com/Automattic/jetpack-admin-ui/tree/v0.2.20"
             },
             "install-path": "../automattic/jetpack-admin-ui"
         },
         {
             "name": "automattic/jetpack-assets",
-            "version": "v1.18.1",
-            "version_normalized": "1.18.1.0",
+            "version": "v1.18.7",
+            "version_normalized": "1.18.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-assets.git",
-                "reference": "bccd132389f780abf779bb85bf12b91984b4b0ce"
+                "reference": "094d19cc5649b8a9e5d12beecee9371ff0ea4279"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-assets/zipball/bccd132389f780abf779bb85bf12b91984b4b0ce",
-                "reference": "bccd132389f780abf779bb85bf12b91984b4b0ce",
+                "url": "https://api.github.com/repos/Automattic/jetpack-assets/zipball/094d19cc5649b8a9e5d12beecee9371ff0ea4279",
+                "reference": "094d19cc5649b8a9e5d12beecee9371ff0ea4279",
                 "shasum": ""
             },
             "require": {
                 "automattic/jetpack-constants": "^1.6.22"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^3.3.2",
+                "automattic/jetpack-changelogger": "^3.3.6",
                 "brain/monkey": "2.6.1",
                 "wikimedia/testing-access-wrapper": "^1.0 || ^2.0",
                 "yoast/phpunit-polyfills": "1.0.4"
@@ -133,7 +133,7 @@
             "suggest": {
                 "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
             },
-            "time": "2023-04-10T11:44:07+00:00",
+            "time": "2023-07-11T05:13:08+00:00",
             "type": "jetpack-library",
             "extra": {
                 "autotagger": true,
@@ -161,7 +161,7 @@
             ],
             "description": "Asset management utilities for Jetpack ecosystem packages",
             "support": {
-                "source": "https://github.com/Automattic/jetpack-assets/tree/v1.18.1"
+                "source": "https://github.com/Automattic/jetpack-assets/tree/v1.18.7"
             },
             "install-path": "../automattic/jetpack-assets"
         },
@@ -450,28 +450,28 @@
         },
         {
             "name": "automattic/jetpack-ip",
-            "version": "v0.1.2",
-            "version_normalized": "0.1.2.0",
+            "version": "v0.1.4",
+            "version_normalized": "0.1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-ip.git",
-                "reference": "8cc665d68ef5230de78e2701b61b91af64d8dfe6"
+                "reference": "fde10bea279aca8adbae9d7ae27d971da3a932e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-ip/zipball/8cc665d68ef5230de78e2701b61b91af64d8dfe6",
-                "reference": "8cc665d68ef5230de78e2701b61b91af64d8dfe6",
+                "url": "https://api.github.com/repos/Automattic/jetpack-ip/zipball/fde10bea279aca8adbae9d7ae27d971da3a932e3",
+                "reference": "fde10bea279aca8adbae9d7ae27d971da3a932e3",
                 "shasum": ""
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^3.3.2",
+                "automattic/jetpack-changelogger": "^3.3.4",
                 "brain/monkey": "2.6.1",
                 "yoast/phpunit-polyfills": "1.0.4"
             },
             "suggest": {
                 "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
             },
-            "time": "2023-04-10T11:43:44+00:00",
+            "time": "2023-05-29T19:04:13+00:00",
             "type": "jetpack-library",
             "extra": {
                 "autotagger": true,
@@ -499,7 +499,7 @@
             ],
             "description": "Utilities for working with IP addresses.",
             "support": {
-                "source": "https://github.com/Automattic/jetpack-ip/tree/v0.1.2"
+                "source": "https://github.com/Automattic/jetpack-ip/tree/v0.1.4"
             },
             "install-path": "../automattic/jetpack-ip"
         },
@@ -712,32 +712,32 @@
         },
         {
             "name": "automattic/jetpack-status",
-            "version": "v1.16.4",
-            "version_normalized": "1.16.4.0",
+            "version": "v1.18.0",
+            "version_normalized": "1.18.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-status.git",
-                "reference": "7c9153b4589bc5efc91637d3e8c6a8618f7afa6b"
+                "reference": "98feb85e54ec04ccd2dd37acc4df18ec521249d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-status/zipball/7c9153b4589bc5efc91637d3e8c6a8618f7afa6b",
-                "reference": "7c9153b4589bc5efc91637d3e8c6a8618f7afa6b",
+                "url": "https://api.github.com/repos/Automattic/jetpack-status/zipball/98feb85e54ec04ccd2dd37acc4df18ec521249d3",
+                "reference": "98feb85e54ec04ccd2dd37acc4df18ec521249d3",
                 "shasum": ""
             },
             "require": {
                 "automattic/jetpack-constants": "^1.6.22"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^3.3.2",
-                "automattic/jetpack-ip": "^0.1.2",
+                "automattic/jetpack-changelogger": "^3.3.7",
+                "automattic/jetpack-ip": "^0.1.4",
                 "brain/monkey": "2.6.1",
                 "yoast/phpunit-polyfills": "1.0.4"
             },
             "suggest": {
                 "automattic/jetpack-autoloader": "Allow for better interoperability with other plugins that use this package."
             },
-            "time": "2023-04-10T11:44:02+00:00",
+            "time": "2023-07-18T23:45:14+00:00",
             "type": "jetpack-library",
             "extra": {
                 "autotagger": true,
@@ -746,7 +746,7 @@
                     "link-template": "https://github.com/Automattic/jetpack-status/compare/v${old}...v${new}"
                 },
                 "branch-alias": {
-                    "dev-trunk": "1.16.x-dev"
+                    "dev-trunk": "1.18.x-dev"
                 }
             },
             "installation-source": "dist",
@@ -761,7 +761,7 @@
             ],
             "description": "Used to retrieve information about the current status of Jetpack and the site overall.",
             "support": {
-                "source": "https://github.com/Automattic/jetpack-status/tree/v1.16.4"
+                "source": "https://github.com/Automattic/jetpack-status/tree/v1.18.0"
             },
             "install-path": "../automattic/jetpack-status"
         },
@@ -981,18 +981,69 @@
             "install-path": "./installers"
         },
         {
-            "name": "woocommerce/subscriptions-core",
-            "version": "5.7.1",
-            "version_normalized": "5.7.1.0",
+            "name": "psr/container",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Automattic/woocommerce-subscriptions-core.git",
-                "reference": "12402c886760d71a67f89ccea1d6d70279456098"
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/woocommerce-subscriptions-core/zipball/12402c886760d71a67f89ccea1d6d70279456098",
-                "reference": "12402c886760d71a67f89ccea1d6d70279456098",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "time": "2021-03-05T17:36:06+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/1.1.1"
+            },
+            "install-path": "../psr/container"
+        },
+        {
+            "name": "woocommerce/subscriptions-core",
+            "version": "6.0.0",
+            "version_normalized": "6.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/woocommerce-subscriptions-core.git",
+                "reference": "b48c46a6a08b73d8afc7a0e686173c5b5c55ecbb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Automattic/woocommerce-subscriptions-core/zipball/b48c46a6a08b73d8afc7a0e686173c5b5c55ecbb",
+                "reference": "b48c46a6a08b73d8afc7a0e686173c5b5c55ecbb",
                 "shasum": ""
             },
             "require": {
@@ -1005,7 +1056,7 @@
                 "woocommerce/woocommerce-sniffs": "0.1.0",
                 "yoast/phpunit-polyfills": "1.0.3"
             },
-            "time": "2023-05-11T04:36:46+00:00",
+            "time": "2023-07-18T06:28:51+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "phpcodesniffer-search-depth": 2
@@ -1035,7 +1086,7 @@
             "description": "Sell products and services with recurring payments in your WooCommerce Store.",
             "homepage": "https://github.com/Automattic/woocommerce-subscriptions-core",
             "support": {
-                "source": "https://github.com/Automattic/woocommerce-subscriptions-core/tree/5.7.1",
+                "source": "https://github.com/Automattic/woocommerce-subscriptions-core/tree/6.0.0",
                 "issues": "https://github.com/Automattic/woocommerce-subscriptions-core/issues"
             },
             "install-path": "../woocommerce/subscriptions-core"

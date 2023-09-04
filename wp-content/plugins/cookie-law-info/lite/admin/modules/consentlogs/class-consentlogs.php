@@ -26,6 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ConsentLogs extends Modules {
 
 	/**
+	 * ConsentLogs controller class.
+	 *
+	 * @var object
+	 */
+	private $controller;
+
+	/**
 	 * Constructor.
 	 */
 	public function init() {

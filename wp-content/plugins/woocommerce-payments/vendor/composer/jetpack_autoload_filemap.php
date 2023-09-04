@@ -7,7 +7,11 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'3773ef3f09c37da5478d578e32b03a4b' => array(
-		'version' => '1.18.1.0',
+		'version' => '1.18.7.0',
 		'path'    => $vendorDir . '/automattic/jetpack-assets/actions.php'
+	),
+	'e25fc356bc58b4090924d1aac798cacd' => array(
+		'version' => 'dev-release/6.4.0',
+		'path'    => $baseDir . '/src/wcpay-get-container.php'
 	),
 );

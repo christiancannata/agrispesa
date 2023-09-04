@@ -8,6 +8,7 @@
 namespace Automattic\Jetpack;
 
 use Automattic\Jetpack\Constants as Constants;
+use Automattic\Jetpack\Current_Plan as Jetpack_Plan;
 use Automattic\Jetpack\IP\Utils as IP_Utils;
 
 /**
@@ -80,9 +81,8 @@ class Modules {
 			if ( $mod['module_tags'] ) {
 				$mod['module_tags'] = explode( ',', $mod['module_tags'] );
 				$mod['module_tags'] = array_map( 'trim', $mod['module_tags'] );
-				$mod['module_tags'] = array_map( 'jetpack_get_module_i18n_tag', $mod['module_tags'] );
 			} else {
-				$mod['module_tags'] = array( jetpack_get_module_i18n_tag( 'Other' ) );
+				$mod['module_tags'] = array( 'Other' );
 			}
 
 			if ( $mod['plan_classes'] ) {
@@ -96,7 +96,7 @@ class Modules {
 				$mod['feature'] = explode( ',', $mod['feature'] );
 				$mod['feature'] = array_map( 'trim', $mod['feature'] );
 			} else {
-				$mod['feature'] = array( jetpack_get_module_i18n_tag( 'Other' ) );
+				$mod['feature'] = array( 'Other' );
 			}
 
 			$modules_details[ $module ] = $mod;
@@ -427,7 +427,7 @@ class Modules {
 						}
 					}
 					if ( $deactivated ) {
-						$state->state( 'deactivated_plugins', join( ',', $deactivated ) );
+						$state->state( 'deactivated_plugins', implode( ',', $deactivated ) );
 						wp_safe_redirect( add_query_arg( 'jetpack_restate', 1 ) );
 						exit;
 					}
@@ -442,7 +442,7 @@ class Modules {
 				}
 			}
 
-			if ( class_exists( 'Jetpack_Plan' ) && ! \Jetpack_Plan::supports( $module ) ) {
+			if ( ! Jetpack_Plan::supports( $module ) ) {
 				return false;
 			}
 

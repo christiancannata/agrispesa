@@ -55,58 +55,58 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		$minimum = 86;
 	}
 
-/*
-	//$allowedClients = get_option('agr_clients_no_limits');
+	/*
+		//$allowedClients = get_option('agr_clients_no_limits');
 
-	$has_sub = false;
+		$has_sub = false;
 
-	$orderLastWeek = 0;
+		$orderLastWeek = 0;
 
-	if ($current_user) {
+		if ($current_user) {
 
-		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 
-		$lastDayCreatedOrdersFN = getLastDeliveryDay();
-		$args = array(
-			'customer_id' => get_current_user_id(),
-			'limit' => 1,
-			'status' => "completed",
-			"meta_key" => "_date_completed",
-			"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
-			"meta_compare" => ">",
-		);
-		$orders = wc_get_orders($args);
-		$orderLastWeek = count($orders);
+			$lastDayCreatedOrdersFN = getLastDeliveryDay();
+			$args = array(
+				'customer_id' => get_current_user_id(),
+				'limit' => 1,
+				'status' => "completed",
+				"meta_key" => "_date_completed",
+				"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
+				"meta_compare" => ">",
+			);
+			$orders = wc_get_orders($args);
+			$orderLastWeek = count($orders);
 
-	}
-
-
-	// NO MINIMO ORDINE SE HA FN ATTIVA
-	if ($current_user && $has_sub) {
-		//tolgo il limite se l'utente ha un abbonamento attivo
-		$minimum = 0;
-	}
-
-	if ($current_user && !$has_sub && $orderLastWeek > 0) {
-		//tolgo il limite se l'utente ha un abbonamento attivo
-		$minimum = 0;
-	}
+		}
 
 
-	if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
-		$minimum = 0;
-	}
+		// NO MINIMO ORDINE SE HA FN ATTIVA
+		if ($current_user && $has_sub) {
+			//tolgo il limite se l'utente ha un abbonamento attivo
+			$minimum = 0;
+		}
+
+		if ($current_user && !$has_sub && $orderLastWeek > 0) {
+			//tolgo il limite se l'utente ha un abbonamento attivo
+			$minimum = 0;
+		}
 
 
+		if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
+			$minimum = 0;
+		}
+
+	*/
 	// Loop through cart items
 	foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
 		// Product id
 		$product_id = $cart_item['product_id'];
 		// Has category box
-		if (has_term($category, 'product_cat', $product_id)) {
-			$minimum = 10;
-			continue;
-		}
+		/*	if (has_term($category, 'product_cat', $product_id)) {
+				$minimum = 10;
+				continue;
+			} */
 
 		//ACQUISTO CREDITO
 		if ($product_id == 17647) {
@@ -116,7 +116,7 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 	}
 
-*/
+
 	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax();
 
 	return ['minimum' => $minimum, 'diff' => $minimum - $totalCart];

@@ -386,62 +386,6 @@ class Admin {
 			'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy45NTg0IDM1LjcwOEM4LjE5MDcxIDM1LjcwOCAwLjI5MTYyNiAyNy43ODUgMC4yOTE2MjUgMTcuOTk5N0wwLjI5MTYyNSAxNi4wMjY2TDEuNjU0NyAxNi4yOTk5QzEuNzI2OSAxNi4zMTQ0IDEuNzkyNTQgMTYuMzI3OCAxLjg1MjkyIDE2LjM0MDJDMi4xODk0NyAxNi40MDg5IDIuMzYyNCAxNi40NDQyIDIuNTkzNTEgMTYuNDQ0MkM0LjAyMjM4IDE2LjQ0NDIgNS4yMDAxNyAxNS41NzUgNS42OTU5MyAxNC4zOTQ2TDYuMDg3NTcgMTMuNDYyMUw3LjA1OTg2IDEzLjc0MDZDNy41NDMzNiAxMy44NzkxIDguMDE5MjQgMTMuOTQ2NCA4LjQ5MDMyIDEzLjk0NjRDMTEuNTEyOSAxMy45NDY0IDEzLjk5NTUgMTEuNDYxNiAxMy45OTU1IDguNDI0NTFDMTMuOTk1NSA3Ljk0NzggMTMuOTI4OCA3LjUzNDcyIDEzLjg0NDggNy4wMjkzNEwxMy43MTc4IDYuMjY1NUwxNC4zODEzIDUuODY2MzdDMTUuMjcyMiA1LjMzMDUzIDE1LjkxNDcgNC4yODU1OSAxNS45ODg2IDMuMDY3MjJDMTUuOTgzNSAyLjcwNjA0IDE1Ljg4MjMgMi4zNzcyMyAxNS43MTQ3IDEuODczMTVMMTUuMzA4MSAwLjY1MDE5NUwxNi41NzE3IDAuMzk2ODM2QzE3LjA5OTIgMC4yOTEwODMgMTcuNjExNiAwLjI5MTIyNSAxOC4wMDQ2IDAuMjkxMzMyTDE4LjA0MTUgMC4yOTEzNEMyNy44MDkyIDAuMjkxMzQgMzUuNzA4MyA4LjIxNDM5IDM1LjcwODMgMTcuOTk5N0MzNS43MDgzIDI3Ljc5MjQgMjcuNzE4NyAzNS43MDggMTcuOTU4NCAzNS43MDhaTTIuNTg2NDMgMTguNzIyNUMyLjk2MjE5IDI2LjkxODMgOS42OTU4NCAzMy40Mjk3IDE3Ljk1ODQgMzMuNDI5N0MyNi40NyAzMy40Mjk3IDMzLjQzIDI2LjUyNDcgMzMuNDMgMTcuOTk5N0MzMy40MyA5LjUzMTg0IDI2LjY0OTQgMi42NzQxMyAxOC4yMzQzIDIuNTcwNzlDMTguMjU0OSAyLjczODY0IDE4LjI2NyAyLjkxMzg1IDE4LjI2NyAzLjA5NTcyTDE4LjI2NyAzLjEyNTZMMTguMjY1NSAzLjE1NTQ0QzE4LjE3ODUgNC44MTIzMiAxNy40MTk2IDYuMzUxODcgMTYuMjAwNiA3LjM2MTI0QzE2LjI0MjUgNy42ODQ1OSAxNi4yNzM3IDguMDM4MzkgMTYuMjczNyA4LjQyNDUxQzE2LjI3MzcgMTIuNzE0NSAxMi43NzY1IDE2LjIyNDYgOC40OTAzMiAxNi4yMjQ2QzguMTA2OSAxNi4yMjQ2IDcuNzI0OTYgMTYuMTk0MSA3LjM0NDk3IDE2LjEzMzhDNi4zNTg1MSAxNy42Njc0IDQuNjI1MTYgMTguNzIyNSAyLjU5MzUxIDE4LjcyMjVDMi41OTExNSAxOC43MjI1IDIuNTg4NzggMTguNzIyNSAyLjU4NjQzIDE4LjcyMjVaIiBmaWxsPSJ3aGl0ZSIvPiA8cGF0aCBkPSJNMTEuNDA1MiAyLjUyOTRDMTEuNDA1MiAxLjM1MDQ1IDEwLjQ0OTUgMC4zOTQ3MjkgOS4yNzA1MyAwLjM5NDcyOUM4LjA5MTU5IDAuMzk0NzI5IDcuMTM1ODYgMS4zNTA0NSA3LjEzNTg2IDIuNTI5NEM3LjEzNTg2IDMuNzA4MzQgOC4wOTE1OSA0LjY2NDA2IDkuMjcwNTMgNC42NjQwNkMxMC40NDk1IDQuNjY0MDYgMTEuNDA1MiAzLjcwODM0IDExLjQwNTIgMi41Mjk0WiIgZmlsbD0id2hpdGUiLz4gPHBhdGggZD0iTTEwLjI0MjYgOS4xOTcxM0MxMC4yNDI2IDguMzM5MjMgOS41NDcxMiA3LjY0Mzc2IDguNjg5MjMgNy42NDM3NkM3LjgzMTMzIDcuNjQzNzYgNy4xMzU4NiA4LjMzOTIzIDcuMTM1ODYgOS4xOTcxM0M3LjEzNTg2IDEwLjA1NSA3LjgzMTMzIDEwLjc1MDUgOC42ODkyMyAxMC43NTA1QzkuNTQ3MTIgMTAuNzUwNSAxMC4yNDI2IDEwLjA1NSAxMC4yNDI2IDkuMTk3MTNaIiBmaWxsPSJ3aGl0ZSIvPiA8cGF0aCBkPSJNNC4xMjQxMiAxMC4yODAzQzQuMTI0MTIgOS4zOTYxNCAzLjQwNzMzIDguNjc5MzUgMi41MjMxMiA4LjY3OTM1QzEuNjM4OTEgOC42NzkzNSAwLjkyMjExOSA5LjM5NjE0IDAuOTIyMTE5IDEwLjI4MDNDMC45MjIxMTkgMTEuMTY0NiAxLjYzODkxIDExLjg4MTMgMi41MjMxMiAxMS44ODEzQzMuNDA3MzMgMTEuODgxMyA0LjEyNDEyIDExLjE2NDYgNC4xMjQxMiAxMC4yODAzWiIgZmlsbD0id2hpdGUiLz4gPHBhdGggZD0iTTE2LjcxNDggMTcuMjUyM0wxNy43MzA4IDE5LjEwMjRMMTguMzUgMjAuMjE1NUwyMy4xNjAzIDEySDI2Ljg3NTJMMjAuMTQzOSAyMy40OTIzSDE2LjQyOUwxMi45OTk5IDE3LjI1MjNIMTYuNzE0OFoiIGZpbGw9IndoaXRlIi8+IDxwYXRoIGQ9Ik0xOS45NDE0IDI1Ljc5MDVIMTYuNDcyNVYyOS4yMzgySDE5Ljk0MTRWMjUuNzkwNVoiIGZpbGw9IndoaXRlIi8+IDwvc3ZnPg==',
 			40
 		);
-		add_submenu_page(
-			null,
-			__( 'Dashboard', 'cookie-law-info' ),
-			__( 'Dashboard', 'cookie-law-info' ),
-			$capability,
-			$slug,
-			array( $this, 'menu_page_template' )
-		);
-		$this->add_sub_menus( $slug, $capability );
-
-		add_submenu_page(
-			null,
-			__( 'Site Settings', 'cookie-law-info' ),
-			__( 'Site Settings', 'cookie-law-info' ),
-			$capability,
-			$slug . '-settings',
-			array( $this, 'menu_page_template' )
-		);
-		add_submenu_page(
-			null,
-			__( 'CookieYes Setup Wizard', 'cookie-law-info' ),
-			__( 'CookieYes Setup Wizard', 'cookie-law-info' ),
-			$capability,
-			$slug . '-wizard',
-			array( $this, 'menu_page_template' )
-		);
-	}
-
-	/**
-	 *  Add menus to the admin page.
-	 *
-	 * @param string $parent_slug Parent menu slug.
-	 * @param string $capability User capability.
-	 * @return void
-	 */
-	public function add_sub_menus( $parent_slug, $capability ) {
-		$settings = new \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings();
-		$pages    = $this->get_registered_menus();
-		if ( empty( $pages ) ) {
-			return;
-		}
-		$order = array_column( $pages, 'order' );
-		array_multisort( $order, SORT_ASC, $pages );
-		foreach ( $pages as $key => $page ) {
-			if ( ! empty( $page['callback'] ) ) {
-				$slug = null;
-				$hook = add_submenu_page(
-					$slug, // $parent_slug.
-					$page['name'], // $page_title.
-					! empty( $page['menu'] ) ? $page['menu'] : $page['name'], // $menu_title.
-					$capability,
-					$parent_slug . '-' . $key,
-					$page['callback']
-				);
-			}
-		}
 	}
 
 	/**
@@ -614,7 +558,7 @@ class Admin {
 	 */
 	public function plugin_action_links( $links ) {
 		$links[] = '<a href="https://www.cookieyes.com/support/" target="_blank">' . esc_html__( 'Support', 'cookie-law-info' ) . '</a>';
-		$links[] = '<a href="' . get_admin_url( null, 'edit.php?page=cookie-law-info' ) . '">' . esc_html__( 'Settings', 'cookie-law-info' ) . '</a>';
+		$links[] = '<a href="' . get_admin_url( null, 'admin.php?page=cookie-law-info' ) . '">' . esc_html__( 'Settings', 'cookie-law-info' ) . '</a>';
 		return array_reverse( $links );
 	}
 }

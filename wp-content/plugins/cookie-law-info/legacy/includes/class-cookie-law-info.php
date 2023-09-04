@@ -73,7 +73,7 @@ class Cookie_Law_Info {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.0.9';
+			$this->version = '3.1.3';
 		}
 		$this->plugin_name = 'cookie-law-info';
 
@@ -601,7 +601,7 @@ class Cookie_Law_Info {
 	}
 	public static function wt_cli_clean( $var ) {
 		if ( is_array( $var ) ) {
-			return array_map( 'self::wt_cli_clean', $var );
+			return array_map( 'Cookie_Law_Info::wt_cli_clean' , $var );
 		} else {
 			return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
 		}

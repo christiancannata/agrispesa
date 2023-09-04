@@ -1,19 +1,19 @@
 === CookieYes | GDPR Cookie Consent & Compliance Notice (CCPA Ready) ===
 Contributors: webtoffee, cookieyesdev
 Donate link: https://www.cookieyes.com/ 
-Tags: GDPR, CPRA, cookie notice, DSGVO, RGPD, LGPD, PIPEDA, POPIA, cookies , cookie law, cookie consent, Opt-in, cookie policy, privacy, compliance
+Tags: GDPR, CCPA, CPRA, cookie notice, DSGVO, RGPD, LGPD, CNIL, PIPEDA, POPIA, VCDPA, cookies , cookie law, cookie consent, Opt-in, cookie policy, privacy, compliance
 Requires at least: 5.0.0
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 3.0.9
+Stable tag: 3.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easily set up cookie notice, cookie policy and get GDPR cookie compliance. Supports GDPR (DSGVO, RGPD), LGPD, CCPA/CPRA, CNIL, and POPIA.
+Easily set up cookie notice, cookie policy and get GDPR cookie compliance. Supports GDPR (DSGVO, RGPD), LGPD, CNIL, POPIA, CCPA/CPRA and other U.S. state privacy laws.
 
 == Description ==
 
-The CookieYes GDPR Cookie Consent plugin will assist you in making your website GDPR (RGPD, DSVGO) compliant by adding a cookie banner to your site. Additionally, this GDPR WordPress plugin also supports cookie compliance with the LGPD of Brazil, CNIL of France, and the California Consumer Privacy Act (CCPA/CPRA) which is a state statute intended to enhance privacy rights and consumer protection for residents of California.
+The CookieYes GDPR Cookie Consent plugin facilitates GDPR (RGPD, DSVGO) compliance by integrating a cookie banner seamlessly into your website. Moreover, the plugin extends its support to LGPD (Brazil), CNIL (France), PIPEDA (Canada), Law 25 (Quebec), POPIA (South Africa), nFADP (Switzerland), Privacy Act (Australia), PDPL (Saudi Arabia), PDPL (Argentina), PDPL (Andorra), DPA (Faroe Islands), and the California Consumer Privacy Act (CCPA/CPRA), a state law in California. It also guarantees alignment with other prominent state privacy laws in the United States, such as VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), and UCPA (Utah).
 
 The plugin is one of the best WordPress GDPR cookie compliance plugins as it comes with a host of features some of which are listed below.
 
@@ -74,9 +74,10 @@ https://www.youtube.com/watch?v=g20giM91rs4
 You can access the following features by connecting to a paid plan (Basic, Pro, or Ultimate) on the CookieYes web app account. [See all features and compare plans](https://www.cookieyes.com/pricing/)
 * Starting from 100,000 to unlimited page views per month
 * Up to 8000 pages per scan
+* Integration with TCF v2.2, an IAB Europe Consent Framework for Publishers. Registered CMP ID: 401
 * Advanced banner customization
 * Pop-up banner layout (with overlay)
-* Location-based targeting of cookie banners (GDPR banner - Worldwide/EU & UK/Other countries & CCPA/CPRA banner - Worldwide/California/United States).
+* Location-based targeting of cookie banners (GDPR banner - Worldwide/EU & UK/Other countries & CCPA/CPRA banner - Worldwide/United States/Other countries).
 * Auto-detect banner languages
 * Scan behind login
 * Scheduled scan
@@ -160,6 +161,24 @@ For every update of the plugin, you will be notified of the installed plugins pa
 9. Privacy policy generator and cookie policy generator
 
 == Changelog ==
+
+= 3.1.3 = 
+
+Tested OK with WordPress version 6.3
+
+= 3.1.2 = 
+
+[Fix] - UI/UX improvements
+[Fix] - Updated email not reflected under "Site Settings" tab for connected users
+[Fix] - Cookie notice message not updated while switching the consent template
+
+= 3.1.1 = 
+
+[Fix] - Polish characters were not displayed correctly in banner 
+
+= 3.1.0 = 
+
+PHP 8.2 compatibility
 
 = 3.0.9 = 
 
@@ -590,6 +609,6 @@ Tested OK with WordPress version 6.2
 
 == Upgrade Notice ==
 
-= 3.0.9 = 
+= 3.1.3 = 
 
-Tested OK with WordPress version 6.2
+Tested OK with WordPress version 6.3

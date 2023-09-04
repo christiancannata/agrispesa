@@ -343,6 +343,8 @@ class Controller extends Cloud {
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 === $response_code ) {
 			$response        = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			$user            = isset( $response['user'] ) ? $response['user'] : array();
 			$plan            = isset( $response['websiteplan'] ) ? $response['websiteplan'] : array();
 			$features        = isset( $plan['features'] ) ? $plan['features'] : array();
 			$scan_timestamp  = isset( $response['last_scan_at'] ) ? strtotime( sanitize_text_field( $response['last_scan_at'] ) ) : false;
@@ -358,6 +360,10 @@ class Controller extends Cloud {
 				'id'             => $this->get_website_id(),
 				'url'            => isset( $response['url'] ) ? esc_url_raw( $response['url'] ) : esc_url_raw( get_site_url() ),
 				'status'         => isset( $response['status'] ) ? sanitize_text_field( $response['status'] ) : '',
+				'user'           => array(
+					'name'        => isset( $user['name'] ) ? sanitize_text_field( $user['name'] ) : '',
+					'email'       => isset( $user['email'] ) ? sanitize_email( $user['email'] ) : '',
+				),
 				'plan'           => array(
 					'id'          => isset( $plan['id'] ) ? sanitize_text_field( $plan['id'] ) : '',
 					'slug'        => isset( $plan['slug'] ) ? sanitize_text_field( $plan['slug'] ) : '',
@@ -379,6 +385,7 @@ class Controller extends Cloud {
 				'banners'        => array(
 					'status' => isset( $response['banner_status'] ) && 1 === $response['banner_status'] ? true : false,
 					'laws'   => $applicable_laws,
+					'is_iab_enabled' => isset( $response['isIABEnabled'] ) && true === $response['isIABEnabled'],
 				),
 				'consent_logs'   => array(
 					'status' => isset( $response['visitor_log'] ) && true === $response['visitor_log'] ? true : false,

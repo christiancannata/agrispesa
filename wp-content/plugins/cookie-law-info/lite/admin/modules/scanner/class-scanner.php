@@ -28,7 +28,6 @@ class Scanner extends Modules {
 		$controller = new \CookieYes\Lite\Admin\Modules\Scanner\Includes\Controller();
 		$this->load_apis( $controller );
 		add_filter( 'cky_admin_scripts_scanner_config', array( $controller, 'load_scanner_config' ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 	}
 
 	/**
@@ -47,14 +46,7 @@ class Scanner extends Modules {
 	 * @return void
 	 */
 	public function admin_menu() {
-		add_submenu_page(
-			null,
-			__( 'Scan Details', 'cookie-law-info' ),
-			__( 'Cookie Manager', 'cookie-law-info' ),
-			self::$capability,
-			self::$menu_slug . '-scan-details',
-			array( $this, 'menu_page_template' )
-		);
+
 	}
 
 	/**

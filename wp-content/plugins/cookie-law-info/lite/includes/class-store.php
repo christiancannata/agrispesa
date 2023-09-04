@@ -42,6 +42,14 @@ abstract class Store {
 	protected $data = array();
 
 	/**
+	 * Default data for this object.
+	 *
+	 * @since 3.0.0
+	 * @var array
+	 */
+	protected $default_data = array();
+
+	/**
 	 * Current language
 	 *
 	 * @var string

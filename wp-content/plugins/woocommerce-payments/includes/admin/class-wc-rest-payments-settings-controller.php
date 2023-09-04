@@ -6,6 +6,7 @@
  */
 
 use WCPay\Fraud_Prevention\Fraud_Risk_Tools;
+use WCPay\Constants\Track_Events;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,15 +29,29 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	private $wcpay_gateway;
 
 	/**
+	 * WC_Payments_Account instance to get information about the account
+	 *
+	 * @var WC_Payments_Account
+	 */
+	protected $account;
+
+
+	/**
 	 * WC_REST_Payments_Settings_Controller constructor.
 	 *
 	 * @param WC_Payments_API_Client   $api_client WC_Payments_API_Client instance.
 	 * @param WC_Payment_Gateway_WCPay $wcpay_gateway WC_Payment_Gateway_WCPay instance.
+	 * @param WC_Payments_Account      $account  Account class instance.
 	 */
-	public function __construct( WC_Payments_API_Client $api_client, WC_Payment_Gateway_WCPay $wcpay_gateway ) {
+	public function __construct(
+		WC_Payments_API_Client $api_client,
+		WC_Payment_Gateway_WCPay $wcpay_gateway,
+		WC_Payments_Account $account
+	) {
 		parent::__construct( $api_client );
 
 		$this->wcpay_gateway = $wcpay_gateway;
+		$this->account       = $account;
 	}
 
 	/**
@@ -63,7 +78,11 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 				'permission_callback' => [ $this, 'check_permission' ],
 				'args'                => [
 					'is_wcpay_enabled'                  => [
-						'description'       => __( 'If WooCommerce Payments should be enabled.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( 'If %s should be enabled.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
@@ -77,32 +96,56 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_manual_capture_enabled'         => [
-						'description'       => __( 'If WooCommerce Payments manual capture of charges should be enabled.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+						/* translators: %s: WooPayments */
+							__( 'If %s manual capture of charges should be enabled.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_saved_cards_enabled'            => [
-						'description'       => __( 'If WooCommerce Payments "Saved cards" should be enabled.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( 'If %s "Saved cards" should be enabled.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_test_mode_enabled'              => [
-						'description'       => __( 'WooCommerce Payments test mode setting.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( '%s test mode setting.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_multi_currency_enabled'         => [
-						'description'       => __( 'WooCommerce Payments Multi-Currency feature flag setting.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( '%s Multi-Currency feature flag setting.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_wcpay_subscription_enabled'     => [
-						'description'       => __( 'WooCommerce Payments Subscriptions feature flag setting.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( '%s Subscriptions feature flag setting.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'account_statement_descriptor'      => [
-						'description'       => __( 'WooCommerce Payments bank account descriptor to be displayed in customers\' bank accounts.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( '%s bank account descriptor to be displayed in customers\' bank accounts.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_statement_descriptor' ],
 					],
@@ -158,7 +201,11 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 						'type'        => [ 'integer', 'null' ],
 					],
 					'is_payment_request_enabled'        => [
-						'description'       => __( 'If WooCommerce Payments express checkouts should be enabled.', 'woocommerce-payments' ),
+						'description'       => sprintf(
+							/* translators: %s: WooPayments */
+							__( 'If %s express checkouts should be enabled.', 'woocommerce-payments' ),
+							'WooPayments'
+						),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
@@ -221,7 +268,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 							'type' => 'string',
 							'enum' => array_keys( $wcpay_form_fields['payment_request_button_locations']['options'] ),
 						],
-						'default'           => [],
+						'default'           => array_keys( $wcpay_form_fields['payment_request_button_locations']['options'] ),
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 				],
@@ -302,6 +349,16 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 			);
 		}
 
+		// Japan accounts require Japanese phone numbers.
+		if ( 'JP' === $this->account->get_account_country() ) {
+			if ( '+81' !== substr( $value, 0, 3 ) ) {
+				return new WP_Error(
+					'rest_invalid_pattern',
+					__( 'Error: Invalid Japanese phone number: ', 'woocommerce-payments' ) . $value
+				);
+			}
+		}
+
 		return true;
 	}
 
@@ -339,6 +396,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function get_settings(): WP_REST_Response {
+		$wcpay_form_fields             = $this->wcpay_gateway->get_form_fields();
 		$available_upe_payment_methods = $this->wcpay_gateway->get_upe_available_payment_methods();
 		/**
 		 * It might be possible that enabled payment methods settings have an invalid state. As an example,
@@ -366,6 +424,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 				'is_wcpay_subscriptions_enabled'      => WC_Payments_Features::is_wcpay_subscriptions_enabled(),
 				'is_wcpay_subscriptions_eligible'     => WC_Payments_Features::is_wcpay_subscriptions_eligible(),
 				'is_subscriptions_plugin_active'      => $this->wcpay_gateway->is_subscriptions_plugin_active(),
+				'account_country'                     => $this->wcpay_gateway->get_option( 'account_country' ),
 				'account_statement_descriptor'        => $this->wcpay_gateway->get_option( 'account_statement_descriptor' ),
 				'account_business_name'               => $this->wcpay_gateway->get_option( 'account_business_name' ),
 				'account_business_url'                => $this->wcpay_gateway->get_option( 'account_business_url' ),
@@ -376,6 +435,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 				'account_branding_icon'               => $this->wcpay_gateway->get_option( 'account_branding_icon' ),
 				'account_branding_primary_color'      => $this->wcpay_gateway->get_option( 'account_branding_primary_color' ),
 				'account_branding_secondary_color'    => $this->wcpay_gateway->get_option( 'account_branding_secondary_color' ),
+				'account_domestic_currency'           => $this->wcpay_gateway->get_option( 'account_domestic_currency' ),
 				'is_payment_request_enabled'          => 'yes' === $this->wcpay_gateway->get_option( 'payment_request' ),
 				'is_debug_log_enabled'                => 'yes' === $this->wcpay_gateway->get_option( 'enable_logging' ),
 				'payment_request_enabled_locations'   => $this->wcpay_gateway->get_option( 'payment_request_button_locations' ),
@@ -385,14 +445,16 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 				'is_saved_cards_enabled'              => $this->wcpay_gateway->is_saved_cards_enabled(),
 				'is_card_present_eligible'            => $this->wcpay_gateway->is_card_present_eligible(),
 				'is_woopay_enabled'                   => 'yes' === $this->wcpay_gateway->get_option( 'platform_checkout' ),
+				'show_woopay_incompatibility_notice'  => get_option( 'woopay_invalid_extension_found', false ),
 				'woopay_custom_message'               => $this->wcpay_gateway->get_option( 'platform_checkout_custom_message' ),
 				'woopay_store_logo'                   => $this->wcpay_gateway->get_option( 'platform_checkout_store_logo' ),
-				'woopay_enabled_locations'            => $this->wcpay_gateway->get_option( 'platform_checkout_button_locations', [] ),
+				'woopay_enabled_locations'            => $this->wcpay_gateway->get_option( 'platform_checkout_button_locations', array_keys( $wcpay_form_fields['payment_request_button_locations']['options'] ) ),
 				'deposit_schedule_interval'           => $this->wcpay_gateway->get_option( 'deposit_schedule_interval' ),
 				'deposit_schedule_monthly_anchor'     => $this->wcpay_gateway->get_option( 'deposit_schedule_monthly_anchor' ),
 				'deposit_schedule_weekly_anchor'      => $this->wcpay_gateway->get_option( 'deposit_schedule_weekly_anchor' ),
 				'deposit_delay_days'                  => $this->wcpay_gateway->get_option( 'deposit_delay_days' ),
 				'deposit_status'                      => $this->wcpay_gateway->get_option( 'deposit_status' ),
+				'deposit_restrictions'                => $this->wcpay_gateway->get_option( 'deposit_restrictions' ),
 				'deposit_completed_waiting_period'    => $this->wcpay_gateway->get_option( 'deposit_completed_waiting_period' ),
 				'current_protection_level'            => $this->wcpay_gateway->get_option( 'current_protection_level' ),
 				'advanced_fraud_protection_settings'  => $this->wcpay_gateway->get_option( 'advanced_fraud_protection_settings' ),
@@ -431,7 +493,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments enabled status.
+	 * Updates WooPayments enabled status.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -471,6 +533,30 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 			)
 		);
 
+		if ( function_exists( 'wc_admin_record_tracks_event' ) ) {
+			$active_payment_methods   = $this->wcpay_gateway->get_upe_enabled_payment_method_ids();
+			$disabled_payment_methods = array_diff( $active_payment_methods, $payment_method_ids_to_enable );
+			$enabled_payment_methods  = array_diff( $payment_method_ids_to_enable, $active_payment_methods );
+
+			foreach ( $disabled_payment_methods as $disabled_payment_method ) {
+				wc_admin_record_tracks_event(
+					Track_Events::PAYMENT_METHOD_DISABLED,
+					[
+						'payment_method_id' => $disabled_payment_method,
+					]
+				);
+			}
+
+			foreach ( $enabled_payment_methods as $enabled_payment_method ) {
+				wc_admin_record_tracks_event(
+					Track_Events::PAYMENT_METHOD_ENABLED,
+					[
+						'payment_method_id' => $enabled_payment_method,
+					]
+				);
+			}
+		}
+
 		$this->wcpay_gateway->update_option( 'upe_enabled_payment_method_ids', $payment_method_ids_to_enable );
 		if ( $payment_method_ids_to_enable ) {
 			$this->request_unrequested_payment_methods( $payment_method_ids_to_enable );
@@ -504,7 +590,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments manual capture.
+	 * Updates WooPayments manual capture.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -519,7 +605,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments test mode.
+	 * Updates WooPayments test mode.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -539,7 +625,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments test mode.
+	 * Updates WooPayments test mode.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -604,7 +690,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments account fields
+	 * Updates WooPayments account fields
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -676,7 +762,7 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 	}
 
 	/**
-	 * Updates WooCommerce Payments "saved cards" feature.
+	 * Updates WooPayments "saved cards" feature.
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
@@ -746,6 +832,9 @@ class WC_REST_Payments_Settings_Controller extends WC_Payments_REST_Controller {
 		}
 
 		$woopay_enabled_locations = $request->get_param( 'woopay_enabled_locations' );
+
+		$all_locations = $this->wcpay_gateway->form_fields['payment_request_button_locations']['options'];
+		WC_Payments::woopay_tracker()->woopay_locations_updated( $all_locations, $woopay_enabled_locations );
 
 		$this->wcpay_gateway->update_option( 'platform_checkout_button_locations', $woopay_enabled_locations );
 	}

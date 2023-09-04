@@ -12,6 +12,8 @@ require plugin_dir_path( __FILE__ ) . 'classes/class-policy-generator-ajax.php';
 require plugin_dir_path( __FILE__ ) . 'classes/class-preview-page.php';
 class Cookie_Law_Info_Cli_Policy_Generator {
 
+	public $plugin_name;
+
 	public static $policy_pageid = 'cli_pg_policy_page_id';
 	public function __construct() {
 		 add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );

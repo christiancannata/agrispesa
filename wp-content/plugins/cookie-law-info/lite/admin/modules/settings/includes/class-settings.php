@@ -126,6 +126,9 @@ class Settings extends Store {
 	 */
 	public function update( $data ) {
 		$settings = get_option( 'cky_settings', $this->data );
+		if ( empty( $settings ) ) {
+			$settings = $this->data;
+		}
 		$settings = self::sanitize( $data, $settings );
 		update_option( 'cky_settings', $settings );
 		do_action( 'cky_after_update_settings', $settings );

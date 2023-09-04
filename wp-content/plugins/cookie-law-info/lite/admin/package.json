@@ -15,6 +15,7 @@
     "chart.js": "^3.9.1",
     "core-js": "^3.6.5",
     "md5": "^2.3.0",
+    "sass": "^1.62.1",
     "vue": "^2.6.11",
     "vue-color": "^2.8.1",
     "vue-frag": "^1.4.1",
@@ -29,7 +30,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^6.0.0",
     "sass-loader": "^10",
     "vue-template-compiler": "^2.6.11",
     "webpack-cli": "^4.10.0"

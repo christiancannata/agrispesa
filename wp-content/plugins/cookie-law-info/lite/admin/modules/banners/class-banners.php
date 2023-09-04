@@ -26,6 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Banners extends Modules {
 
 	/**
+	 * Banners controller class.
+	 *
+	 * @var object
+	 */
+	private $controller;
+
+	/**
 	 * Constructor.
 	 */
 	public function init() {

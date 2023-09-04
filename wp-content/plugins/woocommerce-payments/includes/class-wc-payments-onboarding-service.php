@@ -17,7 +17,8 @@ use WCPay\Exceptions\API_Exception;
  */
 class WC_Payments_Onboarding_Service {
 
-	const TEST_MODE_OPTION = 'wcpay_onboarding_test_mode';
+	const TEST_MODE_OPTION             = 'wcpay_onboarding_test_mode';
+	const ONBOARDING_FLOW_STATE_OPTION = 'wcpay_onboarding_flow_state';
 
 	/**
 	 * Client for making requests to the WooCommerce Payments API
@@ -136,6 +137,8 @@ class WC_Payments_Onboarding_Service {
 	 * @param string|null $structure    The currently selected business structure (optional).
 	 *
 	 * @return array
+	 *
+	 * @throws API_Exception
 	 */
 	public function get_required_verification_information( string $country_code, string $type, $structure = null ): array {
 		return $this->payments_api_client->get_onboarding_required_verification_information( $country_code, $type, $structure );
@@ -182,11 +185,39 @@ class WC_Payments_Onboarding_Service {
 	public function add_admin_body_classes( string $classes = '' ): string {
 		// Onboarding needs to hide wp-admin navigation and masterbar while JS loads.
 		// This class will be removed by the onboarding component.
-		if ( isset( $_GET['path'] ) && '/payments/onboarding-prototype' === $_GET['path'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['path'] ) && '/payments/onboarding' === $_GET['path'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$classes .= ' woocommerce-admin-is-loading';
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Get the onboarding flow state.
+	 *
+	 * @return ?array The onboarding flow state, or null if not set.
+	 */
+	public function get_onboarding_flow_state(): ?array {
+		return get_option( self::ONBOARDING_FLOW_STATE_OPTION, null );
+	}
+
+	/**
+	 * Set the onboarding flow state.
+	 *
+	 * @param array $value The onboarding flow state.
+	 * @return bool Whether the option was updated successfully.
+	 */
+	public function set_onboarding_flow_state( array $value ): bool {
+		return update_option( self::ONBOARDING_FLOW_STATE_OPTION, $value );
+	}
+
+	/**
+	 * Clear the onboarding flow state.
+	 *
+	 * @return boolean Whether the option was deleted successfully.
+	 */
+	public static function clear_onboarding_flow_state(): bool {
+		return delete_option( self::ONBOARDING_FLOW_STATE_OPTION );
 	}
 
 	/**

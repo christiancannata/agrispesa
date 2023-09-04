@@ -296,8 +296,8 @@ class Template {
 		try {
 			$dom         = new DOMDocument();
 			$used_errors = libxml_use_internal_errors( true );
-			if ( function_exists( 'mb_convert_encoding' ) ) {
-				$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+			if ( function_exists( 'mb_encode_numericentity' ) ) {
+				$html = mb_encode_numericentity($html, [0x80, 0x10FFFF, 0, ~0], 'UTF-8');
 			}
 			$dom->loadHTML( $html, LIBXML_HTML_NODEFDTD );
 			$used_errors || libxml_use_internal_errors( false );
