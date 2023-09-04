@@ -3,17 +3,17 @@
  * Rank Math SEO Plugin.
  *
  * @package      RANK_MATH
- * @copyright    Copyright (C) 2019-2021, Rank Math - support@rankmath.com
+ * @copyright    Copyright (C) 2019-2023, Rank Math - support@rankmath.com
  * @link         https://rankmath.com
  * @since        0.9.0
  *
  * @wordpress-plugin
  * Plugin Name:       Rank Math SEO
- * Version:           1.0.115
- * Plugin URI:        https://s.rankmath.com/home
+ * Version:           1.0.122
+ * Plugin URI:        https://rankmath.com/
  * Description:       Rank Math is a revolutionary SEO product that combines the features of many SEO tools and lets you multiply your traffic in the easiest way possible.
  * Author:            Rank Math
- * Author URI:        https://s.rankmath.com/home
+ * Author URI:        https://rankmath.com/?utm_source=Plugin&utm_medium=Readme%20Author%20URI&utm_campaign=WP
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       rank-math
@@ -34,7 +34,7 @@ final class RankMath {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.115';
+	public $version = '1.0.122';
 
 	/**
 	 * Rank Math database version.
@@ -481,8 +481,8 @@ final class RankMath {
 		}
 
 		$more = [
-			'<a href="' . \RankMath\Helper::get_admin_url( 'help' ) . '">' . esc_html__( 'Getting Started', 'rank-math' ) . '</a>',
-			'<a href="https://s.rankmath.com/documentation">' . esc_html__( 'Documentation', 'rank-math' ) . '</a>',
+			'<a href="' . admin_url( '?page=rank-math&view=help' ) . '">' . esc_html__( 'Getting Started', 'rank-math' ) . '</a>',
+			'<a href="https://rankmath.com/kb/?utm_source=Plugin&utm_medium=Plugin%20Page%20KB%20Link&utm_campaign=WP" target="_blank">' . esc_html__( 'Documentation', 'rank-math' ) . '</a>',
 		];
 
 		return array_merge( $links, $more );

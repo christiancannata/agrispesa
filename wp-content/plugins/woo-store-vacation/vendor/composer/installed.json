@@ -1,0 +1,133 @@
+{
+    "packages": [
+        {
+            "name": "mahdiyazdani/wc-install-notice",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mahdiyazdani/wc-install-notice.git",
+                "reference": "6a921025c28e42fcfda7c7d467bd513a1cab7b85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mahdiyazdani/wc-install-notice/zipball/6a921025c28e42fcfda7c7d467bd513a1cab7b85",
+                "reference": "6a921025c28e42fcfda7c7d467bd513a1cab7b85",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
+                "php-parallel-lint/php-parallel-lint": "1.3.2",
+                "phpcompatibility/phpcompatibility-wp": "2.1.3",
+                "phpunit/phpunit": "9.5.24",
+                "squizlabs/php_codesniffer": "3.7.1",
+                "woocommerce/woocommerce-git-hooks": "*",
+                "woocommerce/woocommerce-sniffs": "*",
+                "wp-coding-standards/wpcs": "2.3.0"
+            },
+            "time": "2023-05-25T11:05:24+00:00",
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "lint:wpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
+                    "lint:wpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "WooCommerce Install Notice",
+                    "homepage": "https://mahdiyazdani.one"
+                }
+            ],
+            "description": "Library to be bundled with WordPress plugins to enforce users to install and activate WooCommerce plugin.",
+            "homepage": "https://github.com/mahdiyazdani/wc-install-notice",
+            "keywords": [
+                "plugin",
+                "woocommerce",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/mahdiyazdani/wc-install-notice/issues",
+                "source": "https://github.com/mahdiyazdani/wc-install-notice/tree/1.0.0"
+            },
+            "install-path": "../mahdiyazdani/wc-install-notice"
+        },
+        {
+            "name": "mahdiyazdani/wp-footer-rate",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mahdiyazdani/wp-footer-rate.git",
+                "reference": "a2d20e031e4f7bb3f262235a6ded2e775e21edfe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mahdiyazdani/wp-footer-rate/zipball/a2d20e031e4f7bb3f262235a6ded2e775e21edfe",
+                "reference": "a2d20e031e4f7bb3f262235a6ded2e775e21edfe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
+                "php-parallel-lint/php-parallel-lint": "1.3.2",
+                "phpcompatibility/phpcompatibility-wp": "2.1.3",
+                "phpunit/phpunit": "9.5.24",
+                "squizlabs/php_codesniffer": "3.7.1",
+                "wp-coding-standards/wpcs": "2.3.0"
+            },
+            "time": "2023-07-09T11:38:00+00:00",
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "lint:wpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
+                    "lint:wpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "WordPress Footer Rate Notice",
+                    "homepage": "https://mahdiyazdani.one"
+                }
+            ],
+            "description": "Library to be bundled with WordPress themes and plugins to ask for users to leave a review.",
+            "homepage": "https://github.com/mahdiyazdani/wp-footer-rate",
+            "keywords": [
+                "plugin",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/mahdiyazdani/wp-footer-rate/issues",
+                "source": "https://github.com/mahdiyazdani/wp-footer-rate/tree/1.0.1"
+            },
+            "install-path": "../mahdiyazdani/wp-footer-rate"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}

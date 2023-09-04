@@ -1,0 +1,56 @@
+.wc-install-notice-nux {
+	align-items: center;
+	background-color: #f5ebf3;
+	border-left-color: #a36597;
+	display: flex;
+}
+
+.wc-install-notice-nux .notice-icon {
+	background: #fff;
+	background-image: url(../imgs/wc-logo.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 50px;
+	border-radius: 100%;
+	height: 70px;
+	margin: 20px 17px 20px 5px;
+	position: relative;
+	width: 70px;
+}
+
+.wc-install-notice-nux .notice-content {
+	margin: 22px 0 23px;
+}
+
+.wc-install-notice-nux .notice-content h2 {
+	color: #2e4453;
+	font-weight: bolder;
+	margin: 0 0 10px;
+}
+
+.wc-install-notice-nux .notice-content p {
+	margin: 0;
+	padding: 0;
+}
+
+.wc-install-notice-nux .wc-install-notice.button-primary {
+	background: initial !important;
+	border: none;
+	box-shadow: initial;
+	color: #0073aa;
+	display: initial;
+	line-height: initial;
+	padding: 0;
+	text-decoration: underline;
+	text-shadow: none;
+}
+
+.wc-install-notice-nux .updating-message::before {
+	-webkit-animation: rotation 2s infinite linear;
+	animation: rotation 2s infinite linear;
+	content: "";
+	display: inline-block;
+	font: 400 19px/1 dashicons;
+	margin: 0 5px 0 -2px;
+	vertical-align: bottom;
+}

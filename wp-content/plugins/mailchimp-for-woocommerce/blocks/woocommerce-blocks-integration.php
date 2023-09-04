@@ -7,7 +7,6 @@ use Automattic\WooCommerce\Blocks\StoreApi\Schemas\CheckoutSchema;
 use Automattic\WooCommerce\StoreApi\StoreApi;
 use Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema;
 defined( 'ABSPATH' ) || exit;
-
 /**
  * Class Mailchimp_Woocommerce_Newsletter_Blocks_Integration
  *
@@ -269,17 +268,19 @@ class Mailchimp_Woocommerce_Newsletter_Blocks_Integration implements Integration
      * @param $request
      */
     public function order_processed($order, $request)
-    {
+    {          
         $meta_key = 'mailchimp_woocommerce_is_subscribed';
         $optin = $request['extensions']['mailchimp-newsletter']['optin'];
         $gdpr_fields = isset($request['extensions']['mailchimp-newsletter']['gdprFields']) ?
             (array) $request['extensions']['mailchimp-newsletter']['gdprFields'] : null;
-
         // update the order meta for the subscription status to support legacy functions
-        update_post_meta($order->get_id(), $meta_key, $optin);
+
+        MailChimp_WooCommerce_HPOS::update_order_meta($order->get_id(), $meta_key, $optin);
+        /*update_post_meta($order->get_id(), $meta_key, $optin);*/
         // let's set the GDPR fields here just in case we need to pull them again.
         if (!empty($gdpr_fields)) {
-            update_post_meta($order->get_id(), "mailchimp_woocommerce_gdpr_fields", $gdpr_fields);
+            MailChimp_WooCommerce_HPOS::update_order_meta($order->get_id(), 'mailchimp_woocommerce_gdpr_fields', $gdpr_fields);
+            //update_post_meta($order->get_id(), "mailchimp_woocommerce_gdpr_fields", $gdpr_fields);
         }
 
         // if the user id exists
@@ -310,10 +311,12 @@ class Mailchimp_Woocommerce_Newsletter_Blocks_Integration implements Integration
 
         // update the post meta with campaign tracking details for future sync
         if (!empty($campaign_id)) {
-            update_post_meta($order->get_id(), 'mailchimp_woocommerce_campaign_id', $campaign_id);
+            MailChimp_WooCommerce_HPOS::update_order_meta($order->get_id(), 'mailchimp_woocommerce_campaign_id', $campaign_id);
+            /*update_post_meta($order->get_id(), 'mailchimp_woocommerce_campaign_id', $campaign_id);*/
         }
         if (!empty($landing_site)) {
-            update_post_meta($order->get_id(), 'mailchimp_woocommerce_landing_site', $landing_site);
+            MailChimp_WooCommerce_HPOS::update_order_meta($order->get_id(), 'mailchimp_woocommerce_landing_site', $landing_site);
+            //update_post_meta($order->get_id(), 'mailchimp_woocommerce_landing_site', $landing_site);
         }
 
         $handler = new MailChimp_WooCommerce_Single_Order($order->get_id(), null, $campaign_id, $landing_site, $language, $gdpr_fields);

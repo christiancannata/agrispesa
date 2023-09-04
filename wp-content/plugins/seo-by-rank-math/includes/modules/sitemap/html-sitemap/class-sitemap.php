@@ -25,6 +25,20 @@ class Sitemap extends Taxonomy {
 	use Hooker;
 
 	/**
+	 * Generators.
+	 *
+	 * @var array
+	 */
+	private $generators;
+
+	/**
+	 * Cache.
+	 *
+	 * @var object
+	 */
+	private $cache;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -96,8 +110,7 @@ class Sitemap extends Taxonomy {
 	 */
 	public function get_output() {
 		$post_types = self::get_post_types();
-		$taxonomies = Helper::get_accessible_taxonomies();
-		$taxonomies = array_filter( $taxonomies, [ $this, 'handles_type' ] );
+		$taxonomies = self::get_taxonomies();
 
 		/**
 		 * Filter the setting of excluding empty terms from the XML sitemap.
@@ -105,7 +118,6 @@ class Sitemap extends Taxonomy {
 		 * @param boolean $exclude        Defaults to true.
 		 * @param array   $taxonomies     Array of names for the taxonomies being processed.
 		 */
-		$hide_empty = $this->do_filter( 'sitemap/exclude_empty_terms', true, $taxonomies );
 
 		$show_dates = Helper::get_settings( 'sitemap.html_sitemap_show_dates' );
 		$output     = [];
@@ -132,10 +144,14 @@ class Sitemap extends Taxonomy {
 					continue;
 				}
 
-				$sitemap = $this->get_generator( 'terms' )->generate_sitemap(
+				$hide_empty = ! Helper::get_settings( 'sitemap.tax_' . $taxonomy . '_include_empty' );
+				$sitemap    = $this->get_generator( 'terms' )->generate_sitemap(
 					$taxonomy,
 					$show_dates,
-					[ 'hide_empty' => $hide_empty ]
+					[
+						'hide_empty' => $hide_empty,
+						'exclude'    => wp_parse_id_list( Helper::get_settings( 'sitemap.exclude_terms' ) ),
+					]
 				);
 				$this->set_cache( $taxonomy, $sitemap );
 				$output[] = $sitemap;
@@ -215,7 +231,7 @@ class Sitemap extends Taxonomy {
 				continue;
 			}
 
-			$taxonomies[] = $taxonomy->name;
+			$taxonomies[ $taxonomy->name ] = $taxonomy;
 		}
 
 		/**

@@ -2,9 +2,9 @@
 Contributors: Tag Concierge
 Tags: google tag manager, GA4, ecommerce events, Google Analytics, Facebook Pixel, shopping behavior
 Requires at least: 5.1.0
-Tested up to: 6.2.1
+Tested up to: 6.3.1
 Requires PHP: 7.0
-Stable tag: 1.10.12
+Stable tag: 1.10.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,55 @@ The plugin always emits events in GA4 compatible format, but the UA preset conta
 
 
 == Changelog ==
+
+= 1.10.23 =
+
+* tested against the latest versions of WordPress and WooCommerce
+
+= 1.10.22 =
+
+* fixed dynamic property in GtmEcommerceWoo\Lib\GaEcommerceEntity\Item object
+* tested against the latest version of WooCommerce
+
+= 1.10.21 =
+
+* tested against the latest versions of WordPress and WooCommerce
+
+= 1.10.20 =
+
+* fixed events inspector's console z-index property
+
+= 1.10.19 =
+
+* added distinction for recently added presets in presets gallery
+
+= 1.10.18 =
+
+* fixed issue with product price in 'purchase' event
+* tested against the latest version of WooCommerce
+
+= 1.10.17 =
+
+* tested against the latest version of WooCommerce
+
+= 1.10.16 =
+
+* changes priority of Google Tag Manager snippet loading on 'wp_head' hook
+* removes 'ecommerce' key from event object, when there is no items and no value
+
+= 1.10.15 =
+
+* added new server-side tracking settings
+* tested against the latest version of WooCommerce
+
+= 1.10.14 =
+
+* tested against the latest version of WooCommerce
+
+= 1.10.13 =
+
+* fixed 'gtm_ecommerce_woo_event_after_processing' filter
+* tested against the latest version of WordPress
 
 = 1.10.12 =
 

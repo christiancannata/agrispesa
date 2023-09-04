@@ -181,6 +181,15 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 	/** @var WC_Facebookcommerce */
 	private $facebook_for_woocommerce;
 
+	/** @var WC_Facebookcommerce_EventsTracker instance. */
+	private $events_tracker;
+
+	/** @var WC_Facebookcommerce_MessengerChat instance. */
+	private $messenger_chat;
+
+	/** @var WC_Facebookcommerce_Background_Process instance. */
+	private $background_processor;
+
 	/**
 	 * Init and hook in the integration.
 	 *
@@ -368,9 +377,30 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 
 		add_action( 'untrashed_post', [ $this, 'fb_restore_untrashed_variable_product' ] );
 
+		// Ensure product is deleted from FB when status is changed to draft.
+		add_action( 'publish_to_draft', [ $this, 'delete_draft_product' ] );
+
 		// Product Set hooks.
 		add_action( 'fb_wc_product_set_sync', [ $this, 'create_or_update_product_set_item' ], 99, 2 );
 		add_action( 'fb_wc_product_set_delete', [ $this, 'delete_product_set_item' ], 99 );
+	}
+
+	/**
+	 * __get method for backward compatibility.
+	 *
+	 * @param string $key property name
+	 * @return mixed
+	 * @since 3.0.32
+	 */
+	public function __get( $key ) {
+		// Add warning for private properties.
+		if ( in_array( $key, array( 'events_tracker', 'messenger_chat', 'background_processor' ), true ) ) {
+			/* translators: %s property name. */
+			_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'The %s property is private and should not be accessed outside its class.', 'facebook-for-woocommerce' ), esc_html( $key ) ), '3.0.32' );
+			return $this->$key;
+		}
+
+		return null;
 	}
 
 	/**
@@ -1016,6 +1046,23 @@ class WC_Facebookcommerce_Integration extends WC_Integration {
 	private function should_update_visibility_for_product_status_change( $new_status, $old_status ) {
 		return ( $old_status === 'publish' && $new_status !== 'publish' ) || ( $old_status === 'trash' && $new_status === 'publish' ) || ( $old_status === 'future' && $new_status === 'publish' );
 	}
+
+	/**
+	 * Deletes a product from Facebook when status is changed to draft.
+	 *
+	 * @since 3.0.27
+	 * @param \WP_post $post
+	 */
+	public function delete_draft_product( $post ) {
+
+		if ( ! $post ) {
+			return;
+		}
+
+		$this->on_product_delete ( $post->ID );
+
+	}
+
 
 	/**
 	 * Generic function for use with any product publishing.

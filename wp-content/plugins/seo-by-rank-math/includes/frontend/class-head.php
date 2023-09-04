@@ -16,6 +16,7 @@ use RankMath\Paper\Paper;
 use RankMath\Traits\Hooker;
 use RankMath\Sitemap\Router;
 use MyThemeShop\Helpers\Str;
+use MyThemeShop\Helpers\Arr;
 use RankMath\Helpers\Security;
 
 defined( 'ABSPATH' ) || exit;
@@ -106,6 +107,21 @@ class Head {
 			}
 
 			printf( '<meta name="%1$s" content="%2$s" />' . "\n", esc_attr( $name ), esc_attr( $content ) );
+		}
+
+		$custom_webmaster_tags = Helper::get_settings( 'general.custom_webmaster_tags' );
+		if ( empty( $custom_webmaster_tags ) ) {
+			return;
+		}
+
+		$custom_webmaster_tags = Arr::from_string( $custom_webmaster_tags );
+		foreach ( $custom_webmaster_tags as $custom_webmaster_tag ) {
+			$custom_webmaster_tag = trim( $custom_webmaster_tag );
+			if ( empty( $custom_webmaster_tag ) ) {
+				continue;
+			}
+
+			echo $custom_webmaster_tag . "\n";
 		}
 	}
 
@@ -379,9 +395,9 @@ class Head {
 
 		if ( false === $closing ) {
 			if ( ! Helper::is_whitelabel() && ! defined( 'RANK_MATH_PRO_FILE' ) ) {
-				echo "\n<!-- " . esc_html__( 'Search Engine Optimization by Rank Math - https://s.rankmath.com/home', 'rank-math' ) . " -->\n";
+				echo "\n<!-- " . esc_html__( 'Search Engine Optimization by Rank Math - https://rankmath.com/', 'rank-math' ) . " -->\n";
 			} elseif ( defined( 'RANK_MATH_PRO_FILE' ) ) {
-				echo "\n<!-- " . esc_html__( 'Search Engine Optimization by Rank Math PRO - https://s.rankmath.com/home', 'rank-math' ) . " -->\n";
+				echo "\n<!-- " . esc_html__( 'Search Engine Optimization by Rank Math PRO - https://rankmath.com/', 'rank-math' ) . " -->\n";
 			}
 			return;
 		}

@@ -8,6 +8,8 @@
  * Date: 7/15/16
  * Time: 11:42 AM
  */
+
+
 class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
 {
     public $id;
@@ -147,11 +149,13 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
 	    $email = null;
 
         // will either add or update the order
-        try {
-
-            if (!($order_post = get_post($this->id))) {
+        try {            
+            if (!($order_post = MailChimp_WooCommerce_HPOS::get_order($this->id))) {
                 return false;
             }
+            /*if (!($order_post = get_post($this->id))) {
+                return false;
+            }*/
 
             // transform the order
             $order = $job->transform($order_post);
@@ -312,7 +316,7 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
 
             // if we have the saved order meta from previous syncs let's use it.
             // This should help with reporting after people may have disconnected and reconnected to a new store.
-            if (($saved = get_post_meta($order_post->ID, 'mailchimp_woocommerce_campaign_id', true))) {
+            if ($saved = $order_post->get_meta('mailchimp_woocommerce_campaign_id') ) {
                 $this->campaign_id = $saved;
             }
             // only do this stuff on new orders
@@ -324,11 +328,17 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
             		// see if we have a saved version
 		            // pull the last clicked campaign for this email address
 		            $job = new MailChimp_WooCommerce_Pull_Last_Campaign($email);
-		            $this->campaign_id = $job->handle();
+					$job->handle();
 
-		            if (!empty($this->campaign_id)) {
-		            	mailchimp_debug('campaign_id', "Pulled campaign tracking from mailchimp user activity for {$email}");
-		            }
+					/// get the click date
+		            $clicked = $job->getClickDate();
+					$processed = $order->getProcessedAtDate();
+
+					// if the order was placed after the click event we can assign the campaign id.
+					if ($clicked && $processed && $processed->getTimestamp() > $clicked->getTimestamp()) {
+						$this->campaign_id = $job->getCampaignID();
+						mailchimp_debug('campaign_id', "Order {$order->getId()} pulled mailchimp user activity for {$email} and found campaign {$this->campaign_id}, clicked on {$clicked->format( 'Y-m-d H:i:s' )}");
+					}
 	            }
 
                 // apply a campaign id if we have one.
@@ -337,7 +347,8 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
                         $order->setCampaignId($this->campaign_id);
                         $log .= ' :: campaign id ' . $this->campaign_id;
                         // save it for later if we don't have this value.
-	                    update_post_meta($order_post->ID, 'mailchimp_woocommerce_campaign_id', $campaign_id);
+                        MailChimp_WooCommerce_HPOS::update_order_meta($order_post->get_id(), 'mailchimp_woocommerce_campaign_id', $campaign_id);
+                        //update_post_meta($order_post->ID, 'mailchimp_woocommerce_campaign_id', $campaign_id);
                     }
                     catch (Exception $e) {
                         mailchimp_log('single_order_set_campaign_id.error', 'No campaign added to order, with provided ID: '. $this->campaign_id. ' :: '. $e->getMessage(). ' :: in '.$e->getFile().' :: on '.$e->getLine());
@@ -419,7 +430,7 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
             // if this is not currently in mailchimp - and we have the saved GDPR fields from
             // we can use the post meta for gdpr fields that were saved during checkout.
             if (!$this->is_full_sync && $new_order && empty($this->gdpr_fields)) {
-                $this->gdpr_fields = get_post_meta($order->getId(), 'mailchimp_woocommerce_gdpr_fields', true);
+                $this->gdpr_fields = $order_post->get_meta('mailchimp_woocommerce_gdpr_fields');
             }
 
             // Maybe sync subscriber to set correct member.language
@@ -450,8 +461,9 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
             $message = strtolower($e->getMessage());
             mailchimp_error('order_submit.tracing_error', $e);
             if (!isset($order)) {
-                // transform the order
-                $order = $job->transform(get_post($this->id));
+                // transform the order                
+                $order = MailChimp_WooCommerce_HPOS::get_order($this->id);
+                /*$order = $job->transform(get_post($this->id));*/
                 $this->cart_session_id = $order->getCustomer()->getId();
             }
             // this can happen when a customer changes their email.
@@ -485,11 +497,14 @@ class MailChimp_WooCommerce_Single_Order extends Mailchimp_Woocommerce_Job
      */
     public function getRealOrderNumber()
     {
-        try {
-            if (empty($this->id) || !($order_post = get_post($this->id))) {
+        try {            
+            if (empty($this->id) || !($order_post = MailChimp_WooCommerce_HPOS::get_order($this->id))) {
                 return false;
             }
-            $woo = wc_get_order($order_post);
+            /*if (empty($this->id) || !($order_post = get_post($this->id))) {
+                return false;
+            }*/
+            $woo = wc_get_order($this->id);
             if ( !$woo )
                 mailchimp_log('order_sync.failure', "Order #{$this->id}. Can’t submit order without a valid ID");
 

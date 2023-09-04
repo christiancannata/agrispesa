@@ -22,7 +22,9 @@ spl_autoload_register(function($class) {
         'Mailchimp_Woocommerce_Deactivation_Survey' => 'includes/class-mailchimp-woocommerce-deactivation-survey.php',
         'MailChimp_WooCommerce_Rest_Api' => 'includes/class-mailchimp-woocommerce-rest-api.php',
         'Mailchimp_Wocoomerce_CLI' => 'includes/class-mailchimp-woocommerce-cli.php',
-        
+        'MailChimp_WooCommerce_HPOS' => 'includes/class-mailchimp-woocommerce-hpos.php',
+        'Mailchimp_Woocommerce_Block_Editor' => 'includes/class-mailchimp-woocommerce-block-editor.php',
+
         // includes/api/assets
         'MailChimp_WooCommerce_Address' => 'includes/api/assets/class-mailchimp-address.php',
         'MailChimp_WooCommerce_Cart' => 'includes/api/assets/class-mailchimp-cart.php',
@@ -95,7 +97,7 @@ function mailchimp_environment_variables() {
     return (object) array(
         'repo' => 'master',
         'environment' => 'production', // staging or production
-        'version' => '2.8.3',
+        'version' => '3.2',
         'php_version' => phpversion(),
         'wp_version' => (empty($wp_version) ? 'Unknown' : $wp_version),
         'wc_version' => function_exists('WC') ? WC()->version : null,
@@ -998,6 +1000,15 @@ function mailchimp_hash_trim_lower($str) {
 }
 
 /**
+ * @param $email
+ * @return mixed
+ */
+function mailchimp_get_wc_customer($email) {
+    global $wpdb;
+    return $wpdb->get_row( "SELECT * FROM `{$wpdb->prefix}wc_customer_lookup` WHERE `email` = '{$email}'" );
+}
+
+/**
  * @param $key
  * @param null $default
  * @return mixed|null
@@ -1520,6 +1531,19 @@ function mailchimp_expanded_alowed_tags() {
 	);
 
 	return $my_allowed;
+}
+
+/**
+ * @param $user_id
+ *
+ * @return DateTime|false|null
+ */
+function mailchimp_get_marketing_status_updated_at($user_id) {
+	if (empty($user_id) || !is_numeric($user_id)) {
+		return null;
+	}
+	$value = get_user_meta($user_id, 'mailchimp_woocommerce_marketing_status_updated_at', true);
+	return !empty($value) && is_numeric($value) ? mailchimp_date_local($value) : null;
 }
 
 // Add WP CLI commands

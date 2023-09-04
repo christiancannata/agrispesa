@@ -82,15 +82,16 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 		$account_info            = array();
 		$shop                    = null;
 		$akamai_block            = false;
+		$mailchimp_api_connected = false;
+		$mailchimp_plan_name     = null;
 
 		if ( $authenticated ) {
 			try {
 				$account_info = $api->getProfile();
+				$mailchimp_api_connected = true;
 			} catch ( Exception $e ) {
 				$account_info = array();
-				if ( $e->getCode() === 503 ) {
-					$akamai_block = true;
-				}
+				$akamai_block = $e->getCode() === 503;
 			}
 			if ( is_array( $account_info ) ) {
 				// don't need these
@@ -167,6 +168,16 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 			}
 		}
 
+		// mc authed, has a list, but no longer connected to MC API
+		$broken_mailchimp = $authenticated && !empty($list_id) && !$mailchimp_api_connected;
+
+		$mc_plan_name = !empty($account_info) &&
+		                isset($account_info['pricing_plan_type']) &&
+		                !empty($account_info['pricing_plan_type']) &&
+		                $account_info['pricing_plan_type'] ? $account_info['pricing_plan_type'] : 'none';
+
+		$paid_account = in_array($mc_plan_name, ['pay_as_you_go', 'monthly']);
+
 		$time = new DateTime( 'now' );
 
 		return array(
@@ -240,6 +251,10 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 							'key'   => 'mc_list_valid',
 							'value' => $list_is_valid,
 						),
+						'mc_paid_account'                => (object) array(
+							'key'   => 'mc_paid_account',
+							'value' => (bool) $paid_account,
+						),
 						'mc.has_legacy_integration' => (object) array(
 							'key'   => 'mc.has_legacy_integration',
 							'value' => $has_old_integration,
@@ -276,6 +291,22 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 						'order_sync_completed'      => (object) array(
 							'key'   => 'order_sync_completed',
 							'value' => get_option( 'mailchimp-woocommerce-sync.orders.completed_at' ),
+						),
+						'curl_enabled' => (object) array(
+							'key' => 'curl_enabled',
+							'value' => function_exists( 'curl_init' ),
+						),
+						'wp_cron_enabled' => (object) array(
+							'key' => 'wp_cron_enabled',
+							'value' => function_exists( 'curl_init' ),
+						),
+						'akamai_blocked' => (object) array(
+							'key' => 'segment.akamai_blocked',
+							'value' => $akamai_block,
+						),
+						'segment.broken_mailchimp_users' => (object) array(
+							'key' => 'segment.broken_mailchimp_users',
+							'value' => $broken_mailchimp,
 						),
 						'last_loop_at'              => (object) array(
 							'key'   => 'last_loop_at',
@@ -329,6 +360,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 						'valid'         => $list_is_valid,
 					),
 					'account_info'            => $account_info,
+					'plan_name'               => $mc_plan_name,
 					'automations'             => isset( $automations ) ? $automations : null,
 					'journeys'                => isset( $journeys ) ? $journeys : null,
 					'merge_fields'            => isset( $merge_fields ) ? (object) $merge_fields : null,
@@ -524,6 +556,14 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 			array(
 				'key'   => 'Actions',
 				'value' => $actions,
+			),
+			array(
+				'key'   => 'Store Currency',
+				'value' => get_woocommerce_currency(),
+			),
+			array(
+				'key'   => 'HPOS (COT) Enabled',
+				'value' => MailChimp_WooCommerce_HPOS::enabled() ? 'Yes' : 'No',
 			),
 		);
 	}

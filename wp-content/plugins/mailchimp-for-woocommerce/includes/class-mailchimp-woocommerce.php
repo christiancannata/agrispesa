@@ -132,9 +132,6 @@ class MailChimp_WooCommerce
         $this->activateMailChimpNewsletter();
         $this->activateMailChimpService();
         $this->applyQueryStringOverrides();
-
-        // load webhooks
-        $this->registerWebhooks();
     }
 
     /**
@@ -253,6 +250,8 @@ class MailChimp_WooCommerce
 		//$this->loader->add_action('admin_bar_menu', $plugin_admin, 'admin_bar', 100);
 
         $this->loader->add_action('plugins_loaded', $plugin_admin, 'update_db_check');
+		$this->loader->add_action('upgrader_process_complete', $plugin_admin, 'plugin_upgrade_completed', 10, 2);
+        $this->loader->add_action('plugins_loaded', $plugin_admin, 'update_plugin_check', 13);
         $this->loader->add_action('admin_init', $plugin_admin, 'setup_survey_form');
         $this->loader->add_action('admin_footer', $plugin_admin, 'inject_sync_ajax_call');
 
@@ -385,8 +384,9 @@ class MailChimp_WooCommerce
 			$this->loader->add_action('woocommerce_cart_item_removed', $service, 'handleCartUpdated');
 
 			// save post hooks
-			$this->loader->add_action('save_post_shop_order', $service, 'handleOrderSaved', 10, 3);
-			$this->loader->add_action('save_post_product', $service, 'handleProductCreated', 10, 3);
+			$this->loader->add_action('woocommerce_new_order', $service, 'handleOrderCreate', 200, 2);
+            $this->loader->add_action('woocommerce_update_order', $service, 'handleOrderUpdate', 10, 2);
+            $this->loader->add_action('save_post_product', $service, 'handleProductCreated', 10, 3);
 
 			// this needs to listen for the title and the description updates.
             $this->loader->add_action('post_updated', $service, 'handleProductUpdated', 10, 3);
@@ -398,6 +398,11 @@ class MailChimp_WooCommerce
 			$this->loader->add_action('updated_post_meta', $service, 'handleProductMetaUpdated', 10, 4);
             $this->loader->add_action('added_post_meta', $service, 'handleProductMetaUpdated', 10, 4);
             $this->loader->add_action('deleted_post_meta', $service, 'handleProductMetaUpdated', 10, 4);
+
+			// hooks for user meta updates and additions
+			$this->loader->add_action('added_user_meta', $service, 'handleUserMetaUpdated', 10, 4);
+			$this->loader->add_action('updated_user_meta', $service, 'handleUserMetaUpdated', 10, 4);
+
 			$this->loader->add_action('wp_trash_post', $service, 'handlePostTrashed');
             $this->loader->add_action('untrashed_post', $service, 'handlePostRestored');
 			//coupons
@@ -484,14 +489,4 @@ class MailChimp_WooCommerce
 	public function get_version() {
 		return $this->version;
 	}
-
-    private function registerWebhooks()
-    {
-        $defined = mailchimp_get_data('registered_webhooks');
-        if (empty($defined)) {
-            mailchimp_log('admin', 'syncing webhooks for existing plugin');
-            mailchimp_set_data('registered_webhooks', true);
-            MailChimp_WooCommerce_Admin::instance()->defineWebhooks();
-        }
-    }
 }

@@ -52,9 +52,10 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 	 */
 
 	if (!$minimum) {
-		$minimum = 43;
+		$minimum = 86;
 	}
 
+	return $minimum;
 
 	//$allowedClients = get_option('agr_clients_no_limits');
 

@@ -4,37 +4,47 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit87708a949ac41b8ec2a1bcc62d766df7
+class ComposerStaticInitb7fe7605ecbace08805bf50bd05969f4
 {
     public static $prefixLengthsPsr4 = array (
         'G' => 
         array (
             'GtmEcommerceWoo\\Lib\\' => 20,
-            'GtmEcommerceWoo\\' => 16,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
         'GtmEcommerceWoo\\Lib\\' => 
         array (
-            0 => __DIR__ . '/../../..' . '/gtm-ecommerce-woo/lib',
-        ),
-        'GtmEcommerceWoo\\' => 
-        array (
-            0 => __DIR__ . '/../../..' . '/gtm-ecommerce-woo',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'GtmEcommerceWoo\\Lib\\Container' => __DIR__ . '/../..' . '/src/Container.php',
+        'GtmEcommerceWoo\\Lib\\EventStrategy\\AbstractEventStrategy' => __DIR__ . '/../..' . '/src/EventStrategy/AbstractEventStrategy.php',
+        'GtmEcommerceWoo\\Lib\\EventStrategy\\AddToCartStrategy' => __DIR__ . '/../..' . '/src/EventStrategy/AddToCartStrategy.php',
+        'GtmEcommerceWoo\\Lib\\EventStrategy\\PurchaseStrategy' => __DIR__ . '/../..' . '/src/EventStrategy/PurchaseStrategy.php',
+        'GtmEcommerceWoo\\Lib\\GaEcommerceEntity\\Event' => __DIR__ . '/../..' . '/src/GaEcommerceEntity/Event.php',
+        'GtmEcommerceWoo\\Lib\\GaEcommerceEntity\\Item' => __DIR__ . '/../..' . '/src/GaEcommerceEntity/Item.php',
+        'GtmEcommerceWoo\\Lib\\Service\\EventInspectorService' => __DIR__ . '/../..' . '/src/Service/EventInspectorService.php',
+        'GtmEcommerceWoo\\Lib\\Service\\EventStrategiesService' => __DIR__ . '/../..' . '/src/Service/EventStrategiesService.php',
+        'GtmEcommerceWoo\\Lib\\Service\\GtmSnippetService' => __DIR__ . '/../..' . '/src/Service/GtmSnippetService.php',
+        'GtmEcommerceWoo\\Lib\\Service\\PluginService' => __DIR__ . '/../..' . '/src/Service/PluginService.php',
+        'GtmEcommerceWoo\\Lib\\Service\\SettingsService' => __DIR__ . '/../..' . '/src/Service/SettingsService.php',
+        'GtmEcommerceWoo\\Lib\\Util\\SanitizationUtil' => __DIR__ . '/../..' . '/src/Util/SanitizationUtil.php',
+        'GtmEcommerceWoo\\Lib\\Util\\WcOutputUtil' => __DIR__ . '/../..' . '/src/Util/WcOutputUtil.php',
+        'GtmEcommerceWoo\\Lib\\Util\\WcTransformerUtil' => __DIR__ . '/../..' . '/src/Util/WcTransformerUtil.php',
+        'GtmEcommerceWoo\\Lib\\Util\\WpSettingsUtil' => __DIR__ . '/../..' . '/src/Util/WpSettingsUtil.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit87708a949ac41b8ec2a1bcc62d766df7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit87708a949ac41b8ec2a1bcc62d766df7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit87708a949ac41b8ec2a1bcc62d766df7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb7fe7605ecbace08805bf50bd05969f4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb7fe7605ecbace08805bf50bd05969f4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb7fe7605ecbace08805bf50bd05969f4::$classMap;
 
         }, null, ClassLoader::class);
     }

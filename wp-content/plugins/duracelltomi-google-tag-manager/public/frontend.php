@@ -297,6 +297,39 @@ function gtm4wp_add_basic_datalayer_data( $data_layer ) {
 					}
 				}
 			}
+
+			$post_meta = get_post_meta( $GLOBALS['post']->ID );
+			if ( is_array( $post_meta ) ) {
+				$data_layer['pagePostTerms']['meta'] = array();
+				foreach ( $post_meta as $post_meta_key => $post_meta_value ) {
+					if ( '_' !== substr( $post_meta_key, 0, 1 ) ) {
+
+						/**
+						 * Applies a filter to determine if post meta should be included in the data layer.
+						 * This function allows other plugins or themes to modify whether post meta should be included in the data layer
+						 * by applying a filter to the variable $include_post_meta_in_datalayer.
+						 *
+						 * @since 1.17
+						 *
+						 * @param string $gtm4wp_post_meta_in_datalayer The name of the filter to be applied.
+						 * @param bool $true_false_default The default value of $include_post_meta_in_datalayer (true).
+						 * @param string $post_meta_key The name of the post meta key to be included in the data layer.
+						 *
+						 * @return bool The final value of $include_post_meta_in_datalayer after the filter has been applied.
+						*/
+						$include_post_meta_in_datalayer = (bool) apply_filters( 'gtm4wp_post_meta_in_datalayer', true, $post_meta_key );
+
+						if ( $include_post_meta_in_datalayer ) {
+							if ( is_array( $post_meta_value ) && ( 1 === count( $post_meta_value ) ) ) {
+								$post_meta_dl_value = $post_meta_value[0];
+							} else {
+								$post_meta_dl_value = $post_meta_value;
+							}
+							$data_layer['pagePostTerms']['meta'][ $post_meta_key ] = $post_meta_dl_value;
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -556,7 +589,20 @@ function gtm4wp_add_basic_datalayer_data( $data_layer ) {
 function gtm4wp_wp_loaded() {
 	global $gtm4wp_options;
 
-	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_MISCGEO ] ) {
+	/**
+	 * GeoIP functionality can be disabled per user by setting the block_gtm4wp_geoip cookie to either "true", "on", "yes" or "1".
+	 * Use this to integrate the feature with your consent manager tool. When user do not accept a specific cookie category, place
+	 * this cookie and for that particular user the GeoIP (and weather API) feature will be not activated.
+	 */
+	$blocking_cookie = false;
+	if ( isset( $_COOKIE['block_gtm4wp_geoip'] ) ) {
+		$blocking_cookie = filter_var( wp_unslash( $_COOKIE['block_gtm4wp_geoip'] ), FILTER_VALIDATE_BOOLEAN );
+	}
+
+	if (
+		( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_MISCGEO ] )
+		&& ( ! $blocking_cookie )
+	) {
 		$client_ip = gtm4wp_get_user_ip();
 		$geodata   = get_transient( 'gtm4wp-geodata-' . esc_attr( $client_ip ) );
 
@@ -656,12 +702,13 @@ function gtm4wp_get_the_gtm_tag() {
 
 	$has_html5_support    = current_theme_supports( 'html5' );
 	$add_cookiebot_ignore = (bool) $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_COOKIEBOT ];
+	$no_console_log       = (bool) $gtm4wp_options[ GTM4WP_OPTION_NOCONSOLELOG ];
 
 	$_gtm_tag = '
 <!-- GTM Container placement set to ' . esc_html( gtm4wp_get_container_placement_string() ) . ' -->
 <!-- Google Tag Manager (noscript) -->';
 
-	if ( GTM4WP_PLACEMENT_OFF === $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
+	if ( ( GTM4WP_PLACEMENT_OFF === $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) && ( ! $no_console_log ) ) {
 		$gtm4wp_container_code_written = true;
 
 		$_gtm_tag .= '
@@ -952,6 +999,7 @@ function gtm4wp_wp_header_begin( $echo = true ) {
 
 	$has_html5_support    = current_theme_supports( 'html5' );
 	$add_cookiebot_ignore = (bool) $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_COOKIEBOT ];
+	$no_console_log       = (bool) $gtm4wp_options[ GTM4WP_OPTION_NOCONSOLELOG ];
 
 	echo '
 <!-- Google Tag Manager for WordPress by gtm4wp.com -->
@@ -1052,7 +1100,7 @@ function gtm4wp_wp_header_begin( $echo = true ) {
 	do_action( GTM4WP_WPACTION_AFTER_DATALAYER );
 
 	$output_container_code = true;
-	if ( GTM4WP_PLACEMENT_OFF === $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
+	if ( ( GTM4WP_PLACEMENT_OFF === $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) && ( ! $no_console_log ) ) {
 		$output_container_code = false;
 
 		echo '
@@ -1069,12 +1117,14 @@ function gtm4wp_wp_header_begin( $echo = true ) {
 			if ( in_array( $user_role, $disabled_roles, true ) ) {
 				$output_container_code = false;
 
-				echo '
+				if ( ! $no_console_log ) {
+					echo '
 <script' . ( $has_html5_support ? '' : ' type="text/javascript"' ) . ( $add_cookiebot_ignore ? ' data-cookieconsent="ignore"' : '' ) . '>
 	console.warn && console.warn("[GTM4WP] Google Tag Manager container code was disabled for this user role: ' . esc_js( $user_role ) . ' !!!");
 	console.warn && console.warn("[GTM4WP] Logout or login with a user having a different user role!");
 	console.warn && console.warn("[GTM4WP] Data layer codes are active but GTM container code is omitted !!!");
 </script>';
+				}
 
 				break;
 			}
@@ -1101,12 +1151,18 @@ function gtm4wp_wp_header_begin( $echo = true ) {
 				$_gtm_domain_name = 'www.googletagmanager.com';
 			}
 
+			$_gtm_domain_path           = ( '' === $gtm4wp_options[ GTM4WP_OPTION_GTMCUSTOMPATH ] ) ? 'gtm.js' : $gtm4wp_options[ GTM4WP_OPTION_GTMCUSTOMPATH ];
+			$_gtm_custom_path_has_error = (bool) preg_match( '/^[a-zA-Z0-9\.\-\_]+$/', $_gtm_domain_path );
+			if ( false === $_gtm_custom_path_has_error ) {
+				$_gtm_domain_path = 'gtm.js';
+			}
+
 			echo '
 <script data-cfasync="false"' . ( $add_cookiebot_ignore ? ' data-cookieconsent="ignore"' : '' ) . '>
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
 new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
-\'//' . esc_js( $_gtm_domain_name ) . '/gtm.\'+\'js?id=\'+i+dl' .
+\'//' . esc_js( $_gtm_domain_name ) . '/' . esc_js( $_gtm_domain_path ) . '?id=\'+i+dl' .
 			( ( ( '' !== $gtm4wp_options[ GTM4WP_OPTION_ENV_GTM_AUTH ] ) && ( '' !== $gtm4wp_options[ GTM4WP_OPTION_ENV_GTM_PREVIEW ] ) ) ? "+'&gtm_auth=" . esc_attr( $gtm4wp_options[ GTM4WP_OPTION_ENV_GTM_AUTH ] ) . '&gtm_preview=' . esc_attr( $gtm4wp_options[ GTM4WP_OPTION_ENV_GTM_PREVIEW ] ) . "&gtm_cookies_win=x'" : '' ) . ';f.parentNode.insertBefore(j,f);
 })(window,document,\'script\',\'' . esc_js( $gtm4wp_datalayer_name ) . '\',\'' . esc_js( $one_gtm_id ) . '\');
 </script>';
