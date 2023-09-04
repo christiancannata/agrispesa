@@ -84,7 +84,7 @@ class WCS_My_Account_Payment_Methods {
 			}
 		}
 
-		return $payment_token_data;
+		return $payment_token_data; // nosemgrep: audit.php.wp.security.xss.query-arg -- False positive. This URL is escaped in the WC template when the token links are outputted.
 	}
 
 	/**

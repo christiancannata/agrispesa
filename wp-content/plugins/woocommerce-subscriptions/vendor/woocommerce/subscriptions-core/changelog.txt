@@ -1,5 +1,45 @@
 *** WooCommerce Subscriptions Core Changelog ***
 
+= 6.2.0 - 2023-08-10 =
+* Add - Introduce an updated empty state screen for the WooCommerce > Subscriptions list table.
+* Fix - Ensure subscription checkout and cart block integrations are loaded on store environments where WooPayments is not enabled.
+* Fix - Ensure the shipping phone number field is copied to subscriptions and their orders when copying address meta.
+* Update - When HPOS is disabled, fetch subscriptions by customer_id using the user's subscription cache to improve performance.
+* Dev - Deprecated the 'woocommerce_subscriptions_not_found_label' filter.
+
+= 6.1.0 - 2023-07-26 =
+* Fix - Resolved an issue that prevented the "Used for variations" checkbox to not be enabled on the edit product page load causing variations to be deleted erroneously.
+* Dev - Fixed wcs_get_subscription_orders() returning an empty list when querying parent orders when HPOS is enabled with data syncing off.
+
+= 6.0.0 - 2023-07-18 =
+* Fix - Resolve an issue that prevented the "Used for variations" checkbox from being enabled on the variable subscription product edit screen on WC version v7.9.0.
+
+= 5.9.0 - 2023-07-14 =
+* Fix - Ensure when a customer changes the shipping method on cart and checkout that the recurring totals correctly reflect the chosen method.
+
+= 5.8.0 - 2023-07-05 =
+* Fix - When HPOS is enabled, permanently deleting a subscription related order wasn't updating the related orders cache properly.
+* Fix - Added logic to check if the recurring cart array is present before displaying the recurring totals section in the cart.
+
+= 5.7.2 - 2023-06-05 =
+* Fix - Resolved an issue with customers being redirected to an incorrect Pay for Order URL after login.
+
+= 5.7.1 - 2023-05-11 =
+* Dev - Resolve errors for third-party code using the URLs returned from WC_Subscriptions_Admin::add_subscription_url() and WCS_Cart_Renewal::get_checkout_payment_url() because they were erroneously escaped. #440
+* Dev - Enable third-party code to alter the delete payment token URL returned from flag_subscription_payment_token_deletions. #440
+
+= 5.7.0 - 2023-05-04 =
+* Fix - Fatal error from third-party extensions using the `woocommerce_update_order` expecting the second parameter.
+* Dev - Pass the subscription object as the second parameter to `woocommerce_update_subscription` hook (and `woocommerce_update_order` for backwards compatibility).
+* Dev - Return a response from the WC_Subscription::set_status() function in line with the parent WC_Order::set_status() function.
+* Dev - Add the 'wcs_recurring_shipping_package_rates_match_standard_rates' filter to enable third-parties to override whether the subscription packages match during checkout validation.
+
+= 5.6.0 - 2023-04-19 =
+* Fix - Correctly determine subscription free shipping eligibility when the initial payment cart isn't eligible. Fixes erroneous "Invalid recurring shipping method" errors on checkout. #409
+* Dev - Fixed precision loss notice that occurs when running PHP 8.1. #428
+* Dev - Fix phpcs and semgrep warnings to improve code quality. #429
+* Dev - Use `wp_safe_redirect()` when processing a payment method change request. #429
+
 = 5.5.0 - 2023-03-10 =
 * Fix - When HPOS is enabled, changing your address while paying for a renewal order will update the address on the subscription. #413
 * Fix - Prevent admin error notices being shown for the "subscription trial end" event that was caused by no callbacks being attached to this scheduled action. #414
