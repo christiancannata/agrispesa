@@ -130,12 +130,12 @@ function wc_minimum_order_amount()
 	if ($minOrder['diff'] > 0) {
 		if (is_cart()) {
 
-			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!<br/>Ti mancano ' . wc_price($minOrder['diff']) . '.</span></div></div>';
+			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!</span></div></div>';
 			// Remove proceed to checkout button
 			remove_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
 
 		} else {
-			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!<br/>Ti mancano ' . wc_price($minOrder['diff']) . '.</span></div></div>';
+			echo '<div class="minimum-amount-advice"><div class="checkout--preview--items mg-t"><span class="is-title"><span class="icon-ics is-icon red"></span>Non hai abbastanza prodotti</span><span class="is-description">Per preparare la tua scatola, abbiamo bisogno di un ordine di almeno ' . wc_price($minOrder['minimum']) . '. scegli altri prodotti!.</span></div></div>';
 			// Remove proceed to checkout button
 			remove_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
 
