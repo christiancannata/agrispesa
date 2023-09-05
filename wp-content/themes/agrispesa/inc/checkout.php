@@ -38,6 +38,7 @@ function getMinimumOrder()
 	$minimum = get_option('options_agr_minimun_amount');
 	$usersToEsclude = get_option('options_agr_clients_no_limits');
 
+	$delivery = 15;
 
 	/*
 	 * FATTO. € 43 per chi fa acquisti unicamente dal negozio (ST)
@@ -85,11 +86,13 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 	if ($current_user && $has_sub) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
+		$delivery = 0;
 	}
 
 	if ($current_user && !$has_sub && $orderLastWeek > 0) {
 		//tolgo il limite se l'utente ha un abbonamento attivo
 		$minimum = 0;
+		$delivery = 0;
 	}
 
 
@@ -110,13 +113,14 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		//ACQUISTO CREDITO
 		if ($product_id == 17647) {
 			$minimum = 0;
+			$delivery = 0;
 			continue;
 		}
 
 	}
 
 
-	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax();
+	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax() + WC()->cart->get_shipping_total();
 
 	return ['minimum' => $minimum, 'diff' => $minimum - $totalCart];
 
