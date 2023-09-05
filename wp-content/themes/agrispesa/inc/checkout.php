@@ -55,46 +55,42 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 		$minimum = 86;
 	}
 
-	/*
-		//$allowedClients = get_option('agr_clients_no_limits');
 
-		$has_sub = false;
+	//$allowedClients = get_option('agr_clients_no_limits');
 
-		$orderLastWeek = 0;
+	$has_sub = false;
 
-		if ($current_user) {
+	$orderLastWeek = 0;
 
-			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
+	if ($current_user) {
 
-			$lastDayCreatedOrdersFN = getLastDeliveryDay();
-			$args = array(
-				'customer_id' => get_current_user_id(),
-				'limit' => 1,
-				'status' => "completed",
-				"meta_key" => "_date_completed",
-				"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
-				"meta_compare" => ">",
-			);
-			$orders = wc_get_orders($args);
-			$orderLastWeek = count($orders);
+		$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 
-		}
+		$lastDayCreatedOrdersFN = getLastDeliveryDay();
+		$args = array(
+			'customer_id' => get_current_user_id(),
+			'limit' => 1,
+			'status' => "completed",
+			"meta_key" => "_date_completed",
+			"meta_value" => $lastDayCreatedOrdersFN->getTimestamp(),
+			"meta_compare" => ">",
+		);
+		$orders = wc_get_orders($args);
+		$orderLastWeek = count($orders);
 
-
-		// NO MINIMO ORDINE SE HA FN ATTIVA
-		if ($current_user && $has_sub) {
-			//tolgo il limite se l'utente ha un abbonamento attivo
-			$minimum = 0;
-		}
-
-		if ($current_user && !$has_sub && $orderLastWeek > 0) {
-			//tolgo il limite se l'utente ha un abbonamento attivo
-			$minimum = 0;
-		}
+	}
 
 
+	// NO MINIMO ORDINE SE HA FN ATTIVA
+	if ($current_user && $has_sub) {
+		//tolgo il limite se l'utente ha un abbonamento attivo
+		$minimum = 0;
+	}
 
-	*/
+	if ($current_user && !$has_sub && $orderLastWeek > 0) {
+		//tolgo il limite se l'utente ha un abbonamento attivo
+		$minimum = 0;
+	}
 
 
 	if ($usersToEsclude && is_array($usersToEsclude) && $current_user && in_array($current_user->ID, $usersToEsclude)) {
