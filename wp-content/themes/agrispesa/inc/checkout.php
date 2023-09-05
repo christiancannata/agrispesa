@@ -120,7 +120,7 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 	}
 
 
-	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax() + WC()->cart->get_shipping_total();
+	$totalCart = WC()->cart->get_subtotal() + WC()->cart->get_subtotal_tax();
 
 	return ['minimum' => $minimum, 'diff' => $minimum - $totalCart];
 
