@@ -1,7 +1,0 @@
-2023-07-16T14:46:47+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 45571
-2023-07-16T14:46:52+00:00 NOTICE debug :: Order ID 45571 was pending and is now on-hold :: Array
-(
-    [new_order] => 
-    [tracking] => 
-)
-

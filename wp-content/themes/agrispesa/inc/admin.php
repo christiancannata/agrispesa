@@ -4726,6 +4726,7 @@ function get_single_box_from_attributes($tipologia, $dimensione)
             ],
         ],
     ]);
+
     $productFound = false;
     foreach ($products as $product) {
         $product = wc_get_product($product->ID);
@@ -4736,14 +4737,13 @@ function get_single_box_from_attributes($tipologia, $dimensione)
                 "attribute_pa_tipologia",
                 true
             );
-            $dimensioneVariation = get_post_meta(
+         /*   $dimensioneVariation = get_post_meta(
                 $variation,
                 "attribute_pa_dimensione",
                 true
-            );
+            );*/
             if (
-                $tipologia == $tipologiaVariation &&
-                $dimensioneVariation == $dimensione
+                $tipologia == $tipologiaVariation
             ) {
                 $productFound = $variation;
             }
