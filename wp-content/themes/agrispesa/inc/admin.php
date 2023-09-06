@@ -2631,6 +2631,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
+				if(!$isSubscription){
+					continue;
+				}
+
                 if ($isSubscription) {
                     $subscription = new WC_Subscription($isSubscription);
                     $products = $subscription->get_items();
@@ -2704,10 +2708,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     if ($order->box_code != "ST") {
                         $boxCode = $order->box_code;
                     }
-
-					if($boxCode == 'ST'){
-						continue;
-					}
 
                     $orderNote = $order->get_customer_note();
                     if (empty($orderNote)) {
