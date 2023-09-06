@@ -1,0 +1,8 @@
+2023-09-06T14:14:59+00:00 NOTICE order.member.updated :: Updated cristina.tonello@tiscali.it subscriber status to subscribed and language to it
+2023-09-06T14:14:59+00:00 NOTICE order_submit.success :: updateStoreOrder :: #48140 :: email: cristina.tonello@tiscali.it
+2023-09-06T14:15:11+00:00 NOTICE order.member.updated :: Updated denardi.paola@hsr.it subscriber status to subscribed and language to it
+2023-09-06T14:15:11+00:00 NOTICE order_submit.success :: updateStoreOrder :: #48141 :: email: denardi.paola@hsr.it
+2023-09-06T14:15:32+00:00 NOTICE order.member.updated :: Updated nataliepaul2000@yahoo.it subscriber status to subscribed and language to it
+2023-09-06T14:15:32+00:00 NOTICE order_submit.success :: updateStoreOrder :: #48142 :: email: nataliepaul2000@yahoo.it
+2023-09-06T14:15:47+00:00 NOTICE order.member.updated :: Updated entoni.santoro@gmail.com subscriber status to transactional and language to it
+2023-09-06T14:15:47+00:00 NOTICE order_submit.success :: updateStoreOrder :: #48143 :: email: entoni.santoro@gmail.com

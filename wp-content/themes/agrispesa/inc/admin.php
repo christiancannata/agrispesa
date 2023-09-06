@@ -2494,6 +2494,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
 			$ENABLED_WEEKS = ENABLED_WEEKS;
 
+
 			$enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
 
 
@@ -2502,8 +2503,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-			if(!in_array($week,$enabledWeeksList)){
-
+			if(!in_array($week+1,$enabledWeeksList)){
 				header("Content-type: text/xml");
 				die($doc->saveXml());
 			}
