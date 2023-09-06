@@ -2093,7 +2093,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $customerType = "FNP";
                 }
 
-				$customerType = 'FNG';
+			//	$customerType = 'FNG';
 
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
