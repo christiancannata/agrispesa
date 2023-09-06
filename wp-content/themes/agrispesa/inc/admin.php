@@ -2631,9 +2631,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-				if(!$isSubscription){
+			/*	if(!$isSubscription){
 					continue;
-				}
+				}*/
 
                 if ($isSubscription) {
                     $subscription = new WC_Subscription($isSubscription);
