@@ -2705,6 +2705,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $boxCode = $order->box_code;
                     }
 
+					if($boxCode == 'ST'){
+						continue;
+					}
+
                     $orderNote = $order->get_customer_note();
                     if (empty($orderNote)) {
                         $orderNote = get_user_meta(
