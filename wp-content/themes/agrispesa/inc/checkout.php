@@ -1113,7 +1113,7 @@ function free_first_order_shipping($rates, $package)
 }
 
 //Aggiungi Spedizione solo se è recurrent
-add_filter('woocommerce_subscriptions_is_recurring_fee', '__return_true');
+//add_filter('woocommerce_subscriptions_is_recurring_fee', '__return_true');
 add_filter('woocommerce_cart_calculate_fees', 'add_recurring_postage_fees', 10, 1);
 
 function add_recurring_postage_fees($cart)
@@ -1129,7 +1129,7 @@ function add_recurring_postage_fees($cart)
 
 		} else {
 			//$intervals = explode( '_', $cart->recurring_cart_key );
-			$cart->add_fee('Consegna', 5, false, '');
+			$cart->add_fee('Consegna', 15, false, '');
 		}
 
 
