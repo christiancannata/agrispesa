@@ -2930,13 +2930,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $shipping_method_total = $item->get_total();
                         }
 
-                        if (
-                            $shipping_method_total > 0 &&
-                            !in_array($order->get_shipping_state(), [
-                                "CN",
-                                "AT",
-                            ])
-                        ) {
+                        if ($shipping_method_total > 0) {
+
                             $productNavisionId = get_option(
                                 "delivery_product_sku"
                             );
