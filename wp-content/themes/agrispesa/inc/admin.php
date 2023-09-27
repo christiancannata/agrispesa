@@ -2952,7 +2952,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                                 null,
                                 $currentWeek,
                                 $offerLineNo,
-                                5,
+                                15,
                                 $orders[0]->get_date_paid(),
                                 $boxCode,
                                 $orders[0]->get_shipping_last_name() .
