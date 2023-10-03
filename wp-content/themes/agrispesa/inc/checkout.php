@@ -77,7 +77,24 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 			"meta_compare" => ">",
 		);
 		$orders = wc_get_orders($args);
-		$orderLastWeek = count($orders);
+
+		$totalOrders = 0;
+
+		foreach ($orders as $order) {
+
+			$orderType = get_post_meta(
+				$order->get_id(),
+				"_order_type",
+				true
+			);
+
+			if (in_array($orderType, ["ST", "FN", "ABBONAMENTO FN + ST"])) {
+				$totalOrders++;
+			}
+
+		}
+
+		$orderLastWeek = $totalOrders;
 
 	}
 
