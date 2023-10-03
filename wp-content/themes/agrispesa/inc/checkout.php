@@ -1278,7 +1278,7 @@ function filter_wc_check_cart_items()
 		if ($current_user) {
 			$has_sub = wcs_user_has_subscription($current_user->ID, '', 'active');
 			if (!$has_sub) {
-				$has_sub = wcs_user_has_subscription($current_user->ID, '', 'on-hold');
+				//$has_sub = wcs_user_has_subscription($current_user->ID, '', 'on-hold');
 			}
 
 			if ($has_sub) {
