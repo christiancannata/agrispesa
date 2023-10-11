@@ -40,7 +40,7 @@ after('deploy:prepare', 'ssh:permission');
 
 task('reload:php', function () {
     run('chown -R root:www-data {{deploy_path}}');
-    run('chown developer {{deploy_path}}/shared/wp-content/uploads/invoices');
+    run('chown developer:www-data -R {{deploy_path}}/shared/wp-content/uploads/invoices/');
     run('sudo /usr/sbin/service php8.0-fpm restart');
     run('sudo /usr/sbin/service nginx restart');
 });
