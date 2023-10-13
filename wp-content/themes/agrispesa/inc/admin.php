@@ -2037,7 +2037,31 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $ele2->nodeValue = $order->get_billing_address_1();
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("city");
-                $ele2->nodeValue = $order->get_billing_city();
+
+				        $city = str_replace("-", " ", $order->get_billing_city());
+
+        $isToUpdate = false;
+
+        $cities = explode(" ", $city);
+        foreach ($cities as $key => $city) {
+            for ($i = 0; $i < strlen($city); $i++) {
+                if (isset($city[$i + 1])) {
+                    if (ctype_lower($city[$i]) && ctype_upper($city[$i + 1])) {
+                        $city = substr_replace($city, "'", $i + 1, 0);
+                        $isToUpdate = true;
+                    }
+                }
+            }
+            $cities[$key] = $city;
+        }
+
+     /*   if ($isToUpdate) {
+        }
+*/
+        $city = implode(" ", $cities);
+        $city = strtoupper($city);
+
+                $ele2->nodeValue = $city;
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("postcode");
                 $ele2->nodeValue = $order->get_billing_postcode();
@@ -2326,9 +2350,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $cities[$key] = $city;
         }
 
-        if ($isToUpdate) {
+     /*   if ($isToUpdate) {
         }
-
+*/
         $city = implode(" ", $cities);
         $city = strtoupper($city);
 
