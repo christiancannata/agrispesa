@@ -7,6 +7,7 @@ window.userId = WPURL.userId
 
 
 window.enabled_cap = [
+  24123,
   10010,
   10014,
   10016,

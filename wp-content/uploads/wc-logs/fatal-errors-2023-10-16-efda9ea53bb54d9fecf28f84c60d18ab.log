@@ -1,0 +1,2 @@
+2023-10-16T18:19:43+00:00 CRITICAL require(): Failed opening required '/shared/httpd/agrispesa/wp-content/plugins/woocommerce/src/Internal/Utilities/WebhookUtil.php' (include_path='.:/usr/local/lib/php') in /shared/httpd/agrispesa/wp-content/plugins/woocommerce-payments/vendor/jetpack-autoloader/class-php-autoloader.php alla riga 90
+
