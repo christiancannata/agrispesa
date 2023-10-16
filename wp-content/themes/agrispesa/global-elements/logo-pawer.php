@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?php
+echo '<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 27.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="pawer-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 232.1 83.1" style="enable-background:new 0 0 232.1 83.1;" xml:space="preserve">
@@ -29,4 +30,4 @@
 			c0.1,1.4-0.3,2.4-1.1,3.3s-1.9,1.3-3.3,1.4l-6,0.3l0.5-7.5l6.3-0.4c1.1-0.1,2,0.2,2.6,0.7C209.6,24.8,209.9,25.5,210,26.4z"/>
 	</g>
 </g>
-</svg>
+</svg>';

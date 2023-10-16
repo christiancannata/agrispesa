@@ -61,6 +61,7 @@ jest.mock( '@woocommerce/base-context/hooks', () => {
 } );
 baseContextHooks.useShippingData.mockReturnValue( {
 	needsShipping: true,
+	selectShippingRate: jest.fn(),
 	shippingRates: [
 		{
 			package_id: 0,
@@ -192,7 +193,7 @@ describe( 'TotalsShipping', () => {
 					} }
 					showCalculator={ true }
 					showRateSelector={ true }
-					isCheckout={ true }
+					isCheckout={ false }
 					className={ '' }
 				/>
 			</SlotFillProvider>
@@ -237,7 +238,7 @@ describe( 'TotalsShipping', () => {
 					} }
 					showCalculator={ true }
 					showRateSelector={ true }
-					isCheckout={ true }
+					isCheckout={ false }
 					className={ '' }
 				/>
 			</SlotFillProvider>
@@ -282,7 +283,7 @@ describe( 'TotalsShipping', () => {
 					} }
 					showCalculator={ true }
 					showRateSelector={ true }
-					isCheckout={ true }
+					isCheckout={ false }
 					className={ '' }
 				/>
 			</SlotFillProvider>

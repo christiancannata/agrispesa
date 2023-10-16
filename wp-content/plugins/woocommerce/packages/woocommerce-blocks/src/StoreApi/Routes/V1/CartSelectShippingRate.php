@@ -37,7 +37,7 @@ class CartSelectShippingRate extends AbstractCartRoute {
 				'args'                => [
 					'package_id' => array(
 						'description' => __( 'The ID of the package being shipped. Leave blank to apply to all packages.', 'woocommerce' ),
-						'type'        => [ 'integer', 'string' ],
+						'type'        => [ 'integer', 'string', 'null' ],
 						'required'    => false,
 					),
 					'rate_id'    => [
@@ -69,8 +69,8 @@ class CartSelectShippingRate extends AbstractCartRoute {
 		}
 
 		$cart       = $this->cart_controller->get_cart_instance();
-		$package_id = isset( $request['package_id'] ) ? wc_clean( wp_unslash( $request['package_id'] ) ) : null;
-		$rate_id    = wc_clean( wp_unslash( $request['rate_id'] ) );
+		$package_id = isset( $request['package_id'] ) ? sanitize_text_field( wp_unslash( $request['package_id'] ) ) : null;
+		$rate_id    = sanitize_text_field( wp_unslash( $request['rate_id'] ) );
 
 		try {
 			if ( ! is_null( $package_id ) ) {

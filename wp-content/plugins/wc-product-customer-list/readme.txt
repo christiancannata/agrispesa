@@ -2,8 +2,8 @@
 Contributors: kokomoweb, freemius
 Tags: woocommerce, customer list, who bought, admin order list, product-specific, export customers to csv, email customers, customer list, customer, list, print, front-end, tickets, shows, courses, customers, shortcode
 Requires at least: 5.0
-Tested up to: 6.1.1
-Stable tag: 3.1.3
+Tested up to: 6.3.1
+Stable tag: 3.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,7 @@ Great for sending out e-mails or getting a list of customers for courses, for sh
 * Responsive
 * Multisite compatible
 * Support for custom statuses
+* Support for High Performance Order Storage (HPOS)
 
 = Premium version: =
 
@@ -106,7 +107,18 @@ Please see documentation [here](https://www.kokomoweb.com/docs/).
 1. The customer list in the product edit page.
 2. The settings page.
 
-== Changelog ==
+== Changelog =
+
+= 3.1.6 =
+* Support for High Performance Order Storage (HPOS)
+* Fix missing closing html tag in settings page.
+
+= 3.1.5 =
+* Updated freemius SDK
+
+= 3.1.4 =
+* Updated freemius SDK
+* Added avatar column
 
 = 3.1.3 =
 * Fixes for WooCommerce subscription

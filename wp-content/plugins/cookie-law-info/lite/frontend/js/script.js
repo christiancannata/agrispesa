@@ -134,6 +134,11 @@ function _ckyAttachListener(selector, fn) {
     const item = _ckyFindElement(selector);
     item && item.addEventListener("click", fn);
 }
+
+function _ckyClassAdd() {
+    return _ckyClassAction("add", ...arguments);
+}
+
 function _ckyClassRemove() {
     return _ckyClassAction("remove", ...arguments);
 }
@@ -224,6 +229,14 @@ function _ckyInitOperations() {
 function _ckyPreviewEnabled() {
     let params = (new URL(document.location)).searchParams;
     return params.get("cky_preview") && params.get("cky_preview") === 'true';
+}
+function _ckyToggleAriaExpandStatus(selector, forceDefault = null) {
+    const element = _ckyFindElement(selector);
+  
+    if (!element) return;
+    if (forceDefault) return element.setAttribute("aria-expanded", forceDefault);
+    const toggleFinalValue = element.getAttribute("aria-expanded") === "true" ? "false" : "true";
+    element.setAttribute("aria-expanded", toggleFinalValue);
 }
 /**
  * Sets the initial state of the plugin.
@@ -342,7 +355,6 @@ function _ckyRegisterListeners() {
     _ckyAttachListener("=detail-reject-button", _ckyAcceptReject("reject"));
     _ckyAttachListener("=revisit-consent", () => _revisitCkyConsent());
     _ckyAttachListener("=optout-close", () => _ckyHidePreferenceCenter());
-    _ckyAttachCategoryListeners();
 }
 
 function _ckyAttachCategoryListeners() {
@@ -350,21 +362,30 @@ function _ckyAttachCategoryListeners() {
     const categoryNames = _ckyStore._categories.map(({ slug }) => slug);
     categoryNames.map((category) => {
         const selector = `#ckyDetailCategory${category}`;
+        const accordionButtonSelector = `${selector}  .cky-accordion-btn`;
+        _ckyToggleAriaExpandStatus(accordionButtonSelector, "false");
         _ckyAttachListener(selector, ({ target: { id } }) => {
             if (
                 id === `ckySwitch${category}` ||
                 !_ckyClassToggle(selector, "cky-accordion-active", false)
-            )
+            ) {
+                _ckyToggleAriaExpandStatus(accordionButtonSelector, "false");
                 return;
+            }
+            _ckyToggleAriaExpandStatus(accordionButtonSelector, "true");
             categoryNames
                 .filter((categoryName) => categoryName !== category)
-                .map((filteredName) =>
+                .map(filteredName => {
                     _ckyClassRemove(
                         `#ckyDetailCategory${filteredName}`,
                         "cky-accordion-active",
                         false
-                    )
-                );
+                    );
+                    _ckyToggleAriaExpandStatus(
+                        `#ckyDetailCategory${filteredName} .cky-accordion-btn`,
+                        "false"
+                    );
+                });
         });
     });
 }
@@ -439,6 +460,9 @@ function _ckyHidePreferenceCenter() {
     if (_ckyGetType() !== 'classic') {
         _ckyHideOverLay();
         if (!ref._ckyGetFromStore("action")) _ckyShowBanner();
+    } else {
+        _ckyToggleAriaExpandStatus("=settings-button", "false");
+        _ckyClassRemove("=notice", "cky-consent-bar-expand");
     }
     if (ref._ckyGetFromStore("action")) _ckyShowRevisit();
     const origin = _ckyStore._preferenceOriginTag;
@@ -450,6 +474,9 @@ function _ckyShowPreferenceCenter() {
     if (_ckyGetType() !== 'classic') {
         _ckyShowOverLay();
         _ckyHideBanner();
+    } else {
+        _ckyToggleAriaExpandStatus("=settings-button");
+        _ckyClassAdd("=notice", "cky-consent-bar-expand");
     }
 }
 function _ckyTogglePreferenceCenter() {
@@ -460,6 +487,7 @@ function _ckyTogglePreferenceCenter() {
 function _ckyGetPreferenceClass() {
     return _ckyGetType() === 'classic' ? 'cky-consent-bar-expand' : 'cky-modal-open';
 }
+
 function _ckyGetRevisit() {
     const revisit = _ckyGetElementByTag('revisit-consent');
     return revisit && revisit || false;
@@ -476,9 +504,53 @@ function _ckySetPreferenceAction(tagName = false) {
     _ckyStore._preferenceOriginTag = tagName;
     if (_ckyGetType() === 'classic') {
         _ckyTogglePreferenceCenter();
+        _ckyToggleAriaExpandStatus("=settings-button");    
     } else {
         _ckyShowPreferenceCenter();
     }
+}
+function _ckyGetFocusableElements(element) {
+    const wrapperElement = document.querySelector(`[data-cky-tag="${element}"]`);
+    if (!wrapperElement) return [];
+    const focussableElements = Array.from(
+        wrapperElement.querySelectorAll(
+            'a:not([disabled]), button:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])'
+        )
+    ).filter((element) => element.style.display !== "none");
+    if (focussableElements.length <= 0) return [];
+    return [
+        focussableElements[0],
+        focussableElements[focussableElements.length - 1],
+    ];
+}
+function _ckyLoopFocus() {
+    const activeLaw = _ckyGetLaw();
+    const bannerType = _ckyGetType();
+    if (bannerType === "classic") return;
+    if (bannerType === "popup") {
+        const [firstElementBanner, lastElementBanner] =
+        _ckyGetFocusableElements("notice");
+        _ckyAttachFocusLoop(firstElementBanner, lastElementBanner, true);
+        _ckyAttachFocusLoop(lastElementBanner, firstElementBanner);
+    }
+    const [firstElementPopup, lastElementPopup] = _ckyGetFocusableElements(
+        activeLaw === "ccpa" ? "optout-popup" : "detail"
+    );
+    _ckyAttachFocusLoop(firstElementPopup, lastElementPopup, true);
+    _ckyAttachFocusLoop(lastElementPopup, firstElementPopup);
+}
+function _ckyAttachFocusLoop(element, targetElement, isReverse = false) {
+    if (!element || !targetElement) return;
+    element.addEventListener("keydown", (event) => {
+        if (
+            event.which !== 9 ||
+            (isReverse && !event.shiftKey) ||
+            (!isReverse && event.shiftKey)
+        )
+        return;
+        event.preventDefault();
+        targetElement.focus();
+    });
 }
 
 /**
@@ -632,7 +704,9 @@ function _ckyRenderBanner() {
         "afterbegin",
         doc.body.innerHTML
     );
+    if (_ckyGetType() === "classic") _ckyToggleAriaExpandStatus("=settings-button", "false");
     _ckySetPreferenceCheckBoxStates();
+    _ckyAttachCategoryListeners();
     _ckyRegisterListeners();
     _ckySetCCPAOptions();
     _ckySetPlaceHolder();
@@ -640,7 +714,8 @@ function _ckyRenderBanner() {
     _ckyRemoveStyles();
     _ckyAddPositionClass();
     _ckyAddRtlClass();
-    _ckySetPoweredBy()
+    _ckySetPoweredBy();
+    _ckyLoopFocus();
 }
 
 /**

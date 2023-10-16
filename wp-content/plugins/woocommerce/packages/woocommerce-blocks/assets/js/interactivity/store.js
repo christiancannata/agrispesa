@@ -18,7 +18,7 @@ export const deepMerge = ( target, source ) => {
 
 const getSerializedState = () => {
 	const storeTag = document.querySelector(
-		`script[type="application/json"]#store`
+		`script[type="application/json"]#wc-interactivity-store-data`
 	);
 	if ( ! storeTag ) return {};
 	try {
@@ -26,17 +26,21 @@ const getSerializedState = () => {
 		if ( isObject( state ) ) return state;
 		throw Error( 'Parsed state is not an object' );
 	} catch ( e ) {
+		// eslint-disable-next-line no-console
 		console.log( e );
 	}
 	return {};
 };
+
+export const afterLoads = new Set();
 
 const rawState = getSerializedState();
 export const rawStore = { state: deepSignal( rawState ) };
 
 if ( typeof window !== 'undefined' ) window.store = rawStore;
 
-export const store = ( { state, ...block } ) => {
+export const store = ( { state, ...block }, { afterLoad } = {} ) => {
 	deepMerge( rawStore, block );
 	deepMerge( rawState, state );
+	if ( afterLoad ) afterLoads.add( afterLoad );
 };

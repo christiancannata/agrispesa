@@ -113,7 +113,7 @@ if (is_plugin_active('weglot/weglot.php') && defined('WEGLOT_VERSION')) { ?>
 }
 
 // EWWWW / EASYIO lazy load 
-if (class_exists('EIO_Lazy_Load')) {
+if (class_exists( 'EWWW\Lazy_Load' ) || class_exists( 'EasyIO\Lazy_Load' )) {
     $plugin_file = defined('EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE') ? EWWW_IMAGE_OPTIMIZER_PLUGIN_FILE : EASYIO_PLUGIN_FILE;
     $version = defined('EWWW_IMAGE_OPTIMIZER_VERSION') ? EWWW_IMAGE_OPTIMIZER_VERSION : EASYIO_VERSION;
     $lazyscript = plugins_url('/includes/lazysizes.min.js', $plugin_file); ?>

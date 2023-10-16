@@ -993,7 +993,7 @@ class wfScanEngine {
 							}
 						}
 					}
-					catch (Exception $e) {
+					catch (wfInaccessibleDirectoryException $e) {
 						throw new Exception(__("Wordfence could not read the content of your WordPress directory. This usually indicates your permissions are so strict that your web server can't read your WordPress directory.", 'wordfence'));
 					}
 				}
@@ -1889,36 +1889,50 @@ class wfScanEngine {
 
 		foreach ($this->pluginRepoStatus as $slug => $status) {
 			if ($status === false) {
-				$result = plugins_api('plugin_information', array(
-					'slug'   => $slug,
-					'fields' => array(
-						'short_description' => false,
-						'description'       => false,
-						'sections'          => false,
-						'tested'            => true,
-						'requires'          => true,
-						'rating'            => false,
-						'ratings'           => false,
-						'downloaded'        => false,
-						'downloadlink'      => false,
-						'last_updated'      => true,
-						'added'             => false,
-						'tags'              => false,
-						'compatibility'     => true,
-						'homepage'          => true,
-						'versions'          => false,
-						'donate_link'       => false,
-						'reviews'           => false,
-						'banners'           => false,
-						'icons'             => false,
-						'active_installs'   => false,
-						'group'             => false,
-						'contributors'      => false,
-					),
-				));
-				unset($result->versions);
-				unset($result->screenshots);
-				$this->pluginRepoStatus[$slug] = $result;
+				try {
+					$result = plugins_api('plugin_information', array(
+						'slug'   => $slug,
+						'fields' => array(
+							'short_description' => false,
+							'description'       => false,
+							'sections'          => false,
+							'tested'            => true,
+							'requires'          => true,
+							'rating'            => false,
+							'ratings'           => false,
+							'downloaded'        => false,
+							'downloadlink'      => false,
+							'last_updated'      => true,
+							'added'             => false,
+							'tags'              => false,
+							'compatibility'     => true,
+							'homepage'          => true,
+							'versions'          => false,
+							'donate_link'       => false,
+							'reviews'           => false,
+							'banners'           => false,
+							'icons'             => false,
+							'active_installs'   => false,
+							'group'             => false,
+							'contributors'      => false,
+						),
+					));
+					unset($result->versions);
+					unset($result->screenshots);
+					$this->pluginRepoStatus[$slug] = $result;
+				}
+				catch (Exception $e) {
+					error_log(sprintf('Caught exception while attempting to refresh update status for slug %s: %s', $slug, $e->getMessage()));
+					$this->pluginRepoStatus[$slug] = false;
+					wfConfig::set(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_KEY, sprintf('%s [%s]', $e->getMessage(), $slug), false);
+					wfConfig::set(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_SLUG_KEY, $slug, false);
+				}
+				catch (Throwable $t) {
+					error_log(sprintf('Caught error while attempting to refresh update status for slug %s: %s', $slug, $t->getMessage()));
+					$this->pluginRepoStatus[$slug] = false;
+					wfConfig::set(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_KEY, sprintf('%s [%s]', $t->getMessage(), $slug), false);
+					wfConfig::set(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_SLUG_KEY, $slug, false);
+				}
 
 				$this->forkIfNeeded();
 			}
@@ -1929,7 +1943,39 @@ class wfScanEngine {
 		$haveIssues = wfIssues::STATUS_SECURE;
 
 		if (!$this->isFullScan()) {
-			$this->deleteNewIssues(array('wfUpgrade', 'wfPluginUpgrade', 'wfThemeUpgrade'));
+			$this->deleteNewIssues(array('wfUpgradeError', 'wfUpgrade', 'wfPluginUpgrade', 'wfThemeUpgrade'));
+		}
+		
+		if ($lastError = wfConfig::get(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_KEY)) {
+			$lastSlug = wfConfig::get(wfUpdateCheck::LAST_UPDATE_CHECK_ERROR_SLUG_KEY);
+			$longMsg = sprintf(/* translators: error message. */ __("The update check performed during the scan encountered an error: %s", 'wordfence'), esc_html($lastError));
+			if ($lastSlug === false) {
+				$longMsg .= ' ' . __('Wordfence cannot detect if the installed plugins and themes are up to date. This might be caused by a PHP compatibility issue in one or more plugins/themes.', 'wordfence');
+			}
+			else {
+				$longMsg .= ' ' . __('Wordfence cannot detect if this plugin/theme is up to date. This might be caused by a PHP compatibility issue in the plugin.', 'wordfence');
+			}
+			$longMsg .= ' ' . sprintf(
+				/* translators: Support URL. */
+					__('<a href="%s" target="_blank" rel="noopener noreferrer">Get more information.<span class="screen-reader-text"> (' . esc_html__('opens in new tab', 'wordfence') . ')</span></a>', 'wordfence'), wfSupportController::esc_supportURL(wfSupportController::ITEM_SCAN_RESULT_UPDATE_CHECK_FAILED));
+			
+			$ignoreKey = ($lastSlug === false ? 'wfUpgradeErrorGeneral' : sprintf('wfUpgradeError-%s', $lastSlug));
+			
+			$added = $this->addIssue(
+				'wfUpgradeError',
+				wfIssues::SEVERITY_MEDIUM,
+				$ignoreKey,
+				$ignoreKey,
+				($lastSlug === false ? __("Update Check Encountered Error", 'wordfence') : sprintf(/* translators: plugin/theme slug. */ __("Update Check Encountered Error on '%s'", 'wordfence'), esc_html($lastSlug))),
+				$longMsg,
+				array()
+			);
+			if ($added == wfIssues::ISSUE_ADDED || $added == wfIssues::ISSUE_UPDATED) {
+				$haveIssues = wfIssues::STATUS_PROBLEM;
+			}
+			else if ($haveIssues != wfIssues::STATUS_PROBLEM && ($added == wfIssues::ISSUE_IGNOREP || $added == wfIssues::ISSUE_IGNOREC)) {
+				$haveIssues = wfIssues::STATUS_IGNORED;
+			}
 		}
 
 		// WordPress core updates needed
@@ -2080,7 +2126,7 @@ class wfScanEngine {
 						if ($statusArray['vulnerable']) {
 							$longMsg .= ' ' . __('It has unpatched security issues and may have compatibility problems with the current version of WordPress.', 'wordfence');
 						} else {
-							$longMsg .= ' ' . __('Plugins can be removed from wordpress.org for various reasons. This can include benign issues like a plugin author discontinuing development or moving the plugin distribution to their own site, but some might also be due to security issues. In any case, future updates may or may not be available, so it is worth investigating the cause and deciding whether to temporarily or permanently replace or remove the plugin.', 'wordfence');
+							$longMsg .= ' ' . __('Your site is still using this plugin, but it is not currently available on wordpress.org. Plugins can be removed from wordpress.org for various reasons. This can include benign issues like a plugin author discontinuing development or moving the plugin distribution to their own site, but some might also be due to security issues. In any case, future updates may or may not be available, so it is worth investigating the cause and deciding whether to temporarily or permanently replace or remove the plugin.', 'wordfence');
 						}
 						$longMsg .= ' ' . sprintf(
 							/* translators: Support URL. */
@@ -2115,11 +2161,11 @@ class wfScanEngine {
 								$key = "wfPluginRemoved {$slug} {$pluginData['Version']}";
 								$shortMsg = sprintf(
 								/* translators: Plugin name. */
-									__('The Plugin "%s" has been removed from wordpress.org.', 'wordfence'), (empty($pluginData['Name']) ? $slug : $pluginData['Name']));
+									__('The Plugin "%s" has been removed from wordpress.org but is still installed on your site.', 'wordfence'), (empty($pluginData['Name']) ? $slug : $pluginData['Name']));
 								if ($pluginData['vulnerable']) {
 									$longMsg = __('It has unpatched security issues and may have compatibility problems with the current version of WordPress.', 'wordfence');
 								} else {
-									$longMsg = __('Plugins can be removed from wordpress.org for various reasons. This can include benign issues like a plugin author discontinuing development or moving the plugin distribution to their own site, but some might also be due to security issues. In any case, future updates may or may not be available, so it is worth investigating the cause and deciding whether to temporarily or permanently replace or remove the plugin.', 'wordfence');
+									$longMsg = __('Your site is still using this plugin, but it is not currently available on wordpress.org. Plugins can be removed from wordpress.org for various reasons. This can include benign issues like a plugin author discontinuing development or moving the plugin distribution to their own site, but some might also be due to security issues. In any case, future updates may or may not be available, so it is worth investigating the cause and deciding whether to temporarily or permanently replace or remove the plugin.', 'wordfence');
 								}
 								$longMsg .= ' ' . sprintf(
 									/* translators: Support URL. */

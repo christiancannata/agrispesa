@@ -181,7 +181,7 @@ function trustpilot_get_page_id( $page ) {
 
 function trustpilot_get_product_sku() {
 	$skus = array();
-	if ( class_exists( 'woocommerce' ) ) {
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$product = trustpilot_get_first_product();
 		array_push( $skus, TRUSTPILOT_PRODUCT_ID_PREFIX . trustpilot_get_inventory_attribute( 'id', $product ) );
 
@@ -193,7 +193,7 @@ function trustpilot_get_product_sku() {
 }
 
 function trustpilot_get_product_name() {
-	if ( class_exists( 'woocommerce' ) ) {
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$product = trustpilot_get_first_product();
 		if ( ! empty( $product ) ) {
 			if ( method_exists( $product, 'get_name' ) ) {
@@ -210,7 +210,7 @@ function trustpilot_get_product_name() {
  * WooCommerce get version number
  */
 function trustpilot_get_woo_version_number() {
-	if ( class_exists( 'woocommerce' ) ) {
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		$plugin_folder = get_plugins( '/woocommerce' );
 		$plugin_file   = 'woocommerce.php';
 

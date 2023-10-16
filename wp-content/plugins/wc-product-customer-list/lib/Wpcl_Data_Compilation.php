@@ -2,12 +2,13 @@
 
 /**
  * @package WC_Product_Customer_List
- * @version 2.9.0
+ * @version 3.1.6
  */
 // If this file is called directly, abort.
 if ( !defined( 'WPINC' ) ) {
     die;
 }
+use  Automattic\WooCommerce\Utilities\OrderUtil ;
 class Wpcl_Data_Compilation
 {
     private static  $necessary_capability = 'edit_shop_orders' ;
@@ -487,7 +488,13 @@ class Wpcl_Data_Compilation
         $order_statuses_string = "'" . implode( "', '", $order_statuses ) . "'";
         $post_ids = array_map( 'esc_sql', (array) $all_product_ids );
         $post_ids_string = "'" . implode( "', '", $post_ids ) . "'";
-        $item_sales = $wpdb->get_results( $wpdb->prepare( "SELECT o.ID as order_id, oi.order_item_id,  oim.meta_value AS product_id FROM\n\t\t\t{$wpdb->prefix}woocommerce_order_itemmeta oim\n\t\t\tINNER JOIN {$wpdb->prefix}woocommerce_order_items oi\n\t\t\tON oim.order_item_id = oi.order_item_id\n\t\t\tINNER JOIN {$wpdb->posts} o\n\t\t\tON oi.order_id = o.ID\n\t\t\tWHERE (oim.meta_key = '_product_id' or oim.meta_key = '_variation_id')\n\t\t\tAND oim.meta_value IN ( {$post_ids_string} )\n\t\t\tAND o.post_status IN ( {$order_statuses_string} )\n\t\t\tAND o.post_type NOT IN ('shop_order_refund')\n\t\t\tORDER BY o.ID DESC\n\t\t\tLIMIT %d", $params['wpcl_limit'] ), ARRAY_A );
+        
+        if ( OrderUtil::custom_orders_table_usage_is_enabled() ) {
+            $item_sales = $wpdb->get_results( $wpdb->prepare( "SELECT p.order_id, p.order_item_id, p.product_id \n\t\t        FROM {$wpdb->prefix}wc_order_product_lookup p\n\t\t        INNER JOIN {$wpdb->prefix}wc_orders o ON p.order_id = o.id\n\t\t        WHERE (p.product_id IN ({$post_ids_string}) OR p.variation_id IN ({$post_ids_string})) \n\t\t        AND o.type != 'shop_order_refund' \n\t\t        AND o.status IN ({$order_statuses_string})\n\t\t        ORDER BY p.order_id DESC\n\t\t        LIMIT %d", $params['wpcl_limit'] ), ARRAY_A );
+        } else {
+            $item_sales = $wpdb->get_results( $wpdb->prepare( "SELECT o.ID as order_id, oi.order_item_id,  oim.meta_value AS product_id FROM\n\t\t\t\t{$wpdb->prefix}woocommerce_order_itemmeta oim\n\t\t\t\tINNER JOIN {$wpdb->prefix}woocommerce_order_items oi\n\t\t\t\tON oim.order_item_id = oi.order_item_id\n\t\t\t\tINNER JOIN {$wpdb->posts} o\n\t\t\t\tON oi.order_id = o.ID\n\t\t\t\tWHERE (oim.meta_key = '_product_id' or oim.meta_key = '_variation_id')\n\t\t\t\tAND oim.meta_value IN ( {$post_ids_string} )\n\t\t\t\tAND o.post_status IN ( {$order_statuses_string} )\n\t\t\t\tAND o.post_type NOT IN ('shop_order_refund')\n\t\t\t\tORDER BY o.ID DESC\n\t\t\t\tLIMIT %d", $params['wpcl_limit'] ), ARRAY_A );
+        }
+        
         $timing->add_timing( '[gather_item_sales] Done getting all orders for this product' );
         return $item_sales;
     }

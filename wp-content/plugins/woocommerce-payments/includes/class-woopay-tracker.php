@@ -161,7 +161,7 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 	}
 
 	/**
-	 * Override parent method to omit the jetpack TOS check.
+	 * Override parent method to omit the jetpack TOS check and include custom tracking conditions.
 	 *
 	 * @param bool $is_admin_event Indicate whether the event is emitted from admin area.
 	 * @param bool $track_on_all_stores Indicate whether the event is tracked on all WCPay stores.
@@ -169,6 +169,19 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 	 * @return bool
 	 */
 	public function should_enable_tracking( $is_admin_event = false, $track_on_all_stores = false ) {
+
+		// Don't track if the gateway is not enabled.
+		$gateway = \WC_Payments::get_gateway();
+		if ( ! $gateway->is_enabled() ) {
+			return false;
+		}
+
+		// Don't track if the account is not connected.
+		$account = WC_Payments::get_account_service();
+		if ( is_null( $account ) || ! $account->is_stripe_connected() ) {
+			return false;
+		}
+
 		// Always respect the user specific opt-out cookie.
 		if ( ! empty( $_COOKIE['tk_opt-out'] ) ) {
 			return false;
@@ -201,7 +214,6 @@ class WooPay_Tracker extends Jetpack_Tracks_Client {
 		}
 
 		// For the remaining events, don't track when woopay is disabled.
-		$gateway            = \WC_Payments::get_gateway();
 		$is_woopay_eligible = WC_Payments_Features::is_woopay_eligible(); // Feature flag.
 		$is_woopay_enabled  = 'yes' === $gateway->get_option( 'platform_checkout', 'no' );
 		if ( ! ( $is_woopay_eligible && $is_woopay_enabled ) ) {

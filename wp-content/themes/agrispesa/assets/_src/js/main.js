@@ -563,11 +563,15 @@ jQuery(document).ready(function () {
   jQuery("#shipping_postcode").attr('minlength', 5)
 
   jQuery("#shipping_postcode").change(function () {
-    let cap = parseInt(jQuery(this).val())
-    if (!window.enabled_cap.includes(cap)) {
-      jQuery(this).val('')
-      alert("CAP non attivo.")
+
+    if ($("#petfood").length && $("#petfood").length == 0) {
+      let cap = parseInt(jQuery(this).val())
+      if (!window.enabled_cap.includes(cap)) {
+        jQuery(this).val('')
+        alert("CAP non attivo.")
+      }
     }
+
   })
 
 })

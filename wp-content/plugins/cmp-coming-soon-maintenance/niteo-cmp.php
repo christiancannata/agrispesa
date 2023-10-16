@@ -3,7 +3,7 @@
  Plugin Name: 		CMP - Coming Soon & Maintenance Plugin
  Plugin URI: 		https://wordpress.org/plugins/cmp-coming-soon-maintenance/
  Description:       Display customizable landing page for Coming Soon, Maintenance & Under Construction page.
- Version:           4.1.7
+ Version:           4.1.10
  Author:            NiteoThemes
  Author URI:        https://www.niteothemes.com
  Text Domain:       cmp-coming-soon-maintenance
@@ -25,6 +25,7 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 	 *
 	 * @since 2.8
 	 */
+	#[AllowDynamicProperties]
 	class CMP_Coming_Soon_and_Maintenance
 	{
 
@@ -65,7 +66,7 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 		// define constants
 		private function constants()
 		{
-			$this->define('CMP_VERSION', '4.1.7');
+			$this->define('CMP_VERSION', '4.1.10');
 			$this->define('CMP_DEBUG', FALSE);
 			$this->define('CMP_AUTHOR', 'NiteoThemes');
 			$this->define('CMP_AUTHOR_HOMEPAGE', 'https://niteothemes.com');
@@ -837,16 +838,16 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 			}
 
 			// bypass CMP and set cookie for user defined period of time, if bypass is enabled,  bypass ID is set, and match CMP bypass settings
-			if (isset($_GET['cmp_bypass']) && $_GET['cmp_bypass'] == get_option('niteoCS_bypass_id', md5(get_home_url())) && get_option('niteoCS_bypass', '0') == '1') {
+			if (isset($_GET['cmp_bypass']) && $_GET['cmp_bypass'] == get_option('niteoCS_bypass_id') && get_option('niteoCS_bypass', '0') == '1') {
 				nocache_headers();
 				header('Cache-Control: max-age=0; private');
-				setcookie('cmp_bypass', get_option('niteoCS_bypass_id', md5(get_home_url())), time() + get_option('niteoCS_bypass_expire', 172800));
+				setcookie('cmp_bypass', get_option('niteoCS_bypass_id'), time() + get_option('niteoCS_bypass_expire', 172800));
 				// exit CMP
 				return;
 			}
 
 			// if bypass Cookie is set, return
-			if (isset($_COOKIE['cmp_bypass']) && $_COOKIE['cmp_bypass'] == get_option('niteoCS_bypass_id', md5(get_home_url())) && get_option('niteoCS_bypass', '0') == '1') {
+			if (isset($_COOKIE['cmp_bypass']) && $_COOKIE['cmp_bypass'] == get_option('niteoCS_bypass_id') && get_option('niteoCS_bypass', '0') == '1') {
 				// exit CMP
 				return;
 			}

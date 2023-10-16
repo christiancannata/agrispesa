@@ -284,7 +284,6 @@ do_action('woocommerce_before_cart'); ?>
 
 					<?php do_action('woocommerce_cart_contents'); ?>
 
-
 			</div> <!-- end new-cart !-->
 
 			<tr>

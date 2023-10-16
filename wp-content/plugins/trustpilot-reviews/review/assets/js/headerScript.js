@@ -25,13 +25,7 @@ function tryParseJson(str) {
 if (inIframe()) {
     window.addEventListener('message', function(e) {
         var adminOrign = new URL(window.location).hostname;
-        var eventOriginHostname = new URL(e.origin).hostname;
-        var originMissmatchOldCondition = e.origin.indexOf(adminOrign) === -1;
-        var originMissmatchNewCondition = adminOrign !== eventOriginHostname;
-        if (originMissmatchOldCondition !== originMissmatchNewCondition) {
-            console.log(`Origin missmatch: old condition result: ${originMissmatchOldCondition}, new condition result: ${originMissmatchNewCondition}`);
-        }
-        if (!e.data || originMissmatchNewCondition) {
+        if (!e.data || e.origin.indexOf(adminOrign) === -1) {
             return;
         }
         if (typeof TrustpilotPreview !== 'undefined') {

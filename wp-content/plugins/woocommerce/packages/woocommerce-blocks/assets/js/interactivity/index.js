@@ -1,14 +1,15 @@
 import registerDirectives from './directives';
-import registerComponents from './components';
 import { init } from './router';
+import { rawStore, afterLoads } from './store';
+
+export { navigate } from './router';
 export { store } from './store';
 
 /**
- * Initialize the initial vDOM.
+ * Initialize the Interactivity API.
  */
 document.addEventListener( 'DOMContentLoaded', async () => {
 	registerDirectives();
-	registerComponents();
 	await init();
-	console.log( 'hydrated!' );
+	afterLoads.forEach( ( afterLoad ) => afterLoad( rawStore ) );
 } );

@@ -22,7 +22,7 @@ class TrustpilotLogger {
 		$localErrorObject = $errorObject;
 		unset( $localErrorObject['trace'] );
 
-		if ( class_exists( 'woocommerce' ) ) {
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			if ( function_exists( 'wc_get_logger' ) ) {
 				$logger = wc_get_logger();
 				$logger->error( json_encode( $localErrorObject ), array( 'source' => 'trustpilot-reviews' ) );

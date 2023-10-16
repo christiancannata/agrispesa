@@ -1389,3 +1389,31 @@ Poi perfezioneremo l’ordine ed emetteremo la Fattura in modo che tu possa paga
 	}
 
 }
+
+
+add_filter('woocommerce_package_rates', 'hide_shipping_weight_based', 10, 2);
+
+
+function hide_shipping_weight_based($rates, $package)
+{
+
+
+	$method_id = 'flat_rate:1'; // HERE set the shipping method ID
+	$found = false;
+
+	// Loop through cart items Checking for defined product IDs
+	foreach ($package['contents'] as $cart_item) {
+
+		if (has_term(['petfood'], 'product_cat', $cart_item['product_id'])) {
+			$found = true;
+			break;
+		}
+	}
+
+	if ($found && isset($rates[$method_id])) {
+		unset($rates[$method_id]);
+	}
+
+	return $rates;
+
+}

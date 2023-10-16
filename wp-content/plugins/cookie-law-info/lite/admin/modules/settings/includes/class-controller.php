@@ -151,7 +151,7 @@ class Controller extends Cloud {
 				'description'     => $object->get_description(),
 				'slug'            => $object->get_slug(),
 				'isNecessaryLike' => 'necessary' === $object->get_slug() ? true : false,
-				'active'          => true,
+				'active'          => $object->get_visibility(),
 				'defaultConsent'  => array(
 					'gdpr' => $object->get_slug() === 'necessary' ? true : $object->get_prior_consent(),
 					'ccpa' => $object->get_sell_personal_data() === true && $object->get_slug() !== 'necessary' ? false : true,
@@ -348,8 +348,11 @@ class Controller extends Cloud {
 			$plan            = isset( $response['websiteplan'] ) ? $response['websiteplan'] : array();
 			$features        = isset( $plan['features'] ) ? $plan['features'] : array();
 			$scan_timestamp  = isset( $response['last_scan_at'] ) ? strtotime( sanitize_text_field( $response['last_scan_at'] ) ) : false;
+			$scan_success_timestamp  = isset( $response['last_successful_scan_at'] ) ? strtotime( sanitize_text_field( $response['last_successful_scan_at'] ) ) : false;
 			$date            = isset( $scan_timestamp ) && is_int( $scan_timestamp ) ? gmdate( 'd M Y', $scan_timestamp ) : '';
 			$time            = isset( $scan_timestamp ) && is_int( $scan_timestamp ) ? gmdate( 'H:i:s', $scan_timestamp ) : '';
+			$success_date            = isset( $scan_success_timestamp ) && is_int( $scan_success_timestamp ) ? gmdate( 'd M Y', $scan_success_timestamp ) : '';
+			$success_time            = isset( $scan_success_timestamp ) && is_int( $scan_success_timestamp ) ? gmdate( 'H:i:s', $scan_success_timestamp ) : '';
 			$applicable_laws = isset( $response['applicableLaws'] ) ? $response['applicableLaws'] : array( 'gdpr' );
 			$applicable_laws = implode( ' & ', $applicable_laws );
 
@@ -396,6 +399,13 @@ class Controller extends Cloud {
 						'time' => $time,
 					),
 					'status' => isset( $response['last_scan_at'] ) && '' !== $response['last_scan_at'] ? true : false,
+				),
+				'success_scan'          => array(
+					'date'   => array(
+						'date' => $success_date,
+						'time' => $success_time,
+					),
+					'status' => isset( $response['last_successful_scan_at'] ) && '' !== $response['last_successful_scan_at'],
 				),
 				'languages'      => array(
 					'selected' => isset( $response['language']['preferred'] ) ? cky_sanitize_text( $response['language']['preferred'] ) : array(),

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\export\bg;
 
 if ( !defined( 'ABSPATH' ) ) {
@@ -69,7 +68,13 @@ class WPIE_BG extends \wpie\export\WPIE_Export {
 
                 global $wpdb;
 
-                $wpieProcess = \maybe_unserialize( \get_option( "wpie_bg_process", [] ) );
+                $bgProcess = \get_option( "wpie_bg_process" );
+
+                $wpieProcess = [];
+                
+                if ( is_string( $bgProcess ) && trim( $bgProcess ) !== '' ) {
+                        $wpieProcess = \maybe_unserialize( $bgProcess );
+                }
 
                 if ( !is_array( $wpieProcess ) || empty( $wpieProcess ) ) {
                         $wpieProcess = [];

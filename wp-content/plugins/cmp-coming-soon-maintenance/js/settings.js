@@ -1,4 +1,8 @@
 jQuery(document).ready(function ($) {
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
 	var tab = document.location.hash.substring(1);
 	var action = jQuery('#csoptions').attr('action');
 	var settings = jQuery('#csoptions fieldset:not(.skip-preview-validation *)').serialize();
@@ -42,7 +46,8 @@ jQuery(document).ready(function ($) {
 		navtab(tab);
 	};
 
-	jQuery('.cmp-coming-soon-maintenance .nav-tab:not(.theme-preview):not(.advanced)').click(
+	jQuery('.cmp-coming-soon-maintenance .nav-tab:not(.theme-preview):not(.advanced)').on(
+		'click',
 		function (e) {
 			e.preventDefault();
 			tab = jQuery(this).data('tab');
@@ -108,7 +113,7 @@ jQuery(document).ready(function ($) {
 		placeholder: 'Click to select..',
 	});
 
-	jQuery('.cmp-coming-soon-maintenance #cmp-status').click(function () {
+	jQuery('.cmp-coming-soon-maintenance #cmp-status').on('click', function () {
 		jQuery('.cmp-coming-soon-maintenance .cmp-status input[type=radio]').prop(
 			'disabled',
 			function (_, val) {
@@ -119,7 +124,7 @@ jQuery(document).ready(function ($) {
 		jQuery('.cmp-status-pages').fadeToggle();
 	});
 
-	jQuery('.cmp-status-pages input[type=radio]').change(function () {
+	jQuery('.cmp-status-pages input[type=radio]').on('change', function () {
 		jQuery('.cmp-status-pages input[type=radio]').parent().removeClass('active');
 		jQuery(this).parent().addClass('active');
 	});
@@ -128,32 +133,35 @@ jQuery(document).ready(function ($) {
 
 	function cmp_status_inputs() {
 		// Make clickable status radio buttons
-		jQuery('.cmp-coming-soon-maintenance .cmp-status.switch:not(.disabled)').click(function () {
-			if (jQuery('.cmp-coming-soon-maintenance #cmp-status').prop('checked') == false) {
-				return;
-			}
-			var $children = jQuery(this).children('input');
-			$children.prop('checked', true);
-			jQuery('.cmp-coming-soon-maintenance .cmp-status.switch').removeClass('active');
-			jQuery(this).addClass('active');
+		jQuery('.cmp-coming-soon-maintenance .cmp-status.switch:not(.disabled)').on(
+			'click',
+			function () {
+				if (jQuery('.cmp-coming-soon-maintenance #cmp-status').prop('checked') == false) {
+					return;
+				}
+				var $children = jQuery(this).children('input');
+				$children.prop('checked', true);
+				jQuery('.cmp-coming-soon-maintenance .cmp-status.switch').removeClass('active');
+				jQuery(this).addClass('active');
 
-			$children.trigger('change');
+				$children.trigger('change');
 
-			if ($children.val() == '3') {
-				jQuery('.cmp-coming-soon-maintenance .redirect-inputs').fadeIn('fast');
-			} else {
-				jQuery('.cmp-coming-soon-maintenance .redirect-inputs').fadeOut('fast');
+				if ($children.val() == '3') {
+					jQuery('.cmp-coming-soon-maintenance .redirect-inputs').fadeIn('fast');
+				} else {
+					jQuery('.cmp-coming-soon-maintenance .redirect-inputs').fadeOut('fast');
+				}
 			}
-		});
+		);
 	}
 
 	// expandable tabs
-	jQuery('.cmp-coming-soon-maintenance .table-wrapper h3').click(function () {
+	jQuery('.cmp-coming-soon-maintenance .table-wrapper h3').on('click', function () {
 		jQuery(this).parent().toggleClass('closed');
 	});
 
 	// test unsplash image
-	jQuery('.cmp-coming-soon-maintenance #test-unsplash').click(function (e) {
+	jQuery('.cmp-coming-soon-maintenance #test-unsplash').on('click', function (e) {
 		e.preventDefault();
 
 		var media_wrapper = jQuery('.cmp-coming-soon-maintenance #unsplash-media'),
@@ -685,19 +693,25 @@ jQuery(document).ready(function ($) {
 		};
 	})(jQuery);
 
-	jQuery('.cmp-coming-soon-maintenance .social-inputs input[type="text"]').focusout(function () {
-		var name = jQuery(this).data('name');
-		var socialurl = jQuery(this).val();
-		update_social(name, 'url', socialurl);
-	});
+	jQuery('.cmp-coming-soon-maintenance .social-inputs input[type="text"]').on(
+		'focusout',
+		function () {
+			var name = jQuery(this).data('name');
+			var socialurl = jQuery(this).val();
+			update_social(name, 'url', socialurl);
+		}
+	);
 
-	jQuery('.cmp-coming-soon-maintenance .social-inputs input[type="checkbox"]').click(function (e) {
-		var $this = jQuery(this).siblings('input[type="text"]');
-		$this.toggleDisabled();
-	});
+	jQuery('.cmp-coming-soon-maintenance .social-inputs input[type="checkbox"]').on(
+		'click',
+		function (e) {
+			var $this = jQuery(this).siblings('input[type="text"]');
+			$this.toggleDisabled();
+		}
+	);
 
 	// social icons active/inactive
-	jQuery('.cmp-coming-soon-maintenance .social-media i').click(function () {
+	jQuery('.cmp-coming-soon-maintenance .social-media i').on('click', function () {
 		var name = jQuery(this).data('name');
 		jQuery(this).toggleClass('active');
 		jQuery('.cmp-coming-soon-maintenance .social-inputs li.' + name).toggleClass('active');
@@ -722,7 +736,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	// theme update via admin notice
-	jQuery('.cmp.update-theme').click(function (e) {
+	jQuery('.cmp.update-theme').on('click', function (e) {
 		e.preventDefault();
 		var $this = jQuery(this),
 			$parent = $this.parents('.notice'),
@@ -812,7 +826,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	// display theme details overlay
-	jQuery('.cmp-coming-soon-maintenance .theme-details').click(function (e) {
+	jQuery('.cmp-coming-soon-maintenance .theme-details').on('click', function (e) {
 		e.preventDefault();
 		var $this = jQuery(this),
 			$wrapper = $this.closest('.theme-wrapper'),
@@ -908,7 +922,7 @@ jQuery(document).ready(function ($) {
 				jQuery('.theme-overlay.cmp').append(html);
 
 				// attach close button handler
-				jQuery('.theme-overlay.cmp .close').click(function (e) {
+				jQuery('.theme-overlay.cmp .close').on('click', function (e) {
 					e.preventDefault();
 					// overflow body hidden
 					jQuery('body').removeClass('modal-open');
@@ -916,7 +930,7 @@ jQuery(document).ready(function ($) {
 				});
 
 				// attach arrows navigation handler
-				jQuery('.screenshots-nav .right').click(function () {
+				jQuery('.screenshots-nav .right').on('click', function () {
 					i++;
 
 					if (i == Object.keys(screenshots).length) {
@@ -929,7 +943,7 @@ jQuery(document).ready(function ($) {
 				});
 
 				// attach arrows navigation handler
-				jQuery('.screenshots-nav .left').click(function () {
+				jQuery('.screenshots-nav .left').on('click', function () {
 					i--;
 
 					if (i < 0) {
@@ -959,7 +973,7 @@ jQuery(document).ready(function ($) {
 			$delete_button.css('display', 'block');
 		}
 
-		$add_button.click(function (e) {
+		$add_button.on('click', function (e) {
 			e.preventDefault();
 			// If the media frame already exists, reopen it.
 			if (media_uploader) {
@@ -1058,7 +1072,7 @@ jQuery(document).ready(function ($) {
 				.open();
 		});
 
-		$delete_button.click(function (e) {
+		$delete_button.on('click', function (e) {
 			jQuery(this).css('display', 'none');
 			$container.find('img').remove();
 			jQuery('#niteoCS-' + name + '-id').val('');
@@ -1067,7 +1081,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	// Retrieve Mailchimp lists
-	jQuery('.cmp-coming-soon-maintenance #connect-mailchimp').click(function (e) {
+	jQuery('.cmp-coming-soon-maintenance #connect-mailchimp').on('click', function (e) {
 		e.preventDefault();
 
 		var apikey = jQuery(
@@ -1122,9 +1136,9 @@ jQuery(document).ready(function ($) {
 
 	function toggle_settings(classname) {
 		// Logo type inputs
-		jQuery('.cmp-coming-soon-maintenance .' + classname).change(function () {
+		jQuery('.cmp-coming-soon-maintenance .' + classname).on('change', function () {
 			var value = jQuery('.cmp-coming-soon-maintenance .' + classname + ':checked').val();
-			value = jQuery.isNumeric(value) ? 'x' + value : value;
+			value = isNumeric(value) ? 'x' + value : value;
 			value = value === undefined ? 'off' : value;
 
 			jQuery('.cmp-coming-soon-maintenance .' + classname + '-switch.' + value).css(
@@ -1143,9 +1157,9 @@ jQuery(document).ready(function ($) {
 	}
 
 	function toggle_select(classname) {
-		jQuery('.cmp-coming-soon-maintenance .' + classname).change(function () {
+		jQuery('.cmp-coming-soon-maintenance .' + classname).on('change', function () {
 			var value = jQuery('.' + classname).val();
-			value = jQuery.isNumeric(value) ? 'x' + value : value;
+			value = isNumeric(value) ? 'x' + value : value;
 
 			jQuery('.cmp-coming-soon-maintenance .' + classname + '.' + value).css('display', 'block');
 			jQuery('.cmp-coming-soon-maintenance .' + classname + ':not(.' + value + ')').css(
@@ -1177,7 +1191,7 @@ jQuery(document).ready(function ($) {
 		if (!jQuery('#wrapper-' + field_id).length) {
 			return;
 		}
-		jQuery('#add-' + field_id).click(function (e) {
+		jQuery('#add-' + field_id).on('click', function (e) {
 			e.preventDefault();
 			var $wrapper = jQuery('#wrapper-' + field_id);
 			var $target = jQuery('#wrapper-' + field_id + ' .target-repeater-fields');

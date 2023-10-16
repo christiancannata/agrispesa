@@ -43,63 +43,63 @@ class Orders {
 	 * Handle WP actions and filters.
 	 */
 	private function do_hooks() {
-		add_action( 'woocommerce_order_status_changed', array( $this, 'trustpilot_orderStatusChange' ) );
-		add_action( 'woocommerce_thankyou', array( $this, 'trustpilot_thankYouPageLoaded' ) );
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			add_action( 'woocommerce_order_status_changed', array( $this, 'trustpilot_orderStatusChange' ) );
+			add_action( 'woocommerce_thankyou', array( $this, 'trustpilot_thankYouPageLoaded' ) );
+		}
 	}
 
 	/**
 	 * WooCommerce order status change. Backend side
 	 */
 	public function trustpilot_orderStatusChange( $order_id ) {
-		if ( class_exists( 'woocommerce' ) ) {
-			$order            = wc_get_order( $order_id );
-			$order_status     = $order->get_status();
-			$general_settings = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION );
-			$key              = $general_settings->key;
-			$trustpilot_api   = new TrustpilotHttpClient( TRUSTPILOT_API_URL );
-			$hook             = 'woocommerce_order_status_changed';
+		$order            = wc_get_order( $order_id );
+		$order_status     = $order->get_status();
+		$general_settings = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION );
+		$key              = $general_settings->key;
+		$trustpilot_api   = new TrustpilotHttpClient( TRUSTPILOT_API_URL );
+		$hook             = 'woocommerce_order_status_changed';
 
-			if ( ! empty( $key ) ) {
-				try {
-					$invitation = $this->trustpilot_get_invitation( $order, $hook, WITHOUT_PRODUCT_DATA );
-					if ( in_array( $order_status, $general_settings->mappedInvitationTrigger ) && trustpilot_compatible() ) {
-						$response = $trustpilot_api->postInvitation( $key, $invitation );
+		if ( ! empty( $key ) ) {
+			try {
+				$invitation = $this->trustpilot_get_invitation( $order, $hook, WITHOUT_PRODUCT_DATA );
+				if ( in_array( $order_status, $general_settings->mappedInvitationTrigger ) && trustpilot_compatible() ) {
+					$response = $trustpilot_api->postInvitation( $key, $invitation );
 
-						if ( 202 == $response['code'] ) {
-							$invitation = $this->trustpilot_get_invitation( $order, $hook, WITH_PRODUCT_DATA );
-							$response   = $trustpilot_api->postInvitation( $key, $invitation );
-						}
-
-						$this->handle_single_response( $response, $invitation );
-					} else {
-						$invitation['payloadType'] = 'OrderStatusUpdate';
-						$trustpilot_api->postInvitation( $key, $invitation );
+					if ( 202 == $response['code'] ) {
+						$invitation = $this->trustpilot_get_invitation( $order, $hook, WITH_PRODUCT_DATA );
+						$response   = $trustpilot_api->postInvitation( $key, $invitation );
 					}
-				} catch ( \Throwable $e ) {
-					$message = 'Unable to send invitation for order id: ' . $order_id;
-					TrustpilotLogger::error(
-						$e,
-						$message,
-						array(
-							'key'         => $key,
-							'orderId'     => $order_id,
-							'orderStatus' => $order_status,
-							'hook'        => $hook,
-						)
-					);
-				} catch ( \Exception $e ) {
-					$message = 'Unable to send invitation for order id: ' . $order_id;
-					TrustpilotLogger::error(
-						$e,
-						$message,
-						array(
-							'key'         => $key,
-							'orderId'     => $order_id,
-							'orderStatus' => $order_status,
-							'hook'        => $hook,
-						)
-					);
+
+					$this->handle_single_response( $response, $invitation );
+				} else {
+					$invitation['payloadType'] = 'OrderStatusUpdate';
+					$trustpilot_api->postInvitation( $key, $invitation );
 				}
+			} catch ( \Throwable $e ) {
+				$message = 'Unable to send invitation for order id: ' . $order_id;
+				TrustpilotLogger::error(
+					$e,
+					$message,
+					array(
+						'key'         => $key,
+						'orderId'     => $order_id,
+						'orderStatus' => $order_status,
+						'hook'        => $hook,
+					)
+				);
+			} catch ( \Exception $e ) {
+				$message = 'Unable to send invitation for order id: ' . $order_id;
+				TrustpilotLogger::error(
+					$e,
+					$message,
+					array(
+						'key'         => $key,
+						'orderId'     => $order_id,
+						'orderStatus' => $order_status,
+						'hook'        => $hook,
+					)
+				);
 			}
 		}
 	}
@@ -108,52 +108,50 @@ class Orders {
 	 * WooCommerce order confirmed. Frontend side
 	 */
 	public function trustpilot_thankYouPageLoaded( $order_id ) {
-		if ( class_exists( 'woocommerce' ) ) {
-			$pluginStatus = new TrustpilotPluginStatus();
-			$code         = $pluginStatus->checkPluginStatus( get_option( 'siteurl' ) );
-			if ( $code > 250 && $code < 254 ) {
-				return;
+		$pluginStatus = new TrustpilotPluginStatus();
+		$code         = $pluginStatus->checkPluginStatus( get_option( 'siteurl' ) );
+		if ( $code > 250 && $code < 254 ) {
+			return;
+		}
+
+		$general_settings = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION );
+		$invitation       = $this->trustpilot_get_invitation_by_order_id( $order_id, 'woocommerce_thankyou' );
+
+		if ( ! is_null( $invitation ) ) {
+			try {
+				/**
+				 * ROI data
+				 */
+				$order                   = wc_get_order( $order_id );
+				$invitation['totalCost'] = $order->get_total();
+				$invitation['currency']  = $order->get_currency();
+			} catch ( \Throwable $e ) {
+				$message = 'Unable to collect ROI data on frontend checkout for order id: ' . $order_id;
+				TrustpilotLogger::error(
+					$e,
+					$message,
+					array(
+						'orderId' => $order_id,
+					)
+				);
+			} catch ( \Exception $e ) {
+				$message = 'Unable to collect ROI data on frontend checkout for order id: ' . $order_id;
+				TrustpilotLogger::error(
+					$e,
+					$message,
+					array(
+						'orderId' => $order_id,
+					)
+				);
 			}
 
-			$general_settings = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION );
-			$invitation       = $this->trustpilot_get_invitation_by_order_id( $order_id, 'woocommerce_thankyou' );
-
-			if ( ! is_null( $invitation ) ) {
-				try {
-					/**
-					 * ROI data
-					 */
-					$order                   = wc_get_order( $order_id );
-					$invitation['totalCost'] = $order->get_total();
-					$invitation['currency']  = $order->get_currency();
-				} catch ( \Throwable $e ) {
-					$message = 'Unable to collect ROI data on frontend checkout for order id: ' . $order_id;
-					TrustpilotLogger::error(
-						$e,
-						$message,
-						array(
-							'orderId' => $order_id,
-						)
-					);
-				} catch ( \Exception $e ) {
-					$message = 'Unable to collect ROI data on frontend checkout for order id: ' . $order_id;
-					TrustpilotLogger::error(
-						$e,
-						$message,
-						array(
-							'orderId' => $order_id,
-						)
-					);
-				}
-
-				if ( ! in_array( 'trustpilotOrderConfirmed', $general_settings->mappedInvitationTrigger ) ) {
-					$invitation['payloadType'] = 'OrderStatusUpdate';
-				}
-
-				wp_register_script( 'tp-invitation', plugins_url( 'assets/js/thankYouScript.min.js', __FILE__ ), [], '1.0' );
-				wp_localize_script( 'tp-invitation', 'trustpilot_order_data', array( TRUSTPILOT_ORDER_DATA => $invitation ) );
-				wp_enqueue_script( 'tp-invitation' );
+			if ( ! in_array( 'trustpilotOrderConfirmed', $general_settings->mappedInvitationTrigger ) ) {
+				$invitation['payloadType'] = 'OrderStatusUpdate';
 			}
+
+			wp_register_script( 'tp-invitation', plugins_url( 'assets/js/thankYouScript.min.js', __FILE__ ), [], '1.0' );
+			wp_localize_script( 'tp-invitation', 'trustpilot_order_data', array( TRUSTPILOT_ORDER_DATA => $invitation ) );
+			wp_enqueue_script( 'tp-invitation' );
 		}
 	}
 

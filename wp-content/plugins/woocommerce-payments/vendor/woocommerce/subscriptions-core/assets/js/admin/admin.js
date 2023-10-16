@@ -667,6 +667,7 @@ jQuery( function ( $ ) {
 	if ( $( '.options_group.pricing' ).length > 0 ) {
 		$.setSalePeriod();
 		$.showHideSubscriptionMeta();
+		$.enableSubscriptionProductFields();
 		$.showHideVariableSubscriptionMeta();
 		$.setSubscriptionLengths();
 		$.setTrialPeriods();
@@ -1426,5 +1427,10 @@ jQuery( function ( $ ) {
 				WCSubscriptions.i18n_remove_personal_data_notice
 			);
 		}
+	} );
+
+	// On the subscriptions list table empty state screen, add the is-busy class to the button when clicked.
+	$( '.woo_subscriptions_empty_state__button_container a' ).on( 'click', function ( e ) {
+		$( this ).addClass( 'is-busy' );
 	} );
 } );

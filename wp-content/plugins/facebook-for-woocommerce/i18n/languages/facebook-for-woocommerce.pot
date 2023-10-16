@@ -2,22 +2,22 @@
 # This file is distributed under the same license as the Facebook for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Facebook for WooCommerce 3.0.32\n"
+"Project-Id-Version: Facebook for WooCommerce 3.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/facebook-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-18T12:01:01+00:00\n"
+"POT-Creation-Date: 2023-10-12T18:37:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: facebook-for-woocommerce\n"
 
 #. Plugin Name of the plugin
 #: class-wc-facebookcommerce.php:761
 #: facebook-commerce.php:207
-#: includes/Admin.php:1488
+#: includes/Admin.php:1503
 #: includes/Admin/Settings.php:111
 #: includes/Admin/Settings.php:179
 msgid "Facebook for WooCommerce"
@@ -32,7 +32,7 @@ msgid "Grow your business on Facebook! Use this official plugin to help sell mor
 msgstr ""
 
 #. Author of the plugin
-#: includes/Admin.php:1146
+#: includes/Admin.php:1161
 #: includes/Admin/Settings.php:112
 #: includes/Admin/Settings.php:351
 msgid "Facebook"
@@ -153,22 +153,22 @@ msgid "There was an issue connecting to the Facebook API: %s"
 msgstr ""
 
 #. translators: %1$s - plugin name, %2$s - minimum WordPress version required, %3$s - update WordPress link open, %4$s - update WordPress link close
-#: facebook-for-woocommerce.php:223
+#: facebook-for-woocommerce.php:222
 msgid "%1$s requires WordPress version %2$s or higher. Please %3$supdate WordPress &raquo;%4$s"
 msgstr ""
 
 #. translators: %1$s - Plugin Name, %2$s - activate WooCommerce link open, %3$s - activate WooCommerce link close.
-#: facebook-for-woocommerce.php:249
+#: facebook-for-woocommerce.php:248
 msgid "%1$s requires WooCommerce to be activated. Please %2$sactivate WooCommerce%3$s."
 msgstr ""
 
 #. translators: %1$s - Plugin Name, %2$s - install WooCommerce link open, %3$s - install WooCommerce link close.
-#: facebook-for-woocommerce.php:266
+#: facebook-for-woocommerce.php:265
 msgid "%1$s requires WooCommerce to be installed and activated. Please %2$sinstall WooCommerce%3$s."
 msgstr ""
 
 #. translators: %1$s - Plugin Name, %2$s - minimum WooCommerce version, %3$s - update WooCommerce link open, %4$s - update WooCommerce link close, %5$s - download minimum WooCommerce link open, %6$s - download minimum WooCommerce link close.
-#: facebook-for-woocommerce.php:286
+#: facebook-for-woocommerce.php:285
 msgid "%1$s requires WooCommerce version %2$s or higher. Please %3$supdate WooCommerce%4$s to the latest version, or %5$sdownload the minimum required version &raquo;%6$s"
 msgstr ""
 
@@ -226,127 +226,127 @@ msgid "You're removing a product from the Facebook sync that is currently listed
 msgstr ""
 
 #: includes/Admin.php:441
-#: includes/Admin.php:1191
-#: includes/Admin.php:1327
+#: includes/Admin.php:1206
+#: includes/Admin.php:1342
 msgid "Facebook sync"
 msgstr ""
 
-#: includes/Admin.php:464
-#: includes/Admin.php:492
+#: includes/Admin.php:476
+#: includes/Admin.php:507
 msgid "Sync and show"
 msgstr ""
 
-#: includes/Admin.php:466
-#: includes/Admin.php:493
+#: includes/Admin.php:478
+#: includes/Admin.php:508
 msgid "Sync and hide"
 msgstr ""
 
-#: includes/Admin.php:469
-#: includes/Admin.php:494
-#: includes/Admin.php:1195
-#: includes/Admin.php:1331
+#: includes/Admin.php:481
+#: includes/Admin.php:509
+#: includes/Admin.php:1210
+#: includes/Admin.php:1346
 msgid "Do not sync"
 msgstr ""
 
-#: includes/Admin.php:491
+#: includes/Admin.php:506
 msgid "Filter by Facebook sync setting"
 msgstr ""
 
-#: includes/Admin.php:850
+#: includes/Admin.php:865
 msgid "Include in Facebook sync"
 msgstr ""
 
-#: includes/Admin.php:851
+#: includes/Admin.php:866
 msgid "Exclude from Facebook sync"
 msgstr ""
 
 #. translators: Placeholders: %1$s - <strong> tag, %2$s - </strong> tag, %3$s - <a> tag, %4$s - <a> tag
-#: includes/Admin.php:1010
+#: includes/Admin.php:1025
 msgid "%1$sHeads up!%2$s If this product was previously visible in Facebook, you may need to delete it from the %3$sFacebook catalog%4$s to completely hide it from customer view."
 msgid_plural "%1$sHeads up!%2$s If these products were previously visible in Facebook, you may need to delete them from the %3$sFacebook catalog%4$s to completely hide them from customer view."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Admin.php:1017
+#: includes/Admin.php:1032
 msgid "Don't show this notice again"
 msgstr ""
 
 #. translators: Placeholders: %1$s - number of affected products, %2$s opening HTML <a> tag, %3$s - closing HTML </a> tag, %4$s - opening HTML <a> tag, %5$s - closing HTML </a> tag
-#: includes/Admin.php:1051
+#: includes/Admin.php:1066
 msgid "%2$s%1$s product%3$s or some of its variations could not be updated to show in the Facebook catalog — %4$sFacebook Commerce Policies%5$s prohibit selling some product types (like virtual products). You may still advertise Virtual products on Facebook."
 msgid_plural "%2$s%1$s products%3$s or some of their variations could not be updated to show in the Facebook catalog — %4$sFacebook Commerce Policies%5$s prohibit selling some product types (like virtual products). You may still advertise Virtual products on Facebook."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Placeholders: %1$s - opening HTML <strong> tag, %2$s - closing HTML </strong> tag, %3$s - opening HTML <a> tag, %4$s - closing HTML </a> tag
-#: includes/Admin.php:1117
+#: includes/Admin.php:1132
 msgid "%1$sHeads up!%2$s Facebook's %3$sCommerce Policies%4$s do not support selling virtual products, so we have hidden your synced Virtual products in your Facebook catalog. You may still advertise Virtual products on Facebook."
 msgstr ""
 
-#: includes/Admin.php:1193
-#: includes/Admin.php:1329
+#: includes/Admin.php:1208
+#: includes/Admin.php:1344
 msgid "Sync and show in catalog"
 msgstr ""
 
-#: includes/Admin.php:1194
-#: includes/Admin.php:1330
+#: includes/Admin.php:1209
+#: includes/Admin.php:1345
 msgid "Sync and hide in catalog"
 msgstr ""
 
-#: includes/Admin.php:1204
-#: includes/Admin.php:1343
+#: includes/Admin.php:1219
+#: includes/Admin.php:1358
 msgid "Facebook Description"
 msgstr ""
 
-#: includes/Admin.php:1206
-#: includes/Admin.php:1345
+#: includes/Admin.php:1221
+#: includes/Admin.php:1360
 msgid "Custom (plain-text only) description for product on Facebook. If blank, product description will be used. If product description is blank, shortname will be used."
 msgstr ""
 
-#: includes/Admin.php:1217
-#: includes/Admin.php:1358
+#: includes/Admin.php:1232
+#: includes/Admin.php:1373
 msgid "Facebook Product Image"
 msgstr ""
 
-#: includes/Admin.php:1219
-#: includes/Admin.php:1360
+#: includes/Admin.php:1234
+#: includes/Admin.php:1375
 msgid "Choose the product image that should be synced to the Facebook catalog for this product. If using a custom image, please enter an absolute URL (e.g. https://domain.com/image.jpg)."
 msgstr ""
 
-#: includes/Admin.php:1221
+#: includes/Admin.php:1236
 msgid "Use WooCommerce image"
 msgstr ""
 
-#: includes/Admin.php:1222
-#: includes/Admin.php:1364
+#: includes/Admin.php:1237
+#: includes/Admin.php:1379
 msgid "Use custom image"
 msgstr ""
 
-#: includes/Admin.php:1233
-#: includes/Admin.php:1376
+#: includes/Admin.php:1248
+#: includes/Admin.php:1391
 msgid "Custom Image URL"
 msgstr ""
 
 #. translators: Placeholders %1$s - WC currency symbol
-#: includes/Admin.php:1244
-#: includes/Admin.php:1389
+#: includes/Admin.php:1259
+#: includes/Admin.php:1404
 msgid "Facebook Price (%1$s)"
 msgstr ""
 
-#: includes/Admin.php:1248
-#: includes/Admin.php:1393
+#: includes/Admin.php:1263
+#: includes/Admin.php:1408
 msgid "Custom price for product on Facebook. Please enter in monetary decimal (.) format without thousand separators and currency symbols. If blank, product price will be used."
 msgstr ""
 
-#: includes/Admin.php:1362
+#: includes/Admin.php:1377
 msgid "Use variation image"
 msgstr ""
 
-#: includes/Admin.php:1363
+#: includes/Admin.php:1378
 msgid "Use parent image"
 msgstr ""
 
-#: includes/Admin.php:1490
+#: includes/Admin.php:1505
 msgid "Close modal panel"
 msgstr ""
 

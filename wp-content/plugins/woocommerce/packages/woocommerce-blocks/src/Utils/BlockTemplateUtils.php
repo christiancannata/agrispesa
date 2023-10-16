@@ -1,11 +1,15 @@
 <?php
 namespace Automattic\WooCommerce\Blocks\Utils;
 
-use Automattic\WooCommerce\Blocks\Templates\ProductAttributeTemplate;
-use Automattic\WooCommerce\Blocks\Templates\ProductSearchResultsTemplate;
 use Automattic\WooCommerce\Blocks\Domain\Services\FeatureGating;
 use Automattic\WooCommerce\Blocks\Options;
+use Automattic\WooCommerce\Blocks\Templates\CartTemplate;
+use Automattic\WooCommerce\Blocks\Templates\CheckoutHeaderTemplate;
+use Automattic\WooCommerce\Blocks\Templates\CheckoutTemplate;
 use Automattic\WooCommerce\Blocks\Templates\MiniCartTemplate;
+use Automattic\WooCommerce\Blocks\Templates\OrderConfirmationTemplate;
+use Automattic\WooCommerce\Blocks\Templates\ProductAttributeTemplate;
+use Automattic\WooCommerce\Blocks\Templates\ProductSearchResultsTemplate;
 
 /**
  * Utility methods used for serving block templates from WooCommerce Blocks.
@@ -215,6 +219,11 @@ class BlockTemplateUtils {
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
 		$template->post_types     = array(); // Don't appear in any Edit Post template selector dropdown.
 		$template->area           = 'uncategorized';
+
+		// Force the Mini-Cart template part to be in the Mini-Cart template part area.
+		if ( 'wp_template_part' === $template_type && 'mini-cart' === $template_file->slug ) {
+			$template->area = 'mini-cart';
+		}
 		return $template;
 	}
 
@@ -302,38 +311,52 @@ class BlockTemplateUtils {
 	 * @return array The plugin template types.
 	 */
 	public static function get_plugin_block_template_types() {
-		$plugin_template_types = array(
-			'single-product'                   => array(
+		return array(
+			'single-product'                      => array(
 				'title'       => _x( 'Single Product', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays a single product.', 'woocommerce' ),
 			),
-			'archive-product'                  => array(
+			'archive-product'                     => array(
 				'title'       => _x( 'Product Catalog', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays your products.', 'woocommerce' ),
 			),
-			'taxonomy-product_cat'             => array(
+			'taxonomy-product_cat'                => array(
 				'title'       => _x( 'Products by Category', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays products filtered by a category.', 'woocommerce' ),
 			),
-			'taxonomy-product_tag'             => array(
+			'taxonomy-product_tag'                => array(
 				'title'       => _x( 'Products by Tag', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays products filtered by a tag.', 'woocommerce' ),
 			),
-			ProductAttributeTemplate::SLUG     => array(
+			ProductAttributeTemplate::SLUG        => array(
 				'title'       => _x( 'Products by Attribute', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays products filtered by an attribute.', 'woocommerce' ),
 			),
-			ProductSearchResultsTemplate::SLUG => array(
+			ProductSearchResultsTemplate::SLUG    => array(
 				'title'       => _x( 'Product Search Results', 'Template name', 'woocommerce' ),
 				'description' => __( 'Displays search results for your store.', 'woocommerce' ),
 			),
-			MiniCartTemplate::SLUG             => array(
-				'title'       => _x( 'Mini Cart', 'Template name', 'woocommerce' ),
-				'description' => __( 'Template used to display the Mini Cart drawer.', 'woocommerce' ),
+			MiniCartTemplate::SLUG                => array(
+				'title'       => _x( 'Mini-Cart', 'Template name', 'woocommerce' ),
+				'description' => __( 'Template used to display the Mini-Cart drawer.', 'woocommerce' ),
+			),
+			CartTemplate::get_slug()              => array(
+				'title'       => _x( 'Cart', 'Template name', 'woocommerce' ),
+				'description' => __( 'The Cart template displays the items selected by the user for purchase, including quantities, prices, and discounts. It allows users to review their choices before proceeding to checkout.', 'woocommerce' ),
+			),
+			CheckoutTemplate::get_slug()          => array(
+				'title'       => _x( 'Checkout', 'Template name', 'woocommerce' ),
+				'description' => __( 'The Checkout template guides users through the final steps of the purchase process. It enables users to enter shipping and billing information, select a payment method, and review order details.', 'woocommerce' ),
+			),
+			CheckoutHeaderTemplate::SLUG          => array(
+				'title'       => _x( 'Checkout Header', 'Template name', 'woocommerce' ),
+				'description' => __( 'Template used to display the simplified Checkout header.', 'woocommerce' ),
+			),
+			OrderConfirmationTemplate::get_slug() => array(
+				'title'       => _x( 'Order Confirmation', 'Template name', 'woocommerce' ),
+				'description' => __( 'The Order Confirmation template provides customers with a summary of their completed purchase, including ordered items, shipping details, and order total. It serves as a receipt and confirmation of the successful transaction.', 'woocommerce' ),
 			),
 		);
-
-		return $plugin_template_types;
 	}
 
 	/**
@@ -422,25 +445,25 @@ class BlockTemplateUtils {
 	/**
 	 * Checks to see if they are using a compatible version of WP, or if not they have a compatible version of the Gutenberg plugin installed.
 	 *
+	 * @param string $template_type Optional. Template type: `wp_template` or `wp_template_part`.
+	 *                              Default `wp_template`.
 	 * @return boolean
 	 */
-	public static function supports_block_templates() {
-		if (
-			! wc_current_theme_is_fse_theme() &&
-			( ! function_exists( 'gutenberg_supports_block_templates' ) || ! gutenberg_supports_block_templates() )
-		) {
-			return false;
+	public static function supports_block_templates( $template_type = 'wp_template' ) {
+		if ( 'wp_template_part' === $template_type && ( wc_current_theme_is_fse_theme() || current_theme_supports( 'block-template-parts' ) ) ) {
+			return true;
+		} elseif ( 'wp_template' === $template_type && wc_current_theme_is_fse_theme() ) {
+			return true;
 		}
-
-		return true;
+		return false;
 	}
 
 	/**
 	 * Retrieves a single unified template object using its id.
 	 *
 	 * @param string $id            Template unique identifier (example: theme_slug//template_slug).
-	 * @param string $template_type Optional. Template type: `'wp_template'` or '`wp_template_part'`.
-	 *                             Default `'wp_template'`.
+	 * @param string $template_type Optional. Template type: `wp_template` or 'wp_template_part`.
+	 *                              Default `wp_template`.
 	 *
 	 * @return WP_Block_Template|null Template.
 	 */
@@ -674,5 +697,42 @@ class BlockTemplateUtils {
 	 */
 	public static function template_has_legacy_template_block( $template ) {
 		return has_block( 'woocommerce/legacy-template', $template->content );
+	}
+
+	/**
+	 * Gets the templates saved in the database.
+	 *
+	 * @param array  $slugs An array of slugs to retrieve templates for.
+	 * @param string $template_type wp_template or wp_template_part.
+	 *
+	 * @return int[]|\WP_Post[] An array of found templates.
+	 */
+	public static function get_block_templates_from_db( $slugs = array(), $template_type = 'wp_template' ) {
+		$check_query_args = array(
+			'post_type'      => $template_type,
+			'posts_per_page' => -1,
+			'no_found_rows'  => true,
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				array(
+					'taxonomy' => 'wp_theme',
+					'field'    => 'name',
+					'terms'    => array( self::DEPRECATED_PLUGIN_SLUG, self::PLUGIN_SLUG, get_stylesheet() ),
+				),
+			),
+		);
+
+		if ( is_array( $slugs ) && count( $slugs ) > 0 ) {
+			$check_query_args['post_name__in'] = $slugs;
+		}
+
+		$check_query         = new \WP_Query( $check_query_args );
+		$saved_woo_templates = $check_query->posts;
+
+		return array_map(
+			function( $saved_woo_template ) {
+				return self::build_template_result_from_post( $saved_woo_template );
+			},
+			$saved_woo_templates
+		);
 	}
 }

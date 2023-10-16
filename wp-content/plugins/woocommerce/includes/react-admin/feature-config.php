@@ -6,8 +6,10 @@ if ( ! function_exists( 'wc_admin_get_feature_config' ) ) {
 		return array(
 			'activity-panels' => true,
 			'analytics' => true,
-			'product-block-editor' => false,
+			'product-block-editor' => true,
 			'coupons' => true,
+			'core-profiler' => true,
+			'customize-store' => false,
 			'customer-effort-score-tracks' => true,
 			'import-products-task' => true,
 			'experimental-fashion-sample-products' => true,
@@ -21,7 +23,7 @@ if ( ! function_exists( 'wc_admin_get_feature_config' ) ) {
 			'new-product-management-experience' => false,
 			'onboarding' => true,
 			'onboarding-tasks' => true,
-			'product-variation-management' => false,
+			'product-variation-management' => true,
 			'remote-inbox-notifications' => true,
 			'remote-free-extensions' => true,
 			'payment-gateway-suggestions' => true,
@@ -33,6 +35,7 @@ if ( ! function_exists( 'wc_admin_get_feature_config' ) ) {
 			'woo-mobile-welcome' => true,
 			'wc-pay-promotion' => true,
 			'wc-pay-welcome-page' => true,
+			'async-product-editor-category-field' => false,
 		);
 	}
 }

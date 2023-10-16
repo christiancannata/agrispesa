@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KV2JF
 Tags: coming soon, coming soon page, launch page, maintenance mode, under construction
 Requires at least: 3.0
 Requires PHP: 5.6
-Tested up to: 6.1
-Stable tag: 4.1.7
+Tested up to: 6.3
+Stable tag: 4.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,9 @@ https://www.youtube.com/watch?v=uxuJfHzwdtE
 <p>Nothing is better than a good feedback! Please go to <a href="https://wordpress.org/support/plugin/cmp-coming-soon-maintenance/reviews/">Plugin reviews</a> and rate it! Alternatively you can click on a Donate button too!:)</p>
 
 == Changelog ==
+<h4>CMP 4.1.9 - 09-Jun-23</h4>
+	<li>Updated compatibility with image lazy load options for EWWW Image Optimizer and Easy Image Optimizer plugins.</li>
+</ul>
 <h4>CMP 4.1.7 - 02-Mar-23</h4>
 <ul>
 	<li>Fix security issue when post details could be loaded by Ajax unauthorized request./li>

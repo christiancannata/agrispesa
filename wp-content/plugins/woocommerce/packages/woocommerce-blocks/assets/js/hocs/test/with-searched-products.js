@@ -6,12 +6,23 @@
  */
 import TestRenderer, { act } from 'react-test-renderer';
 import * as mockUtils from '@woocommerce/editor-components/utils';
-import * as mockUseDebounce from 'use-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
  */
 import withSearchedProducts from '../with-searched-products';
+
+// Add a mock implementation of debounce for testing so we can spy on the onSearch call.
+jest.mock( 'use-debounce', () => {
+	return {
+		useDebouncedCallback: jest
+			.fn()
+			.mockImplementation(
+				( search ) => () => mockUtils.getProducts( search )
+			),
+	};
+} );
 
 jest.mock( '@woocommerce/block-settings', () => ( {
 	__esModule: true,
@@ -28,25 +39,20 @@ mockUtils.getProducts = jest.fn().mockImplementation( () =>
 	] )
 );
 
-// Add a mock implementation of debounce for testing so we can spy on the onSearch call.
-mockUseDebounce.useDebouncedCallback = jest
-	.fn()
-	.mockImplementation( ( search ) => () => mockUtils.getProducts( search ) );
-
 describe( 'withSearchedProducts Component', () => {
 	const { getProducts } = mockUtils;
 	afterEach( () => {
-		mockUseDebounce.useDebouncedCallback.mockClear();
+		useDebouncedCallback.mockClear();
 		mockUtils.getProducts.mockClear();
 	} );
 	const TestComponent = withSearchedProducts(
 		( { selected, products, isLoading, onSearch } ) => {
 			return (
 				<div
-					products={ products }
-					selected={ selected }
-					isLoading={ isLoading }
-					onSearch={ onSearch }
+					data-products={ products }
+					data-selected={ selected }
+					data-isLoading={ isLoading }
+					data-onSearch={ onSearch }
 				/>
 			);
 		}
@@ -63,8 +69,8 @@ describe( 'withSearchedProducts Component', () => {
 
 		it( 'has expected values for props', () => {
 			props = renderer.root.findByType( 'div' ).props;
-			expect( props.selected ).toEqual( selected );
-			expect( props.products ).toEqual( [
+			expect( props[ 'data-selected' ] ).toEqual( selected );
+			expect( props[ 'data-products' ] ).toEqual( [
 				{ id: 10, name: 'foo', parent: 0 },
 				{ id: 20, name: 'bar', parent: 0 },
 			] );
@@ -74,10 +80,10 @@ describe( 'withSearchedProducts Component', () => {
 			props = renderer.root.findByType( 'div' ).props;
 
 			act( () => {
-				props.onSearch();
+				props[ 'data-onSearch' ]();
 			} );
 
-			expect( mockUseDebounce.useDebouncedCallback ).toHaveBeenCalled();
+			expect( useDebouncedCallback ).toHaveBeenCalled();
 			expect( getProducts ).toHaveBeenCalledTimes( 1 );
 		} );
 	} );

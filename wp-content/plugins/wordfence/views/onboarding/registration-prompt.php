@@ -45,12 +45,18 @@ $populated = $existing && $email && $license;
 				<textarea id="wf-onboarding-license-input" rows="3" required><?php echo esc_html((string) $license) ?></textarea>
 			</div>
 			<div class="wf-onboarding-form-group wf-onboarding-consent-group"<?php if ($populated): ?> style="display: none;"<?php endif ?>>
-				<input type="checkbox" id="wf-onboarding-subscribe-input">
-				<label for="wf-onboarding-subscribe-input"><?php esc_html_e('Join our WordPress security mailing to receive security alerts and Wordfence news', 'wordfence') ?></label>
+				<label id="wf-onboarding-subscription-options-label"><?php esc_html_e('Would you like WordPress security and vulnerability alerts sent to you via email?', 'wordfence') ?></label>
+				<div class="wf-onboarding-subscription-options" role="radiogroup" aria-labelledby="wf-onboarding-subscription-options-label">
+					<ul class="wf-switch">
+						<li data-value="1" role="radio" tabindex="0"><?php esc_html_e('Yes', 'wordfence') ?></li>
+						<li data-value="0" role="radio" tabindex="0"><?php esc_html_e('No', 'wordfence') ?></li>
+					</ul>
+					<small class="wf-onboarding-subscription-option-required" style="display: none;"><?php esc_html_e('You must select either "Yes" or "No"', 'wordfence') ?></small>
+				</div>
 			</div>
 			<div class="wf-onboarding-form-group wf-onboarding-consent-group"<?php if ($populated): ?> style="display: none;"<?php endif ?>>
 				<input type="checkbox" id="wf-onboarding-consent-input" required<?php if ($populated): ?> checked<?php endif ?>>
-				<label for="wf-onboarding-consent-input">I have read and agree to the <a href="https://www.wordfence.com/license-terms-and-conditions/" target="_blank" rel="noopener noreferrer">Wordfence License Terms and Conditions</a>, the <a href="https://www.wordfence.com/services-subscription-agreement" rel="noopener noreferrer" target="_blank">Services Subscription Agreement</a>, and <a href="https://www.wordfence.com/terms-of-service/" target="_blank" rel="noopener noreferrer">Terms of Service</a>, and have read and acknowledge the <a href="https://www.wordfence.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Wordfence Privacy Policy</a>.</label>
+				<label for="wf-onboarding-consent-input"><?php echo wp_kses(__('I have read and agree to the <a href="https://www.wordfence.com/license-terms-and-conditions/" target="_blank" rel="noopener noreferrer">Wordfence License Terms and Conditions</a>, the <a href="https://www.wordfence.com/services-subscription-agreement" rel="noopener noreferrer" target="_blank">Services Subscription Agreement</a>, and <a href="https://www.wordfence.com/terms-of-service/" target="_blank" rel="noopener noreferrer">Terms of Service</a>, and have read and acknowledge the <a href="https://www.wordfence.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Wordfence Privacy Policy</a>.', 'wordfence'), array('a' => array('href' => array(), 'target' => array(), 'rel' => array()))) ?></label>
 			</div>
 			<button class="wf-btn wf-btn-primary wf-onboarding-install-license" type="submit"><?php esc_html_e('Install License', 'wordfence') ?></button>
 		</form>

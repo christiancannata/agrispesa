@@ -1,7 +1,6 @@
 <?php
 namespace Automattic\WooCommerce\Blocks;
 
-use Automattic\WooCommerce\Blocks\BlockTypes\AtomicBlock;
 use Automattic\WooCommerce\Blocks\Package;
 use Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry;
 use Automattic\WooCommerce\Blocks\Assets\Api as AssetApi;
@@ -61,10 +60,10 @@ final class BlockTypesController {
 		$block_types = $this->get_block_types();
 
 		foreach ( $block_types as $block_type ) {
-			$block_type_class    = __NAMESPACE__ . '\\BlockTypes\\' . $block_type;
-			$block_type_instance = new $block_type_class( $this->asset_api, $this->asset_data_registry, new IntegrationRegistry() );
-		}
+			$block_type_class = __NAMESPACE__ . '\\BlockTypes\\' . $block_type;
 
+			new $block_type_class( $this->asset_api, $this->asset_data_registry, new IntegrationRegistry() );
+		}
 	}
 
 	/**
@@ -190,13 +189,18 @@ final class BlockTypesController {
 			'ProductButton',
 			'ProductCategories',
 			'ProductCategory',
+			'ProductCollection',
 			'ProductImage',
 			'ProductImageGallery',
 			'ProductNew',
 			'ProductOnSale',
 			'ProductPrice',
+			'ProductTemplate',
 			'ProductQuery',
+			'ProductAverageRating',
 			'ProductRating',
+			'ProductRatingCounter',
+			'ProductRatingStars',
 			'ProductResultsCount',
 			'ProductReviews',
 			'ProductSaleBadge',
@@ -213,6 +217,7 @@ final class BlockTypesController {
 			'ReviewsByProduct',
 			'RelatedProducts',
 			'ProductDetails',
+			'SingleProduct',
 			'StockFilter',
 		];
 
@@ -224,21 +229,11 @@ final class BlockTypesController {
 		);
 
 		if ( Package::feature()->is_experimental_build() ) {
-			$block_types[] = 'SingleProduct';
-		}
-
-		/**
-		 * This disables specific blocks in Widget Areas by not registering them.
-		 */
-		if ( in_array( $pagenow, [ 'widgets.php', 'themes.php', 'customize.php' ], true ) && ( empty( $_GET['page'] ) || 'gutenberg-edit-site' !== $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-			$block_types = array_diff(
-				$block_types,
-				[
-					'AllProducts',
-					'Cart',
-					'Checkout',
-				]
-			);
+			$block_types[] = 'ProductGallery';
+			$block_types[] = 'ProductGalleryLargeImage';
+			$block_types[] = 'ProductGalleryLargeImageNextPrevious';
+			$block_types[] = 'ProductGalleryPager';
+			$block_types[] = 'ProductGalleryThumbnails';
 		}
 
 		/**

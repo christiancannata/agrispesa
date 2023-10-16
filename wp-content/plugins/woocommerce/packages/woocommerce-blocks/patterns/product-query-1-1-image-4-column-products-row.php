@@ -1,12 +1,12 @@
 <?php
 /**
- * Title: WooCommerce 1:1 Image 4-Column Products Row
+ * Title: 1:1 Image 4-Column Product Row
  * Slug: woocommerce-blocks/product-query-1-1-image-4-column-products-row
  * Categories: WooCommerce
  * Block Types: core/query/woocommerce/product-query
  */
 ?>
-<!-- wp:query {"queryId":1,"query":{"perPage":"4","pages":0,"offset":0,"postType":"product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"__woocommerceStockStatus":["instock","outofstock","onbackorder"]},"displayLayout":{"type":"flex","columns":4},"namespace":"woocommerce/product-query"} -->
+<!-- wp:query {"query":{"perPage":"4","pages":0,"offset":0,"postType":"product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"__woocommerceStockStatus":["instock","outofstock","onbackorder"]},"displayLayout":{"type":"flex","columns":4},"namespace":"woocommerce/product-query"} -->
 <div class="wp-block-query"><!-- wp:post-template -->
 <!-- wp:woocommerce/product-image {"isDescendentOfQueryLoop":true,"style":{"spacing":{"margin":{"bottom":"0.75rem","top":"0"}}}} /-->
 

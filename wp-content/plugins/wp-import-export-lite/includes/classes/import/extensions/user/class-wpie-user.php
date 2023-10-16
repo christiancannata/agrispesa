@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\import\user;
 
 use WP_User_Query;
@@ -131,6 +130,17 @@ class WPIE_User_Import extends \wpie\import\engine\WPIE_Import_Engine {
 
                 if ( $this->is_new_item ) {
 
+                        if ( !isset( $this->wpie_final_data[ 'user_email' ] ) || '' === trim( $this->wpie_final_data[ 'user_email' ] ) ) {
+
+                                $this->set_log( '<strong>' . __( 'ERROR', 'wp-import-export-lite' ) . '</strong> : ' . __( 'Cannot create a user with an empty email', 'wp-import-export-lite' ) );
+
+                                $this->process_log[ 'imported' ]++;
+
+                                $this->process_log[ 'skipped' ]++;
+
+                                return true;
+                        }
+
                         $this->item_id = wp_insert_user( $this->wpie_final_data );
                 } else {
 
@@ -192,7 +202,7 @@ class WPIE_User_Import extends \wpie\import\engine\WPIE_Import_Engine {
 				SET `user_pass` = %s
 				WHERE `ID` = %d
 				", $this->wpie_final_data[ 'user_pass' ], $this->item_id
-                        ) );
+                                ) );
                 }
 
                 if ( empty( $send_notifications ) || absint( $send_notifications ) !== 1 ) {

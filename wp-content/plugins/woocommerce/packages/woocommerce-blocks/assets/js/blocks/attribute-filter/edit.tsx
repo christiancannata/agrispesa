@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { sortBy } from 'lodash';
+import { sort } from 'fast-sort';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
@@ -69,7 +69,6 @@ const Edit = ( {
 }: EditProps ) => {
 	const {
 		attributeId,
-		className,
 		displayStyle,
 		heading,
 		headingLevel,
@@ -158,15 +157,14 @@ const Edit = ( {
 			),
 		};
 
-		const list = sortBy(
+		const list = sort(
 			ATTRIBUTES.map( ( item ) => {
 				return {
 					id: parseInt( item.attribute_id, 10 ),
 					name: item.attribute_label,
 				};
-			} ),
-			'name'
-		);
+			} )
+		).asc( 'name' );
 
 		return (
 			<SearchListControl
@@ -354,6 +352,7 @@ const Edit = ( {
 				href={ getAdminLink(
 					'edit.php?post_type=product&page=product_attributes'
 				) }
+				target="_top"
 			>
 				{ __( 'Add new attribute', 'woo-gutenberg-products-block' ) +
 					' ' }
@@ -363,6 +362,7 @@ const Edit = ( {
 				className="wc-block-attribute-filter__read_more_button"
 				isTertiary
 				href="https://docs.woocommerce.com/document/managing-product-taxonomies/"
+				target="_blank"
 			>
 				{ __( 'Learn more', 'woo-gutenberg-products-block' ) }
 			</Button>
@@ -420,12 +420,7 @@ const Edit = ( {
 			{ isEditing ? (
 				renderEditMode()
 			) : (
-				<div
-					className={ classnames(
-						className,
-						'wc-block-attribute-filter'
-					) }
-				>
+				<div className={ classnames( 'wc-block-attribute-filter' ) }>
 					{ heading && (
 						<BlockTitle
 							className="wc-block-attribute-filter__title"

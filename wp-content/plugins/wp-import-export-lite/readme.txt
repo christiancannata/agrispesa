@@ -3,9 +3,9 @@ Contributors: vjinfotech
 Tags: export, import, migrate, csv, migration, product import, woocommerce import, bulk export, bulk import, bulk upload, Order Import, post import, Product Upload, schedule, wordpress import export
 Donate link: https://1.envato.market/1krom
 Requires at least: 4.4
-Tested up to: 6.1
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 3.9.24
+Stable tag: 3.9.26
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

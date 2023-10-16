@@ -43,7 +43,11 @@
 	}
 	.wc-block-components-radio-control__description-group {
 		@include font-size(smaller);
-		color: $gray-700;
+	}
+
+	&--disabled {
+		opacity: 0.5;
+		transition: opacity 200ms ease;
 	}
 }
 

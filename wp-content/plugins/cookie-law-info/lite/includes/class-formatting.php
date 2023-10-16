@@ -92,6 +92,8 @@ if ( ! function_exists( 'cky_allowed_html' ) ) {
 			'role'             => true,
 			'data-*'           => true,
 			'data-cky-tag'     => true,
+			'tabindex'         => true,
+			'aria-level'       => true,
 		);
 		if ( true === $value ) {
 			$value = array();

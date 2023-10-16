@@ -8,21 +8,25 @@ import {
 import { Icon } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { stacks } from '@woocommerce/icons';
-import { isWpVersion } from '@woocommerce/settings';
+import { isWpVersion, getSettingWithCoercion } from '@woocommerce/settings';
 import { select, subscribe } from '@wordpress/data';
-import { QueryBlockAttributes } from '@woocommerce/blocks/product-query/types';
+import {
+	QueryBlockAttributes,
+	ProductQueryBlockQuery,
+} from '@woocommerce/blocks/product-query/types';
+import { isSiteEditorPage } from '@woocommerce/utils';
+import { isNumber } from '@woocommerce/types';
 
 /**
  * Internal dependencies
  */
 import {
+	PRODUCT_QUERY_VARIATION_NAME,
 	DEFAULT_ALLOWED_CONTROLS,
 	INNER_BLOCKS_TEMPLATE,
 	QUERY_DEFAULT_ATTRIBUTES,
 	QUERY_LOOP_ID,
 } from '../constants';
-
-export const VARIATION_NAME = 'woocommerce/product-query';
 
 const ARCHIVE_PRODUCT_TEMPLATES = [
 	'woocommerce/woocommerce//archive-product',
@@ -38,11 +42,11 @@ const registerProductsBlock = ( attributes: QueryBlockAttributes ) => {
 			'A block that displays a selection of products in your store.',
 			'woo-gutenberg-products-block'
 		),
-		name: VARIATION_NAME,
+		name: PRODUCT_QUERY_VARIATION_NAME,
 		/* translators: “Products“ is the name of the block. */
 		title: __( 'Products (Beta)', 'woo-gutenberg-products-block' ),
 		isActive: ( blockAttributes ) =>
-			blockAttributes.namespace === VARIATION_NAME,
+			blockAttributes.namespace === PRODUCT_QUERY_VARIATION_NAME,
 		icon: (
 			<Icon
 				icon={ stacks }
@@ -51,7 +55,7 @@ const registerProductsBlock = ( attributes: QueryBlockAttributes ) => {
 		),
 		attributes: {
 			...attributes,
-			namespace: VARIATION_NAME,
+			namespace: PRODUCT_QUERY_VARIATION_NAME,
 		},
 		// Gutenberg doesn't support this type yet, discussion here:
 		// https://github.com/WordPress/gutenberg/pull/43632
@@ -64,34 +68,53 @@ const registerProductsBlock = ( attributes: QueryBlockAttributes ) => {
 };
 
 if ( isWpVersion( '6.1', '>=' ) ) {
-	const store = select( 'core/edit-site' );
+	let currentTemplateId: string | undefined;
+	subscribe( () => {
+		const previousTemplateId = currentTemplateId;
+		const store = select( 'core/edit-site' );
+		currentTemplateId = store?.getEditedPostId();
+		if ( previousTemplateId === currentTemplateId ) {
+			return;
+		}
 
-	if ( store ) {
-		let currentTemplateId: string | undefined;
+		if ( isSiteEditorPage( store ) ) {
+			const inherit =
+				ARCHIVE_PRODUCT_TEMPLATES.includes( currentTemplateId );
 
-		subscribe( () => {
-			const previousTemplateId = currentTemplateId;
+			const inheritQuery: Partial< ProductQueryBlockQuery > = {
+				inherit,
+			};
 
-			currentTemplateId = store?.getEditedPostId();
-
-			if ( previousTemplateId === currentTemplateId ) {
-				return;
+			if ( inherit ) {
+				inheritQuery.perPage = getSettingWithCoercion(
+					'loopShopPerPage',
+					12,
+					isNumber
+				);
 			}
 
 			const queryAttributes = {
 				...QUERY_DEFAULT_ATTRIBUTES,
 				query: {
 					...QUERY_DEFAULT_ATTRIBUTES.query,
-					inherit:
-						ARCHIVE_PRODUCT_TEMPLATES.includes( currentTemplateId ),
+					...inheritQuery,
 				},
 			};
 
-			unregisterBlockVariation( QUERY_LOOP_ID, VARIATION_NAME );
+			unregisterBlockVariation(
+				QUERY_LOOP_ID,
+				PRODUCT_QUERY_VARIATION_NAME
+			);
 
 			registerProductsBlock( queryAttributes );
-		} );
-	} else {
-		registerProductsBlock( QUERY_DEFAULT_ATTRIBUTES );
-	}
+		}
+	}, 'core/edit-site' );
+
+	let isBlockRegistered = false;
+	subscribe( () => {
+		if ( ! isBlockRegistered ) {
+			isBlockRegistered = true;
+			registerProductsBlock( QUERY_DEFAULT_ATTRIBUTES );
+		}
+	}, 'core/edit-post' );
 }

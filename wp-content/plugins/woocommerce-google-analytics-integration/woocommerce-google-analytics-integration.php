@@ -5,9 +5,9 @@
  * Description: Allows Google Analytics tracking code to be inserted into WooCommerce store pages.
  * Author: WooCommerce
  * Author URI: https://woocommerce.com
- * Version: 1.8.4
+ * Version: 1.8.7
  * WC requires at least: 6.8
- * WC tested up to: 8.0
+ * WC tested up to: 8.2
  * Tested up to: 6.3
  * License: GPLv2 or later
  * Text Domain: woocommerce-google-analytics-integration
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'WC_Google_Analytics_Integration' ) ) {
 
-	define( 'WC_GOOGLE_ANALYTICS_INTEGRATION_VERSION', '1.8.4' ); // WRCS: DEFINED_VERSION.
+	define( 'WC_GOOGLE_ANALYTICS_INTEGRATION_VERSION', '1.8.7' ); // WRCS: DEFINED_VERSION.
 	define( 'WC_GOOGLE_ANALYTICS_INTEGRATION_MIN_WC_VER', '6.8' );
 
 	// Maybe show the GA Pro notice on plugin activation.
@@ -82,7 +82,7 @@ if ( ! class_exists( 'WC_Google_Analytics_Integration' ) ) {
 		/**
 		 * Gets the settings page URL.
 		 *
-		 * @since x.x.x
+		 * @since 1.5.17
 		 *
 		 * @return string Settings URL
 		 */
@@ -105,10 +105,13 @@ if ( ! class_exists( 'WC_Google_Analytics_Integration' ) ) {
 		 */
 		public function plugin_links( $links ) {
 			$settings_url = $this->get_settings_url();
+			$support_url  = 'https://wordpress.org/support/plugin/woocommerce-google-analytics-integration';
+			$docs_url     = 'https://woocommerce.com/document/google-analytics-integration/?utm_source=wordpress&utm_medium=all-plugins-page&utm_campaign=doc-link&utm_content=woocommerce-google-analytics-integration';
 
 			$plugin_links = array(
-				'<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'woocommerce-google-analytics-integration' ) . '</a>',
-				'<a href="https://wordpress.org/support/plugin/woocommerce-google-analytics-integration">' . __( 'Support', 'woocommerce-google-analytics-integration' ) . '</a>',
+				'<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'woocommerce-google-analytics-integration' ) . '</a>',
+				'<a href="' . esc_url( $support_url ) . '">' . esc_html__( 'Support', 'woocommerce-google-analytics-integration' ) . '</a>',
+				'<a href="' . esc_url( $docs_url ) . '">' . esc_html__( 'Documentation', 'woocommerce-google-analytics-integration' ) . '</a>',
 			);
 
 			return array_merge( $plugin_links, $links );
@@ -169,7 +172,7 @@ if ( ! class_exists( 'WC_Google_Analytics_Integration' ) ) {
 		/**
 		 * Get Google Analytics Integration
 		 *
-		 * @since x.x.x
+		 * @since 1.5.17
 		 *
 		 * @return WC_Google_Analytics The Google Analytics integration.
 		 */

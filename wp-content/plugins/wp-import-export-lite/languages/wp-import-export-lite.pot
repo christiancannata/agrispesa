@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Import Export Lite\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-29 09:37+0000\n"
+"POT-Creation-Date: 2023-09-28 05:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.3; wp-6.0.3\n"
+"X-Loco-Version: 2.6.6; wp-6.3.1\n"
 "X-Domain: wp-import-export-lite"
 
 #: includes/classes/import/fields/wpie-post.php:519
@@ -317,7 +317,7 @@ msgstr ""
 #: includes/classes/import/fields/wpie-post.php:3
 #: includes/classes/import/fields/wpie-taxonomy.php:3
 #: includes/classes/import/file-format/manager.php:6
-#: includes/classes/export/extensions/bg/class-wpie-bg.php:7
+#: includes/classes/export/extensions/bg/class-wpie-bg.php:6
 #: includes/classes/export/extensions/bg/wpie_bg.php:4
 #: includes/classes/export/extensions/bg/wpie_bg_btn.php:3
 #: includes/classes/export/extensions/user/class-wpie-user.php:9
@@ -325,7 +325,7 @@ msgstr ""
 #: includes/classes/export/extensions/yoast-seo/class-wpie-yoast-seo.php:7
 #: includes/classes/export/extensions/yoast-seo/class-wpie-yoast-seo_taxonomy.php:7
 #: includes/classes/export/extensions/yoast-seo/wpie_yoast_seo.php:5
-#: includes/classes/import/extensions/bg/class-wpie-bg.php:7
+#: includes/classes/import/extensions/bg/class-wpie-bg.php:6
 #: includes/classes/import/extensions/bg/wpie_bg.php:4
 #: includes/classes/import/extensions/bg/wpie_bg_btn.php:3
 #: includes/classes/import/extensions/existing-file/class-existing-file.php:8
@@ -337,7 +337,7 @@ msgstr ""
 #: includes/classes/import/extensions/url-upload/class-wpie-url-upload.php:9
 #: includes/classes/import/extensions/url-upload/wpie-url-upload-view.php:3
 #: includes/classes/import/extensions/url-upload/wpie_url_upload.php:5
-#: includes/classes/import/extensions/user/class-wpie-user.php:9
+#: includes/classes/import/extensions/user/class-wpie-user.php:8
 #: includes/classes/import/extensions/user/user.php:4
 #: includes/classes/import/extensions/user/wpie-user-fields.php:3
 #: includes/classes/import/extensions/user/wpie-user.php:3
@@ -358,7 +358,7 @@ msgstr ""
 msgid "can't parse uploaded file"
 msgstr ""
 
-#: includes/classes/import/extensions/user/class-wpie-user.php:139
+#: includes/classes/import/extensions/user/class-wpie-user.php:149
 msgid "Can't update current Login user"
 msgstr ""
 
@@ -370,6 +370,10 @@ msgstr ""
 #: includes/views/wpie-manage-export.php:232
 #: includes/views/wpie-manage-import.php:258
 msgid "cancel"
+msgstr ""
+
+#: includes/classes/import/extensions/user/class-wpie-user.php:135
+msgid "Cannot create a user with an empty email"
 msgstr ""
 
 #: includes/classes/import/extensions/yoast-seo/views/post.php:256
@@ -1021,8 +1025,9 @@ msgstr ""
 #: includes/classes/import/class-wpie-post.php:685
 #: includes/classes/import/class-wpie-taxonomy.php:73
 #: includes/classes/import/class-wpie-taxonomy.php:80
-#: includes/classes/import/extensions/user/class-wpie-user.php:156
-#: includes/classes/import/extensions/user/class-wpie-user.php:163
+#: includes/classes/import/extensions/user/class-wpie-user.php:135
+#: includes/classes/import/extensions/user/class-wpie-user.php:166
+#: includes/classes/import/extensions/user/class-wpie-user.php:173
 msgid "ERROR"
 msgstr ""
 
@@ -3130,7 +3135,7 @@ msgstr ""
 
 #: includes/classes/import/class-wpie-post.php:232
 #: includes/classes/import/class-wpie-taxonomy.php:80
-#: includes/classes/import/extensions/user/class-wpie-user.php:163
+#: includes/classes/import/extensions/user/class-wpie-user.php:173
 msgid "something wrong, ID = 0 was generated."
 msgstr ""
 
@@ -3788,7 +3793,7 @@ msgstr ""
 #: includes/classes/import/class-wpie-import-engine.php:319
 #: includes/classes/import/class-wpie-import-engine.php:597
 #: includes/classes/import/class-wpie-import-engine.php:619
-#: includes/classes/import/extensions/user/class-wpie-user.php:139
+#: includes/classes/import/extensions/user/class-wpie-user.php:149
 #: includes/classes/import/extensions/yoast-seo/class-images.php:79
 #: includes/classes/import/extensions/yoast-seo/class-images.php:82
 #: includes/classes/import/extensions/yoast-seo/class-images.php:119

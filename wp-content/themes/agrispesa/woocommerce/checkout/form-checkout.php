@@ -15,15 +15,15 @@
  * @version 3.5.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-do_action( 'woocommerce_before_checkout_form', $checkout );
+do_action('woocommerce_before_checkout_form', $checkout);
 
 // If checkout registration is disabled and not logged in, the user cannot checkout.
-if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
-	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
+if (!$checkout->is_registration_enabled() && $checkout->is_registration_required() && !is_user_logged_in()) {
+	echo esc_html(apply_filters('woocommerce_checkout_must_be_logged_in_message', __('You must be logged in to checkout.', 'woocommerce')));
 	return;
 }
 
@@ -32,48 +32,62 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 <div class="checkout-page">
 
 
-	<?php if ( $checkout->get_checkout_fields() ) : ?>
+	<?php if ($checkout->get_checkout_fields()) : ?>
 
-		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
+		<?php do_action('woocommerce_checkout_before_customer_details'); ?>
 
 		<div class="checkout--flex" id="customer_details">
 			<div class="checkout--form">
-                <?php
-                echo woocommerce_checkout_login_form();
-                ?>
-                <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-                <?php do_action( 'woocommerce_checkout_billing' ); ?>
-								<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+
+				<?php
+				$hasPetfood = 0;
+
+				foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+					if (has_term(['petfood'], 'product_cat', $cart_item['product_id'])) {
+						$hasPetfood = 1;
+					}
+
+				}
+
+				?>
+				<input type="hidden" id="petfood" value="<?php echo $hasPetfood; ?>">
+
+				<?php
+				echo woocommerce_checkout_login_form();
+				?>
+				<form name="checkout" method="post" class="checkout woocommerce-checkout"
+					  action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
+					<?php do_action('woocommerce_checkout_billing'); ?>
+					<?php do_action('woocommerce_checkout_shipping'); ?>
 
 
-								<?php do_action( 'woocommerce_checkout_payment_hook' ); ?>
+					<?php do_action('woocommerce_checkout_payment_hook'); ?>
 
-								<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+					<?php do_action('woocommerce_checkout_after_customer_details'); ?>
 
-                </form>
+				</form>
 			</div>
 
 			<div class="checkout--sommair">
-				<?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
+				<?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
 
-				<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+				<?php do_action('woocommerce_checkout_before_order_review'); ?>
 
 				<div id="order_review" class="woocommerce-checkout-review-order">
-					<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+					<?php do_action('woocommerce_checkout_order_review'); ?>
 				</div>
 
-				<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
+				<?php do_action('woocommerce_checkout_after_order_review'); ?>
 			</div>
 		</div>
-
 
 
 	<?php endif; ?>
 
 
-
-</form>
+	</form>
 
 </div>
 
-<?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
+<?php do_action('woocommerce_after_checkout_form', $checkout); ?>

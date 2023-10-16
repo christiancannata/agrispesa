@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\import\bg;
 
 if ( !defined( 'ABSPATH' ) ) {
@@ -34,7 +33,6 @@ class WPIE_BG_Import extends \wpie\import\WPIE_Import {
 
                 return $files;
         }
-
 
         public function wpie_bg_import_init() {
                 $id = $this->get_bg_template_id();
@@ -87,7 +85,17 @@ class WPIE_BG_Import extends \wpie\import\WPIE_Import {
 
                 global $wpdb;
 
-                $wpieProcess = \maybe_unserialize( \get_option( "wpie_bg_process" ) );
+                $bgProcess = \get_option( "wpie_bg_process" );
+
+                $wpieProcess = [];
+
+                if ( is_string( $bgProcess ) && trim( $bgProcess ) !== '' ) {
+                        $wpieProcess = \maybe_unserialize( $bgProcess );
+                }
+
+                if ( !is_array( $wpieProcess ) || empty( $wpieProcess ) ) {
+                        $wpieProcess = [];
+                }
 
                 $wpieProcess[ 'processing' ] = isset( $wpieProcess[ 'processing' ] ) ? $wpieProcess[ 'processing' ] : [];
 

@@ -8,14 +8,14 @@
  * @wordpress-plugin
  * Plugin Name:       Trustpilot-reviews
  * Description:       Trustpilot-reviews helps Woocommerce store owners generate a ton of reviews for their products.
- * Version:           2.5.922
+ * Version:           2.5.925
  * Author:            Trustpilot
  * Author URI:        https://trustpilot.com
  * Text Domain:       Trustpilot-reviews
  * License:           AFL-3.0
  * License URI:       https://www.afl.org/licenses/afl-3.0.txt
  * WC requires at least: 3.0
- * WC tested up to: 4.0
+ * WC tested up to: 7.9.0
  */
 
 namespace Trustpilot\Review;
@@ -80,6 +80,15 @@ function init() {
 	$Review_trustbox   = TrustBox::get_instance();
 }
 add_action( 'plugins_loaded', 'Trustpilot\\Review\\init' );
+
+/**
+ * Declare plugin as compatible with WooCommerce HPOS
+ */
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
 
 /**
  * Register activation and deactivation hooks

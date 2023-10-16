@@ -12,6 +12,7 @@ use Automattic\WooCommerce\Blocks\Domain\Services\Notices;
 use Automattic\WooCommerce\Blocks\Domain\Services\DraftOrders;
 use Automattic\WooCommerce\Blocks\Domain\Services\FeatureGating;
 use Automattic\WooCommerce\Blocks\Domain\Services\GoogleAnalytics;
+use Automattic\WooCommerce\Blocks\Domain\Services\Hydration;
 use Automattic\WooCommerce\Blocks\InboxNotifications;
 use Automattic\WooCommerce\Blocks\Installer;
 use Automattic\WooCommerce\Blocks\Migration;
@@ -22,7 +23,11 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\Cheque;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\PayPal;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use Automattic\WooCommerce\Blocks\Registry\Container;
+use Automattic\WooCommerce\Blocks\Templates\CartTemplate;
+use Automattic\WooCommerce\Blocks\Templates\CheckoutHeaderTemplate;
+use Automattic\WooCommerce\Blocks\Templates\CheckoutTemplate;
 use Automattic\WooCommerce\Blocks\Templates\ClassicTemplatesCompatibility;
+use Automattic\WooCommerce\Blocks\Templates\OrderConfirmationTemplate;
 use Automattic\WooCommerce\Blocks\Templates\ProductAttributeTemplate;
 use Automattic\WooCommerce\Blocks\Templates\ProductSearchResultsTemplate;
 use Automattic\WooCommerce\StoreApi\RoutesController;
@@ -95,12 +100,12 @@ class Bootstrap {
 	protected function init() {
 		$this->register_dependencies();
 		$this->register_payment_methods();
+		$this->load_interactivity_api();
 
-		if ( $this->package->is_experimental_build() && is_admin() ) {
-			if ( $this->package->get_version() !== $this->package->get_version_stored_on_db() ) {
-				$this->migration->run_migrations();
-				$this->package->set_version_stored_on_db();
-			}
+		// This is just a temporary solution to make sure the migrations are run. We have to refactor this. More details: https://github.com/woocommerce/woocommerce-blocks/issues/10196.
+		if ( $this->package->get_version() !== $this->package->get_version_stored_on_db() ) {
+			$this->migration->run_migrations();
+			$this->package->set_version_stored_on_db();
 		}
 
 		add_action(
@@ -115,29 +120,43 @@ class Bootstrap {
 		);
 
 		$is_rest = wc()->is_rest_api_request();
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$is_store_api_request = $is_rest && ! empty( $_SERVER['REQUEST_URI'] ) && ( false !== strpos( $_SERVER['REQUEST_URI'], trailingslashit( rest_get_url_prefix() ) . 'wc/store/' ) );
+
+		// Load and init assets.
+		$this->container->get( StoreApi::class )->init();
+		$this->container->get( PaymentsApi::class )->init();
+		$this->container->get( DraftOrders::class )->init();
+		$this->container->get( CreateAccount::class )->init();
+		$this->container->get( ShippingController::class )->init();
 
 		// Load assets in admin and on the frontend.
 		if ( ! $is_rest ) {
 			$this->add_build_notice();
 			$this->container->get( AssetDataRegistry::class );
-			$this->container->get( Installer::class );
 			$this->container->get( AssetsController::class );
+			$this->container->get( Installer::class )->init();
+			$this->container->get( GoogleAnalytics::class )->init();
 		}
-		$this->container->get( DraftOrders::class )->init();
-		$this->container->get( CreateAccount::class )->init();
-		$this->container->get( Notices::class )->init();
-		$this->container->get( StoreApi::class )->init();
-		$this->container->get( GoogleAnalytics::class );
-		$this->container->get( BlockTypesController::class );
-		$this->container->get( BlockTemplatesController::class );
-		$this->container->get( ProductSearchResultsTemplate::class );
-		$this->container->get( ProductAttributeTemplate::class );
-		$this->container->get( ClassicTemplatesCompatibility::class );
-		$this->container->get( ArchiveProductTemplatesCompatibility::class )->init();
-		$this->container->get( SingleProductTemplateCompatibility::class )->init();
-		$this->container->get( BlockPatterns::class );
-		$this->container->get( PaymentsApi::class );
-		$this->container->get( ShippingController::class )->init();
+
+		// Load assets unless this is a request specifically for the store API.
+		if ( ! $is_store_api_request ) {
+			// Template related functionality. These won't be loaded for store API requests, but may be loaded for
+			// regular rest requests to maintain compatibility with the store editor.
+			$this->container->get( BlockPatterns::class );
+			$this->container->get( BlockTypesController::class );
+			$this->container->get( BlockTemplatesController::class );
+			$this->container->get( ProductSearchResultsTemplate::class );
+			$this->container->get( ProductAttributeTemplate::class );
+			$this->container->get( CartTemplate::class );
+			$this->container->get( CheckoutTemplate::class );
+			$this->container->get( CheckoutHeaderTemplate::class );
+			$this->container->get( OrderConfirmationTemplate::class );
+			$this->container->get( ClassicTemplatesCompatibility::class );
+			$this->container->get( ArchiveProductTemplatesCompatibility::class )->init();
+			$this->container->get( SingleProductTemplateCompatibility::class )->init();
+			$this->container->get( Notices::class )->init();
+		}
 	}
 
 	/**
@@ -208,6 +227,13 @@ class Bootstrap {
 	}
 
 	/**
+	 * Load and set up the Interactivity API if enabled.
+	 */
+	protected function load_interactivity_api() {
+			require_once __DIR__ . '/../Interactivity/load.php';
+	}
+
+	/**
 	 * Register core dependencies with the container.
 	 */
 	protected function register_dependencies() {
@@ -274,6 +300,30 @@ class Bootstrap {
 			}
 		);
 		$this->container->register(
+			CartTemplate::class,
+			function () {
+				return new CartTemplate();
+			}
+		);
+		$this->container->register(
+			CheckoutTemplate::class,
+			function () {
+				return new CheckoutTemplate();
+			}
+		);
+		$this->container->register(
+			CheckoutHeaderTemplate::class,
+			function () {
+				return new CheckoutHeaderTemplate();
+			}
+		);
+		$this->container->register(
+			OrderConfirmationTemplate::class,
+			function () {
+				return new OrderConfirmationTemplate();
+			}
+		);
+		$this->container->register(
 			ClassicTemplatesCompatibility::class,
 			function ( Container $container ) {
 				$asset_data_registry = $container->get( AssetDataRegistry::class );
@@ -308,10 +358,6 @@ class Bootstrap {
 		$this->container->register(
 			GoogleAnalytics::class,
 			function( Container $container ) {
-				// Require Google Analytics Integration to be activated.
-				if ( ! class_exists( 'WC_Google_Analytics_Integration', false ) ) {
-					return;
-				}
 				$asset_api = $container->get( AssetApi::class );
 				return new GoogleAnalytics( $asset_api );
 			}
@@ -320,6 +366,12 @@ class Bootstrap {
 			Notices::class,
 			function( Container $container ) {
 				return new Notices( $container->get( Package::class ) );
+			}
+		);
+		$this->container->register(
+			Hydration::class,
+			function( Container $container ) {
+				return new Hydration( $container->get( AssetDataRegistry::class ) );
 			}
 		);
 		$this->container->register(

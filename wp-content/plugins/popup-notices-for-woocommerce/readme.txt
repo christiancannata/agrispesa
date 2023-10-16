@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: popup,notices,woocommerce,notice,modal
 Requires at least: 4.4
 Tested up to: 6.3
-Stable tag: 1.4.3
+Stable tag: 1.4.6
 Requires PHP: 5.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -98,6 +98,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 3. An example of a WooCommerce Notice info on the Popup
 
 == Changelog ==
+
+= 1.4.6 - 26/09/2023 =
+* WC tested up to: 8.1.
+* Update plugin icon, banner
+
+= 1.4.5 - 14/09/2023 =
+* Fix - Micromodal is not defined.
+
+= 1.4.4 - 13/09/2023 =
+* Fix - Javascript Uncaught TypeError.
+* Dev - Migrate from Gulp to Webpack.
+* WC tested up to: 8.1.
 
 = 1.4.3 - 01/09/2023 =
 * WC tested up to: 8.0.

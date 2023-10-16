@@ -111,6 +111,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 .yith-plugin-fw-rate {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 2200px;
 }
 
 @media screen and (max-width: 782px) {
@@ -796,7 +797,6 @@ body.rtl .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__action
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   grid-gap: 24px;
-  max-width: 1700px;
 }
 
 #yith-plugin-fw__panel__your-store-tools-tab .items .item {

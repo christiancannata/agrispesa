@@ -230,7 +230,7 @@ class Admin {
 		$fields         = array( 'none', 'sku', 'id' );
 		$optionalFields = array( 'upc', 'isbn', 'brand' );
 		$dynamicFields  = array( 'mpn', 'gtin' );
-		if ( class_exists( 'woocommerce' ) ) {
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			$attrs = array_map(
 				function ( $t ) {
 					return $t->attribute_name;
@@ -260,7 +260,7 @@ class Admin {
 	}
 
 	public function get_business_country() {
-		if ( class_exists( 'woocommerce' ) ) {
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			return \WC_Geolocation::geolocate_ip( '', true, true )['country'] ? \WC_Geolocation::geolocate_ip( '', true, true )['country'] : WC()->countries->get_base_country();
 		}
 	}
@@ -282,7 +282,7 @@ class Admin {
 		try {
 			$pageUrls          = new \stdClass();
 			$pageUrls->landing = trustpilot_get_page_url( 'landing' );
-			if ( class_exists( 'woocommerce' ) ) {
+			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 				$pageUrls->category = trustpilot_get_page_url( 'category' );
 				$pageUrls->product  = trustpilot_get_page_url( 'product' );
 			}
@@ -300,7 +300,7 @@ class Admin {
 			$productIdentificationOptions = $this->get_product_identification_options();
 			$configuration_scope_tree     = base64_encode( json_encode( $this->get_configuration_scope_tree() ) );
 			$pluginStatus                 = base64_encode( json_encode( trustpilot_get_field( TRUSTPILOT_PLUGIN_STATUS ) ) );
-			$mode                         = class_exists( 'woocommerce' ) ? '' : 'data-mode=\'trustbox-only\'';
+			$mode                         = is_plugin_active( 'woocommerce/woocommerce.php' ) ? '' : 'data-mode=\'trustbox-only\'';
 			wp_enqueue_script( 'TrustBoxPreviewComponent', TRUSTPILOT_TRUSTBOX_PREVIEW_URL, array(), '1.0');
 
 			$iframe = "

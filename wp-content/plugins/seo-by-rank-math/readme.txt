@@ -3,9 +3,9 @@ Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
 Tested up to: 6.3
-Requires at least: 5.6
+Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.0.122
+Stable tag: 1.0.203
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -583,12 +583,13 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.122 [Aug 23, 2023] =
-- Added: New option in [Webmaster Tools](https://rankmath.com/kb/general-settings/#webmaster-tools) to add additional verification tags
-- Added: [New filter](https://rankmath.com/kb/filters-hooks-api-developer/#modify-link-counter-content) to modify the content passed to the [Link Counter](https://rankmath.com/kb/link-counter/)
-- Fixed: PHP Warning with WP CLI command `wp rankmath sitemap generate`
-- Fixed: Setup Wizard was not updating [Person/Organization Name](https://rankmath.com/kb/how-to-setup/#your-site)
-- Fixed: PHP warnings on the [Redirections](https://rankmath.com/kb/setting-up-redirections/) page in PHP 8.1, occurring when no Redirections are present on the site
+= 1.0.203 [Oct 05, 2023] =
+- Added: New [filter](https://rankmath.com/kb/filters-hooks-api-developer/#allow-editing-robots.txt-htaccess) to allow editing [Robots.txt](https://rankmath.com/kb/general-settings/#edit-robotstxt) & [htaccess](https://rankmath.com/kb/general-settings/#edit-htaccess) data even when the `DISALLOW_FILE_EDIT` constant is set to true
+- Improved: Several improvements have been made to the [Analytics module](https://rankmath.com/kb/analytics/)
+- Improved: New parameter is added to the [Redirection query string filter](https://rankmath.com/kb/filters-hooks-api-developer/#redirect-remove-query) to enable/disable appending query string based on the Redirection URL.
+- Fixed: Paginated [Sitemaps](https://rankmath.com/kb/configure-sitemaps/) will now be created only when they have entries
+- Fixed: SEO Score calculated using [Update SEO Scores tool](https://rankmath.com/kb/rank-math-status-and-tools/#recalculate-seo-score-for-posts) now matches the SEO Score on the post editor when the `%keywords%` variable is used in the SEO Title
+- Fixed: Language setting was not being used for the [Command Center options](https://rankmath.com/kb/using-content-ai-in-block-editor/#command-center), resulting in the output being generated in an incorrect language
 
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

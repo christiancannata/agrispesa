@@ -44,6 +44,10 @@ class WC_REST_Product_Variations_Controller extends WC_REST_Product_Variations_V
 						'description' => __( 'Unique identifier for the variable product.', 'woocommerce' ),
 						'type'        => 'integer',
 					),
+					'delete' => array(
+						'description' => __( 'Deletes unused variations.', 'woocommerce' ),
+						'type'        => 'boolean',
+					),
 				),
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
@@ -862,6 +866,17 @@ class WC_REST_Product_Variations_Controller extends WC_REST_Product_Variations_V
 			$args['meta_query'] = $this->add_meta_query( $args, wc_get_min_max_price_meta_query( $request ) );  // WPCS: slow query ok.
 		}
 
+		// Price filter.
+		if ( is_bool( $request['has_price'] ) ) {
+			$args['meta_query'] = $this->add_meta_query( // WPCS: slow query ok.
+				$args,
+				array(
+					'key'     => '_price',
+					'compare' => $request['has_price'] ? 'EXISTS' : 'NOT EXISTS',
+				)
+			);
+		}
+
 		// Filter product based on stock_status.
 		if ( ! empty( $request['stock_status'] ) ) {
 			$args['meta_query'] = $this->add_meta_query( // WPCS: slow query ok.
@@ -923,7 +938,48 @@ class WC_REST_Product_Variations_Controller extends WC_REST_Product_Variations_V
 			'validate_callback' => 'rest_validate_request_arg',
 		);
 
+		$params['has_price'] = array(
+			'description'       => __( 'Limit result set to products with or without price.', 'woocommerce' ),
+			'type'              => 'boolean',
+			'sanitize_callback' => 'wc_string_to_bool',
+			'validate_callback' => 'rest_validate_request_arg',
+		);
+
 		return $params;
+	}
+
+	/**
+	 * Deletes all unmatched variations (aka duplicates).
+	 *
+	 * @param  WC_Product $product Variable product.
+	 * @return int        Number of deleted variations.
+	 */
+	private function delete_unmatched_product_variations( $product ) {
+		$deleted_count = 0;
+
+		if ( ! $product ) {
+			return $deleted_count;
+		}
+
+		$attributes = wc_list_pluck( array_filter( $product->get_attributes(), 'wc_attributes_array_filter_variation' ), 'get_slugs' );
+
+		// Get existing variations so we don't create duplicates.
+		$existing_variations = array_map( 'wc_get_product', $product->get_children() );
+
+		$possible_attribute_combinations = array_reverse( wc_array_cartesian( $attributes ) );
+
+		foreach ( $existing_variations as $existing_variation ) {
+			$matching_attribute_key = array_search( $existing_variation->get_attributes(), $possible_attribute_combinations ); // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+			if ( $matching_attribute_key !== false ) {
+				// We only want one possible variation for each possible attribute combination.
+				unset( $possible_attribute_combinations[ $matching_attribute_key ] );
+				continue;
+			}
+			$existing_variation->delete( true );
+			$deleted_count ++;
+		}
+
+		return $deleted_count;
 	}
 
 	/**
@@ -946,6 +1002,11 @@ class WC_REST_Product_Variations_Controller extends WC_REST_Product_Variations_V
 		$product           = wc_get_product( $product_id );
 		$data_store        = $product->get_data_store();
 		$response['count'] = $data_store->create_all_product_variations( $product, Constants::get_constant( 'WC_MAX_LINKED_VARIATIONS' ) );
+
+		if ( isset( $request['delete'] ) && $request['delete'] ) {
+			$deleted_count = $this->delete_unmatched_product_variations( $product );
+			$response['deleted_count'] = $deleted_count;
+		}
 
 		$data_store->sort_all_product_variations( $product->get_id() );
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8b99fe137b97966a43ce652d0d039662
+class ComposerStaticInitb78f51a8be8e6e22451c7a2a0e90ae54
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -594,7 +594,6 @@ class ComposerStaticInit8b99fe137b97966a43ce652d0d039662
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Integration\\WooCommerceBrands' => __DIR__ . '/../..' . '/src/Integration/WooCommerceBrands.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Integration\\WooCommercePreOrders' => __DIR__ . '/../..' . '/src/Integration/WooCommercePreOrders.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Integration\\WooCommerceProductBundles' => __DIR__ . '/../..' . '/src/Integration/WooCommerceProductBundles.php',
-        'Automattic\\WooCommerce\\GoogleListingsAndAds\\Integration\\WooCommerceSubscriptions' => __DIR__ . '/../..' . '/src/Integration/WooCommerceSubscriptions.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Integration\\YoastWooCommerceSeo' => __DIR__ . '/../..' . '/src/Integration/YoastWooCommerceSeo.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Internal\\ContainerAwareTrait' => __DIR__ . '/../..' . '/src/Internal/ContainerAwareTrait.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Internal\\DependencyManagement\\AbstractServiceProvider' => __DIR__ . '/../..' . '/src/Internal/DependencyManagement/AbstractServiceProvider.php',
@@ -676,7 +675,6 @@ class ComposerStaticInit8b99fe137b97966a43ce652d0d039662
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\MultichannelMarketing\\MarketingChannelRegistrar' => __DIR__ . '/../..' . '/src/MultichannelMarketing/MarketingChannelRegistrar.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\AbstractNote' => __DIR__ . '/../..' . '/src/Notes/AbstractNote.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\AbstractSetupCampaign' => __DIR__ . '/../..' . '/src/Notes/AbstractSetupCampaign.php',
-        'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\AttributeMappingNewFeature' => __DIR__ . '/../..' . '/src/Notes/AttributeMappingNewFeature.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\CompleteSetup' => __DIR__ . '/../..' . '/src/Notes/CompleteSetup.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\ContactInformation' => __DIR__ . '/../..' . '/src/Notes/ContactInformation.php',
         'Automattic\\WooCommerce\\GoogleListingsAndAds\\Notes\\LeaveReviewActionTrait' => __DIR__ . '/../..' . '/src/Notes/LeaveReviewActionTrait.php',
@@ -4110,9 +4108,9 @@ class ComposerStaticInit8b99fe137b97966a43ce652d0d039662
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8b99fe137b97966a43ce652d0d039662::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8b99fe137b97966a43ce652d0d039662::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8b99fe137b97966a43ce652d0d039662::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb78f51a8be8e6e22451c7a2a0e90ae54::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb78f51a8be8e6e22451c7a2a0e90ae54::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb78f51a8be8e6e22451c7a2a0e90ae54::$classMap;
 
         }, null, ClassLoader::class);
     }

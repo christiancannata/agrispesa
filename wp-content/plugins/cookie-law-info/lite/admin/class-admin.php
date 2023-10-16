@@ -118,7 +118,7 @@ class Admin {
 	 * @return void
 	 */
 	public function add_review_notice() {
-		$expiry    = 15 * DAY_IN_SECONDS;
+		$expiry    = 30 * DAY_IN_SECONDS;
 		$settings  = new \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings();
 		$installed = $settings->get_installed_date();
 		if ( $installed && ( $installed + $expiry > time() ) ) {

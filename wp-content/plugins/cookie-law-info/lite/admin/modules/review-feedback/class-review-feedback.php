@@ -81,7 +81,8 @@ class Review_Feedback extends Modules {
 						<div class="cky-col-12">
 							<div class="cky-flex" style="margin-top: 10px;">
 								<button class="cky-button cky-button-review"><?php echo esc_html__( 'Review now', 'cookie-law-info' ); ?></button>
-								<button class="cky-button-outline-secondary cky-button cky-button-cancel" style="margin-left: 10px;"><?php echo esc_html__( 'Remind me later', 'cookie-law-info' ); ?></button>
+								<button class="cky-button-outline-secondary cky-button cky-button-cancel"><?php echo esc_html__( 'Remind me later', 'cookie-law-info' ); ?></button>
+								<button class="cky-button-outline-secondary cky-button cky-button-nsa"><?php echo esc_html__( 'Never show again', 'cookie-law-info' ); ?></button>
 							</div>
 						</div>
 					</div>
@@ -141,6 +142,11 @@ class Review_Feedback extends Modules {
 				color: #555d66;
 				border-color: #c9d0d6;
 			}
+			.cky-flex {
+				.cky-button-outline-secondary{
+					margin-left: 10px;
+				}
+			}
 			.cky-admin-notice .cky-close {
 				font-size: 20px;
 				font-weight: 300;
@@ -183,7 +189,7 @@ class Review_Feedback extends Modules {
 	 * @return void
 	 */
 	public function add_script() {
-		$expiry = 15 * DAY_IN_SECONDS;
+		$expiry = 30 * DAY_IN_SECONDS;
 		?>
 			<script type="text/javascript">
 				(function($) {
@@ -213,6 +219,10 @@ class Review_Feedback extends Modules {
 						e.preventDefault();
 						ckyUpdateNotice(0);
 						window.open('<?php echo esc_js( $this->review_url ); ?>');
+					});
+					$(document).on('click', '.cky-button-nsa', function(e) {
+						e.preventDefault();
+						ckyUpdateNotice(0);
 					});
 				})(jQuery)
 			</script>

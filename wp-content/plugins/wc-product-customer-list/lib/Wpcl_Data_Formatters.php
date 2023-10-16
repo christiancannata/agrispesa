@@ -44,7 +44,7 @@ class Wpcl_Data_Formatters
     )
     {
         $clean_column = str_replace( [ 'wpcl_custom_field__', 'wpcl_user_meta__' ], '', $column );
-        $value = maybe_unserialize( get_post_meta( $order_id, $clean_column, true ) );
+        $value = maybe_unserialize( $order->get_meta( $clean_column, true ) );
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
@@ -1294,6 +1294,53 @@ class Wpcl_Data_Formatters
      *
      * @return array
      */
+    public static function data_customer_avatar(
+        $column,
+        $source,
+        $params,
+        $columns,
+        $order_id,
+        $order,
+        $item_id,
+        $product,
+        $product_id,
+        $customer_id,
+        $customer,
+        $quantity,
+        $current_row
+    )
+    {
+        
+        if ( empty($customer) == false && is_a( $customer, 'WP_User' ) ) {
+            $value = get_avatar( $customer_id, 96 );
+        } else {
+            $value = '';
+        }
+        
+        $current_row[$column] = $value;
+        return [
+            'current_row' => $current_row,
+            'columns'     => $columns,
+        ];
+    }
+    
+    /**
+     * @param string       $column
+     * @param string       $source
+     * @param array        $params
+     * @param array        $columns
+     * @param int          $order_id
+     * @param WC_Order     $order
+     * @param int          $item_id
+     * @param WC_Product   $product
+     * @param int          $product_id
+     * @param int          $customer_id
+     * @param WP_User|bool $customer
+     * @param int          $quantity
+     * @param array        $current_row
+     *
+     * @return array
+     */
     public static function data_order_status(
         $column,
         $source,
@@ -1855,7 +1902,7 @@ class Wpcl_Data_Formatters
             $sanitized_column_name = 'wpcl_custom_field__' . sanitize_title( $custom_field );
             
             if ( isset( $columns[$sanitized_column_name] ) ) {
-                $current_row[$sanitized_column_name] = maybe_unserialize( get_post_meta( $order_id, $custom_field, true ) );
+                $current_row[$sanitized_column_name] = maybe_unserialize( $order->get_meta( $custom_field, true ) );
                 /*
                  * We've added the possibility to create your own data_formatters for custom columns.
                  *
@@ -1972,7 +2019,7 @@ class Wpcl_Data_Formatters
     {
         $cleaned_field_name = str_replace( 'wpcl_custom_field__', '', $column );
         $sanitized_column_name = 'wpcl_custom_field__' . sanitize_title( $cleaned_field_name );
-        $current_row[$sanitized_column_name] = maybe_unserialize( get_post_meta( $order_id, $cleaned_field_name, true ) );
+        $current_row[$sanitized_column_name] = maybe_unserialize( $order->get_meta( $cleaned_field_name, true ) );
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
@@ -2225,9 +2272,9 @@ class Wpcl_Data_Formatters
         } else {
             $value_id = $id . '_' . $n;
             $value_id = apply_filters( 'we_attendee_key', $value_id, $current_item );
-            $metadata = get_post_meta( $order_id, 'att_info-' . $value_id, true );
+            $metadata = $order->get_meta( 'att_info-' . $value_id, true );
             if ( $metadata == '' ) {
-                $metadata = get_post_meta( $order_id, 'att_info-' . $id, true );
+                $metadata = $order->get_meta( 'att_info-' . $id, true );
             }
             
             if ( $metadata != '' ) {

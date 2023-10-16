@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-08-09 08:27:27+00:00\n"
+"POT-Creation-Date: 2023-10-09 08:44:56+00:00\n"
 "PO-Revision-Date: 2022-06-29 13:12:18+0000\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
@@ -89,16 +89,16 @@ msgstr "顏色數值"
 msgid "There was an error with your request; please try again later."
 msgstr "您的請求有誤； 請稍後再試。"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:501
-#: includes/class-yit-plugin-panel.php:1546
+#: includes/class-yit-plugin-panel-woocommerce.php:502
+#: includes/class-yit-plugin-panel.php:1561
 msgid "Options saved!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:555
+#: includes/class-yit-plugin-panel-woocommerce.php:556
 msgid "Options reset correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:605
+#: includes/class-yit-plugin-panel-woocommerce.php:606
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "如果你離開這個頁面，這些改變將會遺失"
 
@@ -110,28 +110,28 @@ msgstr "外掛設定"
 msgid "Settings"
 msgstr "設定"
 
-#: includes/class-yit-plugin-panel.php:544
-#: includes/class-yit-plugin-panel.php:547
+#: includes/class-yit-plugin-panel.php:559
+#: includes/class-yit-plugin-panel.php:562
 msgid "How to install premium version"
 msgstr "如何安裝高級版"
 
-#: includes/class-yit-plugin-panel.php:1158
+#: includes/class-yit-plugin-panel.php:1173
 msgid "Read the <mark>plugin documentation</mark>"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1159
+#: includes/class-yit-plugin-panel.php:1174
 msgid "Learn what you can really do with this powerful tool"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1169
+#: includes/class-yit-plugin-panel.php:1184
 msgid "Watch our <mark>\"First Steps\" video</mark>"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1170
+#: includes/class-yit-plugin-panel.php:1185
 msgid "See how it works before you start using it"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1290
+#: includes/class-yit-plugin-panel.php:1305
 msgid ""
 "At first, I was hesitant to buy the premium version so I started with the "
 "free option.\n"
@@ -142,44 +142,44 @@ msgid ""
 "kind of work and just buy whatever plugin you need from YITH."
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1541
+#: includes/class-yit-plugin-panel.php:1556
 msgid ""
 "The element you have entered already exists. Please, enter another name."
 msgstr "你輸入的這個元素已經存在，請輸入另一個名稱"
 
-#: includes/class-yit-plugin-panel.php:1542
+#: includes/class-yit-plugin-panel.php:1557
 msgid "Settings saved"
 msgstr "設定已經儲存"
 
-#: includes/class-yit-plugin-panel.php:1543
+#: includes/class-yit-plugin-panel.php:1558
 msgid "Settings reset"
 msgstr "重置設定"
 
-#: includes/class-yit-plugin-panel.php:1544
+#: includes/class-yit-plugin-panel.php:1559
 msgid "Element deleted correctly."
 msgstr "元素已被確實刪除"
 
-#: includes/class-yit-plugin-panel.php:1545
+#: includes/class-yit-plugin-panel.php:1560
 msgid "Element updated correctly."
 msgstr "元素已正確更新。"
 
-#: includes/class-yit-plugin-panel.php:1547
+#: includes/class-yit-plugin-panel.php:1562
 msgid "Database imported correctly."
 msgstr "資料庫已被正確匯入"
 
-#: includes/class-yit-plugin-panel.php:1548
+#: includes/class-yit-plugin-panel.php:1563
 msgid "An error has occurred during import. Please try again."
 msgstr "匯入過程中發生一個錯誤，請再試一次"
 
-#: includes/class-yit-plugin-panel.php:1549
+#: includes/class-yit-plugin-panel.php:1564
 msgid "The added file is not valid."
 msgstr "添加的檔案無效"
 
-#: includes/class-yit-plugin-panel.php:1550
+#: includes/class-yit-plugin-panel.php:1565
 msgid "Sorry, import is disabled."
 msgstr "抱歉，匯入功能被關閉"
 
-#: includes/class-yit-plugin-panel.php:1551
+#: includes/class-yit-plugin-panel.php:1566
 msgid "Sorting successful."
 msgstr "已順利排序"
 
@@ -863,33 +863,33 @@ msgid "Yes, delete"
 msgstr "是的，刪除"
 
 #. translators: 1. Plugin name.
-#: includes/class-yit-plugin-panel.php:905
+#: includes/class-yit-plugin-panel.php:920
 msgctxt "Help tab default title"
 msgid "Thank you for purchasing %s!"
 msgstr "感謝您購買 %s !"
 
-#: includes/class-yit-plugin-panel.php:905
+#: includes/class-yit-plugin-panel.php:920
 msgctxt "Help tab default title"
 msgid "Thank you for using %s!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:914
+#: includes/class-yit-plugin-panel.php:929
 msgctxt "Help tab default description"
 msgid ""
 "We want to help you enjoy a wonderful experience with all of our products."
 msgstr "我們希望幫助您享受我們所有產品的美妙體驗。"
 
-#: includes/class-yit-plugin-panel.php:962
+#: includes/class-yit-plugin-panel.php:977
 msgctxt "Premium tab name"
 msgid "Get premium"
 msgstr "取得高級版"
 
-#: includes/class-yit-plugin-panel.php:977
+#: includes/class-yit-plugin-panel.php:992
 msgctxt "Panel tab name"
 msgid "Your Store Tools"
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:992
+#: includes/class-yit-plugin-panel.php:1007
 msgctxt "Help tab name"
 msgid "Help"
 msgstr "幫助"

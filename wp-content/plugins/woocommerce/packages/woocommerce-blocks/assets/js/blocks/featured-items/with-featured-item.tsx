@@ -4,14 +4,12 @@
  * External dependencies
  */
 import type { BlockAlignment } from '@wordpress/blocks';
-import { ProductResponseItem } from '@woocommerce/types';
-import { __experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles } from '@wordpress/block-editor';
+import { ProductResponseItem, isEmpty } from '@woocommerce/types';
 import { Icon, Placeholder, Spinner } from '@wordpress/components';
 import classnames from 'classnames';
-import { isEmpty } from 'lodash';
 import { useCallback, useState } from '@wordpress/element';
 import { WP_REST_API_Category } from 'wp-types';
-import { useBorderProps } from '@woocommerce/base-hooks';
+import { useStyleProps } from '@woocommerce/base-hooks';
 import type { ComponentType, Dispatch, SetStateAction } from 'react';
 
 /**
@@ -29,6 +27,7 @@ import {
 
 interface WithFeaturedItemConfig extends GenericBlockUIConfig {
 	emptyMessage: string;
+	noSelectionButtonLabel: string;
 }
 
 export interface FeaturedItemRequiredAttributes {
@@ -46,6 +45,7 @@ export interface FeaturedItemRequiredAttributes {
 	overlayGradient: string;
 	showDesc: boolean;
 	showPrice: boolean;
+	editMode: boolean;
 }
 
 interface FeaturedCategoryRequiredAttributes
@@ -94,7 +94,12 @@ type FeaturedItemProps< T extends EditorBlock< T > > =
 	| ( T & FeaturedProductProps< T > );
 
 export const withFeaturedItem =
-	( { emptyMessage, icon, label }: WithFeaturedItemConfig ) =>
+	( {
+		emptyMessage,
+		icon,
+		label,
+		noSelectionButtonLabel,
+	}: WithFeaturedItemConfig ) =>
 	< T extends EditorBlock< T > >( Component: ComponentType< T > ) =>
 	( props: FeaturedItemProps< T > ) => {
 		const [ isEditingImage ] = props.useEditingImage;
@@ -142,17 +147,33 @@ export const withFeaturedItem =
 			);
 		};
 
+		const renderNoItemButton = () => {
+			return (
+				<>
+					<p>{ emptyMessage }</p>
+					<div style={ { flexBasis: '100%', height: '0' } }></div>
+					<button
+						type="button"
+						className="components-button is-secondary"
+						onClick={ () => setAttributes( { editMode: true } ) }
+					>
+						{ noSelectionButtonLabel }
+					</button>
+				</>
+			);
+		};
+
 		const renderNoItem = () => (
 			<Placeholder
 				className={ className }
 				icon={ <Icon icon={ icon } /> }
 				label={ label }
 			>
-				{ isLoading ? <Spinner /> : emptyMessage }
+				{ isLoading ? <Spinner /> : renderNoItemButton() }
 			</Placeholder>
 		);
 
-		const borderProps = useBorderProps( attributes );
+		const styleProps = useStyleProps( attributes );
 
 		const renderItem = () => {
 			const {
@@ -171,7 +192,7 @@ export const withFeaturedItem =
 				textColor,
 			} = attributes;
 
-			const classes = classnames(
+			const containerClass = classnames(
 				className,
 				{
 					'is-selected':
@@ -184,7 +205,8 @@ export const withFeaturedItem =
 					'is-repeated': isRepeated,
 				},
 				dimRatioToClass( dimRatio ),
-				contentAlign !== 'center' && `has-${ contentAlign }-content`
+				contentAlign !== 'center' && `has-${ contentAlign }-content`,
+				styleProps.className
 			);
 
 			const containerStyle = {
@@ -193,11 +215,8 @@ export const withFeaturedItem =
 					? `var(--wp--preset--color--${ textColor })`
 					: style?.color?.text,
 				boxSizing: 'border-box',
-			};
-
-			const wrapperStyle = {
-				...getSpacingClassesAndStyles( attributes ).style,
 				minHeight,
+				...styleProps.style,
 			};
 
 			const isImgElement = ! isRepeated && ! hasParallax;
@@ -223,14 +242,8 @@ export const withFeaturedItem =
 						showHandle={ isSelected }
 						style={ { minHeight } }
 					/>
-					<div
-						className={ classes }
-						style={ { containerStyle, ...borderProps.style } }
-					>
-						<div
-							className={ `${ className }__wrapper` }
-							style={ wrapperStyle }
-						>
+					<div className={ containerClass } style={ containerStyle }>
+						<div className={ `${ className }__wrapper` }>
 							<div
 								className="background-dim__overlay"
 								style={ overlayStyle }

@@ -2,9 +2,9 @@
 Contributors: mmaunder, wfryan, wfmatt, wfmattr
 Tags: security, waf, malware, 2fa, two factor, login security, firewall, brute force, scanner, scan, web application firewall, protection, stop hackers, prevent hacks, secure wordpress, wordpress security
 Requires at least: 3.9
-Requires PHP: 5.3
-Tested up to: 6.2
-Stable tag: 7.9.1
+Requires PHP: 5.5
+Tested up to: 6.3
+Stable tag: 7.10.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -188,6 +188,58 @@ Secure your website with Wordfence.
 9. Logging in is easy with Wordfence 2FA.
 
 == Changelog ==
+
+= 7.10.4 - September 25, 2023 =
+* Improvement: "Admin created outside of WordPress" scan results may now be reviewed and approved
+* Improvement: The WAF storage engine may now be specified by setting the environmental variable "WFWAF_STORAGE_ENGINE"
+* Improvement: Detect when a plugin or theme with a custom update handler is broken and blocking update version checks
+* Change: Deprecated support for WordPress versions lower than 4.7.0
+* Change: Exclude parse errors of a damaged compiled rules file from reporting
+* Fix: Suppress PHP notices related to rule loading when running WP-CLI
+* Fix: Fixed an issue with the scan monitor cron that could leave it running unnecessarily
+
+= 7.10.3 - July 31, 2023 =
+* Improvement: Updated GeoIP database
+* Fix: Added missing text domain to translation function call
+* Fix: Corrected inconsistent styling of switch controls
+* Change: Made MySQLi storage engine the default for Flywheel hosted sites
+
+= 7.10.2 - July 17, 2023 =
+* Fix: Prevented bundled sodium_compat library from conflicting with versions included with older WordPress versions
+
+= 7.10.1 - July 12, 2023 =
+* Improvement: Added support for processing arrays of files in the WAF
+* Improvement: Refactored security event processing to send events in bulk
+* Improvement: Updated bundled sodium_compat and random_compat libraries
+* Fix: Prevented deprecation warning caused by dynamic property creation
+* Fix: Added translation support for additional strings
+* Change: Adjusted Wordfence registration UI
+
+= 7.10.0 - June 21, 2023 =
+* Improvement: Added translation support for strings from login security plugin
+* Improvement: Added translator notes regarding word order and hidden text
+* Improvement: Added translation support for additional strings
+* Improvement: Prevented scans from failing if unreadable directories are encountered
+* Improvement: Added help link to IPv4 scan option
+* Improvement: Updated scan result text to clarify meaning of plugins removed from wordpress.org
+* Improvement: Made "Increased Attack Rate" emails actionable
+* Improvement: Updated GeoIP database
+* Improvement: Updated JavaScript libraries
+* Fix: Corrected IPv6 address expansion
+* Fix: Ensured long request payloads for malicious requests are recorded in live traffic
+* Fix: Prevented "commands out of sync" database error messages when the database connection has failed
+* Fix: Prevented rare JSON encoding issues from breaking free license registration
+* Fix: Prevented PHP notice from being logged when request parameter is missing
+* Fix: Prevented deprecation warning in PHP 8.1
+* Change: Moved detection for old TimThumb files to malware signature
+* Change: Moved translation file from .po to .pot
+* Change: Renamed "Macedonia" to "North Macedonia, Republic of"
+
+= 7.9.3 - May 31, 2023 =
+* Improvement: Added exception handling to prevent WAF errors from being fatal
+* Fix: Corrected error caused by method call on null in WAF
+* Change: Deprecated support for PHP 5.5 and 5.6, ended support for PHP 5.3 and 5.4
+* Change: Specified WAF version parameter when requesting firewall rules
 
 = 7.9.2 - March 27, 2023 =
 * Improvement: The vulnerability severity score (CVSS) is now shown with any vulnerability findings from the scanner
