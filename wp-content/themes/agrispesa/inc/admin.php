@@ -3299,6 +3299,41 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+	 register_rest_route("agrispesa/v1", "cap", [
+        "methods" => "GET",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+
+		  $data_store = WC_Data_Store::load( 'shipping-zone' );
+   $raw_zones = $data_store->get_zones();
+   foreach ( $raw_zones as $raw_zone ) {
+      $zones[] = new WC_Shipping_Zone( $raw_zone );
+   }
+
+	$postcodes = array_filter($zones[1]->get_data()['zone_locations'],function($cap){
+		return $cap->type == 'postcode';
+	});
+
+   $postcodes = array_map( function($cap){
+		return $cap->code;
+	},$postcodes);
+
+   $json= [];
+   foreach($postcodes as $postcode){
+	 $json[] = $postcode;
+   }
+
+            $response = new WP_REST_Response($json);
+            $response->set_status(200);
+            return $response;
+        },
+    ]);
+
+
+
     register_rest_route("agrispesa/v1", "shop-categories", [
         "methods" => "GET",
         "permission_callback" => function () {
