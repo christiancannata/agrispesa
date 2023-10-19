@@ -6,21 +6,10 @@ window.baseurl = WPURL.siteurl
 window.userId = WPURL.userId
 
 
-
-window.enabled_cap = [
-]
+window.enabled_cap = []
 
 
 jQuery(document).ready(function () {
-
-
-  jQuery.ajax({
-    type: 'GET',
-    url: '/wp-json/agrispesa/v1/cap',
-    success: function (response) {
-      window.enabled_cap = response
-    }
-  });
 
 
   jQuery(".input-text.qty").attr('readonly', true)
@@ -30,10 +19,18 @@ jQuery(document).ready(function () {
 
   jQuery("#shipping_postcode").change(function () {
     let cap = parseInt(jQuery(this).val())
-    if (!window.enabled_cap.includes(cap)) {
-      jQuery(this).val('')
-      alert("CAP non attivo.")
-    }
+
+    jQuery.ajax({
+      type: 'GET',
+      url: '/wp-json/agrispesa/v1/cap',
+      success: function (caps) {
+        if (!caps.includes(cap)) {
+          jQuery(this).val('')
+          alert("CAP non attivo.")
+        }
+      }
+    });
+
   })
 
 })
