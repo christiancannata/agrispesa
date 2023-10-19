@@ -3326,7 +3326,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 	 $json[] = $postcode;
    }
 
-            $response = new WP_REST_Response($json);
+   			$isValid = false;
+
+   if(in_array( $request["cap"],$json)){
+	   $isValid = true;
+   }
+
+            $response = new WP_REST_Response(['is_valid' => $isValid]);
             $response->set_status(200);
             return $response;
         },

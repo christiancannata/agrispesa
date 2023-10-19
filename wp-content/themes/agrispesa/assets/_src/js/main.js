@@ -22,9 +22,9 @@ jQuery(document).ready(function () {
 
     jQuery.ajax({
       type: 'GET',
-      url: '/wp-json/agrispesa/v1/cap',
-      success: function (caps) {
-        if (!caps.includes(cap)) {
+      url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
+      success: function (response) {
+        if (!response.is_valid) {
           jQuery(this).val('')
           alert("CAP non attivo.")
         }
