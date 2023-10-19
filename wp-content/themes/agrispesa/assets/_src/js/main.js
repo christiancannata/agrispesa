@@ -25,7 +25,7 @@ jQuery(document).ready(function () {
       url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
       success: function (response) {
         if (!response.is_valid) {
-          jQuery(this).val('')
+          jQuery("#shipping_postcode").val('')
           alert("CAP non attivo.")
         }
       }
