@@ -286,11 +286,13 @@ jQuery(document).ready(function ($) {
           allDay: true,
           classNames: ['temp-event'],
           id: 'week_' + selectedWeek,
-          week: selectedWeek
+          week: selectedWeek,
+          year: selectedDeliveryDate.year()
         });
 
         window.events.push({
           week: selectedWeek,
+          year: selectedDeliveryDate.year(),
           start: firstday.toISOString(),
           end: lastday.toISOString(),
           id: 'week_' + selectedWeek
