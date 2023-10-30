@@ -25,11 +25,11 @@ jQuery(document).ready(function ($) {
     return dates;
   }
 
-  const date1 = new Date('2023-07-24');
+  /*const date1 = new Date('2023-07-24');
   const date2 = new Date('2023-09-10');
 
   let allDates = getDatesBetween(date1, date2);
-
+*/
   function isAnOverlapEvent(eventStartDay, eventEndDay) {
     // Events
     var events = window.calendar.getEvents()
@@ -234,7 +234,6 @@ jQuery(document).ready(function ($) {
       let selectedWeek = selectedDeliveryDate.week()
 
       if (window.blockedWeeks[selectedDeliveryDate.year()].includes(selectedWeek)) {
-
         return false
       }
 
@@ -244,7 +243,7 @@ jQuery(document).ready(function ($) {
         return false
       }
 
-      if (selectedWeek < currentWeek) {
+      if (selectedWeek < currentWeek && nextAvailableWednesday.year() == selectedDeliveryDate.year()) {
         return false
       }
 
