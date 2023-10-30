@@ -3568,8 +3568,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $timestamp - 86400 * (date("N", $timestamp) - 1);
 
                         $monday = new DateTime();
-						$monday->setDate($toDate->format("Y"),$monday->format("m"),$monday->format("d"));
                         $monday->setTimestamp($timestamp_for_monday);
+						$monday->setDate($toDate->format("Y"),$monday->format("m"),$monday->format("d"));
 
                         $sunday = clone $monday;
                         $sunday->modify("next sunday");
