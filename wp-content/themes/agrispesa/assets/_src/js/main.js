@@ -11,9 +11,9 @@ jQuery(document).ready(function () {
   jQuery(".input-text.qty").attr('readonly', true)
 
   jQuery("#shipping_postcode").attr('maxlength', 5)
-  jQuery("#shipping_postcode").attr('minlength', 5)
+  jQuery("#billing_postcode").attr('minlength', 5)
 
-  jQuery("#shipping_city").change(function () {
+  jQuery(document).on('change', "#shipping_city", function () {
     let cap = parseInt(jQuery("#shipping_postcode").val())
 
     let data = {
