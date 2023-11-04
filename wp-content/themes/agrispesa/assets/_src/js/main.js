@@ -32,6 +32,7 @@ jQuery(document).ready(function () {
             jQuery("#shipping_postcode").val('')
             alert("CAP non attivo.")
           }
+          jQuery('body').trigger('update_checkout');
         }
       });
     }).fail(function (response) {
