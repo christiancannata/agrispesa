@@ -1,5 +1,5 @@
 <?php
-
+$petfoodId = 1079;
 
 add_action('woocommerce_payment_complete', 'wpdesk_set_completed_for_paid_orders');
 
@@ -430,7 +430,6 @@ function display_shipping_scala_field($shipping_fields)
 		'type' => 'text',
 		'label' => __('Scala'),
 		'class' => array('form-row-wide'),
-		'priority' => 25,
 		'required' => false,
 		'clear' => true,
 		'priority' => 101
@@ -1306,6 +1305,12 @@ function filter_wc_check_cart_items()
 }
 
 
+add_action('woocommerce_add_to_cart_validation', function ($passed_validation, $product_id) use ($petfoodId) {
+
+	return true;
+
+}, 10, 2);
+
 add_action('woocommerce_checkout_subscription_created', function ($subscription) {
 
 	//suspend all old subscription of the customer
@@ -1397,23 +1402,126 @@ add_filter('woocommerce_package_rates', 'hide_shipping_weight_based', 10, 2);
 function hide_shipping_weight_based($rates, $package)
 {
 
+	if (!$_POST['s_postcode'] || empty($_POST['s_postcode'])) {
+		return $rates;
+	}
 
-	$method_id = 'flat_rate:1'; // HERE set the shipping method ID
-	$found = false;
+	$cart = WC()->cart;
 
-	// Loop through cart items Checking for defined product IDs
-	foreach ($package['contents'] as $cart_item) {
+	$petfoodId = 1079;
 
-		if (has_term(['petfood'], 'product_cat', $cart_item['product_id'])) {
-			$found = true;
-			break;
+
+	$petfoodCategories = [
+		$petfoodId
+	];
+
+	$args_query = array(
+		'taxonomy' => 'product_cat',
+		'hide_empty' => false,
+		'child_of' => $petfoodId
+	);
+
+	foreach (get_terms($args_query) as $term) {
+		if ($term->term_id) {
+			$petfoodCategories[] = $term->term_id;
 		}
 	}
 
-	if ($found && isset($rates[$method_id])) {
-		unset($rates[$method_id]);
+	//is no petfood cart
+	$hasPetfoodInCart = false;
+	$hasOtherProductInCart = false;
+
+	$nonPetfoodProduct = [];
+
+	foreach ($cart->get_cart() as $item) {
+
+		if ($hasPetfoodInCart && $hasOtherProductInCart) {
+			continue;
+		}
+
+		$terms = get_the_terms($item['product_id'], 'product_cat');
+		foreach ($terms as $term) {
+			if (in_array($term->term_id, $petfoodCategories)) {
+				$hasPetfoodInCart = true;
+			} else {
+				$hasOtherProductInCart = true;
+				$nonPetfoodProduct[] = $item;
+			}
+		}
 	}
+
+	// prezzo al chilo
+	if ($hasPetfoodInCart && !$hasOtherProductInCart) {
+		// get spedizione al chilo
+		$rates = array_filter($rates, function ($rate) {
+			return strstr($rate->id, 'flexible_shipping_single') !== false;
+		});
+
+
+		return $rates;
+	}
+
+	if ($hasPetfoodInCart && $hasOtherProductInCart) {
+
+		$data_store = WC_Data_Store::load("shipping-zone");
+
+		$raw_zones = $data_store->get_zones();
+
+
+		$raw_zones = array_filter($raw_zones, function ($zone) {
+			return $zone->zone_name == 'Italia';
+		});
+		$raw_zone = reset($raw_zones);
+
+		$zone = new WC_Shipping_Zone($raw_zone);
+
+		$postcodes = array_filter(
+			$zone->get_data()["zone_locations"],
+			function ($cap) {
+				return $cap->type == "postcode";
+			}
+		);
+
+
+		$enabledPostcode = array_map(function ($cap) {
+			return $cap->code;
+		}, $postcodes);
+
+		if (!empty($_POST['s_postcode'])) {
+
+			if (in_array($_POST['s_postcode'], $enabledPostcode)) {
+
+				return $rates;
+
+			} else {
+//tolgo i prodotti non petfood dal carrello
+				foreach ($nonPetfoodProduct as $product) {
+					WC()->cart->remove_cart_item($product['key']);
+				}
+
+				wc_add_notice('Ci dispiace, non possiamo spedire a casa tua i prodotti della categoria "Petfood", potrai ordinare solo quelli.', 'error');
+
+			}
+		}
+
+
+	}
+
 
 	return $rates;
 
+}
+
+
+add_action('wp_ajax_get_cart_items', 'wp_ajax_get_cart_items_action');
+add_action('wp_ajax_nopriv_get_cart_items', 'wp_ajax_get_cart_items_action');
+function wp_ajax_get_cart_items_action()
+{
+	$cart = WC()->cart;
+
+	if ($cart) {
+		wp_send_json_success($cart);
+		/** @noinspection ForgottenDebugOutputInspection */
+		wp_die();
+	}
 }

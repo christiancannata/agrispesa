@@ -819,17 +819,16 @@ add_action("rest_api_init", function () {
         "callback" => function ($request) {
             $subscriptions = wcs_get_subscriptions([
                 "subscriptions_per_page" => -1,
-			   "subscription_status" => "any",
-               // "subscription_status" => ["active", "on-hold"],
+                "subscription_status" => "any",
+                // "subscription_status" => ["active", "on-hold"],
             ]);
 
-
             foreach ($subscriptions as $subscription) {
-               $shippings = $subscription->get_items("shipping");
-			   dd($shippings);
-			   if(count($shippings) > 1){
-				   dd($shippings);
-			   }
+                $shippings = $subscription->get_items("shipping");
+                dd($shippings);
+                if (count($shippings) > 1) {
+                    dd($shippings);
+                }
             }
 
             $response = new WP_REST_Response([]);
@@ -1221,7 +1220,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $price = str_replace(",", ".", $price);
                 $price = floatval($price);
                 $productObj->set_price($price);
-/*
+                /*
                 $the_weight_array = getNumbersFromString($productName);
                 $i = 1;
                 $weigth_nav = "";
@@ -1753,7 +1752,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             update_option("current_order_week", date("Y") . "_" . $week);
             update_option("last_order_week", $lastOrderWeek);
 
-			wc_recount_all_terms();
+            wc_recount_all_terms();
 
             $response = new WP_REST_Response($boxIds);
             $response->set_status(201);
@@ -2038,28 +2037,31 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 $row->appendChild($ele2);
                 $ele2 = $doc->createElement("city");
 
-				        $city = str_replace("-", " ", $order->get_billing_city());
+                $city = str_replace("-", " ", $order->get_billing_city());
 
-        $isToUpdate = false;
+                $isToUpdate = false;
 
-        $cities = explode(" ", $city);
-        foreach ($cities as $key => $city) {
-            for ($i = 0; $i < strlen($city); $i++) {
-                if (isset($city[$i + 1])) {
-                    if (ctype_lower($city[$i]) && ctype_upper($city[$i + 1])) {
-                        $city = substr_replace($city, "'", $i + 1, 0);
-                        $isToUpdate = true;
+                $cities = explode(" ", $city);
+                foreach ($cities as $key => $city) {
+                    for ($i = 0; $i < strlen($city); $i++) {
+                        if (isset($city[$i + 1])) {
+                            if (
+                                ctype_lower($city[$i]) &&
+                                ctype_upper($city[$i + 1])
+                            ) {
+                                $city = substr_replace($city, "'", $i + 1, 0);
+                                $isToUpdate = true;
+                            }
+                        }
                     }
+                    $cities[$key] = $city;
                 }
-            }
-            $cities[$key] = $city;
-        }
 
-     /*   if ($isToUpdate) {
+                /*   if ($isToUpdate) {
         }
 */
-        $city = implode(" ", $cities);
-        $city = strtoupper($city);
+                $city = implode(" ", $cities);
+                $city = strtoupper($city);
 
                 $ele2->nodeValue = $city;
                 $row->appendChild($ele2);
@@ -2117,7 +2119,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     $customerType = "FNP";
                 }
 
-				$customerType = 'FNG';
+                $customerType = "FNG";
 
                 $ele2 = $doc->createElement("codiceabbonamento");
                 $ele2->nodeValue = "ABSP-" . $customerType;
@@ -2350,7 +2352,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $cities[$key] = $city;
         }
 
-     /*   if ($isToUpdate) {
+        /*   if ($isToUpdate) {
         }
 */
         $city = implode(" ", $cities);
@@ -2516,23 +2518,21 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $today->add(new \DateInterval("P7D"));
             $week = $today->format("W");
 
-			//check if the week is enabled
+            //check if the week is enabled
 
-			$ENABLED_WEEKS = ENABLED_WEEKS;
+            $ENABLED_WEEKS = ENABLED_WEEKS;
 
-
-			$enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
-
+            $enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
 
             $doc = new DOMDocument();
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-			if(!in_array($week+1,$enabledWeeksList)){
-				header("Content-type: text/xml");
-				die($doc->saveXml());
-			}
+            if (!in_array($week + 1, $enabledWeeksList)) {
+                header("Content-type: text/xml");
+                die($doc->saveXml());
+            }
 
             $currentWeek = str_pad($week, 2, 0, STR_PAD_LEFT);
             $currentWeek = date("y") . $currentWeek;
@@ -2655,7 +2655,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-			/*	if(!$isSubscription){
+                /*	if(!$isSubscription){
 					continue;
 				}*/
 
@@ -2955,7 +2955,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         }
 
                         if ($shipping_method_total > 0) {
-
                             $productNavisionId = get_option(
                                 "delivery_product_sku"
                             );
@@ -3028,7 +3027,6 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->appendChild($root);
 
             foreach ($orders as $order) {
-
                 if ($order->get_id() <= 39319) {
                     continue;
                 }
@@ -3299,6 +3297,97 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             return $response;
         },
     ]);
+
+    register_rest_route("agrispesa/v1", "cap", [
+        "methods" => "POST",
+        "permission_callback" => function () {
+            return true;
+        },
+        "callback" => function ($request) {
+
+
+		$cart = $_POST;
+
+		$petfoodId = 1079;
+
+
+	$petfoodCategories = [
+		$petfoodId
+	];
+
+	$args_query = array(
+		'taxonomy' => 'product_cat',
+		'hide_empty' => false,
+		'child_of' => $petfoodId
+	);
+
+	foreach (get_terms($args_query) as $term) {
+		if ($term->term_id) {
+			$petfoodCategories[] = $term->term_id;
+		}
+	}
+
+	//is no petfood cart
+	$hasPetfoodInCart = false;
+	$hasOtherProductInCart = false;
+
+	foreach ($cart as $item) {
+
+		if ($hasPetfoodInCart && $hasOtherProductInCart) {
+			continue;
+		}
+
+		$terms = get_the_terms($item['product_id'], 'product_cat');
+		foreach ($terms as $term) {
+			if (in_array($term->term_id, $petfoodCategories)) {
+				$hasPetfoodInCart = true;
+			} else {
+				$hasOtherProductInCart = true;
+			}
+		}
+	}
+
+	if($hasPetfoodInCart){
+
+            $response = new WP_REST_Response(["is_valid" => true]);
+            $response->set_status(200);
+            return $response;
+	}
+
+            $data_store = WC_Data_Store::load("shipping-zone");
+            $raw_zones = $data_store->get_zones();
+            foreach ($raw_zones as $raw_zone) {
+                $zones[] = new WC_Shipping_Zone($raw_zone);
+            }
+
+            $postcodes = array_filter(
+                $zones[1]->get_data()["zone_locations"],
+                function ($cap) {
+                    return $cap->type == "postcode";
+                }
+            );
+
+            $postcodes = array_map(function ($cap) {
+                return $cap->code;
+            }, $postcodes);
+
+            $json = [];
+            foreach ($postcodes as $postcode) {
+                $json[] = $postcode;
+            }
+
+            $isValid = false;
+
+            if (in_array($request["cap"], $json)) {
+                $isValid = true;
+            }
+
+            $response = new WP_REST_Response(["is_valid" => $isValid]);
+            $response->set_status(200);
+            return $response;
+        },
+    ]);
+
     register_rest_route("agrispesa/v1", "shop-categories", [
         "methods" => "GET",
         "permission_callback" => function () {
@@ -3344,35 +3433,39 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-	  register_rest_route("agrispesa/v1", "subscription/(?P<id>\d+)/change-status", [
-        "methods" => "POST",
-        "permission_callback" => function () {
-            return true;
-        },
-        "callback" => function ($request) {
-            $subscriptionId = $request["id"];
+    register_rest_route(
+        "agrispesa/v1",
+        "subscription/(?P<id>\d+)/change-status",
+        [
+            "methods" => "POST",
+            "permission_callback" => function () {
+                return true;
+            },
+            "callback" => function ($request) {
+                $subscriptionId = $request["id"];
 
-			$subscription = wcs_get_subscription($subscriptionId);
+                $subscription = wcs_get_subscription($subscriptionId);
 
-			if(!$subscription){
-				$response = new WP_REST_Response([]);
-            	$response->set_status(404);
-            	return $response;
-			}
+                if (!$subscription) {
+                    $response = new WP_REST_Response([]);
+                    $response->set_status(404);
+                    return $response;
+                }
 
-			if($subscription->get_status() == 'active'){
-				$subscription->set_status('on-hold');
-			}else{
-				$subscription->set_status('active');
-			}
+                if ($subscription->get_status() == "active") {
+                    $subscription->set_status("on-hold");
+                } else {
+                    $subscription->set_status("active");
+                }
 
-			$subscription->save();
+                $subscription->save();
 
-            $response = new WP_REST_Response([]);
-            $response->set_status(204);
-            return $response;
-        },
-    ]);
+                $response = new WP_REST_Response([]);
+                $response->set_status(204);
+                return $response;
+            },
+        ]
+    );
 
     register_rest_route("agrispesa/v1", "add-user-blocked-weeks", [
         "methods" => "POST",
@@ -3528,6 +3621,11 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                         $monday = new DateTime();
                         $monday->setTimestamp($timestamp_for_monday);
+                        $monday->setDate(
+                            $toDate->format("Y"),
+                            $monday->format("m"),
+                            $monday->format("d")
+                        );
 
                         $sunday = clone $monday;
                         $sunday->modify("next sunday");
@@ -4623,7 +4721,7 @@ function create_order_from_subscription($id)
         "customer_id" => $subscription->get_customer_id(),
         "status" => ["wc-completed"],
         "meta_key" => "_order_type",
-		"meta_value" => ["FN", "ST"],
+        "meta_value" => ["FN", "ST"],
         "meta_compare" => "IN",
     ];
     $orders = wc_get_orders($args);
@@ -4763,14 +4861,12 @@ function get_single_box_from_attributes($tipologia, $dimensione)
                 "attribute_pa_tipologia",
                 true
             );
-         /*   $dimensioneVariation = get_post_meta(
+            /*   $dimensioneVariation = get_post_meta(
                 $variation,
                 "attribute_pa_dimensione",
                 true
             );*/
-            if (
-                $tipologia == $tipologiaVariation
-            ) {
+            if ($tipologia == $tipologiaVariation) {
                 $productFound = $variation;
             }
         }
@@ -5175,12 +5271,7 @@ function scegli_tu_page()
         "wc-completed" => _x("Completed", "Order status", "woocommerce"),
         "wc-cancelled" => _x("Cancelled", "Order status", "woocommerce"),
         "wc-refunded" => _x("Refunded", "Order status", "woocommerce"),
-        "wc-failed" => _x(
-            "Failed",
-            "Order status",
-
-            "woocommerce"
-        ),
+        "wc-failed" => _x("Failed", "Order status", "woocommerce"),
     ];
     ?>
 
@@ -6226,7 +6317,6 @@ function consegne_ordini_pages()
                 "order" => "DESC",
             ]);
             $date = new DateTime();
-
             $currentWeek = $date->format("W");
             ?>
 
@@ -6879,10 +6969,7 @@ function my_saved_post($post_id, $json, $is_update)
         $product->save();
         wc_delete_product_transients($product->get_id()); // Do something.
     }*/
-}
-//add_action("pmxi_saved_post", "my_saved_post", 10, 3);
-
-
+} //add_action("pmxi_saved_post", "my_saved_post", 10, 3);
 function getLabelDay(DateTime $date)
 {
     $mesi = [
