@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
   jQuery("#shipping_postcode").attr('maxlength', 5)
   jQuery("#shipping_postcode").attr('minlength', 5)
 
-  jQuery("#shipping_postcode").change(function () {
+  jQuery("#shipping_postcode,#shipping_postcode2").change(function () {
     let cap = parseInt(jQuery(this).val())
 
     let data = {
@@ -30,6 +30,8 @@ jQuery(document).ready(function () {
         success: function (response) {
           if (!response.is_valid) {
             jQuery("#shipping_postcode").val('')
+            jQuery("#shipping_postcode2").val('')
+
             alert("CAP non attivo.")
           }
           jQuery('body').trigger('update_checkout');
