@@ -1502,7 +1502,6 @@ function hide_shipping_weight_based($rates, $package)
 			return strstr($rate->id, 'flexible_shipping_single') !== false;
 		});
 
-
 		return $rates;
 	}
 
