@@ -13,6 +13,35 @@ jQuery(document).ready(function () {
   jQuery("#shipping_postcode").attr('maxlength', 5)
   jQuery("#shipping_postcode").attr('minlength', 5)
 
+  jQuery("#shipping_city").change(function () {
+    let cap = parseInt(jQuery("#shipping_postcode").val())
+
+    let data = {
+      action: 'get_cart_items'
+    };
+
+    jQuery.post('/wp-admin/admin-ajax.php', data, function (response) {
+
+
+      jQuery.ajax({
+        type: 'POST',
+        url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
+        data: response.data.cart_contents,
+        success: function (response) {
+          if (!response.is_valid) {
+            jQuery("#shipping_postcode").val('')
+            jQuery("#shipping_postcode2").val('')
+
+            alert("CAP non attivo.")
+          }
+          jQuery('body').trigger('update_checkout');
+        }
+      });
+    }).fail(function (response) {
+      console.log('Fail');
+    });
+  })
+
   jQuery("#shipping_postcode,#shipping_postcode2").change(function () {
     let cap = parseInt(jQuery(this).val())
 
