@@ -98,6 +98,51 @@ a. Per questi ordini aggiuntivi FN, se l'indirizzo di consegna è uguale a quell
 
 	}
 
+	//NO MINIMO ORDINE SE HA SOLO PETFOOD NEL CARRELLO
+	$cart = WC()->cart;
+
+	$petfoodId = 1079;
+
+
+	$petfoodCategories = [
+		$petfoodId
+	];
+
+	$args_query = array(
+		'taxonomy' => 'product_cat',
+		'hide_empty' => false,
+		'child_of' => $petfoodId
+	);
+
+	foreach (get_terms($args_query) as $term) {
+		if ($term->term_id) {
+			$petfoodCategories[] = $term->term_id;
+		}
+	}
+
+	//is no petfood cart
+	$hasPetfoodInCart = false;
+	$hasOtherProductInCart = false;
+
+	foreach ($cart->get_cart() as $item) {
+
+		if ($hasPetfoodInCart && $hasOtherProductInCart) {
+			continue;
+		}
+
+		$terms = get_the_terms($item['product_id'], 'product_cat');
+		foreach ($terms as $term) {
+			if (in_array($term->term_id, $petfoodCategories)) {
+				$hasPetfoodInCart = true;
+			} else {
+				$hasOtherProductInCart = true;
+			}
+		}
+	}
+
+	if (!$hasOtherProductInCart && $hasPetfoodInCart) {
+		$minimum = 0;
+	}
 
 	// NO MINIMO ORDINE SE HA FN ATTIVA
 	if ($current_user && $has_sub) {
