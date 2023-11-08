@@ -7,7 +7,7 @@ $thumb_url = $thumb_url_array[0];
 $product_data = $product->get_meta('_woo_uom_input');
 
 $title = get_the_title();
-/*$title_without_weight = preg_replace(
+$title_without_weight = preg_replace(
 	 array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
 	 array(''),
 	 $title
@@ -28,7 +28,7 @@ if(isset($the_weight_array) && !empty($the_weight_array)) {
 		}
 	}
 }
-*/
+
 ?>
 <article class="petfood-box" style="background-image:url(<?php echo $thumb_url;?>);">
   <?php if (str_contains(get_the_title(), 'Puppy')) {
@@ -39,7 +39,7 @@ if(isset($the_weight_array) && !empty($the_weight_array)) {
     <div class="petfood-box--text--top">
       <h2 class="petfood-box--title"><a href="<?php the_permalink(); ?>" title="<?php echo strip_tags($title); ?>"><?php echo $title; ?></a></h2>
       <div class="petfood-box--price--flex">
-        <?php // echo '<span class="product-info--quantity">' . $weigth_nav . '</span>'; ?>
+        <?php echo '<span class="product-info--quantity">' . '' . '</span>'; ?>
 
         <div class="petfood-box--price">
           <?php echo $product->get_price_html(); ?>
