@@ -3486,6 +3486,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ]);
             $subscription = reset($subscription);
 
+			$disabledWeeks = [];
+
             foreach ($events as $event) {
                 $day = new \DateTime($event["start"]);
 
@@ -3622,7 +3624,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $monday = new DateTime();
                         $monday->setTimestamp($timestamp_for_monday);
                         $monday->setDate(
-                            $toDate->format("Y"),
+                            $fromDate->format("Y"),
                             $monday->format("m"),
                             $monday->format("d")
                         );
