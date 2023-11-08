@@ -39,7 +39,7 @@ if (in_array('petfood', $categories)) {
 }
 
 $title = get_the_title();
-$title_without_weight = preg_replace(
+/*$title_without_weight = preg_replace(
 	array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
 	array(''),
 	$title
@@ -67,10 +67,10 @@ if (empty($weigth_nav)) {
 	$weigth_nav = $product_data . ' ' . $product->get_weight();
 }
 
-
-echo '<h1 class="product_title entry-title">' . $title_without_weight . '</h1>';
+*/
+echo '<h1 class="product_title entry-title">' . $title . '</h1>';
 echo '<div class="product-info">';
-echo '<span class="product-info--quantity">' . $weigth_nav . '</span>';
+//echo '<span class="product-info--quantity">' . $weigth_nav . '</span>';
 
 
 if ($produttori) {

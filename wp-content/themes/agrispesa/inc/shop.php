@@ -148,7 +148,7 @@ function soChangeProductsTitle()
 	//$product_data = $product->get_meta('_woo_uom_input');
 
 	$title = get_the_title();
-	$title_without_weight = preg_replace(
+	/*$title_without_weight = preg_replace(
 		array('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/'),
 		array(''),
 		$title
@@ -179,9 +179,9 @@ function soChangeProductsTitle()
 
 	$title_without_weight = explode(" ,",$title_without_weight);
 	$title_without_weight = $title_without_weight[0];
-
-	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . trim($title_without_weight) . '</h6>';
-	echo '<span class="product-info--quantity">' . $weigth_nav . '</span></div>';
+*/
+	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . trim($title) . '</h6>';
+	//echo '<span class="product-info--quantity">' . $weigth_nav . '</span></div>';
 
 }
 
