@@ -132,6 +132,8 @@ function jk_related_products_args($args)
 
 function getNumbersFromString($str)
 {
+//	return  (float) filter_var( $str, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION ) ;
+
 	$matches = array();
 	preg_match_all('/(kg\s\d+|ml\s\d+|cl\s\d+|g\s\d+|pz\s\d+|l\s\d+)/', $str, $matches);
 	return $matches;
@@ -171,10 +173,14 @@ function soChangeProductsTitle()
 
 	if (empty($weigth_nav)) {
 		$product_data = $product->get_meta('_woo_uom_input');
-		$weigth_nav = $product_data.' ' . $product->get_weight();
+		$weigth_nav = $product_data . ' ' . $product->get_weight();
 	}
 
-	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . $title_without_weight . '</h6>';
+
+	$title_without_weight = explode(" ,",$title_without_weight);
+	$title_without_weight = $title_without_weight[0];
+
+	echo '<div class="product-loop-title-meta"><h6 class="' . esc_attr(apply_filters('woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title')) . '">' . trim($title_without_weight) . '</h6>';
 	echo '<span class="product-info--quantity">' . $weigth_nav . '</span></div>';
 
 }

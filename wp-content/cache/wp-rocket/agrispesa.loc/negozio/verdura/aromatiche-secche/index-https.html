@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it-IT" prefix="og: https://ogp.me/ns#">
 <head><meta charset="UTF-8"/><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],window.addEventListener("pageshow",t=>{this.persisted=t.persisted}),window.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(t){if(document.hidden){t._triggerListener();return}this.triggerEvents.forEach(e=>window.addEventListener(e,t.userEventHandler,{passive:!0})),window.addEventListener("touchstart",t.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",t.touchStartHandler),document.addEventListener("visibilitychange",t.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(t){"HTML"!==t.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),t.target.addEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(t){t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this.interceptedClicks.push(t),t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(t=>{t.target.dispatchEvent(new MouseEvent("click",{view:t.view,bubbles:!0,cancelable:!0}))})}_waitForPendingClicks(){return new Promise(t=>{this._isClickPending?this._pendingClickFinished=t:t()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(t,e,r){t.hasAttribute&&t.hasAttribute(e)&&(event.target.setAttribute(r,event.target.getAttribute(e)),event.target.removeAttribute(e))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let t=[];document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{if(e.hasAttribute("src")){let r=new URL(e.src).origin;r!==location.origin&&t.push({src:r,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this._batchInjectResourceHints(t,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._triggerWindowLoad()}catch(t){console.error(t)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _transformScript(t){return new Promise((await this._littleBreath(),navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)?e=>{let r=document.createElement("script");[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),r.setAttribute(e,t.nodeValue))}),t.text&&(r.text=t.text),r.hasAttribute("src")?(r.addEventListener("load",e),r.addEventListener("error",e)):(r.text=t.text,e());try{t.parentNode.replaceChild(r,t)}catch(i){e()}}:async e=>{function r(){t.setAttribute("data-rocket-status","failed"),e()}try{let i=t.getAttribute("data-rocket-type"),n=t.getAttribute("data-rocket-src");t.text,i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",function r(){t.setAttribute("data-rocket-status","executed"),e()}),t.addEventListener("error",r),n?(t.removeAttribute("data-rocket-src"),t.src=n):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}catch(s){r()}})}async _loadScriptsFromList(t){let e=t.shift();return e&&e.isConnected?(await this._transformScript(e),this._loadScriptsFromList(t)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(t,e){var r=document.createDocumentFragment();t.forEach(t=>{let i=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(i){let n=document.createElement("link");n.href=i,n.rel=e,"preconnect"!==e&&(n.as="script"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),r.appendChild(n),this.trash.push(n)}}),document.head.appendChild(r)}_delayEventListeners(t){let e={};function r(t,r){!function t(r){!e[r]&&(e[r]={originalFunctions:{add:r.addEventListener,remove:r.removeEventListener},eventsToRewrite:[]},r.addEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.add.apply(r,arguments)},r.removeEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.remove.apply(r,arguments)});function i(t){return e[r].eventsToRewrite.indexOf(t)>=0?"rocket-"+t:t}}(t),e[t].eventsToRewrite.push(r)}function i(t,e){let r=t[e];Object.defineProperty(t,e,{get:()=>r||function(){},set(i){t["rocket"+e]=r=i}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),i(document,"onreadystatechange"),i(window,"onload"),i(window,"onpageshow")}_delayJQueryReady(t){let e;function r(r){if(r&&r.fn&&!t.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(e){return t.domReadyFired?e.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>e.bind(document)(r)),r([])};let i=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){if(this[0]===window){function t(t){return t.split(" ").map(t=>"load"===t||0===t.indexOf("load.")?"rocket-jquery-load":t).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=t(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{delete Object.assign(arguments[0],{[t(e)]:arguments[0][e]})[e]})}return i.apply(this,arguments),this},t.allJQueries.push(r)}e=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){r(t)}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this._littleBreath();let t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}_handleDocumentWrite(){let t=new Map;document.write=document.writeln=function(e){let r=document.currentScript;r||console.error("WPRocket unable to document.write this: "+e);let i=document.createRange(),n=r.parentElement,s=t.get(r);void 0===s&&(s=r.nextSibling,t.set(r,s));let a=document.createDocumentFragment();i.setStart(a,0),a.appendChild(i.createContextualFragment(e)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}_emptyTrash(){this.trash.forEach(t=>t.remove())}static run(){let t=new RocketLazyLoadScripts;t._addUserInteractionListener(t)}}RocketLazyLoadScripts.run();</script>
@@ -26,28 +25,24 @@
 </script>
 <!-- End Google Tag Manager for WordPress by gtm4wp.com -->
 <!-- Search Engine Optimization by Rank Math - https://rankmath.com/ -->
-<title>Agrispesa - Agricoltura contadina, a casa tua.</title>
-<meta name="description" content="Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone."/>
+<title>Aromatiche secche - Agrispesa</title>
+<meta name="description" content="Peperoncino con buon gusto, una buona piccantezza che non copra il sapore del piatto, il gusto che si avvicini al fresco."/>
 <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-<link rel="canonical" href="https://agrispesa.loc/" />
+<link rel="canonical" href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/" />
 <meta property="og:locale" content="it_IT" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Agrispesa - Agricoltura contadina, a casa tua." />
-<meta property="og:description" content="Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone." />
-<meta property="og:url" content="https://agrispesa.loc/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Aromatiche secche - Agrispesa" />
+<meta property="og:description" content="Peperoncino con buon gusto, una buona piccantezza che non copra il sapore del piatto, il gusto che si avvicini al fresco." />
+<meta property="og:url" content="https://agrispesa.loc/negozio/verdura/aromatiche-secche/" />
 <meta property="og:site_name" content="Agrispesa" />
-<meta property="og:updated_time" content="2023-07-18T14:41:11+02:00" />
+<meta property="article:publisher" content="https://www.facebook.com/Agrispesa" />
 <meta property="fb:admins" content="100002804009172,100000496146264" />
-<meta property="article:published_time" content="2022-12-13T18:15:17+01:00" />
-<meta property="article:modified_time" content="2023-07-18T14:41:11+02:00" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Agrispesa - Agricoltura contadina, a casa tua." />
-<meta name="twitter:description" content="Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone." />
-<meta name="twitter:label1" content="Written by" />
-<meta name="twitter:data1" content="nathalie" />
-<meta name="twitter:label2" content="Time to read" />
-<meta name="twitter:data2" content="Less than a minute" />
-<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://agrispesa.loc/#organization","name":"Agrispesa","url":"https://www.agrispesa.it","sameAs":["https://www.facebook.com/Agrispesa"]},{"@type":"WebSite","@id":"https://agrispesa.loc/#website","url":"https://agrispesa.loc","name":"Agrispesa","publisher":{"@id":"https://agrispesa.loc/#organization"},"inLanguage":"it-IT","potentialAction":{"@type":"SearchAction","target":"https://agrispesa.loc/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"https://agrispesa.loc/#webpage","url":"https://agrispesa.loc/","name":"Agrispesa - Agricoltura contadina, a casa tua.","datePublished":"2022-12-13T18:15:17+01:00","dateModified":"2023-07-18T14:41:11+02:00","about":{"@id":"https://agrispesa.loc/#organization"},"isPartOf":{"@id":"https://agrispesa.loc/#website"},"inLanguage":"it-IT"},{"@type":"Person","@id":"https://agrispesa.loc/author/nathalie/","name":"nathalie","url":"https://agrispesa.loc/author/nathalie/","image":{"@type":"ImageObject","@id":"https://secure.gravatar.com/avatar/5ade862b47342a89affd02b6a3bd30de?s=96&amp;d=mm&amp;r=g","url":"https://secure.gravatar.com/avatar/5ade862b47342a89affd02b6a3bd30de?s=96&amp;d=mm&amp;r=g","caption":"nathalie","inLanguage":"it-IT"},"worksFor":{"@id":"https://agrispesa.loc/#organization"}},{"@type":"Article","headline":"Agrispesa - Agricoltura contadina, a casa tua.","keywords":"agricoltura","datePublished":"2022-12-13T18:15:17+01:00","dateModified":"2023-07-18T14:41:11+02:00","author":{"@id":"https://agrispesa.loc/author/nathalie/","name":"nathalie"},"publisher":{"@id":"https://agrispesa.loc/#organization"},"description":"Prodotti di agricoltura contadina. Verdura, frutta, uova, latte, formaggi, pesce e carne ottenuti nel rispetto di terra, piante, animali e persone.","name":"Agrispesa - Agricoltura contadina, a casa tua.","@id":"https://agrispesa.loc/#richSnippet","isPartOf":{"@id":"https://agrispesa.loc/#webpage"},"inLanguage":"it-IT","mainEntityOfPage":{"@id":"https://agrispesa.loc/#webpage"}}]}</script>
+<meta name="twitter:title" content="Aromatiche secche - Agrispesa" />
+<meta name="twitter:description" content="Peperoncino con buon gusto, una buona piccantezza che non copra il sapore del piatto, il gusto che si avvicini al fresco." />
+<meta name="twitter:label1" content="Prodotti" />
+<meta name="twitter:data1" content="4" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://agrispesa.loc/#organization","name":"Agrispesa","sameAs":["https://www.facebook.com/Agrispesa"]},{"@type":"WebSite","@id":"https://agrispesa.loc/#website","url":"https://agrispesa.loc","name":"Agrispesa","publisher":{"@id":"https://agrispesa.loc/#organization"},"inLanguage":"it-IT"},{"@type":"CollectionPage","@id":"https://agrispesa.loc/negozio/verdura/aromatiche-secche/#webpage","url":"https://agrispesa.loc/negozio/verdura/aromatiche-secche/","name":"Aromatiche secche - Agrispesa","isPartOf":{"@id":"https://agrispesa.loc/#website"},"inLanguage":"it-IT"}]}</script>
 <!-- /Rank Math WordPress SEO plugin -->
 
 <link rel='dns-prefetch' href='//stats.wp.com' />
@@ -60,7 +55,7 @@
 <!-- Google Tag Manager for WordPress by gtm4wp.com -->
 <!-- GTM Container placement set to automatic -->
 <script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
-	var dataLayer_content = {"visitorLoginState":"logged-out","visitorEmail":"","visitorEmailHash":"","visitorRegistrationDate":"","visitorUsername":"","pagePostType":"frontpage","pagePostType2":"single-page","pagePostAuthor":"nathalie","customerTotalOrders":0,"customerTotalOrderValue":"0.00","customerFirstName":"","customerLastName":"","customerBillingFirstName":"","customerBillingLastName":"","customerBillingCompany":"","customerBillingAddress1":"","customerBillingAddress2":"","customerBillingCity":"","customerBillingState":"","customerBillingPostcode":"","customerBillingCountry":"","customerBillingEmail":"","customerBillingEmailHash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","customerBillingPhone":"","customerShippingFirstName":"","customerShippingLastName":"","customerShippingCompany":"","customerShippingAddress1":"","customerShippingAddress2":"","customerShippingCity":"","customerShippingState":"","customerShippingPostcode":"","customerShippingCountry":"","cartContent":{"totals":{"applied_coupons":[],"discount_total":0,"subtotal":0,"total":0},"items":[]},"ecomm_prodid":[],"ecomm_pagetype":"home","ecomm_totalvalue":0};
+	var dataLayer_content = {"visitorLoginState":"logged-out","visitorEmail":"","visitorEmailHash":"","visitorRegistrationDate":"","visitorUsername":"","pagePostType":"product","pagePostType2":"tax-product","pageCategory":[],"customerTotalOrders":0,"customerTotalOrderValue":"0.00","customerFirstName":"","customerLastName":"","customerBillingFirstName":"","customerBillingLastName":"","customerBillingCompany":"","customerBillingAddress1":"","customerBillingAddress2":"","customerBillingCity":"","customerBillingState":"","customerBillingPostcode":"","customerBillingCountry":"","customerBillingEmail":"","customerBillingEmailHash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","customerBillingPhone":"","customerShippingFirstName":"","customerShippingLastName":"","customerShippingCompany":"","customerShippingAddress1":"","customerShippingAddress2":"","customerShippingCity":"","customerShippingState":"","customerShippingPostcode":"","customerShippingCountry":"","cartContent":{"totals":{"applied_coupons":[],"discount_total":0,"subtotal":0,"total":0},"items":[]},"ecomm_prodid":[],"ecomm_pagetype":"category","ecomm_totalvalue":0};
 	dataLayer.push( dataLayer_content );
 </script>
 <script type="rocketlazyloadscript" data-cfasync="false">
@@ -71,7 +66,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KBKXQRZ');
 </script>
 <!-- End Google Tag Manager -->
-<!-- End Google Tag Manager for WordPress by gtm4wp.com --><script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+<!-- End Google Tag Manager for WordPress by gtm4wp.com --><link rel="alternate" type="application/rss+xml" title="Feed Agrispesa &raquo; Aromatiche secche Categoria" href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/feed/" />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
 window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/agrispesa.loc\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.3.2"}};
 /*! This file is auto-generated */
 !function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83e\udef1\ud83c\udffb\u200d\ud83e\udef2\ud83c\udfff","\ud83e\udef1\ud83c\udffb\u200b\ud83e\udef2\ud83c\udfff")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
@@ -105,7 +101,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 .wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
 </style>
 <link data-minify="1" rel='stylesheet' id='contact-form-7-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=1681918184' type='text/css' media='all' />
-<link rel='stylesheet' id='ttt-pnwc-css' href='https://agrispesa.loc/wp-content/plugins/popup-notices-for-woocommerce/assets/css/pnwc-frontend.min.css?ver=231016-151600' type='text/css' media='all' />
+<link rel='stylesheet' id='ttt-pnwc-css' href='https://agrispesa.loc/wp-content/plugins/popup-notices-for-woocommerce/assets/css/pnwc-frontend.min.css?ver=231104-161643' type='text/css' media='all' />
 <link data-minify="1" rel='stylesheet' id='wdap-frontend.css-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-delivery-area-pro/assets/css/wdap-frontend.css?ver=1681918184' type='text/css' media='all' />
 <link data-minify="1" rel='stylesheet' id='select2.css-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-delivery-area-pro/assets/css/select2.css?ver=1681918185' type='text/css' media='all' />
 <link data-minify="1" rel='stylesheet' id='select2-bootstrap.css-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-delivery-area-pro/assets/css/select2-bootstrap.css?ver=1681918185' type='text/css' media='all' />
@@ -117,13 +113,12 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 </style>
 <link data-minify="1" rel='stylesheet' id='bathe-main-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/themes/agrispesa/assets/css/main.css?ver=1681918185' type='text/css' media='all' />
 <link data-minify="1" rel='stylesheet' id='tailwind-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/themes/agrispesa/assets/css/tailwind.css?ver=1681918185' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='flexible-shipping-free-shipping-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/flexible-shipping/assets/dist/css/free-shipping.css?ver=1697474343' type='text/css' media='all' />
 <link data-minify="1" rel='stylesheet' id='woo-wallet-style-css' href='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woo-wallet/assets/css/frontend.css?ver=1681918185' type='text/css' media='all' />
 <script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2' id='wp-polyfill-inert-js'></script>
 <script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.11' id='regenerator-runtime-js'></script>
 <script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
 <script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-includes/js/dist/hooks.min.js?ver=c6aec9a8d4e5a5d543a1' id='wp-hooks-js'></script>
-<script type='text/javascript' src='https://stats.wp.com/w.js?ver=202342' id='woo-tracks-js'></script>
+<script type='text/javascript' src='https://stats.wp.com/w.js?ver=202345' id='woo-tracks-js'></script>
 <script type='text/javascript' id='cookie-law-info-js-extra'>
 /* <![CDATA[ */
 var _ckyConfig = {"_ipData":[],"_assetsURL":"https:\/\/agrispesa.loc\/wp-content\/plugins\/cookie-law-info\/lite\/frontend\/images\/","_publicURL":"https:\/\/agrispesa.loc","_expiry":"365","_categories":[{"name":"Necessary","slug":"necessary","isNecessary":true,"ccpaDoNotSell":true,"cookies":[],"active":true,"defaultConsent":{"gdpr":true,"ccpa":true}},{"name":"Functional","slug":"functional","isNecessary":false,"ccpaDoNotSell":true,"cookies":[],"active":true,"defaultConsent":{"gdpr":false,"ccpa":false}},{"name":"Analytics","slug":"analytics","isNecessary":false,"ccpaDoNotSell":true,"cookies":[],"active":true,"defaultConsent":{"gdpr":false,"ccpa":false}},{"name":"Performance","slug":"performance","isNecessary":false,"ccpaDoNotSell":true,"cookies":[],"active":true,"defaultConsent":{"gdpr":false,"ccpa":false}},{"name":"Advertisement","slug":"advertisement","isNecessary":false,"ccpaDoNotSell":true,"cookies":[],"active":true,"defaultConsent":{"gdpr":false,"ccpa":false}}],"_activeLaw":"gdpr","_rootDomain":"","_block":"1","_showBanner":"1","_bannerConfig":{"settings":{"type":"box","position":"bottom-right","applicableLaw":"gdpr"},"behaviours":{"reloadBannerOnAccept":false,"loadAnalyticsByDefault":false,"animations":{"onLoad":"animate","onHide":"sticky"}},"config":{"revisitConsent":{"status":false,"tag":"revisit-consent","position":"bottom-left","meta":{"url":"#"},"styles":{"background-color":"#3c21ff"},"elements":{"title":{"type":"text","tag":"revisit-consent-title","status":true,"styles":{"color":"#0056a7"}}}},"preferenceCenter":{"toggle":{"status":true,"tag":"detail-category-toggle","type":"toggle","states":{"active":{"styles":{"background-color":"#1863DC"}},"inactive":{"styles":{"background-color":"#D0D5D2"}}}}},"categoryPreview":{"status":false,"toggle":{"status":true,"tag":"detail-category-preview-toggle","type":"toggle","states":{"active":{"styles":{"background-color":"#1863DC"}},"inactive":{"styles":{"background-color":"#D0D5D2"}}}}},"videoPlaceholder":{"status":true,"styles":{"background-color":"#000000","border-color":"#000000","color":"#ffffff"}},"readMore":{"status":false,"tag":"readmore-button","type":"link","meta":{"noFollow":true,"newTab":true},"styles":{"color":"#1863DC","background-color":"transparent","border-color":"transparent"}},"auditTable":{"status":false},"optOption":{"status":true,"toggle":{"status":true,"tag":"optout-option-toggle","type":"toggle","states":{"active":{"styles":{"background-color":"#1863dc"}},"inactive":{"styles":{"background-color":"#FFFFFF"}}}}}}},"_version":"3.1.5","_logConsent":"1","_tags":[{"tag":"accept-button","styles":{"color":"#FFFFFF","background-color":"#3c21ff","border-color":"#3c21ff"}},{"tag":"reject-button","styles":{"color":"#3c21ff","background-color":"transparent","border-color":"#3c21ff"}},{"tag":"settings-button","styles":{"color":"#3c21ff","background-color":"transparent","border-color":"#3c21ff"}},{"tag":"readmore-button","styles":{"color":"#1863DC","background-color":"transparent","border-color":"transparent"}},{"tag":"donotsell-button","styles":{"color":"#1863DC","background-color":"transparent","border-color":"transparent"}},{"tag":"accept-button","styles":{"color":"#FFFFFF","background-color":"#3c21ff","border-color":"#3c21ff"}},{"tag":"revisit-consent","styles":{"background-color":"#3c21ff"}}],"_shortCodes":[{"key":"cky_readmore","content":"<a href=\"#\" class=\"cky-policy\" aria-label=\"Read More\" target=\"_blank\" rel=\"noopener\" data-cky-tag=\"readmore-button\">Read More<\/a>","tag":"readmore-button","status":false,"attributes":{"rel":"nofollow","target":"_blank"}},{"key":"cky_show_desc","content":"<button class=\"cky-show-desc-btn\" data-cky-tag=\"show-desc-button\" aria-label=\"Show more\">Show more<\/button>","tag":"show-desc-button","status":true,"attributes":[]},{"key":"cky_hide_desc","content":"<button class=\"cky-show-desc-btn\" data-cky-tag=\"hide-desc-button\" aria-label=\"Show less\">Show less<\/button>","tag":"hide-desc-button","status":true,"attributes":[]},{"key":"cky_category_toggle_label","content":"[cky_{{status}}_category_label] [cky_preference_{{category_slug}}_title]","tag":"","status":true,"attributes":[]},{"key":"cky_enable_category_label","content":"Enable","tag":"","status":true,"attributes":[]},{"key":"cky_disable_category_label","content":"Disable","tag":"","status":true,"attributes":[]},{"key":"cky_video_placeholder","content":"<div class=\"video-placeholder-normal\" data-cky-tag=\"video-placeholder\" id=\"[UNIQUEID]\"><p class=\"video-placeholder-text-normal\" data-cky-tag=\"placeholder-title\">Please accept cookies to access this content<\/p><\/div>","tag":"","status":true,"attributes":[]},{"key":"cky_enable_optout_label","content":"Enable","tag":"","status":true,"attributes":[]},{"key":"cky_disable_optout_label","content":"Disable","tag":"","status":true,"attributes":[]},{"key":"cky_optout_toggle_label","content":"[cky_{{status}}_optout_label] [cky_optout_option_title]","tag":"","status":true,"attributes":[]},{"key":"cky_optout_option_title","content":"Do Not Sell or Share My Personal Information","tag":"","status":true,"attributes":[]},{"key":"cky_optout_close_label","content":"Close","tag":"","status":true,"attributes":[]}],"_rtl":"","_providersToBlock":[]};
@@ -194,12 +189,9 @@ gtag("config", "AW-11191143499");
 var wpso = {"ajaxurl":"https:\/\/agrispesa.loc\/wp-admin\/admin-ajax.php","user_items":[]};
 /* ]]> */
 </script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/plugins/wp-sort-order/js/front-scripts.js?t=2023100439&#038;ver=6.3.2' id='wp-wpso-front-scripts-js'></script>
-<link rel="https://api.w.org/" href="https://agrispesa.loc/wp-json/" /><link rel="alternate" type="application/json" href="https://agrispesa.loc/wp-json/wp/v2/pages/16" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://agrispesa.loc/xmlrpc.php?rsd" />
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/plugins/wp-sort-order/js/front-scripts.js?t=2023110426&#038;ver=6.3.2' id='wp-wpso-front-scripts-js'></script>
+<link rel="https://api.w.org/" href="https://agrispesa.loc/wp-json/" /><link rel="alternate" type="application/json" href="https://agrispesa.loc/wp-json/wp/v2/product_cat/768" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://agrispesa.loc/xmlrpc.php?rsd" />
 <meta name="generator" content="WordPress 6.3.2" />
-<link rel='shortlink' href='https://agrispesa.loc/' />
-<link rel="alternate" type="application/json+oembed" href="https://agrispesa.loc/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fagrispesa.loc%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://agrispesa.loc/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fagrispesa.loc%2F&#038;format=xml" />
 <style id="cky-style-inline">[data-cky-tag]{visibility:hidden;}</style><meta name="generator" content="Site Kit by Google 1.111.0" />			<style type="text/css">.default #wdapzipsumit {color:#ffffff;
 				  background-color:#a46497;}.classic .wdapziptextbox {border-color:#a46497;} .default #wdapziptextbox{border:1px solid#a46497;}</style>
 						<script type="rocketlazyloadscript">
@@ -357,6 +349,24 @@ text-shadow: none;
 .woocommerce-variation-price .price .subscription-details,
 .woo-wallet-content-heading,.woo-wallet-content hr{
 	display: none;
+}
+
+#shipping_method li:nth-child(2){
+  
+  display: none !important;
+}
+
+.pet-heroes--flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
+
+@media (min-width: 641px) {
+	.wb-section-box--flex {
+	display: flex;
+}
 }		</style>
 		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<!-- TrustBox script -->
 	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://agrispesa.loc/wp-content/cache/min/1/bootstrap/v5/tp.widget.bootstrap.min.js?ver=1686059977" async></script>
@@ -413,7 +423,7 @@ text-shadow: none;
 </script>
 </head>
 
-<body class="home page-template page-template-frontpage page-template-frontpage-php page page-id-16 theme-agrispesa woocommerce-no-js" style="padding-bottom:100px;">
+<body class="archive tax-product_cat term-aromatiche-secche term-768 theme-agrispesa woocommerce woocommerce-page woocommerce-no-js" style="padding-bottom:100px;">
 
 <!-- GTM Container placement set to automatic -->
 <!-- Google Tag Manager (noscript) -->
@@ -434,10 +444,11 @@ text-shadow: none;
 					</a>
 				</div>
 				<div class="mini-menu--header">
-					<div id="mini_menu" class="menu-container"><ul id="menu-mini-menu" class="mini_menu"><li id="menu-item-298" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-298"><a title="Manifesto" href="https://agrispesa.loc/manifesto/">Manifesto</a></li>
-<li id="menu-item-42706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42706"><a href="https://agrispesa.loc/fogliospesa/">Fogliospesa</a></li>
-<li id="menu-item-45468" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-45468"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
+					<div id="mini_menu" class="menu-container"><ul id="menu-mini-menu" class="mini_menu"><li id="menu-item-45468" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat current-product_cat-ancestor menu-item-45468"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
 <li id="menu-item-18999" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-18999"><a href="https://agrispesa.loc/box/facciamo-noi/">Facciamo noi</a></li>
+<li id="menu-item-51824" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51824"><a href="https://agrispesa.loc/pawer-petfood/">Pawer Petfood</a></li>
+<li id="menu-item-298" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-298"><a title="Manifesto" href="https://agrispesa.loc/manifesto/">Manifesto</a></li>
+<li id="menu-item-51825" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51825"><a href="https://agrispesa.loc/chi-siamo/">Chi siamo</a></li>
 </ul></div>				</div>
 
 			</div>
@@ -480,13 +491,10 @@ text-shadow: none;
 				</div>
 			</div>
 			<nav class="agr-menu--nav">
-				<div class="menu-principale-container"><ul id="main-menu" class="main-menu"><li id="menu-item-45469" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-45469"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
-<li id="menu-item-19001" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-19001"><a href="https://agrispesa.loc/box/facciamo-noi/">Facciamo noi</a></li>
-<li id="menu-item-7335" class="menu-item menu-item-type-post_type_archive menu-item-object-producer menu-item-7335"><a href="https://agrispesa.loc/produttori/">Produttori</a></li>
-<li id="menu-item-299" class="divider-menu menu-item menu-item-type-post_type menu-item-object-page menu-item-299"><a title="Manifesto" href="https://agrispesa.loc/manifesto/">Manifesto</a></li>
-<li id="menu-item-283" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-283"><a title="Come funziona" href="https://agrispesa.loc/come-funziona/">Come funziona</a></li>
-<li id="menu-item-7334" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7334"><a href="https://agrispesa.loc/fogliospesa/">Fogliospesa</a></li>
-<li id="menu-item-148" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a title="Recensioni" href="https://agrispesa.loc/recensioni/">Recensioni</a></li>
+				<div class="menu-footer-1-container"><ul id="main-menu" class="main-menu"><li id="menu-item-45470" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat current-product_cat-ancestor menu-item-45470"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
+<li id="menu-item-19000" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-19000"><a href="https://agrispesa.loc/box/facciamo-noi/">Facciamo noi</a></li>
+<li id="menu-item-288" class="menu-item menu-item-type-post_type_archive menu-item-object-producer menu-item-288"><a title="Produttori" href="https://agrispesa.loc/produttori/">Produttori</a></li>
+<li id="menu-item-51730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51730"><a href="https://agrispesa.loc/pawer-petfood/">Pawer Petfood</a></li>
 </ul></div>							</nav>
 		</div>
 	</div>
@@ -494,339 +502,427 @@ text-shadow: none;
 
 	<div class="info_agr">
 		<span class="info_agr--button"><span class="icon-arrow-down"></span></span>
-		<h4 class="info_agr--title">🌈 PROMEMORIA SETTIMANA 43 🌈 </h4>
-		<p class="info_agr--subtitle">Per ricevere la spesa tra il 23 e il 25 ottobre, fai il tuo ordine entro le ore 12 di mercoledì 18 ottobre. Grazie!</p>
+		<h4 class="info_agr--title">🌈 PROMEMORIA SETTIMANA 47 🌈 </h4>
+		<p class="info_agr--subtitle">Per ricevere la spesa tra il 20 e il 22 novembre, fai il tuo ordine entro le ore 12 di mercoledì 15 novembre. Grazie!</p>
 	</div>
 	
 <main id="primary" class="site-main" role="main">
-
-<section class="hero">
-  <div class="hero--item">
-    <div class="hero--content">
-      <div class="hero--text" data-aos="fade-in" data-aos-duration="600" data-aos-delay="0">
-        <h1 class="hero--title">Agricoltura contadina, <br class="only-desktop"/>a casa tua.</h1>
-        <h2 class="hero--subtitle"></h2>
-        <a href="https://agrispesa.loc/box/facciamo-noi" class="btn btn-primary btn-big hero--btn" alt="Abbonati alla spesa">Abbonati alla spesa</a>
-        <div class="hero-stars">
-          <div class="review-page--stars">
-            <span class="icon-star yellow"></span>
-            <span class="icon-star yellow"></span>
-            <span class="icon-star yellow"></span>
-            <span class="icon-star yellow"></span>
-            <span class="icon-star yellow"></span>
-          </div>
-          <div class="hero-stars--flex">
-            <a href="https://it.trustpilot.com/review/www.agrispesa.it" target="_blank" title="Leggi le nostre recensioni su Trustpilot">
-            <span class="value">4.8</span>
-            <span>su Trustpilot</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="hero--box" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-        <img width="1920" height="1006" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201006'%3E%3C/svg%3E" alt="Prova Agrispesa" data-lazy-src="https://agrispesa.loc/wp-content/themes/agrispesa/assets/images/box/box1_BZ.webp" /><noscript><img width="1920" height="1006" src="https://agrispesa.loc/wp-content/themes/agrispesa/assets/images/box/box1_BZ.webp" alt="Prova Agrispesa" /></noscript>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec-home sec-wide bg-orange no-line">
-
-    <div class="container-pg">
-
-            <section class="how-works">
-        <div class="how-works--flex">
-                            <div class="how-works--item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-                  <h3 class="how-works--item--title">Per tutti i gusti</h3>
-                  <p class="how-works--item--subtitle">Vegana, vegetariana, pescetariana, onnivora. <br class="only-desktop"/>Ma niente a che vedere <br class="only-desktop"/> con le solite box!</p>
-                </div>
-                            <div class="how-works--item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-                  <h3 class="how-works--item--title">Facciamo noi </h3>
-                  <p class="how-works--item--subtitle">Sei in buone mani, la terra <br class="only-desktop"/>  e le stagioni ci danno  <br class="only-desktop"/>  i prodotti migliori: <br class="only-desktop"/>  Facciamo noi la tua spesa</p>
-                </div>
-                            <div class="how-works--item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-                  <h3 class="how-works--item--title">A casa tua</h3>
-                  <p class="how-works--item--subtitle">A poche ore dal raccolto. <br class="only-desktop"/>  E quando non ci sei, <br class="only-desktop"/>  la spesa ti aspetta <br class="only-desktop"/>  sullo zerbino </p>
-                </div>
-                      </div>
-        </section>
-      
-      <div class="sec-wide--content" data-aos="fade-up" data-aos-duration="700" data-aos-delay="50">
-        <h4 class="sec-wide--text">
-          Agrispesa vuol dire prodotti di agricoltura contadina. Semplice.<br class="only-desktop"/>Verdura, frutta, uova, latte, formaggi, pesce e carne<br class="only-desktop"/> ottenuti nel rispetto di terra, piante, animali e persone        </h4>
-        <a href="https://agrispesa.loc/box/facciamo-noi" class="btn btn-primary btn-big sec-wide--btn" title="Abbonati alla spesa">Abbonati alla spesa</a>
-      </div>
-    </div>
-
-</section>
-
-<div class="clearfix"></div>
-
-<div class="agr-section--container">
-  
-
-            <section class="agr-section agr-section--right" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:#e5d7c8; color:#343535">
-          <div class="agr-section--flex">
-            <div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-              <div data-bg="https://agrispesa.loc/wp-content/uploads/2023/04/raccolta-malva.jpg" class="img-bg-column rocket-lazyload" style=""></div>
-            </div>
-          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
-            <div class="agr-section--text--content">
-              <div class="agr-section--title"><h4>La terra produce, noi collaboriamo.</h4>
-</div>
-              <div class="agr-section--subtitle"><p>Carote, asparagi, radicchio, zucchini, bietole, cavolfiore.</p>
-</div>
-                                                <a href="https://agrispesa.loc/negozio/verdura/" class="btn btn-primary" title="Scegli la tua verdura">Scegli la tua verdura</a>
-                                          </div>
-          </div>
-          </div>
-        </section>
-            
-    
-  
-
-            <section class="agr-section" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50" style="background-color:#765341; color:#e5d7c8">
-          <div class="agr-section--flex">
-          <div class="agr-section--text" data-aos="fade-left" data-aos-duration="700" data-aos-delay="50">
-            <div class="agr-section--text--content">
-              <div class="agr-section--title"><h4>Vecchie varietà locali, anche gli insetti vivono bene!</h4>
-</div>
-              <div class="agr-section--subtitle"><p>Frutta fresca, di stagione e biodiversità del territorio</p>
-</div>
-                                                <a href="https://agrispesa.loc/negozio/frutta/" class="btn btn-primary" title="Scegli la tua frutta">Scegli la tua frutta</a>
-                                          </div>
-          </div>
-          <div class="agr-section--image" data-aos="fade-right" data-aos-duration="700" data-aos-delay="50">
-            <div data-bg="https://agrispesa.loc/wp-content/uploads/2023/02/ape-vs-fiore-ciliegio.jpg" class="img-bg-column rocket-lazyload" style=""></div>
-          </div>
-          </div>
-        </section>
-            
-    
-</div>
-<div class="reviews-home" data-aos="fade-in" data-aos-duration="700" data-aos-delay="50"><div class="container-pg"><div class="reviews--slider">
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Ho conosciuto Agrispesa alcuni anni fa e mi sono subito entusiasmata per la formula intelligente nel fare la spesa: coniugare i prodotti dell'orto del contadino, coltivati con sapienza e nel rispetto della natura, con il desiderio della clientela di consumare prodotti freschi, di stagione e del territorio. Sono così diventata una cliente affezionata, anche perché dietro al servizio impeccabile c'è la gentilezza, la professionalità e l'impegno a rendersi sempre disponibili per rispondere alle esigenze del consumatore.</p></div>
-    <p class="review--name">Angela</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Agrispesa ha saputo negli anni selezionare prodotti di eccellente qualità del nostro bel territorio e ampliare l’offerta in modo molto interessante. Durante il lock down ha consegnato prodotti freschi e con grande puntualità ha saputo rendere un servizio a chi era chiuso in casa. Non da ultimo ha introdotto la spesa per chi è in difficoltà segno di grande etica e responsabilità sociale.
-Grazie!</p></div>
-    <p class="review--name">Anna</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Vengo dal Sud, sono abituata al sapore vero del cibo, la frutta e la verdura devono avere il sapore della terra che li produce; la carne e i formaggi devono sapere e profumare dell’erba e dei pascoli che hanno nutrito gli animali. Il sedano è salato, le fragole sono di zucchero. Questo ho ritrovato nei prodotti di Agrispesa che mi hanno fatto amare la nuova terra che mi ha ospitata. Qui ho conosciuto nuovi amici, come i topinambur e il sedano rapa, i fagioli del Babi, il cardo gobbo e le tome alpine. Nutrirsi di buono e di amore fa bene all’anima. Un prodotto di Agrispesa è tutto questo è molto più. Provare per credere.</p></div>
-    <p class="review--name">Maria</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Clienti di Agrispesa da oltre dieci anni. Oltre ad offrire una varietà di prodotti di ottima qualità, frutta, verdura e carni fresche, Agrispesa affianca con attenzione allevatori e contadini con cui collabora, rispettandone il lavoro e la cura.</p></div>
-    <p class="review--name">Elena</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Agrispesa è un appuntamento di gioia per tutta la famiglia! Quando arriva la bellissima scatola (preparata con cura in ogni dettaglio) è bellissimo aprirla insieme ai miei bambini. I prodotti sono buonissimi e vari mescolati ad arte per facilitare ottime ricette. Si trovano spunti e letture interessanti nella confezione e tutta questa dedizione la si percepisce con la testa e con il palato. Il perfetto connubio tra mangiare bene e fare bene all'ambiente e al proprio territorio. Semplicemente unici!!!</p></div>
-    <p class="review--name">Fernando</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Da molti anni, con alcuni intervalli, facciamo la spesa con Agrispesa. I prodotti sono freschi, di qualità e provengono da aziende sostenibili. Il valore aggiunto sono la cortesia e la disponibilità. Io lo consiglio sempre a tutti</p></div>
-    <p class="review--name">Rosaria</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Ho conosciuto Agrispesa nel 2006 e da allora è stato un piacevole appuntamento settimanale con il buon cibo. Oltre alla comodità di ricevere il pacco a casa è l’alta qualità dei prodotti che ha fatto si che ancora oggi sia una fidata cliente. Se la provi non la lasci più: crea dipendenza 😅</p></div>
-    <p class="review--name">Monica</p>
-  </div>
-</div>
-
-
-
-<div class="review--item">
-
-  <div class="review--text">
-    <div class="review-page--stars">
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-      <span class="icon-star yellow"></span>
-    </div>
-
-    <div class="review--description"><p>Sono molto contenta del servizio offerto da AgriSpesa. Sono 2 anni che uso i loro prodotti e devo dire che la qualità è molto alta. Avevo fatto un corso per fare il pane a lievito madre e quindi mi serviva la farina di buona qualità. Non sono riuscita a trovare di meglio. Trovo che alcuni prodotti sono meglio di altri per esempio le mele 🍎 🍏 sono ottimi, il pollo 🐓 anche e le poche volte che non sono rimasta soddisfatta le signore Giovanna ed Elena si sono rese super disponibile per venirmi in contro. Sapere che si sta mangiando cibo genuino da produttori locali da un’azienda con una cultura etica non ha prezzo a pagare. Ottimo sito!</p></div>
-    <p class="review--name">Gian Piero</p>
-  </div>
-</div>
-
-
-</div><a href="https://agrispesa.loc/recensioni" class="btn btn-primary reviews-home--button" title="Leggi tutte le recensioni">Scoprile tutte</a></div></div><section class="press">
-  <div class="container-pg">
-    <h3 class="press--title">Parlano di noi</h3>
-    <div class="press--slider">
-                <div class="press--item">
-                        <a href="https://www.repubblica.it/il-gusto/2022/01/17/news/spesa_a_domicilio_italia_agrispesa_acciugai-333797018/" class="press--link" target="_blank" title="Dalle acciughe ai prodotti contadini, la famiglia che consegna a domicilio il cibo (e le sue storie)">
-                          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Dalle acciughe ai prodotti contadini, la famiglia che consegna a domicilio il cibo (e le sue storie)" class="press--logo" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/01/repubblica.png" /><noscript><img src="https://agrispesa.loc/wp-content/uploads/2023/01/repubblica.png" alt="Dalle acciughe ai prodotti contadini, la famiglia che consegna a domicilio il cibo (e le sue storie)" class="press--logo" /></noscript>
-                        </a>
-                      </div>
-                <div class="press--item">
-                        <a href="https://www.freshplaza.it/article/9392037/agrispesa-prodotti-a-domicilio-da-un-agricoltura-sostenibile/" class="press--link" target="_blank" title="Agrispesa, prodotti a domicilio da un'agricoltura sostenibile">
-                          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Agrispesa, prodotti a domicilio da un'agricoltura sostenibile" class="press--logo" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/01/fresh-plaza.png" /><noscript><img src="https://agrispesa.loc/wp-content/uploads/2023/01/fresh-plaza.png" alt="Agrispesa, prodotti a domicilio da un'agricoltura sostenibile" class="press--logo" /></noscript>
-                        </a>
-                      </div>
-          </div>
-  </div>
-</section>
-
-<section class="newsletter">
-	<div class="newsletter--intro">
-		<h3 class="newsletter--title">Ogni tanto ci facciamo sentire.</h3>
-		<p class="newsletter--subtitle">Abbiamo una newsletter speciale, di quelle che non stressano.</p>
-	</div>
-
-	<div class="mailchimp-form">
-
-		<!-- Begin Mailchimp Signup Form -->
-	<div class="newsletter--form" id="mc_embed_signup">
-
-		<form action="https://agrispesa.us8.list-manage.com/subscribe/post?u=a601ffa5369b98db7030601ee&amp;id=cae80e4aed&amp;f_id=001468e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self">
-				<div id="mc_embed_signup_scroll" class="signup">
-					<div class="mc-field-group">
-						<input type="email" value="" name="EMAIL" placeholder="Il tuo indirizzo email" class="input-text required email" id="mce-EMAIL">
-					</div>
-					<div class="mc-field-group">
-						<input type="text" value="" name="FNAME" class="input-text show-name" placeholder="Il tuo nome" id="mce-FNAME">
-						<span id="mce-FNAME-HELPERTEXT" class="helper_text"></span>
-					</div>
-
-						<div id="mergeRow-gdpr" class="mergeRow gdpr-mergeRow content__gdprBlock mc-field-group">
-								<div class="content__gdpr">
-									<div class="checkbox-form form-agree">
-										<input type="checkbox" id="gdpr_13" name="gdpr[13]" value="Y" class="av-checkbox">
-										<label class="green" for="gdpr_13">Ho letto e accetto la <a href="https://agrispesa.loc/privacy-policy" target="_blank" title="Privacy Policy">Privacy Policy</a></label>
-									</div>
-								 </div>
-						</div>
-
-
-					<div class="mailchimp-form--buttons">
-						<input type="submit" value="Iscriviti" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btb-small">
-					</div>
-
-					<div id="mce-responses" class="clear">
-						<div class="response" id="mce-error-response" style="display:none"></div>
-						<div class="response" id="mce-success-response" style="display:none"></div>
-					</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-					<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_42fcc9d5ed6c3e5687d0de042_0cc342225e" tabindex="-1" value=""></div>
-
+<div id="primary" class="content-area"><main id="main" class="site-main" role="main"><nav class="woocommerce-breadcrumb"><a href="https://agrispesa.loc">Home</a>&nbsp;&#47;&nbsp;<a href="https://agrispesa.loc/negozio/">Negozio</a>&nbsp;&#47;&nbsp;<a href="https://agrispesa.loc/negozio/verdura/">Verdura</a>&nbsp;&#47;&nbsp;Aromatiche secche</nav>	<header class="woocommerce-products-header">
+		<section class="big-search">
+			<div class="big-search--content">
+				<div class="big-search--text">
+					<h1 class="big-search--h1">Aromatiche secche</h1>
+					<h3 class="big-search--title"><p>Peperoncino con buon gusto, una buona piccantezza che non copra il sapore del piatto, il gusto che si avvicini al fresco.</p>
+</h3>
 				</div>
-		</form>
+				
+<form method="get" id="searchform" action="https://agrispesa.loc/" role="search">
+	<label class="sr-only" for="s">Cerca</label>
+	<div class="input-group search-form">
+		<div class="input-search">
+			<span class="icon-close delete-search"></span>
+			<input class="field form-control search-input-field" id="s" name="s" type="text"
+				placeholder="Cerca un prodotto..." value="">
+				<button class="go-search" id="searchsubmit" name="submit" type="submit"><span class="icon-search"></span></button>
+		</div>
 	</div>
-	<script type="rocketlazyloadscript">
-		function validateForm() {
-			if (document.forms["mc-embedded-subscribe-form"]["gdpr_13"].checked === true) {
-				jQuery('#mc-embedded-subscribe-form .form-agree').removeClass('not-valid');
-			} else {
-				jQuery('#mc-embedded-subscribe-form .form-agree').addClass('not-valid');
-				return false;
-			}
-		}
-	</script>
-	<!--End mc_embed_signup-->
+</form>
+			</div>
+		</section>
+
+		<div class="all-categories">
+			<ul class="all-categories--list"><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/regali-di-natale/" title="Regali di Natale" class="big"><svg id="icon-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M34.25,17.44c.55-.57,.23-1.52-.55-1.65l-8.37-1.28c-.33-.05-.6-.25-.74-.54l-3.71-7.92c-.34-.75-1.41-.75-1.76,0l-3.7,7.92c-.14,.29-.42,.5-.74,.54l-8.38,1.28c-.78,.13-1.1,1.08-.54,1.65l6.12,6.28c.22,.23,.31,.54,.26,.84l-1.43,8.82c-.14,.8,.72,1.41,1.42,1.01l7.4-4.09c.3-.16,.65-.16,.94,0l7.4,4.09c.71,.4,1.56-.21,1.43-1.01l-1.43-8.82c-.05-.31,.05-.62,.26-.84l6.12-6.28Z"/>
+</svg>
+Regali di Natale</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/carne-pesce/" title="Carne e Pesce" class="big"><svg id="icon-carne-pesce" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M30.82,11.43c-.32,0-.58-.26-.58-.58s.26-.58,.58-.58,.58,.26,.58,.58-.26,.58-.58,.58Zm.83-1.41c.92,0,1.66-.74,1.66-1.66s-.74-1.66-1.66-1.66h-3.33c0,.92,.74,1.66,1.66,1.66-.92,0-1.75,.37-2.35,.98-2.57,2.57-5.66,5.68-9.3,5.68-4.22,0-7.43-4.99-11.65-4.99,0,1.06,.42,2.09,1.18,2.84l2.15,2.15-3.33-1.66c0,1.06,.42,2.09,1.18,2.84l2.15,2.15c0,4.82,5.43,9.64,5.8,9.97l-.84,3.35c-.91,.01-1.64,.75-1.64,1.66h6.66c0-.92-.74-1.66-1.66-1.66h-1.64l.83-3.33h.81c1.05,0,2.07-.13,3.05-.36l1.85,3.69c-.87,.05-1.57,.77-1.57,1.66h6.66c0-.92-.74-1.66-1.66-1.66h-1.57l-2.09-4.17c5.05-1.89,8.64-6.76,8.64-12.47h.49c.65,0,1.18-.53,1.18-1.18,0-.31-.12-.61-.34-.83l-1.32-1.32h1.66l-1.66-1.66Z"/>
+</svg>
+Carne e Pesce</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/casa-persona/" title="Casa e Persona" class="big"><svg id="icon-casa-persona" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <g><g><path d="M21.25,25.4c0,.26-.1,.51-.28,.69-.18,.18-.43,.28-.69,.28h-2.43c-.81,0-1.46-.65-1.46-1.46v-6.81c0-.27,.22-.49,.49-.49h.97c.17,0,.33,.09,.42,.24l2.78,4.63c.14,.23,.21,.49,.21,.75v2.16Zm.97-2.36c0-.6-.16-1.19-.46-1.71l-4.68-8.09h-5.28l-4.68,8.09c-.3,.52-.46,1.11-.46,1.71v11.11c0,.81,.65,1.46,1.46,1.46h12.64c.81,0,1.46-.65,1.46-1.46v-11.11Z"/><rect x="12.01" y="8.38" width="4.86" height="1.95"/><rect x="11.04" y="11.3" width="6.81" height=".97"/></g><g><path d="M30.07,22.79c1.07-.03,1.96,.81,1.99,1.88v9.17c0,.08-.07,.15-.16,.15h-.72c-.08,0-.15-.06-.16-.15v-8.69c-.01-.99-.57-1.9-1.45-2.35h.49Zm-5.46,12.82h7.87c.46,.01,.84-.35,.86-.81v-10.14c0-1.7-1.46-3.09-3.27-3.09h-3.05c-1.8,0-3.27,1.38-3.27,3.09v10.14c.01,.46,.4,.82,.86,.81h0Z"/><polygon points="27.94 17.01 27.94 17.62 26.88 17.62 26.88 20.66 30.22 20.66 30.22 17.62 29.15 17.62 29.15 17.01 27.94 17.01"/><path d="M26.54,16.8l.34,.28,2.1-2.6-.34-.27c-.09-.07-.2-.1-.31-.09-.11,.01-.21,.07-.29,.16l-1.56,1.93c-.07,.09-.1,.2-.09,.31,.01,.11,.07,.22,.16,.29h0Z"/></g></g><path d="M23.45,4.09c.73,0,1.32,.59,1.32,1.32,0,.14-.11,.25-.26,.25s-.25-.11-.26-.25c0-.45-.36-.81-.81-.81-.14,0-.26-.11-.26-.26s.11-.26,.26-.26Zm-.1,3.42c.81,0,1.53-.49,1.84-1.23,.31-.75,.14-1.6-.43-2.17-.57-.57-1.43-.74-2.17-.43-.75,.31-1.23,1.04-1.23,1.84,0,.53,.21,1.04,.58,1.41,.37,.37,.88,.58,1.41,.58h0Z"/><path d="M26.67,10.51c0,.13-.11,.24-.24,.24s-.24-.11-.24-.24c0-.43-.35-.78-.78-.78-.13,0-.24-.11-.24-.24s.11-.24,.24-.24c.7,0,1.26,.57,1.26,1.26h0Zm-3.26,.1c0,.77,.46,1.46,1.17,1.76,.71,.29,1.53,.13,2.07-.41,.54-.54,.71-1.36,.41-2.07-.29-.71-.99-1.17-1.76-1.17-1.05,0-1.9,.85-1.9,1.9Z"/><path d="M29.56,5.27c.6,0,1.08,.49,1.08,1.08,0,.12-.09,.21-.21,.21s-.21-.09-.21-.21c0-.37-.3-.66-.67-.67-.12,0-.21-.09-.21-.21s.09-.21,.21-.21Zm-.08,2.8c.66,0,1.26-.4,1.51-1.01,.25-.61,.11-1.31-.35-1.78-.47-.47-1.17-.61-1.78-.35-.61,.25-1.01,.85-1.01,1.51,0,.9,.73,1.63,1.63,1.63Z"/>
+</svg>
+Casa e Persona</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/dolci-bevande/" title="Dolci e Bevande" class="big"><svg id="icon-dolci-bevande" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M8.76,19.75c7.78,.79,16.01,3.05,23.95,3.78v2.85c-7.76-.73-16-2.99-23.95-3.78v-2.85Zm12.41-8.79l11.3,6.78-21.66-3.37,3.04-1.1c.86,1.21,2.7,1.98,4.96,1.62,2.14-.63,2.7-2.46,2.36-3.94h0Zm-2.19-.52c.31,.22,.58,.52,.8,.92,.18,.73-.29,1.83-1.23,2.12-2.14,.32-3.5-.75-3.73-1.41-.05-.42-.13-.73-.11-.91,.02-.16,.09-.31,.38-.55,.49,.71,1.21,1.08,1.89,1.08,.74,0,1.51-.44,2-1.26h0Zm-3.65-3.48c-.57,.32-.85,.92-.85,1.52,0,.27,.03,.53,.07,.77-.74,.37-1.17,1.1-1.25,1.74-.04,.38,0,.68,.06,.95l-5.55,2c-.27,.1-.47,.38-.47,.67v12.17c0,.32,.24,.63,.56,.7l25.38,5.73c.42,.09,.88-.28,.87-.7v-15.03c0-.25-.14-.49-.35-.61l-12.51-7.51c-.22-.13-.4-.09-.61-.06l-.57,.2c-.2-.17-.42-.32-.65-.45,.02-.18,.03-.37,.03-.57,0-.6-.28-1.2-.85-1.52-.46-.27-1.07-.19-1.65,.07-.63-.33-1.03-.31-1.65-.07h0Z"/>
+</svg>
+Dolci e Bevande</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/frutta/" title="Frutta" class="big"><svg id="icon-frutta" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path class="cls-1" d="M10.91,17.93s1.48-1.81,2.67-2.22c5.1-1.69,4.16,.62,1.65,1.23-1.56,.41-2.39,1.19-2.67,1.65-.25,.45-1.32,.82-1.69,.45s.04-1.11,.04-1.11h0Zm8.52-6.05s1.44-4.48,3.5-5.43c2.1-.91,7.03-.08,6.87,1.28-.12,1.36-1.89,2.84-3.41,3.17-1.52,.33-6.95,.99-6.95,.99h0Zm-2.67,1.32h6.54c5.64,0,10.2,4.61,10.2,10.2v.33c0,5.6-4.57,10.2-10.2,10.2h-6.54c-5.64,0-10.24-4.61-10.24-10.2v-.33c0-5.6,4.61-10.2,10.24-10.2Z"/>
+</svg>
+Frutta</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/pane-cereali/" title="Pane e Cereali" class="big"><svg id="icon-pane-cereali" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path class="cls-1" d="M30.61,21.3c-.1-.03-.17,.03-.21,.14-.03,.14-.07,.27-.1,.41-.75,2.73-1.78,4.85-2.32,4.72-.55-.14-.38-2.5,.34-5.23,0-.07,.03-.14,.07-.17,.03-.1-.03-.21-.14-.21-1.06-.14-2.19-.24-3.38-.34-.07,0-.17,.03-.17,.14-.07,.38-.17,.72-.27,1.13-.75,2.73-1.78,4.85-2.32,4.72-.55-.14-.38-2.5,.34-5.23,.07-.24,.14-.44,.21-.65,.03-.1-.03-.21-.14-.21-.82-.1-1.64-.1-2.5-.1-.34,0-.68,0-1.03,.03-.07,0-.14,.07-.17,.14-.1,.41-.17,.85-.31,1.26-.75,2.73-1.78,4.85-2.32,4.72-.55-.14-.38-2.5,.34-5.23,.07-.21,.1-.41,.17-.62,.03-.1-.07-.21-.17-.21-1.26,.07-2.43,.17-3.55,.31-.07,0-.14,.07-.14,.14-.07,.31-.14,.62-.24,.92-.75,2.73-1.78,4.85-2.32,4.72-.55-.14-.38-2.5,.34-5.23,.03-.1-.07-.24-.17-.21-.24,.03-.48,.07-.68,.1-4.1,.68-6.77,4.68-5.81,8.72l.24,1.03c.24,1.03,1.16,1.78,2.26,1.78h27.11c1.06,0,1.98-.72,2.26-1.78l.24-1.03c.95-3.96-1.54-7.86-5.44-8.68h0Z"/><g><path d="M23.87,10.89s.06,.06,.06,.1c.03,.06,.1,.13,.13,.23,.06,.13,.1,.29,.13,.49,.03,.2,0,.39-.03,.55-.03,.1-.03,.2-.06,.32-.03,.16-.1,.29-.1,.45-.06,.32,.16,.62,.49,.68h.1c.2,0,.36-.1,.49-.26,.16-.23,.29-.45,.45-.71,.16-.29,.26-.68,.26-1.04,.03-.36-.03-.71-.16-1.07-.06-.16-.13-.32-.23-.49-.06-.13-.2-.29-.26-.39-.2-.26-.29-.62-.29-.94,0-.2,.03-.36,.1-.52,.03-.1,.06-.2,.13-.32,.06-.13,.13-.26,.16-.42,.1-.32-.06-.65-.36-.75-.23-.06-.49,0-.65,.16-.2,.23-.36,.39-.55,.68-.2,.29-.32,.65-.39,1.01-.13,.71,.06,1.49,.49,2.08,.03,.06,.07,.13,.1,.16h0Z"/><path d="M19.35,10.89s.06,.06,.06,.1c.03,.06,.1,.13,.13,.23,.06,.13,.1,.29,.13,.49,.03,.2,0,.39-.03,.55-.03,.1-.03,.2-.06,.32-.03,.16-.06,.29-.1,.45-.06,.32,.16,.62,.49,.68h.1c.2,0,.36-.1,.49-.26,.16-.23,.29-.45,.45-.71,.16-.32,.26-.68,.26-1.04,.03-.36-.03-.71-.16-1.07-.06-.16-.13-.32-.23-.49-.06-.13-.2-.29-.26-.39-.2-.26-.29-.62-.29-.94,0-.2,.03-.36,.1-.52,.03-.1,.06-.2,.13-.32,.06-.13,.13-.26,.16-.42,.1-.32-.06-.65-.36-.75-.23-.06-.49,0-.65,.16-.2,.23-.36,.39-.55,.68-.2,.29-.32,.65-.39,1.01-.13,.71,.06,1.49,.49,2.08,.03,.06,.07,.13,.1,.16h0Z"/><path d="M14.84,10.89s.06,.06,.06,.1c.03,.06,.1,.13,.13,.23,.06,.13,.1,.29,.13,.49,.03,.2,0,.39-.03,.55-.03,.1-.03,.2-.06,.32-.03,.16-.06,.29-.1,.45-.06,.32,.16,.62,.49,.68h.1c.2,0,.36-.1,.49-.26,.16-.23,.29-.45,.45-.71,.16-.32,.26-.68,.26-1.04,.03-.36-.03-.71-.16-1.07-.06-.16-.13-.32-.23-.49-.06-.13-.2-.29-.26-.39-.2-.26-.29-.62-.29-.94,0-.2,.03-.36,.1-.52,.03-.1,.06-.2,.13-.32,.06-.13,.13-.26,.16-.42,.1-.32-.06-.65-.36-.75-.23-.06-.49,0-.65,.16-.2,.23-.36,.39-.55,.68-.2,.29-.32,.65-.39,1.01-.13,.71,.06,1.49,.49,2.08,.03,.06,.07,.13,.1,.16h0Z"/></g>
+</svg>
+Pane e Cereali</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/petfood/" title="Petfood" class="big"><svg id="icon-pet-food" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M33.73,22.63c-.86-1.53-2.28-2.67-3.97-3.15-.26-.06-.51,.09-.59,.34-.08,.25,.06,.52,.3,.61,4.11,1.28,4.75,5.37,2.98,8.33-.74,1.27-2.28,2.45-3.29,3.09l.17-1.14c.26-2.48,.77-5.16-.74-7.39-.15-.2-2.84-3.26-4.05-4.39-1.84-1.62-3.46-3.47-4.83-5.51-1.7-2.45-2.54-4.11-4.25-6.06-.66-.85-1.91-.85-2.9-.92-.8-.07-1.58,.21-2.14,.78-.6,.57-1.27,1.07-1.99,1.49l-2.04,1.13c-.68,.37-.96,1.19-.66,1.9l.47,1.09c.5,1.09,1.66,1.74,2.85,1.59l.99-.13c.31-.04,.6,.17,.68,.47,.26,.81-.1,1.86-.3,2.65-.43,1.66-.1,3.43,.91,4.82l1.21,1.67c.52,1.41,.72,2.91,.6,4.41l-.18,1.99c0,.32-.42,.63-.61,.84-.35,.28-.92,.54-.92,1.08v.53c0,.13,.05,.26,.15,.35,.09,.09,.22,.15,.35,.15h2.33c.25,.03,.7-.43,.89-.55,.44-.32,.73-.81,.81-1.35l1.03-6.55,1.2,2.33c-.08,1.23,.46,2.44,1.04,3.5h-1.28c-.32,0-.63,.13-.85,.36-.23,.23-.35,.54-.35,.86l.03,.95c0,.13,.05,.26,.15,.35,.09,.09,.22,.15,.35,.15h11.26c.07,0,.14-.01,.2-.04,.68-.29,3.42-1.99,4.6-3.97,.48-.88,1.93-3.81,.42-6.68h0ZM14.66,11.32c-.22,.6-.58,1.14-1.06,1.58-.75,.43-1.42-.13-1.65-.99-.5-1.38-.62-2.88-.34-4.32,.32-.15,.68-.2,1.02-.15-.21,1.4-.28,2.68,.12,3.69,.07,.31,.18,.61,.34,.88,.28-.33,.5-.7,.66-1.1l.8-3.04c.29,.28,.56,.58,.8,.9l-.66,2.48s-.02,.04-.03,.06h0Z"/>
+</svg>
+Petfood</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/piatti-preparati/" title="Piatti preparati" class="big"><svg id="icon-piatti-preparati" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M17.26,19.27s1.88-2.03,2.79-3.09c.61-1.88,.12-4.09-1.42-5.57l-4.91-4.82c-.24-.24-.61-.24-.88-.03-.3,.24-.3,.67-.06,.94l4.66,4.85c.27,.27,.24,.7-.06,.94l-.06,.06c-.27,.21-.67,.21-.91-.06l-4.61-5.06c-.24-.24-.64-.27-.91-.06l-.03,.03c-.27,.24-.3,.64-.09,.94l4.42,5.12c.24,.27,.21,.7-.06,.91l-.06,.06c-.27,.24-.7,.18-.94-.09l-4.27-5.21c-.24-.27-.64-.33-.94-.09l-.03,.03c-.27,.21-.3,.61-.09,.91l4.18,5.42c.21,.27,.18,.67-.09,.88l-.09,.09c-.3,.24-.73,.18-.94-.12l-3.94-5.42c-.21-.3-.67-.36-.94-.12-.24,.21-.3,.58-.12,.88l3.94,5.85c1.45,2.15,4.21,2.85,6.45,1.85h0Z"/>
+  <path d="M24.23,22.21c-.39,.55-.82,1.15-1.24,1.79-.36,.55-.76,1.09-1.15,1.67,1.03,1.42,2.18,2.94,3.58,4.6,4.12,4.88,5.48,4.33,6.15,3.76,.67-.58,1.45-1.82-2.64-6.73-1.7-2-3.27-3.64-4.7-5.09h0Z"/><path d="M25.69,20.88c.61,.7,1.7,.61,2.18-.18l4.15-6.7c1.55-2.39,1.64-5.45,.18-7.88-.33-.55-1.12-.61-1.51-.09,0,0-4.12,5.54-8.75,10.94-3.64,4.18-7.73,8.18-9.51,10.33-4.12,4.91-3.33,6.15-2.64,6.73,.67,.58,2.03,1.12,6.15-3.79,3.85-4.6,5.97-8.3,8.24-11.15l1.51,1.79Z"/>
+</svg>
+Piatti preparati</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/salse-olio/" title="Salse e Olio" class="big"><svg id="icon-salse-olio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M20.82,28.9c0-4.61,4.02-7.24,5.6-12.32,.06-.18,.22-.3,.41-.3s.36,.12,.41,.3c1.47,4.7,5,7.3,5.54,11.3,.49,3.69-2.28,7.08-6,7.04-1.59-.01-3.1-.65-4.22-1.78-1.12-1.13-1.74-2.65-1.74-4.23h0Zm-6.79,.58c-1.14-.43-2.12-1.19-2.81-2.19-.69-1-1.07-2.18-1.07-3.4,.03-1.66,.48-3.28,1.28-4.73-.12,.61-.18,1.24-.18,1.86,0,1.27,.36,2.5,1.04,3.57,.68,1.07,1.64,1.93,2.78,2.47,.45,.22,.73,.67,.73,1.17,0,.43-.21,.83-.56,1.08-.35,.24-.8,.3-1.21,.15h0Zm9.95-10.59c-1.84-4.22-5.52-7.81-7.25-13.36-.08-.27-.33-.45-.61-.45-.28,0-.53,.18-.61,.45-2.36,7.57-8.35,11.48-8.35,18.35h0c0,2.36,.93,4.63,2.6,6.31,1.66,1.68,3.92,2.63,6.29,2.65,1.42,.01,2.82-.32,4.08-.97-.42-.93-.63-1.95-.63-2.97,0-3.02,1.49-5.29,2.93-7.48,.53-.81,1.07-1.64,1.56-2.53h0Z"/>
+</svg>
+Salse e Olio</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/latticini/" title="Uova e Latticini" class="big"><svg id="icon-latte-formaggio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <path d="M31.39,24.13c-.37,0-.68-.3-.68-.68s.3-.68,.68-.68,.68,.3,.68,.68-.3,.68-.68,.68Zm-3.74,7.26c-1.3,0-2.37-1.06-2.37-2.35s1.06-2.37,2.37-2.37,2.35,1.06,2.35,2.37-1.06,2.35-2.35,2.35Zm-7.2,.82c-.37,0-.68-.3-.68-.68s.3-.68,.68-.68,.68,.3,.68,.68c0,.37-.3,.68-.68,.68Zm-3.47-3.86c-.83,0-1.51-.67-1.51-1.5s.67-1.51,1.51-1.51,1.5,.67,1.5,1.51-.67,1.5-1.5,1.5Zm-4.58,3.62h-1.44c-.37,0-.67-.3-.67-.67s.3-.67,.67-.67h1.44c.37,0,.67,.3,.67,.67,0,.37-.3,.67-.67,.67Zm-.87-9.53c.37,0,.68,.3,.68,.68s-.3,.68-.68,.68-.68-.3-.68-.68,.3-.68,.68-.68Zm16.49-1.91c-.3,1.37-1.57,2.43-3.02,2.43s-2.74-1.07-3.04-2.43H5.29v2.21c1.33,.35,2.29,1.57,2.29,2.99s-.97,2.63-2.29,2.99v4.08c0,1.11,.91,2.02,2.02,2.02h25.38c1.11,0,2.02-.91,2.02-2.02v-12.28s-6.68,0-6.68,0Z"/><path d="M23.24,19.85h0c0,.98,.79,1.76,1.76,1.76s1.75-.79,1.75-1.75h0c0-.38,.3-.69,.67-.69h7.28c-.17-6.65-4.97-11.57-13.61-13.92-.72-.2-1.48,.01-2,.55L6.21,19.17H22.56c.37,0,.67,.3,.67,.67h0Z"/>
+</svg>
+Uova e Latticini</a></li><li style="min-width:9.0909090909091%;"><a href="https://agrispesa.loc/negozio/verdura/" title="Verdura" class="current big"><svg id="icon-verdura" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+	<path class="cls-1"
+		  d="M19.46,8.13c.24-.24,.63-.24,.87,0,.24,.24,.24,.63,0,.87l-1.8,1.8c.22,.11,.46,.19,.72,.22,.51,.07,1.06-.02,1.58-.25,.31-.14,.67,0,.81,.31,.14,.31,0,.67-.31,.81-.74,.32-1.52,.44-2.24,.35-.52-.07-1.02-.25-1.45-.54l-2.76,2.76c.22,.11,.46,.19,.72,.22,.5,.07,1.06-.02,1.58-.25,.31-.14,.67,0,.81,.31,.14,.31,0,.67-.31,.81-.74,.32-1.52,.44-2.24,.35-.52-.07-1.02-.25-1.45-.54l-2.68,2.68c.22,.11,.46,.19,.72,.22,.5,.07,1.06-.02,1.58-.25,.31-.14,.67,0,.81,.31,.14,.31,0,.67-.31,.81-.74,.32-1.52,.44-2.24,.35-.52-.07-1.02-.25-1.45-.54l-4.09,4.09c-.24,.24-.63,.24-.87,0-.24-.24-.24-.63,0-.87l4.09-4.09c-.29-.43-.47-.93-.54-1.45-.1-.73,.02-1.51,.35-2.24,.14-.31,.5-.45,.81-.31,.31,.14,.45,.5,.31,.81-.23,.53-.32,1.08-.25,1.58,.03,.25,.11,.5,.22,.72l2.68-2.68c-.29-.43-.47-.93-.54-1.45-.1-.73,.02-1.51,.35-2.24,.14-.31,.5-.45,.81-.31,.31,.14,.45,.5,.31,.81-.23,.53-.32,1.08-.25,1.58,.03,.25,.11,.5,.22,.72l2.76-2.76c-.29-.43-.47-.93-.54-1.45-.1-.73,.02-1.51,.35-2.25,.14-.31,.5-.45,.81-.31,.31,.14,.45,.5,.31,.81-.23,.53-.32,1.08-.25,1.58,.03,.25,.11,.5,.22,.72l1.8-1.8h0Zm-3.23,24.37c-.32,.13-.68-.02-.8-.34-.13-.32,.02-.68,.34-.8l2.36-.96c-.16-.19-.36-.35-.58-.48-.44-.26-.98-.39-1.56-.39-.34,0-.62-.26-.62-.6,0-.34,.27-.62,.6-.62,.8-.01,1.57,.18,2.2,.55,.46,.27,.84,.62,1.13,1.06l3.62-1.47c-.16-.19-.36-.35-.58-.48-.44-.26-.98-.39-1.56-.38-.34,0-.62-.27-.62-.6,0-.34,.26-.62,.6-.62,.8-.01,1.57,.18,2.2,.55,.46,.27,.84,.62,1.13,1.06l3.51-1.43c-.16-.19-.36-.35-.58-.48-.44-.26-.98-.39-1.56-.38-.34,0-.62-.27-.62-.6,0-.34,.27-.62,.6-.62,.8-.01,1.57,.18,2.2,.55,.46,.27,.84,.62,1.13,1.06l5.35-2.18c.32-.13,.68,.02,.8,.34,.13,.32-.02,.68-.34,.8l-5.35,2.18c.1,.51,.07,1.04-.07,1.55-.19,.71-.61,1.38-1.19,1.93-.25,.23-.64,.22-.87-.03-.23-.25-.22-.64,.03-.87,.42-.4,.71-.87,.85-1.36,.07-.25,.09-.5,.08-.75l-3.51,1.43c.1,.51,.07,1.04-.07,1.55-.19,.71-.61,1.38-1.19,1.93-.25,.23-.64,.22-.87-.03-.23-.25-.22-.64,.03-.87,.42-.4,.71-.87,.85-1.36,.07-.25,.09-.5,.08-.75l-3.62,1.47c.1,.51,.07,1.04-.07,1.55-.19,.71-.61,1.38-1.19,1.93-.25,.23-.64,.22-.87-.03-.23-.25-.22-.64,.03-.87,.42-.4,.71-.87,.85-1.36,.07-.25,.09-.5,.08-.75l-2.36,.96h0Zm17.1-11.19c-2.61,.56-5.05,1.21-5.05,1.21-.65-3.12-4.49-2.46-5.06-.05-1.87-.7-3.66-.43-4.33,1.67-3.29-.78-3.37-.07-4.45,3.03-1.84,.31-5.05,2.35-1.26,5.91-.22,5.19,3.5,4.41,5.03,3.35,2.93,1.46,3.49,1.91,5.3-.94,1.94,1.04,3.41-.02,4.26-1.83,2.1,1.33,5.31-.88,3.59-3.57,0,0,2.2-1.24,4.46-2.66,2.78-1.75,.72-6.81-2.49-6.12h0Zm-25.28,3.79c2.19-1.53,4.19-3.08,4.19-3.08,1.81,2.63,5.09,.53,4.68-1.92,2-.08,3.54-1.02,3.34-3.22,3.33-.56,3.13-1.25,2.93-4.52,1.57-1.01,3.74-4.13-1.13-5.94-1.81-4.87-4.94-2.71-5.94-1.13-3.27-.21-3.96-.41-4.52,2.93-2.2-.2-3.14,1.34-3.22,3.34-2.45-.41-4.55,2.87-1.92,4.68,0,0-1.54,1.99-3.08,4.19-1.88,2.7,1.98,6.56,4.68,4.68h0Z"/>
+</svg>
+Verdura</a></li></ul>		</div>
+	</header>
+<div class="woocommerce-notices-wrapper"></div><p class="woocommerce-result-count">
+	Visualizzazione di 4 risultati</p>
+<form class="woocommerce-ordering" method="get">
+	<select name="orderby" class="orderby" aria-label="Ordine negozio">
+					<option value="menu_order"  selected='selected'>Ordinamento predefinito</option>
+					<option value="popularity" >Popolarità</option>
+					<option value="date" >Ordina in base al più recente</option>
+					<option value="price" >Prezzo: dal più economico</option>
+					<option value="price-desc" >Prezzo: dal più caro</option>
+			</select>
+	<input type="hidden" name="paged" value="1" />
+	</form>
+<div class="negozio--flex"><div class="products-list-agr"><div class="products-list--header"><h3 class="products-list--title">Aromatiche secche</h3></div><ul class="products columns-4">
+<li class="product type-product post-51876 status-publish first instock product_cat-aromatiche-secche taxable shipping-taxable purchasable product-type-simple">
+	<a href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/origano-di-montagna-g-10/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" data-lazy-srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" /><noscript><img width="300" height="300" src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" sizes="(max-width: 300px) 100vw, 300px" /></noscript><div class="product-loop-title-meta"><h6 class="woocommerce-loop-product__title">Origano di montagna </h6><span class="product-info--quantity"> </span></div>
+	<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&euro;</span>5,61</bdi></span></span>
+</a><div class="shop-buttons-flex"><form action="?add-to-cart=51876" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button><div class="quantity">
+		<label class="screen-reader-text" for="quantity_654bb6c530c5c">Origano di montagna g 10 quantità</label>
+	<input
+		type="number"
+				id="quantity_654bb6c530c5c"
+		class="input-text qty text"
+		name="quantity"
+		value="1"
+		aria-label="Product quantity"
+		size="4"
+		min="0"
+		max=""
+					step="1"
+			placeholder=""
+			inputmode=""
+			autocomplete="off"
+			/>
 	</div>
-
-</section>
-
-
+<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="51876" data-quantity="1" data-tip="Ciao" data-product_sku="ERBEAROMATIC31_2347" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">Acquista</button></form></div><span class="gtm4wp_productdata" style="display:none; visibility:hidden;" data-gtm4wp_product_id="51876" data-gtm4wp_product_internal_id="51876" data-gtm4wp_product_name="Origano di montagna g 10" data-gtm4wp_product_price="5.61" data-gtm4wp_product_cat="Aromatiche secche" data-gtm4wp_product_url="https://agrispesa.loc/negozio/verdura/aromatiche-secche/origano-di-montagna-g-10/" data-gtm4wp_product_listposition="1" data-gtm4wp_productlist_name="General Product List" data-gtm4wp_product_stocklevel="" data-gtm4wp_product_brand=""></span></li>
+<li class="product type-product post-51879 status-publish instock product_cat-aromatiche-secche taxable shipping-taxable purchasable product-type-simple">
+	<a href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/peperoncino-arlecchino-g-125/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" data-lazy-srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" /><noscript><img width="300" height="300" src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" sizes="(max-width: 300px) 100vw, 300px" /></noscript><div class="product-loop-title-meta"><h6 class="woocommerce-loop-product__title">Peperoncino arlecchino ,5</h6><span class="product-info--quantity"> </span></div>
+	<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&euro;</span>9,70</bdi></span></span>
+</a><div class="shop-buttons-flex"><form action="?add-to-cart=51879" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button><div class="quantity">
+		<label class="screen-reader-text" for="quantity_654bb6c533ba8">Peperoncino arlecchino g 12,5 quantità</label>
+	<input
+		type="number"
+				id="quantity_654bb6c533ba8"
+		class="input-text qty text"
+		name="quantity"
+		value="1"
+		aria-label="Product quantity"
+		size="4"
+		min="0"
+		max=""
+					step="1"
+			placeholder=""
+			inputmode=""
+			autocomplete="off"
+			/>
+	</div>
+<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="51879" data-quantity="1" data-tip="Ciao" data-product_sku="ERBEAROMATICH21_2347" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">Acquista</button></form></div><span class="gtm4wp_productdata" style="display:none; visibility:hidden;" data-gtm4wp_product_id="51879" data-gtm4wp_product_internal_id="51879" data-gtm4wp_product_name="Peperoncino arlecchino g 12,5" data-gtm4wp_product_price="9.7" data-gtm4wp_product_cat="Aromatiche secche" data-gtm4wp_product_url="https://agrispesa.loc/negozio/verdura/aromatiche-secche/peperoncino-arlecchino-g-125/" data-gtm4wp_product_listposition="2" data-gtm4wp_productlist_name="General Product List" data-gtm4wp_product_stocklevel="" data-gtm4wp_product_brand=""></span></li>
+<li class="product type-product post-51878 status-publish instock product_cat-aromatiche-secche taxable shipping-taxable purchasable product-type-simple">
+	<a href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/peperoncino-rosso-g-125/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" data-lazy-srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" /><noscript><img width="300" height="300" src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" sizes="(max-width: 300px) 100vw, 300px" /></noscript><div class="product-loop-title-meta"><h6 class="woocommerce-loop-product__title">Peperoncino rosso ,5</h6><span class="product-info--quantity"> </span></div>
+	<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&euro;</span>8,42</bdi></span></span>
+</a><div class="shop-buttons-flex"><form action="?add-to-cart=51878" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button><div class="quantity">
+		<label class="screen-reader-text" for="quantity_654bb6c5362c6">Peperoncino rosso g 12,5 quantità</label>
+	<input
+		type="number"
+				id="quantity_654bb6c5362c6"
+		class="input-text qty text"
+		name="quantity"
+		value="1"
+		aria-label="Product quantity"
+		size="4"
+		min="0"
+		max=""
+					step="1"
+			placeholder=""
+			inputmode=""
+			autocomplete="off"
+			/>
+	</div>
+<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="51878" data-quantity="1" data-tip="Ciao" data-product_sku="ERBEAROMATICH17_2147" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">Acquista</button></form></div><span class="gtm4wp_productdata" style="display:none; visibility:hidden;" data-gtm4wp_product_id="51878" data-gtm4wp_product_internal_id="51878" data-gtm4wp_product_name="Peperoncino rosso g 12,5" data-gtm4wp_product_price="8.42" data-gtm4wp_product_cat="Aromatiche secche" data-gtm4wp_product_url="https://agrispesa.loc/negozio/verdura/aromatiche-secche/peperoncino-rosso-g-125/" data-gtm4wp_product_listposition="3" data-gtm4wp_productlist_name="General Product List" data-gtm4wp_product_stocklevel="" data-gtm4wp_product_brand=""></span></li>
+<li class="product type-product post-24369 status-publish last instock product_cat-aromatiche-secche product_cat-negozio taxable shipping-taxable purchasable product-type-simple">
+	<a href="https://agrispesa.loc/negozio/santoreggia-2/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="300" height="300" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" data-lazy-srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" /><noscript><img width="300" height="300" src="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png" class="woocommerce-placeholder wp-post-image" alt="Segnaposto" decoding="async" srcset="https://agrispesa.loc/wp-content/uploads/2023/02/default-300x300.png 300w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1024x1024.png 1024w, https://agrispesa.loc/wp-content/uploads/2023/02/default-150x150.png 150w, https://agrispesa.loc/wp-content/uploads/2023/02/default-768x768.png 768w, https://agrispesa.loc/wp-content/uploads/2023/02/default-1536x1536.png 1536w, https://agrispesa.loc/wp-content/uploads/2023/02/default-600x600.png 600w, https://agrispesa.loc/wp-content/uploads/2023/02/default-100x100.png 100w, https://agrispesa.loc/wp-content/uploads/2023/02/default.png 1800w" sizes="(max-width: 300px) 100vw, 300px" /></noscript><div class="product-loop-title-meta"><h6 class="woocommerce-loop-product__title">Santoreggia </h6><span class="product-info--quantity">gr 15</span></div>
+	<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&euro;</span>5,61</bdi></span> <span class="uom">gr</span></span>
+</a><div class="shop-buttons-flex"><form action="?add-to-cart=24369" class="cart" method="post" enctype="multipart/form-data"><div class="product-quantity--change"><button type="button" id="minus" class="product-quantity--minus disabled" field="quantity">-</button><div class="quantity">
+		<label class="screen-reader-text" for="quantity_654bb6c53965f">Santoreggia g 15 quantità</label>
+	<input
+		type="number"
+				id="quantity_654bb6c53965f"
+		class="input-text qty text"
+		name="quantity"
+		value="1"
+		aria-label="Product quantity"
+		size="4"
+		min="0"
+		max=""
+					step="1"
+			placeholder=""
+			inputmode=""
+			autocomplete="off"
+			/>
+	</div>
+<button type="button" id="plus" class="product-quantity--plus" field="quantity">+</button></div><button type="submit" data-product_id="24369" data-quantity="1" data-tip="Ciao" data-product_sku="ERBEAROMATIC30_2050" class="btn btn-primary btn-small ajax_add_to_cart add_to_cart_button">Acquista</button></form></div><span class="gtm4wp_productdata" style="display:none; visibility:hidden;" data-gtm4wp_product_id="24369" data-gtm4wp_product_internal_id="24369" data-gtm4wp_product_name="Santoreggia g 15" data-gtm4wp_product_price="5.61" data-gtm4wp_product_cat="Aromatiche secche" data-gtm4wp_product_url="https://agrispesa.loc/negozio/santoreggia-2/" data-gtm4wp_product_listposition="4" data-gtm4wp_productlist_name="General Product List" data-gtm4wp_product_stocklevel="" data-gtm4wp_product_brand=""></span></li>
+</ul>
+</div><div class="negozio-sidebar"><ul class="negozio-sidebar--list"><li class="cat-item cat-extra-special"><a href="https://agrispesa.loc/regali-di-natale/">Regali di Natale</a></li></ul><ul class="negozio-sidebar--list navigate">	<li class="cat-item cat-item-carne-pesce cat-item-754 "><a href="https://agrispesa.loc/negozio/carne-pesce/">Carne e Pesce</a>
+<ul class='children'>
+	<li class="cat-item cat-item-coniglio-con-osso cat-item-790 "><a href="https://agrispesa.loc/negozio/carne-pesce/coniglio-con-osso/">Coniglio con osso</a>
+</li>
+	<li class="cat-item cat-item-coniglio-disossato cat-item-791 "><a href="https://agrispesa.loc/negozio/carne-pesce/coniglio-disossato/">Coniglio senza osso</a>
+</li>
+	<li class="cat-item cat-item-maiale cat-item-817 "><a href="https://agrispesa.loc/negozio/carne-pesce/maiale/">Maiale</a>
+</li>
+	<li class="cat-item cat-item-pesce-conservato cat-item-832 "><a href="https://agrispesa.loc/negozio/carne-pesce/pesce-conservato/">Pesce conservato</a>
+</li>
+	<li class="cat-item cat-item-pesce-fresco cat-item-833 "><a href="https://agrispesa.loc/negozio/carne-pesce/pesce-fresco/">Pesce fresco</a>
+</li>
+	<li class="cat-item cat-item-pollo-con-osso cat-item-839 "><a href="https://agrispesa.loc/negozio/carne-pesce/pollo-con-osso/">Pollo con osso</a>
+</li>
+	<li class="cat-item cat-item-pollo-disossato cat-item-840 "><a href="https://agrispesa.loc/negozio/carne-pesce/pollo-disossato/">Pollo senza osso</a>
+</li>
+	<li class="cat-item cat-item-affettati-e-salumi-carne-pesce cat-item-1023 "><a href="https://agrispesa.loc/negozio/carne-pesce/affettati-e-salumi-carne-pesce/">Salumi e affettati</a>
+</li>
+	<li class="cat-item cat-item-tacchino cat-item-853 "><a href="https://agrispesa.loc/negozio/carne-pesce/tacchino/">Tacchino</a>
+</li>
+	<li class="cat-item cat-item-vitellone-per-arrosti cat-item-864 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-per-arrosti/">Vitellone per arrosti</a>
+</li>
+	<li class="cat-item cat-item-vitellone-per-bistecche-grigliate cat-item-865 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-per-bistecche-grigliate/">Vitellone per bistecche, grigliate</a>
+</li>
+	<li class="cat-item cat-item-vitellone-per-bolliti cat-item-866 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-per-bolliti/">Vitellone per bolliti</a>
+</li>
+	<li class="cat-item cat-item-vitellone-per-cruda cat-item-867 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-per-cruda/">Vitellone per cruda</a>
+</li>
+	<li class="cat-item cat-item-vitellone-per-sugo cat-item-868 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-per-sugo/">Vitellone per sugo</a>
+</li>
+	<li class="cat-item cat-item-vitellone-tagli-particolari cat-item-869 "><a href="https://agrispesa.loc/negozio/carne-pesce/vitellone-tagli-particolari/">Vitellone tagli particolari</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/carne-pesce/' title='Carne e Pesce' class='view-all--link'>Carne e Pesce</a></li>	<li class="cat-item cat-item-casa-persona cat-item-760 "><a href="https://agrispesa.loc/negozio/casa-persona/">Casa e Persona</a>
+<ul class='children'>
+	<li class="cat-item cat-item-igiene-e-saponi cat-item-1024 "><a href="https://agrispesa.loc/negozio/casa-persona/igiene-e-saponi/">Igiene e saponi</a>
+</li>
+	<li class="cat-item cat-item-oleoliti-e-creme cat-item-1025 "><a href="https://agrispesa.loc/negozio/casa-persona/oleoliti-e-creme/">Oleoliti e creme</a>
+</li>
+	<li class="cat-item cat-item-per-la-persona cat-item-900 cat-empty"><a href="https://agrispesa.loc/negozio/casa-persona/per-la-persona/">Per la persona</a>
+</li>
+	<li class="cat-item cat-item-pulizia-della-casa cat-item-1026 "><a href="https://agrispesa.loc/negozio/casa-persona/pulizia-della-casa/">Pulizia della casa</a>
+</li>
+	<li class="cat-item cat-item-svaghi-e-giochi-in-legno cat-item-1027 cat-empty"><a href="https://agrispesa.loc/negozio/casa-persona/svaghi-e-giochi-in-legno/">Svaghi e giochi in legno</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/casa-persona/' title='Casa e Persona' class='view-all--link'>Casa e Persona</a></li>	<li class="cat-item cat-item-dolci-bevande cat-item-756 "><a href="https://agrispesa.loc/negozio/dolci-bevande/">Dolci e Bevande</a>
+<ul class='children'>
+	<li class="cat-item cat-item-torte-e-biscotti cat-item-1033 "><a href="https://agrispesa.loc/negozio/dolci-bevande/torte-e-biscotti/">Biscottate</a>
+</li>
+	<li class="cat-item cat-item-crostate-e-torte cat-item-1093 "><a href="https://agrispesa.loc/negozio/dolci-bevande/crostate-e-torte/">Biscotti e crostate</a>
+</li>
+	<li class="cat-item cat-item-budini cat-item-776 "><a href="https://agrispesa.loc/negozio/dolci-bevande/budini/">Budini</a>
+</li>
+	<li class="cat-item cat-item-cioccolato-creme-e-budini cat-item-1031 "><a href="https://agrispesa.loc/negozio/dolci-bevande/cioccolato-creme-e-budini/">Cioccolato e creme</a>
+</li>
+	<li class="cat-item cat-item-marmellate-e-miele cat-item-1032 "><a href="https://agrispesa.loc/negozio/dolci-bevande/marmellate-e-miele/">Marmellate e miele</a>
+</li>
+	<li class="cat-item cat-item-spuntini-e-dolci-di-frutta cat-item-850 "><a href="https://agrispesa.loc/negozio/dolci-bevande/spuntini-e-dolci-di-frutta/">Spuntini e dolci di frutta</a>
+</li>
+	<li class="cat-item cat-item-bibite-estratti-e-succhi cat-item-1029 "><a href="https://agrispesa.loc/negozio/dolci-bevande/bibite-estratti-e-succhi/">Succhi, bibite e sciroppi</a>
+</li>
+	<li class="cat-item cat-item-liquori cat-item-816 "><a href="https://agrispesa.loc/negozio/dolci-bevande/liquori/">Superalcolici</a>
+</li>
+	<li class="cat-item cat-item-caffe-the-e-infusi cat-item-1030 "><a href="https://agrispesa.loc/negozio/dolci-bevande/caffe-the-e-infusi/">Tè e caffè</a>
+</li>
+	<li class="cat-item cat-item-infusi-e-te cat-item-809 "><a href="https://agrispesa.loc/negozio/dolci-bevande/infusi-e-te/">Tisane e infusi</a>
+</li>
+	<li class="cat-item cat-item-birra-vino-liquori cat-item-1028 "><a href="https://agrispesa.loc/negozio/dolci-bevande/birra-vino-liquori/">Vino</a>
+</li>
+	<li class="cat-item cat-item-zucchero-dolcificanti cat-item-871 "><a href="https://agrispesa.loc/negozio/dolci-bevande/zucchero-dolcificanti/">Zucchero e dolcificanti</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/dolci-bevande/' title='Dolci e Bevande' class='view-all--link'>Dolci e Bevande</a></li>	<li class="cat-item cat-item-frutta cat-item-753 "><a href="https://agrispesa.loc/negozio/frutta/">Frutta</a>
+<ul class='children'>
+	<li class="cat-item cat-item-agrumi cat-item-765 "><a href="https://agrispesa.loc/negozio/frutta/agrumi/">Agrumi</a>
+</li>
+	<li class="cat-item cat-item-banane cat-item-919 "><a href="https://agrispesa.loc/negozio/frutta/banane/">Avocado</a>
+</li>
+	<li class="cat-item cat-item-kiwi-e-pere cat-item-811 "><a href="https://agrispesa.loc/negozio/frutta/kiwi-e-pere/">Cachi, kiwi, melagrana e uva</a>
+</li>
+	<li class="cat-item cat-item-castagne cat-item-1088 cat-empty"><a href="https://agrispesa.loc/negozio/frutta/castagne/">Castagne</a>
+</li>
+	<li class="cat-item cat-item-estratti-di-frutta-e-di-verdura cat-item-1017 cat-empty"><a href="https://agrispesa.loc/negozio/frutta/estratti-di-frutta-e-di-verdura/">Estratti di frutta e verdura</a>
+</li>
+	<li class="cat-item cat-item-frutta-secca cat-item-806 "><a href="https://agrispesa.loc/negozio/frutta/frutta-secca/">Frutta secca</a>
+</li>
+	<li class="cat-item cat-item-melagrane-e-mele cat-item-880 "><a href="https://agrispesa.loc/negozio/frutta/melagrane-e-mele/">Mele</a>
+</li>
+	<li class="cat-item cat-item-arachidi-mandorle-nocciole-e-noci cat-item-766 "><a href="https://agrispesa.loc/negozio/frutta/arachidi-mandorle-nocciole-e-noci/">Nocciole e mandorle</a>
+</li>
+	<li class="cat-item cat-item-pere cat-item-1084 "><a href="https://agrispesa.loc/negozio/frutta/pere/">Pere</a>
+</li>
+	<li class="cat-item cat-item-piccoli-frutti cat-item-890 cat-empty"><a href="https://agrispesa.loc/negozio/frutta/piccoli-frutti/">Piccoli frutti</a>
+</li>
+	<li class="cat-item cat-item-albicocche-e-susine cat-item-891 cat-empty"><a href="https://agrispesa.loc/negozio/frutta/albicocche-e-susine/">Susine</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/frutta/' title='Frutta' class='view-all--link'>Frutta</a></li>	<li class="cat-item cat-item-pane-cereali cat-item-755 "><a href="https://agrispesa.loc/negozio/pane-cereali/">Pane e Cereali</a>
+<ul class='children'>
+	<li class="cat-item cat-item-cereali-in-fiocchi cat-item-783 "><a href="https://agrispesa.loc/negozio/pane-cereali/cereali-in-fiocchi/">Cereali in fiocchi</a>
+</li>
+	<li class="cat-item cat-item-cereali-in-grani cat-item-784 "><a href="https://agrispesa.loc/negozio/pane-cereali/cereali-in-grani/">Cereali in grani</a>
+</li>
+	<li class="cat-item cat-item-farine-di-grano cat-item-800 "><a href="https://agrispesa.loc/negozio/pane-cereali/farine-di-grano/">Farine di grano</a>
+</li>
+	<li class="cat-item cat-item-farine-varie cat-item-801 "><a href="https://agrispesa.loc/negozio/pane-cereali/farine-varie/">Farine varie</a>
+</li>
+	<li class="cat-item cat-item-grissini cat-item-1103 "><a href="https://agrispesa.loc/negozio/pane-cereali/grissini/">Focacce e grissini</a>
+</li>
+	<li class="cat-item cat-item-pane-grissini-e-pangrattato cat-item-822 "><a href="https://agrispesa.loc/negozio/pane-cereali/pane-grissini-e-pangrattato/">Pane</a>
+</li>
+	<li class="cat-item cat-item-pasta-e-pastina cat-item-826 "><a href="https://agrispesa.loc/negozio/pane-cereali/pasta-e-pastina/">Pasta di grano duro</a>
+</li>
+	<li class="cat-item cat-item-pasta-fresca cat-item-825 "><a href="https://agrispesa.loc/negozio/pane-cereali/pasta-fresca/">Pasta fresca</a>
+</li>
+	<li class="cat-item cat-item-pasta-e-pastina-varie cat-item-1102 "><a href="https://agrispesa.loc/negozio/pane-cereali/pasta-e-pastina-varie/">Pasta grani vari</a>
+</li>
+	<li class="cat-item cat-item-pasta-per-minestre cat-item-827 "><a href="https://agrispesa.loc/negozio/pane-cereali/pasta-per-minestre/">Pastina</a>
+</li>
+	<li class="cat-item cat-item-riso cat-item-842 "><a href="https://agrispesa.loc/negozio/pane-cereali/riso/">Riso</a>
+</li>
+	<li class="cat-item cat-item-spuntini cat-item-849 "><a href="https://agrispesa.loc/negozio/pane-cereali/spuntini/">Spuntini</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/pane-cereali/' title='Pane e Cereali' class='view-all--link'>Pane e Cereali</a></li>	<li class="cat-item cat-item-petfood cat-item-1079 "><a href="https://agrispesa.loc/negozio/petfood/">Petfood</a>
+<ul class='children'>
+	<li class="cat-item cat-item-cane-adulto cat-item-1080 "><a href="https://agrispesa.loc/negozio/petfood/cane-adulto/">Cane adulto</a>
+</li>
+	<li class="cat-item cat-item-cane-cucciolo cat-item-1081 "><a href="https://agrispesa.loc/negozio/petfood/cane-cucciolo/">Cane cucciolo</a>
+</li>
+	<li class="cat-item cat-item-promozione cat-item-1091 "><a href="https://agrispesa.loc/negozio/petfood/promozione/">Promozione</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/petfood/' title='Petfood' class='view-all--link'>Petfood</a></li>	<li class="cat-item cat-item-piatti-preparati cat-item-759 "><a href="https://agrispesa.loc/negozio/piatti-preparati/">Piatti preparati</a>
+<ul class='children'>
+	<li class="cat-item cat-item-antipasti cat-item-1097 "><a href="https://agrispesa.loc/negozio/piatti-preparati/antipasti/">Antipasti</a>
+</li>
+	<li class="cat-item cat-item-antipasti-e-contorni cat-item-1105 "><a href="https://agrispesa.loc/negozio/piatti-preparati/antipasti-e-contorni/">Antipasti e contorni</a>
+</li>
+	<li class="cat-item cat-item-primi cat-item-1098 "><a href="https://agrispesa.loc/negozio/piatti-preparati/primi/">Primi</a>
+</li>
+	<li class="cat-item cat-item-salse-piatti-preparati cat-item-1100 "><a href="https://agrispesa.loc/negozio/piatti-preparati/salse-piatti-preparati/">Salse e condimenti</a>
+</li>
+	<li class="cat-item cat-item-secondi cat-item-1099 "><a href="https://agrispesa.loc/negozio/piatti-preparati/secondi/">Secondi</a>
+</li>
+	<li class="cat-item cat-item-piatti-preparati-dolci cat-item-1096 "><a href="https://agrispesa.loc/negozio/piatti-preparati/piatti-preparati-dolci/">Specialità dolci</a>
+</li>
+	<li class="cat-item cat-item-contorni cat-item-1101 "><a href="https://agrispesa.loc/negozio/piatti-preparati/contorni/">Verdure</a>
+</li>
+	<li class="cat-item cat-item-sottolii-e-antipasti-di-verdure cat-item-848 "><a href="https://agrispesa.loc/negozio/piatti-preparati/sottolii-e-antipasti-di-verdure/">Verdure sott&#039;olio e antipasti</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/piatti-preparati/' title='Piatti preparati' class='view-all--link'>Piatti preparati</a></li>	<li class="cat-item cat-item-salse-olio cat-item-757 "><a href="https://agrispesa.loc/negozio/salse-olio/">Salse e Olio</a>
+<ul class='children'>
+	<li class="cat-item cat-item-aceto cat-item-761 "><a href="https://agrispesa.loc/negozio/salse-olio/aceto/">Aceto</a>
+</li>
+	<li class="cat-item cat-item-composte-per-carne-pesce-e-formaggio cat-item-786 cat-empty"><a href="https://agrispesa.loc/negozio/salse-olio/composte-per-carne-pesce-e-formaggio/">Composte per carne, pesce e formaggio</a>
+</li>
+	<li class="cat-item cat-item-condimenti-per-minestre cat-item-787 "><a href="https://agrispesa.loc/negozio/salse-olio/condimenti-per-minestre/">Condimenti per minestre</a>
+</li>
+	<li class="cat-item cat-item-condimenti-per-primi-piatti cat-item-788 "><a href="https://agrispesa.loc/negozio/salse-olio/condimenti-per-primi-piatti/">Condimenti per primi piatti</a>
+</li>
+	<li class="cat-item cat-item-olio cat-item-875 cat-empty"><a href="https://agrispesa.loc/negozio/salse-olio/olio/">Olio</a>
+</li>
+	<li class="cat-item cat-item-sale cat-item-843 "><a href="https://agrispesa.loc/negozio/salse-olio/sale/">Sale</a>
+</li>
+	<li class="cat-item cat-item-salse cat-item-844 "><a href="https://agrispesa.loc/negozio/salse-olio/salse/">Salse</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/salse-olio/' title='Salse e Olio' class='view-all--link'>Salse e Olio</a></li>	<li class="cat-item cat-item-latticini cat-item-758 "><a href="https://agrispesa.loc/negozio/latticini/">Uova e Latticini</a>
+<ul class='children'>
+	<li class="cat-item cat-item-latte-yogurt-e-burro cat-item-812 "><a href="https://agrispesa.loc/negozio/latticini/latte-yogurt-e-burro/">Burro, latte e uova</a>
+</li>
+	<li class="cat-item cat-item-caprini-freschi cat-item-888 "><a href="https://agrispesa.loc/negozio/latticini/caprini-freschi/">Caprini freschi</a>
+</li>
+	<li class="cat-item cat-item-caprini-semistagionati cat-item-778 "><a href="https://agrispesa.loc/negozio/latticini/caprini-semistagionati/">Caprini semistagionati</a>
+</li>
+	<li class="cat-item cat-item-misti cat-item-1076 cat-empty"><a href="https://agrispesa.loc/negozio/latticini/misti/">Misti</a>
+</li>
+	<li class="cat-item cat-item-ovini-semistagionati cat-item-821 "><a href="https://agrispesa.loc/negozio/latticini/ovini-semistagionati/">Ovini semistagionati</a>
+</li>
+	<li class="cat-item cat-item-senza-sale-o-senza-caglio cat-item-847 "><a href="https://agrispesa.loc/negozio/latticini/senza-sale-o-senza-caglio/">Senza sale o senza caglio</a>
+</li>
+	<li class="cat-item cat-item-vaccini-freschi cat-item-856 "><a href="https://agrispesa.loc/negozio/latticini/vaccini-freschi/">Vaccini freschi</a>
+</li>
+	<li class="cat-item cat-item-vaccini-semistagionati cat-item-857 "><a href="https://agrispesa.loc/negozio/latticini/vaccini-semistagionati/">Vaccini semistagionati</a>
+</li>
+	<li class="cat-item cat-item-vaccini-stagionati cat-item-858 "><a href="https://agrispesa.loc/negozio/latticini/vaccini-stagionati/">Vaccini stagionati</a>
+</li>
+	<li class="cat-item cat-item-yogurt cat-item-1090 "><a href="https://agrispesa.loc/negozio/latticini/yogurt/">Yogurt</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/latticini/' title='Uova e Latticini' class='view-all--link'>Uova e Latticini</a></li>	<li class="cat-item cat-item-verdura cat-item-752  current-cat-parent current-cat-ancestor"><a href="https://agrispesa.loc/negozio/verdura/">Verdura</a>
+<ul class='children'>
+	<li class="cat-item cat-item-aglio-cipolle-e-porri cat-item-763 "><a href="https://agrispesa.loc/negozio/verdura/aglio-cipolle-e-porri/">Aglio, cipolle e porri</a>
+</li>
+	<li class="cat-item cat-item-aromatiche-fresche cat-item-767 "><a href="https://agrispesa.loc/negozio/verdura/aromatiche-fresche/">Aromatiche fresche</a>
+</li>
+	<li class="cat-item cat-item-aromatiche-secche cat-item-768  current-cat"><a aria-current="page" href="https://agrispesa.loc/negozio/verdura/aromatiche-secche/">Aromatiche secche</a>
+</li>
+	<li class="cat-item cat-item-aromatiche-sotto-sale cat-item-769 "><a href="https://agrispesa.loc/negozio/verdura/aromatiche-sotto-sale/">Aromatiche sotto sale</a>
+</li>
+	<li class="cat-item cat-item-asparagi cat-item-1003 cat-empty"><a href="https://agrispesa.loc/negozio/verdura/asparagi/">Asparagi</a>
+</li>
+	<li class="cat-item cat-item-broccoli-cavolfiori-e-cavoli cat-item-775 "><a href="https://agrispesa.loc/negozio/verdura/broccoli-cavolfiori-e-cavoli/">Broccoli e cavoli</a>
+</li>
+	<li class="cat-item cat-item-carote-e-patate cat-item-781 "><a href="https://agrispesa.loc/negozio/verdura/carote-e-patate/">Carote e patate</a>
+</li>
+	<li class="cat-item cat-item-dado-e-soffritto cat-item-795 "><a href="https://agrispesa.loc/negozio/verdura/dado-e-soffritto/">Dado e soffritto</a>
+</li>
+	<li class="cat-item cat-item-fermentati cat-item-802 "><a href="https://agrispesa.loc/negozio/verdura/fermentati/">Fermentati</a>
+</li>
+	<li class="cat-item cat-item-finocchi-e-sedani cat-item-803 "><a href="https://agrispesa.loc/negozio/verdura/finocchi-e-sedani/">Finocchi e sedani</a>
+</li>
+	<li class="cat-item cat-item-foglie-da-cottura cat-item-804 "><a href="https://agrispesa.loc/negozio/verdura/foglie-da-cottura/">Foglie da cottura</a>
+</li>
+	<li class="cat-item cat-item-insalate cat-item-810 "><a href="https://agrispesa.loc/negozio/verdura/insalate/">Insalate</a>
+</li>
+	<li class="cat-item cat-item-legumi-freschi cat-item-814 cat-empty"><a href="https://agrispesa.loc/negozio/verdura/legumi-freschi/">Legumi freschi</a>
+</li>
+	<li class="cat-item cat-item-legumi-secchi-e-preparati cat-item-815 "><a href="https://agrispesa.loc/negozio/verdura/legumi-secchi-e-preparati/">Legumi secchi e preparati</a>
+</li>
+	<li class="cat-item cat-item-minestre-fresche-verdura cat-item-1095 "><a href="https://agrispesa.loc/negozio/verdura/minestre-fresche-verdura/">Minestre fresche</a>
+</li>
+	<li class="cat-item cat-item-pannocchie cat-item-1086 cat-empty"><a href="https://agrispesa.loc/negozio/verdura/pannocchie/">Pannocchie</a>
+</li>
+	<li class="cat-item cat-item-pomodori cat-item-841 "><a href="https://agrispesa.loc/negozio/verdura/pomodori/">Pomodori e peperoni</a>
+</li>
+	<li class="cat-item cat-item-barbabietola-radici-e-rape cat-item-771 "><a href="https://agrispesa.loc/negozio/verdura/barbabietola-radici-e-rape/">Radici e rape</a>
+</li>
+	<li class="cat-item cat-item-rapanelli cat-item-1019 cat-empty"><a href="https://agrispesa.loc/negozio/verdura/rapanelli/">Rapanelli</a>
+</li>
+	<li class="cat-item cat-item-semi cat-item-846 "><a href="https://agrispesa.loc/negozio/verdura/semi/">Semi</a>
+</li>
+	<li class="cat-item cat-item-spesa-sospesa-verdura-negozio cat-item-1016 "><a href="https://agrispesa.loc/negozio/verdura/spesa-sospesa-verdura-negozio/">Spesa SOSpesa</a>
+</li>
+	<li class="cat-item cat-item-zucche cat-item-1083 "><a href="https://agrispesa.loc/negozio/verdura/zucche/">Zucche</a>
+</li>
+	<li class="cat-item cat-item-zucchini cat-item-870 "><a href="https://agrispesa.loc/negozio/verdura/zucchini/">Zucchini</a>
+</li>
+</ul>
+</li>
+<li class='cat-item view-all'><a href='https://agrispesa.loc/negozio/verdura/' title='Verdura' class='view-all--link'>Verdura</a></li></ul></div></main></div>
 </main>
 
 <footer class="footer">
@@ -842,9 +938,10 @@ Grazie!</p></div>
 
 					<div class="footer--menu">
 						<h6 class="footer--menu--title big-title">Fai la spesa <span class="icon-arrow-down footer--menu--title__icon only-mobile"></span></h6>
-						<div class="footer--menu--list"><ul id="menu-footer-1" class="menu"><li id="menu-item-45470" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-45470"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
-<li id="menu-item-19000" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-19000"><a href="https://agrispesa.loc/box/facciamo-noi/">Facciamo noi</a></li>
-<li id="menu-item-288" class="menu-item menu-item-type-post_type_archive menu-item-object-producer menu-item-288"><a title="Produttori" href="https://agrispesa.loc/produttori/">Produttori</a></li>
+						<div class="footer--menu--list"><ul id="menu-footer-1" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat current-product_cat-ancestor menu-item-45470"><a href="https://agrispesa.loc/negozio/verdura/">Negozio</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-19000"><a href="https://agrispesa.loc/box/facciamo-noi/">Facciamo noi</a></li>
+<li class="menu-item menu-item-type-post_type_archive menu-item-object-producer menu-item-288"><a title="Produttori" href="https://agrispesa.loc/produttori/">Produttori</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51730"><a href="https://agrispesa.loc/pawer-petfood/">Pawer Petfood</a></li>
 </ul></div>					</div>
 					<div class="footer--logo only-desktop">
 						<div class="footer--logo--flex">
@@ -965,7 +1062,7 @@ Grazie!</p></div>
       }, false );
     </script>
     <!-- End Meta Pixel Event Code -->
-    			<!-- Facebook Pixel Code -->
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"name":"Home","@id":"https:\/\/agrispesa.loc"}},{"@type":"ListItem","position":2,"item":{"name":"Negozio","@id":"https:\/\/agrispesa.loc\/negozio\/"}},{"@type":"ListItem","position":3,"item":{"name":"Verdura","@id":"https:\/\/agrispesa.loc\/negozio\/verdura\/"}},{"@type":"ListItem","position":4,"item":{"name":"Aromatiche secche","@id":"https:\/\/agrispesa.loc\/negozio\/verdura\/aromatiche-secche\/"}}]}</script>			<!-- Facebook Pixel Code -->
 			<noscript>
 				<img
 					height="1"
@@ -983,7 +1080,7 @@ Grazie!</p></div>
 			document.body.className = c;
 		})();
 	</script>
-	<script type='text/javascript' src='//stats.wp.com/w.js?ver=202342' id='jp-tracks-js'></script>
+	<script type='text/javascript' src='//stats.wp.com/w.js?ver=202345' id='jp-tracks-js'></script>
 <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-payments/vendor/automattic/jetpack-connection/dist/tracks-callables.js?ver=1686059977' id='jp-tracks-functions-js'></script>
 <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=1686059977' id='swv-js'></script>
 <script type='text/javascript' id='contact-form-7-js-extra'>
@@ -996,10 +1093,10 @@ var wpcf7 = {"api":{"root":"https:\/\/agrispesa.loc\/wp-json\/","namespace":"con
 <script type="rocketlazyloadscript" id="ttt-pnwc-js-before" data-rocket-type="text/javascript">
 const ttt_pnwc_info = {"themeURI":"https:\/\/agrispesa.loc\/wp-content\/themes\/agrispesa","pluginURL":"https:\/\/agrispesa.loc\/wp-content\/plugins\/popup-notices-for-woocommerce","icon_default_class":"default-icon","error_icon_class":"","info_icon_class":"","success_icon_class":"","click_inside_close":"yes","modulesRequired":[],"types":{"error":"no","info":"no","success":"yes"},"ajax_opt":"yes","cookie_opt":{"enabled":"no","time":0.5,"message_origin":"static"},"auto_close_time":0,"auto_close_types":[],"ignored_msg":{"field":["<p><\/p>"],"search_method":"partial_comparison","regex_flags":"i"},"audio":{"enabled":"no","opening":"","closing":""}}
 </script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/plugins/popup-notices-for-woocommerce/assets/js/pnwc-frontend.min.js?ver=231016-151600' id='ttt-pnwc-js'></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/plugins/popup-notices-for-woocommerce/assets/js/pnwc-frontend.min.js?ver=231104-161643' id='ttt-pnwc-js'></script>
 <script type='text/javascript' id='wdap-frontend.js-js-extra'>
 /* <![CDATA[ */
-var wdap_settings_obj = {"ajax_url":"https:\/\/agrispesa.loc\/wp-admin\/admin-ajax.php","nonce":"e3473d9771","exclude_countries":[],"marker_country_restrict":"1","is_api_key":"yes","range_circle_ui":{"strokeColor":"#FF0000","strokeOpacity":1,"strokeWeight":1,"fillColor":"#FF0000","fillOpacity":0.5},"mapsettings":{"zoom":"8","centerlat":"45,455911","sicon_url":"https:\/\/agrispesa.loc\/wp-content\/plugins\/woocommerce-delivery-area-pro\/assets\/images\/\/pin_blue.png","centerlng":"9,186069","style":"[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#6195a0\" } ] }, { \"featureType\": \"administrative.province\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": \"0\" }, { \"saturation\": \"0\" }, { \"color\": \"#f5f5f2\" }, { \"gamma\": \"1\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": \"-3\" }, { \"gamma\": \"1.00\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#bae5ce\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fac9a9\" }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels.text\", \"stylers\": [ { \"color\": \"#4e4e4e\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#787878\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#0a00ff\" }, { \"saturation\": \"-77\" }, { \"gamma\": \"0.57\" }, { \"lightness\": \"0\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#43321e\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#ff6c00\" }, { \"lightness\": \"4\" }, { \"gamma\": \"0.75\" }, { \"saturation\": \"-68\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#eaf6f8\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#c7eced\" } ] }, { \"featureType\": \"water\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"lightness\": \"-49\" }, { \"saturation\": \"-53\" }, { \"gamma\": \"0.79\" } ] } ]","enable_restrict":"","enable_markers_on_map":"true","enable_bound":"true","enable_polygon_on_map":"true","restrict_country":""},"errormessages":{"empty":"Please enter zip code.","na":" Product Not Available ","a":" Product Available","invld":"Invalid Zipcode.","p":"Products are ","th":"Availability Status ","pr":"Products ","summary":"{no_products_available} Available, {no_products_unavailable} Unavailable ","error_msg_color":"#ff0000","success_msg_color":"#209620"},"shortcode_settings":{"wdap_address_empty":"Per favore, inserisci il tuo CAP.","address_not_shipable":"Scusa, Agrispesa non arriva nella tua zona.","address_shipable":"Iu-uh! Agrispesa consegna a casa tua.","prlist_error":"Please select at least one product.","form_success_msg_color":"#209620","form_error_msg_color":"#ff0000"},"shortcode_map":{"enable":true,"zoom":"8","centerlat":"45,455911","centerlng":"9,186069","style":"[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#6195a0\" } ] }, { \"featureType\": \"administrative.province\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": \"0\" }, { \"saturation\": \"0\" }, { \"color\": \"#f5f5f2\" }, { \"gamma\": \"1\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": \"-3\" }, { \"gamma\": \"1.00\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#bae5ce\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fac9a9\" }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels.text\", \"stylers\": [ { \"color\": \"#4e4e4e\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#787878\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#0a00ff\" }, { \"saturation\": \"-77\" }, { \"gamma\": \"0.57\" }, { \"lightness\": \"0\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#43321e\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#ff6c00\" }, { \"lightness\": \"4\" }, { \"gamma\": \"0.75\" }, { \"saturation\": \"-68\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#eaf6f8\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#c7eced\" } ] }, { \"featureType\": \"water\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"lightness\": \"-49\" }, { \"saturation\": \"-53\" }, { \"gamma\": \"0.79\" } ] } ]"},"can_be_delivered_redirect_url":"","cannot_be_delivered_redirect_url":"","loader_image":"https:\/\/agrispesa.loc\/wp-content\/plugins\/woocommerce-delivery-area-pro\/assets\/images\/loader.gif","enable_autosuggest_checkout":"false","disable_availability_status":"1"};
+var wdap_settings_obj = {"ajax_url":"https:\/\/agrispesa.loc\/wp-admin\/admin-ajax.php","nonce":"f4be5a611d","exclude_countries":[],"marker_country_restrict":"1","is_api_key":"yes","range_circle_ui":{"strokeColor":"#FF0000","strokeOpacity":1,"strokeWeight":1,"fillColor":"#FF0000","fillOpacity":0.5},"mapsettings":{"zoom":"8","centerlat":"45,455911","sicon_url":"https:\/\/agrispesa.loc\/wp-content\/plugins\/woocommerce-delivery-area-pro\/assets\/images\/\/pin_blue.png","centerlng":"9,186069","style":"[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#6195a0\" } ] }, { \"featureType\": \"administrative.province\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": \"0\" }, { \"saturation\": \"0\" }, { \"color\": \"#f5f5f2\" }, { \"gamma\": \"1\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": \"-3\" }, { \"gamma\": \"1.00\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#bae5ce\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fac9a9\" }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels.text\", \"stylers\": [ { \"color\": \"#4e4e4e\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#787878\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#0a00ff\" }, { \"saturation\": \"-77\" }, { \"gamma\": \"0.57\" }, { \"lightness\": \"0\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#43321e\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#ff6c00\" }, { \"lightness\": \"4\" }, { \"gamma\": \"0.75\" }, { \"saturation\": \"-68\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#eaf6f8\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#c7eced\" } ] }, { \"featureType\": \"water\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"lightness\": \"-49\" }, { \"saturation\": \"-53\" }, { \"gamma\": \"0.79\" } ] } ]","enable_restrict":"","enable_markers_on_map":"true","enable_bound":"true","enable_polygon_on_map":"true","restrict_country":""},"errormessages":{"empty":"Please enter zip code.","na":"Product Not Available","a":"Product Available","invld":"Invalid Zipcode","p":"Products are ","th":"Availability Status ","pr":"Products ","summary":"{no_products_available} Available, {no_products_unavailable} Unavailable ","error_msg_color":"#ff0000","success_msg_color":"#209620"},"shortcode_settings":{"wdap_address_empty":"Per favore, inserisci il tuo CAP.","address_not_shipable":"Scusa, Agrispesa non arriva nella tua zona.","address_shipable":"Iu-uh! Agrispesa consegna a casa tua.","prlist_error":"Please select at least one product.","form_success_msg_color":"#209620","form_error_msg_color":"#ff0000"},"shortcode_map":{"enable":true,"zoom":"8","centerlat":"45,455911","centerlng":"9,186069","style":"[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#6195a0\" } ] }, { \"featureType\": \"administrative.province\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": \"0\" }, { \"saturation\": \"0\" }, { \"color\": \"#f5f5f2\" }, { \"gamma\": \"1\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": \"-3\" }, { \"gamma\": \"1.00\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#bae5ce\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fac9a9\" }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels.text\", \"stylers\": [ { \"color\": \"#4e4e4e\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#787878\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#0a00ff\" }, { \"saturation\": \"-77\" }, { \"gamma\": \"0.57\" }, { \"lightness\": \"0\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#43321e\" } ] }, { \"featureType\": \"transit.station.rail\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"hue\": \"#ff6c00\" }, { \"lightness\": \"4\" }, { \"gamma\": \"0.75\" }, { \"saturation\": \"-68\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#eaf6f8\" }, { \"visibility\": \"on\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#c7eced\" } ] }, { \"featureType\": \"water\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"lightness\": \"-49\" }, { \"saturation\": \"-53\" }, { \"gamma\": \"0.79\" } ] } ]"},"can_be_delivered_redirect_url":"","cannot_be_delivered_redirect_url":"","loader_image":"https:\/\/agrispesa.loc\/wp-content\/plugins\/woocommerce-delivery-area-pro\/assets\/images\/loader.gif","enable_autosuggest_checkout":"false","disable_availability_status":"1"};
 /* ]]> */
 </script>
 <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-delivery-area-pro/assets/js/wdap-frontend.js?ver=1686059977' id='wdap-frontend.js-js'></script>
@@ -1059,7 +1156,123 @@ var WPURL = {"siteurl":"https:\/\/agrispesa.loc","userId":"0"};
 </script>
 <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/cache/min/1/wp-content/themes/agrispesa/assets/_src/js/main.js?ver=1686059977' id='agrispesa-js-js'></script>
 <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-rocket-src='https://agrispesa.loc/wp-content/cache/min/1/wp-content/plugins/woocommerce-google-analytics-integration/assets/js/build/actions.js?ver=1686587833' id='woocommerce-google-analytics-integration-actions-js'></script>
-<!-- gtm-ecommerce-woo no-scripts --><script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-gtm-ecommerce-woo-scripts>
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({ ecommerce: null });
+(function(dataLayer, jQuery) {
+var gtm_ecommerce_woo_items_by_product_id = {"51876":{"item_name":"Origano di montagna g 10","item_id":51876,"price":5.6056,"item_category":"Aromatiche secche"},"51879":{"item_name":"Peperoncino arlecchino g 12,5","item_id":51879,"price":9.702,"item_category":"Aromatiche secche"},"51878":{"item_name":"Peperoncino rosso g 12,5","item_id":51878,"price":8.424,"item_category":"Aromatiche secche"},"24369":{"item_name":"Santoreggia g 15","item_id":24369,"price":5.6056,"item_category":"Aromatiche secche","item_category2":"Negozio"}};
+jQuery(document).on('click', '.ajax_add_to_cart', function(ev) {
+    var targetElement = jQuery(ev.currentTarget);
+    if (0 === targetElement.length) {
+        return;
+    }
+    var product_id = targetElement.data('product_id');
+    if (undefined === product_id) {
+        return;
+    }
+	var quantity = targetElement.data('quantity') ?? 1;
+	var item = {};
+
+	if ('undefined' === typeof gtm_ecommerce_pro) {
+	    item = gtm_ecommerce_woo_items_by_product_id[product_id];
+	} else {
+	    item = gtm_ecommerce_pro.getItemByProductId(product_id);
+	}
+
+	item.quantity = parseInt(quantity);
+
+	let event = {"event":"add_to_cart","ecommerce":{"currency":"EUR"}};
+
+	dataLayer.push({
+		...event,
+	  'ecommerce': {
+		...event.ecommerce,
+		'value': (item.price * quantity),
+		'items': [item]
+	  }
+	});
+});
+})(dataLayer, jQuery);</script>
+<!-- WooCommerce JavaScript -->
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+jQuery(function($) { /* WooCommerce Facebook Integration Event Tracking */
+fbq('set', 'agent', 'woocommerce-8.2.0-3.1.1', '310911555915518');
+fbq('trackCustom', 'ViewCategory', {
+    "source": "woocommerce",
+    "version": "8.2.0",
+    "pluginVersion": "3.1.1",
+    "content_name": "Aromatiche secche",
+    "content_category": "Aromatiche secche",
+    "content_ids": "[\"ERBEAROMATIC31_2347_51876\",\"ERBEAROMATICH21_2347_51879\",\"ERBEAROMATICH17_2147_51878\",\"ERBEAROMATIC30_2050_24369\"]",
+    "content_type": "product",
+    "contents": {
+        "0": {
+            "id": "ERBEAROMATIC31_2347_51876",
+            "quantity": 1
+        },
+        "1": {
+            "id": "ERBEAROMATICH21_2347_51879",
+            "quantity": 1
+        },
+        "2": {
+            "id": "ERBEAROMATICH17_2147_51878",
+            "quantity": 1
+        },
+        "3": {
+            "id": "ERBEAROMATIC30_2050_24369",
+            "quantity": 1
+        }
+    }
+}, {
+    "eventID": "c4f3abeb-dd00-41b6-b757-cdad71beafd8"
+});
+
+gtag('event', 'view_item_list', {"items":[{"id":"ERBEAROMATIC31_2347","name":"Origano di montagna g 10","category":"Aromatiche secche","list":"Product List"}]})
+
+
+			$( '.product.post-51876 a , .product.post-51876 button' ).on('click', function() {
+				if ( false === $(this).hasClass( 'product_type_variable' ) && false === $(this).hasClass( 'product_type_grouped' ) ) {
+					gtag('event', 'add_to_cart', {"items":[{"id":"ERBEAROMATIC31_2347","name":"Origano di montagna g 10","category":"Aromatiche secche","quantity":"1"}]})
+				} else {
+					gtag('event', 'select_content', {"items":[{"id":"ERBEAROMATIC31_2347","name":"Origano di montagna g 10","category":"Aromatiche secche","quantity":"1"}]})
+				}
+			});
+
+gtag('event', 'view_item_list', {"items":[{"id":"ERBEAROMATICH21_2347","name":"Peperoncino arlecchino g 12,5","category":"Aromatiche secche","list":"Product List"}]})
+
+
+			$( '.product.post-51879 a , .product.post-51879 button' ).on('click', function() {
+				if ( false === $(this).hasClass( 'product_type_variable' ) && false === $(this).hasClass( 'product_type_grouped' ) ) {
+					gtag('event', 'add_to_cart', {"items":[{"id":"ERBEAROMATICH21_2347","name":"Peperoncino arlecchino g 12,5","category":"Aromatiche secche","quantity":"1"}]})
+				} else {
+					gtag('event', 'select_content', {"items":[{"id":"ERBEAROMATICH21_2347","name":"Peperoncino arlecchino g 12,5","category":"Aromatiche secche","quantity":"1"}]})
+				}
+			});
+
+gtag('event', 'view_item_list', {"items":[{"id":"ERBEAROMATICH17_2147","name":"Peperoncino rosso g 12,5","category":"Aromatiche secche","list":"Product List"}]})
+
+
+			$( '.product.post-51878 a , .product.post-51878 button' ).on('click', function() {
+				if ( false === $(this).hasClass( 'product_type_variable' ) && false === $(this).hasClass( 'product_type_grouped' ) ) {
+					gtag('event', 'add_to_cart', {"items":[{"id":"ERBEAROMATICH17_2147","name":"Peperoncino rosso g 12,5","category":"Aromatiche secche","quantity":"1"}]})
+				} else {
+					gtag('event', 'select_content', {"items":[{"id":"ERBEAROMATICH17_2147","name":"Peperoncino rosso g 12,5","category":"Aromatiche secche","quantity":"1"}]})
+				}
+			});
+
+gtag('event', 'view_item_list', {"items":[{"id":"ERBEAROMATIC30_2050","name":"Santoreggia g 15","category":"Aromatiche secche\/Negozio","list":"Product List"}]})
+
+
+			$( '.product.post-24369 a , .product.post-24369 button' ).on('click', function() {
+				if ( false === $(this).hasClass( 'product_type_variable' ) && false === $(this).hasClass( 'product_type_grouped' ) ) {
+					gtag('event', 'add_to_cart', {"items":[{"id":"ERBEAROMATIC30_2050","name":"Santoreggia g 15","category":"Aromatiche secche\/Negozio","quantity":"1"}]})
+				} else {
+					gtag('event', 'select_content', {"items":[{"id":"ERBEAROMATIC30_2050","name":"Santoreggia g 15","category":"Aromatiche secche\/Negozio","quantity":"1"}]})
+				}
+			});
+ });
+</script>
+<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
 if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
 images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
 if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://agrispesa.loc/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script><script type="rocketlazyloadscript">
@@ -1075,4 +1288,4 @@ if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_c
 </body>
 </html>
 
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1697474349 -->
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1699460805 -->
