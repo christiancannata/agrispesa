@@ -75,7 +75,7 @@ echo '<div class="product-info">';
 
 if ($produttori) {
 	foreach ($produttori as $produttore) {
-		echo '<span class="product-info--producer">/ <a href="' . get_permalink($produttore->ID) . '">' . get_the_title($produttore->ID) . '</a></span>';
+		echo '<span class="product-info--producer"><a href="' . get_permalink($produttore->ID) . '">' . get_the_title($produttore->ID) . '</a></span>';
 	}
 }
 
