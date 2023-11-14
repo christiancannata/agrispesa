@@ -4501,7 +4501,12 @@ add_filter(
 
 		$wallet_balance = get_user_meta($user_id, '_saldo_navision', true);
 
-		return $wallet_balance;
+		if(!$wallet_balance){
+			return 0;
+		}
+
+		$wallet_balance = str_replace(",", ".", $wallet_balance);
+		return floatval($wallet_balance);
 		/*
         $customWallet = get_user_meta(
             $user_id,
