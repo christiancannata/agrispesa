@@ -4498,6 +4498,11 @@ function generate_fabbisogno()
 add_filter(
     "woo_wallet_current_balance",
     function ($wallet_balance, $user_id) {
+
+		$wallet_balance = get_user_meta($user_id, '_saldo_navision', true);
+
+		return $wallet_balance;
+		/*
         $customWallet = get_user_meta(
             $user_id,
             "_current_woo_wallet_balance",
@@ -4507,7 +4512,7 @@ add_filter(
             $wallet_balance = $customWallet;
         }
 
-        return $wallet_balance;
+        return $wallet_balance;*/
     },
     10,
     2
