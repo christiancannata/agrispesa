@@ -2512,7 +2512,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
             $limit = $request->get_param("limit");
-            $week = $request->get_param("week");
+         //   $week = $request->get_param("week");
 
             $today = new \DateTime();
             $today->add(new \DateInterval("P7D"));
@@ -2529,7 +2529,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
 
-            if (!in_array($week + 1, $enabledWeeksList)) {
+            if (!in_array($week, $enabledWeeksList)) {
                 header("Content-type: text/xml");
                 die($doc->saveXml());
             }
