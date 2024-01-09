@@ -1,15 +1,15 @@
-# Translation of WordPress - 6.3.x - Development - Administration - Network Admin in Italian
-# This file is distributed under the same license as the WordPress - 6.3.x - Development - Administration - Network Admin package.
+# Translation of WordPress - 6.4.x - Development - Administration - Network Admin in Italian
+# This file is distributed under the same license as the WordPress - 6.4.x - Development - Administration - Network Admin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-07-18 21:32:47+0000\n"
+"PO-Revision-Date: 2023-10-26 17:40:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.9\n"
+"X-Generator: GlotPress/4.0.0-alpha.11\n"
 "Language: it\n"
-"Project-Id-Version: WordPress - 6.3.x - Development - Administration - Network Admin\n"
+"Project-Id-Version: WordPress - 6.4.x - Development - Administration - Network Admin\n"
 
 #: wp-admin/network/site-new.php:87
 msgid "Missing site title."
@@ -39,17 +39,17 @@ msgstr "Tabella ordinata per percorso dei siti."
 msgid "Table ordered by Site Domain Name."
 msgstr "Tabella ordinata per nome di dominio dei siti."
 
-#: wp-admin/includes/network.php:648
+#: wp-admin/includes/network.php:697
 msgid "https://wordpress.org/documentation/article/nginx/"
 msgstr "https://wordpress.org/documentation/article/nginx/"
 
-#: wp-admin/includes/network.php:556
+#: wp-admin/includes/network.php:605
 msgid "Network configuration authentication keys"
 msgstr "Chiavi di autenticazione per la configurazione del network"
 
 #. translators: %s: File name (wp-config.php, .htaccess or web.config).
-#: wp-admin/includes/network.php:493 wp-admin/includes/network.php:632
-#: wp-admin/includes/network.php:694
+#: wp-admin/includes/network.php:542 wp-admin/includes/network.php:681
+#: wp-admin/includes/network.php:743
 msgid "Network configuration rules for %s"
 msgstr "Regole di configurazione del network per %s"
 
@@ -62,23 +62,23 @@ msgid "Cannot create an empty site."
 msgstr "Non è possibile creare un sito vuoto."
 
 #. translators: %s: wp-config.php
-#: wp-admin/includes/network.php:463
+#: wp-admin/includes/network.php:513
 msgid "You should back up your existing %s file."
 msgstr "Dovresti fare il backup del file %s."
 
 #. translators: 1: wp-config.php, 2: .htaccess
 #. translators: 1: wp-config.php, 2: web.config
-#: wp-admin/includes/network.php:447 wp-admin/includes/network.php:455
+#: wp-admin/includes/network.php:499 wp-admin/includes/network.php:506
 msgid "You should back up your existing %1$s and %2$s files."
 msgstr "Dovresti fare il backup dei file %1$s e %2$s."
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:732
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:733
 msgid "Visit theme site for %s"
 msgstr "Visita il sito del tema %s"
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:745
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:746
 msgid "Child theme of %s"
 msgstr "Tema child di %s"
 
@@ -86,7 +86,7 @@ msgstr "Tema child di %s"
 msgid "<a href=\"https://wordpress.org/documentation/article/network-admin-settings-screen/\">Documentation on Network Settings</a>"
 msgstr "<a href=\"https://wordpress.org/documentation/article/network-admin-settings-screen/\">Documentazione sulle Impostazioni del network</a>"
 
-#: wp-admin/network/site-info.php:185
+#: wp-admin/network/site-info.php:191
 msgctxt "site"
 msgid "Public"
 msgstr "Pubblico"
@@ -97,20 +97,20 @@ msgid "Not spam"
 msgstr "Non è spam"
 
 #. translators: %s: Number of themes.
-#: wp-admin/network/themes.php:412
+#: wp-admin/network/themes.php:438
 msgid "%s theme will no longer be auto-updated."
 msgid_plural "%s themes will no longer be auto-updated."
 msgstr[0] "%s tema non verrà più aggiornato automaticamente."
 msgstr[1] "%s temi non verranno più aggiornati automaticamente."
 
 #. translators: %s: Number of themes.
-#: wp-admin/network/themes.php:403
+#: wp-admin/network/themes.php:427
 msgid "%s theme will be auto-updated."
 msgid_plural "%s themes will be auto-updated."
 msgstr[0] "%s tema verrà aggiornato automaticamente."
 msgstr[1] "%s temi verranno aggiornati automaticamente."
 
-#: wp-admin/network/themes.php:226
+#: wp-admin/network/themes.php:240
 msgid "Sorry, you are not allowed to change themes automatic update settings."
 msgstr "Non hai i permessi per modificare le impostazioni di aggiornamento automatico dei temi."
 
@@ -118,14 +118,14 @@ msgstr "Non hai i permessi per modificare le impostazioni di aggiornamento autom
 msgid "No themes are currently available."
 msgstr "Nessun tema attualmente disponibile."
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:504
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:529
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:503
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:528
 #: wp-admin/includes/class-wp-ms-users-list-table.php:346
 msgid "Y/m/d g:i:s a"
 msgstr "d/m/Y H:i:s"
 
 #. translators: %s: Documentation URL.
-#: wp-admin/includes/network.php:647
+#: wp-admin/includes/network.php:696
 msgid "It seems your network is running with Nginx web server. <a href=\"%s\">Learn more about further configuration</a>."
 msgstr "Sembra che il tuo network giri su un server Nginx. <a href=\"%s\">Scopri di più riguardo ad ulteriori configurazioni</a>."
 
@@ -189,7 +189,7 @@ msgid_plural "Update Available <span class=\"count\">(%s)</span>"
 msgstr[0] "Aggiornamento disponibile <span class=\"count\">(%s)</span>"
 msgstr[1] "Aggiornamenti disponibili <span class=\"count\">(%s)</span>"
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:648
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:650
 msgid "Main"
 msgstr "Principale"
 
@@ -202,7 +202,7 @@ msgid "<a href=\"https://wordpress.org/documentation/article/create-a-network/\"
 msgstr "<a href=\"https://wordpress.org/documentation/article/create-a-network/\">Documentazione sulla Creazione di un network</a>"
 
 #. translators: %s: DO_NOT_UPGRADE_GLOBAL_TABLES
-#: wp-admin/includes/network.php:118
+#: wp-admin/includes/network.php:119
 msgid "The constant %s cannot be defined when creating a network."
 msgstr "La costante %s non può essere definita durante la creazione di un network."
 
@@ -210,42 +210,42 @@ msgstr "La costante %s non può essere definita durante la creazione di un netwo
 msgid "You are about to delete the following sites:"
 msgstr "Stai per eliminare i seguenti siti:"
 
-#: wp-admin/network/site-users.php:245
+#: wp-admin/network/site-users.php:249
 msgid "User could not be added to this site."
 msgstr "L'utente non può essere aggiunto a questo sito."
 
-#: wp-admin/network/site-new.php:281
+#: wp-admin/network/site-new.php:287
 msgid "The username and a link to set the password will be mailed to this email address."
 msgstr "Il nome utente ed il link per impostare la password saranno inviati a questo indirizzo email."
 
 #. translators: %s: New network admin email.
-#: wp-admin/network/settings.php:176
+#: wp-admin/network/settings.php:177
 msgid "There is a pending change of the network admin email to %s."
 msgstr "Vi è un cambiamento in sospeso all'email di amministrazione del network in %s."
 
-#: wp-admin/includes/network.php:332
+#: wp-admin/includes/network.php:369
 msgid "Sub-domain Installation"
 msgstr "Installazione con sottodomini"
 
-#: wp-admin/includes/network.php:301 wp-admin/includes/network.php:319
+#: wp-admin/includes/network.php:338 wp-admin/includes/network.php:356
 msgid "Sub-directory Installation"
 msgstr "Installazione con sotto directory"
 
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:932
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:939
 msgid "Active Child Theme"
 msgstr "Tema child attivo"
 
-#: wp-admin/network/site-info.php:194
+#: wp-admin/network/site-info.php:200
 msgid "Attributes"
 msgstr "Attributi"
 
 #. translators: %s: File size in kilobytes.
-#: wp-admin/network/settings.php:433
+#: wp-admin/network/settings.php:442
 msgid "%s KB"
 msgstr "%s KB"
 
 #. translators: %s: Default network title.
-#: wp-admin/includes/network.php:172
+#: wp-admin/includes/network.php:196
 msgid "%s Sites"
 msgstr "%s siti"
 
@@ -274,11 +274,11 @@ msgstr "Non hai i permessi per aggiungere siti a questo network."
 msgid "Sorry, you are not allowed to edit this site."
 msgstr "Non hai i permessi per modificare questo sito."
 
-#: wp-admin/network/settings.php:380
+#: wp-admin/network/settings.php:389
 msgid "The email address of the first comment author on a new site."
 msgstr "L'indirizzo email per l'autore del primo commento su un nuovo sito."
 
-#: wp-admin/network/settings.php:376
+#: wp-admin/network/settings.php:385
 msgid "First Comment Email"
 msgstr "Email per il primo commento"
 
@@ -286,77 +286,77 @@ msgstr "Email per il primo commento"
 #. is localized. You can check the localized release package or
 #. https://i18n.svn.wordpress.org/<locale code>/branches/<wp
 #. version>/dist/wp-config-sample.php
-#: wp-admin/includes/network.php:485
+#: wp-admin/includes/network.php:534
 msgid "That&#8217;s all, stop editing! Happy publishing."
 msgstr "È tutto, termina le modifiche! Scrivi con gioia."
 
 #. translators: 1: wp-config.php, 2: Location of wp-config file, 3: Translated
 #. version of "That's all, stop editing! Happy publishing."
-#: wp-admin/includes/network.php:477
+#: wp-admin/includes/network.php:526
 msgid "Add the following to your %1$s file in %2$s <strong>above</strong> the line reading %3$s:"
 msgstr "Aggiungi quanto segue nel tuo file %1$s in %2$s <strong>sopra</strong> la linea dove leggi %3$s:"
 
 #. translators: 1: Theme name, 2: Theme author.
-#: wp-admin/network/themes.php:150
+#: wp-admin/network/themes.php:164
 msgctxt "theme"
 msgid "%1$s by %2$s"
 msgstr "%1$s di %2$s"
 
-#: wp-admin/network/site-new.php:223
+#: wp-admin/network/site-new.php:229
 msgid "Only lowercase letters (a-z), numbers, and hyphens are allowed."
 msgstr "Sono consentite solo lettere minuscole (a-z), numeri e trattini."
 
 #. translators: %s: wp-config.php
-#: wp-admin/includes/network.php:549
+#: wp-admin/includes/network.php:598
 msgid "These unique authentication keys are also missing from your %s file."
 msgstr "Anche queste chiavi uniche di autenticazione mancano dal tuo file %s."
 
 #. translators: %s: wp-config.php
-#: wp-admin/includes/network.php:543
+#: wp-admin/includes/network.php:592
 msgid "This unique authentication key is also missing from your %s file."
 msgstr "Anche questa chiave unica di autenticazione manca dal tuo file %s."
 
 #. translators: 1: localhost, 2: localhost.localdomain
-#: wp-admin/includes/network.php:306
+#: wp-admin/includes/network.php:343
 msgid "Because you are using %1$s, the sites in your WordPress network must use sub-directories. Consider using %2$s if you wish to use sub-domains."
 msgstr "Siccome stai usando %1$s, i siti nel tuo network WordPress devono usare sotto directory. Prendi in considerazione di usare %2$s se vuoi usare dei sottodomini."
 
 #. translators: %s: Host name.
-#: wp-admin/includes/network.php:288 wp-admin/includes/network.php:348
+#: wp-admin/includes/network.php:325 wp-admin/includes/network.php:385
 msgid "The internet address of your network will be %s."
 msgstr "L'indirizzo internet del tuo network sarà %s."
 
 #. translators: 1: Site URL, 2: Host name, 3: www.
-#: wp-admin/includes/network.php:274
+#: wp-admin/includes/network.php:311
 msgid "You should consider changing your site domain to %1$s before enabling the network feature. It will still be possible to visit your site using the %3$s prefix with an address like %2$s but any links will not have the %3$s prefix."
 msgstr "Dovresti prendere in considerazione la modifica dell'URL del tuo sito in %1$s prima di abilitare il network. Sarà ancora possibile visitare il tuo sito utilizzando il prefisso %3$s con un indirizzo come %2$s, ma tutti i link non avranno il prefisso %3$s."
 
-#: wp-admin/includes/network.php:229
+#: wp-admin/includes/network.php:259
 msgid "You cannot change this later."
 msgstr "Non puoi cambiarlo in seguito."
 
-#: wp-admin/includes/network.php:228
+#: wp-admin/includes/network.php:258
 msgid "Please choose whether you would like sites in your WordPress network to use sub-domains or sub-directories."
 msgstr "Scegli se vuoi usare sottodomini o sotto directory per i siti del tuo network WordPress."
 
 #. translators: 1: mod_rewrite, 2: mod_rewrite documentation URL, 3: Google
 #. search for mod_rewrite.
-#: wp-admin/includes/network.php:216
+#: wp-admin/includes/network.php:239
 msgid "If %1$s is disabled, ask your administrator to enable that module, or look at the <a href=\"%2$s\">Apache documentation</a> or <a href=\"%3$s\">elsewhere</a> for help setting it up."
 msgstr "Se %1$s è disabilitato, chiedi all'amministratore di abilitare quel modulo, o di guardare la <a href=\"%2$s\">documentazione Apache</a> o <a href=\"%3$s\">altrove</a> per avere aiuto sulla sua creazione."
 
 #. translators: %s: mod_rewrite
-#: wp-admin/includes/network.php:206
+#: wp-admin/includes/network.php:231
 msgid "It looks like the Apache %s module is not installed."
 msgstr "Sembra che il modulo Apache %s non sia installato."
 
 #. translators: %s: mod_rewrite
-#: wp-admin/includes/network.php:198
+#: wp-admin/includes/network.php:223
 msgid "Please make sure the Apache %s module is installed as it will be used at the end of this installation."
 msgstr "Assicurati che il modulo Apache %s sia installato. Verrà usato alla fine di questa installazione."
 
 #. translators: %s: Port number.
-#: wp-admin/includes/network.php:145
+#: wp-admin/includes/network.php:163
 msgid "You cannot use port numbers such as %s."
 msgstr "Non puoi utilizzare numeri di porta come %s."
 
@@ -383,46 +383,46 @@ msgctxt "user"
 msgid "Mark as spam"
 msgstr "Contrassegna come spam"
 
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:738
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:739
 msgid "Visit Theme Site"
 msgstr "Visita il sito del tema"
 
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:701
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:702
 msgid "Broken Theme:"
 msgstr "Tema corrotto:"
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:607
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:608
 msgid "Network Disable %s"
 msgstr "Disabilita %s dal network"
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:604
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:605
 msgid "Disable %s"
 msgstr "Disabilita %s"
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:581
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:582
 msgid "Network Enable %s"
 msgstr "Attiva %s nel network"
 
 #. translators: %s: Theme name.
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:578
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:579
 msgid "Enable %s"
 msgstr "Attiva %s"
 
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:470
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:614
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:615
 msgid "Network Disable"
 msgstr "Disabilita dal network"
 
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:470
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:614
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:615
 msgid "Disable"
 msgstr "Disabilita"
 
 #: wp-admin/includes/class-wp-ms-themes-list-table.php:467
-#: wp-admin/includes/class-wp-ms-themes-list-table.php:588
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:589
 msgid "Enable"
 msgstr "Attiva"
 
@@ -462,38 +462,38 @@ msgstr[1] "Tutti <span class=\"count\">(%s)</span>"
 msgid "No themes found."
 msgstr "Nessun tema trovato."
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:791
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:794
 msgctxt "verb; site"
 msgid "Archive"
 msgstr "Archivia"
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:780
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:783
 msgid "Unarchive"
 msgstr "Recupera da archivio"
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:508
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:507
 msgid "Never"
 msgstr "Mai"
 
 #. translators: 1: Site title, 2: Site tagline.
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:480
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:479
 msgid "%1$s &#8211; %2$s"
 msgstr "%1$s &#8211; %2$s"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:369
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:404
-#: wp-admin/network/site-info.php:177
+#: wp-admin/network/site-info.php:183
 msgctxt "site"
 msgid "Registered"
 msgstr "Registrato"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:368
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:403
-#: wp-admin/network/site-info.php:181
+#: wp-admin/network/site-info.php:187
 msgid "Last Updated"
 msgstr "Ultimo aggiornamento"
 
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:804
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:807
 msgctxt "site"
 msgid "Not Spam"
 msgstr "Non è spam"
@@ -508,33 +508,33 @@ msgid "No sites found."
 msgstr "Nessun sito trovato."
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:41
-#: wp-admin/network/site-info.php:191
+#: wp-admin/network/site-info.php:197
 msgid "Mature"
 msgstr "Per adulti"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:40
-#: wp-admin/network/site-info.php:189
+#: wp-admin/network/site-info.php:195
 msgid "Deleted"
 msgstr "Eliminato"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:39
-#: wp-admin/includes/class-wp-ms-sites-list-table.php:815
-#: wp-admin/network/site-info.php:188
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:818
+#: wp-admin/network/site-info.php:194
 msgctxt "site"
 msgid "Spam"
 msgstr "Spam"
 
 #: wp-admin/includes/class-wp-ms-sites-list-table.php:38
-#: wp-admin/network/site-info.php:187
+#: wp-admin/network/site-info.php:193
 msgid "Archived"
 msgstr "Archiviato"
 
-#: wp-admin/network/site-users.php:357 wp-admin/network/user-new.php:135
+#: wp-admin/network/site-users.php:373 wp-admin/network/user-new.php:149
 msgid "A password reset link will be sent to the user via email."
 msgstr "All'utente verrà inviato, tramite email, un link di reimpostazione della password."
 
 #. translators: 1: NOBLOGREDIRECT, 2: wp-config.php
-#: wp-admin/network/settings.php:218
+#: wp-admin/network/settings.php:227
 msgid "If registration is disabled, please set %1$s in %2$s to a URL you will redirect visitors to if they visit a non-existent site."
 msgstr "Se la registrazione è disabilitata, imposta %1$s in %2$s ad un URL al quale reindirizzare i visitatori se questi visitano un sito inesistente."
 
@@ -543,7 +543,7 @@ msgstr "Se la registrazione è disabilitata, imposta %1$s in %2$s ad un URL al q
 msgid "You must define the %1$s constant as true in your %2$s file to allow creation of a Network."
 msgstr "Devi definire la costante %1$s come true nel file %2$s per consentire la creazione di un network."
 
-#: wp-admin/network/themes.php:332
+#: wp-admin/network/themes.php:346
 msgid "Themes list navigation"
 msgstr "Navigazione elenco dei temi"
 
@@ -649,7 +649,7 @@ msgstr "dominio"
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Users_Screen\">Documentation on Network Users</a>"
 msgstr "<a href=\"https://codex.wordpress.org/Network_Admin_Users_Screen\">Documentazione sugli utenti del Network</a> (in inglese)"
 
-#: wp-admin/network/themes.php:324
+#: wp-admin/network/themes.php:338
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Themes_Screen\">Documentation on Network Themes</a>"
 msgstr "<a href=\"https://codex.wordpress.org/Network_Admin_Themes_Screen\">Documentazione sui temi del network</a> (in inglese)"
 
@@ -659,68 +659,68 @@ msgid "Warning! Problem updating %1$s. Your server may not be able to connect to
 msgstr "Attenzione! Problemi nell'aggiornamento di %1$s. Il tuo server potrebbe non essere in grado di connettersi ai siti che girano su di esso. Messaggio di errore: %2$s"
 
 #. translators: %s: Number of themes.
-#: wp-admin/network/themes.php:394
+#: wp-admin/network/themes.php:416
 msgid "%s theme deleted."
 msgid_plural "%s themes deleted."
 msgstr[0] "%s tema eliminato."
 msgstr[1] "%s temi eliminati."
 
 #. translators: %s: Number of themes.
-#: wp-admin/network/site-themes.php:206 wp-admin/network/themes.php:385
+#: wp-admin/network/site-themes.php:214 wp-admin/network/themes.php:405
 msgid "%s theme disabled."
 msgid_plural "%s themes disabled."
 msgstr[0] "%s tema disabilitato."
 msgstr[1] "%s temi disabilitati."
 
 #. translators: %s: Number of themes.
-#: wp-admin/network/site-themes.php:197 wp-admin/network/themes.php:376
+#: wp-admin/network/site-themes.php:197 wp-admin/network/themes.php:394
 msgid "%s theme enabled."
 msgid_plural "%s themes enabled."
 msgstr[0] "%s tema abilitato."
 msgstr[1] "%s temi abilitati."
 
-#: wp-admin/network/themes.php:176
+#: wp-admin/network/themes.php:190
 msgid "Yes, delete these themes"
 msgstr "Sì, elimina questi temi"
 
-#: wp-admin/network/themes.php:143
+#: wp-admin/network/themes.php:157
 msgid "You are about to remove the following themes:"
 msgstr "Stai per rimuovere i seguenti temi:"
 
-#: wp-admin/network/themes.php:142
+#: wp-admin/network/themes.php:151
 msgid "These themes may be active on other sites in the network."
 msgstr "Questi temi potrebbero essere attivi su altri siti del network."
 
-#: wp-admin/network/themes.php:141
+#: wp-admin/network/themes.php:148
 msgid "Delete Themes"
 msgstr "Elimina i temi"
 
 #. translators: Hidden accessibility text.
-#: wp-admin/network/site-info.php:200
+#: wp-admin/network/site-info.php:206
 msgid "Set site attributes"
 msgstr "Imposta attributi sito"
 
 #. translators: Hidden accessibility text.
-#: wp-admin/network/settings.php:510
+#: wp-admin/network/settings.php:519
 msgid "Enable menus"
 msgstr "Abilita i menu"
 
 #. translators: Hidden accessibility text.
-#: wp-admin/network/settings.php:440
+#: wp-admin/network/settings.php:449
 msgid "Size in kilobytes"
 msgstr "Dimensione in kilobyte"
 
-#: wp-admin/network/settings.php:422
+#: wp-admin/network/settings.php:431
 msgid "Allowed file types. Separate types by spaces."
 msgstr "Tipi di file permessi. Tipologie diverse separate da spazi."
 
 #. translators: Hidden accessibility text.
-#: wp-admin/network/settings.php:206
+#: wp-admin/network/settings.php:215
 msgid "New registrations settings"
 msgstr "Impostazioni nuove registrazioni"
 
 #. translators: 1: File name (.htaccess or web.config), 2: File path.
-#: wp-admin/includes/network.php:619 wp-admin/includes/network.php:681
+#: wp-admin/includes/network.php:668 wp-admin/includes/network.php:730
 msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
 msgstr "Aggiungi quanto segue al tuo %1$s file in %2$s, <strong>sostituendo</strong> le altre regole di WordPress:"
 
@@ -793,8 +793,8 @@ msgstr "Utilizza questa schermata una volta che si è aggiornato ad una nuova ve
 msgid "Upgrade Network"
 msgstr "Aggiorna il network"
 
-#: wp-admin/includes/network.php:263 wp-admin/includes/network.php:625
-#: wp-admin/includes/network.php:687
+#: wp-admin/includes/network.php:294 wp-admin/includes/network.php:674
+#: wp-admin/includes/network.php:736
 msgid "Subdirectory networks may not be fully compatible with custom wp-content directories."
 msgstr "I network in sottodirectory potrebbe non essere completamente compatibile con cartelle wp-content personalizzate."
 
@@ -802,11 +802,11 @@ msgstr "I network in sottodirectory potrebbe non essere completamente compatibil
 msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
 msgstr "Aggiungi le seguenti linee di codice al file wp-config.php (subito prima di <code>/* ...interrompere le modifiche... */</code>) ed al file <code>.htaccess</code> (sostituendo le regole di WordPress esistenti)."
 
-#: wp-admin/network/settings.php:452
+#: wp-admin/network/settings.php:461
 msgid "Language Settings"
 msgstr "Impostazioni lingua"
 
-#: wp-admin/network/settings.php:244
+#: wp-admin/network/settings.php:253
 msgid "Allow site administrators to add new users to their site via the \"Users &rarr; Add New\" page"
 msgstr "Permettere agli amministratori di aggiungere nuovi utenti al proprio sito tramite la pagina \"Utenti &rarr; Aggiungi nuovo\""
 
@@ -814,37 +814,33 @@ msgstr "Permettere agli amministratori di aggiungere nuovi utenti al proprio sit
 msgid "Super admins can no longer be added on the Options screen. You must now go to the list of existing users on Network Admin > Users and click on Username or the Edit action link below that name. This goes to an Edit User page where you can check a box to grant super admin privileges."
 msgstr "I Super amministratori non possono più venir inseriti dalla schermata delle opzioni. Si deve passare tramite la lista degli utenti esistenti su Gestione network > Utenti e fare clic sul nome utente o sul link di Modifica sotto tale nome. Si andrà a modificare la pagina utente nella quale si potrà selezionare una casella per concedere i privilegi super amministratore."
 
-#: wp-admin/network/site-users.php:266
+#: wp-admin/network/site-users.php:273
 msgid "Enter the username and email."
 msgstr "Inserisci il nome utente e l'email."
 
-#: wp-admin/network/site-users.php:263
+#: wp-admin/network/site-users.php:270
 msgid "User created."
 msgstr "Utente creato."
 
-#: wp-admin/network/site-users.php:260
+#: wp-admin/network/site-users.php:266
 msgid "Select a user to remove."
 msgstr "Seleziona un utente da rimuovere."
 
-#: wp-admin/network/site-users.php:254
+#: wp-admin/network/site-users.php:259
 msgid "Select a user to change role."
 msgstr "Seleziona un utente per modificare il ruolo."
 
-#: wp-admin/network/site-users.php:248
+#: wp-admin/network/site-users.php:252
 msgid "Enter the username of an existing user."
 msgstr "Inserire un nome utente di un utente registrato."
 
-#: wp-admin/network/site-users.php:242
+#: wp-admin/network/site-users.php:246
 msgid "User is already a member of this site."
 msgstr "Questo utente è già membro di questo sito."
 
 #: wp-admin/network/site-settings.php:78
 msgid "Site options updated."
 msgstr "Opzioni sito aggiornate."
-
-#: wp-admin/network/site-new.php:182 wp-admin/network/site-new.php:192
-msgid "Add New Site"
-msgstr "Aggiungi nuovo sito"
 
 #. translators: 1: Dashboard URL, 2: Network admin edit URL.
 #: wp-admin/network/site-new.php:174
@@ -859,31 +855,31 @@ msgstr "Questa schermata è per i super amministratori per aggiungere siti al ne
 msgid "Site info updated."
 msgstr "Informazioni sito aggiornate."
 
-#: wp-admin/network/themes.php:418
+#: wp-admin/network/themes.php:446
 msgid "You cannot delete a theme while it is active on the main site."
 msgstr "Non è possibile eliminare un tema mentre è attivo sul sito principale."
 
-#: wp-admin/network/themes.php:302
+#: wp-admin/network/themes.php:316
 msgid "Themes can be enabled on a site by site basis by the network admin on the Edit Site screen (which has a Themes tab); get there via the Edit action link on the All Sites screen. Only network admins are able to install or edit themes."
 msgstr "I temi possono essere abilitati, tramite la schermata Modifica sito (che ha una scheda Temi), sito per sito da un amministratore del network; è possibile arrivarci tramite il link Modifica nella schermata Tutti i siti. Solo gli amministratori del network sono in grado di installare o modificare i temi."
 
-#: wp-admin/network/themes.php:183
+#: wp-admin/network/themes.php:197
 msgid "No, return me to the theme list"
 msgstr "No, fammi tornare all'elenco dei temi"
 
-#: wp-admin/network/themes.php:174
+#: wp-admin/network/themes.php:188
 msgid "Yes, delete this theme"
 msgstr "Sì, elimina questo tema"
 
-#: wp-admin/network/themes.php:160
+#: wp-admin/network/themes.php:174
 msgid "Are you sure you want to delete these themes?"
-msgstr "Desideri eliminare questi temi?"
+msgstr "Vuoi davvero eliminare questi temi?"
 
-#: wp-admin/network/themes.php:139
+#: wp-admin/network/themes.php:146
 msgid "You are about to remove the following theme:"
 msgstr "Stai per rimuovere il seguente tema:"
 
-#: wp-admin/network/themes.php:138
+#: wp-admin/network/themes.php:140
 msgid "This theme may be active on other sites in the network."
 msgstr "Questo tema può essere attivo in un altro sito del network."
 
@@ -891,19 +887,19 @@ msgstr "Questo tema può essere attivo in un altro sito del network."
 msgid "Delete Theme"
 msgstr "Elimina tema"
 
-#: wp-admin/network/site-themes.php:214
+#: wp-admin/network/site-themes.php:237
 msgid "Network enabled themes are not shown on this screen."
 msgstr "I temi attivati nel network non sono visualizzati in questa schermata."
 
-#: wp-admin/network/site-themes.php:210 wp-admin/network/themes.php:416
+#: wp-admin/network/site-themes.php:227 wp-admin/network/themes.php:443
 msgid "No theme selected."
 msgstr "Nessun tema selezionato."
 
-#: wp-admin/network/site-themes.php:203 wp-admin/network/themes.php:382
+#: wp-admin/network/site-themes.php:211 wp-admin/network/themes.php:401
 msgid "Theme disabled."
 msgstr "Tema disabilitato."
 
-#: wp-admin/network/site-themes.php:194 wp-admin/network/themes.php:373
+#: wp-admin/network/site-themes.php:194 wp-admin/network/themes.php:390
 msgid "Theme enabled."
 msgstr "Tema abilitato."
 
@@ -943,7 +939,7 @@ msgstr "Un link di Modifica ad una schermata separata di Modifica sito."
 msgid "Add New takes you to the Add New Site screen. You can search for a site by Name, ID number, or IP address. Screen Options allows you to choose how many sites to display on one page."
 msgstr "Aggiungi Nuovo porterà alla schermata di Aggiungi nuovo sito. Sarà possibile cercare un sito per Nome, numero ID o indirizzo IP. Le Impostazioni schermata permettono di scegliere quanti siti visualizzare per ciascuna pagina."
 
-#: wp-admin/network/site-users.php:320 wp-admin/network/user-new.php:147
+#: wp-admin/network/site-users.php:336 wp-admin/network/user-new.php:161
 msgid "Add User"
 msgstr "Aggiungi utente"
 
@@ -971,122 +967,118 @@ msgstr "Temi installati"
 msgid "All Sites"
 msgstr "Tutti i siti"
 
-#: wp-admin/includes/network.php:708
+#: wp-admin/includes/network.php:757
 msgid "Once you complete these steps, your network is enabled and configured. You will have to log in again."
 msgstr "Dopo aver completato questi passaggi, il tuo network è attivo e configurato. Dovrai accedere nuovamente."
 
-#: wp-admin/includes/network.php:554
+#: wp-admin/includes/network.php:603
 msgid "To make your installation more secure, you should also add:"
 msgstr "Per rendere la tua installazione più sicura, dovresti anche aggiungere:"
 
-#: wp-admin/includes/network.php:440
+#: wp-admin/includes/network.php:488
 msgid "Complete the following steps to enable the features for creating a network of sites."
 msgstr "Completa gli step seguenti per abilitare le funzionalità di creazione di un network di siti."
 
-#: wp-admin/includes/network.php:439
+#: wp-admin/includes/network.php:487
 msgid "Enabling the Network"
 msgstr "Attivazione del network"
 
-#: wp-admin/includes/network.php:428
+#: wp-admin/includes/network.php:476
 msgid "Please complete the configuration steps. To create a new network, you will need to empty or remove the network database tables."
 msgstr "Completa i passi di configurazione. Per creare un nuovo network, devi o svuotare o rimuovere le tabelle del database del network."
 
-#: wp-admin/includes/network.php:427
+#: wp-admin/includes/network.php:470
 msgid "An existing WordPress network was detected."
 msgstr "È stato rilevato un network WordPress già esistente."
 
-#: wp-admin/includes/network.php:422
+#: wp-admin/includes/network.php:464
 msgid "The original configuration steps are shown here for reference."
 msgstr "I passi della configurazione originale sono mostrati qui come riferimento."
 
-#: wp-admin/includes/network.php:369
+#: wp-admin/includes/network.php:406
 msgid "Your email address."
 msgstr "Il tuo indirizzo email."
 
-#: wp-admin/includes/network.php:360
+#: wp-admin/includes/network.php:397
 msgid "What would you like to call your network?"
 msgstr "Come vorresti chiamare il tuo network?"
 
-#: wp-admin/includes/network.php:356 wp-admin/network/settings.php:154
+#: wp-admin/includes/network.php:393 wp-admin/network/settings.php:159
 msgid "Network Title"
 msgstr "Nome del network"
 
-#: wp-admin/includes/network.php:335
+#: wp-admin/includes/network.php:372
 msgid "Because your installation is not new, the sites in your WordPress network must use sub-domains."
 msgstr "Dato che la tua installazione non è nuova, i siti nel tuo network di WordPress devono usare i sottodomini."
 
-#: wp-admin/includes/network.php:322
+#: wp-admin/includes/network.php:359
 msgid "Because your installation is in a directory, the sites in your WordPress network must use sub-directories."
 msgstr "Dato che la tua installazione è in una directory, i siti nel tuo network WordPress devono utilizzare le sotto directory."
 
-#: wp-admin/includes/network.php:312 wp-admin/includes/network.php:325
-#: wp-admin/includes/network.php:336
+#: wp-admin/includes/network.php:349 wp-admin/includes/network.php:362
+#: wp-admin/includes/network.php:373
 msgid "The main site in a sub-directory installation will need to use a modified permalink structure, potentially breaking existing links."
 msgstr "Il sito principale in una installazione in una sotto directory deve utilizzare una struttura permalink modificata, potenzialmente può rompere i link esistenti."
 
-#: wp-admin/includes/network.php:297
+#: wp-admin/includes/network.php:334
 msgid "Network Details"
 msgstr "Dettagli del network"
 
-#: wp-admin/includes/network.php:269 wp-admin/includes/network.php:283
-#: wp-admin/includes/network.php:343
+#: wp-admin/includes/network.php:306 wp-admin/includes/network.php:320
+#: wp-admin/includes/network.php:380
 msgid "Server Address"
 msgstr "Indirizzo del server"
 
 #. translators: 1: Host name.
-#: wp-admin/includes/network.php:251
+#: wp-admin/includes/network.php:281
 msgctxt "subdirectory examples"
 msgid "like <code>%1$s/site1</code> and <code>%1$s/site2</code>"
 msgstr "come <code>%1$s/site1</code> e <code>%1$s/site2</code>"
 
-#: wp-admin/includes/network.php:246
+#: wp-admin/includes/network.php:276
 msgid "Sub-directories"
 msgstr "Sotto directory"
 
 #. translators: 1: Host name.
-#: wp-admin/includes/network.php:239
+#: wp-admin/includes/network.php:269
 msgctxt "subdomain examples"
 msgid "like <code>site1.%1$s</code> and <code>site2.%1$s</code>"
 msgstr "come <code>site1.%1$s</code> e <code>site2.%1$s</code>"
 
-#: wp-admin/includes/network.php:234
+#: wp-admin/includes/network.php:264
 msgid "Sub-domains"
 msgstr "Sottodomini"
 
-#: wp-admin/includes/network.php:230
+#: wp-admin/includes/network.php:260
 msgid "You will need a wildcard DNS record if you are going to use the virtual host (sub-domain) functionality."
 msgstr "Avrai bisogno di un record DNS wildcard se vuoi utilizzare la funzionalità host virtuale (sottodominio)"
 
-#: wp-admin/includes/network.php:227
+#: wp-admin/includes/network.php:257
 msgid "Addresses of Sites in your Network"
 msgstr "Indirizzi dei siti nel tuo network"
 
-#: wp-admin/includes/network.php:195
-msgid "Note:"
-msgstr "Nota:"
-
-#: wp-admin/includes/network.php:182
+#: wp-admin/includes/network.php:206
 msgid "Fill in the information below and you&#8217;ll be on your way to creating a network of WordPress sites. Configuration files will be created in the next step."
 msgstr "Inserisci le informazioni qui di seguito e sarai sulla buona strada per creare un network di siti WordPress. I file di configurazione saranno creati nel passaggio successivo."
 
-#: wp-admin/includes/network.php:181
+#: wp-admin/includes/network.php:205
 msgid "Welcome to the Network installation process!"
 msgstr "Benvenuto nel processo di installazione del network!"
 
-#: wp-admin/includes/network.php:160
+#: wp-admin/includes/network.php:178
 msgid "Error: The network could not be created."
 msgstr "ERRORE: impossibile creare il network."
 
-#: wp-admin/includes/network.php:142
+#: wp-admin/includes/network.php:155
 msgid "You cannot install a network of sites with your server address."
 msgstr "Non puoi installare un network di siti con l'indirizzo del tuo server"
 
-#: wp-admin/includes/network.php:133
+#: wp-admin/includes/network.php:145
 msgid "Once the network is created, you may reactivate your plugins."
 msgstr "Dopo che il network è stato creato puoi riattivare i tuoi plugin."
 
 #. translators: %s: URL to Plugins screen.
-#: wp-admin/includes/network.php:130
+#: wp-admin/includes/network.php:140
 msgid "Please <a href=\"%s\">deactivate your plugins</a> before enabling the Network feature."
 msgstr "<a href=\"%s\">Disabilita i tuoi plugin</a> prima di abilitare le funzionalità network."
 
@@ -1187,11 +1179,11 @@ msgstr "Se questa procedura fallisce per qualsiasi motivo, gli utenti che si col
 msgid "If a version update to core has not happened, clicking this button will not affect anything."
 msgstr "Se non c'è stato un aggiornamento di versione dei file del core, fare clic su questo pulsante non avrà alcun effetto."
 
-#: wp-admin/network/themes.php:301
+#: wp-admin/network/themes.php:315
 msgid "If the network admin disables a theme that is in use, it can still remain selected on that site. If another theme is chosen, the disabled theme will not appear in the site&#8217;s Appearance > Themes screen."
 msgstr "Se l'amministratore del network disabilita un tema che è in uso, questo rimarrà attivo per questo sito. Se si seleziona un tema differente, il tema disabilitato non apparirà più nella schermata del sito Aspetto > Temi."
 
-#: wp-admin/network/themes.php:300
+#: wp-admin/network/themes.php:314
 msgid "This screen enables and disables the inclusion of themes available to choose in the Appearance menu for each site. It does not activate or deactivate which theme a site is currently using."
 msgstr "Questa schermata abilita e disabilita per ciascun sito le inclusioni dei temi disponibili nel menu Aspetto. Non attiva o disattiva il tema che un sito sta attualmente utilizzando."
 
@@ -1224,15 +1216,15 @@ msgstr "Le seguenti parole sono riservate per l'utilizzo da parte delle funzioni
 msgid "If your browser does not start loading the next page automatically, click this link:"
 msgstr "Se il tuo browser non inizia a caricare automaticamente la pagina successiva fai clic su questo link:"
 
-#: wp-admin/network/settings.php:307
+#: wp-admin/network/settings.php:316
 msgid "If you want to ban domains from site registrations. One domain per line."
 msgstr "Se desideri impedire a specifici domini email la registrazione ai siti. Inserisci un dominio per riga."
 
-#: wp-admin/network/settings.php:287
+#: wp-admin/network/settings.php:296
 msgid "If you want to limit site registrations to certain domains. One domain per line."
 msgstr "Se desideri consentire solo a specifici domini email di registrarsi ai siti. Inserisci un dominio per riga."
 
-#: wp-admin/network/users.php:268
+#: wp-admin/network/users.php:266
 msgid "Users removed from spam."
 msgstr "Utenti rimossi dallo spam."
 
@@ -1252,11 +1244,11 @@ msgstr "Siti contrassegnati come spam."
 msgid "Sites removed from spam."
 msgstr "Siti rimossi dallo spam."
 
-#: wp-admin/network/users.php:271
+#: wp-admin/network/users.php:269
 msgid "Users deleted."
 msgstr "Utenti eliminati."
 
-#: wp-admin/network/users.php:265
+#: wp-admin/network/users.php:263
 msgid "Users marked as spam."
 msgstr "Utenti contrassegnati come spammer."
 
@@ -1292,32 +1284,32 @@ msgstr "Non hai i permessi per modificare il sito corrente."
 msgid "There was an error creating the user."
 msgstr "Si è verificato un errore nella creazione dell'utente."
 
-#: wp-admin/network/settings.php:418
+#: wp-admin/network/settings.php:427
 msgid "Upload file types"
 msgstr "Tipi di file che si possono caricare"
 
 #. translators: %s: Number of megabytes to limit uploads to.
-#: wp-admin/network/settings.php:403
+#: wp-admin/network/settings.php:412
 msgid "Limit total size of files uploaded to %s MB"
 msgstr "Limitare la dimensione totale dei file caricati a %s MB"
 
-#: wp-admin/network/settings.php:389
+#: wp-admin/network/settings.php:398
 msgid "The URL for the first comment on a new site."
 msgstr "L'URL del primo commento su di un nuovo sito."
 
-#: wp-admin/network/settings.php:371
+#: wp-admin/network/settings.php:380
 msgid "The author of the first comment on a new site."
 msgstr "L'autore del primo commento di un nuovo sito."
 
-#: wp-admin/network/settings.php:362
+#: wp-admin/network/settings.php:371
 msgid "The first comment on a new site."
 msgstr "Il primo commento di un nuovo sito."
 
-#: wp-admin/network/settings.php:352
+#: wp-admin/network/settings.php:361
 msgid "The first page on a new site."
 msgstr "La prima pagina di un nuovo sito."
 
-#: wp-admin/network/settings.php:342
+#: wp-admin/network/settings.php:351
 msgid "The first post on a new site."
 msgstr "Il primo articolo di un nuovo sito."
 
@@ -1325,39 +1317,39 @@ msgstr "Il primo articolo di un nuovo sito."
 msgid "All done!"
 msgstr "Operazione completata!"
 
-#: wp-admin/network/settings.php:212
+#: wp-admin/network/settings.php:221
 msgid "Both sites and user accounts can be registered"
 msgstr "Possono venir registrati sia nuovi account utente che nuovi siti."
 
-#: wp-admin/network/settings.php:211
+#: wp-admin/network/settings.php:220
 msgid "Logged in users may register new sites"
 msgstr "Gli utenti già autenticati possono registrare nuovi siti."
 
-#: wp-admin/network/settings.php:210
+#: wp-admin/network/settings.php:219
 msgid "User accounts may be registered"
 msgstr "Possono essere creati nuovi account utente."
 
-#: wp-admin/network/settings.php:209
+#: wp-admin/network/settings.php:218
 msgid "Registration is disabled"
 msgstr "La registrazione è disabilitata"
 
-#: wp-admin/network/settings.php:505
+#: wp-admin/network/settings.php:514
 msgid "Enable administration menus"
 msgstr "Abilita i menu di amministrazione"
 
-#: wp-admin/network/settings.php:394
+#: wp-admin/network/settings.php:403
 msgid "Upload Settings"
 msgstr "Impostazioni caricamento file"
 
-#: wp-admin/network/settings.php:313
+#: wp-admin/network/settings.php:322
 msgid "New Site Settings"
 msgstr "Impostazioni nuovo sito"
 
-#: wp-admin/network/settings.php:191
+#: wp-admin/network/settings.php:200
 msgid "Registration Settings"
 msgstr "Impostazioni di registrazione"
 
-#: wp-admin/network/settings.php:151
+#: wp-admin/network/settings.php:156
 msgid "Operational Settings"
 msgstr "Impostazioni operative"
 
@@ -1373,99 +1365,99 @@ msgstr "Indirizzo blog mancante o non corretto."
 msgid "Next Sites"
 msgstr "Siti successivi"
 
-#: wp-admin/network/settings.php:397
+#: wp-admin/network/settings.php:406
 msgid "Site upload space"
 msgstr "Spazio di upload del sito"
 
-#: wp-admin/network/settings.php:322
+#: wp-admin/network/settings.php:331
 msgid "The welcome email sent to new site owners."
 msgstr "L'email di benvenuto che viene inviata ai proprietari dei nuovi siti."
 
-#: wp-admin/network/settings.php:262
+#: wp-admin/network/settings.php:271
 msgid "Users are not allowed to register these sites. Separate names by spaces."
 msgstr "Agli utenti non è consentito registrare questi siti. Separa i nomi con degli spazi."
 
-#: wp-admin/network/settings.php:237
+#: wp-admin/network/settings.php:246
 msgid "Send the network admin an email notification every time someone registers a site or user account"
 msgstr "Inviare all&#8217;amministratore del network una email di notifica ogni volta che qualcuno registra un sito o un account utente."
 
-#: wp-admin/includes/network.php:365 wp-admin/network/settings.php:161
+#: wp-admin/includes/network.php:402 wp-admin/network/settings.php:166
 msgid "Network Admin Email"
 msgstr "Email amministratore network"
 
-#: wp-admin/network/site-new.php:281
+#: wp-admin/network/site-new.php:287
 msgid "A new user will be created if the above email address is not in the database."
 msgstr "Verrà creato un nuovo utente se l&#8217;indirizzo email precedente non è presente nel database."
 
-#: wp-admin/network/site-new.php:273
+#: wp-admin/network/site-new.php:279
 msgid "Admin Email"
 msgstr "Email amministratore"
 
-#: wp-admin/network/site-new.php:293
+#: wp-admin/network/site-new.php:299
 msgid "Add Site"
 msgstr "Aggiungi sito"
 
-#: wp-admin/network/settings.php:455
+#: wp-admin/network/settings.php:464
 msgid "Default Language"
 msgstr "Lingua predefinita"
 
-#: wp-admin/network/settings.php:428
+#: wp-admin/network/settings.php:437
 msgid "Max upload file size"
 msgstr "Dimensione massima dei file"
 
-#: wp-admin/network/settings.php:385
+#: wp-admin/network/settings.php:394
 msgid "First Comment URL"
 msgstr "L'URL del primo commento"
 
-#: wp-admin/network/settings.php:367
+#: wp-admin/network/settings.php:376
 msgid "First Comment Author"
 msgstr "L'autore del primo commento"
 
-#: wp-admin/network/settings.php:357
+#: wp-admin/network/settings.php:366
 msgid "First Comment"
 msgstr "Primo commento"
 
-#: wp-admin/network/settings.php:347
+#: wp-admin/network/settings.php:356
 msgid "First Page"
 msgstr "Prima pagina"
 
-#: wp-admin/network/settings.php:332
+#: wp-admin/network/settings.php:341
 msgid "The welcome email sent to new users."
 msgstr "L'email di benvenuto che viene inviata ai nuovi utenti."
 
-#: wp-admin/network/settings.php:327
+#: wp-admin/network/settings.php:336
 msgid "Welcome User Email"
 msgstr "L'email di benvenuto agli utenti"
 
-#: wp-admin/network/settings.php:317
+#: wp-admin/network/settings.php:326
 msgid "Welcome Email"
 msgstr "Email di benvenuto"
 
-#: wp-admin/network/settings.php:293
+#: wp-admin/network/settings.php:302
 msgid "Banned Email Domains"
 msgstr "Domini email bannati"
 
-#: wp-admin/network/settings.php:268
+#: wp-admin/network/settings.php:277
 msgid "Limited Email Registrations"
 msgstr "Registrazioni limitate per email"
 
-#: wp-admin/network/settings.php:249
+#: wp-admin/network/settings.php:258
 msgid "Banned Names"
 msgstr "Nomi bannati"
 
-#: wp-admin/network/settings.php:242
+#: wp-admin/network/settings.php:251
 msgid "Add New Users"
 msgstr "Aggiungi nuovi utenti"
 
-#: wp-admin/network/settings.php:230
+#: wp-admin/network/settings.php:239
 msgid "Registration notification"
 msgstr "Notifica registrazione"
 
-#: wp-admin/network/settings.php:194
+#: wp-admin/network/settings.php:203
 msgid "Allow new registrations"
 msgstr "Consenti nuove registrazioni"
 
-#: wp-admin/network/site-users.php:269
+#: wp-admin/network/site-users.php:276
 msgid "Duplicated username or email address."
 msgstr "Nomi utente o indirizzi email duplicati."
 

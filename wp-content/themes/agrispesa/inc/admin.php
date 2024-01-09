@@ -3598,9 +3598,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $fromDate = new Carbon\Carbon($startDate);
 
             $fromDate =
-                $fromDate->dayOfWeek == Carbon\Carbon::THURSDAY
+                $fromDate->dayOfWeek == Carbon\Carbon::WEDNESDAY
                     ? $fromDate
-                    : $fromDate->copy()->modify("next Thursday");
+                    : $fromDate->copy()->modify("next Wednesday");
 
             $toDate = new Carbon\Carbon($endDate);
             $dates = [];
@@ -3612,8 +3612,12 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 "disable_weeks_" . $startDate->format("Y"),
                 true
             );
+
+
             if (is_array($disabledWeeks)) {
+
                 for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
+
                     if (in_array($date->format("W"), $disabledWeeks)) {
                         $timestamp =
                             mktime(0, 0, 0, 1, 1, date("Y")) +
@@ -3628,6 +3632,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                             $monday->format("m"),
                             $monday->format("d")
                         );
+
+						$monday->sub(new \DateInterval('P1W'));
 
                         $sunday = clone $monday;
                         $sunday->modify("next sunday");
