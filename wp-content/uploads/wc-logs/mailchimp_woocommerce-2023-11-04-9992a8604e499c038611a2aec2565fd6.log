@@ -1,3 +1,0 @@
-2023-11-04T17:01:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 4f7818f30719e6a65194284a0c58050e
-2023-11-04T17:02:41+00:00 ERROR abandoned_cart.error :: email: asdasd@asdasd.com :: attempting product update :: asdasd@asdasd.com is an invalid email address and cannot be imported.
-2023-11-04T17:02:42+00:00 ERROR abandoned_cart.error :: Error Code 400 :: asdasd@asdasd.com is an invalid email address and cannot be imported. on 2462 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php

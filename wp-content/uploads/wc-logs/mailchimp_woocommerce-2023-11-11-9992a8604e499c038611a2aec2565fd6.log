@@ -1,6 +1,0 @@
-2023-11-11T19:05:45+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id 4f7818f30719e6a65194284a0c58050e
-2023-11-11T19:06:13+00:00 ERROR abandoned_cart.error :: email: asdasd@asdasd.com :: attempting product update :: asdasd@asdasd.com is an invalid email address and cannot be imported.
-2023-11-11T19:06:14+00:00 ERROR abandoned_cart.error :: Error Code 400 :: asdasd@asdasd.com is an invalid email address and cannot be imported. on 2462 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php
-2023-11-11T19:06:31+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id b87c9fb0b3228bcd5d70482d20d25467
-2023-11-11T19:08:13+00:00 NOTICE abandoned_cart.success :: email: chras@qewewe.com :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=b87c9fb0b3228bcd5d70482d20d25467
-2023-11-11T19:08:13+00:00 NOTICE cart.member.updated :: Updated chras@qewewe.com subscriber status to transactional and language to it
