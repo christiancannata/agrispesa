@@ -3306,8 +3306,14 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
 
+		if(strstr($request["cap"]) < 5){
+
+            $response = new WP_REST_Response(["is_valid" => true]);
+            $response->set_status(200);
+		}
 
 		$cart = $_POST;
+
 
 		$petfoodId = 1079;
 
