@@ -13,30 +13,37 @@ jQuery(document).ready(function () {
   jQuery("#shipping_postcode").attr('maxlength', 5)
   jQuery("#billing_postcode").attr('minlength', 5)
 
-  jQuery(document).on('change', "#shipping_city", function () {
+
+
+  function checkCap(cart){
+
     let cap = parseInt(jQuery("#shipping_postcode").val())
+
+    jQuery.ajax({
+      type: 'POST',
+      url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
+      data: cart,
+      success: function (response) {
+        if (!response.is_valid) {
+          jQuery("#shipping_postcode").val('')
+          jQuery("#shipping_postcode2").val('')
+
+          alert("CAP non attivo.")
+        }
+        jQuery('body').trigger('update_checkout');
+      }
+    });
+  }
+
+
+  jQuery(document).on('change', "#shipping_city", function () {
 
     let data = {
       action: 'get_cart_items'
     };
 
     jQuery.post('/wp-admin/admin-ajax.php', data, function (response) {
-
-
-      jQuery.ajax({
-        type: 'POST',
-        url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
-        data: response.data.cart_contents,
-        success: function (response) {
-          if (!response.is_valid) {
-            jQuery("#shipping_postcode").val('')
-            jQuery("#shipping_postcode2").val('')
-
-            alert("CAP non attivo.")
-          }
-          jQuery('body').trigger('update_checkout');
-        }
-      });
+      checkCap(response.data.cart_contents)
     }).fail(function (response) {
       console.log('Fail');
     });
@@ -51,21 +58,8 @@ jQuery(document).ready(function () {
 
     jQuery.post('/wp-admin/admin-ajax.php', data, function (response) {
 
+      checkCap(response.data.cart_contents)
 
-      jQuery.ajax({
-        type: 'POST',
-        url: '/wp-json/agrispesa/v1/cap?cap=' + cap,
-        data: response.data.cart_contents,
-        success: function (response) {
-          if (!response.is_valid) {
-            jQuery("#shipping_postcode").val('')
-            jQuery("#shipping_postcode2").val('')
-
-            alert("CAP non attivo.")
-          }
-          jQuery('body').trigger('update_checkout');
-        }
-      });
     }).fail(function (response) {
       console.log('Fail');
     });
