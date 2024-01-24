@@ -1531,7 +1531,7 @@ function hide_shipping_weight_based($rates, $package)
 			return $cap->code;
 		}, $postcodes);
 
-		if (!empty($_POST['s_postcode'])) {
+		if (isset($_POST['s_postcode']) && !empty($_POST['s_postcode'])) {
 
 			if (in_array($_POST['s_postcode'], $enabledPostcode)) {
 
