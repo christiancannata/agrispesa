@@ -1447,7 +1447,7 @@ add_filter('woocommerce_package_rates', 'hide_shipping_weight_based', 10, 2);
 function hide_shipping_weight_based($rates, $package)
 {
 
-	if (!$_POST['s_postcode'] || empty($_POST['s_postcode'])) {
+	if (!isset($_POST['s_postcode']) || !$_POST['s_postcode'] || empty($_POST['s_postcode'])) {
 		return $rates;
 	}
 
