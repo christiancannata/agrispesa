@@ -140,8 +140,12 @@ do_action('woocommerce_before_cart'); ?>
 															$tipologia = get_term_by('name', $_product->get_attribute('pa_tipologia'), 'pa_tipologia');
 
 															echo '<div class="new-cart--variations">';
-															echo '<span class="cart-product-var-var">' . $dimensione->name . '</span>';
-															echo '<span class="cart-product-var-var last">' . $tipologia->name . '</span>';
+															if($dimensione){
+																echo '<span class="cart-product-var-var">' . $dimensione->name . '</span>';
+															}
+															if($tipologia){
+																echo '<span class="cart-product-var-var last">' . $tipologia->name . '</span>';
+															}
 															echo '</div>';
 														} else {
 															// unità di misura personalizzata
