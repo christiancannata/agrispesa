@@ -1544,7 +1544,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $wpdb->query("DELETE pm
 	FROM wp_postmeta pm
 	LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
-	WHERE wp.ID IS NULL");
+	WHERE wp.ID IS NULL;");
 
             foreach ($boxes as $idBox => $boxProducts) {
                 $boxName =
@@ -1552,7 +1552,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
                 // DELETE BOX FOR THE CURRENT WEEK
                 $wpdb->query(
-                    'DELETE from wp_posts WHERE post_title = "' . $boxName . '"'
+                    'DELETE from wp_posts WHERE post_title = "' . $boxName . '";'
                 );
 
                 $navisionId = explode("-", $idBox);
@@ -2166,6 +2166,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $newInvoices = [];
             foreach ($invoices as $key => $invoice) {
                 $invoice = (array) $invoice;
+
+				if(!isset($invoice['documentno'])){
+					continue;
+				}
 
                 $alreadyExists = get_posts([
                     "post_type" => "invoice",
