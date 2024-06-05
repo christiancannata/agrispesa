@@ -935,11 +935,19 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     implode(",", $productsToInclude) .
                     ");"
             );*/
+
+            $productsToInclude = array_filter($productsToInclude,function($id){
+				return !empty($id);
+            });
             $wpdb->query(
                 "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
                     implode(",", $productsToInclude) .
                     ");"
             );
+
+			    $productsToExclude = array_filter($productsToExclude,function($id){
+				return !empty($id);
+            });
 
             if (!empty($productsToExclude)) {
                 /*  $wpdb->query(
@@ -947,6 +955,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         implode(",", $productsToExclude) .
                         ");"
                 );*/
+
+
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
                 );
@@ -1331,6 +1341,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 (new DateTime())->format("Y-m-d H:i:s")
             );
 
+				    $productsToExclude = array_filter($productsToExclude,function($id){
+				return !empty($id);
+            });
+
             if (!empty($productsToExclude)) {
                 /* $wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
@@ -1704,6 +1718,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             }
 
             // ENABLE PRODUCTS
+            	    $scegliTuProducts = array_filter($scegliTuProducts,function($id){
+				return !empty($id);
+            });
+
             if (!empty($scegliTuProducts)) {
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $scegliTuProducts) .");"
@@ -1724,12 +1742,13 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 (new DateTime())->format("Y-m-d H:i:s")
             );
 
+			            	    $productsToExclude = array_filter($productsToExclude,function($id){
+				return !empty($id);
+            });
+
+
             if (!empty($productsToExclude)) {
-                /*  $wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
-                );*/
+
                 $wpdb->query(
                     "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
                 );
