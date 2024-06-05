@@ -2167,7 +2167,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             foreach ($invoices as $key => $invoice) {
                 $invoice = (array) $invoice;
 
-				if(!isset($invoice['documentno'])){
+				if(!isset($invoice['documentno']) || !isset( $invoice["id_codeclient"])){
 					continue;
 				}
 
