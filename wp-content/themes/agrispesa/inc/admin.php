@@ -948,9 +948,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         ");"
                 );*/
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
                 );
             }
 
@@ -1340,9 +1338,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         ");"
                 );*/
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $productsToExclude) .");"
                 );
             }
 
@@ -1473,9 +1469,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         ");"
                 );*/
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
                 );
             }
 
@@ -1518,9 +1512,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             if (!empty($postIds)) {
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $postIds) .
-                        ")"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) .");"
                 );
                 /*$wpdb->query(
                     "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
@@ -1714,9 +1706,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             // ENABLE PRODUCTS
             if (!empty($scegliTuProducts)) {
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $scegliTuProducts) .
-                        ");"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $scegliTuProducts) .");"
                 );
             }
 
@@ -1741,9 +1731,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         ");"
                 );*/
                 $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
+                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
                 );
             }
 
