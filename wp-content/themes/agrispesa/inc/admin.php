@@ -1042,6 +1042,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 return $price > 0;
             });
 
+
             foreach ($activeProducts as $key => $product) {
                 $product = (array) $product;
 
