@@ -2536,11 +2536,15 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
 
+			$enabledWeeksList = array_map(function($weekTmp){
+				 $weekTmp+=1;
+				 return $weekTmp;
+			},$enabledWeeksList);
+
             $doc = new DOMDocument();
             $doc->formatOutput = true;
             $root = $doc->createElement("ROOT");
             $root = $doc->appendChild($root);
-
 
             if (!in_array($week, $enabledWeeksList)) {
                 header("Content-type: text/xml");
