@@ -14,6 +14,8 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Admin\MetaBox\MetaBoxInitializer
 use Automattic\WooCommerce\GoogleListingsAndAds\Admin\MetaBox\MetaBoxInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Admin\Product\Attributes\AttributesTab;
 use Automattic\WooCommerce\GoogleListingsAndAds\Admin\Product\Attributes\VariationsAttributes;
+use Automattic\WooCommerce\GoogleListingsAndAds\Admin\Product\ChannelVisibilityBlock;
+use Automattic\WooCommerce\GoogleListingsAndAds\Admin\ProductBlocksService;
 use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AccountService as AdsAccountService;
 use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AdsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AdsService;
@@ -109,6 +111,7 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Shipping\ShippingZone;
 use Automattic\WooCommerce\GoogleListingsAndAds\Shipping\ZoneLocationsParser;
 use Automattic\WooCommerce\GoogleListingsAndAds\TaskList\CompleteSetupTask;
 use Automattic\WooCommerce\GoogleListingsAndAds\Tracking\Events\ActivatedEvents;
+use Automattic\WooCommerce\GoogleListingsAndAds\Tracking\Events\GenericEvents;
 use Automattic\WooCommerce\GoogleListingsAndAds\Tracking\Events\SiteClaimEvents;
 use Automattic\WooCommerce\GoogleListingsAndAds\Tracking\Events\SiteVerificationEvents;
 use Automattic\WooCommerce\GoogleListingsAndAds\Tracking\EventTracking;
@@ -231,14 +234,14 @@ class CoreServiceProvider extends AbstractServiceProvider {
 		// Set up Options, and inflect classes that need options.
 		$this->share_concrete( OptionsInterface::class, Options::class );
 		$this->getLeagueContainer()
-			 ->inflector( OptionsAwareInterface::class )
-			 ->invokeMethod( 'set_options_object', [ OptionsInterface::class ] );
+			->inflector( OptionsAwareInterface::class )
+			->invokeMethod( 'set_options_object', [ OptionsInterface::class ] );
 
 		// Share helper classes, and inflect classes that need it.
 		$this->share_with_tags( GoogleHelper::class, WC::class );
 		$this->getLeagueContainer()
-			 ->inflector( GoogleHelperAwareInterface::class )
-			 ->invokeMethod( 'set_google_helper_object', [ GoogleHelper::class ] );
+			->inflector( GoogleHelperAwareInterface::class )
+			->invokeMethod( 'set_google_helper_object', [ GoogleHelper::class ] );
 
 		// Set up the TargetAudience service.
 		$this->share_with_tags( TargetAudience::class, WC::class, OptionsInterface::class, GoogleHelper::class );
@@ -246,15 +249,15 @@ class CoreServiceProvider extends AbstractServiceProvider {
 		// Set up MerchantCenter service, and inflect classes that need it.
 		$this->share_with_tags( MerchantCenterService::class );
 		$this->getLeagueContainer()
-			 ->inflector( MerchantCenterAwareInterface::class )
-			 ->invokeMethod( 'set_merchant_center_object', [ MerchantCenterService::class ] );
+			->inflector( MerchantCenterAwareInterface::class )
+			->invokeMethod( 'set_merchant_center_object', [ MerchantCenterService::class ] );
 
 		// Set up Ads service, and inflect classes that need it.
 		$this->share_with_tags( AdsAccountState::class );
 		$this->share_with_tags( AdsService::class, AdsAccountState::class );
 		$this->getLeagueContainer()
-			 ->inflector( AdsAwareInterface::class )
-			 ->invokeMethod( 'set_ads_object', [ AdsService::class ] );
+			->inflector( AdsAwareInterface::class )
+			->invokeMethod( 'set_ads_object', [ AdsService::class ] );
 		$this->share_with_tags( AssetSuggestionsService::class, WP::class, WC::class, ImageUtility::class, wpdb::class, AdsAssetGroupAsset::class );
 
 		// Set up the installer.
@@ -293,7 +296,7 @@ class CoreServiceProvider extends AbstractServiceProvider {
 		$this->conditionally_share_with_tags( ProductFeed::class );
 		$this->conditionally_share_with_tags( AttributeMapping::class );
 		$this->conditionally_share_with_tags( Settings::class );
-		$this->conditionally_share_with_tags( TrackerSnapshot::class );
+		$this->share_with_tags( TrackerSnapshot::class );
 		$this->conditionally_share_with_tags( EventTracking::class, ContainerInterface::class );
 		$this->conditionally_share_with_tags( RESTControllers::class, ContainerInterface::class );
 		$this->conditionally_share_with_tags( ConnectionTest::class, ContainerInterface::class );
@@ -320,6 +323,10 @@ class CoreServiceProvider extends AbstractServiceProvider {
 		$this->conditionally_share_with_tags( AttributeManager::class );
 		$this->conditionally_share_with_tags( AttributesTab::class, Admin::class, AttributeManager::class, MerchantCenterService::class );
 		$this->conditionally_share_with_tags( VariationsAttributes::class, Admin::class, AttributeManager::class, MerchantCenterService::class );
+
+		// Product Block Editor
+		$this->share_with_tags( ChannelVisibilityBlock::class, ProductHelper::class, MerchantCenterService::class );
+		$this->conditionally_share_with_tags( ProductBlocksService::class, AssetsHandlerInterface::class, ChannelVisibilityBlock::class, AttributeManager::class, MerchantCenterService::class );
 
 		$this->share_with_tags( MerchantAccountState::class );
 		$this->share_with_tags( MerchantStatuses::class );
@@ -370,8 +377,8 @@ class CoreServiceProvider extends AbstractServiceProvider {
 
 		// Set up inflector for tracks classes.
 		$this->getLeagueContainer()
-			 ->inflector( TracksAwareInterface::class )
-			 ->invokeMethod( 'set_tracks', [ TracksInterface::class ] );
+			->inflector( TracksAwareInterface::class )
+			->invokeMethod( 'set_tracks', [ TracksInterface::class ] );
 
 		// Share admin meta boxes
 		$this->conditionally_share_with_tags( ChannelVisibilityMetaBox::class, Admin::class, ProductMetaHandler::class, ProductHelper::class, MerchantCenterService::class );
@@ -386,8 +393,9 @@ class CoreServiceProvider extends AbstractServiceProvider {
 
 		// Share other classes.
 		$this->share_with_tags( ActivatedEvents::class, $_SERVER );
-		$this->share_with_tags( SiteVerificationEvents::class );
+		$this->share_with_tags( GenericEvents::class );
 		$this->share_with_tags( SiteClaimEvents::class );
+		$this->share_with_tags( SiteVerificationEvents::class );
 
 		$this->conditionally_share_with_tags( InstallTimestamp::class );
 		$this->conditionally_share_with_tags( ClearProductStatsCache::class, MerchantStatuses::class );

@@ -72,7 +72,7 @@ class Shop
      */
     private function prepare_shop_from_shop_url($shop_url)
     {
-        $parsed_url = \parse_url($shop_url);
-        return \str_replace('www.', '', $parsed_url['host']);
+        $host = \parse_url($shop_url, \PHP_URL_HOST);
+        return \str_replace('www.', '', $host ?? '');
     }
 }

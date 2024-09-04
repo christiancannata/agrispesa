@@ -1,17 +1,17 @@
-# Copyright (C) 2022 CookieYes
+# Copyright (C) 2024 CookieYes
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: CookieYes | GDPR Cookie Consent 3.0.0\n"
+"Project-Id-Version: CookieYes | GDPR Cookie Consent 3.1.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cookie-law-info\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-23T14:49:48+00:00\n"
+"POT-Creation-Date: 2024-01-03T12:41:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: cookie-law-info\n"
 
 #. Plugin Name of the plugin
@@ -28,31 +28,31 @@ msgid "A simple way to show your website complies with the EU Cookie Law / GDPR.
 msgstr ""
 
 #. Author of the plugin
-#: lite/admin/class-admin.php:349
-#: lite/admin/class-admin.php:350
+#: lite/admin/class-admin.php:381
+#: lite/admin/class-admin.php:382
 msgid "CookieYes"
 msgstr ""
 
-#: cookie-law-info.php:88
+#: cookie-law-info.php:98
 msgid "Please make sure the cache is cleared after each plugin update especially if you have minified JS and/or CSS files."
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:181
-#: legacy/admin/class-cookie-law-info-admin.php:182
-#: legacy/admin/class-cookie-law-info-admin.php:257
+#: legacy/admin/class-cookie-law-info-admin.php:188
+#: legacy/admin/class-cookie-law-info-admin.php:189
+#: legacy/admin/class-cookie-law-info-admin.php:264
 #: legacy/admin/partials/cookie-law-info-admin_settings.php:31
-#: lite/admin/class-admin.php:585
+#: lite/admin/class-admin.php:561
 msgid "Settings"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:189
-#: legacy/admin/class-cookie-law-info-admin.php:190
+#: legacy/admin/class-cookie-law-info-admin.php:196
+#: legacy/admin/class-cookie-law-info-admin.php:197
 #: legacy/admin/partials/cookie-law-info-privacy_overview.php:25
 msgid "Privacy Overview"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:232
-#: legacy/admin/class-cookie-law-info-admin.php:269
+#: legacy/admin/class-cookie-law-info-admin.php:239
+#: legacy/admin/class-cookie-law-info-admin.php:276
 #: legacy/admin/modules/cli-policy-generator/classes/class-policy-generator-ajax.php:19
 #: legacy/admin/modules/cookie-scaner/classes/class-cookie-law-info-cookie-scanner-ajax.php:24
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:289
@@ -67,91 +67,91 @@ msgstr ""
 msgid "You do not have sufficient permission to perform this operation"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:251
-#: legacy/admin/class-cookie-law-info-admin.php:291
+#: legacy/admin/class-cookie-law-info-admin.php:258
+#: legacy/admin/class-cookie-law-info-admin.php:298
 #: legacy/admin/modules/cookies/cookies.php:779
 msgid "Settings Updated."
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:258
-#: lite/admin/class-admin.php:584
-#: lite/admin/dist/js/app.js:1279
+#: legacy/admin/class-cookie-law-info-admin.php:265
+#: lite/admin/class-admin.php:560
+#: lite/admin/dist/js/app.js:1351
 msgid "Support"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:259
+#: legacy/admin/class-cookie-law-info-admin.php:266
 msgid "Premium Upgrade"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:367
+#: legacy/admin/class-cookie-law-info-admin.php:374
 msgid "Close consent bar"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:371
+#: legacy/admin/class-cookie-law-info-admin.php:378
 msgid "Redirect to URL on click"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:385
+#: legacy/admin/class-cookie-law-info-admin.php:392
 msgid "Extra Large"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:389
+#: legacy/admin/class-cookie-law-info-admin.php:396
 msgid "Large"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:393
+#: legacy/admin/class-cookie-law-info-admin.php:400
 msgid "Medium"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:397
+#: legacy/admin/class-cookie-law-info-admin.php:404
 msgid "Small"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:411
+#: legacy/admin/class-cookie-law-info-admin.php:418
 msgid "Default theme font"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:415
+#: legacy/admin/class-cookie-law-info-admin.php:422
 msgid "Sans Serif"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:419
+#: legacy/admin/class-cookie-law-info-admin.php:426
 msgid "Serif"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:423
+#: legacy/admin/class-cookie-law-info-admin.php:430
 msgid "Arial"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:427
+#: legacy/admin/class-cookie-law-info-admin.php:434
 msgid "Arial Black"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:431
+#: legacy/admin/class-cookie-law-info-admin.php:438
 msgid "Georgia, serif"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:435
+#: legacy/admin/class-cookie-law-info-admin.php:442
 msgid "Helvetica"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:439
+#: legacy/admin/class-cookie-law-info-admin.php:446
 msgid "Lucida"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:443
+#: legacy/admin/class-cookie-law-info-admin.php:450
 msgid "Tahoma"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:447
+#: legacy/admin/class-cookie-law-info-admin.php:454
 msgid "Times New Roman"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:451
+#: legacy/admin/class-cookie-law-info-admin.php:458
 msgid "Trebuchet"
 msgstr ""
 
-#: legacy/admin/class-cookie-law-info-admin.php:455
+#: legacy/admin/class-cookie-law-info-admin.php:462
 msgid "Verdana"
 msgstr ""
 
@@ -226,7 +226,7 @@ msgstr ""
 
 #: legacy/admin/modules/cli-policy-generator/classes/class-policy-generator-ajax.php:95
 #: legacy/admin/modules/cli-policy-generator/classes/class-policy-generator-ajax.php:132
-#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:120
+#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:122
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:312
 msgid "Error"
 msgstr ""
@@ -239,13 +239,13 @@ msgstr ""
 msgid "Auto reload preview"
 msgstr ""
 
-#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:95
-#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:96
+#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:97
+#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:98
 #: legacy/admin/modules/cli-policy-generator/views/policy-generator.php:21
 msgid "Policy generator"
 msgstr ""
 
-#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:121
+#: legacy/admin/modules/cli-policy-generator/cli-policy-generator.php:123
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:332
 msgid "Success"
 msgstr ""
@@ -259,7 +259,7 @@ msgid "Sample content"
 msgstr ""
 
 #: legacy/admin/modules/cli-policy-generator/views/policy-generator.php:27
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Delete"
 msgstr ""
 
@@ -277,7 +277,7 @@ msgstr ""
 #: legacy/admin/modules/cookies/views/necessary-settings.php:41
 #: legacy/admin/modules/cookies/views/non-necessary-settings.php:55
 #: legacy/public/modules/script-blocker/views/settings.php:165
-#: legacy/public/modules/shortcode/shortcode.php:248
+#: legacy/public/modules/shortcode/shortcode.php:239
 #: lite/admin/dist/js/3.js:167
 #: lite/admin/dist/js/3.js:179
 msgid "Description"
@@ -362,7 +362,7 @@ msgstr ""
 
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:63
 #: lite/admin/dist/js/3.js:83
-#: lite/admin/dist/js/5.js:58
+#: lite/admin/dist/js/4.js:58
 msgid "Failed"
 msgstr ""
 
@@ -396,7 +396,7 @@ msgid "Stop"
 msgstr ""
 
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:314
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1210
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1226
 msgid "Scan again"
 msgstr ""
 
@@ -510,7 +510,7 @@ msgid "Clicking “Connect & scan” will let you connect with a free <a href=\"
 msgstr ""
 
 #: legacy/admin/modules/cookie-scaner/cookie-scaner.php:459
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1215
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1231
 msgid "Connect & scan"
 msgstr ""
 
@@ -588,31 +588,31 @@ msgstr ""
 msgid "Invalid scan token"
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1164
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1180
 msgid "Why scan your website for cookies?"
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1165
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1181
 msgid "Your website needs to obtain prior consent from your users before setting any cookies other than those required for the proper functioning of your website. Therefore, you need to identify and keep track of all the cookies used on your website."
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1166
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1182
 msgid "Our cookie scanning solution lets you:"
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1168
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1184
 msgid "Discover the first-party and third-party cookies that are being used on your website ( Limited upto 100 pages )."
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1169
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1185
 msgid "Identify what personal data they collect and what are the other purposes they serve."
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1170
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1186
 msgid "Determine whether you need to comply with the data protection laws governing cookies. Eg:- EU’s GDPR, ePrivacy Directive (EU Cookie Law), California’s CCPA, etc."
 msgstr ""
 
-#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1201
+#: legacy/admin/modules/cookie-scaner/cookie-scaner.php:1217
 #: lite/admin/dist/js/3.js:191
 msgid "Scan website for cookies"
 msgstr ""
@@ -640,7 +640,7 @@ msgstr ""
 
 #: legacy/admin/modules/cookie-scaner/views/scan-results.php:71
 #: legacy/admin/modules/cookies/cookies.php:251
-#: legacy/public/modules/shortcode/shortcode.php:245
+#: legacy/public/modules/shortcode/shortcode.php:236
 #: lite/admin/dist/js/3.js:167
 #: lite/admin/dist/js/3.js:179
 msgid "Duration"
@@ -674,12 +674,12 @@ msgstr ""
 #: lite/admin/dist/js/3.js:95
 #: lite/admin/dist/js/3.js:179
 #: lite/admin/dist/js/3.js:191
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "Cookie List"
 msgstr ""
 
 #: legacy/admin/modules/cookies/cookies.php:121
-#: legacy/public/modules/shortcode/shortcode.php:239
+#: legacy/public/modules/shortcode/shortcode.php:230
 #: lite/admin/dist/js/3.js:167
 msgid "Cookie"
 msgstr ""
@@ -747,7 +747,7 @@ msgid "Cookie Sensitivity: ( necessary , non-necessary )"
 msgstr ""
 
 #: legacy/admin/modules/cookies/cookies.php:249
-#: legacy/public/modules/shortcode/shortcode.php:242
+#: legacy/public/modules/shortcode/shortcode.php:233
 msgid "Type"
 msgstr ""
 
@@ -799,6 +799,7 @@ msgstr ""
 #: legacy/admin/modules/cookies/cookies.php:628
 #: legacy/admin/modules/cookies/views/non-necessary-settings.php:41
 #: legacy/public/views/cookie-law-info_popup_content.php:7
+#: lite/admin/dist/js/2.js:167
 msgid "Disabled"
 msgstr ""
 
@@ -865,8 +866,9 @@ msgstr ""
 #: legacy/admin/modules/cookies/views/necessary-settings.php:35
 #: legacy/admin/modules/cookies/views/non-necessary-settings.php:49
 #: legacy/admin/partials/cookie-law-info-privacy_overview.php:33
-#: lite/admin/dist/js/app.js:1339
-#: lite/admin/dist/js/app.js:1363
+#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1447
+#: lite/admin/dist/js/app.js:1459
 msgid "Title"
 msgstr ""
 
@@ -952,11 +954,12 @@ msgid "Describe the challenges that you faced while using our Cookie Scanner.&#1
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:55
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:130
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:139
 msgid "The plugin is great, but I need specific feature that you don't support"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:57
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:143
 msgid "Could you tell us more about that feature?"
 msgstr ""
 
@@ -989,7 +992,7 @@ msgid "Name the language and the translator plugin that you are using"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:85
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:138
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:153
 msgid "I found a better plugin"
 msgstr ""
 
@@ -1002,14 +1005,14 @@ msgid "Upgrade to pro"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:95
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:150
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:177
 msgid "It’s a temporary deactivation"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:99
 #: legacy/admin/views/admin-settings-general.php:10
 #: legacy/admin/views/admin-settings-general.php:66
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:154
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:181
 msgid "Other"
 msgstr ""
 
@@ -1022,22 +1025,22 @@ msgid "If you have a moment, please let us know why you are deactivating:"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:149
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:195
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:253
 msgid "We do not collect any personal data when you submit this form. It's your feedback that we value."
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:150
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:196
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:254
 msgid "Privacy Policy"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:157
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:203
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:263
 msgid "Go to support"
 msgstr ""
 
 #: legacy/admin/modules/uninstall-feedback/uninstall-feedback.php:158
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:206
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:259
 msgid "Submit & Deactivate"
 msgstr ""
 
@@ -1116,11 +1119,11 @@ msgid "Delete settings and reset"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-advanced.php:15
-msgid "Are you sure you want to delete all your settings?"
+msgid "Are you sure you want to delete all your settings and switch to the new interface?"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-advanced.php:16
-msgid "Warning: Resets all your current settings to default."
+msgid "Warning: Resets all your current settings to default. This action will switch you to the new and improved user interface and this action is not reversible."
 msgstr ""
 
 #: legacy/admin/views/admin-settings-buttons.php:10
@@ -1162,8 +1165,8 @@ msgstr ""
 #: legacy/admin/views/admin-settings-buttons.php:190
 #: legacy/admin/views/admin-settings-buttons.php:246
 #: legacy/admin/views/admin-settings-buttons.php:374
-#: lite/admin/dist/js/app.js:1303
-#: lite/admin/dist/js/app.js:1315
+#: lite/admin/dist/js/app.js:1399
+#: lite/admin/dist/js/app.js:1411
 msgid "Text"
 msgstr ""
 
@@ -1221,7 +1224,7 @@ msgstr ""
 #: legacy/admin/views/admin-settings-buttons.php:279
 #: legacy/admin/views/admin-settings-buttons.php:286
 #: legacy/admin/views/admin-settings-buttons.php:412
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "URL"
 msgstr ""
 
@@ -1301,6 +1304,7 @@ msgid "CCPA Text"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-buttons.php:353
+#: lite/admin/dist/js/app.js:1447
 msgid "Checkbox"
 msgstr ""
 
@@ -1491,7 +1495,7 @@ msgid "Input text to have a heading for the cookie consent bar. Leave it blank i
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:25
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "Message"
 msgstr ""
 
@@ -1520,10 +1524,14 @@ msgid "Show cookie bar as"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:67
+#: lite/admin/dist/js/app.js:3816
+#: lite/admin/src/modules/banners/helpers/utils.js:228
 msgid "Banner"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:68
+#: lite/admin/dist/js/app.js:3816
+#: lite/admin/src/modules/banners/helpers/utils.js:234
 msgid "Popup"
 msgstr ""
 
@@ -1532,19 +1540,19 @@ msgid "Widget"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:73
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1471
 msgid "Position"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:77
 #: legacy/admin/views/admin-settings-messagebar.php:175
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1471
 msgid "Left"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-messagebar.php:78
 #: legacy/admin/views/admin-settings-messagebar.php:174
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1471
 msgid "Right"
 msgstr ""
 
@@ -1659,14 +1667,16 @@ msgid "Features"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-upgrade-pro.php:13
-#: lite/admin/modules/settings/includes/class-controller.php:262
+#: lite/admin/modules/settings/includes/class-controller.php:263
 msgid "Free"
 msgstr ""
 
 #: legacy/admin/views/admin-settings-upgrade-pro.php:14
-#: lite/admin/dist/js/2.js:203
-#: lite/admin/dist/js/2.js:227
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/1.js:227
+#: lite/admin/dist/js/1.js:251
+#: lite/admin/dist/js/1.js:335
+#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1447
 msgid "Premium"
 msgstr ""
 
@@ -2078,6 +2088,8 @@ msgid "Hey, we at %1$sWebToffee%2$s would like to thank you for using our plugin
 msgstr ""
 
 #: legacy/includes/class-cookie-law-info-review-request.php:53
+#: lite/admin/modules/review-feedback/class-review-feedback.php:84
+#: lite/admin/dist/js/app.js:1375
 msgid "Remind me later"
 msgstr ""
 
@@ -2086,7 +2098,37 @@ msgid "Not interested"
 msgstr ""
 
 #: legacy/includes/class-cookie-law-info-review-request.php:55
+#: lite/admin/modules/review-feedback/class-review-feedback.php:83
+#: lite/admin/dist/js/app.js:1375
 msgid "Review now"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:976
+msgid "Migrate to the new UI for an enhanced experience and advanced features"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:977
+msgid "By migrating to the new and improved user interface, you can:"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:979
+msgid "Display the new cookie consent banner (compliant with the WCAG guidelines) on your website"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:980
+msgid "Access new free features (set consent expiration period, enable/disable prior consent, show/hide categories on the banner, light/dark/custom color scheme, privacy policy generator, etc.)"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:981
+msgid "Use the live preview feature to customize your banner while you are looking at it."
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:982
+msgid "Get access to additional free features such as cookie scan, consent log, etc. by connecting to the CookieYes web app (Optional)"
+msgstr ""
+
+#: legacy/includes/class-cookie-law-info.php:985
+msgid "Start Migration"
 msgstr ""
 
 #: legacy/public/modules/script-blocker/script-blocker.php:203
@@ -2161,35 +2203,35 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:98
+#: legacy/public/modules/shortcode/shortcode.php:89
 msgid "Your current state:"
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:101
+#: legacy/public/modules/shortcode/shortcode.php:92
 msgid "Consent accepted."
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:103
+#: legacy/public/modules/shortcode/shortcode.php:94
 msgid "Consent rejected."
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:107
+#: legacy/public/modules/shortcode/shortcode.php:98
 msgid "No consent given."
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:109
+#: legacy/public/modules/shortcode/shortcode.php:100
 msgid "Manage your consent."
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:144
+#: legacy/public/modules/shortcode/shortcode.php:135
 msgid "Delete Cookies"
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:523
+#: legacy/public/modules/shortcode/shortcode.php:514
 msgid "Close the cookie bar"
 msgstr ""
 
-#: legacy/public/modules/shortcode/shortcode.php:523
+#: legacy/public/modules/shortcode/shortcode.php:514
 msgid "Close and Accept"
 msgstr ""
 
@@ -2217,23 +2259,6 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
-#: lite/admin/class-admin.php:359
-#: lite/admin/class-admin.php:360
-#: lite/admin/dist/js/app.js:667
-msgid "Dashboard"
-msgstr ""
-
-#: lite/admin/class-admin.php:369
-#: lite/admin/class-admin.php:370
-#: lite/admin/dist/js/app.js:667
-msgid "Site Settings"
-msgstr ""
-
-#: lite/admin/class-admin.php:377
-#: lite/admin/class-admin.php:378
-msgid "CookieYes Setup Wizard"
-msgstr ""
-
 #: lite/admin/modules/banners/api/class-api.php:103
 #: lite/admin/modules/banners/api/class-api.php:439
 #: lite/admin/modules/cookies/api/class-categories-api.php:94
@@ -2245,8 +2270,8 @@ msgstr ""
 #: lite/admin/modules/scanner/api/class-api.php:110
 #: lite/admin/modules/scanner/api/class-api.php:289
 #: lite/admin/modules/settings/api/class-api.php:118
-#: lite/admin/modules/settings/api/class-api.php:399
-#: lite/admin/modules/settings/api/class-api.php:405
+#: lite/admin/modules/settings/api/class-api.php:427
+#: lite/admin/modules/settings/api/class-api.php:433
 msgid "Unique identifier for the resource."
 msgstr ""
 
@@ -2274,7 +2299,7 @@ msgstr ""
 #: lite/admin/modules/banners/api/class-api.php:406
 #: lite/admin/modules/consentlogs/api/class-api.php:121
 #: lite/admin/modules/cookies/api/class-api-controller.php:253
-#: lite/admin/modules/settings/api/class-api.php:375
+#: lite/admin/modules/settings/api/class-api.php:403
 msgid "Limit results to those matching a string."
 msgstr ""
 
@@ -2314,20 +2339,20 @@ msgstr ""
 msgid "The date the banner was last modified, as GMT."
 msgstr ""
 
-#: lite/admin/modules/banners/class-banners.php:58
-#: lite/admin/dist/js/app.js:667
+#: lite/admin/modules/banners/class-banners.php:66
+#: lite/admin/dist/js/app.js:691
 msgid "Cookie Banner"
 msgstr ""
 
 #: lite/admin/modules/consentlogs/api/class-api.php:104
 #: lite/admin/modules/cookies/api/class-api-controller.php:236
-#: lite/admin/modules/settings/api/class-api.php:358
+#: lite/admin/modules/settings/api/class-api.php:386
 msgid "Current page of the collection."
 msgstr ""
 
 #: lite/admin/modules/consentlogs/api/class-api.php:112
 #: lite/admin/modules/cookies/api/class-api-controller.php:244
-#: lite/admin/modules/settings/api/class-api.php:366
+#: lite/admin/modules/settings/api/class-api.php:394
 msgid "Maximum number of items to be returned in result set."
 msgstr ""
 
@@ -2351,7 +2376,7 @@ msgstr ""
 msgid "Unique visitor ID"
 msgstr ""
 
-#: lite/admin/modules/consentlogs/class-consentlogs.php:54
+#: lite/admin/modules/consentlogs/class-consentlogs.php:61
 msgid "Consent Log"
 msgstr ""
 
@@ -2359,11 +2384,11 @@ msgstr ""
 #: lite/admin/modules/cookies/api/class-api-controller.php:43
 #: lite/admin/modules/cookies/api/class-api-controller.php:53
 #: lite/admin/modules/cookies/api/class-api-controller.php:64
-#: lite/includes/class-store.php:126
-#: lite/includes/class-store.php:137
-#: lite/includes/class-store.php:148
-#: lite/includes/class-store.php:159
-#: lite/includes/class-store.php:508
+#: lite/includes/class-store.php:134
+#: lite/includes/class-store.php:145
+#: lite/includes/class-store.php:156
+#: lite/includes/class-store.php:167
+#: lite/includes/class-store.php:516
 #: lite/integrations/cookieyes/includes/class-cloud.php:84
 #: lite/integrations/cookieyes/includes/class-cloud.php:97
 #: lite/integrations/cookieyes/includes/class-cloud.php:110
@@ -2465,9 +2490,8 @@ msgstr ""
 msgid "URL patterns for blocking purposes"
 msgstr ""
 
-#: lite/admin/modules/cookies/class-cookies.php:63
-#: lite/admin/modules/scanner/class-scanner.php:53
-#: lite/admin/dist/js/app.js:667
+#: lite/admin/modules/cookies/class-cookies.php:64
+#: lite/admin/dist/js/app.js:691
 msgid "Cookie Manager"
 msgstr ""
 
@@ -2485,14 +2509,18 @@ msgstr ""
 
 #: lite/admin/modules/languages/class-languages.php:53
 #: lite/admin/modules/languages/class-languages.php:60
-#: lite/admin/dist/js/5.js:106
-#: lite/admin/dist/js/app.js:667
+#: lite/admin/dist/js/4.js:106
+#: lite/admin/dist/js/app.js:691
 msgid "Languages"
 msgstr ""
 
 #: lite/admin/modules/policies/class-policies.php:40
-#: lite/admin/dist/js/app.js:667
+#: lite/admin/dist/js/app.js:691
 msgid "Policy Generators"
+msgstr ""
+
+#: lite/admin/modules/review-feedback/class-review-feedback.php:79
+msgid "Hey, we at %1$s CookieYes %2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going."
 msgstr ""
 
 #: lite/admin/modules/scanner/api/class-api.php:236
@@ -2509,77 +2537,73 @@ msgstr ""
 msgid "Cookie count."
 msgstr ""
 
-#: lite/admin/modules/scanner/class-scanner.php:52
-msgid "Scan Details"
-msgstr ""
-
-#: lite/admin/modules/settings/api/class-api.php:191
+#: lite/admin/modules/settings/api/class-api.php:203
 msgid "GDPR (General Data Protection Regulation)"
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:192
+#: lite/admin/modules/settings/api/class-api.php:204
 msgid "Continue with the GDPR template if most of your targeted audience are from the EU or UK. It creates a customizable banner that allows your visitors to accept/reject cookies or adjust their consent preferences."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:193
+#: lite/admin/modules/settings/api/class-api.php:205
 msgid ""
 "Choose GDPR if most of your targeted audience are from the EU or UK.\n"
 "\t\t\t\t\tIt creates a customizable banner that allows your visitors to accept/reject cookies or adjust their consent preferences."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:201
+#: lite/admin/modules/settings/api/class-api.php:213
 msgid "CCPA (California Consumer Privacy Act)"
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:202
+#: lite/admin/modules/settings/api/class-api.php:214
 msgid "Choose CCPA if most of your targeted audience are from California or US. This will create a customizable banner with a “Do Not Sell My Personal Information” link that allows your visitors to refuse the use of cookies."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:203
+#: lite/admin/modules/settings/api/class-api.php:215
 msgid ""
 "Choose CCPA if most of your targeted audience are from California or US.\n"
 "\t\t\t\t\tIt creates a customizable banner with a “Do Not Sell My Personal Information” link that allows your visitors to refuse the use of cookies."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:211
+#: lite/admin/modules/settings/api/class-api.php:223
 msgid "INFO (Information Display Banner)"
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:212
+#: lite/admin/modules/settings/api/class-api.php:224
 msgid "Choose INFO if you do not want to block any cookies on your website. This will create a dismissible banner that provides some general information to your site visitors."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:213
+#: lite/admin/modules/settings/api/class-api.php:225
 msgid ""
 "Choose Info if you do not want to block any cookies on your website.\n"
 "\t\t\t\t\t\tIt creates a dismissible banner that provides some general info to your site visitors."
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:382
+#: lite/admin/modules/settings/api/class-api.php:410
 msgid "Force fetch data"
 msgstr ""
 
-#: lite/admin/modules/settings/api/class-api.php:410
-#: lite/admin/modules/settings/api/class-api.php:415
-#: lite/admin/modules/settings/api/class-api.php:420
-#: lite/admin/modules/settings/api/class-api.php:425
-#: lite/admin/modules/settings/api/class-api.php:430
+#: lite/admin/modules/settings/api/class-api.php:438
+#: lite/admin/modules/settings/api/class-api.php:443
+#: lite/admin/modules/settings/api/class-api.php:448
+#: lite/admin/modules/settings/api/class-api.php:453
+#: lite/admin/modules/settings/api/class-api.php:458
 msgid "Language."
 msgstr ""
 
-#: lite/admin/modules/settings/includes/class-controller.php:263
+#: lite/admin/modules/settings/includes/class-controller.php:264
 msgid "Free Plan"
 msgstr ""
 
-#: lite/admin/modules/settings/includes/class-controller.php:333
+#: lite/admin/modules/settings/includes/class-controller.php:335
 msgid "Invalid Website ID"
 msgstr ""
 
-#: lite/admin/modules/settings/includes/class-controller.php:396
+#: lite/admin/modules/settings/includes/class-controller.php:432
 msgid "Failed to fetch data from the API"
 msgstr ""
 
-#: lite/admin/modules/settings/includes/class-controller.php:425
+#: lite/admin/modules/settings/includes/class-controller.php:461
 msgid "Failed to the update the data to web app"
 msgstr ""
 
@@ -2592,32 +2616,49 @@ msgstr ""
 msgid "Setup is too difficult/ Lack of documentation"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:134
-msgid "The plugin is affecting website performance"
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:130
+msgid "Describe the challenges that you faced while using our plugin"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:142
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:149
+msgid "The plugin is affecting website speed"
+msgstr ""
+
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:157
+msgid "Please share which plugin"
+msgstr ""
+
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:163
 msgid "I have issues while connecting to the CookieYes web app"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:146
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:167
+msgid "Please describe the issues"
+msgstr ""
+
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:173
 msgid "I would like to use the CookieYes web app instead of the plugin"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:176
-msgid "We are sorry to see you go :("
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:185
+msgid "Please share the reason"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:180
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:209
+msgid "Quick Feedback"
+msgstr ""
+
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:213
 msgid "If you have a moment, please let us know why you are deactivating the CookieYes plugin."
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:192
-msgid "Feedback..."
+#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:266
+msgid "Skip & Deactivate"
 msgstr ""
 
-#: lite/admin/modules/uninstall-feedback/class-uninstall-feedback.php:207
-msgid "Skip & Deactivate"
+#. translators: %s: Migration notice expiry notice.
+#: lite/admin/modules/upgrade/class-upgrade.php:531
+msgid "Not satisfied with the New UI and related changes? You can switch back to the old UI at any time until %s."
 msgstr ""
 
 #: lite/includes/class-rest-controller.php:51
@@ -2641,7 +2682,7 @@ msgstr ""
 msgid "Ivalid method."
 msgstr ""
 
-#: uninstall.php:68
+#: uninstall.php:70
 msgid "Failed to delete CookieYes plugin data!"
 msgstr ""
 
@@ -2661,156 +2702,398 @@ msgstr ""
 msgid "Go to CookieYes Web App"
 msgstr ""
 
-#: lite/admin/dist/js/1.js:59
-msgid "Consent Ratio"
-msgstr ""
-
-#: lite/admin/dist/js/2.js:35
-msgid "Please enter a value between 0 and 730"
-msgstr ""
-
-#: lite/admin/dist/js/2.js:71
+#: lite/admin/dist/js/1.js:71
 msgid "Worldwide"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:71
+#: lite/admin/dist/js/1.js:71
 msgid "EU Countries & UK"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:71
+#: lite/admin/dist/js/1.js:71
 msgid "Select countries"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:71
-msgid "California"
-msgstr ""
-
-#: lite/admin/dist/js/2.js:71
+#: lite/admin/dist/js/1.js:71
 msgid "United States"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:71
-msgid "Geo-target GDPR Banner"
+#: lite/admin/dist/js/1.js:71
+msgid "Geo-target Banner"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:71
-msgid "Geo-target CCPA Banner"
+#: lite/admin/dist/js/1.js:107
+msgid "The <b>Push down</b> style is supported for the <b>Banner</b> layout only."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:155
+#: lite/admin/dist/js/1.js:155
+msgid "Customize the validity period of your users' consent preferences here. While the <b>GDPR</b> does not specify a specific time limit for consent durations, the French Data Protection Authority, <b>CNIL</b>, recommends retaining user choices for a period of six months (<b>180</b> days) as a best practice."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:155
+msgid "Customize the validity period of your users' consent preferences here. The <b>US State Laws</b> do not specify a specific time limit for retaining user choices."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:179
 msgid "Failed to load cookies please try again later!"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:155
+#: lite/admin/dist/js/1.js:179
 #: lite/admin/dist/js/3.js:83
 #: lite/admin/dist/js/app.js:235
 msgid "An unexpected error occurred please try reloading the page or logging in again."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:155
+#: lite/admin/dist/js/1.js:179
 msgid "Update was successfull!"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:155
+#: lite/admin/dist/js/1.js:179
 #: lite/admin/dist/js/3.js:83
 msgid "Problem occurred while saving your settings. Please try again later!"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:227
+#: lite/admin/dist/js/1.js:251
 msgid "Upgrade to unlock geo-targeting and other advanced features"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:239
+#: lite/admin/dist/js/1.js:263
 msgid "Consent Template"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:239
-msgid "Please upgrade to the Pro or Ultimate plan to show GDPR or CCPA banner to your site visitors based on their geolocation."
+#: lite/admin/dist/js/1.js:263
+msgid "The selected template (opt-in banner) supports GDPR (EU & UK), LGPD (Brazil), PIPEDA (Canada), Law 25 (Quebec), POPIA (South Africa), nFADP (Switzerland), Privacy Act (Australia), PDPL (Saudi Arabia), PDPL (Argentina), PDPL (Andorra), DPA (Faroe Island)."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:239
-msgid "GDPR & CCPA"
+#: lite/admin/dist/js/1.js:263
+msgid "The selected template (opt-out banner) supports CCPA/CPRA (California), VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), & UCPA (Utah)."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:251
+#: lite/admin/dist/js/1.js:263
+msgid "Please upgrade to the Pro or Ultimate plan to show GDPR or US State Laws banner to your site visitors based on their geolocation."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:263
+msgid "GDPR & US State Laws"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:275
 msgid "Upgrade to unlock popup layout and other advanced features"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:263
-#: lite/admin/dist/js/2.js:275
-#: lite/admin/dist/js/2.js:287
-#: lite/admin/dist/js/2.js:299
+#: lite/admin/dist/js/1.js:299
+msgid "Categories on first layer"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:299
+msgid "Enabling this option will display cookie categories on the first layer of your banner. The categories will be displayed on the second layer (preference center) even if this option is disabled."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:299
+msgid "This feature is available with <b>Banner + Push down</b> layout only."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:311
+#: lite/admin/dist/js/1.js:323
+#: lite/admin/dist/js/1.js:335
+#: lite/admin/dist/js/1.js:347
 msgid "Fetching data"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:263
+#: lite/admin/dist/js/1.js:311
+#: lite/admin/dist/js/1.js:323
+#: lite/admin/dist/js/1.js:335
+#: lite/admin/dist/js/1.js:347
+msgid "The selected template (opt-in banner) supports GDPR (EU & UK), LGPD (Brazil), PIPEDA (Canada), Law 25 (Quebec), POPIA (South Africa), nFADP (Switzerland), Privacy Act (Australia), PDPL (Saudi Arabia), PDPL (Argentina), PDPL (Andorra), DPA (Faroe Island)"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:311
+#: lite/admin/dist/js/1.js:323
+#: lite/admin/dist/js/1.js:335
+#: lite/admin/dist/js/1.js:347
+msgid "The selected template (opt-out banner) supports CCPA/CPRA (California), VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), & UCPA (Utah)"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:311
 msgid "The edits that you have made in the HTML Editor will override any changes made to the settings below"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:263
+#: lite/admin/dist/js/1.js:311
 msgid "Colour scheme"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:275
+#: lite/admin/dist/js/1.js:323
 msgid "Custom CSS for additional styling"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:275
+#: lite/admin/dist/js/1.js:323
 msgid "Upgrade to unlock custom css and other advanced features"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
-msgid "Show CCPA Banner"
+#: lite/admin/dist/js/1.js:335
+msgid "Show Banner"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
+msgid "Support IAB TCF v2.2"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
+msgid "Enable the support for IAB Transparency and Consent Framework if you run ads on your site. When enabled, a GDPR-compliant consent banner will appear on your site, allowing your visitors to set granular advertising tracking preferences."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
+msgid "Upgrade to unlock IAB TCF v2.2 support and other advanced features"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
+msgid "Support Google's Additional Consent Mode"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
+msgid "Google's Additional Consent (AC) Mode allows the collection of consents for Google's Ad Technology Providers (ATPs) that are not yet registered on the IAB Europe Global Vendor List (GVL). AC Mode is intended only for use alongside IAB TCF."
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
+msgid "Upgrade to unlock Google's Additional Consent Mode support and other advanced features"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:335
 msgid "Hide advanced settings"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Show advanced settings"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Consent expiration (days)"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Reload page on consent action"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Load cookies prior to consent"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Choosing any of these categories(cookies) to load prior to receiving user consent will make your website non-compliant with GDPR."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Hide categories from banner"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:287
+#: lite/admin/dist/js/1.js:335
 msgid "Hiding any of the categories (with cookies) will make your website non-compliant with GDPR."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:311
+#: lite/admin/dist/js/1.js:347
+#: lite/admin/dist/js/app.js:1435
+msgid "Cookie Notice"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:347
+#: lite/admin/dist/js/app.js:1459
+msgid "Preference Center"
+msgstr ""
+
+#: lite/admin/dist/js/1.js:359
 msgid "Loading..."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:311
-#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/1.js:359
+#: lite/admin/dist/js/app.js:1531
 msgid "Banner Preview"
 msgstr ""
 
-#: lite/admin/dist/js/2.js:311
-msgid "The CCPA banner has been disabled. You can enable it from ‘General’, if needed."
+#: lite/admin/dist/js/1.js:359
+msgid "The banner has been disabled. You can enable it from ‘General’, if needed."
 msgstr ""
 
-#: lite/admin/dist/js/2.js:311
-#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/1.js:359
+#: lite/admin/dist/js/app.js:1531
 msgid "Publish Changes"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:23
+msgid "Create a free account to connect with %sCookieYes web app%s. After connecting, you can manage all your settings from the web app and access advanced features:"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:23
+msgid "You can continue using the plugin without connecting to the web app if you wish so. Please note that the standalone version of the plugin doesn't provide some advanced features. However, it offers unlimited <a href=\"%s\" target=\"_blank\">pageviews</a> in contrast to that of the web app-connected version."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:59
+msgid "Alternatively, you can <a href=\"%s\">disconnect</a> your site from the web app and continue using the standalone version of the plugin. Please note that by doing so, you will lose your banner customization and access to advanced features."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:59
+msgid "Your free trial has expired. This site is now suspended and will be <b>permanently deleted</b> from your web app account if you do not upgrade to a paid plan by <b>%s</b>. Visit <a href=\"%s\" target=\"_blank\">Subscriptions</a> to choose a plan and activate your banner."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:59
+msgid "This site is currently suspended due to payment failure and will be <b>permanently deleted</b> from your web app account if you do not complete the payment by <b>%s</b>. Visit <a href=\"%s\" target=\"_blank\">Subscriptions</a> to choose a plan and activate your banner."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:59
+msgid "<b>Pageview limit exceeded</b>: Upgrade to a higher plan to increase your pageview limit and continue displaying the banner on this site. Visit <a href=\"%s\" target=\"_blank\">Subscriptions</a> to upgrade plan."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:59
+msgid "<b>Pageview limit exceeded</b>: Upgrade to a higher plan to increase your pageview limit and continue displaying the banner on this site. Visit <a href=\"%s\" target=\"_blank\">Subscriptions</a> to upgrade plan and activate your banner."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:83
+msgid "Total Cookies"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:83
+msgid "Total Categories"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:83
+msgid "Pages Scanned"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Keep pace with compliance as your business grows"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Access advanced features and future-proof your business against legal risks. Get 2 months free on annual plans!"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Get unlimited pageviews/month"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Schedule monthly cookie scan"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Geo-target cookie banner"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Remove CookieYes branding"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Upgrade Now"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Automate your compliance at scale with our enterprise plan"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Your growing website needs scalable compliance. Get access to custom features tailored to meet your unique requirements."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Unlimited pages scanned/month"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Advanced CSS customization"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Dedicated customer support"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:107
+msgid "Get Custom Plan"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+#: lite/admin/dist/js/6.js:47
+msgid "Your website is connected to CookieYes"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+#: lite/admin/dist/js/6.js:47
+msgid "You can access all the plugin settings (Cookie Banner, Cookie Manager, Languages & Policy Generators) on the web app and unlock new features like Cookie Scan and Consent Log."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+#: lite/admin/dist/js/6.js:47
+msgid "Go to Web App"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+msgid "Connect your website to CookieYes"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+msgid "Cookie Scanner - Discover cookies on your site and auto-block them prior to user consent (Legally required)"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+msgid "Consent Log - Record user consents to demonstrate proof of compliance (Legally required)"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+#: lite/admin/dist/js/3.js:119
+#: lite/admin/dist/js/7.js:23
+msgid "New? Create a Free Account"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+#: lite/admin/dist/js/3.js:119
+msgid "Connecting..."
+msgstr ""
+
+#: lite/admin/dist/js/2.js:131
+msgid "Connect Your Existing Account"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:155
+msgid "Switch back to old UI"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Overview"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Banner status"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Active"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Regulation"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Last successful scan"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Not available"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Language"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Customize Banner"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:167
+msgid "Preview Banner"
+msgstr ""
+
+#: lite/admin/dist/js/2.js:191
+msgid "Cookie Summary"
 msgstr ""
 
 #: lite/admin/dist/js/3.js:83
@@ -2835,25 +3118,14 @@ msgid "To access this feature, connect to a CookieYes free account. After connec
 msgstr ""
 
 #: lite/admin/dist/js/3.js:119
-#: lite/admin/dist/js/4.js:95
 #: lite/admin/dist/js/7.js:23
-msgid "New? Create a Free Account"
-msgstr ""
-
-#: lite/admin/dist/js/3.js:119
-#: lite/admin/dist/js/4.js:95
-msgid "Connecting..."
-msgstr ""
-
-#: lite/admin/dist/js/3.js:119
-#: lite/admin/dist/js/7.js:23
-#: lite/admin/dist/js/app.js:931
+#: lite/admin/dist/js/app.js:991
 msgid "Already have an account?"
 msgstr ""
 
 #: lite/admin/dist/js/3.js:119
 #: lite/admin/dist/js/7.js:23
-#: lite/admin/dist/js/app.js:931
+#: lite/admin/dist/js/app.js:991
 msgid "Connect your existing account"
 msgstr ""
 
@@ -2898,7 +3170,7 @@ msgid "New Cookie"
 msgstr ""
 
 #: lite/admin/dist/js/3.js:179
-msgid "Cookie id is required"
+msgid "Cookie ID is required"
 msgstr ""
 
 #: lite/admin/dist/js/3.js:179
@@ -2945,151 +3217,72 @@ msgstr ""
 msgid "To access this feature, connect to a CookieYes free account."
 msgstr ""
 
-#: lite/admin/dist/js/4.js:23
-msgid "Create a free account to connect with %sCookieYes web app%s. After connecting, you can manage all your settings from the web app and access advanced features:"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:71
-msgid "Total Cookies"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:71
-msgid "Total Categories"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:71
-msgid "Pages Scanned"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-#: lite/admin/dist/js/6.js:47
-msgid "Your website is connected to CookieYes"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-#: lite/admin/dist/js/6.js:47
-msgid "You can access all the plugin settings (Cookie Banner, Cookie Manager, Languages & Policy Generators) on the web app and unlock new features like Cookie Scan and Consent Log."
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-#: lite/admin/dist/js/6.js:47
-msgid "Go to Web App"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-msgid "Connect your website to CookieYes"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-msgid "Cookie Scanner - Discover cookies on your site and auto-block them prior to user consent (Legally required)"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-msgid "Consent Log - Record user consents to demonstrate proof of compliance (Legally required)"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:95
-msgid "Connect Your Existing Account"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Banner status"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Active"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Regulation"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Last cookie scan"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Not available"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Language"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Customize Banner"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:119
-msgid "Preview Banner"
-msgstr ""
-
-#: lite/admin/dist/js/4.js:143
-msgid "Cookie Summary"
-msgstr ""
-
-#: lite/admin/dist/js/5.js:46
+#: lite/admin/dist/js/4.js:46
 msgid "Problem occurred while adding languages. Please try again later!"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:58
+#: lite/admin/dist/js/4.js:58
 msgid "Are you sure you want to delete this language?"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:58
+#: lite/admin/dist/js/4.js:58
 msgid "Successfully deleted the language"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:94
+#: lite/admin/dist/js/4.js:94
 msgid "Add language"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:94
+#: lite/admin/dist/js/4.js:94
 msgid "Select prefered language(s)"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:94
+#: lite/admin/dist/js/4.js:94
 msgid "Search..."
 msgstr ""
 
-#: lite/admin/dist/js/5.js:94
+#: lite/admin/dist/js/4.js:94
 msgid "Translations not available"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:94
+#: lite/admin/dist/js/4.js:94
 msgid "Note: Translations are not available for some of the languages you have added, so the banner content that has not been translated will be displayed in English unless you add translations for these languages manually."
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Add Language"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Language List"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Language Code"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Loading languages"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Default"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Edit Content"
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "You can't delete the default language."
 msgstr ""
 
-#: lite/admin/dist/js/5.js:106
+#: lite/admin/dist/js/4.js:106
 msgid "Set as default"
+msgstr ""
+
+#: lite/admin/dist/js/5.js:71
+msgid "Consent Ratio"
 msgstr ""
 
 #: lite/admin/dist/js/6.js:35
@@ -3149,193 +3342,233 @@ msgid "Unable to reach your web app account at this moment. Please reload the pa
 msgstr ""
 
 #: lite/admin/dist/js/app.js:235
-msgid "It looks like your website URL has been changed. To ensure the proper functioning of your banner, go to your <a href=\"%1$s\" target=\"_blank\">CookieYes account</a> > navigate to <b>More</b> > <b>Site Settings</b> and update the registered URL. Then, reload this page to retry. If the issue persists, contact <a href=\"%2$s\" target=\"_blank\">customer support</a>."
+msgid "Looks like your website URL has changed. To ensure the proper functioning of your banner, update the registered URL on your CookieYes account (navigate to the <a href=\"https://app.cookieyes.com/settings/subscriptions\" target=\"_blank\">Subscriptions</a> page and click the More button associated with your site). Then, reload this page to retry. If the issue persists, please  <a href=\"%2$s\" target=\"_blank\">contact us</a>."
 msgstr ""
 
-#: lite/admin/dist/js/app.js:931
+#: lite/admin/dist/js/app.js:691
+msgid "Dashboard"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:691
+msgid "Site Settings"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:703
+msgid "Hey, we at %sCookieYes%s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going."
+msgstr ""
+
+#: lite/admin/dist/js/app.js:979
+msgid "Missing database tables: Some features may be disabled or not work as expected since one or more required tables are missing from the database."
+msgstr ""
+
+#: lite/admin/dist/js/app.js:979
+msgid "Checking..."
+msgstr ""
+
+#: lite/admin/dist/js/app.js:979
+msgid "Check again"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:991
 msgid "To upgrade, create a new CookieYes account, or connect to an existing account and access premium features! After connecting, you can manage all your settings from the web app."
 msgstr ""
 
-#: lite/admin/dist/js/app.js:931
+#: lite/admin/dist/js/app.js:991
 msgid "New? Create an Account"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:943
+#: lite/admin/dist/js/app.js:1003
 msgid "Loading"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1279
+#: lite/admin/dist/js/app.js:1351
 msgid "Help Guides"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1303
-#: lite/admin/dist/js/app.js:1315
-#: lite/admin/dist/js/app.js:1351
+#: lite/admin/dist/js/app.js:1387
+msgid "Current plan:"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1387
+msgid "pageviews used"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1399
+#: lite/admin/dist/js/app.js:1411
 msgid "Label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1303
-#: lite/admin/dist/js/app.js:1315
-#: lite/admin/dist/js/app.js:1339
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1399
+#: lite/admin/dist/js/app.js:1411
+#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1471
 msgid "Background"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1303
-#: lite/admin/dist/js/app.js:1315
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1399
+#: lite/admin/dist/js/app.js:1411
+#: lite/admin/dist/js/app.js:1435
 msgid "Border"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1315
+#: lite/admin/dist/js/app.js:1411
 msgid "Blocked Content"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1315
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1411
+#: lite/admin/dist/js/app.js:1471
 msgid "Colours"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "Show cookie list"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "\"Cookie\" label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "\"Duration\" label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "\"Description\" label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "\"Always Active\" label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1327
+#: lite/admin/dist/js/app.js:1423
 msgid "\"No cookies to display\" label"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
-msgid "Cookie Notice"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "“Accept All” button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "“Reject All” button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "“Customize” button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
-msgid "“Read More” link"
+#: lite/admin/dist/js/app.js:1435
+msgid "“Cookie Policy” link"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "“Do Not Sell” link"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "Close [X] button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "Enable the close button to let users close the banner and continue browsing the site without being tracked. A close button is required by the Italian DPA."
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "Custom logo"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
+#: lite/admin/dist/js/app.js:1435
 msgid "Upgrade to unlock custom logo and other advanced features"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1339
-msgid "Disable CookieYes branding"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1339
-msgid "Upgrade to disable CookieYes branding and unlock other advanced features"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1351
+#: lite/admin/dist/js/app.js:1447
 msgid "Opt-out center"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1351
-msgid "Opt-out Confirmation"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1351
-msgid "“Confirm” button"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1351
-msgid "“Cancel Button“"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1363
-msgid "Preference Center"
-msgstr ""
-
-#: lite/admin/dist/js/app.js:1363
+#: lite/admin/dist/js/app.js:1447
+#: lite/admin/dist/js/app.js:1459
 msgid "Privacy overview"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1363
+#: lite/admin/dist/js/app.js:1447
+#: lite/admin/dist/js/app.js:1459
+msgid "“Show more” button"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+#: lite/admin/dist/js/app.js:1459
+msgid "“Show less” button"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+msgid "Enabled state"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+msgid "Disabled state"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+msgid "“Cancel“ button"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+#: lite/admin/dist/js/app.js:1459
 msgid "“Save My Preferences” button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1447
+msgid "Respect “Global Privacy control“"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1447
+msgid "Upgrade to respect Global Privacy Control (GPC) and unlock other advanced features"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:1471
 msgid "Revisit Consent Button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1471
 msgid "Revisit consent button"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1375
+#: lite/admin/dist/js/app.js:1471
 msgid "Text on hover"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1531
 msgid "Back to Language List"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1531
 msgid "Default language:"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:1435
+#: lite/admin/dist/js/app.js:1531
 msgid "Edit content in:"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:3531
+#: lite/admin/dist/js/app.js:3816
 #: lite/admin/src/modules/banners/helpers/utils.js:216
-msgid "Classic Type"
+msgid "Box"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:3531
+#: lite/admin/dist/js/app.js:3816
 #: lite/admin/src/modules/banners/helpers/utils.js:222
-msgid "Banner Type"
+msgid "Classic"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:3531
-#: lite/admin/src/modules/banners/helpers/utils.js:229
-msgid "Box Type"
+#: lite/admin/dist/js/app.js:3816
+#: lite/admin/src/modules/banners/helpers/utils.js:247
+msgid "Center"
 msgstr ""
 
-#: lite/admin/dist/js/app.js:3531
-#: lite/admin/src/modules/banners/helpers/utils.js:235
-msgid "Popup Type"
+#: lite/admin/dist/js/app.js:3816
+#: lite/admin/src/modules/banners/helpers/utils.js:253
+msgid "Sidebar"
+msgstr ""
+
+#: lite/admin/dist/js/app.js:3816
+#: lite/admin/src/modules/banners/helpers/utils.js:259
+msgid "Push down"
 msgstr ""

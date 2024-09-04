@@ -11,7 +11,7 @@
 namespace RankMath\SEO_Analysis;
 
 use RankMath\Module\Base;
-use MyThemeShop\Admin\Page;
+use RankMath\Admin\Page;
 use RankMath\KB;
 
 defined( 'ABSPATH' ) || exit;
@@ -23,28 +23,28 @@ class Admin extends Base {
 
 	/**
 	 * Module ID.
-	 * 
+	 *
 	 * @var string
 	 */
 	public $id = '';
 
 	/**
 	 * Module directory.
-	 * 
+	 *
 	 * @var string
 	 */
 	public $directory = '';
 
 	/**
 	 * Module page.
-	 * 
+	 *
 	 * @var object
 	 */
 	public $page;
 
 	/**
 	 * SEO Analyzer object.
-	 * 
+	 *
 	 * @var object
 	 */
 	public $analyzer;
@@ -84,6 +84,7 @@ class Admin extends Base {
 
 		$this->page = new Page(
 			'rank-math-seo-analysis',
+			// Translators: placeholder is the new Rank Math label.
 			sprintf( esc_html__( 'SEO Analyzer %s', 'rank-math' ), $new_label ),
 			[
 				'position'   => 60,

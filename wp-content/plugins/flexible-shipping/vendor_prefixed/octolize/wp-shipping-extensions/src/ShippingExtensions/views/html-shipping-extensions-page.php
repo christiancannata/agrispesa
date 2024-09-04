@@ -36,9 +36,6 @@ echo \esc_attr(\wp_json_encode($categories));
      data-plugins="<?php 
 echo \esc_attr(\wp_json_encode($plugins));
 ?>"
-     data-buy_plugin_label="<?php 
-\esc_attr_e('Buy plugin →', 'flexible-shipping');
-?>"
 >
 </div>
 <?php 

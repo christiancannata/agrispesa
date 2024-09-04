@@ -114,17 +114,6 @@ class ShippingMethodSingle extends WC_Shipping_Method {
 
 		$data = wp_parse_args( $data, $defaults );
 
-		$ads = '';
-
-		if ( ! $this->is_html_ads_loaded ) {
-			ob_start();
-			$shipping_method_id = self::SHIPPING_METHOD_ID;
-			include __DIR__ . '/../../../../classes/table-rate/views/html-ads.php';
-			$ads                      = ob_get_clean();
-			$ads                      = apply_filters( 'flexible-shipping/sell-box', is_string( $ads ) ? $ads : '' );
-			$this->is_html_ads_loaded = true;
-		}
-
 		ob_start();
 		?>
 		</table>
@@ -133,8 +122,6 @@ class ShippingMethodSingle extends WC_Shipping_Method {
 		<?php if ( ! empty( $data['description'] ) ) : ?>
 			<p><?php echo wp_kses_post( $data['description'] ); ?></p>
 		<?php endif; ?>
-
-		<?php echo wp_kses_post( $ads ); ?>
 
 		<table class="form-table">
 		<?php

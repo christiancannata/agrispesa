@@ -330,9 +330,9 @@ class Module extends amePersistentModule {
 		$flattenedRedirects = $this->getRedirects()->flatten();
 
 		$usableMenuItems = [];
-		$adminMenu = $this->menuEditor->get_active_admin_menu();
-		if ( !empty($adminMenu['tree']) ) {
-			$extractor = new MenuExtractor($adminMenu['tree']);
+		$adminMenuTree = $this->menuEditor->get_active_admin_menu_tree();
+		if ( !empty($adminMenuTree) ) {
+			$extractor = new MenuExtractor($adminMenuTree);
 			$usableMenuItems = $extractor->getUsableItems();
 		}
 

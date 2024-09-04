@@ -27,11 +27,11 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Shipping_Methods')) {
          */
         public function get_data()
         {
-            $active_methods = array();
+            $active_methods = [];
             $shipping_methods = \WC()->shipping->get_shipping_methods();
             foreach ($shipping_methods as $id => $shipping_method) {
                 if (isset($shipping_method->enabled) && 'yes' === $shipping_method->enabled) {
-                    $active_methods[$id] = array('title' => $shipping_method->title, 'tax_status' => $shipping_method->tax_status);
+                    $active_methods[$id] = ['title' => $shipping_method->title, 'tax_status' => $shipping_method->tax_status];
                 }
             }
             return ['shipping_methods' => $active_methods];

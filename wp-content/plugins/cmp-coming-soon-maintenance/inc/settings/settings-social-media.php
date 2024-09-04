@@ -137,6 +137,10 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
                             $title 	= 'Twitch';
                             $url = 'https://twitch.tv/profile';
                             break;
+                        case 'medium':
+                            $title 	= 'Medium';
+                            $url = 'https://medium.com/@username';
+                            break;
                         default:
                             $title 	= ucfirst( $social['name'] );
                             $url 	= 'https://'.$social['name'].'.com/profile';

@@ -65,7 +65,7 @@ class Creator implements HookableCollection {
 			$this->create_dpd_contextual_info( $phrases_in );
 			$other_phrases_not_in = $this->merge_phrases( $other_phrases_not_in, $phrases_in );
 
-			$phrases_in = [ 'List', 'poczta polska', 'pocztex', 'polecony', 'poczt' ];
+			$phrases_in = [ 'List', 'poczta polska', 'pocztex', 'polecony', 'poczt', 'enadawca' ];
 			$this->create_enadawca_contextual_info( $phrases_in );
 			$other_phrases_not_in = $this->merge_phrases( $other_phrases_not_in, $phrases_in );
 
@@ -147,8 +147,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Want to show your customers the DHL Express live rates? %1$sCheck our DHL Express plugin →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://octol.io/fs-cross-dhl-express" target="_blank">',
+						__( 'Want to show your customers the DHL Express live rates? %1$sCheck our DHL Express plugin%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-cross-dhl-express" target="_blank">',
 						'</a>'
 					)
 				)
@@ -171,8 +171,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Want to show your customers the FedEx live rates? %1$sCheck our FedEx plugin →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="' . $target_url . '" target="_blank">',
+						__( 'Want to show your customers the FedEx live rates? %1$sCheck our FedEx plugin%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="' . $target_url . '" target="_blank">',
 						'</a>'
 					)
 				)
@@ -195,8 +195,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products with UPS? Create the shipments and generate shipping labels directly from your shop using our %1$sUPS Labels →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="' . $target_url . '" target="_blank">',
+						__( 'Sending your products with UPS? Create the shipments and generate shipping labels directly from your shop using our %1$sUPS Labels%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="' . $target_url . '" target="_blank">',
 						'</a>'
 					)
 				)
@@ -218,8 +218,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Want to show your customers the USPS live rates? %1$sCheck our USPS plugin →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="' . esc_url( $target_url ) . '" target="_blank">',
+						__( 'Want to show your customers the USPS live rates? %1$sCheck our USPS plugin%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="' . esc_url( $target_url ) . '" target="_blank">',
 						'</a>'
 					)
 				)
@@ -239,8 +239,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via DPD? Create the shipments and generate shipping labels directly from your shop using our %1$sDPD integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://www.wpdesk.pl/sklep/dpd-woocommerce/?utm_source=flexible-shipping-method-dpd&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
+						__( 'Sending your products via DPD? Create the shipments and generate shipping labels directly from your shop using our %1$sDPD integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-dpd-pl" target="_blank">',
 						'</a>'
 					)
 				)
@@ -260,8 +260,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via Poczta Polska? Create the shipments and generate shipping labels directly from your shop using our %1$sPoczta Polska eNadawca integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://www.wpdesk.pl/sklep/e-nadawca-poczta-polska-woocommerce/?utm_source=flexible-shipping-method-enadawca&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
+						__( 'Sending your products via Poczta Polska? Create the shipments and generate shipping labels directly from your shop using our %1$sPoczta Polska eNadawca integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-enadawca-pl" target="_blank">',
 						'</a>'
 					)
 				)
@@ -281,8 +281,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via DHL? Create the shipments and generate shipping labels directly from your shop using our %1$sDHL integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://www.wpdesk.pl/sklep/dhl-woocommerce/?utm_source=flexible-shipping-method-dhl&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
+						__( 'Sending your products via DHL? Create the shipments and generate shipping labels directly from your shop using our %1$sDHL integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-dhl-pl" target="_blank">',
 						'</a>'
 					)
 				)
@@ -302,8 +302,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via Orlen Paczka? Create the shipments and generate shipping labels directly from your shop using our %1$sOrlen Paczka integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://www.wpdesk.pl/sklep/orlen-paczka-woocommerce/?utm_source=flexible-shipping-method-pwr&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
+						__( 'Sending your products via Orlen Paczka? Create the shipments and generate shipping labels directly from your shop using our %1$sOrlen Paczka integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-op-pl" target="_blank">',
 						'</a>'
 					)
 				)
@@ -323,8 +323,8 @@ class Creator implements HookableCollection {
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via InPost? Create the shipments and generate shipping labels directly from your shop using our %1$sInPost integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://www.wpdesk.pl/sklep/paczkomaty-woocommerce/?utm_source=flexible-shipping-method-inpost&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
+						__( 'Sending your products via InPost? Create the shipments and generate shipping labels directly from your shop using our %1$sInPost integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-inpost-pl" target="_blank">',
 						'</a>'
 					)
 				)
@@ -340,12 +340,12 @@ class Creator implements HookableCollection {
 			$this->add_hookable(
 				new Flexible_Shipping_Contextual_Info(
 					self::METHOD_TITLE_AND_METHOD_DESCRIPTION_ELEMENTS,
-					'inpost',
+					'dpd_uk',
 					$phrases_in,
 					sprintf(
 					// Translators: link.
-						__( 'Sending your products via DPD UK? Create the shipments and generate shipping labels directly from your shop using our %1$sDPD UK integration →%2$s', 'flexible-shipping' ),
-						'<a class="button button-primary" href="https://octol.io/fs-cross-dpd-uk" target="_blank">',
+						__( 'Sending your products via DPD UK? Create the shipments and generate shipping labels directly from your shop using our %1$sDPD UK integration%2$s', 'flexible-shipping' ),
+						'<a class="oct-btn-more" href="https://octol.io/fs-cross-dpd-uk" target="_blank">',
 						'</a>'
 					)
 				)
@@ -379,25 +379,26 @@ class Creator implements HookableCollection {
 				sprintf(
 					// Translators: link.
 					__( '%1$sAdd integrations%2$s', 'flexible-shipping' ),
-					'<a class="button button-primary" href="https://www.wpdesk.pl/kategoria-produktu/integracje-wysylkowe/?utm_source=flexible-shipping-method&utm_medium=button&utm_campaign=flexible-shipping-integrations" target="_blank">',
-					' &rarr;</a>'
+					'<a class="oct-btn-more" href="https://octol.io/fs-context-cross-shipping-integrations-pl" target="_blank">',
+					'</a>'
 				);
 		} elseif ( $this->is_base_location_country_gb() ) {
 			return __( 'Check our further shipping integration with DPD UK and FedEx / UPS live rates plugins.', 'flexible-shipping' ) . '&nbsp;&nbsp;' .
 				sprintf(
 					// Translators: link.
 					__( '%1$sAdd integration%2$s', 'flexible-shipping' ),
-					'<a class="button button-primary" href="https://octol.io/fs-integrations" target="_blank">',
-					' &rarr;</a>'
+					'<a class="oct-btn-more" href="https://octol.io/fs-integrations" target="_blank">',
+					'</a>'
 				);
 		} else {
-			return __( 'Check our further shipping integration with FedEx / UPS / USPS live rates plugins.', 'flexible-shipping' ) . '&nbsp;&nbsp;' .
+			return __( 'Upgrade from the free version to the Flexible Shipping PRO and create even the most complex shipping scenarios with ease.', 'flexible-shipping' ) . '&nbsp;&nbsp;' .
 				sprintf(
 					// Translators: link.
-					__( '%1$sAdd integration%2$s', 'flexible-shipping' ),
-					'<a class="button button-primary" href="https://octol.io/fs-integrations" target="_blank">',
-					' &rarr;</a>'
+					__( '%1$sUpgrade Now%2$s', 'flexible-shipping' ),
+					'<a class="oct-btn-more" href="https://octol.io/fs-context-fs-pro" target="_blank">',
+					'</a>'
 				);
 		}
 	}
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\export;
 
 use wpie\export\post;
@@ -1042,8 +1041,25 @@ class WPIE_Export {
                                 $headers [] = $header;
                         }
 
+                        $headersCount = count( $headers );
+
                         while ( $row = fgetcsv( $handle, 0, ',' ) ) {
-                                $csv[] = array_combine( $headers, $row );
+
+                                $tempHeaders = $headers;
+                                
+                                if ( !is_array( $row ) ) {
+                                        continue;
+                                }
+
+                                if ( $headersCount < count( $row ) ) {
+                                        $row = array_slice( $row, 0, $headersCount );
+                                }
+
+                                if ( $headersCount > count( $row ) ) {
+                                        $tempHeaders = array_slice( $headers, 0, count( $row ) );
+                                }
+
+                                $csv[] = array_combine( $tempHeaders, $row );
                         }
 
                         fclose( $handle );

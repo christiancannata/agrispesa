@@ -34,13 +34,13 @@ class Connection {
 	const OAUTH_URL = 'https://facebook.com/dialog/oauth';
 
 	/** @var string WooCommerce connection proxy URL */
-	const PROXY_URL = 'https://connect.woocommerce.com/auth/facebook/';
+	const PROXY_URL = 'https://api.woocommerce.com/integrations/auth/facebook/';
 
 	/** @var string WooCommerce connection for APP Store login URL */
-	const APP_STORE_LOGIN_URL = 'https://connect.woocommerce.com/app-store-login/facebook/';
+	const APP_STORE_LOGIN_URL = 'https://api.woocommerce.com/integrations/app-store-login/facebook/';
 
 	/** @var string WooCommerce connection authentication URL */
-	const CONNECTION_AUTHENTICATION_URL = 'https://connect.woocommerce.com/auth/facebookcommerce/';
+	const CONNECTION_AUTHENTICATION_URL = 'https://api.woocommerce.com/integrations/auth/facebookcommerce/';
 
 	/** @var string the Standard Auth type */
 	const AUTH_TYPE_STANDARD = 'standard';
@@ -900,15 +900,6 @@ class Connection {
 		);
 		if ( $external_merchant_settings_id = facebook_for_woocommerce()->get_integration()->get_external_merchant_settings_id() ) {
 			$parameters['setup']['merchant_settings_id'] = $external_merchant_settings_id;
-		}
-		// if messenger was previously enabled
-		if ( facebook_for_woocommerce()->get_integration()->is_messenger_enabled() ) {
-			$parameters['business_config']['messenger_chat'] = array(
-				'enabled' => true,
-				'domains' => array(
-					home_url( '/' ),
-				),
-			);
 		}
 		return $parameters;
 	}

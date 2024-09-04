@@ -86,6 +86,17 @@ class AccountController extends BaseController {
 				],
 			]
 		);
+
+		$this->register_route(
+			'ads/account-status',
+			[
+				[
+					'methods'             => TransportMethods::READABLE,
+					'callback'            => $this->get_ads_account_has_access(),
+					'permission_callback' => $this->get_permission_callback(),
+				],
+			]
+		);
 	}
 
 	/**
@@ -94,7 +105,7 @@ class AccountController extends BaseController {
 	 * @return callable
 	 */
 	protected function get_accounts_callback(): callable {
-		return function() {
+		return function () {
 			try {
 				return new Response( $this->account->get_accounts() );
 			} catch ( Exception $e ) {
@@ -109,7 +120,7 @@ class AccountController extends BaseController {
 	 * @return callable
 	 */
 	protected function create_or_link_account_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$link_id = absint( $request['id'] );
 				if ( $link_id ) {
@@ -130,7 +141,7 @@ class AccountController extends BaseController {
 	 * @return callable
 	 */
 	protected function get_connected_ads_account_callback(): callable {
-		return function() {
+		return function () {
 			return $this->account->get_connected_account();
 		};
 	}
@@ -141,7 +152,7 @@ class AccountController extends BaseController {
 	 * @return callable
 	 */
 	protected function disconnect_ads_account_callback(): callable {
-		return function() {
+		return function () {
 			$this->account->disconnect();
 
 			return [
@@ -157,8 +168,23 @@ class AccountController extends BaseController {
 	 * @return callable
 	 */
 	protected function get_billing_status_callback(): callable {
-		return function() {
+		return function () {
 			return $this->account->get_billing_status();
+		};
+	}
+
+	/**
+	 * Get the callback function for retrieving the account access status for ads.
+	 *
+	 * @return callable
+	 */
+	protected function get_ads_account_has_access(): callable {
+		return function () {
+			try {
+				return $this->account->get_ads_account_has_access();
+			} catch ( Exception $e ) {
+				return $this->response_from_exception( $e );
+			}
 		};
 	}
 
@@ -195,5 +221,4 @@ class AccountController extends BaseController {
 	protected function get_schema_title(): string {
 		return 'account';
 	}
-
 }

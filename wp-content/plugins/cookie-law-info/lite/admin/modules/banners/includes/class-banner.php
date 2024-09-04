@@ -81,7 +81,7 @@ class Banner extends Store {
 	}
 	/**
 	 * Read directly from the data object given.
-	 * Used for assigning data to object if it is alread fetched from API or DB.
+	 * Used for assigning data to object if it is already fetched from API or DB.
 	 *
 	 * @param array|object $data Banner data.
 	 * @return void
@@ -238,7 +238,7 @@ class Banner extends Store {
 	 */
 	public function get_type() {
 		$config = $this->get_settings();
-		return isset( $config['settings']['type'] ) ? $config['settings']['type'] : 'classic';
+		return isset( $config['settings']['type'] ) ? $config['settings']['type'] : 'box';
 	}
 
 	/**
@@ -314,11 +314,11 @@ class Banner extends Store {
 	 */
 	public static function sanitize_settings( $function, $settings, $defaults ) {
 		$result  = array();
-		$exludes = self::get_excludes();
+		$excludes = self::get_excludes();
 		foreach ( $defaults as $key => $data ) {
 			$value    = isset( $settings[ $key ] ) ? $settings[ $key ] : $data;
 			$defaults = $data;
-			if ( in_array( $key, $exludes, true ) ) {
+			if ( in_array( $key, $excludes, true ) ) {
 				$result[ $key ] = $function( $key, $value );
 				return $result;
 			}
@@ -475,10 +475,20 @@ class Banner extends Store {
 	public function get_translations( $lang = '', $key = '' ) {
 		$contents = wp_cache_get( 'cky_contents_' . $lang, 'cky_banner_contents' );
 		$law      = $this->get_law();
+		$translated     = \CookieYes\Lite\Admin\Modules\Languages\Includes\Controller::get_instance()->is_cky_translated($lang);
+		$upload_dir    = wp_upload_dir();
 		if ( ! $contents ) {
-			$contents = cky_read_json_file( dirname( __FILE__ ) . '/contents/' . esc_html( $lang ) . '.json' );
+			if($translated) {
+				$translation = cky_read_json_file( $upload_dir['basedir'] . '/cookieyes/languages/banners/' . esc_html( $lang ) . '.json' );
+				if($translation) {
+					$contents = $translation['banner_data'];
+				}
+				if(!$contents) {
+					$contents = cky_read_json_file( dirname( __FILE__ ) . '/contents/' . esc_html( $lang ) . '.json' );
+				}
+			}
 			if ( empty( $contents ) ) {
-				return $this->get_translations( 'en' );
+				$contents = cky_read_json_file( dirname( __FILE__ ) . '/contents/en.json' );
 			}
 			wp_cache_set( 'cky_contents_' . $lang, $contents, 'cky_banner_contents', 12 * HOUR_IN_SECONDS );
 		}

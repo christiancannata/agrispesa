@@ -277,7 +277,7 @@ class Logger implements \Psr\Log\LoggerInterface, \FSVendor\Monolog\ResettableIn
      *
      * @phpstan-param Level $level
      */
-    public function addRecord(int $level, string $message, array $context = [], \FSVendor\Monolog\DateTimeImmutable $datetime = null) : bool
+    public function addRecord(int $level, string $message, array $context = [], ?\FSVendor\Monolog\DateTimeImmutable $datetime = null) : bool
     {
         if (isset(self::RFC_5424_LEVELS[$level])) {
             $level = self::RFC_5424_LEVELS[$level];

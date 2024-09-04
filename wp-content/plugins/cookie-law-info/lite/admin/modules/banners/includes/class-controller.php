@@ -260,6 +260,9 @@ class Controller extends Base_Controller {
 		$data->contents       = isset( $item->contents ) ? $this->prepare_json( $item->contents ) : array();
 		$data->banner_default = isset( $item->banner_default ) ? absint( $item->banner_default ) : 0;
 		$data->status         = isset( $item->status ) ? absint( $item->status ) : 0;
+		if (isset($data->settings['settings']['type']) && ($data->settings['settings']['type'] === "classic")) {
+			$data->settings['settings']['preferenceCenterType'] = "pushdown";
+		}
 		return $data;
 	}
 
@@ -351,7 +354,7 @@ class Controller extends Base_Controller {
 	 *  Return the default settings of a banner.
 	 *
 	 * @param string $type Consent type. Default value "gdpr".
-	 * @return arrray
+	 * @return array
 	 */
 	public static function get_default_configs( $type = 'gdpr' ) {
 		$settings = wp_cache_get( 'default', 'cky_banner_settings_' . $type );

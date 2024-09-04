@@ -903,6 +903,69 @@ span.wt-cli-tootip-icon {
 	box-sizing: border-box;
 }
 
+#wt-cli-migrate-btn {
+	cursor: pointer;
+}
+
+.wt-cky-migration-modal.wt-cli-modal {
+	width: 700px;
+	padding: 15px 20px;
+}
+
+.wt-cky-migration-modal .wt-cli-modal-js-close{
+	padding-top: 15px;
+	padding-right: 20px;
+}
+
+.wt-cky-migration-modal .wt-cli-modal-header h4 {
+	line-height: 27px;
+}
+
+.wt-cky-migration-modal ul {
+	padding-left: 20px;
+}
+
+.wt-cli-bullet-list, .wt-cli-bullet-list-main li{
+	list-style-type: disc;
+}
+
+.wt-cky-migration-modal .wt-cli-modal-body p{
+	padding-left: 20px;
+}
+
+.wt-cky-migration-modal .wt-cli-modal-body{
+	padding-top: 16px;
+}
+
+.wt-cky-migration-modal .wt-cli-action-container{
+	text-align: right;
+}
+
+.wt-cky-migration-modal .wt-cli-action-group{
+	display: inline-flex;
+	gap: 10px;
+}
+
+.wt-cky-migration-modal .wt-cli-action-container a{
+	text-decoration: none;
+	margin: 0;
+	border-radius: 4px;
+	padding: 8px 16px;
+	font-weight: 600;
+	line-height: 24px;
+}
+
+.wt-cky-migration-modal .wt-cli-action-container a:hover{
+	transform: none;
+}
+
+.wt-cli-ckyes-support{
+	border: 1px solid #2D9FFF;
+	color: #2D9FFF;
+	display: inline-flex;
+	gap: 4px;
+}
+
 .wt-cli-modal.on {
 	display: block;
 }

@@ -220,6 +220,7 @@ class Request extends Report {
 				'sessions',
 				'sessionConversionRate',
 				'sessionsPerUser',
+				'totalAdRevenue',
 				'totalUsers',
 			)
 		);
@@ -273,6 +274,7 @@ class Request extends Report {
 		$valid_dimensions = apply_filters(
 			'googlesitekit_shareable_analytics_4_dimensions',
 			array(
+				'adSourceName',
 				'city',
 				'country',
 				'date',
@@ -282,6 +284,10 @@ class Request extends Report {
 				'pageTitle',
 				'sessionDefaultChannelGroup',
 				'sessionDefaultChannelGrouping',
+				'customEvent:googlesitekit_post_author',
+				'customEvent:googlesitekit_post_categories',
+				'customEvent:googlesitekit_post_date',
+				'customEvent:googlesitekit_post_type',
 			)
 		);
 
@@ -380,12 +386,23 @@ class Request extends Report {
 			$filter_class = String_Filter::class;
 		} elseif ( 'inListFilter' === $filter_type ) {
 			$filter_class = In_List_Filter::class;
+			// Ensure that the 'inListFilter' is provided a flat array of values.
+			// Extract the actual values from the 'value' key if present.
+			if ( isset( $dimension_value['value'] ) ) {
+				$dimension_value = $dimension_value['value'];
+			}
 		} else {
 			return null;
 		}
 
 		$filter            = new $filter_class();
 		$filter_expression = $filter->parse_filter_expression( $dimension_name, $dimension_value );
+
+		if ( ! empty( $dimension_value['notExpression'] ) ) {
+			$not_filter_expression = new Google_Service_AnalyticsData_FilterExpression();
+			$not_filter_expression->setNotExpression( $filter_expression );
+			return $not_filter_expression;
+		}
 
 		return $filter_expression;
 	}

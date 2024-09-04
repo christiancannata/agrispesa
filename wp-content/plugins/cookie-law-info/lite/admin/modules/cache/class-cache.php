@@ -52,7 +52,7 @@ class Cache extends Modules {
 	}
 
 	/**
-	 * Get supported list of servies.
+	 * Get supported list of services.
 	 *
 	 * @return array
 	 */

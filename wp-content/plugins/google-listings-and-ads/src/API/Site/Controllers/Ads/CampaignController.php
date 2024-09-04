@@ -97,12 +97,12 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 	 * @return callable
 	 */
 	protected function get_campaigns_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$exclude_removed = $request->get_param( 'exclude_removed' );
 
 				return array_map(
-					function( $campaign ) use ( $request ) {
+					function ( $campaign ) use ( $request ) {
 						$data = $this->prepare_item_for_response( $campaign, $request );
 						return $this->prepare_response_for_collection( $data );
 					},
@@ -120,7 +120,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 	 * @return callable
 	 */
 	protected function create_campaign_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$fields = array_intersect_key( $request->get_json_params(), $this->get_schema_properties() );
 
@@ -136,6 +136,30 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 
 				$campaign = $this->ads_campaign->create_campaign( $fields );
 
+				/**
+				 * When a campaign has been successfully created.
+				 *
+				 * @event gla_created_campaign
+				 * @property int    id                 Campaign ID.
+				 * @property string status             Campaign status, `enabled` or `paused`.
+				 * @property string name               Campaign name, generated based on date.
+				 * @property float  amount             Campaign budget.
+				 * @property string country            Base target country code.
+				 * @property string targeted_locations Additional target country codes.
+				 */
+				do_action(
+					'woocommerce_gla_track_event',
+					'created_campaign',
+					[
+						'id'                 => $campaign['id'],
+						'status'             => $campaign['status'],
+						'name'               => $campaign['name'],
+						'amount'             => $campaign['amount'],
+						'country'            => $campaign['country'],
+						'targeted_locations' => join( ',', $campaign['targeted_locations'] ),
+					]
+				);
+
 				return $this->prepare_item_for_response( $campaign, $request );
 			} catch ( Exception $e ) {
 				return $this->response_from_exception( $e );
@@ -149,7 +173,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 	 * @return callable
 	 */
 	protected function get_campaign_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$id       = absint( $request['id'] );
 				$campaign = $this->ads_campaign->get_campaign( $id );
@@ -177,7 +201,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 	 * @return callable
 	 */
 	protected function edit_campaign_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$fields = array_intersect_key( $request->get_json_params(), $this->get_edit_schema() );
 				if ( empty( $fields ) ) {
@@ -191,6 +215,26 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 				}
 
 				$campaign_id = $this->ads_campaign->edit_campaign( absint( $request['id'] ), $fields );
+
+				/**
+				 * When a campaign has been successfully edited.
+				 *
+				 * @event gla_edited_campaign
+				 * @property int    id     Campaign ID.
+				 * @property string status Campaign status, `enabled` or `paused`.
+				 * @property string name   Campaign name, generated based on date.
+				 * @property float  amount Campaign budget.
+				 */
+				do_action(
+					'woocommerce_gla_track_event',
+					'edited_campaign',
+					array_merge(
+						[
+							'id' => $campaign_id,
+						],
+						$fields,
+					)
+				);
 
 				return [
 					'status'  => 'success',
@@ -209,9 +253,23 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 	 * @return callable
 	 */
 	protected function delete_campaign_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			try {
 				$deleted_id = $this->ads_campaign->delete_campaign( absint( $request['id'] ) );
+
+				/**
+				 * When a campaign has been successfully deleted.
+				 *
+				 * @event gla_deleted_campaign
+				 * @property int id Campaign ID.
+				 */
+				do_action(
+					'woocommerce_gla_track_event',
+					'deleted_campaign',
+					[
+						'id' => $deleted_id,
+					]
+				);
 
 				return [
 					'status'  => 'success',
@@ -241,7 +299,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 		// Unset required to allow editing individual fields.
 		array_walk(
 			$fields,
-			function( &$value ) {
+			function ( &$value ) {
 				unset( $value['required'] );
 			}
 		);

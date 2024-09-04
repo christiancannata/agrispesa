@@ -308,11 +308,10 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						// Do nothing.
 						break;
 					case 'title':
-
 						$class_title = $field['class_title'] ?? '';
 						echo '<div class="yith-plugin-fw__panel__section">';
 						if ( ! empty( $field['title'] ) ) {
-							echo '<div class="yith-plugin-fw__panel__section__title '.esc_attr( $class_title ).'">';
+							echo '<div class="yith-plugin-fw__panel__section__title ' . esc_attr( $class_title ) . '">';
 							echo '<h2>' . esc_html( $field['title'] ) . '</h2>';
 							if ( ! empty( $field['desc'] ) ) {
 								echo '<div class="yith-plugin-fw__panel__section__description">';
@@ -866,7 +865,7 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 			check_ajax_referer( 'save-toggle-element', 'security' );
 
 			if ( ! current_user_can( $this->settings['capability'] ) ) {
-				wp_die( - 1 );
+				wp_die( -1 );
 			}
 
 			$posted          = $_POST;
@@ -900,7 +899,7 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						$i         = 0;
 						$new_value = array();
 						foreach ( $order_elements as $key ) {
-							$index               = apply_filters( 'yith_toggle_elements_index', $i ++, $key );
+							$index               = apply_filters( 'yith_toggle_elements_index', $i++, $key );
 							$new_value[ $index ] = $value[ $key ];
 						}
 

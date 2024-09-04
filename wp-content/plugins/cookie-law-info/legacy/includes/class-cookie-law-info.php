@@ -73,7 +73,7 @@ class Cookie_Law_Info {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.1.5';
+			$this->version = '3.2.4';
 		}
 		$this->plugin_name = 'cookie-law-info';
 
@@ -81,7 +81,7 @@ class Cookie_Law_Info {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->define_thrid_party_hooks();
+		$this->define_third_party_hooks();
 		add_action( 'admin_init', array( $this, 'start_migration' ) );
 		add_action( 'admin_notices', array( $this, 'migration_notice' ) );
 	}
@@ -227,7 +227,7 @@ class Cookie_Law_Info {
 	 * @since    1.7.2
 	 * @access   public
 	 */
-	public function define_thrid_party_hooks() {
+	public function define_third_party_hooks() {
 		$plugin_third_party = new Cookie_Law_Info_Third_Party();
 		$plugin_third_party->register_scripts();
 	}

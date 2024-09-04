@@ -13,8 +13,14 @@ $section_tabs = array(
 	'error-log' => esc_html__( 'Log Files', 'yith-plugin-fw' ),
 );
 
-$current_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'main'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$tab_path    = defined( 'YIT_CORE_PLUGIN_PATH' ) ? YIT_CORE_PLUGIN_PATH : get_template_directory() . '/core/plugin-fw/';
+if ( ! apply_filters( 'yith_system_status_enable_phpinfo', true ) ) {
+	unset( $section_tabs['php-info'] );
+}
+
+$current_tab   = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'main'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$current_tab   = array_key_exists( $current_tab, $section_tabs ) ? $current_tab : array_key_first( $section_tabs );
+$base_path     = defined( 'YIT_CORE_PLUGIN_PATH' ) ? YIT_CORE_PLUGIN_PATH : get_template_directory() . '/core/plugin-fw/';
+$template_path = $base_path . "/templates/sysinfo/tabs/$current_tab.php";
 
 ?>
 <div id="yith-sysinfo" class="wrap yith-system-info yith-plugin-ui">
@@ -37,7 +43,11 @@ $tab_path    = defined( 'YIT_CORE_PLUGIN_PATH' ) ? YIT_CORE_PLUGIN_PATH : get_te
 	</h2>
 	<div id="wrap" class="yith-plugin-fw plugin-option yit-admin-panel-container">
 		<div class="yith-system-info-wrap">
-			<?php require_once $tab_path . "/templates/sysinfo/tabs/$current_tab.php"; ?>
+			<?php
+			if ( file_exists( $template_path ) ) {
+				require_once $template_path;
+			}
+			?>
 		</div>
 	</div>
 </div>

@@ -9,6 +9,8 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AssetSuggestionsService as A
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Ads;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\AdsCampaign;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Connection;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Merchant;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\MerchantMetrics;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Middleware;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Settings;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\AdsAssetGroup;
@@ -117,7 +119,7 @@ class RESTServiceProvider extends AbstractServiceProvider {
 		$this->share( AdsBudgetRecommendationController::class, BudgetRecommendationQuery::class, Ads::class );
 		$this->share( PhoneVerificationController::class, PhoneVerification::class );
 		$this->share( MerchantCenterAccountController::class, MerchantAccountService::class );
-		$this->share( MerchantCenterRequestReviewController::class, Middleware::class, RequestReviewStatuses::class, TransientsInterface::class );
+		$this->share( MerchantCenterRequestReviewController::class, Middleware::class, Merchant::class, RequestReviewStatuses::class, TransientsInterface::class );
 		$this->share_with_container( MerchantCenterReportsController::class );
 		$this->share( ShippingRateBatchController::class, ShippingRateQuery::class );
 		$this->share( ShippingRateController::class, ShippingRateQuery::class );
@@ -128,7 +130,7 @@ class RESTServiceProvider extends AbstractServiceProvider {
 		$this->share( SupportedCountriesController::class, WC::class, GoogleHelper::class );
 		$this->share( SettingsSyncController::class, Settings::class );
 		$this->share( DisconnectController::class );
-		$this->share( SetupCompleteController::class );
+		$this->share( SetupCompleteController::class, MerchantMetrics::class );
 		$this->share( AssetSuggestionsController::class, AdsAssetSuggestionsService::class );
 		$this->share( SyncableProductsCountController::class, JobRepository::class );
 		$this->share( PolicyComplianceCheckController::class, PolicyComplianceCheck::class );
@@ -144,23 +146,23 @@ class RESTServiceProvider extends AbstractServiceProvider {
 	 *
 	 * Overridden to include the RESTServer proxy with all classes.
 	 *
-	 * @param string $class        The class name to add.
+	 * @param string $class_name   The class name to add.
 	 * @param mixed  ...$arguments Constructor arguments for the class.
 	 *
 	 * @return DefinitionInterface
 	 */
-	protected function share( string $class, ...$arguments ): DefinitionInterface {
-		return parent::share( $class, RESTServer::class, ...$arguments )->addTag( 'rest_controller' );
+	protected function share( string $class_name, ...$arguments ): DefinitionInterface {
+		return parent::share( $class_name, RESTServer::class, ...$arguments )->addTag( 'rest_controller' );
 	}
 
 	/**
 	 * Share a class with only the container object provided.
 	 *
-	 * @param string $class The class name to add.
+	 * @param string $class_name The class name to add.
 	 *
 	 * @return DefinitionInterface
 	 */
-	protected function share_with_container( string $class ): DefinitionInterface {
-		return parent::share( $class, ContainerInterface::class )->addTag( 'rest_controller' );
+	protected function share_with_container( string $class_name ): DefinitionInterface {
+		return parent::share( $class_name, ContainerInterface::class )->addTag( 'rest_controller' );
 	}
 }

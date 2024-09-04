@@ -134,6 +134,36 @@ class Rest extends WP_REST_Controller {
 				'permission_callback' => [ $this, 'has_ping_permission' ],
 			]
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/migrateuser',
+			[
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => [ $this, 'migrate_user' ],
+				'permission_callback' => [ $this, 'has_permission' ],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/generateAlt',
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'generate_alt' ],
+				'permission_callback' => [ $this, 'has_permission' ],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/updateCredits',
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'update_credits' ],
+				'permission_callback' => [ $this, 'has_permission' ],
+			]
+		);
 	}
 
 	/**
@@ -176,7 +206,17 @@ class Rest extends WP_REST_Controller {
 	 * @return int Credits.
 	 */
 	public function get_credits( WP_REST_Request $request ) {
-		return Helper::get_content_ai_credits( true );
+		$credits = Helper::get_content_ai_credits( true, true );
+		if ( ! empty( $credits['error'] ) ) {
+			$error       = $credits['error'];
+			$error_texts = Helper::get_content_ai_errors();
+			return [
+				'error'   => ! empty( $error_texts[ $error ] ) ? wp_specialchars_decode( $error_texts[ $error ], ENT_QUOTES ) : $error,
+				'credits' => isset( $credits['credits'] ) ? $credits['credits'] : '',
+			];
+		}
+
+		return $credits;
 	}
 
 	/**
@@ -190,7 +230,7 @@ class Rest extends WP_REST_Controller {
 		$object_id    = $request->get_param( 'objectID' );
 		$country      = $request->get_param( 'country' );
 		$keyword      = mb_strtolower( $request->get_param( 'keyword' ) );
-		$force_update = $request->get_param( 'force_update' );
+		$force_update = $request->get_param( 'forceUpdate' );
 		$keyword_data = get_option( 'rank_math_ca_data' );
 
 		if ( ! in_array( get_post_type( $object_id ), (array) Helper::get_settings( 'general.content_ai_post_types' ), true ) ) {
@@ -231,8 +271,12 @@ class Rest extends WP_REST_Controller {
 			return $this->get_errored_data( $data['error'] );
 		}
 
-		$credits = $data['remaining_credits'] > 0 ? $data['remaining_credits'] : 0;
-		$data    = $data['data']['details'];
+		$credits = ! empty( $data['credits'] ) ? $data['credits'] : 0;
+		if ( ! empty( $credits ) ) {
+			$credits = $credits['available'] - $credits['taken'];
+		}
+
+		$data = $data['data']['details'];
 		$this->get_recommendations( $data );
 
 		update_post_meta(
@@ -299,7 +343,7 @@ class Rest extends WP_REST_Controller {
 		$credits_data = $request->get_param( 'credits' );
 
 		if ( ! empty( $credits_data ) ) {
-			$credits = ! empty( $credits_data['credits'] ) ? json_decode( $credits_data['credits'], true ) : [];
+			$credits = ! empty( $credits_data['credits'] ) ? $credits_data['credits'] : [];
 			$data    = [
 				'credits'      => ! empty( $credits['available'] ) ? $credits['available'] - $credits['taken'] : 0,
 				'plan'         => ! empty( $credits_data['plan'] ) ? $credits_data['plan'] : '',
@@ -399,6 +443,48 @@ class Rest extends WP_REST_Controller {
 	}
 
 	/**
+	 * Migrate user to nest js server.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function migrate_user( WP_REST_Request $request ) {
+		return Helper::migrate_user_to_nest_js();
+	}
+
+	/**
+	 * Endpoint to generate Image Alt.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function generate_alt( WP_REST_Request $request ) {
+		$ids = $request->get_param( 'attachmentIds' );
+		if ( empty( $ids ) ) {
+			return false;
+		}
+
+		do_action( 'rank_math/content_ai/generate_alt', $ids );
+
+		return true;
+	}
+
+	/**
+	 * Endpoint to Update the credits data.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_credits( WP_REST_Request $request ) {
+		$credits = $request->get_param( 'credits' );
+		Helper::update_credits( $credits );
+		return true;
+	}
+
+	/**
 	 * Get data from the API.
 	 *
 	 * @param string $keyword      Researched keyword.
@@ -426,7 +512,7 @@ class Rest extends WP_REST_Controller {
 
 		$url = add_query_arg(
 			$args,
-			'https://rankmath.com/wp-json/contentai/v1/research'
+			CONTENT_AI_URL . '/ai/research'
 		);
 
 		$data = wp_remote_get(

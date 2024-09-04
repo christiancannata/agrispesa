@@ -1,8 +1,8 @@
 <?php
 /**
- * Set up Google Analytics Integration task.
+ * Set up Google Analytics for WooCommerce task.
  *
- * Adds a set up Google Analytics Integration task to the task list.
+ * Adds a set up Google Analytics for WooCommerce task to the task list.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -67,7 +67,4 @@ class WC_Google_Analytics_Task extends Task {
 	public function is_complete() {
 		return WC_Google_Analytics_Integration::get_integration()->is_setup_complete();
 	}
-
 }
-
-

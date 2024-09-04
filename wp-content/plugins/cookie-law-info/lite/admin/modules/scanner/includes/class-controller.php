@@ -147,7 +147,7 @@ class Controller extends Cookieyes {
 	/**
 	 * Update the last scan info to the option table
 	 *
-	 * @param array $data Scan data recieved from the CookieYes web app after initiating the scan.
+	 * @param array $data Scan data received from the CookieYes web app after initiating the scan.
 	 * @return void
 	 */
 	public function update_info( $data = array() ) {

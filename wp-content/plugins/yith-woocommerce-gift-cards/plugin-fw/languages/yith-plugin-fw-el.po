@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-10-09 08:44:56+00:00\n"
+"POT-Creation-Date: 2024-05-10 13:24:20+00:00\n"
 "PO-Revision-Date: 2021-02-11 18:07:46+0000\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
@@ -13,49 +13,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 
-#: includes/class-yit-assets.php:137
+#: includes/class-yit-assets.php:213
 msgid "No file provided."
 msgstr ""
 
-#: includes/class-yit-assets.php:138
+#: includes/class-yit-assets.php:214
 msgid "You cannot drop files here."
 msgstr ""
 
-#: includes/class-yit-assets.php:160 yit-functions.php:1982
+#: includes/class-yit-assets.php:236 yit-functions.php:1993
 msgid "Confirm trash"
 msgstr ""
 
-#: includes/class-yit-assets.php:161
+#: includes/class-yit-assets.php:237
 msgid "Are you sure you want to trash the selected items?"
 msgstr ""
 
-#: includes/class-yit-assets.php:163 includes/class-yit-assets.php:167
+#: includes/class-yit-assets.php:239 includes/class-yit-assets.php:243
 #: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
-#: yit-functions.php:1984 yit-functions.php:2002
+#: yit-functions.php:1995 yit-functions.php:2013
 msgid "No"
 msgstr "Όχι"
 
-#: includes/class-yit-assets.php:164 yit-functions.php:2000
-#: yit-functions.php:2127
+#: includes/class-yit-assets.php:240 yit-functions.php:2011
+#: yit-functions.php:2138
 msgid "Confirm delete"
 msgstr ""
 
-#: includes/class-yit-assets.php:165
+#: includes/class-yit-assets.php:241
 msgid "Are you sure you want to delete the selected items?"
 msgstr ""
 
-#: includes/class-yit-assets.php:165 yit-functions.php:1916
-#: yit-functions.php:2075
+#: includes/class-yit-assets.php:241 yit-functions.php:1927
+#: yit-functions.php:2086
 msgid ""
 "This action cannot be undone and you will not be able to recover this data."
 msgstr ""
 
-#: includes/class-yit-assets.php:185 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:261 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid "Are you sure?"
 msgstr "Είστε σίγουρος;"
 
-#: includes/class-yit-assets.php:186 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:262 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid ""
 "If you continue with this action, you will reset all options in this page."
@@ -63,27 +63,27 @@ msgstr ""
 "Αν συνεχίσετε με αυτή την ενέργεια θα επαναφέρετε όλες τις επιλογές στη "
 "σελίδα."
 
-#: includes/class-yit-assets.php:197
+#: includes/class-yit-assets.php:273
 msgid "Clear"
 msgstr "Καθαρισμός"
 
-#: includes/class-yit-assets.php:198
+#: includes/class-yit-assets.php:274
 msgid "Clear color"
 msgstr "Καθαρισμός χρώματος"
 
-#: includes/class-yit-assets.php:199
+#: includes/class-yit-assets.php:275
 msgid "Default"
 msgstr "Προεπιλεγμένο"
 
-#: includes/class-yit-assets.php:200
+#: includes/class-yit-assets.php:276
 msgid "Select default color"
 msgstr "Επιλογή προεπιλεγμένου χρώματος"
 
-#: includes/class-yit-assets.php:201
+#: includes/class-yit-assets.php:277
 msgid "Select Color"
 msgstr "Επιλογή Χρώματος"
 
-#: includes/class-yit-assets.php:202
+#: includes/class-yit-assets.php:278
 msgid "Color value"
 msgstr "Αξία χρώματος"
 
@@ -91,16 +91,16 @@ msgstr "Αξία χρώματος"
 msgid "There was an error with your request; please try again later."
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:502
-#: includes/class-yit-plugin-panel.php:1561
+#: includes/class-yit-plugin-panel-woocommerce.php:501
+#: includes/class-yit-plugin-panel.php:1562
 msgid "Options saved!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:556
+#: includes/class-yit-plugin-panel-woocommerce.php:555
 msgid "Options reset correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:606
+#: includes/class-yit-plugin-panel-woocommerce.php:605
 msgid "The changes you have made will be lost if you leave this page."
 msgstr ""
 "Οι αλλαγές που έχετε δημιουργήσει θα χαθούν αν αφήσετε αυτήν την σελίδα."
@@ -145,44 +145,44 @@ msgid ""
 "kind of work and just buy whatever plugin you need from YITH."
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1556
+#: includes/class-yit-plugin-panel.php:1557
 msgid ""
 "The element you have entered already exists. Please, enter another name."
 msgstr "Το στοιχείο που εισάγατε υπάρχει ήδη. Παρακαλώ, εισάγετε άλλο όνομα."
 
-#: includes/class-yit-plugin-panel.php:1557
+#: includes/class-yit-plugin-panel.php:1558
 msgid "Settings saved"
 msgstr "Ρυθμίσεις αποθηκεύτηκαν"
 
-#: includes/class-yit-plugin-panel.php:1558
+#: includes/class-yit-plugin-panel.php:1559
 msgid "Settings reset"
 msgstr "Επαναφορά ρυθμίσεων"
 
-#: includes/class-yit-plugin-panel.php:1559
+#: includes/class-yit-plugin-panel.php:1560
 msgid "Element deleted correctly."
 msgstr "Το στοιχείο διαγράφηκε επιτυχώς."
 
-#: includes/class-yit-plugin-panel.php:1560
+#: includes/class-yit-plugin-panel.php:1561
 msgid "Element updated correctly."
 msgstr "Το στοιχείο αναβαθμίστηκε επιτυχώς."
 
-#: includes/class-yit-plugin-panel.php:1562
+#: includes/class-yit-plugin-panel.php:1563
 msgid "Database imported correctly."
 msgstr "Επιτυχής εισαγωγή βάσης δεδομένων."
 
-#: includes/class-yit-plugin-panel.php:1563
+#: includes/class-yit-plugin-panel.php:1564
 msgid "An error has occurred during import. Please try again."
 msgstr "Παρουσιάστηκε σφάλμα κατά την εισαγωγή. Παρακαλώ προσπαθήστε ξανά."
 
-#: includes/class-yit-plugin-panel.php:1564
+#: includes/class-yit-plugin-panel.php:1565
 msgid "The added file is not valid."
 msgstr "Το προστιθέμενο αρχείο δεν είναι έγκυρο."
 
-#: includes/class-yit-plugin-panel.php:1565
+#: includes/class-yit-plugin-panel.php:1566
 msgid "Sorry, import is disabled."
 msgstr "Συγνώμη, η εισαγωγή είναι απενεργοποιημένη."
 
-#: includes/class-yit-plugin-panel.php:1566
+#: includes/class-yit-plugin-panel.php:1567
 msgid "Sorting successful."
 msgstr "Διαλογή επιτυχής."
 
@@ -250,12 +250,21 @@ msgstr ""
 
 #. translators: %s is the name of the post type (example Back to "Membership
 #. Plans").
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to \"%s\""
 msgstr ""
 
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to the list"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: includes/class-yith-post-type-admin.php:414
+msgid "Show more details"
+msgstr ""
+
+#: includes/class-yith-post-type-admin.php:470
+msgid "Reset filters"
 msgstr ""
 
 #: includes/class-yith-system-status.php:107
@@ -669,7 +678,7 @@ msgstr "PHPInfo"
 msgid "Log Files"
 msgstr "Αρχεία Καταγραφής"
 
-#: templates/sysinfo/system-information-panel.php:22
+#: templates/sysinfo/system-information-panel.php:28
 msgid "YITH System Information"
 msgstr "Σύστημα Πληροφοριών YITH"
 
@@ -784,16 +793,16 @@ msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
 msgstr ""
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1914
+#: yit-functions.php:1925
 msgid "Are you sure you want to move \"%s\" to trash?"
 msgstr ""
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1916 yit-functions.php:2075
+#: yit-functions.php:1927 yit-functions.php:2086
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr ""
 
-#: yit-functions.php:2014 yit-functions.php:2022 yit-functions.php:2138
+#: yit-functions.php:2025 yit-functions.php:2033 yit-functions.php:2149
 msgid "Further actions"
 msgstr ""
 
@@ -827,49 +836,49 @@ msgctxt "[gutenberg]: Category Name"
 msgid "YITH"
 msgstr "YITH"
 
-#: includes/class-yit-assets.php:120
+#: includes/class-yit-assets.php:196
 msgctxt "Enhanced select"
 msgid "No matches found"
 msgstr ""
 
-#: includes/class-yit-assets.php:121
+#: includes/class-yit-assets.php:197
 msgctxt "Enhanced select"
 msgid "Please enter 1 or more characters"
 msgstr ""
 
 #. translators: %s is the number of characters.
-#: includes/class-yit-assets.php:123
+#: includes/class-yit-assets.php:199
 msgctxt "Enhanced select"
 msgid "Please enter %s or more characters"
 msgstr ""
 
-#: includes/class-yit-assets.php:124
+#: includes/class-yit-assets.php:200
 msgctxt "Enhanced select"
 msgid "Searching&hellip;"
 msgstr ""
 
-#: includes/class-yit-assets.php:136
+#: includes/class-yit-assets.php:212
 msgctxt "Title"
 msgid "Error"
 msgstr ""
 
-#: includes/class-yit-assets.php:148
+#: includes/class-yit-assets.php:224
 msgctxt "Button text"
 msgid "Confirm"
 msgstr ""
 
-#: includes/class-yit-assets.php:149
+#: includes/class-yit-assets.php:225
 msgctxt "Button text"
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-yit-assets.php:162 yit-functions.php:1985
+#: includes/class-yit-assets.php:238 yit-functions.php:1996
 msgctxt "Trash confirmation action"
 msgid "Yes, move to trash"
 msgstr ""
 
-#: includes/class-yit-assets.php:166 yit-functions.php:2003
-#: yit-functions.php:2129
+#: includes/class-yit-assets.php:242 yit-functions.php:2014
+#: yit-functions.php:2140
 msgctxt "Delete confirmation action"
 msgid "Yes, delete"
 msgstr ""
@@ -1201,57 +1210,57 @@ msgctxt "Plugin in \"Your Store Tools\" tab"
 msgid "Get it"
 msgstr ""
 
-#: yit-functions.php:1928
+#: yit-functions.php:1939
 msgctxt "Post action"
 msgid "Preview"
 msgstr ""
 
-#: yit-functions.php:1937
+#: yit-functions.php:1948
 msgctxt "Post action"
 msgid "View"
 msgstr ""
 
-#: yit-functions.php:1948
+#: yit-functions.php:1959
 msgctxt "Post action"
 msgid "Edit"
 msgstr ""
 
-#: yit-functions.php:1956
+#: yit-functions.php:1967
 msgctxt "Post action"
 msgid "Duplicate"
 msgstr ""
 
-#: yit-functions.php:1968
+#: yit-functions.php:1979
 msgctxt "Post action"
 msgid "Restore"
 msgstr ""
 
-#: yit-functions.php:1976
+#: yit-functions.php:1987
 msgctxt "Post action"
 msgid "Trash"
 msgstr ""
 
-#: yit-functions.php:1993
+#: yit-functions.php:2004
 msgctxt "Post action"
 msgid "Delete Permanently"
 msgstr ""
 
-#: yit-functions.php:2089
+#: yit-functions.php:2100
 msgctxt "Term action"
 msgid "View"
 msgstr ""
 
-#: yit-functions.php:2099
+#: yit-functions.php:2110
 msgctxt "Term action"
 msgid "Edit"
 msgstr ""
 
-#: yit-functions.php:2107
+#: yit-functions.php:2118
 msgctxt "Term action"
 msgid "Duplicate"
 msgstr ""
 
-#: yit-functions.php:2120
+#: yit-functions.php:2131
 msgctxt "Term action"
 msgid "Delete"
 msgstr ""

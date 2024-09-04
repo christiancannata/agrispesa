@@ -13,7 +13,7 @@ $script_blocker_class  = ( $js_blocking_status === false || $script_blocker_stat
 $advanced_settings_url = get_admin_url( null, 'edit.php?post_type=' . CLI_POST_TYPE . '&page=cookie-law-info#cookie-law-info-advanced' );
 $js_blocking_notice    = sprintf( wp_kses( __( 'Advanced script rendering is currently disabled. It should be enabled for the automatic script blocker to function. <a href="%s">Enable.</a>', 'cookie-law-info' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $advanced_settings_url ) );
 $count                 = 0;
-$plugin_help_url       = 'https://www.webtoffee.com/gdpr-cookie-consent-plugin-basic-version-user-guide/#Script_Blo_21';
+$plugin_help_url       = 'https://www.cookieyes.com/documentation/gdpr-cookie-consent-plugin/#Script_Blo_8';
 ?>
 <style>
 	#wt-cli-script-blocker-action {

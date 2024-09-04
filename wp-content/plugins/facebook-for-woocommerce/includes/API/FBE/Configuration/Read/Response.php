@@ -11,14 +11,6 @@ use WooCommerce\Facebook\API;
  * FBE Configuration API read response object.
  */
 class Response extends API\Response {
-	/**
-	 * Gets the messenger configuration object.
-	 *
-	 * @return API\FBE\Configuration\Messenger
-	 */
-	public function get_messenger_configuration(): API\FBE\Configuration\Messenger {
-		return new API\FBE\Configuration\Messenger( $this->response_data['messenger_chat'] ?? [] );
-	}
 
 	/**
 	 * Is Instagram Shopping enabled?

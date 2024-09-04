@@ -5,7 +5,7 @@
  */
 class WPDesk_Flexible_Shipping_Logger_Settings {
 
-	const LOGGER_CHANNEL_NAME = 'fs';
+	const LOGGER_CHANNEL_NAME = 'flexible-shipping';
 
 	const DEBUG_LOG_OPTION = 'debug_log';
 
@@ -85,12 +85,10 @@ class WPDesk_Flexible_Shipping_Logger_Settings {
 			'title' => __( 'Debug mode', 'flexible-shipping' ),
 		);
 		if ( 'yes' === $this->saas_settings->get_option( self::DEBUG_LOG_OPTION ) ) {
-			$downloader = new WPDesk_Flexible_Shipping_Logger_Downloader();
-
 			$settings[ self::DEBUG_LOG_OPTION ]['description'] = sprintf(
 				// Translators: URL.
 				__( '%1$sDownload debug.log file%2$s', 'flexible-shipping' ),
-				sprintf( '<a href="%1$s" target="_blank">', $downloader->get_download_url() ),
+				sprintf( '<a href="%1$s" target="_blank">', admin_url( 'admin.php?page=wc-status&tab=logs&source=flexible-shipping&paged=1' ) ),
 				'</a>'
 			);
 		}

@@ -5,8 +5,13 @@
  * @package Flexible Shippign
  */
 
-use FSVendor\Octolize\BetterDocs\Beacon\BeaconOptions;
+use FSVendor\Octolize\Blocks\IntegrationData;
+use FSVendor\Octolize\Blocks\Registrator;
+use FSVendor\Octolize\Blocks\StoreEndpoint;
+use FSVendor\Octolize\Brand\Assets\AdminAssets;
+use FSVendor\Octolize\Brand\UpsellingBox\ShippingMethodShouldShowStrategy;
 use FSVendor\Octolize\ShippingExtensions\ShippingExtensions;
+use FSVendor\Octolize\Tracker\DeactivationTracker\OctolizeReasonsFactory;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayAndConditions;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayOrConditions;
@@ -15,7 +20,7 @@ use FSVendor\Octolize\Tracker\TrackerInitializer;
 use FSVendor\WPDesk\FS\Compatibility\PluginCompatibility;
 use FSVendor\WPDesk\FS\Shipment\ShipmentFunctionality;
 use FSVendor\WPDesk\FS\TableRate\Logger\Assets;
-use FSVendor\WPDesk\Logger\WPDeskLoggerFactory;
+use FSVendor\WPDesk\Logger\SimpleLoggerFactory;
 use FSVendor\WPDesk\Mutex\WordpressPostMutex;
 use FSVendor\WPDesk\Notice\AjaxHandler;
 use FSVendor\WPDesk\PluginBuilder\Plugin\AbstractPlugin;
@@ -34,23 +39,28 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConvertersFactory;
 use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\ShippingIntegrations;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use WPDesk\FS\Blocks\FreeShipping\FreeShippingBlock;
+use WPDesk\FS\Blocks\FreeShipping\FreeShippingStoreEndpointData;
 use WPDesk\FS\Helpers\FlexibleShippingMethodsChecker;
 use WPDesk\FS\Helpers\WooSettingsPageChecker;
 use WPDesk\FS\Integration\ExternalPluginAccess;
-use WPDesk\FS\Onboarding\TableRate\Onboarding;
 use WPDesk\FS\Onboarding\TableRate\FinishOption;
+use WPDesk\FS\Onboarding\TableRate\Onboarding;
 use WPDesk\FS\Onboarding\TableRate\OptionAjaxUpdater;
 use WPDesk\FS\Onboarding\TableRate\PopupData;
 use WPDesk\FS\Plugin\PluginActivation;
+use WPDesk\FS\ProFeatures;
 use WPDesk\FS\ProVersion\ProVersionUpdateReminder;
+use WPDesk\FS\Shipment;
 use WPDesk\FS\TableRate\Beacon\Beacon;
 use WPDesk\FS\TableRate\Beacon\BeaconClickedAjax;
 use WPDesk\FS\TableRate\Beacon\BeaconDeactivationTracker;
 use WPDesk\FS\TableRate\Beacon\BeaconDisplayStrategy;
+use WPDesk\FS\TableRate\ContextualInfo;
+use WPDesk\FS\TableRate\Debug\DebugTracker;
 use WPDesk\FS\TableRate\Debug\MultipleShippingZonesMatchedSameTerritoryNotice;
 use WPDesk\FS\TableRate\Debug\MultipleShippingZonesMatchedSameTerritoryTracker;
 use WPDesk\FS\TableRate\Debug\NoShippingMethodsNotice;
-use WPDesk\FS\TableRate\Debug\DebugTracker;
 use WPDesk\FS\TableRate\FreeShipping\FreeShippingNotice;
 use WPDesk\FS\TableRate\FreeShipping\FreeShippingNoticeGenerator;
 use WPDesk\FS\TableRate\FreeShipping\FreeShippingNoticeRenderer;
@@ -62,7 +72,6 @@ use WPDesk\FS\TableRate\ImporterExporter\ImporterData;
 use WPDesk\FS\TableRate\MultiCurrency;
 use WPDesk\FS\TableRate\Order\ItemMeta;
 use WPDesk\FS\TableRate\Rule\PreconfiguredScenarios;
-use WPDesk\FS\ProFeatures;
 use WPDesk\FS\TableRate\Rule\TrackerData;
 use WPDesk\FS\TableRate\RulesSettingsField;
 use WPDesk\FS\TableRate\ShippingMethod\BlockEditing\BlockEditing;
@@ -75,13 +84,12 @@ use WPDesk\FS\TableRate\ShippingMethod\Duplicate\DuplicateScript;
 use WPDesk\FS\TableRate\ShippingMethod\Duplicate\DuplicateTracker;
 use WPDesk\FS\TableRate\ShippingMethod\Duplicate\DuplicatorChecker;
 use WPDesk\FS\TableRate\ShippingMethod\Management\ShippingMethodManagement;
-use WPDesk\FS\TableRate\ShippingMethod\MethodTitle;
 use WPDesk\FS\TableRate\ShippingMethod\MethodDescription;
+use WPDesk\FS\TableRate\ShippingMethod\MethodTitle;
 use WPDesk\FS\TableRate\ShippingMethodSingle;
 use WPDesk\FS\TableRate\Tax\Tracker;
 use WPDesk\FS\TableRate\UserFeedback;
-use WPDesk\FS\TableRate\ContextualInfo;
-use WPDesk\FS\Shipment;
+use WPDesk\WooCommerceCartWeight\Block\StoreEndpointData;
 
 /**
  * Class Flexible_Shipping_Plugin
@@ -183,7 +191,7 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		if ( $logger_settings->is_enabled() ) {
 			add_filter( 'wpdesk_is_wp_log_capture_permitted', '__return_false' );
 
-			return $this->logger = ( new WPDeskLoggerFactory() )->createWPDeskLogger( $logger_settings->get_logger_channel_name() );
+			return $this->logger = ( new SimpleLoggerFactory( $logger_settings->get_logger_channel_name() ) )->getLogger();
 		}
 
 		return $this->logger = new NullLogger();
@@ -215,18 +223,20 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 
 		$this->add_hookable( new WPDesk\FS\Rate\WPDesk_Flexible_Shipping_Rate_Notice() );
 
-		$this->add_hookable(
-			new TextPetitionDisplayer(
-				'woocommerce_after_settings_shipping',
-				new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), ShippingMethodSingle::SHIPPING_METHOD_ID ),
-				new RepositoryRatingPetitionText(
-					'Octolize',
-					$this->plugin_info->get_plugin_name(),
-					'https://octol.io/fs-rate',
-					'center'
+		if ( class_exists( '\WC_Shipping_Zones' ) ) {
+			$this->add_hookable(
+				new TextPetitionDisplayer(
+					'woocommerce_after_settings_shipping',
+					new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), ShippingMethodSingle::SHIPPING_METHOD_ID ),
+					new RepositoryRatingPetitionText(
+						'Octolize',
+						$this->plugin_info->get_plugin_name(),
+						'https://octol.io/fs-rate',
+						'center'
+					)
 				)
-			)
-		);
+			);
+		}
 
 
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Shorcode_Unit_Weight() );
@@ -235,8 +245,6 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$this->add_hookable( new AjaxHandler( trailingslashit( $this->get_plugin()->get_plugin_url() ) . 'vendor_prefixed/wpdesk/wp-notice/assets' ) );
 
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Method_Created_Tracker_Deactivation_Data() );
-
-		$this->add_hookable( new WPDesk_Flexible_Shipping_Logger_Downloader( new WPDeskLoggerFactory() ) );
 
 		$this->add_hookable( new ShippingIntegrations( 'flexible_shipping' ) );
 
@@ -320,6 +328,16 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 
 		$this->add_hookable( new ProVersionUpdateReminder( 'pl_PL' === get_locale() ) );
 
+		$this->add_hookable( new \WPDesk\FS\Plugin\PluginLinks( $this->get_plugin_file_path() ) );
+
+		$brand_assets_url = $this->get_plugin_assets_url() . '../vendor_prefixed/octolize/wp-octolize-brand-assets/assets/';
+
+		$this->add_hookable( new \WPDesk\FS\AdvertMetabox\ProPluginAdvertMetabox( $brand_assets_url ) );
+		$this->add_hookable( new \WPDesk\FS\AdvertMetabox\FsiePluginAdvertMetabox( $brand_assets_url ) );
+
+		$should_show_strategy = new ShippingMethodShouldShowStrategy( \WPDesk_Flexible_Shipping_Settings::METHOD_ID );
+		$this->add_hookable( new AdminAssets( $brand_assets_url, 'fs', $should_show_strategy ) );
+
 	}
 
 	/**
@@ -392,6 +410,7 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$this->init_tracker();
 		$this->hooks();
 		$this->init_assets_url_on_rules_settings_field();
+		$this->init_checkout_blocks();
 	}
 
 	/**
@@ -461,11 +480,30 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$this->hooks_on_hookable_objects();
 	}
 
+	private function init_checkout_blocks() {
+		( new FreeShippingBlock( [ self::FS_FREE_SHIPPING_NOTICE_NAME ] ) )->hooks();
+
+		$integration_data = ( new IntegrationData() )
+			->set_integration_name( $this->plugin_namespace . '-free-shipping-notice-block-integration' )
+			->set_script_name( '' )
+			->set_script_path( '/assets/blocks/free-shipping-notice-block-integration/' );
+		( new StoreEndpoint( $integration_data->get_integration_name(), 'page_type', false ) )->hooks();
+		( new FreeShippingStoreEndpointData( $integration_data->get_integration_name() ) )->hooks();
+		( new Registrator(
+			$integration_data,
+			$this->plugin_path,
+			$this->get_plugin_file_path(),
+			false,
+			false
+		) )->hooks();
+	}
+
+
 	/**
 	 * .
 	 */
 	public function init_multicurrency() {
-		$prefix = 'flexible-shipping';
+		$prefix = $this->plugin_info->get_plugin_dir();
 		( new FilterConvertersFactory( $prefix ) )->hooks();
 		( new MultiCurrency( $this->logger, $prefix ) )->hooks();
 	}
@@ -500,11 +538,11 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 	public function init_free_shipping_notice() {
 		$cart    = WC()->cart;
 		$session = WC()->session;
+		( new FreeShippingNoticeGenerator( null, null, self::FS_FREE_SHIPPING_NOTICE_NAME ) )->hooks();
+		( new FreeShippingNoticeRenderer( $this->renderer ) )->hooks();
 		if ( $cart instanceof WC_Cart && $session instanceof WC_Session ) {
-			( new FreeShippingNoticeGenerator( $cart, $session, self::FS_FREE_SHIPPING_NOTICE_NAME ) )->hooks();
 			( new FreeShippingNotice( $cart, $session, self::FS_FREE_SHIPPING_NOTICE_NAME ) )->hooks();
 			( new \WPDesk\FS\TableRate\FreeShipping\Assets( $this->get_plugin_assets_url(), $this->scripts_version ) )->hooks();
-			( new FreeShippingNoticeRenderer( $this->renderer ) )->hooks();
 		}
 		( new NoticeTextSettings() )->hooks();
 		( new ProgressBarSettings() )->hooks();
@@ -515,11 +553,20 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 	 * Init tracker.
 	 */
 	private function init_tracker() {
-		$this->add_hookable(
-			TrackerInitializer::create_from_plugin_info( $this->plugin_info, $this->prepare_shoud_display_for_flexible_shipping() )
-		);
-		$this->add_hookable( new WPDesk_Flexible_Shipping_Tracker() );
-		$this->add_hookable( new TrackerData() );
+		add_action( 'woocommerce_init', function () {
+			TrackerInitializer::create_from_plugin_info(
+				$this->plugin_info,
+				$this->prepare_shoud_display_for_flexible_shipping(),
+				new OctolizeReasonsFactory(
+					'https://octol.io/fs-docs-exit-pop-up',
+					'https://octol.io/fs-support-forum-exit-pop-up',
+					__( 'Flexible Shipping PRO', 'flexible-shipping' ),
+					'https://octol.io/fs-contact-exit-pop-up',
+				)
+			)->hooks();
+			( new WPDesk_Flexible_Shipping_Tracker() )->hooks();
+			( new TrackerData() )->hooks();
+		} );
 	}
 
 	/**
@@ -807,23 +854,18 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 	 * @return array
 	 */
 	public function links_filter( $links ) {
-		$docs_link    = get_locale() === 'pl_PL' ? 'https://octol.io/fs-docs-pl' : 'https://octol.io/fs-docs';
-		$support_link = get_locale() === 'pl_PL' ? 'https://octol.io/fs-support-pl' : 'https://octol.io/fs-support';
-
-		$settings_url = admin_url( 'admin.php?page=wc-settings&tab=shipping&section=' . WPDesk_Flexible_Shipping_Settings::METHOD_ID );
+		$settings_url = admin_url( 'admin.php?page=wc-settings&tab=shipping&section=' . \WPDesk_Flexible_Shipping_Settings::METHOD_ID );
 
 		$plugin_links = [
 			'<a href="' . $settings_url . '">' . __(
 				'Settings',
 				'flexible-shipping'
 			) . '</a>',
-			'<a target="_blank" href="' . $docs_link . '">' . __( 'Docs', 'flexible-shipping' ) . '</a>',
-			'<a target="_blank" href="' . $support_link . '">' . __( 'Support', 'flexible-shipping' ) . '</a>',
 		];
-		$pro_link     = get_locale() === 'pl_PL' ? 'https://octol.io/fs-upgrade-pl' : 'https://octol.io/fs-upgrade';
 
-		if ( ! wpdesk_is_plugin_active( 'flexible-shipping-pro/flexible-shipping-pro.php' ) ) {
-			$plugin_links[] = '<a href="' . $pro_link . '" target="_blank" style="color:#d64e07;font-weight:bold;">' . __(
+		if ( ! defined( 'FLEXIBLE_SHIPPING_PRO_VERSION' )  ) {
+			$pro_link     = get_locale() === 'pl_PL' ? 'https://octol.io/fs-upgrade-pl' : 'https://octol.io/fs-upgrade';
+			$plugin_links[] = '<a href="' . esc_url( $pro_link ) . '" target="_blank" style="color:#00B62E;font-weight:bold;">' . __(
 					'Buy PRO',
 					'flexible-shipping'
 				) . '</a>';

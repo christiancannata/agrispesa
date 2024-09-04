@@ -115,6 +115,9 @@ jQuery( function ( $ ) {
 	}
 
 	init_dependencies();
+
+	$( document ).on( 'yith-plugin-fw-panel-init-deps', init_dependencies );
+
 	// re-init deps after an add toggle action
 	$( document ).on( 'yith-add-box-button-toggle', init_dependencies );
 
@@ -430,4 +433,5 @@ jQuery( function ( $ ) {
 		} );
 
 	} )();
-} );
+} )
+;

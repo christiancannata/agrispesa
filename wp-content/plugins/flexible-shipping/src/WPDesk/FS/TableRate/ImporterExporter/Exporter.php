@@ -26,6 +26,9 @@ class Exporter implements Hookable {
 	 */
 	public function flexible_shipping_export() {
 		check_ajax_referer( 'flexible_shipping', 'flexible_shipping_nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$instance_id = filter_input( INPUT_GET, 'instance_id' );
 		$methods     = array_filter( wp_parse_id_list( filter_input( INPUT_GET, 'methods' ) ) );

@@ -61,9 +61,12 @@ class Controller extends Cloud {
 	 */
 	public function get_statistics() {
 		$logs = array();
+		$this->set_api_url( CKY_APP_URL . '/api/v3/' );
 		$this->make_auth_request();
+		$data = array( 'granularity' => '7d' );
 		$response      = $this->get(
-			'websites/' . $this->get_website_id() . '/consent-logs/chart-data'
+			'websites/' . $this->get_website_id() . '/consent-logs/chart-data',
+			$data
 		);
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 === $response_code ) {

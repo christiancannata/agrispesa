@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-10-09 08:44:56+00:00\n"
-"PO-Revision-Date: 2023-07-06 06:04:36+0000\n"
+"POT-Creation-Date: 2024-05-10 13:24:20+00:00\n"
+"PO-Revision-Date: 2024-02-15 12:07:20+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,50 +13,50 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 
-#: includes/class-yit-assets.php:137
+#: includes/class-yit-assets.php:213
 msgid "No file provided."
 msgstr "No se proporcionó ningún archivo."
 
-#: includes/class-yit-assets.php:138
+#: includes/class-yit-assets.php:214
 msgid "You cannot drop files here."
 msgstr "Aquí no se pueden soltar archivos."
 
-#: includes/class-yit-assets.php:160 yit-functions.php:1982
+#: includes/class-yit-assets.php:236 yit-functions.php:1993
 msgid "Confirm trash"
 msgstr "Confirmar el traslado a la papelera"
 
-#: includes/class-yit-assets.php:161
+#: includes/class-yit-assets.php:237
 msgid "Are you sure you want to trash the selected items?"
 msgstr ""
 "¿Estás seguro de que quieres mover a la papelera los elementos seleccionados?"
 
-#: includes/class-yit-assets.php:163 includes/class-yit-assets.php:167
+#: includes/class-yit-assets.php:239 includes/class-yit-assets.php:243
 #: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
-#: yit-functions.php:1984 yit-functions.php:2002
+#: yit-functions.php:1995 yit-functions.php:2013
 msgid "No"
 msgstr "No"
 
-#: includes/class-yit-assets.php:164 yit-functions.php:2000
-#: yit-functions.php:2127
+#: includes/class-yit-assets.php:240 yit-functions.php:2011
+#: yit-functions.php:2138
 msgid "Confirm delete"
 msgstr "Confirmar el borrado"
 
-#: includes/class-yit-assets.php:165
+#: includes/class-yit-assets.php:241
 msgid "Are you sure you want to delete the selected items?"
 msgstr "¿Estás seguro de que quieres borrar los elementos seleccionados?"
 
-#: includes/class-yit-assets.php:165 yit-functions.php:1916
-#: yit-functions.php:2075
+#: includes/class-yit-assets.php:241 yit-functions.php:1927
+#: yit-functions.php:2086
 msgid ""
 "This action cannot be undone and you will not be able to recover this data."
 msgstr "Esta acción no se puede revertir y no podrá recuperar estos datos."
 
-#: includes/class-yit-assets.php:185 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:261 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: includes/class-yit-assets.php:186 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:262 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid ""
 "If you continue with this action, you will reset all options in this page."
@@ -64,27 +64,27 @@ msgstr ""
 "Si continúas con esta acción, restablecerás todas las opciones en esta "
 "página."
 
-#: includes/class-yit-assets.php:197
+#: includes/class-yit-assets.php:273
 msgid "Clear"
 msgstr "Borrar"
 
-#: includes/class-yit-assets.php:198
+#: includes/class-yit-assets.php:274
 msgid "Clear color"
 msgstr "Borrar color"
 
-#: includes/class-yit-assets.php:199
+#: includes/class-yit-assets.php:275
 msgid "Default"
 msgstr "Predeterminado"
 
-#: includes/class-yit-assets.php:200
+#: includes/class-yit-assets.php:276
 msgid "Select default color"
 msgstr "Seleccionar color predeterminado"
 
-#: includes/class-yit-assets.php:201
+#: includes/class-yit-assets.php:277
 msgid "Select Color"
 msgstr "Seleccionar color"
 
-#: includes/class-yit-assets.php:202
+#: includes/class-yit-assets.php:278
 msgid "Color value"
 msgstr "Valor del color"
 
@@ -93,16 +93,16 @@ msgid "There was an error with your request; please try again later."
 msgstr ""
 "Se ha producido un error en tu solicitud; inténtalo de nuevo más tarde."
 
-#: includes/class-yit-plugin-panel-woocommerce.php:502
-#: includes/class-yit-plugin-panel.php:1561
+#: includes/class-yit-plugin-panel-woocommerce.php:501
+#: includes/class-yit-plugin-panel.php:1562
 msgid "Options saved!"
 msgstr "¡Opciones guardadas!"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:556
+#: includes/class-yit-plugin-panel-woocommerce.php:555
 msgid "Options reset correctly!"
 msgstr "¡Opciones restablecidas correctamente!"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:606
+#: includes/class-yit-plugin-panel-woocommerce.php:605
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "Los cambios que has hecho se perderán si abandonas esta página."
 
@@ -154,46 +154,46 @@ msgstr ""
 "pequeño que sea tu problema. Hazte un favor y deja de usar plugins gratuitos "
 "que no funcionan y compra cualquier plugin que necesites de YITH."
 
-#: includes/class-yit-plugin-panel.php:1556
+#: includes/class-yit-plugin-panel.php:1557
 msgid ""
 "The element you have entered already exists. Please, enter another name."
 msgstr ""
 "El elemento que has introducido ya existe. Por favor, introduce otro nombre."
 
-#: includes/class-yit-plugin-panel.php:1557
+#: includes/class-yit-plugin-panel.php:1558
 msgid "Settings saved"
 msgstr "Ajustes guardados"
 
-#: includes/class-yit-plugin-panel.php:1558
+#: includes/class-yit-plugin-panel.php:1559
 msgid "Settings reset"
 msgstr "Restablecer ajustes"
 
-#: includes/class-yit-plugin-panel.php:1559
+#: includes/class-yit-plugin-panel.php:1560
 msgid "Element deleted correctly."
 msgstr "Elemento eliminado correctamente."
 
-#: includes/class-yit-plugin-panel.php:1560
+#: includes/class-yit-plugin-panel.php:1561
 msgid "Element updated correctly."
 msgstr "Elemento actualizado correctamente."
 
-#: includes/class-yit-plugin-panel.php:1562
+#: includes/class-yit-plugin-panel.php:1563
 msgid "Database imported correctly."
 msgstr "Base de datos importada correctamente."
 
-#: includes/class-yit-plugin-panel.php:1563
+#: includes/class-yit-plugin-panel.php:1564
 msgid "An error has occurred during import. Please try again."
 msgstr ""
 "Ha ocurrido un error durante la importación. Por favor, inténtalo de nuevo."
 
-#: includes/class-yit-plugin-panel.php:1564
+#: includes/class-yit-plugin-panel.php:1565
 msgid "The added file is not valid."
 msgstr "El archivo añadido no es válido."
 
-#: includes/class-yit-plugin-panel.php:1565
+#: includes/class-yit-plugin-panel.php:1566
 msgid "Sorry, import is disabled."
 msgstr "Lo siento, la importación está desactivada."
 
-#: includes/class-yit-plugin-panel.php:1566
+#: includes/class-yit-plugin-panel.php:1567
 msgid "Sorting successful."
 msgstr "Clasificación realizada con éxito"
 
@@ -270,13 +270,22 @@ msgstr ""
 
 #. translators: %s is the name of the post type (example Back to "Membership
 #. Plans").
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to \"%s\""
 msgstr "Volver a \"%s\""
 
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to the list"
 msgstr "Volver a la lista"
+
+#. translators: Hidden accessibility text.
+#: includes/class-yith-post-type-admin.php:414
+msgid "Show more details"
+msgstr "Muestra más detalles"
+
+#: includes/class-yith-post-type-admin.php:470
+msgid "Reset filters"
+msgstr "Restablecer filtros"
 
 #: includes/class-yith-system-status.php:107
 msgid "WordPress Version"
@@ -355,7 +364,7 @@ msgid ""
 "%1$sClick here%2$s to know more"
 msgstr ""
 "La comprobación del sistema ha detectado algunos problemas de compatibilidad "
-"en tu instalación.%1$sHaz clic quí%2$s para saber más"
+"en tu instalación. %1$sHaz clic aquí%2$s para saber más"
 
 #: includes/class-yith-system-status.php:482
 msgid "Enabled"
@@ -435,8 +444,8 @@ msgid ""
 "%2$s module is disabled. Ask your hosting company to enable it."
 msgstr ""
 "La comprobación del sistema no ha podido determinar qué versión de %1$s está "
-"instalada porque el módulo %2$s está desactivado. Solicita a tu compañia de "
-"hosting que lo active."
+"instalada porque el módulo %2$s está desactivado. Solicita a tu compañía de "
+"alojamiento que lo active."
 
 #. translators: %1$s TLS label
 #: includes/class-yith-system-status.php:599
@@ -688,7 +697,7 @@ msgstr "Información PHP"
 msgid "Log Files"
 msgstr "Archivos de registro"
 
-#: templates/sysinfo/system-information-panel.php:22
+#: templates/sysinfo/system-information-panel.php:28
 msgid "YITH System Information"
 msgstr "Información de Sistema de YITH"
 
@@ -802,16 +811,16 @@ msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
 msgstr "Datos: %1$.2fMB | Índice: %2$.2fMB | Libre: %3$.2fMB | Motor: %4$s"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1914
+#: yit-functions.php:1925
 msgid "Are you sure you want to move \"%s\" to trash?"
 msgstr "¿Estás seguro de que quieres mover \"%s\" a la papelera?"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1916 yit-functions.php:2075
+#: yit-functions.php:1927 yit-functions.php:2086
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "¿Estás seguro de que quieres borrar \"%s\"?"
 
-#: yit-functions.php:2014 yit-functions.php:2022 yit-functions.php:2138
+#: yit-functions.php:2025 yit-functions.php:2033 yit-functions.php:2149
 msgid "Further actions"
 msgstr "Otras acciones"
 
@@ -849,49 +858,49 @@ msgctxt "[gutenberg]: Category Name"
 msgid "YITH"
 msgstr "YITH"
 
-#: includes/class-yit-assets.php:120
+#: includes/class-yit-assets.php:196
 msgctxt "Enhanced select"
 msgid "No matches found"
 msgstr "No se han encontrado coincidencias"
 
-#: includes/class-yit-assets.php:121
+#: includes/class-yit-assets.php:197
 msgctxt "Enhanced select"
 msgid "Please enter 1 or more characters"
 msgstr "Por favor, introduce uno o más caracteres"
 
 #. translators: %s is the number of characters.
-#: includes/class-yit-assets.php:123
+#: includes/class-yit-assets.php:199
 msgctxt "Enhanced select"
 msgid "Please enter %s or more characters"
 msgstr "Por favor, introduce %s o más caracteres"
 
-#: includes/class-yit-assets.php:124
+#: includes/class-yit-assets.php:200
 msgctxt "Enhanced select"
 msgid "Searching&hellip;"
 msgstr "Buscando&hellip;"
 
-#: includes/class-yit-assets.php:136
+#: includes/class-yit-assets.php:212
 msgctxt "Title"
 msgid "Error"
 msgstr "Error"
 
-#: includes/class-yit-assets.php:148
+#: includes/class-yit-assets.php:224
 msgctxt "Button text"
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: includes/class-yit-assets.php:149
+#: includes/class-yit-assets.php:225
 msgctxt "Button text"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: includes/class-yit-assets.php:162 yit-functions.php:1985
+#: includes/class-yit-assets.php:238 yit-functions.php:1996
 msgctxt "Trash confirmation action"
 msgid "Yes, move to trash"
 msgstr "Sí, mover a la papelera"
 
-#: includes/class-yit-assets.php:166 yit-functions.php:2003
-#: yit-functions.php:2129
+#: includes/class-yit-assets.php:242 yit-functions.php:2014
+#: yit-functions.php:2140
 msgctxt "Delete confirmation action"
 msgid "Yes, delete"
 msgstr "Si, borrar"
@@ -1232,57 +1241,57 @@ msgctxt "Plugin in \"Your Store Tools\" tab"
 msgid "Get it"
 msgstr "Consíguelo"
 
-#: yit-functions.php:1928
+#: yit-functions.php:1939
 msgctxt "Post action"
 msgid "Preview"
 msgstr "Previsualizar"
 
-#: yit-functions.php:1937
+#: yit-functions.php:1948
 msgctxt "Post action"
 msgid "View"
 msgstr "Ver"
 
-#: yit-functions.php:1948
+#: yit-functions.php:1959
 msgctxt "Post action"
 msgid "Edit"
 msgstr "Editar"
 
-#: yit-functions.php:1956
+#: yit-functions.php:1967
 msgctxt "Post action"
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: yit-functions.php:1968
+#: yit-functions.php:1979
 msgctxt "Post action"
 msgid "Restore"
 msgstr "Restaurar"
 
-#: yit-functions.php:1976
+#: yit-functions.php:1987
 msgctxt "Post action"
 msgid "Trash"
 msgstr "A la papelera"
 
-#: yit-functions.php:1993
+#: yit-functions.php:2004
 msgctxt "Post action"
 msgid "Delete Permanently"
 msgstr "Borrar permanentemente"
 
-#: yit-functions.php:2089
+#: yit-functions.php:2100
 msgctxt "Term action"
 msgid "View"
 msgstr "Ver"
 
-#: yit-functions.php:2099
+#: yit-functions.php:2110
 msgctxt "Term action"
 msgid "Edit"
 msgstr "Editar"
 
-#: yit-functions.php:2107
+#: yit-functions.php:2118
 msgctxt "Term action"
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: yit-functions.php:2120
+#: yit-functions.php:2131
 msgctxt "Term action"
 msgid "Delete"
 msgstr "Borrar"

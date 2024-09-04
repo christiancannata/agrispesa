@@ -10,9 +10,11 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Sender_Wordpress_To_WPDesk')) {
     {
         /**
          * URL to the WP Desk Tracker API endpoint.
+         *
          * @var string
          */
         private $api_url = 'https://data.wpdesk.org/?track=1';
+        /** @var string */
         private $test_api_url = 'https://testdata.wpdesk.org/?track=1';
         private function get_api_url()
         {
@@ -33,7 +35,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Sender_Wordpress_To_WPDesk')) {
          */
         public function send_payload(array $payload)
         {
-            $response = \wp_remote_post($this->get_api_url(), array('method' => 'POST', 'timeout' => 5, 'redirection' => 5, 'httpversion' => '1.0', 'blocking' => \false, 'headers' => array('user-agent' => 'WPDeskTracker'), 'body' => \json_encode($payload), 'cookies' => array()));
+            $response = \wp_remote_post($this->get_api_url(), ['method' => 'POST', 'timeout' => 5, 'redirection' => 5, 'httpversion' => '1.0', 'blocking' => \false, 'headers' => ['user-agent' => 'WPDeskTracker'], 'body' => \json_encode($payload), 'cookies' => []]);
             if ($response instanceof \WP_Error) {
                 throw new \FSVendor\WPDesk_Tracker_Sender_Exception_WpError('Payload send error', $response);
             } else {

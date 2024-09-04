@@ -184,30 +184,33 @@
 		{
 			//$all_plugins = get_plugins();
 			
-			//pree($all_plugins);exit;
+			$translation_array = array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),	
+				'this_url' => admin_url('admin.php?page=wpso-settings'),
+				'wpso_tab' => (isset($_GET['t'])?esc_attr($_GET['t']):'0'),
+				'nonce'=> wp_create_nonce('wpso_nonce_ensured'),
+
+			);
+			
 			
 			if ( $this->_check_load_script_css() ) {
 				wp_enqueue_script( 'jquery' );
 				wp_enqueue_script( 'jquery-ui-sortable' );
-				wp_enqueue_script( 'wpsojs', WPSO_URL.'/js/scripts.js', array( 'jquery' ), null, true );
-				
-				wp_enqueue_style( 'wpso', WPSO_URL.'/css/styles.css', array(), null );
+				wp_enqueue_script( 'wpsojs', WPSO_URL.'/js/scripts.js', array( 'jquery' ), date('Ymdh'), true );				
+				wp_enqueue_style( 'wpso', WPSO_URL.'/css/styles.css', array(), date('Ymdh') );
 			}
 			
 			if(is_admin() && isset($_GET['page']) && $_GET['page'] == 'wpso-settings'){
 
-				wp_enqueue_style( 'wpso', WPSO_URL.'/css/admin.css', array(), time() );
-				wp_enqueue_script( 'wpsojs', WPSO_URL.'/js/admin.js', array( 'jquery' ), null, true );
+				wp_enqueue_style( 'wpso', WPSO_URL.'/css/admin.css', array(), date('Ymdh') );
+				wp_enqueue_script( 'wpsojs', WPSO_URL.'/js/admin.js', array( 'jquery' ), date('Ymdh'), true );
 
-				$translation_array = array(
+				
+				
 
-                    'this_url' => admin_url('admin.php?page=wpso-settings'),
-                    'wpso_tab' => (isset($_GET['t'])?esc_attr($_GET['t']):'0'),
-
-                );
-				wp_localize_script('wpsojs', 'wpso_obj', $translation_array);
-
-			}			
+			}		
+			
+			wp_localize_script('wpsojs', 'wpso_obj', $translation_array);	
 		}
 		
 		
@@ -457,37 +460,50 @@
 		function update_menu_order()
 		{
 			global $wpdb;
+			
+			if (
+                ! isset( $_POST['wpso_nonce'] )
+                || ! wp_verify_nonce( sanitize_text_field( wp_unslash ($_POST['wpso_nonce'])), 'wpso_nonce_ensured' )
+            ) {
+
+                print_r(__('Sorry! Your nonce did not verified.', 'wpso-sort-order'));
+
+            }else{
 	
-			parse_str( $_POST['order'], $data );
-			
-			if ( !is_array( $data ) ) return false;
+				parse_str( $_POST['order'], $data );
 				
-			// get objects per now page
-			$id_arr = array();
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {
-					$id_arr[] = $id;
+				if ( !is_array( $data ) ) return false;
+					
+				// get objects per now page
+				$id_arr = array();
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {
+						$id_arr[] = $id;
+					}
 				}
+				
+				// get menu_order of objects per now page
+				$menu_order_arr = array();
+				foreach( $id_arr as $key => $id ) {
+					$results = $wpdb->get_results( "SELECT menu_order FROM $wpdb->posts WHERE ID = ".intval( $id ) );
+					foreach( $results as $result ) {
+						$menu_order_arr[] = $result->menu_order;
+					}
+				}
+				
+				// maintains key association = no
+				sort( $menu_order_arr );
+				$counter = 0;
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {
+						$counter++;
+						$wpdb->update( $wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => intval( $id ) ) );//$menu_order_arr[$position]
+					}
+				}
+				
 			}
 			
-			// get menu_order of objects per now page
-			$menu_order_arr = array();
-			foreach( $id_arr as $key => $id ) {
-				$results = $wpdb->get_results( "SELECT menu_order FROM $wpdb->posts WHERE ID = ".intval( $id ) );
-				foreach( $results as $result ) {
-					$menu_order_arr[] = $result->menu_order;
-				}
-			}
-			
-			// maintains key association = no
-			sort( $menu_order_arr );
-			$counter = 0;
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {
-					$counter++;
-					$wpdb->update( $wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => intval( $id ) ) );//$menu_order_arr[$position]
-				}
-			}
+			exit;
 		}
 		
 		function wpso_increment_order($arr=array(), $order=0){
@@ -504,37 +520,48 @@
 		{
 			global $wpdb;
 			
-			parse_str( $_POST['order'], $data );
-			
-			if ( !is_array( $data ) ) return false;
-			
-			$id_arr = array();
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {
-					$id_arr[] = $id;
-				}
-			}
-			
+			if (
+                ! isset( $_POST['wpso_nonce'] )
+                || ! wp_verify_nonce( sanitize_text_field( wp_unslash ($_POST['wpso_nonce'])), 'wpso_nonce_ensured' )
+            ) {
 
-			$menu_order_arr = array();
-			foreach( $id_arr as $key => $id ) {
-				$row = $wpdb->get_row( "SELECT term_order FROM $wpdb->terms WHERE term_id = ".intval( $id ) );
+                print_r(__('Sorry! Your nonce did not verified.', 'wpso-sort-order'));
+
+            }else{
+			
+				parse_str( $_POST['order'], $data );
 				
-				if(is_object($row) && !empty($row)){
-					$menu_order_arr[] = $this->wpso_increment_order($menu_order_arr, $row->term_order);
-				}
-			}
-			sort( $menu_order_arr );
-
-			
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {					
-					if(array_key_exists($position, $menu_order_arr)){
-						$term_order = $menu_order_arr[$position];						
-						$wpdb->update( $wpdb->terms, array( 'term_order' => $term_order ), array( 'term_id' => intval( $id ) ) );
-
+				if ( !is_array( $data ) ) return false;
+				
+				$id_arr = array();
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {
+						$id_arr[] = $id;
 					}
 				}
+				
+	
+				$menu_order_arr = array();
+				foreach( $id_arr as $key => $id ) {
+					$row = $wpdb->get_row( "SELECT term_order FROM $wpdb->terms WHERE term_id = ".intval( $id ) );
+					
+					if(is_object($row) && !empty($row)){
+						$menu_order_arr[] = $this->wpso_increment_order($menu_order_arr, $row->term_order);
+					}
+				}
+				sort( $menu_order_arr );
+	
+				
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {					
+						if(array_key_exists($position, $menu_order_arr)){
+							$term_order = $menu_order_arr[$position];						
+							$wpdb->update( $wpdb->terms, array( 'term_order' => $term_order ), array( 'term_id' => intval( $id ) ) );
+	
+						}
+					}
+				}
+			
 			}
 			
 			exit;
@@ -568,45 +595,56 @@
 		{
 			global $wpdb;
 			
-			parse_str( $_POST['order'], $data );
-			parse_str( $_POST['referer_string'], $params);
-			//pree($data);
-			//pree($params);
-			$valid_tax = $this->current_tax($params);
-			//pree($valid_tax);
+			if (
+                ! isset( $_POST['wpso_nonce'] )
+                || ! wp_verify_nonce( sanitize_text_field( wp_unslash ($_POST['wpso_nonce'])), 'wpso_nonce_ensured' )
+            ) {
+
+                print_r(__('Sorry! Your nonce did not verified.', 'wpso-sort-order'));
+
+            }else{
 			
-			if ( !is_array( $data ) ) return false;
-			
-			$id_arr = array();
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {
-					$id_arr[] = $id;
+				parse_str( $_POST['order'], $data );
+				parse_str( $_POST['referer_string'], $params);
+				//pree($data);
+				//pree($params);
+				$valid_tax = $this->current_tax($params);
+				//pree($valid_tax);
+				
+				if ( !is_array( $data ) ) return false;
+				
+				$id_arr = array();
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {
+						$id_arr[] = $id;
+					}
 				}
-			}
-			//pree($id_arr);
-			$user_order = 'user_order_'.$valid_tax;
-			//pree($user_order);
-			$menu_order_arr = array();
-			foreach( $id_arr as $key => $id ) {
-				//$results = $wpdb->get_results( "SELECT user_order FROM $wpdb->users WHERE ID = ".intval( $id ) );
-				//foreach( $results as $result ) {
-					$menu_order_arr[] = get_user_meta( $id, $user_order, true ); //$result->user_order;
-				//}
-			}
-			sort( $menu_order_arr );
-			
-			//pree($data);
-			//pree($menu_order_arr);
-			
-			foreach( $data as $key => $values ) {
-				foreach( $values as $position => $id ) {
-					//pree($position.' - '.$id.' - '.$menu_order_arr[$position]);
-					//pree($menu_order_arr[$position]);
-					//$wpdb->update( $wpdb->users, array( 'user_order' => $menu_order_arr[$position] ), array( 'ID' => intval( $id ) ) );
-					//pree(intval($id).' - '.$user_order.' - '.$menu_order_arr[$position]);
-					//pree(($menu_order_arr[$position]));
-					update_user_meta(intval($id), $user_order, sanitize_wpso_data($menu_order_arr[$position]));
+				//pree($id_arr);
+				$user_order = 'user_order_'.$valid_tax;
+				//pree($user_order);
+				$menu_order_arr = array();
+				foreach( $id_arr as $key => $id ) {
+					//$results = $wpdb->get_results( "SELECT user_order FROM $wpdb->users WHERE ID = ".intval( $id ) );
+					//foreach( $results as $result ) {
+						$menu_order_arr[] = get_user_meta( $id, $user_order, true ); //$result->user_order;
+					//}
 				}
+				sort( $menu_order_arr );
+				
+				//pree($data);
+				//pree($menu_order_arr);
+				
+				foreach( $data as $key => $values ) {
+					foreach( $values as $position => $id ) {
+						//pree($position.' - '.$id.' - '.$menu_order_arr[$position]);
+						//pree($menu_order_arr[$position]);
+						//$wpdb->update( $wpdb->users, array( 'user_order' => $menu_order_arr[$position] ), array( 'ID' => intval( $id ) ) );
+						//pree(intval($id).' - '.$user_order.' - '.$menu_order_arr[$position]);
+						//pree(($menu_order_arr[$position]));
+						update_user_meta(intval($id), $user_order, sanitize_wpso_data($menu_order_arr[$position]));
+					}
+				}
+				
 			}
 			exit;
 			
@@ -616,21 +654,33 @@
 		{
 			global $wpdb;
 			
-			parse_str( $_POST['order'], $data );
+			if (
+                ! isset( $_POST['wpso_nonce'] )
+                || ! wp_verify_nonce( sanitize_text_field( wp_unslash ($_POST['wpso_nonce'])), 'wpso_nonce_ensured' )
+            ) {
+
+                print_r(__('Sorry! Your nonce did not verified.', 'wpso-sort-order'));
+
+            }else{
 			
-			if ( !is_array( $data ) ) return false;
-			
-			$id_arr = array();
-			foreach( $data as $key => $values ) {
+				parse_str( $_POST['order'], $data );
 				
-				foreach( $values as $position => $id ) {
-					$id_arr[$position] = $id;
+				if ( !is_array( $data ) ) return false;
+				
+				$id_arr = array();
+				foreach( $data as $key => $values ) {
+					
+					foreach( $values as $position => $id ) {
+						$id_arr[$position] = $id;
+					}
+					
 				}
+	
+				update_option('wpso_extras_order', sanitize_wpso_data($id_arr));
 				
 			}
-
-			update_option('wpso_extras_order', sanitize_wpso_data($id_arr));
 			
+			exit;
 			
 		}			
 		function update_options()
@@ -845,53 +895,61 @@
 			* for Front End
 			*/
 			
-			} elseif(!is_home() && !is_front_page() && !is_feed()) {
-
-				$debug_backtrace = debug_backtrace();
+			} else{ //if(!is_home() && !is_front_page() && !is_feed()) {
+				
+				$home_url = (basename(home_url()));
+				$request_uri = (basename($_SERVER['REQUEST_URI']));
+				//pree($home_url.' != '.$request_uri);
+				if($home_url!=$request_uri){
+				
 					
-				/*$function = is_feed().' * '.$debug_backtrace[0]['function'];
-				$function .= ' / '.$debug_backtrace[1]['function'];
-				$function .= ' / '.$debug_backtrace[2]['function'];
-				$function .= ' / '.$debug_backtrace[3]['function'];
-				$function .= ' / '.$debug_backtrace[4]['function'];
-				$function .= ' / '.$debug_backtrace[5]['function'];
-				$function .= ' / '.$debug_backtrace[6]['function'].'<br /><br />';
-								
-				$f = fopen('/alpha.html', 'a+');
-				fwrite($f, $function);
-				foreach($_SERVER as $k=>$v){
-					fwrite($f, $k.' = '.$v.'<br />');
-				}
-				fclose($f);*/
-				
-				
-				$active = false;
-				
-				// page or custom post types
-				if ( isset( $wp_query->query['post_type'] ) ) {
-					// exclude array()
-					if ( !is_array( $wp_query->query['post_type'] ) ) {
-						if ( in_array( $wp_query->query['post_type'], $objects ) ) {
+					$debug_backtrace = debug_backtrace();
+						
+					/*$function = is_feed().' * '.$debug_backtrace[0]['function'];
+					$function .= ' / '.$debug_backtrace[1]['function'];
+					$function .= ' / '.$debug_backtrace[2]['function'];
+					$function .= ' / '.$debug_backtrace[3]['function'];
+					$function .= ' / '.$debug_backtrace[4]['function'];
+					$function .= ' / '.$debug_backtrace[5]['function'];
+					$function .= ' / '.$debug_backtrace[6]['function'].'<br /><br />';
+									
+					$f = fopen('/alpha.html', 'a+');
+					fwrite($f, $function);
+					foreach($_SERVER as $k=>$v){
+						fwrite($f, $k.' = '.$v.'<br />');
+					}
+					fclose($f);*/
+					
+					
+					$active = false;
+					
+					// page or custom post types
+					if ( isset( $wp_query->query['post_type'] ) ) {
+						// exclude array()
+						if ( !is_array( $wp_query->query['post_type'] ) ) {
+							if ( in_array( $wp_query->query['post_type'], $objects ) ) {
+								$active = true;
+							}
+						}
+					// post
+					} else {
+						if ( in_array( 'post', $objects ) ) {
 							$active = true;
 						}
 					}
-				// post
-				} else {
-					if ( in_array( 'post', $objects ) ) {
-						$active = true;
+					
+					if ( !$active ) return false;
+					
+					// get_posts()
+					if ( isset( $wp_query->query['suppress_filters'] ) ) {
+						if ( $wp_query->get( 'orderby' ) == 'date' )  $wp_query->set( 'orderby', 'menu_order' );
+						if ( $wp_query->get( 'order' ) == 'DESC' ) $wp_query->set( 'order', 'ASC' );
+					// WP_Query( contain main_query )
+					} else {
+						if ( !$wp_query->get( 'orderby' ) )  $wp_query->set( 'orderby', 'menu_order' );
+						if ( !$wp_query->get( 'order' ) ) $wp_query->set( 'order', 'ASC' );
 					}
-				}
-				
-				if ( !$active ) return false;
-				
-				// get_posts()
-				if ( isset( $wp_query->query['suppress_filters'] ) ) {
-					if ( $wp_query->get( 'orderby' ) == 'date' )  $wp_query->set( 'orderby', 'menu_order' );
-					if ( $wp_query->get( 'order' ) == 'DESC' ) $wp_query->set( 'order', 'ASC' );
-				// WP_Query( contain main_query )
-				} else {
-					if ( !$wp_query->get( 'orderby' ) )  $wp_query->set( 'orderby', 'menu_order' );
-					if ( !$wp_query->get( 'order' ) ) $wp_query->set( 'order', 'ASC' );
+					
 				}
 			}
 		}

@@ -33,7 +33,7 @@ class API extends Base {
 
 	public const GRAPH_API_URL = 'https://graph.facebook.com/';
 
-	public const API_VERSION = 'v17.0';
+	public const API_VERSION = 'v20.0';
 
 	/** @var string URI used for the request */
 	protected $request_uri = self::GRAPH_API_URL . self::API_VERSION;
@@ -276,22 +276,6 @@ class API extends Base {
 	public function get_business_configuration( $external_business_id ) {
 		$request = new API\FBE\Configuration\Request( $external_business_id, 'GET' );
 		$this->set_response_handler( API\FBE\Configuration\Read\Response::class );
-		return $this->perform_request( $request );
-	}
-
-
-	/**
-	 * Updates the messenger configuration.
-	 *
-	 * @param string                          $external_business_id external business ID
-	 * @param API\FBE\Configuration\Messenger $configuration messenger configuration
-	 * @return API\Response|API\FBE\Configuration\Update\Response
-	 * @throws ApiException
-	 */
-	public function update_messenger_configuration( string $external_business_id, API\FBE\Configuration\Messenger $configuration ): API\FBE\Configuration\Update\Response {
-		$request = new API\FBE\Configuration\Update\Request( $external_business_id );
-		$request->set_messenger_configuration( $configuration );
-		$this->set_response_handler( API\FBE\Configuration\Update\Response::class );
 		return $this->perform_request( $request );
 	}
 

@@ -29,24 +29,24 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Shipping_Methods_Zone
         {
             if (\class_exists('WC_Shipping_Zones')) {
                 $other_zones = \WC_Shipping_Zones::get_zones();
-                $zones = array();
+                $zones = [];
                 foreach ($other_zones as $zone) {
                     $zones[] = \WC_Shipping_Zones::get_zone_by('zone_id', $zone['zone_id']);
                 }
                 $zones[] = \WC_Shipping_Zones::get_zone_by();
-                $data['shipping_methods_by_title'] = array();
-                $data['shipping_zones_by_name'] = array();
+                $data['shipping_methods_by_title'] = [];
+                $data['shipping_zones_by_name'] = [];
                 foreach ($zones as $zone) {
                     if (empty($data['shipping_zones_by_name'][$zone->get_zone_name()])) {
                         $data['shipping_zones_by_name'][$zone->get_zone_name()] = 1;
                     } else {
-                        $data['shipping_zones_by_name'][$zone->get_zone_name()]++;
+                        ++$data['shipping_zones_by_name'][$zone->get_zone_name()];
                     }
                     foreach ($zone->get_shipping_methods() as $shipping_method) {
                         if (empty($data['shipping_methods_by_title'][$shipping_method->method_title])) {
                             $data['shipping_methods_by_title'][$shipping_method->method_title] = 1;
                         } else {
-                            $data['shipping_methods_by_title'][$shipping_method->method_title]++;
+                            ++$data['shipping_methods_by_title'][$shipping_method->method_title];
                         }
                     }
                 }

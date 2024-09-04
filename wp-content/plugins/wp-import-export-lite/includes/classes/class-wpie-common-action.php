@@ -1,6 +1,5 @@
 <?php
 
-
 if ( !defined( 'ABSPATH' ) ) {
         die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
 }
@@ -216,20 +215,32 @@ class WPIE_Common_Actions {
                 die();
         }
 
-        public function get_export_list() {
+        public function get_export_list( $limit = 25 ) {
 
                 global $wpdb;
 
-                $results = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "wpie_template where `opration` IN ('export','schedule_export') ORDER BY `id` DESC" );
+                $limit = \absint( $limit ) > 0 ? \absint( $limit ) : 25;
+
+                $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                                "SELECT * FROM " . $wpdb->prefix . "wpie_template where `opration` IN ('export','schedule_export') ORDER BY `id` DESC limit 0,%d"
+                                , $limit )
+                );
 
                 return $results;
         }
 
-        public function get_import_list() {
+        public function get_import_list( $limit = 25 ) {
 
                 global $wpdb;
 
-                $results = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "wpie_template where `opration` IN ('import','schedule_import') ORDER BY `id` DESC" );
+                $limit = \absint( $limit ) > 0 ? \absint( $limit ) : 25;
+
+                $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                                "SELECT * FROM " . $wpdb->prefix . "wpie_template where `opration` IN ('import','schedule_import') ORDER BY `id` DESC limit 0,%d"
+                                , $limit )
+                );
 
                 return $results;
         }
@@ -384,7 +395,7 @@ class WPIE_Common_Actions {
                                 require_once( ABSPATH . 'wp-admin/includes/file.php' );
                         }
 
-                        $movefile = wp_handle_upload( $_FILES[ 'wpie_template_file' ], array( 'test_form' => false ) );
+                        $movefile = wp_handle_upload( $_FILES[ 'wpie_template_file' ], array( 'test_form' => false, 'test_type' => false ) );
 
                         if ( $movefile && isset( $movefile[ 'file' ] ) && !isset( $movefile[ 'error' ] ) ) {
 
@@ -394,7 +405,7 @@ class WPIE_Common_Actions {
 
                                 if ( !empty( $template_data ) ) {
 
-                                        $template_data = maybe_unserialize( $template_data );
+                                        $template_data = json_decode( $template_data );
 
                                         if ( !empty( $template_data ) ) {
 
@@ -412,13 +423,14 @@ class WPIE_Common_Actions {
 
                                                 foreach ( $template_data as $template ) {
 
+
                                                         $data = [
                                                                 'status'           => "completed",
                                                                 'opration'         => isset( $template->opration ) ? $template->opration : "",
                                                                 'username'         => $username,
                                                                 'unique_id'        => uniqid(),
                                                                 'opration_type'    => isset( $template->opration_type ) ? $template->opration_type : "",
-                                                                'options'          => isset( $template->options ) ? $template->options : "",
+                                                                'options'          => isset( $template->options ) ? maybe_serialize( json_decode( json_encode( $template->options ), true ) ) : "",
                                                                 'process_log'      => "",
                                                                 'process_lock'     => 0,
                                                                 'create_date'      => $time,

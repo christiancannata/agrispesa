@@ -1386,7 +1386,8 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 				$item = wp_parse_args( $item, $item_defaults );
 
 				if ( $item['url'] ) {
-					$item['url'] = $this->add_utm_data( $item['url'], 'your-store-tools' );
+					$plugin_ref  = basename( wp_parse_url( $item['url'] )['path'] ?? '' );
+					$item['url'] = $this->add_utm_data( $item['url'], 'your-store-tools', 'button-cta', $plugin_ref );
 				}
 
 				$options['items'][ $key ] = $item;
@@ -2253,13 +2254,14 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 
 				if ( in_array( $pagenow, array( 'edit.php', 'edit-tags.php' ), true ) ) {
 					$options_to_classes[]   = 'wp-list-style';
+					$options_to_classes[]   = 'wp-list-auto-h-scroll';
 					$page_wrapper_classes[] = 'yith-plugin-ui';
 				}
 
 				foreach ( $options_to_classes as $key ) {
 					if ( isset( $options[ $key ] ) ) {
 						$option                 = $options[ $key ];
-						$page_wrapper_classes[] = "yith-plugin-ui--{$option}-{$key}";
+						$page_wrapper_classes[] = true === $option ? "yith-plugin-ui--{$key}" : "yith-plugin-ui--{$option}-{$key}";
 					}
 				}
 				$page_wrapper_classes = implode( ' ', array_filter( $page_wrapper_classes ) );
@@ -2531,14 +2533,17 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 		 *
 		 * @param string $url      The url.
 		 * @param string $campaign The campaign.
+		 * @param string $content  The content.
+		 * @param string $term     The term.
 		 *
 		 * @return string
 		 * @since 4.1.0
+		 * @since 4.5.8 Added $content and $term prams.
 		 */
-		public function add_utm_data( $url, $campaign ) {
+		public function add_utm_data( $url, $campaign, $content = '', $term = '' ) {
 			$plugin_slug = $this->get_plugin_slug();
 			if ( $plugin_slug ) {
-				$url = yith_plugin_fw_add_utm_data( $url, $plugin_slug, $campaign, $this->get_plugin_version_type() );
+				$url = yith_plugin_fw_add_utm_data( $url, $plugin_slug, $campaign, $this->get_plugin_version_type(), $content, $term );
 			}
 
 			return $url;

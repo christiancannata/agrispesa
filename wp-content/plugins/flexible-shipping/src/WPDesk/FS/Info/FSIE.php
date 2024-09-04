@@ -37,6 +37,7 @@ class FSIE extends Metabox {
 	private function get_footer_content() {
 		$url = get_locale() === 'pl_PL' ? 'https://octol.io/fs-info-addons-pl' : 'https://octol.io/fs-info-addons';
 
-		return '<a class="button button-primary" href="' . esc_url( $url ) . '" target="_blank">' . __( 'Buy Flexible Shipping Add-ons &rarr;', 'flexible-shipping' ) . '</a>';
+		return '<a class="oct-metabox-btn" href="' . esc_url( $url ) . '" target="_blank">' . __( 'Buy Add-ons', 'flexible-shipping' ) . '</a>';
 	}
+
 }

@@ -43,14 +43,12 @@ class BulkAction implements Hookable {
 	}
 
 	public function handle_bulk_action_new_screen() {
-		if ( ! isset( $_GET['page'], $_GET['action'], $_GET['order'] ) || empty( $_GET['order'] ) || 'wc-orders' !== wp_unslash( $_GET['page'] ) ) { //phpcs:ignore
+		if ( ! isset( $_GET['page'], $_GET['action'], $_GET['id'] ) || empty( $_GET['id'] ) || 'wc-orders' !== wp_unslash( $_GET['page'] ) ) { //phpcs:ignore
 			return;
 		}
 
-		check_admin_referer( 'bulk-orders' );
-
 		$action = wp_unslash( $_GET['action'] ); //phpcs:ignore
-		$orders = wp_parse_id_list( wp_unslash( $_GET['order'] ) );
+		$orders = wp_parse_id_list( wp_unslash( $_GET['id'] ) );
 
 		try {
 			$this->get_handle_action_strategy( $action );
@@ -58,6 +56,7 @@ class BulkAction implements Hookable {
 			return;
 		}
 
+		check_admin_referer( 'bulk-orders' );
 		wp_safe_redirect( $this->handle_action( wp_get_referer(), $action, $orders ) );
 		die();
 	}
@@ -136,4 +135,5 @@ class BulkAction implements Hookable {
 	protected function get_handle_action_strategy( string $action ): HandleActionStrategyInterface {
 		return ( new HandleActionStrategy( $this->session_factory ) )->get( $action );
 	}
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\lib\xml\array2xml;
 
 class ArrayToXml {
@@ -202,10 +201,14 @@ class ArrayToXml {
                         return;
                 }
 
-                $key = preg_replace( '/[^a-z0-9_]/i', '', $key );
-
                 if ( $this->replaceSpacesByUnderScoresInKeyNames ) {
                         $key = str_replace( ' ', '_', $key );
+                }
+
+                $key = preg_replace( '/[^a-z0-9_]/i', '', strtolower( $key ) );
+
+                if ( '' === trim( $key ) ) {
+                        return;
                 }
 
                 $child = $this->document->createElement( strtolower( $key ) );

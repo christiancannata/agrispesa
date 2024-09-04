@@ -18,8 +18,8 @@ class FSWalkthroughPL extends Links {
 	 */
 	public function __construct() {
 		$title        = __( 'Flexible Shipping walkthrough', 'flexible-shipping' );
-		$footer_label = __( 'Learn more about Flexible Shipping &rarr;', 'flexible-shipping' );
-		$footer_url   = 'https://octol.io/fs-info-docs-pl';
+		$footer_label = __( 'Learn more', 'flexible-shipping' );
+		$footer_url   = 'https://octol.io/fs-info-docs';
 
 		parent::__construct( 'fs-walkthrough', $title, $this->generate_footer( $footer_url, $footer_label ) );
 	}

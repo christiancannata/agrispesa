@@ -143,10 +143,10 @@ class Settings extends Store {
 	 */
 	public static function sanitize( $settings, $defaults ) {
 		$result  = array();
-		$exludes = self::get_excludes();
+		$excludes = self::get_excludes();
 		foreach ( $defaults as $key => $data ) {
 			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : $data;
-			if ( in_array( $key, $exludes, true ) ) {
+			if ( in_array( $key, $excludes, true ) ) {
 				$result[ $key ] = self::sanitize_option( $key, $value );
 				continue;
 			}

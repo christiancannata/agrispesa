@@ -38,6 +38,9 @@ class AjaxTracker implements Hookable {
 	 */
 	public function handle_ajax(): void {
 		check_ajax_referer( self::AJAX_ACTION );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$status = wc_string_to_bool( sanitize_text_field( wp_unslash( $_REQUEST['status'] ?? 'false' ) ) );
 

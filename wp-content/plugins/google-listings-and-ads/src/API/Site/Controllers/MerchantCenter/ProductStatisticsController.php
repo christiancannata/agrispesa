@@ -83,7 +83,7 @@ class ProductStatisticsController extends BaseOptionsController {
 	 * @return callable
 	 */
 	protected function get_product_statistics_read_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			return $this->get_product_status_stats( $request );
 		};
 	}
@@ -93,7 +93,7 @@ class ProductStatisticsController extends BaseOptionsController {
 	 * @return callable
 	 */
 	protected function get_product_statistics_refresh_callback(): callable {
-		return function( Request $request ) {
+		return function ( Request $request ) {
 			return $this->get_product_status_stats( $request, true );
 		};
 	}
@@ -169,6 +169,19 @@ class ProductStatisticsController extends BaseOptionsController {
 				'description' => __( 'Amount of scheduled jobs which will sync products to Google.', 'google-listings-and-ads' ),
 				'context'     => [ 'view' ],
 				'readonly'    => true,
+			],
+			'loading'        => [
+				'type'        => 'boolean',
+				'description' => __( 'Whether the product statistics are loading.', 'google-listings-and-ads' ),
+				'context'     => [ 'view' ],
+				'readonly'    => true,
+			],
+			'error'          => [
+				'type'        => 'string',
+				'description' => __( 'Error message in case of failure', 'google-listings-and-ads' ),
+				'context'     => [ 'view' ],
+				'readonly'    => true,
+				'default'     => null,
 			],
 		];
 	}

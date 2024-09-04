@@ -1,4 +1,3 @@
-
 </main>
 
 <footer class="footer">
@@ -7,7 +6,7 @@
 
 	<div class="footer--flex">
 		<div class="footer--sx">
-
+    <?php echo do_shortcode("[karmawidget]"); ?>
 
 			<div class="footer--menu--flex">
 				<div class="footer--column one">

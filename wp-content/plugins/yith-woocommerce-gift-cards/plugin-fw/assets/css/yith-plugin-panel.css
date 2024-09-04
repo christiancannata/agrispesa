@@ -441,7 +441,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 .yith-plugin-fw-rate {
 
 .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__page .yith-plugin-fw__panel__content__page__heading .yith-plugin-fw__panel__content__page__description {
   margin-top: .75rem;
-  font-size: .875rem;
+  font-size: .8rem;
   line-height: 1.5;
 }
 
@@ -592,17 +592,6 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 .yith-plugin-fw-rate {
 
 .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__actions :not(style) + :not(style) {
   margin-left: 8px;
-}
-
-.yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw__panel__content__page .yith-plugin-fw__panel__content__page__heading {
-  border-bottom: none;
-}
-
-.yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw__panel__content__page .yith-plugin-fw__panel__content__page__container,
-.yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw__panel__content__page .yith-plugin-fw-panel-custom-tab-container,
-.yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw__panel__content__page #plugin-fw-wc,
-.yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw__panel__content__page #yith-plugin-fw-panel {
-  padding-top: 0;
 }
 
 #yith-plugin-fw__panel__sidebar__mobile-backdrop {
@@ -960,7 +949,7 @@ body.rtl .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__action
 
 .yith-plugin-fw-wp-page-wrapper .yith-plugin-fw-wp-page__description {
   margin-top: .75rem;
-  font-size: .875rem;
+  font-size: .8rem;
   line-height: 1.5;
 }
 
@@ -1090,11 +1079,6 @@ body.yith-plugin-fw-panel--version-2 .yith-plugin-fw-wp-page-wrapper .wrap hr.wp
   visibility: visible;
 }
 
-body.yith-plugin-fw-panel--version-2 .yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw-wp-page-wrapper .wrap hr.wp-header-end {
-  border-bottom: none;
-  margin: 16px -16px;
-}
-
 body.yith-plugin-fw-panel--version-2.term-php .yith-plugin-fw-wp-page-wrapper.yith-plugin-ui--taxonomy-type #ajax-response:after {
   content: '';
   width: calc(100% + 64px);
@@ -1106,11 +1090,6 @@ body.yith-plugin-fw-panel--version-2.term-php .yith-plugin-fw-wp-page-wrapper.yi
 
 body.yith-plugin-fw-panel--version-2.term-php .yith-plugin-fw-wp-page-wrapper #message {
   display: none;
-}
-
-body.yith-plugin-fw-panel--version-2.term-php .yith-plugin-fw__panel__content.yith-plugin-fw__panel__content--has-header-nav .yith-plugin-fw-wp-page-wrapper.yith-plugin-ui--taxonomy-type #ajax-response:after {
-  border-bottom: none;
-  margin: 16px -16px;
 }
 
 /**
@@ -1347,6 +1326,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-1 #yith-plugin-fw__panel
   font-weight: 600;
   color: #A36A19;
   text-align: center;
+  text-wrap: balance;
 }
 
 #yith-plugin-fw__panel__premium-tab .main-content .landing .landing__pricing {

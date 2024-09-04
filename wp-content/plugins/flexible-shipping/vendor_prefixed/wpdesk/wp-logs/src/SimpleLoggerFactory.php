@@ -28,7 +28,7 @@ final class SimpleLoggerFactory implements \FSVendor\WPDesk\Logger\LoggerFactory
         }
         $this->logger = new \FSVendor\Monolog\Logger($this->channel);
         if ($this->options->use_wc_log) {
-            if (\function_exists('wc_get_logger')) {
+            if (\function_exists('wc_get_logger') && \did_action('woocommerce_init')) {
                 $this->create_wc_handler();
             } else {
                 \add_action('woocommerce_init', [$this, 'create_wc_handler']);

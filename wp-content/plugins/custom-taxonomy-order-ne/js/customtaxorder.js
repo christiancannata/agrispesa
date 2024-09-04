@@ -97,3 +97,15 @@ function customtaxorder_orderslug() {
 function customtaxorder_slug_sort(a, b) {
 	return jQuery(a).attr('data-slug').localeCompare(jQuery(b).attr('data-slug'), undefined, {numeric: true, sensitivity: 'base'});
 }
+
+
+/* Keep menu for Tools.php open on our pages. */
+jQuery(document).ready(function($) {
+
+	if ( jQuery( "div.customtaxorder" ).hasClass( 'wrap-customtaxorder' ) ) {
+		jQuery( 'li#menu-tools' ).removeClass( 'wp-not-current-submenu' );
+		jQuery( 'li#menu-tools' ).addClass( 'wp-has-current-submenu' );
+		jQuery( 'li#menu-tools' ).addClass( 'wp-menu-open' );
+	}
+
+});

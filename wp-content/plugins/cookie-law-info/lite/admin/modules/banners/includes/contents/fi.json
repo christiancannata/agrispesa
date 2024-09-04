@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie-asetukset"
+                "title": "Suostumusasetukset"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "Arvostamme yksityisyyttäsi",
-                "description": "Tämä verkkosivusto tai sen kolmannen osapuolen työkalut käsittelevät henkilötietoja. Voit kieltäytyä henkilökohtaisten tietojesi myynnistä napsauttamalla “Henkilökohtaisia tietojani ei saa myydä tai jakaa eteenpäin” linkkiä.",
+                "description": "<p>Tämä verkkosivusto tai sen kolmannen osapuolen työkalut käsittelevät henkilötietoja. Voit kieltäytyä henkilökohtaisten tietojesi myynnistä napsauttamalla “Henkilökohtaisia tietojani ei saa myydä tai jakaa eteenpäin” linkkiä.</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie-asetukset"
+                "title": "Suostumusasetukset"
             }
         },
         "auditTable": {

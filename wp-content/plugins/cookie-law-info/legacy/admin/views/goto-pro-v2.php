@@ -26,7 +26,7 @@
 
 .wt-white-wrapper {
 	background-color: #fff;
-	padding: 17px;
+	padding: 8px;
 }
 
 .px-10 {
@@ -79,71 +79,17 @@ h3.wt-sidebar-title {
 	margin: 0 auto 30px auto;
 }
 
-.wt-secondary-btn {
-	background: #FFFFFF;
-	border: 2px solid #2D9FFF;
-	border-radius: 13px;
-	font-style: normal;
-	font-weight: 700;
-	font-size: 15px;
-	line-height: 17px;
-	color: #2D9FFF;
-	padding: 12px 15px 12px 56px;
-	display: inline-block;
-}
-
-.wt-primary-btn.crown-icon, .wt-secondary-btn.crown-icon {
-	position: relative;
-	padding-left: 52px;
-	text-decoration: none;
-	transition: all .2s ease;
-}
-
 .wt-primary-btn:hover,
-.wt-secondary-btn:hover,
-.wt-primary-btn:focus,
-.wt-secondary-btn:focus {
+.wt-primary-btn:focus {
 	outline: none;
 	text-decoration: none;
 	transition: all .2s ease;
 	transform: translateY(2px);
 	box-shadow: none;
 	opacity: .8;
-	
 }
 .wt-primary-btn:hover {
 	color: #fff;
-}
-.wt-secondary-btn:hover {
-	color: #2D9FFF;
-}
-.wt-primary-btn.crown-icon:before,
-.wt-secondary-btn.crown-icon:before {
-	position: absolute;
-	content: '';
-	height: 19px;
-	width: 23px;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	left: 15px;
-}
-
-.wt-primary-btn.crown-icon:before {
-	background-image: url(
-	<?php
-	echo esc_url( $assets_path . 'white-crown.svg' );
-	?>
-	);
-}
-
-.wt-secondary-btn.crown-icon:before {
-	background-image: url(
-	<?php
-	echo esc_url( $assets_path . 'blue-crown.svg' );
-	?>
-	);
-
 }
 
 .wt-moneyback-support-wrapper {
@@ -175,7 +121,7 @@ h3.wt-sidebar-title {
 
 ul.wt-gdprpro-features {
 	margin: 0;
-	padding: 30px 25px;
+	padding: 8px 24px;
 }
 
 .wt-gdprpro-features li {
@@ -185,8 +131,8 @@ ul.wt-gdprpro-features {
 	line-height: 19px;
 	color: #000000;
 	list-style: none;
-	margin: 0 0 30px 0;
-	padding-left: 42px;
+	margin: 0 0 24px 0;
+	padding-left: 32px;
 	position: relative;
 }
 
@@ -197,8 +143,9 @@ ul.wt-gdprpro-features {
 .wt-gdprpro-features li:before {
 	content: '';
 	position: absolute;
-	height: 17px;
-	width: 20px;
+	height: 16px;
+	width: 16px;
+	margin-top: 2px;
 	background-image: url(
 	<?php
 	echo esc_url( $assets_path . 'list-icon.svg' );
@@ -220,7 +167,6 @@ ul.wt-gdprpro-features {
 	font-size: 14px;
 	line-height: 18px;
 	text-decoration: underline;
-	margin-top: 20px;
 	color: #1093F2;
 	display: inline-block;
 	margin-bottom: 35px;
@@ -348,105 +294,155 @@ ul.wt-gdprpro-features {
 	border-radius: 0 0 13px 13px;
 }
 
+.wt-blue-text {
+	color: #2D9FFF;
+}
+
 </style>
 
 <div class="wt-cli-sidebar" style="max-width: 365px;margin-top:45px">
 	<div class="wt-white-wrapper">
 		<div class="wt-bg">
-		  <h3 class="wt-sidebar-title text-center"><?php echo esc_html( _e( 'Get access to advanced features for GDPR compliance', 'cookie-law-info' ) ); ?></h3>
-		  <p class="text-center my-0"><a
-			  href="https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=free_plugin_sidebar&utm_medium=gdpr_basic&utm_campaign=GDPR&utm_content=<?php echo esc_attr( CLI_VERSION ); ?>"
-			  class="wt-primary-btn crown-icon" target="_blank" style="text-transform:uppercase;"><?php echo esc_html( _e( 'Upgrade to premium', 'cookie-law-info' ) ); ?></a></p>
-
-		</div>
-		<div class="wt-moneyback-support-wrapper d-flex ">
-		  <div class="wt-moneyback d-flex v-center">
-			<img src="<?php echo esc_url( $assets_path . 'money-back.svg' ); ?>" alt="money back badge" height="36" width="36">
-			<p><?php echo esc_html( __( '30 Day Money Back Guarantee', 'cookie-law-info' ) ); ?></p>
-		  </div>
-		  <div class="wt-support d-flex v-center">
-			<img src="<?php echo esc_url( $assets_path . 'support.svg' ); ?>" alt="support badge" height="36" width="36">
-			<p><?php echo esc_html( __( 'Fast and Priority Support', 'cookie-law-info' ) ); ?></p>
-		  </div>
+			<h3 class="wt-sidebar-title text-center">
+				<?php
+				echo wp_kses(
+					__( "You are using the legacy version! <span class='wt-blue-text'>Migrate to the new UI</span> for better experience and advanced features", 'cookie-law-info' ),
+					array(
+						'span'      => array(
+							'class' => array()
+						),
+					)
+					);
+				?>
+			</h3>
+			<p class="text-center my-0"><a id="wt-cli-migrate-btn" class="wt-primary-btn" onclick="wtCliAdminFunctions.showModal('wt-cky-migration-modal')"><?php echo esc_html( _e( 'Migrate Now', 'cookie-law-info' ) ); ?></a></p>
 		</div>
 		<ul class="wt-gdprpro-features">
-		  <li><b><?php echo esc_html( __( 'Enhanced cookie scanning:', 'cookie-law-info' ) ); ?></b> <?php echo esc_html( __( 'Scan up to 2000 URLs in a go.', 'cookie-law-info' ) ); ?></li>
-		  <li>
-			<b><?php echo esc_html( __( 'Auto-block cookies from popular third-party services & plugins:', 'cookie-law-info' ) ); ?></b>                						  
-						  <?php
-							echo esc_html(
-								__( 'Supports Google analytics, Facebook pixel, Google tag manager, Hotjar analytics, +20 more.', 'cookie-law-info' )
-							);
-							?>
+			<li><b><?php echo esc_html( __( 'Get the new, WCAG-compliant cookie consent banner.', 'cookie-law-info' ) ); ?></b></li>
+			<li><b><?php echo esc_html( __( 'Access new free features', 'cookie-law-info' ) ); ?></b>
+				<?php echo esc_html( __( '— Set consent expiration, disable prior consent, hide consent categories, choose colour scheme (light/dark/custom), generate cookie/privacy policy, etc.', 'cookie-law-info' ) ); ?>
 			</li>
-		  <li>
-			<b><?php echo esc_html( __( 'Be consent proof ready:', 'cookie-law-info' ) ); ?></b>
-						  <?php
-							echo esc_html(
-								__(
-									'Keep a record of users who have given consent along with details such as cookie categories, user ID, time stamp, etc.',
-									'cookie-law-info'
-								)
-							);
-							?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Display cookie notice based on user location:', 'cookie-law-info' ) ); ?></b> <?php echo esc_html( __( 'Option to show cookie notice only to users from the EU.', 'cookie-law-info' ) ); ?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Show ‘Do not sell my personal information’ link only to users from california.', 'cookie-law-info' ) ); ?></b>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Multiple pre-built templates for cookie notice:', 'cookie-law-info' ) ); ?></b> 
-						  <?php
-							echo esc_html(
-								__(
-									'Choose from 26 pre-designed and customizable cookie notice templates.',
-									'cookie-law-info'
-								)
-							);
-							?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Live preview of cookie notice:', 'cookie-law-info' ) ); ?></b> <?php echo esc_html( __( 'Get live preview of cookie notice as and when you customize them.', 'cookie-law-info' ) ); ?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Disable ‘Powered by CookieYes’ branding:', 'cookie-law-info' ) ); ?></b> <?php echo esc_html( __( 'Remove CookieYes branding from cookie notices.', 'cookie-law-info' ) ); ?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Renew user consent:', 'cookie-law-info' ) ); ?></b> 
-						  <?php
-							echo esc_html(
-								__(
-									'Renew user consent when you update your privacy/cookie policy or when needed otherwise.',
-									'cookie-law-info'
-								)
-							);
-							?>
-		  </li>
-		  <li>
-
-			<b><?php echo esc_html( __( 'Categorize personal data collecting cookies:', 'cookie-law-info' ) ); ?></b> 
-						  <?php
-							echo esc_html(
-								__(
-									'Categorize personal data collecting cookies for ‘Do not sell my personal information’ link.',
-									'cookie-law-info'
-								)
-							);
-							?>
-		  </li>
+			<li>
+				<b><?php echo esc_html( __( 'Access additional free and premium features by connecting to CookieYes web app (Optional)', 'cookie-law-info' ) ); ?></b>                						  
+				<?php echo esc_html(
+					__( '— Cookie scan, Consent log, Support for Google Consent Mode v2, IAB TCF v2.2 banner, Google’s Additional Consent Mode, etc.', 'cookie-law-info' )
+				); ?>
+			</li>
 		</ul>
-		<p class="text-center my-0"><a
-			href="https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=free_plugin_sidebar&utm_medium=gdpr_basic&utm_campaign=GDPR&utm_content=<?php echo esc_attr( CLI_VERSION ); ?>"
-			class="wt-secondary-btn crown-icon" target="_blank" style="text-transform:uppercase;"><?php echo esc_html( __( 'Upgrade to premium', 'cookie-law-info' ) ); ?></a></p>
-		<p class="text-center my-0"> <a id="cky-table-comparison-link" class="wt-link"><?php echo esc_html( __( 'Compare Free and Premium', 'cookie-law-info' ) ); ?></a></p>
-	  </div>
-
+		<p class="text-center my-0"> <a href="https://www.cookieyes.com/documentation/ui-migration" class="wt-link" target="_blank"><?php echo esc_html( __( 'Learn more about migration', 'cookie-law-info' ) ); ?></a></p>
+	</div>
+</div>
+<div class="wt-cky-migration-modal wt-cli-modal" id="wt-cky-migration-modal">
+	<span class="wt-cli-modal-js-close">×</span>
+	<div class="wt-cli-modal-header"><h4><?php echo esc_html( _e( 'Ready to migrate to the new UI?', 'cookie-law-info' ) ); ?></h4></div>
+	<div class="wt-cli-modal-body">
+		<?php echo '<b>' . esc_html( __( 'Please review the following before proceeding:', 'cookie-law-info' ) ) . '</b>'; ?>
+		<ul class="wt-cli-bullet-list-main">
+			<li>
+				<?php
+				echo wp_kses(
+					__( '<strong>Cookie bar and other shortcodes</strong> will be replaced with <strong>easier customization methods.</strong>', 'cookie-law-info' ),
+					array(
+						'p'      => array(),
+						'strong' => array(),
+					)
+				);
+				?>
+			</li>
+			<li>
+				<?php
+				echo wp_kses(
+					__( '<strong>After migrating, you can add custom CSS to:</strong>', 'cookie-law-info' ),
+					array(
+						'p'      => array(),
+						'strong' => array(),
+					)
+				);
+				?>
+			</li>
+			<ul class="wt-cli-bullet-list">
+				<li>
+					<?php echo esc_html( __( 'Change the font format of the cookie banner (available in the premium plans).', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Customize the position of the revisit consent button (from the right/left margin).', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Change the button size.', 'cookie-law-info' ) ); ?>
+				</li>
+			</ul>
+			<li>
+				<?php
+				echo wp_kses(
+					__( '<strong>The following customization features will no longer be available:</strong>', 'cookie-law-info' ),
+					array(
+						'p'      => array(),
+						'strong' => array(),
+					)
+				);
+				?>
+			</li>
+			<ul class="wt-cli-bullet-list">
+				<li>
+					<?php echo esc_html( __( 'Changing the button to a link.', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Redirecting to the URL on click.', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Animating the cookie banner (On Load/Hide).', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Allowing the cookie banner to move with page scroll.', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Accepting cookie consent on the page scroll or delay action on the cookie banner.', 'cookie-law-info' ) ); ?>
+				</li>
+			</ul>
+			<li>
+				<?php
+				echo wp_kses(
+					__( 'The <strong>popup layout</strong> for the banner and the <strong>option to use both "GDPR" and "US State Laws" consent templates</strong> will be <strong>available in the premium plans</strong> with <strong>advanced geo-targeting.</strong>', 'cookie-law-info' ),
+					array(
+						'p'      => array(),
+						'strong' => array(),
+					)
+				);
+				?>
+			</li>
+			<li>
+				<?php
+				echo wp_kses(
+					__( 'From the new plugin UI, you can navigate to <strong>Cookie Manager > Add Cookie > Advanced settings</strong> and add the pattern that identifies the script <strong>(Script URL Pattern)</strong> to manually block cookies before obtaining user consent.', 'cookie-law-info' ),
+					array(
+						'p'      => array(),
+						'strong' => array(),
+					)
+				);
+				?>
+			</li>
+		</ul>
+		<p>
+			<?php
+			echo wp_kses(
+				__( 'Alternatively, you can <strong>connect to the CookieYes web app (optional)</strong> to utilize the <strong>cookie scan feature,</strong> which <strong>discovers, categorizes, and automatically blocks</strong> your website cookies prior to consent.', 'cookie-law-info' ),
+				array(
+					'p'      => array(),
+					'strong' => array(),
+				)
+			);
+			?>
+		</p>
+		<div class="wt-cli-action-container">
+			<div class="wt-cli-action-group">
+				<a id="wt-cli-ckyes-support" href="https://www.cookieyes.com/support/" target="_blank" class="wt-cli-ckyes-support">
+					<?php echo esc_html__( 'Contact Support', 'cookie-law-info' ); ?>
+					<span class="dashicons dashicons-external"></span>
+				</a>
+				<a href="<?php echo esc_attr( wp_nonce_url( add_query_arg( 'migrate', 'start', admin_url( 'edit.php?post_type=cookielawinfo&page=cookie-law-info' ) ), 'migrate', '_wpnonce' ) ); ?>" class="wt-primary-btn" rel="noopener noreferrer">
+					<?php echo esc_html__( 'Start Migration', 'cookie-law-info' ); ?>
+				</a>
+			</div>
+		</div>
+	</div>
 </div>

@@ -119,7 +119,7 @@ class Cookie_Categories extends Store {
 
 	/**
 	 * Read directly from the data object given.
-	 * Used for assigning data to object if it is alread fetched from API or DB.
+	 * Used for assigning data to object if it is already fetched from API or DB.
 	 *
 	 * @param array|object $data Category data.
 	 * @return void
@@ -315,8 +315,21 @@ class Cookie_Categories extends Store {
 	public function get_translations( $lang = '', $key = '' ) {
 		$slug     = $this->get_slug();
 		$contents = wp_cache_get( 'cky_category_contents_' . $lang, 'cky_category_contents' );
+		$translated     = \CookieYes\Lite\Admin\Modules\Languages\Includes\Controller::get_instance()->is_cky_translated($lang);
+		$upload_dir    = wp_upload_dir();
 		if ( ! $contents ) {
-			$contents = cky_read_json_file( dirname( __FILE__ ) . "/contents/categories/{$lang}.json" );
+			if ( $translated ) {
+				$translation = cky_read_json_file( $upload_dir['basedir'] . '/cookieyes/languages/banners/' . esc_html( $lang ) . '.json' );
+				if($translation) {
+					$contents = $translation['category_data'];
+				}
+				if(!$contents) {
+					$contents = cky_read_json_file( dirname( __FILE__ ) . "/contents/categories/{$lang}.json" );
+				}
+			}
+			if (empty($contents)) {
+				$contents = cky_read_json_file( dirname( __FILE__ ) . "/contents/categories/en.json" );
+			}
 			wp_cache_set( 'cky_category_contents_' . $lang, $contents, 'cky_category_contents', 12 * HOUR_IN_SECONDS );
 		}
 		return isset( $contents[ $slug ][ $key ] ) ? $contents[ $slug ][ $key ] : '';

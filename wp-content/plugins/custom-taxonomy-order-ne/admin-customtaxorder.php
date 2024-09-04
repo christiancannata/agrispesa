@@ -36,12 +36,11 @@ function customtaxorder_menu() {
 	// Set your custom capability through this filter.
 	$custom_cap = apply_filters( 'customtaxorder_custom_cap', 'manage_categories' );
 
-	//add_menu_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = '', string $icon_url = '', int $position = null )
-	add_menu_page(esc_html__('Term Order', 'custom-taxonomy-order-ne'), esc_html__('Term Order', 'custom-taxonomy-order-ne'), $custom_cap, 'customtaxorder', 'customtaxorder_subpage', 'dashicons-list-view', 122);
 	//add_submenu_page( string $parent_slug, string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = '', int $position = null )
+	add_submenu_page('tools.php', esc_html__('Term Order', 'custom-taxonomy-order-ne'), esc_html__('Term Order', 'custom-taxonomy-order-ne'), $custom_cap, 'customtaxorder', 'customtaxorder_subpage');
 	add_submenu_page('customtaxorder', esc_html__('Order Taxonomies', 'custom-taxonomy-order-ne'), esc_html__('Order Taxonomies', 'custom-taxonomy-order-ne'), $custom_cap, 'customtaxorder-taxonomies', 'custom_taxonomy_order');
 
-	$taxonomies = customtaxorder_get_taxonomies() ;
+	$taxonomies = customtaxorder_get_taxonomies();
 	$taxonomies = customtaxorder_sort_taxonomies( $taxonomies );
 	$tax_count = count( $taxonomies );
 
@@ -66,7 +65,7 @@ function customtaxorder_menu() {
 
 			// Set your finegrained capability for this taxonomy for this custom filter.
 			$custom_cap_tax = apply_filters( 'customtaxorder_custom_cap_' . $tax_name, $custom_cap );
-			add_submenu_page('customtaxorder', esc_html__('Order ', 'custom-taxonomy-order-ne') . $tax_label, esc_html__('Order ', 'custom-taxonomy-order-ne') . $tax_label, $custom_cap_tax, 'customtaxorder-'.$tax_name, 'customtaxorder_subpage');
+			add_submenu_page('customtaxorder', esc_html__('Order ', 'custom-taxonomy-order-ne') . $tax_label, esc_html__('Order ', 'custom-taxonomy-order-ne') . $tax_label, $custom_cap_tax, 'customtaxorder-' . $tax_name, 'customtaxorder_subpage');
 		}
 	}
 	add_submenu_page('customtaxorder', esc_html__('About', 'custom-taxonomy-order-ne'), esc_html__('About', 'custom-taxonomy-order-ne'), $custom_cap, 'customtaxorder-about', 'customtaxorder_about');
@@ -110,7 +109,7 @@ add_action('admin_print_scripts', 'customtaxorder_js_libs');
  */
 function customtaxorder_tag_edit_screen() {
 
-	$taxonomies = customtaxorder_get_taxonomies() ;
+	$taxonomies = customtaxorder_get_taxonomies();
 	$options = customtaxorder_get_settings();
 
 	foreach ( $taxonomies as $taxonomy ) {
@@ -273,36 +272,59 @@ function customtaxorder_set_db_term_order( $term_id = 0, $term_order = 0, $taxon
 function customtaxorder_about() {
 	?>
 	<div class='wrap'>
+		<div id="poststuff" class="metabox-holder">
+			<div class="widget">
 
-		<h1><?php esc_html_e('About Custom Taxonomy Order NE', 'custom-taxonomy-order-ne'); ?></h1>
-		<h2><?php esc_html_e('Support', 'custom-taxonomy-order-ne'); ?></h2>
-		<p><?php
-			$support = '<a href="https://wordpress.org/support/plugin/custom-taxonomy-order-ne" target="_blank">';
-			/* translators: %s is a link */
-			echo sprintf( esc_html__( 'If you have a problem or a feature request, please post it on the %ssupport forum at wordpress.org%s.', 'custom-taxonomy-order-ne' ), $support, '</a>' ); ?>
-			<?php esc_html_e('I will do my best to respond as soon as possible.', 'custom-taxonomy-order-ne'); ?><br />
-			<?php esc_html_e('If you send me an email, I will not reply. Please use the support forum.', 'custom-taxonomy-order-ne'); ?>
-		</p>
+				<h1><?php esc_html_e('About Custom Taxonomy Order NE', 'custom-taxonomy-order-ne'); ?></h1>
+
+				<h2 class="widget-top"><?php esc_html_e('Support', 'custom-taxonomy-order-ne'); ?></h2>
+				<p><?php
+					$support = '<a href="https://wordpress.org/support/plugin/custom-taxonomy-order-ne" target="_blank">';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'If you have a problem or a feature request, please post it on the %1$ssupport forum at wordpress.org%2$s.', 'custom-taxonomy-order-ne' ), $support, '</a>' ); ?>
+					<?php esc_html_e('I will do my best to respond as soon as possible.', 'custom-taxonomy-order-ne'); ?><br />
+					<?php esc_html_e('If you send me an email, I will not reply. Please use the support forum.', 'custom-taxonomy-order-ne'); ?>
+				</p>
 
 
-		<h2><?php esc_html_e('Review this plugin.', 'custom-taxonomy-order-ne'); ?></h2>
-		<p><?php
-			$review = '<a href="https://wordpress.org/support/view/plugin-reviews/custom-taxonomy-order-ne?rate=5#postform" target="_blank">';
-			/* translators: %s is a link */
-			echo sprintf( esc_html__( 'If this plugin has any value to you, then please leave a review at %sthe plugin page%s at wordpress.org.', 'custom-taxonomy-order-ne' ), $review, '</a>' ); ?>
-		</p>
+				<h2 class="widget-top"><?php esc_html_e('Review this plugin.', 'custom-taxonomy-order-ne'); ?></h2>
+				<p><?php
+					$review = '<a href="https://wordpress.org/support/view/plugin-reviews/custom-taxonomy-order-ne?rate=5#postform" target="_blank">';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'If this plugin has any value to you, then please leave a review at %1$sthe plugin page%2$s at wordpress.org.', 'custom-taxonomy-order-ne' ), $review, '</a>' ); ?>
+				</p>
 
-		<h2><?php esc_html_e('Translations', 'custom-taxonomy-order-ne'); ?></h2>
-		<p><?php
-			$link = '<a href="https://translate.wordpress.org/projects/wp-plugins/custom-taxonomy-order-ne" target="_blank">';
-			/* translators: %s is a link */
-			echo sprintf( esc_html__( 'Translations can be added very easily through %sGlotPress%s.', 'custom-taxonomy-order-ne' ), $link, '</a>' ); echo '<br />';
-			echo sprintf( esc_html__( "You can start translating strings there for your locale. They need to be validated though, so if there's no validator yet, and you want to apply for being validator (PTE), please post it on the %ssupport forum%s.", 'custom-taxonomy-order-ne' ), $support, '</a>' ); echo '<br />';
-			$make = '<a href="https://make.wordpress.org/polyglots/" target="_blank">';
-			/* translators: %s is a link */
-			echo sprintf( esc_html__( 'I will make a request on %smake/polyglots%s to have you added as validator for this plugin/locale.', 'custom-taxonomy-order-ne' ), $make, '</a>' ); ?>
-		</p>
+				<h2 class="widget-top"><?php esc_html_e('Translations', 'custom-taxonomy-order-ne'); ?></h2>
+				<p><?php
+					$link = '<a href="https://translate.wordpress.org/projects/wp-plugins/custom-taxonomy-order-ne" target="_blank">';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'Translations can be added very easily through %1$sGlotPress%2$s.', 'custom-taxonomy-order-ne' ), $link, '</a>' ); echo '<br />';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'You can start translating strings there for your locale. They need to be validated though, so if there is no validator yet, and you want to apply for being validator (PTE), please post it on the %1$ssupport forum%2$s.', 'custom-taxonomy-order-ne' ), $support, '</a>' ); echo '<br />';
+					$make = '<a href="https://make.wordpress.org/polyglots/" target="_blank">';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'I will make a request on %1$smake/polyglots%2$s to have you added as validator for this plugin/locale.', 'custom-taxonomy-order-ne' ), $make, '</a>' ); ?>
+				</p>
 
+				<h2 class="widget-top"><?php esc_html_e('Recommended.', 'custom-taxonomy-order-ne'); ?></h2>
+				<p><?php
+					esc_html_e('Recommended plugin to fight spam in your WordPress website:', 'custom-taxonomy-order-ne');
+					echo '<br /><br />';
+					esc_html_e('If you can appreciate this plugin, you are welcome to check out my special antispam plugin.', 'custom-taxonomy-order-ne');
+					echo '<br />';
+					esc_html_e('It supports JavaScript spamfilters, like a honeypot and timeout and I think it works really well.', 'custom-taxonomy-order-ne');
+					echo '<br />';
+					esc_html_e('It also has support for Stop Forum Spam included.', 'custom-taxonomy-order-ne');
+					echo '<br /><br />';
+
+					$recommended = '<a href="https://wordpress.org/plugins/la-sentinelle-antispam/" target="_blank">';
+					/* translators: %1$s and %2$s is a link */
+					echo sprintf( esc_html__( 'Check it out: %1$sLa Sentinelle antispam plugin at wordpress.org%2$s.', 'custom-taxonomy-order-ne' ), $recommended, '</a>' );
+					?>
+				</p>
+
+			</div>
+		</div>
 	</div>
 	<?php
 }
@@ -312,7 +334,7 @@ function customtaxorder_about() {
  * Add Settings link to the main plugin page.
  */
 function customtaxorder_links( $links, $file ) {
-	if ( $file == plugin_basename( dirname(__FILE__).'/customtaxorder.php' ) ) {
+	if ( $file == plugin_basename( dirname(__FILE__) . '/customtaxorder.php' ) ) {
 		$links[] = '<a href="' . admin_url( 'admin.php?page=customtaxorder' ) . '">' . esc_html__( 'Settings', 'custom-taxonomy-order-ne' ) . '</a>';
 	}
 	return $links;

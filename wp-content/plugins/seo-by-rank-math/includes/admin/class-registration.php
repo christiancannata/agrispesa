@@ -14,7 +14,7 @@ use RankMath\KB;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Admin\Admin_Helper;
-use MyThemeShop\Helpers\Param;
+use RankMath\Helpers\Param;
 use RankMath\Helpers\Security;
 use RankMath\Google\Authentication;
 
@@ -299,8 +299,11 @@ class Registration {
 			<h1><?php esc_html_e( 'Connect FREE Account', 'rank-math' ); ?></h1>
 			<p class="rank-math-gray-box">
 				<?php
-				/* translators: Link to Free Account Benefits KB article */
-				printf( esc_html__( 'By connecting your free account, you get keyword suggestions directly from Google when entering the focus keywords. Not only that, get access to our revolutionary SEO Analyzer inside WordPress that scans your website for SEO errors and suggest improvements. %s', 'rank-math' ), '<a href="' . KB::get( 'free-account-benefits', 'SW Connect Free Account' ) . '" target="_blank">' . esc_html__( 'Read more by following this link.', 'rank-math' ) . '</a>' );
+				printf(
+					/* translators: Link to Free Account Benefits KB article */
+					esc_html__( 'By connecting your free account, you get keyword suggestions directly from Google when entering the focus keywords. Not only that, get access to our revolutionary Content AI, SEO Analyzer inside WordPress that scans your website for SEO errors and suggest improvements. %s', 'rank-math' ),
+					'<a href="' . esc_url( KB::get( 'free-account-benefits', 'SW Connect Free Account' ) ) . '" target="_blank">' . esc_html__( 'Read more by following this link.', 'rank-math' ) . '</a>'
+				);
 				?>
 			</p>
 			<?php

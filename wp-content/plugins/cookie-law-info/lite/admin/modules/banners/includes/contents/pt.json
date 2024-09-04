@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Configurações de cookies"
+                "title": "Preferências de Consentimento"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "Valorizamos a sua privacidade",
-                "description": "Este website ou as suas ferramentas de terceiros processam dados pessoais. Pode optar pela venda das suas informações pessoais clicando no link \"Não Vendam ou Partilhem a Minha Informação Pessoal\".",
+                "description": "<p>Este website ou as suas ferramentas de terceiros processam dados pessoais. Pode optar pela venda das suas informações pessoais clicando no link \"Não Vendam ou Partilhem a Minha Informação Pessoal\".</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Configurações de cookies"
+                "title": "Preferências de Consentimento"
             }
         },
         "auditTable": {

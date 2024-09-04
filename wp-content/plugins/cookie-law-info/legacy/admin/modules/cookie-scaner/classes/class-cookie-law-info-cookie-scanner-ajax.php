@@ -79,7 +79,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 		wp_send_json_error( $data );
 	}
 	/**
-	 * Retreives the next scan ID from CookieYes before proceeding to scan.
+	 * Retrieves the next scan ID from CookieYes before proceeding to scan.
 	 *
 	 * @return void
 	 */
@@ -133,7 +133,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 		$post_types        = $this->get_exclude_post_types();
 
 		$total_rows = $wpdb->get_row( $wpdb->prepare( "SELECT COUNT(ID) AS ttnum FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish' ORDER BY post_type='page' DESC LIMIT %d", $page_limit ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$total      = $total_rows ? $total_rows['ttnum'] + 1 : 1; // always add 1 becuase home url is there.
+		$total      = $total_rows ? $total_rows['ttnum'] + 1 : 1; // always add 1 because home url is there.
 
 		$this->set_ckyes_scan_status( 0 );
 		$scan_id = $this->create_scan_entry( $total );
@@ -149,9 +149,9 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 			foreach ( $data as $value ) {
 
 				$permalink         = get_permalink( $value['ID'] );
-				$currrent_url_host = $this->wt_cli_get_host( $permalink );
+				$current_url_host = $this->wt_cli_get_host( $permalink );
 
-				if ( ( $this->filter_url( $permalink ) ) && ( $currrent_url_host === $wt_cli_site_host ) ) {
+				if ( ( $this->filter_url( $permalink ) ) && ( $current_url_host === $wt_cli_site_host ) ) {
 					$this->insert_url( $scan_id, $permalink );
 				} else {
 					$out['total'] = $out['total'] - 1;
@@ -387,7 +387,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 			$this->update_scan_entry( $data_arr, $scan_id );
 			update_option( 'CLI_BYPASS', 0 );
 			$data['refresh'] = true;
-			$data['message'] = __( 'Abort successfull', 'cookie-law-info' );
+			$data['message'] = __( 'Abort successful', 'cookie-law-info' );
 			wp_send_json_success( $data );
 
 		} else {
@@ -484,7 +484,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 							$category_id          = $category->term_id;
 							$category_description = $category->description;
 
-							// Check if catgory has description.
+							// Check if category has description.
 							if ( empty( $category_description ) ) {
 								$description            = wp_kses_post( trim( wp_unslash( $cookie['cli_cookie_category_description'] ) ) );
 								$category_slug          = $category->slug;
@@ -503,7 +503,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 					}
 				}
 
-				// preparing response message based on choosed option.
+				// preparing response message based on chosen option.
 				$out_message = $added . ' ' . __( 'cookies added.', 'cookie-law-info' );
 				if ( $import_option == 2 ) {
 					$out_message .= ' ' . $skipped . ' ' . __( 'cookies skipped.', 'cookie-law-info' );

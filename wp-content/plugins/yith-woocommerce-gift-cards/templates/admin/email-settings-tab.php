@@ -15,7 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div id="yith-ywgc-table-emails">
 		<div class="heading-table yith-ywgc-row">
 			<span class="yith-ywgc-column email"><?php esc_html_e( 'Email', 'yith-woocommerce-gift-cards' ); ?></span>
-			<span class="yith-ywgc-column recipient"><?php esc_html_e( 'Recipient', 'yith-woocommerce-gift-cards' ); ?></span>
 			<span class="yith-ywgc-column action"></span>
 			<span class="yith-ywgc-column status"><?php esc_html_x( 'Active', '[ADMIN] Column name table emails', 'yith-woocommerce-gift-cards' ); ?></span>
 		</div>
@@ -25,9 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="yith-ywgc-row">
 					<span class="yith-ywgc-column email">
 						<?php echo esc_html( $email['title'] ); ?>
-						<?php echo wc_help_tip( $email['description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php if ( 'ywgc-email-send-gift-card' !== $email_key ) : ?>
-                            <span class="premium-badge">
+							<span class="premium-badge">
 							<?php
 							esc_html_e(
 								'Premium',
@@ -36,9 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 							?>
 									</span>
 						<?php endif; ?>
-					</span>
-					<span class="yith-ywgc-column recipient">
-						<?php echo esc_html( $email['recipient'] ); ?>
 					</span>
 					<span class="yith-ywgc-column action">
 						<?php

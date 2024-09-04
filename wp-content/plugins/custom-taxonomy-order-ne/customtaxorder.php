@@ -3,7 +3,7 @@
 Plugin Name: Custom Taxonomy Order
 Plugin URI: https://wordpress.org/plugins/custom-taxonomy-order-ne/
 Description: Allows for the ordering of categories and custom taxonomy terms through a simple drag-and-drop interface.
-Version: 3.4.4
+Version: 4.0.0
 Author: Marcel Pol
 Author URI: https://timelord.nl/
 License: GPLv2 or later
@@ -12,7 +12,7 @@ Domain Path: /lang/
 
 
 Copyright 2011 - 2011  Drew Gourley
-Copyright 2013 - 2022  Marcel Pol   (marcel@timelord.nl)
+Copyright 2013 - 2023  Marcel Pol   (marcel@timelord.nl)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 // Plugin Version
-define('CUSTOMTAXORDER_VER', '3.4.4');
+define('CUSTOMTAXORDER_VER', '4.0.0');
 
 
 /*
@@ -54,9 +54,9 @@ define('CUSTOMTAXORDER_VER', '3.4.4');
  * @return array $customtaxorder_settings an array with key: $taxonomy->name and value:
  */
 function customtaxorder_get_settings() {
-	$customtaxorder_defaults = array('category' => 0);
+	$customtaxorder_defaults = array( 'category' => 0 );
 
-	$taxonomies = customtaxorder_get_taxonomies() ;
+	$taxonomies = customtaxorder_get_taxonomies();
 	foreach ( $taxonomies as $taxonomy ) {
 		$customtaxorder_defaults[$taxonomy->name] = 0;
 	}
@@ -260,7 +260,7 @@ function customtaxorder_wp_get_object_terms_order_filter( $terms ) {
 										}
 									}
 								}
-								$rear_of_float .= (string) ($ancestor_term->term_order + $padding);
+								$rear_of_float .= (string) ( $ancestor_term->term_order + $padding );
 							}
 						}
 
@@ -287,7 +287,7 @@ function customtaxorder_wp_get_object_terms_order_filter( $terms ) {
 								}
 							}
 						}
-						$rear_of_float .= (string) ($term->term_order + $padding);
+						$rear_of_float .= (string) ( $term->term_order + $padding );
 						$term->term_order = (float) ( $front_of_float . '.' . $rear_of_float );
 					}
 				}

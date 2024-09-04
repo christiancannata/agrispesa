@@ -62,7 +62,7 @@
                 },
                 "gpcOption": {
                     "elements": {
-                        "description": "<p>Your opt-out settings for this website have been respected since we deteted a <b>Gobal Privacy Control</b> signal from your browser and, therefore, you cannot change this setting.</p>"
+                        "description": "<p>Your opt-out settings for this website have been respected since we detected a <b>Global Privacy Control</b> signal from your browser and, therefore, you cannot change this setting.</p>"
                     }
                 },
                 "showLess": "Show less",
@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie Settings"
+                "title": "Consent Preferences"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "We value your privacy",
-                "description": "This website or its third-party tools process personal data. You can opt out of the sale of your personal information by clicking on the \"Do Not Sell or Share My Personal Information\" link.",
+                "description": "<p>This website or its third-party tools process personal data. You can opt out of the sale of your personal information by clicking on the \"Do Not Sell or Share My Personal Information\" link.</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -162,7 +162,7 @@
                 },
                 "gpcOption": {
                     "elements": {
-                        "description": "<p>Your opt-out settings for this website have been respected since we deteted a <b>Gobal Privacy Control</b> signal from your browser and, therefore, you cannot change this setting.</p>"
+                        "description": "<p>Your opt-out settings for this website have been respected since we detected a <b>Global Privacy Control</b> signal from your browser and, therefore, you cannot change this setting.</p>"
                     }
                 },
                 "showLess": "Show less",
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie Settings"
+                "title": "Consent Preferences"
             }
         },
         "auditTable": {

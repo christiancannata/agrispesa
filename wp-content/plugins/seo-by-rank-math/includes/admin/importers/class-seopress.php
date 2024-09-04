@@ -15,7 +15,7 @@ use RankMath\Admin\Admin_Helper;
 use RankMath\Redirections\Redirection;
 use RankMath\Schema\JsonLD;
 use RankMath\Schema\Singular;
-use MyThemeShop\Helpers\DB;
+use RankMath\Helpers\DB;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -789,7 +789,7 @@ class SEOPress extends Plugin_Importer {
 
 			// Keep global no index status.
 			if ( ! empty( $robots['noindex'] ) ) {
-				unset( $current[ 'index' ] );
+				unset( $current['index'] );
 				$current[] = 'noindex';
 			}
 		}

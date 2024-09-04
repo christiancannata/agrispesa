@@ -26,6 +26,13 @@
         ]
     },
     "autoload-dev": {},
+    "extra": {
+        "text-domain": "wpdesk-wp-builder",
+        "translations-folder": "lang",
+        "po-files": {
+            "pl_PL": "pl_PL.po"
+        }
+    },
     "scripts": {
         "phpcs": "phpcs",
         "phpunit-unit": "phpunit --configuration phpunit-unit.xml --coverage-text --colors=never",

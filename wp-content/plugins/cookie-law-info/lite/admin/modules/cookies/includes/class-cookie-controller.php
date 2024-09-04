@@ -296,7 +296,7 @@ class Cookie_Controller extends Base_Controller {
 	}
 
 	/**
-	 * Delet a cookie from the database.
+	 * Delete a cookie from the database.
 	 *
 	 * @param object $object Cookie object.
 	 * @return void

@@ -22,18 +22,17 @@
 		global $wpdb;
 		
 		wp_enqueue_script(
-			'wp-wpso-front-scripts',
-			plugins_url('js/front-scripts.js?t='.date('Ymhi'), dirname(__FILE__)),
-			array('jquery')
+			'wpso-front-scripts',
+			plugins_url('js/front-scripts.js', dirname(__FILE__)),
+			array('jquery'),
+			date('Ymhi')
 		);
 		
-		$expected_terms = $wpdb->get_results("SELECT t.term_id FROM ".$wpdb->prefix."term_taxonomy t WHERE t.taxonomy='usercategories'");
-		
-		//pree($expected_terms);
+		$expected_terms = $wpdb->get_results("SELECT t.term_id FROM ".$wpdb->prefix."term_taxonomy t WHERE t.taxonomy='usercategories'");		
 		
 		$wp_wpso_array = array(
 								'ajaxurl' => admin_url( 'admin-ajax.php' ),	
-								
+								'nonce'=> wp_create_nonce('wpso_nonce_ensured'),
 						);
 						
 		$expected_items = array();				
@@ -95,13 +94,11 @@
 				}
 
 			}
-		}
-		
-		//pree($expected_items);
+		}		
 		
 		$wp_wpso_array['user_items'] = $expected_items;
 		
-		wp_localize_script( 'wp-wpso-front-scripts', 'wpso', $wp_wpso_array );
+		wp_localize_script( 'wpso-front-scripts', 'wpso', $wp_wpso_array );
 	}
 	
 	add_action( 'wp_enqueue_scripts', 'wp_wpso_enqueue_scripts', 99 );	

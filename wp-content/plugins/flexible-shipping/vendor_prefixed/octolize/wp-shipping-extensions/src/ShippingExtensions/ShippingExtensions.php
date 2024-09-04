@@ -20,18 +20,26 @@ class ShippingExtensions implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookab
      */
     private $plugin_info;
     /**
-     * @param WPDesk_Plugin_Info $plugin_info .
+     * @var bool
      */
-    public function __construct(\FSVendor\WPDesk_Plugin_Info $plugin_info)
+    private $add_plugin_links;
+    /**
+     * @param WPDesk_Plugin_Info $plugin_info .
+     * @param bool               $add_plugin_links .
+     */
+    public function __construct(\FSVendor\WPDesk_Plugin_Info $plugin_info, $add_plugin_links = \false)
     {
         $this->plugin_info = $plugin_info;
+        $this->add_plugin_links = $add_plugin_links;
     }
     /**
      * @return void
      */
     public function hooks() : void
     {
-        $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\PluginLinks($this->plugin_info));
+        if ($this->add_plugin_links) {
+            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\PluginLinks($this->plugin_info));
+        }
         if (\apply_filters(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, \false) === \false) {
             \add_filter(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, '__return_true');
             $tracker = new \FSVendor\Octolize\ShippingExtensions\Tracker\ViewPageTracker();
@@ -39,6 +47,7 @@ class ShippingExtensions implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookab
             $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\Assets($this->get_assets_url(), self::VERSION));
             $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\Tracker\Tracker($tracker));
             $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\PageViewTracker($tracker));
+            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\WooCommerceSuggestions());
         }
         $this->hooks_on_hookable_objects();
     }

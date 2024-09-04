@@ -7,9 +7,10 @@
 		'axis': 'y',
 		'helper': fixHelper,
 		'update' : function(e, ui) {
-			$.post( ajaxurl, {
+			$.post( wpso_obj.ajaxurl, {
 				action: 'update-menu-order',
 				order: $('#the-list').sortable('serialize'),
+				'wpso_nonce': wpso_obj.nonce,
 			});
 		}
 	});
@@ -22,9 +23,10 @@
 		'axis': 'y',
 		'helper': fixHelper,
 		'update' : function(e, ui) {
-			$.post( ajaxurl, {
+			$.post( wpso_obj.ajaxurl, {
 				action: 'update-menu-order-tags',
 				order: $('#the-list').sortable('serialize'),
+				'wpso_nonce': wpso_obj.nonce,
 			});
 		}
 	});
@@ -35,10 +37,11 @@
 		'helper': fixHelper,
 		'update' : function(e, ui) {
 			var ref = $('input[name="_wp_http_referer"]').val().split('?');
-			$.post( ajaxurl, {
+			$.post( wpso_obj.ajaxurl, {
 				action: 'update-menu-order-users',
 				order: $('#the-list').sortable('serialize'),
-				referer_string: ref[1]
+				referer_string: ref[1],
+				'wpso_nonce': wpso_obj.nonce,
 			});
 		}
 	});	
@@ -54,9 +57,10 @@
 		'helper': fixHelper,
 		'refreshPositions': true,
 		'update' : function(e, ui) {		
-			$.post( ajaxurl, {
+			$.post( wpso_obj.ajaxurl, {
 				action: 'update-menu-order-extras',
-				order: $('#the-list').sortable('serialize')
+				order: $('#the-list').sortable('serialize'),
+				'wpso_nonce': wpso_obj.nonce,
 			});
 		}
 	});		

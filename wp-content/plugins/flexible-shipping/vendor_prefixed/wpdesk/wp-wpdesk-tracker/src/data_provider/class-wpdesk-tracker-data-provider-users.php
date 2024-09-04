@@ -27,10 +27,10 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Users')) {
          */
         public function get_data()
         {
-            $user_count = array();
+            $user_count = [];
             $user_count_data = \count_users();
             $user_count['total'] = $user_count_data['total_users'];
-            // Get user count based on user role
+            // Get user count based on user role.
             foreach ($user_count_data['avail_roles'] as $role => $count) {
                 $user_count[$role] = $count;
             }

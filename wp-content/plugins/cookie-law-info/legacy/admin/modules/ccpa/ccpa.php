@@ -99,14 +99,14 @@ class Cookie_Law_Info_CCPA {
 			$cookie_options = Cookie_Law_Info::get_settings();
 
 			$ccpa_enabled   = ( wp_validate_boolean( isset( $cookie_options['ccpa_enabled'] ) ? $cookie_options['ccpa_enabled'] : false ) );
-			$cli_ccpa_datas = array(
+			$cli_ccpa_data = array(
 				'opt_out_prompt'  => __( 'Do you really wish to opt out?', 'cookie-law-info' ),
 				'opt_out_confirm' => __( 'Confirm', 'cookie-law-info' ),
 				'opt_out_cancel'  => __( 'Cancel', 'cookie-law-info' ),
 			);
 			if ( $ccpa_enabled === true ) {
 				wp_enqueue_script( 'cookie-law-info-ccpa', plugin_dir_url( __FILE__ ) . 'assets/js/cookie-law-info-ccpa.js', array( 'jquery', 'cookie-law-info' ), CLI_VERSION, false );
-				wp_localize_script( 'cookie-law-info-ccpa', 'ccpa_data', $cli_ccpa_datas );
+				wp_localize_script( 'cookie-law-info-ccpa', 'ccpa_data', $cli_ccpa_data );
 			}
 		}
 	}

@@ -58,6 +58,8 @@ class WPDesk_Flexible_Shipping extends WC_Shipping_Method {
 	 */
 	private $section_name;
 
+	public string $type;
+
 	/**
 	 * Constructor for your shipment class
 	 *
@@ -186,10 +188,6 @@ class WPDesk_Flexible_Shipping extends WC_Shipping_Method {
 
 		?>
 			</table>
-            <?php
-				$shipping_method_id = self::METHOD_ID;
-                include __DIR__ . '/views/html-ads.php';
-            ?>
 			<h3 class="wc-settings-sub-title <?php echo esc_attr( $data['class'] ); ?>" id="<?php echo esc_attr( $field ); ?>"><?php echo wp_kses_post( $data['title'] ); ?>
 		<?php if ( $this->is_allowed_editing() ): ?>
 			<a href="<?php echo esc_url( remove_query_arg( 'added', add_query_arg( 'action', 'new' ) ) ); ?>"

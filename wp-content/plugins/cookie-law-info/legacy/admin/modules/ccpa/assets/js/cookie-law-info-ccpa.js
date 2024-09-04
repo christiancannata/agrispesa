@@ -26,7 +26,7 @@
 		},
 		setCheckboxState : function() {
 			var cliConsent       = {};
-			var preferenceCookie = CLI_Cookie.read( CLI_PREFERNCE_COOKIE );
+			var preferenceCookie = CLI_Cookie.read( CLI_PREFERENCE_COOKIE );
 			if ( preferenceCookie !== null ) {
 				cliConsent = CCPA.parseCookie( preferenceCookie );
 				if ( typeof( cliConsent.ccpaOptout ) !== 'undefined') {
@@ -41,7 +41,7 @@
 			}
 		},
 		optOutCcpa: function() {
-			var preferenceCookie = CLI_Cookie.read( CLI_PREFERNCE_COOKIE );
+			var preferenceCookie = CLI_Cookie.read( CLI_PREFERENCE_COOKIE );
 			var cliConsent       = {};
 			if ( preferenceCookie !== null ) {
 				cliConsent = CCPA.parseCookie( preferenceCookie );
@@ -49,7 +49,7 @@
 			cliConsent.ccpaOptout = this.ccpaOptedOut;
 			cliConsent            = JSON.stringify( cliConsent );
 			cliConsent            = window.btoa( cliConsent );
-			CLI_Cookie.set( CLI_PREFERNCE_COOKIE,cliConsent,CLI_ACCEPT_COOKIE_EXPIRE );
+			CLI_Cookie.set( CLI_PREFERENCE_COOKIE,cliConsent,CLI_ACCEPT_COOKIE_EXPIRE );
 			this.setCheckboxState();
 		},
 		parseCookie: function( preferenceCookie ) {

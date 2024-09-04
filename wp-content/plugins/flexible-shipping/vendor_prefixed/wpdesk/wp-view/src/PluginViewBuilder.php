@@ -60,7 +60,7 @@ class PluginViewBuilder
      *
      * @return string Rendered template.
      */
-    public function loadTemplate($name, $path = '.', $args = array())
+    public function loadTemplate($name, $path = '.', $args = [])
     {
         $renderer = $this->createSimpleRenderer();
         return $renderer->render(\trailingslashit($path) . $name, $args);

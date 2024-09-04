@@ -78,7 +78,6 @@ class Settings {
 		$screens = array(
 			Settings_Screens\Product_Sync::ID => new Settings_Screens\Product_Sync(),
 			Settings_Screens\Product_Sets::ID => new Settings_Screens\Product_Sets(),
-			Settings_Screens\Messenger::ID    => new Settings_Screens\Messenger(),
 		);
 
 		return array_merge( array_merge( $first, $screens ), $last );
@@ -182,9 +181,6 @@ class Settings {
 				switch ( $_GET['tab'] ) {
 					case Connection::ID:
 						$crumbs[] = __( 'Connection', 'facebook-for-woocommerce' );
-						break;
-					case Settings_Screens\Messenger::ID:
-						$crumbs[] = __( 'Messenger', 'facebook-for-woocommerce' );
 						break;
 					case Settings_Screens\Product_Sync::ID:
 						$crumbs[] = __( 'Product sync', 'facebook-for-woocommerce' );

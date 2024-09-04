@@ -57,21 +57,7 @@ $all_pages          = get_pages( $args_for_get_pages );
 			</div>
 			<div class="wt-cli-gdpr-plugin-branding-tagline">
 
-			<span><b><?php echo esc_html__( 'Cookie Compliance Made Easy', 'cookie-law-info' ); ?> | 
-								<?php
-								echo sprintf(
-									wp_kses(
-										__( 'Plugin Developed By <a href="%s" target="_blank">WebToffee</a>', 'cookie-law-info' ),
-										array(
-											'a' => array(
-												'href'   => array(),
-												'target' => array(),
-											),
-										)
-									),
-									'https://www.webtoffee.com/'
-								);
-								?>
+			<span><b><?php echo esc_html__( 'Cookie Compliance Made Easy', 'cookie-law-info' ); ?>
 			</b></span>
 			</div>
 		</div>
@@ -87,7 +73,6 @@ $all_pages          = get_pages( $args_for_get_pages );
 				'cookie-law-info-buttons'     => __( 'Customise Buttons', 'cookie-law-info' ),
 				'cookie-law-info-advanced'    => __( 'Advanced', 'cookie-law-info' ),
 				'cookie-law-info-help'        => __( 'Help Guide', 'cookie-law-info' ),
-				'cookie-law-info-upgrade-pro' => __( 'Free vs Pro', 'cookie-law-info' ),
 			);
 			Cookie_Law_Info::generate_settings_tabhead( $tab_head_arr );
 			?>
@@ -102,7 +87,6 @@ $all_pages          = get_pages( $args_for_get_pages );
 			);
 			$setting_views_b = array(
 				'cookie-law-info-help'        => 'admin-settings-help.php',
-				'cookie-law-info-upgrade-pro' => 'admin-settings-upgrade-pro.php',
 			);
 			?>
 			<?php $form_action = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : ''; ?>

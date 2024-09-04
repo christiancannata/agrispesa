@@ -2,8 +2,8 @@
 Contributors: fahadmahmood, kiranzehra
 Tags: taxonomy order, user order, plugins order, post order
 Requires at least: 3.5.0
-Tested up to: 6.2
-Stable tag: 1.3.1
+Tested up to: 6.5
+Stable tag: 1.3.3
 Requires PHP: 7.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,6 +103,10 @@ add_action( 'pre_get_posts', 'my_filter' );
 `
 
 == Changelog ==
+= 1.3.3 =
+* Fix: PHP Notice:  Function is_home was called incorrectly. [Thanks to @goose1984 / Cotton Jamie][21/05/2024]
+= 1.3.2 =
+* Updated version with the improved security checks. [Thanks to patchstack.com / CatFather][21/01/2024]
 = 1.3.1 =
 * Updated version for WordPress. [24/05/2023]
 = 1.3.0 =
@@ -146,6 +150,10 @@ add_action( 'pre_get_posts', 'my_filter' );
 Initial Release
 
 == Upgrade Notice ==
+= 1.3.3 =
+Fix: PHP Notice:  Function is_home was called incorrectly.
+= 1.3.2 =
+Updated version with the improved security checks.
 = 1.3.1 =
 Updated version for WordPress.
 = 1.3.0 =

@@ -58,7 +58,7 @@ class Settings extends Modules {
 	 * @return void
 	 */
 	public function load_default() {
-		if ( false === cky_first_time_install() ) {
+		if ( false === cky_first_time_install() ||  false !== get_option( 'cky_settings', false ) ) {
 			return;
 		}
 		$settings = new \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings();

@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/jakubnovaksl
 Tags: webp, images, pictures, optimize, convert, media
 Requires at least: 3.0.1
 Requires PHP: 5.6
-Tested up to: 6.3
-Stable tag: 4.4
+Tested up to: 6.5
+Stable tag: 4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,8 +167,27 @@ then you need to add this to your server block, usually site.conf or /nginx/site
 
 Are you using ISP Manager? Then it's probably not working for you, but no worries, you just need to go to `WWW domains` and delete `jpg|jpeg|png` from the `Static content extensions` field.
 
+= Delete all generated WebP images =
+
+There is no button to do that and it will also not delete generated WebPs automatically when you deactivate the plugin, but if you really need this, you can run some shell command to achieve this:
+
+`find . -type f -name "*.webp" -exec bash -c 'if [ -f "${1%.webp}" ]; then echo "Deleting $1"; rm "$1"; fi' _ {} \;`
+
+This will find all the files with a `.webp` extension and if there is similar file with the exact filename, but without the `.webp` extension, then it will delete it.
+
+
 
 == Changelog ==
+
+= 4.7 =
+* Tested on WP 6.5
+
+= 4.6 =
+* Fix for "Find and convert MISSING images" button
+
+= 4.5 =
+* Tested on WP 6.4
+* added FAQ section "Delete all generated WebP images"
 
 = 4.4 =
 * Tested on WP 6.3

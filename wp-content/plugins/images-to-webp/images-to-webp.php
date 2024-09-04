@@ -3,7 +3,7 @@
 	Plugin Name: Images to WebP
 	Plugin URI: https://www.paypal.me/jakubnovaksl
 	Description: Convert JPG, PNG and GIF images to WEBP, speed up your web
-	Version: 4.4
+	Version: 4.7
 	Author: KubiQ
 	Author URI: https://kubiq.sk
 	Text Domain: images-to-webp

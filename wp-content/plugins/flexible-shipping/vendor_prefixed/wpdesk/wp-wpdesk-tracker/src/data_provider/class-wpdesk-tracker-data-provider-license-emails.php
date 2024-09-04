@@ -28,10 +28,10 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_License_Emails')) {
         public function get_data()
         {
             global $wpdesk_helper_plugins;
-            $license_emails_email = array();
-            $license_emails = array();
+            $license_emails_email = [];
+            $license_emails = [];
             if (!isset($wpdesk_helper_plugins)) {
-                $wpdesk_helper_plugins = array();
+                $wpdesk_helper_plugins = [];
             }
             foreach ($wpdesk_helper_plugins as $key => $plugin) {
                 if (isset($plugin['api_manager'])) {

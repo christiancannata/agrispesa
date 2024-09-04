@@ -15,7 +15,7 @@ use RankMath\Module\Base;
 use RankMath\Traits\Hooker;
 use RankMath\Traits\Ajax;
 use RankMath\Admin\Options;
-use MyThemeShop\Helpers\Param;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,11 +42,15 @@ class Instant_Indexing extends Base {
 
 	/**
 	 * Store previous post status that we can check agains in save_post.
+	 *
+	 * @var array
 	 */
 	private $previous_post_status = [];
 
 	/**
 	 * Store original permalinks for when they get trashed.
+	 *
+	 * @var array
 	 */
 	private $previous_post_permalinks = [];
 
@@ -68,7 +72,7 @@ class Instant_Indexing extends Base {
 		}
 
 		$post_types = $this->get_auto_submit_post_types();
-		if (  ! empty( $post_types ) ) {
+		if ( ! empty( $post_types ) ) {
 			$this->filter( 'wp_insert_post_data', 'before_save_post', 10, 4 );
 		}
 
@@ -82,7 +86,7 @@ class Instant_Indexing extends Base {
 		$this->filter( 'page_row_actions', 'post_row_actions', 10, 2 );
 		$this->filter( 'admin_init', 'handle_post_row_actions' );
 
-		$this->action( 'template_redirect', 'serve_api_key' );
+		$this->action( 'wp', 'serve_api_key' );
 		$this->action( 'rest_api_init', 'init_rest_api' );
 	}
 
@@ -253,7 +257,7 @@ class Instant_Indexing extends Base {
 
 	/**
 	 * Store previous post status & permalink before saving the post.
-	 * 
+	 *
 	 * @param  array $data                Post data.
 	 * @param  array $postarr             Raw post data.
 	 * @param  array $unsanitized_postarr Unsanitized post data.
@@ -301,6 +305,14 @@ class Instant_Indexing extends Base {
 
 		if ( ! Helper::is_post_indexable( $post_id ) ) {
 			return;
+		}
+
+		// Check if it's a hidden product.
+		if ( 'product' === $post->post_type && Helper::is_woocommerce_active() ) {
+			$product = wc_get_product( $post_id );
+			if ( $product && ! $product->is_visible() ) {
+				return;
+			}
 		}
 
 		$url = get_permalink( $post );
@@ -406,8 +418,9 @@ class Instant_Indexing extends Base {
 			return false;
 		}
 
-		if ( ! $is_manual_submission ) {
-			$logs = array_values( array_reverse( $api->get_log() ) );
+		$api_logs = $api->get_log();
+		if ( ! $is_manual_submission && ! empty( $api_logs ) ) {
+			$logs = array_values( array_reverse( $api_logs ) );
 			if ( ! empty( $logs[0] ) && $logs[0]['url'] === $url && time() - $logs[0]['time'] < self::THROTTLE_LIMIT ) {
 				return false;
 			}

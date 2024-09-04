@@ -1,6 +1,7 @@
 {
     "settings": {
         "type": "box",
+        "preferenceCenterType": "popup",
         "position": "bottom-left",
         "versionID": "6.0.0",
         "applicableLaw": "ccpa",

@@ -11,6 +11,8 @@
 namespace CookieYes\Lite\Admin;
 
 use CookieYes\Lite\Includes\Notice;
+use CookieYes\Lite\Includes\Connect_Notice;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -109,7 +111,6 @@ class Admin {
 				'type'        => 'info',
 			)
 		);
-
 	}
 
 	/**
@@ -131,7 +132,6 @@ class Admin {
 				'expiration' => $expiry,
 			)
 		);
-
 	}
 	/**
 	 * Get the default modules array
@@ -152,6 +152,7 @@ class Admin {
 			'uninstall_feedback',
 			'review_feedback',
 			'upgrade',
+			'pageviews',
 		);
 		return $modules;
 	}
@@ -162,7 +163,6 @@ class Admin {
 	 * @return void
 	 */
 	public function get_active_modules() {
-
 	}
 	/**
 	 * Load all the modules
@@ -247,6 +247,7 @@ class Admin {
 			}
 		}
 		$notice = Notice::get_instance();
+		$expand = Connect_Notice::get_instance();
 
 		$global_script  = $this->plugin_name . '-app';
 		$admin_url      = cky_parse_url( admin_url( 'admin.php' ) );
@@ -270,6 +271,7 @@ class Admin {
 						'loginUrl'   => CKY_APP_URL . '/login',
 						'signUpUrl'  => CKY_APP_URL . '/signup',
 						'pricingUrl' => CKY_APP_URL . '/plans-list',
+						'checkoutUrl'=> CKY_APP_URL . '/checkout',
 					),
 					'path'         => array(
 						'base'  => plugin_dir_path( __FILE__ ),
@@ -290,6 +292,7 @@ class Admin {
 					'nonce'        => wp_create_nonce( 'wp_rest' ),
 					'assetsURL'    => CKY_PLUGIN_URL . 'frontend/images/',
 					'multilingual' => cky_i18n_is_multilingual() && count( cky_selected_languages() ) > 0 ? true : false,
+					'pluginVersion' => $this->version,
 				),
 				$global_script
 			)
@@ -338,6 +341,11 @@ class Admin {
 			$global_script,
 			'ckyAppNotices',
 			$notice->get()
+		);
+		wp_localize_script(
+			$global_script,
+			'ckyNoticeExpand',
+			$expand->get()
 		);
 
 	}
@@ -389,7 +397,7 @@ class Admin {
 	}
 
 	/**
-	 * Redirec the plugin to web app if connected.
+	 * Redirect the plugin to web app if connected.
 	 *
 	 * @return void
 	 */

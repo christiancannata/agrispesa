@@ -9,6 +9,7 @@ class WPDesk_Tracker_Persistence_Consent
 {
     /**
      * Option name with settings.
+     *
      * @var string
      */
     private $option_name = 'wpdesk_helper_options';
@@ -36,9 +37,9 @@ class WPDesk_Tracker_Persistence_Consent
      */
     private function get_helper_options()
     {
-        $options = \get_option($this->option_name, array());
+        $options = \get_option($this->option_name, []);
         if (!\is_array($options)) {
-            $options = array();
+            $options = [];
         }
         return $options;
     }

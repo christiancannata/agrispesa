@@ -12,12 +12,11 @@ namespace RankMath\Admin;
 
 use RankMath\Runner;
 use RankMath\Helper;
+use RankMath\Helpers\Str;
+use RankMath\Helpers\Param;
 use RankMath\Admin\Admin_Helper;
 use RankMath\Traits\Ajax;
 use RankMath\Traits\Hooker;
-use MyThemeShop\Helpers\Str;
-use MyThemeShop\Helpers\Param;
-use MyThemeShop\Helpers\Conditional;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,8 +40,10 @@ class Admin implements Runner {
 		$this->action( 'cmb2_save_options-page_fields', 'update_is_configured_value', 10, 2 );
 		$this->filter( 'action_scheduler_pastdue_actions_check_pre', 'as_exclude_pastdue_actions' );
 		$this->action( 'rank_math/pro_badge', 'offer_icon' );
+		$this->filter( 'load_script_translation_file', 'load_script_translation_file', 10, 3 );
 
 		// AJAX.
+		$this->ajax( 'search_pages', 'search_pages' );
 		$this->ajax( 'is_keyword_new', 'is_keyword_new' );
 		$this->ajax( 'save_checklist_layout', 'save_checklist_layout' );
 		$this->ajax( 'deactivate_plugins', 'deactivate_plugins' );
@@ -55,6 +56,10 @@ class Admin implements Runner {
 		if ( get_option( 'rank_math_flush_rewrite' ) ) {
 			flush_rewrite_rules();
 			delete_option( 'rank_math_flush_rewrite' );
+		}
+
+		if ( 'rank-math' === Param::get( 'page' ) && get_option( 'rank_math_view_modules' ) ) {
+			delete_option( 'rank_math_view_modules' );
 		}
 	}
 
@@ -108,7 +113,7 @@ class Admin implements Runner {
 		$post_type  = get_post_type( $post_id );
 		$is_allowed = in_array( $post_type, Helper::get_allowed_post_types(), true );
 
-		if ( ! $is_allowed || Conditional::is_autosave() || Conditional::is_ajax() || isset( $_REQUEST['bulk_edit'] ) ) {
+		if ( ! $is_allowed || Helper::is_autosave() || Helper::is_ajax() || isset( $_REQUEST['bulk_edit'] ) ) {
 			return $post_id;
 		}
 
@@ -141,6 +146,39 @@ class Admin implements Runner {
 
 		update_user_meta( get_current_user_id(), 'rank_math_metabox_checklist_layout', $layout );
 		exit;
+	}
+
+	/**
+	 * Ajax handler to search pages based on the searched string. Used in the Local SEO Settings.
+	 */
+	public function search_pages() {
+		check_ajax_referer( 'rank-math-ajax-nonce', 'security' );
+		$this->has_cap_ajax( 'general' );
+
+		$term = Param::get( 'term' );
+		if ( empty( $term ) ) {
+			exit;
+		}
+
+		global $wpdb;
+		$pages = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT ID, post_title FROM {$wpdb->prefix}posts WHERE post_type = 'page' AND post_status = 'publish' AND post_title LIKE %s",
+				"%{$wpdb->esc_like( $term )}%"
+			),
+			ARRAY_A
+		);
+
+		$data = [];
+		foreach ( $pages as $page ) {
+			$data[] = [
+				'id'   => $page['ID'],
+				'text' => $page['post_title'],
+				'url'  => get_permalink( $page['ID'] ),
+			];
+		}
+
+		wp_send_json( [ 'results' => $data ] );
 	}
 
 	/**
@@ -397,7 +435,8 @@ class Admin implements Runner {
 				🎉
 				<span><?php esc_attr_e( 'Exclusive Offer!', 'rank-math' ); ?></span>
 			</a>
-		<?php }
+			<?php
+		}
 	}
 
 	/**
@@ -408,7 +447,7 @@ class Admin implements Runner {
 			return;
 		}
 
-		$field_description = wp_kses_post( __( 'Additional Profiles to add in the <code>sameAs</code> Schema property.', 'rank-math' ) );
+		$field_description = __( 'Additional Profiles to add in the <code>sameAs</code> Schema property.', 'rank-math' );
 		?>
 		<script type="text/javascript">
 			( function( $ ) {
@@ -428,10 +467,27 @@ class Admin implements Runner {
 					$txtarea.val( additionalProfileField[0].value.replaceAll( " ", "\n" ) );
 					additionalProfileField.replaceWith( $txtarea );
 
-					$( '<p class="description"><?php echo $field_description; ?></p>' ).insertAfter( $txtarea );
+					$( '<p class="description"><?php echo wp_kses_post( $field_description ); ?></p>' ).insertAfter( $txtarea );
 				} );
 			})(jQuery);
 		</script>
 		<?php
+	}
+
+	/**
+	 * Function to replace domain with seo-by-rank-math in translation file.
+	 *
+	 * @param string|false $file   Path to the translation file to load. False if there isn't one.
+	 * @param string       $handle Name of the script to register a translation domain to.
+	 * @param string       $domain The text domain.
+	 */
+	public function load_script_translation_file( $file, $handle, $domain ) {
+		if ( 'rank-math' !== $domain ) {
+			return $file;
+		}
+
+		$data                       = explode( '/', $file );
+		$data[ count( $data ) - 1 ] = preg_replace( '/rank-math/', 'seo-by-rank-math', $data[ count( $data ) - 1 ], 1 );
+		return implode( '/', $data );
 	}
 }

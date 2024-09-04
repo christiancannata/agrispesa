@@ -2,7 +2,7 @@
 /**
  * Pop-up Notices for WooCommerce (TTT) - Core Class
  *
- * @version 1.4.5
+ * @version 1.4.7
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -19,6 +19,13 @@ if ( ! class_exists( 'WPFactory\PNWC\Core' ) ) {
 
 		public $plugin_info = array();
 		public $modal;
+
+		/**
+		 * $free_version_file_system_path.
+		 *
+		 * @since 1.4.7
+		 */
+		protected $free_version_file_system_path;
 
 		/**
 		 * Call this method to get singleton
@@ -79,13 +86,21 @@ if ( ! class_exists( 'WPFactory\PNWC\Core' ) ) {
 		/**
 		 * Initializes.
 		 *
-		 * @version 1.3.7
+		 * @version 1.4.7
 		 * @since   1.0.0
 		 *
 		 * @return Core
 		 */
 		public function init() {
 		    $this->handle_localization();
+			// Adds compatibility with HPOS.
+			add_action( 'before_woocommerce_init', function () {
+				$this->declare_compatibility_with_hpos( $this->plugin_info['path'] );
+				if ( ! empty( $this->get_free_version_filesystem_path() ) ) {
+					$this->declare_compatibility_with_hpos( $this->get_free_version_filesystem_path() );
+				}
+			} );
+
 			$this->set_admin();
 			$this->set_wp_admin_notices();
 			add_action( 'template_redirect', array( $this, 'add_license_query_string_on_admin_settings' ) );
@@ -109,6 +124,48 @@ if ( ! class_exists( 'WPFactory\PNWC\Core' ) ) {
 				// Hide WooCommerce Notices
 				add_action( 'wp_enqueue_scripts', array( $this, 'hide_woocommerce_notices' ) );
 			}
+		}
+
+		/**
+		 * Declare compatibility with custom order tables for WooCommerce.
+		 *
+		 * @version 1.4.7
+		 * @since   1.4.7
+		 *
+		 * @param $filesystem_path
+		 *
+		 * @return void
+		 * @link    https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
+		 *
+		 */
+		function declare_compatibility_with_hpos( $filesystem_path ) {
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $filesystem_path, true );
+			}
+		}
+
+		/**
+		 * get_free_version_filesystem_path.
+		 *
+		 * @version 3.0.3
+		 * @since   3.0.3
+		 *
+		 * @return mixed
+		 */
+		public function get_free_version_filesystem_path() {
+			return $this->free_version_file_system_path;
+		}
+
+		/**
+		 * set_free_version_filesystem_path.
+		 *
+		 * @version 3.0.3
+		 * @since   3.0.3
+		 *
+		 * @param   mixed  $free_version_file_system_path
+		 */
+		public function set_free_version_filesystem_path( $free_version_file_system_path ) {
+			$this->free_version_file_system_path = $free_version_file_system_path;
 		}
 
 		/**

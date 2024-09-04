@@ -1,16 +1,18 @@
 <?php
+/**
+ * YITH_WooCommerce_Gift_Cards class
+ *
+ * @package YITH\GiftCards\Classes
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-
 if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
-
 	/**
-	 * Class YITH_WooCommerce_Gift_Cards
+	 * YITH_WooCommerce_Gift_Cards class
 	 *
-	 * @class   YITH_WooCommerce_Gift_Cards
-	 * @package Yithemes
 	 * @since   1.0.0
 	 * @author  YITH <plugins@yithemes.com>
 	 */
@@ -24,6 +26,22 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @since 1.0.0
 		 */
 		protected static $instance;
+
+		/**
+		 * Backend variable
+		 *
+		 * @since 1.0.0
+		 * @var array
+		 */
+		public $backend;
+
+		/**
+		 * Frontend variable
+		 *
+		 * @since 1.0.0
+		 * @var array
+		 */
+		public $frontend;
 
 		/**
 		 * Plugin emails array
@@ -55,7 +73,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @since  1.0
 		 */
 		protected function __construct() {
-
 			$this->includes();
 			$this->init_hooks();
 			$this->start();
@@ -67,7 +84,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @return void
 		 */
 		public function includes() {
-
 			// Elementor Widgets integration.
 			if ( defined( 'ELEMENTOR_VERSION' ) ) {
 				require_once YITH_YWGC_DIR . 'includes/compatibilities/elementor/class-ywgc-elementor.php';
@@ -120,8 +136,12 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 			 */
 			add_filter( 'yith_wcgc_date_format', array( $this, 'yith_ywgc_date_format_callback' ) );
 
-			add_action( 'before_woocommerce_init', array( $this, 'declare_wc_features_support' ) );
-
+			/**
+			 * Display the YITH Product Addons in the gift card template
+			 */
+			if ( defined( 'YITH_WAPO_PREMIUM' ) ) {
+				add_action( 'yith_wcgc_template_after_code', array( $this, 'ywgc_display_product_addons' ) );
+			}
 		}
 
 		/**
@@ -146,11 +166,8 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 			$this->frontend = YITH_YWGC_Frontend();
 
 			YITH_YWGC_Cart_Checkout();
-
 			YITH_YWGC_Emails();
-
 			YITH_YWGC_Shortcodes();
-
 			YITH_YWGC_Category_Taxonomy();
 		}
 
@@ -158,10 +175,10 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 *  Execute all the operation need when the plugin init
 		 */
 		public function on_plugin_init() {
-
 			$this->init_post_type();
 
 			$is_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+
 			if ( is_admin() && ! $is_ajax ) {
 				$this->init_metabox();
 			}
@@ -180,7 +197,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * Register the custom post type
 		 */
 		public function init_post_type() {
-
 			/**
 			 * APPLY_FILTERS: yith_wcgc_show_in_menu_cpt
 			 *
@@ -228,7 +244,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 
 			// Registering your Custom Post Type.
 			register_post_type( YWGC_CUSTOM_POST_TYPE_NAME, $args );
-
 		}
 
 		/**
@@ -267,7 +282,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 								),
 								'_ywgc_is_digital'     => array(
 									'label'   => esc_html__( 'Virtual', 'yith-woocommerce-gift-cards' ),
-									'desc'    => esc_html__( 'Enable if the gift card will be sent via email', 'yith-woocommerce-gift-cards' ),
+									'desc'    => esc_html__( 'Check if the gift card will be sent via email. Leave it unchecked to make this work as a physical gift card', 'yith-woocommerce-gift-cards' ),
 									'type'    => 'onoff',
 									'private' => false,
 									'std'     => '',
@@ -375,7 +390,6 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 		 * @since  1.0.0
 		 */
 		public function get_gift_card_by_code( $code ) {
-
 			$args = array( 'gift_card_number' => $code );
 
 			return new YITH_YWGC_Gift_Card( $args );
@@ -407,8 +421,7 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 			$pattern     = get_option( 'ywgc_code_pattern', '****-****-****-****' );
 			$pattern_len = strlen( $pattern );
 
-			for ( $i = 0; $i < $pattern_len; $i ++ ) {
-
+			for ( $i = 0; $i < $pattern_len; $i++ ) {
 				if ( '*' === $pattern[ $i ] ) {
 					// replace all '*'s with one letter from the unique $code generated.
 					$pattern[ $i ] = $code[ $i % $code_len ];
@@ -697,6 +710,40 @@ if ( ! class_exists( 'YITH_WooCommerce_Gift_Cards' ) ) {
 			$date_format_in_php = strtr( $date_format_in_js, $js_to_php_date_format );
 
 			return $date_format_in_php;
+		}
+
+		/**
+		 * Display the YITH Product Addons in the gift card template
+		 *
+		 * @param object $gift_card Gift card object.
+		 */
+		public function ywgc_display_product_addons( $gift_card ) {
+			$gift_card->order_item_id = get_post_meta( $gift_card->ID, '_ywgc_order_item_id', true );
+
+			if ( isset( $gift_card->order_item_id ) ) {
+				$item_id = $gift_card->order_item_id;
+
+				$addons_array = wc_get_order_item_meta( $item_id, '_ywapo_meta_data', true );
+
+				if ( is_array( $addons_array ) && ! empty( $addons_array ) ) {
+					foreach ( $addons_array as $addon ) {
+						if ( isset( $addon['name'] ) && isset( $addon['value'] ) ) {
+							?>
+							<tr><td colspan="2" ><?php echo wp_kses_post( $addon['name'] . ': ' . $addon['value'] ); ?></td></tr>
+							<?php
+						} else {
+							foreach ( $addon as $key => $value ) {
+								$label       = $value['display_label'] ?? '';
+								$addon_value = $value['display_value'] ?? '';
+
+								?>
+								<tr><td colspan="2" ><b><?php echo ( ! empty( $label ) ? wp_kses_post( $label ) . ': ' : '' ) ?></b><?php echo wp_kses_post( $addon_value ); ?></td></tr>
+								<?php
+							}
+						}
+					}
+				}
+			}
 		}
 
 		/**

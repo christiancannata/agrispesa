@@ -17,42 +17,47 @@ class Ajax implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
             $json['status'] = 'fail';
             $json['message'] = \__('Nonce verification error! Invalid request.', 'flexible-shipping');
         } else {
-            if (empty($_REQUEST['shipment_id'])) {
+            if (!\current_user_can('manage_woocommerce')) {
                 $json['status'] = 'fail';
-                $json['message'] = \__('No shipment id!', 'flexible-shipping');
+                $json['message'] = \__('Insufficient user permissions!', 'flexible-shipping');
             } else {
-                if (empty($_REQUEST['data']) || !\is_array($_REQUEST['data'])) {
+                if (empty($_REQUEST['shipment_id'])) {
                     $json['status'] = 'fail';
-                    $json['message'] = \__('No data!', 'flexible-shipping');
+                    $json['message'] = \__('No shipment id!', 'flexible-shipping');
                 } else {
-                    $shipment = fs_get_shipment(\intval($_REQUEST['shipment_id']));
-                    $action = \sanitize_key($_REQUEST['fs_action']);
-                    $data = $_REQUEST['data'];
-                    try {
-                        $ajax_request = $shipment->ajax_request($action, $data);
-                        if (\is_array($ajax_request)) {
-                            $json['content'] = $ajax_request['content'];
-                            $json['message'] = '';
-                            if (isset($ajax_request['message'])) {
-                                $json['message'] = $ajax_request['message'];
-                            }
-                        } else {
-                            $json['content'] = $ajax_request;
-                            $json['message'] = '';
-                            if ($action == 'save') {
-                                $json['message'] = \__('Saved', 'flexible-shipping');
-                            }
-                            if ($action == 'send') {
-                                $json['message'] = \__('Created', 'flexible-shipping');
-                            }
-                        }
-                        $json['status'] = 'success';
-                        if (!empty($ajax_request['status'])) {
-                            $json['status'] = $ajax_request['status'];
-                        }
-                    } catch (\Exception $e) {
+                    if (empty($_REQUEST['data']) || !\is_array($_REQUEST['data'])) {
                         $json['status'] = 'fail';
-                        $json['message'] = $e->getMessage();
+                        $json['message'] = \__('No data!', 'flexible-shipping');
+                    } else {
+                        $shipment = fs_get_shipment(\intval($_REQUEST['shipment_id']));
+                        $action = \sanitize_key($_REQUEST['fs_action']);
+                        $data = $_REQUEST['data'];
+                        try {
+                            $ajax_request = $shipment->ajax_request($action, $data);
+                            if (\is_array($ajax_request)) {
+                                $json['content'] = $ajax_request['content'];
+                                $json['message'] = '';
+                                if (isset($ajax_request['message'])) {
+                                    $json['message'] = $ajax_request['message'];
+                                }
+                            } else {
+                                $json['content'] = $ajax_request;
+                                $json['message'] = '';
+                                if ($action == 'save') {
+                                    $json['message'] = \__('Saved', 'flexible-shipping');
+                                }
+                                if ($action == 'send') {
+                                    $json['message'] = \__('Created', 'flexible-shipping');
+                                }
+                            }
+                            $json['status'] = 'success';
+                            if (!empty($ajax_request['status'])) {
+                                $json['status'] = $ajax_request['status'];
+                            }
+                        } catch (\Exception $e) {
+                            $json['status'] = 'fail';
+                            $json['message'] = $e->getMessage();
+                        }
                     }
                 }
             }

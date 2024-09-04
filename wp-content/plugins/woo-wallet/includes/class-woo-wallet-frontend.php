@@ -2,7 +2,7 @@
 /**
  * Wallet Admin file.
  *
- * @package WooWallet
+ * @package StandaleneTech
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -53,19 +53,26 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 			add_action( 'wp_enqueue_scripts', array( &$this, 'woo_wallet_styles' ), 20 );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'woocommerce_available_payment_gateways' ), 30 );
 			if ( 'on' === woo_wallet()->settings_api->get_option( 'is_enable_cashback_reward_program', '_wallet_settings_credit', 'off' ) ) {
-				add_action( 'woocommerce_before_cart_table', array( $this, 'woocommerce_before_cart_table' ) );
-				add_action( 'woocommerce_before_checkout_form', array( $this, 'woocommerce_before_cart_table' ) );
+				add_action( 'woocommerce_before_cart_table', array( $this, 'display_cashback_on_cart_checkout' ) );
+				add_action( 'woocommerce_before_checkout_form', array( $this, 'display_cashback_on_cart_checkout' ) );
+
+				add_action( 'woocommerce_blocks_enqueue_cart_block_scripts_after', array( $this, 'display_cashback_on_cart_checkout' ) );
+				add_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before', array( $this, 'display_cashback_on_cart_checkout' ) );
+
 				add_action( 'woocommerce_shop_loop_item_title', array( $this, 'display_cashback' ), 15 );
 				add_action( 'woocommerce_single_product_summary', array( $this, 'display_cashback' ), 15 );
 				add_filter( 'woocommerce_available_variation', array( $this, 'woocommerce_available_variation' ), 10, 3 );
 			}
-			add_action( 'woocommerce_checkout_order_processed', array( $this, 'woocommerce_checkout_order_processed' ), 30, 3 );
+
+			add_action( 'woocommerce_checkout_order_processed', array( $this, 'checkout_order_processed' ), 30 );
+			add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'checkout_order_processed' ), 30 );
+
 			add_action( 'woocommerce_review_order_after_order_total', array( $this, 'woocommerce_review_order_after_order_total' ) );
-			add_action( 'woocommerce_checkout_create_order_coupon_item', array( $this, 'convert_coupon_to_cashbak_if' ), 10, 4 );
 
 			add_filter( 'woocommerce_coupon_message', array( $this, 'update_woocommerce_coupon_message_as_cashback' ), 10, 3 );
 			add_filter( 'woocommerce_cart_totals_coupon_label', array( $this, 'change_coupon_label' ), 10, 2 );
 			add_filter( 'woocommerce_cart_get_total', array( $this, 'woocommerce_cart_get_total' ) );
+
 			add_shortcode( 'woo-wallet', __CLASS__ . '::woo_wallet_shortcode_callback' );
 			add_shortcode( 'mini-wallet', __CLASS__ . '::mini_wallet_shortcode_callback' );
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'woo_wallet_add_partial_payment_fee' ) );
@@ -152,8 +159,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 * @return type
 		 */
 		public function add_woocommerce_query_vars( $query_vars ) {
-			$query_vars['woo-wallet']              = get_option( 'woocommerce_woo_wallet_endpoint', 'woo-wallet' );
-			$query_vars['woo-wallet-transactions'] = get_option( 'woocommerce_woo_wallet_transactions_endpoint', 'woo-wallet-transactions' );
+			$query_vars['woo-wallet']              = get_option( 'woocommerce_woo_wallet_endpoint', 'my-wallet' );
+			$query_vars['woo-wallet-transactions'] = get_option( 'woocommerce_woo_wallet_transactions_endpoint', 'wallet-transactions' );
 			return $query_vars;
 		}
 
@@ -316,10 +323,6 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 * Do wallet frontend load functions.
 		 */
 		public function woo_wallet_frontend_loaded() {
-			// reset partial payment session.
-			if ( ! wp_doing_ajax() ) {
-				update_wallet_partial_payment_session();
-			}
 			/**
 			 * Process wallet recharge.
 			 */
@@ -351,7 +354,7 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 					wc_add_notice( $response['message'], 'error' );
 				} else {
 					wc_add_notice( $response['message'] );
-					$location = wp_get_raw_referer() ? wp_get_raw_referer() : esc_url( wc_get_account_endpoint_url( get_option( 'woocommerce_woo_wallet_endpoint', 'woo-wallet' ) ) );
+					$location = wp_get_raw_referer() ? wp_get_raw_referer() : esc_url( wc_get_account_endpoint_url( get_option( 'woocommerce_woo_wallet_endpoint', 'my-wallet' ) ) );
 					wp_safe_redirect( $location );
 					exit();
 				}
@@ -562,7 +565,7 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		/**
 		 * Cashback notice
 		 */
-		public function woocommerce_before_cart_table() {
+		public function display_cashback_on_cart_checkout() {
 			if ( woo_wallet()->cashback->calculate_cashback() && ! is_wallet_rechargeable_cart() && apply_filters( 'display_cashback_notice_at_woocommerce_page', ! is_wallet_account_locked() ) ) :
 				?>
 				<div class="woocommerce-Message woocommerce-Message--info woocommerce-info wallet-cashback-notice">
@@ -582,16 +585,32 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		}
 
 		/**
-		 * Handel cashback and partial payment on order processed hook
+		 * Handel cashback calculation on order processed hook
 		 *
-		 * @param int    $order_id order_id.
-		 * @param array  $posted_data posted_data.
-		 * @param Object $order order.
+		 * @param int     @param WC_Order|int $order order.
 		 */
-		public function woocommerce_checkout_order_processed( $order_id, $posted_data, $order ) {
+		public function checkout_order_processed( $order ) {
+			if ( ! $order instanceof WC_Order ) {
+				$order = wc_get_order( $order );
+			}
 			$cashback_amount = woo_wallet()->cashback->calculate_cashback();
-			if ( $cashback_amount && ! is_wallet_rechargeable_order( wc_get_order( $order_id ) ) && is_user_logged_in() ) {
-				update_post_meta( $order_id, '_wallet_cashback', $cashback_amount );
+			if ( $cashback_amount && ! is_wallet_rechargeable_order( wc_get_order( $order->get_id() ) ) && is_user_logged_in() ) {
+				WOO_Wallet_Helper::update_order_meta_data( $order->get_id(), '_wallet_cashback', $cashback_amount );
+			}
+			$_coupon_cashback_amount = 0;
+			foreach ( WC()->cart->get_coupons() as $code => $coupon ) {
+				$coupon_id           = $coupon->get_id();
+				$_is_coupon_cashback = get_post_meta( $coupon_id, '_is_coupon_cashback', true );
+				if ( 'yes' === $_is_coupon_cashback && is_user_logged_in() ) {
+					$_coupon_cashback_amount += WC()->cart->get_coupon_discount_amount( $code, WC()->cart->display_cart_ex_tax );
+				}
+			}
+			if ( $_coupon_cashback_amount ) {
+				$discount_total  = $order->get_discount_total( 'edit' );
+				$discount_total -= $_coupon_cashback_amount;
+				$order->set_discount_total( $discount_total );
+				$order->set_total( $order->get_total( 'edit' ) + $_coupon_cashback_amount );
+				WOO_Wallet_Helper::update_order_meta_data( $order, '_coupon_cashback_amount', $_coupon_cashback_amount );
 			}
 		}
 
@@ -601,7 +620,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 * @since 1.2.1
 		 */
 		public function woo_wallet_add_partial_payment_fee() {
-			$parial_payment_amount = apply_filters( 'woo_wallet_partial_payment_amount', woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) );
+			$parial_payment_amount = apply_filters( 'woo_wallet_partial_payment_amount', wc()->session->get( 'partial_payment_amount', 0 ) && woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) >= wc()->session->get( 'partial_payment_amount', 0 ) ? wc()->session->get( 'partial_payment_amount', 0 ) : woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) );
+
 			if ( $parial_payment_amount > 0 ) {
 				$fee = array(
 					'id'        => '_via_wallet_partial_payment',
@@ -651,28 +671,6 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 			woo_wallet()->get_template( 'woo-wallet-partial-payment.php' );
 		}
 
-		/**
-		 * Convert coupon to cashback.
-		 *
-		 * @param array  $item item.
-		 * @param string $code code.
-		 * @param Object $coupon coupon.
-		 * @param Object $order order.
-		 * @since 1.0.6
-		 */
-		public function convert_coupon_to_cashbak_if( $item, $code, $coupon, $order ) {
-			$coupon_id           = $coupon->get_id();
-			$_is_coupon_cashback = get_post_meta( $coupon_id, '_is_coupon_cashback', true );
-			if ( 'yes' === $_is_coupon_cashback && is_user_logged_in() ) {
-				$discount_total  = $order->get_discount_total( 'edit' );
-				$coupon_amount   = WC()->cart->get_coupon_discount_amount( $code, WC()->cart->display_cart_ex_tax );
-				$discount_total -= $coupon_amount;
-				$order->set_discount_total( $discount_total );
-				$order_id                = $order->save();
-				$_coupon_cashback_amount = floatval( get_post_meta( $order_id, '_coupon_cashback_amount', true ) );
-				update_post_meta( $order_id, '_coupon_cashback_amount', ( $_coupon_cashback_amount + $coupon_amount ) );
-			}
-		}
 		/**
 		 * Add cashback amount and cashback HTML to variation data.
 		 *
@@ -759,12 +757,15 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		/**
 		 * Update WC Cart get_total if cashback coupon applied.
 		 *
-		 * @param float $total total.
+		 * @param mixed $total total.
 		 * @return float
 		 */
 		public function woocommerce_cart_get_total( $total ) {
+			if ( ! is_numeric( $total ) ) {
+				$total = (float) $total;
+			}
 			$total += get_woowallet_coupon_cashback_amount();
-			return $total;
+			return (string) $total;
 		}
 
 		/**
@@ -842,7 +843,7 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 */
 		public static function mini_wallet_shortcode_output( $atts ) {
 			?>
-			<a href="<?php echo esc_url( wc_get_account_endpoint_url( get_option( 'woocommerce_woo_wallet_endpoint', 'woo-wallet' ) ) ); ?>" class="woo-wallet-menu-contents" title="<?php esc_html_e( 'Current wallet balance', 'woo-wallet' ); ?>">
+			<a href="<?php echo esc_url( wc_get_account_endpoint_url( get_option( 'woocommerce_woo_wallet_endpoint', 'my-wallet' ) ) ); ?>" class="woo-wallet-menu-contents" title="<?php esc_html_e( 'Current wallet balance', 'woo-wallet' ); ?>">
 				<span dir="rtl" class="woo-wallet-icon-wallet"></span>
 				&nbsp;
 				<?php echo woo_wallet()->wallet->get_wallet_balance( get_current_user_id() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

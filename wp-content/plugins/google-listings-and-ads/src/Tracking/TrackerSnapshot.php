@@ -4,7 +4,7 @@ declare( strict_types=1 );
 namespace Automattic\WooCommerce\GoogleListingsAndAds\Tracking;
 
 use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AdsService;
-use Automattic\WooCommerce\GoogleListingsAndAds\Infrastructure\Conditional;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\MerchantMetrics;
 use Automattic\WooCommerce\GoogleListingsAndAds\Infrastructure\Registerable;
 use Automattic\WooCommerce\GoogleListingsAndAds\Infrastructure\Service;
 use Automattic\WooCommerce\GoogleListingsAndAds\Internal\ContainerAwareTrait;
@@ -20,24 +20,19 @@ use Automattic\WooCommerce\GoogleListingsAndAds\PluginHelper;
  * Include Google Listings and Ads data in the WC Tracker snapshot.
  *
  * ContainerAware used to access:
- * - MerchantStatuses
+ * - AdsService
+ * - MerchantCenterService
+ * - MerchantMetrics
+ * - TargetAudience
  *
  * @package Automattic\WooCommerce\GoogleListingsAndAds\Tracking
  */
-class TrackerSnapshot implements Conditional, ContainerAwareInterface, OptionsAwareInterface, Registerable, Service {
+class TrackerSnapshot implements ContainerAwareInterface, OptionsAwareInterface, Registerable, Service {
 
 	use ContainerAwareTrait;
 	use OptionsAwareTrait;
 	use PluginHelper;
 
-	/**
-	 * Not needed if allow_tracking is disabled.
-	 *
-	 * @return bool Whether the object is needed.
-	 */
-	public static function is_needed(): bool {
-		return 'yes' === get_option( 'woocommerce_allow_tracking', 'no' );
-	}
 
 	/**
 	 * Hook extension tracker data into the WC tracker data.
@@ -45,7 +40,7 @@ class TrackerSnapshot implements Conditional, ContainerAwareInterface, OptionsAw
 	public function register(): void {
 		add_filter(
 			'woocommerce_tracker_data',
-			function( $data ) {
+			function ( $data ) {
 				return $this->include_snapshot_data( $data );
 			}
 		);
@@ -83,6 +78,8 @@ class TrackerSnapshot implements Conditional, ContainerAwareInterface, OptionsAw
 		$ads_service = $this->container->get( AdsService::class );
 		/** @var MerchantCenterService $mc_service */
 		$mc_service = $this->container->get( MerchantCenterService::class );
+		/** @var MerchantMetrics $merchant_metrics */
+		$merchant_metrics = $this->container->get( MerchantMetrics::class );
 
 		return [
 			'version'                         => $this->get_version(),
@@ -98,6 +95,8 @@ class TrackerSnapshot implements Conditional, ContainerAwareInterface, OptionsAw
 			'has_account_issue'               => $mc_service->is_connected() && $mc_service->has_account_issues() ? 'yes' : 'no',
 			'has_at_least_one_synced_product' => $mc_service->is_connected() && $mc_service->has_at_least_one_synced_product() ? 'yes' : 'no',
 			'ads_setup_started'               => $ads_service->is_setup_started() ? 'yes' : 'no',
+			'ads_customer_id'                 => $this->options->get_ads_id(),
+			'ads_campaign_count'              => $merchant_metrics->get_campaign_count(),
 		];
 	}
 

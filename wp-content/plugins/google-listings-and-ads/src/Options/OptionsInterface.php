@@ -13,6 +13,7 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Value\PositiveInteger;
 interface OptionsInterface {
 
 	public const ADS_ACCOUNT_CURRENCY                      = 'ads_account_currency';
+	public const ADS_ACCOUNT_OCID                          = 'ads_account_ocid';
 	public const ADS_ACCOUNT_STATE                         = 'ads_account_state';
 	public const ADS_BILLING_URL                           = 'ads_billing_url';
 	public const ADS_ID                                    = 'ads_id';
@@ -37,6 +38,7 @@ interface OptionsInterface {
 	public const SITE_VERIFICATION                         = 'site_verification';
 	public const SYNCABLE_PRODUCTS_COUNT                   = 'syncable_products_count';
 	public const SYNCABLE_PRODUCTS_COUNT_INTERMEDIATE_DATA = 'syncable_products_count_intermediate_data';
+	public const PRODUCT_STATUSES_COUNT_INTERMEDIATE_DATA  = 'product_statuses_count_intermediate_data';
 	public const TARGET_AUDIENCE                           = 'target_audience';
 	public const TOURS                                     = 'tours';
 	public const UPDATE_ALL_PRODUCTS_LAST_SYNC             = 'update_all_products_last_sync';
@@ -44,6 +46,7 @@ interface OptionsInterface {
 
 	public const VALID_OPTIONS = [
 		self::ADS_ACCOUNT_CURRENCY                      => true,
+		self::ADS_ACCOUNT_OCID                          => true,
 		self::ADS_ACCOUNT_STATE                         => true,
 		self::ADS_BILLING_URL                           => true,
 		self::ADS_ID                                    => true,
@@ -68,6 +71,7 @@ interface OptionsInterface {
 		self::SITE_VERIFICATION                         => true,
 		self::SYNCABLE_PRODUCTS_COUNT                   => true,
 		self::SYNCABLE_PRODUCTS_COUNT_INTERMEDIATE_DATA => true,
+		self::PRODUCT_STATUSES_COUNT_INTERMEDIATE_DATA  => true,
 		self::TARGET_AUDIENCE                           => true,
 		self::TOURS                                     => true,
 		self::UPDATE_ALL_PRODUCTS_LAST_SYNC             => true,
@@ -82,12 +86,12 @@ interface OptionsInterface {
 	/**
 	 * Get an option.
 	 *
-	 * @param string $name    The option name.
-	 * @param mixed  $default A default value for the option.
+	 * @param string $name          The option name.
+	 * @param mixed  $default_value A default value for the option.
 	 *
 	 * @return mixed
 	 */
-	public function get( string $name, $default = null );
+	public function get( string $name, $default_value = null );
 
 	/**
 	 * Add an option.

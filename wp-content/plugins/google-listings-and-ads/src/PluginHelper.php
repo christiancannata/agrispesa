@@ -152,7 +152,7 @@ trait PluginHelper {
 	 * @return string
 	 */
 	protected function get_documentation_url(): string {
-		return 'https://docs.woocommerce.com/document/google-listings-and-ads/?utm_source=wordpress&utm_medium=all-plugins-page&utm_campaign=doc-link&utm_content=google-listings-and-ads';
+		return 'https://woocommerce.com/document/google-listings-and-ads/?utm_source=wordpress&utm_medium=all-plugins-page&utm_campaign=doc-link&utm_content=google-listings-and-ads';
 	}
 
 	/**
@@ -174,8 +174,7 @@ trait PluginHelper {
 			return apply_filters( 'woocommerce_gla_wcs_url', WOOCOMMERCE_GLA_CONNECT_SERVER_URL );
 		}
 
-		// TODO: Change to api.woocommerce.com when we are no longer in test phase.
-		return apply_filters( 'woocommerce_gla_wcs_url', 'https://api-vipgo.woocommerce.com' );
+		return apply_filters( 'woocommerce_gla_wcs_url', 'https://api.woocommerce.com' );
 	}
 
 	/**

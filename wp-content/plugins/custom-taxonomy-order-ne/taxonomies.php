@@ -25,7 +25,7 @@ function custom_taxonomy_order() {
 			$nonce = wp_create_nonce( 'custom-taxonomy-order-ne-nonce' );
 			echo '<input type="hidden" id="custom-taxonomy-order-ne-nonce" name="custom-taxonomy-order-ne-nonce" value="' . esc_attr( $nonce ) . '" />';
 
-			$taxonomies = customtaxorder_get_taxonomies() ;
+			$taxonomies = customtaxorder_get_taxonomies();
 
 			if ( ! empty($taxonomies) ) {
 
@@ -103,9 +103,9 @@ function customtaxorder_update_taxonomies() {
 		$new_order = sanitize_text_field( $_POST['hidden-taxonomy-order'] );
 		update_option('customtaxorder_taxonomies', $new_order);
 
-		echo '<div id="message" class="updated fade notice is-dismissible"><p>'. esc_html__('Order updated successfully.', 'custom-taxonomy-order-ne').'</p></div>';
+		echo '<div id="message" class="updated fade notice is-dismissible"><p>' . esc_html__('Order updated successfully.', 'custom-taxonomy-order-ne') . '</p></div>';
 	} else {
-		echo '<div id="message" class="error fade notice is-dismissible"><p>'. esc_html__('An error occured, order has not been saved.', 'custom-taxonomy-order-ne').'</p></div>';
+		echo '<div id="message" class="error fade notice is-dismissible"><p>' . esc_html__('An error occured, order has not been saved.', 'custom-taxonomy-order-ne') . '</p></div>';
 	}
 
 }

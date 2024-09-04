@@ -40,10 +40,18 @@ abstract class Feature extends Core\Singleton {
 
 		$this->admin = Admin::instance();
 
+
 		if ( wp_doing_ajax() ) {
-			add_action( 'admin_init', [ $this, 'init_fields' ] );
+			$actions = array_merge(
+				apply_filters( 'acf_quick_edit_post_ajax_actions', [ 'inline-save' ] ),
+				apply_filters( 'acf_quick_edit_term_ajax_actions', [ 'inline-save-tax' ] ),
+				[ 'get_acf_post_meta' ]
+			);
+			if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $actions ) ) {
+				add_action( 'admin_init', [ $this, 'init_fields' ] );
+			}
 		} else {
-			add_action( 'current_screen', [ $this, 'init_fields' ] );
+			add_action( 'current_screen', [ $this, 'current_screen' ] );
 		}
 
 		add_filter( 'acf/load_field', [ $this, 'load_field' ] );
@@ -51,6 +59,18 @@ abstract class Feature extends Core\Singleton {
 		parent::__construct();
 	}
 
+	/**
+	 *	@filter current_screen
+	 */
+	public function current_screen( $current_screen ) {
+		global $pagenow;
+		if (
+			in_array( $pagenow, [ 'edit.php', 'edit-tags.php', 'users.php', 'upload.php' ] )
+			&& 'acf-field-group' !== $current_screen->post_type
+	 	) {
+			$this->init_fields();
+		}
+	}
 
 	/**
 	 *	@filter acf/load_field
@@ -117,32 +137,37 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 *	@param string $by Column to sort on
+	 *	@param WP_Query $wp_query
 	 */
 	protected function get_meta_query( $wp_query = null ) {
 
 		if ( ! isset( $_REQUEST['meta_query'] ) ) {
 			if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars['meta_query'] ) ) {
-				return $wp_query->query_vars['meta_query'];
+				// respect previous meta query
+				$meta_query = $wp_query->query_vars['meta_query'];
 			} else {
-				return [];
+				$meta_query = [];
+			}
+		} else {
+			// validate meta query
+			$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+
+			$meta_query = array_filter( $meta_query, function($clause) {
+				if ( ! is_array( $clause ) ) {
+					return true;
+				}
+				$clause = wp_parse_args( $clause, [ 'value' => '' ] );
+				return $clause['value'] !== '';
+			} );
+			if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
+				$meta_query = [];
 			}
 		}
-
-		$meta_query = wp_unslash( $_REQUEST['meta_query'] );
-
-		$meta_query = array_filter( $meta_query, function($clause) {
-			if ( ! is_array( $clause ) ) {
-				return true;
-			}
-			$clause = wp_parse_args( $clause, [ 'value' => '' ] );
-			return $clause['value'] !== '';
-		} );
-		if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
+		if ( empty( $meta_query ) ) {
 			$meta_query = [];
 		}
 
-		return apply_filters( 'acf_qef_meta_query_request', $meta_query );
+		return $meta_query;
 	}
 
 	/**
@@ -192,7 +217,6 @@ abstract class Feature extends Core\Singleton {
 		}
 
 		$field_store = acf_get_store( 'fields' );
-
 
 		$fields_query = [];
 		$fields_query[ $this->get_fieldgroup_option() ] = true;

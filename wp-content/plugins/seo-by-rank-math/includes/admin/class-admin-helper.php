@@ -16,8 +16,7 @@ use RankMath\KB;
 use RankMath\Helper;
 use RankMath\Data_Encryption;
 use RankMath\Helpers\Security;
-use MyThemeShop\Helpers\Param;
-use MyThemeShop\Helpers\WordPress;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,7 +38,7 @@ class Admin_Helper {
 			];
 		}
 
-		$wp_filesystem = WordPress::get_filesystem();
+		$wp_filesystem = Helper::get_filesystem();
 		if ( empty( $wp_filesystem ) ) {
 			return;
 		}
@@ -128,7 +127,10 @@ class Admin_Helper {
 
 			Helper::remove_notification( 'rank-math-site-url-mismatch' );
 			update_option( 'rank_math_registration_skip', 1 );
-			return update_option( $row, $data );
+			$connected = update_option( $row, $data );
+
+			do_action( 'rank_math/connect/account_connected', $data );
+			return $connected;
 		}
 
 		// Getter.
@@ -175,6 +177,13 @@ class Admin_Helper {
 					'id'   => 'rank-math-site-url-mismatch',
 				]
 			);
+		}
+
+		/**
+		 * Ensure the site_url is returned if it is absent, as it is required for the Content AI.
+		 */
+		if ( empty( $options['site_url'] ) ) {
+			$options['site_url'] = Helper::get_home_url();
 		}
 
 		return $options;
@@ -339,10 +348,10 @@ class Admin_Helper {
 		);
 		?>
 		<span class="wizard-share">
-			<a href="#" onclick="window.open('<?php echo $tweet_url; ?>', 'sharewindow', 'resizable,width=600,height=300'); return false;" class="share-twitter">
+			<a href="#" onclick="window.open('<?php echo esc_url( $tweet_url ); ?>', 'sharewindow', 'resizable,width=600,height=300'); return false;" class="share-twitter">
 				<span class="dashicons dashicons-twitter"></span> <?php esc_html_e( 'Tweet', 'rank-math' ); ?>
 			</a>
-			<a href="#" onclick="window.open('<?php echo $fb_share_url; ?>', 'sharewindow', 'resizable,width=600,height=300'); return false;" class="share-facebook">
+			<a href="#" onclick="window.open('<?php echo esc_url( $fb_share_url ); ?>', 'sharewindow', 'resizable,width=600,height=300'); return false;" class="share-facebook">
 				<span class="dashicons dashicons-facebook-alt"></span> <?php esc_html_e( 'Share', 'rank-math' ); ?>
 			</a>
 		</span>
@@ -382,7 +391,7 @@ class Admin_Helper {
 
 		return apply_filters(
 			'rank_math/license/activate_url',
-			Security::add_query_arg_raw( $args, 'https://rankmath.com/auth' ),
+			Security::add_query_arg_raw( $args, RANK_MATH_SITE_URL . '/auth' ),
 			$args
 		);
 	}

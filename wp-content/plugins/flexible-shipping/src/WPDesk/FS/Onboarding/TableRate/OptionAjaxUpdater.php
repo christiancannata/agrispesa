@@ -49,6 +49,9 @@ class OptionAjaxUpdater implements Hookable {
 	 */
 	public function handle_ajax_action_event() {
 		check_ajax_referer( self::NONCE_ACTION );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$event = $this->filter_input( INPUT_POST, 'event' );
 		$step  = (int) $this->filter_input( INPUT_POST, 'step' );
@@ -70,6 +73,9 @@ class OptionAjaxUpdater implements Hookable {
 	 */
 	public function handle_ajax_action_click() {
 		check_ajax_referer( self::NONCE_ACTION );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$clicks = (int) $this->option->get_option_value( 'clicks' );
 
@@ -86,6 +92,9 @@ class OptionAjaxUpdater implements Hookable {
 	 */
 	public function handle_ajax_action_auto_show_popup() {
 		check_ajax_referer( self::NONCE_ACTION );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$this->option->update_option( 'auto_show_popup', 1 );
 

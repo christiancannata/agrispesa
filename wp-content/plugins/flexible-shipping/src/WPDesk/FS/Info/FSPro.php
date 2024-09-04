@@ -37,6 +37,7 @@ class FSPro extends Metabox {
 	private function get_footer_content() {
 		$url = get_user_locale() === 'pl_PL' ? 'https://octol.io/fs-info-pro-pl' : 'https://octol.io/fs-info-pro';
 
-		return '<a class="button button-primary" href="' . esc_url( $url ) . '" target="_blank">' . __( 'Upgrade now to PRO version &rarr;', 'flexible-shipping' ) . '</a>';
+		return '<a class="oct-metabox-btn" href="' . esc_url( $url ) . '" target="_blank">' . __( 'Upgrade Now', 'flexible-shipping' ) . '</a>';
 	}
+
 }

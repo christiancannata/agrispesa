@@ -305,7 +305,7 @@ class Cookie_Law_Info_Cookies {
 		}
 	}
 	/**
-	 * Register cutsom taxonomy
+	 * Register custom taxonomy
 	 *
 	 * @return void
 	 */
@@ -1075,8 +1075,12 @@ class Cookie_Law_Info_Cookies {
 	 * @return array
 	 */
 	public function get_term_data_by_slug( $value ) {
-		global $wpdb;
-		$term_data = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->terms WHERE slug = %s", $value ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$term_data = wp_cache_get( $value . '_term_data', 'term-details' );
+		if ( $term_data === false ) {
+			global $wpdb;
+			$term_data = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->terms WHERE slug = %s", $value ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			wp_cache_set( $value . '_term_data', $term_data, 'term-details', MINUTE_IN_SECONDS );
+		}
 		if ( $term_data && is_object( $term_data ) ) {
 			return $term_data;
 		}

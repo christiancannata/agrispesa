@@ -351,7 +351,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<td>
 						<input type="radio" cli_frm_tgl-target="wt-cli-ccpa-advanced" id="button_6_as_link_field_yes" name="button_6_as_link_field" class="styled cli_form_toggle" value="true" <?php echo ( wp_validate_boolean( $the_options['button_6_as_link'] ) == true ) ? ' checked="checked"' : ''; ?> /> <?php echo esc_html__( 'Link', 'cookie-law-info' ); ?>
 						<input type="radio" cli_frm_tgl-target="wt-cli-ccpa-advanced" id="button_6_as_link_field_no" name="button_6_as_link_field" class="styled cli_form_toggle" value="false" <?php echo ( wp_validate_boolean( $the_options['button_6_as_link'] ) == false ) ? ' checked="checked"' : ' '; ?> /> <?php echo esc_html__( 'Checkbox', 'cookie-law-info' ); ?>
-						<span class="cli_form_help" cli_frm_tgl-id="wt-cli-ccpa-advanced" cli_frm_tgl-val="true" style="margin-top:8px;"><?php echo esc_html__( 'The shortcode will be represented as a link whereever used.', 'cookie-law-info' ); ?></span>
+						<span class="cli_form_help" cli_frm_tgl-id="wt-cli-ccpa-advanced" cli_frm_tgl-val="true" style="margin-top:8px;"><?php echo esc_html__( 'The shortcode will be represented as a link wherever used.', 'cookie-law-info' ); ?></span>
 						<span class="cli_form_help" cli_frm_tgl-id="wt-cli-ccpa-advanced" cli_frm_tgl-val="false" style="margin-top:8px;"><?php echo esc_html__( 'The shortcode will be represented as a checkbox with select option to record consent.', 'cookie-law-info' ); ?></span>
 
 					</td>

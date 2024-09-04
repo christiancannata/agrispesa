@@ -66,6 +66,32 @@ class Api extends Rest_Controller {
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/plans',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_plan_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/currencies',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_currency_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 	/**
 	 * Get a collection of items.
@@ -75,6 +101,16 @@ class Api extends Rest_Controller {
 	 */
 	public function get_items( $request ) {
 		$data = Controller::get_instance()->get_items();
+		return rest_ensure_response( $data );
+	}
+
+	public function get_currency_items( $request ) {
+		$data = Controller::get_instance()->get_currencies();
+		return rest_ensure_response( $data );
+	}
+
+	public function get_plan_items( $request ) {
+		$data = Controller::get_instance()->get_plans();
 		return rest_ensure_response( $data );
 	}
 

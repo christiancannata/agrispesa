@@ -501,7 +501,8 @@ if ( !get_option('niteoCS_socialmedia') ) {
 		'tiktok',
 		'imdb',
 		'wikipedia',
-		'twitch'
+		'twitch',
+		'medium'
 	);
 	$i = 0;
 	$socialmedia  = array();

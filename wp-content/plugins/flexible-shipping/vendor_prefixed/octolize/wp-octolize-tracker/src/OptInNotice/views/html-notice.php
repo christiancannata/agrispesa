@@ -33,6 +33,9 @@ echo \admin_url('admin-ajax.php');
 					{
 						type: 'POST',
 						data: {
+							security: '<?php 
+echo \wp_create_nonce(\FSVendor\WPDesk_Tracker::WPDESK_TRACKER_NOTICE);
+?>',
 							action: 'wpdesk_tracker_notice_handler',
 							type: 'allow',
 						}

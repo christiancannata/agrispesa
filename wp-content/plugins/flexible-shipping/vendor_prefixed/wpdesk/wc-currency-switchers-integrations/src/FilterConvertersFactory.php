@@ -37,7 +37,6 @@ class FilterConvertersFactory implements \FSVendor\WPDesk\PluginBuilder\Plugin\H
         \add_action('woocommerce_init', [$this, 'create_aelia_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
         \add_action('woocommerce_init', [$this, 'create_fox_currency_switcher_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
         \add_action('woocommerce_init', [$this, 'create_wmcs_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
-        \add_action('woocommerce_init', [$this, 'create_curcy_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
     }
     public function create_woocommerce_multicurrency_filter_converter()
     {
@@ -77,14 +76,6 @@ class FilterConvertersFactory implements \FSVendor\WPDesk\PluginBuilder\Plugin\H
         // php scoper faker.
         if (\function_exists($wmcs_convert_price)) {
             (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WMCS\Converter(), $this->shipping_method_id))->hooks();
-        }
-    }
-    public function create_curcy_filter_converter()
-    {
-        $wmc_get_price = 'wmc_get_price';
-        // php scoper faker.
-        if (\function_exists($wmc_get_price)) {
-            (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\CURCY\Converter(), $this->shipping_method_id))->hooks();
         }
     }
 }

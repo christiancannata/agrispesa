@@ -390,6 +390,7 @@ class Frontend {
 
 		$properties                                   = $banner->get_settings();
 		$data['settings']['type']                     = $properties['settings']['type'];
+		$data['settings']['preferenceCenterType']     = $properties['settings']['type'] === "classic" ? "pushdown" : $properties['settings']['preferenceCenterType'];
 		$data['settings']['position']                 = $properties['settings']['position'];
 		$data['settings']['applicableLaw']            = $properties['settings']['applicableLaw'];
 		$data['behaviours']['reloadBannerOnAccept']   = $properties['behaviours']['reloadBannerOnAccept']['status'];
@@ -530,5 +531,4 @@ class Frontend {
 
 		return in_array( $language, array( 'ar', 'az', 'dv', 'he', 'ku', 'fa', 'ur' ), true );
 	}
-
 }

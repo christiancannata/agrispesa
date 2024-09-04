@@ -3,6 +3,7 @@
 namespace WPDesk\FS\TableRate\FreeShipping;
 
 use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
+use WPDesk\FS\Blocks\FreeShipping\FreeShippingBlock;
 
 /**
  * Can enqueue assets.
@@ -33,7 +34,7 @@ class Assets implements Hookable {
 	}
 
 	public function enqueue_scripts() {
-		if ( apply_filters( 'flexible-shipping/free-shipping/enqueue_css', is_page() || is_checkout() || is_cart() || is_product() || is_shop() ) ) {
+		if ( apply_filters( 'flexible-shipping/free-shipping/enqueue_css', is_page() || is_checkout() || is_cart() || is_product() || is_shop() || has_block( FreeShippingBlock::BLOCK_NAME ) ) ) {
 			wp_enqueue_style(
 				'flexible-shipping-free-shipping',
 				trailingslashit( $this->assets_url ) . 'dist/css/free-shipping.css',

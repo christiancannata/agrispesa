@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
+class ComposerStaticInitd2cd57a1875face2fc022e6080c1e1ce
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -17,6 +17,7 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
         ),
         'A' => 
         array (
+            'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\' => 55,
             'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\' => 51,
         ),
     );
@@ -29,6 +30,10 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
         'Composer\\Installers\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/woocommerce/grow/src',
         ),
         'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\' => 
         array (
@@ -45,6 +50,11 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
         'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\Proxies\\ActionSchedulerInterface' => __DIR__ . '/..' . '/woocommerce/action-scheduler-job-framework/src/Proxies/ActionSchedulerInterface.php',
         'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\Utilities\\BatchQueryOffset' => __DIR__ . '/..' . '/woocommerce/action-scheduler-job-framework/src/Utilities/BatchQueryOffset.php',
         'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\Utilities\\BatchSize' => __DIR__ . '/..' . '/woocommerce/action-scheduler-job-framework/src/Utilities/BatchSize.php',
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\Checker' => __DIR__ . '/..' . '/woocommerce/grow/src/Checker.php',
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\Checks\\CompatCheck' => __DIR__ . '/..' . '/woocommerce/grow/src/Checks/CompatCheck.php',
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\Checks\\WCCompatibility' => __DIR__ . '/..' . '/woocommerce/grow/src/Checks/WCCompatibility.php',
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\Checks\\WPCompatibility' => __DIR__ . '/..' . '/woocommerce/grow/src/Checks/WPCompatibility.php',
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\Exception\\IncompatibleException' => __DIR__ . '/..' . '/woocommerce/grow/src/Exception/IncompatibleException.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Composer\\Installers\\AglInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AglInstaller.php',
         'Composer\\Installers\\AimeosInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AimeosInstaller.php',
@@ -160,7 +170,6 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
         'WooCommerce\\Facebook\\API\\Catalog\\Send_Item_Updates\\Response' => __DIR__ . '/../..' . '/includes/API/Catalog/Send_Item_Updates/Response.php',
         'WooCommerce\\Facebook\\API\\Exceptions\\ConnectApiException' => __DIR__ . '/../..' . '/includes/API/Exceptions/ConnectApiException.php',
         'WooCommerce\\Facebook\\API\\Exceptions\\Request_Limit_Reached' => __DIR__ . '/../..' . '/includes/API/Exceptions/Request_Limit_Reached.php',
-        'WooCommerce\\Facebook\\API\\FBE\\Configuration\\Messenger' => __DIR__ . '/../..' . '/includes/API/FBE/Configuration/Messenger.php',
         'WooCommerce\\Facebook\\API\\FBE\\Configuration\\Read\\Response' => __DIR__ . '/../..' . '/includes/API/FBE/Configuration/Read/Response.php',
         'WooCommerce\\Facebook\\API\\FBE\\Configuration\\Request' => __DIR__ . '/../..' . '/includes/API/FBE/Configuration/Request.php',
         'WooCommerce\\Facebook\\API\\FBE\\Configuration\\Update\\Request' => __DIR__ . '/../..' . '/includes/API/FBE/Configuration/Update/Request.php',
@@ -232,7 +241,6 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
         'WooCommerce\\Facebook\\Admin\\Settings' => __DIR__ . '/../..' . '/includes/Admin/Settings.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Advertise' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Advertise.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Connection' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Connection.php',
-        'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Messenger' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Messenger.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Product_Sets' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Product_Sets.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Product_Sync' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Product_Sync.php',
         'WooCommerce\\Facebook\\Admin\\Tasks\\Setup' => __DIR__ . '/../..' . '/includes/Admin/Tasks/Setup.php',
@@ -294,9 +302,9 @@ class ComposerStaticInit5551265f842185cb5df34c63b9d1b889
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5551265f842185cb5df34c63b9d1b889::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5551265f842185cb5df34c63b9d1b889::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit5551265f842185cb5df34c63b9d1b889::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd2cd57a1875face2fc022e6080c1e1ce::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd2cd57a1875face2fc022e6080c1e1ce::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd2cd57a1875face2fc022e6080c1e1ce::$classMap;
 
         }, null, ClassLoader::class);
     }

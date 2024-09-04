@@ -91,6 +91,7 @@ class CurrentView extends Core\Singleton {
 			// no post type on taxonomies!
 			$this->screen_param = array_diff_key( $this->screen_param, [ 'post_type' => 0 ] );
 		} else if ( $this->object_kind === 'user' ) {
+			// ?
 		}
 
 		$this->object_type = $this->get_object_type(); // current taxonomy
@@ -128,11 +129,15 @@ class CurrentView extends Core\Singleton {
 					}
 				}
 			} else if ( 'post' === $this->object_kind ) {
-				$this->object_type = 'post';
-				foreach ( $this->screen_param as $param => $value ) {
-					if ( 'post_type' === $param ) {
-						$this->object_type = $value;
-						break;
+				if ( $GLOBALS['pagenow'] === 'upload.php' ) {
+					$this->object_type = 'attachment';
+				} else {
+					$this->object_type = 'post';
+					foreach ( $this->screen_param as $param => $value ) {
+						if ( 'post_type' === $param ) {
+							$this->object_type = $value;
+							break;
+						}
 					}
 				}
 			}
@@ -152,7 +157,10 @@ class CurrentView extends Core\Singleton {
 
 			foreach ( $this->screen_param as $param => $value ) {
 
-				if ( 'post_type' === $param && ! empty( $value ) ) {
+				if ( $GLOBALS['pagenow'] === 'upload.php' ) {
+					$this->field_group_filter['attachment'] = 'all';
+
+				} else if ( 'post_type' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['post_type'] = $value;
 
 				} else if ( 'attachment-filter' === $param ) {
@@ -167,7 +175,7 @@ class CurrentView extends Core\Singleton {
 				} else if ( 'category_name' === $param ) {
 					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $value );
 
-				} else if ( ( 'cat' === $param ) && ( $cat = get_category($value) ) ) {
+				} else if ( ( 'cat' === $param ) && ( $cat = get_category($value) ) && ! is_wp_error( $cat ) ) {
 					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $cat->slug );
 
 				} else if ( taxonomy_exists( $param ) && ! empty( $value ) ) {
@@ -257,7 +265,8 @@ class CurrentView extends Core\Singleton {
 				if ( is_bool( $value ) ) {
 					$value = intval($value);
 				}
-				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] !== $value ) {
+
+				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] != $value ) {
 					$match = false;
 					break;
 				}
@@ -282,16 +291,29 @@ class CurrentView extends Core\Singleton {
 
 			$filters = $this->get_fieldgroup_filter();
 
+			add_filter('acf/location/rule_match', [ $this, 'location_rule_match' ], 10, 4 );
 			$this->_available_field_groups = array_map(
 				function( $group ) {
 					return $group['key'];
 				},
 				acf_get_field_groups( $filters )
 			);
-
+			remove_filter('acf/location/rule_match', [ $this, 'location_rule_match' ], 10 );
 		}
 
 		return $this->_available_field_groups;
+	}
+
+	/**
+	 *	@filter acf/location/rule_match
+	 */
+	public function location_rule_match( $result, $rule, $screen, $field_group ) {
+		if ( $field_group['qef_simple_location_rules'] ) {
+			if ( ! in_array( $rule['param'], [ 'post_type', 'taxonomy' ] ) ) {
+				$result = true;
+			}
+		}
+		return $result;
 	}
 
 	/**

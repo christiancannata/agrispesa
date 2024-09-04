@@ -24,12 +24,12 @@ class FreeShippingNoticeGenerator implements Hookable {
 	const PRIORITY = 10;
 
 	/**
-	 * @var WC_Cart
+	 * @var WC_Cart|null
 	 */
 	protected $cart;
 
 	/**
-	 * @var WC_Session
+	 * @var WC_Session|null
 	 */
 	private $session;
 
@@ -41,11 +41,11 @@ class FreeShippingNoticeGenerator implements Hookable {
 	/**
 	 * FreeShippingNotice constructor.
 	 *
-	 * @param WC_Cart    $cart    .
-	 * @param WC_Session $session .
-	 * @param string     $session_variable_name .
+	 * @param WC_Cart|null    $cart    .
+	 * @param WC_Session|null $session .
+	 * @param string          $session_variable_name .
 	 */
-	public function __construct( WC_Cart $cart, WC_Session $session, string $session_variable_name ) {
+	public function __construct( $cart, $session, string $session_variable_name ) {
 		$this->cart                  = $cart;
 		$this->session               = $session;
 		$this->session_variable_name = $session_variable_name;
@@ -56,6 +56,18 @@ class FreeShippingNoticeGenerator implements Hookable {
 	 */
 	public function hooks() {
 		add_filter( 'woocommerce_package_rates', [ $this, 'add_free_shipping_notice_if_should' ], self::PRIORITY );
+		add_action( 'woocommerce_after_calculate_totals', [ $this, 'clear_notices_if_cart_not_needs_shipping' ], self::PRIORITY );
+	}
+
+	/**
+	 * @param WC_Cart $cart
+	 *
+	 * @return void
+	 */
+	public function clear_notices_if_cart_not_needs_shipping( $cart ) {
+		if ( ! $cart->needs_shipping() ) {
+			$this->get_session()->set( $this->session_variable_name, null );
+		}
 	}
 
 	/**
@@ -67,13 +79,18 @@ class FreeShippingNoticeGenerator implements Hookable {
 	 * @return array
 	 */
 	public function add_free_shipping_notice_if_should( $package_rates ) {
+		$this->cart = WC()->cart;
 		if ( $this->cart->needs_shipping() && $this->has_shipping_rate_with_free_shipping( $package_rates ) && ! $this->has_free_shipping_rate( $package_rates ) && $this->get_shipping_packages_count() === 1 ) {
 			$this->add_free_shipping_amount_to_session( $package_rates );
 		} else {
-			$this->session->set( $this->session_variable_name, null );
+			$this->get_session()->set( $this->session_variable_name, null );
 		}
 
 		return $package_rates;
+	}
+
+	protected function get_session() {
+		return WC()->session;
 	}
 
 	/**
@@ -90,8 +107,9 @@ class FreeShippingNoticeGenerator implements Hookable {
 	 */
 	private function add_free_shipping_amount_to_session( $package_rates ) {
 		$shipping_method_with_lowest_free_shipping_limit = $this->get_shipping_method_with_lowest_free_shipping_limit( $package_rates );
+		$lowest_free_shipping_limit                      = floatval( $shipping_method_with_lowest_free_shipping_limit[ self::SETTING_METHOD_FREE_SHIPPING ] );
 		$lowest_free_shipping_limit                      = round(
-			(float) apply_filters( 'flexible_shipping_value_in_currency', floatval( $shipping_method_with_lowest_free_shipping_limit[ self::SETTING_METHOD_FREE_SHIPPING ] ) ),
+			(float) apply_filters( 'flexible_shipping_value_in_currency', $lowest_free_shipping_limit, $lowest_free_shipping_limit ),
 			wc_get_rounding_precision()
 		);
 		$amount                                          = $lowest_free_shipping_limit - $this->get_cart_value();
@@ -109,7 +127,7 @@ class FreeShippingNoticeGenerator implements Hookable {
 			$meta_data
 		);
 
-		$this->session->set( $this->session_variable_name, $free_shipping_notice_data->jsonSerialize() );
+		$this->get_session()->set( $this->session_variable_name, $free_shipping_notice_data->jsonSerialize() );
 	}
 
 	/**

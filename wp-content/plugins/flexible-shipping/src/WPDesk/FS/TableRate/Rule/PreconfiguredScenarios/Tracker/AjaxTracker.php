@@ -28,6 +28,10 @@ class AjaxTracker implements Hookable {
 	 */
 	public function handle_ajax() {
 		check_ajax_referer( self::AJAX_ACTION, 'security' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
+
 		$tracking_data = new TrackingData();
 		$action        = isset( $_REQUEST['tracking_action'] ) ? sanitize_key( wp_unslash( $_REQUEST['tracking_action'] ) ) : '';
 		$scenario      = isset( $_REQUEST['scenario'] ) ? sanitize_key( wp_unslash( $_REQUEST['scenario'] ) ) : '';

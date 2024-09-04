@@ -2,7 +2,7 @@
 /**
  * Plugin ajax file
  *
- * @package WooWallet
+ * @package StandaleneTech
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -157,6 +157,10 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 		 */
 		public function terawallet_export_user_search() {
 			check_ajax_referer( 'search-user', 'security' );
+			// Check permissions again and make sure we have what we need.
+			if ( ! get_wallet_user_capability() ) {
+				wp_die( -1 );
+			}
 			$term    = isset( $_POST['term'] ) ? sanitize_text_field( wp_unslash( $_POST['term'] ) ) : '';
 			$return  = array();
 			$blog_id = isset( $_POST['site_id'] ) ? sanitize_text_field( wp_unslash( $_POST['site_id'] ) ) : get_current_blog_id();
@@ -187,7 +191,7 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 		 */
 		public function recalculate_order_cashback_after_calculate_totals( $and_taxes, $order ) {
 			$cashback_amount = woo_wallet()->cashback->calculate_cashback( false, $order->get_id(), true );
-			$transaction_id  = get_post_meta( $order->get_id(), '_general_cashback_transaction_id', true );
+			$transaction_id  = $order->get_meta( '_general_cashback_transaction_id' );
 			if ( $transaction_id ) {
 				update_wallet_transaction( $transaction_id, $order->get_customer_id(), array( 'amount' => $cashback_amount ), array( '%f' ) );
 			}
@@ -209,8 +213,8 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 				$response['success'] = true;
 				/* translators: wallet amount */
 				$order->add_order_note( sprintf( __( '%s refunded to customer wallet', 'woo-wallet' ), wc_price( $partial_payment_amount, woo_wallet_wc_price_args( $order->get_customer_id() ) ) ) );
-				update_post_meta( $order_id, '_woo_wallet_partial_payment_refunded', true );
-				update_post_meta( $order_id, '_partial_payment_refund_id', $transaction_id );
+				WOO_Wallet_Helper::update_order_meta_data( $order, '_woo_wallet_partial_payment_refunded', true, false );
+				WOO_Wallet_Helper::update_order_meta_data( $order, '_partial_payment_refund_id', $transaction_id );
 				do_action( 'woo_wallet_partial_order_refunded', $order_id, $transaction_id );
 			}
 			wp_send_json( $response );
@@ -360,7 +364,7 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 		 */
 		public function woo_wallet_partial_payment_update_session() {
 			if ( isset( $_POST['checked'] ) && 'true' === $_POST['checked'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-				update_wallet_partial_payment_session( true );
+				update_wallet_partial_payment_session( woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) );
 			} else {
 				update_wallet_partial_payment_session();
 			}
@@ -419,10 +423,10 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 						'woo_wallet_transactons_datatable_row_data',
 						array(
 							'id'      => $transaction->transaction_id,
-							'amount'  => '<mark class="' . $transaction->type . '">' . wc_price( apply_filters( 'woo_wallet_amount', $transaction->amount, $transaction->currency, $transaction->user_id ), woo_wallet_wc_price_args( $transaction->user_id ) ) . '</mark>',
-							'details' => $transaction->details,
+							'amount'  => '<mark class="' . esc_attr( $transaction->type ) . '">' . wc_price( apply_filters( 'woo_wallet_amount', $transaction->amount, $transaction->currency, $transaction->user_id ), woo_wallet_wc_price_args( $transaction->user_id ) ) . '</mark>',
+							'details' => wp_kses_post( $transaction->details ),
 							'date'    => wc_string_to_datetime( $transaction->date )->date_i18n( wc_date_format() ),
-							'type'    => ucfirst( $transaction->type ),
+							'type'    => esc_html( ucfirst( $transaction->type ) ),
 						),
 						$transaction
 					);
@@ -443,7 +447,6 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 			echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			wp_die();
 		}
-
 	}
 
 }

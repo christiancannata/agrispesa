@@ -102,7 +102,8 @@
 .yith-plugin-fw input.select2-search__field,
 .yith-plugin-fw .select2-container .select2-search--inline .select2-search__field,
 .woocommerce .yith-plugin-fw input.select2-search__field,
-.woocommerce .yith-plugin-fw table.form-table input.select2-search__field {
+.woocommerce .yith-plugin-fw table.form-table input.select2-search__field,
+.yith-plugin-fw-panel .yith-plugin-ui table.form-table input[type=text].select2-search__field {
     padding   : 3px;
     min-width : 380px;
 }
@@ -301,8 +302,10 @@ ul.yit-icons-manager-list li.active {
     margin : 0 3px 0 0;
 }
 
-.yith-plugin-fw-radio__row {
-    margin-bottom : 8px;
+.yith-plugin-fw-radio {
+    display               : grid;
+    grid-template-columns : 1fr;
+    grid-gap              : 8px;
 }
 
 /* ------- Checkbox Array ------- */
@@ -946,7 +949,7 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
 }
 
 .yith-plugin-fw-select2-container.select2-container--default .select2-results__option[data-selected=true],
-.wp-admin.wc-wp-version-gte-53 .yith-plugin-fw-select2-container.select2-container--default .select2-results__option[data-selected=true]{
+.wp-admin.wc-wp-version-gte-53 .yith-plugin-fw-select2-container.select2-container--default .select2-results__option[data-selected=true] {
     background-color : var(--yith-primary);
     color            : var(--yith-primary-text);
     outline          : none;
@@ -1004,6 +1007,7 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
     border  : 0 !important;
     padding : 0 !important;
     height  : 30px !important;
+    width   : 100% !important;
 }
 
 .yith-plugin-ui .select2-container--default .select2-search--dropdown .select2-search__field,
@@ -1030,7 +1034,7 @@ span.select2.select2-container.select2-container--default.yith-plugin-fw-select2
 .yith-plugin-ui [type="radio"]:checked + label,
 .yith-plugin-ui [type="radio"]:not(:checked) + label {
     position     : relative;
-    padding-left : 35px;
+    padding-left : 25px;
     cursor       : pointer;
     line-height  : 20px;
     display      : inline-block;
@@ -1413,6 +1417,10 @@ div#ui-datepicker-div.yith-plugin-fw-datepicker-div {
     vertical-align : middle;
 }
 
+.yith-plugin-ui .yith-plugin-fw-field-wrapper .wp-picker-input-wrap .wp-picker-clear {
+    display : none !important;
+}
+
 .yith-plugin-ui .yith-plugin-fw-field-wrapper .wp-picker-active .iris-picker,
 .yith-plugin-ui .yith-plugin-fw-field-wrapper .wp-picker-active .wp-picker-holder {
     display : block !important;
@@ -1513,7 +1521,7 @@ div#ui-datepicker-div.yith-plugin-fw-datepicker-div {
 
 .yith-plugin-ui .yith-single-colorpicker > label {
     display        : block;
-    font-size      : 11px;
+    font-size      : 10px;
     font-weight    : 600;
     margin         : 0 0 10px 0;
     text-transform : uppercase;
@@ -1790,27 +1798,6 @@ div#ui-datepicker-div.yith-plugin-fw-datepicker-div {
 
 .yith-plugin-ui #plugin-fw-wc table.form-table th.check-column {
     padding-left : 3px;
-}
-
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table tbody td {
-    padding-left : 20px;
-}
-
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table th,
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table td {
-    padding : 15px 20px 15px 20px;
-}
-
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table thead td,
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table thead th,
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table tfoot td,
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table tfoot th {
-    padding : 3px 20px;
-}
-
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table thead a,
-.yith-plugin-ui #plugin-fw-wc table.wp-list-table tfoot a {
-    padding-left : 0;
 }
 
 .yith-plugin-ui .yith-plugin-fw-list-table .list-table-title {

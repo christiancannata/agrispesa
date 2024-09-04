@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Definições de cookies"
+                "title": "Preferências de consentimento"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "Valorizamos sua privacidade",
-                "description": "Este site ou suas ferramentas de terceiros processam dados pessoais. Você pode optar por não vender suas informações pessoais clicando no link \"Não venda ou compartilhe minhas informações pessoais\".",
+                "description": "<p>Este site ou suas ferramentas de terceiros processam dados pessoais. Você pode optar por não vender suas informações pessoais clicando no link \"Não venda ou compartilhe minhas informações pessoais\".</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Definições de cookies"
+                "title": "Preferências de consentimento"
             }
         },
         "auditTable": {

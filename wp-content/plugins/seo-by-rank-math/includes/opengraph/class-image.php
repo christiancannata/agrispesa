@@ -16,9 +16,9 @@ namespace RankMath\OpenGraph;
 use RankMath\Helper;
 use RankMath\Post;
 use RankMath\Traits\Hooker;
-use MyThemeShop\Helpers\Str;
-use MyThemeShop\Helpers\Url;
-use MyThemeShop\Helpers\Attachment;
+use RankMath\Helpers\Str;
+use RankMath\Helpers\Url;
+use RankMath\Helpers\Attachment;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -519,7 +519,7 @@ class Image {
 			$cache_key = 'rank_math_og_content_image';
 			$cache     = get_post_meta( $post->ID, $cache_key, true );
 			$check     = md5( $post->post_content );
-			if ( ! empty( $cache ) && $check === $cache['check'] ) {
+			if ( ! empty( $cache ) && isset( $cache['check'] ) && $check === $cache['check'] ) {
 				foreach ( $cache['images'] as $image ) {
 					if ( is_int( $image ) ) {
 						$this->add_image_by_id( $image );

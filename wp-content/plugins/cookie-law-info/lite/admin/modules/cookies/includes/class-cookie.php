@@ -120,7 +120,7 @@ class Cookie extends Store {
 
 	/**
 	 * Read directly from the data object given.
-	 * Used for assigning data to object if it is alread fetched from API or DB.
+	 * Used for assigning data to object if it is already fetched from API or DB.
 	 *
 	 * @param array|object $data Category data.
 	 * @return void

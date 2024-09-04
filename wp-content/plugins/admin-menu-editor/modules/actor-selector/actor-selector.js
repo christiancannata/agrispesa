@@ -162,7 +162,13 @@ class AmeActorSelector {
             }
             else {
                 const availableActors = this.getVisibleActors();
-                this.setSelectedActor(AmeActorSelector._.first(availableActors).getId());
+                const firstActor = AmeActorSelector._.head(availableActors);
+                if (firstActor) {
+                    this.setSelectedActor(firstActor.getId());
+                }
+                else {
+                    this.setSelectedActor(null);
+                }
             }
         }
         this.highlightSelectedActor();
@@ -201,8 +207,7 @@ class AmeActorSelector {
             if (user) {
                 actors.push(user);
             }
-        })
-            .value();
+        });
         this.cachedVisibleActors = actors;
         return actors;
     }
@@ -271,6 +276,22 @@ class AmeActorSelector {
             }
         });
         return publicObservable;
+    }
+    /**
+     * Select an actor based on the "selected_actor" URL parameter.
+     *
+     * Does nothing if the parameter is not set or the actor ID is invalid.
+     */
+    setSelectedActorFromUrl() {
+        if (!URLSearchParams) {
+            return;
+        }
+        //Select an actor based on the "selected_actor" URL parameter.
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedActor = urlParams.get('selected_actor');
+        if (selectedActor !== null) {
+            this.setSelectedActor(selectedActor);
+        }
     }
 }
 AmeActorSelector._ = wsAmeLodash;

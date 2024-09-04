@@ -59,6 +59,11 @@ class Admin extends Core\Singleton {
 	private $filters = null;
 
 	/**
+	 *	@var BackendSearch
+	 */
+	private $backendsearch = null;
+
+	/**
 	 *	@var Ajax\AjaxHandler
 	 */
 	private $ajax_handler = null;
@@ -79,8 +84,19 @@ class Admin extends Core\Singleton {
 		add_action( 'after_setup_theme', [ $this , 'setup' ] );
 
 		// init field group admin
-		add_action( 'acf/field_group/admin_head', [ $this, 'field_group_admin_head' ] );
+		add_action( 'acf/field_group/admin_head', [ $this, 'init_field_group' ] );
+		add_action( 'wp_ajax_acf/field_group/render_field_settings', [ $this, 'init_field_group' ], 1 );
 
+		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
+	}
+
+	/**
+	 *	@action acf/load_field_group
+	 */
+	public function load_field_group( $field_group ) {
+		return wp_parse_args( $field_group, [
+			'qef_simple_location_rules' => false,
+		]);
 	}
 
 	/**
@@ -96,8 +112,9 @@ class Admin extends Core\Singleton {
 
 	/**
 	 *	@action acf/field_group/admin_head
+	 *	@action wp_ajax_acf/field_group/render_field_settings
 	 */
-	public function field_group_admin_head() {
+	public function init_field_group() {
 		if ( version_compare( acf()->version, '6.0.0', '>=' ) ) {
 			FieldGroup::instance();
 		} else {
@@ -112,7 +129,7 @@ class Admin extends Core\Singleton {
 	 */
 	public function setup() {
 
-		// early return if conditions not met
+		// early return if no ACF
 		if ( ! function_exists('acf') || ! class_exists('acf') || version_compare( acf()->version, '5.7', '<' ) ) {
 			if ( current_user_can( 'activate_plugins' ) ) {
 				add_action( 'admin_notices', [ $this, 'print_no_acf_notice' ] );
@@ -120,11 +137,14 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
-		$this->columns		= Columns::instance();
-		$this->quickedit	= Quickedit::instance();
-		$this->bulkedit		= Bulkedit::instance();
-		$this->filters		= Filters::instance();
-		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
+		// Features
+		$this->columns			= Columns::instance();
+		$this->quickedit		= Quickedit::instance();
+		$this->bulkedit			= Bulkedit::instance();
+		$this->filters			= Filters::instance();
+		$this->backendsearch	= BackendSearch::instance();
+
+		$this->ajax_handler 	= new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
 			'capability'		=> false, // apply_filters( 'acf_qef_capability', 'edit_posts' ),
@@ -135,7 +155,6 @@ class Admin extends Core\Singleton {
 		add_action( 'load-edit-tags.php', [ $this , 'enqueue_edit_assets' ] );
 		add_action( 'load-users.php', [ $this, 'enqueue_columns_assets' ] );
 		add_action( 'acf/field_group/admin_enqueue_scripts', [ $this, 'enqueue_fieldgroup_assets' ] );
-
 	}
 
 	/**
@@ -169,11 +188,15 @@ class Admin extends Core\Singleton {
 					}
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
-						$value = $field_object->get_value( $object_id, false );
+						$value = $field_object->sanitize_value(
+							$field_object->get_value( $object_id, false ),
+							'ajax'
+						);
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
-							$val = $field_object->get_value( $object_id, false );
-							$data[ $key ] = $field_object->sanitize_value( $val, 'ajax' );
+							// $val = $field_object->get_value( $object_id, false );
+							$data[ $key ] = $value;
+
 						} else {
 							// multiple iterations - no value if values aren't equal
 							if ( $data[ $key ] != $value ) {

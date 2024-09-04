@@ -44,7 +44,7 @@ class PluginSorter
         $priority = 0;
         $plugin_priority = \array_search($plugin->get_plugin_file(), $this->plugins_priority);
         if ($plugin_priority !== \false) {
-            $priority += -1000 + $plugin_priority;
+            $priority += -1000 + $plugin_priority * 100;
         }
         $category_priority = \array_search($plugin->get_category(), $this->category_priority);
         if ($category_priority !== \false) {

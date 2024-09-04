@@ -21,7 +21,7 @@ $wt_cli_integration_list = apply_filters(
 			'identifier'  => 'CTF_VERSION',
 			'label'       => 'Smash Balloon Twitter Feed',
 			'status'      => 'yes',
-			'description' => 'Twitter Feed By Smash Baloon',
+			'description' => 'Twitter Feed By Smash Balloon',
 			'category'    => 'analytics',
 			'type'        => 1,
 		),
@@ -29,7 +29,7 @@ $wt_cli_integration_list = apply_filters(
 			'identifier'  => 'SBIVER',
 			'label'       => 'Smash Balloon Instagram Feed',
 			'status'      => 'yes',
-			'description' => 'Instagram Feed By Smash Baloon',
+			'description' => 'Instagram Feed By Smash Balloon',
 			'category'    => 'advertisement',
 			'type'        => 1,
 		),
@@ -266,7 +266,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 		}
 
 		/**
-		 * Enabe or disable javascript blocking
+		 * Enable or disable javascript blocking
 		 *
 		 * @since  1.9.2
 		 * @access public

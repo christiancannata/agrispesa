@@ -2,7 +2,7 @@
 /**
  * Utility file for this plugin.
  *
- * @package WooWallet
+ * @package StandaleneTech
  */
 
 if ( ! function_exists( 'is_wallet_rechargeable_order' ) ) {
@@ -37,7 +37,7 @@ if ( ! function_exists( 'is_wallet_rechargeable_cart' ) ) {
 	 */
 	function is_wallet_rechargeable_cart() {
 		$is_wallet_rechargeable_cart = false;
-		if ( ! is_null( wc()->cart ) && count( wc()->cart->get_cart() ) > 0 && get_wallet_rechargeable_product() ) {
+		if ( did_action( 'wp_loaded' ) && ! is_null( wc()->cart ) && count( wc()->cart->get_cart() ) > 0 && get_wallet_rechargeable_product() ) {
 			foreach ( wc()->cart->get_cart() as $key => $cart_item ) {
 				if ( get_wallet_rechargeable_product()->get_id() === $cart_item['product_id'] ) {
 					$is_wallet_rechargeable_cart = true;
@@ -112,7 +112,7 @@ if ( ! function_exists( 'is_enable_wallet_partial_payment' ) ) {
 	function is_enable_wallet_partial_payment() {
 		$is_enable  = false;
 		$cart_total = get_woowallet_cart_total();
-		if ( ! is_wallet_rechargeable_cart() && is_user_logged_in() && ( ( ! is_null( wc()->session ) && wc()->session->get( 'is_wallet_partial_payment', false ) ) || 'on' === woo_wallet()->settings_api->get_option( 'is_auto_deduct_for_partial_payment', '_wallet_settings_general' ) ) && $cart_total >= apply_filters( 'woo_wallet_partial_payment_amount', woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) ) ) {
+		if ( ! is_wallet_rechargeable_cart() && is_user_logged_in() && ( ( ! is_null( wc()->session ) && wc()->session->get( 'partial_payment_amount', false ) ) || 'on' === woo_wallet()->settings_api->get_option( 'is_auto_deduct_for_partial_payment', '_wallet_settings_general' ) ) && $cart_total >= apply_filters( 'woo_wallet_partial_payment_amount', woo_wallet()->wallet->get_wallet_balance( get_current_user_id(), 'edit' ) ) ) {
 			$is_enable = true;
 		}
 		return apply_filters( 'is_enable_wallet_partial_payment', $is_enable );
@@ -163,11 +163,11 @@ if ( ! function_exists( 'update_wallet_partial_payment_session' ) ) {
 	/**
 	 * Refresh WooCommerce session for partial payment.
 	 *
-	 * @param boolean $set set.
+	 * @param float $amount set.
 	 */
-	function update_wallet_partial_payment_session( $set = false ) {
+	function update_wallet_partial_payment_session( $amount = 0 ) {
 		if ( ! is_null( wc()->session ) ) {
-			wc()->session->set( 'is_wallet_partial_payment', $set );
+			wc()->session->set( 'partial_payment_amount', $amount );
 		}
 	}
 }
@@ -339,7 +339,11 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 		}
 		$query['join'] = implode( ' ', $joins );
 
-		$query['where'] = "WHERE transactions.user_id = {$user_id}";
+		$query['where'] = 'WHERE 1=1';
+		if ( $user_id ) {
+			$query['where'] .= " AND transactions.user_id = {$user_id}";
+		}
+
 		if ( ! $include_deleted ) {
 			$query['where'] .= ' AND transactions.deleted = 0';
 		}
@@ -569,7 +573,7 @@ if ( ! function_exists( 'get_all_wallet_users' ) ) {
 	 */
 	function get_all_wallet_users( $exclude_me = true ) {
 		$args = array(
-			'blog_id' => $GLOBALS['blog_id'],
+			'blog_id' => get_current_blog_id(),
 			'exclude' => $exclude_me ? array( get_current_user_id() ) : array(),
 			'orderby' => 'login',
 			'order'   => 'ASC',
@@ -591,8 +595,8 @@ if ( ! function_exists( 'get_total_order_cashback_amount' ) ) {
 		$total_cashback_amount = 0;
 		if ( $order ) {
 			$transaction_ids                  = array();
-			$_general_cashback_transaction_id = get_post_meta( $order_id, '_general_cashback_transaction_id', true );
-			$_coupon_cashback_transaction_id  = get_post_meta( $order_id, '_coupon_cashback_transaction_id', true );
+			$_general_cashback_transaction_id = $order->get_meta( '_general_cashback_transaction_id' );
+			$_coupon_cashback_transaction_id  = $order->get_meta( '_coupon_cashback_transaction_id' );
 			if ( $_general_cashback_transaction_id ) {
 				$transaction_ids[] = $_general_cashback_transaction_id;
 			}

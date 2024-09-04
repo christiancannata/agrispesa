@@ -141,7 +141,7 @@
 							var data             = {
 								action: 'cli_policy_generator',
 								security: cli_policy_generator.nonces.cli_policy_generator,
-								cli_policy_generator_action:'autosave_contant_data',
+								cli_policy_generator_action:'autosave_content_data',
 								content_data:content_data,
 								page_id:cli_policy_generator.page_id,
 								enable_webtofee_powered_by:($( '[name="enable_webtofee_powered_by"]' ).is( ':checked' ) ? 1 : 0)

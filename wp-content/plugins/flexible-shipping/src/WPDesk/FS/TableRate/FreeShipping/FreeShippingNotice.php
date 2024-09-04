@@ -10,7 +10,7 @@ namespace WPDesk\FS\TableRate\FreeShipping;
 use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 use WC_Cart;
 use WC_Session;
-use WP;
+use WPDesk\FS\Blocks\FreeShipping\FreeShippingBlock;
 
 /**
  * Can display free shipping notice.
@@ -52,7 +52,13 @@ class FreeShippingNotice implements Hookable {
 	 * Hooks.
 	 */
 	public function hooks() {
-		add_action( 'wp_head', [ $this, 'add_notice_if_should' ] );
+		add_action( 'woocommerce_after_calculate_totals', [ $this, 'add_notice_if_should' ] );
+		add_action( 'wp_head', [ $this, 'add_notice_if_should_via_wp_head' ] );
+	}
+
+	public function add_notice_if_should_via_wp_head() {
+		remove_action( 'woocommerce_after_calculate_totals', [ $this, 'add_notice_if_should' ] );
+		$this->add_notice_if_should();
 	}
 
 	/**
@@ -86,7 +92,18 @@ class FreeShippingNotice implements Hookable {
 	}
 
 	private function should_add_notice_on_current_page( FreeShippingNoticeData $free_shipping_notice_data ): bool {
-		return apply_filters( 'flexible-shipping/free-shipping/show-notice', is_cart() || is_checkout(), $free_shipping_notice_data );
+		if ( is_ajax() ) {
+			return false;
+		}
+		if (
+			( ! is_checkout() && ! is_cart() && has_block( FreeShippingBlock::BLOCK_NAME ) )
+			|| has_block( 'woocommerce/checkout' )
+			|| has_block( 'woocommerce/cart' )
+		) {
+			return false;
+		}
+
+		return apply_filters( 'flexible-shipping/free-shipping/show-notice', is_checkout() || is_cart(), $free_shipping_notice_data );
 	}
 
 	/**

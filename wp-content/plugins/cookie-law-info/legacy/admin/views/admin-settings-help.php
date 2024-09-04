@@ -69,12 +69,13 @@ if ( ! defined( 'WPINC' ) ) {
 				<ul class="cli-shortcodes">
 				<li>
 					<div style="font-weight: bold;">[cookie_audit]</div>
-						<?php echo esc_html__( 'This prints out a nice table of cookies, in line with the guidance given by the ICO.', 'cookie-law-info' ); ?> <em><?php echo esc_html__( 'You need to enter the cookies your website uses via the Cookie Law Info menu in your WordPress dashboard.', 'cookie-law-info' ); ?></em>
+						<?php echo esc_html__( 'This prints out a nice table of cookies, in line with the guidance given by the ICO.', 'cookie-law-info' ); ?> <em><?php echo esc_html__( 'You need to enter the cookies your website uses via the GDPR Cookie Consent > Cookie List menu in your WordPress dashboard.', 'cookie-law-info' ); ?></em>
 					<div style="font-weight: bold;">
 						[cookie_audit style="winter"] <br />
 						[cookie_audit not_shown_message="No records found"] <br />
 						[cookie_audit style="winter" not_shown_message="Not found"]<br />
 						[cookie_audit columns="cookie,description"] <br />
+						[cookie_audit category="categoryslug"] <br />
 						[cookie_audit heading="The below list details the cookies used in our website."]
 					</div>
 					<?php echo esc_html__( 'Styles included', 'cookie-law-info' ); ?>:	simple, classic, modern, rounded, elegant, winter. Default is classic.
@@ -106,7 +107,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<img src="<?php echo esc_url( $admin_img_path ); ?>documentation.png">
 					<h3><?php echo esc_html__( 'Documentation', 'cookie-law-info' ); ?></h3>
 					<p><?php echo esc_html__( 'Refer to our documentation to set and get started', 'cookie-law-info' ); ?></p>
-					<a target="_blank" href="https://www.webtoffee.com/gdpr-cookie-consent-plugin-basic-version-user-guide/" class="button button-primary">
+					<a target="_blank" href="https://www.cookieyes.com/documentation/gdpr-cookie-consent-plugin/" class="button button-primary">
 						<?php echo esc_html__( 'Documentation', 'cookie-law-info' ); ?>        
 					</a>
 				</li>

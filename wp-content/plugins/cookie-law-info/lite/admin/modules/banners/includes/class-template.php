@@ -47,11 +47,13 @@ class Template {
 	protected $html = '';
 
 	/**
-	 * Template type, by deafult it will be banner
+	 * Template type, by default it will be banner
 	 *
 	 * @var string
 	 */
 	protected $type = 'banner';
+
+	protected $ptype = 'popup';
 
 	/**
 	 * Theme presets to be applied on the template
@@ -160,8 +162,22 @@ class Template {
 	public function generate() {
 		$settings    = isset( $this->properties['settings'] ) ? $this->properties['settings'] : array();
 		$this->id    = isset( $settings['versionID'] ) ? $settings['versionID'] : 'default';
-		$this->type  = isset( $settings['type'] ) ? $settings['type'] : 'classic';
+		$this->type  = isset( $settings['type'] ) ? $settings['type'] : 'box';
+		if ($this->type === "classic") {
+			$this->ptype = "pushdown";
+		} else {
+			$this->ptype = isset( $settings['preferenceCenterType'] ) ? $settings['preferenceCenterType'] : 'popup';
+		}
 		$this->theme = isset( $settings['theme'] ) ? $settings['theme'] : 'light';
+
+		if ( strpos($this->ptype, 'sidebar') !== false ) {
+			if ( $this->type === "banner" ) {
+				$this->type = "banner-sidebar";
+			}
+			if ( $this->type === "box" ) {
+				$this->type = "box-sidebar";
+			}
+		}
 
 		$templates     = $this->get_templates( $this->id );
 		$this->presets = $this->get_presets( $this->id );

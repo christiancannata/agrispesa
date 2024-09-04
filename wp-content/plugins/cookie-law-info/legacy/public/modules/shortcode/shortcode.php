@@ -53,7 +53,7 @@ class Cookie_Law_Info_Shortcode {
 	*   @since 1.7.4
 	*/
 	public function wf_powered_by() {
-		return '<p class="powered_by_p" style="width:100% !important; display:block !important; color:#333; clear:both; font-style:italic !important; font-size:12px !important; margin-top:15px !important;">Powered By <a href="https://www.webtoffee.com/" class="powered_by_a" style="color:#333; font-weight:600 !important; font-size:12px !important;">WebToffee</a></p>';
+		return '<p class="powered_by_p" style="width:100% !important; display:block !important; color:#333; clear:both; font-style:italic !important; font-size:12px !important; margin-top:15px !important;">Powered By <a href="https://www.cookieyes.com/" class="powered_by_a" style="color:#333; font-weight:600 !important; font-size:12px !important;">CookieYes</a></p>';
 	}
 
 	/*

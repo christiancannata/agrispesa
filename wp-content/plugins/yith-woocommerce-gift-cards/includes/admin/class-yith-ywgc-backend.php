@@ -256,10 +256,12 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					'ywgc-backend',
 					'ywgc_data',
 					array(
-						'loader'            => apply_filters( 'yith_gift_cards_loader', YITH_YWGC_ASSETS_URL . '/images/loading.gif' ),
-						'ajax_url'          => admin_url( 'admin-ajax.php' ),
-						'choose_image_text' => esc_html__( 'Choose Image', 'yith-woocommerce-gift-cards' ),
-						'date_format'       => $date_format,
+						'loader'                    => apply_filters( 'yith_gift_cards_loader', YITH_YWGC_ASSETS_URL . '/images/loading.gif' ),
+						'ajax_url'                  => admin_url( 'admin-ajax.php' ),
+						'choose_image_text'         => esc_html__( 'Choose Image', 'yith-woocommerce-gift-cards' ),
+						'date_format'               => $date_format,
+						'save_email_settings_nonce' => wp_create_nonce( 'yith_ywgc_save_email_settings' ),
+						'save_email_status_nonce'   => wp_create_nonce( 'yith_ywgc_save_email_status' ),
 					)
 				);
 
@@ -730,6 +732,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					$gift_card->save();
 
 					do_action( 'yith_ywgc_after_gift_card_generation_save', $gift_card );
+
+					update_post_meta( $gift_card->ID, '_ywgc_order_item_id', $order_item_id );
 
 					// Save the gift card id.
 					$new_ids[] = $gift_card->ID;

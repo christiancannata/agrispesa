@@ -281,7 +281,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             $required_plugins = $this->retrieve_required_plugins_data();
             if (\count($required_plugins) > 0) {
                 foreach ($required_plugins as $plugin) {
-                    if (\version_compare($plugin['Version'], $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], '<=')) {
+                    if (isset($plugin['Version']) && \version_compare($plugin['Version'], $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], '<=')) {
                         $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%1$s&#8221; plugin requires at least %2$s version of %3$s to work correctly. Please update it to its latest release.', $this->get_text_domain()), \esc_html($this->plugin_name), $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], $plugin['Name']));
                     }
                 }

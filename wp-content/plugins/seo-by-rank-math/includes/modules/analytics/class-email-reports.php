@@ -16,7 +16,7 @@ use RankMath\Traits\Hooker;
 use RankMath\Google\Console;
 use RankMath\Admin\Admin_Helper;
 
-use MyThemeShop\Helpers\Param;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -71,7 +71,7 @@ class Email_Reports {
 
 	/**
 	 * Debug mode.
-	 * 
+	 *
 	 * @var boolean
 	 */
 	private $debug = false;

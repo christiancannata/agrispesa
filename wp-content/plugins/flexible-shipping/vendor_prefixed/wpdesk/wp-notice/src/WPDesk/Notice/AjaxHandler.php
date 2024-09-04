@@ -68,19 +68,20 @@ class AjaxHandler implements \FSVendor\WPDesk\PluginBuilder\Plugin\HookablePlugi
     {
         if (isset($_POST[self::POST_FIELD_NOTICE_NAME])) {
             $noticeName = \sanitize_text_field($_POST[self::POST_FIELD_NOTICE_NAME]);
+            $optionName = \FSVendor\WPDesk\Notice\PermanentDismissibleNotice::OPTION_NAME_PREFIX . $noticeName;
+            \check_ajax_referer($optionName, self::POST_FIELD_SECURITY);
+            if (!\current_user_can('edit_posts')) {
+                \wp_send_json_error();
+            }
             if (isset($_POST[self::POST_FIELD_SOURCE])) {
                 $source = \sanitize_text_field($_POST[self::POST_FIELD_SOURCE]);
             } else {
                 $source = null;
             }
-            $security = $_POST[self::POST_FIELD_SECURITY] ?? '';
-            $option_name = \FSVendor\WPDesk\Notice\PermanentDismissibleNotice::OPTION_NAME_PREFIX . $noticeName;
-            if (\wp_verify_nonce($security, $option_name)) {
-                \update_option($option_name, \FSVendor\WPDesk\Notice\PermanentDismissibleNotice::OPTION_VALUE_DISMISSED);
-                \do_action('wpdesk_notice_dismissed_notice', $noticeName, $source);
-                if (\defined('DOING_AJAX') && \DOING_AJAX) {
-                    \wp_send_json_success();
-                }
+            \update_option($optionName, \FSVendor\WPDesk\Notice\PermanentDismissibleNotice::OPTION_VALUE_DISMISSED);
+            \do_action('wpdesk_notice_dismissed_notice', $noticeName, $source);
+            if (\defined('DOING_AJAX') && \DOING_AJAX) {
+                \wp_send_json_success();
             }
         }
         if (\defined('DOING_AJAX') && \DOING_AJAX) {

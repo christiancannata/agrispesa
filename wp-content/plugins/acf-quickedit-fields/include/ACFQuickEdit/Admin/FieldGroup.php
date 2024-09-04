@@ -15,6 +15,9 @@ class FieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
+		add_filter('acf/field_group/additional_group_settings_tabs', [ $this, 'field_group_tabs' ] );
+		add_action('acf/field_group/render_group_settings_tab/quickedit_fields', [ $this, 'field_group_settings' ] );
+
 		foreach ( Fields\Field::get_types() as $type => $supports ) {
 			if ( $supports[ 'column' ] || $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_headline' ] );
@@ -31,9 +34,35 @@ class FieldGroup extends Core\Singleton {
 			if ( $supports[ 'filter' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_filter_settings' ] );
 			}
+			if ( $supports[ 'backendsearch' ] ) {
+				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_backendsearch_settings' ] );
+			}
 		}
 
 		parent::__construct();
+	}
+
+	/**
+	 *	@action acf/field_group/additional_group_settings_tabs
+	 */
+	public function field_group_tabs( $tabs ) {
+		$tabs['quickedit_fields'] = __( 'QuickEdit Fields', 'acf-quickedit-fields' );
+		return $tabs;
+	}
+
+	/**
+	 *	@action acf/field_group/render_group_settings_tab/quickedit_fields
+	 */
+	public function field_group_settings( $field_group ) {
+		acf_render_field_wrap( [
+			'label'        => __( 'Simplifed Location Rules', 'acf-quickedit-fields' ),
+			'instructions' => __( 'Forces QuickEdit and columns to display even if Location Rules do not match the current admin screen.', 'acf-quickedit-fields' ),
+			'type'         => 'true_false',
+			'name'         => 'qef_simple_location_rules',
+			'prefix'       => 'acf_field_group',
+			'value'        => $field_group['qef_simple_location_rules'],
+			'ui'           => 1,
+		] );
 	}
 
 	/**
@@ -134,6 +163,21 @@ class FieldGroup extends Core\Singleton {
 			'instructions'	=> __( 'Filters will work with posts and user list tables.', 'acf-quickedit-fields'),
 			'type'			=> 'true_false',
 			'name'			=> 'show_column_filter',
+			'ui'			=> 1,
+			'wrapper'		=> [ 'width' => 33, ],
+		]);
+	}
+
+	/**
+	 *	@action acf/render_field_settings/type={$type}
+	 */
+	public function render_backendsearch_settings( $field ) {
+
+		acf_render_field_setting( $field, [
+			'label'			=> __( 'Backend Search', 'acf-quickedit-fields' ),
+			'instructions'	=> __( 'Field value is searchable in WP-Admin.', 'acf-quickedit-fields'),
+			'type'			=> 'true_false',
+			'name'			=> 'allow_backendsearch',
 			'ui'			=> 1,
 			'wrapper'		=> [ 'width' => 33, ],
 		]);

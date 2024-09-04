@@ -73,7 +73,7 @@ class Cookie_Law_Info_Languages {
 	}
 
 	/**
-	 * Returns the current lanugage of the site
+	 * Returns the current language of the site
 	 *
 	 * @access public
 	 * @return string

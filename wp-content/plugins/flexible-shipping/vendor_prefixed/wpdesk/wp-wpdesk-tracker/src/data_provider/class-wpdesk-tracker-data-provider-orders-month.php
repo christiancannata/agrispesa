@@ -29,7 +29,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Orders_Month')) {
         {
             global $wpdb;
             $query = $wpdb->get_results("\n            \tSELECT min(post_date) min, max(post_date) max, TIMESTAMPDIFF(MONTH, min(post_date), max(post_date) )+1 months\n            \tFROM {$wpdb->posts} p\n            \tWHERE p.post_type = 'shop_order'\n            \tAND p.post_status = 'wc-completed'\n            \t");
-            $data['orders_per_month'] = array();
+            $data['orders_per_month'] = [];
             if ($query) {
                 foreach ($query as $row) {
                     $data['orders_per_month']['first'] = $row->min;

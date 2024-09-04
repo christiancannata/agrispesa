@@ -92,6 +92,10 @@ class BeaconClickedAjax implements Hookable {
 	 */
 	public function handle_ajax_action() {
 		check_ajax_referer( self::AJAX_ACTION, 'nonce' );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 		update_option( self::OPTION_NAME, 1 );
+		wp_send_json_success();
 	}
 }

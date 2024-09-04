@@ -9,6 +9,8 @@
 
 namespace CookieYes\Lite\Admin\Modules\Languages\Includes;
 
+use CookieYes\Lite\Integrations\Cookieyes\Includes\Cloud;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -20,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @version     3.0.0
  * @package     CookieYes
  */
-class Controller {
+class Controller extends Cloud{
 
 	/**
 	 * Instance of the current class
@@ -34,6 +36,12 @@ class Controller {
 	 * @var array
 	 */
 	public $languages;
+
+	const API_BASE_PATH = CKY_APP_URL . '/api/v2/';
+
+	public $cky_translated = array(
+		"en","de","fr","it","es","nl","bg","da","ru","ar","pl","pt","ca","hu","sv","hr","zh","uk","sk","tr","lt","cs","fi","no","pt-br","sl","ro","th","et","lv","el","eu","bs","gl","ja","ko","mt","sr","tl","cy","sr-latn"
+	);
 
 	/**
 	 * Return the current instance of the class
@@ -87,6 +95,7 @@ class Controller {
 				'Chamorro'              => 'ch',
 				'Chechen'               => 'ce',
 				'Chichewa'              => 'ny',
+				'Chinese'               => 'zh',
 				'Chinese (Simplified)'  => 'zh-hans',
 				'Chinese (Traditional)' => 'zh-hant',
 				'Chuvash'               => 'cv',
@@ -96,6 +105,7 @@ class Controller {
 				'Croatian'              => 'hr',
 				'Czech'                 => 'cs',
 				'Danish'                => 'da',
+				'Dutch'                 => 'nl',
 				'English'               => 'en',
 				'Esperanto'             => 'eo',
 				'Estonian'              => 'et',
@@ -167,7 +177,6 @@ class Controller {
 				'Nepali'                => 'ne',
 				'North Ndebele'         => 'nd',
 				'Northern Sami'         => 'se',
-				'Dutch'                 => 'nl',
 				'Norwegian Bokmål'      => 'no',
 				'Norwegian Nynorsk'     => 'nn',
 				'Occitan'               => 'oc',
@@ -191,7 +200,8 @@ class Controller {
 				'Sanskrit'              => 'sa',
 				'Sardinian'             => 'sc',
 				'Scots Gaelic'          => 'gd',
-				'Serbian'               => 'sr',
+				'Serbian(Cyrillic)'     => 'sr',
+				'Serbian(Latin)'        => 'sr-latn',
 				'Serbo-Croatian'        => 'sh',
 				'Sesotho'               => 'st',
 				'Setswana'              => 'tn',
@@ -255,5 +265,61 @@ class Controller {
 			);
 		}
 		return $data;
+	}
+
+	public function is_cky_translated($lang) {
+		return in_array($lang,$this->cky_translated);
+	}
+
+	public static function get_upload_path( $path = '' ) {
+		$uploads    = wp_upload_dir();
+		$upload_dir =  $uploads['basedir'] . '/cookieyes/' . $path;
+		if ( !is_dir( $upload_dir)  ) {
+			wp_mkdir_p($upload_dir);
+		}
+		return trailingslashit( $upload_dir );
+	}
+
+	public function download( $src ) {
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		$upload_dir = $this->get_upload_path('languages/banners/');
+
+		if ( ! file_exists( $upload_dir ) ) {
+			wp_mkdir_p( $upload_dir, 0755);
+		}
+
+		//download file
+		$tmpfile  = download_url( $src, $timeout = 25 );
+		$file     = $upload_dir . basename( $src );
+
+		//check for errors
+		if ( !is_wp_error( $tmpfile ) ) {
+			//remove current file
+			if ( file_exists( $file ) ) {
+				unlink( $file );
+			}
+
+			//in case the server prevents deletion, we check it again.
+			if ( ! file_exists( $file ) ) {
+				copy( $tmpfile, $file );
+			}
+		} else {
+			return $tmpfile;
+		}
+
+		if ( is_string( $tmpfile ) && file_exists( $tmpfile ) ) {
+			unlink( $tmpfile );
+		}
+	}
+
+	public function get_translations($lang) {
+		if ($lang != 'en' && $this->is_cky_translated($lang)) {
+			$upload_dir    = wp_upload_dir();
+			$contents = cky_read_json_file( $upload_dir['basedir'] . '/cookieyes/languages/banners/' . esc_html( $lang ) . '.json' );
+			if ( empty( $contents ) ) {
+				$this->download( self::API_BASE_PATH . "languages/" . esc_html( $lang ) . ".json" );
+			}
+		}
+		return true;
 	}
 }

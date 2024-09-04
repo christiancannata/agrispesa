@@ -279,9 +279,14 @@ abstract class Base_Controller {
 	 * @return boolean
 	 */
 	protected function table_exist() {
-		global $wpdb;
 		foreach ( $this->get_tables() as $table_name ) {
-			if ( strtolower( $table_name ) !== strtolower( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$table = wp_cache_get( $table_name . 'cky_table_exist', 'table-details' );
+			if ( $table === false ) {
+				global $wpdb;
+				$table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) );
+				wp_cache_set( $table_name . 'cky_table_exist', $table, 'table-details', MINUTE_IN_SECONDS );
+			}
+			if ( strtolower( $table_name ) !== strtolower( isset($table) ? $table : '' ) )  { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$this->update_missing_tables( $table_name );
 				return false;
 			}

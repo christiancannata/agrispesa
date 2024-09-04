@@ -51,7 +51,7 @@ export const Edit = ( { attributes, setAttributes } ) => {
 				/>
 			</div>
 			{
-				gdpr && gdpr.length &&
+				gdpr && gdpr.length && gdprStatus != 'hide' &&
 				(
 					<>
 						<div style={{display: 'flex', marginTop: '2rem'}}>
@@ -63,18 +63,16 @@ export const Edit = ( { attributes, setAttributes } ) => {
 						</div>
 						{gdpr.map((gdprItem, index) => {
 							return (
-								<div style={{display: 'flex', marginTop: '1rem'}}>
-									<CheckboxControl
-										id={'gdpr_'+gdprItem.marketing_permission_id}
-										checked={ gdpr[index].enabled }
-										onChange={ () => {
-											gdpr[index].enabled = !gdpr[index].enabled;
-											setAttributes({gdpr: gdpr});
-										}}
-									>
-										<span dangerouslySetInnerHTML={ {__html: gdprItem.text} }/>
-									</CheckboxControl>
-								</div>
+								<CheckboxControl
+									id={'gdpr_'+gdprItem.marketing_permission_id}
+									checked={ gdpr[index].enabled }
+									onChange={ () => {
+										gdpr[index].enabled = !gdpr[index].enabled;
+										setAttributes({gdpr: gdpr});
+									}}
+								>
+									<span dangerouslySetInnerHTML={ {__html: gdprItem.text} }/>
+								</CheckboxControl>
 							)
 						})}
 					</>
@@ -82,7 +80,7 @@ export const Edit = ( { attributes, setAttributes } ) => {
 			}
 		</div>
 	);
-};
+}
 
 // not sure
 export const Save = () => {

@@ -3,7 +3,7 @@
  Plugin Name: 		CMP - Coming Soon & Maintenance Plugin
  Plugin URI: 		https://wordpress.org/plugins/cmp-coming-soon-maintenance/
  Description:       Display customizable landing page for Coming Soon, Maintenance & Under Construction page.
- Version:           4.1.10
+ Version:           4.1.12
  Author:            NiteoThemes
  Author URI:        https://www.niteothemes.com
  Text Domain:       cmp-coming-soon-maintenance
@@ -66,7 +66,7 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 		// define constants
 		private function constants()
 		{
-			$this->define('CMP_VERSION', '4.1.10');
+			$this->define('CMP_VERSION', '4.1.12');
 			$this->define('CMP_DEBUG', FALSE);
 			$this->define('CMP_AUTHOR', 'NiteoThemes');
 			$this->define('CMP_AUTHOR_HOMEPAGE', 'https://niteothemes.com');
@@ -2089,6 +2089,13 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 			return ((isset($input) && true == $input) ? '1' : '0');
 		}
 
+		public function sanitize_api_key($input)
+		{
+			// allow only api key e7de0c881b7ff033a535f020fa719bef-us12
+			return preg_replace('/[^a-zA-Z0-9-]/', '', $input);
+
+		}
+
 		// sanitize function
 		public function niteo_sanitize_html($html)
 		{
@@ -2492,7 +2499,7 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 					$params = $_POST['params'];
 				}
 
-				$api_key = $params['apikey'];
+				$api_key = $this->sanitize_api_key($params['apikey']);
 
 				$dc = substr($api_key, strpos($api_key, '-') + 1); // datacenter, it is the part of your api key - us5, us8 etc
 

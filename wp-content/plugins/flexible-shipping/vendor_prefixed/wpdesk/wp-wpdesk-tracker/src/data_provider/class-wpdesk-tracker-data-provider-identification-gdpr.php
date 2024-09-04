@@ -25,7 +25,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Identification_Gdpr')
         const DATA_KEY_EMAIL_HASH = 'email_hash';
         const WPDESK_TRACKER_UNIQUE_HASH_OPTION_NAME = 'wpdesk_tracker_unique_hash';
         /**
-         * Hash unique for wordpress instance.
+         * Hash unique for WordPress instance.
          *
          * @return string
          */

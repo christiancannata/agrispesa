@@ -327,6 +327,19 @@ if ( version_compare($pre_update_version, CMP_VERSION ) < 0 ) {
 			$update = true;
 		}
 
+		// add medium social media in 4.1.12 update
+		if ( !$this->niteo_in_array_r( 'medium', $socialmedia, true ) ) {
+			$icon  = array(
+				'name' 		=> 'medium',
+				'url' 		=> '',
+				'active' 	=> '1',
+				'hidden' 	=> '1',
+				'order' 	=> 31,
+			);
+			array_push( $socialmedia, $icon );
+			$update = true;
+		}
+
 		if ( $update == true ) {
 			update_option('niteoCS_socialmedia', json_encode( $socialmedia) );
 		}

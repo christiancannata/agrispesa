@@ -8,7 +8,7 @@ if (!\defined('ABSPATH')) {
 ?>
 <div id="wpdesk_tracker_connect" class="plugin-card">
 	<div class="message plugin-card-top">
-        <span class="wpdesk-logo"></span>
+		<span class="wpdesk-logo"></span>
 
 		<p>
 			<?php 
@@ -40,61 +40,61 @@ echo \esc_url($skip_url);
 ?></a>
 
 		<div class="permissions-details">
-		    <ul>
-		    	<li id="permission-site" class="permission site">
-		    		<i class="dashicons dashicons-admin-settings"></i>
-		    		<div>
-		    			<span><?php 
+			<ul>
+				<li id="permission-site" class="permission site">
+					<i class="dashicons dashicons-admin-settings"></i>
+					<div>
+						<span><?php 
 \esc_html_e('Your Site Overview', 'flexible-shipping');
 ?></span>
-		    			<p><?php 
+						<p><?php 
 \esc_html_e('WP version, PHP info', 'flexible-shipping');
 ?></p>
-		    		</div>
-		    	</li>
-		    	<li id="permission-events" class="permission events">
-		    		<i class="dashicons dashicons-admin-plugins"></i>
-		    		<div>
-		    			<span><?php 
+					</div>
+				</li>
+				<li id="permission-events" class="permission events">
+					<i class="dashicons dashicons-admin-plugins"></i>
+					<div>
+						<span><?php 
 \esc_html_e('Plugin Usage', 'flexible-shipping');
 ?></span>
-		    			<p><?php 
+						<p><?php 
 \esc_html_e('Current settings and usage information of WP Desk plugins', 'flexible-shipping');
 ?></p>
-		    		</div>
-		    	</li>
-		    	<li id="permission-store" class="permission store">
-		    		<i class="dashicons dashicons-store"></i>
-		    		<div>
-		    			<span><?php 
+					</div>
+				</li>
+				<li id="permission-store" class="permission store">
+					<i class="dashicons dashicons-store"></i>
+					<div>
+						<span><?php 
 \esc_html_e('Your Store Overview', 'flexible-shipping');
 ?></span>
-		    			<p><?php 
+						<p><?php 
 \esc_html_e('Anonymized and non-sensitive store usage information', 'flexible-shipping');
 ?></p>
-		    		</div>
-		    	</li>
-		    </ul>
+					</div>
+				</li>
+			</ul>
 
-            <div class="terms">
-                <a href="<?php 
+			<div class="terms">
+				<a href="<?php 
 echo \esc_url($terms_url);
 ?>" target="_blank"><?php 
 \esc_html_e('Find out more &raquo;', 'flexible-shipping');
 ?></a>
-            </div>
+			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	jQuery('.trigger').click(function(e) {
-	    e.preventDefault();
-	    if (jQuery(this).parent().hasClass('open')) {
-            jQuery(this).parent().removeClass('open')
-        }
-        else {
-            jQuery(this).parent().addClass('open');
-        }
+		e.preventDefault();
+		if (jQuery(this).parent().hasClass('open')) {
+			jQuery(this).parent().removeClass('open')
+		}
+		else {
+			jQuery(this).parent().addClass('open');
+		}
 	});
 </script>
 <?php 

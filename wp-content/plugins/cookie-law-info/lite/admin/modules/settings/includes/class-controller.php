@@ -331,7 +331,7 @@ class Controller extends Cloud {
 		$data = array();
 		if ( ! $this->get_website_id() ) {
 			return new WP_Error(
-				'cky_invalide_website_id',
+				'cky_invalid_website_id',
 				__( 'Invalid Website ID', 'cookie-law-info' ),
 				array( 'status' => 404 )
 			);
@@ -363,6 +363,7 @@ class Controller extends Cloud {
 				'id'             => $this->get_website_id(),
 				'url'            => isset( $response['url'] ) ? esc_url_raw( $response['url'] ) : esc_url_raw( get_site_url() ),
 				'status'         => isset( $response['status'] ) ? sanitize_text_field( $response['status'] ) : '',
+				'banner_disabled_manually' => isset($response['banner_disabled_manually']) && true == $response['banner_disabled_manually'],
 				'user'           => array(
 					'name'        => isset( $user['name'] ) ? sanitize_text_field( $user['name'] ) : '',
 					'email'       => isset( $user['email'] ) ? sanitize_email( $user['email'] ) : '',
@@ -389,6 +390,7 @@ class Controller extends Cloud {
 					'status' => isset( $response['banner_status'] ) && 1 === $response['banner_status'] ? true : false,
 					'laws'   => $applicable_laws,
 					'is_iab_enabled' => isset( $response['isIABEnabled'] ) && true === $response['isIABEnabled'],
+					'targetedLocation' => isset( $response['targetedLocation'] ) ? $response['targetedLocation'] : 'worldwide',
 				),
 				'consent_logs'   => array(
 					'status' => isset( $response['visitor_log'] ) && true === $response['visitor_log'] ? true : false,

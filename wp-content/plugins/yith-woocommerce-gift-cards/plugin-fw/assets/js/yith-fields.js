@@ -1,4 +1,4 @@
-/* globals yith_framework_fw_fields, wp, yith */
+/* globals yith_framework_fw_fields, wp, yith, isRtl */
 ( function ( $ ) {
 
 	/* Upload */
@@ -301,14 +301,14 @@
 			wrap1.length && wrap_main1.find( 'a.wp-color-result' ).attr( 'title', select_label );
 			wrap_main2.length && wrap_main2.find( 'a.wp-color-result' ).attr( 'title', select_label );
 
-			if ( !wrap1.find( '.wp-picker-default-custom' ).length ) {
+			if ( ! wrap1.find( '.wp-picker-default-custom' ).length ) {
 				var button = $( '<span/>' ).attr( {
 													  class: 'wp-picker-default-custom'
 												  } );
 				wrap1.find( '.wp-picker-default' ).wrap( button );
 			}
 
-			if ( !wrap2.find( '.wp-picker-default-custom' ).length ) {
+			if ( ! wrap2.find( '.wp-picker-default-custom' ).length ) {
 				var button = $( '<span/>' ).attr( {
 													  class: 'wp-picker-default-custom'
 												  } );
@@ -536,7 +536,7 @@
 							spinner.removeClass( 'show' );
 						}
 
-						$( document ).trigger( 'yith_save_toggle_element_done', [result, toggle] );
+						$( document ).trigger( 'yith_save_toggle_element_done', [ result, toggle ] );
 					}
 				} );
 	};
@@ -595,7 +595,7 @@
 			toggle_el.find( '.subtitle' ).html( subtitle );
 		}
 
-		$( document ).trigger( 'yith-toggle-element-item-title', [toggle_el] );
+		$( document ).trigger( 'yith-toggle-element-item-title', [ toggle_el ] );
 	};
 
 	$.urlParam = function ( name ) {
@@ -609,7 +609,7 @@
 		var _toggle       = $( event.target ),
 			_section      = _toggle.closest( '.yith-toggle-row' ),
 			_content      = _section.find( '.yith-toggle-content' ),
-			_isOnOffClick = !!_toggle.closest( '.yith-toggle-onoff' ).length;
+			_isOnOffClick = !! _toggle.closest( '.yith-toggle-onoff' ).length;
 
 		if ( _isOnOffClick || _toggle.hasClass( 'yith-icon-drag' ) ) {
 			return false;
@@ -644,7 +644,7 @@
 			}
 
 			$( document ).trigger( 'yith_fields_init' );
-			$( document ).trigger( 'yith-add-box-button-toggle', [$this] );
+			$( document ).trigger( 'yith-add-box-button-toggle', [ $this ] );
 		}
 	} );
 
@@ -668,7 +668,7 @@
 
 		hidden_obj.val( counter );
 
-		$( document ).trigger( 'yith-toggle-change-counter', [hidden_obj, add_box] );
+		$( document ).trigger( 'yith-toggle-change-counter', [ hidden_obj, add_box ] );
 
 		counter       = hidden_obj.val();
 		var template  = wp.template( 'yith-toggle-element-item-' + id ),
@@ -706,7 +706,7 @@
 
 		$( toggle_el ).formatToggleTitle();
 		var form_is_valid = $( '<input type="hidden">' ).val( 'yes' );
-		$( document ).trigger( 'yith-toggle-element-item-before-add', [add_box, toggle_el, form_is_valid] );
+		$( document ).trigger( 'yith-toggle-element-item-before-add', [ add_box, toggle_el, form_is_valid ] );
 
 		var delayInMilliseconds = 1000; //1 second
 		setTimeout( function () {
@@ -738,7 +738,7 @@
 		toggle_row.formatToggleTitle();
 
 		var form_is_valid = $( '<input type="hidden">' ).val( 'yes' );
-		$( document ).trigger( 'yith-toggle-element-item-before-update', [toggle, toggle_row, form_is_valid] );
+		$( document ).trigger( 'yith-toggle-element-item-before-update', [ toggle, toggle_row, form_is_valid ] );
 		if ( form_is_valid.val() === 'yes' ) {
 			spinner.addClass( 'show' );
 			toggle.saveToggleElement( spinner );
@@ -803,7 +803,7 @@
 	 * For multiple select this is already handled by select2.
 	 */
 	$( document ).on( 'select2:open', function ( e ) {
-		if ( !e.target.multiple ) {
+		if ( ! e.target.multiple ) {
 			setTimeout(
 				function () {
 					var select2SearchField = document.querySelector( '.yith-plugin-fw-select2-container .select2-search__field' );
@@ -922,28 +922,55 @@
 	 * Action buttons
 	 */
 	var actionButtons = {
-		init           : function () {
+		observable        : {
+			openedMenu: false,
+			button    : false
+		},
+		init              : function () {
 			$( document ).on( 'click', '.yith-plugin-fw__action-button--has-menu', actionButtons.open );
 			$( document ).on( 'click', '.yith-plugin-fw__action-button__menu', actionButtons.stopPropagation );
 			$( document ).on( 'click', actionButtons.closeAll );
+			$( window ).on( 'scroll', actionButtons.handleScroll );
 		},
-		closeAll       : function () {
+		closeAll          : function () {
+			actionButtons.observable.openedMenu = false;
 			$( '.yith-plugin-fw__action-button--opened' ).removeClass( 'yith-plugin-fw__action-button--opened' );
 		},
-		open           : function ( e ) {
+		updateMenuPosition: function () {
+			if ( actionButtons.observable.openedMenu && actionButtons.observable.button ) {
+				var buttonEl   = actionButtons.observable.button.get( 0 ),
+					buttonRect = buttonEl.getBoundingClientRect(),
+					leftOffset = isRtl ? 0 : buttonRect.width - actionButtons.observable.openedMenu.outerWidth(),
+					props      = {
+						top : buttonRect.top + buttonRect.height + 8,
+						left: buttonRect.left + leftOffset
+					};
+
+				actionButtons.observable.openedMenu.css( props )
+			}
+		},
+		open              : function ( e ) {
 			var button    = $( this ).closest( '.yith-plugin-fw__action-button' ),
+				menu      = button.find( '.yith-plugin-fw__action-button__menu' ),
 				wasOpened = button.hasClass( 'yith-plugin-fw__action-button--opened' );
 			e.preventDefault();
 			e.stopPropagation();
 
 			actionButtons.closeAll();
 
-			if ( !wasOpened ) {
+			if ( ! wasOpened ) {
 				button.addClass( 'yith-plugin-fw__action-button--opened' );
+				actionButtons.observable.openedMenu = menu;
+				actionButtons.observable.button     = button;
+
+				actionButtons.updateMenuPosition();
 			}
 		},
-		stopPropagation: function ( e ) {
+		stopPropagation   : function ( e ) {
 			e.stopPropagation();
+		},
+		handleScroll      : function () {
+			actionButtons.updateMenuPosition();
 		}
 	};
 	actionButtons.init();
@@ -1017,7 +1044,7 @@
 				allPanelIds           = allHandlers.get().map( function ( _current ) {
 					return _current.getAttribute( 'href' );
 				} ).filter( function ( _current ) {
-					return !!_current;
+					return !! _current;
 				} ).join( ', ' ),
 				allPanels             = $( allPanelIds ),
 				showTab               = function ( tabHandler ) {
@@ -1026,9 +1053,9 @@
 						panelId   = tabHandler.attr( 'href' );
 
 					tab.addClass( 'yith-plugin-fw__tab--active' );
-					!!additionalActiveClass && tab.addClass( additionalActiveClass );
+					!! additionalActiveClass && tab.addClass( additionalActiveClass );
 					otherTabs.removeClass( 'yith-plugin-fw__tab--active' );
-					!!additionalActiveClass && otherTabs.removeClass( additionalActiveClass );
+					!! additionalActiveClass && otherTabs.removeClass( additionalActiveClass );
 
 					allPanels.hide();
 					$( panelId ).show();
@@ -1039,7 +1066,7 @@
 						tab               = currentTabHandler.parent( '.yith-plugin-fw__tab' ),
 						isActive          = tab.hasClass( 'yith-plugin-fw__tab--active' );
 
-					if ( !isActive ) {
+					if ( ! isActive ) {
 						showTab( currentTabHandler );
 					}
 				};
@@ -1047,7 +1074,7 @@
 			tabsContainer.addClass( 'yith-plugin-fw__tabs--initialized' );
 			tabsContainer.on( 'click', '.yith-plugin-fw__tab__handler', handleTabClick );
 
-			!!firstTabHandler.length && showTab( firstTabHandler );
+			!! firstTabHandler.length && showTab( firstTabHandler );
 		} );
 	} ).trigger( 'yith-plugin-fw-tabs-init' );
 
@@ -1069,7 +1096,7 @@
 				init    : function ( wrapper ) {
 					uploader.wrapper = wrapper;
 
-					if ( !uploader.instance ) {
+					if ( ! uploader.instance ) {
 						var mediaUploaderStates = [
 							new wp.media.controller.Library(
 								{
@@ -1124,7 +1151,7 @@
 			var urlField = wrapper.find( '.yith-plugin-fw-media__url-value' ),
 				idField  = wrapper.find( '.yith-plugin-fw-media__id-value' );
 
-			if ( !media ) {
+			if ( ! media ) {
 				urlField.length && urlField.val( '' ).trigger( 'change' );
 				idField.length && idField.val( '' ).trigger( 'change' );
 				updatePreview( wrapper, '' );
@@ -1148,7 +1175,7 @@
 				previewImage    = preview.find( '.yith-plugin-fw-media__preview__image' ),
 				previewFileName = preview.find( '.yith-plugin-fw-media__preview__file__name' );
 
-			if ( !mediaUrl ) {
+			if ( ! mediaUrl ) {
 				previewImage.attr( 'src', '' );
 				preview.attr( 'data-type', 'upload' );
 			} else {
@@ -1206,7 +1233,7 @@
 		function onDragEnter( event ) {
 			event.preventDefault();
 
-			if ( !event.dataTransfer ) {
+			if ( ! event.dataTransfer ) {
 				event.dataTransfer = event.originalEvent.dataTransfer;
 			}
 
@@ -1229,7 +1256,7 @@
 		 */
 		function addErrorNotice( wrapper, message ) {
 			var errorNotice = $( '<div>' );
-			errorNotice.addClass( ['yith-plugin-fw__notice', 'yith-plugin-fw__notice--error', 'yith-plugin-fw-animate__appear-from-top', 'yith-plugin-fw--inline'] );
+			errorNotice.addClass( [ 'yith-plugin-fw__notice', 'yith-plugin-fw__notice--error', 'yith-plugin-fw-animate__appear-from-top', 'yith-plugin-fw--inline' ] );
 			errorNotice.html( message );
 			errorNotice.append( $( '<span class="yith-plugin-fw__notice__dismiss"></span>' ) );
 
@@ -1244,7 +1271,7 @@
 			preview.removeClass( 'yith-plugin-fw--is-dragging' );
 			preview.addClass( 'yith-plugin-fw--is-loading' );
 
-			if ( !event.dataTransfer ) {
+			if ( ! event.dataTransfer ) {
 				event.dataTransfer = event.originalEvent.dataTransfer;
 			}
 
@@ -1261,7 +1288,7 @@
 				files = files[ 0 ];
 			}
 
-			if ( !files.length ) {
+			if ( ! files.length ) {
 				addErrorNotice( wrapper, yith_framework_fw_fields.i18n.noFileError );
 				onFinish();
 			} else if ( 'mediaUtils' in wp && 'uploadMedia' in wp.mediaUtils ) {
@@ -1326,7 +1353,7 @@
 		}
 
 		function maybeDragEnd() {
-			if ( !isDragging ) {
+			if ( ! isDragging ) {
 				return;
 			}
 
@@ -1381,8 +1408,70 @@
 			.on( 'dragover', '.yith-plugin-fw-file', onDragOver )
 			.on( 'dragleave', '.yith-plugin-fw-file', onDragLeave )
 			.on( 'change', '.yith-plugin-fw-file__field', onChange );
+	} )();
 
+	// WP List - Auto Horizontal Scroll
+	( function () {
+		var selectors = [
+			'.yith-plugin-ui--wp-list-auto-h-scroll .wp-list-table:not(.yith-plugin-ui-wp-list-auto-h-scroll--initialized)',
+			'.yith-plugin-ui__wp-list-auto-h-scroll:not(.yith-plugin-ui-wp-list-auto-h-scroll--initialized)'
+		];
+		$( selectors.join( ',' ) ).each(
+			function () {
+				var table = $( this );
+				table.wrap( '<div class="yith-plugin-ui__wp-list-auto-h-scroll__wrapper"><div class="yith-plugin-ui__wp-list-auto-h-scroll__scrollable"></div></div>' );
 
+				var scrollable = table.parent( '.yith-plugin-ui__wp-list-auto-h-scroll__scrollable' ),
+					wrapper    = scrollable.parent( '.yith-plugin-ui__wp-list-auto-h-scroll__wrapper' ),
+					thead      = table.find( 'thead' ).first(),
+					update     = function () {
+						table.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initializing' );
+
+						table.css( { position: 'absolute', tableLayout: 'auto', width: 'max-content', minWidth: '' } );
+						var minWidth = table.outerWidth();
+
+						table.css( { position: '', tableLayout: '', width: '', minWidth: minWidth + 'px' } );
+
+						if ( minWidth > scrollable.innerWidth() ) {
+							wrapper.addClass( 'yith-plugin-ui--has-scrolling' )
+						} else {
+							wrapper.removeClass( 'yith-plugin-ui--has-scrolling' )
+						}
+
+						table.removeClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initializing' );
+						table.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll--initialized' );
+					};
+
+				if ( table.is( '.yith-plugin-fw__classic-table' ) ) {
+					wrapper.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll__wrapper--classic' )
+				} else if ( table.is( '.yith-plugin-fw__boxed-table' ) ) {
+					wrapper.addClass( 'yith-plugin-ui__wp-list-auto-h-scroll__wrapper--boxed' )
+				}
+
+				scrollable.on( 'scroll', function () {
+					if ( scrollable.scrollLeft() > 0 ) {
+						wrapper.addClass( 'yith-plugin-ui--is-scrolling' );
+					} else {
+						wrapper.removeClass( 'yith-plugin-ui--is-scrolling' );
+					}
+
+					if ( scrollable.scrollLeft() + scrollable.innerWidth() >= scrollable[ 0 ].scrollWidth ) {
+						wrapper.addClass( 'yith-plugin-ui--is-scrolled' );
+					} else {
+						wrapper.removeClass( 'yith-plugin-ui--is-scrolled' );
+					}
+				} );
+
+				if ( typeof MutationObserver !== 'undefined' ) {
+					var observer = new MutationObserver( update );
+					observer.observe( thead.get( 0 ), { attributes: true, childList: true, subtree: true } );
+				}
+
+				$( window ).on( 'resize', update );
+
+				update();
+			}
+		);
 	} )();
 
 } )( jQuery );

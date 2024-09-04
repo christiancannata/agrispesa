@@ -3,16 +3,16 @@
  * Plugin Name: Flexible Shipping
  * Plugin URI: https://wordpress.org/plugins/flexible-shipping/
  * Description: Create additional shipment methods in WooCommerce and enable pricing based on cart weight or total.
- * Version: 4.22.1
+ * Version: 4.25.1
  * Author: Octolize
  * Author URI: https://octol.io/fs-author
  * Text Domain: flexible-shipping
  * Domain Path: /lang/
  * Requires at least: 5.8
- * Tested up to: 6.3
- * WC requires at least: 7.8
- * WC tested up to: 8.2
- * Requires PHP: 7.2
+ * Tested up to: 6.5
+ * WC requires at least: 8.6
+ * WC tested up to: 9.0
+ * Requires PHP: 7.4
  * ​
  * Copyright 2017 WP Desk Ltd.
  * ​
@@ -34,7 +34,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /* THIS VARIABLE CAN BE CHANGED AUTOMATICALLY */
-$plugin_version = '4.22.1';
+$plugin_version = '4.25.1';
 
 $plugin_name        = 'Flexible Shipping';
 $plugin_class_name  = Flexible_Shipping_Plugin::class;
@@ -42,12 +42,15 @@ $plugin_text_domain = 'flexible-shipping';
 $product_id         = 'Flexible Shipping';
 $plugin_file        = __FILE__;
 $plugin_dir         = __DIR__;
+$plugin_shops       = [
+	'default' => 'https://octolize.com/',
+];
 
 define( 'FLEXIBLE_SHIPPING_VERSION', $plugin_version );
 define( $plugin_class_name, $plugin_version );
 
 $requirements = [
-	'php'          => '7.2',
+	'php'          => '7.4',
 	'wp'           => '5.8',
 	'repo_plugins' => [
 		[
@@ -66,5 +69,10 @@ if ( interface_exists( \Psr\Log\LoggerInterface::class ) || interface_exists( \P
 	trait_exists( \Psr\Log\LoggerTrait::class );
 }
 
-require __DIR__ . '/vendor_prefixed/wpdesk/wp-plugin-flow-common/src/plugin-init-php52-free.php';
+add_action( 'before_woocommerce_init', function () {
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+	}
+} );
 
+require __DIR__ . '/vendor_prefixed/wpdesk/wp-plugin-flow-common/src/plugin-init-php52-free.php';

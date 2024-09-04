@@ -16,6 +16,8 @@ trait ColumnLists {
 		$value = $this->get_value( $object_id, false );
 		if ( is_object( $value ) && isset( $value->id ) ) {
 			$value = $value->id;
+		} else if  ( is_array( $value ) && isset( $value['id'] ) ) {
+			$value = $value['id'];
 		}
 		$value = (array) $value;
 		$value = array_filter( $value );
@@ -119,7 +121,7 @@ trait ColumnLists {
 
 		if ( ! $is_term ) {
 			/* translators: Term ID */
-			return sprintf( esc_html__( '(Term ID %d not found)', 'acf-quickedit-fields' ), $term );
+			return sprintf( esc_html__( '(Term ID %d not found)', 'acf-quickedit-fields' ), $value );
 		} else if ( trim( $term_obj->name ) !== '' ) {
 			$label =  $term_obj->name;
 		} else if ( trim( $term_obj->slug ) !== '' ) {

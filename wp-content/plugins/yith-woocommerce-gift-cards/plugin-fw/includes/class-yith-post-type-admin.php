@@ -116,6 +116,7 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 		 */
 		public function init_wp_list_handlers() {
 			if ( $this->should_wp_list_handlers_be_loaded() ) {
+				add_action( 'manage_posts_extra_tablenav', array( $this, 'maybe_render_reset_filters_button' ) );
 				add_action( 'manage_posts_extra_tablenav', array( $this, 'maybe_render_blank_state' ) );
 
 				add_action( 'restrict_manage_posts', array( $this, 'maybe_render_filters' ) );
@@ -240,6 +241,13 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 		}
 
 		/**
+		 * Return true if the list is filtered, to show the "clear filters" button.
+		 */
+		protected function is_the_list_filtered() {
+			return false;
+		}
+
+		/**
 		 * Handle any custom filters.
 		 *
 		 * @param array $query_vars Query vars.
@@ -334,17 +342,36 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 			global $post_type;
 
 			if ( $this->get_blank_state_params() && $post_type === $this->post_type && 'bottom' === $which ) {
-				$counts = (array) wp_count_posts( $post_type );
+				$counts  = (array) wp_count_posts( $post_type );
+				$trashed = $counts['trash'] ?? 0;
 				unset( $counts['auto-draft'] );
+				unset( $counts['trash'] );
 				$count = array_sum( $counts );
 
 				if ( 0 < $count ) {
 					return;
 				}
 
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				if ( $trashed && isset( $_REQUEST['post_status'] ) && 'trash' === $_REQUEST['post_status'] ) {
+					return;
+				}
+
 				$this->render_blank_state();
 
-				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .tablenav.top, .tablenav.bottom > *, .wrap .subsubsub  { display: none; } #posts-filter .tablenav.bottom { height: auto; display: block } </style>';
+				$selectors_to_hide = array(
+					'#posts-filter .wp-list-table',
+					'#posts-filter .yith-plugin-ui__wp-list-auto-h-scroll__wrapper',
+					'#posts-filter .tablenav.top',
+					'.tablenav.bottom > *',
+				);
+
+				if ( ! $trashed ) {
+					$selectors_to_hide[] = '.wrap .subsubsub';
+				}
+
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<style type="text/css">' . implode( ', ', $selectors_to_hide ) . '{ display: none; } #posts-filter .tablenav.bottom { height: auto; display: block } </style>';
 			}
 		}
 
@@ -379,6 +406,14 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 			if ( is_callable( array( $this, $render_method ) ) ) {
 				$this->{$render_method}();
 			}
+
+			if ( $this->get_primary_column() === $column ) {
+				printf(
+					'<button type="button" class="toggle-row"><span class="screen-reader-text">%s</span></button>',
+					// translators: Hidden accessibility text.
+					esc_html__( 'Show more details', 'yith-plugin-fw' )
+				);
+			}
 		}
 
 		/**
@@ -405,6 +440,36 @@ if ( ! class_exists( 'YITH_Post_Type_Admin' ) ) {
 
 			if ( $this->post_type === $typenow ) {
 				$this->render_filters();
+			}
+		}
+
+		/**
+		 * Render the "reset filters" button if the current view is filtered.
+		 *
+		 * @param string $which String which table-nav is being shown.
+		 */
+		public function maybe_render_reset_filters_button( $which ) {
+			global $post_type;
+
+			if ( $post_type === $this->post_type && 'top' === $which && $this->is_the_list_filtered() ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$post_status = sanitize_text_field( wp_unslash( $_GET['post_status'] ?? 'all' ) );
+				$args        = array_filter(
+					array(
+						'post_type'   => $this->post_type,
+						'post_status' => 'all' !== $post_status ? $post_status : '',
+						'all_posts'   => 'all' === $post_status ? 1 : '',
+					)
+				);
+
+				printf(
+					'<a id="%s" class="%s" href="%s">%s</a>',
+					'yith-plugin-fw__wp-list__reset-filters',
+					'yith-plugin-fw__button--tertiary',
+					esc_url( add_query_arg( $args, admin_url( 'edit.php' ) ) ),
+					esc_html__( 'Reset filters', 'yith-plugin-fw' )
+				);
+
 			}
 		}
 

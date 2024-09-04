@@ -2,12 +2,16 @@
 
 Contributors: yithemes
 Tags: gift card, gift cards, coupon, gift, discount
-Requires at least: 6.1
-Tested up to: 6.3
-Stable tag: 4.5.0
-Requires PHP: 7.0
+Requires at least: 6.3
+Tested up to: 6.5
+Stable tag: 4.14.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+The essential tool for selling gift cards in your store, increasing your conversion rate and attracting new customers.
+
+== Description ==
 
 = The easy way to sell gift cards in your shop  =
 
@@ -137,6 +141,54 @@ Want to add a new language to our YITH WooCommerce Gift Cards? Learn how to cont
 
 
 == Changelog ==
+
+= 4.14.0 - Released on 19 June 2024 =
+
+* New: support for WooCommerce 9.0
+* Update: YITH plugin framework
+
+= 4.13.0 - Released on 10 May 2024 =
+
+* New: support for WooCommerce 8.9
+* Update: YITH plugin framework
+* Fix: fixed vulnerability due to a missing capability check on the 'save_mail_status' and 'save_email_settings'
+
+= 4.12.0 - Released on 24 April 2024 =
+
+* New: support for WooCommerce 8.8
+* Update: YITH plugin framework
+
+= 4.11.0 - Released on 20 March 2024 =
+
+* New: support for WordPress 6.5
+* New: support for WooCommerce 8.7
+* Update: YITH plugin framework
+
+= 4.10.0 - Released on 22 February 2024 =
+
+* New: support for WooCommerce 8.6
+* Update: YITH plugin framework
+
+= 4.9.0 - Released on 29 January 2024 =
+
+* New: Display the options from YITH WooCommerce Product Add-Ons & Extra Options in the gift card email
+* Update: YITH plugin framework
+
+= 4.8.0 - Released on 11 January 2024 =
+
+* New: support for WooCommerce 8.5
+* Update: YITH plugin framework
+
+= 4.7.0 - Released on 27 December 2023 =
+
+* New: support for WooCommerce 8.4
+* Update: YITH plugin framework
+
+= 4.6.0 - Released on 20 November 2023 =
+
+* New: support for WordPress 6.4
+* New: support for WooCommerce 8.3
+* Update: YITH plugin framework
 
 = 4.5.0 - Released on 09 October 2023 =
 

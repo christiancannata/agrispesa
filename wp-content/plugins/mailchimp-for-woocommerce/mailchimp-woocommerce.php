@@ -16,7 +16,7 @@
  * Plugin Name:       Mailchimp for WooCommerce
  * Plugin URI:        https://mailchimp.com/connect-your-store/
  * Description:       Connects WooCommerce to Mailchimp to sync your store data, send targeted campaigns to your customers, and sell more stuff. 
- * Version:           3.2
+ * Version:           4.1
  * Author:            Mailchimp
  * Author URI:        https://mailchimp.com
  * License:           GPL-2.0+
@@ -24,9 +24,9 @@
  * Text Domain:       mailchimp-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 4.9
- * Tested up to: 6.3
- * WC requires at least: 3.5
- * WC tested up to: 7.9
+ * Tested up to: 6.5
+ * WC requires at least: 4.2
+ * WC tested up to: 9.0
  */
 
 // If this file is called directly, abort.
@@ -48,15 +48,15 @@ register_activation_hook( __FILE__, 'activate_mailchimp_woocommerce');
 // plugins loaded callback
 add_action('plugins_loaded', 'mailchimp_on_all_plugins_loaded', 12);
 
-add_action('plugins_loaded', function() {
-   // make this a one liner for testing and code separation
-   include_once __DIR__ . '/blocks/newsletter.php';
-}, 1);
+// make this a one liner for testing and code separation
+include_once __DIR__ . '/blocks/newsletter.php';
 
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_block_editor', __FILE__, true );
+
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 	}
 } );

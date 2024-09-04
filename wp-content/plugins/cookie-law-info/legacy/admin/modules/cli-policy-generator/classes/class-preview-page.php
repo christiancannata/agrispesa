@@ -91,8 +91,8 @@ class Cli_PreviewPage {
 			   if(jQuery('[name="cli_pg_toggle_preview_autoreload"]').is(':checked'))
 				{
 					jQuery.get(window.location.href+'?rnd='+Math.random(), function(data) {
-						var html=jQuery('<div />').html(data).find('.cli_pg_page_contaner').html();
-						jQuery('.cli_pg_page_contaner').html(html);
+						var html=jQuery('<div />').html(data).find('.cli_pg_page_container').html();
+						jQuery('.cli_pg_page_container').html(html);
 						cli_pg_autorealod_tmr=setTimeout(function(){
 							cli_page_auto_reload();
 						},2000);

@@ -30,10 +30,15 @@ class MultiCurrency implements Hookable {
 	}
 
 	public function hooks() {
-		add_filter( 'flexible_shipping_value_in_currency', [ $this, 'flexible_shipping_value_in_currency' ] );
+		add_filter( 'flexible_shipping_value_in_currency', [ $this, 'flexible_shipping_value_in_currency' ], PHP_INT_MAX, 2 );
 	}
 
-	public function flexible_shipping_value_in_currency( $amount ) {
+	public function flexible_shipping_value_in_currency( $amount, $base_currency_amount = null ) {
+		if ( $base_currency_amount && $amount !== $base_currency_amount ) {
+			// Already converted.
+			return $amount;
+		}
+
 		return (float) apply_filters( $this->filter_prefix . '/currency-switchers/amount', $amount, $this->logger );
 	}
 

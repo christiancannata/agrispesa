@@ -1,11 +1,11 @@
 === Google Listings & Ads ===
 Contributors: automattic, google, woocommerce
-Tags: woocommerce, google, listings, ads
+Tags: woocommerce, google, product feed, ads, listings
 Requires at least: 5.9
-Tested up to: 6.3
+Tested up to: 6.5
 Requires PHP: 7.4
 Requires PHP Architecture: 64 Bits
-Stable tag: 2.5.9
+Stable tag: 2.7.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -60,7 +60,7 @@ Create a new Google Ads account through Google Listings & Ads and a promotional 
 * PHP Architecture 64 bits
 * MySQL version 5.6 or greater
 
-Visit the [WooCommerce server requirements documentation](https://docs.woocommerce.com/document/server-requirements/) for a detailed list of server requirements.
+Visit the [WooCommerce server requirements documentation](https://woocommerce.com/document/server-requirements/) for a detailed list of server requirements.
 
 = Automatic installation =
 
@@ -111,28 +111,22 @@ Yes, you can run both at the same time, and we recommend it! In the US, advertis
 
 == Changelog ==
 
-= 2.5.9 - 2023-10-10 =
-* Dev - E2E - Setup Google Ads Step 2 - Create your paid campaign.
-* Dev - E2E - Setup Google Ads Step 3 - Setup billing data.
-* Dev - E2E tests - Track gtag event on specific page.
-* Dev - Prevent Prefix Vendor to be added twice.
-* Fix - Avoid creating two campaigns after completing the Google Ads onboarding.
-* Fix - The auto-refresh processing of billing status in the Google Ads onboarding flow.
+= 2.7.3 - 2024-06-18 =
+* Fix - Fatal error when loading campaign in the marketing overview section.
+* Tweak -  Replace woo.com references with woocommerce.com.
 
-= 2.5.8 - 2023-10-03 =
-* Add - Privacy policy guide section.
-* Add - The missing tracking to onboarding when changing steps.
-* Dev - Adjust the conditions for loading JS and CSS assets, and configure them with lazy loading and code splitting.
-* Dev - E2E - Onboarding Step 4 - Complete your campaign.
-* Fix - Remove AttributeMapping new feature inbox notification.
-* Tweak - Add UTM parameters to documentation link.
-* Tweak - The properties of the gla_setup_mc and gla_setup_ads tracking events to reduce their confusion.
-* Tweak - WC 8.2 compatibility.
+= 2.7.2 - 2024-06-10 =
+* Add - Google Ads account invitation acceptance step to the connection process.
+* Fix - Show tracking snapshots in WPCLI.
+* Tweak - Adjust click event tracking when connecting, disconnecting, and opening billing setup for Google Ads account.
+* Tweak - Adjust event tracking for the creating and claim buttons of Google Ads account.
+* Tweak - WC 9.0 compatibility.
+* Update - Enable users to seamlessly set up conversion tracking, without having to set up merchant center first or requiring campaign creation.
+* Update - Move the Google Ads account connection process from step 4 to step 1 of the onboarding flow.
 
-= 2.5.7 - 2023-09-20 =
-* Dev - E2E - Ads a paid campaign Step 1 - Connect Ads Account.
-* Dev - E2E - Onboarding Step 2 - Configure product listings.
-* Dev - E2E - Onboarding Step 3 - Confirm store requirements.
-* Fix - Performance issue with GoogleAdsFailures::init.
+= 2.7.1 - 2024-05-29 =
+* Dev - Add info about  Legacy Google Ads API Client Library  in Readme.
+* Fix - Prevent PHP Warning when Statistics is null.
+* Update - Implement Account Request Review Requests in the extension.
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/google-listings-and-ads/trunk/changelog.txt).

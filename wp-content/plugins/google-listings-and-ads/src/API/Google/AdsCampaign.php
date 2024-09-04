@@ -14,17 +14,19 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Google\Ads\GoogleAdsClient;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Options\TransientsInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\Util\V14\ResourceNames;
-use Google\Ads\GoogleAds\V14\Common\MaximizeConversionValue;
-use Google\Ads\GoogleAds\V14\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V14\Resources\Campaign;
-use Google\Ads\GoogleAds\V14\Resources\Campaign\ShoppingSetting;
-use Google\Ads\GoogleAds\V14\Services\CampaignServiceClient;
-use Google\Ads\GoogleAds\V14\Services\CampaignOperation;
-use Google\Ads\GoogleAds\V14\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V14\Services\MutateOperation;
+use Google\Ads\GoogleAds\Util\V16\ResourceNames;
+use Google\Ads\GoogleAds\V16\Common\MaximizeConversionValue;
+use Google\Ads\GoogleAds\V16\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V16\Resources\Campaign;
+use Google\Ads\GoogleAds\V16\Resources\Campaign\ShoppingSetting;
+use Google\Ads\GoogleAds\V16\Services\Client\CampaignServiceClient;
+use Google\Ads\GoogleAds\V16\Services\CampaignOperation;
+use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsRequest;
+use Google\Ads\GoogleAds\V16\Services\MutateOperation;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 use Exception;
@@ -35,6 +37,7 @@ use Exception;
  *
  * ContainerAware used for:
  * - AdsAssetGroup
+ * - TransientsInterface
  * - WC
  *
  * @since 1.12.2 Refactored to support PMax and (legacy) SSC.
@@ -110,12 +113,23 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				$query->where( 'campaign.status', 'REMOVED', '!=' );
 			}
 
+			$campaign_count      = 0;
 			$campaign_results    = $query->get_results();
 			$converted_campaigns = [];
 
 			foreach ( $campaign_results->iterateAllElements() as $row ) {
+				++$campaign_count;
 				$campaign                               = $this->convert_campaign( $row );
 				$converted_campaigns[ $campaign['id'] ] = $campaign;
+			}
+
+			if ( $exclude_removed ) {
+				// Cache campaign count.
+				$this->container->get( TransientsInterface::class )->set(
+					TransientsInterface::ADS_CAMPAIGN_COUNT,
+					$campaign_count,
+					HOUR_IN_SECONDS * 12
+				);
 			}
 
 			if ( $fetch_criterion ) {
@@ -220,6 +234,9 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 
 			$campaign_id = $this->mutate( $operations );
 
+			// Clear cached campaign count.
+			$this->container->get( TransientsInterface::class )->delete( TransientsInterface::ADS_CAMPAIGN_COUNT );
+
 			return [
 				'id'      => $campaign_id,
 				'status'  => CampaignStatus::ENABLED,
@@ -314,6 +331,9 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				$this->delete_operation( $campaign_resource_name ),
 			];
 
+			// Clear cached campaign count.
+			$this->container->get( TransientsInterface::class )->delete( TransientsInterface::ADS_CAMPAIGN_COUNT );
+
 			return $this->mutate( $operations );
 		} catch ( ApiException $e ) {
 			do_action( 'woocommerce_gla_ads_client_exception', $e, __METHOD__ );
@@ -370,9 +390,9 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				foreach ( $this->get_campaigns( false, false ) as $campaign ) {
 					if ( CampaignType::PERFORMANCE_MAX !== $campaign['type'] ) {
 						if ( CampaignStatus::REMOVED === $campaign['status'] ) {
-							$old_removed_campaigns++;
+							++$old_removed_campaigns;
 						} else {
-							$old_campaigns++;
+							++$old_campaigns;
 						}
 					}
 				}
@@ -427,8 +447,8 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				'url_expansion_opt_out'     => true,
 				'shopping_setting'          => new ShoppingSetting(
 					[
-						'merchant_id'   => $this->options->get_merchant_id(),
-						'sales_country' => $country,
+						'merchant_id' => $this->options->get_merchant_id(),
+						'feed_label'  => $country,
 					]
 				),
 			]
@@ -495,7 +515,7 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 		$shopping = $campaign->getShoppingSetting();
 		if ( $shopping ) {
 			$data += [
-				'country' => $shopping->getSalesCountry(),
+				'country' => $shopping->getFeedLabel(),
 			];
 		}
 
@@ -554,11 +574,10 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 	 * @throws ApiException If any of the operations fail.
 	 */
 	protected function mutate( array $operations ): int {
-		$responses = $this->client->getGoogleAdsServiceClient()->mutate(
-			$this->options->get_ads_id(),
-			$operations
-		);
-
+		$request = new MutateGoogleAdsRequest();
+		$request->setCustomerId( $this->options->get_ads_id() );
+		$request->setMutateOperations( $operations );
+		$responses = $this->client->getGoogleAdsServiceClient()->mutate( $request );
 		foreach ( $responses->getMutateOperationResponses() as $response ) {
 			if ( 'campaign_result' === $response->getResponse() ) {
 				$campaign_result = $response->getCampaignResult();

@@ -25,9 +25,9 @@ function gtm4wp_youtube( $return, $url, $data ) {
 
 	if ( false !== strpos( $return, 'youtube.com' ) ) {
 		return str_replace( 'feature=oembed', 'feature=oembed&enablejsapi=1&origin=' . $site_url_parts['scheme'] . '://' . $site_url_parts['host'], $return );
-	} else {
-		return $return;
-	}
+	} 
+	
+	return $return;
 }
 
 add_filter( 'oembed_result', 'gtm4wp_youtube', 10, 3 );
@@ -42,6 +42,6 @@ if ( ! is_admin() ) {
 			|| ( strpos( $GLOBALS['post']->post_content, '<iframe' ) !== false && strpos( $GLOBALS['post']->post_content, 'youtu' ) !== false )
 		)
 	) {
-		wp_enqueue_script( 'gtm4wp-youtube', $gtp4wp_plugin_url . 'js/gtm4wp-youtube.js', array(), GTM4WP_VERSION, $in_footer );
+		wp_enqueue_script( 'gtm4wp-youtube', $gtp4wp_script_path . 'gtm4wp-youtube.js', array(), GTM4WP_VERSION, $in_footer );
 	}
 }

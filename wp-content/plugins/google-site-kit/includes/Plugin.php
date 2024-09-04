@@ -10,7 +10,6 @@
 
 namespace Google\Site_Kit;
 
-use Google\Site_Kit\Core\Util\Build_Mode;
 use Google\Site_Kit\Core\Util\Feature_Flags;
 
 /**
@@ -159,12 +158,13 @@ final class Plugin {
 
 				$user_input = new Core\User_Input\User_Input( $this->context, $options, $user_options, $survey_queue );
 
-				if ( Feature_Flags::enabled( 'userInput' ) ) {
-					$user_input->register();
-				}
-
 				$authentication = new Core\Authentication\Authentication( $this->context, $options, $user_options, $transients, $user_input );
 				$authentication->register();
+
+				$remote_features = new Core\Util\Remote_Features( $options, $authentication );
+				$remote_features->register();
+
+				$user_input->register();
 
 				$modules = new Core\Modules\Modules( $this->context, $options, $user_options, $authentication, $assets );
 				$modules->register();
@@ -173,6 +173,9 @@ final class Plugin {
 				$dismissals->register();
 
 				$dismissed_items = $dismissals->get_dismissed_items();
+
+				$expirables = new Core\Expirables\Expirables( $this->context, $user_options );
+				$expirables->register();
 
 				$permissions = new Core\Permissions\Permissions( $this->context, $authentication, $modules, $user_options, $dismissed_items );
 				$permissions->register();
@@ -189,7 +192,7 @@ final class Plugin {
 				$user_surveys = new Core\User_Surveys\User_Surveys( $authentication, $user_options, $survey_queue );
 				$user_surveys->register();
 
-				( new Core\Authentication\Setup( $this->context, $user_options, $authentication ) )->register();
+				( new Core\Authentication\Setup( $this->context, $user_options, $authentication, $remote_features ) )->register();
 
 				( new Core\Util\Reset( $this->context ) )->register();
 				( new Core\Util\Reset_Persistent( $this->context ) )->register();
@@ -202,18 +205,25 @@ final class Plugin {
 				( new Core\Admin\Notices() )->register();
 				( new Core\Admin\Pointers() )->register();
 				( new Core\Admin\Dashboard( $this->context, $assets, $modules ) )->register();
+				( new Core\Admin\Authorize_Application( $this->context, $assets ) )->register();
 				( new Core\Notifications\Notifications( $this->context, $options, $authentication ) )->register();
-				( new Core\Util\Debug_Data( $this->context, $options, $user_options, $authentication, $modules, $permissions ) )->register();
+				( new Core\Site_Health\Site_Health( $this->context, $options, $user_options, $authentication, $modules, $permissions ) )->register();
 				( new Core\Util\Health_Checks( $authentication ) )->register();
 				( new Core\Admin\Standalone( $this->context ) )->register();
 				( new Core\Util\Activation_Notice( $this->context, $activation_flag, $assets ) )->register();
 				( new Core\Feature_Tours\Feature_Tours( $this->context, $user_options ) )->register();
 				( new Core\Util\Migration_1_3_0( $this->context, $options, $user_options ) )->register();
 				( new Core\Util\Migration_1_8_1( $this->context, $options, $user_options, $authentication ) )->register();
+				( new Core\Util\Migration_1_123_0( $this->context, $options ) )->register();
+				( new Core\Util\Migration_Conversion_ID( $this->context, $options ) )->register();
 				( new Core\Dashboard_Sharing\Dashboard_Sharing( $this->context, $user_options ) )->register();
+				( new Core\Key_Metrics\Key_Metrics( $this->context, $user_options, $options ) )->register();
+				( new Core\Prompts\Prompts( $this->context, $user_options ) )->register();
+				( new Core\Consent_Mode\Consent_Mode( $this->context, $options ) )->register();
+				( new Core\Tags\GTag() )->register();
 
-				if ( Feature_Flags::enabled( 'userInput' ) ) {
-					( new Core\Key_Metrics\Key_Metrics( $this->context, $user_options, $options ) )->register();
+				if ( Feature_Flags::enabled( 'conversionInfra' ) ) {
+					( new Core\Conversion_Tracking\Conversion_Tracking( $this->context, $options ) )->register();
 				}
 
 				// If a login is happening (runs after 'init'), update current user in dependency chain.
@@ -283,7 +293,6 @@ final class Plugin {
 
 		if ( file_exists( GOOGLESITEKIT_PLUGIN_DIR_PATH . 'dist/config.php' ) ) {
 			$config = include GOOGLESITEKIT_PLUGIN_DIR_PATH . 'dist/config.php';
-			Build_Mode::set_mode( $config['buildMode'] );
 			Feature_Flags::set_features( (array) $config['features'] );
 		}
 

@@ -460,6 +460,9 @@ class Shortcodes {
 		foreach ( $categories as $category ) {
 			$object = new \CookieYes\Lite\Admin\Modules\Cookies\Includes\Cookie_Categories( $category );
 			$name   = $object->get_name( $this->language );
+			if ( false === $object->get_visibility() && false === $this->preview ) {
+				continue;
+			}
 			$html  .= str_replace(
 				array(
 					'[cky_preview_{{category_slug}}_title]',

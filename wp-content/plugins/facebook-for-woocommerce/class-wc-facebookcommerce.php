@@ -9,7 +9,6 @@
  * @package FacebookCommerce
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/includes/fbutils.php';
 
 use Automattic\WooCommerce\Admin\Features\Features as WooAdminFeatures;
@@ -181,7 +180,6 @@ class WC_Facebookcommerce extends WooCommerce\Facebook\Framework\Plugin {
 			include_once 'facebook-commerce.php';
 
 			require_once __DIR__ . '/includes/fbproductfeed.php';
-			require_once __DIR__ . '/facebook-commerce-messenger-chat.php';
 
 			$this->heartbeat = new Heartbeat( WC()->queue() );
 			$this->heartbeat->init();
@@ -710,7 +708,7 @@ class WC_Facebookcommerce extends WooCommerce\Facebook\Framework\Plugin {
 	 * @return string
 	 */
 	public function get_documentation_url() {
-		return 'https://docs.woocommerce.com/document/facebook-for-woocommerce/';
+		return 'https://woocommerce.com/document/facebook-for-woocommerce/';
 	}
 
 

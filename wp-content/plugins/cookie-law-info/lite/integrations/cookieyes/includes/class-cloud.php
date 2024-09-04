@@ -51,7 +51,7 @@ abstract class Cloud extends Cookieyes {
 		try {
 			$cloud = false;
 			if ( ! in_array( $request, self::$allowed_methods, true ) ) {
-				return new WP_Error( 'invalid-method', sprintf( __( 'Ivalid method.', 'cookie-law-info' ), __METHOD__ ), array( 'status' => 405 ) );
+				return new WP_Error( 'invalid-method', sprintf( __( 'Invalid method.', 'cookie-law-info' ), __METHOD__ ), array( 'status' => 405 ) );
 			}
 			if ( true === $this->is_connected() ) {
 				$cloud = true;
@@ -68,7 +68,7 @@ abstract class Cloud extends Cookieyes {
 				}
 			}
 		} catch ( Exception $e ) {
-			return new WP_Error( 'invalid-method', sprintf( __( 'Ivalid method.', 'cookie-law-info' ), __METHOD__ ), array( 'status' => 405 ) );
+			return new WP_Error( 'invalid-method', sprintf( __( 'Invalid method.', 'cookie-law-info' ), __METHOD__ ), array( 'status' => 405 ) );
 		}
 	}
 	/**

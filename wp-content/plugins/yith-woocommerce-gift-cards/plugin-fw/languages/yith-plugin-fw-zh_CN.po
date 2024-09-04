@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-10-09 08:44:56+00:00\n"
+"POT-Creation-Date: 2024-05-10 13:24:20+00:00\n"
 "PO-Revision-Date: 2022-06-29 13:12:18+0000\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
@@ -13,75 +13,75 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 
-#: includes/class-yit-assets.php:137
+#: includes/class-yit-assets.php:213
 msgid "No file provided."
 msgstr ""
 
-#: includes/class-yit-assets.php:138
+#: includes/class-yit-assets.php:214
 msgid "You cannot drop files here."
 msgstr ""
 
-#: includes/class-yit-assets.php:160 yit-functions.php:1982
+#: includes/class-yit-assets.php:236 yit-functions.php:1993
 msgid "Confirm trash"
 msgstr "確認丟棄"
 
-#: includes/class-yit-assets.php:161
+#: includes/class-yit-assets.php:237
 msgid "Are you sure you want to trash the selected items?"
 msgstr "你確定要將所選的項目移至垃圾桶嗎?"
 
-#: includes/class-yit-assets.php:163 includes/class-yit-assets.php:167
+#: includes/class-yit-assets.php:239 includes/class-yit-assets.php:243
 #: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
-#: yit-functions.php:1984 yit-functions.php:2002
+#: yit-functions.php:1995 yit-functions.php:2013
 msgid "No"
 msgstr "不"
 
-#: includes/class-yit-assets.php:164 yit-functions.php:2000
-#: yit-functions.php:2127
+#: includes/class-yit-assets.php:240 yit-functions.php:2011
+#: yit-functions.php:2138
 msgid "Confirm delete"
 msgstr "確認刪除"
 
-#: includes/class-yit-assets.php:165
+#: includes/class-yit-assets.php:241
 msgid "Are you sure you want to delete the selected items?"
 msgstr "你確定要刪除所選的項目嗎?"
 
-#: includes/class-yit-assets.php:165 yit-functions.php:1916
-#: yit-functions.php:2075
+#: includes/class-yit-assets.php:241 yit-functions.php:1927
+#: yit-functions.php:2086
 msgid ""
 "This action cannot be undone and you will not be able to recover this data."
 msgstr "此操作無法撤消，您將無法恢復此數據。"
 
-#: includes/class-yit-assets.php:185 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:261 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid "Are you sure?"
 msgstr "你確定嗎?"
 
-#: includes/class-yit-assets.php:186 includes/class-yit-plugin-subpanel.php:134
+#: includes/class-yit-assets.php:262 includes/class-yit-plugin-subpanel.php:134
 #: templates/panel/panel-content-page.php:14
 msgid ""
 "If you continue with this action, you will reset all options in this page."
 msgstr "如果你繼續這個動作，你將會重設這個頁面所有的選項"
 
-#: includes/class-yit-assets.php:197
+#: includes/class-yit-assets.php:273
 msgid "Clear"
 msgstr "清除"
 
-#: includes/class-yit-assets.php:198
+#: includes/class-yit-assets.php:274
 msgid "Clear color"
 msgstr "清除顏色"
 
-#: includes/class-yit-assets.php:199
+#: includes/class-yit-assets.php:275
 msgid "Default"
 msgstr "預設"
 
-#: includes/class-yit-assets.php:200
+#: includes/class-yit-assets.php:276
 msgid "Select default color"
 msgstr "選擇預設顏色"
 
-#: includes/class-yit-assets.php:201
+#: includes/class-yit-assets.php:277
 msgid "Select Color"
 msgstr "選擇顏色"
 
-#: includes/class-yit-assets.php:202
+#: includes/class-yit-assets.php:278
 msgid "Color value"
 msgstr "顏色數值"
 
@@ -89,16 +89,16 @@ msgstr "顏色數值"
 msgid "There was an error with your request; please try again later."
 msgstr "您的請求有誤； 請稍後再試。"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:502
-#: includes/class-yit-plugin-panel.php:1561
+#: includes/class-yit-plugin-panel-woocommerce.php:501
+#: includes/class-yit-plugin-panel.php:1562
 msgid "Options saved!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:556
+#: includes/class-yit-plugin-panel-woocommerce.php:555
 msgid "Options reset correctly!"
 msgstr ""
 
-#: includes/class-yit-plugin-panel-woocommerce.php:606
+#: includes/class-yit-plugin-panel-woocommerce.php:605
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "如果你離開這個頁面，這些改變將會遺失"
 
@@ -142,44 +142,44 @@ msgid ""
 "kind of work and just buy whatever plugin you need from YITH."
 msgstr ""
 
-#: includes/class-yit-plugin-panel.php:1556
+#: includes/class-yit-plugin-panel.php:1557
 msgid ""
 "The element you have entered already exists. Please, enter another name."
 msgstr "你輸入的這個元素已經存在，請輸入另一個名稱"
 
-#: includes/class-yit-plugin-panel.php:1557
+#: includes/class-yit-plugin-panel.php:1558
 msgid "Settings saved"
 msgstr "設定已經儲存"
 
-#: includes/class-yit-plugin-panel.php:1558
+#: includes/class-yit-plugin-panel.php:1559
 msgid "Settings reset"
 msgstr "重置設定"
 
-#: includes/class-yit-plugin-panel.php:1559
+#: includes/class-yit-plugin-panel.php:1560
 msgid "Element deleted correctly."
 msgstr "元素已被確實刪除"
 
-#: includes/class-yit-plugin-panel.php:1560
+#: includes/class-yit-plugin-panel.php:1561
 msgid "Element updated correctly."
 msgstr "元素已正確更新。"
 
-#: includes/class-yit-plugin-panel.php:1562
+#: includes/class-yit-plugin-panel.php:1563
 msgid "Database imported correctly."
 msgstr "資料庫已被正確匯入"
 
-#: includes/class-yit-plugin-panel.php:1563
+#: includes/class-yit-plugin-panel.php:1564
 msgid "An error has occurred during import. Please try again."
 msgstr "匯入過程中發生一個錯誤，請再試一次"
 
-#: includes/class-yit-plugin-panel.php:1564
+#: includes/class-yit-plugin-panel.php:1565
 msgid "The added file is not valid."
 msgstr "添加的檔案無效"
 
-#: includes/class-yit-plugin-panel.php:1565
+#: includes/class-yit-plugin-panel.php:1566
 msgid "Sorry, import is disabled."
 msgstr "抱歉，匯入功能被關閉"
 
-#: includes/class-yit-plugin-panel.php:1566
+#: includes/class-yit-plugin-panel.php:1567
 msgid "Sorting successful."
 msgstr "已順利排序"
 
@@ -251,13 +251,22 @@ msgstr "發生錯誤，這可能意味著 Feed 已關閉。 稍後再試。"
 
 #. translators: %s is the name of the post type (example Back to "Membership
 #. Plans").
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to \"%s\""
 msgstr "返回至 \"%s\""
 
-#: includes/class-yith-post-type-admin.php:286
+#: includes/class-yith-post-type-admin.php:294
 msgid "Back to the list"
 msgstr "返回至列表"
+
+#. translators: Hidden accessibility text.
+#: includes/class-yith-post-type-admin.php:414
+msgid "Show more details"
+msgstr ""
+
+#: includes/class-yith-post-type-admin.php:470
+msgid "Reset filters"
+msgstr ""
 
 #: includes/class-yith-system-status.php:107
 msgid "WordPress Version"
@@ -660,7 +669,7 @@ msgstr "PHP 信息"
 msgid "Log Files"
 msgstr "紀錄檔"
 
-#: templates/sysinfo/system-information-panel.php:22
+#: templates/sysinfo/system-information-panel.php:28
 msgid "YITH System Information"
 msgstr "YITH 系統信息"
 
@@ -773,16 +782,16 @@ msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
 msgstr "資料數據: %1$.2fMB | 索引: %2$.2fMB | 可用: %3$.2fMB | 引擎: %4$s"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1914
+#: yit-functions.php:1925
 msgid "Are you sure you want to move \"%s\" to trash?"
 msgstr "您確定要將 \"%s\" 丟進垃圾桶嗎?"
 
 #. translators: %s is the title of the post object.
-#: yit-functions.php:1916 yit-functions.php:2075
+#: yit-functions.php:1927 yit-functions.php:2086
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "您確定要刪除 \"%s\" 嗎?"
 
-#: yit-functions.php:2014 yit-functions.php:2022 yit-functions.php:2138
+#: yit-functions.php:2025 yit-functions.php:2033 yit-functions.php:2149
 msgid "Further actions"
 msgstr "進一步動作"
 
@@ -815,49 +824,49 @@ msgctxt "[gutenberg]: Category Name"
 msgid "YITH"
 msgstr "YITH"
 
-#: includes/class-yit-assets.php:120
+#: includes/class-yit-assets.php:196
 msgctxt "Enhanced select"
 msgid "No matches found"
 msgstr ""
 
-#: includes/class-yit-assets.php:121
+#: includes/class-yit-assets.php:197
 msgctxt "Enhanced select"
 msgid "Please enter 1 or more characters"
 msgstr ""
 
 #. translators: %s is the number of characters.
-#: includes/class-yit-assets.php:123
+#: includes/class-yit-assets.php:199
 msgctxt "Enhanced select"
 msgid "Please enter %s or more characters"
 msgstr ""
 
-#: includes/class-yit-assets.php:124
+#: includes/class-yit-assets.php:200
 msgctxt "Enhanced select"
 msgid "Searching&hellip;"
 msgstr ""
 
-#: includes/class-yit-assets.php:136
+#: includes/class-yit-assets.php:212
 msgctxt "Title"
 msgid "Error"
 msgstr ""
 
-#: includes/class-yit-assets.php:148
+#: includes/class-yit-assets.php:224
 msgctxt "Button text"
 msgid "Confirm"
 msgstr "確認"
 
-#: includes/class-yit-assets.php:149
+#: includes/class-yit-assets.php:225
 msgctxt "Button text"
 msgid "Cancel"
 msgstr "取消"
 
-#: includes/class-yit-assets.php:162 yit-functions.php:1985
+#: includes/class-yit-assets.php:238 yit-functions.php:1996
 msgctxt "Trash confirmation action"
 msgid "Yes, move to trash"
 msgstr "是的，將它移至垃圾桶"
 
-#: includes/class-yit-assets.php:166 yit-functions.php:2003
-#: yit-functions.php:2129
+#: includes/class-yit-assets.php:242 yit-functions.php:2014
+#: yit-functions.php:2140
 msgctxt "Delete confirmation action"
 msgid "Yes, delete"
 msgstr "是的，刪除"
@@ -1187,57 +1196,57 @@ msgctxt "Plugin in \"Your Store Tools\" tab"
 msgid "Get it"
 msgstr ""
 
-#: yit-functions.php:1928
+#: yit-functions.php:1939
 msgctxt "Post action"
 msgid "Preview"
 msgstr "預覽"
 
-#: yit-functions.php:1937
+#: yit-functions.php:1948
 msgctxt "Post action"
 msgid "View"
 msgstr "查看"
 
-#: yit-functions.php:1948
+#: yit-functions.php:1959
 msgctxt "Post action"
 msgid "Edit"
 msgstr "編輯"
 
-#: yit-functions.php:1956
+#: yit-functions.php:1967
 msgctxt "Post action"
 msgid "Duplicate"
 msgstr "複製"
 
-#: yit-functions.php:1968
+#: yit-functions.php:1979
 msgctxt "Post action"
 msgid "Restore"
 msgstr "還原"
 
-#: yit-functions.php:1976
+#: yit-functions.php:1987
 msgctxt "Post action"
 msgid "Trash"
 msgstr "垃圾桶"
 
-#: yit-functions.php:1993
+#: yit-functions.php:2004
 msgctxt "Post action"
 msgid "Delete Permanently"
 msgstr "永久刪除"
 
-#: yit-functions.php:2089
+#: yit-functions.php:2100
 msgctxt "Term action"
 msgid "View"
 msgstr "查看"
 
-#: yit-functions.php:2099
+#: yit-functions.php:2110
 msgctxt "Term action"
 msgid "Edit"
 msgstr "編輯"
 
-#: yit-functions.php:2107
+#: yit-functions.php:2118
 msgctxt "Term action"
 msgid "Duplicate"
 msgstr "複製"
 
-#: yit-functions.php:2120
+#: yit-functions.php:2131
 msgctxt "Term action"
 msgid "Delete"
 msgstr "刪除"

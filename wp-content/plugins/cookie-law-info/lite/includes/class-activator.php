@@ -41,6 +41,9 @@ class Activator {
 		'3.0.7' => array(
 			'update_db_307',
 		),
+		'3.2.1' => array(
+			'update_db_321',
+		)
 	);
 	/**
 	 * Return the current instance of the class
@@ -169,6 +172,26 @@ class Activator {
 				$contents[ $language ] = $content;
 			}
 			$banner->set_contents( $contents );
+			$banner->save();
+		}
+	}
+
+	public static function update_db_321() {
+		$items = Controller::get_instance()->get_items();
+		foreach ( $items as $item ) {
+			$banner   = new Banner( $item->banner_id );
+			$contents = $banner->get_contents();
+			$settings = $banner->get_settings();
+			if ( isset($contents['en']) ) {
+				$translation = $banner->get_translations( 'en' );
+				$text        = isset( $translation['optoutPopup']['elements']['gpcOption']['elements']['description'] ) ? $translation['optoutPopup']['elements']['gpcOption']['elements']['description'] : "<p>Your opt-out settings for this website have been respected since we detected a <b>Global Privacy Control</b> signal from your browser and, therefore, you cannot change this setting.</p>";
+				$contents['en']['optoutPopup']['elements']['gpcOption']['elements']['description'] = $text;
+			}
+			if ( isset($settings['config']) ) {
+				$settings['config']['preferenceCenter']['elements']['categories']['elements']['toggle']['status']=!$settings['config']['categoryPreview']['status'];
+			}
+			$banner->set_contents( $contents );
+			$banner->set_settings( $settings );
 			$banner->save();
 		}
 	}

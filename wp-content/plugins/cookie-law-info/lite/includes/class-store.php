@@ -381,16 +381,16 @@ abstract class Store {
 	 *
 	 * @since  3.0.0
 	 *
-	 * @param array $datas Key value pairs to set. Key is the prop and should map to a setter function name.
+	 * @param array $data Key value pairs to set. Key is the prop and should map to a setter function name.
 	 *
 	 * @return bool|WP_Error
 	 */
-	public function set_multi_item_data( $datas ) {
+	public function set_multi_item_data( $data ) {
 		$errors = false;
 
-		foreach ( $datas as $data => $value ) {
+		foreach ( $data as $item => $value ) {
 			try {
-				$setter = "set_$data";
+				$setter = "set_$item";
 
 				if ( is_callable( array( $this, $setter ) ) ) {
 					$this->{$setter}( $value );

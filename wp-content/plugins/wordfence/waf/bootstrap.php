@@ -131,7 +131,7 @@ class wfWAFWordPressRequest extends wfWAFRequest {
 				continue; //This was an array so we can skip to the next item
 			}
 			$skipToNext = false;
-			$trustedProxyConfig = wfWAF::getInstance()->getStorageEngine()->getConfig('howGetIPs_trusted_proxies', null, 'synced');
+			$trustedProxyConfig = wfWAF::getInstance()->getStorageEngine()->getConfig('howGetIPs_trusted_proxies_unified', null, 'synced');
 			$trustedProxies = $trustedProxyConfig === null ? array() : explode("\n", $trustedProxyConfig);
 			foreach (array(',', ' ', "\t") as $char) {
 				if (strpos($item, $char) !== false) {
@@ -912,8 +912,17 @@ try {
 							->setCharset($wfWAFDBCredentials['charset'],
 								!empty($wfWAFDBCredentials['collation']) ? $wfWAFDBCredentials['collation'] : '');
 					}
-					if (function_exists('get_option')) {
-						$wfWAFStorageEngine->installing = !get_option('wordfenceActivated');
+					if (defined('ABSPATH')) {
+						$tableExists = false;
+						$optionName = 'wordfence_installed'; //Also exists in wfConfig.php
+						if (is_multisite() && function_exists('get_network_option')) {
+							$tableExists = get_network_option(null, $optionName, null);
+						}
+						else {
+							$tableExists = get_option($optionName, null);
+						}
+						
+						$wfWAFStorageEngine->installing = !$tableExists;
 						$wfWAFStorageEngine->getDb()->installing = $wfWAFStorageEngine->installing;
 					}
 

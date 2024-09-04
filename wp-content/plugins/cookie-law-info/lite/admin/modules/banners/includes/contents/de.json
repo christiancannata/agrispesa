@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie-Einstellungen"
+                "title": "Einstellungen zustimmen"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "Wir schätzen Ihre Privatsphäre",
-                "description": "Diese Website oder ihre Tools von Drittanbietern verarbeiten personenbezogene Daten. Sie können den Verkauf Ihrer persönlichen Daten abbestellen, indem Sie auf den Link \"Verkaufen oder teilen Sie meine persönlichen Daten nicht\" klicken.",
+                "description": "<p>Diese Website oder ihre Tools von Drittanbietern verarbeiten personenbezogene Daten. Sie können den Verkauf Ihrer persönlichen Daten abbestellen, indem Sie auf den Link \"Verkaufen oder teilen Sie meine persönlichen Daten nicht\" klicken.</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Cookie-Einstellungen"
+                "title": "Einstellungen zustimmen"
             }
         },
         "auditTable": {

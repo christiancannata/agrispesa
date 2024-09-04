@@ -115,6 +115,10 @@ class Plugin implements \JsonSerializable
      */
     public function jsonSerialize() : array
     {
-        return ['category' => $this->get_category(), 'icon' => $this->get_icon(), 'name' => $this->get_plugin_name(), 'description' => $this->get_description(), 'plugin_url' => $this->get_plugin_url()];
+        return ['category' => $this->get_category(), 'icon' => $this->get_icon(), 'name' => $this->get_plugin_name(), 'description' => $this->get_description(), 'plugin_url' => $this->get_plugin_url(), 'buy_plugin_label' => $this->prepare_buy_plugin_label()];
+    }
+    private function prepare_buy_plugin_label() : string
+    {
+        return $this->category === \FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::get_categories()[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES] ? \__('Buy bundle →', 'flexible-shipping') : \__('Buy plugin →', 'flexible-shipping');
     }
 }

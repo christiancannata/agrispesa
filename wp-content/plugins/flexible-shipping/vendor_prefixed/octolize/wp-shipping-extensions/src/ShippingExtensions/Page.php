@@ -96,21 +96,37 @@ class Page implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
         $categories_priority = [];
         if (\in_array('flexible-shipping/flexible-shipping.php', $active_plugins, \true)) {
             $plugins_priority[] = 'flexible-shipping-pro/flexible-shipping-pro.php';
+            $plugins_priority[] = 'fs-bundle';
             $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_CUSTOMIZABLE_RATES];
             $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_SHIPPING_LABELS];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_LIVE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES];
         }
         if (\in_array('flexible-shipping-ups/flexible-shipping-ups.php', $active_plugins, \true)) {
             $plugins_priority[] = 'flexible-shipping-ups-pro/flexible-shipping-ups-pro.php';
             $plugins_priority[] = 'flexible-shipping-ups-labels/flexible-shipping-ups-labels.php';
+            $plugins_priority[] = 'ups-bundle';
+            $plugins_priority[] = 'flexible-shipping-conditional-methods/flexible-shipping-conditional-methods.php';
             $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_LIVE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_CUSTOMIZABLE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_SHIPPING_LABELS];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES];
         }
         if (\in_array('flexible-shipping-fedex/flexible-shipping-fedex.php', $active_plugins, \true)) {
             $plugins_priority[] = 'flexible-shipping-fedex-pro/flexible-shipping-fedex-pro.php';
+            $plugins_priority[] = 'flexible-shipping-conditional-methods/flexible-shipping-conditional-methods.php';
             $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_LIVE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_CUSTOMIZABLE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_SHIPPING_LABELS];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES];
         }
         if (\in_array('flexible-shipping-dhl-express/flexible-shipping-dhl-express.php', $active_plugins, \true)) {
             $plugins_priority[] = 'flexible-shipping-dhl-express-pro/flexible-shipping-dhl-express-pro.php';
+            $plugins_priority[] = 'flexible-shipping-conditional-methods/flexible-shipping-conditional-methods.php';
             $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_LIVE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_CUSTOMIZABLE_RATES];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_SHIPPING_LABELS];
+            $categories_priority[] = $categories[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES];
         }
         return [$plugins_priority, $categories_priority];
     }

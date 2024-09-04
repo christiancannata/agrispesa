@@ -94,7 +94,9 @@ class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hoo
         $class::set_fs_logger($this->logger);
         $shipment_cpt = new \FSVendor\WPDesk\FS\Shipment\CustomPostType();
         $shipment_cpt->hooks();
-        $subscriptions_integration = new \FSVendor\WPDesk\FS\Shipment\Subscriptions\SubscriptionsIntegration($shipment_cpt);
+        $shipment_creator = new \FSVendor\WPDesk\FS\Shipment\Checkout\ShipmentCreator();
+        $shipment_creator->hooks();
+        $subscriptions_integration = new \FSVendor\WPDesk\FS\Shipment\Subscriptions\SubscriptionsIntegration($shipment_creator);
         $subscriptions_integration->hooks();
         $add_shipping_metabox = new \FSVendor\WPDesk\FS\Shipment\Order\AddShippingMetabox();
         $add_shipping_metabox->hooks();

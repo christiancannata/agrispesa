@@ -14,9 +14,10 @@ class Scripts
      * @param PluginData  $plugin_data .
      * @param string|null $view_file .
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, $view_file = null)
+    public function __construct(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, \FSVendor\WPDesk\Tracker\Deactivation\ReasonsFactory $reasons_factory, $view_file = null)
     {
         $this->plugin_data = $plugin_data;
+        $this->reasons_factory = $reasons_factory;
         if (!empty($view_file)) {
             $this->view_file = $view_file;
         } else {

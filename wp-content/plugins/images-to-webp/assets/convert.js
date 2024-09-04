@@ -25,6 +25,7 @@ jQuery(document).ready(function($){
 
 	$('.convert-all-images, .convert-missing-images').click(function(event){
 		event.preventDefault();
+		const button = this;
 		window.selected_folders = $('#jstree').jstree().get_top_checked();
 		if( selected_folders.length ){
 			$('#transparency_status_message span').text( transparency_status_message );
@@ -44,7 +45,7 @@ jQuery(document).ready(function($){
 			.done(function( response, statusText, xhr ){
 				$('#show-on-convert').prepend('<span>Subdirectories loaded successfully.</span><br>');
 				window.selected_folders = response;
-				convert_old_images( $(this).hasClass('convert-missing-images') ? 1 : 0 );
+				convert_old_images( $( button ).hasClass('convert-missing-images') ? 1 : 0 );
 			})
 			.fail(function( xhr, textStatus ){
 				$('#show-on-convert').prepend( '<span>' + xhr.status + '</span><br>' );

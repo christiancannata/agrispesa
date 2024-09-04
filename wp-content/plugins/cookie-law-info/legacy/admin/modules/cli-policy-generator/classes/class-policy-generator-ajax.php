@@ -24,7 +24,7 @@ class Cookie_Law_Info_Policy_Generator_Ajax extends Cookie_Law_Info_Cli_Policy_G
 		);
 		$non_json_response = array();
 		if ( isset( $_POST['cli_policy_generator_action'] ) ) {
-			$allowed_actions             = array( 'autosave_contant_data', 'save_contentdata', 'get_policy_pageid' );
+			$allowed_actions             = array( 'autosave_content_data', 'save_contentdata', 'get_policy_pageid' );
 			$action                      = isset( $_POST['cli_policy_generator_action'] ) ? sanitize_text_field( wp_unslash( $_POST['cli_policy_generator_action'] ) ) : '';
 			$cli_policy_generator_action = in_array( $action, $allowed_actions ) ? $action : '';
 			if ( in_array( $cli_policy_generator_action, $allowed_actions ) && method_exists( $this, $cli_policy_generator_action ) ) {
@@ -105,7 +105,7 @@ class Cookie_Law_Info_Policy_Generator_Ajax extends Cookie_Law_Info_Cli_Policy_G
 	*	@since 1.7.4
 	*	Autosave Current content to session (Ajax-main)
 	*/
-	public function autosave_contant_data() {
+	public function autosave_content_data() {
 		check_ajax_referer( 'cli_policy_generator', 'security' );
 		$out          = array(
 			'response' => true,

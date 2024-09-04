@@ -33,7 +33,7 @@ abstract class Links extends Metabox {
 		$body = '';
 
 		foreach ( $this->get_links() as $link ) {
-			$body .= sprintf( '<li><span class="link-arrow">&#9654;</span>&nbsp;&nbsp;<a href="%s" target="_blank">%s</a></li>', esc_url( $link['href'] ), $link['label'] );
+			$body .= sprintf( '<li><a href="%s" target="_blank">%s</a></li>', esc_url( $link['href'] ), $link['label'] );
 		}
 
 		return sprintf( '<ul class="links">%s</ul>', $body );
@@ -46,7 +46,7 @@ abstract class Links extends Metabox {
 	 * @return string
 	 */
 	protected function generate_footer( $url, $label ) {
-		return sprintf( '<a href="%s" class="read-more" target="_blank">%s</a>', $url, $label );
+		return sprintf( '<a href="%s" class="button-secondary" target="_blank">%s</a>', $url, $label );
 	}
 
 	/**

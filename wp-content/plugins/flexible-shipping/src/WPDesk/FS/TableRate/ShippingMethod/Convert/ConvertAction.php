@@ -45,6 +45,9 @@ class ConvertAction implements Hookable {
 	 */
 	public function ajax_run_convert() {
 		check_ajax_referer( self::AJAX_NONCE );
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error();
+		}
 
 		$instance_id = filter_input( INPUT_GET, 'instance_id', FILTER_VALIDATE_INT );
 

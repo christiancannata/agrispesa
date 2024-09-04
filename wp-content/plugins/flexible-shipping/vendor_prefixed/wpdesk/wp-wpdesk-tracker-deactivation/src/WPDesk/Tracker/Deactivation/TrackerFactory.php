@@ -42,13 +42,14 @@ class TrackerFactory
      *
      * @return Tracker
      */
-    public static function createCustomTracker(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, $scripts = null, $thickbox = null, $ajax = null)
+    public static function createCustomTracker(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, $scripts = null, $thickbox = null, $ajax = null, \FSVendor\WPDesk\Tracker\Deactivation\ReasonsFactory $reasons_factory = null)
     {
+        $reasons_factory = $reasons_factory ?? new \FSVendor\WPDesk\Tracker\Deactivation\DefaultReasonsFactory();
         if (empty($scripts)) {
-            $scripts = new \FSVendor\WPDesk\Tracker\Deactivation\Scripts($plugin_data);
+            $scripts = new \FSVendor\WPDesk\Tracker\Deactivation\Scripts($plugin_data, $reasons_factory);
         }
         if (empty($thickbox)) {
-            $thickbox = new \FSVendor\WPDesk\Tracker\Deactivation\Thickbox($plugin_data);
+            $thickbox = new \FSVendor\WPDesk\Tracker\Deactivation\Thickbox($plugin_data, $reasons_factory);
         }
         if (empty($ajax)) {
             $sender = \apply_filters('wpdesk/tracker/sender/' . $plugin_data->getPluginSlug(), new \FSVendor\WPDesk_Tracker_Sender_Wordpress_To_WPDesk());

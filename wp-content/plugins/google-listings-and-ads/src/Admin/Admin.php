@@ -76,7 +76,7 @@ class Admin implements Service, Registerable, Conditional, OptionsAwareInterface
 	public function register(): void {
 		add_action(
 			'admin_enqueue_scripts',
-			function() {
+			function () {
 				if ( PageController::is_admin_page() ) {
 					// Enqueue the required JavaScript scripts and CSS styles of the Media library.
 					wp_enqueue_media();
@@ -91,14 +91,14 @@ class Admin implements Service, Registerable, Conditional, OptionsAwareInterface
 
 		add_action(
 			"plugin_action_links_{$this->get_plugin_basename()}",
-			function( $links ) {
+			function ( $links ) {
 				return $this->add_plugin_links( $links );
 			}
 		);
 
 		add_action(
 			'wp_default_scripts',
-			function( $scripts ) {
+			function ( $scripts ) {
 				$this->inject_fast_refresh_for_dev( $scripts );
 			},
 			20
@@ -113,7 +113,7 @@ class Admin implements Service, Registerable, Conditional, OptionsAwareInterface
 	 * @return Asset[]
 	 */
 	protected function get_assets(): array {
-		$wc_admin_condition = function() {
+		$wc_admin_condition = function () {
 			return PageController::is_admin_page();
 		};
 
@@ -131,6 +131,7 @@ class Admin implements Service, Registerable, Conditional, OptionsAwareInterface
 		) )->add_inline_script(
 			'glaData',
 			[
+				'slug'                     => $this->get_slug(),
 				'mcSetupComplete'          => $this->merchant_center->is_setup_complete(),
 				'mcSupportedCountry'       => $this->merchant_center->is_store_country_supported(),
 				'mcSupportedLanguage'      => $this->merchant_center->is_language_supported(),
@@ -140,6 +141,11 @@ class Admin implements Service, Registerable, Conditional, OptionsAwareInterface
 				'dateFormat'               => get_option( 'date_format' ),
 				'timeFormat'               => get_option( 'time_format' ),
 				'siteLogoUrl'              => wp_get_attachment_image_url( get_theme_mod( 'custom_logo' ), 'full' ),
+				'initialWpData'            => [
+					'version' => $this->get_version(),
+					'mcId'    => $this->options->get_merchant_id() ?: null,
+					'adsId'   => $this->options->get_ads_id() ?: null,
+				],
 			]
 		);
 

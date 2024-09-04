@@ -80,8 +80,32 @@ class Api extends Rest_Controller {
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
 		);
-
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/translations',
+			array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'get_translations' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
+
+	public function get_translations ($request) {
+		$langs = $request->get_params();
+		unset($langs['context']);
+		unset($langs['_locale']);
+		foreach($langs as $lang) {
+			Controller::get_instance()->get_translations($lang);
+			$data      = $this->prepare_item_for_response( $lang, $request );
+			$objects[] = $this->prepare_response_for_collection( $data );
+		}
+		return rest_ensure_response( $objects );
+	}
+
 	/**
 	 * Get a collection of available languages.
 	 *

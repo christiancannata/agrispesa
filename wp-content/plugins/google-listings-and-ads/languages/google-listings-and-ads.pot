@@ -1,17 +1,17 @@
-# Copyright (C) 2023 WooCommerce
+# Copyright (C) 2024 WooCommerce
 # This file is distributed under the same license as the Google Listings and Ads plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Listings and Ads 2.5.9\n"
+"Project-Id-Version: Google Listings and Ads 2.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/google-listings-and-ads\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-10T09:26:31+00:00\n"
+"POT-Creation-Date: 2024-06-18T07:48:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: google-listings-and-ads\n"
 
 #. Plugin Name of the plugin
@@ -20,7 +20,7 @@ msgid "Google Listings and Ads"
 msgstr ""
 
 #. Description of the plugin
-#: src/MultichannelMarketing/GLAChannel.php:104
+#: src/MultichannelMarketing/GLAChannel.php:113
 msgid "Native integration with Google that allows merchants to easily display their products across Google’s network."
 msgstr ""
 
@@ -38,28 +38,29 @@ msgstr ""
 msgid "No action matching %s was found."
 msgstr ""
 
-#: src/Admin/Admin.php:202
+#: src/Admin/Admin.php:208
 #: src/Menu/Settings.php:25
 #: js/build/commons.js:34
 #: js/build/index.js:17
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/Admin.php:208
+#: src/Admin/Admin.php:214
+#: js/build/blocks.js:1
 msgid "Get Started"
 msgstr ""
 
-#: src/Admin/Admin.php:215
+#: src/Admin/Admin.php:221
 msgid "Documentation"
 msgstr ""
 
 #. translators: 1) HTML anchor open tag 2) HTML anchor closing tag
-#: src/Admin/Admin.php:276
+#: src/Admin/Admin.php:282
 msgid "By using this extension, you may be storing personal data or sharing data with an external service. %1$sLearn more about what data is collected by Google and what you may want to include in your privacy policy%2$s."
 msgstr ""
 
 #: src/Admin/Input/BooleanSelect.php:20
-#: src/Admin/Product/Attributes/AttributesForm.php:120
+#: src/Admin/Product/Attributes/AttributesForm.php:139
 msgid "Default"
 msgstr ""
 
@@ -81,12 +82,14 @@ msgstr ""
 msgid "Enter your value"
 msgstr ""
 
-#: src/Admin/Input/SelectWithTextInput.php:115
+#: src/Admin/Input/SelectWithTextInput.php:106
+#: src/Admin/Input/SelectWithTextInput.php:156
 msgid "Enter a custom value"
 msgstr ""
 
 #: src/Admin/MetaBox/ChannelVisibilityMetaBox.php:73
 #: src/Admin/MetaBox/CouponChannelVisibilityMetaBox.php:78
+#: src/Admin/ProductBlocksService.php:185
 msgid "Channel visibility"
 msgstr ""
 
@@ -228,17 +231,41 @@ msgstr ""
 msgid "The cut of the item. Recommended for apparel items."
 msgstr ""
 
+#: src/Admin/ProductBlocksService.php:148
+#: src/Menu/Dashboard.php:41
+#: src/Menu/Dashboard.php:58
+#: src/Menu/Dashboard.php:62
+#: src/Menu/GetStarted.php:41
+#: src/Menu/GetStarted.php:58
+#: src/Menu/GetStarted.php:62
+#: src/MultichannelMarketing/GLAChannel.php:104
+#: views/attributes/variations-form.php:22
+#: views/meta-box/channel_visibility.php:92
+#: views/meta-box/coupon_channel_visibility.php:160
+#: js/build/index.js:17
+msgid "Google Listings & Ads"
+msgstr ""
+
+#: src/Admin/ProductBlocksService.php:204
+#: views/attributes/tab-panel.php:20
+msgid "Product attributes"
+msgstr ""
+
 #. translators: 1: is a numeric account ID
-#: src/Ads/AccountService.php:107
+#: src/Ads/AccountService.php:113
 msgid "Ads account %1$d already connected."
 msgstr ""
 
 #. translators: 1: is a string representing an unknown step name
-#: src/Ads/AccountService.php:172
+#: src/Ads/AccountService.php:190
 msgid "Unknown ads account creation step %1$s"
 msgstr ""
 
-#: src/Ads/AccountService.php:238
+#: src/Ads/AccountService.php:254
+msgid "Account must be accepted before completing setup."
+msgstr ""
+
+#: src/Ads/AccountService.php:332
 msgid "Billing setup must be completed."
 msgstr ""
 
@@ -247,29 +274,29 @@ msgstr ""
 msgid "Invalid Term ID or Post ID or site url %1$d"
 msgstr ""
 
-#: src/Ads/AssetSuggestionsService.php:246
-#: src/Ads/AssetSuggestionsService.php:247
-#: src/Ads/AssetSuggestionsService.php:248
-#: src/Ads/AssetSuggestionsService.php:730
+#: src/Ads/AssetSuggestionsService.php:242
+#: src/Ads/AssetSuggestionsService.php:243
+#: src/Ads/AssetSuggestionsService.php:244
+#: src/Ads/AssetSuggestionsService.php:721
 msgid "Homepage"
 msgstr ""
 
 #. translators: 1: is an integer representing an unknown Post ID
-#: src/Ads/AssetSuggestionsService.php:271
+#: src/Ads/AssetSuggestionsService.php:266
 msgid "Invalid Post ID %1$d"
 msgstr ""
 
 #. translators: 1: is an integer representing an unknown Term ID
-#: src/Ads/AssetSuggestionsService.php:320
+#: src/Ads/AssetSuggestionsService.php:315
 msgid "Invalid Term ID %1$d"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/Ads.php:84
+#: src/API/Google/Ads.php:85
 msgid "Error retrieving accounts: %s"
 msgstr ""
 
-#: src/API/Google/Ads.php:324
+#: src/API/Google/Ads.php:357
 msgid "Merchant link is not available to accept"
 msgstr ""
 
@@ -284,20 +311,20 @@ msgid "Error creating asset group: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsAssetGroup.php:309
+#: src/API/Google/AdsAssetGroup.php:266
 msgid "Error retrieving asset groups: %s"
 msgstr ""
 
-#: src/API/Google/AdsAssetGroup.php:378
+#: src/API/Google/AdsAssetGroup.php:334
 msgid "Each image type (landscape, square, portrait or logo) cannot contain duplicated images."
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsAssetGroup.php:384
+#: src/API/Google/AdsAssetGroup.php:340
 msgid "Error editing asset group: %s"
 msgstr ""
 
-#: src/API/Google/AdsAssetGroup.php:473
+#: src/API/Google/AdsAssetGroup.php:429
 msgid "Invalid asset group ID"
 msgstr ""
 
@@ -307,48 +334,48 @@ msgid "Error retrieving asset groups assets: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsAssetGroupAsset.php:207
+#: src/API/Google/AdsAssetGroupAsset.php:206
 msgid "Error retrieving asset groups assets by final url: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsCampaign.php:132
+#: src/API/Google/AdsCampaign.php:146
 msgid "Error retrieving campaigns: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsCampaign.php:175
+#: src/API/Google/AdsCampaign.php:189
 msgid "Error retrieving campaign: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsCampaign.php:234
+#: src/API/Google/AdsCampaign.php:251
 msgid "Error creating campaign: %s"
 msgstr ""
 
-#: src/API/Google/AdsCampaign.php:237
+#: src/API/Google/AdsCampaign.php:254
 msgid "A campaign with this name already exists"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsCampaign.php:290
+#: src/API/Google/AdsCampaign.php:307
 msgid "Error editing campaign: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsCampaign.php:323
+#: src/API/Google/AdsCampaign.php:343
 msgid "Error deleting campaign: %s"
 msgstr ""
 
-#: src/API/Google/AdsCampaign.php:326
+#: src/API/Google/AdsCampaign.php:346
 msgid "This campaign has already been deleted"
 msgstr ""
 
-#: src/API/Google/AdsCampaign.php:586
+#: src/API/Google/AdsCampaign.php:605
 msgid "Invalid campaign ID"
 msgstr ""
 
-#: src/API/Google/AdsCampaign.php:602
+#: src/API/Google/AdsCampaign.php:621
 msgid "Invalid geo target location ID"
 msgstr ""
 
@@ -362,21 +389,21 @@ msgid "Invalid campaign budget ID"
 msgstr ""
 
 #. translators: %1 is a random 4-digit string
-#: src/API/Google/AdsConversionAction.php:69
+#: src/API/Google/AdsConversionAction.php:70
 msgid "[%1$s] Google Listings and Ads purchase action"
 msgstr ""
 
-#: src/API/Google/AdsConversionAction.php:104
+#: src/API/Google/AdsConversionAction.php:107
 msgid "A conversion action with this name already exists"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsConversionAction.php:113
+#: src/API/Google/AdsConversionAction.php:116
 msgid "Error creating conversion action: %s"
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/AdsConversionAction.php:154
+#: src/API/Google/AdsConversionAction.php:157
 msgid "Error retrieving conversion action: %s"
 msgstr ""
 
@@ -402,29 +429,33 @@ msgstr ""
 msgid "An unknown error occurred in the Shopping Content Service."
 msgstr ""
 
-#: src/API/Google/Merchant.php:95
+#: src/API/Google/Merchant.php:98
 msgid "Unable to claim website."
 msgstr ""
 
-#: src/API/Google/Merchant.php:97
+#: src/API/Google/Merchant.php:100
 msgid "Website already claimed, use overwrite to complete the process."
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/Merchant.php:197
+#: src/API/Google/Merchant.php:200
 msgid "Unable to retrieve Merchant Center account: %s"
 msgstr ""
 
-#: src/API/Google/Merchant.php:248
+#: src/API/Google/Merchant.php:251
 msgid "Unable to retrieve Merchant Center account status."
 msgstr ""
 
 #. translators: %s Error message
-#: src/API/Google/Merchant.php:298
+#: src/API/Google/Merchant.php:301
 msgid "Unable to update Merchant Center account: %s"
 msgstr ""
 
-#: src/API/Google/MerchantReport.php:96
+#: src/API/Google/MerchantReport.php:116
+msgid "Unable to retrieve Product View Report."
+msgstr ""
+
+#: src/API/Google/MerchantReport.php:184
 msgid "Unable to retrieve report data."
 msgstr ""
 
@@ -439,17 +470,17 @@ msgstr ""
 
 #: src/API/Google/Middleware.php:105
 #: src/API/Google/SiteVerification.php:59
-#: src/MerchantCenter/AccountService.php:422
+#: src/MerchantCenter/AccountService.php:437
 msgid "Invalid site URL."
 msgstr ""
 
 #: src/API/Google/Middleware.php:161
-#: src/API/Google/Middleware.php:341
+#: src/API/Google/Middleware.php:342
 msgid "Invalid response when creating account"
 msgstr ""
 
 #: src/API/Google/Middleware.php:164
-#: src/API/Google/Middleware.php:347
+#: src/API/Google/Middleware.php:348
 msgid "Error creating account"
 msgstr ""
 
@@ -473,40 +504,20 @@ msgstr ""
 msgid "Store country is not supported"
 msgstr ""
 
-#: src/API/Google/Middleware.php:391
+#: src/API/Google/Middleware.php:392
 msgid "Invalid response when linking account"
 msgstr ""
 
-#: src/API/Google/Middleware.php:397
+#: src/API/Google/Middleware.php:398
 msgid "Error linking account"
 msgstr ""
 
 #. translators: 1: current date in the format Y-m-d
-#: src/API/Google/Middleware.php:501
+#: src/API/Google/Middleware.php:504
 msgid "Account %1$s"
 msgstr ""
 
-#: src/API/Google/Middleware.php:549
-msgid "Invalid response getting account review status"
-msgstr ""
-
-#: src/API/Google/Middleware.php:555
-msgid "Error getting account review status"
-msgstr ""
-
-#: src/API/Google/Middleware.php:600
-msgid "Invalid response getting requesting a new review."
-msgstr ""
-
-#: src/API/Google/Middleware.php:607
-msgid "A new review has been successfully requested"
-msgstr ""
-
-#: src/API/Google/Middleware.php:614
-msgid "Error requesting a new review."
-msgstr ""
-
-#: src/API/Google/Query/AdsQuery.php:78
+#: src/API/Google/Query/AdsQuery.php:79
 msgid "No result from query"
 msgstr ""
 
@@ -520,17 +531,17 @@ msgstr ""
 msgid "Unable to insert site verification: %s"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AccountController.php:149
+#: src/API/Site/Controllers/Ads/AccountController.php:160
 #: src/API/Site/Controllers/Google/AccountController.php:151
-#: src/API/Site/Controllers/Jetpack/AccountController.php:160
+#: src/API/Site/Controllers/Jetpack/AccountController.php:169
 msgid "Successfully disconnected."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AccountController.php:174
+#: src/API/Site/Controllers/Ads/AccountController.php:200
 msgid "Google Ads Account ID."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AccountController.php:181
+#: src/API/Site/Controllers/Ads/AccountController.php:207
 msgid "Billing Flow URL."
 msgstr ""
 
@@ -558,44 +569,44 @@ msgstr ""
 msgid "Campaign ID."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:175
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:174
 msgid "Successfully created asset group."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:198
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:197
 msgid "No asset group fields to update."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:204
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:203
 msgid "Successfully edited asset group."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:222
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:221
 msgid "Asset Group ID"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:227
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:226
 #: js/build/commons.js:1
 msgid "Final URL"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:233
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:232
 msgid "Text that may appear appended to the url displayed in the ad."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:238
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:237
 msgid "Asset is a part of an ad which can be shared across multiple ads. It can be an image, headlines, descriptions, etc."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:282
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:281
 msgid "Asset ID"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:286
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:285
 msgid "Asset content"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/AssetGroupController.php:290
+#: src/API/Site/Controllers/Ads/AssetGroupController.php:289
 msgid "Asset field type"
 msgstr ""
 
@@ -643,23 +654,19 @@ msgstr ""
 msgid "Cannot find any budget recommendations."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:155
+#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:154
 #: src/API/Site/Controllers/ShippingRateSchemaTrait.php:42
 msgid "The currency to use for the shipping rate."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:166
+#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:165
 #: src/API/Site/Controllers/MerchantCenter/ShippingTimeController.php:260
 #: src/API/Site/Controllers/ShippingRateSchemaTrait.php:34
 msgid "Country code in ISO 3166-1 alpha-2 format."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:171
-msgid "The lower bound recommended daily budget for a country."
-msgstr ""
-
-#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:175
-msgid "The upper bound recommended daily budget for a country."
+#: src/API/Site/Controllers/Ads/BudgetRecommendationController.php:170
+msgid "The recommended daily budget for a country."
 msgstr ""
 
 #. translators: %s: current date time.
@@ -667,53 +674,53 @@ msgstr ""
 msgid "Campaign %s"
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:160
+#: src/API/Site/Controllers/Ads/CampaignController.php:184
 msgid "Campaign is not available."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:187
+#: src/API/Site/Controllers/Ads/CampaignController.php:211
 msgid "Invalid edit data."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:197
+#: src/API/Site/Controllers/Ads/CampaignController.php:241
 msgid "Successfully edited campaign."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:218
+#: src/API/Site/Controllers/Ads/CampaignController.php:276
 msgid "Successfully deleted campaign."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:260
+#: src/API/Site/Controllers/Ads/CampaignController.php:318
 msgid "Exclude removed campaigns."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:277
+#: src/API/Site/Controllers/Ads/CampaignController.php:335
 #: src/API/Site/Controllers/Ads/ReportsController.php:145
 msgid "ID number."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:283
+#: src/API/Site/Controllers/Ads/CampaignController.php:341
 msgid "Descriptive campaign name."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:291
+#: src/API/Site/Controllers/Ads/CampaignController.php:349
 #: src/API/Site/Controllers/Ads/ReportsController.php:156
 msgid "Campaign status."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:298
+#: src/API/Site/Controllers/Ads/CampaignController.php:356
 msgid "Campaign type."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:304
+#: src/API/Site/Controllers/Ads/CampaignController.php:362
 msgid "Daily budget amount in the local currency."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:311
+#: src/API/Site/Controllers/Ads/CampaignController.php:369
 msgid "Country code of sale country in ISO 3166-1 alpha-2 format."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/CampaignController.php:319
+#: src/API/Site/Controllers/Ads/CampaignController.php:377
 msgid "The locations that an Ads campaign is targeting in ISO 3166-1 alpha-2 format."
 msgstr ""
 
@@ -773,7 +780,7 @@ msgstr ""
 msgid "Conversions."
 msgstr ""
 
-#: src/API/Site/Controllers/Ads/SetupCompleteController.php:51
+#: src/API/Site/Controllers/Ads/SetupCompleteController.php:85
 msgid "Successfully marked Ads setup as completed."
 msgstr ""
 
@@ -840,7 +847,7 @@ msgid "Sort collection by attribute."
 msgstr ""
 
 #: src/API/Site/Controllers/BaseReportsController.php:89
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:203
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:208
 #: src/API/Site/Controllers/MerchantCenter/ProductFeedController.php:169
 msgid "Maximum number of rows to be returned in result data."
 msgstr ""
@@ -871,11 +878,11 @@ msgstr ""
 msgid "The URL for making a connection to Google."
 msgstr ""
 
-#: src/API/Site/Controllers/Jetpack/AccountController.php:138
+#: src/API/Site/Controllers/Jetpack/AccountController.php:147
 msgid "Indicates the next page name mapped to the redirect URL when back from Jetpack authorization."
 msgstr ""
 
-#: src/API/Site/Controllers/Jetpack/AccountController.php:249
+#: src/API/Site/Controllers/Jetpack/AccountController.php:268
 msgid "The URL for making a connection to Jetpack (wordpress.com)."
 msgstr ""
 
@@ -963,47 +970,51 @@ msgstr ""
 msgid "CLDR country code (e.g. \"US\")."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:118
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:117
 msgid "The issues related to the Merchant Center account."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:126
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:125
 msgid "Issue type."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:131
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:130
 msgid "Affected product."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:136
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:135
 msgid "The WooCommerce product ID."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:141
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:140
 msgid "Internal Google code for issue."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:146
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:145
 msgid "Descriptive text of the issue."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:151
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:150
 msgid "Descriptive text of action to take."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:156
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:155
 msgid "Documentation URL for issue and/or action."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:161
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:160
 msgid "Severity level of the issue: warning or error."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:166
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:165
 msgid "Country codes of the product audience."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:195
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:183
+msgid "Whether the product issues are loading."
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/IssuesController.php:200
 #: src/API/Site/Controllers/MerchantCenter/ProductFeedController.php:161
 msgid "Page of data to retrieve."
 msgstr ""
@@ -1124,6 +1135,14 @@ msgstr ""
 msgid "Amount of scheduled jobs which will sync products to Google."
 msgstr ""
 
+#: src/API/Site/Controllers/MerchantCenter/ProductStatisticsController.php:175
+msgid "Whether the product statistics are loading."
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/ProductStatisticsController.php:181
+msgid "Error message in case of failure"
+msgstr ""
+
 #: src/API/Site/Controllers/MerchantCenter/ProductVisibilityController.php:117
 msgid "Products whose visibility was changed successfully."
 msgstr ""
@@ -1140,28 +1159,44 @@ msgstr ""
 msgid "New Visibility status for the specified products."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:116
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:119
 msgid "Your account is under cool down period and cannot request a new review."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:128
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:131
 msgid "Your account is not eligible for a new request review."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:180
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:183
 msgid "The status of the last review."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:186
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:189
 msgid "Timestamp indicating if the user is in cool down period."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:192
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:195
 msgid "The issues related to the Merchant Center to be reviewed and addressed before approval."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:201
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:204
 msgid "The region codes in which is allowed to request a new review."
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:286
+msgid "Error getting account review status."
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:318
+msgid "Invalid response getting requesting a new review."
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:325
+msgid "A new review has been successfully requested"
+msgstr ""
+
+#: src/API/Site/Controllers/MerchantCenter/RequestReviewController.php:331
+msgid "Error requesting a new review."
 msgstr ""
 
 #: src/API/Site/Controllers/MerchantCenter/SettingsController.php:81
@@ -1200,7 +1235,7 @@ msgstr ""
 msgid "Whether the phone number, email, and/or address are visible on the website."
 msgstr ""
 
-#: src/API/Site/Controllers/MerchantCenter/SettingsSyncController.php:74
+#: src/API/Site/Controllers/MerchantCenter/SettingsSyncController.php:91
 msgid "Successfully synchronized settings with Google."
 msgstr ""
 
@@ -1325,7 +1360,7 @@ msgstr ""
 msgid "Your installation of Google Listings and Ads is incomplete. If you installed from GitHub, %1$splease refer to this document%2$s to set up your development environment."
 msgstr ""
 
-#: src/Coupon/CouponSyncer.php:471
+#: src/Coupon/CouponSyncer.php:472
 #: src/Product/ProductSyncer.php:363
 msgid "Google Merchant Center has not been set up correctly. Please review your configuration."
 msgstr ""
@@ -1415,20 +1450,6 @@ msgstr ""
 msgid "Attribute Mapping"
 msgstr ""
 
-#: src/Menu/Dashboard.php:41
-#: src/Menu/Dashboard.php:58
-#: src/Menu/Dashboard.php:62
-#: src/Menu/GetStarted.php:41
-#: src/Menu/GetStarted.php:58
-#: src/Menu/GetStarted.php:62
-#: src/MultichannelMarketing/GLAChannel.php:95
-#: views/attributes/variations-form.php:22
-#: views/meta-box/channel_visibility.php:95
-#: views/meta-box/coupon_channel_visibility.php:160
-#: js/build/index.js:17
-msgid "Google Listings & Ads"
-msgstr ""
-
 #: src/Menu/Dashboard.php:73
 #: js/build/commons.js:34
 #: js/build/index.js:17
@@ -1456,54 +1477,58 @@ msgstr ""
 msgid "MC Setup Wizard"
 msgstr ""
 
-#: src/MerchantCenter/AccountService.php:182
+#: src/MerchantCenter/AccountService.php:186
 msgid "Attempting invalid URL switch."
 msgstr ""
 
-#: src/MerchantCenter/AccountService.php:205
+#: src/MerchantCenter/AccountService.php:209
 msgid "Attempting invalid claim overwrite."
 msgstr ""
 
 #. translators: 1: is a string representing an unknown step name
-#: src/MerchantCenter/AccountService.php:337
+#: src/MerchantCenter/AccountService.php:352
 msgid "Unknown merchant account creation step %1$s"
 msgstr ""
 
-#: src/MerchantCenter/AccountService.php:369
+#: src/MerchantCenter/AccountService.php:384
 msgid "Unable to claim website URL with this Merchant Center Account."
 msgstr ""
 
 #. translators: 1: is a numeric account ID
-#: src/MerchantCenter/AccountService.php:401
+#: src/MerchantCenter/AccountService.php:416
 msgid "Merchant Center account already connected: %d"
 msgstr ""
 
 #. translators: 1: is a website URL (without the protocol)
-#: src/MerchantCenter/AccountService.php:450
+#: src/MerchantCenter/AccountService.php:465
 msgid "This Merchant Center account already has a verified and claimed URL, %1$s"
 msgstr ""
 
-#: src/MerchantCenter/MerchantCenterService.php:274
+#: src/MerchantCenter/MerchantCenterService.php:280
 msgid "No contact information."
 msgstr ""
 
-#: src/MerchantCenter/MerchantCenterService.php:275
+#: src/MerchantCenter/MerchantCenterService.php:281
 msgid "Add store contact information"
 msgstr ""
 
-#: src/MerchantCenter/MerchantStatuses.php:179
+#: src/MerchantCenter/MerchantStatuses.php:148
+msgid "The scheduled job has been paused due to a high failure rate."
+msgstr ""
+
+#: src/MerchantCenter/MerchantStatuses.php:276
 msgid "Google account is not connected."
 msgstr ""
 
-#: src/MerchantCenter/MerchantStatuses.php:182
+#: src/MerchantCenter/MerchantStatuses.php:279
 msgid "Merchant Center account is not set up."
 msgstr ""
 
-#: src/MerchantCenter/MerchantStatuses.php:394
+#: src/MerchantCenter/MerchantStatuses.php:497
 msgid "All products"
 msgstr ""
 
-#: src/MerchantCenter/MerchantStatuses.php:524
+#: src/MerchantCenter/MerchantStatuses.php:589
 msgid "Update this attribute in your product data"
 msgstr ""
 
@@ -1553,13 +1578,12 @@ msgid "You’ve gotten %s+ clicks on your free listings! 🎉"
 msgstr ""
 
 #: src/Notes/ReviewAfterClicks.php:81
-#: src/Notes/ReviewAfterConversions.php:92
+#: src/Notes/ReviewAfterConversions.php:83
 msgid "Congratulations! Tell us what you think about Google Listings & Ads by leaving a review. Your feedback will help us make WooCommerce even better for you."
 msgstr ""
 
-#. translators: %s number of conversions
-#: src/Notes/ReviewAfterConversions.php:87
-msgid "You’ve gotten %s+ conversions through Google Ads! 🎉"
+#: src/Notes/ReviewAfterConversions.php:81
+msgid "You got your first conversion on Google Ads! 🎉"
 msgstr ""
 
 #: src/Notes/SetupCampaign.php:48
@@ -1593,7 +1617,6 @@ msgstr ""
 #: js/build/commons.js:38
 #: js/build/product-feed.js:1
 #: js/build/settings.js:1
-#: js/build/setup-mc.js:3
 msgid "Learn more"
 msgstr ""
 
@@ -1613,15 +1636,15 @@ msgstr ""
 msgid "You're just a few steps away from reaching new shoppers across Google. Finish connecting your account, create your campaign, pick your budget, and easily measure the impact of your ads."
 msgstr ""
 
-#: src/Notes/SetupCouponSharing.php:58
+#: src/Notes/SetupCouponSharing.php:59
 msgid "Show your store coupons on your Google listings"
 msgstr ""
 
-#: src/Notes/SetupCouponSharing.php:60
+#: src/Notes/SetupCouponSharing.php:61
 msgid "Sync your store promotions and coupons directly with Google to showcase on your product listings across the Google Shopping tab. <br/><br/>When creating a coupon, you’ll see a Channel Visibility settings box on the right; select \"Show coupon on Google\" to enable."
 msgstr ""
 
-#: src/Notes/SetupCouponSharing.php:73
+#: src/Notes/SetupCouponSharing.php:74
 msgid "Go to coupons"
 msgstr ""
 
@@ -1838,8 +1861,14 @@ msgstr ""
 msgid "20 minutes"
 msgstr ""
 
-#: views/attributes/tab-panel.php:20
-msgid "Product attributes"
+#: src/Value/ChannelVisibility.php:74
+#: js/build/product-feed.js:5
+#: js/build/product-feed.js:9
+msgid "Sync and show"
+msgstr ""
+
+#: src/Value/ChannelVisibility.php:75
+msgid "Don't Sync and show"
 msgstr ""
 
 #: views/attributes/tab-panel.php:21
@@ -1864,6 +1893,7 @@ msgstr ""
 
 #: views/meta-box/channel_visibility.php:28
 #: views/meta-box/coupon_channel_visibility.php:60
+#: js/build/blocks.js:1
 msgid "Issues detected"
 msgstr ""
 
@@ -1876,32 +1906,25 @@ msgstr ""
 msgid "Google Listing & Ads"
 msgstr ""
 
-#: views/meta-box/channel_visibility.php:67
-#: js/build/product-feed.js:5
-#: js/build/product-feed.js:9
-msgid "Sync and show"
-msgstr ""
-
-#: views/meta-box/channel_visibility.php:68
-msgid "Don't Sync and show"
-msgstr ""
-
-#: views/meta-box/channel_visibility.php:80
+#: views/meta-box/channel_visibility.php:77
+#: js/build/blocks.js:1
 msgid "Google sync status"
 msgstr ""
 
-#: views/meta-box/channel_visibility.php:84
+#: views/meta-box/channel_visibility.php:81
+#: js/build/blocks.js:1
 msgid "Issues"
 msgstr ""
 
-#: views/meta-box/channel_visibility.php:96
+#: views/meta-box/channel_visibility.php:93
+#: js/build/blocks.js:1
 msgid "Complete setup to get your products listed on Google for free."
 msgstr ""
 
-#: views/meta-box/channel_visibility.php:98
+#: views/meta-box/channel_visibility.php:95
 #: views/meta-box/coupon_channel_visibility.php:163
 #: js/build/commons.js:21
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Complete setup"
 msgstr ""
 
@@ -2143,6 +2166,10 @@ msgstr ""
 msgid "Manage attributes"
 msgstr ""
 
+#: js/build/blocks.js:1
+msgid "This product cannot be shown on any channel because it is hidden from your store catalog. To enable this option, please change this product to be shown in the product catalog, and save the changes."
+msgstr ""
+
 #: js/build/commons.js:1
 #: js/build/commons.js:58
 #: js/build/product-feed.js:10
@@ -2175,16 +2202,15 @@ msgid "Google Merchant Center"
 msgstr ""
 
 #: js/build/commons.js:1
-msgid "Required to sync products and list on Google"
+msgid "Required to sync products and list on Google."
 msgstr ""
 
 #: js/build/commons.js:1
-#: js/build/setup-mc.js:3
 msgid "Google Ads"
 msgstr ""
 
 #: js/build/commons.js:1
-msgid "Connect with millions of shoppers who are searching for products like yours and drive sales with Google."
+msgid "Required to set up conversion measurement and create campaigns."
 msgstr ""
 
 #: js/build/commons.js:1
@@ -2726,11 +2752,30 @@ msgid "Or, connect to a different Google Ads account"
 msgstr ""
 
 #: js/build/commons.js:21
+msgid "Claim your new Google Ads account to complete this setup."
+msgstr ""
+
+#: js/build/commons.js:21
+msgid "Claim your Google Ads account"
+msgstr ""
+
+#: js/build/commons.js:21
+msgid "Claim account in Google Ads"
+msgstr ""
+
+#: js/build/commons.js:21
+msgid "Claiming your account lets you access Google Ads and sets up conversion measurement. You must claim your account in the next 20 days."
+msgstr ""
+
+#: js/build/commons.js:21
+msgid "When you claim your account, you’ll be asked to set up billing. This step is optional and you only need to complete it if you want to create Google Ads campaigns. If you don’t want to set up billing, close the window after you’ve clicked ‘Continue’ on the next page."
+msgstr ""
+
+#: js/build/commons.js:21
 msgid "Create Google Ads Account"
 msgstr ""
 
 #: js/build/commons.js:21
-#: js/build/commons.js:25
 #: js/build/commons.js:34
 msgid "Create account"
 msgstr ""
@@ -2749,12 +2794,20 @@ msgid "I have read and accept these terms"
 msgstr ""
 
 #: js/build/commons.js:21
+msgid "Unable to create Google Ads account. Please try again later."
+msgstr ""
+
+#: js/build/commons.js:21
 #: js/build/commons.js:34
 msgid "Creating…"
 msgstr ""
 
 #: js/build/commons.js:21
-msgid "Unable to create Google Ads account. Please try again later."
+msgid "Updating…"
+msgstr ""
+
+#: js/build/commons.js:21
+msgid "Claim Account"
 msgstr ""
 
 #: js/build/commons.js:21
@@ -2799,6 +2852,10 @@ msgstr ""
 
 #: js/build/commons.js:23
 msgid "Unable to get Google authorization page. Please try again later."
+msgstr ""
+
+#: js/build/commons.js:23
+msgid "Conversion measurement has been set up. You can create a campaign later."
 msgstr ""
 
 #: js/build/commons.js:25
@@ -2923,7 +2980,7 @@ msgid "Add paid campaign"
 msgstr ""
 
 #: js/build/commons.js:34
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "You can only choose from countries you’ve selected during product listings configuration."
 msgstr ""
 
@@ -2948,7 +3005,6 @@ msgstr ""
 #: js/build/commons.js:34
 #: js/build/setup-ads.js:1
 #: js/build/setup-mc.js:1
-#: js/build/setup-mc.js:3
 msgid "Continue"
 msgstr ""
 
@@ -3131,7 +3187,7 @@ msgid "You do not have billing information set up in your Google Ads account. On
 msgstr ""
 
 #: js/build/commons.js:38
-msgid "You will be directed to Google Ads for this step. In case your browser is unable to open the pop-up, <link>click here instead</link>."
+msgid "You will be directed to Google Ads for this step. In case your browser is unable to open the pop-up, <link>click here instead <icon /></link>."
 msgstr ""
 
 #: js/build/commons.js:38
@@ -3143,14 +3199,14 @@ msgstr ""
 msgid "Billing method for Google Ads added successfully"
 msgstr ""
 
-#. translators: it's a range of recommended budget amount. 1: the low value of the range, 2: the high value of the range, 3: the currency of amount.
+#. translators: it's a range of recommended budget amount. 1: the value of the budget, 2: the currency of amount.
 #: js/build/commons.js:40
-msgid "Google will optimize your ads to maximize performance across the country/s you select.<br /><em>Tip: Most merchants targeting similar countries <strong>set a daily budget of %1$f to %2$f %3$s</strong></em>"
+msgid "Google will optimize your ads to maximize performance across the country/s you select.<br /><em>Tip: Most merchants targeting similar countries <strong>set a daily budget of %1$f %2$s</strong></em>"
 msgstr ""
 
-#. translators: it's a range of recommended budget amount. 1: the low value of the range, 2: the high value of the range, 3: the currency of amount, 4: a country name selected by the merchant.
+#. translators: it's a range of recommended budget amount. 1: the value of the budget, 2: the currency of amount 3: a country name selected by the merchant.
 #: js/build/commons.js:42
-msgid "Google will optimize your ads to maximize performance across the country/s you select.<br /><em>Tip: Most merchants targeting <strong>%4$s set a daily budget of %1$f to %2$f %3$s</strong></em>"
+msgid "Google will optimize your ads to maximize performance across the country/s you select.<br /><em>Tip: Most merchants targeting <strong>%3$s set a daily budget of %1$f %2$s</strong></em>"
 msgstr ""
 
 #: js/build/commons.js:42
@@ -3162,7 +3218,7 @@ msgid "Set your budget"
 msgstr ""
 
 #: js/build/commons.js:42
-msgid "With Performance Max campaigns, you can set your own budget and Google’s Smart Bidding technology will serve the most appropriate ad, with the optimal bid, to maximize campaign performance."
+msgid "With Performance Max campaigns, you can set your own budget and Google’s Smart Bidding technology will serve the most appropriate ad, with the optimal bid, to maximize campaign performance. You only pay when people click on your ads, and you can start or stop your campaign whenever you want."
 msgstr ""
 
 #: js/build/commons.js:42
@@ -3645,16 +3701,12 @@ msgid "Google Listings & Ads Benefits"
 msgstr ""
 
 #: js/build/get-started-page.js:1
-msgid "Increase clicks by <strong>50%</strong>"
+msgid "Reach your sales goals by creating a campaign"
 msgstr ""
 
 #: js/build/get-started-page.js:1
-msgid "Using free listings and ads together increased clicks by 50% and doubled impressions. Small-to-medium merchants saw the largest share of the increases."
-msgstr ""
-
-#: js/build/get-started-page.js:1
-#: js/build/setup-mc.js:3
-msgid "Source: Google Internal Data, July 2020"
+#: js/build/setup-mc.js:1
+msgid "Reach more customers by advertising your products across Google Ads channels like Search, YouTube and Discover. Set up your campaign now so your products are included as soon as they’re approved."
 msgstr ""
 
 #: js/build/get-started-page.js:1
@@ -4217,6 +4269,10 @@ msgid "There was an error updating the tour."
 msgstr ""
 
 #: js/build/index.js:17
+msgid "There was an error getting the status of your Google Ads account."
+msgstr ""
+
+#: js/build/index.js:17
 msgid "There was an error loading Google account access info."
 msgstr ""
 
@@ -4451,6 +4507,10 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: js/build/product-feed.js:9
+msgid "Loading product feed"
+msgstr ""
+
+#: js/build/product-feed.js:9
 msgid "An error occurred while retrieving products. Please try again later."
 msgstr ""
 
@@ -4555,6 +4615,14 @@ msgid "Sync with Google:"
 msgstr ""
 
 #: js/build/product-feed.js:12
+msgid "Overview Stats:"
+msgstr ""
+
+#: js/build/product-feed.js:12
+msgid "There was an error loading the Overview Stats. Click to retry."
+msgstr ""
+
+#: js/build/product-feed.js:12
 msgid "No issues to resolve 🎉"
 msgstr ""
 
@@ -4578,6 +4646,10 @@ msgid "Account status:"
 msgstr ""
 
 #: js/build/product-feed.js:14
+msgid "An error occurred while retrieving your product feed. Please try again later."
+msgstr ""
+
+#: js/build/product-feed.js:14
 msgid "Overview"
 msgstr ""
 
@@ -4595,10 +4667,6 @@ msgstr ""
 
 #: js/build/product-feed.js:14
 msgid "How easy was it to understand the requirements for the Google Listings & Ads setup?"
-msgstr ""
-
-#: js/build/product-feed.js:14
-msgid "An error occurred while retrieving your product feed. Please try again later."
 msgstr ""
 
 #: js/build/reports.js:1
@@ -4863,28 +4931,23 @@ msgid "Your phone number is required by Google for verification purposes. It wil
 msgstr ""
 
 #: js/build/setup-ads.js:1
-#: js/build/setup-mc.js:1
 msgid "Check your maximum free credit"
 msgstr ""
 
 #: js/build/setup-ads.js:1
-#: js/build/setup-mc.js:1
 msgid "Whatever you spend in the next month will be added back to your Google Ads account as free credit, up to a maximum limit depending on your store’s country."
 msgstr ""
 
 #: js/build/setup-ads.js:1
-#: js/build/setup-mc.js:1
 msgid "Spend $500 to get $500 in Google Ads credits!"
 msgstr ""
 
 #: js/build/setup-ads.js:1
-#: js/build/setup-mc.js:1
 msgid "New to Google Ads? Get $500 in ad credit when you spend $500 within your first 60 days. Check how much credit you can receive in your country <checkLink>here</checkLink>. <termLink>Terms and conditions apply</termLink>."
 msgstr ""
 
 #: js/build/setup-ads.js:1
 #: js/build/setup-mc.js:1
-#: js/build/setup-mc.js:3
 msgid "Set up your accounts"
 msgstr ""
 
@@ -5066,7 +5129,6 @@ msgid "Please check all requirements."
 msgstr ""
 
 #: js/build/setup-mc.js:1
-#: js/build/setup-mc.js:3
 msgid "Confirm store requirements"
 msgstr ""
 
@@ -5082,117 +5144,107 @@ msgstr ""
 msgid "Unable to update your contact information. Please try again later."
 msgstr ""
 
-#. translators: %d: number of products will be synced to Google Merchant Center.
-#: js/build/setup-mc.js:3
-msgid "%d product"
-msgid_plural "%d products"
-msgstr[0] ""
-msgstr[1] ""
-
-#: js/build/setup-mc.js:3
-msgid "You can manage and edit your product feed after this setup"
+#: js/build/setup-mc.js:1
+msgid "Set a daily budget, and only pay when people click on your ads."
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Product feed status"
-msgstr ""
-
-#: js/build/setup-mc.js:3
-msgid "Your product listings are ready to be uploaded"
-msgstr ""
-
-#: js/build/setup-mc.js:3
-msgid "Preparing your product listings"
-msgstr ""
-
-#: js/build/setup-mc.js:3
-msgid "Google will review your product listings within 3-5 days. Once approved, your products will automatically be live and searchable on Google. You’ll be notified if there are any product feed issues."
-msgstr ""
-
-#: js/build/setup-mc.js:3
-msgid "Promote your products across Google Search, YouTube, Display, Discover, Maps, Gmail, and more."
-msgstr ""
-
-#: js/build/setup-mc.js:3
-msgid "Set a daily budget, and only pay when someone clicks."
-msgstr ""
-
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Claim $500 in ads credit when you spend your first $500 with Google Ads. Terms and conditions apply."
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Recommended"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Boost product listings with paid ads"
+#: js/build/setup-mc.js:1
+msgid "Performance Max campaign"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Get the most out of your paid ads with Performance Max campaigns. With Google’s machine learning technology, your Performance Max campaigns will be automated to show the most impactful ads at the right time and place."
+#: js/build/setup-mc.js:1
+msgid "Performance Max uses the best of Google’s AI to show the most impactful ads for your products at the right time and place. Google will use your product data to create ads for this campaign. "
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Drive more traffic and sales by using both free listings and paid ads"
+#: js/build/setup-mc.js:1
+msgid "Learn more about Performance Max"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Using free listings and paid ads together can double impressions and increase clicks by 50%*"
+#: js/build/setup-mc.js:1
+msgid "Drive more sales with Performance Max"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "A Google Ads account is required to create paid campaigns with your product listings"
-msgstr ""
-
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Unable to complete your setup."
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Complete your campaign with paid ads"
+#: js/build/setup-mc.js:1
+msgid "Create a campaign to advertise your products"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "As soon as your products are approved, your listings and ads will be live. In the meantime, let’s set up your ads."
+#: js/build/setup-mc.js:1
+msgid "You’re ready to set up a Performance Max campaign to drive more sales with ads. Your products will be included in the campaign after they’re approved."
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Skip this step for now"
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Create a paid ad campaign"
+#: js/build/setup-mc.js:1
+msgid "Create campaign"
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Skip paid ads creation"
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Configure product listings"
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "Configure your product listings"
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "There was an error saving audience."
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "There was an error saving settings."
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "There was an error saving shipping rates."
 msgstr ""
 
-#: js/build/setup-mc.js:3
+#: js/build/setup-mc.js:1
 msgid "There was an error saving shipping times."
 msgstr ""
 
-#: js/build/setup-mc.js:3
-msgid "Complete your campaign"
+#: js/build/setup-mc.js:1
+msgid "Create a campaign"
+msgstr ""
+
+#: js/build/product-channel-visibility/block.json
+msgctxt "block title"
+msgid "Product channel visibility"
+msgstr ""
+
+#: js/build/product-date-time-field/block.json
+msgctxt "block title"
+msgid "Product date and time fields"
+msgstr ""
+
+#: js/build/product-onboarding-prompt/block.json
+msgctxt "block title"
+msgid "Product onboarding prompt"
+msgstr ""
+
+#: js/build/product-select-field/block.json
+msgctxt "block title"
+msgid "Product select field"
+msgstr ""
+
+#: js/build/product-select-with-text-field/block.json
+msgctxt "block title"
+msgid "Product select with text field"
 msgstr ""

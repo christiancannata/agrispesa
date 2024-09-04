@@ -3,9 +3,9 @@ Contributors: octolize,grola,sebastianpisula
 Donate link: https://octol.io/fs-repo-up
 Tags: table rate, table rate shipping, conditional shipping, free shipping, woocommerce shipping, woocommerce table rate shipping, cart based shipping, weight based shipping, totals based shipping, order based shipping, advanced shipping
 Requires at least: 5.8
-Tested up to: 6.3
-Stable tag: 4.22.1
-Requires PHP: 7.2
+Tested up to: 6.5
+Stable tag: 4.25.1
+Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,7 +17,7 @@ The best and the most powerful Table Rate shipping plugin for WooCommerce. Defin
 
 Flexible Shipping is the most advanced shipping plugin for WooCommerce stores, allowing you to calculate the shipping costs based on weight and/or cart total. Combine it with the PRO version and it will become the only WooCommerce shipping plugin you'll ever need.
 
-[youtube https://www.youtube.com/watch?v=C7dQ2jQ-iVc]
+[youtube https://www.youtube.com/watch?v=Fk0mF0s6W8w]
 
 > **Upgrade to Flexible Shipping PRO**<br />
 > Upgrade to [Flexible Shipping PRO now](https://octol.io/fs-repo-up) to get the priority e-mail support and gain an access to all the PRO features!
@@ -233,6 +233,100 @@ We provide a limited support for the free version of our Flexible Shipping plugi
 If you are upgrading from the old Flexible Shipping version (1.3.2, woo-flexible-shipping) make sure to completely delete the old version first. If you install the new version without deleting the old one it may break your WordPress installation.
 
 == Changelog ==
+
+= 4.25.1 - 2024-06-18 =
+* Added support for WooCommerce 9.0
+* Fixed CURCY currency switcher compatibility: CURCY plugin provides Flexible Shipping filters
+
+= 4.25.0 - 2024-05-22 =
+* Added support for WooCommerce 8.9
+* Changed shipping extensions tab
+
+= 4.24.20 - 2024-04-28 =
+* Deprecated notice on PHP 8.1, preg_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated
+* Fixed shipping extensions tab font
+
+= 4.24.19 - 2024-04-08 =
+* Added support for WooCommerce 8.8
+* Fixed duplicate shipping method link on zone shipping methods list
+
+= 4.24.18 - 2024-03-28 =
+* Added support for WordPress 6.5
+
+= 4.24.17 - 2024-03-13 =
+* Updated libraries
+* Added AJAX permissions check in onboarding form
+* Logger moved to WooCommerce logs
+
+= 4.24.16 - 2024-03-10 =
+* Fixed AJAX nonce check in op-in form
+
+= 4.24.15 - 2024-03-07 =
+* Fixed missing opt-in permission check
+
+= 4.24.14 - 2024-03-07 =
+* Fixed fatal error WC_Shipping_Method on some installations
+* Removed empty stylesheets
+
+= 4.24.13 - 2024-02-29 =
+* Changed deactivation popup
+* Added support for WooCommerce 8.7
+
+= 4.24.12 - 2024-02-21 =
+* Fixed free shipping block notices on Firefox
+
+= 4.24.11 - 2024-02-09 =
+* Fixed compatibility currency switchers
+
+= 4.24.10 - 2024-02-05 =
+* Added support for WooCommerce 8.6
+
+= 4.24.9 - 2024-01-31 =
+* Fixed compatibility with CURCY currency switcher
+* Removed files reporting by security plugins as potentially dangerous
+
+= 4.24.8 - 2024-01-15 =
+* Fixed fatal error on automated emails
+* Fixed warnings in PHP 8.2
+
+= 4.24.7 - 2024-01-04 =
+* Added support for WooCommerce 8.5
+* Fixed block checkout incompatibility with WooCommerce 8.4
+
+= 4.24.6 - 2023-12-21 =
+* Fixed conflict with plugins triggering checkout_update action in checkout form by removing free shipping notice from AJAX response
+
+= 4.24.5 - 2023-12-20 =
+* Fixed infinite checkout update
+
+= 4.24.4 - 2023-12-19 =
+* Fixed infinite checkout update
+
+= 4.24.3 - 2023-12-15 =
+* Fixed Save settings button on Flexible Shipping Info page
+
+= 4.24.2 - 2023-12-15 =
+* Fixed an error message in block cart
+
+= 4.24.1 - 2023-12-13 =
+* Fixed an error when placing an order at the checkout block
+
+= 4.24.0 - 2023-12-12 =
+* Added support for WooCommerce 8.4
+* Added Left to free shipping notice for WooCommerce Blocks
+
+= 4.23.3 - 2023-11-23 =
+* Fixed nonce verification in HPOS bulk actions
+
+= 4.23.2 - 2023-11-22 =
+* Fixed HPOS bulk actions for FLexible Shipping integrations (InPost/eNadawca/DPD/DHL/Orlen Paczka/DPD UK)
+
+= 4.23.1 - 2023-11-07 =
+* Added support for WooCommerce 8.3
+
+= 4.23.0 - 2023-10-26 =
+* Added compatibility with WooCommerce Cart and Checkout Blocks
+* Added support for WordPress 6.4
 
 = 4.22.1 - 2023-10-04 =
 * Added support for WooCommerce 8.2

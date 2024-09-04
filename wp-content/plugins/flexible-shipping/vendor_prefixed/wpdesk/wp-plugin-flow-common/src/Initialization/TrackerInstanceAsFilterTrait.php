@@ -2,6 +2,7 @@
 
 namespace FSVendor\WPDesk\Plugin\Flow\Initialization\Simple;
 
+use FSVendor\WPDesk\Tracker\OptInOptOut;
 /**
  * Trait helps with tracker initialization
  *
@@ -59,5 +60,13 @@ trait TrackerInstanceAsFilterTrait
                 return self::$tracker_instance;
             }
         }, 10 - $this->get_tracker_version());
+    }
+    private function register_tracker_ui_extensions()
+    {
+        $shops = $this->plugin_info->get_plugin_shops();
+        $shop_url = $shops[\get_locale()] ?? $shops['default'] ?? 'https://wpdesk.net';
+        $tracker_ui = new \FSVendor\WPDesk\Tracker\OptInOptOut($this->plugin_info->get_plugin_file_name(), $this->plugin_info->get_plugin_slug(), $shop_url, $this->plugin_info->get_plugin_name());
+        $tracker_ui->create_objects();
+        $tracker_ui->hooks();
     }
 }

@@ -215,7 +215,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$wpdb->query( "ALTER TABLE {$wpdb->prefix}cli_cookie_scan_cookies ADD CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES {$wpdb->prefix}cli_cookie_scan_categories (`id_cli_cookie_category`)" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
 	/**
-	 * Recursice function to insert sanner tables no matter what error has occured
+	 * Recursice function to insert sanner tables no matter what error has occurred
 	 *
 	 * @param string  $sql sql query.
 	 * @param string  $prop property value.
@@ -326,7 +326,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 					'importing'           => __( 'Importing....', 'cookie-law-info' ),
 					'refreshing'          => __( 'Refreshing....', 'cookie-law-info' ),
 					'reload_page'         => __( 'Error !!! Please reload the page to see cookie list.', 'cookie-law-info' ),
-					'stoping'             => __( 'Stopping...', 'cookie-law-info' ),
+					'stopping'             => __( 'Stopping...', 'cookie-law-info' ),
 					'scanning_stopped'    => __( 'Scanning stopped.', 'cookie-law-info' ),
 					'ru_sure'             => __( 'Are you sure?', 'cookie-law-info' ),
 					'success'             => __( 'Success', 'cookie-law-info' ),
@@ -806,7 +806,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 
 	}
 	/**
-	 * Retuns scan results by ID
+	 * Returns scan results by ID
 	 *
 	 * @param [type] $id scan ID.
 	 * @return array
@@ -1094,12 +1094,20 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 	 */
 	protected function insert_categories( $categories ) {
 		global $wpdb;
+		$category_table = $wpdb->prefix . $this->category_table;
 		foreach ( $categories as $id => $category_data ) {
 			$category    = ( isset( $category_data['category'] ) ? esc_sql( sanitize_text_field( $category_data['category'] ) ) : '' );
 			$description = ( isset( $category_data['category_desc'] ) ? esc_sql( addslashes( wp_kses_post( $category_data['category_desc'] ) ) ) : '' );
-			if ( ! empty( $category ) ) {
+			// Check if the entry already exists
+			$existing_entry = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT * FROM $category_table WHERE cli_cookie_category_name = %s",
+					$category
+				)
+			);
+			if ( ! empty( $category ) && !$existing_entry ) {
 				$wpdb->insert(
-					$wpdb->prefix . 'cli_cookie_scan_categories',
+					$category_table,
 					array(
 						'cli_cookie_category_name'        => $category,
 						'cli_cookie_category_description' => $description,
@@ -1120,7 +1128,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 	 */
 	protected function insert_cookies( $scan_id, $urls, $cookie_data, $category ) {
 		global $wpdb;
-
+		$cookies_table = $wpdb->prefix . $this->cookies_table;
 		foreach ( $cookie_data as $cookies ) {
 			if ( is_array( $cookies ) && ! empty( $cookies ) ) {
 				$cookie_id   = isset( $cookies['cookie_id'] ) ? esc_sql( sanitize_text_field( $cookies['cookie_id'] ) ) : '';
@@ -1133,9 +1141,17 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 				$category_id = $wpdb->get_var( $wpdb->prepare( "SELECT `id_cli_cookie_category` FROM {$wpdb->prefix}cli_cookie_scan_categories WHERE `cli_cookie_category_name` = %s;", array( $category ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared
 				$category_id = esc_sql( absint( $category_id ) );
 
-				if ( ! empty( $cookie_id ) ) {
+				// Check if the entry already exists
+				$existing_entry = $wpdb->get_row(
+					$wpdb->prepare(
+						"SELECT * FROM $cookies_table WHERE cookie_id = %s",
+						$cookie_id
+					)
+				);
+
+				if ( ! empty( $cookie_id ) && !$existing_entry ) {
 					$wpdb->insert(
-						$wpdb->prefix . 'cli_cookie_scan_cookies',
+						$cookies_table,
 						array(
 							'id_cli_cookie_scan'     => $scan_id,
 							'id_cli_cookie_scan_url' => $url_id,

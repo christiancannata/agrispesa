@@ -43,7 +43,7 @@ function customtaxorder_subpage() {
 	}
 
 	?>
-	<div class='wrap customtaxorder'>
+	<div class="wrap customtaxorder wrap-customtaxorder">
 		<div id="icon-customtaxorder"></div>
 
 	<?php
@@ -55,9 +55,15 @@ function customtaxorder_subpage() {
 			<p><?php esc_html_e('The ordering of categories, tags and terms through a simple drag-and-drop interface.', 'custom-taxonomy-order-ne'); ?></p>
 		<?php
 		if ( ! empty( $taxonomies ) ) {
-			echo '<h2>' . esc_html__('Taxonomies', 'custom-taxonomy-order-ne') . '</h2><ul>';
+			echo '
+			<h2>' . esc_html__('Taxonomies', 'custom-taxonomy-order-ne') . '</h2>
+			<ul>
+			';
 			$taxonomies = customtaxorder_sort_taxonomies( $taxonomies );
-			echo '<li class="lineitem"><a href="' . admin_url( 'admin.php?page=customtaxorder-taxonomies' ) . '">' . esc_html__('Taxonomies', 'custom-taxonomy-order-ne') . '</a></li>
+			echo '
+				<li class="lineitem">
+					<a href="' . admin_url( 'admin.php?page=customtaxorder-taxonomies' ) . '">' . esc_html__('Taxonomies', 'custom-taxonomy-order-ne') . '</a>
+				</li>
 				';
 			foreach ( $taxonomies as $taxonomy ) {
 				$tax_label = $taxonomy->label;
@@ -72,7 +78,11 @@ function customtaxorder_subpage() {
 				';
 			}
 		}
-		echo '</ul></div></div><!-- #wrap -->';
+		echo '
+			</ul>
+		</div><!-- .order-widget -->
+	</div><!-- .wrap -->
+	';
 
 		return;
 	}
@@ -80,7 +90,7 @@ function customtaxorder_subpage() {
 	$settings = ''; // The input and text for the taxonomy that's shown.
 	if ( ! empty( $taxonomies ) ) {
 		foreach ( $taxonomies as $taxonomy ) {
-			$com_page = 'customtaxorder-'.$taxonomy->name;
+			$com_page = 'customtaxorder-' . $taxonomy->name;
 			if ( ! isset($options[$taxonomy->name]) ) {
 				$options[$taxonomy->name] = 0; // default if not set in options yet
 			}
@@ -182,7 +192,7 @@ function customtaxorder_subpage() {
 				</div>
 				<?php
 				$dropdown = customtaxorder_sub_query( $terms, $tax_name );
-				if( ! empty($dropdown) ) { ?>
+				if ( ! empty($dropdown) ) { ?>
 				<div class="widget order-widget">
 					<h2 class="widget-top"><?php esc_html_e('Sub-', 'custom-taxonomy-order-ne') . esc_html( $tax_label ); ?> | <small><?php esc_html_e('Choose a term from the dropdown to order its sub-terms.', 'custom-taxonomy-order-ne'); ?></small></h2>
 					<div class="misc-pub-section misc-pub-section-last">
@@ -249,7 +259,7 @@ function customtaxorder_update_order() {
 	if (isset($_POST['hidden-custom-order']) && $_POST['hidden-custom-order'] != '') {
 
 		$options = customtaxorder_get_settings();
-		$taxonomies = customtaxorder_get_taxonomies() ;
+		$taxonomies = customtaxorder_get_taxonomies();
 		$this_page = sanitize_text_field( $_GET['page'] );
 
 		// Set your custom capability through this filter.
@@ -297,7 +307,7 @@ function customtaxorder_update_order() {
 		}
 
 	} else {
-		echo '<div id="message" class="error fade notice is-dismissible"><p>'. esc_html__('An error occured, order has not been saved.', 'custom-taxonomy-order-ne').'</p></div>';
+		echo '<div id="message" class="error fade notice is-dismissible"><p>' . esc_html__('An error occured, order has not been saved.', 'custom-taxonomy-order-ne') . '</p></div>';
 	}
 
 }
@@ -332,7 +342,7 @@ function customtaxorder_update_settings() {
 	if ( strlen( $tax_name ) > 0 ) {
 
 		$options = customtaxorder_get_settings();
-		$taxonomies = customtaxorder_get_taxonomies() ;
+		$taxonomies = customtaxorder_get_taxonomies();
 		$this_page = sanitize_text_field( $_GET['page'] );
 
 		// Set your custom capability through this filter.
@@ -372,7 +382,7 @@ function customtaxorder_update_settings() {
 /* Called from settings API, register_settings(). */
 function customtaxorder_settings_validate( $input ) {
 
-	$taxonomies = customtaxorder_get_taxonomies() ;
+	$taxonomies = customtaxorder_get_taxonomies();
 
 	foreach ( $taxonomies as $taxonomy ) {
 		if ( $input[$taxonomy->name] != 1 ) {

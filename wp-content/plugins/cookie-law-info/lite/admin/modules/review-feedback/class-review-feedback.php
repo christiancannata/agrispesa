@@ -66,7 +66,7 @@ class Review_Feedback extends Modules {
 			return;
 		}
 		$notices = Notice::get_instance()->get();
-		if ( ! isset( $notices['review_notice'] ) ) {
+		if ( ! isset( $notices['review_notice'] ) || empty( $notices['review_notice'] ) ) {
 			return;
 		}
 		?>
@@ -82,7 +82,6 @@ class Review_Feedback extends Modules {
 							<div class="cky-flex" style="margin-top: 10px;">
 								<button class="cky-button cky-button-review"><?php echo esc_html__( 'Review now', 'cookie-law-info' ); ?></button>
 								<button class="cky-button-outline-secondary cky-button cky-button-cancel"><?php echo esc_html__( 'Remind me later', 'cookie-law-info' ); ?></button>
-								<button class="cky-button-outline-secondary cky-button cky-button-nsa"><?php echo esc_html__( 'Never show again', 'cookie-law-info' ); ?></button>
 							</div>
 						</div>
 					</div>
@@ -219,10 +218,6 @@ class Review_Feedback extends Modules {
 						e.preventDefault();
 						ckyUpdateNotice(0);
 						window.open('<?php echo esc_js( $this->review_url ); ?>');
-					});
-					$(document).on('click', '.cky-button-nsa', function(e) {
-						e.preventDefault();
-						ckyUpdateNotice(0);
 					});
 				})(jQuery)
 			</script>

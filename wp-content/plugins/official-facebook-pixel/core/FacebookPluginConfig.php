@@ -20,7 +20,7 @@ namespace FacebookPixelPlugin\Core;
 defined('ABSPATH') or die('Direct access not allowed');
 
 class FacebookPluginConfig {
-  const PLUGIN_VERSION = '3.0.13';
+  const PLUGIN_VERSION = '3.0.16';
   const SOURCE = 'wordpress';
   const TEXT_DOMAIN = 'official-facebook-pixel';
   const PLUGIN_NAME = 'Meta for WordPress';
@@ -90,6 +90,12 @@ class FacebookPluginConfig {
     'save_capi_integration_events_filter';
   const CAPI_INTEGRATION_FILTER_PAGE_VIEW_EVENT = '1';
   const CAPI_INTEGRATION_KEEP_PAGE_VIEW_EVENT = '0';
+  const CAPI_PII_CACHING_STATUS = 'facebook_capi_pii_caching_status';
+  const CAPI_PII_CACHING_STATUS_DEFAULT = '1';
+  const SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME =
+    'save_capi_pii_caching_status';
+  const CAPI_PII_CACHING_STATUS_UPDATE_ERROR =
+    'Status could not be saved, please refresh the page and continue.';
 
   // integration config: INTEGRATION_KEY => PLUGIN_CLASS
   public static function integrationConfig() {
@@ -100,7 +106,6 @@ class FacebookPluginConfig {
       'FORMIDABLE_FORM' => 'FacebookWordpressFormidableForm',
       'MAILCHIMP_FOR_WP' => 'FacebookWordpressMailchimpForWp',
       'NINJA_FORMS' => 'FacebookWordpressNinjaForms',
-      'WPFORMS' => 'FacebookWordpressWPForms',
       'WP_E_COMMERCE' => 'FacebookWordpressWPECommerce',
       'WOOCOMMERCE' => 'FacebookWordpressWooCommerce'
     );

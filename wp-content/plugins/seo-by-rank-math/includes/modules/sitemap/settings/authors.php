@@ -7,18 +7,17 @@
  */
 
 use RankMath\Helper;
-use MyThemeShop\Helpers\WordPress;
 
 defined( 'ABSPATH' ) || exit;
 
-$roles   = WordPress::get_roles();
+$roles   = Helper::get_roles();
 $default = $roles;
 unset( $default['administrator'], $default['editor'], $default['author'] );
 
 $dep = [
 	'relation' => 'OR',
 	[ 'authors_sitemap', 'on' ],
-	[ 'authors_html_sitemap', 'on' ]
+	[ 'authors_html_sitemap', 'on' ],
 ];
 
 $cmb->add_field(
@@ -40,7 +39,7 @@ $cmb->add_field(
 		'default' => 'on',
 		'classes' => [
 			'rank-math-html-sitemap',
-			! Helper::get_settings( 'sitemap.html_sitemap' ) ? 'hidden' : ''
+			! Helper::get_settings( 'sitemap.html_sitemap' ) ? 'hidden' : '',
 		],
 	]
 );

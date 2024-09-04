@@ -120,6 +120,8 @@ abstract class Request {
 		$this->headers[ $name ] = $value;
 	}
 
+	abstract public function set_api_url( $base = '' );
+
 	/**
 	 * Get the Request URL
 	 *
@@ -223,7 +225,6 @@ abstract class Request {
 	 */
 	public function request( $path, $data = array(), $method = 'post' ) {
 		$url = $this->get_api_url( $path );
-
 		$this->make_auth_request();
 
 		$url = add_query_arg( $this->get_args, $url );

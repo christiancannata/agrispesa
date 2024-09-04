@@ -1073,10 +1073,6 @@ label[for=ywgc_page_layout_version-v2] {
     display: none;
 }
 
-#yith-ywgc-table-emails .woocommerce-help-tip{
-    display: none;
-}
-
 #yith-ywgc-table-emails .email-settings .submit{
     text-align: right;
     margin-right: 20px;

@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="cli_pg_footer">
 			<div style="float:right; width:75%;">
-				<p><input type="checkbox" id="enable_webtofee_powered_by" name="enable_webtofee_powered_by"> <label for="enable_webtofee_powered_by"><?php echo esc_html__( 'Enabling this option will help us spread the word by placing a credit to WebToffee at the very end of the Cookie Policy page.', 'cookie-law-info' ); ?></label></p>
+				<p><input type="checkbox" id="enable_webtofee_powered_by" name="enable_webtofee_powered_by"> <label for="enable_webtofee_powered_by"><?php echo esc_html__( 'Enabling this option will help us spread the word by placing a credit to CookieYes at the very end of the Cookie Policy page.', 'cookie-law-info' ); ?></label></p>
 
 				<?php
 				$policy_pageid                 = $this->get_cookie_policy_pageid();

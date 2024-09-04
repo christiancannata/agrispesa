@@ -13,6 +13,7 @@ use stdClass;
 use CookieYes\Lite\Includes\Rest_Controller;
 use CookieYes\Lite\Admin\Modules\Settings\Includes\Settings;
 use CookieYes\Lite\Admin\Modules\Settings\Includes\Controller;
+use CookieYes\Lite\Includes\Connect_Notice;
 use CookieYes\Lite\Includes\Notice;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -147,6 +148,18 @@ class Api extends Rest_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'update_notice' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/expand',
+			array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'expand_notice' ),
 					'permission_callback' => array( $this, 'create_item_permissions_check' ),
 					'args'                => $this->get_collection_params(),
 				),
@@ -313,6 +326,21 @@ class Api extends Rest_Controller {
 			Notice::get_instance()->dismiss( $notice, $expiry );
 			$response['status'] = true;
 		}
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Update the expand status of connect notice.
+	 *
+	 * @param object $request Request.
+	 * @return WP_Error|WP_REST_Response
+	 */
+	public function expand_notice( $request ) {
+		$response = array( 'status' => false );
+		$expand   = isset( $request['expand'] ) ? boolval( $request['expand'] ) : true;
+
+		Connect_Notice::get_instance()->save_state( $expand );
+		$response['status'] = true;
 		return rest_ensure_response( $response );
 	}
 

@@ -14,8 +14,7 @@
 namespace RankMath\Sitemap;
 
 use RankMath\Helper;
-use MyThemeShop\Helpers\WordPress;
-use MyThemeShop\Database\Database;
+use RankMath\Admin\Database\Database;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,7 +48,7 @@ class Cache {
 	 * The constructor.
 	 */
 	public function __construct() {
-		$this->wp_filesystem = WordPress::get_filesystem();
+		$this->wp_filesystem = Helper::get_filesystem();
 		$this->mode          = $this->is_writable() ? 'file' : 'db';
 
 		/**
@@ -149,6 +148,7 @@ class Cache {
 	 *
 	 * @param  null|string $type The type to get the key for. Null or '1' for index cache.
 	 * @param  int         $page The page of cache to get the key for.
+	 * @param  boolean     $html Whether to add html extension.
 	 * @return boolean|string The key where the cache is stored on. False if the key could not be generated.
 	 */
 	private function get_storage_key( $type = null, $page = 1, $html = false ) {
@@ -214,7 +214,7 @@ class Cache {
 			return;
 		}
 
-		$wp_filesystem = WordPress::get_filesystem();
+		$wp_filesystem = Helper::get_filesystem();
 		if ( is_null( $wp_filesystem ) ) {
 			return;
 		}

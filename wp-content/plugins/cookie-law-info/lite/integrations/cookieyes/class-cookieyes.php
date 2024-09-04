@@ -35,6 +35,8 @@ class Cookieyes extends Request {
 	 * @var integer
 	 */
 	private $website_id;
+
+	private $api_url;
 	/**
 	 * License object
 	 *
@@ -60,9 +62,20 @@ class Cookieyes extends Request {
 		$settings         = new Settings();
 		$this->api_key    = $settings->get_token();
 		$this->website_id = $settings->get_website_id();
+		$this->set_api_url();
 		$this->add_header_argument( 'Content-Type', 'application/json' );
 		$this->add_header_argument( 'Accept', 'application/json' );
 	}
+
+	public function set_api_url( $base = '' ) {
+		if ( empty( $base ) ) {
+			if ( defined( 'self::API_BASE_PATH' ) && self::API_BASE_PATH ) {
+				$base = self::API_BASE_PATH;
+			}
+		}
+		$this->api_url = $base;
+	}
+
 	/**
 	 * Get API URL.
 	 *
@@ -71,9 +84,7 @@ class Cookieyes extends Request {
 	 * @return string
 	 */
 	public function get_api_url( $path = '' ) {
-		if ( defined( 'self::API_BASE_PATH' ) && self::API_BASE_PATH ) {
-			return self::API_BASE_PATH . $path;
-		}
+		return $this->api_url . $path;
 	}
 
 	/**

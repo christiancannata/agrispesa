@@ -18,7 +18,7 @@ class WooCommerceABC extends Links {
 	 */
 	public function __construct() {
 		$title        = __( 'WooCommerce ABCs', 'flexible-shipping' );
-		$footer_label = __( 'Want to know more about WooCommerce? &rarr;', 'flexible-shipping' );
+		$footer_label = __( 'More articles', 'flexible-shipping' );
 		$footer_url   = 'https://octol.io/fs-info-blog';
 
 		parent::__construct( 'woocommerce-abc', $title, $this->generate_footer( $footer_url, $footer_label ) );

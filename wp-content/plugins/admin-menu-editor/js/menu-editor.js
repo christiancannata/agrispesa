@@ -20,7 +20,9 @@
  * @property {boolean} wsEditorData.showExtraIcons
  * @property {boolean} wsEditorData.dashiconsAvailable
  * @property {string}  wsEditorData.submenuIconsEnabled
- * @property {Object}  wsEditorData.showHints
+ *
+ * @property {Object} wsEditorData.showHints
+ * @property {string} wsEditorData.hideHintNonce
  *
  * @property {string} wsEditorData.hideAdvancedSettingsNonce
  * @property {string} wsEditorData.getPagesNonce
@@ -2399,6 +2401,33 @@ function readMenuTreeState(){
 		itemsByFilename[filename] = containerNode;
 	});
 
+	// Ensure items that need auto-generated slugs have unique IDs. The IDs only
+	// need to be unique within the same menu configuration, not globally.
+	let localIdCounter = 0;
+	const usedLocalIds = {};
+	function ensureUniqueIdIfNeeded(menuItem) {
+		// Recurse into children.
+		if (menuItem.items) {
+			_.forEach(menuItem.items, ensureUniqueIdIfNeeded);
+		}
+
+		const needsUniqueId = (menuItem.template_id === wsEditorData.embeddedPageTemplateId)
+			|| (menuItem.open_in === 'iframe');
+		const currentLocalId = (typeof menuItem.local_id === 'string') ? menuItem.local_id : '';
+
+		// Assign a new ID if the item needs one and doesn't have it, or if the current ID
+		// is a duplicate. IDs can get duplicated if the user copies and pastes items.
+		if ((needsUniqueId && (currentLocalId === '')) || usedLocalIds.hasOwnProperty(currentLocalId)) {
+			menuItem.local_id = randomMenuId(localIdCounter + 'C', 8);
+		}
+
+		if (typeof menuItem.local_id === 'string') {
+			usedLocalIds[menuItem.local_id] = true;
+			localIdCounter++;
+		}
+	}
+	_.forEach(tree, ensureUniqueIdIfNeeded);
+
 	AmeCapabilityManager.pruneGrantedUserCapabilities();
 
 	var result = {
@@ -3626,7 +3655,20 @@ function ameOnDomReady() {
 		var cssClass = getFieldValue(menuItem, 'css_class', '');
 		var iconUrl = getFieldValue(menuItem, 'icon_url', '', containerNode);
 
+		//Clear the search box and restore icons that were hidden by a previous search.
+		const $searchBoxes = iconSelector.find('.ws_icon_search_box');
+		$searchBoxes.each(function() {
+			const $this = $(this);
+			if ($this.val() !== '') {
+				$this.val('');
+				//Let's call the search handler directly instead of using $.trigger('keyup').
+				//The event handler is throttled and might not run until later.
+				searchMenuIcons('', $this.closest('.ws_tool_tab'));
+			}
+		});
+
 		var customImageOption = iconSelector.find('.ws_custom_image_icon').hide();
+		iconSelector.data('ame-item-has-custom-image', false);
 
 		//Highlight the currently selected icon.
 		iconSelector.find('.ws_selected_icon').removeClass('ws_selected_icon');
@@ -3644,6 +3686,7 @@ function ameOnDomReady() {
 				//Display and highlight the custom image.
 				customImageOption.find('img').prop('src', iconUrl);
 				customImageOption.addClass('ws_selected_icon').show().data('icon-url', iconUrl);
+				iconSelector.data('ame-item-has-custom-image', true);
 				selectedIcon = customImageOption;
 			}
 		} else if ( classMatches || iconFontMatches ) {
@@ -3661,7 +3704,16 @@ function ameOnDomReady() {
 			iconSelectorTabs.tabs('option', 'active', activeTabItem.index());
 		}
 
+		//Before showing the selector, clear the fixed height that was set when it was last visible.
+		iconSelector.css('height', '');
+
 		iconSelector.show();
+
+		//Set a fixed height while the selector is visible. This prevents the selector's
+		//height from changing when the user filters the icon list.
+		const initialHeight = iconSelector.height();
+		iconSelector.css('height', initialHeight);
+
 		iconSelector.position({ //Requires jQuery UI.
 			my: 'left top',
 			at: 'left bottom',
@@ -3754,6 +3806,41 @@ function ameOnDomReady() {
 		}
 	});
 
+	//Provide search-as-you-type functionality for the icon selector.
+	function searchMenuIcons(query, $currentTab) {
+		let $searchableItems = $currentTab.find('.ws_icon_option');
+		//If the current menu item doesn't have a custom image, exclude the custom image
+		//option from the search results.
+		if (!iconSelector.data('ame-item-has-custom-image')) {
+			$searchableItems = $searchableItems.not('.ws_custom_image_icon');
+		}
+
+		let foundAnything = false;
+
+		$searchableItems.each(function() {
+			const $icon = $(this);
+			const name = $icon.prop('title').toLowerCase();
+
+			if (name.includes(query)) {
+				$icon.show();
+				foundAnything = true;
+			} else {
+				$icon.hide();
+			}
+		});
+
+		$currentTab.find('.ws_no_matching_icons').toggle(!foundAnything);
+	}
+
+	iconSelectorTabs.find('.ws_icon_search_box').on('keyup', _.throttle(
+		function() {
+			const $inputField = $(this);
+			const $tab = $inputField.closest('.ws_tool_tab');
+
+			searchMenuIcons($inputField.val().toLowerCase().trim(), $tab);
+		},
+		250
+	));
 
 	/*************************************************************************
 	                        Embedded page selector
@@ -4113,7 +4200,7 @@ function ameOnDomReady() {
 
 		function hideRecursively(containerNode, exceptActor) {
 			var otherActors = _(actorSelectorWidget.getVisibleActors())
-				.pluck('id')
+				.map('id')
 				.without(exceptActor)
 				.value();
 
@@ -5376,8 +5463,9 @@ function ameOnDomReady() {
 		$.post(
 			wsEditorData.adminAjaxUrl,
 			{
-				'action' : 'ws_ame_hide_hint',
-				'hint' : hint.attr('id')
+				'action': 'ws_ame_hide_hint',
+				'_ajax_nonce': wsEditorData.hideHintNonce,
+				'hint': hint.attr('id')
 			}
 		);
 	});
@@ -5617,6 +5705,48 @@ function ameOnDomReady() {
 
 	//... and make the UI visible now that it's fully rendered.
 	menuEditorNode.css('visibility', 'visible');
+
+	//Add an extra class to the editor toolbars when their "position: sticky" triggers.
+	//This is useful for adding a bottom border and other styles.
+	if (IntersectionObserver) {
+		/*
+		This assumes that the toolbars stick below the admin bar. If that changes,
+		this code will need to be updated.
+
+		How do we detect that?
+		- We could use IntersectionObserver to detect when the toolbar leaves the viewport,
+		  but since it's sticky, it usually won't.
+		- We can get around that by using negative root margins. Negative margins effectively shrink
+		  the bounding box of the viewport. If we set the top margin to "-1px", the effective top of
+		  the viewport will be 1px lower, so the observer will fire just *before* the toolbar would
+		  leave the viewport.
+		- The admin bar is always at the top of the viewport.
+		- So we can detect when the toolbar is right below the admin bar by using a negative top
+		  margin that is equal to the height of the admin bar + 1px.
+		*/
+		let observerRootMargin = '-33px'; //Default admin bar height is 32px.
+		const adminBarHeight = $('#wpadminbar').outerHeight();
+		if (adminBarHeight > 0) {
+			observerRootMargin = (-1 * adminBarHeight - 1) + 'px';
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					e.target.classList.toggle('ws_is_sticky_toolbar', e.intersectionRatio < 1);
+				}
+			},
+			{
+				threshold: [1],
+				rootMargin: observerRootMargin + ' 0px 0px 0px'
+			}
+		);
+
+		const editorToolbars = document.querySelectorAll('.ws_main_container .ws_toolbar');
+		for (const toolbar of editorToolbars) {
+			observer.observe(toolbar);
+		}
+	}
 }
 
 $(document).ready(ameOnDomReady);

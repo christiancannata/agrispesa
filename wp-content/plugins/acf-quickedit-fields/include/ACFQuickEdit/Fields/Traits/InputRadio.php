@@ -17,8 +17,9 @@ trait InputRadio {
 		$output = '';
 
 		$acf_field = wp_parse_args( $acf_field, [
-			'choices' => [],
+			'choices'      => [],
 			'other_choice' => 0,
+			'allow_null'   => 0,
 		]);
 
 		$output .= sprintf( '<ul class="acf-radio-list%s" data-acf-field-key="%s">',
@@ -26,9 +27,25 @@ trait InputRadio {
 			$acf_field['key']
 		);
 
+		if ( $acf_field['allow_null'] ) {
+			$id = $this->core->prefix( $acf_field['key'] . '---none' );
+			$output .= sprintf( '<li><label for="%s">', $id );
+			$output .= sprintf( '<input %s />%s', acf_esc_attr( [
+				'id'					=> $id,
+				'type'					=> 'radio',
+				'value'					=> '',
+				'class'					=> 'acf-quick-edit',
+				'data-acf-field-key'	=> $acf_field['key'],
+				'name'					=> $input_atts['name'],
+				'checked'				=> 'checked',
+			] ), '<em>' . esc_html__('(No value)', 'acf-quickedit-fields') . '</em>' );
+
+			$output .= '</label></li>';
+		}
+
 		foreach( $acf_field['choices'] as $name => $value) {
 
-			$id = $this->core->prefix( $acf_field['key'] . '-' . $name );
+			$id = $this->core->prefix( $acf_field['key'] . '-' . sanitize_key( $name ) );
 
 			$output .= sprintf( '<li><label for="%s">', $id );
 			$output .= sprintf( '<input %s />%s', acf_esc_attr( [

@@ -2,10 +2,10 @@
 Contributors: mpol
 Tags: term order, category order, taxonomy order, order
 Requires at least: 4.1
-Tested up to: 6.1
-Stable tag: 3.4.4
+Tested up to: 6.5
+Stable tag: 4.0.0
 License: GPLv2 or later
-
+Requires PHP: 7.0
 
 Allows for the ordering of categories and custom taxonomy terms through a simple drag-and-drop interface
 
@@ -20,7 +20,7 @@ It supports the following features:
 * It uses the available WordPress scripts and styles.
 * The plugin is lightweight, without any unnecessary scripts to load into the admin.
 * It falls in line gracefully with the look and feel of the WordPress interface.
-* It uses it's own menu in the backend.
+* It is located under the Tools > Term Order menu in the backend.
 * Translated or translatable.
 * Custom functions to order the taxonomies themselves.
 * There is no Pro version, everything works in the Free version.
@@ -38,7 +38,7 @@ This plugin is also available in [Codeberg](https://codeberg.org/cyclotouriste/c
 
 1. Upload the plugin folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Order posts from the 'Term Order' menu in the admin
+3. Order terms in the admin menu under Tools > Term Order
 4. Optionally set whether or not to have queries of the selected taxonomy be sorted by this order automatically.
 5. Optionally set `'orderby' => 'term_order', 'order' => 'ASC'` to manually sort queries by this order.
 6. Enjoy!
@@ -212,6 +212,12 @@ The left metabox lists the toplevel terms. Right (or below) are the sub-terms.
 
 
 == Changelog ==
+
+= 4.0.0 =
+* 2023-11-14
+* Move admin menu item under Tools.
+* On sub-subpages, have the menu-item for Tools open.
+* Add small advertisement for a recommended plugin (free).
 
 = 3.4.4 =
 * 2022-07-27

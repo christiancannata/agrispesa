@@ -43,8 +43,8 @@ class Cookie_Law_Info_Cli_Policy_Generator {
 	}
 
 	public static function get_page_content() {
-		 $contant_val = get_option( 'cli_pg_content_data' );
-		$html         = isset( $contant_val ) ? $contant_val : '';
+		 $content_val = get_option( 'cli_pg_content_data' );
+		$html         = isset( $content_val ) ? $content_val : '';
 		return $html;
 	}
 
@@ -55,7 +55,7 @@ class Cookie_Law_Info_Cli_Policy_Generator {
 	 * @return string
 	 */
 	public static function generate_page_content( $powered_by, $content_data_post_arr = array(), $render_shortcode = 1 ) {
-		$html  = '<div class="cli_pg_page_contaner">';
+		$html  = '<div class="cli_pg_page_container">';
 		$html .= self::gen_page_html( $content_data_post_arr, $render_shortcode );
 		$html .= ( $powered_by == 1 ? '[webtoffee_powered_by]' : '' ) . '</div>';
 		return $html;

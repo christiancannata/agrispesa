@@ -608,6 +608,10 @@ to accommodate the drop-down button.
   box-sizing: border-box;
   width: 100%;
   padding: 6px 6px 0 6px;
+  position: sticky;
+  top: var(--wp-admin--admin-bar--height, 32px);
+  background-color: white;
+  z-index: 5;
 }
 
 .ws_button {
@@ -656,6 +660,11 @@ a.ws_button.ws_button_disabled:hover {
 
 #ws_toggle_toolbar, .ws_toggle_toolbar_button {
   margin-right: 0;
+}
+
+.ws_is_sticky_toolbar {
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /************************************
@@ -727,6 +736,7 @@ select.ws_dropdown optgroup option {
   width: 216px;
   padding: 4px 0 0 0;
   position: absolute;
+  z-index: 6;
 }
 
 #ws_icon_selector.ws_with_more_icons {
@@ -812,6 +822,7 @@ select.ws_dropdown optgroup option {
   box-sizing: border-box;
   height: 25px;
   min-height: 25px;
+  min-width: 26px;
 }
 .ame-is-wp53-plus #ws_menu_editor .ws_select_icon {
   height: 28px;
@@ -847,9 +858,20 @@ select.ws_dropdown optgroup option {
   padding: 4px 10px 11px;
 }
 #ws_icon_selector .ws_tool_tab {
-  padding: 4px 4px 2px;
+  padding: 0 4px 2px;
   max-height: 324px;
   overflow-y: auto;
+}
+#ws_icon_selector .ws_icon_search_bar {
+  margin: 0 0 0 2px;
+  position: sticky;
+  top: 0;
+  background-color: #FDFDFD;
+  padding: 4px 0;
+}
+#ws_icon_selector .ws_no_matching_icons {
+  margin-left: 2px;
+  padding: 4px 0;
 }
 
 #ws_choose_icon_from_media {
@@ -1583,7 +1605,7 @@ select.ws_dropdown optgroup option {
   font-size: 18px;
 }
 
-.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons {
+.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons, .ws-ame-postbox .ws_tooltip_trigger .dashicons {
   font-size: 18px;
   height: 18px;
   vertical-align: bottom;
@@ -1813,6 +1835,14 @@ select.ws_dropdown optgroup option {
   bottom: 40px;
   z-index: 100;
 }
+#ws_sidebar_pro_ad .dashicons {
+  font-size: 15px;
+  width: unset;
+  height: unset;
+}
+#ws_sidebar_pro_ad.ame-tgc-sidebar-ad {
+  max-width: 280px;
+}
 
 .ws-ame-icon-radio-button-group > label {
   display: inline-block;
@@ -1828,7 +1858,8 @@ span.description {
 }
 
 .wrap :target {
-  background-color: rgba(255, 230, 81, 0.7);
+  background-color: rgba(255, 245, 100, 0.7);
+  outline: 3px solid rgba(250, 220, 75, 0.7);
 }
 
 .test-wrap {

@@ -66,6 +66,9 @@ class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
     public function handleAjaxRequest()
     {
         \check_ajax_referer(self::AJAX_ACTION . $this->plugin_data->getPluginSlug());
+        if (!\current_user_can('activate_plugins')) {
+            \wp_send_json_error();
+        }
         if (isset($_REQUEST['reason'])) {
             $this->sendPayloadToWpdesk($this->preparePayload($_REQUEST));
         }

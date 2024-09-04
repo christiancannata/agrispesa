@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce UOM\n"
+"POT-Creation-Date: 2018-09-07 13:06+1000\n"
+"PO-Revision-Date: 2018-09-07 13:08+1000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_AU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: esc_attr_x;__;_e;_n;_x;_ex;esc_attr;esc_attr_e;"
+"esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/class-uom-product-input.php:37
+msgid "Unit of Measure"
+msgstr ""
+
+#: classes/class-uom-product-input.php:40
+msgid "Enter your unit of measure for this product here."
+msgstr ""

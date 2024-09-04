@@ -1,16 +1,16 @@
 === Post Types Order  ===
 Contributors: nsp-code, tdgu
 Donate link: http://www.nsp-code.com/donate.php
-Tags: post order, posts order, sort, post sort, posts sort, post type order, custom order, admin posts order
+Tags: post order, posts order, post sort, posts sort, post types order
 Requires at least: 2.8
-Tested up to: 6.3
-Stable tag: 2.1
+Tested up to: 6.5.3
+Stable tag: 2.2.3
 
 Sort Posts and custom Post Type Objects (custom post types) using a Drag and Drop Sortable JavaScript AJAX interface or default WordPress dashboard. 
 
 == Description ==
 
-<strong>Over 6.8 MILLIONS DOWNLOADS and near PERFECT rating out of 200 REVIEWS</strong>. <br />
+<strong>Over 9.8 MILLIONS DOWNLOADS and near PERFECT rating out of 200 REVIEWS</strong>. <br />
 A powerful plugin, Order Posts and Post Types Objects using a Drag and Drop Sortable JavaScript capability. 
 
 The order can be customized within **default WordPress post type archive list page** or **a separate Re-Order interface** which displays all objects.
@@ -27,7 +27,7 @@ This plugin was developed considering everyone to be able to use the sorting fea
 * If prefer sort apply through the code, include 'orderby' =>'menu_order' within custom query arguments, more details at http://www.nsp-code.com/sample-code-on-how-to-apply-the-sort-for-post-types-order-plugin/
 
 = Example of Usage =
-[youtube http://www.youtube.com/watch?v=VEbNKFSfhCc] 
+[youtube https://www.youtube.com/watch?v=6-so4UH-n6M] 
 
 As you can see just a matter of drag and drop and post ordering will change on front side right away.
 If for some reason the post order does not update on your front side, you either do something wrong or the theme code you are using does not use a standard query per WordPress Codex rules and regulations. But we can still help, use the forum to report your issue as there are many peoples who gladly help or get in touch with us.
@@ -92,7 +92,33 @@ A filter can be used to achieve that pto/posts_orderby. An example can be found 
 Consider upgrading to our advanced version of this plugin at a very resonable price <a target="_blank" href="http://www.nsp-code.com/premium-plugins/wordpress-plugins/advanced-post-types-order/">Advanced Post Types Order</a>
 
 
-== Change Log ==  
+== Change Log ==
+
+= 2.2.3 = 
+ - When order update, attempt to clear the site / server caches. 
+ - Set Yes as default for the option to Enable sortable drag-and-drop functionality within the default WordPress post type archive.
+ - WordPress 6.5.3 compatibility tag.
+
+= 2.2.1 = 
+ - Options interface layout updates.
+ - Code cleanup
+ - Remove unused svg icon file.
+ 
+= 2.2 =
+ - Formidable style fix when Autosort is active.
+ - Plugin headers format update.
+ - WordPress 6.5 compatibility check and tag update ( RC1 )
+ 
+= 2.1.8 =
+ - Fix: Media/images order, retrieve the items per page from user upload_per_page
+ 
+= 2.1.4 =
+ - PHP Deprecated fix: Constant FILTER_SANITIZE_STRING is deprecated
+ - WordPress 6.4.3 compatibility check and tag update
+
+= 2.1.2 =
+ - PHP 8.2.4 check for compatibility
+ - WordPress 6.4.2 compatibility check and tag update
 
 = 2.1 =
  - Trigger wp_cache_flush when saving the order to clear the internal caches

@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Ustawienia plików cookie"
+                "title": "Preferencje co do zgód"
             }
         },
         "auditTable": {
@@ -103,7 +103,7 @@
         "notice": {
             "elements": {
                 "title": "Cenimy prywatność użytkowników",
-                "description": "Ta strona internetowa lub jej narzędzia stron trzecich przetwarzają dane osobowe. Możesz zrezygnować ze sprzedaży swoich danych osobowych, klikając łącze „Nie sprzedawaj i nie udostępniaj moich danych osobowych”.",
+                "description": "<p>Ta strona internetowa lub jej narzędzia stron trzecich przetwarzają dane osobowe. Możesz zrezygnować ze sprzedaży swoich danych osobowych, klikając łącze „Nie sprzedawaj i nie udostępniaj moich danych osobowych”.</p>",
                 "privacyLink": "",
                 "buttons": {
                     "elements": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Ustawienia plików cookie"
+                "title": "Preferencje co do zgód"
             }
         },
         "auditTable": {

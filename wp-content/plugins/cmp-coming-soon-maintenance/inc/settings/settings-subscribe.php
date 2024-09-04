@@ -23,7 +23,7 @@ if (isset($_POST['niteoCS_subscribe_method']))  {
 }
 
 if (isset($_POST['niteoCS_mailchimp_apikey']))  {
-	update_option('niteoCS_mailchimp_apikey', sanitize_text_field($_POST['niteoCS_mailchimp_apikey']));
+	update_option('niteoCS_mailchimp_apikey', $this->sanitize_api_key($_POST['niteoCS_mailchimp_apikey']));
 }
 
 if (isset($_POST['niteoCS_mailchimp_list_selected']))  {

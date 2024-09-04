@@ -1,17 +1,19 @@
-=== TeraWallet – Best WooCommerce Wallet System With Cashback Rewards, Partial Payment, Wallet Refunds ===
+=== Wallet for WooCommerce ===
 Contributors: standalonetech, subratamal, moumitaadak
-Tags: woo wallet, woocommerce wallet, digital wallet, user wallet, refund, cashback, partial payment, wallet, wc wallet, woocommerce credits
-Requires PHP: 7.3
-Requires at least: 6.0
-Tested up to: 6.3
-Stable tag: 1.4.9
+Tags: terawallet, woocommerce wallet, digital wallet, cashback, partial payment
+Requires PHP: 7.4
+Requires at least: 6.4
+Tested up to: 6.5
+Stable tag: 1.5.4
 Donate link: https://donate.stripe.com/fZeaFydax6NNfjWeVc
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A powerful, extendable WooCommerce wallet system which support payment, partial payment, cashback reward program as well as refund for your WooCommerce store.
+A extendable WooCommerce wallet system which support payment, partial payment, cashback reward program as well as refund for your WooCommerce store.
 
 == Description ==
+
+= Maximize Convenience and Savings: Wallet for WooCommerce Facilitates Quick Funds, Cashback, Refunds, and Partial Payments! =
 
 TeraWallet is an advanced digital wallet and credit system specially designed for WooCommerce. It empowers you to offer your customers a seamless payment experience by allowing them to deposit funds into their accounts, transfer money to other users, and make purchases using their wallet balance.
 
@@ -46,6 +48,7 @@ With this plugin, your customers no longer need to repeatedly enter payment deta
 - Support multiple languages translations.
 - Support [CURCY – Multi Currency for WooCommerce](https://wordpress.org/plugins/woo-multi-currency/)
 - Support [FOX – Currency Switcher Professional for WooCommerce](https://wordpress.org/plugins/woocommerce-currency-switcher/)
+- Support [WooCommerce Multilingual & Multicurrency with WPML](https://wpml.org/)
 - Support WooCommerce block checkout.
 - Support WooCommerce Subscriptions.
 - Support WooCommerce Multivendor Marketplace by WC Lovers.
@@ -56,7 +59,7 @@ With this plugin, your customers no longer need to repeatedly enter payment deta
 
 = Workflow of TeraWallet =
 After the plugin installation, the admin needs to do the payment method configuration. Set the title and select allowed payments for adding money.
-Now for enable cashback rules, navigate to WooWallet > Settings >  Credit. Now setup cashback rule according to your requirement. If cashback rule set to product wise then admin will have an option to add cashback rule for each product.
+Now for enable cashback rules, navigate to TeraWallet > Settings >  Credit. Now setup cashback rule according to your requirement. If cashback rule set to product wise then admin will have an option to add cashback rule for each product.
 On the front-end, the customers can log in to the store and go to wallet page from My Account. Enter the amount to add and then complete the checkout process just like any other product purchase.
 
 = Premium extensions =
@@ -74,7 +77,7 @@ On the front-end, the customers can log in to the store and go to wallet page fr
 
 = Minimum Requirements =
 
-* PHP 7.3 or greater is required (PHP 8.0 or greater is recommended)
+* PHP 7.4 or greater is required (PHP 8.0 or greater is recommended)
 * MySQL 5.6 or greater, OR MariaDB version 10.1 or greater, is required
 * WordPress 6.0 or greater is required
 * WooCommerce 7.2 or greater is required
@@ -99,7 +102,7 @@ If on the off-chance you do encounter issues with the wallet endpoints pages aft
 
 = Does this plugin work with newest WP version and also older versions? =
 
-Yes, this plugin works fine with WordPress 4.9, It is also compatible for older WordPress versions upto 4.4.
+Yes, this plugin works fine with WordPress 6.5, It is also compatible for older WordPress versions upto 6.0.
 
 = Up to which version of WooCommerce this plugin compatible with? =
 
@@ -138,6 +141,37 @@ Yes you can! Join in on our [GitHub repository](https://github.com/malsubrata/wo
 9. Wallet actions.
 
 == Changelog ==
+= v1.5.4 ( May 10, 2024 ) =
+- **Fix:-** Multiple refund of partial payment amount when order cancelled.
+- **Fix:-** Rewrite rule issues for wallet endpoints.
+
+= v1.5.3 ( May 02, 2024 ) =
+- **Fix:-** Partial payment option not showing at old WooCommerce checkout page issue.
+
+= v1.5.2 ( May 02, 2024 ) =
+- **Added:-** Support for WooCommerce HPOS.
+- **Added:-** Support for WooCommerce block cart & checkout.
+- **Added:-** Partial payment option for WooCommerce block cart & checkout.
+- **New:-** Now customer can enter amount they want to redeem at cart & checkout page.
+- **Fix:-** Conflict with WooCommerce Square plugin.
+- **Fix:-** Partial payment amount not debited issue for WooCommerce block checkout.
+- **Fix:-** Coupon cashback issue for WooCommerce block checkout.
+
+= 1.5.1 - 2024-03-20 =
+* Added - Escaping functions for rendering html content.
+
+= 1.5.0 - 2024-03-09 =
+* Fix - Vulnerability: Cross Site Scripting (XSS)
+
+= 1.4.11 - 2024-03-01 =
+* Fix - Compatibility issues with PHP 8.1
+* Fix - Missing Authorization to Authenticated (Subscriber+) User Email Export
+
+= 1.4.10 - 2023-11-23 =
+* New - Added WooCommerce Multilingual & Multicurrency with WPML plugin support.
+* Fix - Compatibility issue with Dokan 3.8
+* Fix - PHP issues
+
 = 1.4.9 - 2023-08-17 =
 * New - Added sell your content action ( Using this action you can sell your site content using wallet balance).
 * New - Export user wallet balance ( Now site admin also export only user balance of the website in CSV file).

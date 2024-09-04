@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.7
-Tested up to: 6.3.1
-Stable tag: 1.11.2
+Tested up to: 6.5.3
+Stable tag: 1.12.2
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,27 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.12.2 =
+* Fixed the "Media" menu always being highlighted as "new" when the "Enable Media Replace" plugin is active.
+* Fixed PHP warning "Attempt to read property "cap_key" on null" that could potentially be triggered if a metadata update happened for a non-existent user or the user couldn't be retrieved.
+* Fixed a conflict with UIPress where the admin menu settings were not being applied.
+* Updated the MailPoet compatibility fix to also work with MailPoet 4.49.1.
+* Other minor bug fixes.
+* Tested with WP 6.6-alpha.
+
+= 1.12.1 =
+* Made menu editor toolbars "sticky". They will now stay below the admin bar when scrolling down, which can be useful when editing very long menus.
+* Restored the "custom item" indicator for the "Modern" editor color scheme. Previously, it was not visible in the menu editor when using that color scheme.
+* Fixed a missing nonce check when hiding the "Upgrade to Pro" panel.
+* Migrated to Lodash 4.
+* Tested with WP 6.5-alpha.
+
+= 1.12 =
+* Added a search box for menu icons.
+* Added more Dashicons. Now the icon dropdown should include all currently existing Dashicons.
+* Fixed a visual bug where the icon would become unreasonably narrow when no icon was selected.
+* Tested with WP 6.3.2 and 6.4-beta4.
 
 = 1.11.2 =
 * Fixed a conflict that prevented users from changing the menu icon of the Wordfence plugin (and possibly some other plugins that use similar CSS).

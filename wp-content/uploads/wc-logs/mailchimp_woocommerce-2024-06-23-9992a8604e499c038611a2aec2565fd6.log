@@ -1,0 +1,8 @@
+2024-06-23T10:26:46+00:00 ERROR webhook :: <p>url: We couldn't verify the URL is working. Please double check and try again. HTTP Code: 503</p>
+2024-06-23T10:26:46+00:00 ERROR webhook :: <p>url: We couldn't verify the URL is working. Please double check and try again. HTTP Code: 503</p>
+2024-06-23T10:26:48+00:00 NOTICE webhooks :: Ran plugin updater
+2024-06-23T10:26:48+00:00 NOTICE webhooks :: Ran plugin updater
+2024-06-23T10:48:37+00:00 NOTICE handleOrderUpdate :: order_status
+2024-06-23T10:48:37+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Single_Order starts in 90 seconds :: obj_id 62561
+2024-06-23T10:48:37+00:00 NOTICE handleOrderUpdate :: order_status
+2024-06-23T11:23:56+00:00 NOTICE order_submit :: #62561 has a financial status of pending and was skipped.

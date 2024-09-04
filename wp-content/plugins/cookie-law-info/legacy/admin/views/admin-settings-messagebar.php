@@ -92,10 +92,10 @@ if ( ! defined( 'WPINC' ) ) {
 						<th scope="row"><label for="notify_position_vertical_field"><?php echo esc_html__( 'Position:', 'cookie-law-info' ); ?></label></th>
 						<td>
 							<?php
-							$notify_positon = ( isset( $the_options['notify_position_vertical'] ) ? $the_options['notify_position_vertical'] : 'bottom' );
+							$notify_position = ( isset( $the_options['notify_position_vertical'] ) ? $the_options['notify_position_vertical'] : 'bottom' );
 							?>
-							<input type="radio" id="notify_position_vertical_field_top" name="notify_position_vertical_field" class="styled cli_form_toggle" cli_frm_tgl-target="cli_bar_pos" value="top" <?php checked( $notify_positon, 'top' ); ?> /> <?php echo esc_html__( 'Header', 'cookie-law-info' ); ?>
-							<input type="radio" id="notify_position_vertical_field_bottom" name="notify_position_vertical_field" class="styled cli_form_toggle" cli_frm_tgl-target="cli_bar_pos" value="bottom" <?php checked( $notify_positon, 'bottom' ); ?> /> <?php echo esc_html__( 'Footer', 'cookie-law-info' ); ?>
+							<input type="radio" id="notify_position_vertical_field_top" name="notify_position_vertical_field" class="styled cli_form_toggle" cli_frm_tgl-target="cli_bar_pos" value="top" <?php checked( $notify_position, 'top' ); ?> /> <?php echo esc_html__( 'Header', 'cookie-law-info' ); ?>
+							<input type="radio" id="notify_position_vertical_field_bottom" name="notify_position_vertical_field" class="styled cli_form_toggle" cli_frm_tgl-target="cli_bar_pos" value="bottom" <?php checked( $notify_position, 'bottom' ); ?> /> <?php echo esc_html__( 'Footer', 'cookie-law-info' ); ?>
 						</td>
 					</tr>
 					<!-- header_fix code here -->
