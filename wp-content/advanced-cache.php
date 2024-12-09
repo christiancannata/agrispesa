@@ -23,6 +23,10 @@ if (
 }
 
 
+if ( file_exists( '/shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php' ) && ! class_exists( 'WP_Rocket_Mobile_Detect' ) ) {
+	include_once '/shared/httpd/agrispesa/wp-content/plugins/wp-rocket/inc/classes/dependencies/mobiledetect/mobiledetectlib/Mobile_Detect.php';
+}
+
 
 spl_autoload_register(
 	function( $class ) use ( $rocket_path ) {

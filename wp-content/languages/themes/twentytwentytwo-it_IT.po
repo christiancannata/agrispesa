@@ -7,16 +7,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.11\n"
+"X-Generator: GlotPress/4.0.1\n"
 "Language: it\n"
 "Project-Id-Version: Themes - Twenty Twenty-Two\n"
 
 #. Description of the theme
+#: style.css
 #, gp-priority: high
 msgid "Built on a solidly designed foundation, Twenty Twenty-Two embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong, its color palette is drawn from nature, and its layout elements sit gently on the page. The true richness of Twenty Twenty-Two lies in its opportunity for customization. The theme is built to take advantage of the Site Editor features introduced in WordPress 5.9, which means that colors, typography, and the layout of every single page on your site can be customized to suit your vision. It also includes dozens of block patterns, opening the door to a wide range of professionally designed layouts in just a few clicks. Whether you’re building a single-page website, a blog, a business website, or a portfolio, Twenty Twenty-Two will help you create a site that is uniquely yours."
 msgstr "Sviluppato su solide fondamenta ben progettate, Twenty Twenty-Two abbraccia l'idea che tutti meritano un sito web davvero unico. Gli stili tenui del tema si ispirano alla diversità e alla versatilità degli uccelli: la tipografia è leggera, ma decisa, la tavolozza dei colori richiama la natura e gli elementi del layout si distribuiscono con delicatezza nella pagina. La vera ricchezza di Twenty Twenty-Two sta nelle sue possibilità di personalizzazione. Il tema è stato sviluppato per sfruttare le funzionalità del Full Site Editing introdotte con WordPress 5.9, il che significa che i colori, la tipografia e il layout di ogni singola pagina del tuo sito possono essere personalizzati per adattarsi alla tua immaginazione. Include anche dozzine di pattern di blocchi, per darti un'ampia gamma di layout professionali tramite pochi clic. Che tu stia costruendo un sito a pagina singola, un blog, un sito commerciale o un portfolio, Twenty Twenty-Two ti aiuterà a creare un sito che sarà veramente tuo."
 
 #. Theme Name of the theme
+#: style.css
 #, gp-priority: high
 msgid "Twenty Twenty-Two"
 msgstr "Twenty Twenty-Two"
@@ -180,27 +182,27 @@ msgctxt "Gradient name"
 msgid "Vertical secondary to tertiary"
 msgstr "In verticale dal secondario al terziario"
 
-#: theme.json styles/blue.json styles/pink.json styles/swiss.json
+#: styles/blue.json styles/pink.json styles/swiss.json theme.json
 msgctxt "Color name"
 msgid "Tertiary"
 msgstr "Terziario"
 
-#: theme.json styles/blue.json styles/pink.json styles/swiss.json
+#: styles/blue.json styles/pink.json styles/swiss.json theme.json
 msgctxt "Color name"
 msgid "Secondary"
 msgstr "Secondario"
 
-#: theme.json styles/blue.json styles/pink.json styles/swiss.json
+#: styles/blue.json styles/pink.json styles/swiss.json theme.json
 msgctxt "Color name"
 msgid "Primary"
 msgstr "Primario"
 
-#: theme.json styles/blue.json styles/pink.json styles/swiss.json
+#: styles/blue.json styles/pink.json styles/swiss.json theme.json
 msgctxt "Color name"
 msgid "Background"
 msgstr "Sfondo"
 
-#: theme.json styles/blue.json styles/pink.json styles/swiss.json
+#: styles/blue.json styles/pink.json styles/swiss.json theme.json
 msgctxt "Color name"
 msgid "Foreground"
 msgstr "Primo piano"
@@ -924,16 +926,19 @@ msgid "Featured"
 msgstr "In evidenza"
 
 #. Theme URI of the theme
+#: style.css
 #, gp-priority: low
 msgid "https://wordpress.org/themes/twentytwentytwo/"
 msgstr "https://wordpress.org/themes/twentytwentytwo/"
 
 #. Author URI of the theme
+#: style.css
 #, gp-priority: low
 msgid "https://wordpress.org/"
 msgstr "https://wordpress.org/"
 
 #. Author of the theme
+#: style.css
 #, gp-priority: low
 msgid "the WordPress team"
 msgstr "il team di WordPress"

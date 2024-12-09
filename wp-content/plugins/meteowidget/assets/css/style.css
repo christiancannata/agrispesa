@@ -1,0 +1,100 @@
+
+.meteofetch {background-color: #203A4B; padding: 10px; padding-bottom: 20px;}
+.meteofetch h4 {color: #ffffff;}
+.meteofetch p {color: #ffffff; margin: 0;}
+.meteofetch small.text-muted {color: #ffffff !important;}
+.meteofetch .firstInfo {text-align: left; margin: 10px auto; background: #3E5561; border-top: 2px solid #677983; border-bottom: 2px solid #677983; }
+.meteofetch h3.fetcherTitle {text-align: center; margin: 10px 0; color: #ffffff;}
+.meteofetch .fetcherInfo {text-align: center;}
+.meteofetch .text-muted {color: #ffffff;}
+.meteofetch .microinfo p {margin: 5px 0 ;}
+.meteofetch .evid {text-transform: uppercase; font-weight: bold;}
+.meteofetch .tempril {font-size: 32px; text-align: center;}
+.meteofetch .altreinfo, .meteofetch .pluginfooter {margin: 10px auto;}
+.meteofetch .altreinfo {text-align: center;}
+.meteofetch .altreinfo p {margin: 4px 0;}
+.meteofetch .sep {    width: 100%;
+    border-top: 1px solid #ffffff;
+    margin: 3px;}
+
+.meteofetch .bigsep {
+  width: 100%;
+     border-top: 2px solid #ffffff;
+     margin: 3px;
+}
+.meteofetch .pluginfooter h4 {margin: 0; margin-bottom: 14px;}
+.meteofetch .pluginfooter p {padding-bottom: 10px;}
+.meteofetch .icone img {padding: 5px;}
+.meteofetch .icone .col-3 {text-align: center; }
+.meteofetch .consigli h4 {text-align: center;}
+.meteofetch .consigli .dove {font-size: 1em;}
+.meteofetch .portate {margin-top: 12px; text-align: center;}
+.meteofetch .portate h4 {text-align: center;}
+
+.meteofetch .icone img {padding: 10px; max-width: 100px;}
+.meteofetch .ombrello {font-size: 3em;}
+.meteofetch .cloud {font-size: 1.6em; color: #ffffff; margin-bottom: 5px;}
+.meteofetch .wind {font-size: 1.6em; color: #ffffff;}
+.meteofetch .snow {font-size: 1.6em; color: #ffffff;}
+
+.meteofetch .temp {justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+
+.meteofetch .history, .meteofetch .history div {padding: 0;}
+.meteofetch .history .col-6, .meteofetch .history .col-1 {float: left; height:20px;}
+.meteofetch .history {border-top: 1px solid white; text-align: center; background-color: #3E5561;}
+
+
+.meteofetch .allertaverde {background-color: #008000;}
+.meteofetch .allertagialla {background-color: #CCCC00;}
+.meteofetch .allertaarancione {background-color: #FF8C00;}
+.meteofetch .allertarossa {background-color: #FF0000;}
+.meteofetch .firstInfo.chill {background-color: #399cbd;}
+
+.meteofetch .alertmessage .fas {font-size: 1em;}
+.meteofetch .firstInfo[class*="allerta"] .avvisoall p, .meteofetch .firstInfo[class*="allerta"] .cloud, .meteofetch .firstInfo[class*="allerta"] .wind {color: #203A4B !important;}
+.meteofetch .avvisoall {text-align: center;     border-top: 1px solid white;
+    padding-top: 10px;
+    padding-bottom: 10px;}
+
+.meteofetch .avvisoall strong {text-transform: uppercase;}
+.meteofetch .segnatempo {color: #ffffff;font-size: 12px; font-weight: bold;}
+/** style bianco **/
+
+.meteofetch.bianco {background-color: #F3F3F3;}
+.meteofetch.bianco h4 {color: #203A4B;}
+.meteofetch.bianco p {color: #203A4B;}
+.meteofetch.bianco small.text-muted {color: #203A4B !important;}
+.meteofetch.bianco .firstInfo {background: #FFFFFF; border-top: 2px solid #FFFFFF; border-bottom: 2px solid #FFFFFF; }
+.meteofetch.bianco h3.fetcherTitle {color: #203A4B;}
+.meteofetch.bianco .text-muted {color: #203A4B;}
+.meteofetch.bianco .sep { border-top: 1px solid #203A4B;}
+.meteofetch.bianco .bigsep {border-top: 2px solid #203A4B;}
+.meteofetch.bianco .cloud {font-size: 1.6em; color: #203A4B; margin-bottom: 5px;}
+.meteofetch.bianco .wind {font-size: 1.6em; color: #203A4B;}
+.meteofetch.bianco .firstInfo.chill div p {color: #ffffff !important;}
+.meteofetch.bianco .firstinfo .avvisoall p {color: #fff !important;}
+.meteofetch.bianco .history {background-color: #FFFFFF;}
+.meteofetch.bianco .firstInfo .history p, .meteofetch.bianco .firstInfo div p {color: #203A4B !important;}
+.meteofetch.bianco .firstInfo[class*="allerta"] .avvisoall p, .meteofetch.bianco .firstInfo[class*="allerta"] .avvisoall .cloud, .meteofetch.bianco .firstInfo[class*="allerta"] .avvisoall .wind {color: #ffffff !important;}
+.meteofetch.bianco .alertmessage .fas {font-size: 1em;}
+.meteofetch.bianco .segnatempo {color: #000000;font-size: 12px; font-weight: bold;}
+@media (max-width: 768px) {
+.meteofetch .firstInfo {padding-top: 30px; padding-bottom: 30px;text-align: center;}
+.meteofetch .altreinfo p {text-align: center;}
+.meteofetch .icone img {padding: 10px;}
+.portate p, .portate h4 {text-align: center;}
+ .icone {margin-bottom: 20px;}
+ .meteofetch .icon div {text-align: center; }
+ }
+
+
+ @media (max-width: 576px) {
+
+ .meteofetch .icone img {padding: 3px; max-width: 100%;}
+ .meteofetch .icon div {text-align: center; }
+
+
+  }

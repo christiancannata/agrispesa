@@ -3592,91 +3592,100 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-    register_rest_route("agrispesa/v1", "user-blocked-weeks", [
-        "methods" => "GET",
-        "permission_callback" => function () {
-            return true;
-        },
-        "callback" => function ($request) {
-            $loggedUser = $_GET["userId"];
+register_rest_route("agrispesa/v1", "user-blocked-weeks", [
+    "methods" => "GET",
+    "permission_callback" => function () {
+        return true;
+    },
+    "callback" => function ($request) {
+        $loggedUser = $_GET["userId"];
 
-            $startDate = $_GET["start"];
-            $startDate = new DateTime($startDate);
+        $startDate = $_GET["start"];
+        $startDate = new DateTime($startDate);
 
-            $endDate = $_GET["end"];
-            $endDate = new DateTime($endDate);
+        $endDate = $_GET["end"];
+        $endDate = new DateTime($endDate);
 
-            $subscription = wcs_get_subscriptions([
-                "subscriptions_per_page" => 1,
-                "orderby" => "ID",
-                "order" => "DESC",
-                "subscription_status" => ["active", "on-hold"],
-                "customer_id" => $loggedUser,
-            ]);
-            $subscription = reset($subscription);
+        $subscription = wcs_get_subscriptions([
+            "subscriptions_per_page" => 1,
+            "orderby" => "ID",
+            "order" => "DESC",
+            "subscription_status" => ["active", "on-hold"],
+            "customer_id" => $loggedUser,
+        ]);
 
-            require_once get_template_directory() .
-                "/libraries/carbon/autoload.php";
+        $subscription = reset($subscription);
 
-            $fromDate = new Carbon\Carbon($startDate);
+        require_once get_template_directory() .
+            "/libraries/carbon/autoload.php";
 
-            $fromDate =
-                $fromDate->dayOfWeek == Carbon\Carbon::WEDNESDAY
-                    ? $fromDate
-                    : $fromDate->copy()->modify("next Wednesday");
+        $fromDate = new Carbon\Carbon($startDate);
 
-            $toDate = new Carbon\Carbon($endDate);
-            $dates = [];
+        $fromDate =
+            $fromDate->dayOfWeek == Carbon\Carbon::WEDNESDAY
+                ? $fromDate
+                : $fromDate->copy()->modify("next Wednesday");
 
-            $events = [];
+        $toDate = new Carbon\Carbon($endDate);
+        $dates = [];
+        $events = [];
 
-            $disabledWeeks = get_post_meta(
+        // Ottieni gli anni compresi tra startDate e endDate
+        $startYear = $fromDate->format("Y");
+        $endYear = $toDate->format("Y");
+
+        $disabledWeeks = [];
+        for ($year = $startYear; $year <= $endYear; $year++) {
+            $yearWeeks = get_post_meta(
                 $subscription->get_id(),
-                "disable_weeks_" . $startDate->format("Y"),
+                "disable_weeks_" . $year,
                 true
             );
 
+            if (is_array($yearWeeks)) {
+                $disabledWeeks = array_merge($disabledWeeks, $yearWeeks);
+            }
+        }
 
-            if (is_array($disabledWeeks)) {
+        // Calcolo degli eventi per le settimane disabilitate
+        if (is_array($disabledWeeks)) {
+            for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
+                if (in_array($date->format("W"), $disabledWeeks)) {
+                    $timestamp =
+                        mktime(0, 0, 0, 1, 1, date("Y")) +
+                        $date->format("W") * 7 * 24 * 60 * 60;
+                    $timestamp_for_monday =
+                        $timestamp - 86400 * (date("N", $timestamp) - 1);
 
-                for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
+                    $monday = new DateTime();
+                    $monday->setTimestamp($timestamp_for_monday);
+                    $monday->setDate(
+                        $date->format("Y"),
+                        $monday->format("m"),
+                        $monday->format("d")
+                    );
 
-                    if (in_array($date->format("W"), $disabledWeeks)) {
-                        $timestamp =
-                            mktime(0, 0, 0, 1, 1, date("Y")) +
-                            $date->format("W") * 7 * 24 * 60 * 60;
-                        $timestamp_for_monday =
-                            $timestamp - 86400 * (date("N", $timestamp) - 1);
+                    $monday->sub(new \DateInterval('P1W'));
 
-                        $monday = new DateTime();
-                        $monday->setTimestamp($timestamp_for_monday);
-                        $monday->setDate(
-                            $fromDate->format("Y"),
-                            $monday->format("m"),
-                            $monday->format("d")
-                        );
+                    $sunday = clone $monday;
+                    $sunday->modify("next sunday");
 
-						$monday->sub(new \DateInterval('P1W'));
-
-                        $sunday = clone $monday;
-                        $sunday->modify("next sunday");
-
-                        $events[] = [
-                            "start" => $monday->format("Y-m-d 00:00:00"),
-                            "end" => $sunday->format("Y-m-d 23:59:59"),
-                            "title" =>
-                                "Questa settimana non ricevi la Facciamo Noi",
-                            "week" => $sunday->format("W"),
-                        ];
-                    }
+                    $events[] = [
+                        "start" => $monday->format("Y-m-d 00:00:00"),
+                        "end" => $sunday->format("Y-m-d 23:59:59"),
+                        "title" =>
+                            "Questa settimana non ricevi la Facciamo Noi",
+                        "week" => $sunday->format("W"),
+                    ];
                 }
             }
+        }
 
-            $response = new WP_REST_Response($events);
-            $response->set_status(200);
-            return $response;
-        },
-    ]);
+        $response = new WP_REST_Response($events);
+        $response->set_status(200);
+        return $response;
+    },
+]);
 
     register_rest_route("agrispesa/v1", "user-subscriptions", [
         "methods" => "GET",
