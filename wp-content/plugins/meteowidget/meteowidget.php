@@ -5,7 +5,7 @@
 /*
 Plugin Name: Meteo Plugin
 Plugin URL: https://christiancannata.com/
-Version: 1
+Version: 1.2
 Author: Christian Cannata
 Description: Plugin per visualizzare le previsioni meteo
 */
@@ -74,6 +74,7 @@ class MeteoWidget
             'vento_umidita' => 'Vento e Umidità',
             'alba_tramonto' => 'Alba e Tramonto',
             'consigli' => 'Consigli',
+            'cosa_portare' => 'Cosa Portare',
             'fase_lunare' => 'Fase Lunare',
             'barra_stato' => 'Barra Stato',
         );
@@ -278,7 +279,7 @@ class MeteoWidget
 // Prova a recuperare i dati dalla cache
         $cachedData = get_transient('meteofetcher_api_data');
         if ($cachedData !== false) {
-            return $cachedData; // Restituisci i dati dalla cache se disponibili
+           return $cachedData;
         }
 
 // Costruisci la URL con i parametri dinamici
@@ -434,7 +435,7 @@ class MeteoWidget
         $rugiada = $data['dewpoint_c'] ?? $fallbackData['rugiada'] ?? null;
         $percepita = $data['heat_index_c'] ?? $fallbackData['percepita'] ?? null;
 
-        $faseLunare = self::calculateMoonPhase($mysqldate);
+        $faseLunare = self::calculateMoonPhase();
 
         // Preparazione degli alert
         $allertaVento = self::getAllertaVento($velocitaVento);
@@ -573,21 +574,32 @@ class MeteoWidget
         return 0;
     }
 
-    private static function calculateMoonPhase($date)
+    private static function calculateMoonPhase()
     {
+        // Imposta il fuso orario Europe/Rome
+        $timezone = new DateTimeZone("Europe/Rome");
+
+        // Ottieni la data corrente nel fuso orario
+        $currentDate = new DateTime("now", $timezone);
+
         // Data di riferimento: Nuova luna il 6 gennaio 2000 alle 18:14 UTC
-        $baseDate = strtotime("2000-01-06 18:14:00");
-        $targetDate = strtotime($date);
-        $daysSinceBase = ($targetDate - $baseDate) / (24 * 3600);
+        $baseDate = new DateTime("2000-01-06 18:14:00", new DateTimeZone("UTC"));
+
+        // Calcola i giorni trascorsi dalla data di riferimento
+        $daysSinceBase = ($currentDate->getTimestamp() - $baseDate->getTimestamp()) / (24 * 3600);
 
         // Durata media di un ciclo lunare
         $moonCycle = 29.53;
 
         // Calcolo dell'età della luna
-        $age = $daysSinceBase % $moonCycle;
+        $age = fmod($daysSinceBase, $moonCycle); // Usa il modulo float
         if ($age < 0) {
             $age += $moonCycle; // Assicurati che l'età sia sempre positiva
         }
+
+        // Debug: stampa i valori intermedi
+        //echo "Data corrente: " . $currentDate->format("Y-m-d H:i:s") . "\n";
+        //echo "Età della luna: " . $age . " giorni\n";
 
         // Determina la fase della luna
         if ($age < 1.84566) {
@@ -904,18 +916,18 @@ class MeteoWidget
 
     public function cron_activation()
     {
-        if (!wp_next_scheduled('cronFetch')) {
-            wp_schedule_event(time(), 'five_minutes', 'cronFetch');
-            error_log('cronFetch registrato con successo');
+        if (!wp_next_scheduled('cronFetchNew')) {
+            wp_schedule_event(time(), 'five_minutes', 'cronFetchNew');
+            error_log('cronFetchNew registrato con successo');
         } else {
-            error_log('cronFetch è già registrato');
+            error_log('cronFetchNew è già registrato');
         }
 
-        if (!wp_next_scheduled('triggerHistory')) {
-            wp_schedule_event(time(), 'hourly', 'triggerHistory');
-            error_log('triggerHistory registrato con successo');
+        if (!wp_next_scheduled('triggerHistoryNew')) {
+            wp_schedule_event(time(), 'hourly', 'triggerHistoryNew');
+            error_log('triggerHistoryNew registrato con successo');
         } else {
-            error_log('triggerHistory è già registrato');
+            error_log('triggerHistoryNew è già registrato');
         }
     }
 
@@ -993,7 +1005,7 @@ function meteo_parser_new($atts = array())
     $args = shortcode_atts(
         array(
             'columns' => 1, // Numero di colonne (default 1)
-            'sections' => 'temperatura,vento_umidita,alba_tramonto,consigli,fase_lunare,barra_stato', // Sezioni abilitate di default
+            'sections' => 'temperatura,vento_umidita,alba_tramonto,consigli,fase_lunare,barra_stato,cosa_portare', // Sezioni abilitate di default
             'widget_bg' => '#e3e3e3', // Sfondo predefinito per il widget
             'section_bg' => '#ffffff' // Sfondo predefinito per le sezioni
         ),
@@ -1186,6 +1198,7 @@ function meteo_parser_new($atts = array())
 
         .alba-tramonto-wrapper {
             display: flex;
+            justify-content: center;
         }
 
         .cella {
@@ -1545,8 +1558,8 @@ function meteo_parser_new($atts = array())
             const fetchInterval = 300000; // 5 minuti
 
             function fetchWeatherData() {
-                fetch('<?php echo esc_url(rest_url('meteofetcher/v1/weather-data')); ?>')
-                    .then(response => response.json())
+                fetch('<?php echo esc_url(rest_url('meteofetcher/v1/weather-data')); ?>?v=' + new Date().getTime())
+                        .then(response => response.json())
                     .then(data => {
                         <?php if (in_array('temperatura', $sections)): ?>
                         widgetDiv.querySelector(".meteo-temperatura").innerText = data.temperatura;
@@ -1690,8 +1703,8 @@ add_shortcode('meteo_widget', 'meteo_parser_new');
 
 add_filter('cron_schedules', 'five_minutes');
 
-add_action('cronFetch', array($meteoFetcherWidget, 'fetchInfo'));
-add_action('triggerHistory', array($meteoFetcherWidget, 'makeHistory'));
+add_action('cronFetchNew', array($meteoFetcherWidget, 'fetchInfo'));
+add_action('triggerHistoryNew', array($meteoFetcherWidget, 'makeHistory'));
 
 register_activation_hook(__FILE__, array($meteoFetcherWidget, 'activate'));
 

@@ -136,23 +136,27 @@ function sospensioni_abbonamento_page()
 	global $wpdb;
 
 	$today = new DateTime();
+	$currentYear = $today->format('Y');
+	$nextYear = $today->format('Y') + 1;
 
+	// Recupera sia le sospensioni dell'anno corrente che dell'anno successivo
 	$subscriptionsDatabase = $wpdb->get_results(
-		"SELECT * from wp_postmeta where meta_key LIKE 'disable_weeks_" . $today->format('Y') . "'",
+		"SELECT * FROM wp_postmeta
+         WHERE meta_key IN ('disable_weeks_{$currentYear}', 'disable_weeks_{$nextYear}')",
 		ARRAY_A
 	);
 
-
 	$subscriptions = [];
 	foreach ($subscriptionsDatabase as $record) {
-
 		$subscription = wcs_get_subscription($record['post_id']);
 		if (!$subscription) {
 			continue;
 		}
+
 		$subscriptions[$subscription->get_id()] = [
 			'subscription' => $subscription,
-			'weeks' => unserialize($record['meta_value'])
+			'weeks' => unserialize($record['meta_value']),
+			'year' => str_replace('disable_weeks_', '', $record['meta_key']) // Estrae l'anno dalla meta_key
 		];
 	}
 
@@ -160,34 +164,46 @@ function sospensioni_abbonamento_page()
 
 	$weeksArray = [];
 
-	for ($i = $currentWeek;
-		 $i <= 52;
-		 $i++) {
-
+	// Gestisce le settimane dell'anno corrente
+	for ($i = $currentWeek; $i <= 52; $i++) {
 		$weeksArray[] = [
 			'week' => $i,
-			'from' => '',
-			'to' => '',
-			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i) {
-				return in_array($i, $subscription['weeks']);
+			'year' => $currentYear,
+			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i, $currentYear) {
+				return $subscription['year'] == $currentYear && in_array($i, $subscription['weeks']);
 			})
 		];
-
 	}
 
+	// Gestisce le settimane dell'anno successivo
+	for ($i = 1; $i <= 52; $i++) {
+		$weeksArray[] = [
+			'week' => $i,
+			'year' => $nextYear,
+			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i, $nextYear) {
+				return $subscription['year'] == $nextYear && in_array($i, $subscription['weeks']);
+			})
+		];
+	}
 
 	?>
 	<h1>Sospensioni Abbonamento</h1>
 
 	<?php
 	foreach ($weeksArray as $week):
+		if (empty($week['subscriptions'])) continue; // Salta le settimane senza sospensioni
 		?>
-		<h3>Settimana <?php echo $week['week'] ?></h3>
+		<h3>Settimana <?php echo $week['week'] . ' - ' . $week['year']; ?></h3>
 		<table class="table-admin-subscriptions">
-			<thead></thead>
+			<thead>
+			<tr>
+				<th>Nome Cliente</th>
+				<th>Prodotti</th>
+				<th>Azioni</th>
+			</tr>
+			</thead>
 			<tbody>
 			<?php
-
 			usort($week['subscriptions'], function ($a, $b) {
 				return strcmp($a['subscription']->get_shipping_last_name(), $b['subscription']->get_shipping_last_name());
 			});
@@ -196,58 +212,55 @@ function sospensioni_abbonamento_page()
 				$items = $subscription['subscription']->get_items();
 				?>
 				<tr>
-					<td><?php echo $subscription['subscription']->get_shipping_last_name() . " " . $subscription['subscription']->get_shipping_first_name() ?></td>
+					<td>
+						<?php echo $subscription['subscription']->get_shipping_last_name() . " " . $subscription['subscription']->get_shipping_first_name(); ?>
+					</td>
 					<td>
 						<?php
 						foreach ($items as $item) {
-							echo $item->get_name();
+							echo $item->get_name() . "<br>";
 						}
 						?>
 					</td>
 					<td>
 						<a target="_blank"
-						   href="/wp-admin/post.php?post=<?php echo $subscription['subscription']->get_id(); ?>&action=edit">Vai
-							all'abbonamento</a>
+						   href="/wp-admin/post.php?post=<?php echo $subscription['subscription']->get_id(); ?>&action=edit">
+							Vai all'abbonamento
+						</a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
 		</table>
-
-		<style>
-
-
-			.table-admin-subscriptions {
-				border-collapse: collapse;
-				width: 100%;
-			}
-
-			.table-admin-subscriptions td, #customers th {
-				border: 1px solid #ddd;
-				width: 33%;
-				padding: 8px;
-			}
-
-			.table-admin-subscriptions tr:nth-child(even) {
-				background-color: #f2f2f2;
-			}
-
-			.table-admin-subscriptions tr:hover {
-				background-color: #ddd;
-			}
-
-			.table-admin-subscriptions th {
-				background-color: #04AA6D;
-				color: white;
-				padding-bottom: 12px;
-				padding-top: 12px;
-				text-align: left;
-			}
-		</style>
 	<?php endforeach; ?>
 
-	<?php
+	<style>
+		.table-admin-subscriptions {
+			border-collapse: collapse;
+			width: 100%;
+		}
 
+		.table-admin-subscriptions td, .table-admin-subscriptions th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		.table-admin-subscriptions tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		.table-admin-subscriptions tr:hover {
+			background-color: #ddd;
+		}
+
+		.table-admin-subscriptions th {
+			background-color: #04AA6D;
+			color: white;
+			padding: 12px;
+			text-align: left;
+		}
+	</style>
+	<?php
 }
 
 ?>
