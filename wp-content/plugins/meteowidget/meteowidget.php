@@ -5,7 +5,7 @@
 /*
 Plugin Name: Meteo Plugin
 Plugin URL: https://christiancannata.com/
-Version: 1.2
+Version: 1.5
 Author: Christian Cannata
 Description: Plugin per visualizzare le previsioni meteo
 */
@@ -77,6 +77,7 @@ class MeteoWidget
             'cosa_portare' => 'Cosa Portare',
             'fase_lunare' => 'Fase Lunare',
             'barra_stato' => 'Barra Stato',
+            'oroscopo' => 'Oroscopo' // Nuova sezione
         );
 
         ?>
@@ -190,6 +191,61 @@ class MeteoWidget
             dbDelta($sql);
         }
     }
+    static function getZodiacSign($date) {
+        $zodiac = [
+            ['Ariete', '03-21', '04-19'],
+            ['Toro', '04-20', '05-20'],
+            ['Gemelli', '05-21', '06-20'],
+            ['Cancro', '06-21', '07-22'],
+            ['Leone', '07-23', '08-23'],
+            ['Vergine', '08-24', '09-22'],
+            ['Bilancia', '09-23', '10-22'],
+            ['Scorpione', '10-23', '11-21'],
+            ['Sagittario', '11-22', '12-21'],
+            ['Capricorno', '12-22', '01-19'],
+            ['Acquario', '01-20', '02-19'],
+            ['Pesci', '02-20', '03-20']
+        ];
+
+        $currentDate = new \DateTime($date);
+
+        foreach ($zodiac as [$name, $start, $end]) {
+            // Anno corrente
+            $year = $currentDate->format('Y');
+
+            // Creazione delle date di inizio e fine
+            $startDate = new \DateTime("{$year}-{$start}");
+            $endDate = new \DateTime("{$year}-{$end}");
+
+            // Gestione del cambio anno
+            if ($end < $start) { // Segno zodiacale attraversa l'anno (es: Capricorno e Acquario)
+                $endDate->modify('+1 year'); // La fine appartiene all'anno successivo
+            }
+
+            // Verifica se la data corrente è all'interno del range
+            if ($currentDate >= $startDate && $currentDate <= $endDate) {
+                return [
+                    'name' => $name,
+                    'start' => self::formatItalianDate($startDate),
+                    'end' => self::formatItalianDate($endDate)
+                ];
+            }
+        }
+
+        return null; // Nessun segno zodiacale trovato
+    }
+
+// Funzione per formattare la data in italiano
+    static function formatItalianDate($date) {
+        $months = [
+            1 => 'gennaio', 2 => 'febbraio', 3 => 'marzo', 4 => 'aprile',
+            5 => 'maggio', 6 => 'giugno', 7 => 'luglio', 8 => 'agosto',
+            9 => 'settembre', 10 => 'ottobre', 11 => 'novembre', 12 => 'dicembre'
+        ];
+
+        return $date->format('d') . ' ' . ucfirst($months[(int)$date->format('m')]);
+    }
+
 
     public function includes()
     {
@@ -312,8 +368,10 @@ class MeteoWidget
             return null;
         }
 
+
         // Estrai i dati
         $weatherData = self::extractWeatherData($data, $current);
+
 
         // Logica di validazione dei casi
         $selectedCase = self::validateCases($weatherData['temperatura'], $weatherData['velocitaVento'], $weatherData['pressione']);
@@ -442,12 +500,25 @@ class MeteoWidget
         $allertaPioggia = self::getAllertaPioggia();
         $allertaCaldo = self::getAllertaCaldoLevel($percepita);
 
+// Trova il numero maggiore tra i tre livelli di allerta
+        $maxAllerta = max($allertaVento, $allertaPioggia, $allertaCaldo);
+
+// Determina la categoria in base al massimo livello di allerta
+        if ($maxAllerta === $allertaVento) {
+            $category = 'vento';
+        } elseif ($maxAllerta === $allertaPioggia) {
+            $category = 'pioggia';
+        } elseif ($maxAllerta === $allertaCaldo) {
+            $category = 'caldo';
+        } else {
+            $category = null; // Nessun allerta significativo
+        }
+
+// Determina l'allerta principale e i dettagli
         $allerta = self::compareAlert($allertaVento, $allertaPioggia, $allertaCaldo)[0] ?? '';
         $alertIntro = self::compareAlert($allertaVento, $allertaPioggia, $allertaCaldo)[1] ?? '';
-        $allertaDetail = self::getAllertaDetail('caldo', $allertaCaldo)
-            ?? self::getAllertaDetail('pioggia', $allertaPioggia)
-            ?? self::getAllertaDetail('vento', $allertaVento)
-            ?? '';
+        $allertaDetail = self::getAllertaDetail($category, $maxAllerta) ?? '';
+
 
         // Formatta la data
         $dataFormatted = $dateUnform ? (new DateTime($dateUnform))->format('d-m-Y H:i') : null;
@@ -1005,7 +1076,7 @@ function meteo_parser_new($atts = array())
     $args = shortcode_atts(
         array(
             'columns' => 1, // Numero di colonne (default 1)
-            'sections' => 'temperatura,vento_umidita,alba_tramonto,consigli,fase_lunare,barra_stato,cosa_portare', // Sezioni abilitate di default
+            'sections' => 'temperatura,vento_umidita,alba_tramonto,consigli,fase_lunare,barra_stato,cosa_portare,oroscopo', // Sezioni abilitate di default
             'widget_bg' => '#e3e3e3', // Sfondo predefinito per il widget
             'section_bg' => '#ffffff' // Sfondo predefinito per le sezioni
         ),
@@ -1357,6 +1428,12 @@ function meteo_parser_new($atts = array())
         }
 
         <?php echo esc_attr("#".$unique_id); ?>
+        .medium-icon {
+            width: 55px; /* Imposta la larghezza dell'icona */
+            margin: 0 auto !important;
+        }
+
+        <?php echo esc_attr("#".$unique_id); ?>
         .fase-lunare-icon {
             margin: 0 auto;
             width: 120px;
@@ -1539,6 +1616,24 @@ function meteo_parser_new($atts = array())
                                 <span></span>
                             </p>
                             <?php break;
+
+                        case 'oroscopo':
+                            $currentDate = date('Y-m-d');
+                            $zodiacSign = MeteoWidget::getZodiacSign($currentDate);
+                            ?>
+                                <?php if ($zodiacSign): ?>
+                                    <h3>Segno Zodiacale</h3>
+                                    <img src="<?php echo esc_url($baseDir . '/' . strtolower($zodiacSign['name']) . '.png'); ?>"
+                                         alt="<?php echo esc_attr($zodiacSign['name']); ?>"
+                                         class="medium-icon">
+                                    <p style="margin:0 auto;text-align:center"><strong><?php echo esc_html($zodiacSign['name']); ?></strong></p>
+                                    <p style="margin:0 auto;text-align:center"><?php echo esc_html($zodiacSign['start']); ?> - <?php echo esc_html($zodiacSign['end']); ?></p>
+                                <?php else: ?>
+                                    <p>Segno zodiacale non disponibile</p>
+                                <?php endif; ?>
+                            <?php
+                            break;
+
                     endswitch; ?>
                 </div>
             <?php endif; ?>

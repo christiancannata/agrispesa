@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - WordPress Importer - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-10-13 21:04:33+0000\n"
+"PO-Revision-Date: 2024-07-31 21:55:40+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.3\n"
+"X-Generator: GlotPress/4.0.1\n"
 "Language: it\n"
 "Project-Id-Version: Plugins - WordPress Importer - Stable (latest release)\n"
 
@@ -42,22 +42,27 @@ msgid "To make it simpler for you to edit and save the imported content, you may
 msgstr "Per rendere più semplice editare e salvare il contenuto importato potresti voler riassegnare gli elementi importati ad un utente di questo sito, ad esempio al tuo amministratore principale."
 
 #. Author URI of the plugin
+#: wordpress-importer.php
 msgid "https://wordpress.org/"
-msgstr "https://wordpress.org/"
+msgstr "https://it.wordpress.org/"
 
 #. Author of the plugin
+#: wordpress-importer.php
 msgid "wordpressdotorg"
 msgstr "wordpressdotorg"
 
 #. Description of the plugin
+#: wordpress-importer.php
 msgid "Import posts, pages, comments, custom fields, categories, tags and more from a WordPress export file."
 msgstr "Importare articoli, pagine, commenti, campi personalizzati, categorie, tag ed altro da un file di esportazione di WordPress."
 
 #. Plugin URI of the plugin
+#: wordpress-importer.php
 msgid "https://wordpress.org/plugins/wordpress-importer/"
-msgstr "https://wordpress.org/plugins/wordpress-importer/"
+msgstr "https://it.wordpress.org/plugins/wordpress-importer/"
 
 #. Plugin Name of the plugin
+#: wordpress-importer.php
 msgid "WordPress Importer"
 msgstr "Importatore WordPress"
 
@@ -67,15 +72,15 @@ msgstr "Importa <strong>articoli, pagine, commenti, campi personalizzati, catego
 
 #: class-wp-import.php:1335
 msgid "Choose a WXR (.xml) file to upload, then click Upload file and import."
-msgstr "Scegliere un file WXR (.xml) da caricare, quindi fare clic su Carica file ed importalo."
+msgstr "Scegli un file WXR (.xml) da caricare, quindi fi clic su Carica file e importalo."
 
 #: class-wp-import.php:1334
 msgid "Howdy! Upload your WordPress eXtended RSS (WXR) file and we&#8217;ll import the posts, pages, comments, custom fields, categories, and tags into this site."
-msgstr "Caricare il file WordPress eXtended RSS (WXR) e verranno importati in questo sito articoli, pagine, commenti, campi personalizzati, categorie e tag."
+msgstr "Carica un file WordPress eXtended RSS (WXR) e verranno importati in questo sito articoli, pagine, commenti, campi personalizzati, categorie e tag."
 
 #: class-wp-import.php:1319
 msgid "A new version of this importer is available. Please update to version %s to ensure compatibility with newer export files."
-msgstr "&Egrave; disponibile una nuova versione di questo importatore. Si prega di aggiornarlo alla versione %s per garantire la compatibilità con i file di esportazione più recenti."
+msgstr "&Egrave; disponibile una nuova versione di questo importatore. Aggiornalo alla versione %s per garantire la compatibilità con i file di esportazione più recenti."
 
 #: class-wp-import.php:1312
 msgid "Import WordPress"
@@ -91,7 +96,7 @@ msgstr "Nessun file scaricato"
 
 #: class-wp-import.php:1125
 msgid "Remote server did not respond"
-msgstr "Il server  remoto non risponde"
+msgstr "Il server remoto non risponde"
 
 #: class-wp-import.php:1031
 msgid "Invalid file type"
@@ -103,11 +108,11 @@ msgstr "Il recupero degli allegati non è abilitato"
 
 #: class-wp-import.php:946
 msgid "Menu item skipped due to invalid menu slug: %s"
-msgstr "Voce di menu saltata a causa di una abbreviazione di menu menu non valida: %s"
+msgstr "Voce di menu saltata a causa di uno slug di menu non valido: %s"
 
 #: class-wp-import.php:939
 msgid "Menu item skipped due to missing menu slug"
-msgstr "Voce di menu saltata a causa della mancanza dall'abbreviazione del menu"
+msgstr "Voce di menu saltata a causa della mancanza dello slug del menu"
 
 #: class-wp-import.php:753
 msgid "Failed to import %1$s &#8220;%2$s&#8221;"
@@ -155,7 +160,7 @@ msgstr "come un nuovo utente:"
 
 #: class-wp-import.php:290
 msgid "or create new user with login name:"
-msgstr "o crea un nuovo utente con un nome di login"
+msgstr "o crea un nuovo utente con un nome di login:"
 
 #: class-wp-import.php:275
 msgid "Import author:"
@@ -167,7 +172,7 @@ msgstr "Invia"
 
 #: class-wp-import.php:257
 msgid "Download and import file attachments"
-msgstr "Scarica ed importa gli allegati"
+msgstr "Scarica e importa gli allegati"
 
 #: class-wp-import.php:254
 msgid "Import Attachments"
@@ -195,7 +200,7 @@ msgstr "Non è stato possibile trovare il file di esportazione in <code>%s</code
 
 #: class-wp-import.php:152
 msgid "Remember to update the passwords and roles of imported users."
-msgstr "Ricordarsi di aggiornare password e ruoli degli utenti importati."
+msgstr "Ricordati di aggiornare password e ruoli degli utenti importati."
 
 #: class-wp-import.php:151
 msgid "Have fun!"
@@ -207,7 +212,7 @@ msgstr "Operazione completata."
 
 #: class-wp-import.php:108
 msgid "The file does not exist, please try again."
-msgstr "Il file non esiste, si prega di riprovare."
+msgstr "Il file non esiste, riprova."
 
 #: class-wp-import.php:107 class-wp-import.php:116 class-wp-import.php:167
 #: class-wp-import.php:171 class-wp-import.php:180
@@ -217,9 +222,9 @@ msgstr "Si è verificato un errore."
 #: parsers/class-wxr-parser-regex.php:102
 #: parsers/class-wxr-parser-simplexml.php:46
 #: parsers/class-wxr-parser-simplexml.php:52
-#: parsers/class-wxr-parser-xml.php:107
+#: parsers/class-wxr-parser-xml.php:106
 msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
-msgstr "Questo non sembra essere un file WXR, numero di versione WXR mancante o errato "
+msgstr "Questo non sembra essere un file WXR, numero di versione WXR mancante o errato"
 
 #: parsers/class-wxr-parser.php:46
 msgid "Details are shown above. The importer will now try again with a different parser..."

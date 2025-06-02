@@ -1,1131 +1,2501 @@
-# Copyright (C) 2023 YITH
-# This file is distributed under the same license as the YITH WooCommerce Gift Cards package.
+# Translation of Plugins - YITH WooCommerce Gift Cards - Stable (latest release) in Italian
+# This file is distributed under the same license as the Plugins - YITH WooCommerce Gift Cards - Stable (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: YITH WooCommerce Gift Cards 2.17.0\n"
-"Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2023-01-04 14:31:47+00:00\n"
-"PO-Revision-Date: 2023-02-06 21:09+0100\n"
-"Last-Translator: \n"
-"Language-Team: YITH <info@yithemes.com>\n"
-"Language: it_IT\n"
+"PO-Revision-Date: 2024-07-23 14:55:02+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
-"_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
-"esc_html_x:1,2c\n"
-"X-Poedit-Basepath: ..\n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: Poedit 3.2.2\n"
-"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: it\n"
+"Project-Id-Version: Plugins - YITH WooCommerce Gift Cards - Stable (latest release)\n"
 
-#: includes/admin/class-yith-ywgc-backend.php:198
-#: includes/class-yith-ywgc-frontend.php:301
-msgid "Gift card code: "
-msgstr ""
+#: plugin-fw/includes/class-yith-system-status.php:195
+msgid "Database"
+msgstr "Database"
 
-#: includes/admin/class-yith-ywgc-backend.php:260
-msgid "Choose Image"
-msgstr ""
+#: plugin-fw/includes/class-yith-external-services.php:72
+msgctxt "External Services error message"
+msgid "Error: Unable to process the External Services API Request."
+msgstr "Errore: Impossibile elaborare la richiesta API dei servizi esterni."
 
-#: includes/admin/class-yith-ywgc-backend.php:290
-msgid "Set gift card image category"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:293
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin Recover Abandoned Cart"
+msgid "Contact users who have added products to the cart without completing the order and try to recover lost sales."
+msgstr "Contatta gli utenti che hanno aggiunto prodotti al carrello senza completare l'ordine e prova a recuperare le mancate vendite."
 
-#: includes/admin/class-yith-ywgc-backend.php:291
-msgid "Unset gift card image category"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:285
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Customize My Account"
+msgid "Customize the My Account page of your customers by creating custom sections with promotions and ad-hoc content based on your needs."
+msgstr "Personalizza la pagina Il Mio Account dei tuoi clienti creando sezioni dedicate con promozioni e contenuti ad hoc in base alle loro esigenze."
 
-#: includes/admin/class-yith-ywgc-backend.php:319
-msgid "Manage the Media library"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:273
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Dynamic Pricing and Discounts"
+msgid "Increase conversions through dynamic discounts and price rules, and build powerful and targeted offers."
+msgstr "Aumenta le conversioni con le regole di prezzo e sconto dinamiche e crea offerte potenti e mirate."
 
-#: includes/admin/class-yith-ywgc-backend.php:320
-msgid "Done"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:261
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Product Add-Ons"
+msgid "Add paid or free advanced options to your product pages using fields like radio buttons, checkboxes, drop-downs, custom text inputs, and more."
+msgstr "Aggiungi opzioni avanzate gratuite o a pagamento alle tue pagine prodotto usando campi come radio button, checkbox, select, input di testo personalizzati, ecc."
 
-#: includes/admin/class-yith-ywgc-backend.php:360
-#: templates/yith-gift-cards/ywgc-gift-card-template.php:72
-msgid "Gift card"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:249
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Request a Quote"
+msgid "Hide prices and/or the \"Add to cart\" button and let your customers request a custom quote for every product."
+msgstr "Nascondi i prezzi e/o il pulsante \"Aggiungi al carrello\" e permetti ai tuoi clienti di richiedere un preventivo personalizzato per ciascun prodotto."
 
-#: includes/admin/class-yith-ywgc-backend.php:1079
-msgid "Gift card: "
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:236
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH Bookings"
+msgid "Enable a booking/appointment system to manage renting or booking of services, rooms, houses, cars, accommodation facilities and so on."
+msgstr "Abilita un sistema prenotazioni/appuntamenti per gestire affitti o prenotazioni di servizi, stanze, case, auto, servizi ricettivi ecc."
 
-#: includes/admin/class-yith-ywgc-backend.php:1107
-msgid "Used"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:224
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Ajax Product Filter"
+msgid "Help your customers to easily find the products they are looking for and improve the user experience of your shop."
+msgstr "Aiuta i tuoi clienti a trovare facilmente i prodotti che stanno cercando e migliora la user experience del tuo shop."
 
-#: includes/admin/class-yith-ywgc-backend.php:1155
-msgid "Product ID"
-msgstr ""
+#: includes/admin/class-ywgc-admin.php:212
+msgctxt "[YOUR STORE TOOLS TAB] Description for plugin YITH WooCommerce Wishlist"
+msgid "Allow your customers to create lists of products they want and share them with family and friends."
+msgstr "Permetti ai tuoi clienti di creare liste di prodotti a cui sono interessati e condividerle con parenti ed amici."
 
-#: includes/admin/class-yith-ywgc-backend.php:1157
-msgid "Product as a present"
-msgstr ""
+#: plugin-fw/includes/class-yith-post-type-admin.php:470
+msgid "Reset filters"
+msgstr "Reimposta i filtri"
 
-#: includes/admin/class-yith-ywgc-backend.php:1159
-msgid "Present product ID"
-msgstr ""
+#. translators: Hidden accessibility text.
+#: plugin-fw/includes/class-yith-post-type-admin.php:414
+msgid "Show more details"
+msgstr "Mostra più dettagli"
 
-#: includes/admin/class-yith-ywgc-backend.php:1161
-msgid "Present variation ID"
-msgstr ""
+#: plugin-options/settings-options.php:19
+msgid "Configure the gift card categories."
+msgstr "Configura le categorie dei buoni regalo."
 
-#: includes/admin/class-yith-ywgc-backend.php:1163
-#: includes/class-yith-woocommerce-gift-cards.php:229
-msgid "Amount"
-msgstr ""
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:501
+#: plugin-fw/includes/class-yit-plugin-panel.php:1562
+msgid "Options saved!"
+msgstr "Opzioni salvate!"
 
-#: includes/admin/class-yith-ywgc-backend.php:1165
-msgid "Digital"
-msgstr ""
+#: templates/admin/email-settings-tab.php:17
+msgid "Email"
+msgstr "Email"
 
-#: includes/admin/class-yith-ywgc-backend.php:1167
-#: includes/class-yith-woocommerce-gift-cards.php:250
-msgid "Sender's name"
-msgstr ""
+#: views/settings-tabs/html-module.php:42
+msgid "Enable module"
+msgstr "Abilita modulo"
 
-#: includes/admin/class-yith-ywgc-backend.php:1169
-#: includes/class-yith-woocommerce-gift-cards.php:273
-msgid "Recipient's name"
-msgstr "Nome del destinatario"
+#: templates/admin/email-settings-tab.php:42
+msgid "Edit"
+msgstr "Modifica"
 
-#: includes/admin/class-yith-ywgc-backend.php:1171
-#: includes/class-yith-woocommerce-gift-cards.php:284
-msgid "Message"
-msgstr ""
+#: templates/admin/email-settings-tab.php:30
+msgid "Premium"
+msgstr "Premium"
 
-#: includes/admin/class-yith-ywgc-backend.php:1173
-msgid "Design type"
-msgstr ""
+#: templates/admin/email-settings-tab.php:19
+msgctxt "[ADMIN] Column name table emails"
+msgid "Active"
+msgstr "Attiva"
 
-#: includes/admin/class-yith-ywgc-backend.php:1175
-msgid "Design"
-msgstr ""
+#: plugin-options/settings/general-options.php:143
+msgid "If enabled, a PDF with the gift card will be attached to the gift card email."
+msgstr "Se abilitata verrà allegato un PDF con il buono regalo nell'email."
 
-#: includes/admin/class-yith-ywgc-backend.php:1177
-msgid "Subtotal"
-msgstr ""
+#: plugin-options/settings/general-options.php:138
+msgid "Attach PDF"
+msgstr "Allega PDF"
 
-#: includes/admin/class-yith-ywgc-backend.php:1179
-msgid "Subtotal tax"
-msgstr ""
+#: plugin-options/settings/general-options.php:115
+msgid "Email settings"
+msgstr "Impostazioni email"
 
-#: includes/admin/class-yith-ywgc-backend.php:1181
-msgid "Version"
-msgstr ""
+#: plugin-options/settings/general-options.php:100
+msgid "Allow your customers to choose a delivery date and time for the virtual gift card (option not available for physical gift cards delivered at home)."
+msgstr "Permetti ai tuoi clienti di scegliere data e ora di consegna dei buoni regalo virtuali (opzione non disponibile per i buoni regalo fisici consegnati a domicilio)."
 
-#: includes/admin/class-yith-ywgc-backend.php:1183
-msgid "Delivery date"
-msgstr ""
+#: plugin-options/settings/general-options.php:96
+msgid "Allow the user to choose the delivery date and time"
+msgstr "Consenti all'utente di scegliere la data e l'ora di consegna"
 
-#: includes/admin/class-yith-ywgc-backend.php:1185
-msgid "Postdated"
-msgstr ""
+#: plugin-options/settings/general-options.php:92
+msgid "Recipient & Delivery settings"
+msgstr "Impostazioni Destinatario & consegna"
 
-#: includes/admin/class-yith-ywgc-backend.php:1329
-#: includes/admin/class-yith-ywgc-backend.php:1332
-msgid "Gift card updated"
-msgstr ""
+#: plugin-options/settings/general-options.php:81
+msgid "If enabled, customers can enter a custom amount when buying a gift card."
+msgstr "Se abilitata, i clienti possono inserire un importo personalizzato durante l'acquisto di un buono regalo."
 
-#: includes/admin/class-yith-ywgc-backend.php:1330
-msgid "Custom field updated"
-msgstr ""
+#: plugin-options/settings/general-options.php:77
+msgid "Allow custom amount"
+msgstr "Permetti l’inserimento di un importo personalizzato"
 
-#: includes/admin/class-yith-ywgc-backend.php:1331
-msgid "Custom field deleted"
-msgstr ""
+#: plugin-options/settings/general-options.php:63
+msgid "Enable if the customer can upload a custom image/photo for the gift card."
+msgstr "Scegli se permettere o meno all’utente di caricare un’immagine personalizzata per il buono regalo."
 
-#: includes/admin/class-yith-ywgc-backend.php:1333
-msgid "Gift card restored"
-msgstr ""
+#: plugin-options/settings/general-options.php:59
+msgid "Custom Image upload"
+msgstr "Permetti il caricamento di un’immagine personalizzata"
 
-#: includes/admin/class-yith-ywgc-backend.php:1334
-msgid "Gift card published"
-msgstr ""
+#: plugin-options/settings-options.php:14
+msgid "Configure the plugin general settings."
+msgstr "Configura le impostazioni generali."
 
-#: includes/admin/class-yith-ywgc-backend.php:1335
-msgid "Gift card saved"
-msgstr ""
-
-#: includes/admin/class-yith-ywgc-backend.php:1336
-msgid "Gift card submitted"
-msgstr ""
-
-#. translators: %s is the date
-#: includes/admin/class-yith-ywgc-backend.php:1339
-msgid "Gift card scheduled for: %s."
-msgstr ""
-
-#: includes/admin/class-yith-ywgc-backend.php:1342
-msgid "Gift card draft updated."
-msgstr ""
-
-#: includes/admin/class-yith-ywgc-backend.php:1361
-msgid "This code is already used. Please choose another one"
-msgstr ""
-
-#. translators: %s: gift card count
-#: includes/admin/class-yith-ywgc-backend.php:1383
-msgid "%s gift card updated."
-msgid_plural "%s gift cards updated."
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: gift card count
-#: includes/admin/class-yith-ywgc-backend.php:1385
-msgid "%s gift card not updated, somebody is editing it."
-msgid_plural "%s gift cards not updated, somebody is editing them."
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: gift count
-#: includes/admin/class-yith-ywgc-backend.php:1387
-msgid "%s gift card permanently deleted."
-msgid_plural "%s gift cards permanently deleted."
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: gift card count
-#: includes/admin/class-yith-ywgc-backend.php:1389
-msgid "%s gift card moved to the Trash."
-msgid_plural "%s gift cards moved to the Trash."
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: gift card count
-#: includes/admin/class-yith-ywgc-backend.php:1391
-msgid "%s gift card restored from the Trash."
-msgid_plural "%s gift cards restored from the Trash."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/admin/class-ywgc-admin.php:98
-msgid "Dashboard"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:99
-#: includes/class-yith-woocommerce-gift-cards.php:223
+#: plugin-options/settings-options.php:12
+msgctxt "Tab title in plugin settings panel"
 msgid "General"
-msgstr ""
+msgstr "Generali"
 
-#: includes/admin/class-ywgc-admin.php:100
-msgid "Image categories"
-msgstr ""
+#: plugin-options/email-options.php:23
+msgid "Manage and customize the emails sent to users about gift cards."
+msgstr "Gestisci e personalizza le email relative ai buoni regalo inviate agli utenti."
 
-#: includes/admin/class-ywgc-admin.php:108
-msgid ""
-"Set an <strong>expiration date for the gift card</strong> (a specific date, "
-"like January 01, or after a specific time after the purchase, like 3 months "
-"after)"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:109
-msgid "Manage stock of each gift card product"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:110
-msgid "Enable an optional <strong>QR code</strong> in gift cards"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:111
-msgid "Import and export gift cards into a <strong>CSV file</strong>"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:112
-msgid ""
-"Allow users to <strong>choose a delivery date</strong> for the gift card"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:113
-msgid ""
-"Allow users to <strong>enter a custom amount</strong> (and set the minimum "
-"and/or maximum amount)"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:114
-msgid ""
-"Allow users to <strong>upload a custom image or photo</strong> to customize "
-"the gift card"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:115
-msgid "Option to attach a PDF to gift card email"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:116
-msgid ""
-"Notify the sender via email when the gift card is delivered to recipient"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:117
-msgid ""
-"Allow users to enter the gift card code into the standard coupon code field "
-"(instead of showing two different forms in cart and checkout)"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:118
-msgid ""
-"Enable the “Gift this product” option in product pages to sell gift cards "
-"linked to specific products"
-msgstr ""
-
-#: includes/admin/class-ywgc-admin.php:119
-msgid "Regular updates, Translations and Premium Support"
-msgstr ""
-
-#: includes/admin/views/empty-gift-cards-table-state-customer.php:50
-msgid "There are no gift cards to show!"
-msgstr ""
-
-#: includes/admin/views/gift-cards-product-settings.php:20
-msgid "Gift card amounts"
-msgstr ""
-
-#: includes/admin/views/gift-cards-product-settings.php:27
-msgid "Amount value already used"
-msgstr ""
-
-#: includes/admin/views/gift-cards-product-settings.php:28
-msgid "Enter a valid amount"
-msgstr ""
-
-#: includes/class-yith-wc-product-gift-card.php:509
-msgid "Select amount"
-msgstr ""
-
-#: includes/class-yith-wc-product-gift-card.php:509
-msgid "Read more"
-msgstr ""
-
-#. translators: %d: Comment ID
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:171
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:246
-msgid "Gift card %d contains personal data but could not be anonymized."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:614
-msgid "Gift Card"
-msgstr "Carta Regalo"
-
-#: includes/class-yith-woocommerce-gift-cards.php:175
-msgid "Create Gift Card Code"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:176
-msgid "New Gift Card"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:177
-msgid "Edit Gift Card"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:178
-msgid "View Gift Card"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:179
-msgid "All gift cards"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:180
-msgid "Search gift cards"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:181
-msgid "Parent gift cards:"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:182
-#: templates/myaccount/my-giftcards.php:143
-msgid "No gift cards found."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:183
-msgid "No gift cards found in Trash."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:185
-#: includes/class-yith-woocommerce-gift-cards.php:186
-#: includes/class-yith-ywgc-frontend.php:244
-msgid "Gift Cards"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:217
-msgid "Gift card detail"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:230
-msgid "The gift card amount."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:236
-msgid "Current balance"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:237
-msgid "The current amount available for the customer."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:243
-msgid "Virtual"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:244
-msgid ""
-"Check if the gift card will be sent via email. Leave it unchecked to make "
-"this work as a physical gift card."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:251
-msgid "The name of the digital gift card sender, if any."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:262
-msgid "Recipient's email"
-msgstr "Email del destinatario"
-
-#: includes/class-yith-woocommerce-gift-cards.php:263
-msgid "The email address of the digital gift card recipient."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:274
-msgid "The name of the digital gift card recipient."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:285
-msgid "The message attached to the gift card."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:296
-msgid "Internal notes"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:297
-msgid "Enter your notes here. This will only be visible to the admin."
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:424
-msgid "Disabled"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:437
-msgid "Dismissed"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:450
-msgid "Code not valid"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:463
-msgid "Pre-Printed"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:512
+#: plugin-options/settings-options.php:17
+msgctxt "Tab title in plugin settings panel"
 msgid "Gift card categories"
-msgstr ""
+msgstr "Categorie buoni regalo"
 
-#: includes/class-yith-woocommerce-gift-cards.php:513
-#: includes/class-yith-woocommerce-gift-cards.php:522
-msgid "Gift card category"
-msgstr ""
+#: plugin-fw/templates/panel/v2/premium-tab.php:24
+msgctxt "Premium Tab"
+msgid "Check out the advanced features you can get by upgrading to premium!"
+msgstr "Scopri le funzionalità avanzate che puoi ottenere facendo l'upgrade alla versione premium!"
 
-#: includes/class-yith-woocommerce-gift-cards.php:514
-msgid "Search categories"
-msgstr ""
+#: plugin-fw/templates/panel/v2/premium-tab.php:22
+msgctxt "Premium Tab"
+msgid "Upgrade to unlock premium features"
+msgstr "Fai l'upgrade per sbloccare le funzionalità premium"
 
-#: includes/class-yith-woocommerce-gift-cards.php:515
-msgid "All categories"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:124
+msgctxt "Premium Tab"
+msgid "Verified Customer"
+msgstr "Cliente verificato"
 
-#: includes/class-yith-woocommerce-gift-cards.php:516
-msgid "Parent category"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:98
+msgctxt "Premium Tab"
+msgid "100% Money-back guarantee"
+msgstr "Garanzia di rimborso al 100%"
 
-#: includes/class-yith-woocommerce-gift-cards.php:517
-msgid "Parent category:"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:97
+msgctxt "Premium Tab"
+msgid "Technical support"
+msgstr "Assistenza tecnica"
 
-#: includes/class-yith-woocommerce-gift-cards.php:518
-msgid "Edit category"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:96
+msgctxt "Premium Tab"
+msgid "Regular updates"
+msgstr "Aggiornamenti regolari"
 
-#: includes/class-yith-woocommerce-gift-cards.php:519
-msgid "Update gift card category"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:95
+msgctxt "Premium Tab"
+msgid "Advanced features"
+msgstr "Funzionalità avanzate"
 
-#: includes/class-yith-woocommerce-gift-cards.php:520
-msgid "Add new category"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:83
+msgctxt "Premium Tab"
+msgid "Upgrade now to unlock premium features"
+msgstr "Fai subito l'upgrade per sbloccare le funzionalità premium"
 
-#: includes/class-yith-woocommerce-gift-cards.php:521
-msgid "New category name"
-msgstr ""
+#. translators: %s is the discount percentage.
+#: plugin-fw/templates/panel/premium-tab-content.php:79
+msgctxt "Premium Tab"
+msgid "Upgrade now to get a %s%% off"
+msgstr "Fai l'upgrade ora ed ottieni uno sconto del %s%%"
 
-#: includes/class-yith-woocommerce-gift-cards.php:543
-msgid "None"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:546
+#: plugin-fw/includes/class-yit-plugin-panel.php:1305
 msgid ""
-"Select this category in your gift card product if you do not want to display "
-"images in your gift card gallery"
+"At first, I was hesitant to buy the premium version so I started with the free option.\n"
+"After a while, seeing the quality of the plugin and the results I was getting, I decided to give it a shot and switch to premium. No regrets!\n"
+"They have an amazing support team that is always there no matter how big or small your problem is. Do yourself a favor and stop using free plugins that kind of work and just buy whatever plugin you need from YITH."
 msgstr ""
+"All'inizio ho esitato nell'acquisto della versione premium, quindi ho iniziato con quella gratuita.\n"
+"Poi, vista la qualità del plugin e i risultati che stavo ottenendo, ho deciso di fare un tentativo e passare alla premium. Non ho rimpianti!\n"
+"Il team di assistenza è straordinario, sono sempre disponibili indipendentemente da quale sia il problema.\n"
+"Fa' un favore a te stesso: smetti di usare plugin gratuiti ed acquista il plugin che ti serve da YITH."
 
-#: includes/class-yith-woocommerce-gift-cards.php:554
-msgid "All"
-msgstr ""
+#: modules/modules.php:12
+msgid "Enable this module to be able to generate gift cards from your products. With the \"Gift this product\" feature, your customers can buy a gift card with the same value as the product he likes and suggest the product to the recipient."
+msgstr "Abilita questo modulo per generare buoni regalo dai tuoi prodotti. Con la funzionalità \"Regala questo prodotto\" i tuoi clienti potranno acquistare buoni regalo dello stesso valore dei prodotti consigliati al destinatario."
 
-#: includes/class-yith-woocommerce-gift-cards.php:557
-msgid ""
-"Select this category in your gift card product if you want to display all "
-"the images categories in your gift card gallery"
-msgstr ""
+#: modules/modules.php:11
+msgctxt "Module name"
+msgid "Gift this product"
+msgstr "Regala questo prodotto"
 
-#: includes/class-yith-woocommerce-gift-cards.php:822
-msgid "Your message will show up here…"
-msgstr ""
+#: includes/emails/class-yith-ywgc-email-notify-customer.php:25
+msgid "YITH Gift Cards - Used Gift Card"
+msgstr "YITH Gift Cards - Buono regalo utilizzato"
 
-#: includes/class-yith-woocommerce-gift-cards.php:921
-msgid "This gift card code does not exist!"
-msgstr ""
+#: includes/emails/class-yith-ywgc-email-delivered-gift-card.php:29
+msgid "YITH Gift Cards - Delivered Gift Card Notification"
+msgstr "YITH Gift Cards - Notifica consegna buono regalo"
 
-#: includes/class-yith-woocommerce-gift-cards.php:980
-msgid ""
-"It is not possible to add any gift card if the cart contains a subscription-"
-"based product"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:994
-msgid "This code is already applied"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:168
-msgid ""
-"It is not possible to add a gift card code when the cart contains a gift "
-"card product"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:564
-msgid "Gift cards:"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:607
-msgid "Gift card:"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:637
-msgid "[Remove]"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1018
-msgid "Order paid with gift cards for a total amount of %s."
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1045
-msgid "The gift card has an invalid amount"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1157
-msgid "An error occurred while adding the product to the cart."
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1171
-msgid "Add a valid email address for the recipient"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1184
-msgid "The recipient(s) email address is mandatory"
-msgstr ""
-
-#: includes/class-yith-ywgc-cart-checkout.php:1195
-msgid "Email address not valid, please check the following: "
-msgstr ""
-
-#: includes/class-yith-ywgc-frontend.php:308
-#: includes/class-yith-ywgc-gift-cards-table.php:298
-msgid "Sent on %s"
-msgstr ""
-
-#: includes/class-yith-ywgc-frontend.php:311
-#: includes/class-yith-ywgc-gift-cards-table.php:301
-msgid "Scheduled"
-msgstr ""
-
-#: includes/class-yith-ywgc-frontend.php:314
-#: includes/class-yith-ywgc-gift-cards-table.php:304
-msgid "Not yet sent"
-msgstr ""
-
-#: includes/class-yith-ywgc-frontend.php:317
-#: includes/class-yith-ywgc-gift-cards-table.php:307
+#: includes/class-yith-ywgc-frontend.php:312
+msgctxt "gift card delivery status label"
 msgid "Failed"
-msgstr ""
+msgstr "Fallito"
 
-#: includes/class-yith-ywgc-frontend.php:322
-msgid "Recipient: %s"
-msgstr "Destinatario: %s"
+#: includes/class-yith-ywgc-frontend.php:309
+msgctxt "gift card delivery status label"
+msgid "Not yet sent"
+msgstr "Non ancora inviato"
 
-#: includes/class-yith-ywgc-frontend.php:326
-#: includes/class-yith-ywgc-gift-cards-table.php:320
-msgid "Delivery date: %s"
-msgstr ""
+#: includes/class-yith-ywgc-frontend.php:306
+msgctxt "gift card delivery status label"
+msgid "Scheduled"
+msgstr "Programmato"
 
-#: includes/class-yith-ywgc-frontend.php:509
-msgid "Please enter a valid email address"
-msgstr ""
+#: includes/class-yith-ywgc-frontend.php:245
+msgctxt "my account endpoint title"
+msgid "Gift Cards"
+msgstr "Buoni regalo"
 
-#: includes/class-yith-ywgc-gift-card.php:580
-msgid "The gift card code %s does not exist!"
-msgstr ""
+#: includes/admin/taxonomies/class-yith-ywgc-categories.php:147
+msgctxt "empty gift card categories message"
+msgid "You have no gift card categories yet!"
+msgstr "Non hai ancora categorie buoni regalo!"
 
-#: includes/class-yith-ywgc-gift-card.php:583
-msgid ""
-"Sorry, it seems that the gift card code \"%s\" is not yours and cannot be "
-"used for this order."
-msgstr ""
+#: includes/admin/taxonomies/class-yith-ywgc-categories.php:70
+msgctxt "Actions column in the gift card categories table"
+msgid "Actions"
+msgstr "Azioni"
 
-#: includes/class-yith-ywgc-gift-card.php:586
-msgid "The gift card code %s has already been applied!"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:648
+msgctxt "gift cards dashboard description"
+msgid "A table with all the gift card codes generated in your shop."
+msgstr "Tabella con tutti i codici buoni regalo generati nel tuo shop."
 
-#: includes/class-yith-ywgc-gift-card.php:589
-msgid "Sorry, the gift card code %s is expired and cannot be used."
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:647
+msgid "Export/Import"
+msgstr "Esporta/Importa"
 
-#: includes/class-yith-ywgc-gift-card.php:592
-msgid "Sorry, the gift card code %s is currently disabled and cannot be used."
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:647
+msgid "Available on Premium"
+msgstr "Disponibile nella versione Premium"
 
-#: includes/class-yith-ywgc-gift-card.php:595
-msgid "Sorry, the gift card code %s is no longer valid!"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:598
-msgid ""
-"Sorry, it seems that the gift card code %s is invalid - it has been removed "
-"from your cart."
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:601
-#: includes/class-yith-ywgc-gift-card.php:641
-msgid "Gift card codes cannot be used to purchase other gift cards"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:634
-msgid "Gift card code successfully applied."
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:637
-msgid "Gift card code successfully removed."
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:855
-msgid "The gift card has been disabled"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-card.php:858
-msgid "Valid"
-msgstr "Valido"
-
-#: includes/class-yith-ywgc-gift-card.php:861
-msgid "No longer valid, replaced by another code"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:80
-#: templates/myaccount/my-giftcards.php:15
-msgid "Code"
-msgstr "Codice"
-
-#: includes/class-yith-ywgc-gift-cards-table.php:97
-msgid "Purchase order"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:98
-#: templates/myaccount/my-giftcards.php:16
-msgid "Balance"
-msgstr "Credito"
-
-#: includes/class-yith-ywgc-gift-cards-table.php:99
-msgid "Used in orders"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:100
-msgid "Expiration date"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:101
-msgid "Recipient"
-msgstr "Destinatario"
-
-#: includes/class-yith-ywgc-gift-cards-table.php:153
-msgid "Guest"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:185
-msgid "Created manually"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:203
-msgid "Partially redeemed"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:205
-msgid "Completely redeemed"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:207
-#: templates/myaccount/my-giftcards.php:120
-msgid "The code has not been used yet"
-msgstr "Il codice non è ancora stato usato"
-
-#: includes/class-yith-ywgc-gift-cards-table.php:225
-msgid "Unlimited"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:265
-msgid "Send now"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:284
-msgid "This card is dismissed."
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:291
-msgid "Physical product"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:369
-msgid ""
-"You don’t have any gift card code to display. Once a user has purchased a "
-"gift card you will be able to see the code here. You can also manually "
-"create a gift card code to share."
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:378
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:520
+msgctxt "Button text"
 msgid "Create code"
-msgstr ""
+msgstr "Crea codice"
 
-#: includes/compatibilities/elementor/class-ywgc-form-widget.php:40
-msgid "YITH Gift Card Product Form"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:518
+msgid "You have no Gift Cards yet!"
+msgstr "Non ci sono ancora buoni regalo!"
 
-#: includes/compatibilities/elementor/class-ywgc-form-widget.php:65
-msgid "Content"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:398
+msgid "This action cannot be undone and you will be not able to recover this data."
+msgstr "Questa azione non può essere annullata e non potrai recuperare questi dati."
 
-#: includes/compatibilities/elementor/class-ywgc-form-widget.php:73
-msgid "Form Title"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:398
+msgid "Are you sure you want to delete this gift card?"
+msgstr "Sei sicuro di voler eliminare questo buono regalo?"
 
-#: includes/compatibilities/elementor/class-ywgc-form-widget.php:76
-msgid "Your section title"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:386
+msgid "Send email"
+msgstr "Invia email"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:321
+msgctxt "Display the gift card used in specific WC orders, for example, In order: #1234"
+msgid "In order:"
+msgstr "Nell’ordine:"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:279
+msgid "Generated in bulk"
+msgstr "Generato in blocco"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:217
+msgid "Expire on"
+msgstr "Scade il"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:100
+msgid "Not Redeemed"
+msgstr "Non riscattati"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:99
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:216
+msgid "Redeemed"
+msgstr "Riscattati"
+
+#: includes/admin/class-ywgc-admin.php:147
+msgid "Suggest the purchase of a gift card on the product pages: the gift cards will be automatically generated with the same value as the products and they will be highlighted in the e-mail. "
+msgstr "Permetti l’acquisto di buono regalo nelle pagine prodotto: i buoni saranno generati automaticamente con lo stesso valore dei prodotti e quest’ultimi saranno suggeriti nell’ e-mail inviata al destinatario del buono."
+
+#: includes/admin/class-ywgc-admin.php:146
+msgid "\"Gift this product” options to sell more gift cards "
+msgstr "L’opzione \"Regala questo prodotto” per vendere più buoni regali "
+
+#: includes/admin/class-ywgc-admin.php:143
+msgid "Generate and send in bulk multiple gift cards, disable cards, check and manually update their balance, and other options for advanced management."
+msgstr "Genera e invia buoni regalo in massa, disabilita buoni, aggiorna manualmente il credito residuo dei buoni e molte altre opzioni per una gestione ancora più avanzata."
+
+#: includes/admin/class-ywgc-admin.php:142
+msgid "Advanced admin options"
+msgstr "Opzioni avanzate per l’amministratore"
+
+#: includes/admin/class-ywgc-admin.php:139
+msgid "Choose where to show the gift card field on the Cart and Checkout pages, set a minimum requested amount in the cart to allow users to apply a gift card code, exclude specific product categories from redemption, etc."
+msgstr "Scegli dove mostrare il campo per l’inserimento del codice buono regalo nelle pagine Carrello e Checkout, imposta un importo minimo al carrello per il riscatto del buono regalo, escludi specifiche categorie di prodotto dal riscatto del buono regalo, ecc."
+
+#: includes/admin/class-ywgc-admin.php:138
+msgid "Gift card redemption options"
+msgstr "Opzioni per il riscatto del buono regalo"
+
+#: includes/admin/class-ywgc-admin.php:135
+msgid "Notify the sender via e-mail when the gift card is delivered to the recipient and when it is used to purchase in your shop."
+msgstr "Invia notifiche email al mittente per informarlo della consegna del buono regalo e quando quest’ultimo viene utilizzato per un acquisto nel tuo shop."
+
+#: includes/admin/class-ywgc-admin.php:134
+msgid "Notifications to improve user experience "
+msgstr "Notifiche per migliorare l’esperienza utente "
+
+#: includes/admin/class-ywgc-admin.php:131
+msgid "Users can upload or drag and drop a custom image or photo to customize the gift card and make it more special."
+msgstr "Gli utenti possono caricare una foto o trascinare un’immagine personalizzata per rendere il buono regalo ancora più unico e speciale."
+
+#: includes/admin/class-ywgc-admin.php:130
+msgid "Custom images support"
+msgstr "Immagini personalizzate"
+
+#: includes/admin/class-ywgc-admin.php:127
+msgid "Allow users to enter a custom card amount and choose a delivery date and time for the gift card."
+msgstr "Permetti ai tuoi clienti di inserire un importo personalizzato e di scegliere data e ora per la consegna del buono regalo."
+
+#: includes/admin/class-ywgc-admin.php:126
+msgid "Advanced user options"
+msgstr "Opzioni avanzate per gli utenti"
+
+#: includes/admin/class-ywgc-admin.php:123
+msgid "Create unlimited physical gift cards with one or multiple fixed amounts. Physical gift cards can be printed and shipped to customers."
+msgstr "Crea infiniti buoni regalo “fisici” con uno o più importi prestabiliti. I buoni regalo di questo tipo potranno essere stampati e inviati per posta ai clienti."
+
+#: includes/admin/class-ywgc-admin.php:122
+msgid "Sell physical gift cards to ship to customers"
+msgstr "Vendi buoni regalo da spedire fisicamente ai tuoi clienti"
+
+#: includes/admin/class-ywgc-admin.php:106
+msgid "Enable the following modules to unlock additional features for your gift cards."
+msgstr "Abilita i seguenti moduli per sbloccare funzionalità aggiuntive per i tuoi prodotti buoni regalo."
+
+#: includes/admin/class-ywgc-admin.php:105
+msgctxt "Modules tab name"
+msgid "Modules"
+msgstr "Moduli"
+
+#: includes/admin/class-ywgc-admin.php:101
+msgid "Email Settings"
+msgstr "Impostazioni email"
+
+#: includes/admin/class-ywgc-admin.php:97
+msgctxt "Settings tab name"
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: includes/admin/class-ywgc-admin.php:93
+msgctxt "Settings tab name"
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: plugin-fw/templates/panel/v2/your-store-tools-tab.php:51
+msgctxt "Plugin in \"Your Store Tools\" tab"
+msgid "Get it"
+msgstr "Aggiungi"
+
+#: plugin-fw/templates/panel/v2/your-store-tools-tab.php:46
+msgctxt "Plugin in \"Your Store Tools\" tab"
+msgid "Active"
+msgstr "Attivo"
+
+#: plugin-fw/templates/panel/v2/your-store-tools-tab.php:35
+msgctxt "Plugin in \"Your Store Tools\" tab"
+msgid "Best choice"
+msgstr "Scelta migliore"
+
+#: plugin-fw/templates/panel/v2/your-store-tools-tab.php:21
+msgid "Additional tools to improve UX, increase conversions, and loyalize customers."
+msgstr "Strumenti aggiuntivi per migliorare l'UX, aumentare le conversioni e fidelizzare i clienti."
+
+#: plugin-fw/templates/panel/v2/your-store-tools-tab.php:17
+msgid "#1 Independent Seller of <mark>WooCommerce plugins</mark>"
+msgstr "Prima azienda indipendente di <mark>plugin per WooCommerce</mark>"
+
+#: plugin-fw/templates/fields/ajax-orders.php:16
+msgid "Search for an order..."
+msgstr "Cerca un ordine..."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:992
+msgctxt "Panel tab name"
+msgid "Your Store Tools"
+msgstr "Strumenti per il tuo negozio"
+
+#: plugin-fw/templates/panel/premium-tab-content.php:45
+#: plugin-fw/templates/panel/v2/panel-option-label-tags.php:16
+msgctxt "Panel option tag"
+msgid "PREMIUM"
+msgstr "PREMIUM"
+
+#: plugin-fw/templates/panel/v2/panel-nav.php:36
+#: plugin-fw/templates/sysinfo/system-information-panel.php:46
+msgid "Collapse"
+msgstr "Riduci"
+
+#. translators: %s is the alternative action "Upload a file".
+#: plugin-fw/templates/fields/media.php:72
+msgid "Upload a file"
+msgstr "Carica un file"
+
+#. translators: %s is the alternative action "Upload a file".
+#: plugin-fw/templates/fields/media.php:71
+msgid "Drag or %s"
+msgstr "Trascina o %s"
+
+#: plugin-fw/templates/fields/media.php:53
+msgid "Enter URL"
+msgstr "Inserisci URL"
+
+#: plugin-fw/templates/fields/media.php:47
+msgid "Upload file"
+msgstr "Carica file"
+
+#: plugin-fw/templates/fields/file.php:14
+msgid "Drag or upload a file."
+msgstr "Trascina o carica un file."
+
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:555
+msgid "Options reset correctly!"
+msgstr "Opzioni reimpostate correttamente!"
+
+#: plugin-fw/includes/class-yit-assets.php:214
+msgid "You cannot drop files here."
+msgstr "Non è possibile trascinare file qui."
+
+#: plugin-fw/includes/class-yit-assets.php:213
+msgid "No file provided."
+msgstr "Nessun file disponibile."
+
+#: plugin-fw/includes/class-yit-assets.php:212
+msgctxt "Title"
+msgid "Error"
+msgstr "Errore"
+
+#. translators: %s is the number of characters.
+#: plugin-fw/includes/class-yit-assets.php:200
+msgctxt "Enhanced select"
+msgid "Searching&hellip;"
+msgstr "Ricerca in corso&hellip;"
+
+#. translators: %s is the number of characters.
+#: plugin-fw/includes/class-yit-assets.php:199
+msgctxt "Enhanced select"
+msgid "Please enter %s or more characters"
+msgstr "Inserisci %s o più caratteri"
+
+#: plugin-fw/includes/class-yit-assets.php:197
+msgctxt "Enhanced select"
+msgid "Please enter 1 or more characters"
+msgstr "Inserisci 1 o più caratteri"
+
+#: plugin-fw/includes/class-yit-assets.php:196
+msgctxt "Enhanced select"
+msgid "No matches found"
+msgstr "Nessuna corrispondenza trovata"
 
 #: includes/emails/class-yith-ywgc-email-send-gift-card.php:41
 msgid "YITH Gift Cards - Gift Card Delivery"
-msgstr ""
+msgstr "YITH Gift Cards - Consegna buono regalo"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:44
-msgid ""
-"Send the digital gift card to the email address selected during the purchase"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:562
+msgid "You don’t have any gift card code to display. Once a user has purchased a gift card you will be able to see the code here. You can also manually create a gift card code to share."
+msgstr "Non ci sono codici buoni regalo da mostrare, ma potrai vederlo qui non appena un utente avrà acquistato un buono regalo. Puoi anche creare manualmente un buono regalo da condividere."
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:47
-msgid "Your gift card"
-msgstr ""
+#. translators: %s is the number of steps.
+#: plugin-fw/templates/panel/welcome-modals/welcome.php:45
+msgid "Start with these %s steps:"
+msgstr "Inizia da questi %s step:"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:48
-msgid "[{site_title}] You have received a gift card"
-msgstr ""
+#: plugin-fw/templates/panel/welcome-modals/welcome.php:30
+msgid "Thank you for using our plugin"
+msgstr "Grazie per aver scelto di usare il nostro plugin"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:54
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:184
-msgid ""
-"Hi {recipient_name}, you have received this gift card from {sender}, use it "
-"on our online shop."
-msgstr ""
-"Ciao {recipient_name}, hai ricevuto una carta regalo da {sender}, usala per "
-"comprare prodotti buoni nel nostro negozio."
+#: plugin-fw/templates/panel/welcome-modals/update.php:64
+#: plugin-fw/templates/panel/welcome-modals/welcome.php:60
+msgid "Got it, close this window"
+msgstr "Ho capito, chiudi questa finestra"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:179
-msgid "a friend"
-msgstr ""
+#: plugin-fw/templates/panel/welcome-modals/update.php:49
+msgid "Check the changelog >"
+msgstr "Vedi il changelog >"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:268
-msgid "Enable/Disable"
-msgstr ""
+#. translators: %s is the plugin version.
+#: plugin-fw/templates/panel/welcome-modals/update.php:44
+msgid "What's new in version %s"
+msgstr "Novità nella versione %s"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:270
-msgid "Enable this email notification"
-msgstr ""
+#. translators: %s is the plugin version.
+#: plugin-fw/templates/panel/welcome-modals/update.php:34
+msgid "is successfully updated to version %s."
+msgstr "è stato aggiornato alla versione %s."
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:274
-msgid "Subject"
-msgstr ""
+#: plugin-fw/templates/bh-onboarding/onboarding-tabs.php:60
+#: templates/admin/email-settings-single.php:22
+msgid "Save"
+msgstr "Salva"
 
-#. translators: %s: Subject
-#. translators: %s: Heading
-#. translators: %s: Introductory_text
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:276
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:283
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:290
-msgid "Defaults to <code>%s</code>"
-msgstr ""
+#: plugin-fw/includes/class-yith-bh-onboarding.php:85
+msgid "It is not possible save the options"
+msgstr "Impossibile salvare le opzioni"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:281
-msgid "Email Heading"
-msgstr ""
+#: plugin-fw/includes/class-yit-plugin-panel.php:1185
+msgid "See how it works before you start using it"
+msgstr "Guarda come funziona prima di iniziare ad usarlo"
 
-#: includes/emails/class-yith-ywgc-email-send-gift-card.php:288
-msgid "Introductive message"
-msgstr ""
+#: plugin-fw/includes/class-yit-plugin-panel.php:1184
+msgid "Watch our <mark>\"First Steps\" video</mark>"
+msgstr "Guarda il nostro <mark>video \"Primi Step\"</mark>"
 
-#: includes/functions.yith-ywgc.php:159
-msgid "This title is already used. Please choose another one"
-msgstr ""
+#: plugin-fw/includes/class-yit-plugin-panel.php:1174
+msgid "Learn what you can really do with this powerful tool"
+msgstr "Scopri cosa puoi fare con questo potente strumento"
 
-#: init.php:52
-msgid ""
-"YITH WooCommerce Gift Cards is enabled but not effective. It requires "
-"WooCommerce in order to work."
-msgstr ""
+#: plugin-fw/includes/class-yit-plugin-panel.php:1173
+msgid "Read the <mark>plugin documentation</mark>"
+msgstr "Consulta la <mark>documentazione del plugin</mark>"
 
-#: plugin-options/general-options.php:27
-msgid "General settings"
-msgstr ""
+#: plugin-fw/templates/panel/premium-tab-content.php:66
+msgctxt "Premium Tab"
+msgid "Check the premium features >"
+msgstr "Dai un'occhiata alle caratteristiche premium > "
 
-#: plugin-options/general-options.php:32
-msgid "Gift card code pattern"
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:241
+msgctxt "Help tab support"
+msgid "Yes, I need help"
+msgstr "Sì, mi serve aiuto"
 
-#: plugin-options/general-options.php:33
-msgid ""
-"Choose the pattern of new gift cards. If you set ***-*** your cards will "
-"have a code like: 1ME-D28."
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:238
+msgctxt "Help tab support"
+msgid "Call or chat 24/7 with our support agents, or let our experts build your site."
+msgstr "Chiama o chatta 24/7 con i nostri operatori dell'assistenza o lascia creare il tuo sito ai nostri esperti."
 
-#: plugin-options/general-options.php:41
-msgid "Enable the images gallery"
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:235
+msgctxt "Help tab support"
+msgid "From DIY to full-service help"
+msgstr "Dall'aiuto fai da te al servizio completo"
 
-#: plugin-options/general-options.php:45
-msgid ""
-"Allow users to pick the gift card image from those available in the gallery. "
-"Note: images that can be used by customers have to be uploaded through the "
-"Media gallery. To make the search easier, you can group images into "
-"categories (e.g. Christmas, Easter, Birthday, etc.) through this link: "
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:231
+#: plugin-fw/templates/panel/help-tab.php:233
+msgctxt "Help tab support"
+msgid "Need some help?"
+msgstr "Hai bisogno di aiuto?"
 
-#: plugin-options/general-options.php:45
-msgid "Set your gallery categories."
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:220
+msgctxt "Help tab documentation"
+msgid "to learn how it works from the basics."
+msgstr "per scoprire dalle basi come funziona."
 
-#: plugin-options/general-options.php:45
-msgid "Set your template categories"
-msgstr ""
+#: plugin-fw/templates/panel/help-tab.php:216
+#: plugin-fw/templates/panel/help-tab.php:218
+#: plugin-fw/templates/panel/help-tab.php:223
+msgctxt "Help tab documentation"
+msgid "Read the plugin documentation"
+msgstr "Consulta la documentazione del plugin"
 
-#: plugin-options/general-options.php:50
-msgid "How many images to show"
-msgstr ""
+#. translators: 1. Plugin name.
+#: plugin-fw/includes/class-yit-plugin-panel.php:920
+msgctxt "Help tab default title"
+msgid "Thank you for using %s!"
+msgstr "Grazie per aver scelto %s!"
 
-#: plugin-options/general-options.php:51
-msgid "Set how many gift card images to show on the gift card page."
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:571
+msgid "Create code"
+msgstr "Crea codice"
 
-#: plugin-options/general-options.php:64
-msgid "Make recipient's info mandatory"
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:462
+msgid "Physical product"
+msgstr "Prodotto fisico"
 
-#: plugin-options/general-options.php:68
-msgid ""
-"If enabled, the recipient's name and email fields will be mandatory in the "
-"virtual gift cards."
-msgstr ""
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:218
+msgid "Recipient"
+msgstr "Destinatario"
 
-#: plugin-options/general-options.php:82
-msgid "Email options"
-msgstr ""
+#: includes/class-yith-ywgc-cart-checkout.php:166
+msgid "It is not possible to add a gift card code when the cart contains a gift card product"
+msgstr "Non è possibile aggiungere un codice buono regalo se il carrello contiene un prodotto buono regalo"
 
-#: plugin-options/general-options.php:84
-msgid "You can manage and edit the YITH Gift Card emails in the "
-msgstr ""
+#: includes/class-yith-woocommerce-gift-cards.php:1024
+msgid "This gift card code does not exist!"
+msgstr "Questo codice non esiste!"
 
-#: plugin-options/general-options.php:84
-msgid "WooCommerce emails settings"
-msgstr ""
+#: includes/class-yith-woocommerce-gift-cards.php:545
+#: includes/class-yith-woocommerce-gift-cards.php:551
+msgid "Pre-Printed"
+msgstr "Pre-stampato"
 
-#: plugin-options/general-options.php:87
+#: includes/class-yith-woocommerce-gift-cards.php:271
+msgid "The gift card amount"
+msgstr "Importo del buono regalo"
+
+#: views/privacy/html-policy-content-has_access.php:4
+msgctxt "Privacy Policy Content"
+msgid "Sender name, recipient name, recipient email address, delivery date, message, amount and balance of the gift card you have purchased"
+msgstr "Nome mittente, nome destinatario, indirizzo email del destinatario, data di consegna, messaggio, importo e saldo del buono che hai acquistato"
+
+#: views/privacy/html-policy-content-has_access.php:1
+msgctxt "Privacy Policy Content"
+msgid "Members of our team have access to the information you provide us. For example, both Administrators and Shop Managers can access:"
+msgstr "I membri del nostro staff hanno accesso alle informazioni che ci fornisci. Per esempio, sia l'amministratore che il gestore del negozio potranno accedere a:"
+
+#: views/privacy/html-policy-content-collect_and_store.php:4
+msgctxt "Privacy Policy Content"
+msgid "Sender's name, recipient's name and email address:  we’ll use this to create gift card products"
+msgstr "Nome del mittente, nome e indirizzo email del destinatario: utilizzeremo questi dati per creare i prodotti buoni regalo"
+
+#: views/privacy/html-policy-content-collect_and_store.php:1
+msgctxt "Privacy Policy Content"
+msgid "While you visit our site, we collect information about you during the checkout process on our store. We’ll track:"
+msgstr "Quando visiti il nostro sito, salviamo le tue informazioni durante il processo di pagamento nel nostro negozio. Teniamo traccia di:"
+
+#: views/gift-cards-product-settings.php:28
+msgid "Enter a valid amount"
+msgstr "Inserisci un importo"
+
+#: views/gift-cards-product-settings.php:27
+msgid "Amount value already used"
+msgstr "Valore importo già utilizzato"
+
+#: views/gift-cards-product-settings.php:15
+msgctxt "[Admin] Gift Card Options in product edit page"
+msgid "Gift Card Options"
+msgstr "Opzioni Gift Card"
+
+#: views/empty-gift-cards-table-state-customer.php:50
+msgid "There are no gift cards to show!"
+msgstr "Non ci sono buoni regalo da mostrare."
+
+#: includes/admin/class-yith-ywgc-backend.php:1342
+msgid "This code is already used. Please choose another one"
+msgstr "Questo codice è già in uso. Per favore scegline un altro"
+
+#: includes/admin/class-yith-ywgc-backend.php:1314
+msgid "Gift card restored"
+msgstr "Buono regalo ripristinato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1143
+msgid "Present variation ID"
+msgstr "ID variazione regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:1141
+msgid "Present product ID"
+msgstr "ID Prodotto regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:1139
+msgid "Product as a present"
+msgstr "Prodotto come regalo"
+
+#: plugin-fw/templates/panel/premium-tab-content.php:102
+msgctxt "Premium Tab"
+msgid "Get the premium version"
+msgstr "Ottieni la versione premium"
+
+#: plugin-fw/templates/panel/premium-tab-content.php:62
+msgctxt "Premium Tab"
+msgid "Check the free vs premium features >"
+msgstr "Confronta le funzionalità della versione gratuita e della premium >"
+
+#: plugin-fw/templates/panel/premium-tab-content.php:59
+msgctxt "Premium Tab"
+msgid "...and so much more!"
+msgstr "...e molto altro!"
+
+#. translators: 1. Plugin(s) name(s).
+#: plugin-fw/yit-plugin.php:282
+msgid "%s was deactivated as you're running an higher tier version of the same plugin."
+msgid_plural "%s were deactivated as you're running higher tier versions of the same plugins."
+msgstr[0] "%s è stato disattivato poiché stai usando una versione superiore dello stesso plugin."
+msgstr[1] "%s sono stati disattivati poiché stai usando una versione superiore degli stessi plugin."
+
+#: plugin-fw/templates/panel/help-tab.php:142
+msgctxt "Help tab Watch video tutorials link"
+msgid "to see some helpful use cases."
+msgstr "per vedere dei casi d'utilizzo utili."
+
+#: plugin-fw/templates/panel/help-tab.php:129
+msgctxt "Help tab Read Documentation link"
+msgid "to learn how the plugin works from the basics."
+msgstr "per scoprire dalle basi come funziona il plugin."
+
+#: plugin-fw/templates/fields/ajax-terms.php:41
+msgid "Search for a category..."
+msgstr "Cerca una categoria..."
+
+#: plugin-fw/templates/fields/ajax-posts.php:41
+msgid "Search for a post..."
+msgstr "Cerca un articolo..."
+
+#: plugin-fw/templates/fields/ajax-customers.php:41
+msgid "Search for a customer..."
+msgstr "Cerca un cliente..."
+
+#. translators: %s: gift card count
+#: includes/admin/class-yith-ywgc-backend.php:1372
+msgid "%s gift card restored from the Trash."
+msgid_plural "%s gift cards restored from the Trash."
+msgstr[0] "%s buono regalo ripristinato dal cestino."
+msgstr[1] "%s buoni regalo ripristinati dal cestino."
+
+#. translators: %s: gift card count
+#: includes/admin/class-yith-ywgc-backend.php:1370
+msgid "%s gift card moved to the Trash."
+msgid_plural "%s gift cards moved to the Trash."
+msgstr[0] "%s buono regalo spostato nel cestino."
+msgstr[1] "%s buoni regalo spostati nel cestino."
+
+#. translators: %s: gift count
+#: includes/admin/class-yith-ywgc-backend.php:1368
+msgid "%s gift card permanently deleted."
+msgid_plural "%s gift cards permanently deleted."
+msgstr[0] "%s buono regalo eliminato definitivamente."
+msgstr[1] "%s buoni regalo eliminati definitivamente."
+
+#. translators: %s: gift card count
+#: includes/admin/class-yith-ywgc-backend.php:1366
+msgid "%s gift card not updated, somebody is editing it."
+msgid_plural "%s gift cards not updated, somebody is editing them."
+msgstr[0] "%s buono regalo non aggiornato. Qualcuno lo sta modificando."
+msgstr[1] "%s buoni regalo non aggiornati. Qualcuno li sta modificando."
+
+#. translators: %s: gift card count
+#: includes/admin/class-yith-ywgc-backend.php:1364
+msgid "%s gift card updated."
+msgid_plural "%s gift cards updated."
+msgstr[0] "%s buono regalo aggiornato."
+msgstr[1] "%s buoni regalo aggiornati."
+
+#: includes/admin/class-yith-ywgc-backend.php:1323
+msgid "Gift card draft updated."
+msgstr "Bozza buono regalo aggiornata."
+
+#. translators: %s is the date
+#: includes/admin/class-yith-ywgc-backend.php:1320
+msgid "Gift card scheduled for: %s."
+msgstr "Buono regalo programmato per: %s."
+
+#: includes/admin/class-yith-ywgc-backend.php:1317
+msgid "Gift card submitted"
+msgstr "Buono regalo inviato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1316
+msgid "Gift card saved"
+msgstr "Buono regalo salvato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1315
+msgid "Gift card published"
+msgstr "Buono regalo pubblicato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1312
+msgid "Custom field deleted"
+msgstr "Campo personalizzato eliminato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1311
+msgid "Custom field updated"
+msgstr "Campo personalizzato aggiornato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1310
+#: includes/admin/class-yith-ywgc-backend.php:1313
+msgid "Gift card updated"
+msgstr "Buono regalo aggiornato"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:977
+msgctxt "Premium tab name"
+msgid "Get premium"
+msgstr "Diventa premium"
+
+#. Translators: %1$f: Table size, %2$f: Index size, %3$f: Free size, %4$s
+#. Engine.
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:57
+msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
+msgstr "Dati: %1$.2fMB | Indice: %2$.2fMB | Libero: %3$.2fMB | Motore: %4$s"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:46
+msgid "Database Free Size"
+msgstr "Dimensione spazio libero database"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:42
+msgid "Database Index Size"
+msgstr "Dimensione indice database"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:38
+msgid "Database Data Size"
+msgstr "Dimensione dati database"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:34
+msgid "Total Database Size"
+msgstr "Dimensione totale database"
+
+#. Translators: %s: Codex link.
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:19
+msgid "WordPress requirements"
+msgstr "Requisiti WordPress"
+
+#. Translators: %s: Codex link.
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:19
+msgid "WordPress recommends a minimum MySQL version of 5.6. See: %s"
+msgstr "WordPress consiglia una versione minima 5.6 di MySQL. Vedi: %s"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:28
+msgid "MySQL version"
+msgstr "Versione MySQL"
+
+#: plugin-fw/templates/sysinfo/tabs/db-info.php:24
+msgid "Database Info"
+msgstr "Info database"
+
+#. translators: %s is the name of the plugin that is loading the framework.
+#: plugin-fw/templates/sysinfo/tabs/main.php:66
+msgid "loaded by %s"
+msgstr "caricato da %s"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:61
+msgid "YITH Plugin Framework Version"
+msgstr "YITH Plugin Framework Version"
+
+#: plugin-fw/templates/fields/image-dimensions.php:23
+msgctxt "Image height field label"
+msgid "Height"
+msgstr "Altezza"
+
+#: plugin-fw/templates/fields/image-dimensions.php:18
+msgctxt "Image width field label"
+msgid "Width"
+msgstr "Larghezza"
+
+#: plugin-fw/includes/class-yit-assets.php:242 plugin-fw/yit-functions.php:2014
+#: plugin-fw/yit-functions.php:2140
+msgctxt "Delete confirmation action"
+msgid "Yes, delete"
+msgstr "Sì, elimina"
+
+#: plugin-fw/yit-functions.php:2131
+msgctxt "Term action"
+msgid "Delete"
+msgstr "Elimina"
+
+#: plugin-fw/yit-functions.php:2118
+msgctxt "Term action"
+msgid "Duplicate"
+msgstr "Duplica"
+
+#: plugin-fw/yit-functions.php:2110
+msgctxt "Term action"
+msgid "Edit"
+msgstr "Modifica"
+
+#: plugin-fw/yit-functions.php:2100
+msgctxt "Term action"
+msgid "View"
+msgstr "Visualizza"
+
+#: plugin-fw/yit-functions.php:2025 plugin-fw/yit-functions.php:2033
+#: plugin-fw/yit-functions.php:2149
+msgid "Further actions"
+msgstr "Ulteriori azioni"
+
+#: plugin-fw/yit-functions.php:2004
+msgctxt "Post action"
+msgid "Delete Permanently"
+msgstr "Elimina definitivamente"
+
+#: plugin-fw/yit-functions.php:1987
+msgctxt "Post action"
+msgid "Trash"
+msgstr "Cestina"
+
+#: plugin-fw/yit-functions.php:1979
+msgctxt "Post action"
+msgid "Restore"
+msgstr "Ripristina"
+
+#: plugin-fw/yit-functions.php:1967
+msgctxt "Post action"
+msgid "Duplicate"
+msgstr "Duplica"
+
+#: plugin-fw/yit-functions.php:1959
+msgctxt "Post action"
+msgid "Edit"
+msgstr "Modifica"
+
+#: plugin-fw/yit-functions.php:1948
+msgctxt "Post action"
+msgid "View"
+msgstr "Visualizza"
+
+#: plugin-fw/yit-functions.php:1939
+msgctxt "Post action"
+msgid "Preview"
+msgstr "Anteprima"
+
+#. translators: %s is the title of the post object.
+#: plugin-fw/yit-functions.php:1927 plugin-fw/yit-functions.php:2086
+msgid "Are you sure you want to delete \"%s\"?"
+msgstr "Sei sicuro di voler eliminare \"%s\"?"
+
+#. translators: %s is the title of the post object.
+#: plugin-fw/yit-functions.php:1925
+msgid "Are you sure you want to move \"%s\" to trash?"
+msgstr "Sei sicuro di voler spostare \"%s\" nel cestino?"
+
+#: plugin-fw/includes/class-yit-help-desk.php:148
+msgid "There was an error with your request; please try again later."
+msgstr "Si è verificato un errore con la tua richiesta. Riprova più tardi."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:929
+msgctxt "Help tab default description"
+msgid "We want to help you enjoy a wonderful experience with all of our products."
+msgstr "Vogliamo aiutarti ad avere un'esperienza fantastica con tutti i nostri prodotti."
+
+#. translators: 1. Plugin name.
+#: plugin-fw/includes/class-yit-plugin-panel.php:920
+msgctxt "Help tab default title"
+msgid "Thank you for purchasing %s!"
+msgstr "Grazie per aver acquistato %s!"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1007
+msgctxt "Help tab name"
+msgid "Help"
+msgstr "Help"
+
+#. translators: %s is the name of the post type (example Back to "Membership
+#. Plans").
+#: plugin-fw/includes/class-yith-post-type-admin.php:294
+msgid "Back to the list"
+msgstr "Torna alla lista "
+
+#. translators: %s is the name of the post type (example Back to "Membership
+#. Plans").
+#: plugin-fw/includes/class-yith-post-type-admin.php:294
+msgid "Back to \"%s\""
+msgstr "Torna a \"%s\""
+
+#. translators: %s is the title of the post object.
+#: plugin-fw/includes/class-yit-assets.php:241 plugin-fw/yit-functions.php:1927
+#: plugin-fw/yit-functions.php:2086
+msgid "This action cannot be undone and you will not be able to recover this data."
+msgstr "Quest'azione non può essere annullata e non sarà possibile recuperare questi dati."
+
+#: plugin-fw/includes/class-yit-assets.php:241
+msgid "Are you sure you want to delete the selected items?"
+msgstr "Se sicuro di voler eliminare gli elementi selezionati?"
+
+#: plugin-fw/includes/class-yit-assets.php:240 plugin-fw/yit-functions.php:2011
+#: plugin-fw/yit-functions.php:2138
+msgid "Confirm delete"
+msgstr "Conferma eliminazione"
+
+#: plugin-fw/includes/class-yit-assets.php:238 plugin-fw/yit-functions.php:1996
+msgctxt "Trash confirmation action"
+msgid "Yes, move to trash"
+msgstr "Sì, sposta nel cestino"
+
+#: plugin-fw/includes/class-yit-assets.php:237
+msgid "Are you sure you want to trash the selected items?"
+msgstr "Se sicuro di voler spostare nel cestino gli elementi selezionati?"
+
+#: plugin-fw/includes/class-yit-assets.php:236 plugin-fw/yit-functions.php:1993
+msgid "Confirm trash"
+msgstr "Conferma"
+
+#: plugin-fw/includes/class-yit-assets.php:225
+msgctxt "Button text"
+msgid "Cancel"
+msgstr "Annulla"
+
+#: plugin-fw/includes/class-yit-assets.php:224
+msgctxt "Button text"
+msgid "Confirm"
+msgstr "Conferma"
+
+#: plugin-fw/templates/panel/woocommerce/woocommerce-form.php:31
+msgid "Options Saved"
+msgstr "Opzioni salvate"
+
+#: plugin-fw/templates/panel/v2/panel-content-page.php:57
+#: plugin-fw/templates/panel/v2/woocommerce/woocommerce-form.php:69
+#: plugin-fw/templates/panel/woocommerce/woocommerce-form.php:27
+#: plugin-fw/templates/panel/woocommerce/woocommerce-form.php:31
+msgid "Save Options"
+msgstr "Salva opzioni "
+
+#: plugin-fw/templates/panel/help-tab.php:204
+msgctxt "Help tab submit ticket button"
+msgid "Submit a ticket"
+msgstr "Invia un ticket"
+
+#: plugin-fw/templates/panel/help-tab.php:196
+msgctxt "Help tab submit ticket description"
+msgid "If you are experiencing any technical issues, ask for help from our developers. Submit a ticket through our support desk and we will help you as soon as possible."
+msgstr "Se stai riscontrando problemi tecnici chiedi aiuto ai nostri sviluppatori. Invia un ticket dalla nostra piattaforma di supporto e ti daremo assistenza il più presto possibile."
+
+#: plugin-fw/templates/panel/help-tab.php:193
+msgctxt "Help tab submit ticket title"
+msgid "Need help?"
+msgstr "Ti serve aiuto?"
+
+#: plugin-fw/templates/panel/help-tab.php:184
+msgctxt "Help tab FAQ link"
+msgid "View all FAQs >"
+msgstr "Vedi tutte le FAQ"
+
+#: plugin-fw/templates/panel/help-tab.php:170
+msgctxt "Help tab FAQ title"
+msgid "Last FAQs in our Help Center"
+msgstr "Ultime FAQ nel nostro Centro Assistenza"
+
+#: plugin-fw/templates/panel/help-tab.php:155
+msgctxt "Help tab view FAQs link"
+msgid "to find answers to your doubts."
+msgstr "per trovare le risposte ai tuoi dubbi."
+
+#: plugin-fw/templates/panel/help-tab.php:152
+msgctxt "Help tab view FAQs link"
+msgid "Check the FAQs"
+msgstr "Controlla le FAQ"
+
+#: plugin-fw/templates/panel/help-tab.php:139
+msgctxt "Help tab Watch video tutorials link"
+msgid "Watch our video tutorials"
+msgstr "Guarda i nostri video tutorial"
+
+#: plugin-fw/templates/panel/help-tab.php:126
+msgctxt "Help tab Read Documentation link"
+msgid "Read the documentation"
+msgstr "Consulta la documentazione"
+
+#: plugin-fw/templates/panel/help-tab.php:96
+msgctxt "Help tab Watch Videotutorials link"
+msgid "Videos are also available in:"
+msgstr "I video sono disponibili anche in:"
+
+#. translators: 1. Url to EN playlist.
+#: plugin-fw/templates/panel/help-tab.php:89
+msgctxt "Help tab view all video link"
+msgid "Check the full <a href=\"%s\" target=\"_blank\">Playlist on Youtube</a> to learn more >"
+msgstr "Per saperne di più, vedi la <a href=\"%s\" target=\"_blank\">Playlist completa su Youtube</a>>"
+
+#: plugin-fw/templates/panel/panel-header.php:26
+#: plugin-fw/templates/panel/v2/panel-header.php:21
+msgid "help us by leaving a good review"
+msgstr "aiutaci lasciando una recensione positiva"
+
+#. translators: %s it the Elementor Widget title.
+#: plugin-fw/includes/builders/elementor/class-yith-elementor-widget.php:252
+msgctxt "Elementor Widget - section title"
+msgid "%s - Options"
+msgstr "%s - Opzioni"
+
+#: plugin-fw/templates/fields/copy-to-clipboard.php:45
+msgctxt "Copy-to-clipboard button text"
+msgid "Copy"
+msgstr "Copia"
+
+#: plugin-fw/templates/fields/copy-to-clipboard.php:41
+msgctxt "Copy-to-clipboard message"
+msgid "Copied!"
+msgstr "Copiato!"
+
+#: plugin-fw/includes/class-yit-pointers.php:97
+msgid "From now on, you can find the option panel of YITH plugins in YITH menu. Every time one of our plugins is added, a new entry will be added to this menu. For example, after the update, plugin options (such as for YITH WooCommerce Wishlist, YITH WooCommerce Ajax Search, etc.) will be moved from previous location to YITH menu."
+msgstr "D'ora in poi troverai il pannello opzioni dei plugin YITH nel menu YITH. Ogni volta che viene aggiunto uno dei nostri plugin comparirà una voce in questo menu. Ad esempio, dopo l'aggiornamento, le opzioni del plugin (come per YITH WooCommerce Wishlist, YITH WooCommerce Ajax Search, etc.) verranno spostate dalla posizione precedente al menu YITH."
+
+#. translators: 1. YITH site link; 2. WordPress site link.
+#: plugin-fw/includes/class-yit-pointers.php:84
+#: plugin-fw/includes/class-yit-pointers.php:100
+msgid "Discover all our plugins available on: %1$s and %2$s"
+msgstr "Scopri tutti i nostri plugin su: %1$s e %2$s"
+
+#: plugin-fw/includes/class-yit-pointers.php:81
+msgid "From now on, you can find all plugin options in YITH menu. Plugin customization settings will be available as a new entry in YITH menu."
+msgstr "D'ora in poi troverai il pannello opzioni dei plugin YITH nel menu YITH. Le impostazioni di personalizzazione del plugin saranno disponibili sotto una nuova voce nel menu YITH."
+
+#: plugin-fw/templates/fields/date-format.php:70
+msgid "Preview:"
+msgstr "Anteprima:"
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:95
+msgid "Copy Code"
+msgstr "Copia il codice"
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:95
+msgid "Copied!"
+msgstr "Copiato!"
+
+#. translators: %s file name.
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:86
+msgid "No Log file available. Enable the WordPress debug by adding this in the %s file of your installation"
+msgstr "Nessun file log disponibile. Attiva il debug di WordPress aggiungendolo nel file %s della tua installazione "
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:59
+msgid "The file size exceeds 8 megabytes so it must be downloaded"
+msgstr "La dimensione del file supera gli 8 megabyte e deve essere scaricato"
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:48
+msgid "Download"
+msgstr "Scarica"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:72
+msgid "Plugins Requirements"
+msgstr "Requisiti plugin"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:41
+msgid "Site Info"
+msgstr "Informazioni sito"
+
+#: plugin-fw/includes/class-yith-system-status.php:199
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:108
+msgid "Log Files"
+msgstr "File log"
+
+#: plugin-fw/includes/class-yith-system-status.php:191
+msgid "PHPInfo"
+msgstr "PHPInfo"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:57
+msgid "External object cache"
+msgstr "External object cache"
+
+#. translators: %1$s TLS label
+#: plugin-fw/includes/class-yith-system-status.php:624
+msgid "The system check cannot determine which %1$s version is installed due to a connection issue between your site and our server."
+msgstr "Non è stato possibile determinare con i controlli di sistema quale versione di %1$s è installata a causa di un problema di connessione fra il tuo sito e il nostro server."
+
+#. translators: %1$s TLS label, %2$s cURL label
+#: plugin-fw/includes/class-yith-system-status.php:621
+msgid "The system check cannot determine which %1$s version is installed because %2$s module is disabled. Ask your hosting company to enable it."
+msgstr "Non è stato possibile determinare quale versione di %1$s è installata in quanto il modulo %2$s è disattivato. Chiedi al tuo servizio hosting di attivarlo."
+
+#: plugin-fw/includes/class-yith-system-status.php:563
+msgid "Contact your hosting company in order to install it."
+msgstr "Contatta il tuo hosting per installarlo."
+
+#: plugin-fw/includes/class-yit-assets.php:278
+msgid "Color value"
+msgstr "Valore del colore"
+
+#: plugin-fw/includes/class-yit-assets.php:277
+msgid "Select Color"
+msgstr "Seleziona colore"
+
+#: plugin-fw/includes/class-yit-assets.php:276
+msgid "Select default color"
+msgstr "Seleziona il colore predefinito"
+
+#: plugin-fw/includes/class-yit-assets.php:275
+msgid "Default"
+msgstr "Predefinito "
+
+#: plugin-fw/includes/class-yit-assets.php:274
+msgid "Clear color"
+msgstr "Rimuovi colore"
+
+#: plugin-fw/includes/class-yit-assets.php:273
+msgid "Clear"
+msgstr "Cancella"
+
+#: plugin-fw/includes/class-yit-assets.php:239
+#: plugin-fw/includes/class-yit-assets.php:243
+#: plugin-fw/templates/sysinfo/tabs/main.php:54
+#: plugin-fw/templates/sysinfo/tabs/main.php:58
+#: plugin-fw/yit-functions.php:1995 plugin-fw/yit-functions.php:2013
+msgid "No"
+msgstr "No"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:54
+#: plugin-fw/templates/sysinfo/tabs/main.php:58
+msgid "Yes"
+msgstr "Sì"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:53
+msgid "Defined WP_CACHE"
+msgstr "Defined WP_CACHE"
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:18
+msgid "PHP error_log file"
+msgstr "File PHP error_log"
+
+#: plugin-fw/templates/sysinfo/tabs/error-log.php:13
+msgid "WP debug.log file"
+msgstr "File WP debug.log"
+
+#: plugin-fw/templates/fields/dimensions.php:94
+msgctxt "Tooltip in the \"Dimensions\" field"
+msgid "Link values together"
+msgstr "Collega i valori"
+
+#: plugin-fw/templates/fields/dimensions.php:16
+msgctxt "Position in the \"Dimensions\" field"
+msgid "Left"
+msgstr "A sinistra"
+
+#: plugin-fw/templates/fields/dimensions.php:15
+msgctxt "Position in the \"Dimensions\" field"
+msgid "Bottom"
+msgstr "In basso"
+
+#: plugin-fw/templates/fields/dimensions.php:14
+msgctxt "Position in the \"Dimensions\" field"
+msgid "Right"
+msgstr "A destra"
+
+#: plugin-fw/templates/fields/dimensions.php:13
+msgctxt "Position in the \"Dimensions\" field"
+msgid "Top"
+msgstr "In alto"
+
+#: includes/compatibilities/elementor/class-ywgc-form-widget.php:76
+msgid "Your section title"
+msgstr "Titolo della sezione"
+
+#: includes/compatibilities/elementor/class-ywgc-form-widget.php:73
+msgid "Form Title"
+msgstr "Titolo del modulo"
+
+#: includes/compatibilities/elementor/class-ywgc-form-widget.php:65
+msgid "Content"
+msgstr "Contenuto"
+
+#: includes/compatibilities/elementor/class-ywgc-form-widget.php:40
+msgid "YITH Gift Card Product Form"
+msgstr "YITH Gift Card - modulo prodotto"
+
+#: includes/class-yith-woocommerce-gift-cards.php:636
+msgid "Select this category in your gift card product if you want to display all the images categories in your gift card gallery"
+msgstr "Seleziona questa categoria nel prodotto buono regalo per mostrare tutte le categorie della tua galleria immagini per i buoni regalo"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:98
+#: includes/class-yith-woocommerce-gift-cards.php:633
+msgid "All"
+msgstr "Tutti"
+
+#: includes/class-yith-woocommerce-gift-cards.php:625
+msgid "Select this category in your gift card product if you do not want to display images in your gift card gallery"
+msgstr "Seleziona questa categoria nel prodotto buono regalo per non mostrare alcuna immagine nella galleria del buono regalo"
+
+#: plugin-options/settings/general-options.php:123
+msgid "If enabled, the gift card dispatch email will contain a link to redirect your user to your site in one click."
+msgstr "Se abilitata, ci sarà un pulsante nell'email inviata così che il cliente possa essere reindirizzato al tuo sito con un clic."
+
+#: plugin-options/settings/general-options.php:119
 msgid "Show a button in the gift card email"
-msgstr ""
+msgstr "Mostra un pulsante nell’email del buono regalo"
 
-#: plugin-options/general-options.php:91
-msgid ""
-"If enabled, the gift card dispatch email will contain a link to redirect "
-"your user to your site in one click."
-msgstr ""
-
-#: plugin-options/general-options.php:96
-msgid "Button label"
-msgstr ""
-
-#: plugin-options/general-options.php:99
-#: templates/emails/automatic-discount.php:13
-#: templates/emails/automatic-discount.php:19
-msgid "Apply your gift card code"
-msgstr "Applica il codice della tua carta regalo"
-
-#: templates/checkout/form-gift-cards.php:32
-msgid "Got a gift card from a loved one?"
-msgstr "Hai ricevuto una Carta regalo?"
-
-#: templates/checkout/form-gift-cards.php:32
-msgid "Use it here!"
-msgstr "Usala qui!"
-
-#: templates/checkout/form-gift-cards.php:62
-msgid "Apply the gift card code in the following field"
-msgstr ""
-
-#: templates/checkout/form-gift-cards.php:74
-msgid "Apply Gift Card"
-msgstr "Applica Gift Card"
-
-#: templates/myaccount/my-giftcards.php:17
-msgid "Usage"
-msgstr "Utilizzo"
-
-#: templates/myaccount/my-giftcards.php:18
-msgid "Status"
-msgstr "Stato"
-
-#. translators: %s: Order_id
-#: templates/myaccount/my-giftcards.php:113
-msgid "Order %s"
-msgstr ""
+#: includes/functions.yith-ywgc.php:174
+msgid "This title is already used. Please choose another one"
+msgstr "Questo titolo è già in uso. Scegline un altro"
 
 #: templates/single-product/add-to-cart/gift-card-amount-selection.php:14
 msgid "Set an amount"
-msgstr ""
-
-#: templates/single-product/add-to-cart/gift-card.php:33
-msgid "This product cannot be purchased"
-msgstr ""
-
-#: templates/single-product/form-preview.php:28
-msgid "From: "
-msgstr ""
+msgstr "Seleziona un importo"
 
 #: templates/single-product/form-preview.php:32
 msgid "To: "
-msgstr ""
+msgstr "A: "
+
+#: templates/single-product/form-preview.php:28
+msgid "From: "
+msgstr "Da: "
 
 #: templates/yith-gift-cards/gift-card-design.php:38
 msgid "Choose your image"
-msgstr ""
+msgstr "Scegli immagine"
 
-#: templates/yith-gift-cards/gift-card-details.php:18
-msgid "Delivery info"
-msgstr ""
+#: templates/yith-gift-cards/ywgc-gift-card-template.php:126
+msgid "To use this gift card, you can either enter the code in the gift card field on the cart page or click on the following link to automatically get the discount."
+msgstr "Puoi utilizzare questo buono regalo inserendo il codice nell’apposito campo della pagina Carrello o cliccando sul seguente link per applicare automaticamente il codice al tuo prossimo acquisto."
 
-#: templates/yith-gift-cards/gift-card-details.php:23
-msgid "RECIPIENT INFO"
-msgstr "Destinatario"
-
-#: templates/yith-gift-cards/gift-card-details.php:29
-#: templates/yith-gift-cards/gift-card-details.php:52
-msgid "Name: "
-msgstr ""
-
-#: templates/yith-gift-cards/gift-card-details.php:30
-msgid "ENTER THE RECIPIENT'S NAME"
-msgstr "Inserisci il nome del destinatario"
-
-#: templates/yith-gift-cards/gift-card-details.php:34
-msgid "Email: "
-msgstr ""
-
-#: templates/yith-gift-cards/gift-card-details.php:36
-msgid "ENTER THE RECIPIENT'S EMAIL ADDRESS"
-msgstr "Inserisci l’email del destinatario"
-
-#: templates/yith-gift-cards/gift-card-details.php:41
-msgid "If empty, will be sent to your email address"
-msgstr ""
-
-#: templates/yith-gift-cards/gift-card-details.php:48
-msgid "YOUR INFO"
-msgstr "I tuoi dati"
-
-#: templates/yith-gift-cards/gift-card-details.php:54
-msgid "ENTER YOUR NAME"
-msgstr ""
-
-#: templates/yith-gift-cards/gift-card-details.php:58
-#: templates/yith-gift-cards/physical-gift-card-details.php:22
-msgid "Message: "
-msgstr ""
-
-#: templates/yith-gift-cards/gift-card-details.php:59
-#: templates/yith-gift-cards/physical-gift-card-details.php:23
-msgid "ENTER A MESSAGE FOR THE RECIPIENT"
-msgstr "Inserisci un messaggio per il destinatario"
+#: templates/yith-gift-cards/ywgc-gift-card-template.php:74
+msgid "on"
+msgstr "su"
 
 #: templates/yith-gift-cards/ywgc-gift-card-template.php:48
 #: templates/yith-gift-cards/ywgc-gift-card-template.php:49
 #: templates/yith-gift-cards/ywgc-gift-card-template.php:55
 #: templates/yith-gift-cards/ywgc-gift-card-template.php:56
 msgid "Gift card image"
-msgstr ""
+msgstr "Immagine del buono regalo"
 
-#: templates/yith-gift-cards/ywgc-gift-card-template.php:74
-msgid "on"
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:48
+msgid "YOUR INFO"
+msgstr "I TUOI DATI"
 
-#: templates/yith-gift-cards/ywgc-gift-card-template.php:111
-msgid "Gift card code:"
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:41
+msgid "If empty, will be sent to your email address"
+msgstr "Se vuoto, sarà inviato al tuo indirizzo email"
 
-#: templates/yith-gift-cards/ywgc-gift-card-template.php:126
-msgid ""
-"To use this gift card, you can either enter the code in the gift card field "
-"on the cart page or click on the following link to automatically get the "
-"discount."
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:34
+msgid "Email: "
+msgstr "Email: "
 
-#. Description of the plugin/theme
-msgid ""
-"<code><strong>YITH WooCommerce Gift Cards</strong></code> allows your users "
-"to purchase and give gift cards. In this way, you will increase the spread "
-"of your brand, your sales, and average spend, especially during the "
-"holidays. <a href=\"https://yithemes.com/\" target=\"_blank\">Get more "
-"plugins for your e-commerce shop on <strong>YITH</strong></a>."
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:23
+msgid "RECIPIENT INFO"
+msgstr "DATI DESTINATARIO"
 
-#: includes/admin/class-yith-ywgc-backend.php:1437
-msgctxt "Column heading in the image categories table"
-msgid "Count"
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:18
+#: templates/yith-gift-cards/physical-gift-card-details.php:19
+msgid "Delivery info"
+msgstr "Informazioni di consegna"
 
-#: includes/admin/views/gift-cards-product-settings.php:15
-msgctxt "[Admin] Gift Card Options in product edit page"
-msgid "Gift Card Options"
-msgstr ""
+#: templates/yith-gift-cards/gift-card-details.php:57
+#: templates/yith-gift-cards/physical-gift-card-details.php:24
+msgid "Message: "
+msgstr "Messaggio: "
 
-#: includes/admin/views/privacy/html-policy-content-collect_and_store.php:1
-msgctxt "Privacy Policy Content"
-msgid ""
-"While you visit our site, we collect information about you during the "
-"checkout process on our store. We’ll track:"
-msgstr ""
-
-#: includes/admin/views/privacy/html-policy-content-collect_and_store.php:4
-msgctxt "Privacy Policy Content"
-msgid ""
-"Sender's name, recipient's name and email address:  we’ll use this to create "
-"gift card products"
-msgstr ""
-
-#: includes/admin/views/privacy/html-policy-content-has_access.php:1
-msgctxt "Privacy Policy Content"
-msgid ""
-"Members of our team have access to the information you provide us. For "
-"example, both Administrators and Shop Managers can access:"
-msgstr ""
-
-#: includes/admin/views/privacy/html-policy-content-has_access.php:4
-msgctxt "Privacy Policy Content"
-msgid ""
-"Sender name, recipient name, recipient email address, delivery date, "
-"message, amount and balance of the gift card you have purchased"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:35
-msgctxt "Privacy Policy Content"
-msgid "YITH Gift Cards for WooCommerce premium"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:102
-msgctxt "GDPR privacy"
-msgid "YITH gift cards received and sent"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:150
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:223
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:576
-msgctxt "GDPR privacy"
-msgid "Anonymous"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:312
-msgctxt "GDPR privacy"
-msgid "YITH gift cards received"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:364
-msgctxt "GDPR privacy"
-msgid "Gift cards received"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:391
-msgctxt "GDPR privacy"
-msgid "YITH gift cards sent"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards-privacy.php:438
-msgctxt "GDPR privacy"
-msgid "Gift cards sent"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:170
-msgctxt "post type general name"
-msgid "All Gift Cards"
-msgstr ""
-
-#: includes/class-yith-woocommerce-gift-cards.php:171
-msgctxt "post type singular name"
-msgid "Gift Card"
-msgstr "Carta Regalo"
-
-#: includes/class-yith-woocommerce-gift-cards.php:172
-msgctxt "admin menu"
-msgid "Gift Cards"
-msgstr "Carte Regalo"
-
-#: includes/class-yith-woocommerce-gift-cards.php:173
-msgctxt "add new on admin bar"
-msgid "Gift Card"
-msgstr "Carta Regalo"
-
-#: includes/class-yith-woocommerce-gift-cards.php:174
-msgctxt "admin menu item"
-msgid "Create Code"
-msgstr ""
-
-#: includes/class-yith-ywgc-gift-cards-table.php:158
-msgctxt "Order number by X"
-msgid "%s by %s"
-msgstr ""
-
-#: templates/checkout/form-gift-cards.php:51
-msgctxt "Apply gift card"
-msgid ""
-"In order to apply the gift card, the total amount in the cart has to be at "
-"least"
-msgstr ""
+#: templates/checkout/form-gift-cards.php:74
+msgid "Apply Gift Card"
+msgstr "Applica il codice"
 
 #: templates/checkout/form-gift-cards.php:67
 msgctxt "Apply gift card"
 msgid "Gift card code"
-msgstr ""
+msgstr "Codice del buono regalo"
+
+#: templates/checkout/form-gift-cards.php:62
+msgid "Apply the gift card code in the following field"
+msgstr "Applica il codice del buono regalo nel campo seguente"
+
+#: templates/checkout/form-gift-cards.php:51
+msgctxt "Apply gift card"
+msgid "In order to apply the gift card, the total amount in the cart has to be at least"
+msgstr "Per poter applicare il buono regalo, l'importo totale del carrello dev'essere almeno"
+
+#: templates/checkout/form-gift-cards.php:32
+msgid "Use it here!"
+msgstr "Inseriscilo qui!"
+
+#: templates/checkout/form-gift-cards.php:32
+msgid "Got a gift card from a loved one?"
+msgstr "Hai ricevuto un buono regalo da un amico?"
+
+#. translators: %s: Order_id
+#: templates/myaccount/my-giftcards.php:131
+msgid "Order %s"
+msgstr "Ordine %s"
 
 #. translators: %1: Date format %1: Date
-#: templates/myaccount/my-giftcards.php:95
+#: templates/myaccount/my-giftcards.php:113
 msgctxt "gift card expiration date"
 msgid "Expires on: %1$s (%2$s)"
-msgstr ""
+msgstr "Scade il: %1$s (%2$s)"
+
+#: templates/myaccount/my-giftcards.php:27
+msgid "Status"
+msgstr "Stato"
+
+#: templates/myaccount/my-giftcards.php:26
+msgid "Usage"
+msgstr "Utilizzo"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:213
+#: templates/myaccount/my-giftcards.php:24
+msgid "Code"
+msgstr "Codice"
+
+#: plugin-options/settings/general-options.php:131
+#: templates/emails/automatic-discount.php:13
+#: templates/emails/automatic-discount.php:19
+msgid "Apply your gift card code"
+msgstr "Applica il tuo buono regalo"
+
+#: plugin-options/settings/general-options.php:128
+msgid "Button label"
+msgstr "Testo pulsante"
+
+#: plugin-options/settings/general-options.php:73
+msgid "If enabled, the recipient's name and email fields will be mandatory in the virtual gift cards."
+msgstr "Se attivata, i campi nome e email del destinatario per i buoni regalo virtuali saranno obbligatori."
+
+#: plugin-options/settings/general-options.php:69
+msgid "Make recipient's info mandatory"
+msgstr "Rendi obbligatoria la compilazione dei campi contenenti i dati del destinatario"
+
+#: plugin-options/settings/general-options.php:47
+msgid "Set how many gift card images to show on the gift card page."
+msgstr "Inserisci il numero di immagini da mostrare sulla pagina del buono regalo"
+
+#: plugin-options/settings/general-options.php:46
+msgid "How many images to show"
+msgstr "Numero di immagini da mostrare"
+
+#: plugin-options/settings/general-options.php:41
+msgid "Set your template categories"
+msgstr "Seleziona la tua categoria di template"
+
+#: plugin-options/settings/general-options.php:41
+msgid "Set your gallery categories."
+msgstr "Imposta le categorie per la tua galleria."
+
+#: plugin-options/settings/general-options.php:41
+msgid "Allow users to pick the gift card image from those available in the gallery. Note: images that can be used by customers have to be uploaded through the Media gallery. To make the search easier, you can group images into categories (e.g. Christmas, Easter, Birthday, etc.) through this link: "
+msgstr "Permetti agli utenti di scegliere l'immagine del buono regalo tra quelli disponibili nella galleria. N.B.: le immagini che possono essere utilizzate dai clienti devono essere caricate tramite la Media Gallery. Per rendere la ricerca più semplice puoi raggruppare le immagini per categorie (es.: Natale, Pasqua, Compleanno, ecc.) tramite questo link: "
+
+#: plugin-options/settings/general-options.php:37
+msgid "Enable the images gallery"
+msgstr "Attiva la galleria immagini"
+
+#: plugin-options/settings/general-options.php:31
+msgid "Choose the pattern of new gift cards. If you set ***-*** your cards will have a code like: 1ME-D28."
+msgstr "Scegli il pattern per i nuovi buoni regalo. Se imposti ***-*** i tuoi buoni regalo avranno un codice simile a questo: 1ME-D28."
+
+#: plugin-options/settings/general-options.php:30
+msgid "Gift card code pattern"
+msgstr "Pattern del codice del buono regalo"
+
+#: includes/class-yith-wc-product-gift-card.php:507
+msgid "Read more"
+msgstr "Leggi di più"
+
+#: includes/admin/class-yith-ywgc-backend.php:1167
+msgid "Postdated"
+msgstr "Postdatato"
+
+#: includes/admin/class-yith-ywgc-backend.php:1165
+msgid "Delivery date"
+msgstr "Data di consegna"
+
+#: includes/admin/class-yith-ywgc-backend.php:1163
+msgid "Version"
+msgstr "Versione"
+
+#: includes/admin/class-yith-ywgc-backend.php:1161
+msgid "Subtotal tax"
+msgstr "Tasse sul subtotale"
+
+#: includes/admin/class-yith-ywgc-backend.php:1159
+msgid "Subtotal"
+msgstr "Subtotale"
+
+#: includes/admin/class-yith-ywgc-backend.php:1157
+msgid "Design"
+msgstr "Design"
+
+#: includes/admin/class-yith-ywgc-backend.php:1155
+msgid "Design type"
+msgstr "Tipologia di design"
+
+#: includes/admin/class-yith-ywgc-backend.php:1145
+#: includes/class-yith-woocommerce-gift-cards.php:270
+msgid "Amount"
+msgstr "Importo"
+
+#: includes/admin/class-yith-ywgc-backend.php:1137
+msgid "Product ID"
+msgstr "ID Prodotto"
+
+#: includes/admin/class-yith-ywgc-backend.php:1085
+msgid "Gift card: "
+msgstr "Buono regalo: "
+
+#: includes/admin/class-yith-ywgc-backend.php:332
+msgid "Done"
+msgstr "Fatto"
+
+#: includes/admin/class-yith-ywgc-backend.php:331
+msgid "Manage the Media library"
+msgstr "Gestisci la Media Library"
+
+#: includes/admin/class-yith-ywgc-backend.php:303
+msgid "Unset gift card category"
+msgstr "Rimuovi categoria buoni regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:302
+msgid "Set gift card category"
+msgstr "Imposta categoria buono regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:261
+msgid "Choose Image"
+msgstr "Scegli immagine"
+
+#: includes/class-yith-woocommerce-gift-cards.php:1097
+msgid "This code is already applied"
+msgstr "Questo codice è stato già applicato"
+
+#: includes/class-yith-woocommerce-gift-cards.php:1083
+msgid "It is not possible to add any gift card if the cart contains a subscription-based product"
+msgstr "Non è possibile aggiungere buoni regalo se il carrello contiene un prodotto con abbonamento"
+
+#: includes/class-yith-woocommerce-gift-cards.php:1063
+msgid "In order to use the gift card, the minimum total amount in the cart has to be "
+msgstr "Per poter utilizzare il buono regalo l'importo totale minimo nel carrello deve essere"
+
+#: includes/class-yith-woocommerce-gift-cards.php:925
+msgid "Your message will show up here…"
+msgstr "Il tuo messaggio verrà mostrato qui..."
+
+#: includes/class-yith-woocommerce-gift-cards.php:338
+msgid "Enter your notes here. This will only be visible to the admin"
+msgstr "Aggiungi le tue note qui. Saranno visibili solo lato amministratore"
+
+#: includes/class-yith-woocommerce-gift-cards.php:337
+msgid "Internal notes"
+msgstr "Note interne"
+
+#: includes/class-yith-woocommerce-gift-cards.php:326
+msgid "The message attached to the gift card"
+msgstr "Messaggio allegato al buono regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:1153
+#: includes/class-yith-woocommerce-gift-cards.php:325
+msgid "Message"
+msgstr "Messaggio"
+
+#: includes/class-yith-woocommerce-gift-cards.php:315
+msgid "The name of the digital gift card recipient"
+msgstr "Nome del destinatario del buono regalo virtuale"
+
+#: includes/admin/class-yith-ywgc-backend.php:1151
+#: includes/class-yith-woocommerce-gift-cards.php:314
+msgid "Recipient's name"
+msgstr "Nome del destinatario"
+
+#: includes/class-yith-woocommerce-gift-cards.php:292
+msgid "The email address of the digital gift card recipient"
+msgstr "Indirizzo email del destinatario del buono regalo digitale"
+
+#: includes/class-yith-woocommerce-gift-cards.php:291
+msgid "Recipient's email"
+msgstr "Email del destinatario"
+
+#: includes/class-yith-woocommerce-gift-cards.php:303
+msgid "The name of the digital gift card sender, if any"
+msgstr "Nome del mittente del buono regalo virtuale (se disponibile)"
+
+#: includes/admin/class-yith-ywgc-backend.php:1149
+#: includes/class-yith-woocommerce-gift-cards.php:302
+msgid "Sender's name"
+msgstr "Nome del mittente"
+
+#: includes/class-yith-woocommerce-gift-cards.php:285
+msgid "Check if the gift card will be sent via email. Leave it unchecked to make this work as a physical gift card"
+msgstr "Abilita per inviare il buono regalo per email. Lascia disabilitata se vuoi che funzioni come un buono regalo fisico"
+
+#: includes/admin/class-yith-ywgc-backend.php:1147
+msgid "Digital"
+msgstr "Digitale"
+
+#: includes/class-yith-woocommerce-gift-cards.php:278
+msgid "The current amount available for the customer"
+msgstr "Saldo attualmente disponibile per il cliente"
+
+#: includes/class-yith-woocommerce-gift-cards.php:277
+msgid "Current balance"
+msgstr "Saldo attuale"
+
+#: includes/class-yith-woocommerce-gift-cards.php:257
+msgid "Gift card detail"
+msgstr "Dettagli del buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:532
+#: includes/class-yith-woocommerce-gift-cards.php:538
+msgid "Code not valid"
+msgstr "Codice non valido"
+
+#: includes/class-yith-woocommerce-gift-cards.php:519
+#: includes/class-yith-woocommerce-gift-cards.php:525
+msgid "Dismissed"
+msgstr "Destituita"
+
+#: includes/class-yith-woocommerce-gift-cards.php:600
+msgid "Update gift card category"
+msgstr "Aggiorna la categoria buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:594
+#: includes/class-yith-woocommerce-gift-cards.php:603
+msgid "Gift card category"
+msgstr "Categoria buoni regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:593
+msgid "Gift card categories"
+msgstr "Categorie buoni regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:224
+msgid "No gift cards found in Trash."
+msgstr "Nessun buono regalo trovato nel Cestino."
+
+#: includes/class-yith-woocommerce-gift-cards.php:223
+msgid "No gift cards found."
+msgstr "Nessun buono regalo trovato."
+
+#: includes/class-yith-woocommerce-gift-cards.php:222
+msgid "Parent gift cards:"
+msgstr "Buoni regalo - genitore:"
+
+#: includes/class-yith-woocommerce-gift-cards.php:221
+msgid "Search gift cards"
+msgstr "Cerca un buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:220
+msgid "All gift cards"
+msgstr "Tutti i buoni regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:219
+msgid "View Gift Card"
+msgstr "Visualizza il buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:218
+msgid "Edit Gift Card"
+msgstr "Modifica buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:217
+msgid "New Gift Card"
+msgstr "Nuovo buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:216
+msgid "Create Gift Card Code"
+msgstr "Crea il codice del buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:215
+msgctxt "admin menu item"
+msgid "Create Code"
+msgstr "Crea codice"
+
+#: includes/class-yith-woocommerce-gift-cards.php:214
+msgctxt "add new on admin bar"
+msgid "Gift Card"
+msgstr "Buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:213
+msgctxt "admin menu"
+msgid "Gift Cards"
+msgstr "Buoni regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:212
+msgctxt "post type singular name"
+msgid "Gift Card"
+msgstr "Buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards.php:211
+msgctxt "post type general name"
+msgid "All Gift Cards"
+msgstr "Lista dei buoni regalo"
+
+#: includes/class-yith-ywgc-gift-card.php:855
+msgid "No longer valid, replaced by another code"
+msgstr "Non più valido, rimpiazzato da un altro codice"
+
+#: includes/class-yith-ywgc-gift-card.php:851
+msgid "Valid"
+msgstr "Valido"
+
+#: includes/class-yith-ywgc-gift-card.php:847
+msgid "The gift card has been disabled"
+msgstr "Il buono regalo è stato disabilitato"
+
+#: includes/class-yith-ywgc-gift-card.php:643
+msgid "Gift card code successfully removed."
+msgstr "Codice buono regalo rimosso con successo."
+
+#: includes/class-yith-ywgc-gift-card.php:639
+msgid "Gift card code successfully applied."
+msgstr "Codice buono regalo applicato con successo."
+
+#: includes/class-yith-ywgc-gift-card.php:609
+#: includes/class-yith-ywgc-gift-card.php:647
+msgid "Gift card codes cannot be used to purchase other gift cards"
+msgstr "I codici dei buoni regalo non possono essere utilizzati per acquistare altri buoni regalo"
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:605
+msgid "Sorry, it seems that the gift card code %s is invalid - it has been removed from your cart."
+msgstr "Ops, sembra che il codice del buono regalo %s non sia valido e per questo motivo è stato rimosso dal tuo carrello."
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:600
+msgid "Sorry, the gift card code %s is no longer valid!"
+msgstr "Ops, il codice del buono regalo %s non è più valido!"
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:595
+msgid "Sorry, the gift card code %s is currently disabled and cannot be used."
+msgstr "Ops, il codice del buono regalo %s è attualmente disabilitato e non può essere utilizzato."
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:590
+msgid "Sorry, the gift card code %s is expired and cannot be used."
+msgstr "Ops, il codice del buono regalo %s è scaduto e non può essere utilizzato."
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:585
+msgid "The gift card code %s has already been applied!"
+msgstr "Il codice del buono regalo %s è stato già applicato!"
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:580
+msgid "Sorry, it seems that the gift card code \"%s\" is not yours and cannot be used for this order."
+msgstr "Ops, sembra che il codice di buono regalo \"%s\" non è tuo e non può essere applicato per questo ordine."
+
+#. translators: %s is the gift card code.
+#: includes/class-yith-ywgc-gift-card.php:575
+msgid "The gift card code %s does not exist!"
+msgstr "Il codice acquisto %s non è esiste!"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:613
+msgid "Gift Card"
+msgstr "Buono regalo"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:437
+msgctxt "GDPR privacy"
+msgid "Gift cards sent"
+msgstr "Buoni regalo inviati"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:390
+msgctxt "GDPR privacy"
+msgid "YITH gift cards sent"
+msgstr "YITH Buoni regalo inviati"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:363
+msgctxt "GDPR privacy"
+msgid "Gift cards received"
+msgstr "Buoni regalo ricevuti"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:311
+msgctxt "GDPR privacy"
+msgid "YITH gift cards received"
+msgstr "YITH Buoni regalo ricevuti"
+
+#. translators: %d: Comment ID
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:171
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:246
+msgid "Gift card %d contains personal data but could not be anonymized."
+msgstr "Il buono regalo %d contiene dati personali ma non può essere anonimizzato."
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:150
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:223
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:575
+msgctxt "GDPR privacy"
+msgid "Anonymous"
+msgstr "Anonimo"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:102
+msgctxt "GDPR privacy"
+msgid "YITH gift cards received and sent"
+msgstr "YITH Buoni regalo ricevuti e inviati"
+
+#: includes/class-yith-woocommerce-gift-cards-privacy.php:35
+msgctxt "Privacy Policy Content"
+msgid "YITH Gift Cards for WooCommerce premium"
+msgstr "YITH Gift Cards for WooCommerce premium"
+
+#: includes/class-yith-woocommerce-gift-cards.php:284
+msgid "Virtual"
+msgstr "Virtuale"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:455
+msgid "This card is dismissed."
+msgstr "Questo buono regalo non è più valido."
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:357
+msgid "Unlimited"
+msgstr "Illimitato"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:345
+#: templates/myaccount/my-giftcards.php:138
+msgid "The code has not been used yet"
+msgstr "Il codice non è stato ancora utilizzato"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:291
+msgid "Created manually"
+msgstr "Creato manualmente"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:215
+#: templates/myaccount/my-giftcards.php:25
+msgid "Balance"
+msgstr "Saldo"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:214
+msgid "Order"
+msgstr "Ordine"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:284
+msgid "Introductive message"
+msgstr "Messaggio introduttivo"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:276
+msgid "Email Heading"
+msgstr "Intestazione dell'email"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:271
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:279
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:287
+msgid "Defaults to <code>%s</code>"
+msgstr "Predefinito: <code>%s</code>"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:268
+msgid "Subject"
+msgstr "Oggetto"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:264
+msgid "Enable this email notification"
+msgstr "Abilita questa notifica email"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:261
+msgid "Enable/Disable"
+msgstr "Abilita/Disabilita"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:171
+msgid "a friend"
+msgstr "un amico"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:54
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:176
+msgid "Hi {recipient_name}, you have received this gift card from {sender}, use it on our online shop."
+msgstr "Ciao {recipient_name}, ricevi questo buono regalo da {sender}. Utilizzalo nel nostro negozio online."
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:48
+msgid "[{site_title}] You have received a gift card"
+msgstr "[{site_title}] Hai ricevuto un buono regalo"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:47
+msgid "Your gift card"
+msgstr "Il tuo buono regalo"
+
+#: includes/emails/class-yith-ywgc-email-send-gift-card.php:44
+msgid "Send the digital gift card to the email address selected during the purchase"
+msgstr "Invia il buono regalo digitale all'indirizzo email selezionato durante l'acquisto"
+
+#: includes/class-yith-ywgc-cart-checkout.php:1199
+msgid "Email address not valid, please check the following: "
+msgstr "Indirizzo email non valido, per favore, controlla quanto segue: "
+
+#: includes/class-yith-ywgc-cart-checkout.php:1188
+msgid "The recipient(s) email address is mandatory"
+msgstr "L'indirizzo email dei destinatari è obbligatorio"
+
+#: includes/class-yith-ywgc-cart-checkout.php:1175
+msgid "Add a valid email address for the recipient"
+msgstr "Aggiungi un indirizzo email valido per il destinatario"
+
+#: includes/class-yith-ywgc-cart-checkout.php:1161
+msgid "An error occurred while adding the product to the cart."
+msgstr "Si è verificato un errore mentre il prodotto veniva aggiunto al carrello."
+
+#: includes/class-yith-ywgc-cart-checkout.php:1049
+msgid "The gift card has an invalid amount"
+msgstr "L'importo del buono regalo non è valido"
+
+#: includes/class-yith-ywgc-cart-checkout.php:1018
+#: includes/class-yith-ywgc-cart-checkout.php:1023
+msgid "Order paid with gift cards for a total amount of %s."
+msgstr "Ordine pagato con buono regalo per un importo totale di %s."
+
+#: includes/class-yith-ywgc-cart-checkout.php:631
+msgid "[Remove]"
+msgstr "[Rimuovi]"
+
+#: includes/class-yith-ywgc-cart-checkout.php:601
+msgid "Gift card:"
+msgstr "Buono regalo:"
+
+#: includes/class-yith-ywgc-cart-checkout.php:558
+msgid "Gift cards:"
+msgstr "Buoni regalo:"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:492
+#: includes/class-yith-ywgc-frontend.php:321
+msgid "Delivery date: %s"
+msgstr "Data di consegna %s"
+
+#: includes/class-yith-ywgc-frontend.php:317
+msgid "Recipient: %s"
+msgstr "Destinatario %s"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:479
+msgid "Failed"
+msgstr "Fallito"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:476
+msgid "Not yet sent"
+msgstr "Non ancora inviata"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:473
+msgid "Scheduled"
+msgstr "Programmato"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:470
+#: includes/class-yith-ywgc-frontend.php:303
+msgid "Sent on %s"
+msgstr "Inviato il %s"
+
+#: templates/yith-gift-cards/gift-card-details.php:29
+#: templates/yith-gift-cards/gift-card-details.php:52
+msgid "Name: "
+msgstr "Nome: "
+
+#: includes/class-yith-ywgc-frontend.php:503
+msgid "Please enter a valid email address"
+msgstr "Inserisci un indirizzo email valido"
+
+#: plugin-fw/templates/panel/panel-header.php:27
+#: plugin-fw/templates/panel/v2/panel-header.php:22
+msgid ":) Thanks!"
+msgstr ":) Grazie!"
+
+#: plugin-fw/templates/panel/panel-header.php:24
+#: plugin-fw/templates/panel/v2/panel-header.php:19
+msgid "to keep updating and improving the plugin. Please,"
+msgstr "per poter continuare ad aggiornare e migliorare il plugin."
+
+#: plugin-fw/templates/panel/panel-header.php:23
+#: plugin-fw/templates/panel/v2/panel-header.php:18
+msgid "We need your support"
+msgstr "Abbiamo bisogno del tuo sostegno"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:49
+msgid "Output IP Address"
+msgstr "Indirizzo IP di output"
+
+#: plugin-fw/templates/sysinfo/tabs/main.php:45
+msgid "Site URL"
+msgstr "URL del sito"
+
+#: plugin-fw/includes/class-yith-system-status.php:522
+msgid "N/A"
+msgstr "N.D."
+
+#. translators: 1. user display name; 2. user ID; 3. user email.
+#: plugin-fw/templates/fields/ajax-customers.php:68
+#: plugin-fw/templates/fields/ajax-customers.php:79
+msgid "%1$s (#%2$s &ndash; %3$s)"
+msgstr "%1$s (#%2$s &ndash; %3$s)"
+
+#. translators: %1$s opening link tag, %2$s closing link tag
+#: plugin-fw/includes/class-yith-system-status.php:582
+#: plugin-fw/includes/class-yith-system-status.php:616
+msgid "Read more %1$shere%2$s or contact your hosting company in order to increase it."
+msgstr "Per maggiori informazioni %1$sleggi qui%2$s oppure contatta il tuo host per un upgrade."
+
+#: plugin-fw/includes/class-yith-system-status.php:578
+msgid "Contact your hosting company in order to enable it."
+msgstr "Per attivarlo contatta il tuo servizio di hosting."
+
+#. translators: %1$s code, %2$s file name
+#: plugin-fw/includes/class-yith-system-status.php:570
+msgid "Remove %1$s from %2$s file"
+msgstr "Rimuovi %1$s dal file %2$s"
+
+#: plugin-fw/includes/class-yith-system-status.php:559
+#: plugin-fw/includes/class-yith-system-status.php:565
+msgid "Contact your hosting company in order to update it."
+msgstr "Contatta il tuo servizio hosting per aggiornarlo."
+
+#: plugin-fw/includes/class-yith-system-status.php:555
+msgid "Update it to the latest version in order to benefit of all new features and security updates."
+msgstr "Aggiorna all'ultima versione per beneficiare di tutte le nuove funzionalità e degli aggiornamenti di sicurezza."
+
+#. translators: %1$s plugin name, %2$s version number
+#: plugin-fw/includes/class-yith-system-status.php:549
+msgid "%1$s needs at least %2$s version"
+msgstr "%1$s necessita almeno della versione %2$s"
+
+#. translators: %s recommended memory amount
+#: plugin-fw/includes/class-yith-system-status.php:613
+msgid "For optimal functioning of our plugins, we suggest setting at least %s of available memory"
+msgstr "Per il funzionamento ottimale dei nostri plugin consigliamo di impostare almeno %s della memoria disponibile"
+
+#. translators: %1$s plugin name, %2$s required memory amount
+#: plugin-fw/includes/class-yith-system-status.php:546
+msgid "%1$s needs at least %2$s of available memory"
+msgstr "%1$s necessita di almeno %2$s di memoria disponibile"
+
+#. translators: %1$s plugin name, %2$s requirement name
+#: plugin-fw/includes/class-yith-system-status.php:543
+msgid "%1$s needs %2$s enabled"
+msgstr "%1$s necessita dell'attivazione di %2$s"
+
+#: includes/class-yith-woocommerce-gift-cards.php:506
+#: includes/class-yith-woocommerce-gift-cards.php:512
+#: plugin-fw/includes/class-yith-system-status.php:518
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:219
+#: plugin-fw/includes/class-yith-system-status.php:518
+msgid "Enabled"
+msgstr "Abilitato"
+
+#: plugin-fw/templates/sysinfo/system-information-panel.php:27
+msgid "YITH System Information"
+msgstr "YITH System Information"
+
+#. translators: %1$s open link tag, %2$s open link tag
+#: plugin-fw/includes/class-yith-system-status.php:372
+msgid "The system check has detected some compatibility issues on your installation.%1$sClick here%2$s to know more"
+msgstr "Il controllo del sistema ha rilevato dei problemi di compatibilità sulla tua installazione. Per maggiori informazioni %1$sfai clic qui%2$s"
+
+#: plugin-fw/includes/class-yith-system-status.php:368
+msgid "Warning!"
+msgstr "Attenzione!"
+
+#: plugin-fw/includes/class-yith-system-status.php:225
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: plugin-fw/includes/class-yith-system-status.php:146
+msgid "URL FOpen"
+msgstr "URL FOpen"
+
+#: plugin-fw/includes/class-yith-system-status.php:145
+msgid "OPCache Save Comments"
+msgstr "OPCache Save Comments"
+
+#: plugin-fw/includes/class-yith-system-status.php:144
+msgid "Iconv Module"
+msgstr "Iconv Module"
+
+#: plugin-fw/includes/class-yith-system-status.php:143
+msgid "GD Library"
+msgstr "GD Library"
+
+#: plugin-fw/includes/class-yith-system-status.php:142
+msgid "ImageMagick Version"
+msgstr "Versione di ImageMagick"
+
+#: plugin-fw/includes/class-yith-system-status.php:141
+msgid "MultiByte String"
+msgstr "MultiByte String"
+
+#: plugin-fw/includes/class-yith-system-status.php:140
+msgid "SimpleXML"
+msgstr "SimpleXML"
+
+#: plugin-fw/includes/class-yith-system-status.php:139
+msgid "WordPress Cron"
+msgstr "Cron WordPress"
+
+#: plugin-fw/includes/class-yith-system-status.php:138
+msgid "TLS Version"
+msgstr "Versione TLS"
+
+#: plugin-fw/includes/class-yith-system-status.php:137
+msgid "PHP Version"
+msgstr "Versione PHP"
+
+#: plugin-fw/includes/class-yith-system-status.php:136
+msgid "Available Memory"
+msgstr "Memoria disponibile"
+
+#: plugin-fw/includes/class-yith-system-status.php:135
+msgid "WooCommerce Version"
+msgstr "Versione di WooCommerce"
+
+#: plugin-fw/includes/class-yith-system-status.php:134
+msgid "WordPress Version"
+msgstr "Versione di WordPress"
+
+#: plugin-fw/includes/class-yith-system-status.php:161
+#: plugin-fw/includes/class-yith-system-status.php:162
+#: plugin-fw/includes/class-yith-system-status.php:187
+msgid "System Status"
+msgstr "Stato del sistema"
+
+#: plugin-fw/templates/fields/date-format.php:65
+msgid "Custom:"
+msgstr "Personalizzato:"
+
+#: plugin-fw/templates/fields/select-buttons.php:20
+msgid "Remove All"
+msgstr "Rimuovi tutti"
+
+#: plugin-fw/templates/fields/select-buttons.php:19
+msgid "Add All"
+msgstr "Aggiungi tutti"
+
+#: plugin-fw/includes/class-yith-dashboard.php:137
+msgctxt "Button label"
+msgid "Close"
+msgstr "Chiudi"
+
+#: plugin-fw/includes/class-yith-dashboard.php:97
+msgctxt "Plugin FW"
+msgid "Latest update released on"
+msgstr "Ultimo aggiornamento rilasciato il"
+
+#: plugin-fw/includes/class-yith-dashboard.php:96
+msgctxt "Plugin FW"
+msgid "View Changelog"
+msgstr "Visualizza il changelog"
+
+#: plugin-fw/includes/class-yith-dashboard.php:63
+msgid "An error has occurred, which probably means the feed is down. Try again later."
+msgstr "Si è verificato un errore probabilmente causato dal feed non disponibile. Riprova più tardi."
+
+#: plugin-fw/includes/class-yith-dashboard.php:56
+msgid "RSS Error:"
+msgstr "Errore RSS:"
+
+#: plugin-fw/includes/class-yith-dashboard.php:36
+msgid "Latest news from YITH Blog"
+msgstr "Ultime novità dal blog YITH"
+
+#: plugin-fw/includes/class-yith-dashboard.php:35
+msgid "YITH Latest Updates"
+msgstr "Ultimi aggiornamenti da YITH"
+
+#: plugin-fw/includes/builders/gutenberg/class-yith-gutenberg.php:156
+msgctxt "[gutenberg]: Category Name"
+msgid "YITH"
+msgstr "YITH"
+
+#. Author of the plugin
+#: init.php
+msgid "YITH"
+msgstr "YITH"
+
+#. Description of the plugin
+#: init.php
+msgid "<code><strong>YITH WooCommerce Gift Cards</strong></code> allows your users to purchase and give gift cards. In this way, you will increase the spread of your brand, your sales, and average spend, especially during the holidays. <a href=\"https://yithemes.com/\" target=\"_blank\">Get more plugins for your e-commerce shop on <strong>YITH</strong></a>."
+msgstr "<code><strong>YITH Woocommerce Gift Cards</strong></code> permette ai tuoi utenti di acquistare e inviare buoni regalo. In questo modo, aumenterai la visibilità del tuo brand, le tue vendite e il valore dello scontrino medio, soprattutto durante le festività. <a href=\"https://yithemes.com/\" target=\"_blank\">Scopri tanti altri plugin per il tuo e-commerce su <strong>YITH</strong></a>."
+
+#: plugin-fw/yit-plugin.php:243
+msgid "License"
+msgstr "Chiave di licenza"
+
+#: plugin-fw/yit-plugin.php:239
+msgctxt "Action links"
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: plugin-fw/yit-plugin.php:98
+msgctxt "Plugin Row Meta"
+msgid "Premium version"
+msgstr "Versione premium"
+
+#: plugin-fw/yit-plugin.php:94
+msgctxt "Plugin Row Meta"
+msgid "Support"
+msgstr "Assistenza"
+
+#: plugin-fw/yit-plugin.php:90
+msgctxt "Plugin Row Meta"
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: plugin-fw/yit-plugin.php:86
+msgctxt "Plugin Row Meta"
+msgid "Live Demo"
+msgstr "Live Demo"
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:106
+msgctxt "Privacy Policy Content"
+msgid "Payments"
+msgstr "Pagamenti"
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:103
+msgctxt "Privacy Policy Content"
+msgid "What we share with others"
+msgstr "Cosa condividiamo con gli altri"
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:100
+msgctxt "Privacy Policy Content"
+msgid "Who on our team has access"
+msgstr "Persone del nostro gruppo di lavoro che hanno accesso"
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:97
+msgctxt "Privacy Policy Content"
+msgid "What we collect and store"
+msgstr "Cosa raccogliamo e salviamo"
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:93
+msgctxt "Privacy Policy Content"
+msgid "This sample language includes the basics around what personal data your store may be collecting, storing and sharing, as well as who may have access to that data. Depending on what settings are enabled and which additional plugins are used, the specific information shared by your store will vary. We recommend consulting with a lawyer when deciding what information to disclose on your privacy policy."
+msgstr "Questo esempio include gli elementi di base sulla raccolta dei dati personali, la memorizzazione e la condivisione, nonché su chi è autorizzato ad accedere a tali dati. In base alle impostazioni abilitate e ai moduli di estensione aggiuntivi utilizzati, le informazioni specifiche condivise dal nostro negozio possono variare. Ti consigliamo di consultare un legale al momento di decidere quali informazioni divulgare nell'informativa sulla privacy."
+
+#: plugin-fw/includes/privacy/class-yith-privacy.php:61
+msgctxt "Privacy Policy Guide Title"
+msgid "YITH Plugins"
+msgstr "YITH Plugins"
+
+#: plugin-fw/templates/fields/icons.php:78
+msgid "Set Default"
+msgstr "Ripristina impostazioni iniziali"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:559
+#: plugin-fw/includes/class-yit-plugin-panel.php:562
+msgid "How to install premium version"
+msgstr "Come installare la versione premium"
+
+#: includes/admin/class-yith-ywgc-backend.php:198
+#: includes/class-yith-ywgc-frontend.php:296
+msgid "Gift card code: "
+msgstr "Codice del buono regalo: "
+
+#. Author URI of the plugin
+#: init.php
+msgid "https://yithemes.com/"
+msgstr "https://yithemes.com/"
+
+#. Plugin URI of the plugin
+#: init.php
+msgid "https://yithemes.com/themes/plugins/yith-woocommerce-gift-cards"
+msgstr "https://yithemes.com/themes/plugins/yith-woocommerce-gift-cards"
+
+#: templates/single-product/add-to-cart/gift-card.php:33
+msgid "This product cannot be purchased"
+msgstr "Questo prodotto non può essere acquistato"
+
+#: plugin-options/settings/general-options.php:25
+msgid "General settings"
+msgstr "Impostazioni generali"
+
+#: plugin-fw/templates/panel/v2/panel-content-page.php:58
+#: plugin-fw/templates/panel/v2/woocommerce/woocommerce-form.php:70
+#: plugin-fw/templates/panel/woocommerce/woocommerce-form.php:41
+msgid "Reset Defaults"
+msgstr "Ripristina impostazioni iniziali"
+
+#: plugin-fw/templates/fields/upload.php:39
+msgid "Reset"
+msgstr "Ripristina"
+
+#: plugin-fw/templates/fields/sidebars.php:54
+msgid "Right Sidebar"
+msgstr "Barra laterale destra"
+
+#: plugin-fw/templates/fields/sidebars.php:39
+msgid "Left Sidebar"
+msgstr "Barra laterale sinistra"
+
+#: plugin-fw/templates/fields/sidebars.php:41
+#: plugin-fw/templates/fields/sidebars.php:56
+msgid "Choose a sidebar"
+msgstr "Scegli una barra laterale"
+
+#: plugin-fw/templates/fields/sidebars.php:23
+msgid "Right sidebar"
+msgstr "Barra laterale destra"
+
+#: plugin-fw/templates/fields/sidebars.php:26
+#: plugin-fw/templates/fields/sidebars.php:29
+msgid "No sidebar"
+msgstr "Nessuna barra laterale"
+
+#: plugin-fw/templates/fields/sidebars.php:20
+msgid "Left sidebar"
+msgstr "Barra laterale sinistra"
+
+#: includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php:171
+#: plugin-fw/templates/fields/image-gallery.php:26
+#: plugin-fw/templates/fields/image-gallery.php:37
+msgid "Delete"
+msgstr "Elimina"
+
+#: plugin-fw/templates/fields/image-gallery.php:35
+msgid "Add images"
+msgstr "Aggiungi immagini"
+
+#: plugin-fw/templates/fields/image-gallery.php:34
+msgid "Add to gallery"
+msgstr "Aggiungi alla galleria"
+
+#: plugin-fw/templates/fields/image-gallery.php:33
+msgid "Add Images to Gallery"
+msgstr "Aggiungi immagini alla galleria"
+
+#: plugin-fw/templates/fields/image-gallery.php:36
+msgid "Delete image"
+msgstr "Rimuovi immagine"
+
+#: plugin-fw/templates/fields/customtabs.php:93
+msgid "Do you want to remove the custom tab?"
+msgstr "Vuoi rimuovere la scheda personalizzata?"
+
+#: plugin-fw/templates/fields/customtabs.php:52
+msgid "Add custom product tab"
+msgstr "Aggiungi scheda prodotto personalizzata"
+
+#: plugin-fw/templates/fields/customtabs.php:41
+#: plugin-fw/templates/fields/customtabs.php:82
+msgid "Content of the tab. (HTML is supported)"
+msgstr "Contenuto della scheda (codice HTML supportato)."
+
+#: plugin-fw/templates/fields/customtabs.php:40
+#: plugin-fw/templates/fields/customtabs.php:81
+msgid "Value"
+msgstr "Valore"
+
+#: plugin-fw/templates/fields/customtabs.php:17
+msgid "Expand all"
+msgstr "Espandi tutti"
+
+#: plugin-fw/templates/fields/customtabs.php:17
+msgid "Close all"
+msgstr "Chiudi tutti"
+
+#: plugin-fw/templates/fields/upload.php:34
+#: plugin-fw/templates/panel/woocommerce/woocommerce-upload.php:37
+msgid "Upload"
+msgstr "Carica"
+
+#: plugin-fw/templates/fields/customtabs.php:25
+#: plugin-fw/templates/fields/customtabs.php:68
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: includes/class-yith-woocommerce-gift-cards.php:622
+msgid "None"
+msgstr "Nessuna"
+
+#: plugin-fw/templates/fields/ajax-products.php:16
+msgid "Search for a product..."
+msgstr "Cerca un prodotto..."
+
+#: plugin-options/email-options.php:22
+msgid "Emails"
+msgstr "Email"
+
+#: plugin-fw/includes/class-yit-pointers.php:96
+msgid "Plugins Upgraded"
+msgstr "Plugin aggiornati"
+
+#: plugin-fw/includes/class-yit-pointers.php:80
+msgid "Plugins Activated"
+msgstr "Plugin attivati"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1567
+msgid "Sorting successful."
+msgstr "Ordinamento effettuato con successo."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1566
+msgid "Sorry, import is disabled."
+msgstr "L'importazione è disabilitata."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1565
+msgid "The added file is not valid."
+msgstr "Il file aggiunto non è valido."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1564
+msgid "An error has occurred during import. Please try again."
+msgstr "Si è verificato un errore durante l'importazione. Prova di nuovo."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1563
+msgid "Database imported correctly."
+msgstr "Database importato correttamente."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1561
+msgid "Element updated correctly."
+msgstr "Elemento aggiornato correttamente."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1560
+msgid "Element deleted correctly."
+msgstr "Elemento rimosso correttamente."
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1559
+msgid "Settings reset"
+msgstr "Impostazioni azzerate"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1558
+msgid "Settings saved"
+msgstr "Impostazioni salvate"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:1557
+msgid "The element you have entered already exists. Please, enter another name."
+msgstr "L'elemento inserito esiste già. Inserisci un altro nome."
+
+#: plugin-fw/includes/class-yit-assets.php:261
+#: plugin-fw/includes/class-yit-plugin-subpanel.php:134
+#: plugin-fw/templates/panel/panel-content-page.php:14
+msgid "Are you sure?"
+msgstr "Sei sicuro?"
+
+#: plugin-fw/includes/class-yit-plugin-subpanel.php:137
+#: plugin-fw/templates/panel/panel-content-page.php:38
+msgid "Reset to default"
+msgstr "Ripristina configurazione predefinita"
+
+#: plugin-fw/includes/class-yit-assets.php:262
+#: plugin-fw/includes/class-yit-plugin-subpanel.php:134
+#: plugin-fw/templates/panel/panel-content-page.php:14
+msgid "If you continue with this action, you will reset all options in this page."
+msgstr "Se prosegui con questa azione, tutte le opzioni di questa pagina saranno reimpostate."
+
+#: plugin-fw/includes/class-yit-plugin-subpanel.php:127
+#: plugin-fw/templates/panel/panel-content-page.php:29
+msgid "Save Changes"
+msgstr "Salva modifiche"
+
+#: plugin-fw/includes/class-yith-system-status.php:217
+msgid "YITH Plugins"
+msgstr "Plugin YITH"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:89
+msgid "Plugin Settings"
+msgstr "Impostazioni plugin"
+
+#: plugin-fw/includes/class-yit-plugin-panel-woocommerce.php:605
+msgid "The changes you have made will be lost if you leave this page."
+msgstr "Perderai tutti i cambiamenti effettuati se lasci questa pagina."
+
+#: plugin-fw/templates/fields/customtabs.php:34
+#: plugin-fw/templates/fields/customtabs.php:76
+msgid "Name"
+msgstr "Nome"
+
+#: includes/class-yith-woocommerce-gift-cards.php:602
+msgid "New category name"
+msgstr "Nome nuova categoria"
+
+#: includes/class-yith-woocommerce-gift-cards.php:601
+msgid "Add new category"
+msgstr "Aggiungi nuova categoria"
+
+#: includes/class-yith-woocommerce-gift-cards.php:599
+msgid "Edit category"
+msgstr "Modifica categoria"
+
+#: includes/class-yith-woocommerce-gift-cards.php:598
+msgid "Parent category:"
+msgstr "Categoria genitore:"
+
+#: includes/class-yith-woocommerce-gift-cards.php:597
+msgid "Parent category"
+msgstr "Categoria genitore"
+
+#: includes/class-yith-woocommerce-gift-cards.php:596
+msgid "All categories"
+msgstr "Tutte le categorie"
+
+#: includes/class-yith-woocommerce-gift-cards.php:595
+msgid "Search categories"
+msgstr "Cerca categorie"
+
+#: includes/class-yith-wc-product-gift-card.php:507
+msgid "Select amount"
+msgstr "Seleziona l'importo"
+
+#. Plugin Name of the plugin
+#: init.php
+msgid "YITH WooCommerce Gift Cards"
+msgstr "YITH WooCommerce Gift Cards"
+
+#: plugin-fw/includes/class-yit-plugin-panel.php:90
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: templates/yith-gift-cards/ywgc-gift-card-template.php:111
+msgid "Gift card code:"
+msgstr "Codice del buono regalo:"
+
+#: includes/class-yith-woocommerce-gift-cards.php:226
+#: includes/class-yith-woocommerce-gift-cards.php:227
+msgid "Gift Cards"
+msgstr "Buoni regalo"
+
+#: views/gift-cards-product-settings.php:20
+msgid "Gift card amounts"
+msgstr "Importi del buono regalo"
+
+#: includes/admin/class-yith-ywgc-backend.php:371
+#: templates/yith-gift-cards/ywgc-gift-card-template.php:72
+msgid "Gift card"
+msgstr "Buono regalo"
+
+#: init.php:50
+msgid "YITH WooCommerce Gift Cards is enabled but not effective. It requires WooCommerce in order to work."
+msgstr "YITH WooCommerce Gift Cards è abilitato ma non in funzione. Richiede WooCommerce per poter funzionare."

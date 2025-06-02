@@ -1,0 +1,45 @@
+# Translation of Plugins - Meta pixel for WordPress - Stable (latest release) in Italian
+# This file is distributed under the same license as the Plugins - Meta pixel for WordPress - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-11-30 18:51:34+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.0\n"
+"Language: it\n"
+"Project-Id-Version: Plugins - Meta pixel for WordPress - Stable (latest release)\n"
+
+#. Plugin Name of the plugin
+#: facebook-for-wordpress.php
+msgid "Meta pixel for WordPress"
+msgstr "Meta pixel per WordPress"
+
+#. Description of the plugin
+#: facebook-for-wordpress.php
+msgid "<strong><em>***ATTENTION: After upgrade the plugin may be deactivated due to a known issue, to workaround please refresh this page and activate plugin.***</em></strong> The Facebook pixel is an analytics tool that helps you measure the effectiveness of your advertising. You can use the Facebook pixel to understand the actions people are taking on your website and reach audiences you care about."
+msgstr "<strong><em>***ATTENZIONE: dopo l'aggiornamento, il plugin potrebbe essere disattivato a causa di un problema noto. Per non avere problemi, aggiorna questa pagina e attiva il plugin.***</em></strong> Il pixel di Facebook è uno strumento di analisi che aiuta a misurare l'efficacia delle tue campagne pubblicitarie. Puoi usare il pixel di Facebook per capire le azioni che i visitatori fanno sul tuo sito e raggiungere le persone che ti interessano."
+
+#. Author URI of the plugin
+#: facebook-for-wordpress.php
+msgid "https://www.facebook.com/"
+msgstr "https://www.facebook.com/"
+
+#. Author of the plugin
+#: facebook-for-wordpress.php
+msgid "Facebook"
+msgstr "Facebook"
+
+#. Plugin URI of the plugin
+#: facebook-for-wordpress.php
+msgid "https://www.facebook.com/business/help/881403525362441"
+msgstr "https://www.facebook.com/business/help/881403525362441"
+
+#: core/FacebookWordpressSettingsPage.php:541
+msgid "Dismiss this notice."
+msgstr "Ignora questa notifica."
+
+#: core/FacebookWordpressSettingsPage.php:65
+msgid "You do not have sufficient permissions to access this page"
+msgstr "Non hai i permessi necessari per accedere a questa pagina"

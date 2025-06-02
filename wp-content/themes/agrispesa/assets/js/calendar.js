@@ -6,12 +6,12 @@ jQuery(document).ready(function ($) {
 
   window.blockedWeeks = {
 
-    2024: [
-      26, 28, 30, 32, 33, 34, 35, 36, 38, 40, 42, 44, 46, 48, 50, 52
-    ],
     2025: [
       1, 2, 4, 6, 8, 10, 12, 14, 16, 17, 19, 21, 23, 25, 27, 29
     ],
+    2026: [
+      31, 32, 33, 34, 35, 36, 38, 40, 42, 44, 46, 48, 50, 52
+    ]
   }
 
   function getDatesBetween(startDate, endDate) {
