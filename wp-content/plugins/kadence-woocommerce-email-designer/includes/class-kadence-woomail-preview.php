@@ -344,7 +344,6 @@ if ( ! class_exists( 'Kadence_Woomail_Preview' ) ) {
 					case 'customer_invoice':
 						$email->object = $order;
 						if ( is_object( $order ) ) {
-							$email->invoice = ( function_exists( 'wc_gzdp_get_order_last_invoice' ) ? wc_gzdp_get_order_last_invoice( $order ) : null );
 							$email->find['order-date']   = '{order_date}';
 							$email->find['order-number'] = '{order_number}';
 							$email->replace['order-date']   = wc_format_datetime( $email->object->get_date_created() );

@@ -11,10 +11,11 @@ use Exception;
 use WordPress\Plugin_Check\Checker\Check_Categories;
 use WordPress\Plugin_Check\Checker\Check_Result;
 use WordPress\Plugin_Check\Checker\Checks\Abstract_File_Check;
+use WordPress\Plugin_Check\Lib\Readme\Parser as PCPParser;
 use WordPress\Plugin_Check\Traits\Amend_Check_Result;
 use WordPress\Plugin_Check\Traits\Find_Readme;
 use WordPress\Plugin_Check\Traits\Stable_Check;
-use WordPressdotorg\Plugin_Directory\Readme\Parser;
+use WordPressdotorg\Plugin_Directory\Readme\Parser as DotorgParser;
 
 /**
  * Check for trademarks.
@@ -137,13 +138,26 @@ class Trademarks_Check extends Abstract_File_Check {
 		'wordpress',
 		'wordpess',
 		'wpress',
-		'wp-',
+		'wp', // it's allowed, but shows a warning.
+		'wc', // it's allowed, but shows a warning.
 		'wp-mail-smtp-',
 		'yandex-',
 		'yahoo-',
 		'yoast',
 		'youtube-',
 		'you-tube-',
+	);
+
+	/**
+	 * Lists of allowed acronyms of trademarks.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var string[]
+	 */
+	const ALLOWED_ACRONYMS = array(
+		'wp',
+		'wc',
 	);
 
 	/**
@@ -252,7 +266,7 @@ class Trademarks_Check extends Abstract_File_Check {
 
 		$readme_file = reset( $readme );
 
-		$parser = new Parser( $readme_file );
+		$parser = class_exists( DotorgParser::class ) ? new DotorgParser( $readme_file ) : new PCPParser( $readme_file );
 
 		try {
 			$this->validate_name_has_no_trademarks( $parser->name );
@@ -348,6 +362,17 @@ class Trademarks_Check extends Abstract_File_Check {
 				esc_html( $plugin_name ),
 				esc_html( trim( $check, '-' ) )
 			);
+		} elseif (
+			trim( $check, '-' ) === $check
+			&& in_array( $check, self::ALLOWED_ACRONYMS, true )
+		) {
+			// Trademarks that are allowed to use as an acronym.
+			$message = sprintf(
+				/* translators: 1: plugin slug, 2: found trademarked term */
+				__( 'The plugin name includes a restricted term. Your plugin name - "%1$s" - contains the restricted term "%2$s" which can be used , as long as you don\'t change it to the full name. For example: You can use WP but not WordPress.', 'plugin-check' ),
+				esc_html( $plugin_name ),
+				esc_html( trim( $check, '-' ) )
+			);
 		} elseif ( trim( $check, '-' ) === $check ) {
 			// Trademarks that do NOT end in "-" indicate slug cannot contain term at all.
 			$message = sprintf(
@@ -392,6 +417,17 @@ class Trademarks_Check extends Abstract_File_Check {
 			$message = sprintf(
 				/* translators: 1: plugin slug, 2: found trademarked term */
 				__( 'The plugin slug includes a restricted term. Your plugin slug - "%1$s" - contains the restricted term "%2$s" which cannot be used within in your plugin slug, unless your plugin slug ends with "for %2$s". The term must still not appear anywhere else in your plugin slug.', 'plugin-check' ),
+				esc_html( $plugin_slug ),
+				esc_html( trim( $check, '-' ) )
+			);
+		} elseif (
+			trim( $check, '-' ) === $check
+			&& in_array( $check, self::ALLOWED_ACRONYMS, true )
+		) {
+			// Trademarks that are allowed to use with Acronym.
+			$message = sprintf(
+				/* translators: 1: plugin slug, 2: found trademarked term */
+				__( 'The plugin slug includes a restricted term. Your plugin slug - "%1$s" - contains the restricted term "%2$s" which can be used within the plugin slug, as long as you don\'t use the full name in the plugin name. For example: You can use WP but not WordPress.', 'plugin-check' ),
 				esc_html( $plugin_slug ),
 				esc_html( trim( $check, '-' ) )
 			);

@@ -25,8 +25,8 @@ class SessionFactory
     public function get_woocommerce_session_adapter()
     {
         if (null === $this->woocommerce_session_adapter) {
-            \WC()->initialize_session();
-            $this->woocommerce_session_adapter = new \FSVendor\WPDesk\Session\Adapter\WooCommerceSession(\WC()->session);
+            WC()->initialize_session();
+            $this->woocommerce_session_adapter = new WooCommerceSession(WC()->session);
         }
         return $this->woocommerce_session_adapter;
     }

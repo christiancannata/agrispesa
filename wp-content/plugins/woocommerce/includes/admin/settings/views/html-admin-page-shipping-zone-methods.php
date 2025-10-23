@@ -7,16 +7,15 @@
 
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 use Automattic\WooCommerce\Blocks\Shipping\ShippingController;
+use Automattic\WooCommerce\StoreApi\Utilities\LocalPickupUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
 
-<h2>
-	<a href="<?php echo esc_url( admin_url( 'admin.php?page=wc-settings&tab=shipping' ) ); ?>"><?php esc_html_e( 'Shipping zones', 'woocommerce' ); ?></a> &gt;
-	<span class="wc-shipping-zone-name"><?php echo esc_html( $zone->get_zone_name() ? $zone->get_zone_name() : __( 'Zone', 'woocommerce' ) ); ?></span>
-</h2>
+
+<?php wc_back_header( $zone->get_zone_name() ? $zone->get_zone_name() : __( 'Add zone', 'woocommerce' ), __( 'Return to shipping', 'woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=shipping' ) ); ?>
 
 <?php
 // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment
@@ -242,10 +241,15 @@ do_action( 'woocommerce_shipping_zone_after_methods_table', $zone );
 									);
 
 								} else {
+									/* translators: %s: Local pickup settings page URL. */
+									$message = __( 'Local pickup: Set up pickup locations in the <a href="%s">Local pickup settings page</a>.', 'woocommerce' );
+									if ( LocalPickupUtils::is_local_pickup_enabled() ) {
+										/* translators: %s: Local pickup settings page URL. */
+										$message = __( 'Local pickup: Manage existing pickup locations in the <a href="%s">Local pickup settings page</a>.', 'woocommerce' );
+									}
 									printf(
 										wp_kses(
-										/* translators: %s: Local pickup settings page URL. */
-											__( 'Local pickup: Set up pickup locations in the <a href="%s">Local pickup settings page</a>.', 'woocommerce' ),
+											$message,
 											array( 'a' => array( 'href' => array() ) )
 										),
 										esc_url( admin_url( 'admin.php?page=wc-settings&tab=shipping&section=pickup_location' ) )

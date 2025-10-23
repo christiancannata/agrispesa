@@ -5,8 +5,12 @@
 	"keywords": [ "Handpicked Products", "WooCommerce" ],
 	"description": "Display a selection of hand-picked products in a grid.",
 	"supports": {
+		"interactivity": {
+			"clientNavigation": false
+		},
 		"align": [ "wide", "full" ],
-		"html": false
+		"html": false,
+		"inserter": false
 	},
 	"attributes": {
 		"align": {
@@ -75,6 +79,6 @@
 		}
 	},
 	"textdomain": "woocommerce",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

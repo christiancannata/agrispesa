@@ -12,6 +12,7 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Enums\OrderStatus;
 use Automattic\WooCommerce\Utilities\NumberUtil;
 use Automattic\WooCommerce\Utilities\OrderUtil;
 use Automattic\WooCommerce\Utilities\RestApiUtil;
@@ -294,7 +295,7 @@ class WC_Webhook extends WC_Legacy_Webhook {
 			$order = wc_get_order( absint( $arg ) );
 
 			// Ignore standard drafts for orders.
-			if ( in_array( $order->get_status(), array( 'draft', 'auto-draft', 'new' ), true ) ) {
+			if ( in_array( $order->get_status(), array( OrderStatus::DRAFT, OrderStatus::AUTO_DRAFT, 'new' ), true ) ) {
 				return false;
 			}
 		}
@@ -427,7 +428,7 @@ class WC_Webhook extends WC_Legacy_Webhook {
 		} elseif ( in_array( $this->get_api_version(), wc_get_webhook_rest_api_versions(), true ) ) {
 				$payload = $this->get_wp_api_payload( $resource, $resource_id, $event );
 		} else {
-			if ( is_null( wc()->api ) ) {
+			if ( ! WC()->legacy_rest_api_is_available() ) {
 				throw new \Exception( 'The Legacy REST API plugin is not installed on this site. More information: https://developer.woocommerce.com/2023/10/03/the-legacy-rest-api-will-move-to-a-dedicated-extension-in-woocommerce-9-0/ ' );
 			}
 			$payload = wc()->api->get_webhook_api_payload( $resource, $resource_id, $event );
@@ -533,7 +534,10 @@ class WC_Webhook extends WC_Legacy_Webhook {
 		// Check for a success, which is a 2xx, 301 or 302 Response Code.
 		if ( intval( $response_code ) >= 200 && intval( $response_code ) < 303 ) {
 			$this->set_failure_count( 0 );
-			$this->save();
+
+			if ( 0 !== $this->get_id() ) {
+				$this->save();
+			}
 		} else {
 			$this->failed_delivery();
 		}
@@ -557,7 +561,9 @@ class WC_Webhook extends WC_Legacy_Webhook {
 			$this->set_failure_count( ++$failures );
 		}
 
-		$this->save();
+		if ( 0 !== $this->get_id() ) {
+			$this->save();
+		}
 	}
 
 	/**

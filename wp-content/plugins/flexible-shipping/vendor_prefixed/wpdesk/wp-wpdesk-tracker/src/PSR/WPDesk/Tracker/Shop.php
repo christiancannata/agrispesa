@@ -44,14 +44,14 @@ class Shop
     public function get_usage_tracking_page()
     {
         $usage_tracking_page = isset($this->shops_usage_tracking_pages[$this->shop]) ? $this->shops_usage_tracking_pages[$this->shop] : $this->shops_usage_tracking_pages[$this->default_shop];
-        return \apply_filters('wpdesk/tracker/usage_tracking_page', $usage_tracking_page, $this->shop);
+        return apply_filters('wpdesk/tracker/usage_tracking_page', $usage_tracking_page, $this->shop);
     }
     /**
      * @return string
      */
     public function get_shop_name()
     {
-        return \apply_filters('wpdesk/tracker/shop_name', $this->shops_usage_tracking_names[$this->shop] ?? $this->default_shop_name, $this->shop);
+        return apply_filters('wpdesk/tracker/shop_name', $this->shops_usage_tracking_names[$this->shop] ?? $this->default_shop_name, $this->shop);
     }
     /**
      * @return string
@@ -60,9 +60,9 @@ class Shop
     {
         $logo_file = isset($this->shops_usage_tracking_pages[$this->shop]) ? $this->shop : $this->default_shop;
         $logo_file .= '.png';
-        $logo_file = \apply_filters('wpdesk/tracker/logo_file', $logo_file, $this->shop);
+        $logo_file = apply_filters('wpdesk/tracker/logo_file', $logo_file, $this->shop);
         // Look for our assets folder from package root directory.
-        if (!\file_exists(\dirname(__DIR__, 3) . '/assets/images/' . $logo_file)) {
+        if (!file_exists(dirname(__DIR__, 3) . '/assets/images/' . $logo_file)) {
             $logo_file = $this->default_logo;
         }
         return $logo_file;
@@ -72,7 +72,7 @@ class Shop
      */
     private function prepare_shop_from_shop_url($shop_url)
     {
-        $host = \parse_url($shop_url, \PHP_URL_HOST);
-        return \str_replace('www.', '', $host ?? '');
+        $host = parse_url($shop_url, \PHP_URL_HOST);
+        return str_replace('www.', '', $host ?? '');
     }
 }

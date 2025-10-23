@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms;
 
-use Psr\Container\ContainerInterface;
+use FSVendor\Psr\Container\ContainerInterface;
 /**
  * Some field owners can receive and process field data.
  * Probably should be used with FieldProvider interface.
@@ -18,5 +18,5 @@ interface FieldsDataReceiver
      *
      * @return void
      */
-    public function update_fields_data(\Psr\Container\ContainerInterface $data);
+    public function update_fields_data(ContainerInterface $data);
 }

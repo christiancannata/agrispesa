@@ -174,6 +174,13 @@ function _ckyRemoveElement(tag) {
     item && item.remove();
 }
 
+function _ckyFireEvent(responseCategories) {
+    const consentUpdate = new CustomEvent("cookieyes_consent_update", {
+        detail: responseCategories
+    });
+    document.dispatchEvent(consentUpdate);
+}
+
 /**
  * Remove styles by it's id.
  */
@@ -232,11 +239,29 @@ function _ckyPreviewEnabled() {
 }
 function _ckyToggleAriaExpandStatus(selector, forceDefault = null) {
     const element = _ckyFindElement(selector);
-  
+
     if (!element) return;
-    if (forceDefault) return element.setAttribute("aria-expanded", forceDefault);
-    const toggleFinalValue = element.getAttribute("aria-expanded") === "true" ? "false" : "true";
-    element.setAttribute("aria-expanded", toggleFinalValue);
+
+    if (element.classList.contains('cky-accordion-btn')) {
+        const accordionItem = element.closest('.cky-accordion');
+        if (accordionItem) {
+            const accordionBody = accordionItem.querySelector('.cky-accordion-body');
+            if (accordionBody) {
+                // Generate unique ID for the accordion body if it doesn't have one
+                let bodyId = accordionBody.id;
+                if (!bodyId) {
+                    bodyId = `ckyDetailCategory${accordionItem.id.replace('ckyDetailCategory', '')}Body`;
+                    accordionBody.id = bodyId;
+                }
+                // Always set aria-controls - the relationship is permanent
+                element.setAttribute("aria-controls", bodyId);
+            }
+        }
+    }
+
+    const currentExpanded = element.getAttribute("aria-expanded");
+    const newExpandedValue = forceDefault || (currentExpanded === "true" ? "false" : "true");
+    element.setAttribute("aria-expanded", newExpandedValue);
 }
 /**
  * Sets the initial state of the plugin.
@@ -263,6 +288,7 @@ function _ckySetInitialState() {
         ref._ckySetInStore(`${category.slug}`, valueToSet);
     }
     _ckyUnblock();
+    _ckyFireEvent(responseCategories);
 }
 
 /**
@@ -275,6 +301,10 @@ function _ckyAddPositionClass() {
     if (!notice) return false;
     const container = notice.closest('.cky-consent-container');
     if (!container) return false;
+    
+    container.setAttribute("aria-label", "We value your privacy");
+    container.setAttribute("role", "region");
+    
     const type = _ckyStore._bannerConfig.settings.type;
     let position = _ckyStore._bannerConfig.settings.position;
     let bannerType = type;
@@ -295,15 +325,24 @@ function _ckyAddPositionClass() {
  * 
  * @returns {boolean}
  */
-function _ckyAddPreferenceCenterClass(){
+function _ckyAddPreferenceCenterClass() {
     const detail = _ckyGetLaw() === 'ccpa' ? _ckyGetElementByTag("optout-popup") : _ckyGetElementByTag("detail");
     if (!detail) return false;
     const modal = detail.closest('.cky-modal');
     if (!modal) return false;
-    if (_ckyGetPtype() !== "pushdown" && _ckyGetPtype() !== "popup"){
+    if (_ckyGetPtype() !== "pushdown" && _ckyGetPtype() !== "popup") {
         const pType = _ckyStore._bannerConfig.settings.preferenceCenterType;
         const modalClass = `cky-${pType}`;
         modal.classList.add(modalClass);
+    }
+
+    // Ensure ARIA attributes are always present on the preference center div
+    const preferenceCenter = modal.querySelector('.cky-preference-center');
+    if (preferenceCenter) {
+        preferenceCenter.setAttribute('role', 'dialog');
+        preferenceCenter.setAttribute('aria-modal', 'true');
+        const ariaLabel = _ckyGetLaw() === 'ccpa' ? 'Opt-out Preferences' : 'Customise Consent Preferences';
+        preferenceCenter.setAttribute('aria-label', ariaLabel);
     }
 }
 
@@ -382,6 +421,26 @@ function _ckyAttachCategoryListeners() {
     categoryNames.map((category) => {
         const selector = `#ckyDetailCategory${category}`;
         const accordionButtonSelector = `${selector}  .cky-accordion-btn`;
+
+        // Set initial aria-controls and aria-expanded for accordion buttons
+        const accordionButton = document.querySelector(accordionButtonSelector);
+        if (accordionButton) {
+            const accordionItem = accordionButton.closest('.cky-accordion');
+            if (accordionItem) {
+                const accordionBody = accordionItem.querySelector('.cky-accordion-body');
+                if (accordionBody) {
+                    // Generate unique ID for the accordion body if it doesn't have one
+                    let bodyId = accordionBody.id;
+                    if (!bodyId) {
+                        bodyId = `ckyDetailCategory${accordionItem.id.replace('ckyDetailCategory', '')}Body`;
+                        accordionBody.id = bodyId;
+                    }
+                    // Always set aria-controls - the relationship is permanent
+                    accordionButton.setAttribute("aria-controls", bodyId);
+                }
+            }
+        }
+
         _ckyToggleAriaExpandStatus(accordionButtonSelector, "false");
         _ckyAttachListener(selector, ({ target: { id } }) => {
             if (
@@ -441,7 +500,7 @@ function _ckyGetLaw() {
 function _ckyGetType() {
     return _ckyStore._bannerConfig.settings.type;
 }
-function _ckyGetPtype(){
+function _ckyGetPtype() {
     if (_ckyGetType() === 'classic') {
         return 'pushdown';
     }
@@ -482,6 +541,10 @@ function _ckyGetPreferenceCenter() {
 function _ckyHidePreferenceCenter() {
     const element = _ckyGetPreferenceCenter();
     element && element.classList.remove(_ckyGetPreferenceClass());
+
+    // ARIA attributes remain always present - only aria-expanded on settings button changes
+    // The modal relationship is permanent, only visibility changes
+
     if (_ckyGetType() !== 'classic') {
         _ckyHideOverLay();
         if (!ref._ckyGetFromStore("action")) _ckyShowBanner();
@@ -496,6 +559,18 @@ function _ckyHidePreferenceCenter() {
 function _ckyShowPreferenceCenter() {
     const element = _ckyGetPreferenceCenter();
     element && element.classList.add(_ckyGetPreferenceClass());
+
+    // Ensure ARIA attributes are always present on the preference center div
+    if (element) {
+        const preferenceCenter = element.querySelector('.cky-preference-center');
+        if (preferenceCenter) {
+            preferenceCenter.setAttribute('role', 'dialog');
+            preferenceCenter.setAttribute('aria-modal', 'true');
+            const ariaLabel = _ckyGetLaw() === 'ccpa' ? 'Opt-out Preferences' : 'Customise Consent Preferences';
+            preferenceCenter.setAttribute('aria-label', ariaLabel);
+        }
+    }
+
     if (_ckyGetType() !== 'classic') {
         _ckyShowOverLay();
         _ckyHideBanner();
@@ -506,8 +581,34 @@ function _ckyShowPreferenceCenter() {
 }
 function _ckyTogglePreferenceCenter() {
     const element = _ckyGetPreferenceCenter();
-    element && element.classList.toggle(_ckyGetPreferenceClass());
+    if (!element) return;
+    element.classList.toggle(_ckyGetPreferenceClass());
     if (_ckyGetPtype() !== 'pushdown') _ckyToggleOverLay();
+
+    const isOpen = element.classList.contains(_ckyGetPreferenceClass());
+    element.classList.toggle(_ckyGetPreferenceClass());
+    if (_ckyGetType() === 'classic') {
+        const preferenceCenter = element.querySelector('.cky-preference-center');
+        if (preferenceCenter) {
+            preferenceCenter.setAttribute('role', 'dialog');
+            preferenceCenter.setAttribute('aria-modal', 'true');
+            const ariaLabel = _ckyGetLaw() === 'ccpa' ? 'Opt-out Preferences' : 'Customise Consent Preferences';
+            preferenceCenter.setAttribute('aria-label', ariaLabel);
+        }
+        _ckyToggleAriaExpandStatus("=settings-button");
+        _ckyClassToggle("=notice", "cky-consent-bar-expand");
+    } else {
+        if (!isOpen) {
+            _ckyShowOverLay();
+            _ckyHideBanner();
+        } else {
+            _ckyHideOverLay();
+            if (!ref._ckyGetFromStore("action")) _ckyShowBanner();
+        }
+    }
+    if (ref._ckyGetFromStore("action")) _ckyShowRevisit();
+    const origin = _ckyStore._preferenceOriginTag;
+    origin && _ckySetFocus(origin)
 }
 function _ckyGetPreferenceClass() {
     return _ckyGetPtype() === 'pushdown' ? 'cky-consent-bar-expand' : 'cky-modal-open';
@@ -529,7 +630,7 @@ function _ckySetPreferenceAction(tagName = false) {
     _ckyStore._preferenceOriginTag = tagName;
     if (_ckyGetType() === 'classic') {
         _ckyTogglePreferenceCenter();
-        _ckyToggleAriaExpandStatus("=settings-button");    
+        _ckyToggleAriaExpandStatus("=settings-button");
     } else {
         _ckyShowPreferenceCenter();
     }
@@ -554,7 +655,7 @@ function _ckyLoopFocus() {
     if (bannerType === "classic") return;
     if (bannerType === "popup") {
         const [firstElementBanner, lastElementBanner] =
-        _ckyGetFocusableElements("notice");
+            _ckyGetFocusableElements("notice");
         _ckyAttachFocusLoop(firstElementBanner, lastElementBanner, true);
         _ckyAttachFocusLoop(lastElementBanner, firstElementBanner);
     }
@@ -572,7 +673,7 @@ function _ckyAttachFocusLoop(element, targetElement, isReverse = false) {
             (isReverse && !event.shiftKey) ||
             (!isReverse && event.shiftKey)
         )
-        return;
+            return;
         event.preventDefault();
         targetElement.focus();
     });
@@ -670,10 +771,10 @@ function _ckySetCategoryToggle(element, category = {}, revisit = false) {
     } else if (element.parentElement.getAttribute('data-cky-tag') === 'detail-category-preview-toggle') {
         _ckySetCategoryPreview(element, category);
     }
-    if(!category.isNecessary){
+    if (!category.isNecessary) {
         const categoryName = category.name;
         const categoryTitle = document.querySelector(`[data-cky-tag="detail-category-title"][aria-label="${categoryName}"]`);
-        if(categoryTitle){
+        if (categoryTitle) {
             const toggleContainer = categoryTitle.closest('.cky-accordion-item');
             const necessaryText = toggleContainer.querySelector('.cky-always-active');
             necessaryText && necessaryText.remove();
@@ -804,6 +905,7 @@ function _ckyAcceptCookies(choice = "all") {
         } else responseCategories.accepted.push(category.slug);
     }
     _ckyUnblock();
+    _ckyFireEvent(responseCategories);
 }
 function _ckySetShowMoreLess() {
     const activeLaw = _ckyGetLaw();
@@ -1305,3 +1407,27 @@ function _ckySetCheckBoxInfo(
 }
 
 window.revisitCkyConsent = () => _revisitCkyConsent();
+
+window.getCkyConsent = function () {
+    const cookieConsent = {
+        activeLaw: "",
+        categories: {},
+        isUserActionCompleted: false,
+        consentID: "",
+        languageCode: ""
+    };
+
+    try {
+        cookieConsent.activeLaw = _ckyGetLaw();
+
+        _ckyStore._categories.forEach(category => {
+            cookieConsent.categories[category.slug] = ref._ckyGetFromStore(category.slug) === "yes";
+        });
+
+        cookieConsent.isUserActionCompleted = ref._ckyGetFromStore("action") === "yes";
+        cookieConsent.consentID = ref._ckyGetFromStore("consentid") || "";
+        cookieConsent.languageCode = _ckyStore._language || "";
+    } catch (e) { }
+
+    return cookieConsent;
+};

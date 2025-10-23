@@ -31,11 +31,11 @@ abstract class Services {
 	 * @return void
 	 */
 	public function load_hooks() {
-		add_action( 'cky_after_update_banner', array( $this, 'clear_cache' ) );
+		add_action( 'cky_after_update_banner', array( $this, 'clear_cache' ), 10, 1 );
 		add_action( 'cky_after_update_cookie', array( $this, 'clear_cache' ) );
 		add_action( 'cky_after_update_cookie_category', array( $this, 'clear_cache' ) );
 		add_action( 'cky_after_connect', array( $this, 'clear_cache' ) );
-		add_action( 'cky_after_update_settings', array( $this, 'clear_cache' ) );
+		add_action( 'cky_after_update_settings', array( $this, 'clear_cache' ), 10, 1 );
 		add_action( 'cky_after_activate', array( $this, 'clear_cache' ) );
 		add_action( 'cky_clear_cache', array( $this, 'clear_cache' ) );
 	}

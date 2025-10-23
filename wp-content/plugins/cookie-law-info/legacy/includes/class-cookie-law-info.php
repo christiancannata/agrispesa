@@ -73,7 +73,7 @@ class Cookie_Law_Info {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.2.4';
+			$this->version = '3.3.5';
 		}
 		$this->plugin_name = 'cookie-law-info';
 
@@ -148,6 +148,8 @@ class Cookie_Law_Info {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'third-party/class-cookie-law-info-third-party.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-cookie-law-info-review-request.php';
+
 		$this->loader = new Cookie_Law_Info_Loader();
 
 	}
@@ -165,7 +167,7 @@ class Cookie_Law_Info {
 
 		$plugin_i18n = new Cookie_Law_Info_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -304,9 +306,9 @@ class Cookie_Law_Info {
 		}
 		foreach ( $out_arr as $k => $v ) {
 			if ( is_array( $v ) ) {
-				$v = ( isset( $v[2] ) ? $v[2] : '' ) . __( $v[0], 'cookie-law-info' ) . ' ' . ( isset( $v[1] ) ? $v[1] : '' );
+				$v = ( isset( $v[2] ) ? $v[2] : '' ) . __( $v[0], 'cookie-law-info' ) . ' ' . ( isset( $v[1] ) ? $v[1] : '' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 			} else {
-				$v = __( $v, 'cookie-law-info' );
+				$v = __( $v, 'cookie-law-info' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 			}
 			?>
 			<a class="nav-tab" href="#<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></a>
@@ -612,7 +614,7 @@ class Cookie_Law_Info {
 			'post_type'        => CLI_POST_TYPE,
 			'posts_per_page'   => -1,
 			'suppress_filters' => false,
-			'meta_query'       => array(
+			'meta_query'       => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'   => '_cli_cookie_sensitivity',
 					'value' => 'non-necessary',
@@ -936,7 +938,7 @@ class Cookie_Law_Info {
 	 */
 	public static function is_divi_enabled() {
 
-		return isset( $_GET['et_fb'] ) ? true : false;
+		return isset( $_GET['et_fb'] ) ? true : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -977,7 +979,7 @@ class Cookie_Law_Info {
 			<h4><?php echo esc_html__( 'By migrating to the new and improved user interface, you can:', 'cookie-law-info' ); ?></h4>
 			<ul>
 				<li><?php echo esc_html__( 'Display the new cookie consent banner (compliant with the WCAG guidelines) on your website', 'cookie-law-info' ); ?></li>
-				<li><?php echo esc_html__( 'Access new free features (set consent expiration period, enable/disable prior consent, show/hide categories on the banner, light/dark/custom color scheme, privacy policy generator, etc.)', 'cookie-law-info' ); ?></li>
+				<li><?php echo esc_html__( 'Access new free features (set consent expiration period, enable/disable prior consent, show/hide categories on the banner, light/dark/custom colour scheme, privacy policy generator, etc.)', 'cookie-law-info' ); ?></li>
 				<li><?php echo esc_html__( 'Use the live preview feature to customize your banner while you are looking at it.', 'cookie-law-info' ); ?></li>
 				<li><?php echo esc_html__( 'Get access to additional free features such as cookie scan, consent log, etc. by connecting to the CookieYes web app (Optional)', 'cookie-law-info' ); ?></li>
 			</ul>

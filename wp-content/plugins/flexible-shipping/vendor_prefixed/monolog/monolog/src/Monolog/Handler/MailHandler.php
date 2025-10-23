@@ -20,12 +20,12 @@ use FSVendor\Monolog\Formatter\HtmlFormatter;
  *
  * @phpstan-import-type Record from \Monolog\Logger
  */
-abstract class MailHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+abstract class MailHandler extends AbstractProcessingHandler
 {
     /**
      * {@inheritDoc}
      */
-    public function handleBatch(array $records) : void
+    public function handleBatch(array $records): void
     {
         $messages = [];
         foreach ($records as $record) {
@@ -48,11 +48,11 @@ abstract class MailHandler extends \FSVendor\Monolog\Handler\AbstractProcessingH
      *
      * @phpstan-param Record[] $records
      */
-    protected abstract function send(string $content, array $records) : void;
+    abstract protected function send(string $content, array $records): void;
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->send((string) $record['formatted'], [$record]);
     }
@@ -60,7 +60,7 @@ abstract class MailHandler extends \FSVendor\Monolog\Handler\AbstractProcessingH
      * @phpstan-param non-empty-array<Record> $records
      * @phpstan-return Record
      */
-    protected function getHighestRecord(array $records) : array
+    protected function getHighestRecord(array $records): array
     {
         $highestRecord = null;
         foreach ($records as $record) {
@@ -70,7 +70,7 @@ abstract class MailHandler extends \FSVendor\Monolog\Handler\AbstractProcessingH
         }
         return $highestRecord;
     }
-    protected function isHtmlBody(string $body) : bool
+    protected function isHtmlBody(string $body): bool
     {
         return ($body[0] ?? null) === '<';
     }
@@ -79,8 +79,8 @@ abstract class MailHandler extends \FSVendor\Monolog\Handler\AbstractProcessingH
      *
      * @return FormatterInterface
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\HtmlFormatter();
+        return new HtmlFormatter();
     }
 }

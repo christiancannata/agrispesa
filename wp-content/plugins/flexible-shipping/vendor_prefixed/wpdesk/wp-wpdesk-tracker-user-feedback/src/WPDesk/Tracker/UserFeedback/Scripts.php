@@ -14,7 +14,7 @@ class Scripts
      * @param UserFeedbackData $user_feedback_data .
      * @param string|null $view_file If null given default scrips file is used.
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackData $user_feedback_data, $view_file = null)
+    public function __construct(UserFeedbackData $user_feedback_data, $view_file = null)
     {
         $this->user_feedback_data = $user_feedback_data;
         if (!empty($view_file)) {

@@ -155,7 +155,7 @@ class Detector {
 	 */
 	private function requirements() {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			require_once ABSPATH . 'wp-admin/includes/plugin.php'; // @phpstan-ignore-line
 		}
 	}
 
@@ -169,9 +169,10 @@ class Detector {
 		$importer = new $plugin['class']( $plugin['file'] );
 		if ( $importer->run_detect() ) {
 			self::$plugins[ $slug ] = [
-				'name'    => $importer->get_plugin_name(),
-				'file'    => $importer->get_plugin_file(),
-				'choices' => $importer->get_choices(),
+				'name'     => $importer->get_plugin_name(),
+				'file'     => $importer->get_plugin_file(),
+				'choices'  => $importer->get_choices(),
+				'isActive' => is_plugin_active( $importer->get_plugin_file() ),
 			];
 		}
 	}

@@ -12,7 +12,7 @@ echo \esc_attr($form->get_method());
 echo \esc_attr($form->get_action());
 ?>">
 	<h2 style="display:none;"></h2><?php 
-// All admin notices will be moved here by WP js.
+// All admin notices will be moved here by WP js. 
 ?>
 
 	<table class="form-table">

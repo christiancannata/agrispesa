@@ -10,9 +10,11 @@ use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\TargetAudience;
 use Automattic\WooCommerce\GoogleListingsAndAds\PluginHelper;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Automattic\WooCommerce\GoogleListingsAndAds\Value\ChannelVisibility;
+use Automattic\WooCommerce\GoogleListingsAndAds\Value\NotificationStatus;
 use Automattic\WooCommerce\GoogleListingsAndAds\Value\MCStatus;
 use Automattic\WooCommerce\GoogleListingsAndAds\Value\SyncStatus;
 use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Google\Service\ShoppingContent\Product as GoogleProduct;
+use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\Notifications\HelperNotificationInterface;
 use WC_Product;
 use WC_Product_Variation;
 use WP_Post;
@@ -24,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package Automattic\WooCommerce\GoogleListingsAndAds\Product
  */
-class ProductHelper implements Service {
+class ProductHelper implements Service, HelperNotificationInterface {
 
 	use PluginHelper;
 
@@ -57,6 +59,31 @@ class ProductHelper implements Service {
 	}
 
 	/**
+	 * Mark the item as notified.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return void
+	 */
+	public function mark_as_notified( $product ): void {
+		$this->meta_handler->delete_failed_delete_attempts( $product );
+		$this->meta_handler->update_synced_at( $product, time() );
+		$this->meta_handler->update_sync_status( $product, SyncStatus::SYNCED );
+		$this->update_empty_visibility( $product );
+
+		// mark the parent product as synced if it's a variation
+		if ( $product instanceof WC_Product_Variation ) {
+			try {
+				$parent_product = $this->get_wc_product( $product->get_parent_id() );
+			} catch ( InvalidValue $exception ) {
+				return;
+			}
+
+			$this->mark_as_notified( $parent_product );
+		}
+	}
+
+	/**
 	 * Mark a product as synced in the local database.
 	 * This function also handles the following cleanup tasks:
 	 * - Remove any failed delete attempts
@@ -78,10 +105,10 @@ class ProductHelper implements Service {
 		$google_ids         = array_unique( array_merge( $current_google_ids, [ $google_product->getTargetCountry() => $google_product->getId() ] ) );
 		$this->meta_handler->update_google_ids( $product, $google_ids );
 
-		// check if product is synced completely and remove any previous errors if it is
+		// check if product is synced for main target country and remove any previous errors if it is
 		$synced_countries = array_keys( $google_ids );
 		$target_countries = $this->target_audience->get_target_countries();
-		if ( count( $synced_countries ) === count( $target_countries ) && empty( array_diff( $synced_countries, $target_countries ) ) ) {
+		if ( empty( array_diff( $synced_countries, $target_countries ) ) ) {
 			$this->meta_handler->delete_errors( $product );
 			$this->meta_handler->delete_failed_sync_attempts( $product );
 			$this->meta_handler->delete_sync_failed_at( $product );
@@ -102,7 +129,7 @@ class ProductHelper implements Service {
 	/**
 	 * @param WC_Product $product
 	 */
-	public function mark_as_unsynced( WC_Product $product ) {
+	public function mark_as_unsynced( $product ): void {
 		$this->meta_handler->delete_synced_at( $product );
 		if ( ! $this->is_sync_ready( $product ) ) {
 			$this->meta_handler->delete_sync_status( $product );
@@ -283,10 +310,14 @@ class ProductHelper implements Service {
 		$mc_product_id_tokens = explode( ':', $mc_product_id );
 		$mc_product_id        = end( $mc_product_id_tokens );
 
+		// Support a fully numeric ID both with and without the `gla_` prefix.
 		$wc_product_id = 0;
-		$pattern       = '/' . preg_quote( $this->get_slug(), '/' ) . '_(\d+)$/';
+		$pattern       = '/^(' . preg_quote( $this->get_slug(), '/' ) . '_)?(\d+)$/';
+		$wc_pattern    = '/^(woocommerce_gpf_)?(\d+)$/';
 		if ( preg_match( $pattern, $mc_product_id, $matches ) ) {
-			$wc_product_id = (int) $matches[1];
+			$wc_product_id = (int) $matches[2];
+		} elseif ( preg_match( $wc_pattern, $mc_product_id, $matches ) ) {
+			$wc_product_id = (int) $matches[2];
 		}
 
 		/**
@@ -355,6 +386,108 @@ class ProductHelper implements Service {
 		$google_ids = $this->meta_handler->get_google_ids( $product );
 
 		return ! empty( $synced_at ) && ! empty( $google_ids );
+	}
+
+	/**
+	 * Indicates if a product is ready for sending Notifications.
+	 * A product is ready to send notifications if DONT_SYNC_AND_SHOW is not enabled and the post status is publish.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return bool
+	 */
+	public function is_ready_to_notify( WC_Product $product ): bool {
+		$is_ready = ChannelVisibility::DONT_SYNC_AND_SHOW !== $this->get_channel_visibility( $product ) &&
+			$product->get_status() === 'publish' &&
+			in_array( $product->get_type(), ProductSyncer::get_supported_product_types(), true );
+
+		if ( $is_ready && $product instanceof WC_Product_Variation ) {
+			$parent   = $this->maybe_swap_for_parent( $product );
+			$is_ready = $this->is_ready_to_notify( $parent );
+		}
+
+		/**
+		 * Allow users to filter if a product is ready to notify.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param bool $value The current filter value.
+		 * @param WC_Product $product The product for the notification.
+		 */
+		return apply_filters( 'woocommerce_gla_product_is_ready_to_notify', $is_ready, $product );
+	}
+
+	/**
+	 * Indicates if a product is ready for sending a create Notification.
+	 * A product is ready to send create notifications if is ready to notify and has not sent create notification yet.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return bool
+	 */
+	public function should_trigger_create_notification( $product ): bool {
+		return ! $product instanceof WC_Product_Variation && $this->is_ready_to_notify( $product ) && ! $this->has_notified_creation( $product );
+	}
+
+	/**
+	 * Indicates if a product is ready for sending an update Notification.
+	 * A product is ready to send update notifications if is ready to notify and has sent create notification already.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return bool
+	 */
+	public function should_trigger_update_notification( $product ): bool {
+		return ! $product instanceof WC_Product_Variation && $this->is_ready_to_notify( $product ) && $this->has_notified_creation( $product );
+	}
+
+	/**
+	 * Indicates if a product is ready for sending a delete Notification.
+	 * A product is ready to send delete notifications if it is not ready to notify and has sent create notification already.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return bool
+	 */
+	public function should_trigger_delete_notification( $product ): bool {
+		return ! $this->is_ready_to_notify( $product ) && $this->has_notified_creation( $product );
+	}
+
+	/**
+	 * Indicates if a product was already notified about its creation.
+	 * Notice we consider synced products in MC as notified for creation.
+	 *
+	 * @param WC_Product $product
+	 *
+	 * @return bool
+	 */
+	public function has_notified_creation( WC_Product $product ): bool {
+		if ( $product instanceof WC_Product_Variation ) {
+			return $this->has_notified_creation( $this->maybe_swap_for_parent( $product ) );
+		}
+
+		$valid_has_notified_creation_statuses = [
+			NotificationStatus::NOTIFICATION_CREATED,
+			NotificationStatus::NOTIFICATION_UPDATED,
+			NotificationStatus::NOTIFICATION_PENDING_UPDATE,
+			NotificationStatus::NOTIFICATION_PENDING_DELETE,
+		];
+
+		return in_array(
+			$this->meta_handler->get_notification_status( $product ),
+			$valid_has_notified_creation_statuses,
+			true
+		) || $this->is_product_synced( $product );
+	}
+
+	/**
+	 * Set the notification status for a WooCommerce product.
+	 *
+	 * @param WC_Product $product
+	 * @param string     $status
+	 */
+	public function set_notification_status( $product, $status ): void {
+		$this->meta_handler->update_notification_status( $product, $status );
 	}
 
 	/**
@@ -630,5 +763,17 @@ class ProductHelper implements Service {
 	public function get_categories( WC_Product $product ): array {
 		$terms = get_the_terms( $product->get_id(), 'product_cat' );
 		return ( empty( $terms ) || is_wp_error( $terms ) ) ? [] : wp_list_pluck( $terms, 'name' );
+	}
+
+	/**
+	 * Get the offer id for a product
+	 *
+	 * @since 2.8.0
+	 * @param int $product_id The product id to get the offer id.
+	 *
+	 * @return string The offer id
+	 */
+	public function get_offer_id( int $product_id ) {
+		return WCProductAdapter::get_google_product_offer_id( $this->get_slug(), $product_id );
 	}
 }

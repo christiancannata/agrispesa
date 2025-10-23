@@ -406,6 +406,14 @@ abstract class AbstractSettingsDictionary implements \ArrayAccess, \JsonSerializ
 		return strtotime($isoTimestamp);
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getIdPrefix() {
+		return $this->idPrefix;
+	}
+
+
 	public function elementBuilder() {
 		return new ElementBuilderFactory($this);
 	}

@@ -15,7 +15,10 @@ $email_button_label_get_option = get_option( 'ywgc_email_button_label', esc_html
 ?>
 <div class="ywgc-add-cart-discount">
 	<div class="ywgc-discount-link-section">
-		<a class="ywgc-discount-link"
-		href="<?php echo esc_url( $apply_discount_url ); ?>"><?php echo ( empty( $email_button_label_get_option ) ? esc_html__( 'Apply your gift card code', 'yith-woocommerce-gift-cards' ) : wp_kses( $email_button_label_get_option, 'post' ) ); ?></a>
+		<a
+			<?php if ( 'email' === $context ) : ?>
+				href="<?php echo esc_url( $apply_discount_url ); ?>"
+			<?php endif; ?>
+			class="ywgc-discount-link" style="background-color:<?php echo esc_attr( get_option( 'ywgc_plugin_main_color', '#000000' ) ); ?>"><?php echo wp_kses_post( empty( $email_button_label_get_option ) ? __( 'Apply your gift card code', 'yith-woocommerce-gift-cards' ) : $email_button_label_get_option ); ?></a>
 	</div>
 </div>

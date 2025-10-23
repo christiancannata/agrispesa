@@ -14,7 +14,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Integrates Shipments with WooCommerce Subscriptions plugin.
  */
-class SubscriptionsIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class SubscriptionsIntegration implements Hookable
 {
     /**
      * @var ShipmentCreator
@@ -25,7 +25,7 @@ class SubscriptionsIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\
      *
      * @param ShipmentCreator $shipment_creator .
      */
-    public function __construct(\FSVendor\WPDesk\FS\Shipment\Checkout\ShipmentCreator $shipment_creator)
+    public function __construct(ShipmentCreator $shipment_creator)
     {
         $this->shipment_creator = $shipment_creator;
     }
@@ -35,8 +35,8 @@ class SubscriptionsIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\
     public function hooks()
     {
         $last_priority = \PHP_INT_MAX;
-        \add_action('woocommerce_checkout_subscription_created', array($this, 'create_shipping_for_subscription'), $last_priority, 3);
-        \add_filter('wcs_renewal_order_created', array($this, 'create_shipping_for_order_from_subscription'), 10, 2);
+        add_action('woocommerce_checkout_subscription_created', array($this, 'create_shipping_for_subscription'), $last_priority, 3);
+        add_filter('wcs_renewal_order_created', array($this, 'create_shipping_for_order_from_subscription'), 10, 2);
     }
     /**
      * @param \WC_Subscription $subscription .
@@ -78,7 +78,7 @@ class SubscriptionsIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\
          *
          * @param \WPDesk_Flexible_Shipping_Shipment $order_shipment Created shipment.
          */
-        \do_action('flexible-shipping/shipment-from-subscription/created/' . $integration, $order_shipment);
+        do_action('flexible-shipping/shipment-from-subscription/created/' . $integration, $order_shipment);
     }
     /**
      * @param array                              $meta_data .
@@ -89,7 +89,7 @@ class SubscriptionsIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\
     private function setup_shipment_meta_data(array $meta_data, $integration, $shipment, $order_shipment)
     {
         foreach ($meta_data as $meta_key => $meta_value) {
-            $order_shipment_meta_value = \apply_filters('flexible-shipping/shipment-from-subscription/meta-value/' . $integration, $shipment->get_meta($meta_key), $meta_key, $order_shipment);
+            $order_shipment_meta_value = apply_filters('flexible-shipping/shipment-from-subscription/meta-value/' . $integration, $shipment->get_meta($meta_key), $meta_key, $order_shipment);
             $order_shipment->set_meta($meta_key, $order_shipment_meta_value);
         }
     }

@@ -8,6 +8,7 @@
 namespace WordPress\Plugin_Check\Checker\Checks;
 
 use Exception;
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Runner;
 use WordPress\Plugin_Check\Checker\Check_Result;
 use WordPress\Plugin_Check\Checker\Static_Check;
@@ -57,6 +58,8 @@ abstract class Abstract_PHP_CodeSniffer_Check implements Static_Check {
 	/**
 	 * Amends the given result by running the check on the associated plugin.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param Check_Result $result The check result to amend, including the plugin context to check.
@@ -72,23 +75,39 @@ abstract class Abstract_PHP_CodeSniffer_Check implements Static_Check {
 			include_once $autoloader;
 		}
 
-		if ( ! class_exists( '\PHP_CodeSniffer\Runner' ) ) {
+		if ( ! class_exists( Runner::class ) ) {
 			throw new Exception(
 				__( 'Unable to find PHPCS Runner class.', 'plugin-check' )
+			);
+		}
+
+		if ( ! class_exists( Config::class ) ) {
+			throw new Exception(
+				__( 'Unable to find PHPCS Config class.', 'plugin-check' )
 			);
 		}
 
 		// Backup the original command line arguments.
 		$orig_cmd_args = $_SERVER['argv'] ?? '';
 
+		$args = $this->get_args( $result );
+
+		// Reset PHP_CodeSniffer config.
+		$this->reset_php_codesniffer_config();
+
+		// Get current installed_paths config.
+		$installed_paths = Config::getConfigData( 'installed_paths' );
+
+		// Override installed_paths to load custom sniffs.
+		if ( isset( $args['installed_paths'] ) && is_array( $args['installed_paths'] ) ) {
+			Config::setConfigData( 'installed_paths', implode( ',', $args['installed_paths'] ), true );
+		}
+
 		// Create the default arguments for PHPCS.
 		$defaults = $this->get_argv_defaults( $result );
 
 		// Set the check arguments for PHPCS.
-		$_SERVER['argv'] = $this->parse_argv( $this->get_args( $result ), $defaults );
-
-		// Reset PHP_CodeSniffer config.
-		$this->reset_php_codesniffer_config();
+		$_SERVER['argv'] = $this->parse_argv( $args, $defaults );
 
 		// Run PHPCS.
 		try {
@@ -100,6 +119,9 @@ abstract class Abstract_PHP_CodeSniffer_Check implements Static_Check {
 			$_SERVER['argv'] = $orig_cmd_args;
 			throw $e;
 		}
+
+		// Reset installed_paths.
+		Config::setConfigData( 'installed_paths', $installed_paths, true );
 
 		// Restore original arguments.
 		$_SERVER['argv'] = $orig_cmd_args;
@@ -120,7 +142,7 @@ abstract class Abstract_PHP_CodeSniffer_Check implements Static_Check {
 				$this->add_result_message_for_file(
 					$result,
 					strtoupper( $file_message['type'] ) === 'ERROR',
-					$file_message['message'],
+					esc_html( $file_message['message'] ),
 					$file_message['source'],
 					$file_name,
 					$file_message['line'],
@@ -214,14 +236,14 @@ abstract class Abstract_PHP_CodeSniffer_Check implements Static_Check {
 	 * @since 1.0.0
 	 */
 	private function reset_php_codesniffer_config() {
-		if ( class_exists( '\PHP_CodeSniffer\Config' ) ) {
+		if ( class_exists( Config::class ) ) {
 			/*
 			 * PHPStan ignore reason: PHPStan raised an issue because we can't
 			 * use class in ReflectionClass.
 			 *
 			 * @phpstan-ignore-next-line
 			 */
-			$reflected_phpcs_config = new \ReflectionClass( '\PHP_CodeSniffer\Config' );
+			$reflected_phpcs_config = new \ReflectionClass( Config::class );
 			$overridden_defaults    = $reflected_phpcs_config->getProperty( 'overriddenDefaults' );
 			$overridden_defaults->setAccessible( true );
 			$overridden_defaults->setValue( $reflected_phpcs_config, array() );

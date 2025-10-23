@@ -22,7 +22,7 @@ class Factory
      */
     public static function notice($noticeContent = '', $noticeType = 'info', $isDismissible = \false, $priority = 10)
     {
-        return new \FSVendor\WPDesk\Notice\Notice($noticeContent, $noticeType, $isDismissible, $priority);
+        return new Notice($noticeContent, $noticeType, $isDismissible, $priority);
     }
     /**
      * Creates PermanentDismissibleNotice object.
@@ -36,6 +36,6 @@ class Factory
      */
     public static function permanentDismissibleNotice($noticeContent = '', $noticeName = '', $noticeType = '', $priority = 10)
     {
-        return new \FSVendor\WPDesk\Notice\PermanentDismissibleNotice($noticeContent, $noticeName, $noticeType, $priority);
+        return new PermanentDismissibleNotice($noticeContent, $noticeName, $noticeType, $priority);
     }
 }

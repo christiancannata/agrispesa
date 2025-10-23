@@ -1,8 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_CLASSES_DIR . '/class-wpie-security.php' ) ) {
         require_once(WPIE_CLASSES_DIR . '/class-wpie-security.php');
@@ -389,6 +387,18 @@ class WPIE_Common_Actions {
 
                 $return_value = array( "status" => 'error' );
 
+                $filename = isset( $_FILES[ 'wpie_template_file' ][ 'name' ] ) ? $_FILES[ 'wpie_template_file' ][ 'name' ] : '';
+
+                $validate = \wp_check_filetype( $filename );
+
+                $mime_check = isset( $_FILES[ 'wpie_template_file' ][ 'type' ] ) ? $_FILES[ 'wpie_template_file' ][ 'type' ] : '';
+
+                if ( $validate[ 'type' ] !== 'text/plain' || $mime_check !== 'text/plain' ) {
+
+                        echo json_encode( [ 'status' => 'error', 'message' => __( 'File type is not allowed', 'wp-import-export-lite' ) ] );
+                        die();
+                }
+
                 if ( $_FILES && file_exists( $_FILES[ 'wpie_template_file' ][ 'tmp_name' ] ) && is_uploaded_file( $_FILES[ 'wpie_template_file' ][ 'tmp_name' ] ) ) {
 
                         if ( !function_exists( 'wp_handle_upload' ) ) {
@@ -578,5 +588,4 @@ class WPIE_Common_Actions {
                         unset( $this->$key );
                 }
         }
-
 }

@@ -753,26 +753,33 @@ class MeteoWidget
 // Funzione per validare i casi in modo più compatto
     private static function validateCases($temperatura, $velocitaVento, $pressione)
     {
-        // Struttura dell'array $ranges:
-        // 'nomeCaso' => [tempMin, tempMax, ventMin, ventMax, pressMin, pressMax]
+        $temperatura = floatval($temperatura);
+
         $ranges = [
-            'caso1' => [0, 10, 0, 20, 980, 1010],  // Caso 1: temperatura tra 0 e 10, vento tra 0 e 20, pressione tra 980 e 1010
-            'caso2' => [10, 15, 0, 20, 980, 1010], // Caso 2: temperatura tra 10 e 15, vento tra 0 e 20, pressione tra 980 e 1010
-            'caso3' => [15, 20, 0, 20, 1000, 1020], // Caso 3: temperatura tra 15 e 20, vento tra 0 e 20, pressione tra 1000 e 1020
-            'caso4' => [20, 25, 0, 50, 1000, 1040], // Caso 4: temperatura tra 20 e 25, vento tra 0 e 50, pressione tra 1000 e 1040
-            'caso5' => [25, 30, 0, 50, 1000, 1040], // Caso 5: temperatura tra 25 e 30, vento tra 0 e 50, pressione tra 1000 e 1040
-            'caso6' => [30, 35, 0, 50, 1000, 1040], // Caso 6: temperatura tra 30 e 35, vento tra 0 e 50, pressione tra 1000 e 1040
-            'caso7' => [35, 40, 0, 50, 1000, 1040], // Caso 7: temperatura tra 35 e 40, vento tra 0 e 50, pressione tra 1000 e 1040
+            'caso1' => [0, 10, 0, 20, 980, 1010],
+            'caso2' => [10, 15, 0, 20, 980, 1010],
+            'caso3' => [15, 20, 0, 20, 1000, 1020],
+            'caso4' => [20, 25, 0, 50, 1000, 1040],
+            'caso5' => [25, 30, 0, 50, 1000, 1040],
+            'caso6' => [30, 35, 0, 50, 1000, 1040],
+            'caso7' => [35, 40, 0, 50, 1000, 1040],
         ];
 
-        // Itera sui casi e valida ciascuno
+        // Primo tentativo: verifica tutti i range (temperatura, vento, pressione)
         foreach ($ranges as $key => [$tempMin, $tempMax, $ventMin, $ventMax, $pressMin, $pressMax]) {
             if (self::validaCaso($tempMin, $tempMax, $temperatura, $ventMin, $ventMax, $velocitaVento, $pressMin, $pressMax, $pressione)) {
-                return $key; // Restituisci il primo caso valido
+                return $key;
             }
         }
 
-        return 'caso1'; // Caso predefinito se nessuno è valido
+        // Secondo tentativo: verifica solo la temperatura
+        foreach ($ranges as $key => [$tempMin, $tempMax]) {
+            if ($temperatura >= $tempMin && $temperatura < $tempMax) {
+                return $key;
+            }
+        }
+
+        return 'caso1'; // Default fallback
     }
 
 // Funzione di validazione del singolo caso

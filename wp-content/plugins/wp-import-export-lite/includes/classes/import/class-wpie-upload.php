@@ -6,9 +6,7 @@ namespace wpie\import\upload;
 use wpie\import;
 use wpie\import\FileFormat\Manager as FileExtract;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_Upload {
 

@@ -79,16 +79,16 @@ class Controller extends Cloud {
 
 	public function get_plans() {
 		$data = array();
+		$this->set_api_url(CKY_APP_URL . '/api/v3/' );
 		$response      = $this->get(
 			'plans'
 		);
 		$response_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 === $response_code ) {
 			$response = json_decode( wp_remote_retrieve_body( $response ), true );
+			$response = isset( $response['data'] ) ? $response['data'] : array();
 			if (isset($response['freePlan'])) {
 				$item = $response['freePlan'];
-				$data['plan']['free']['features']['scan_limit'] = isset($item['scan_limit']) ? $item['scan_limit'] : '';
-				$data['plan']['free']['features']['page_view_limit'] = isset($item['features']['page_view_limit']) ? $item['features']['page_view_limit'] : '';
 				if (isset($item['features'])) {
 					foreach ($item['features'] as $key => $value) {
 						$data['plan']['free']['features'][$key] = $value;
@@ -99,8 +99,6 @@ class Controller extends Cloud {
 				$items = $response['paidPlans'];
 				foreach($items as $val) {
 					if($val['slug'] === 'basic-monthly') {
-						$data['plan']['basic']['features']['scan_limit'] = isset($val['scan_limit']) ? $val['scan_limit'] : '';
-						$data['plan']['basic']['features']['page_view_limit'] = isset($val['features']['page_view_limit']) ? $val['features']['page_view_limit'] : '';
 						if (isset($val['features'])) {
 							foreach ($val['features'] as $key => $value) {
 								$data['plan']['basic']['features'][$key] = $value;
@@ -111,8 +109,6 @@ class Controller extends Cloud {
 						}
 					}
 					if($val['slug'] === 'pro-monthly') {
-						$data['plan']['pro']['features']['scan_limit'] = isset($val['scan_limit']) ? $val['scan_limit'] : '';
-						$data['plan']['pro']['features']['page_view_limit'] = isset($val['features']['page_view_limit']) ? $val['features']['page_view_limit'] : '';
 						if (isset($val['features'])) {
 							foreach ($val['features'] as $key => $value) {
 								$data['plan']['pro']['features'][$key] = $value;
@@ -123,8 +119,6 @@ class Controller extends Cloud {
 						}
 					}
 					if($val['slug'] === 'ultimate-monthly') {
-						$data['plan']['ultimate']['features']['scan_limit'] = isset($val['scan_limit']) ? $val['scan_limit'] : '';
-						$data['plan']['ultimate']['features']['page_view_limit'] = isset($val['features']['page_view_limit']) ? $val['features']['page_view_limit'] : '';
 						if (isset($val['features'])) {
 							foreach ($val['features'] as $key => $value) {
 								$data['plan']['ultimate']['features'][$key] = $value;

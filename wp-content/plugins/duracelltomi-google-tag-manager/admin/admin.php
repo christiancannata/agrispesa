@@ -129,12 +129,6 @@ function gtm4wp_safe_admin_html_with_links( $text ) {
 	);
 }
 
-require_once dirname( __FILE__ ) . '/admin-tab-basicdata.php';
-require_once dirname( __FILE__ ) . '/admin-tab-events.php';
-require_once dirname( __FILE__ ) . '/admin-tab-scrolltracking.php';
-require_once dirname( __FILE__ ) . '/admin-tab-integrate.php';
-require_once dirname( __FILE__ ) . '/admin-tab-advanced.php';
-
 /**
  * Callback function for add_settings_section(). Outputs the HTML of an admin tab.
  *
@@ -569,6 +563,8 @@ function gtm4wp_sanitize_options( $options ) {
 			$output[ $optionname ] = (int) $newoptionvalue;
 		} elseif ( GTM4WP_OPTION_INTEGRATE_WCORDERMAXAGE === $optionname ) {
 			$output[ $optionname ] = (int) $newoptionvalue;
+		} elseif ( GTM4WP_OPTION_INTEGRATE_WCDLMAXTIMEOUT === $optionname ) {
+			$output[ $optionname ] = (int) $newoptionvalue;
 		} elseif ( GTM4WP_OPTION_INTEGRATE_WCREMPRODIDPREFIX === $optionname ) {
 			$output[ $optionname ] = trim( (string) $newoptionvalue );
 		} elseif ( GTM4WP_OPTION_INTEGRATE_WCEECBRANDTAXONOMY === $optionname ) {
@@ -592,9 +588,9 @@ function gtm4wp_sanitize_options( $options ) {
 
 		} elseif ( GTM4WP_OPTION_GTMCUSTOMPATH === $optionname ) {
 			// remove https:// prefix if used.
-			$newoptionvalue = trim( $newoptionvalue, "/\n\r\t\v\x00" );
+			$newoptionvalue = trim( $newoptionvalue, "\n\r\t\v\x00" );
 
-			$gtm_custom_path_has_error = (bool) preg_match( '/^[a-zA-Z0-9\.\-\_]*$/', $newoptionvalue );
+			$gtm_custom_path_has_error = (bool) preg_match( '/^[a-zA-Z0-9\.\-\_\/]*$/', $newoptionvalue );
 			if ( false === $gtm_custom_path_has_error ) {
 				add_settings_error( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTMCUSTOMPATH . ']', esc_html__( 'Invalid GTM custom domain path. Value can include anything between a-z, A-Z, 0-9 or any of the characters . - _', 'duracelltomi-google-tag-manager' ) );
 				$newoptionvalue = '';
@@ -706,6 +702,12 @@ function gtm4wp_sanitize_options( $options ) {
  * @return void
  */
 function gtm4wp_admin_init() {
+	require_once dirname( __FILE__ ) . '/admin-tab-basicdata.php';
+	require_once dirname( __FILE__ ) . '/admin-tab-events.php';
+	require_once dirname( __FILE__ ) . '/admin-tab-scrolltracking.php';
+	require_once dirname( __FILE__ ) . '/admin-tab-integrate.php';
+	require_once dirname( __FILE__ ) . '/admin-tab-advanced.php';
+
 	global $gtm4wp_includefieldtexts, $gtm4wp_eventfieldtexts, $gtm4wp_integratefieldtexts, $gtm4wp_scrollerfieldtexts,
 		$gtm4wp_advancedfieldtexts, $gtm4wp_entity_ids;
 

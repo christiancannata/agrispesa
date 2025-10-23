@@ -25,7 +25,7 @@ use FSVendor\Symfony\Component\Mime\Email;
  *
  * @phpstan-import-type Record from \Monolog\Logger
  */
-class SymfonyMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
+class SymfonyMailerHandler extends MailHandler
 {
     /** @var MailerInterface|TransportInterface */
     protected $mailer;
@@ -37,7 +37,7 @@ class SymfonyMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      * @param MailerInterface|TransportInterface $mailer The mailer to use
      * @param callable|Email                     $email  An email template, the subject/body will be replaced
      */
-    public function __construct($mailer, $email, $level = \FSVendor\Monolog\Logger::ERROR, bool $bubble = \true)
+    public function __construct($mailer, $email, $level = Logger::ERROR, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
         $this->mailer = $mailer;
@@ -46,7 +46,7 @@ class SymfonyMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
     /**
      * {@inheritDoc}
      */
-    protected function send(string $content, array $records) : void
+    protected function send(string $content, array $records): void
     {
         $this->mailer->send($this->buildMessage($content, $records));
     }
@@ -55,9 +55,9 @@ class SymfonyMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      *
      * @param string|null $format The format of the subject
      */
-    protected function getSubjectFormatter(?string $format) : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getSubjectFormatter(?string $format): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\LineFormatter($format);
+        return new LineFormatter($format);
     }
     /**
      * Creates instance of Email to be sent
@@ -67,34 +67,32 @@ class SymfonyMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      *
      * @phpstan-param Record[] $records
      */
-    protected function buildMessage(string $content, array $records) : \FSVendor\Symfony\Component\Mime\Email
+    protected function buildMessage(string $content, array $records): Email
     {
         $message = null;
-        if ($this->emailTemplate instanceof \FSVendor\Symfony\Component\Mime\Email) {
+        if ($this->emailTemplate instanceof Email) {
             $message = clone $this->emailTemplate;
-        } elseif (\is_callable($this->emailTemplate)) {
+        } elseif (is_callable($this->emailTemplate)) {
             $message = ($this->emailTemplate)($content, $records);
         }
-        if (!$message instanceof \FSVendor\Symfony\Component\Mime\Email) {
-            $record = \reset($records);
-            throw new \InvalidArgumentException('Could not resolve message as instance of Email or a callable returning it' . ($record ? \FSVendor\Monolog\Utils::getRecordMessageForException($record) : ''));
+        if (!$message instanceof Email) {
+            $record = reset($records);
+            throw new \InvalidArgumentException('Could not resolve message as instance of Email or a callable returning it' . ($record ? Utils::getRecordMessageForException($record) : ''));
         }
         if ($records) {
             $subjectFormatter = $this->getSubjectFormatter($message->getSubject());
             $message->subject($subjectFormatter->format($this->getHighestRecord($records)));
         }
         if ($this->isHtmlBody($content)) {
-            if (null !== ($charset = $message->getHtmlCharset())) {
+            if (null !== $charset = $message->getHtmlCharset()) {
                 $message->html($content, $charset);
             } else {
                 $message->html($content);
             }
+        } else if (null !== $charset = $message->getTextCharset()) {
+            $message->text($content, $charset);
         } else {
-            if (null !== ($charset = $message->getTextCharset())) {
-                $message->text($content, $charset);
-            } else {
-                $message->text($content);
-            }
+            $message->text($content);
         }
         return $message->date(new \DateTimeImmutable());
     }

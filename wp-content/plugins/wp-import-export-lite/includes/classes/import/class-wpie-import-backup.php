@@ -5,9 +5,7 @@ namespace wpie\import\backup;
 use WP_Error;
 use wpie\export\WPIE_Export;
 
-if (!defined('ABSPATH')) {
-    die(__("Can't load this file directly", 'wp-import-export-lite'));
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_Import_Backup {
 

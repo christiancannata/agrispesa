@@ -6,7 +6,7 @@ use JsonSerializable;
 /**
  * .
  */
-class Plugin implements \JsonSerializable
+class Plugin implements JsonSerializable
 {
     private const DEFAULT_LOCALE = 'default';
     /**
@@ -53,14 +53,14 @@ class Plugin implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_plugin_name() : string
+    public function get_plugin_name(): string
     {
         return $this->plugin_name;
     }
     /**
      * @return string
      */
-    public function get_description() : string
+    public function get_description(): string
     {
         return $this->description;
     }
@@ -70,7 +70,7 @@ class Plugin implements \JsonSerializable
      *
      * @return self
      */
-    public function add_url(string $url, string $locale) : self
+    public function add_url(string $url, string $locale): self
     {
         $this->urls[$locale] = $url;
         return $this;
@@ -78,47 +78,47 @@ class Plugin implements \JsonSerializable
     /**
      * @return string
      */
-    public function get_icon() : string
+    public function get_icon(): string
     {
         return $this->icon;
     }
     /**
      * @return string
      */
-    public function get_plugin_url() : string
+    public function get_plugin_url(): string
     {
-        return $this->urls[\get_user_locale()] ?? $this->urls[self::DEFAULT_LOCALE];
+        return $this->urls[get_user_locale()] ?? $this->urls[self::DEFAULT_LOCALE];
     }
     /**
      * @return string
      */
-    public function get_category() : string
+    public function get_category(): string
     {
         return $this->category;
     }
     /**
      * @return bool
      */
-    public function is_plugin_installed() : bool
+    public function is_plugin_installed(): bool
     {
-        return \array_key_exists($this->plugin_file, \get_plugins());
+        return array_key_exists($this->plugin_file, get_plugins());
     }
     /**
      * @return string
      */
-    public function get_plugin_file() : string
+    public function get_plugin_file(): string
     {
         return $this->plugin_file;
     }
     /**
      * @return array
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return ['category' => $this->get_category(), 'icon' => $this->get_icon(), 'name' => $this->get_plugin_name(), 'description' => $this->get_description(), 'plugin_url' => $this->get_plugin_url(), 'buy_plugin_label' => $this->prepare_buy_plugin_label()];
     }
-    private function prepare_buy_plugin_label() : string
+    private function prepare_buy_plugin_label(): string
     {
-        return $this->category === \FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::get_categories()[\FSVendor\Octolize\ShippingExtensions\Plugin\PluginFactory::CATEGORY_BUNDLES] ? \__('Buy bundle →', 'flexible-shipping') : \__('Buy plugin →', 'flexible-shipping');
+        return $this->category === PluginFactory::get_categories()[PluginFactory::CATEGORY_BUNDLES] ? __('Buy bundle →', 'flexible-shipping') : __('Buy plugin →', 'flexible-shipping');
     }
 }

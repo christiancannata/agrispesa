@@ -25,7 +25,14 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 #screen-meta-links {
 }
 
 body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 #yith-plugin-fw__panel__notices {
-  margin: 35px 20px -24px 0;
+  margin: 32px 24px -24px 0;
+  max-width: 2175px;
+}
+
+@media screen and (max-width: 782px) {
+  body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 #yith-plugin-fw__panel__notices {
+    margin-right: 10px;
+  }
 }
 
 body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 #yith-plugin-fw__panel__notices .notice {
@@ -528,6 +535,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 .yith-plugin-fw-rate {
   font-weight: 400;
   font-size: inherit;
   margin-bottom: 8px;
+  padding-inline-end: 70px;
 }
 
 .yith-plugin-fw__panel__content .yith-plugin-fw__panel__option.yith-plugin-fw__panel__option--onoff {
@@ -588,6 +596,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-2 .yith-plugin-fw-rate {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
   background: #f8fafc;
+  z-index: 10;
 }
 
 .yith-plugin-fw__panel__content .yith-plugin-fw__panel__content__actions :not(style) + :not(style) {
@@ -1334,6 +1343,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-1 #yith-plugin-fw__panel
   line-height: 1.3;
   font-weight: 500;
   text-align: center;
+  position: relative;
 }
 
 #yith-plugin-fw__panel__premium-tab .main-content .landing .landing__pricing .product-price-del {
@@ -1355,7 +1365,7 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-1 #yith-plugin-fw__panel
   font-size: .5em;
 }
 
-#yith-plugin-fw__panel__premium-tab .main-content .landing .landing__pricing .product-price .product-price-save {
+#yith-plugin-fw__panel__premium-tab .main-content .landing .landing__pricing .product-price-save {
   position: absolute;
   display: inline-block;
   padding: 4px 6px;
@@ -1367,6 +1377,9 @@ body.yith-plugin-fw-panel.yith-plugin-fw-panel--version-1 #yith-plugin-fw__panel
   font-size: 11px;
   pointer-events: none;
   margin-left: 8px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 80px);
 }
 
 #yith-plugin-fw__panel__premium-tab .main-content .landing .landing__advantages {

@@ -3,6 +3,10 @@
  * Admin functions for Custom Taxonomy Order.
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 function customtaxorder_register_settings() {
 
 	register_setting(
@@ -334,7 +338,7 @@ function customtaxorder_about() {
  * Add Settings link to the main plugin page.
  */
 function customtaxorder_links( $links, $file ) {
-	if ( $file == plugin_basename( dirname(__FILE__) . '/customtaxorder.php' ) ) {
+	if ( $file == plugin_basename( __DIR__ . '/customtaxorder.php' ) ) {
 		$links[] = '<a href="' . admin_url( 'admin.php?page=customtaxorder' ) . '">' . esc_html__( 'Settings', 'custom-taxonomy-order-ne' ) . '</a>';
 	}
 	return $links;
@@ -355,9 +359,11 @@ add_action( 'customtaxorder_update_order', 'customtaxorder_flush_cache' );
 
 
 /*
- * Load language files.
+ * Load language files, only on dashboard.
  */
 function customtaxorder_load_lang() {
-	load_plugin_textdomain('custom-taxonomy-order-ne', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/');
+
+	load_plugin_textdomain('custom-taxonomy-order-ne', false, __DIR__ . '/lang/');
+
 }
-add_action('plugins_loaded', 'customtaxorder_load_lang');
+add_action( 'admin_init', 'customtaxorder_load_lang' );

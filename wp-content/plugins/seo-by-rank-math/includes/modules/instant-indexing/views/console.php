@@ -22,9 +22,23 @@ $cmb->add_field(
 		'type'            => 'textarea_small',
 		'sanitization_cb' => '__return_false',
 		'attributes'      => [
-			'class' => 'instant-indexing-urls',
+			'class'       => 'instant-indexing-urls',
 			'placeholder' => trailingslashit( home_url() ) . _x( 'hello-world', 'URL slug placeholder', 'rank-math' ),
 		],
 		'after_field'     => '<a href="#" id="indexnow_submit" class="button button-primary large-button" style="margin-top: 20px;">' . esc_html__( 'Submit URLs', 'rank-math' ) . '</a> <span class="spinner" id="indexnow_spinner"></span>',
+	]
+);
+
+$cmb->add_field(
+	[
+		'id'         => 'educational_note',
+		'type'       => 'notice',
+		'what'       => 'info',
+		'save_field' => false,
+		'content'    => sprintf(
+			/* translators: Note text */
+			esc_html__( '%s The URLs will be submitted to Bing and Yandex only, and not to Google.', 'rank-math' ),
+			'<b>' . esc_html__( 'Note:', 'rank-math' ) . '</b>'
+		),
 	]
 );

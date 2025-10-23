@@ -112,7 +112,7 @@ class ProductBlocksService implements Service, Registerable, Conditional {
 	}
 
 	/**
-	 * Action hanlder for the 'init' hook.
+	 * Action handler for the 'init' hook.
 	 */
 	public function hook_init(): void {
 		$build_path = "{$this->get_root_dir()}/js/build";
@@ -122,7 +122,7 @@ class ProductBlocksService implements Service, Registerable, Conditional {
 	}
 
 	/**
-	 * Action hanlder for the "woocommerce_block_template_area_{$template_area}_after_add_block_{$block_id}" hook.
+	 * Action handler for the "woocommerce_block_template_area_{$template_area}_after_add_block_{$block_id}" hook.
 	 *
 	 * @param BlockInterface $block The block just added to get its root template to add this extension's group and blocks.
 	 */
@@ -145,7 +145,7 @@ class ProductBlocksService implements Service, Registerable, Conditional {
 				'id'         => 'google-listings-and-ads-group',
 				'order'      => 100,
 				'attributes' => [
-					'title' => __( 'Google Listings & Ads', 'google-listings-and-ads' ),
+					'title' => __( 'Google for WooCommerce', 'google-listings-and-ads' ),
 				],
 			]
 		);
@@ -274,6 +274,12 @@ class ProductBlocksService implements Service, Registerable, Conditional {
 		foreach ( $attribute_types as $attribute_type ) {
 			$input_type = call_user_func( [ $attribute_type, 'get_input_type' ] );
 			$input      = AttributesForm::init_input( new $input_type(), new $attribute_type() );
+
+			// Avoid to render Inputs that are defined as hidden in the Input.
+			// i.e We don't render GTIN for new WC versions anymore.
+			if ( $input->is_hidden() ) {
+				continue;
+			}
 
 			if ( $is_variation_template ) {
 				// When editing a variation, its product type on the frontend side won't be changed dynamically.

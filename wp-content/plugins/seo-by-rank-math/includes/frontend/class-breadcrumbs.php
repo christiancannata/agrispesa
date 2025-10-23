@@ -16,6 +16,8 @@ namespace RankMath\Frontend;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Helpers\Security;
+use WP_Error;
+use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -118,7 +120,7 @@ class Breadcrumbs {
 			wp_parse_args(
 				$args,
 				[
-					'delimiter'   => '&nbsp;&#47;&nbsp;',
+					'separator'   => $this->settings['separator'],
 					'wrap_before' => '<nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p>',
 					'wrap_after'  => '</p></nav>',
 					'before'      => '',
@@ -145,14 +147,14 @@ class Breadcrumbs {
 			$link = $link ? '<a href="' . esc_url( $crumb[1] ) . '">' . esc_html( $crumb[0] ) . '</a>' :
 				'<span class="last">' . esc_html( $crumb[0] ) . '</span>';
 
-			$html .= $args['before'] . $link . $args['after'];
+			$html .= wp_kses_post( $args['before'] ) . $link . wp_kses_post( $args['after'] );
 
 			if ( $size !== $key + 1 ) {
-				$html .= '<span class="separator"> ' . wp_kses_post( $this->settings['separator'] ) . ' </span>';
+				$html .= '<span class="separator"> ' . wp_kses_post( $args['separator'] ) . ' </span>';
 			}
 		}
 
-		$html = $args['wrap_before'] . $html . $args['wrap_after'];
+		$html = wp_kses_post( $args['wrap_before'] ) . $html . wp_kses_post( $args['wrap_after'] );
 
 		/**
 		 * Change the breadcrumbs HTML output.
@@ -393,6 +395,10 @@ class Breadcrumbs {
 	private function add_crumbs_category() {
 		$this->maybe_add_blog();
 		$term = $GLOBALS['wp_query']->get_queried_object();
+		if ( empty( $term ) ) {
+			return;
+		}
+
 		$this->maybe_add_term_ancestors( $term );
 		$this->add_crumb( $this->get_breadcrumb_title( 'term', $term, $term->name ), get_term_link( $term ) );
 	}
@@ -442,6 +448,10 @@ class Breadcrumbs {
 		global $author;
 
 		$userdata = get_userdata( $author );
+		if ( ! $userdata || ! is_object( $userdata ) || ! isset( $userdata->ID ) ) {
+			return;
+		}
+
 		$this->add_crumb( sprintf( $this->strings['archive_format'], $this->get_breadcrumb_title( 'user', $userdata->ID, $userdata->display_name ) ) );
 	}
 
@@ -505,7 +515,7 @@ class Breadcrumbs {
 	/**
 	 * Get the primary term.
 	 *
-	 * @param array $terms Terms attached to the current post.
+	 * @param WP_Term[]|false|WP_Error $terms Terms attached to the current post.
 	 */
 	private function maybe_add_primary_term( $terms ) {
 		// Early Bail!
@@ -554,7 +564,7 @@ class Breadcrumbs {
 	 * @return bool
 	 */
 	private function can_add_term_ancestors( $term ) {
-		if ( 0 === $term->parent || false === $this->settings['show_ancestors'] || false === is_taxonomy_hierarchical( $term->taxonomy ) ) {
+		if ( empty( $term ) || 0 === $term->parent || false === $this->settings['show_ancestors'] || false === is_taxonomy_hierarchical( $term->taxonomy ) ) {
 			return false;
 		}
 
@@ -626,12 +636,12 @@ class Breadcrumbs {
 	/**
 	 * Get the breadcrumb title.
 	 *
-	 * @param  string $object_type Object type.
-	 * @param  int    $object_id   Object ID to get the title for.
-	 * @param  string $default     Default value to use for title.
+	 * @param  string $object_type   Object type.
+	 * @param  int    $object_id     Object ID to get the title for.
+	 * @param  string $default_value Default value to use for title.
 	 * @return string
 	 */
-	private function get_breadcrumb_title( $object_type, $object_id, $default ) {
+	private function get_breadcrumb_title( $object_type, $object_id, $default_value ) {
 		$title = '';
 		if ( 'post' === $object_type ) {
 			$title = Helper::get_post_meta( 'breadcrumb_title', $object_id );
@@ -641,6 +651,6 @@ class Breadcrumbs {
 			$title = Helper::get_user_meta( 'breadcrumb_title', $object_id );
 		}
 
-		return $title ? $title : $default;
+		return $title ? $title : $default_value;
 	}
 }

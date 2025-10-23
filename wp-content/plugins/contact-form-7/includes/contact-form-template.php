@@ -3,13 +3,13 @@
 class WPCF7_ContactFormTemplate {
 
 	public static function get_default( $prop = 'form' ) {
-		if ( 'form' == $prop ) {
+		if ( 'form' === $prop ) {
 			$template = self::form();
-		} elseif ( 'mail' == $prop ) {
+		} elseif ( 'mail' === $prop ) {
 			$template = self::mail();
-		} elseif ( 'mail_2' == $prop ) {
+		} elseif ( 'mail_2' === $prop ) {
 			$template = self::mail_2();
-		} elseif ( 'messages' == $prop ) {
+		} elseif ( 'messages' === $prop ) {
 			$template = self::messages();
 		} else {
 			$template = null;
@@ -160,59 +160,43 @@ class WPCF7_ContactFormTemplate {
 function wpcf7_messages() {
 	$messages = array(
 		'mail_sent_ok' => array(
-			'description'
-				=> __( "Sender's message was sent successfully", 'contact-form-7' ),
-			'default'
-				=> __( "Thank you for your message. It has been sent.", 'contact-form-7' ),
+			'description' => __( 'Sender&#8217;s message was sent successfully', 'contact-form-7' ),
+			'default' => __( 'Thank you for your message. It has been sent.', 'contact-form-7' ),
 		),
 
 		'mail_sent_ng' => array(
-			'description'
-				=> __( "Sender's message failed to send", 'contact-form-7' ),
-			'default'
-				=> __( "There was an error trying to send your message. Please try again later.", 'contact-form-7' ),
+			'description' => __( 'Sender&#8217;s message failed to send', 'contact-form-7' ),
+			'default' => __( 'There was an error trying to send your message. Please try again later.', 'contact-form-7' ),
 		),
 
 		'validation_error' => array(
-			'description'
-				=> __( "Validation errors occurred", 'contact-form-7' ),
-			'default'
-				=> __( "One or more fields have an error. Please check and try again.", 'contact-form-7' ),
+			'description' => __( 'Validation errors occurred', 'contact-form-7' ),
+			'default' => __( 'One or more fields have an error. Please check and try again.', 'contact-form-7' ),
 		),
 
 		'spam' => array(
-			'description'
-				=> __( "Submission was referred to as spam", 'contact-form-7' ),
-			'default'
-				=> __( "There was an error trying to send your message. Please try again later.", 'contact-form-7' ),
+			'description' => __( 'Submission was referred to as spam', 'contact-form-7' ),
+			'default' => __( 'There was an error trying to send your message. Please try again later.', 'contact-form-7' ),
 		),
 
 		'accept_terms' => array(
-			'description'
-				=> __( "There are terms that the sender must accept", 'contact-form-7' ),
-			'default'
-				=> __( "You must accept the terms and conditions before sending your message.", 'contact-form-7' ),
+			'description' => __( 'There are terms that the sender must accept', 'contact-form-7' ),
+			'default' => __( 'You must accept the terms and conditions before sending your message.', 'contact-form-7' ),
 		),
 
 		'invalid_required' => array(
-			'description'
-				=> __( "There is a field that the sender must fill in", 'contact-form-7' ),
-			'default'
-				=> __( "Please fill out this field.", 'contact-form-7' ),
+			'description' => __( 'There is a field that the sender must fill in', 'contact-form-7' ),
+			'default' => __( 'Please fill out this field.', 'contact-form-7' ),
 		),
 
 		'invalid_too_long' => array(
-			'description'
-				=> __( "There is a field with input that is longer than the maximum allowed length", 'contact-form-7' ),
-			'default'
-				=> __( "This field has a too long input.", 'contact-form-7' ),
+			'description' => __( 'There is a field with input that is longer than the maximum allowed length', 'contact-form-7' ),
+			'default' => __( 'This field has a too long input.', 'contact-form-7' ),
 		),
 
 		'invalid_too_short' => array(
-			'description'
-				=> __( "There is a field with input that is shorter than the minimum allowed length", 'contact-form-7' ),
-			'default'
-				=> __( "This field has a too short input.", 'contact-form-7' ),
+			'description' => __( 'There is a field with input that is shorter than the minimum allowed length', 'contact-form-7' ),
+			'default' => __( 'This field has a too short input.', 'contact-form-7' ),
 		),
 	);
 

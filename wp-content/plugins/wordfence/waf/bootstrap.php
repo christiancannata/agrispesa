@@ -331,19 +331,6 @@ class wfWAFWordPressObserver extends wfWAFBaseObserver {
 			}
 		}
 		
-		$watchedIPs = wfWAF::getInstance()->getStorageEngine()->getConfig('watchedIPs', null, 'transient');
-		if ($watchedIPs) {
-			if (!is_array($watchedIPs)) {
-				$watchedIPs = explode(',', $watchedIPs);
-			}
-			foreach ($watchedIPs as $watchedIP) {
-				$ipRange = new wfWAFUserIPRange($watchedIP);
-				if ($ipRange->isIPInRange(wfWAF::getInstance()->getRequest()->getIP())) {
-					$this->waf->recordLogEvent(new wfWAFLogEvent());
-				}
-			}
-		}
-		
 		if ($reason = wfWAF::getInstance()->getRequest()->getMetadata('finalAction')) {
 			$e = new wfWAFBlockException($reason['action']);
 			$e->setRequest(wfWAF::getInstance()->getRequest());
@@ -511,8 +498,8 @@ class wfWAFWordPress extends wfWAF {
 					if ($event->isInPast()) {
 						$run[$index] = $event;
 						$newEvent = $event->reschedule();
-						$className = get_class($newEvent);
-						if ($newEvent instanceof wfWAFCronEvent && $newEvent !== $event && !in_array($className, $cronDeduplication)) {
+						$className = is_object($newEvent) ? get_class($newEvent) : null;
+						if ($newEvent && $newEvent instanceof wfWAFCronEvent && $newEvent !== $event && !in_array($className, $cronDeduplication)) {
 							$cron[$index] = $newEvent;
 							$cronDeduplication[] = $className;
 							$updated = true;
@@ -804,20 +791,29 @@ class wfWAFWordPressI18n implements wfWAFI18nEngine {
 		return $text;
 	}
 
+	private function getPotentialDirectories() {
+		return array(
+			dirname(__FILE__) . "/../languages/",
+			dirname(WFWAF_LOG_PATH) . "/languages/plugins/"
+		);
+	}
+
 	protected function loadTranslations() {
 		require_once dirname(__FILE__) . '/pomo/mo.php';
 
 		$currentLocale = $this->storageEngine->getConfig('WPLANG', '', 'synced');
+		if (!preg_match("/^[a-zA-Z_]+$/", $currentLocale))
+			return false;
+		$filename = "wordfence-{$currentLocale}.mo";
 
-		// Find translation file for the current language.
-		$mofile = dirname(__FILE__) . '/../languages/wordfence-' . $currentLocale . '.mo';
-		if (!file_exists($mofile)) {
-			// No translation, use the default
-			$mofile = dirname(__FILE__) . '/../languages/wordfence.mo';
+		foreach ($this->getPotentialDirectories() as $directory) {
+			$path = "{$directory}/{$filename}";
+			if (file_exists($path)) {
+				$this->mo = new wfMO();
+				return $this->mo->import_from_file($path);
+			}
 		}
-
-		$this->mo = new wfMO();
-		return $this->mo->import_from_file( $mofile );
+		return false;
 	}
 }
 

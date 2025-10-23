@@ -68,6 +68,8 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 		 * @return string
 		 */
 		public function get_subject() {
+			$gift_card = $this->get_gift_card();
+
 			$default_subject = $this->get_default_subject();
 			$subject         = str_replace(
 				array(
@@ -76,9 +78,9 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 					'{order_id}',
 				),
 				array(
-					$this->object->recipient_name ? $this->object->recipient_name : '',
-					$this->object->sender_name ? $this->object->sender_name : '',
-					$this->object->order_id ? $this->object->order_id : '',
+					$gift_card->recipient_name ? $gift_card->recipient_name : '',
+					$gift_card->sender_name ? $gift_card->sender_name : '',
+					$gift_card->order_id ? $gift_card->order_id : '',
 				),
 				$this->format_string( $this->get_option( 'subject', $default_subject ) )
 			);
@@ -91,6 +93,8 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 		 * @return string
 		 */
 		public function get_heading() {
+			$gift_card = $this->get_gift_card();
+
 			$default_heading = $this->get_default_heading();
 			$heading         = str_replace(
 				array(
@@ -98,8 +102,8 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 					'{sender_name}',
 				),
 				array(
-					$this->object->recipient_name ? $this->object->recipient_name : '',
-					$this->object->sender_name ? $this->object->sender_name : '',
+					$gift_card->recipient_name ? $gift_card->recipient_name : '',
+					$gift_card->sender_name ? $gift_card->sender_name : '',
 				),
 				$this->format_string( $this->get_option( 'heading', $default_heading ) )
 			);
@@ -232,8 +236,8 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 			wc_get_template(
 				$this->template_html,
 				array(
-					'gift_card'         => $this->object,
-					'introductory_text' => $this->introductory_text,
+					'gift_card'         => $this->get_gift_card(),
+					'introductory_text' => $this->get_introductory_text(),
 					'email_heading'     => $this->get_heading(),
 					'email_type'        => $this->email_type,
 					'sent_to_admin'     => false,
@@ -289,6 +293,49 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 					'default'     => '',
 				),
 			);
+		}
+
+		/**
+		 * Get email main object
+		 *
+		 * @return object
+		 */
+		public function get_gift_card() {
+			return has_filter( 'woocommerce_is_email_preview' ) ? $this->get_dummy_gift_card() : $this->object;
+		}
+
+		/**
+		 * Get a dummy gift card.
+		 *
+		 * @return YITH_YWGC_Gift_Card
+		 */
+		public function get_dummy_gift_card() {
+			$gift_card = new YITH_YWGC_Gift_Card();
+
+			$gift_card->gift_card_number = 'J4KD-L8QZ-WX9M-R2NT';
+			$gift_card->total_amount     = 25;
+			$gift_card->message          = __( 'Happy birthday! Enjoy this gift on your most special day.', 'yith-woocommerce-gift-cards' );
+			$gift_card->expiration       = strtotime( '+1 year' );
+
+			return $gift_card;
+		}
+
+		/**
+		 * Get email introductory text
+		 *
+		 * @return string
+		 */
+		public function get_introductory_text() {
+			return has_filter( 'woocommerce_is_email_preview' ) ? $this->get_dummy_introductory_text() : $this->introductory_text;
+		}
+
+		/**
+		 * Get dummy introductory text
+		 *
+		 * @return string
+		 */
+		public function get_dummy_introductory_text() {
+			return __( 'Hi John, you have received this gift card from Mary, use it on our online shop.', 'yith-woocommerce-gift-cards' );
 		}
 	} // end \YITH_YWGC_Email_Send_Gift_Card class
 }

@@ -2,7 +2,9 @@
 
 namespace YahnisElsts\AdminMenuEditor\Customizable\Controls;
 
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas\Enum;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\CssLengthSetting;
+use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\WithSchema\CssLengthSetting as CssLengthSettingWithSchema;
 use YahnisElsts\AdminMenuEditor\Customizable\HtmlHelper;
 use YahnisElsts\AdminMenuEditor\Customizable\Rendering\Renderer;
 use YahnisElsts\AdminMenuEditor\Customizable\Settings;
@@ -17,7 +19,7 @@ class NumberInput extends AbstractNumericControl {
 	 */
 	protected $fixedUnit = null;
 	/**
-	 * @var Setting|null
+	 * @var Settings\AbstractSetting|null
 	 */
 	protected $unitSetting = null;
 
@@ -34,12 +36,15 @@ class NumberInput extends AbstractNumericControl {
 			if ( array_key_exists('unit', $params) ) {
 				if ( is_string($params['unit']) ) {
 					$this->fixedUnit = $params['unit'];
-				} else if ( $params['unit'] instanceof Setting ) {
+				} else if ( $params['unit'] instanceof Settings\AbstractSetting ) {
 					$this->unitSetting = $params['unit'];
 				}
-			} else if ( $this->mainSetting instanceof CssLengthSetting ) {
+			} else if (
+				($this->mainSetting instanceof CssLengthSetting)
+				|| ($this->mainSetting instanceof CssLengthSettingWithSchema)
+			) {
 				$unitSetting = $this->mainSetting->getUnitSetting();
-				if ( $unitSetting instanceof Setting ) {
+				if ( $unitSetting instanceof Settings\AbstractSetting ) {
 					$this->unitSetting = $unitSetting;
 				} else {
 					$this->fixedUnit = $this->mainSetting->getUnit();
@@ -76,7 +81,13 @@ class NumberInput extends AbstractNumericControl {
 	}
 
 	public function renderContent(Renderer $renderer) {
-		$hasUnitDropdown = $this->unitSetting instanceof Settings\EnumSetting;
+		$hasUnitDropdown = (
+			($this->unitSetting instanceof Settings\EnumSetting)
+			|| (
+				($this->unitSetting instanceof Settings\WithSchema\SettingWithSchema)
+				&& ($this->unitSetting->getSchema() instanceof Enum)
+			)
+		);
 
 		$currentUnitValue = $this->getCurrentUnit();
 		if ( $hasUnitDropdown || !empty($currentUnitValue) ) {
@@ -132,7 +143,7 @@ class NumberInput extends AbstractNumericControl {
 		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- buildInputElement() is safe
 		echo $this->buildInputElement($attributes);
 
-		if ( $hasUnitDropdown && ($this->unitSetting instanceof Settings\EnumSetting) ) {
+		if ( $hasUnitDropdown ) {
 			$this->renderUnitDropdown($this->unitSetting, [
 				'name'               => $this->getFieldName(null, $this->unitSetting),
 				'id'                 => $unitElementId,
@@ -169,7 +180,7 @@ class NumberInput extends AbstractNumericControl {
 	}
 
 	protected function getCurrentUnit() {
-		if ( $this->unitSetting instanceof Setting ) {
+		if ( $this->unitSetting instanceof Settings\AbstractSetting ) {
 			return $this->unitSetting->getValue();
 		}
 		return $this->fixedUnit;
@@ -185,12 +196,11 @@ class NumberInput extends AbstractNumericControl {
 		$unitText = $this->getCurrentUnit();
 		$hasUnitDropdown = false;
 
-		if ( $this->unitSetting instanceof Settings\EnumSetting ) {
+		$units = ChoiceControlOption::tryGenerateFromSetting($this->unitSetting);
+		if ( !empty($units) ) {
 			$hasUnitDropdown = true;
 			$params['hasUnitDropdown'] = true;
-			$params['unitDropdownOptions'] = ChoiceControlOption::generateKoOptions(
-				$this->unitSetting->generateChoiceOptions()
-			);
+			$params['unitDropdownOptions'] = ChoiceControlOption::generateKoOptions($units);
 		} else if ( !empty($unitText) ) {
 			$params['unitText'] = $unitText;
 		}
@@ -205,7 +215,7 @@ class NumberInput extends AbstractNumericControl {
 	public function serializeForJs() {
 		$result = parent::serializeForJs();
 
-		if ( $this->unitSetting instanceof Settings\EnumSetting ) {
+		if ( $this->unitSetting instanceof Settings\AbstractSetting ) {
 			if ( empty($result['settings']) ) {
 				$result['settings'] = [];
 			}

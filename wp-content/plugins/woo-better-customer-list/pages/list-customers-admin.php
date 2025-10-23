@@ -169,7 +169,7 @@ $_SERVER['REQUEST_URI'] = request_URI();
 		<input type="hidden" name="page" value="blz-bcl-list-customers" />
 		<p class="search-box">
 			<label class="screen-reader-text" for="user-search-input"><?php _e('Search Customers', 'woo-better-customer-list' ); ?>:</label>
-			<input type="search" id="user-search-input" name="s" value="<?php $searchval = ($search) ? $search : ''; echo $searchval; ?>">
+			<input type="search" id="user-search-input" name="s" value="<?php echo esc_attr( $search ? $search : '' ); ?>">
 			<input type="submit" id="search-submit" class="button" value="<?php _e('Search Users', 'woo-better-customer-list' ); ?>">
 		</p>
 		<?php if ($customerstatus || $customeraverage || $customerordered || $search): ?>
@@ -223,7 +223,7 @@ $_SERVER['REQUEST_URI'] = request_URI();
 		<thead>
 			<tr>
 				<th scope="col" id="full_name" class="manage-column column-full_name <?php echo ('display_name' == $orderby) ? 'sorted ' : 'sortable '; echo $order; ?>">
-					<a href="<?php echo $_SERVER['REQUEST_URI']; ?>&orderby=display_name&order=<?php echo $orderlink; ?>">
+					<a href="<?php echo esc_url( add_query_arg( array( 'orderby' => 'display_name', 'order' => $orderlink ), $_SERVER['REQUEST_URI'] ) ); ?>">
 						<span><?php _e('Full Name', 'woo-better-customer-list' ); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>
@@ -231,20 +231,20 @@ $_SERVER['REQUEST_URI'] = request_URI();
 				<th><?php _e('Customer Status', 'woo-better-customer-list' ); ?></th>
 				<th><?php _e('Email', 'woo-better-customer-list' ); ?></th>
 				<th scope="col" id="avg_order" class="manage-column column-avg_order <?php echo ('customer_average' == $metakey) ? 'sorted ' : 'sortable '; echo $orderclass; ?>">
-					<a href="<?php echo $_SERVER['REQUEST_URI']; ?>&orderby=meta_value_num&metakey=customer_average&order=<?php echo $orderlink; ?>">
+				<a href="<?php echo esc_url( add_query_arg( array( 'orderby' => 'meta_value_num', 'metakey' => 'customer_average', 'order' => $orderlink ), $_SERVER['REQUEST_URI'] ) ); ?>">
 						<span><?php _e('Avg Order Rate', 'woo-better-customer-list' ); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>
 				</th>
 				<th><?php _e('Last Order', 'woo-better-customer-list' ); ?></th>
 				<th scope="col" id="total_orders" class="manage-column column-total_orders <?php echo ('_order_count' == $metakey) ? 'sorted ' : 'sortable '; echo $orderclass; ?>">
-					<a href="<?php echo $_SERVER['REQUEST_URI']; ?>&orderby=meta_value_num&metakey=_order_count&order=<?php echo $orderlink; ?>">
+				<a href="<?php echo esc_url( add_query_arg( array( 'orderby' => 'meta_value_num', 'metakey' => '_order_count', 'order' => $orderlink ), $_SERVER['REQUEST_URI'] ) ); ?>">
 						<span><?php _e('Total Orders', 'woo-better-customer-list' ); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>
 				</th>
 				<th scope="col" id="total_spend" class="manage-column column-total_spend <?php echo ('_money_spent' == $metakey) ? 'sorted ' : 'sortable '; echo $order; ?>">
-					<a href="<?php echo $_SERVER['REQUEST_URI']; ?>&orderby=meta_value_num&metakey=_money_spent&order=<?php echo $orderlink; ?>">
+				<a href="<?php echo esc_url( add_query_arg( array( 'orderby' => 'meta_value_num', 'metakey' => '_money_spent', 'order' => $orderlink ), $_SERVER['REQUEST_URI'] ) ); ?>">
 						<span><?php _e('Total Spend', 'woo-better-customer-list' ); ?></span>
 						<span class="sorting-indicator"></span>
 					</a>

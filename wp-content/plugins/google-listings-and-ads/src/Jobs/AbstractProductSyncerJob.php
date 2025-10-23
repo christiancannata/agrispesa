@@ -4,6 +4,7 @@ declare( strict_types=1 );
 namespace Automattic\WooCommerce\GoogleListingsAndAds\Jobs;
 
 use Automattic\WooCommerce\GoogleListingsAndAds\ActionScheduler\ActionSchedulerInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\WP\NotificationsService;
 use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\MerchantCenterService;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\ProductRepository;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\ProductSyncer;
@@ -15,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package Automattic\WooCommerce\GoogleListingsAndAds\Jobs
  */
-abstract class AbstractProductSyncerJob extends AbstractActionSchedulerJob implements ProductSyncerJobInterface {
+abstract class AbstractProductSyncerJob extends AbstractActionSchedulerJob {
 
 	/**
 	 * @var ProductSyncer
@@ -33,7 +34,7 @@ abstract class AbstractProductSyncerJob extends AbstractActionSchedulerJob imple
 	protected $merchant_center;
 
 	/**
-	 * SyncProducts constructor.
+	 * AbstractProductSyncerJob constructor.
 	 *
 	 * @param ActionSchedulerInterface  $action_scheduler
 	 * @param ActionSchedulerJobMonitor $monitor
@@ -55,15 +56,6 @@ abstract class AbstractProductSyncerJob extends AbstractActionSchedulerJob imple
 	}
 
 	/**
-	 * Get whether Merchant Center is connected and ready for syncing data.
-	 *
-	 * @return bool
-	 */
-	public function is_mc_ready_for_syncing(): bool {
-		return $this->merchant_center->is_ready_for_syncing();
-	}
-
-	/**
 	 * Can the job be scheduled.
 	 *
 	 * @param array|null $args
@@ -71,6 +63,6 @@ abstract class AbstractProductSyncerJob extends AbstractActionSchedulerJob imple
 	 * @return bool Returns true if the job can be scheduled.
 	 */
 	public function can_schedule( $args = [] ): bool {
-		return ! $this->is_running( $args ) && $this->is_mc_ready_for_syncing();
+		return ! $this->is_running( $args ) && $this->merchant_center->is_enabled_for_datatype( NotificationsService::DATATYPE_PRODUCT );
 	}
 }

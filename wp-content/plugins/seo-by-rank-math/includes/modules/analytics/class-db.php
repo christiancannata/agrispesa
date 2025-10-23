@@ -130,6 +130,10 @@ class DB {
 			return [];
 		}
 
+		if ( ! DB_Helper::check_table_exists( 'rank_math_analytics_gsc' ) ) {
+			return [];
+		}
+
 		$key  = 'rank_math_analytics_data_info';
 		$data = get_transient( $key );
 		if ( false !== $data ) {
@@ -144,7 +148,7 @@ class DB {
 			->selectCount( 'id' )
 			->getVar();
 
-		$size = $wpdb->get_var( "SELECT SUM((data_length + index_length)) AS size FROM information_schema.TABLES WHERE table_schema='" . $wpdb->dbname . "' AND (table_name='" . $wpdb->prefix . "rank_math_analytics_gsc')" ); // phpcs:ignore
+		$size = DB_Helper::get_var( "SELECT SUM((data_length + index_length)) AS size FROM information_schema.TABLES WHERE table_schema='" . $wpdb->dbname . "' AND (table_name='" . $wpdb->prefix . "rank_math_analytics_gsc')" );
 		$data = compact( 'days', 'rows', 'size' );
 
 		$data = apply_filters( 'rank_math/analytics/analytics_tables_info', $data );
@@ -284,24 +288,22 @@ class DB {
 	 */
 	public static function get_inspection_defaults() {
 		$defaults = [
-			'created'                  => current_time( 'mysql' ),
-			'page'                     => '',
-			'index_verdict'            => 'VERDICT_UNSPECIFIED',
-			'indexing_state'           => 'INDEXING_STATE_UNSPECIFIED',
-			'coverage_state'           => '',
-			'page_fetch_state'         => 'PAGE_FETCH_STATE_UNSPECIFIED',
-			'robots_txt_state'         => 'ROBOTS_TXT_STATE_UNSPECIFIED',
-			'mobile_usability_verdict' => 'VERDICT_UNSPECIFIED',
-			'mobile_usability_issues'  => '',
-			'rich_results_verdict'     => 'VERDICT_UNSPECIFIED',
-			'rich_results_items'       => '',
-			'last_crawl_time'          => '',
-			'crawled_as'               => 'CRAWLING_USER_AGENT_UNSPECIFIED',
-			'google_canonical'         => '',
-			'user_canonical'           => '',
-			'sitemap'                  => '',
-			'referring_urls'           => '',
-			'raw_api_response'         => '',
+			'created'              => current_time( 'mysql' ),
+			'page'                 => '',
+			'index_verdict'        => 'VERDICT_UNSPECIFIED',
+			'indexing_state'       => 'INDEXING_STATE_UNSPECIFIED',
+			'coverage_state'       => '',
+			'page_fetch_state'     => 'PAGE_FETCH_STATE_UNSPECIFIED',
+			'robots_txt_state'     => 'ROBOTS_TXT_STATE_UNSPECIFIED',
+			'rich_results_verdict' => 'VERDICT_UNSPECIFIED',
+			'rich_results_items'   => '',
+			'last_crawl_time'      => '',
+			'crawled_as'           => 'CRAWLING_USER_AGENT_UNSPECIFIED',
+			'google_canonical'     => '',
+			'user_canonical'       => '',
+			'sitemap'              => '',
+			'referring_urls'       => '',
+			'raw_api_response'     => '',
 		];
 
 		return apply_filters( 'rank_math/analytics/inspection_defaults', $defaults );
@@ -325,11 +327,19 @@ class DB {
 			unset( $args['id'] );
 
 			$updated = self::objects()->set( $args )
-				->where( 'id', $old_id )
-				->where( 'object_id', absint( $args['object_id'] ) )
-				->update();
+			->where( 'id', $old_id )
+			->where( 'object_id', absint( $args['object_id'] ) )
+			->update();
 
 			if ( ! empty( $updated ) ) {
+				return $old_id;
+			}
+			$old_id = self::objects()
+			->select( 'id' )
+			->where( 'object_id', absint( $args['object_id'] ) )
+			->getVar();
+			if ( ! empty( $old_id ) ) {
+				// $updated may sometimes return 0 if there is no field that is changed, even if a row with $args['object_id'] exists.
 				return $old_id;
 			}
 		}
@@ -397,7 +407,7 @@ class DB {
 
 			$data[] = $date;
 			$data[] = $row['query'];
-			$data[] = str_replace( Helper::get_home_url(), '', self::remove_hash( urldecode( $row['page'] ) ) );
+			$data[] = self::get_page( $row['page'] );
 			$data[] = $row['clicks'];
 			$data[] = $row['impressions'];
 			$data[] = $row['position'];
@@ -415,7 +425,41 @@ class DB {
 		$sql .= implode( ",\n", $placeholders );
 
 		// Run the query.  Returns number of affected rows.
-		return $wpdb->query( $wpdb->prepare( $sql, $data ) ); // phpcs:ignore
+		return DB_Helper::query( $wpdb->prepare( $sql, $data ) );
+	}
+
+	/**
+	 * Get page slug from full URL.
+	 *
+	 * @param  string $url Full URL to parse.
+	 * @return string Page path/slug with leading slash.
+	 */
+	public static function get_page( $url ) {
+		if ( empty( $url ) || ! is_string( $url ) ) {
+			return '';
+		}
+
+		$url = urldecode( preg_replace( '/#.*$/', '', $url ) );
+
+		$url = self::remove_hash( $url );
+
+		// Parse the URL to get the path component.
+		$parsed_url = wp_parse_url( $url );
+		if ( isset( $parsed_url['path'] ) ) {
+			return $parsed_url['path'];
+		}
+
+		// Fallback: try to extract path by removing domain.
+		$host = Helper::get_home_url();
+		$url  = str_replace( $host, '', $url );
+
+		// Remove ASCII domain.
+		$host_ascii = idn_to_ascii( $host );
+		$url        = str_replace( $host_ascii, '', $url );
+
+		$url = preg_replace( '#^https?://(www\.)?#i', '', $url );
+
+		return $url;
 	}
 
 	/**
@@ -483,9 +527,12 @@ class DB {
 	 * @return int
 	 */
 	public static function get_inspections_count( $params ) {
-		$pages = self::objects()->select( 'page' )->get( ARRAY_A );
-		$pages = array_unique( wp_list_pluck( $pages, 'page' ) );
-		$query = self::inspections()->selectCount( 'id', 'total' )->whereIn( 'page', $pages );
+		$inspections = self::inspections()->table;
+		$objects     = self::objects()->table;
+		$query       = self::inspections()
+		->selectCount( "$inspections.id", 'total' )
+		->leftJoin( $objects, "$inspections.page", "$objects.page" )
+		->where( "$objects.page", '!=', '' );
 
 		do_action_ref_array( 'rank_math/analytics/get_inspections_count_query', [ &$query, $params ] );
 

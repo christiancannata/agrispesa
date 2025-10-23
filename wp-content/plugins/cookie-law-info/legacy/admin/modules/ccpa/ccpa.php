@@ -89,7 +89,7 @@ class Cookie_Law_Info_CCPA {
 		return $options;
 	}
 	public function wt_cli_enqueue_admin_scripts() {
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE && isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE && isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_script( 'cookie-law-info-ccpa-admin', plugin_dir_url( __FILE__ ) . 'assets/js/cookie-law-info-ccpa-admin.js', array( 'jquery' ), CLI_VERSION, false );
 		}
 	}

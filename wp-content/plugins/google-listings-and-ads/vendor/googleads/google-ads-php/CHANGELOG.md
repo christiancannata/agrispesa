@@ -1,3 +1,103 @@
+## 31.0.1
+*    Updated protobuf constraint in to be less restrictive for users on the Protobuf 3.x series and preserve backwards compatibility.
+
+## 31.0.0
+*    Compatibility with v21.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+*    Added support for declaring EU political advertising status on campaign creation in examples.
+*    Pinned the 'grpc/grpc' dependency so it doesn't get ahead of the C 'ext-grpc'.
+*    Removed support for v18 of the API: https://ads-developers.googleblog.com/2025/07/google-ads-api-v18-sunset-reminder.html
+
+## 30.0.0
+*    Fixed the potential break in v29.0.0 (due to dependency conflicts) by pinning the protobuf dependency to be <=4.30.0 and reverting back to the old getLabel method.
+*    Fixed the potential maximum call size error due to a bug in the GRPC C extension by pinning ext-grpc to be <=1.66.0
+
+## 29.0.0
+*    Security fixes, updated deprecated getLabel to isRepeated.
+
+## 28.0.0
+*    Compatibility with v20.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
+## 27.2.0
+*    Removed support for v17 of the API: https://ads-developers.googleblog.com/2025/04/google-ads-api-v17-sunset-reminder.html
+
+## 26.2.0
+*    Compatibility with v19.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
+## 26.1.0
+*   Added support for v19 of Google Ads API.
+*   Removed support for Feed-related classes, fields and enums in v19.
+*   Updated code examples:
+    * AddPerformanceMaxCampaign
+    * AddPerformanceMaxRetailCampaign
+    * AddShoppingProductAd
+    * GetChangeDetails
+
+## 26.0.0
+*   Removed support for v16 of Google Ads API.
+
+## 25.0.0
+*   Added support for v18 of Google Ads API.
+*   Removed support for the `useGapicV2Source` configuration, as the source code
+    of all versions are generated as GAPIC v2.
+    * Fixed the LaravelSampleApp to use GAPIC v2.
+*   Updated code examples:
+    * GetAllDisapprovedAds
+    * HandlePartialFailure
+
+## 24.0.0
+*   Added support for v17_1 of Google Ads API.
+*   Removed support for v15 of Google Ads API.
+*   Made service client classes non-final.
+*   Added support for setting a REST handler as a client option for each call.
+
+## 23.1.0
+*   Added support for v17 of Google Ads API.
+*   Updated code examples for removing the usage of `pageSize`:
+    * GetAccountHierarchy
+    * GetChangeDetails
+    * GetChangeSummary
+    * LinkManagerToClient
+    * FindAndRemoveCriteriaFromSharedSet
+    * GetAdGroupBidModifiers
+    * GetResponsiveSearchAds
+    * GetAllDisapprovedAds
+    * CampaignReportToCsv
+    * SetUpRemarketing
+    * UpdateAudienceTargetRestriction
+    * AddPerformanceMaxProductListingGroupTree
+    * AddPerformanceMaxRetailCampaign
+    * AddShoppingProductListingGroupTree
+    * GetProductCategoryConstants
+    * Utils\Feeds
+*   Removed code examples:
+    * NavigateSearchResultPagesCachingTokens
+
+## 23.0.1
+*   Re-generated the source code for v16_1 of Google Ads API to add some missing
+    classes and enum values.
+
+## 23.0.0
+*   Added support for v16_1 of Google Ads API.
+*   Removed support for v14 of Google Ads API.
+*   Added support for `google/protobuf` v4.26.
+*   Updated `composer.json` to require the minimum PHP version of 8.1.
+*   Rolled back changes to the code base that requires PHP 8.0 or above, so PHP
+    7 users can still easily clone this library to work with the legacy code.
+*   Updated `package.json` of LaravelSampleApp.
+*   Added VerifyAdvertiserIdentity example.
+*   Updated code examples:
+    * AddCompleteCampaignsUsingBatchJob
+    * DetectAndApplyRecommendations
+    * DismissRecommendation
+    * UploadConversionAdjustment
+*   Removed code examples:
+    * AddFlightsFeed
+    * AddRealEstateFeed
+    * ApplyRecommendation
+    * ApproveMerchantCenterLink
+    * DismissRecommendation
+    * RejectMerchantCenterLink
+
 ## 22.1.0
 *   Added support for v16 of Google Ads API.
 *   Fixed dependabot alert in `examples/LaravelSampleApp/composer.lock`.

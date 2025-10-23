@@ -231,6 +231,7 @@ class PHP extends Tokenizer
                 T_CONTINUE => T_CONTINUE,
                 T_THROW    => T_THROW,
                 T_EXIT     => T_EXIT,
+                T_GOTO     => T_GOTO,
             ],
             'strict' => true,
             'shared' => true,
@@ -251,6 +252,7 @@ class PHP extends Tokenizer
                 T_CONTINUE => T_CONTINUE,
                 T_THROW    => T_THROW,
                 T_EXIT     => T_EXIT,
+                T_GOTO     => T_GOTO,
             ],
             'strict' => true,
             'shared' => true,
@@ -606,6 +608,27 @@ class PHP extends Tokenizer
             }
 
             /*
+                Before PHP 5.5, the yield keyword was tokenized as
+                T_STRING. So look for and change this token in
+                earlier versions.
+            */
+
+            if (PHP_VERSION_ID < 50500
+                && $tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'yield'
+                && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === false
+            ) {
+                // Could still be a context sensitive keyword or "yield from" and potentially multi-line,
+                // so adjust the token stack in place.
+                $token[0] = T_YIELD;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_STRING to T_YIELD".PHP_EOL;
+                }
+            }
+
+            /*
                 Tokenize context sensitive keyword as string when it should be string.
             */
 
@@ -737,7 +760,7 @@ class PHP extends Tokenizer
             }
 
             /*
-                Close an open "inside constant declaration" marker when no keyword convertion was needed.
+                Close an open "inside constant declaration" marker when no keyword conversion was needed.
             */
 
             if ($insideConstDeclaration === true
@@ -778,6 +801,46 @@ class PHP extends Tokenizer
 
                     break;
                 }
+            }//end if
+
+            /*
+                Prior to PHP 7.4, PHP didn't support stand-alone PHP open tags at the end of a file
+                (without a new line), so we need to make sure that the tokenization in PHPCS is consistent
+                cross-version PHP by retokenizing to T_OPEN_TAG.
+            */
+
+            if (PHP_VERSION_ID < 70400
+                && $tokenIsArray === true
+                // PHP < 7.4 with short open tags off.
+                && (($stackPtr === ($numTokens - 1)
+                && $token[0] === T_INLINE_HTML
+                && stripos($token[1], '<?php') === 0)
+                // PHP < 7.4 with short open tags on.
+                || ($stackPtr === ($numTokens - 2)
+                && $token[0] === T_OPEN_TAG
+                && $token[1] === '<?'
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 1)][1]) === 'php'))
+            ) {
+                if ($token[0] === T_INLINE_HTML) {
+                    $finalTokens[$newStackPtr] = [
+                        'code'    => T_OPEN_TAG,
+                        'type'    => 'T_OPEN_TAG',
+                        'content' => $token[1],
+                    ];
+                } else {
+                    $finalTokens[$newStackPtr] = [
+                        'code'    => T_OPEN_TAG,
+                        'type'    => 'T_OPEN_TAG',
+                        'content' => $token[1].$tokens[($stackPtr + 1)][1],
+                    ];
+
+                    $stackPtr++;
+                }
+
+                $newStackPtr++;
+                continue;
             }//end if
 
             /*
@@ -1473,6 +1536,12 @@ class PHP extends Tokenizer
                     ];
                     $newStackPtr++;
 
+                    // Also modify the original token stack so that
+                    // future checks (like looking for T_NULLABLE) can
+                    // detect the T_READONLY token more easily.
+                    $tokens[$stackPtr][0] = T_READONLY;
+                    $token[0] = T_READONLY;
+
                     if (PHP_CODESNIFFER_VERBOSITY > 1 && $type !== T_READONLY) {
                         echo "\t\t* token $stackPtr changed from $type to T_READONLY".PHP_EOL;
                     }
@@ -1493,24 +1562,27 @@ class PHP extends Tokenizer
             }//end if
 
             /*
-                Before PHP 7.0, the "yield from" was tokenized as
+                Before PHP 7.0, "yield from" was tokenized as
                 T_YIELD, T_WHITESPACE and T_STRING. So look for
                 and change this token in earlier versions.
             */
 
             if (PHP_VERSION_ID < 70000
-                && PHP_VERSION_ID >= 50500
                 && $tokenIsArray === true
                 && $token[0] === T_YIELD
                 && isset($tokens[($stackPtr + 1)]) === true
                 && isset($tokens[($stackPtr + 2)]) === true
                 && $tokens[($stackPtr + 1)][0] === T_WHITESPACE
+                && strpos($tokens[($stackPtr + 1)][1], $this->eolChar) === false
                 && $tokens[($stackPtr + 2)][0] === T_STRING
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
-                // Could be multi-line, so adjust the token stack.
-                $token[0]  = T_YIELD_FROM;
-                $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                // Single-line "yield from" with only whitespace between.
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_YIELD_FROM,
+                    'type'    => 'T_YIELD_FROM',
+                    'content' => $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1],
+                ];
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
@@ -1520,53 +1592,130 @@ class PHP extends Tokenizer
                     }
                 }
 
-                $tokens[($stackPtr + 1)] = null;
-                $tokens[($stackPtr + 2)] = null;
-            }
+                $newStackPtr++;
+                $stackPtr += 2;
 
-            /*
-                Before PHP 5.5, the yield keyword was tokenized as
-                T_STRING. So look for and change this token in
-                earlier versions.
-                Checks also if it is just "yield" or "yield from".
-            */
-
-            if (PHP_VERSION_ID < 50500
+                continue;
+            } else if (PHP_VERSION_ID < 80300
                 && $tokenIsArray === true
                 && $token[0] === T_STRING
-                && strtolower($token[1]) === 'yield'
-                && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === false
+                && strtolower($token[1]) === 'from'
+                && $finalTokens[$lastNotEmptyToken]['code'] === T_YIELD
             ) {
-                if (isset($tokens[($stackPtr + 1)]) === true
-                    && isset($tokens[($stackPtr + 2)]) === true
-                    && $tokens[($stackPtr + 1)][0] === T_WHITESPACE
-                    && $tokens[($stackPtr + 2)][0] === T_STRING
-                    && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
-                ) {
-                    // Could be multi-line, so just just the token stack.
-                    $token[0]  = T_YIELD_FROM;
-                    $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                /*
+                    Before PHP 8.3, if there was a comment between the "yield" and "from" keywords,
+                    it was tokenized as T_YIELD, T_WHITESPACE, T_COMMENT... and T_STRING.
+                    We want to keep the tokenization of the tokens between, but need to change the
+                    `T_YIELD` and `T_STRING` (from) keywords to `T_YIELD_FROM.
+                */
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
-                            $type    = Tokens::tokenName($tokens[$i][0]);
-                            $content = Common::prepareForOutput($tokens[$i][1]);
-                            echo "\t\t* token $i merged into T_YIELD_FROM; was: $type => $content".PHP_EOL;
+                $finalTokens[$lastNotEmptyToken]['code'] = T_YIELD_FROM;
+                $finalTokens[$lastNotEmptyToken]['type'] = 'T_YIELD_FROM';
+
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_YIELD_FROM,
+                    'type'    => 'T_YIELD_FROM',
+                    'content' => $token[1],
+                ];
+                $newStackPtr++;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $lastNotEmptyToken (new stack) changed into T_YIELD_FROM; was: T_YIELD".PHP_EOL;
+                    echo "\t\t* token $stackPtr changed into T_YIELD_FROM; was: T_STRING".PHP_EOL;
+                }
+
+                continue;
+            } else if (PHP_VERSION_ID >= 70000
+                && $tokenIsArray === true
+                && $token[0] === T_YIELD_FROM
+                && strpos($token[1], $this->eolChar) !== false
+                && preg_match('`^yield\s+from$`i', $token[1]) === 1
+            ) {
+                /*
+                    In PHP 7.0+, a multi-line "yield from" (without comment) tokenizes as a single
+                    T_YIELD_FROM token, but we want to split it and tokenize the whitespace
+                    separately for consistency.
+                */
+
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_YIELD_FROM,
+                    'type'    => 'T_YIELD_FROM',
+                    'content' => substr($token[1], 0, 5),
+                ];
+                $newStackPtr++;
+
+                $tokenLines = explode($this->eolChar, substr($token[1], 5, -4));
+                $numLines   = count($tokenLines);
+                $newToken   = [
+                    'type'    => 'T_WHITESPACE',
+                    'code'    => T_WHITESPACE,
+                    'content' => '',
+                ];
+
+                foreach ($tokenLines as $i => $line) {
+                    $newToken['content'] = $line;
+                    if ($i === ($numLines - 1)) {
+                        if ($line === '') {
+                            break;
                         }
+                    } else {
+                        $newToken['content'] .= $this->eolChar;
                     }
 
-                    $tokens[($stackPtr + 1)] = null;
-                    $tokens[($stackPtr + 2)] = null;
-                } else {
-                    $newToken            = [];
-                    $newToken['code']    = T_YIELD;
-                    $newToken['type']    = 'T_YIELD';
-                    $newToken['content'] = $token[1];
                     $finalTokens[$newStackPtr] = $newToken;
-
                     $newStackPtr++;
-                    continue;
-                }//end if
+                }
+
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_YIELD_FROM,
+                    'type'    => 'T_YIELD_FROM',
+                    'content' => substr($token[1], -4),
+                ];
+                $newStackPtr++;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr split into 'yield', one or more whitespace tokens and 'from'".PHP_EOL;
+                }
+
+                continue;
+            } else if (PHP_VERSION_ID >= 80300
+                && $tokenIsArray === true
+                && $token[0] === T_YIELD_FROM
+                && preg_match('`^yield[ \t]+from$`i', $token[1]) !== 1
+                && stripos($token[1], 'yield') === 0
+            ) {
+                /*
+                    Since PHP 8.3, "yield from" allows for comments and will
+                    swallow the comment in the `T_YIELD_FROM` token.
+                    We need to split this up to allow for sniffs handling comments.
+                */
+
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_YIELD_FROM,
+                    'type'    => 'T_YIELD_FROM',
+                    'content' => substr($token[1], 0, 5),
+                ];
+                $newStackPtr++;
+
+                $yieldFromSubtokens = @token_get_all("<?php\n".substr($token[1], 5, -4));
+                // Remove the PHP open tag token.
+                array_shift($yieldFromSubtokens);
+                // Add the "from" keyword.
+                $yieldFromSubtokens[] = [
+                    0 => T_YIELD_FROM,
+                    1 => substr($token[1], -4),
+                ];
+
+                // Inject the new tokens into the token stack.
+                array_splice($tokens, ($stackPtr + 1), 0, $yieldFromSubtokens);
+                $numTokens = count($tokens);
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr split into parts (yield from with comment)".PHP_EOL;
+                }
+
+                unset($yieldFromSubtokens);
+                continue;
             }//end if
 
             /*
@@ -2041,6 +2190,7 @@ class PHP extends Tokenizer
                         || $tokenType === T_FN
                         || isset(Tokens::$methodPrefixes[$tokenType]) === true
                         || $tokenType === T_VAR
+                        || $tokenType === T_READONLY
                     ) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token $stackPtr changed from ? to T_NULLABLE".PHP_EOL;
@@ -2148,7 +2298,7 @@ class PHP extends Tokenizer
                         ) {
                             // Non-empty content.
                             if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_USE) {
-                                // Found a use statements, so search ahead for the closing parenthesis.
+                                // Found a use statement, so search ahead for the closing parenthesis.
                                 for ($x += 1; $x < $numTokens; $x++) {
                                     if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
                                         continue(2);
@@ -2716,7 +2866,10 @@ class PHP extends Tokenizer
                     }
                 }
 
-                if (isset($this->tokens[$x]) === true && $this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                if (isset($this->tokens[$x]) === true
+                    && $this->tokens[$x]['code'] === T_OPEN_PARENTHESIS
+                    && isset($this->tokens[$x]['parenthesis_closer']) === true
+                ) {
                     $ignore  = Tokens::$emptyTokens;
                     $ignore += [
                         T_ARRAY                  => T_ARRAY,
@@ -2894,7 +3047,7 @@ class PHP extends Tokenizer
                     }//end if
                 }//end if
 
-                // If after all that, the extra tokens are not set, this is not an arrow function.
+                // If after all that, the extra tokens are not set, this is not a (valid) arrow function.
                 if (isset($this->tokens[$i]['scope_closer']) === false) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $this->tokens[$i]['line'];
@@ -3226,19 +3379,45 @@ class PHP extends Tokenizer
                     }
 
                     if ($suspectedType === 'return' && $this->tokens[$x]['code'] === T_COLON) {
-                        // Make sure this is not the colon from a parameter name.
+                        // Make sure this is the colon for a return type.
                         for ($y = ($x - 1); $y > 0; $y--) {
                             if (isset(Tokens::$emptyTokens[$this->tokens[$y]['code']]) === false) {
                                 break;
                             }
                         }
 
-                        if ($this->tokens[$y]['code'] !== T_PARAM_NAME) {
-                            $confirmed = true;
+                        if ($this->tokens[$y]['code'] !== T_CLOSE_PARENTHESIS) {
+                            // Definitely not a union, intersection or DNF return type, move on.
+                            continue 2;
+                        }
+
+                        if (isset($this->tokens[$y]['parenthesis_owner']) === true) {
+                            if ($this->tokens[$this->tokens[$y]['parenthesis_owner']]['code'] === T_FUNCTION
+                                || $this->tokens[$this->tokens[$y]['parenthesis_owner']]['code'] === T_CLOSURE
+                                || $this->tokens[$this->tokens[$y]['parenthesis_owner']]['code'] === T_FN
+                            ) {
+                                $confirmed = true;
+                            }
+
+                            break;
+                        }
+
+                        // Arrow functions may not have the parenthesis_owner set correctly yet.
+                        // Closure use tokens won't be parentheses owners until PHPCS 4.0.
+                        if (isset($this->tokens[$y]['parenthesis_opener']) === true) {
+                            for ($z = ($this->tokens[$y]['parenthesis_opener'] - 1); $z > 0; $z--) {
+                                if (isset(Tokens::$emptyTokens[$this->tokens[$z]['code']]) === false) {
+                                    break;
+                                }
+                            }
+
+                            if ($this->tokens[$z]['code'] === T_FN || $this->tokens[$z]['code'] === T_USE) {
+                                $confirmed = true;
+                            }
                         }
 
                         break;
-                    }
+                    }//end if
 
                     if ($suspectedType === 'constant' && $this->tokens[$x]['code'] === T_CONST) {
                         $confirmed = true;
@@ -3249,7 +3428,8 @@ class PHP extends Tokenizer
                         && (isset(Tokens::$scopeModifiers[$this->tokens[$x]['code']]) === true
                         || $this->tokens[$x]['code'] === T_VAR
                         || $this->tokens[$x]['code'] === T_STATIC
-                        || $this->tokens[$x]['code'] === T_READONLY)
+                        || $this->tokens[$x]['code'] === T_READONLY
+                        || $this->tokens[$x]['code'] === T_FINAL)
                     ) {
                         // This will also confirm constructor property promotion parameters, but that's fine.
                         $confirmed = true;

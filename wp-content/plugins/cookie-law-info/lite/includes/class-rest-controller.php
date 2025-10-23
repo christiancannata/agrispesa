@@ -65,7 +65,7 @@ abstract class Rest_Controller extends WP_REST_Controller {
 			return new WP_Error( 'cookieyes_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'cookie-law-info' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 
-		return true;
+		return cky_verify_nonce( $request );
 	}
 
 	/**
@@ -93,7 +93,7 @@ abstract class Rest_Controller extends WP_REST_Controller {
 			return new WP_Error( 'cookieyes_rest_cannot_edit', __( 'Sorry, you are not allowed to edit this resource.', 'cookie-law-info' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 
-		return true;
+		return cky_verify_nonce( $request );
 	}
 
 	/**
@@ -106,7 +106,8 @@ abstract class Rest_Controller extends WP_REST_Controller {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return new WP_Error( 'cookieyes_rest_cannot_delete', __( 'Sorry, you are not allowed to delete this resource.', 'cookie-law-info' ), array( 'status' => rest_authorization_required_code() ) );
 		}
-		return true;
+
+		return cky_verify_nonce( $request );
 	}
 
 }

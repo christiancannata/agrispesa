@@ -11,7 +11,7 @@ use FSVendor\WPDesk\FS\TableRate\AbstractOptions;
 /**
  * Can provide cart calculation options.
  */
-class CartCalculationOptions extends \FSVendor\WPDesk\FS\TableRate\AbstractOptions
+class CartCalculationOptions extends AbstractOptions
 {
     const CART = 'cart';
     const PACKAGE = 'package';
@@ -20,6 +20,6 @@ class CartCalculationOptions extends \FSVendor\WPDesk\FS\TableRate\AbstractOptio
      */
     public function get_options()
     {
-        return array(self::CART => \__('Cart value', 'flexible-shipping'), self::PACKAGE => \__('Package value', 'flexible-shipping'));
+        return array(self::CART => __('Cart value', 'flexible-shipping'), self::PACKAGE => __('Package value', 'flexible-shipping'));
     }
 }

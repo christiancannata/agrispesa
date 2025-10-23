@@ -4,6 +4,7 @@ namespace YahnisElsts\AdminMenuEditor\Customizable\Controls;
 
 use YahnisElsts\AdminMenuEditor\Customizable\HtmlHelper;
 use YahnisElsts\AdminMenuEditor\Customizable\Settings;
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas;
 
 abstract class AbstractNumericControl extends ClassicControl {
 	const NUMBER_VALIDATION_PATTERN = '\\s*-?[0-9]+(?:[.,]\\d*)?\s*';
@@ -20,15 +21,16 @@ abstract class AbstractNumericControl extends ClassicControl {
 		parent::__construct($settings, $params);
 
 		//Range.
+		list($defaultMin, $defaultMax) = static::getSettingMinMax($this->mainSetting);
 		if ( array_key_exists('min', $params) ) {
 			$this->min = $params['min'];
-		} else if ( $this->mainSetting instanceof Settings\NumericSetting ) {
-			$this->min = $this->mainSetting->getMinValue();
+		} else {
+			$this->min = $defaultMin;
 		}
 		if ( array_key_exists('max', $params) ) {
 			$this->max = $params['max'];
-		} else if ( $this->mainSetting instanceof Settings\NumericSetting ) {
-			$this->max = $this->mainSetting->getMaxValue();
+		} else {
+			$this->max = $defaultMax;
 		}
 
 		//Step.
@@ -47,6 +49,34 @@ abstract class AbstractNumericControl extends ClassicControl {
 		if ( array_key_exists('rangeByUnit', $params) ) {
 			$this->rangeByUnit = $params['rangeByUnit'];
 		}
+	}
+
+	protected static function getSettingMinMax($setting) {
+		if ( !$setting ) {
+			return [null, null];
+		}
+
+		if ( $setting instanceof Settings\NumericSetting ) {
+			return [$setting->getMinValue(), $setting->getMaxValue()];
+		} else if ( $setting instanceof Settings\WithSchema\SingularSetting ) {
+			$schema = $setting->getSchema();
+			if ( $schema instanceof Schemas\Number ) {
+				return [$schema->getMin(), $schema->getMax()];
+			}
+		}
+		return [null, null];
+	}
+
+	protected static function settingMayContainFloat($setting) {
+		if ( $setting instanceof Settings\WithSchema\SingularSetting ) {
+			$schema = $setting->getSchema();
+			if ( $schema instanceof Schemas\Number ) {
+				return !$schema->isInt();
+			}
+		} else if ( $setting instanceof Settings\FloatSetting ) {
+			return true;
+		}
+		return false;
 	}
 
 	protected function getSliderRanges() {
@@ -68,7 +98,7 @@ abstract class AbstractNumericControl extends ClassicControl {
 		if ( is_numeric($this->step) ) {
 			$step = (float)$this->step;
 		} else {
-			if ( $this->mainSetting instanceof Settings\FloatSetting ) {
+			if ( self::settingMayContainFloat($this->mainSetting) ) {
 				$step = ($this->max - $this->min) / 100;
 			} else {
 				$step = 1;
@@ -96,12 +126,16 @@ abstract class AbstractNumericControl extends ClassicControl {
 	}
 
 	protected function renderUnitDropdown(
-		Settings\StringEnumSetting $unitSetting,
-		                           $elementAttributes = [],
-		                           $includeKoBindings = true
+		Settings\AbstractSetting $unitSetting,
+		                         $elementAttributes = [],
+		                         $includeKoBindings = true
 	) {
 		//Display a dropdown list of units.
-		$units = $unitSetting->generateChoiceOptions();
+		$units = ChoiceControlOption::tryGenerateFromSetting($unitSetting);
+		if ( empty($units) ) {
+			return false; //This setting isn't an enum or doesn't have any values.
+		}
+
 		$selectedUnit = $unitSetting->getValue();
 
 		list($optionHtml, $optionBindings) = ChoiceControlOption::generateSelectOptions(
@@ -122,6 +156,8 @@ abstract class AbstractNumericControl extends ClassicControl {
 		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $optionHtml;
 		echo '</select>';
+
+		return true;
 	}
 
 	protected function getKoComponentParams() {

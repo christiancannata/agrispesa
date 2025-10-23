@@ -39,8 +39,28 @@ function wpcf7_is_url( $text ) {
  * Checks whether the given text is a well-formed telephone number.
  */
 function wpcf7_is_tel( $text ) {
+	$text = preg_replace( '/[#*].*$/', '', $text ); // Remove extension
 	$text = preg_replace( '%[()/.*#\s-]+%', '', $text );
-	$result = preg_match( '/^[+]?[0-9]+$/', $text );
+
+	$is_international = (
+		str_starts_with( $text, '+' ) ||
+		str_starts_with( $text, '00' )
+	);
+
+	if ( $is_international ) {
+		$text = '+' . preg_replace( '/^[+0]+/', '', $text );
+	}
+
+	$result = true;
+
+	if ( ! preg_match( '/^[+]?[0-9]+$/', $text ) ) {
+		$result = false;
+	}
+
+	if ( ! ( 5 < strlen( $text ) and strlen( $text ) < 16 ) ) {
+		$result = false;
+	}
+
 	return apply_filters( 'wpcf7_is_tel', $result, $text );
 }
 
@@ -106,9 +126,11 @@ function wpcf7_is_time( $text ) {
 		$minute = (int) $matches[2];
 		$second = empty( $matches[3] ) ? 0 : (int) $matches[3];
 
-		$result = 0 <= $hour && $hour <= 23 &&
+		$result = (
+			0 <= $hour && $hour <= 23 &&
 			0 <= $minute && $minute <= 59 &&
-			0 <= $second && $second <= 59;
+			0 <= $second && $second <= 59
+		);
 	}
 
 	return apply_filters( 'wpcf7_is_time', $result, $text );
@@ -197,7 +219,7 @@ function wpcf7_is_email_in_domain( $email, $domain ) {
 		do {
 			$site_domain = implode( '.', $domain_parts );
 
-			if ( $site_domain == $email_domain ) {
+			if ( $site_domain === $email_domain ) {
 				continue 2;
 			}
 

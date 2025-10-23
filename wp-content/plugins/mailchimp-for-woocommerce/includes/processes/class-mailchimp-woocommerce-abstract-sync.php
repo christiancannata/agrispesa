@@ -65,30 +65,45 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     public function createSyncManagers()
     {
         switch ($this->getResourceType()) {
-            case 'coupons':
+            case 'customers':
+                $post_count = mailchimp_get_customer_lookup_count_all();
+                break;
+           case 'coupons':
                 $post_count = mailchimp_get_coupons_count();
-               break;
+                break;
             case 'products':
                 $post_count = mailchimp_get_product_count();
-               break;
+                break;
+           case 'product_categories':
+                $post_count = mailchimp_get_product_categories_count();
+                break;
             case 'orders':
                 $post_count = mailchimp_get_order_count();
-               break;
+                break;
            default:
                 mailchimp_log('sync.error', $this->getResourceType().' is not a valid resource.');
-               break;
+                break;
         }
-        
+
         $this->setData('sync.'.$this->getResourceType().'.started_at', time());
 
         $page = $this->getCurrentPage();
 
         while ($page - 1 <= ceil((int)$post_count / $this->items_per_page)) {
-            $next = new static($page);
-            mailchimp_handle_or_queue($next);
-            $this->setResourcePagePointer(($page), $this->getResourceType());
+            $this->spawn($page);
             $page++;
         }
+    }
+
+    /**
+     * @param $page
+     * @return void
+     */
+    public function spawn($page)
+    {
+        $next = new static($page);
+        mailchimp_handle_or_queue($next);
+        $this->setResourcePagePointer(($page), $this->getResourceType());
     }
 
 	/**
@@ -148,6 +163,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
 
         // set the last loop timestamp
         mailchimp_set_data( 'sync.last_loop_at', time() );
+        mailchimp_set_data( "sync.loop_at.{$this->getResourceType()}", time() );
 
         // if we're being rate limited - we need to pause here.
         if ($this->isBeingRateLimited()) {
@@ -163,7 +179,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
         }
 
         $page = $this->getResources();
-        
+
         if (empty($page)) {
             mailchimp_debug(get_called_class().'@handle', 'could not find any more '.$this->getResourceType().' records ending on page '.$this->getResourcePagePointer());
             // call the completed event to process further
@@ -173,9 +189,10 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
             return false;
         }
 
+        mailchimp_debug(get_called_class().'@handle', $this->getResourceType()." :: {$page->count}");
 
-        // if we've got a 0 count, that means we're done.
-        if ($page->count <= 0) {
+        // if we've got a 0 count or less than items per page, that means we're done.
+        if (!$page->count) {
 
             mailchimp_debug(get_called_class().'@handle', $this->getResourceType().' :: completing now!');
 
@@ -190,14 +207,20 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
 
         // iterate through the items and send each one through the pipeline based on this class.
         foreach ($page->items as $resource) {
-           switch ($this->getResourceType()) {
-                case 'coupons':
+            switch ($this->getResourceType()) {
+               case 'customers':
+                   mailchimp_handle_or_queue(new MailChimp_Woocommerce_Single_Customer($resource));
+                   break;
+               case 'coupons':
                     mailchimp_handle_or_queue(new MailChimp_WooCommerce_SingleCoupon($resource));
                    break;
-                case 'products':
+               case 'products':
                     mailchimp_handle_or_queue(new MailChimp_WooCommerce_Single_Product($resource));
                    break;
-                case 'orders':
+               case 'product_categories':
+                    mailchimp_handle_or_queue(new Mailchimp_WooCommerce_Single_Product_Category($resource));
+                   break;
+               case 'orders':
                     $order = new MailChimp_WooCommerce_Single_Order($resource);
                     $order->set_full_sync(true);
                     mailchimp_handle_or_queue($order);
@@ -206,6 +229,10 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
                     mailchimp_log('sync.error', $this->getResourceType().' is not a valid resource.');
                    break;
            }
+        }
+
+        if (isset($page->has_next_page) && !$page->has_next_page) {
+            $this->setResourceCompleteTime();
         }
 
         return false;
@@ -267,14 +294,31 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     }
 
     /**
+     * Completing queueing of the resource.
+     *
      * @param null $resource
      * @return MailChimp_WooCommerce_Abstract_Sync
      */
-    protected function setResourceCompleteTime($resource = null)
+    protected function setResourceCompleteQueueingTime($resource = null)
     {
         if (empty($resource)) $resource = $this->getResourceType();
 
-        return $this->setData('sync.'.$resource.'.completed_at', time());
+        return $this->setData('sync.'.$resource.'-queueing.completed_at', time());
+    }
+
+    /**
+     * Resources sync actual complete
+     *
+     * @param $resource
+     * @return void
+     */
+    private function setResourceCompleteTime($resource = null)
+    {
+        if (empty($resource)) $resource = $this->getResourceType();
+
+        $job = new Mailchimp_Woocommerce_Complete_Resource_Sync($resource);
+
+        mailchimp_handle_or_queue($job, 1);
     }
 
     /**
@@ -285,7 +329,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     {
         if (empty($resource)) $resource = $this->getResourceType();
 
-        $time = $this->getData('sync.'.$resource.'.completed_at', false);
+        $time = $this->getData('sync.'.$resource.'-queueing.completed_at', false);
 
         if ($time > 0) {
             try {
@@ -323,7 +367,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
     {
         $options = $this->getOptions();
         $options[$key] = $value;
-        update_option($this->plugin_name, $options);
+        \Mailchimp_Woocommerce_DB_Helpers::update_option($this->plugin_name, $options);
         return $this;
     }
 
@@ -342,7 +386,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function getOptions()
     {
-        $options = get_option($this->plugin_name);
+        $options = mailchimp_get_admin_options();
         return is_array($options) ? $options : array();
     }
 
@@ -353,7 +397,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function setData($key, $value)
     {
-        update_option($this->plugin_name.'-'.$key, $value, 'yes');
+        \Mailchimp_Woocommerce_DB_Helpers::update_option($this->plugin_name.'-'.$key, $value);
         return $this;
     }
 
@@ -364,7 +408,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function getData($key, $default = null)
     {
-        return get_option($this->plugin_name.'-'.$key, $default);
+        return \Mailchimp_Woocommerce_DB_Helpers::get_option($this->plugin_name.'-'.$key, $default);
     }
 
     /**
@@ -373,7 +417,7 @@ abstract class MailChimp_WooCommerce_Abstract_Sync extends Mailchimp_Woocommerce
      */
     public function removeData($key)
     {
-        return delete_option($this->plugin_name.'-'.$key);
+        return \Mailchimp_Woocommerce_DB_Helpers::delete_option($this->plugin_name.'-'.$key);
     }
 
     /**

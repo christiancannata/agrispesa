@@ -8,7 +8,7 @@ namespace FSVendor\WPDesk\Persistence\Adapter;
  *
  * @package WPDesk\Persistence
  */
-final class ReferenceArrayContainer extends \FSVendor\WPDesk\Persistence\Adapter\ArrayContainer
+final class ReferenceArrayContainer extends ArrayContainer
 {
     /**
      * @param array $referenced You have to pass this array. It can not be value.

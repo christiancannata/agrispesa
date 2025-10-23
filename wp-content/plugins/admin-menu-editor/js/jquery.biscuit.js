@@ -129,21 +129,25 @@
  * @param {string} name
  * @param {number} [expirationInDays]
  * @param {boolean} [jsonEncodingEnabled]
+ * @param {string} [path]
  * @constructor
  */
-function WsAmePreferenceCookie(name, expirationInDays, jsonEncodingEnabled) {
+function WsAmePreferenceCookie(name, expirationInDays, jsonEncodingEnabled, path) {
 	if (typeof expirationInDays === 'undefined') {
 		expirationInDays = 90;
 	}
 	if (typeof jsonEncodingEnabled === 'undefined') {
 		jsonEncodingEnabled = false;
 	}
+	if (typeof path === 'undefined') {
+		path = '/';
+	}
 
 	//Full name = unique prefix + name with the first letter capitalized.
 	this.fullCookieName = 'amePref' + name.charAt(0).toUpperCase() + name.slice(1);
 	this.jsonEncodingEnabled = jsonEncodingEnabled;
 	this.cookieOptions = {
-		'path': '/',
+		'path': path,
 		'samesite': 'lax'
 	};
 	if (expirationInDays > 0) {

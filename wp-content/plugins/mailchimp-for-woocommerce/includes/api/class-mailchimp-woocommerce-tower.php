@@ -59,7 +59,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 		$authenticated = mailchimp_is_configured();
 		$list_id       = mailchimp_get_list_id();
 		$url           = get_option( 'siteurl' );
-		$options       = (array) get_option( 'mailchimp-woocommerce' );
+		$options       = (array) \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce' );
 		$last_sync_at  = mailchimp_get_data('sync.last_loop_at');
 
 		try {
@@ -100,6 +100,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 			$stores      = $api->stores();
 			$compare_url = $this->baseDomain( $url );
 			$list_name   = $list_id ? $api->getList( $list_id )['name'] : null;
+            $mc_stores = array();
 
 			if ( is_array( $stores ) && ! empty( $stores ) ) {
 				foreach ( $stores as $mc_store ) {
@@ -127,6 +128,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 							$duplicate_store_problem = true;
 						}
 					}
+                    $mc_stores[] = $mc_store->toArray();
 				}
 			}
 
@@ -172,13 +174,22 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 		$broken_mailchimp = $authenticated && !empty($list_id) && !$mailchimp_api_connected;
 
 		$mc_plan_name = !empty($account_info) &&
-		                isset($account_info['pricing_plan_type']) &&
-		                !empty($account_info['pricing_plan_type']) &&
-		                $account_info['pricing_plan_type'] ? $account_info['pricing_plan_type'] : 'none';
+		                !empty($account_info['pricing_plan_type']) ? $account_info['pricing_plan_type'] : 'none';
 
 		$paid_account = in_array($mc_plan_name, ['pay_as_you_go', 'monthly']);
 
 		$time = new DateTime( 'now' );
+
+        $timestamps = [
+            'sync_started'     => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.started_at' ),
+            'sync_completed'   => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.completed_at' ),
+            'customer_sync_started_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.customers.started_at' ),
+            'customer_sync_completed_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.customers.completed_at' ),
+            'product_sync_started_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.products.started_at' ),
+            'product_sync_completed_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.products.completed_at' ),
+            'order_sync_started_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.orders.started_at' ),
+            'order_sync_completed_at' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.orders.completed_at' ),
+        ];
 
 		return array(
 			'store'         => (object) array(
@@ -186,7 +197,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 				'domain'                => $url,
 				'secure_url'            => $url,
 				'user'                  => (object) array(
-					'email' => isset( $options['admin_email'] ) ? $options['admin_email'] : null,
+					'email' => $options['admin_email'] ?? null,
 				),
 				'average_monthly_sales' => $this->getShopSales(),
 				'address'               => (object) array(
@@ -270,27 +281,27 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 						),
 						'product_sync_started'      => (object) array(
 							'key'   => 'product_sync_started',
-							'value' => get_option( 'mailchimp-woocommerce-sync.products.started_at' ),
+							'value' => $timestamps['product_sync_started_at'],
 						),
 						'product_sync_completed'    => (object) array(
 							'key'   => 'product_sync_completed',
-							'value' => get_option( 'mailchimp-woocommerce-sync.products.completed_at' ),
+							'value' => $timestamps['product_sync_completed_at'],
 						),
 						'customer_sync_started'     => (object) array(
 							'key'   => 'customer_sync_started',
-							'value' => get_option( 'mailchimp-woocommerce-sync.customers.started_at' ),
+							'value' => $timestamps['customer_sync_started_at'],
 						),
 						'customer_sync_completed'   => (object) array(
 							'key'   => 'customer_sync_completed',
-							'value' => get_option( 'mailchimp-woocommerce-sync.customers.completed_at' ),
+							'value' => $timestamps['customer_sync_completed_at'],
 						),
 						'order_sync_started'        => (object) array(
 							'key'   => 'order_sync_started',
-							'value' => get_option( 'mailchimp-woocommerce-sync.orders.started_at' ),
+							'value' => $timestamps['order_sync_started_at'],
 						),
 						'order_sync_completed'      => (object) array(
 							'key'   => 'order_sync_completed',
-							'value' => get_option( 'mailchimp-woocommerce-sync.orders.completed_at' ),
+							'value' => $timestamps['order_sync_completed_at'],
 						),
 						'curl_enabled' => (object) array(
 							'key' => 'curl_enabled',
@@ -318,16 +329,17 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 			),
 			'meta'          => array(
 				'timestamp'  => $time->format( 'Y-m-d H:i:s' ),
+                'timestamps' => $timestamps,
 				'platform'   => array(
 					'active'              => $store_active,
 					'plan'                => $plan,
 					'store_name'          => get_option( 'blogname' ),
 					'domain'              => $url,
 					'secure_url'          => $url,
-					'user_email'          => isset( $options['admin_email'] ) ? $options['admin_email'] : null,
+					'user_email'          => $options['admin_email'] ?? null,
 					'is_syncing'          => $syncing_mc,
-					'sync_started_at'     => get_option( 'mailchimp-woocommerce-sync.started_at' ),
-					'sync_completed_at'   => get_option( 'mailchimp-woocommerce-sync.completed_at' ),
+					'sync_started_at'     => $timestamps['sync_started'],
+					'sync_completed_at'   => $timestamps['sync_completed'],
 					'subscribed_to_hooks' => true,
 					'uses_custom_rules'   => false,
 					'wp_cron_enabled'     => $this->hasWPCronEnabled(),
@@ -364,6 +376,7 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 					'automations'             => isset( $automations ) ? $automations : null,
 					'journeys'                => isset( $journeys ) ? $journeys : null,
 					'merge_fields'            => isset( $merge_fields ) ? (object) $merge_fields : null,
+                    'stores'                  => isset( $mc_stores ) ? $mc_stores : null,
 				),
 				'merge_tags' => array(),
 			),
@@ -371,6 +384,132 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 			'system_report' => $this->getSystemReport(),
 		);
 	}
+
+    public function formatEcommerceStats()
+    {
+        $api = mailchimp_get_api();
+        $store_id = mailchimp_get_store_id();
+
+        try {
+            $promo_rules_count = mailchimp_get_coupons_count();
+            $product_count  = mailchimp_get_product_count();
+            $customer_count = mailchimp_get_customer_lookup_count();
+            $order_count    = mailchimp_get_order_count();
+        } catch ( Throwable $e ) {
+            $promo_rules_count = 0;
+            $product_count = 0;
+            $customer_count = 0;
+            $order_count    = 0;
+        }
+
+        try {
+            $promo_rules = $api->getPromoRules($store_id, 1, 1, 1);
+            $mailchimp_total_promo_rules = $promo_rules['total_items'];
+            if (isset($promo_rules_count['publish']) && $mailchimp_total_promo_rules > $promo_rules_count['publish']) $mailchimp_total_promo_rules = $promo_rules_count['publish'];
+        } catch (Exception $e) { $mailchimp_total_promo_rules = 0; }
+        try {
+            $mailchimp_total_products = $api->getProductCount($store_id);
+            if ($mailchimp_total_products > $product_count) $mailchimp_total_products = $product_count;
+        } catch (Exception $e) { $mailchimp_total_products = 0; }
+        try {
+            $mailchimp_total_orders = $api->getOrderCount($store_id);
+            if ($mailchimp_total_orders > $order_count) $mailchimp_total_orders = $order_count;
+        } catch (Exception $e) { $mailchimp_total_orders = 0; }
+
+        try {
+            $mailchimp_total_customers = $api->getCustomerCount($store_id);
+            if ($mailchimp_total_customers > $customer_count) $mailchimp_total_customers = $customer_count;
+        } catch (Exception $e) { $mailchimp_total_customers = 0; }
+
+        return array(
+            'platform' => array(
+                'products' => $product_count,
+                'customers' => $customer_count,
+                'orders' => $order_count,
+            ),
+            'mailchimp' => array(
+                'products' => $mailchimp_total_products,
+                'customers' => $mailchimp_total_customers,
+                'orders' => $mailchimp_total_orders,
+            ),
+            'store' => array(
+                'metrics' => array_values(
+                    array(
+                        'shopify_hooks'             => (object) array(
+                            'key'   => 'shopify_hooks',
+                            'value' => $this->hasWebhookInstalled(),
+                        ),
+                        'shop.products'             => (object) array(
+                            'key'   => 'shop.products',
+                            'value' => $product_count,
+                        ),
+                        'shop.customers'            => (object) array(
+                            'key'   => 'shop.customers',
+                            'value' => $customer_count,
+                        ),
+                        'shop.orders'               => (object) array(
+                            'key'   => 'shop.orders',
+                            'value' => $order_count,
+                        ),
+                        'mc.products'               => (object) array(
+                            'key'   => 'mc.products',
+                            'value' => $mailchimp_total_products,
+                        ),
+                        'mc.customers'                 => (object) array(
+                            'key'   => 'mc.customers',
+                            'value' => $mailchimp_total_customers,
+                        ),
+                        'mc.orders'                 => (object) array(
+                            'key'   => 'mc.orders',
+                            'value' => $mailchimp_total_orders,
+                        ),
+                        'mc.has_chimpstatic'        => (object) array(
+                            'key'   => 'mc.has_chimpstatic',
+                            'value' => true,
+                        ),
+                        'mc.is_syncing'             => (object) array(
+                            'key'   => 'mc.is_syncing',
+                            'value' => (bool) mailchimp_get_data('sync.syncing' ),
+                        ),
+                        // this is to identify the people using selective sync.
+                        'mc.has_selective_sync'     => (object) array(
+                            'key'   => 'mc.has_selective_sync',
+                            'value' => mailchimp_submit_subscribed_only(),
+                        ),
+                        'product_sync_started'      => (object) array(
+                            'key'   => 'product_sync_started',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.products.started_at' ),
+                        ),
+                        'product_sync_completed'    => (object) array(
+                            'key'   => 'product_sync_completed',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.products.completed_at' ),
+                        ),
+                        'customer_sync_started'     => (object) array(
+                            'key'   => 'customer_sync_started',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.customers.started_at' ),
+                        ),
+                        'customer_sync_completed'   => (object) array(
+                            'key'   => 'customer_sync_completed',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.customers.completed_at' ),
+                        ),
+                        'order_sync_started'        => (object) array(
+                            'key'   => 'order_sync_started',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.orders.started_at' ),
+                        ),
+                        'order_sync_completed'      => (object) array(
+                            'key'   => 'order_sync_completed',
+                            'value' => \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.orders.completed_at' ),
+                        ),
+                        'last_loop_at'              => (object) array(
+                            'key'   => 'last_loop_at',
+                            'value' => mailchimp_get_data('sync.last_loop_at'),
+                        ),
+                    )
+                ),
+                'meta' => $this->getMeta(),
+            ),
+        );
+    }
 
 	/**
 	 * @return bool
@@ -668,15 +807,26 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 		$list_id        = mailchimp_get_list_id();
 		$is_connected   = mailchimp_is_configured();
 		$post_url       = "https://tower.vextras.com/admin-api/woocommerce/{$command}/{$store_id}";
-		$plugin_options = (array) get_option( 'mailchimp-woocommerce' );
+		$plugin_options = (array) \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce' );
 		$akamai_block   = false;
 
 		if ( (bool) $enable ) {
 			mailchimp_set_data( 'tower.token', $support_token = wp_generate_password(12, false, false) );
 		} else {
 			$support_token = mailchimp_get_data( 'tower.token' );
-			delete_option( 'mailchimp-woocommerce-tower.support_token' );
+			\Mailchimp_Woocommerce_DB_Helpers::delete_option( 'mailchimp-woocommerce-tower.support_token' );
 		}
+
+        mailchimp_debug('tower.remote_support', "trace.step_1", array(
+            'command'       => $command,
+            'store_id'      => $store_id,
+            'list_id'       => $list_id,
+            'php_version'   => phpversion(),
+            'curl_enabled'  => function_exists( 'curl_init' ),
+            'is_connected'  => $is_connected,
+            'sync_complete' => mailchimp_is_done_syncing(),
+            'rest_url'      => MailChimp_WooCommerce_Rest_Api::url( '' ),
+        ));
 
 		if ( $enable ) {
 			$data = array(
@@ -713,6 +863,12 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 					if ( ! isset( $dup_store ) ) {
 						$dup_store = false;
 					}
+                    mailchimp_error('tower.remote_support', 'trace.step_2', array(
+                        'section' => "error getting Mailchimp info",
+                        'akamai_block' => $akamai_block,
+                        'duplicate_store_problem' => $dup_store,
+                        'error' => $e->getMessage(),
+                    ));
 				}
 				$data['list_info']                 = $list_info;
 				$data['is_syncing']                = $syncing_mc;
@@ -745,8 +901,15 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 				'timeout' => 30,
 			);
 			$response = wp_remote_post( $post_url, $payload );
+            if (isset($response['code']) && $response['code'] !== 200) {
+                return ['success' => false, 'code' => $response['code'], 'message' => $response['message']];
+            }
+            mailchimp_debug('tower.remote_support', "trace.step_3", array(
+                'response' => $response,
+            ));
 			return json_decode( $response['body'] );
 		} catch ( Throwable $e ) {
+            mailchimp_error("could not toggle support", $e->getMessage());
 			return null;
 		}
 	}
@@ -759,22 +922,23 @@ class MailChimp_WooCommerce_Tower extends Mailchimp_Woocommerce_Job {
 	 */
 	protected function get_action_status_date( $status, $date_type = 'oldest' ) {
 		$order  = 'oldest' === $date_type ? 'ASC' : 'DESC';
+        $query = array(
+            'claimed'  => false,
+            'status'   => $status,
+            'per_page' => 1,
+            'order'    => $order,
+        );
 		$store  = ActionScheduler::store();
-		$action = $store->query_actions(
-			array(
-				'claimed'  => false,
-				'status'   => $status,
-				'per_page' => 1,
-				'order'    => $order,
-			)
-		);
+		$action = $store->query_actions($query);
+        $count = 0;
 		if ( ! empty( $action ) ) {
 			$date_object = $store->get_date( $action[0] );
-			$action_date = $date_object->format( 'Y-m-d H:i:s O' );
+			$action_date = $date_object->format( 'D, M j, Y g:i A' );
+            $count = number_format(floatval($store->query_actions($query, 'count')));
 		} else {
 			$action_date = '&ndash;';
 		}
-		return $action_date;
+		return "<strong>({$count})</strong> {$action_date}";
 	}
 
 	public function is_shell_enabled() {

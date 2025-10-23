@@ -2,6 +2,9 @@
 
 namespace YahnisElsts\AdminMenuEditor\Customizable\Settings;
 
+/**
+ * @deprecated
+ */
 class BooleanSetting extends Setting {
 	protected $dataType = 'boolean';
 

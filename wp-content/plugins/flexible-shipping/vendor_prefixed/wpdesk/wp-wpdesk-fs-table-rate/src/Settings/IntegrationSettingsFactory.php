@@ -20,6 +20,6 @@ class IntegrationSettingsFactory
      */
     public static function create_from_shipping_method_settings($shipping_method_array)
     {
-        return new \FSVendor\WPDesk\FS\TableRate\Settings\IntegrationSettingsImplementation(isset($shipping_method_array['method_integration']) ? $shipping_method_array['method_integration'] : self::INTEGRATION_NONE);
+        return new IntegrationSettingsImplementation(isset($shipping_method_array['method_integration']) ? $shipping_method_array['method_integration'] : self::INTEGRATION_NONE);
     }
 }

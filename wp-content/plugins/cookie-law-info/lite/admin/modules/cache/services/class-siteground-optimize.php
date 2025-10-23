@@ -41,7 +41,10 @@ class Siteground_Optimize extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		return sg_cachepress_purge_cache();
 	}
 

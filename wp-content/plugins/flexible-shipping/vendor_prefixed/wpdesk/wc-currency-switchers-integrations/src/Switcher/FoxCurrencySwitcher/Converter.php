@@ -14,7 +14,7 @@ use function FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\CurrencySwit
  * Can convert currency using FOX – Currency Switcher Professional for WooCommerce plugin.
  * @see https://wordpress.org/plugins/woocommerce-currency-switcher/
  */
-class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter
+class Converter extends AbstractConverter
 {
     /**
      * @inheritDoc

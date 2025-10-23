@@ -279,9 +279,9 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						$html           = '';
 
 						foreach ( $checkbox_group as $checkbox_field ) {
-							$checkbox_field['name']    = $checkbox_field['id'];
+							$checkbox_field['name']    = $checkbox_field['field_name'] ?? $checkbox_field['id'] ?? '';
 							$checkbox_field['default'] = $checkbox_field['default'] ?? '';
-							$checkbox_field['value']   = WC_Admin_Settings::get_option( $checkbox_field['id'], $checkbox_field['default'] );
+							$checkbox_field['value']   = WC_Admin_Settings::get_option( $checkbox_field['name'], $checkbox_field['default'] );
 
 							$html .= '<label>';
 							$html .= yith_plugin_fw_get_field( $checkbox_field );
@@ -341,18 +341,17 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						if ( ! $field['type'] ) {
 							continue 2;
 						}
-						$field['field_name']  = $field['field_name'] ?? $field['id'];
 						$field['title']       = $field['title'] ?? $field['name'] ?? '';
-						$field['name']        = $field['id'] ?? '';
+						$field['name']        = $field['field_name'] ?? $field['id'] ?? '';
 						$field['default']     = $field['default'] ?? '';
 						$field['placeholder'] = $field['placeholder'] ?? '';
 
 						$value = apply_filters( 'yith_plugin_fw_wc_panel_pre_field_value', null, $field );
 						if ( is_null( $value ) ) {
 							if ( 'toggle-element' === $field['type'] || 'toggle-element-fixed' === $field['type'] ) {
-								$value = get_option( $field['id'], $field['default'] );
+								$value = get_option( $field['name'], $field['default'] );
 							} else {
-								$value = WC_Admin_Settings::get_option( $field['id'], $field['default'] );
+								$value = WC_Admin_Settings::get_option( $field['name'], $field['default'] );
 							}
 						}
 						$field['value'] = $value;
@@ -516,9 +515,12 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 				$array_options = array();
 
 				foreach ( $yit_options[ $option_key ] as $id => $option ) {
-					// Make sure option id is not an array.
+
+					$option_name = $option['field_name'] ?? $option['id'] ?? '';
+
+					// Make sure option name is not an array.
 					$matches = array();
-					isset( $option['id'] ) && preg_match( '/(.*)\[(.*)\]/', $option['id'], $matches );
+					! ! $option_name && preg_match( '/(.*)\[(.*)\]/', $option_name, $matches );
 
 					if ( ! empty( $matches ) && isset( $option['default'] ) ) {
 						if ( ! empty( $matches[2] ) ) {
@@ -530,17 +532,17 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 						if ( isset( $option['yith-type'] ) && 'multi-colorpicker' === $option['yith-type'] && ! empty( $option['colorpickers'] ) ) {
 							$default = array();
 							foreach ( $option['colorpickers'] as $colorpicker ) {
-								$default[ $colorpicker['id'] ] = isset( $colorpicker['default'] ) ? $colorpicker['default'] : '';
+								$default[ $colorpicker['id'] ] = $colorpicker['default'] ?? '';
 							}
-							update_option( $option['id'], $default );
+							update_option( $option_name, $default );
 						} elseif ( isset( $option['yith-type'] ) && 'inline-fields' === $option['yith-type'] && ! empty( $option['fields'] ) ) {
 							$default = array();
 							foreach ( $option['fields'] as $field_id => $field ) {
-								$default[ $field_id ] = isset( $field['default'] ) ? $field['default'] : '';
+								$default[ $field_id ] = $field['default'] ?? '';
 							}
-							update_option( $option['id'], $default );
+							update_option( $option_name, $default );
 						} elseif ( isset( $option['default'] ) ) {
-							update_option( $option['id'], $option['default'] );
+							update_option( $option_name, $option['default'] );
 						}
 					}
 				}

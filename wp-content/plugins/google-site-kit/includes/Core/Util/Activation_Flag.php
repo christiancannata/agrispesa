@@ -50,7 +50,7 @@ final class Activation_Flag {
 	 */
 	public function __construct(
 		Context $context,
-		Options $options = null
+		?Options $options = null
 	) {
 		$this->context = $context;
 		$this->options = $options ?: new Options( $this->context );
@@ -64,7 +64,7 @@ final class Activation_Flag {
 	public function register() {
 		add_action(
 			'googlesitekit_activation',
-			function( $network_wide ) {
+			function ( $network_wide ) {
 				// Set activation flag.
 				$this->set_activation_flag( $network_wide );
 			}

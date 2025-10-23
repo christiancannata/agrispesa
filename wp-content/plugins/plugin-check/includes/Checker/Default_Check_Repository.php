@@ -15,12 +15,44 @@ namespace WordPress\Plugin_Check\Checker;
 class Default_Check_Repository extends Empty_Check_Repository {
 
 	/**
+	 * True if the class was fully initialized.
+	 *
+	 * If the class is instantiated before plugins are loaded, this will be set to false.
+	 * This way the checks will be re-initialized once plugins have been loaded, and only then it is set to true.
+	 *
+	 * @since 1.3.0
+	 * @var bool
+	 */
+	protected $fully_initialized;
+
+	/**
 	 * Initializes checks.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		$this->fully_initialized = did_action( 'plugins_loaded' ) > 0;
 		$this->register_default_checks();
+	}
+
+	/**
+	 * Returns an array of checks.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $flags The check type flag.
+	 * @return Check_Collection Check collection providing an indexed array of check instances.
+	 */
+	public function get_checks( $flags = self::TYPE_ALL ) {
+		// Once plugins have been loaded, re-initialize the checks.
+		if ( ! $this->fully_initialized && did_action( 'plugins_loaded' ) ) {
+			$this->fully_initialized = true;
+			$this->runtime_checks    = array();
+			$this->static_checks     = array();
+			$this->register_default_checks();
+		}
+
+		return parent::get_checks( $flags );
 	}
 
 	/**
@@ -47,6 +79,7 @@ class Default_Check_Repository extends Empty_Check_Repository {
 				'plugin_header_fields'       => new Checks\Plugin_Repo\Plugin_Header_Fields_Check(),
 				'late_escaping'              => new Checks\Security\Late_Escaping_Check(),
 				'plugin_updater'             => new Checks\Plugin_Repo\Plugin_Updater_Check(),
+				'plugin_uninstall'           => new Checks\Plugin_Repo\Plugin_Uninstall_Check(),
 				'plugin_review_phpcs'        => new Checks\Plugin_Repo\Plugin_Review_PHPCS_Check(),
 				'direct_db_queries'          => new Checks\Security\Direct_DB_Queries_Check(),
 				'performant_wp_query_params' => new Checks\Performance\Performant_WP_Query_Params_Check(),
@@ -60,6 +93,7 @@ class Default_Check_Repository extends Empty_Check_Repository {
 				'trademarks'                 => new Checks\Plugin_Repo\Trademarks_Check(),
 				'non_blocking_scripts'       => new Checks\Performance\Non_Blocking_Scripts_Check(),
 				'offloading_files'           => new Checks\Plugin_Repo\Offloading_Files_Check(),
+				'setting_sanitization'       => new Checks\Plugin_Repo\Setting_Sanitization_Check(),
 			)
 		);
 

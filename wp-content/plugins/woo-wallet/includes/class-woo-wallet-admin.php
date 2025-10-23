@@ -5,6 +5,8 @@
  * @package StandaleneTech
  */
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -202,8 +204,34 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 		 */
 		public function add_wallet_topup_report() {
 			if ( current_user_can( 'view_woocommerce_reports' ) ) {
-				$wallet_recharge_order_ids = get_wallet_rechargeable_orders( array( 'date_query' => array( 'after' => gmdate( 'Y-m-01' ) ) ) );
-				$top_up_amount             = 0;
+				$hpos_enabled = OrderUtil::custom_orders_table_usage_is_enabled();
+				if ( $hpos_enabled ) {
+					$wallet_recharge_order_ids = wc_get_orders(
+						array(
+							'limit'        => -1,
+							'meta_query'   => array(
+								array(
+									'key'   => '_wc_wallet_purchase_credited',
+									'value' => true,
+								),
+							),
+							'date_created' => '>=' . gmdate( 'Y-m-01' ),
+							'return'       => 'ids',
+							'status'       => wc_get_is_paid_statuses(),
+						)
+					);
+				} else {
+					$wallet_recharge_order_ids = wc_get_orders(
+						array(
+							'limit'        => -1,
+							'topuporders'  => true,
+							'date_created' => '>=' . gmdate( 'Y-m-01' ),
+							'return'       => 'ids',
+							'status'       => wc_get_is_paid_statuses(),
+						)
+					);
+				}
+				$top_up_amount = 0;
 				foreach ( $wallet_recharge_order_ids as $order_id ) {
 					$order           = wc_get_order( $order_id );
 					$recharge_amount = apply_filters( 'woo_wallet_credit_purchase_amount', $order->get_subtotal( 'edit' ), $order_id );
@@ -401,13 +429,13 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 			global $wp_query, $post, $theorder;
 			$screen    = get_current_screen();
 			$screen_id = $screen ? $screen->id : '';
-			$suffix    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			// register styles.
-			wp_register_style( 'woo_wallet_admin_styles', woo_wallet()->plugin_url() . '/assets/css/admin.css', array(), WOO_WALLET_PLUGIN_VERSION );
-
+			wp_register_style( 'woo_wallet_admin_styles', woo_wallet()->plugin_url() . '/build/admin/main.css', array(), WOO_WALLET_PLUGIN_VERSION );
+			// Add RTL support.
+			wp_style_add_data( 'woo_wallet_admin_styles', 'rtl', 'replace' );
 			// Register scripts.
-			wp_register_script( 'woo_wallet_admin_product', woo_wallet()->plugin_url() . '/assets/js/admin/admin-product' . $suffix . '.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
-			wp_register_script( 'woo_wallet_admin_order', woo_wallet()->plugin_url() . '/assets/js/admin/admin-order' . $suffix . '.js', array( 'jquery', 'wc-admin-order-meta-boxes' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'woo_wallet_admin_product', woo_wallet()->plugin_url() . '/build/admin/product.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'woo_wallet_admin_order', woo_wallet()->plugin_url() . '/build/admin/order.js', array( 'jquery', 'wc-admin-order-meta-boxes' ), WOO_WALLET_PLUGIN_VERSION, true );
 
 			if ( in_array( $screen_id, array( 'product', 'edit-product' ), true ) ) {
 				wp_enqueue_script( 'woo_wallet_admin_product' );
@@ -449,10 +477,11 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 			wp_enqueue_style( 'woo_wallet_admin_styles' );
 
 			// register exporter styles.
-			wp_register_style( 'terawallet-exporter-style', woo_wallet()->plugin_url() . '/assets/css/export.css', array(), WOO_WALLET_PLUGIN_VERSION );
-
+			wp_register_style( 'terawallet-exporter-style', woo_wallet()->plugin_url() . '/build/admin/export.css', array(), WOO_WALLET_PLUGIN_VERSION );
+			// Add RTL support.
+			wp_style_add_data( 'terawallet-exporter-style', 'rtl', 'replace' );
 			// register exporter scripts.
-			wp_register_script( 'terawallet-exporter-script', woo_wallet()->plugin_url() . '/assets/js/admin/export' . $suffix . '.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'terawallet-exporter-script', woo_wallet()->plugin_url() . '/build/admin/export.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
 			wp_localize_script(
 				'terawallet-exporter-script',
 				'terawallet_export_params',
@@ -469,7 +498,7 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 				)
 			);
 
-			wp_register_script( 'terawallet_admin', woo_wallet()->plugin_url() . '/assets/js/admin/admin' . $suffix . '.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'terawallet_admin', woo_wallet()->plugin_url() . '/build/admin/main.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
 			wp_localize_script(
 				'terawallet_admin',
 				'terawallet_admin_params',
@@ -1109,7 +1138,7 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 		 */
 		public function manage_users_custom_column( $value, $column_name, $user_id ) {
 			if ( 'current_wallet_balance' === $column_name ) {
-				return sprintf( '<a href="%s" title="%s">%s</a>', admin_url( '?page=woo-wallet-transactions&user_id=' . $user_id ), __( 'View details', 'woo-wallet' ), woo_wallet()->wallet->get_wallet_balance( $user_id ) );
+				return sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=woo-wallet-transactions&user_id=' . $user_id ), __( 'View details', 'woo-wallet' ), woo_wallet()->wallet->get_wallet_balance( $user_id ) );
 			}
 			return $value;
 		}

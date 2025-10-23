@@ -1,12 +1,16 @@
 <?php
 /*
- * Plugin Name: WooCommerce Satispay
+ * Plugin Name: Satispay for WooCommerce
  * Plugin URI: https://wordpress.org/plugins/woo-satispay/
  * Description: Save time and money by accepting payments from your customers with Satispay. Free, simple, secure! #doitsmart
  * Author: Satispay
  * Author URI: https://www.satispay.com/
- * Version: 2.2.4
- * WC tested up to: 8.9.2
+ * License: MIT
+ * License URI: https://opensource.org/licenses/MIT
+ * Version: 2.2.8
+ * Requires at least: 5.0
+ * Requires Plugins: woocommerce
+ * WC tested up to: 8.9
  */
 
 // Exit if accessed directly.
@@ -67,7 +71,7 @@ function wc_satispay_init() {
 function wc_satispay_cron_schedule($schedules) {
     $schedules['every_four_hours'] = array(
         'interval' => 14400, // Every 4 hours
-        'display'  => __( 'Every 4 hours' ),
+        'display'  => __( 'Every 4 hours', 'woo-satispay'),
     );
     return $schedules;
 }

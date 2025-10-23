@@ -1044,14 +1044,26 @@
 		if(is_object($post) && !$post->menu_order && in_array( $post->post_type, $wpso_objects )){
 			$sql = 'SELECT MAX(menu_order) FROM '.$wpdb->posts.'
 					WHERE post_type = "'.$post->post_type.'" ';
-			$max = $wpdb->get_var($sql);
-			if($max>0){
+			//$max = $wpdb->get_var($sql);
+			
+			$sql = 'SELECT MIN(menu_order) FROM '.$wpdb->posts.'
+					WHERE post_type = "'.$post->post_type.'" ';		
+			$min = (int)$wpdb->get_var($sql); //30/10/2024
+			
+			/*if($max>0){
 				wp_update_post(array(
 					'ID'=>$post->ID,
 					'menu_order'=>$max+1
 				));
 				
-			}
+			}*/
+			
+			
+			wp_update_post(array(
+				'ID'=>$post->ID,
+				'menu_order'=>$min-1
+			)); //30/10/2024
+			
 		}
 	
 	}

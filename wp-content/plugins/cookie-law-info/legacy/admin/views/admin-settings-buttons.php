@@ -312,7 +312,7 @@ if ( ! defined( 'WPINC' ) ) {
 							}
 							if ( $privacy_page_exists == 0 ) {
 								?>
-								<span class="cli_form_er cli_privacy_page_not_exists_er" style="display: inline;"><?php echo esc_html__( 'The currently selected page does not exist. Please select a new page.' ); ?></span>
+								<span class="cli_form_er cli_privacy_page_not_exists_er" style="display: inline;"><?php echo esc_html__( 'The currently selected page does not exist. Please select a new page.', 'cookie-law-info' ); ?></span>
 								<?php
 							}
 						}

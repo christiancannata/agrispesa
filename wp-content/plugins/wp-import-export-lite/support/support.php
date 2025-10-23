@@ -1,9 +1,6 @@
 <?php
 
-
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( !defined( 'SORT_FLAG_CASE' ) ) {
         define( 'SORT_FLAG_CASE', 5 );

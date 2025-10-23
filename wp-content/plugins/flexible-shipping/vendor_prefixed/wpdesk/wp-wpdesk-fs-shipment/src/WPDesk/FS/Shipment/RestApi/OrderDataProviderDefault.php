@@ -10,7 +10,7 @@ namespace FSVendor\WPDesk\FS\Shipment\RestApi;
 /**
  * Default data provider. Can get data from shipment.
  */
-class OrderDataProviderDefault implements \FSVendor\WPDesk\FS\Shipment\RestApi\OrderDataProvider
+class OrderDataProviderDefault implements OrderDataProvider
 {
     const FS_INTEGRATION = '_fs_integration';
     const FS_METHOD = '_fs_method';
@@ -30,7 +30,7 @@ class OrderDataProviderDefault implements \FSVendor\WPDesk\FS\Shipment\RestApi\O
      */
     public function get_data_from_shipment($shipment)
     {
-        return $this->remove_internal_data_from_shipment_data(\get_post_meta($shipment->get_id()));
+        return $this->remove_internal_data_from_shipment_data(get_post_meta($shipment->get_id()));
     }
     /**
      * Filter data.
@@ -41,7 +41,7 @@ class OrderDataProviderDefault implements \FSVendor\WPDesk\FS\Shipment\RestApi\O
      */
     protected function remove_internal_data_from_shipment_data(array $data)
     {
-        $keys_to_remove = \array_merge(self::COMMON_KEYS_TO_REMOVE, $this->keys_to_remove);
+        $keys_to_remove = array_merge(self::COMMON_KEYS_TO_REMOVE, $this->keys_to_remove);
         foreach ($keys_to_remove as $key) {
             if (isset($data[$key])) {
                 unset($data[$key]);
@@ -60,7 +60,7 @@ class OrderDataProviderDefault implements \FSVendor\WPDesk\FS\Shipment\RestApi\O
     {
         $formatted_data = array();
         foreach ($data as $key => $value) {
-            if (\is_array($value) && isset($value[0])) {
+            if (is_array($value) && isset($value[0])) {
                 $formatted_data[$key] = $value[0];
             } else {
                 $formatted_data[$key] = $value;

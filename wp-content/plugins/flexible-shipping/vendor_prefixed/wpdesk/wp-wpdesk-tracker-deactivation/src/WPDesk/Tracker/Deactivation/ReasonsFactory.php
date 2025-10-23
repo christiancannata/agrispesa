@@ -9,5 +9,5 @@ interface ReasonsFactory
      *
      * @return Reason[]
      */
-    public function createReasons() : array;
+    public function createReasons(): array;
 }

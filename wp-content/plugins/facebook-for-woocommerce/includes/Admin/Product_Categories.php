@@ -134,7 +134,7 @@ class Product_Categories {
 		$category_field = new Google_Product_Category_Field();
 		?>
 			<div class="form-field term-<?php echo esc_attr( self::FIELD_GOOGLE_PRODUCT_CATEGORY_ID ); ?>-wrap">
-				<span><?php echo esc_html( self::get_enhanced_catalog_explanation_text() ); ?></span>
+				<span><?php echo esc_html( self::get_catalog_explanation_text() ); ?></span>
 				<br/>
 				<br/>
 				<?php Enhanced_Catalog_Attribute_Fields::render_hidden_input_can_show_attributes(); ?>
@@ -150,12 +150,12 @@ class Product_Categories {
 	}
 
 	/**
-	 * Returns the text that explains why the categories are being displayed
+	 * Returns the text that explains why certain fields should be inputed for ad performance
 	 *
 	 * @return string the explanation text
 	 */
-	public static function get_enhanced_catalog_explanation_text() {
-		return __( 'Facebook catalogs now support category specific fields, to make best use of them you need to select a category. WooCommerce uses the Google taxonomy as it is the most widely accepted form of categorisation. If no Google product category is chosen, the WooCommerce product category will be used instead.', 'facebook-for-woocommerce' );
+	public static function get_catalog_explanation_text() {
+		return __( 'To optimize ad performance, we recommend providing these additional product attributes in WooCommerce. Updates made here will be overwritten with attributes provided in WooCommerce.', 'facebook-for-woocommerce' );
 	}
 
 
@@ -174,7 +174,7 @@ class Product_Categories {
 		?>
 			<tr class="form-field">
 				<td colspan="2">
-					<span><?php echo esc_html( self::get_enhanced_catalog_explanation_text() ); ?></span>
+					<span><?php echo esc_html( self::get_catalog_explanation_text() ); ?></span>
 				</td>
 			</tr>
 			<tr class="form-field term-<?php echo esc_attr( self::FIELD_GOOGLE_PRODUCT_CATEGORY_ID ); ?>-wrap">
@@ -271,8 +271,8 @@ class Product_Categories {
 
 		if (
 			empty( $category_id ) ||
-			$category_handler->is_category( $category_id ) &&
-			$category_handler->is_root_category( $category_id )
+			( $category_handler->is_category( $category_id ) &&
+			$category_handler->is_root_category( $category_id ) )
 		) {
 			// show nothing
 			?>
@@ -314,8 +314,8 @@ class Product_Categories {
 
 		if (
 			empty( $category_id ) ||
-			$category_handler->is_category( $category_id ) &&
-			$category_handler->is_root_category( $category_id )
+			( $category_handler->is_category( $category_id ) &&
+			$category_handler->is_root_category( $category_id ) )
 		) {
 			// show nothing
 			return;
@@ -377,7 +377,7 @@ class Product_Categories {
 		$google_product_category_id = wc_clean( Helper::get_posted_value( self::FIELD_GOOGLE_PRODUCT_CATEGORY_ID ) );
 
 		\WooCommerce\Facebook\Product_Categories::update_google_product_category_id( $term_id, $google_product_category_id );
-		$this->save_enhanced_catalog_attributes( $term_id, $tt_id, $taxonomy );
+		$this->save_enhanced_catalog_attributes( $term_id );
 
 		$term = get_term( $term_id, $taxonomy );
 
@@ -423,11 +423,9 @@ class Product_Categories {
 	 *
 	 * @since 2.1.0
 	 *
-	 * @param int    $term_id term ID.
-	 * @param int    $tt_id term taxonomy ID.
-	 * @param string $taxonomy Taxonomy slug.
+	 * @param int $term_id term ID.
 	 */
-	public function save_enhanced_catalog_attributes( $term_id, $tt_id, $taxonomy ) {
+	public function save_enhanced_catalog_attributes( $term_id ) {
 		$enhanced_catalog_attributes = \WooCommerce\Facebook\Products::get_enhanced_catalog_attributes_from_request();
 
 		foreach ( $enhanced_catalog_attributes as $key => $value ) {

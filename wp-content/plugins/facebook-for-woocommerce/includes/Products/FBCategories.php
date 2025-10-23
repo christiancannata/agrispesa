@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
  *
@@ -21,6 +20,26 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.11.0
  */
 class FBCategories {
+
+	/**
+	 * List of keys to exclude from general attribute processing.
+	 * These are special attributes handled separately by Facebook catalog.
+	 *
+	 * @var array $keys_to_exclude Associative array of attribute keys to exclude
+	 *                            Keys include: brand, color/colour, material, gender,
+	 *                            condition, size, age_group, and pattern
+	 */
+	private $keys_to_exclude = [
+		'brand'     => true,
+		'color'     => true,
+		'material'  => true,
+		'gender'    => true,
+		'condition' => true,
+		'size'      => true,
+		'colour'    => true,
+		'age_group' => true,
+		'pattern'   => true,
+	];
 
 	/**
 	 * Fetches the attribute from a category using attribute key.
@@ -64,9 +83,9 @@ class FBCategories {
 		// TODO: can perform more validations here.
 		switch ( $attribute['type'] ) {
 			case 'enum':
-				return in_array( $value, $attribute['enum_values'] );
+				return in_array( strtolower( $value ), $attribute['enum_values'], true );
 			case 'boolean':
-				return in_array( $value, array( 'yes', 'no' ) );
+				return in_array( $value, array( 'yes', 'no' ), true );
 			default:
 				return true;
 		}
@@ -129,7 +148,14 @@ class FBCategories {
 		$return_attributes = array();
 		foreach ( $category['attributes'] as $attribute_hash ) {
 			// Get attribute array from the stored hash version
-			$return_attributes[] = $this->get_attribute_field_by_hash( $attribute_hash );
+			$attribute = $this->get_attribute_field_by_hash( $attribute_hash );
+
+			// Skip if attribute is invalid or its key is in the exclude list
+			if ( ! is_array( $attribute ) || empty( $attribute['key'] ) || isset( $this->keys_to_exclude[ $attribute['key'] ] ) ) {
+				continue;
+			}
+
+			$return_attributes[] = $attribute;
 		}
 
 		return $return_attributes;

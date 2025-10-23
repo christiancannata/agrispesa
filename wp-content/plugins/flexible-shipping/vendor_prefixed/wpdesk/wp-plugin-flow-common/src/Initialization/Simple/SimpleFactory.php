@@ -7,7 +7,7 @@ use FSVendor\WPDesk\Plugin\Flow\Initialization\InitializationStrategy;
 /**
  * Can decide if strategy is for free plugin or paid plugin
  */
-class SimpleFactory implements \FSVendor\WPDesk\Plugin\Flow\Initialization\InitializationFactory
+class SimpleFactory implements InitializationFactory
 {
     /** @var bool */
     private $free;
@@ -28,8 +28,8 @@ class SimpleFactory implements \FSVendor\WPDesk\Plugin\Flow\Initialization\Initi
     public function create_initialization_strategy(\FSVendor\WPDesk_Plugin_Info $info)
     {
         if ($this->free) {
-            return new \FSVendor\WPDesk\Plugin\Flow\Initialization\Simple\SimpleFreeStrategy($info);
+            return new SimpleFreeStrategy($info);
         }
-        return new \FSVendor\WPDesk\Plugin\Flow\Initialization\Simple\SimplePaidStrategy($info);
+        return new SimplePaidStrategy($info);
     }
 }

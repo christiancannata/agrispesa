@@ -12,6 +12,7 @@ namespace Google\Site_Kit\Core\Authentication\Clients;
 
 use Exception;
 use Google\Site_Kit\Core\Authentication\Google_Proxy;
+use Google\Site_Kit\Core\HTTP\Middleware;
 use Google\Site_Kit_Dependencies\GuzzleHttp\Client;
 use WP_HTTP_Proxy;
 
@@ -89,7 +90,7 @@ final class Client_Factory {
 		$token_callback = $args['token_callback'];
 		if ( $token_callback ) {
 			$client->setTokenCallback(
-				function( $cache_key, $access_token ) use ( $client, $token_callback ) {
+				function ( $cache_key, $access_token ) use ( $client, $token_callback ) {
 					// The same token from this callback should also already be set in the client object, which is useful
 					// to get the full token data, all of which needs to be saved. Just in case, if that is not the same,
 					// we save the passed token only, relying on defaults for the other values.
@@ -148,6 +149,11 @@ final class Client_Factory {
 
 			$config['proxy'] = "{$auth}{$http_proxy->host()}:{$http_proxy->port()}";
 		}
+
+		// Respect WordPress HTTP request blocking settings.
+		$config['handler']->push(
+			Middleware::block_external_request()
+		);
 
 		/**
 		 * Filters the IP version to force hostname resolution with.

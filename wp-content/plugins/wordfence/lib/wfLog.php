@@ -213,19 +213,19 @@ class wfLog {
 		wfRateLimit::countHit($type, wfUtils::getIP());
 		
 		if (wfRateLimit::globalRateLimit()->shouldEnforce($type)) {
-			$this->takeBlockingAction('maxGlobalRequests', __("Exceeded the maximum global requests per minute for crawlers or humans.", 'wordfence'));
+			$this->takeBlockingAction('maxGlobalRequests', wfI18n::__("Exceeded the maximum global requests per minute for crawlers or humans.", 'wordfence'));
 		}
 		else if (wfRateLimit::crawlerViewsRateLimit()->shouldEnforce($type)) {
-			$this->takeBlockingAction('maxRequestsCrawlers', __("Exceeded the maximum number of requests per minute for crawlers.", 'wordfence')); //may not exit
+			$this->takeBlockingAction('maxRequestsCrawlers', wfI18n::__("Exceeded the maximum number of requests per minute for crawlers.", 'wordfence')); //may not exit
 		}
 		else if (wfRateLimit::crawler404sRateLimit()->shouldEnforce($type)) {
-			$this->takeBlockingAction('max404Crawlers', __("Exceeded the maximum number of page not found errors per minute for a crawler.", 'wordfence'));
+			$this->takeBlockingAction('max404Crawlers', wfI18n::__("Exceeded the maximum number of page not found errors per minute for a crawler.", 'wordfence'));
 		}
 		else if (wfRateLimit::humanViewsRateLimit()->shouldEnforce($type)) {
-			$this->takeBlockingAction('maxRequestsHumans', __("Exceeded the maximum number of page requests per minute for humans.", 'wordfence'));
+			$this->takeBlockingAction('maxRequestsHumans', wfI18n::__("Exceeded the maximum number of page requests per minute for humans.", 'wordfence'));
 		}
 		else if (wfRateLimit::human404sRateLimit()->shouldEnforce($type)) {
-			$this->takeBlockingAction('max404Humans', __("Exceeded the maximum number of page not found errors per minute for humans.", 'wordfence'));
+			$this->takeBlockingAction('max404Humans', wfI18n::__("Exceeded the maximum number of page not found errors per minute for humans.", 'wordfence'));
 		}
 	}
 	
@@ -563,8 +563,8 @@ class wfLog {
 			if ($b->matchRequest($IP, $userAgent, $referrer) !== wfBlock::MATCH_NONE) {
 				$b->recordBlock();
 				wfActivityReport::logBlockedIP($IP, null, 'advanced');
-				$this->currentRequest->actionDescription = __('UA/Referrer/IP Range not allowed', 'wordfence');
-				$this->do503(3600, __("Advanced blocking in effect.", 'wordfence')); //exits
+				$this->currentRequest->actionDescription = wfI18n::__('UA/Referrer/IP Range not allowed', 'wordfence');
+				$this->do503(3600, wfI18n::__("Advanced blocking in effect.", 'wordfence')); //exits
 			}
 		}
 
@@ -608,7 +608,7 @@ class wfLog {
 				$this->currentRequest->actionDescription = __('blocked access via country blocking', 'wordfence');
 				wfConfig::inc('totalCountryBlocked');
 				wfActivityReport::logBlockedIP($IP, null, 'country');
-				$this->do503(3600, __('Access from your area has been temporarily limited for security reasons', 'wordfence'));
+				$this->do503(3600, wfI18n::__('Access from your area has been temporarily limited for security reasons', 'wordfence'));
 			}
 		}
 
@@ -623,7 +623,7 @@ class wfLog {
 			}
 			$reason = $ipBlock->reason;
 			if ($ipBlock->type == wfBlock::TYPE_IP_MANUAL || $ipBlock->type == wfBlock::TYPE_IP_AUTOMATIC_PERMANENT) {
-				$reason = __('Manual block by administrator', 'wordfence');
+				$reason = wfI18n::__('Manual block by administrator', 'wordfence');
 			}
 			$this->do503($secsToGo, $reason); //exits
 		}
@@ -907,8 +907,8 @@ class wfUserIPRange {
 			return (strcmp($ip1N, $ipN) <= 0 && strcmp($ip2N, $ipN) >= 0);
 		}
 		else { //Treat as a literal IP
-			$ip1 = @wfUtils::inet_pton($ip_string);
-			$ip2 = @wfUtils::inet_pton($ip);
+			$ip1 = wfUtils::inet_pton($ip_string);
+			$ip2 = wfUtils::inet_pton($ip);
 			if ($ip1 !== false && $ip1 == $ip2) {
 				return true;
 			}
@@ -1007,10 +1007,15 @@ class wfUserIPRange {
 		$ip_string = $this->getIPString();
 		if (preg_match('/[^0-9a-f:\.\-]/i', $ip_string)) { return false; }
 		list($ip1, $ip2) = explode("-", $ip_string);
-		$ip1N = @wfUtils::inet_pton($ip1);
-		$ip2N = @wfUtils::inet_pton($ip2);
 		
-		if ($ip1N === false || !wfUtils::isValidIP($ip1) || $ip2N === false || !wfUtils::isValidIP($ip2)) {
+		if (!wfUtils::isValidIP($ip1) || !wfUtils::isValidIP($ip2)) {
+			return false;
+		}
+		
+		$ip1N = wfUtils::inet_pton($ip1);
+		$ip2N = wfUtils::inet_pton($ip2);
+		
+		if ($ip1N === false || $ip2N === false) {
 			return false;
 		}
 		
@@ -2057,6 +2062,10 @@ class wfErrorLogHandler {
 		}
 		
 		$path = untrailingslashit($path);
+		if (empty($path)) {
+			return array();
+		}
+		
 		$contents = @scandir($path);
 		if (!is_array($contents)) {
 			return array();

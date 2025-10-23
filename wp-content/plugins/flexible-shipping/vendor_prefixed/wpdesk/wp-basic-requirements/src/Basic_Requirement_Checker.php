@@ -2,15 +2,15 @@
 
 namespace FSVendor;
 
-if (!\interface_exists('FSVendor\\WPDesk_Requirement_Checker')) {
+if (!\interface_exists('FSVendor\WPDesk_Requirement_Checker')) {
     require_once __DIR__ . '/Requirement_Checker.php';
 }
-if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
+if (!\class_exists('FSVendor\WPDesk_Basic_Requirement_Checker')) {
     /**
      * Checks requirements for plugin
      * have to be compatible with PHP 5.3.x
      */
-    class WPDesk_Basic_Requirement_Checker implements \FSVendor\WPDesk_Requirement_Checker
+    class WPDesk_Basic_Requirement_Checker implements WPDesk_Requirement_Checker
     {
         const EXTENSION_NAME_OPENSSL = 'openssl';
         const HOOK_ADMIN_NOTICES_ACTION = 'admin_notices';
@@ -39,6 +39,8 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
         private $min_openssl_version = null;
         /** @var array */
         protected $plugin_require;
+        /** @var array */
+        protected $class_require;
         /** @var bool */
         protected $should_check_plugin_versions = \false;
         /** @var array */
@@ -73,6 +75,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             $this->module_require = array();
             $this->setting_require = array();
             $this->notices = array();
+            $this->class_require = array();
         }
         /**
          * @param string $version
@@ -144,6 +147,20 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             return $this;
         }
         /**
+         * Add a class to require list.
+         *
+         * @param string $class_name       Name of the class.
+         * @param string $plugin_nice_name Nice plugin name for better looks in notice.
+         *
+         * @return $this
+         *
+         */
+        public function add_class_require($class_name, $plugin_nice_name)
+        {
+            $this->class_require[$class_name] = $plugin_nice_name;
+            return $this;
+        }
+        /**
          * @param string $module_name
          * @param string $nice_name Nice module name for better looks in notice
          *
@@ -186,20 +203,21 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
         {
             $notices = array();
             if (!self::is_php_at_least($this->min_php_version)) {
-                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on PHP versions older than %s. Please contact your host and ask them to upgrade.', $this->get_text_domain()), \esc_html($this->plugin_name), $this->min_php_version));
+                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on PHP versions older than %s. Please contact your host and ask them to upgrade.', 'flexible-shipping'), \esc_html($this->plugin_name), $this->min_php_version));
             }
             if (!self::is_wp_at_least($this->min_wp_version)) {
-                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on WordPress versions older than %s. Please update WordPress.', $this->get_text_domain()), \esc_html($this->plugin_name), $this->min_wp_version));
+                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on WordPress versions older than %s. Please update WordPress.', 'flexible-shipping'), \esc_html($this->plugin_name), $this->min_wp_version));
             }
             if ($this->min_wc_version !== null && $this->can_check_plugin_version() && !self::is_wc_at_least($this->min_wc_version)) {
-                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on WooCommerce versions older than %s. Please update WooCommerce.', $this->get_text_domain()), \esc_html($this->plugin_name), $this->min_wc_version));
+                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run on WooCommerce versions older than %s. Please update WooCommerce.', 'flexible-shipping'), \esc_html($this->plugin_name), $this->min_wc_version));
             }
             if ($this->min_openssl_version !== null && !self::is_open_ssl_at_least($this->min_openssl_version)) {
-                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without OpenSSL module version at least %s. Please update OpenSSL module.', $this->get_text_domain()), \esc_html($this->plugin_name), '0x' . \dechex($this->min_openssl_version)));
+                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without OpenSSL module version at least %s. Please update OpenSSL module.', 'flexible-shipping'), \esc_html($this->plugin_name), '0x' . \dechex($this->min_openssl_version)));
             }
             $notices = $this->append_plugin_require_notices($notices);
             $notices = $this->append_module_require_notices($notices);
             $notices = $this->append_settings_require_notices($notices);
+            $notices = $this->append_class_require_notices($notices);
             if ($this->should_check_plugin_versions) {
                 $notices = $this->check_minimum_require_plugins_version_and_append_notices($notices);
             }
@@ -282,7 +300,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             if (\count($required_plugins) > 0) {
                 foreach ($required_plugins as $plugin) {
                     if (isset($plugin['Version']) && \version_compare($plugin['Version'], $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], '<=')) {
-                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%1$s&#8221; plugin requires at least %2$s version of %3$s to work correctly. Please update it to its latest release.', $this->get_text_domain()), \esc_html($this->plugin_name), $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], $plugin['Name']));
+                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%1$s&#8221; plugin requires at least %2$s version of %3$s to work correctly. Please update it to its latest release.', 'flexible-shipping'), \esc_html($this->plugin_name), $plugin[self::PLUGIN_INFO_APPEND_PLUGIN_DATA], $plugin['Name']));
                     }
                 }
             }
@@ -311,7 +329,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
                         return \array_unique($headers);
                     });
                 }
-                if (!\function_exists('get_plugins')) {
+                if (!\function_exists('get_plugins') && !\function_exists('FSVendor\get_plugins')) {
                     require_once \ABSPATH . '/wp-admin/includes/plugin.php';
                 }
                 $plugins = \function_exists('get_plugins') ? \get_plugins() : array();
@@ -388,12 +406,27 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
                     if (isset($plugin_info['repository_url'])) {
                         $notice = $this->prepare_plugin_repository_require_notice($plugin_info);
                     } elseif (!self::is_wp_plugin_active($plugin_name)) {
-                        $notice = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin.', $this->get_text_domain()), \esc_html($this->plugin_name), \esc_html(\basename($plugin_info[self::PLUGIN_INFO_KEY_NICE_NAME])), \esc_html(\basename($plugin_info[self::PLUGIN_INFO_KEY_NICE_NAME]))));
+                        $notice = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin.', 'flexible-shipping'), \esc_html($this->plugin_name), \esc_html(\basename($plugin_info[self::PLUGIN_INFO_KEY_NICE_NAME])), \esc_html(\basename($plugin_info[self::PLUGIN_INFO_KEY_NICE_NAME]))));
                     }
                     if ($notice !== null) {
                         $notices[] = $notice;
                     }
                 }
+            }
+            return $notices;
+        }
+        /**
+         * @param array $notices
+         *
+         * @return array
+         */
+        private function append_class_require_notices($notices)
+        {
+            foreach ($this->class_require as $class_name => $plugin_nice_name) {
+                if (\class_exists($class_name)) {
+                    continue;
+                }
+                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin.', 'flexible-shipping'), \esc_html($this->plugin_name), \esc_html($plugin_nice_name), \esc_html($plugin_nice_name)));
             }
             return $notices;
         }
@@ -406,23 +439,11 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
          */
         private function prepare_plugin_repository_install_url($plugin_info)
         {
-            $slug = \basename($plugin_info[self::PLUGIN_INFO_KEY_NAME]);
+            $slug = \basename(\explode('/', $plugin_info[self::PLUGIN_INFO_KEY_NAME])[0]);
             $install_url = \self_admin_url('update.php?action=install-plugin&plugin=' . $slug);
             if (\function_exists('wp_nonce_url') && \function_exists('wp_create_nonce')) {
                 $install_url = \wp_nonce_url($install_url, 'install-plugin_' . $slug);
             }
-            \add_filter('plugins_api', function ($api, $action, $args) use($plugin_info, $slug) {
-                if ('plugin_information' !== $action || \false !== $api || !isset($args->slug) || $slug !== $args->slug) {
-                    return $api;
-                }
-                $api = new \stdClass();
-                $api->name = $plugin_info['nice_name'];
-                // self in closures requires 5.4
-                $api->version = '';
-                $api->download_link = \esc_url($plugin_info['repository_url']);
-                // self in closures requires 5.4
-                return $api;
-            }, 10, 3);
             return $install_url;
         }
         /**
@@ -437,13 +458,13 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             if (!self::is_wp_plugin_active($name)) {
                 if (!self::is_wp_plugin_installed($name, $this->use_transients)) {
                     $install_url = $this->prepare_plugin_repository_install_url($plugin_info);
-                    return $this->prepare_notice_message(\sprintf(\wp_kses(\__('The &#8220;%s&#8221; plugin requires free %s plugin. <a href="%s">Install %s</a>', $this->get_text_domain()), array('a' => array('href' => array()))), $this->plugin_name, $nice_name, \esc_url($install_url), $nice_name));
+                    return $this->prepare_notice_message(\sprintf(\wp_kses(\__('The &#8220;%s&#8221; plugin requires free %s plugin. <a href="%s">Install %s</a>', 'flexible-shipping'), array('a' => array('href' => array()))), $this->plugin_name, $nice_name, \esc_url($install_url), $nice_name));
                 }
                 $activate_url = 'plugins.php?action=activate&plugin=' . \urlencode($plugin_info[self::PLUGIN_INFO_KEY_NAME]) . '&plugin_status=all&paged=1&s';
                 if (\function_exists('wp_create_nonce')) {
                     $activate_url .= '&_wpnonce=' . \urlencode(\wp_create_nonce('activate-plugin_' . $name));
                 }
-                return $this->prepare_notice_message(\sprintf(\wp_kses(\__('The &#8220;%s&#8221; plugin requires activating %s plugin. <a href="%s">Activate %s</a>', $this->get_text_domain()), array('a' => array('href' => array()))), $this->plugin_name, $nice_name, \esc_url(\admin_url($activate_url)), $nice_name));
+                return $this->prepare_notice_message(\sprintf(\wp_kses(\__('The &#8220;%s&#8221; plugin requires activating %s plugin. <a href="%s">Activate %s</a>', 'flexible-shipping'), array('a' => array('href' => array()))), $this->plugin_name, $nice_name, \esc_url(\admin_url($activate_url)), $nice_name));
             }
             return null;
         }
@@ -485,7 +506,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             if (\count($this->module_require) > 0) {
                 foreach ($this->module_require as $module_name => $nice_module_name) {
                     if (!self::is_module_active($module_name)) {
-                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s PHP module installed. Please contact your host and ask them to install %s.', $this->get_text_domain()), \esc_html($this->plugin_name), \esc_html(\basename($nice_module_name)), \esc_html(\basename($nice_module_name))));
+                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s PHP module installed. Please contact your host and ask them to install %s.', 'flexible-shipping'), \esc_html($this->plugin_name), \esc_html(\basename($nice_module_name)), \esc_html(\basename($nice_module_name))));
                     }
                 }
             }
@@ -510,7 +531,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
             if (\count($this->setting_require) > 0) {
                 foreach ($this->setting_require as $setting => $value) {
                     if (!self::is_setting_set($setting, $value)) {
-                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s PHP setting set to %s. Please contact your host and ask them to set %s.', $this->get_text_domain()), \esc_html($this->plugin_name), \esc_html(\basename($setting)), \esc_html(\basename($value)), \esc_html(\basename($setting))));
+                        $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s PHP setting set to %s. Please contact your host and ask them to set %s.', 'flexible-shipping'), \esc_html($this->plugin_name), \esc_html(\basename($setting)), \esc_html(\basename($value)), \esc_html(\basename($setting))));
                     }
                 }
             }
@@ -595,7 +616,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
         public function handle_render_notices_action()
         {
             foreach ($this->notices as $notice) {
-                echo $notice;
+                echo \wp_kses_post($notice);
             }
         }
     }

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YITH Framework\n"
 "Report-Msgid-Bugs-To: YITH <plugins@yithemes.com>\n"
-"POT-Creation-Date: 2024-05-10 13:24:20+00:00\n"
+"POT-Creation-Date: 2025-07-07 05:33:17+00:00\n"
 "PO-Revision-Date: 2024-02-15 12:07:20+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 "¿Estás seguro de que quieres mover a la papelera los elementos seleccionados?"
 
 #: includes/class-yit-assets.php:239 includes/class-yit-assets.php:243
-#: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
+#: templates/sysinfo/tabs/main.php:54 templates/sysinfo/tabs/main.php:58
 #: yit-functions.php:1995 yit-functions.php:2013
 msgid "No"
 msgstr "No"
@@ -93,16 +93,16 @@ msgid "There was an error with your request; please try again later."
 msgstr ""
 "Se ha producido un error en tu solicitud; inténtalo de nuevo más tarde."
 
-#: includes/class-yit-plugin-panel-woocommerce.php:501
+#: includes/class-yit-plugin-panel-woocommerce.php:500
 #: includes/class-yit-plugin-panel.php:1562
 msgid "Options saved!"
 msgstr "¡Opciones guardadas!"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:555
+#: includes/class-yit-plugin-panel-woocommerce.php:557
 msgid "Options reset correctly!"
 msgstr "¡Opciones restablecidas correctamente!"
 
-#: includes/class-yit-plugin-panel-woocommerce.php:605
+#: includes/class-yit-plugin-panel-woocommerce.php:607
 msgid "The changes you have made will be lost if you leave this page."
 msgstr "Los cambios que has hecho se perderán si abandonas esta página."
 
@@ -287,78 +287,92 @@ msgstr "Muestra más detalles"
 msgid "Reset filters"
 msgstr "Restablecer filtros"
 
-#: includes/class-yith-system-status.php:107
+#: includes/class-yith-system-status.php:134
 msgid "WordPress Version"
 msgstr "Versión de WordPress"
 
-#: includes/class-yith-system-status.php:108
+#: includes/class-yith-system-status.php:135
 msgid "WooCommerce Version"
 msgstr "Versión de WooCommerce"
 
-#: includes/class-yith-system-status.php:109
+#: includes/class-yith-system-status.php:136
 msgid "Available Memory"
 msgstr "Memoria disponible"
 
-#: includes/class-yith-system-status.php:110
+#: includes/class-yith-system-status.php:137
 msgid "PHP Version"
 msgstr "Versión PHP"
 
-#: includes/class-yith-system-status.php:111
+#: includes/class-yith-system-status.php:138
 msgid "TLS Version"
 msgstr "Versión TLS"
 
-#: includes/class-yith-system-status.php:112
+#: includes/class-yith-system-status.php:139
 msgid "WordPress Cron"
 msgstr "Cron de WordPress"
 
-#: includes/class-yith-system-status.php:113
+#: includes/class-yith-system-status.php:140
 msgid "SimpleXML"
 msgstr "SimpleXML"
 
-#: includes/class-yith-system-status.php:114
+#: includes/class-yith-system-status.php:141
 msgid "MultiByte String"
 msgstr "Cadena MultiByte"
 
-#: includes/class-yith-system-status.php:115
+#: includes/class-yith-system-status.php:142
 msgid "ImageMagick Version"
 msgstr "Versión ImageMagick"
 
-#: includes/class-yith-system-status.php:116
+#: includes/class-yith-system-status.php:143
 msgid "GD Library"
 msgstr "Biblioteca GD"
 
-#: includes/class-yith-system-status.php:117
+#: includes/class-yith-system-status.php:144
 msgid "Iconv Module"
 msgstr "Módulo Iconv"
 
-#: includes/class-yith-system-status.php:118
+#: includes/class-yith-system-status.php:145
 msgid "OPCache Save Comments"
 msgstr "Guardar comentarios OPCache"
 
-#: includes/class-yith-system-status.php:119
+#: includes/class-yith-system-status.php:146
 msgid "URL FOpen"
 msgstr "URL FOpen"
 
-#: includes/class-yith-system-status.php:136
-#: includes/class-yith-system-status.php:137
-#: templates/sysinfo/system-information-panel.php:11
+#: includes/class-yith-system-status.php:161
+#: includes/class-yith-system-status.php:162
+#: includes/class-yith-system-status.php:187
 msgid "System Status"
 msgstr "Estado del sistema"
 
-#: includes/class-yith-system-status.php:177
+#: includes/class-yith-system-status.php:191
+msgid "PHPInfo"
+msgstr "Información PHP"
+
+#: includes/class-yith-system-status.php:195
+#, fuzzy
+msgid "Database"
+msgstr "Información de la base de datos"
+
+#: includes/class-yith-system-status.php:199
+#: templates/sysinfo/tabs/error-log.php:108
+msgid "Log Files"
+msgstr "Archivos de registro"
+
+#: includes/class-yith-system-status.php:217
 msgid "YITH Plugins"
 msgstr "YITH Plugins"
 
-#: includes/class-yith-system-status.php:185
+#: includes/class-yith-system-status.php:225
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: includes/class-yith-system-status.php:332
+#: includes/class-yith-system-status.php:368
 msgid "Warning!"
 msgstr "¡Atención!"
 
 #. translators: %1$s open link tag, %2$s open link tag
-#: includes/class-yith-system-status.php:336
+#: includes/class-yith-system-status.php:372
 msgid ""
 "The system check has detected some compatibility issues on your installation."
 "%1$sClick here%2$s to know more"
@@ -366,34 +380,34 @@ msgstr ""
 "La comprobación del sistema ha detectado algunos problemas de compatibilidad "
 "en tu instalación. %1$sHaz clic aquí%2$s para saber más"
 
-#: includes/class-yith-system-status.php:482
+#: includes/class-yith-system-status.php:518
 msgid "Enabled"
 msgstr "Activado"
 
-#: includes/class-yith-system-status.php:482
+#: includes/class-yith-system-status.php:518
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: includes/class-yith-system-status.php:487
+#: includes/class-yith-system-status.php:522
 msgid "N/A"
 msgstr "N/D"
 
 #. translators: %1$s plugin name, %2$s requirement name
-#: includes/class-yith-system-status.php:513
+#: includes/class-yith-system-status.php:543
 msgid "%1$s needs %2$s enabled"
 msgstr "%1$s necesita %2$s activado"
 
 #. translators: %1$s plugin name, %2$s required memory amount
-#: includes/class-yith-system-status.php:516
+#: includes/class-yith-system-status.php:546
 msgid "%1$s needs at least %2$s of available memory"
 msgstr "%1$s necesita al menos %2$s de memoria disponible"
 
 #. translators: %1$s plugin name, %2$s version number
-#: includes/class-yith-system-status.php:519
+#: includes/class-yith-system-status.php:549
 msgid "%1$s needs at least %2$s version"
 msgstr "%1$s necesita al menos la versión %2$s"
 
-#: includes/class-yith-system-status.php:542
+#: includes/class-yith-system-status.php:555
 msgid ""
 "Update it to the latest version in order to benefit of all new features and "
 "security updates."
@@ -401,27 +415,27 @@ msgstr ""
 "Actualízalo a la última versión para beneficiarte de todas las "
 "características y actualizaciones de seguridad."
 
-#: includes/class-yith-system-status.php:546
-#: includes/class-yith-system-status.php:552
+#: includes/class-yith-system-status.php:559
+#: includes/class-yith-system-status.php:565
 msgid "Contact your hosting company in order to update it."
 msgstr "Ponte en contacto con tu empresa de hosting para actualizarlo."
 
-#: includes/class-yith-system-status.php:550
+#: includes/class-yith-system-status.php:563
 msgid "Contact your hosting company in order to install it."
 msgstr "Ponte en contacto con tu empresa de hosting para instalarlo."
 
 #. translators: %1$s code, %2$s file name
-#: includes/class-yith-system-status.php:557
+#: includes/class-yith-system-status.php:570
 msgid "Remove %1$s from %2$s file"
 msgstr "Eliminar %1$s desde el archivo %2$s "
 
-#: includes/class-yith-system-status.php:565
+#: includes/class-yith-system-status.php:578
 msgid "Contact your hosting company in order to enable it."
 msgstr "Contacta con tu empresa de hosting para activarlo."
 
 #. translators: %1$s opening link tag, %2$s closing link tag
-#: includes/class-yith-system-status.php:569
-#: includes/class-yith-system-status.php:591
+#: includes/class-yith-system-status.php:582
+#: includes/class-yith-system-status.php:616
 msgid ""
 "Read more %1$shere%2$s or contact your hosting company in order to increase "
 "it."
@@ -429,7 +443,7 @@ msgstr ""
 "Lee más %1$saquí%2$s o contacta a tu empresa de hosting para incrementarlo."
 
 #. translators: %s recommended memory amount
-#: includes/class-yith-system-status.php:588
+#: includes/class-yith-system-status.php:613
 msgid ""
 "For optimal functioning of our plugins, we suggest setting at least %s of "
 "available memory"
@@ -438,7 +452,7 @@ msgstr ""
 "memoria disponible"
 
 #. translators: %1$s TLS label, %2$s cURL label
-#: includes/class-yith-system-status.php:596
+#: includes/class-yith-system-status.php:621
 msgid ""
 "The system check cannot determine which %1$s version is installed because "
 "%2$s module is disabled. Ask your hosting company to enable it."
@@ -448,7 +462,7 @@ msgstr ""
 "alojamiento que lo active."
 
 #. translators: %1$s TLS label
-#: includes/class-yith-system-status.php:599
+#: includes/class-yith-system-status.php:624
 msgid ""
 "The system check cannot determine which %1$s version is installed due to a "
 "connection issue between your site and our server."
@@ -628,20 +642,21 @@ msgstr "ayúdanos dejando una buena valoración"
 msgid ":) Thanks!"
 msgstr ":) ¡Gracias!"
 
-#: templates/panel/v2/panel-content-page.php:57
+#: templates/panel/v2/panel-content-page.php:58
 #: templates/panel/v2/woocommerce/woocommerce-form.php:69
 #: templates/panel/woocommerce/woocommerce-form.php:27
 #: templates/panel/woocommerce/woocommerce-form.php:31
 msgid "Save Options"
 msgstr "Guardar Opciones"
 
-#: templates/panel/v2/panel-content-page.php:58
+#: templates/panel/v2/panel-content-page.php:59
 #: templates/panel/v2/woocommerce/woocommerce-form.php:70
 #: templates/panel/woocommerce/woocommerce-form.php:41
 msgid "Reset Defaults"
 msgstr "Restablecer valores predeterminados"
 
 #: templates/panel/v2/panel-nav.php:36
+#: templates/sysinfo/system-information-panel.php:46
 msgid "Collapse"
 msgstr "Cerrar"
 
@@ -688,18 +703,48 @@ msgstr "Comienza con estos %s pasos:"
 msgid "Options Saved"
 msgstr "Opciones guardadas"
 
-#: templates/sysinfo/system-information-panel.php:12
-msgid "PHPInfo"
-msgstr "Información PHP"
-
-#: templates/sysinfo/system-information-panel.php:13
-#: templates/sysinfo/tabs/error-log.php:26
-msgid "Log Files"
-msgstr "Archivos de registro"
-
-#: templates/sysinfo/system-information-panel.php:28
+#: templates/sysinfo/system-information-panel.php:27
 msgid "YITH System Information"
 msgstr "Información de Sistema de YITH"
+
+#. Translators: %s: Codex link.
+#: templates/sysinfo/tabs/db-info.php:19
+msgid "WordPress recommends a minimum MySQL version of 5.6. See: %s"
+msgstr "WordPress recomienda como versión mínima para MySQL la 5.6. Ver: %s"
+
+#: templates/sysinfo/tabs/db-info.php:19
+msgid "WordPress requirements"
+msgstr "Requerimientos de WordPress"
+
+#: templates/sysinfo/tabs/db-info.php:24
+msgid "Database Info"
+msgstr "Información de la base de datos"
+
+#: templates/sysinfo/tabs/db-info.php:28
+msgid "MySQL version"
+msgstr "Versión de MySQL"
+
+#: templates/sysinfo/tabs/db-info.php:34
+msgid "Total Database Size"
+msgstr "Tamaño total de la base de datos:"
+
+#: templates/sysinfo/tabs/db-info.php:38
+msgid "Database Data Size"
+msgstr "Tamaño de los datos en la base de datos:"
+
+#: templates/sysinfo/tabs/db-info.php:42
+msgid "Database Index Size"
+msgstr "Tamaño del índice en la base de datos:"
+
+#: templates/sysinfo/tabs/db-info.php:46
+msgid "Database Free Size"
+msgstr "Espacio libre en la base de datos:"
+
+#. Translators: %1$f: Table size, %2$f: Index size, %3$f: Free size, %4$s
+#. Engine.
+#: templates/sysinfo/tabs/db-info.php:57
+msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
+msgstr "Datos: %1$.2fMB | Índice: %2$.2fMB | Libre: %3$.2fMB | Motor: %4$s"
 
 #: templates/sysinfo/tabs/error-log.php:13
 msgid "WP debug.log file"
@@ -709,16 +754,16 @@ msgstr "Archivo WP debug.log"
 msgid "PHP error_log file"
 msgstr "Archivo PHP error_log"
 
-#: templates/sysinfo/tabs/error-log.php:61
+#: templates/sysinfo/tabs/error-log.php:48
 msgid "Download"
 msgstr "Descargar"
 
-#: templates/sysinfo/tabs/error-log.php:74
+#: templates/sysinfo/tabs/error-log.php:59
 msgid "The file size exceeds 8 megabytes so it must be downloaded"
 msgstr "El archivo excede los 8 megabytes por lo que debe ser descargado"
 
 #. translators: %s file name.
-#: templates/sysinfo/tabs/error-log.php:98
+#: templates/sysinfo/tabs/error-log.php:86
 msgid ""
 "No Log file available. Enable the WordPress debug by adding this in the %s "
 "file of your installation"
@@ -726,89 +771,50 @@ msgstr ""
 "No hay archivo de registro disponible. Activa la depuración de WordPress "
 "añadiendo este código en el archivo %s de tu instalación"
 
-#: templates/sysinfo/tabs/error-log.php:107
+#: templates/sysinfo/tabs/error-log.php:95
 msgid "Copied!"
 msgstr "¡Copiado!"
 
-#: templates/sysinfo/tabs/error-log.php:107
+#: templates/sysinfo/tabs/error-log.php:95
 msgid "Copy Code"
 msgstr "Copiar código"
 
-#: templates/sysinfo/tabs/main.php:21
+#: templates/sysinfo/tabs/main.php:41
 msgid "Site Info"
 msgstr "Información del sitio"
 
-#: templates/sysinfo/tabs/main.php:26
+#: templates/sysinfo/tabs/main.php:45
 msgid "Site URL"
 msgstr "URL del sitio"
 
-#: templates/sysinfo/tabs/main.php:35
+#: templates/sysinfo/tabs/main.php:49
 msgid "Output IP Address"
 msgstr "Dirección IP de salida"
 
-#: templates/sysinfo/tabs/main.php:43
+#: templates/sysinfo/tabs/main.php:53
 msgid "Defined WP_CACHE"
 msgstr "WP_CACHE definido"
 
-#: templates/sysinfo/tabs/main.php:46 templates/sysinfo/tabs/main.php:54
+#: templates/sysinfo/tabs/main.php:54 templates/sysinfo/tabs/main.php:58
 msgid "Yes"
 msgstr "Sí"
 
-#: templates/sysinfo/tabs/main.php:51
+#: templates/sysinfo/tabs/main.php:57
 msgid "External object cache"
 msgstr "Caché objeto externo"
 
-#: templates/sysinfo/tabs/main.php:59
+#: templates/sysinfo/tabs/main.php:61
 msgid "YITH Plugin Framework Version"
 msgstr "Versión del YITH Plugin Framework "
 
 #. translators: %s is the name of the plugin that is loading the framework.
-#: templates/sysinfo/tabs/main.php:68
+#: templates/sysinfo/tabs/main.php:66
 msgid "loaded by %s"
 msgstr "cargado por %s"
 
-#: templates/sysinfo/tabs/main.php:79
+#: templates/sysinfo/tabs/main.php:72
 msgid "Plugins Requirements"
 msgstr "Requerimientos de los plugins"
-
-#: templates/sysinfo/tabs/main.php:114
-msgid "Database Info"
-msgstr "Información de la base de datos"
-
-#: templates/sysinfo/tabs/main.php:119
-msgid "MySQL version"
-msgstr "Versión de MySQL"
-
-#. Translators: %s: Codex link.
-#: templates/sysinfo/tabs/main.php:129
-msgid "WordPress recommends a minimum MySQL version of 5.6. See: %s"
-msgstr "WordPress recomienda como versión mínima para MySQL la 5.6. Ver: %s"
-
-#: templates/sysinfo/tabs/main.php:129
-msgid "WordPress requirements"
-msgstr "Requerimientos de WordPress"
-
-#: templates/sysinfo/tabs/main.php:136
-msgid "Total Database Size"
-msgstr "Tamaño total de la base de datos:"
-
-#: templates/sysinfo/tabs/main.php:144
-msgid "Database Data Size"
-msgstr "Tamaño de los datos en la base de datos:"
-
-#: templates/sysinfo/tabs/main.php:152
-msgid "Database Index Size"
-msgstr "Tamaño del índice en la base de datos:"
-
-#: templates/sysinfo/tabs/main.php:160
-msgid "Database Free Size"
-msgstr "Espacio libre en la base de datos:"
-
-#. Translators: %1$f: Table size, %2$f: Index size, %3$f: Free size, %4$s
-#. Engine.
-#: templates/sysinfo/tabs/main.php:174
-msgid "Data: %1$.2fMB | Index: %2$.2fMB | Free: %3$.2fMB | Engine: %4$s"
-msgstr "Datos: %1$.2fMB | Índice: %2$.2fMB | Libre: %3$.2fMB | Motor: %4$s"
 
 #. translators: %s is the title of the post object.
 #: yit-functions.php:1925
@@ -824,12 +830,12 @@ msgstr "¿Estás seguro de que quieres borrar \"%s\"?"
 msgid "Further actions"
 msgstr "Otras acciones"
 
-#: yit-plugin.php:242
+#: yit-plugin.php:243
 msgid "License"
 msgstr "Licencia"
 
 #. translators: 1. Plugin(s) name(s).
-#: yit-plugin.php:281
+#: yit-plugin.php:282
 msgid ""
 "%s was deactivated as you're running an higher tier version of the same "
 "plugin."
@@ -1296,27 +1302,27 @@ msgctxt "Term action"
 msgid "Delete"
 msgstr "Borrar"
 
-#: yit-plugin.php:85
+#: yit-plugin.php:86
 msgctxt "Plugin Row Meta"
 msgid "Live Demo"
 msgstr "Demostración en vivo"
 
-#: yit-plugin.php:89
+#: yit-plugin.php:90
 msgctxt "Plugin Row Meta"
 msgid "Documentation"
 msgstr "Documentación"
 
-#: yit-plugin.php:93
+#: yit-plugin.php:94
 msgctxt "Plugin Row Meta"
 msgid "Support"
 msgstr "Soporte"
 
-#: yit-plugin.php:97
+#: yit-plugin.php:98
 msgctxt "Plugin Row Meta"
 msgid "Premium version"
 msgstr "Versión premium"
 
-#: yit-plugin.php:238
+#: yit-plugin.php:239
 msgctxt "Action links"
 msgid "Settings"
 msgstr "Ajustes"

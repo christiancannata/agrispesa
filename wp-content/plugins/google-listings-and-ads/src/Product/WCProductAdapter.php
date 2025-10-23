@@ -109,6 +109,7 @@ class WCProductAdapter extends GoogleProduct implements Validatable {
 		$this->map_woocommerce_product();
 		$this->map_attribute_mapping_rules( $mapping_rules );
 		$this->map_gla_attributes( $gla_attributes );
+		$this->map_gtin();
 
 		// Allow users to override the product's attributes using a WordPress filter.
 		$this->override_attributes();
@@ -157,7 +158,7 @@ class WCProductAdapter extends GoogleProduct implements Validatable {
 		 * @param WCProductAdapter $this       The Adapted Google product object. All WooCommerce product properties
 		 *                                     are already mapped to this object.
 		 *
-		 * @see \Google\Service\ShoppingContent\Product for the list of product properties that can be overriden.
+		 * @see \Google\Service\ShoppingContent\Product for the list of product properties that can be overridden.
 		 * @see WCProductAdapter::map_gla_attributes for the docuementation of `woocommerce_gla_product_attribute_value_{$attribute_id}`
 		 *                                           filter, which allows modifying some attributes such as GTIN, MPN, etc.
 		 *
@@ -206,7 +207,7 @@ class WCProductAdapter extends GoogleProduct implements Validatable {
 				sprintf(
 					'Product category (ID: %s): %s.',
 					$base_product_id,
-					json_encode( $google_product_types )
+					wp_json_encode( $google_product_types )
 				),
 				__METHOD__
 			);
@@ -216,7 +217,7 @@ class WCProductAdapter extends GoogleProduct implements Validatable {
 		return $this;
 	}
 	/**
-	 * Covert WooCommerce product categories to product_type, which follows Google requirements:
+	 * Convert WooCommerce product categories to product_type, which follows Google requirements:
 	 * https://support.google.com/merchants/answer/6324406?hl=en#
 	 *
 	 * @param int[] $category_ids
@@ -922,6 +923,29 @@ class WCProductAdapter extends GoogleProduct implements Validatable {
 		// Size
 		if ( ! empty( $attributes['size'] ) ) {
 			$this->setSizes( [ $attributes['size'] ] );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Map the WooCommerce core global unique ID (GTIN) value if it's available.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return $this
+	 */
+	protected function map_gtin(): WCProductAdapter {
+		// compatibility-code "WC < 9.2" -- Core global unique ID field was added in 9.2
+		if ( ! method_exists( $this->wc_product, 'get_global_unique_id' ) ) {
+			return $this;
+		}
+
+		// avoid dashes and other unsupported format
+		$global_unique_id = preg_replace( '/[^0-9]/', '', $this->wc_product->get_global_unique_id() );
+
+		if ( ! empty( $global_unique_id ) ) {
+			$this->setGtin( $global_unique_id );
 		}
 
 		return $this;

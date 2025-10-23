@@ -102,7 +102,7 @@ jQuery(function($) {
 		}
 
 		$link = $item.children('a').first();
-		$flag = $link.find('.ws-nmh-new-menu-flag');
+		$flag = $link.find('.ws-nmh-new-menu-flag').add($item.children('.ws-nmh-new-menu-flag')).first();
 
 		$item.removeClass('ws-nmh-is-new-menu');
 		$link.removeClass('ws-nmh-is-new-menu');

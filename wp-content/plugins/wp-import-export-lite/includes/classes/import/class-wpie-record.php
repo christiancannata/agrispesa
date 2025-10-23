@@ -6,9 +6,7 @@ namespace wpie\import\record;
 use wpie\lib\xml\xml2array;
 use XMLReader;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_Record {
 

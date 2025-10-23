@@ -2,14 +2,14 @@
 
 namespace FSVendor\WPDesk\Persistence;
 
-use Psr\Container\ContainerInterface;
+use FSVendor\Psr\Container\ContainerInterface;
 /**
  * Container that you can use to save some values.
  * When class require only read capabilities use ContainerInterface. When requires to write use this interface.
  *
  * @package WPDesk\Persistence
  */
-interface PersistentContainer extends \Psr\Container\ContainerInterface
+interface PersistentContainer extends ContainerInterface
 {
     /**
      * Set value for a given key.

@@ -11,7 +11,7 @@
 namespace RankMath\Analytics\Workflow;
 
 use RankMath\Traits\Hooker;
-use function as_enqueue_async_action;
+use RankMath\Helpers\Schedule;
 use function as_unschedule_all_actions;
 
 defined( 'ABSPATH' ) || exit;
@@ -90,36 +90,36 @@ class Workflow {
 	/**
 	 * Service workflow
 	 *
-	 * @param string  $action Action to perform.
-	 * @param integer $days   Number of days to fetch from past.
-	 * @param string  $prev   Previous saved value.
-	 * @param string  $new    New posted value.
+	 * @param string  $action    Action to perform.
+	 * @param integer $days      Number of days to fetch from past.
+	 * @param string  $prev      Previous saved value.
+	 * @param string  $new_value New posted value.
 	 */
-	public function start_workflow( $action, $days = 0, $prev = null, $new = null ) {
+	public function start_workflow( $action, $days = 0, $prev = null, $new_value = null ) {
 		do_action(
 			'rank_math/analytics/workflow/' . $action,
 			$days,
 			$prev,
-			$new
+			$new_value
 		);
 	}
 
 	/**
 	 * Service workflow
 	 *
-	 * @param string  $action Action to perform.
-	 * @param integer $days   Number of days to fetch from past.
-	 * @param string  $prev   Previous saved value.
-	 * @param string  $new    New posted value.
+	 * @param string  $action    Action to perform.
+	 * @param integer $days      Number of days to fetch from past.
+	 * @param string  $prev      Previous saved value.
+	 * @param string  $new_value New posted value.
 	 */
-	public static function do_workflow( $action, $days = 0, $prev = null, $new = null ) {
-		as_enqueue_async_action(
+	public static function do_workflow( $action, $days = 0, $prev = null, $new_value = null ) {
+		Schedule::async_action(
 			'rank_math/analytics/workflow',
 			[
 				$action,
 				$days,
 				$prev,
-				$new,
+				$new_value,
 			],
 			'rank-math'
 		);
@@ -139,7 +139,6 @@ class Workflow {
 		as_unschedule_all_actions( 'rank_math/analytics/get_inspections_data' );
 
 		do_action( 'rank_math/analytics/clear_cache' );
-
 	}
 
 	/**
@@ -149,7 +148,7 @@ class Workflow {
 	 */
 	public static function add_clear_cache( $time ) {
 		as_unschedule_all_actions( 'rank_math/analytics/clear_cache' );
-		as_schedule_single_action(
+		Schedule::single_action(
 			$time,
 			'rank_math/analytics/clear_cache',
 			[],

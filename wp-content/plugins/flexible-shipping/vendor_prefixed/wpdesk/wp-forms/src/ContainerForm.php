@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms;
 
-use Psr\Container\ContainerInterface;
+use FSVendor\Psr\Container\ContainerInterface;
 use FSVendor\WPDesk\Persistence\PersistentContainer;
 /**
  * Persistent container support for forms.
@@ -24,5 +24,5 @@ interface ContainerForm
      *
      * @return void
      */
-    public function put_data(\FSVendor\WPDesk\Persistence\PersistentContainer $container);
+    public function put_data(PersistentContainer $container);
 }

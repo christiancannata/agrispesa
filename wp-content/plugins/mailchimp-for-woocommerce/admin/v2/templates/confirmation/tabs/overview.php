@@ -26,8 +26,10 @@ $mailchimp_total_subscribers   = 0;
 $mailchimp_total_unsubscribed  = 0;
 $mailchimp_total_transactional = 0;
 
-$last_updated_time = get_option( 'mailchimp-woocommerce-resource-last-updated' );
-$sync_started_at   = get_option( 'mailchimp-woocommerce-sync.started_at' );
+$customer_count = mailchimp_get_customer_lookup_count();
+
+$last_updated_time = \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-resource-last-updated' );
+$sync_started_at   = \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.started_at' );
 
 if ( ! empty( $sync_started_at ) ) {
 	$sync_started_at = mailchimp_date_local( $sync_started_at );
@@ -35,7 +37,7 @@ if ( ! empty( $sync_started_at ) ) {
 	$sync_started_at = new DateTime();
 }
 
-$sync_completed_at = get_option( 'mailchimp-woocommerce-sync.completed_at' );
+$sync_completed_at = \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-sync.completed_at' );
 
 if ( ! empty( $sync_completed_at ) ) {
 	$sync_completed_at = mailchimp_date_local( $sync_completed_at );
@@ -77,6 +79,7 @@ if ( $store ) {
     }
     try {
         $mailchimp_total_customers = $mailchimp_api->getCustomerCount($store_id);
+        if ($mailchimp_total_customers > $customer_count) $mailchimp_total_customers = $customer_count;
     } catch (Exception $e) {
 
     }
@@ -177,7 +180,7 @@ if ( $store ) {
                 <div class="sync-contacts">
                     <div class="sync-number">
                         <span class="sync-number-finished">
-                            <?php echo $mailchimp_total_customers; ?>
+                            <?php echo number_format($mailchimp_total_customers); ?>
                         </span>
                     </div>
                     <div class="sync-text">
@@ -193,7 +196,9 @@ if ( $store ) {
                 <div class="sync-orders">
                     <div class="sync-number">
                         <span class="sync-number-finished">
-                            <?php echo $mailchimp_total_orders; ?>
+                            <?php
+                            echo number_format($mailchimp_total_orders);
+                            ?>
                         </span>
                     </div>
                     <div class="sync-text">
@@ -209,7 +214,7 @@ if ( $store ) {
                 <div class="sync-promo-codes">
                     <div class="sync-number">
                         <span class="sync-number-finished">
-                            <?php echo $mailchimp_total_promo_rules; ?>
+                            <?php echo number_format($mailchimp_total_promo_rules); ?>
                         </span>
                     </div>
                     <div class="sync-text">
@@ -225,7 +230,7 @@ if ( $store ) {
                 <div class="sync-products">
                 <div class="sync-number">
                     <span class="sync-number-finished">
-                        <?php echo $mailchimp_total_products; ?>
+                        <?php echo number_format($mailchimp_total_products); ?>
                     </span>
                 </div>
                     <div class="sync-text">
@@ -293,7 +298,7 @@ if ( $store ) {
                     <p>
                         <?php esc_html_e('Get started with flexible templates, drag-and-drop design, and our built-in, expert advice. AI-assisted tools can help generate and optimize your content.', 'mailchimp-for-woocommerce' ); ?>
                     </p>
-                    <a href="https://admin.mailchimp.com/campaigns/#/create-campaign" data-mc-event="recommendation_2" class="mc-wc-btn mc-wc-btn-primary no-linear-gradient js-mailchimp-woocommerce-send-event"  target="_blank"><?php esc_html_e('Create your first email', 'mailchimp-for-woocommerce' ); ?></a>
+                    <a href="https://admin.mailchimp.com/campaigns/#/create-campaign" data-mc-event="recommendation_3" class="mc-wc-btn mc-wc-btn-primary no-linear-gradient js-mailchimp-woocommerce-send-event"  target="_blank"><?php esc_html_e('Create your first email', 'mailchimp-for-woocommerce' ); ?></a>
                 </div>
                 <div class="mc-wc-tab-content-blogs-image">
                     <img src="<?php echo esc_attr( plugin_dir_url( __FILE__ ) . '../../../assets/images/blog-image-3.png' ); ?>" alt="">

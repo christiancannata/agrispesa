@@ -7,7 +7,7 @@ use YahnisElsts\AdminMenuEditor\Customizable\Storage\StorageInterface;
 
 class UserDefinedStruct extends AbstractStructSetting {
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		parent::__construct($id, $store, $params);
 
 		if ( isset($params['childGenerator']) && is_callable($params['childGenerator']) ) {

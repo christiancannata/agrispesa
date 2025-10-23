@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('ABSPATH')) {
-    die(__("Can't load this file directly", 'wp-import-export-lite'));
-}
+defined( 'ABSPATH' ) || exit;
 
 if (!class_exists("WP_Term_Query")) {
 

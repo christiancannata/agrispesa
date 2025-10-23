@@ -14,7 +14,7 @@ namespace FSVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Orders')) {
+if (!\class_exists('FSVendor\WPDesk_Tracker_Data_Provider_Orders')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Orders
      */

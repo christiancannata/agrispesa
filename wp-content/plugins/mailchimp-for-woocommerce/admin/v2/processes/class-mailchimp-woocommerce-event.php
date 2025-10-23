@@ -31,6 +31,7 @@ class Mailchimp_Woocommerce_Event
     protected $login_id = null;
     protected $submitted_data = null;
     protected $entrypoint = null;
+    protected $anonymous_id = null;
 
     public function __construct($mailchimp_user_id = null, $mailchimp_login_id = null)
     {
@@ -49,26 +50,24 @@ class Mailchimp_Woocommerce_Event
         return array_key_exists($event, $events) ? $events[$event] : null;
     }
 
+
     /**
      * @param string $event
      * @param DateTime|null $date
+     * @param bool $test
      * @return array|mixed|null
      */
-    public static function track(string $event, \DateTime $date = null)
+    public static function track(string $event, \DateTime $date = null, $test = false)
     {
-        if (static::$prevent) {
-            return null;
-        }
         if (!($data = static::find($event)) || !is_array($data) || empty($data)) {
-            mailchimp_debug('mailchimp_events', "Could not push tracking event: {$event}, not found in config.");
             return null;
         }
 
-        if (!($mc_user_id = get_option('mailchimp-woocommerce-mailchimp_user_id', null))) {
+        if (!($mc_user_id = \Mailchimp_Woocommerce_DB_Helpers::get_option('mailchimp-woocommerce-mailchimp_user_id', null))) {
             $mc_user_id = null;
         }
 
-        if (!($mc_login_id = get_option('mailchimp-woocommerce-mailchimp_login_id', null))) {
+        if (!($mc_login_id = \Mailchimp_Woocommerce_DB_Helpers::get_option('mailchimp-woocommerce-mailchimp_login_id', null))) {
             $mc_login_id = null;
         }
 
@@ -80,9 +79,10 @@ class Mailchimp_Woocommerce_Event
 
         $payload = (new Mailchimp_Woocommerce_Event($mc_user_id, $mc_login_id))
             ->set_date($date)
+            ->set_anonymous_id(md5(trim(strtolower(get_option('siteurl')))))
             ->configure($data);
 
-        return static::$prevent ? $payload->compile() : $payload->handle();
+        return $test ? $payload->compile() : $payload->handle();
     }
 
     /**
@@ -102,6 +102,17 @@ class Mailchimp_Woocommerce_Event
         }
 
         return null;
+    }
+
+    public function set_anonymous_id(string $id)
+    {
+        $this->anonymous_id = $id;
+        return $this;
+    }
+
+    public function get_anonymous_id()
+    {
+        return $this->anonymous_id;
     }
 
     /**
@@ -128,10 +139,6 @@ class Mailchimp_Woocommerce_Event
      */
     public function handle()
     {
-        if (static::$prevent) {
-            return null;
-        }
-
         try {
             $this->last_error = null;
             $this->submitted_data = $this->compile();
@@ -147,9 +154,12 @@ class Mailchimp_Woocommerce_Event
 
             if ( $response instanceof WP_Error ) {
                 mailchimp_error( 'mailchimp_events',"Could not post event data to mailchimp beacon.", $response );
-
                 return $response;
             }
+
+            mailchimp_debug('event_tracer', $this->object_detail, array(
+                'id' => isset($response['headers']) && isset($response['headers']['event_id']) ? $response['headers']['event_id'] : 'none'
+            ));
 
             return json_decode( $response['body'] );
         } catch (\Throwable $e) {
@@ -192,7 +202,7 @@ class Mailchimp_Woocommerce_Event
      */
     public function compile()
     {
-        $format = 'Y-m-d H:i:s';
+        $format = 'Y-m-d\TH:i:s.v\Z';
         $current = new DateTime('now');
         $payload = array(
             'timestamp' => $current->format($format),
@@ -234,6 +244,10 @@ class Mailchimp_Woocommerce_Event
 
         if (!empty($this->entrypoint)) {
             $payload['properties']['entry_point'] = $this->entrypoint;
+        }
+
+        if (!empty($this->anonymous_id)) {
+            $payload['context']['_mc_anon_id'] = md5(trim(strtolower($this->anonymous_id)));
         }
 
         mailchimp_debug('mailchimp_events', "mailchimp beacon tracking payload {$this->event}", $payload);

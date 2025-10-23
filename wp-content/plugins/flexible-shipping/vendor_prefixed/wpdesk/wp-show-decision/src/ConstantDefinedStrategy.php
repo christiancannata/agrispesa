@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\ShowDecision;
 
-class ConstantDefinedStrategy implements \FSVendor\WPDesk\ShowDecision\ShouldShowStrategy
+class ConstantDefinedStrategy implements ShouldShowStrategy
 {
     /**
      * @var string
@@ -12,8 +12,8 @@ class ConstantDefinedStrategy implements \FSVendor\WPDesk\ShowDecision\ShouldSho
     {
         $this->constant = $constant;
     }
-    public function shouldDisplay() : bool
+    public function shouldDisplay(): bool
     {
-        return \defined($this->constant);
+        return defined($this->constant);
     }
 }

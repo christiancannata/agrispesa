@@ -3,7 +3,7 @@
  Plugin Name: 		CMP - Coming Soon & Maintenance Plugin
  Plugin URI: 		https://wordpress.org/plugins/cmp-coming-soon-maintenance/
  Description:       Display customizable landing page for Coming Soon, Maintenance & Under Construction page.
- Version:           4.1.12
+ Version:           4.1.15
  Author:            NiteoThemes
  Author URI:        https://www.niteothemes.com
  Text Domain:       cmp-coming-soon-maintenance
@@ -66,7 +66,7 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 		// define constants
 		private function constants()
 		{
-			$this->define('CMP_VERSION', '4.1.12');
+			$this->define('CMP_VERSION', '4.1.15');
 			$this->define('CMP_DEBUG', FALSE);
 			$this->define('CMP_AUTHOR', 'NiteoThemes');
 			$this->define('CMP_AUTHOR_HOMEPAGE', 'https://niteothemes.com');
@@ -1342,6 +1342,11 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 				return false;
 			}
 
+			if (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
+				echo '<div class="notice notice-error is-dismissible"><p>' . __('File uploads are disabled on this site.', 'cmp-coming-soon-maintenance') . '</p></div>';
+				return;
+			}
+
 			// allow zip file to upload
 			add_filter('upload_mimes', array($this, 'cmp_allow_mimes'));
 
@@ -1945,6 +1950,10 @@ if (!class_exists('CMP_Coming_Soon_and_Maintenance')) :
 
 		public function cmp_allow_mimes($mimes = array())
 		{
+			    // Check if DISALLOW_FILE_MODS is true
+			if (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
+				return $mimes; // Do not allow additional mime types
+			}
 			// add your own extension here - as many as you like
 			$mimes['zip'] = 'application/zip';
 

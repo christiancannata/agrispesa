@@ -14,7 +14,7 @@ namespace FSVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Server')) {
+if (!\class_exists('FSVendor\WPDesk_Tracker_Data_Provider_Server')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Server
      */
@@ -28,8 +28,9 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Data_Provider_Server')) {
         public function get_data()
         {
             $server_data = [];
-            if (isset($_SERVER['SERVER_SOFTWARE']) && !empty($_SERVER['SERVER_SOFTWARE'])) {
-                $server_data['software'] = $_SERVER['SERVER_SOFTWARE'];
+            $server_software = \sanitize_text_field(\wp_unslash($_SERVER['SERVER_SOFTWARE'] ?? ''));
+            if (!empty($server_software)) {
+                $server_data['software'] = $server_software;
             }
             if (\function_exists('phpversion')) {
                 $server_data['php_version'] = \phpversion();

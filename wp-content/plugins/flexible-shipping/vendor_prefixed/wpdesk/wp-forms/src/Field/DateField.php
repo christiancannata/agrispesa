@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Forms\Field;
 
 use FSVendor\WPDesk\Forms\Sanitizer\TextFieldSanitizer;
-class DateField extends \FSVendor\WPDesk\Forms\Field\BasicField
+class DateField extends BasicField
 {
     public function __construct()
     {

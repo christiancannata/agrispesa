@@ -25,7 +25,7 @@ if (\PHP_VERSION_ID > 50300) {
     if (!isset($plugin_shops) || !\is_array($plugin_shops)) {
         $plugin_shops = array();
     }
-    $bootstrap = new \FSVendor\WPDesk\Plugin\Flow\PluginBootstrap(
+    $bootstrap = new WPDesk\Plugin\Flow\PluginBootstrap(
         $plugin_version,
         null,
         // deprecated

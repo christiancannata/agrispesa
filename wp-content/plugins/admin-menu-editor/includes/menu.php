@@ -1,7 +1,13 @@
 <?php
 abstract class ameMenu {
 	const format_name = 'Admin Menu Editor menu';
-	const format_version = '7.1';
+	const format_version = '8.0';
+
+	const ENCODER_FLAGS_KEY = 'f';
+	const EF_POSITION_MATCHES_INDEX = 'i';
+	const EF_DEF_PARENT_MATCHES_ITEM_PARENT = 'p';
+	const EF_DEF_URL_MATCHES_FILE = 'u';
+	const EF_DEF_PAGE_TITLE_MATCHES_TITLE = 't';
 
 	protected static $custom_loaders = array();
 
@@ -141,6 +147,15 @@ abstract class ameMenu {
 			}
 			if (!empty($granted_capabilities)) {
 				$menu['granted_capabilities'] = $granted_capabilities;
+			}
+		}
+
+		//Copy detected meta capabilities.
+		if ( isset($arr['suspected_meta_caps']) && is_array($arr['suspected_meta_caps']) ) {
+			$meta_caps = array_map('strval', $arr['suspected_meta_caps']);
+			$meta_caps = array_unique($meta_caps); //Remove duplicates.
+			if ( !empty($meta_caps) ) {
+				$menu['suspected_meta_caps'] = $meta_caps;
 			}
 		}
 
@@ -349,7 +364,12 @@ abstract class ameMenu {
 				empty($tree_item['items'])
 				&& isset($tree_item['defaults']['url'], $blacklist[$tree_item['defaults']['url']])
 			) {
-				continue;
+				$filter = $blacklist[$tree_item['defaults']['url']];
+				//The filter value can also be "submenu", which doesn't apply to top level menus.
+				//Skip only if the URL is generally blacklisted (`true`).
+				if ( $filter === true ) {
+					continue;
+				}
 			}
 
 			$tree[$parent] = $tree_item;
@@ -454,11 +474,7 @@ abstract class ameMenu {
 		);
 
 		if ( !empty($menu['tree']) ) {
-			$menu['tree'] = self::map_items(
-				$menu['tree'],
-				array(__CLASS__, 'compress_item'),
-				array($common)
-			);
+			$menu['tree'] = self::compress_list($menu['tree'], $common);
 		}
 
 		$menu = self::add_format_header($menu);
@@ -468,7 +484,23 @@ abstract class ameMenu {
 		return $menu;
 	}
 
-	protected static function compress_item($item, $common) {
+	protected static function compress_list($list, $common, $parent_key = null) {
+		$result = array();
+		$list_position = 0;
+
+		foreach ($list as $key => $item) {
+			$item = self::compress_item($item, $common, $parent_key, $list_position);
+			if ( !empty($item['items']) ) {
+				$item['items'] = self::compress_list($item['items'], $common, $key);
+			}
+			$result[$key] = $item;
+
+			$list_position++;
+		}
+		return $result;
+	}
+
+	protected static function compress_item($item, $common, $parent_key = null, $list_position = null) {
 		//These empty arrays can be dropped. They'll be restored either by merging common properties,
 		//or by ameMenuItem::normalize().
 		if ( empty($item['grant_access']) ) {
@@ -496,6 +528,45 @@ abstract class ameMenu {
 			}
 		}
 
+		//Remove redundant fields. They can be restored later based on other fields.
+		$flags = '';
+		if (
+			isset($item['position'], $list_position)
+			&& ($item['position'] === $list_position)
+		) {
+			$flags .= self::EF_POSITION_MATCHES_INDEX;
+			unset($item['position']);
+		}
+
+		if (
+			isset($item['defaults']['url'], $item['defaults']['file'])
+			&& ($item['defaults']['url'] === $item['defaults']['file'])
+		) {
+			$flags .= self::EF_DEF_URL_MATCHES_FILE;
+			unset($item['defaults']['url']);
+		}
+
+		if (
+			isset($item['defaults']['page_title'], $item['defaults']['menu_title'])
+			&& ($item['defaults']['page_title'] === $item['defaults']['menu_title'])
+		) {
+			$flags .= self::EF_DEF_PAGE_TITLE_MATCHES_TITLE;
+			unset($item['defaults']['page_title']);
+		}
+
+		if (
+			isset($item['defaults']['parent'], $parent_key)
+			&& ($item['defaults']['parent'] === $parent_key)
+			&& is_string($parent_key)
+		) {
+			$flags .= self::EF_DEF_PARENT_MATCHES_ITEM_PARENT;
+			unset($item['defaults']['parent']);
+		}
+
+		if ( !empty($flags) ) {
+			$item[self::ENCODER_FLAGS_KEY] = $flags;
+		}
+
 		return $item;
 	}
 
@@ -521,24 +592,56 @@ abstract class ameMenu {
 		return $menu;
 	}
 
-	protected static function decompress_list($list, $common) {
+	protected static function decompress_list($list, $common, $parent_key = null) {
 		//Optimization: Direct iteration is about 40% faster than map_items.
 		$result = array();
+		$list_position = 0;
+
 		foreach($list as $key => $item) {
-			$item = self::decompress_item($item, $common);
+			$item = self::decompress_item($item, $common, $parent_key, $list_position);
 			if ( !empty($item['items']) ) {
-				$item['items'] = self::decompress_list($item['items'], $common);
+				$item['items'] = self::decompress_list($item['items'], $common, $key);
 			}
 			$result[$key] = $item;
+
+			$list_position++;
 		}
 		return $result;
 	}
 
-	protected static function decompress_item($item, $common) {
+	protected static function decompress_item($item, $common, $parent_key = null, $list_position = null) {
 		$item = array_merge($common['properties'], $item);
 
 		$defaults = !empty($item['custom']) ? $common['custom_item_defaults'] : $common['basic_defaults'];
 		$item['defaults'] = array_merge($defaults, $item['defaults']);
+
+		if ( !empty($item[self::ENCODER_FLAGS_KEY]) ) {
+			$flags = str_split($item[self::ENCODER_FLAGS_KEY]);
+			foreach ($flags as $flag) {
+				switch ($flag) {
+					case self::EF_POSITION_MATCHES_INDEX:
+						if ( isset($list_position) ) {
+							$item['position'] = $list_position;
+						}
+						break;
+					case self::EF_DEF_URL_MATCHES_FILE:
+						if ( isset($item['defaults']['file']) ) {
+							$item['defaults']['url'] = $item['defaults']['file'];
+						}
+						break;
+					case self::EF_DEF_PAGE_TITLE_MATCHES_TITLE:
+						if ( isset($item['defaults']['menu_title']) ) {
+							$item['defaults']['page_title'] = $item['defaults']['menu_title'];
+						}
+						break;
+					case self::EF_DEF_PARENT_MATCHES_ITEM_PARENT:
+						if ( isset($parent_key) && is_string($parent_key) ) {
+							$item['defaults']['parent'] = $parent_key;
+						}
+						break;
+				}
+			}
+		}
 
 		return $item;
 	}
@@ -552,7 +655,7 @@ abstract class ameMenu {
 	 * @param array|null $extra_params Optional. An array of additional parameters to pass to the callback.
 	 * @return array
 	 */
-	protected static function map_items($items, $callback, $extra_params = null) {
+	public static function map_items($items, $callback, $extra_params = null) {
 		if ( $extra_params === null ) {
 			$extra_params = array();
 		}

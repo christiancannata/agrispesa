@@ -14,7 +14,7 @@ class ImageSetting extends CompositeSetting {
 
 	protected $externalUrlsAllowed = true;
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		parent::__construct($id, $store, $params);
 
 		if ( isset($params['externalUrlsAllowed']) ) {

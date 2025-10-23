@@ -6,13 +6,9 @@ import { getSetting } from '@woocommerce/settings';
 
 const settings = getSetting( 'satispay_data', {} );
 
-const defaultLabel = __(
-	'Satispay'
-);
+const defaultLabel = __('Satispay', 'woo-satispay');
 
-const defaultDescription = __(
-	'Do it smart. Choose Satispay and pay with a tap!'
-);
+const defaultDescription = __('Do it smart. Choose Satispay and pay with a tap!','woo-satispay');
 
 const iconUrl = settings.icon;
 

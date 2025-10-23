@@ -11,7 +11,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can dispatch single label file.
  */
-class SingleLabelFileDispatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class SingleLabelFileDispatcher implements Hookable
 {
     const PRIORITY_VERY_LOW = 9999999;
     const DEFAULT_CONTENT_TYPE = 'application/octet-stream';
@@ -22,7 +22,7 @@ class SingleLabelFileDispatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     public function hooks()
     {
-        \add_action('admin_post_flexible_shipping_get_label', array($this, 'dispatch_label_if_requested'), self::PRIORITY_VERY_LOW);
+        add_action('admin_post_flexible_shipping_get_label', array($this, 'dispatch_label_if_requested'), self::PRIORITY_VERY_LOW);
     }
     /**
      * @param array $label_data .
@@ -41,7 +41,7 @@ class SingleLabelFileDispatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     private function get_action_parameter()
     {
-        return !empty($_GET['label_action']) ? \sanitize_text_field(\wp_unslash($_GET['label_action'])) : self::ACTION_DOWNLOAD;
+        return !empty($_GET['label_action']) ? sanitize_text_field(wp_unslash($_GET['label_action'])) : self::ACTION_DOWNLOAD;
         // phpcs:ignore
     }
     /**
@@ -64,9 +64,9 @@ class SingleLabelFileDispatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin
     {
         $shipment = fs_get_shipment($shipment_id);
         $label_data = $shipment->get_label();
-        \header('Content-type: ' . $this->prepare_content_type($label_data));
+        header('Content-type: ' . $this->prepare_content_type($label_data));
         if ($this->get_action_parameter() === self::ACTION_DOWNLOAD) {
-            \header('Content-Disposition: attachment; filename=' . $label_data['file_name']);
+            header('Content-Disposition: attachment; filename=' . $label_data['file_name']);
         }
         echo $label_data['content'];
         // phpcs:ignore
@@ -79,17 +79,17 @@ class SingleLabelFileDispatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     public function dispatch_label_if_requested()
     {
-        \check_admin_referer('flexible_shipping_get_label');
-        $shipment_id = \filter_input(\INPUT_GET, 'shipment_id', \FILTER_VALIDATE_INT);
-        $integration = \get_post_meta($shipment_id, '_integration', \true);
+        check_admin_referer('flexible_shipping_get_label');
+        $shipment_id = filter_input(\INPUT_GET, 'shipment_id', \FILTER_VALIDATE_INT);
+        $integration = get_post_meta($shipment_id, '_integration', \true);
         if (!$integration) {
-            \wp_die(\__('Integration doesn\'t exists.', 'flexible-shipping'));
+            wp_die(__('Integration doesn\'t exists.', 'flexible-shipping'));
             // phpcs:ignore
         }
         try {
             $this->dispatch_label_and_die($shipment_id);
         } catch (\Exception $e) {
-            \wp_die(\esc_html($e->getMessage()), \esc_html(\__('Label error', 'flexible-shipping')));
+            wp_die(esc_html($e->getMessage()), esc_html(__('Label error', 'flexible-shipping')));
         }
     }
 }

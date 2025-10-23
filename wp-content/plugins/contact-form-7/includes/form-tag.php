@@ -20,8 +20,7 @@ class WPCF7_FormTag implements ArrayAccess {
 	public $content = '';
 
 	public function __construct( $tag = array() ) {
-		if ( is_array( $tag )
-		or $tag instanceof self ) {
+		if ( is_array( $tag ) or $tag instanceof self ) {
 			foreach ( $tag as $key => $value ) {
 				if ( property_exists( __CLASS__, $key ) ) {
 					$this->{$key} = $value;
@@ -75,7 +74,7 @@ class WPCF7_FormTag implements ArrayAccess {
 			$pattern = $preset_patterns[$pattern];
 		}
 
-		if ( '' == $pattern ) {
+		if ( '' === $pattern ) {
 			$pattern = '.+';
 		}
 
@@ -177,7 +176,7 @@ class WPCF7_FormTag implements ArrayAccess {
 
 		$matches_a = $this->get_all_match_options( '%^([0-9]*)/[0-9]*$%' );
 
-		foreach ( (array) $matches_a as $matches ) {
+		foreach ( $matches_a as $matches ) {
 			if ( isset( $matches[1] ) and '' !== $matches[1] ) {
 				return $matches[1];
 			}
@@ -204,7 +203,7 @@ class WPCF7_FormTag implements ArrayAccess {
 			'%^(?:[0-9]*x?[0-9]*)?/([0-9]+)$%'
 		);
 
-		foreach ( (array) $matches_a as $matches ) {
+		foreach ( $matches_a as $matches ) {
 			if ( isset( $matches[1] ) and '' !== $matches[1] ) {
 				return $matches[1];
 			}
@@ -248,7 +247,7 @@ class WPCF7_FormTag implements ArrayAccess {
 			'%^([0-9]*)x([0-9]*)(?:/[0-9]+)?$%'
 		);
 
-		foreach ( (array) $matches_a as $matches ) {
+		foreach ( $matches_a as $matches ) {
 			if ( isset( $matches[1] ) and '' !== $matches[1] ) {
 				return $matches[1];
 			}
@@ -275,7 +274,7 @@ class WPCF7_FormTag implements ArrayAccess {
 			'%^([0-9]*)x([0-9]*)(?:/[0-9]+)?$%'
 		);
 
-		foreach ( (array) $matches_a as $matches ) {
+		foreach ( $matches_a as $matches ) {
 			if ( isset( $matches[2] ) and '' !== $matches[2] ) {
 				return $matches[2];
 			}
@@ -307,8 +306,10 @@ class WPCF7_FormTag implements ArrayAccess {
 		if ( $date ) {
 			$date_pattern = '/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/';
 
-			if ( preg_match( $date_pattern, $date, $matches )
-			and checkdate( $matches[2], $matches[3], $matches[1] ) ) {
+			if (
+				preg_match( $date_pattern, $date, $matches ) and
+				checkdate( $matches[2], $matches[3], $matches[1] )
+			) {
 				return $date;
 			}
 		} else {
@@ -350,9 +351,9 @@ class WPCF7_FormTag implements ArrayAccess {
 		foreach ( $options as $opt ) {
 			$opt = sanitize_key( $opt );
 
-			if ( 'user_' == substr( $opt, 0, 5 ) and is_user_logged_in() ) {
+			if ( 'user_' === substr( $opt, 0, 5 ) and is_user_logged_in() ) {
 				$primary_props = array( 'user_login', 'user_email', 'user_url' );
-				$opt = in_array( $opt, $primary_props ) ? $opt : substr( $opt, 5 );
+				$opt = in_array( $opt, $primary_props, true ) ? $opt : substr( $opt, 5 );
 
 				$user = wp_get_current_user();
 				$user_prop = $user->get( $opt );
@@ -378,9 +379,11 @@ class WPCF7_FormTag implements ArrayAccess {
 					}
 				}
 
-			} elseif ( 'get' === $opt and isset( $_GET[$this->name] ) ) {
-				$vals = (array) $_GET[$this->name];
-				$vals = array_map( 'wpcf7_sanitize_query_var', $vals );
+			} elseif (
+				'get' === $opt and
+				$vals = wpcf7_superglobal_get( $this->name )
+			) {
+				$vals = array_map( 'wpcf7_sanitize_query_var', (array) $vals );
 
 				if ( $args['multiple'] ) {
 					$values = array_merge( $values, $vals );
@@ -392,9 +395,11 @@ class WPCF7_FormTag implements ArrayAccess {
 					}
 				}
 
-			} elseif ( 'post' === $opt and isset( $_POST[$this->name] ) ) {
-				$vals = (array) $_POST[$this->name];
-				$vals = array_map( 'wpcf7_sanitize_query_var', $vals );
+			} elseif (
+				'post' === $opt and
+				$vals = wpcf7_superglobal_post( $this->name )
+			) {
+				$vals = array_map( 'wpcf7_sanitize_query_var', (array) $vals );
 
 				if ( $args['multiple'] ) {
 					$values = array_merge( $values, $vals );
@@ -499,7 +504,7 @@ class WPCF7_FormTag implements ArrayAccess {
 	 *                    False if there is no option matches the pattern.
 	 */
 	public function get_first_match_option( $pattern ) {
-		foreach( (array) $this->options as $option ) {
+		foreach ( (array) $this->options as $option ) {
 			if ( preg_match( $pattern, $option, $matches ) ) {
 				return $matches;
 			}
@@ -519,7 +524,7 @@ class WPCF7_FormTag implements ArrayAccess {
 	public function get_all_match_options( $pattern ) {
 		$result = array();
 
-		foreach( (array) $this->options as $option ) {
+		foreach ( (array) $this->options as $option ) {
 			if ( preg_match( $pattern, $option, $matches ) ) {
 				$result[] = $matches;
 			}

@@ -12,7 +12,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter;
  * Can convert currency using WooCommerce MultiCurrency plugin.
  * @see https://woocommerce.com/products/multi-currency/
  */
-class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter
+class Converter extends AbstractConverter
 {
     /**
      * @inheritDoc
@@ -20,11 +20,11 @@ class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractC
     public function convert($value)
     {
         try {
-            $rate_storage = new \WOOMC\Rate\Storage();
-            $price_rounder = new \WOOMC\Price\Rounder();
-            $currency_detector = new \WOOMC\Currency\Detector();
-            $price_calculator = new \WOOMC\Price\Calculator($rate_storage, $price_rounder);
-            $price_controller = new \WOOMC\Price\Controller($price_calculator, $currency_detector);
+            $rate_storage = new \FSVendor\WOOMC\Rate\Storage();
+            $price_rounder = new \FSVendor\WOOMC\Price\Rounder();
+            $currency_detector = new \FSVendor\WOOMC\Currency\Detector();
+            $price_calculator = new \FSVendor\WOOMC\Price\Calculator($rate_storage, $price_rounder);
+            $price_controller = new \FSVendor\WOOMC\Price\Controller($price_calculator, $currency_detector);
             return $price_controller->convert($value);
         } catch (\Throwable $e) {
             if ($this->logger) {

@@ -9,7 +9,7 @@ use FSVendor\WPDesk\View\Resolver\Exception\CanNotResolve;
  *
  * @package WPDesk\View\Resolver
  */
-class ChainResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
+class ChainResolver implements Resolver
 {
     /** @var Resolver[] */
     private $resolvers;
@@ -18,7 +18,7 @@ class ChainResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
      */
     public function __construct()
     {
-        $args = \func_get_args();
+        $args = func_get_args();
         foreach ($args as $resolver) {
             $this->appendResolver($resolver);
         }
@@ -40,15 +40,15 @@ class ChainResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
      *
      * @return string
      */
-    public function resolve($name, \FSVendor\WPDesk\View\Renderer\Renderer $renderer = null)
+    public function resolve($name, Renderer $renderer = null)
     {
         foreach ($this->resolvers as $resolver) {
             try {
                 return $resolver->resolve($name);
-            } catch (\FSVendor\WPDesk\View\Resolver\Exception\CanNotResolve $e) {
+            } catch (CanNotResolve $e) {
                 // not interested
             }
         }
-        throw new \FSVendor\WPDesk\View\Resolver\Exception\CanNotResolve("Cannot resolve {$name}");
+        throw new CanNotResolve("Cannot resolve {$name}");
     }
 }

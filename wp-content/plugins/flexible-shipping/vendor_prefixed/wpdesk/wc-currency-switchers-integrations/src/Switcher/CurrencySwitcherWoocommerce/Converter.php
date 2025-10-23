@@ -12,7 +12,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter;
  * Can convert currency using Currency Switcher for WooCommerce plugin.
  * @see https://wordpress.org/plugins/currency-switcher-woocommerce/
  */
-class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter
+class Converter extends AbstractConverter
 {
     /**
      * @inheritDoc

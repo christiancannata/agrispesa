@@ -84,7 +84,7 @@ class Email_Reports {
 			return;
 		}
 
-		$directory        = dirname( __FILE__ );
+		$directory        = __DIR__;
 		$this->views_path = $directory . '/views/email-reports/';
 
 		$url              = plugin_dir_url( __FILE__ );
@@ -100,7 +100,7 @@ class Email_Reports {
 	 */
 	public function hooks() {
 		$this->action( 'rank_math/analytics/email_report_event', 'email_report' );
-		$this->action( 'template_redirect', 'maybe_debug' );
+		$this->action( 'wp_loaded', 'maybe_debug' );
 
 		$this->action( 'rank_math/analytics/email_report_html', 'replace_variables' );
 		$this->action( 'rank_math/analytics/email_report_html', 'strip_comments' );
@@ -137,7 +137,7 @@ class Email_Reports {
 		$this->variables = [
 			'site_url'                    => get_home_url(),
 			'site_url_simple'             => explode( '://', get_home_url() )[1],
-			'settings_url'                => Helper::get_admin_url( 'options-general#setting-panel-analytics' ),
+			'settings_url'                => Helper::get_settings_url( 'general', 'analytics' ),
 			'report_url'                  => Helper::get_admin_url( 'analytics' ),
 			'assets_url'                  => $this->assets_url,
 			'address'                     => '<br/> [rank_math_contact_info show="address"]',
@@ -377,7 +377,7 @@ class Email_Reports {
 		}
 
 		if ( $recursion ) {
-			$recursion--;
+			--$recursion;
 			$content = $this->replace_variables( $content, $recursion );
 		}
 
@@ -466,12 +466,12 @@ class Email_Reports {
 	/**
 	 * Setting getter.
 	 *
-	 * @param string $option  Option name.
-	 * @param mixed  $default Default value.
+	 * @param string $option        Option name.
+	 * @param mixed  $default_value Default value.
 	 * @return mixed
 	 */
-	public static function get_setting( $option, $default = false ) {
-		return Helper::get_settings( 'general.console_email_' . $option, $default );
+	public static function get_setting( $option, $default_value = false ) {
+		return Helper::get_settings( 'general.console_email_' . $option, $default_value );
 	}
 
 	/**

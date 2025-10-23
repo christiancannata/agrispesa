@@ -20,9 +20,6 @@
 
     $(function () {
 
-        var datePicker = $(".datepicker");
-        datePicker.datepicker({dateFormat: ywgc_data.date_format, minDate: +1, maxDate: "+1Y"});
-
         $('.ywgc-choose-design-preview .ywgc-design-list li:first-child .ywgc-preset-image img').click();
 
     });

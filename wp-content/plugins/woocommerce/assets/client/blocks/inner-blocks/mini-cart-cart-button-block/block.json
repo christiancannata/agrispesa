@@ -13,6 +13,9 @@
 		"color": {
 			"text": true,
 			"background": true
+		},
+		"interactivity": {
+			"clientNavigation": true
 		}
 	},
 	"attributes": {
@@ -22,6 +25,10 @@
 				"remove": false,
 				"move": false
 			}
+		},
+		"cartButtonLabel": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"styles": [
@@ -37,6 +44,6 @@
 	],
 	"parent": [ "woocommerce/mini-cart-footer-block" ],
 	"textdomain": "woocommerce",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

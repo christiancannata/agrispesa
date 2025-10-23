@@ -167,6 +167,18 @@ class Api extends Rest_Controller {
 		);
 		register_rest_route(
 			$this->namespace,
+			'/' . $this->rest_base . '/connect_notice',
+			array(
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'update_connect_notice' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
 			'/' . $this->rest_base . '/reinstall',
 			array(
 				array(
@@ -224,10 +236,10 @@ class Api extends Rest_Controller {
 			array(
 				'slug'        => 'ccpa',
 				'title'       => __( 'CCPA (California Consumer Privacy Act)', 'cookie-law-info' ),
-				'description' => __( 'Choose CCPA if most of your targeted audience are from California or US. This will create a customizable banner with a “Do Not Sell My Personal Information” link that allows your visitors to refuse the use of cookies.', 'cookie-law-info' ),
+				'description' => __( 'Choose CCPA if most of your targeted audience are from California or US. This will create a customizable banner with a "Do Not Sell My Personal Information" link that allows your visitors to refuse the use of cookies.', 'cookie-law-info' ),
 				'tooltip'     => __(
 					'Choose CCPA if most of your targeted audience are from California or US.
-					It creates a customizable banner with a “Do Not Sell My Personal Information” link that allows your visitors to refuse the use of cookies.',
+					It creates a customizable banner with a "Do Not Sell My Personal Information" link that allows your visitors to refuse the use of cookies.',
 					'cookie-law-info'
 				),
 			),
@@ -345,6 +357,21 @@ class Api extends Rest_Controller {
 	}
 
 	/**
+	 * Update the status of connect notice.
+	 *
+	 * @param object $request Request.
+	 * @return WP_Error|WP_REST_Response
+	 */
+
+	public function update_connect_notice( $request ) {
+		$response = array( 'status' => false );
+		$connect_notice = isset( $request['connect_notice'] ) ? boolval( $request['connect_notice'] ) : true;
+		Connect_Notice::get_instance()->save_connect_notice( $connect_notice );
+		$response['status'] = true;
+		return rest_ensure_response( $response );
+	}
+
+	/**
 	 * Update the status of admin notices.
 	 *
 	 * @param object $request Request.
@@ -380,6 +407,12 @@ class Api extends Rest_Controller {
 	 * @return stdClass
 	 */
 	public function prepare_item_for_database( $request ) {
+		$clear = $request->get_param('clear');
+		if ( is_null( $clear ) ) {
+			$clear = true;
+		} else {
+			$clear = filter_var( $clear, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+		}
 		$object     = new Settings();
 		$data       = $object->get();
 		$schema     = $this->get_item_schema();
@@ -398,7 +431,7 @@ class Api extends Rest_Controller {
 				$data[ $key ] = $value;
 			}
 		}
-		$object->update( $data );
+		$object->update( $data, $clear );
 		return $object->get();
 	}
 

@@ -75,7 +75,7 @@ class TrustBox {
 	}
 
 	public function getPage() {
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		if ( class_exists( 'woocommerce' ) ) {
 			if ( is_product() ) {
 				return 'product';
 			} elseif ( is_product_category() ) {
@@ -117,7 +117,7 @@ class TrustBox {
 	}
 
 	public function getName() {
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_product() ) {
+		if ( class_exists( 'woocommerce' ) && is_product() ) {
 			$product = wc_get_product( get_the_id() );
 			return method_exists( $product, 'get_name' ) ? $product->get_name() : $product->get_title();
 		}
@@ -126,7 +126,7 @@ class TrustBox {
 
 	public function get_current_category_products( $results ) {
 		try {
-			if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_product_category() ) {
+			if ( class_exists( 'woocommerce' ) && is_product_category() ) {
 				$products = array();
 				foreach ( $results as $result ) {
 					if ( 'product' == $result->post_type ) {
@@ -173,7 +173,7 @@ class TrustBox {
 	}
 
 	public function getSku() {
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_product() ) {
+		if ( class_exists( 'woocommerce' ) && is_product() ) {
 			$product = wc_get_product( get_the_id() );
 			if ( $product->is_type( 'variable' ) ) {
 				// make a list of product sku plus skus of all variations
@@ -217,11 +217,14 @@ class TrustBox {
 	}
 
 	private function load_trustboxes( $settings, $trustboxes ) {
-		if (count($trustboxes['trustboxes']) > 0) {
-			wp_register_script( 'trustbox', plugins_url( 'assets/js/trustBoxScript.min.js#trustpilot_async', __FILE__ ), [], '1.0' );
-			wp_localize_script( 'trustbox', 'trustbox_settings', $settings );
-			wp_localize_script( 'trustbox', 'trustpilot_trustbox_settings', $trustboxes );
-			wp_enqueue_script( 'trustbox' );
+		// let's not load our scripts when using Oxygen Builder
+		if ( !isset($_GET['ct_builder']) && !isset($_GET['ct_template']) && !isset($_GET['oxygen_iframe']) ) {
+			if (count($trustboxes['trustboxes']) > 0) {
+				wp_register_script( 'trustbox', plugins_url( 'assets/js/trustBoxScript.min.js#trustpilot_async', __FILE__ ), [], '1.0' );
+				wp_localize_script( 'trustbox', 'trustbox_settings', $settings );
+				wp_localize_script( 'trustbox', 'trustpilot_trustbox_settings', $trustboxes );
+				wp_enqueue_script( 'trustbox' );
+			}
 		}
 	}
 }

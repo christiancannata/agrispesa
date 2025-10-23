@@ -25,7 +25,7 @@ abstract class Customizable {
 	 */
 	protected $store = null;
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		$this->id = $id;
 		$this->store = $store;
 

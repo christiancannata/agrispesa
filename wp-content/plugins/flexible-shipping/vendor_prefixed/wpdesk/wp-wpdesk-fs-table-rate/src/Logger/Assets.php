@@ -10,7 +10,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can enqueue assets.
  */
-class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Assets implements Hookable
 {
     const HANDLE = 'flexible_shipping_notices';
     private $assets_url;
@@ -31,7 +31,7 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function hooks()
     {
-        \add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
     }
     /**
      * Enqueue assets.
@@ -40,11 +40,11 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function enqueue_assets()
     {
-        if (\current_user_can('manage_woocommerce')) {
-            \wp_register_script(self::HANDLE, \trailingslashit($this->assets_url) . 'js/notices.js', array('jquery'), $this->scripts_version, \true);
-            \wp_enqueue_script(self::HANDLE);
-            \wp_register_style(self::HANDLE, \trailingslashit($this->assets_url) . 'css/notices.css', array(), $this->scripts_version);
-            \wp_enqueue_style(self::HANDLE);
+        if (current_user_can('manage_woocommerce')) {
+            wp_register_script(self::HANDLE, trailingslashit($this->assets_url) . 'js/notices.js', array('jquery'), $this->scripts_version, \true);
+            wp_enqueue_script(self::HANDLE);
+            wp_register_style(self::HANDLE, trailingslashit($this->assets_url) . 'css/notices.css', array(), $this->scripts_version);
+            wp_enqueue_style(self::HANDLE);
         }
     }
 }

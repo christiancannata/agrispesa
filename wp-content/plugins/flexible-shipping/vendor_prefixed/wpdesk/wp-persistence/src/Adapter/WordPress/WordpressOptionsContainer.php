@@ -9,7 +9,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence\Wordpress
  */
-final class WordpressOptionsContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
+final class WordpressOptionsContainer implements PersistentContainer
 {
     /** @var string */
     private $namespace;
@@ -22,16 +22,16 @@ final class WordpressOptionsContainer implements \FSVendor\WPDesk\Persistence\Pe
     }
     public function set($id, $value)
     {
-        \update_option($this->prepare_key_name($id), $value);
+        update_option($this->prepare_key_name($id), $value);
     }
     public function delete($id)
     {
-        \delete_option($this->prepare_key_name($id));
+        delete_option($this->prepare_key_name($id));
     }
     public function has($key)
     {
-        $fake_default = \uniqid();
-        return $fake_default !== \get_option($this->prepare_key_name($key), $fake_default);
+        $fake_default = uniqid();
+        return $fake_default !== get_option($this->prepare_key_name($key), $fake_default);
     }
     /**
      * Prepare name for key.
@@ -42,14 +42,14 @@ final class WordpressOptionsContainer implements \FSVendor\WPDesk\Persistence\Pe
      */
     private function prepare_key_name($key)
     {
-        return \sanitize_key($this->namespace . $key);
+        return sanitize_key($this->namespace . $key);
     }
     public function get($id)
     {
-        $fake_default = \uniqid();
-        $value = \get_option($this->prepare_key_name($id), $fake_default);
+        $fake_default = uniqid();
+        $value = get_option($this->prepare_key_name($id), $fake_default);
         if ($fake_default === $value) {
-            throw new \FSVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $value;
     }

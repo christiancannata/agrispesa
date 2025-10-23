@@ -24,4 +24,5 @@ if (!\class_exists('WPDesk_Tracker_Data_Provider')) {
          */
         public function get_data();
     }
+    \class_alias('FSVendor\WPDesk_Tracker_Data_Provider', 'WPDesk_Tracker_Data_Provider', \false);
 }

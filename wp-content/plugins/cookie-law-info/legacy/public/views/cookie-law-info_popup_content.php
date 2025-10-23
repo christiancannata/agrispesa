@@ -10,7 +10,7 @@ $overview_title           = sanitize_text_field( stripslashes( isset( $overview[
 $privacy_overview_content = wp_kses_post( isset( $overview['privacy_overview_content'] ) ? $overview['privacy_overview_content'] : $default_privacy_settings['privacy_overview_content'] );
 $privacy_overview_content = nl2br( $privacy_overview_content );
 $privacy_overview_content = do_shortcode( stripslashes( $privacy_overview_content ) );
-$content_length           = strlen( strip_tags( $privacy_overview_content ) );
+$content_length           = strlen( strip_tags( $privacy_overview_content ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags
 $overview_title           = trim( $overview_title );
 
 // $cookie_categories = $this->get_cookie_categories_data();

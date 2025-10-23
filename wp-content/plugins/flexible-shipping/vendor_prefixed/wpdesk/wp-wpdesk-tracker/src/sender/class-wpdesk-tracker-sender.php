@@ -17,4 +17,5 @@ if (!\class_exists('WPDesk_Tracker_Sender')) {
          */
         public function send_payload(array $payload);
     }
+    \class_alias('FSVendor\WPDesk_Tracker_Sender', 'WPDesk_Tracker_Sender', \false);
 }

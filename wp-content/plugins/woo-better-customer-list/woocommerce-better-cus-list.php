@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Better Customer List for WooCommerce
  * Plugin URI:
- * Description: Dedicated customers admin page with customer sales information.
- * Version: 1.2.2
+ * Description: This plugin will no longer be maintained. This functionality can now be achieved by using the built-in WooCommerce Analytics.
+ * Version: 1.2.3
  * Tested up to: 5.5.1
  * WC requires at least: 2.5.5
  * WC tested up to: 4.6.1

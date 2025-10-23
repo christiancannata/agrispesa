@@ -10,6 +10,7 @@
 
 namespace RankMath\Redirections;
 
+use RankMath\Traits\Hooker;
 use RankMath\Helper;
 use RankMath\Helpers\Param;
 use RankMath\Admin\List_Table;
@@ -21,6 +22,8 @@ defined( 'ABSPATH' ) || exit;
  * Table class.
  */
 class Table extends List_Table {
+
+	use Hooker;
 
 	/**
 	 * The Constructor.
@@ -40,8 +43,6 @@ class Table extends List_Table {
 	 * Prepares the list of items for displaying.
 	 */
 	public function prepare_items() {
-		global $per_page;
-
 		$per_page = $this->get_items_per_page( 'rank_math_redirections_per_page', 100 );
 
 		$data = DB::get_redirections(
@@ -115,8 +116,8 @@ class Table extends List_Table {
 		/**
 		 * Filters the default column output. Pass non-empty value to enable.
 		 *
-		 * @param mixed $false The column value.
-		 * @param array $item  The current item.
+		 * @param bool   $false The column value.
+		 * @param object $item  The current item.
 		 */
 		$default = apply_filters( "rank_math/redirection/admin_column_{$column_name}", false, $item );
 		if ( ! empty( $default ) ) {
@@ -203,9 +204,7 @@ class Table extends List_Table {
 			'redirection' => $item['id'],
 			'security'    => wp_create_nonce( 'redirection_list_action' ),
 		];
-
-		$params = wp_parse_args( $params, $defaults );
-
+		$params   = wp_parse_args( $params, $defaults );
 		return esc_url( Helper::get_admin_url( 'redirections', $params ) );
 	}
 
@@ -234,9 +233,20 @@ class Table extends List_Table {
 			);
 		}
 
+		$redirection = $this->do_filter(
+			'redirections/table_item',
+			[
+				'id'          => $item['id'],
+				'sources'     => unserialize( $item['sources'] ), //phpcs:ignore -- This will be fixed after moving the sources to JSON.
+				'url_to'      => $item['url_to'],
+				'header_code' => $item['header_code'],
+				'status'      => $item['status'],
+			]
+		);
+
 		return $this->row_actions(
 			[
-				'edit'       => '<a href="' . $edit_url . '" class="rank-math-redirection-edit">' . esc_html__( 'Edit', 'rank-math' ) . '</a>',
+				'edit'       => '<a data-redirection="' . esc_attr( wp_json_encode( $redirection ) ) . '" href="' . $edit_url . '" class="rank-math-redirection-edit">' . esc_html__( 'Edit', 'rank-math' ) . '</a>',
 				'deactivate' => '<a href="' . $url . '" data-action="deactivate" class="rank-math-redirection-action">' . esc_html__( 'Deactivate', 'rank-math' ) . '</a>',
 				'activate'   => '<a href="' . $url . '" data-action="activate" class="rank-math-redirection-action">' . esc_html__( 'Activate', 'rank-math' ) . '</a>',
 				'trash'      => '<a href="' . $url . '" data-action="trash" class="rank-math-redirection-action">' . esc_html__( 'Trash', 'rank-math' ) . '</a>',
@@ -356,6 +366,7 @@ class Table extends List_Table {
 		 * Filters the row class.
 		 *
 		 * @param string $classes The row class.
+		 * @param object $item    The current item.
 		 */
 		$classes = apply_filters( 'rank_math/redirection/row_classes', $classes, $item );
 

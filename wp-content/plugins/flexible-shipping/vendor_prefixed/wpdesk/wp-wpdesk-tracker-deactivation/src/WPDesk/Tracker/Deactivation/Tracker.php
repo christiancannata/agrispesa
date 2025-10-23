@@ -6,7 +6,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can track plugin deactivation.
  */
-class Tracker implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Tracker implements Hookable
 {
     const HOOK_SUFFIX = 'plugins.php';
     /**
@@ -33,7 +33,7 @@ class Tracker implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      * @param Thickbox $thickbox .
      * @param AjaxDeactivationDataHandler $ajax
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, \FSVendor\WPDesk\Tracker\Deactivation\Scripts $scripts, \FSVendor\WPDesk\Tracker\Deactivation\Thickbox $thickbox, \FSVendor\WPDesk\Tracker\Deactivation\AjaxDeactivationDataHandler $ajax)
+    public function __construct(PluginData $plugin_data, Scripts $scripts, Thickbox $thickbox, AjaxDeactivationDataHandler $ajax)
     {
         $this->plugin_data = $plugin_data;
         $this->scripts = $scripts;
@@ -45,8 +45,8 @@ class Tracker implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function hooks()
     {
-        \add_action('admin_print_footer_scripts-' . self::HOOK_SUFFIX, [$this, 'printDeactivationScripts']);
-        \add_action('admin_footer-' . self::HOOK_SUFFIX, [$this, 'printDeactivationThickbox']);
+        add_action('admin_print_footer_scripts-' . self::HOOK_SUFFIX, [$this, 'printDeactivationScripts']);
+        add_action('admin_footer-' . self::HOOK_SUFFIX, [$this, 'printDeactivationThickbox']);
         $this->ajax->hooks();
     }
     /**

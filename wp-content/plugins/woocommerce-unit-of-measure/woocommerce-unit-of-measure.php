@@ -3,14 +3,14 @@
  * Plugin Name: WooCommerce Unit Of Measure
  * Plugin URI:
  * Description: WooCommerce Unit Of Measure allows the user to add a unit of measure (or any text) after the price on WooCommerce products.
- * Version: 3.1.0
+ * Version: 3.2.0
  * Author: Bradley Davis
  * Author URI: http://bradley-davis.com
  * License: GPL3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: woocommerce-uom
  * WC requires at least: 6.0.0
- * WC tested up to: 8.9.0
+ * WC tested up to: 9.3.3
  *
  * @author    Bradley Davis
  * @category  Admin

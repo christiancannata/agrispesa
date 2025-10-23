@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
  *
@@ -11,7 +10,9 @@
 
 namespace WooCommerce\Facebook;
 
-defined( 'ABSPATH' ) or exit;
+defined( 'ABSPATH' ) || exit;
+
+use WooCommerce\Facebook\ProductSets\LegacyProductSetMigration;
 
 /**
  * The Facebook for WooCommerce plugin lifecycle handler.
@@ -53,7 +54,11 @@ class Lifecycle extends Framework\Lifecycle {
 			'2.0.4',
 			'2.4.0',
 			'2.5.0',
-			'3.2.0'
+			'3.2.0',
+			'3.4.9',
+			'3.5.3',
+			'3.5.4',
+			'3.5.6',
 		);
 	}
 
@@ -143,14 +148,12 @@ class Lifecycle extends Framework\Lifecycle {
 			}
 		}
 
+		$is_woo_all_products_sync_enbaled = facebook_for_woocommerce()->get_integration()->is_woo_all_products_enabled();
+
 		// migrate settings from standalone options
-		if ( ! isset( $new_settings[ \WC_Facebookcommerce_Integration::SETTING_ENABLE_PRODUCT_SYNC ] ) ) {
+		if ( ! $is_woo_all_products_sync_enbaled && ! isset( $new_settings[ \WC_Facebookcommerce_Integration::SETTING_ENABLE_PRODUCT_SYNC ] ) ) {
 			$product_sync_enabled = empty( get_option( 'fb_disable_sync_on_dev_environment', 0 ) );
 			$new_settings[ \WC_Facebookcommerce_Integration::SETTING_ENABLE_PRODUCT_SYNC ] = $product_sync_enabled ? 'yes' : 'no';
-		}
-
-		if ( ! isset( $new_settings[ \WC_Facebookcommerce_Integration::SETTING_PRODUCT_DESCRIPTION_MODE ] ) ) {
-			$new_settings[ \WC_Facebookcommerce_Integration::SETTING_PRODUCT_DESCRIPTION_MODE ] = ! empty( get_option( 'fb_sync_short_description', 0 ) ) ? \WC_Facebookcommerce_Integration::PRODUCT_DESCRIPTION_MODE_SHORT : \WC_Facebookcommerce_Integration::PRODUCT_DESCRIPTION_MODE_STANDARD;
 		}
 
 		if ( ! isset( $new_settings[ \WC_Facebookcommerce_Integration::SETTING_SCHEDULED_RESYNC_OFFSET ] ) ) {
@@ -158,7 +161,7 @@ class Lifecycle extends Framework\Lifecycle {
 			$parsed_time   = ! empty( $autosync_time ) ? strtotime( $autosync_time ) : false;
 			$resync_offset = null;
 			if ( false !== $parsed_time ) {
-				$midnight = ( new \DateTime() )->setTimestamp( $parsed_time )->setTime( 0, 0, 0 );
+				$midnight      = ( new \DateTime() )->setTimestamp( $parsed_time )->setTime( 0, 0, 0 );
 				$resync_offset = $parsed_time - $midnight->getTimestamp();
 			}
 			$new_settings[ \WC_Facebookcommerce_Integration::SETTING_SCHEDULED_RESYNC_OFFSET ] = $resync_offset;
@@ -205,7 +208,8 @@ class Lifecycle extends Framework\Lifecycle {
 	 */
 	protected function upgrade_to_2_0_0() {
 		// handle sync enabled and visible virtual products and variations
-		if ( $handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance() ) {
+		$handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance();
+		if ( $handler ) {
 			// create_job() expects an non-empty array of attributes
 			$handler->create_job( array( 'created_at' => current_time( 'mysql' ) ) );
 			$handler->dispatch();
@@ -219,12 +223,11 @@ class Lifecycle extends Framework\Lifecycle {
 				'enable_product_sync'           => \WC_Facebookcommerce_Integration::SETTING_ENABLE_PRODUCT_SYNC,
 				'excluded_product_category_ids' => \WC_Facebookcommerce_Integration::SETTING_EXCLUDED_PRODUCT_CATEGORY_IDS,
 				'excluded_product_tag_ids'      => \WC_Facebookcommerce_Integration::SETTING_EXCLUDED_PRODUCT_TAG_IDS,
-				'product_description_mode'      => \WC_Facebookcommerce_Integration::SETTING_PRODUCT_DESCRIPTION_MODE,
 				'enable_messenger'              => self::SETTING_ENABLE_MESSENGER,
 				'messenger_locale'              => self::SETTING_MESSENGER_LOCALE,
 				'messenger_greeting'            => self::SETTING_MESSENGER_GREETING,
 				'messenger_color_hex'           => self::SETTING_MESSENGER_COLOR_HEX,
-				'enable_debug_mode'             => self::SETTING_ENABLE_DEBUG_MODE,
+				'enable_debug_mode'             => \WC_Facebookcommerce_Integration::SETTING_ENABLE_DEBUG_MODE,
 			);
 			foreach ( $settings_map as $old_name => $new_name ) {
 				if ( ! empty( $settings[ $old_name ] ) ) {
@@ -248,12 +251,14 @@ class Lifecycle extends Framework\Lifecycle {
 		}
 
 		// if an unfinished job is stuck, give the handler a chance to complete it
-		if ( $handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance() ) {
+		$handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance();
+		if ( $handler ) {
 			$handler->dispatch();
 		}
 
 		// create a job to remove duplicate visibility meta data entries
-		if ( $handler = $this->get_plugin()->get_background_remove_duplicate_visibility_meta_instance() ) {
+		$handler = $this->get_plugin()->get_background_remove_duplicate_visibility_meta_instance();
+		if ( $handler ) {
 			// create_job() expects an non-empty array of attributes
 			$handler->create_job( array( 'created_at' => current_time( 'mysql' ) ) );
 			$handler->dispatch();
@@ -289,10 +294,13 @@ class Lifecycle extends Framework\Lifecycle {
 	 */
 	protected function upgrade_to_2_0_4() {
 		// if unfinished jobs are stuck, give the handlers a chance to complete them
-		if ( $handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance() ) {
+		$handler = $this->get_plugin()->get_background_handle_virtual_products_variations_instance();
+		if ( $handler ) {
 			$handler->dispatch();
 		}
-		if ( $handler = $this->get_plugin()->get_background_remove_duplicate_visibility_meta_instance() ) {
+
+		$handler = $this->get_plugin()->get_background_remove_duplicate_visibility_meta_instance();
+		if ( $handler ) {
 			$handler->dispatch();
 		}
 	}
@@ -330,7 +338,7 @@ class Lifecycle extends Framework\Lifecycle {
 	protected function upgrade_to_3_2_0() {
 		// Remove the Messenger deprecation notice.
 		$notice_slug = 'facebook_messenger_deprecation_warning';
-		if( class_exists( 'WC_Admin_Notices' ) && \WC_Admin_Notices::has_notice( $notice_slug ) ) {
+		if ( class_exists( 'WC_Admin_Notices' ) && \WC_Admin_Notices::has_notice( $notice_slug ) ) {
 			\WC_Admin_Notices::remove_notice( $notice_slug );
 		}
 
@@ -341,4 +349,44 @@ class Lifecycle extends Framework\Lifecycle {
 		delete_option( self::SETTING_MESSENGER_COLOR_HEX );
 	}
 
+	/**
+	 * Trigger sync of all WooCommerce categories
+	 *
+	 * @since 3.4.9
+	 */
+	protected function upgrade_to_3_4_9() {
+		facebook_for_woocommerce()->get_product_sets_sync_handler()->sync_all_product_sets();
+	}
+
+	/**
+	 * Trigger flush of rewrite rules to update with checkout URL
+	 *
+	 * @since 3.5.3
+	 */
+	protected function upgrade_to_3_5_3() {
+		add_rewrite_rule( '^fb-checkout/?$', 'index.php?fb_checkout=1', 'top' );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Forces config synchronization with Meta to ensure all configuration fields are up-to-date
+	 *
+	 * @since 3.5.4
+	 */
+	protected function upgrade_to_3_5_4() {
+		// Force config sync with Meta to ensure all fields are properly synchronized
+		$connection_handler = facebook_for_woocommerce()->get_connection_handler();
+		if ( $connection_handler ) {
+			$connection_handler->force_config_sync_on_update();
+		}
+	}
+
+	/**
+	 * Migrate manually created FB Sets from static to dynamic filter
+	 *
+	 * @since 3.5.6
+	 */
+	protected function upgrade_to_3_5_6() {
+		LegacyProductSetMigration::migrate_legacy_fb_product_sets();
+	}
 }

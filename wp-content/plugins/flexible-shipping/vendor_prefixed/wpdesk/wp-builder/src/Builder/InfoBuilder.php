@@ -9,7 +9,7 @@ use FSVendor\WPDesk\PluginBuilder\Storage\PluginStorage;
  *
  * @package WPDesk\PluginBuilder\Builder
  */
-class InfoBuilder extends \FSVendor\WPDesk\PluginBuilder\Builder\AbstractBuilder
+class InfoBuilder extends AbstractBuilder
 {
     const FILTER_PLUGIN_CLASS = 'wp_builder_plugin_class';
     const HOOK_BEFORE_PLUGIN_INIT = 'wp_builder_before_plugin_init';
@@ -30,19 +30,19 @@ class InfoBuilder extends \FSVendor\WPDesk\PluginBuilder\Builder\AbstractBuilder
      */
     public function build_plugin()
     {
-        $class_name = \apply_filters(self::FILTER_PLUGIN_CLASS, $this->info->get_class_name());
+        $class_name = apply_filters(self::FILTER_PLUGIN_CLASS, $this->info->get_class_name());
         /** @var AbstractPlugin $plugin */
         $this->plugin = new $class_name($this->info);
     }
-    public function store_plugin(\FSVendor\WPDesk\PluginBuilder\Storage\PluginStorage $storage)
+    public function store_plugin(PluginStorage $storage)
     {
         $storage->add_to_storage($this->storage_id, $this->plugin);
     }
     public function init_plugin()
     {
-        \do_action(self::HOOK_BEFORE_PLUGIN_INIT, $this->plugin);
+        do_action(self::HOOK_BEFORE_PLUGIN_INIT, $this->plugin);
         $this->plugin->init();
-        \do_action(self::HOOK_AFTER_PLUGIN_INIT, $this->plugin);
+        do_action(self::HOOK_AFTER_PLUGIN_INIT, $this->plugin);
     }
     /**
      * @return AbstractPlugin

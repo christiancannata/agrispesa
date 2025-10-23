@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "woocommerce/product-checkbox-field",
 	"title": "Product checkbox control",
 	"category": "woocommerce",
@@ -10,7 +10,7 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"__experimentalRole": "content"
+			"role": "content"
 		},
 		"label": {
 			"type": "string"
@@ -37,6 +37,5 @@
 		"lock": false,
 		"__experimentalToolbar": false
 	},
-	"editorStyle": "file:./editor.css",
 	"usesContext": [ "postType" ]
 }

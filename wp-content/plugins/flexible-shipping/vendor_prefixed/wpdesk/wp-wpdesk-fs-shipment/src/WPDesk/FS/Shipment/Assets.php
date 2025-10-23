@@ -7,7 +7,7 @@
  */
 namespace FSVendor\WPDesk\FS\Shipment;
 
-use Psr\Log\LoggerInterface;
+use FSVendor\Psr\Log\LoggerInterface;
 use FSVendor\WPDesk\FS\Shipment\Label\SingleLabelFileDispatcher;
 use FSVendor\WPDesk\FS\Shipment\Manifest\ManifestCustomPostType;
 use FSVendor\WPDesk\FS\Shipment\Metabox\Ajax;
@@ -18,7 +18,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can load shipment functionality.
  */
-class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Assets implements Hookable
 {
     const HANDLE = 'fs_shipment_admin';
     /**
@@ -45,7 +45,7 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function hooks()
     {
-        \add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
+        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
     }
     /**
      * Admin enqueue scripts.
@@ -53,10 +53,10 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     public function admin_enqueue_scripts()
     {
         if ($this->should_enqueue_admin_scripts()) {
-            \wp_register_script(self::HANDLE, \trailingslashit($this->assets_url) . 'js/admin.js', array('jquery'), $this->scripts_version);
-            \wp_localize_script(self::HANDLE, self::HANDLE, array('ajax_url' => \admin_url('admin-ajax.php')));
-            \wp_enqueue_script(self::HANDLE);
-            \wp_enqueue_style(self::HANDLE, \trailingslashit($this->assets_url) . 'css/admin.css', array(), $this->scripts_version);
+            wp_register_script(self::HANDLE, trailingslashit($this->assets_url) . 'js/admin.js', array('jquery'), $this->scripts_version);
+            wp_localize_script(self::HANDLE, self::HANDLE, array('ajax_url' => admin_url('admin-ajax.php')));
+            wp_enqueue_script(self::HANDLE);
+            wp_enqueue_style(self::HANDLE, trailingslashit($this->assets_url) . 'css/admin.css', array(), $this->scripts_version);
         }
     }
     /**
@@ -64,12 +64,12 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     private function should_enqueue_admin_scripts()
     {
-        $current_screen = \get_current_screen();
-        $wc_screen_id = \sanitize_title(\__('WooCommerce', 'woocommerce'));
+        $current_screen = get_current_screen();
+        $wc_screen_id = sanitize_title(__('WooCommerce', 'woocommerce'));
         if (!$current_screen) {
             return \false;
         }
-        if ('woocommerce_page_wc-orders' === $current_screen->id || \in_array($current_screen->post_type, array('shop_order', 'shop_subscription'), \true) || $wc_screen_id . '_page_wc-settings' === $current_screen->id) {
+        if ('woocommerce_page_wc-orders' === $current_screen->id || in_array($current_screen->post_type, array('shop_order', 'shop_subscription'), \true) || $wc_screen_id . '_page_wc-settings' === $current_screen->id) {
             return \true;
         }
         return \false;

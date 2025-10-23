@@ -116,6 +116,8 @@ if (!isset($sendingDiagnosticEmail)) {
 									<div class="wf-result-info"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 								<?php elseif ($result['test']): ?>
 									<div class="wf-result-success"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
+								<?php elseif (isset($result['warn']) && $result['warn']): ?>
+									<div class="wf-result-warn"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 								<?php else: ?>
 									<div class="wf-result-error"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 								<?php endif ?>
@@ -159,6 +161,8 @@ if (!isset($sendingDiagnosticEmail)) {
 										<div class="wf-result-info"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 									<?php elseif ($result['test']): ?>
 										<div class="wf-result-success"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
+									<?php elseif (isset($result['warn']) && $result['warn']): ?>
+										<div class="wf-result-warn"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 									<?php else: ?>
 										<div class="wf-result-error"><?php echo (is_array($result['message']) && isset($result['message']['escaped']) ? $result['message']['escaped'] : nl2br(esc_html($result['message']))); ?></div>
 									<?php endif ?>
@@ -998,6 +1002,7 @@ if (!isset($sendingDiagnosticEmail)) {
 
 	<?php endif ?>
 </div>
+<?php if (!$sendingDiagnosticEmail): ?>
 <div class="wf-scrollTop">
 	<a href="javascript:void(0);"><i class="wf-ionicons wf-ion-chevron-up"></i></a>
 </div>
@@ -1011,3 +1016,4 @@ if (!isset($sendingDiagnosticEmail)) {
 	))->render();
 	?>
 </script>
+<?php endif ?>

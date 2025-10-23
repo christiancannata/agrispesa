@@ -23,6 +23,9 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
 		border-bottom: 1px solid $borderColor;
 
+		border-top-right-radius: inherit;
+		border-top-left-radius: inherit;
+
 		h3 {
 			padding: 10px $horizontalPadding;
 			margin: 0;
@@ -86,6 +89,9 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 		border-top: none;
 
 		padding: $horizontalPadding;
+
+		border-bottom-right-radius: inherit;
+		border-bottom-left-radius: inherit;
 	}
 
 	&.ws-ame-closed-postbox  {

@@ -2,22 +2,22 @@
 
 namespace FSVendor\WPDesk\ShowDecision;
 
-class AndStrategy implements \FSVendor\WPDesk\ShowDecision\ShouldShowStrategy
+class AndStrategy implements ShouldShowStrategy
 {
     /**
      * @var ShouldShowStrategy[]
      */
     private array $conditions = [];
-    public function __construct(\FSVendor\WPDesk\ShowDecision\ShouldShowStrategy $strategy)
+    public function __construct(ShouldShowStrategy $strategy)
     {
         $this->conditions[] = $strategy;
     }
-    public function addCondition(\FSVendor\WPDesk\ShowDecision\ShouldShowStrategy $condition) : self
+    public function addCondition(ShouldShowStrategy $condition): self
     {
         $this->conditions[] = $condition;
         return $this;
     }
-    public function shouldDisplay() : bool
+    public function shouldDisplay(): bool
     {
         foreach ($this->conditions as $condition) {
             if (!$condition->shouldDisplay()) {

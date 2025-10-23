@@ -33,7 +33,7 @@ class Rounding
     {
         $rounding = 0;
         foreach ($this->shipping_method_rules as $rule) {
-            $rounding = \max($rounding, $this->get_rounding_from_rule($rule));
+            $rounding = max($rounding, $this->get_rounding_from_rule($rule));
         }
         return $rounding;
     }
@@ -45,7 +45,7 @@ class Rounding
     private function get_rounding_from_rule($rule)
     {
         if ($rule->is_based_on_weight()) {
-            return \max($this->get_rounding_from_value($rule->get_min()), $this->get_rounding_from_value($rule->get_max()));
+            return max($this->get_rounding_from_value($rule->get_min()), $this->get_rounding_from_value($rule->get_max()));
         }
         return 0;
     }
@@ -56,9 +56,9 @@ class Rounding
      */
     private function get_rounding_from_value($value)
     {
-        $parts = \explode('.', $value);
+        $parts = explode('.', $value);
         if (isset($parts[1])) {
-            return \strlen($parts[1]);
+            return strlen($parts[1]);
         }
         return 0;
     }

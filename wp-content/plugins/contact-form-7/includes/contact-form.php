@@ -94,7 +94,7 @@ class WPCF7_ContactForm {
 
 		$objs = array();
 
-		foreach ( (array) $posts as $post ) {
+		foreach ( $posts as $post ) {
 			$objs[] = new self( $post );
 		}
 
@@ -119,7 +119,7 @@ class WPCF7_ContactForm {
 		}
 
 		$callback = static function ( $options ) {
-			$contact_form = new self;
+			$contact_form = new self();
 			$contact_form->title = $options['title'];
 			$contact_form->locale = $options['locale'];
 
@@ -208,8 +208,7 @@ class WPCF7_ContactForm {
 	private function __construct( $post = null ) {
 		$post = get_post( $post );
 
-		if ( $post
-		and self::post_type === get_post_type( $post ) ) {
+		if ( $post and self::post_type === get_post_type( $post ) ) {
 			$this->id = $post->ID;
 			$this->name = $post->post_name;
 			$this->title = $post->post_title;
@@ -230,33 +229,31 @@ class WPCF7_ContactForm {
 	 * Magic method for property overloading.
 	 */
 	public function __get( $name ) {
+		/* translators: 1: property name, 2: method name */
 		$message = __( '<code>%1$s</code> property of a <code>WPCF7_ContactForm</code> object is <strong>no longer accessible</strong>. Use <code>%2$s</code> method instead.', 'contact-form-7' );
 
-		if ( 'id' == $name ) {
-			if ( WP_DEBUG ) {
-				trigger_error(
-					sprintf( $message, 'id', 'id()' ),
-					E_USER_DEPRECATED
-				);
-			}
+		if ( 'id' === $name ) {
+			wp_trigger_error(
+				'',
+				sprintf( $message, 'id', 'id()' ),
+				E_USER_DEPRECATED
+			);
 
 			return $this->id;
-		} elseif ( 'title' == $name ) {
-			if ( WP_DEBUG ) {
-				trigger_error(
-					sprintf( $message, 'title', 'title()' ),
-					E_USER_DEPRECATED
-				);
-			}
+		} elseif ( 'title' === $name ) {
+			wp_trigger_error(
+				'',
+				sprintf( $message, 'title', 'title()' ),
+				E_USER_DEPRECATED
+			);
 
 			return $this->title;
 		} elseif ( $prop = $this->prop( $name ) ) {
-			if ( WP_DEBUG ) {
-				trigger_error(
-					sprintf( $message, $name, 'prop(\'' . $name . '\')' ),
-					E_USER_DEPRECATED
-				);
-			}
+			wp_trigger_error(
+				'',
+				sprintf( $message, $name, 'prop(\'' . $name . '\')' ),
+				E_USER_DEPRECATED
+			);
 
 			return $prop;
 		}
@@ -433,8 +430,8 @@ class WPCF7_ContactForm {
 	 * @param string $title Title.
 	 */
 	public function set_title( $title ) {
-		$title = strip_tags( $title );
-		$title = trim( $title );
+		$title = wp_strip_all_tags( $title, true );
+		$title = wpcf7_strip_whitespaces( $title );
 
 		if ( '' === $title ) {
 			$title = __( 'Untitled', 'contact-form-7' );
@@ -506,11 +503,13 @@ class WPCF7_ContactForm {
 			return false;
 		}
 
-		if ( empty( $_POST['_wpcf7_unit_tag'] ) ) {
+		$unit_tag = wpcf7_superglobal_post( '_wpcf7_unit_tag' );
+
+		if ( empty( $unit_tag ) ) {
 			return false;
 		}
 
-		return $this->unit_tag() === $_POST['_wpcf7_unit_tag'];
+		return $this->unit_tag() === $unit_tag;
 	}
 
 
@@ -531,23 +530,20 @@ class WPCF7_ContactForm {
 
 		$this->shortcode_atts = $options;
 
-		if ( 'raw_form' == $options['output'] ) {
+		if ( 'raw_form' === $options['output'] ) {
 			return sprintf(
 				'<pre class="wpcf7-raw-form"><code>%s</code></pre>',
 				esc_html( $this->prop( 'form' ) )
 			);
 		}
 
-		if ( $this->is_true( 'subscribers_only' )
-		and ! current_user_can( 'wpcf7_submit', $this->id() ) ) {
-			$notice = __(
-				"This contact form is available only for logged in users.",
-				'contact-form-7'
-			);
-
+		if (
+			$this->is_true( 'subscribers_only' ) and
+			! current_user_can( 'wpcf7_submit', $this->id() )
+		) {
 			$notice = sprintf(
 				'<p class="wpcf7-subscribers-only">%s</p>',
-				esc_html( $notice )
+				wp_kses_data( __( 'This contact form is available only for logged in users.', 'contact-form-7' ) )
 			);
 
 			return apply_filters( 'wpcf7_subscribers_only_notice', $notice, $this );
@@ -573,7 +569,7 @@ class WPCF7_ContactForm {
 			return sprintf(
 				'<p class="wpcf7-invalid-action-url"><strong>%1$s</strong> %2$s</p>',
 				esc_html( __( 'Error:', 'contact-form-7' ) ),
-				esc_html( __( "Invalid action URL is detected.", 'contact-form-7' ) )
+				esc_html( __( 'Invalid action URL is detected.', 'contact-form-7' ) )
 			);
 		}
 
@@ -587,9 +583,10 @@ class WPCF7_ContactForm {
 			wpcf7_format_atts( array(
 				'class' => 'wpcf7 no-js',
 				'id' => $this->unit_tag(),
-				( get_option( 'html_type' ) == 'text/html' ) ? 'lang' : 'xml:lang'
+				( get_option( 'html_type' ) === 'text/html' ) ? 'lang' : 'xml:lang'
 					=> $lang_tag,
 				'dir' => wpcf7_is_rtl( $this->locale ) ? 'rtl' : 'ltr',
+				'data-wpcf7-id' => $this->id(),
 			) )
 		);
 
@@ -731,17 +728,21 @@ class WPCF7_ContactForm {
 			'wpcf7_form_hidden_fields', array()
 		);
 
-		$content = '';
+		$formatter = new WPCF7_HTMLFormatter();
+
+		$formatter->append_start_tag( 'fieldset', array(
+			'class' => 'hidden-fields-container',
+		) );
 
 		foreach ( $hidden_fields as $name => $value ) {
-			$content .= sprintf(
-				'<input type="hidden" name="%1$s" value="%2$s" />',
-				esc_attr( $name ),
-				esc_attr( $value )
-			) . "\n";
+			$formatter->append_start_tag( 'input', array(
+				'type' => 'hidden',
+				'name' => $name,
+				'value' => $value,
+			) );
 		}
 
-		return '<div style="display: none;">' . "\n" . $content . '</div>' . "\n";
+		return $formatter->output() . "\n";
 	}
 
 
@@ -984,11 +985,11 @@ class WPCF7_ContactForm {
 			if ( empty( $type ) ) {
 				continue;
 			} elseif ( ! empty( $options['include'] ) ) {
-				if ( ! in_array( $type, $options['include'] ) ) {
+				if ( ! in_array( $type, $options['include'], true ) ) {
 					continue;
 				}
 			} elseif ( ! empty( $options['exclude'] ) ) {
-				if ( in_array( $type, $options['exclude'] ) ) {
+				if ( in_array( $type, $options['exclude'], true ) ) {
 					continue;
 				}
 			}
@@ -1051,21 +1052,21 @@ class WPCF7_ContactForm {
 	 */
 	public function submit( $options = '' ) {
 		$options = wp_parse_args( $options, array(
-			'skip_mail' =>
-				( $this->in_demo_mode()
-				|| $this->is_true( 'skip_mail' )
-				|| ! empty( $this->skip_mail ) ),
+			'skip_mail' => (
+				$this->in_demo_mode() ||
+				$this->is_true( 'skip_mail' ) ||
+				! empty( $this->skip_mail )
+			),
 		) );
 
-		if ( $this->is_true( 'subscribers_only' )
-		and ! current_user_can( 'wpcf7_submit', $this->id() ) ) {
+		if (
+			$this->is_true( 'subscribers_only' ) and
+			! current_user_can( 'wpcf7_submit', $this->id() )
+		) {
 			$result = array(
 				'contact_form_id' => $this->id(),
 				'status' => 'error',
-				'message' => __(
-					"This contact form is available only for logged in users.",
-					'contact-form-7'
-				),
+				'message' => __( 'This contact form is available only for logged in users.', 'contact-form-7' ),
 			);
 
 			return $result;
@@ -1157,7 +1158,7 @@ class WPCF7_ContactForm {
 
 		foreach ( $settings as $setting ) {
 			if ( preg_match( $pattern, $setting, $matches ) ) {
-				if ( $matches[1] != $name ) {
+				if ( $matches[1] !== $name ) {
 					continue;
 				}
 
@@ -1230,8 +1231,7 @@ class WPCF7_ContactForm {
 	private function upgrade() {
 		$mail = $this->prop( 'mail' );
 
-		if ( is_array( $mail )
-		and ! isset( $mail['recipient'] ) ) {
+		if ( is_array( $mail ) and ! isset( $mail['recipient'] ) ) {
 			$mail['recipient'] = get_option( 'admin_email' );
 		}
 
@@ -1314,7 +1314,7 @@ class WPCF7_ContactForm {
 	 * @return WPCF7_ContactForm New contact form object.
 	 */
 	public function copy() {
-		$new = new self;
+		$new = new self();
 		$new->title = $this->title . '_copy';
 		$new->locale = $this->locale;
 		$new->properties = $this->properties;
@@ -1325,10 +1325,12 @@ class WPCF7_ContactForm {
 
 	/**
 	 * Deletes this contact form.
+	 *
+	 * @return bool True if deletion succeeded, false otherwise.
 	 */
 	public function delete() {
 		if ( $this->initial() ) {
-			return;
+			return false;
 		}
 
 		if ( wp_delete_post( $this->id, true ) ) {

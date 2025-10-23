@@ -41,7 +41,10 @@ class Breeze extends Services {
 	 *
 	 * @return void
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		do_action( 'breeze_clear_all_cache' );
 	}
 

@@ -1946,7 +1946,17 @@ if ( ! class_exists( 'YIT_Plugin_Panel' ) ) {
 		 */
 		public function get_options() {
 			$options = get_option( 'yit_' . $this->settings['parent'] . '_options' );
-			if ( false === $options || ( isset( $_REQUEST['yit-action'] ) && 'reset' === sanitize_key( wp_unslash( $_REQUEST['yit-action'] ) ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+			if (
+				isset( $_REQUEST['yit-action'] ) &&
+				'reset' === sanitize_key( wp_unslash( $_REQUEST['yit-action'] ) ) &&
+				isset( $_POST['yith_panel_reset_options_nonce'] ) &&
+				wp_verify_nonce( sanitize_key( wp_unslash( $_POST['yith_panel_reset_options_nonce'] ) ), 'yith_panel_reset_options' )
+			) {
+				$options = false; // Set options to "false" to get the default ones.
+			}
+
+			if ( false === $options ) {
 				$options = $this->get_default_options();
 			}
 

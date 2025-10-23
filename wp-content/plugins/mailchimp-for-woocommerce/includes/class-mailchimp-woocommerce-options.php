@@ -26,8 +26,8 @@ abstract class MailChimp_WooCommerce_Options
     public function adminReady()
     {
         $this->is_admin = current_user_can(mailchimp_get_allowed_capability());
-        if (get_option('mailchimp_woocommerce_plugin_do_activation_redirect', false)) {
-            delete_option('mailchimp_woocommerce_plugin_do_activation_redirect');
+        if (\Mailchimp_Woocommerce_DB_Helpers::get_option('mailchimp_woocommerce_plugin_do_activation_redirect', false)) {
+            \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp_woocommerce_plugin_do_activation_redirect');
 
             // don't do the redirect while activating the plugin through the rest API. ( Bartosz from Woo asked for this )
             if ((defined( 'REST_REQUEST' ) && REST_REQUEST)) {
@@ -111,9 +111,11 @@ abstract class MailChimp_WooCommerce_Options
     public function getOption($key, $default = null)
     {
         $options = $this->getOptions();
+
         if (isset($options[$key])) {
             return $options[$key];
         }
+
         return $default;
     }
 
@@ -132,7 +134,7 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function resetOptions()
     {
-        return $this->plugin_options = get_option($this->plugin_name);
+        return $this->plugin_options = mailchimp_get_admin_options();
     }
 
     /**
@@ -141,8 +143,9 @@ abstract class MailChimp_WooCommerce_Options
     public function getOptions()
     {
         if (empty($this->plugin_options)) {
-            $this->plugin_options = get_option($this->plugin_name);
+            $this->plugin_options = mailchimp_get_admin_options();
         }
+
         return is_array($this->plugin_options) ? $this->plugin_options : array();
     }
 
@@ -153,7 +156,7 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function setData($key, $value)
     {
-        update_option($this->plugin_name.'-'.$key, $value, 'yes');
+        \Mailchimp_Woocommerce_DB_Helpers::update_option($this->plugin_name.'-'.$key, $value, 'yes');
         return $this;
     }
 
@@ -164,7 +167,7 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function getData($key, $default = null)
     {
-        return get_option($this->plugin_name.'-'.$key, $default);
+        return \Mailchimp_Woocommerce_DB_Helpers::get_option($this->plugin_name.'-'.$key, $default);
     }
 
 
@@ -174,7 +177,7 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function removeData($key)
     {
-        return delete_option($this->plugin_name.'-'.$key);
+        return \Mailchimp_Woocommerce_DB_Helpers::delete_option($this->plugin_name.'-'.$key);
     }
 
     /**
@@ -278,15 +281,14 @@ abstract class MailChimp_WooCommerce_Options
      */
     public function removePointers($products = true, $orders = true)
     {
+        if ($orders) {
+            $this->removeOrderPointers();
+            $this->removeSyncPointers();
+        }
+
         if ($products) {
             $this->removeProductPointers();
         }
-
-        if ($orders) {
-            $this->removeOrderPointers();
-        }
-
-        $this->removeSyncPointers();
 
         $this->removeMiscPointers();
 
@@ -295,15 +297,19 @@ abstract class MailChimp_WooCommerce_Options
 
     public function removeProductPointers()
     {
-        delete_option('mailchimp-woocommerce-sync.products.completed_at');
-        delete_option('mailchimp-woocommerce-sync.products.current_page');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.products.completed_at');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.products-queueing.completed_at');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.products.current_page');
+        mailchimp_flush_specific_resource_pointers('products');
+        mailchimp_flush_specific_resource_pointers('product_categories');
     }
 
     public function removeOrderPointers()
     {
-        delete_option('mailchimp-woocommerce-sync.orders.prevent');
-        delete_option('mailchimp-woocommerce-sync.orders.completed_at');
-        delete_option('mailchimp-woocommerce-sync.orders.current_page');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.orders.prevent');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.orders.completed_at');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.orders-queueing.completed_at');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-sync.orders.current_page');
     }
 
     public function removeSyncPointers()
@@ -313,9 +319,9 @@ abstract class MailChimp_WooCommerce_Options
 
     public function removeMiscPointers()
     {
-        delete_option('mailchimp-woocommerce-errors.store_info');
-        delete_option('mailchimp-woocommerce-validation.api.ping');
-        delete_option('mailchimp-woocommerce-cached-api-lists');
-        delete_option('mailchimp-woocommerce-cached-api-ping-check');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-errors.store_info');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-validation.api.ping');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-cached-api-lists');
+        \Mailchimp_Woocommerce_DB_Helpers::delete_option('mailchimp-woocommerce-cached-api-ping-check');
     }
 }

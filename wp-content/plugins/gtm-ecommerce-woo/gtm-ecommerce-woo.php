@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: GTM for WooCommerce FREE - Google Tag Manager Integration
+ * Plugin Name: Tag Pilot FREE - Google Tag Manager Integration for WooCommerce
  * Plugin URI:  https://wordpress.org/plugins/gtm-ecommerce-woo
- * Description: Enable new growth channels for WooCommerce with GA4, Facebook Pixel and Consent Mode ready GTM integration. Use packaged GTM presets for quick installation.
- * Version:     1.10.34
+ * Description: Complete Google Tag Manager plugin for WooCommerce, Consent Mode v2 and Server-Side GTM ready. Ready GTM configuration for GA4 and Facebook Pixel. Built-in product feed for Google Merchant Center.
+ * Version:     1.12.12
  * Author:      Tag Concierge
  * Author URI:  https://tagconcierge.com/
  * License:     GPLv2 or later
@@ -12,7 +12,7 @@
  * Domain Path: /languages
  *
  * WC requires at least: 4.0
- * WC tested up to: 8.9.1
+ * WC tested up to: 10.0.2
  */
 
 namespace GtmEcommerceWoo;
@@ -31,14 +31,19 @@ add_action( 'before_woocommerce_init', function() {
 	}
 });
 
-$container = new Container($pluginVersion);
 
-$container->getSettingsService()->initialize();
-$container->getGtmSnippetService()->initialize();
-$container->getEventStrategiesService()->initialize();
-$container->getEventInspectorService()->initialize();
+add_action('plugins_loaded', function () use ( $pluginVersion) {
+	$container = new Container($pluginVersion);
 
-$pluginService = $container->getPluginService();
-$pluginService->initialize();
+	$container->getSettingsService()->initialize();
+	$container->getGtmSnippetService()->initialize();
+	$container->getEventStrategiesService()->initialize();
+	$container->getEventInspectorService()->initialize();
+	$container->getProductFeedService()->initialize();
+	$container->getOrderMonitorService()->initialize();
 
-register_activation_hook( __FILE__, [$pluginService, 'activationHook'] );
+	$pluginService = $container->getPluginService();
+	$pluginService->initialize();
+
+	register_activation_hook( __FILE__, [$pluginService, 'activationHook'] );
+});

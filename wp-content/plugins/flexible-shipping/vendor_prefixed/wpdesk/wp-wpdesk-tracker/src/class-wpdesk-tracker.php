@@ -14,11 +14,25 @@ namespace FSVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
+if (!\class_exists('FSVendor\WPDesk_Tracker')) {
+    /**
+     * Class WPDESK_Tracker
+     */
     class WPDesk_Tracker implements \WPDesk_Tracker_Interface
     {
-        const WPDESK_TRACKER_NOTICE = 'wpdesk-tracker-notice';
-        const WPDESK_TRACKER_DEACTIVATION = 'wpdesk-tracker-deactivation';
+        public const ADMIN_HANDLER = 'wpdesk-helper-tracker';
+        public const ADMIN_LOCALIZE = 'wpdesk_tracker_localize';
+        public const ADMIN_NOTICE_HANDLER = 'wpdesk-helper-tracker-notice';
+        public const ADMIN_NOTICE_LOCALIZE = 'wpdesk_tracker_notice_localize';
+        public const ADMIN_PLUGINS_HANDLER = 'wpdesk-helper-plugins-notice';
+        public const ADMIN_PLUGINS_LOCALIZE = 'wpdesk_tracker_plugins_localize';
+        public const AJAX_ACTION = 'wpdesk_tracker_deactivation_handler';
+        public const AJAX_NONCE = 'nonce_wpdesk_tracker_deactivation_handler';
+        public const AJAX_NOTICE_ACTION = 'wpdesk_tracker_notice_handler';
+        public const WPDESK_TRACKER_NOTICE = 'wpdesk-tracker-notice';
+        public const WPDESK_TRACKER_DEACTIVATION = 'wpdesk-tracker-deactivation';
+        private const WPDESK_TRACKER_ACTION = 'wpdesk_tracker_action';
+        private const WPDESK_TRACKER_NONCE = 'nonce';
         /**
          * @var string
          */
@@ -66,6 +80,8 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         {
             \add_action('admin_init', [$this, 'init_schedule']);
             \add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts'], 100);
+            \add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_notice_scripts'], 100);
+            \add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_plugins_scripts'], 100);
             \add_action('wpdesk_tracker_send_event', [$this, 'send_tracking_data']);
             \add_action('admin_menu', [$this, 'admin_menu']);
             \add_action('admin_init', [$this, 'admin_init']);
@@ -77,22 +93,10 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
             \add_filter('default_option_wpdesk_helper_options', [$this, 'default_option_wpdesk_helper_options'], 10, 3);
             \add_filter('wpdesk_tracker_data', [$this, 'wpdesk_tracker_message_version']);
             \add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 999);
-            \add_action('wp_head', [$this, 'wp_head'], 999);
-            \add_action('admin_head', [$this, 'wp_head'], 999);
-            global $pagenow;
-            if ('plugins.php' === $pagenow) {
-                \add_action('admin_footer', [$this, 'admin_footer']);
-            }
         }
         public function add_data_provider(\WPDesk_Tracker_Data_Provider $provider)
         {
             $this->providers[] = $provider;
-        }
-        public function wp_head()
-        {
-            if (\apply_filters('wpdesk_tracker_use_testdata', \false) && \apply_filters('wpdesk_tracker_show_testdata', \false)) {
-                include 'views/tracker-styles.php';
-            }
         }
         /**
          * @param WP_Admin_Bar $wp_admin_bar
@@ -129,26 +133,70 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         {
             return \apply_filters('wpdesk_tracker_enabled', \true);
         }
-        public function admin_footer()
+        public function admin_enqueue_plugins_scripts(): void
         {
-            if (!\is_network_admin() && $this->should_enable_wpdesk_tracker() && !\apply_filters('wpdesk_tracker_do_not_ask', \false)) {
+            global $pagenow;
+            if ('plugins.php' === $pagenow && !\is_network_admin() && $this->should_enable_wpdesk_tracker() && !\apply_filters('wpdesk_tracker_do_not_ask', \false)) {
+                \wp_register_script(self::ADMIN_PLUGINS_HANDLER, \plugin_dir_url(__FILE__) . 'assets/js/admin_plugins.js', [], $this->script_version);
+                \wp_enqueue_script(self::ADMIN_PLUGINS_HANDLER);
                 $plugins = ['wpdesk-helper/wpdesk-helper.php' => 'wpdesk-helper/wpdesk-helper.php'];
                 $plugins = \apply_filters('wpdesk_track_plugin_deactivation', $plugins);
-                include 'views/tracker-plugins-footer.php';
+                \wp_localize_script(self::ADMIN_PLUGINS_HANDLER, self::ADMIN_PLUGINS_LOCALIZE, ['plugins' => \wp_json_encode($plugins), 'base_url' => \esc_url_raw(\wp_nonce_url(\admin_url("admin.php?page=wpdesk_tracker_deactivate"), self::WPDESK_TRACKER_ACTION, self::WPDESK_TRACKER_NONCE))]);
             }
         }
-        public function admin_enqueue_scripts()
+        public function admin_enqueue_scripts(): void
         {
             $screen = \get_current_screen();
             if ($screen->id === 'admin_page_wpdesk_tracker' || $screen->id === 'admin_page_wpdesk_tracker_deactivate') {
-                \wp_register_style('wpdesk-helper-tracker', \plugin_dir_url(__FILE__) . 'assets/css/tracker.css', [], $this->script_version, 'all');
-                \wp_enqueue_style('wpdesk-helper-tracker');
+                \wp_register_style(self::ADMIN_HANDLER, \plugin_dir_url(__FILE__) . 'assets/css/tracker.css', [], $this->script_version, 'all');
+                \wp_enqueue_style(self::ADMIN_HANDLER);
+                \wp_register_script(self::ADMIN_HANDLER, \plugin_dir_url(__FILE__) . 'assets/js/admin.js', [], $this->script_version);
+                \wp_enqueue_script(self::ADMIN_HANDLER);
+                $plugin = '';
+                $plugin_name = '';
+                if (\current_user_can('activate_plugins') && \false !== \check_ajax_referer(self::WPDESK_TRACKER_ACTION, self::WPDESK_TRACKER_NONCE, \false)) {
+                    $plugin = \sanitize_text_field(\wp_unslash($_GET['plugin'] ?? ''));
+                    $active_plugins = \get_plugins();
+                    $plugin_name = $active_plugins[$plugin]['Name'] ?? '';
+                }
+                $deactivation_plugins = ['wpdesk-helper/wpdesk-helper.php' => 'wpdesk-helper/wpdesk-helper.php'];
+                $deactivation_plugins = \apply_filters('wpdesk_track_plugin_deactivation', $deactivation_plugins);
+                \wp_localize_script(self::ADMIN_HANDLER, self::ADMIN_LOCALIZE, ['action' => \esc_attr(self::AJAX_ACTION), 'nonce' => \wp_create_nonce(self::AJAX_NONCE), 'ajax_url' => \esc_url_raw(\admin_url('admin-ajax.php')), 'tracker_page' => \esc_url_raw(\str_replace("&amp;", "&", \admin_url(\wp_nonce_url("plugins.php?action=deactivate&plugin=" . $plugin . "&plugin_status=all&", "deactivate-plugin_" . $plugin)))), 'plugin' => \esc_attr($plugin), 'plugin_name' => \esc_attr($plugin_name), 'submit_txt' => \esc_html__("Submit &amp; Deactivate", "flexible-shipping"), 'deactivation_plugins' => \wp_json_encode($deactivation_plugins)]);
+            }
+        }
+        private function is_notices_enabled(): bool
+        {
+            if (!$this->should_enable_wpdesk_tracker()) {
+                return \false;
+            }
+            if (!\current_user_can('activate_plugins')) {
+                return \false;
+            }
+            if (\get_option('wpdesk_tracker_notice', '0') != 'dismiss_all') {
+                $options = \get_option('wpdesk_helper_options', []);
+                if (!\is_array($options)) {
+                    $options = [];
+                }
+                if (empty($options['wpdesk_tracker_agree']) || $options['wpdesk_tracker_agree'] == '0') {
+                    if ($this->can_display_notice()) {
+                        return \true;
+                    }
+                }
+            }
+            return \false;
+        }
+        public function admin_enqueue_notice_scripts(): void
+        {
+            if ($this->is_notices_enabled()) {
+                \wp_register_script(self::ADMIN_NOTICE_HANDLER, \plugin_dir_url(__FILE__) . 'assets/js/admin_notices.js', [], $this->script_version);
+                \wp_enqueue_script(self::ADMIN_NOTICE_HANDLER);
+                \wp_localize_script(self::ADMIN_NOTICE_HANDLER, self::ADMIN_NOTICE_LOCALIZE, ['action' => \esc_attr(self::AJAX_NOTICE_ACTION), 'nonce' => \wp_create_nonce(self::WPDESK_TRACKER_NOTICE), 'ajax_url' => \esc_url_raw(\admin_url('admin-ajax.php')), 'plugin' => \esc_attr($this->plugin_basename)]);
             }
         }
         public function admin_menu()
         {
-            \add_submenu_page('', 'WP Desk Tracker', 'WP Desk Tracker', 'manage_options', 'wpdesk_tracker', [$this, 'wpdesk_tracker_page']);
-            \add_submenu_page('', 'Deactivate plugin', 'Deactivate plugin', 'manage_options', 'wpdesk_tracker_deactivate', [$this, 'wpdesk_tracker_deactivate']);
+            \add_submenu_page('wpdesk_tracker', 'WP Desk Tracker', 'WP Desk Tracker', 'manage_options', 'wpdesk_tracker', [$this, 'wpdesk_tracker_page']);
+            \add_submenu_page('wpdesk_tracker', 'Deactivate plugin', 'Deactivate plugin', 'manage_options', 'wpdesk_tracker_deactivate', [$this, 'wpdesk_tracker_deactivate']);
         }
         public function wp_ajax_wpdesk_tracker_deactivation_handler()
         {
@@ -161,7 +209,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         public function wp_ajax_wpdesk_tracker_notice_handler()
         {
             \check_ajax_referer(self::WPDESK_TRACKER_NOTICE, 'security');
-            if (!\current_user_can('manage_woocommerce')) {
+            if (!\current_user_can('activate_plugins')) {
                 die;
             }
             $option = \get_option('wpdesk_helper_options');
@@ -238,29 +286,13 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         }
         public function admin_notices()
         {
-            if (!$this->should_enable_wpdesk_tracker()) {
-                return;
+            if ($this->is_notices_enabled()) {
+                $user = \wp_get_current_user();
+                $username = $user->first_name ? $user->first_name : $user->user_login;
+                $terms_url = \get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/dane-uzytkowania/' : 'https://www.wpdesk.net/usage-tracking/';
+                include 'views/tracker-notice.php';
             }
-            if (!\current_user_can('manage_woocommerce')) {
-                return;
-            }
-            $options = \get_option('wpdesk_helper_options', []);
-            if (!\is_array($options)) {
-                $options = [];
-            }
-            if (\get_option('wpdesk_tracker_notice', '0') != 'dismiss_all') {
-                if (empty($options['wpdesk_tracker_agree']) || $options['wpdesk_tracker_agree'] == '0') {
-                    if ($this->can_display_notice()) {
-                        $user = \wp_get_current_user();
-                        $username = $user->first_name ? $user->first_name : $user->user_login;
-                        $terms_url = \get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/dane-uzytkowania/' : 'https://www.wpdesk.net/usage-tracking/';
-                        $shop_url = \get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/' : 'https://www.wpdesk.net/';
-                        $plugin = $this->plugin_basename;
-                        include 'views/tracker-notice.php';
-                    }
-                }
-            }
-            if (isset($_GET['wpdesk_tracker_opt_out'])) {
+            if (isset($_GET['wpdesk_tracker_opt_out']) && \current_user_can('activate_plugins') && $this->should_enable_wpdesk_tracker()) {
                 $options = \get_option('wpdesk_helper_options', []);
                 if (!\is_array($options)) {
                     $options = [];
@@ -273,10 +305,12 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         }
         public function wpdesk_tracker_page()
         {
+            $nonce = \wp_create_nonce(self::WPDESK_TRACKER_ACTION);
             $user = \wp_get_current_user();
             $username = $user->first_name ? $user->first_name : $user->user_login;
             $allow_url = \admin_url('admin.php?page=wpdesk_tracker');
-            $allow_url = \add_query_arg('plugin', \sanitize_text_field(\wp_unslash($_GET['plugin'])), $allow_url);
+            $allow_url = \add_query_arg('plugin', \sanitize_text_field(\wp_unslash($_GET['plugin'] ?? '')), $allow_url);
+            $allow_url = \add_query_arg(self::WPDESK_TRACKER_NONCE, $nonce, $allow_url);
             $skip_url = $allow_url;
             $allow_url = \add_query_arg('allow', '1', $allow_url);
             $skip_url = \add_query_arg('allow', '0', $skip_url);
@@ -285,9 +319,15 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         }
         public function wpdesk_tracker_deactivate()
         {
+            if (!\current_user_can('activate_plugins') || \false === \check_ajax_referer(self::WPDESK_TRACKER_ACTION, self::WPDESK_TRACKER_NONCE)) {
+                die;
+            }
+            if (!$this->applies_to_current_plugin()) {
+                return;
+            }
             $user = \wp_get_current_user();
             $username = $user->first_name;
-            $plugin = \sanitize_text_field(\wp_unslash($_GET['plugin']));
+            $plugin = \sanitize_text_field(\wp_unslash($_GET['plugin'] ?? ''));
             $active_plugins = \get_plugins();
             $plugin_name = $active_plugins[$plugin]['Name'];
             include 'views/tracker-deactivate.php';
@@ -296,6 +336,9 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
         {
             if (isset($_GET['page']) && $_GET['page'] === 'wpdesk_tracker') {
                 if (isset($_GET['plugin']) && isset($_GET['allow'])) {
+                    if (!\current_user_can('activate_plugins') || \false === \check_ajax_referer(self::WPDESK_TRACKER_ACTION, self::WPDESK_TRACKER_NONCE)) {
+                        die;
+                    }
                     $options = \get_option('wpdesk_helper_options', []);
                     if (!\is_array($options)) {
                         $options = [];
@@ -363,10 +406,6 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
             if (!$this->should_enable_wpdesk_tracker()) {
                 return;
             }
-            // Dont trigger this on AJAX Requests.
-            if (\defined('DOING_AJAX') && \DOING_AJAX) {
-                // return;
-            }
             if (!\apply_filters('wpdesk_tracker_send_override', $override)) {
                 // Send a maximum of once per week by default.
                 $last_send = $this->get_last_send_time();
@@ -386,7 +425,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
                 $params = $this->get_tracking_data();
                 if (isset($params['active_plugins'])) {
                     foreach ($params['active_plugins'] as $plugin => $plugin_data) {
-                        $option_name = 'plugin_activation_' . $plugin;
+                        $option_name = 'activation_plugin_' . $plugin;
                         $activation_date = \get_option($option_name, '');
                         if ($activation_date != '') {
                             $params['active_plugins'][$plugin]['activation_date'] = $activation_date;
@@ -418,7 +457,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
             try {
                 $this->sender->send_payload($payload);
                 return \true;
-            } catch (\FSVendor\WPDesk_Tracker_Sender_Exception_WpError $e) {
+            } catch (WPDesk_Tracker_Sender_Exception_WpError $e) {
                 return \false;
             }
         }
@@ -454,20 +493,24 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker')) {
             $data = $this->get_data_from_providers();
             return \apply_filters('wpdesk_tracker_data', $data);
         }
-        private function read_context_from_request() : array
+        private function read_context_from_request(): array
         {
             if (isset($_REQUEST['ctx'], $_REQUEST['plugin'])) {
                 return ['source' => ['plugin' => \sanitize_key($_REQUEST['plugin']), 'ctx' => \sanitize_key($_REQUEST['ctx'])]];
             }
             return [];
         }
-        private function can_display_notice() : bool
+        private function can_display_notice(): bool
         {
             if (\has_filter('wpdesk_tracker_notice_screens') === \true) {
                 $screen = \get_current_screen();
                 return \in_array($screen->id, \apply_filters('wpdesk_tracker_notice_screens', []), \true);
             }
             return \true;
+        }
+        private function applies_to_current_plugin(): bool
+        {
+            return \strpos(\sanitize_text_field(\wp_unslash($_GET['plugin'] ?? '')), $this->plugin_basename);
         }
     }
 }

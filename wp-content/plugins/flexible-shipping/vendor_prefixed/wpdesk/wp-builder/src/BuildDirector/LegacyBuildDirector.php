@@ -9,7 +9,7 @@ class LegacyBuildDirector
 {
     /** @var AbstractBuilder */
     private $builder;
-    public function __construct(\FSVendor\WPDesk\PluginBuilder\Builder\AbstractBuilder $builder)
+    public function __construct(AbstractBuilder $builder)
     {
         $this->builder = $builder;
     }
@@ -20,7 +20,7 @@ class LegacyBuildDirector
     {
         $this->builder->build_plugin();
         $this->builder->init_plugin();
-        $storage = new \FSVendor\WPDesk\PluginBuilder\Storage\StorageFactory();
+        $storage = new StorageFactory();
         $this->builder->store_plugin($storage->create_storage());
     }
     /**

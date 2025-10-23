@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
  *
@@ -17,7 +16,7 @@ use WooCommerce\Facebook\Framework\Api\Exception as ApiException;
 use WooCommerce\Facebook\Framework\Helper;
 use WooCommerce\Facebook\Utilities\Heartbeat;
 
-defined( 'ABSPATH' ) or exit;
+defined( 'ABSPATH' ) || exit;
 
 /**
  * The connection handler.
@@ -34,7 +33,9 @@ class Connection {
 	const OAUTH_URL = 'https://facebook.com/dialog/oauth';
 
 	/** @var string WooCommerce connection proxy URL */
-	const PROXY_URL = 'https://api.woocommerce.com/integrations/auth/facebook/';
+	const PROXY_URL = 'https://api.woocommerce.com/integrations/v2/auth/facebook/';
+
+	const PROXY_TOKEN_EXCHANGE_URL = 'https://api.woocommerce.com/integrations/v2/exchange/facebook/';
 
 	/** @var string WooCommerce connection for APP Store login URL */
 	const APP_STORE_LOGIN_URL = 'https://api.woocommerce.com/integrations/app-store-login/facebook/';
@@ -47,6 +48,8 @@ class Connection {
 
 	/** @var string the action callback for the connection */
 	const ACTION_CONNECT = 'wc_facebook_connect';
+
+	const ACTION_EXCHANGE = 'wc_facebook_exchange';
 
 	/** @var string the action callback for the disconnection */
 	const ACTION_DISCONNECT = 'wc_facebook_disconnect';
@@ -93,6 +96,9 @@ class Connection {
 	/** @var string the Commerce merchant settings ID option name */
 	const OPTION_COMMERCE_MERCHANT_SETTINGS_ID = 'wc_facebook_commerce_merchant_settings_id';
 
+	/** @var string the Commerce Partner Integration ID option name */
+	const OPTION_COMMERCE_PARTNER_INTEGRATION_ID = 'wc_facebook_commerce_partner_integration_id';
+
 	/** @var string|null the generated external merchant settings ID */
 	private $external_business_id;
 
@@ -106,6 +112,8 @@ class Connection {
 	 * Constructs a new Connection.
 	 *
 	 * @since 2.0.0
+	 *
+	 * @param \WC_Facebookcommerce $plugin
 	 */
 	public function __construct( \WC_Facebookcommerce $plugin ) {
 
@@ -141,8 +149,13 @@ class Connection {
 			return;
 		}
 
-		try {
+		$flag_name = '_wc_facebook_for_woocommerce_refresh_business_configuration';
+		if ( 'yes' === get_transient( $flag_name ) ) {
+			return;
+		}
+		set_transient( $flag_name, 'yes', HOUR_IN_SECONDS );
 
+		try {
 			$response = $this->get_plugin()->get_api()->get_business_configuration( $this->get_external_business_id() );
 			facebook_for_woocommerce()->get_tracker()->track_facebook_business_config(
 				$response->is_ig_shopping_enabled(),
@@ -150,10 +163,8 @@ class Connection {
 			);
 
 		} catch ( ApiException $exception ) {
-
 			$this->get_plugin()->log( 'Could not refresh business configuration. ' . $exception->getMessage() );
 		}
-
 	}
 
 
@@ -169,24 +180,152 @@ class Connection {
 			return;
 		}
 
-		try {
-
-			$this->update_installation_data();
-
-		} catch ( ApiException $exception ) {
-
-			$this->get_plugin()->log( 'Could not refresh installation data. ' . $exception->getMessage() );
+		$flag_name = '_wc_facebook_for_woocommerce_refresh_installation_data';
+		if ( 'yes' === get_transient( $flag_name ) ) {
+			return;
 		}
+		set_transient( $flag_name, 'yes', DAY_IN_SECONDS );
 
+		try {
+			$this->update_installation_data();
+			$this->repair_or_update_commerce_integration_data();
+		} catch ( ApiException $exception ) {
+			$this->get_plugin()->log( 'Could not refresh installation data. ' . $exception->getMessage(), null, 'error' );
+		}
 	}
 
+	/**
+	 * Forces a refresh of installation data and config sync with Meta, bypassing transient checks.
+	 * Used during version upgrades to ensure config is properly synchronized.
+	 *
+	 * @since 3.5.4
+	 */
+	public function force_config_sync_on_update() {
+
+		// bail if not connected
+		if ( ! $this->is_connected() ) {
+			$this->get_plugin()->log( 'Skipping config sync on update - not connected to Facebook' );
+			return;
+		}
+
+		$this->get_plugin()->log( 'Starting forced config sync on version update' );
+
+		try {
+			// Force refresh installation data without transient check
+			$this->update_installation_data();
+			$this->repair_or_update_commerce_integration_data();
+			$this->get_plugin()->log( 'Successfully completed forced config sync on version update' );
+
+		} catch ( ApiException $exception ) {
+			$this->get_plugin()->log( 'Failed to complete forced config sync on update: ' . $exception->getMessage(), null, 'error' );
+		}
+	}
+
+	/**
+	 * Refreshes the client side info and configuration.
+	 *
+	 * @since 3.4.8
+	 */
+	public function repair_or_update_commerce_integration_data() {
+		// bail if not connected
+		if ( ! $this->is_connected() ) {
+			return;
+		}
+
+		try {
+			$commerce_integration_id = $this->get_commerce_partner_integration_id();
+
+			// If commerce integration ID doesn't exist, call repair endpoint
+			if ( empty( $commerce_integration_id ) ) {
+				$response = $this->get_plugin()->get_api()->repair_commerce_integration(
+					$this->get_external_business_id(),
+					$this->get_shop_domain(),
+					admin_url(),
+					$this->get_plugin()->get_version()
+				);
+
+				if ( ! $response->is_successful() ) {
+					$this->get_plugin()->log( 'Failed to repair commerce integration.', null, 'error' );
+					return;
+				}
+
+				// Store the new commerce integration ID
+				$new_commerce_integration_id = $response->get_commerce_partner_integration_id();
+				if ( empty( $new_commerce_integration_id ) ) {
+					$this->get_plugin()->log( 'Failed to get commerce partner integration ID from repair response.', null, 'error' );
+					return;
+				}
+
+				$this->update_commerce_partner_integration_id( $new_commerce_integration_id );
+				$commerce_integration_id = $new_commerce_integration_id;
+				$this->get_plugin()->log( 'Successfully repaired commerce integration. New ID: ' . $commerce_integration_id );
+			}
+
+			// If we have a commerce integration ID, update the configuration
+			if ( ! empty( $commerce_integration_id ) ) {
+				$update_response = $this->get_plugin()->get_api()->update_commerce_integration(
+					$commerce_integration_id,
+					$this->get_plugin()->get_version(),  // extension_version
+					admin_url(),                         // admin_url
+					$this->get_country_code(),           // country_code
+					$this->get_currency(),               // currency
+					$this->get_platform_store_id(),      // platform_store_id
+				);
+
+				if ( ! $update_response->is_successful() ) {
+					$this->get_plugin()->log( 'Failed to update commerce integration configuration.', null, 'error' );
+					return;
+				}
+
+				$this->get_plugin()->log( 'Successfully updated commerce integration configuration.' );
+			}
+		} catch ( ApiException $exception ) {
+			$this->get_plugin()->log( 'Could not repair or update commerce integration data. ' . $exception->getMessage(), null, 'error' );
+		}
+	}
+
+	/**
+	 * Gets the shop domain.
+	 *
+	 * @return string
+	 */
+	private function get_shop_domain() {
+		return site_url( '/' );
+	}
+
+	/**
+	 * Gets the country code.
+	 *
+	 * @return string|null
+	 */
+	private function get_country_code() {
+		return WC()->countries->get_base_country();
+	}
+
+	/**
+	 * Gets the currency.
+	 *
+	 * @return string|null
+	 */
+	private function get_currency() {
+		return get_woocommerce_currency();
+	}
+
+	/**
+	 * Gets the platform store ID.
+	 *
+	 * @return int
+	 */
+	private function get_platform_store_id() {
+		return get_current_blog_id();
+	}
 
 	/**
 	 * Retrieves and stores the connected installation data.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws ApiException
+	 * @throws ApiException If the installation data could not be retrieved.
 	 */
 	private function update_installation_data() {
 
@@ -227,6 +366,12 @@ class Connection {
 		if ( $response->get_commerce_merchant_settings_id() ) {
 			$this->update_commerce_merchant_settings_id( sanitize_text_field( $response->get_commerce_merchant_settings_id() ) );
 		}
+
+		if ( $response->get_commerce_partner_integration_id() ) {
+			$this->update_commerce_partner_integration_id( sanitize_text_field( $response->get_commerce_partner_integration_id() ) );
+		} else {
+			$this->update_commerce_partner_integration_id( '' );
+		}
 	}
 
 
@@ -236,6 +381,9 @@ class Connection {
 	 * @internal
 	 *
 	 * @since 2.0.0
+	 *
+	 * @throws ApiException If token exchange failed.
+	 * @throws ConnectApiException If the connect server returned an error.
 	 */
 	public function handle_connect() {
 		// don't handle anything unless the user can manage WooCommerce settings
@@ -246,14 +394,62 @@ class Connection {
 			if ( empty( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_GET['nonce'] ) ), self::ACTION_CONNECT ) ) {
 				throw new ApiException( 'Invalid nonce' );
 			}
-			$is_error                 = ! empty( $_GET['err'] ) ? true : false;
-			$error_code               = ! empty( $_GET['err_code'] ) ? stripslashes( wc_clean( wp_unslash( $_GET['err_code'] ) ) ) : '';
-			$merchant_access_token    = ! empty( $_GET['merchant_access_token'] ) ? wc_clean( wp_unslash( $_GET['merchant_access_token'] ) ) : '';
-			$system_user_access_token = ! empty( $_GET['system_user_access_token'] ) ? wc_clean( wp_unslash( $_GET['system_user_access_token'] ) ) : '';
-			$system_user_id           = ! empty( $_GET['system_user_id'] ) ? wc_clean( wp_unslash( $_GET['system_user_id'] ) ) : '';
+
+			$is_error   = ! empty( $_GET['err'] );
+			$error_code = ! empty( $_GET['err_code'] ) ? stripslashes( wc_clean( wp_unslash( $_GET['err_code'] ) ) ) : '';
 			if ( $is_error && $error_code ) {
 				throw new ConnectApiException( $error_code );
 			}
+
+			// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$facebook_auth_code = $_GET['code'] ?? '';
+			if ( empty( $facebook_auth_code ) ) {
+				throw new ApiException( 'Facebook auth code is missing.' );
+			}
+
+			$state = $_GET['state'] ?? '';
+			if ( empty( $state ) ) {
+				throw new ApiException( 'Missing state query parameter.' );
+			}
+
+			$parameters_string = '?' . http_build_query(
+				array(
+					'nonce'                => wp_create_nonce( self::ACTION_EXCHANGE ),
+					'code'                 => $facebook_auth_code,
+					'external_business_id' => $this->get_external_business_id(),
+					'type'                 => self::AUTH_TYPE_STANDARD,
+					'state'                => $state,
+				)
+			);
+
+			$request_url = self::PROXY_TOKEN_EXCHANGE_URL . $parameters_string;
+			$response    = wp_safe_remote_get(
+				$request_url,
+				array(
+					'timeout' => 60,
+				)
+			);
+
+			if ( is_wp_error( $response ) ) {
+				throw new ApiException( 'WooCommerce Connect Server token exchange has failed.' );
+			}
+
+			$token_data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			if ( isset( $token_data['status'] ) && 500 === $token_data['status'] ) {
+				throw new ApiException( 'WooCommerce Connect Server token exchange has failed.' );
+			}
+
+			// Check that request was initiated from the server.
+			if ( ! wp_verify_nonce( $token_data['nonce'] ?? '', self::ACTION_EXCHANGE ) ) {
+				throw new ApiException( 'Exchange nonce is not valid.' );
+			}
+
+			$merchant_access_token    = wc_clean( wp_unslash( $token_data['merchant_access_token'] ?? '' ) );
+			$system_user_access_token = wc_clean( wp_unslash( $token_data['system_user_access_token'] ?? '' ) );
+			$system_user_id           = wc_clean( wp_unslash( $token_data['system_user_id'] ?? '' ) );
+
 			if ( ! $merchant_access_token ) {
 				throw new ApiException( 'Access token is missing' );
 			}
@@ -270,10 +466,10 @@ class Connection {
 			// Allow opt-out of full batch-API sync, for example if store has a large number of products.
 			if ( facebook_for_woocommerce()->get_integration()->allow_full_batch_api_sync() ) {
 				facebook_for_woocommerce()->get_products_sync_handler()->create_or_update_all_products();
-			}
-			else {
+			} else {
 				facebook_for_woocommerce()->log( 'Initial full product sync disabled by filter hook `facebook_for_woocommerce_allow_full_batch_api_sync`', 'facebook_for_woocommerce_connect' );
 			}
+			facebook_for_woocommerce()->get_product_sets_sync_handler()->sync_all_product_sets();
 			update_option( 'wc_facebook_has_connected_fbe_2', 'yes' );
 			update_option( 'wc_facebook_has_authorized_pages_read_engagement', 'yes' );
 			// redirect to the Commerce onboarding if directed to do so
@@ -311,11 +507,11 @@ class Connection {
 			 * We want to print it pretty for the customers.
 			 */
 			$decoded_message = json_decode( $message );
-			if ( json_last_error() === JSON_ERROR_NONE ) {
-				// If error is the first key we want to use just the body to simplify the message.
-				$decoded_message = isset( $decoded_message->error ) ? $decoded_message->error : $decoded_message;
-				$message         = json_encode( $decoded_message, JSON_PRETTY_PRINT );
-			}
+		if ( json_last_error() === JSON_ERROR_NONE ) {
+			// If error is the first key we want to use just the body to simplify the message.
+			$decoded_message = isset( $decoded_message->error ) ? $decoded_message->error : $decoded_message;
+			$message         = wp_json_encode( $decoded_message, JSON_PRETTY_PRINT );
+		}
 			return $message;
 	}
 
@@ -326,6 +522,8 @@ class Connection {
 	 * @internal
 	 *
 	 * @since 2.0.0
+	 *
+	 * @throws ApiException If the disconnection failed.
 	 */
 	public function handle_disconnect() {
 		check_admin_referer( self::ACTION_DISCONNECT );
@@ -333,13 +531,25 @@ class Connection {
 			wp_die( esc_html__( 'You do not have permission to uninstall Facebook Business Extension.', 'facebook-for-woocommerce' ) );
 		}
 		try {
-			$response = facebook_for_woocommerce()->get_api()->get_user();
-			$id       = $response->get_id();
-			if ( null !== $id ) {
-				$response = facebook_for_woocommerce()->get_api()->delete_user_permission( (string) $id , 'manage_business_extension' );
+			$external_business_id = $this->get_external_business_id();
+
+			// phpcs:ignore Universal.Operators.StrictComparisons.LooseNotEqual
+			if ( null != $external_business_id ) {
+				$response = facebook_for_woocommerce()->get_api()->delete_mbe_connection( (string) $external_business_id );
 				facebook_for_woocommerce()->get_message_handler()->add_message( __( 'Disconnection successful.', 'facebook-for-woocommerce' ) );
+
+				$body = wp_remote_retrieve_body( $response );
+				$body = json_decode( $body, true );
+				if ( ! is_array( $body ) || empty( $body['data'] ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+					facebook_for_woocommerce()->log( 'Failed to disconnect' );
+					// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+					facebook_for_woocommerce()->log( print_r( $body, true ) );
+					throw new ApiException(
+						sprintf( wp_remote_retrieve_response_message( $response ) )
+					);
+				}
 			} else {
-				facebook_for_woocommerce()->log( 'User id not found for the disconnection procedure, connection will be reset.' );
+				facebook_for_woocommerce()->log( 'External business id not found for the disconnection procedure, connection will be reset.' );
 			}
 		} catch ( ApiException $exception ) {
 			facebook_for_woocommerce()->log( sprintf( 'An error occurred during disconnection: %s.', $exception->getMessage() ) );
@@ -371,6 +581,7 @@ class Connection {
 		$this->update_instagram_business_id( '' );
 		$this->update_commerce_merchant_settings_id( '' );
 		$this->update_external_business_id( '' );
+		$this->update_commerce_partner_integration_id( '' );
 		update_option( \WC_Facebookcommerce_Integration::SETTING_FACEBOOK_PAGE_ID, '' );
 		update_option( \WC_Facebookcommerce_Integration::SETTING_FACEBOOK_PIXEL_ID, '' );
 		facebook_for_woocommerce()->get_integration()->update_product_catalog_id( '' );
@@ -384,20 +595,21 @@ class Connection {
 	 *
 	 * @param string $page_id desired Facebook page ID
 	 * @return string
-	 * @throws ApiException
+	 * @throws ApiException If the page access token could not be retrieved.
 	 */
 	private function retrieve_page_access_token( $page_id ) {
 		facebook_for_woocommerce()->log( 'Retrieving page access token' );
-		$api_url = Api::GRAPH_API_URL . Api::API_VERSION;
+		$api_url  = Api::GRAPH_API_URL . Api::API_VERSION;
 		$response = wp_remote_get( $api_url . '/me/accounts?access_token=' . $this->get_access_token() );
-		$body = wp_remote_retrieve_body( $response );
-		$body = json_decode( $body, true );
+		$body     = wp_remote_retrieve_body( $response );
+		$body     = json_decode( $body, true );
 		if ( ! is_array( $body ) || empty( $body['data'] ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			facebook_for_woocommerce()->log( print_r( $body, true ) );
 			throw new ApiException(
 				sprintf(
 					/* translators: Placeholders: %s - API error message */
-					__( 'Could not retrieve page access data. %s', 'facebook for woocommerce' ),
+					__( 'Could not retrieve page access data. %s', 'facebook-for-woocommerce' ),
 					wp_remote_retrieve_response_message( $response )
 				)
 			);
@@ -541,20 +753,6 @@ class Connection {
 		 * @param string $connect_url connect URL
 		 */
 		return apply_filters( 'wc_facebook_commerce_connect_url', $connect_url );
-	}
-
-
-	/**
-	 * Gets the URL to manage the connection.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return string
-	 */
-	public function get_manage_url() {
-		$app_id      = $this->get_client_id();
-		$business_id = $this->get_external_business_id();
-		return "https://www.facebook.com/facebook_business_extension?app_id={$app_id}&external_business_id={$business_id}";
 	}
 
 
@@ -752,6 +950,18 @@ class Connection {
 
 
 	/**
+	 * Gets Commerce Partner Integration ID value.
+	 *
+	 * @since 3.4.8
+	 *
+	 * @return string
+	 */
+	public function get_commerce_partner_integration_id() {
+		return get_option( self::OPTION_COMMERCE_PARTNER_INTEGRATION_ID, '' );
+	}
+
+
+	/**
 	 * Gets the proxy URL.
 	 *
 	 * @since 2.0.0
@@ -855,8 +1065,9 @@ class Connection {
 		 * @since 2.0.0
 		 *
 		 * @param array $parameters connection parameters
+		 *
+		 * nosemgrep: audit.php.wp.security.xss.query-arg
 		 */
-		// nosemgrep: audit.php.wp.security.xss.query-arg
 		return apply_filters(
 			'wc_facebook_connection_parameters',
 			array(
@@ -866,7 +1077,7 @@ class Connection {
 				'display'       => 'page',
 				'response_type' => 'code',
 				'scope'         => implode( ',', $this->get_scopes() ),
-				'extras'        => json_encode( $this->get_connect_parameters_extras() ),
+				'extras'        => wp_json_encode( $this->get_connect_parameters_extras() ),
 			)
 		);
 	}
@@ -898,7 +1109,9 @@ class Connection {
 			),
 			'repeat'          => false,
 		);
-		if ( $external_merchant_settings_id = facebook_for_woocommerce()->get_integration()->get_external_merchant_settings_id() ) {
+
+		$external_merchant_settings_id = facebook_for_woocommerce()->get_integration()->get_external_merchant_settings_id();
+		if ( $external_merchant_settings_id ) {
 			$parameters['setup']['merchant_settings_id'] = $external_merchant_settings_id;
 		}
 		return $parameters;
@@ -908,11 +1121,11 @@ class Connection {
 	/**
 	 * Gets the configured timezone string using values accepted by Facebook
 	 *
-	 * @since 2.0.0
+	 * @since 2.5.0
 	 *
 	 * @return string
 	 */
-	private function get_timezone_string() {
+	public function get_timezone_string() {
 		$timezone = wc_timezone_string();
 		// convert +05:30 and +05:00 into Etc/GMT+5 - we ignore the minutes because Facebook does not allow minute offsets
 		if ( preg_match( '/([+-])(\d{2}):\d{2}/', $timezone, $matches ) ) {
@@ -1124,20 +1337,22 @@ class Connection {
 		// Reject other objects other than subscribed object
 		if ( empty( $data ) || ! isset( $data->object ) || self::WEBHOOK_SUBSCRIBED_OBJECT !== $data->object ) {
 			$this->get_plugin()->log( 'Wrong (or empty) WebHook Event received' );
-			$this->get_plugin()->log( print_r( $data, true ) ); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			$this->get_plugin()->log( print_r( $data, true ) );
 			return;
 		}
 		$log_data = array();
 		$this->get_plugin()->log( 'WebHook User Event received' );
-		$this->get_plugin()->log( print_r( $data, true ) ); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$this->get_plugin()->log( print_r( $data, true ) );
 		$entry = (array) $data->entry[0];
 		if ( empty( $entry ) ) {
 			return;
 		}
 		// Filter event by subscribed field
-		$event = array_filter(
+		$event  = array_filter(
 			$entry['changes'],
-			function( $change ) {
+			function ( $change ) {
 				return self::WEBHOOK_SUBSCRIBED_FIELD === $change->field;
 			}
 		);
@@ -1229,7 +1444,8 @@ class Connection {
 		}//end if
 
 		$this->get_plugin()->log( 'WebHook User event saved data' );
-		$this->get_plugin()->log( print_r( $log_data, true ) ); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$this->get_plugin()->log( print_r( $log_data, true ) );
 	}
 
 
@@ -1297,7 +1513,7 @@ class Connection {
 			exit;
 		}
 		if ( empty( $_REQUEST['success'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$url_params = array(
+			$url_params   = array(
 				'store_url'    => '',
 				'redirect_uri' => rawurlencode( $redirect_uri ),
 				'errors'       => array( 'You need to grant access to WooCommerce.' ),
@@ -1311,5 +1527,16 @@ class Connection {
 		}
 		wp_redirect( $redirect_url ); //phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 		exit;
+	}
+
+	/**
+	 * Stores the given Commerce Partner Integration ID.
+	 *
+	 * @since 3.4.
+	 *
+	 * @param string $id the ID
+	 */
+	public function update_commerce_partner_integration_id( $id ) {
+		update_option( self::OPTION_COMMERCE_PARTNER_INTEGRATION_ID, $id );
 	}
 }

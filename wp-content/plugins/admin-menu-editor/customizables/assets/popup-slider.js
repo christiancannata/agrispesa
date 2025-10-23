@@ -346,7 +346,9 @@ jQuery(function ($) {
 			options.sliderElement = $popup;
 		}
 
-		return new PopupSlider($container, options);
+		const slider = new PopupSlider($container, options);
+		$container.data('amePopupSlider', slider);
+		return slider;
 	}
 
 	//Expose the class in the global scope so that Knockout components can use it.

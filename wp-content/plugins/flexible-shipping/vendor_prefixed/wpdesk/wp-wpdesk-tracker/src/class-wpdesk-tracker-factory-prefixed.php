@@ -11,10 +11,11 @@ namespace FSVendor;
  * @category    Class
  * @author        WP Desk
  */
+use FSVendor\Psr\Log\LoggerInterface;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Tracker_Factory_Prefixed')) {
+if (!\class_exists('FSVendor\WPDesk_Tracker_Factory_Prefixed')) {
     /**
      * Can create and build tracker instance.
      *
@@ -22,6 +23,12 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Factory_Prefixed')) {
      */
     class WPDesk_Tracker_Factory_Prefixed
     {
+        /** @var LoggerInterface|null */
+        private $logger;
+        public function __construct(?LoggerInterface $logger = null)
+        {
+            $this->logger = $logger;
+        }
         /**
          * Builds tracker instance.
          *
@@ -31,30 +38,30 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Factory_Prefixed')) {
          */
         private function build_tracker($basename)
         {
-            $sender = \apply_filters('wpdesk/tracker/sender/' . $basename, new \FSVendor\WPDesk_Tracker_Sender_Wordpress_To_WPDesk());
-            $sender = new \FSVendor\WPDesk_Tracker_Sender_Logged($sender instanceof \WPDesk_Tracker_Sender ? $sender : new \FSVendor\WPDesk_Tracker_Sender_Wordpress_To_WPDesk());
-            $tracker = new \FSVendor\WPDesk_Tracker($basename, $sender);
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Gateways());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Identification());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Identification_Gdpr());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Jetpack());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_License_Emails());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Orders());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Orders_Country());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Orders_Month());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Plugins());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Products());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Products_Variations());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Server());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Settings());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Shipping_Classes());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Shipping_Methods());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Shipping_Methods_Zones());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Templates());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Theme());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_User_Agent());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Users());
-            $tracker->add_data_provider(new \FSVendor\WPDesk_Tracker_Data_Provider_Wordpress());
+            $sender = \apply_filters('wpdesk/tracker/sender/' . $basename, new WPDesk_Tracker_Sender_Wordpress_To_WPDesk());
+            $sender = new WPDesk_Tracker_Sender_Logged($sender instanceof \WPDesk_Tracker_Sender ? $sender : new WPDesk_Tracker_Sender_Wordpress_To_WPDesk(), $this->logger);
+            $tracker = new WPDesk_Tracker($basename, $sender);
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Gateways());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Identification());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Identification_Gdpr());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Jetpack());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_License_Emails());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Orders());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Orders_Country());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Orders_Month());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Plugins());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Products());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Products_Variations());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Server());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Settings());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Shipping_Classes());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Shipping_Methods());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Shipping_Methods_Zones());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Templates());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Theme());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_User_Agent());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Users());
+            $tracker->add_data_provider(new WPDesk_Tracker_Data_Provider_Wordpress());
             $tracker->init_hooks();
             return $tracker;
         }

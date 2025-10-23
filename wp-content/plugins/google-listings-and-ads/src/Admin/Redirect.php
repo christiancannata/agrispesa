@@ -39,7 +39,7 @@ class Redirect implements Activateable, Service, Registerable, OptionsAwareInter
 	protected $wp;
 
 	/**
-	 * Installer constructor.
+	 * Redirect constructor.
 	 *
 	 * @param WP $wp
 	 */
@@ -68,15 +68,15 @@ class Redirect implements Activateable, Service, Registerable, OptionsAwareInter
 	 */
 	public function activate(): void {
 		// Do not take any action if activated in a REST request (via wc-admin).
-		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		if ( $this->wp->wp_is_serving_rest_request() ) {
 			return;
 		}
 
 		if (
 			// Only redirect to onboarding when activated on its own. Either with a link...
-			isset( $_GET['action'] ) && 'activate' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification
+			( isset( $_GET['action'] ) && 'activate' === $_GET['action'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			// ...or with a bulk action.
-			|| isset( $_POST['checked'] ) && is_array( $_POST['checked'] ) && 1 === count( $_POST['checked'] ) // phpcs:ignore WordPress.Security.NonceVerification
+			|| ( isset( $_POST['checked'] ) && is_array( $_POST['checked'] ) && 1 === count( $_POST['checked'] ) ) // phpcs:ignore WordPress.Security.NonceVerification
 		) {
 			$this->options->update( self::OPTION, 'yes' );
 		}

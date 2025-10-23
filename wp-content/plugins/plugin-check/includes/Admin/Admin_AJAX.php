@@ -112,7 +112,10 @@ final class Admin_AJAX {
 		$checks = is_null( $checks ) ? array() : $checks;
 		$plugin = filter_input( INPUT_POST, 'plugin', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
+		$include_experimental = 1 === filter_input( INPUT_POST, 'include-experimental', FILTER_VALIDATE_INT );
+
 		try {
+			$runner->set_experimental_flag( $include_experimental );
 			$runner->set_check_slugs( $checks );
 			$runner->set_plugin( $plugin );
 
@@ -145,13 +148,8 @@ final class Admin_AJAX {
 	 * Handles the AJAX request to cleanup the runtime environment.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @global wpdb   $wpdb         WordPress database abstraction object.
-	 * @global string $table_prefix The database table prefix.
 	 */
 	public function clean_up_environment() {
-		global $wpdb, $table_prefix;
-
 		// Verify the nonce before continuing.
 		$valid_request = $this->verify_request( filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
 
@@ -159,20 +157,14 @@ final class Admin_AJAX {
 			wp_send_json_error( $valid_request, 403 );
 		}
 
-		// Set the new prefix.
-		$old_prefix = $wpdb->set_prefix( $table_prefix . 'pc_' );
-
-		$message = __( 'Runtime environment was not prepared, cleanup was not run.', 'plugin-check' );
-
-		// Test if the runtime environment tables exist.
-		if ( $wpdb->posts === $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->posts ) ) || defined( 'WP_PLUGIN_CHECK_OBJECT_CACHE_DROPIN_VERSION' ) ) {
-			$runtime = new Runtime_Environment_Setup();
+		// Test if the runtime environment is prepared (and thus needs cleanup).
+		$runtime = new Runtime_Environment_Setup();
+		if ( $runtime->is_set_up() ) {
 			$runtime->clean_up();
 			$message = __( 'Runtime environment cleanup successful.', 'plugin-check' );
+		} else {
+			$message = __( 'Runtime environment was not prepared, cleanup was not run.', 'plugin-check' );
 		}
-
-		// Restore the old prefix.
-		$wpdb->set_prefix( $old_prefix );
 
 		wp_send_json_success(
 			array(
@@ -194,12 +186,13 @@ final class Admin_AJAX {
 			wp_send_json_error( $valid_request, 403 );
 		}
 
-		$categories = filter_input( INPUT_POST, 'categories', FILTER_DEFAULT, FILTER_FORCE_ARRAY );
-		$categories = is_null( $categories ) ? array() : $categories;
-		$checks     = filter_input( INPUT_POST, 'checks', FILTER_DEFAULT, FILTER_FORCE_ARRAY );
-		$checks     = is_null( $checks ) ? array() : $checks;
-		$plugin     = filter_input( INPUT_POST, 'plugin', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$runner     = Plugin_Request_Utility::get_runner();
+		$categories           = filter_input( INPUT_POST, 'categories', FILTER_DEFAULT, FILTER_FORCE_ARRAY );
+		$categories           = is_null( $categories ) ? array() : $categories;
+		$checks               = filter_input( INPUT_POST, 'checks', FILTER_DEFAULT, FILTER_FORCE_ARRAY );
+		$checks               = is_null( $checks ) ? array() : $checks;
+		$plugin               = filter_input( INPUT_POST, 'plugin', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$include_experimental = 1 === filter_input( INPUT_POST, 'include-experimental', FILTER_VALIDATE_INT );
+		$runner               = Plugin_Request_Utility::get_runner();
 
 		if ( is_null( $runner ) ) {
 			$runner = new AJAX_Runner();
@@ -214,6 +207,7 @@ final class Admin_AJAX {
 		}
 
 		try {
+			$runner->set_experimental_flag( $include_experimental );
 			$runner->set_check_slugs( $checks );
 			$runner->set_plugin( $plugin );
 			$runner->set_categories( $categories );
@@ -266,7 +260,10 @@ final class Admin_AJAX {
 		$checks = is_null( $checks ) ? array() : $checks;
 		$plugin = filter_input( INPUT_POST, 'plugin', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
+		$include_experimental = 1 === filter_input( INPUT_POST, 'include-experimental', FILTER_VALIDATE_INT );
+
 		try {
+			$runner->set_experimental_flag( $include_experimental );
 			$runner->set_check_slugs( $checks );
 			$runner->set_plugin( $plugin );
 			$results = $runner->run();

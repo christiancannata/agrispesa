@@ -124,14 +124,14 @@ class Settings extends Store {
 	 * @param array $data Array of settings data.
 	 * @return void
 	 */
-	public function update( $data ) {
+	public function update( $data, $clear = true ) {
 		$settings = get_option( 'cky_settings', $this->data );
 		if ( empty( $settings ) ) {
 			$settings = $this->data;
 		}
 		$settings = self::sanitize( $data, $settings );
 		update_option( 'cky_settings', $settings );
-		do_action( 'cky_after_update_settings', $settings );
+		do_action( 'cky_after_update_settings', $clear );
 	}
 
 	/**

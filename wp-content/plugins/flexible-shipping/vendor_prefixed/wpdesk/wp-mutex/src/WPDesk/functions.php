@@ -39,7 +39,7 @@ function wpdesk_create_mysql_lock_from_order(\WC_Order $order, $lockName = '_mut
 function wpdesk_acquire_lock($lockName, $waitForLockTimeout = 5, $lockType = 'mysql')
 {
     if ('mysql' === $lockType) {
-        $mutex = \FSVendor\wpdesk_create_mysql_lock($lockName, $waitForLockTimeout);
+        $mutex = wpdesk_create_mysql_lock($lockName, $waitForLockTimeout);
         $storage = new \FSVendor\WPDesk\Mutex\StaticMutexStorage();
         $storage->addToStorage($lockName, $mutex);
         return $mutex->acquireLock();

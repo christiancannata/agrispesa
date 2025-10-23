@@ -17,7 +17,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.0.8"
+            "php": "7.4.33"
         },
         "allow-plugins": {
             "kylekatarnls\/update-helper": true,
@@ -25,7 +25,7 @@
         }
     },
     "require": {
-        "php": ">=7.0.8",
+        "php": ">=7.4",
         "wpdesk\/wp-builder": "^1.0|^2.0"
     },
     "require-dev": {
@@ -34,7 +34,8 @@
         "mockery\/mockery": "*",
         "10up\/wp_mock": "*",
         "wimg\/php-compatibility": "^8",
-        "wpdesk\/wp-codeception": "^2.7"
+        "wpdesk\/wp-codeception": "^2",
+        "phpunit\/phpunit": "^8"
     },
     "autoload": {
         "psr-4": {
@@ -51,5 +52,11 @@
         "phpunit-unit-fast": "phpunit --configuration phpunit-unit.xml --no-coverage",
         "phpunit-integration": "phpunit --configuration phpunit-integration.xml --coverage-text --colors=never",
         "phpunit-integration-fast": "phpunit --configuration phpunit-integration.xml --no-coverage"
+    },
+    "repositories": {
+        "wpdesk": {
+            "type": "composer",
+            "url": "https:\/\/gitlab.wpdesk.dev\/api\/v4\/group\/wpdesk\/-\/packages\/composer\/"
+        }
     }
 }

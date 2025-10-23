@@ -14,9 +14,11 @@ use WP_User;
 use YahnisElsts\AdminMenuEditor\Options\Option;
 use YahnisElsts\AdminMenuEditor\Options\Some;
 use YahnisElsts\AdminMenuEditor\Options\None;
+use YahnisElsts\AjaxActionWrapper\v2\Action;
 
 class Module extends amePersistentModule {
 	const FILTER_PRIORITY = 1000000;
+	const DEFAULT_SETTING_ACTOR_ID = 'special:default';
 	const UI_SCRIPT_HANDLE = 'ame-redirector-ui';
 
 	const FIRST_LOGIN_AGE_LIMIT_IN_DAYS = 14;
@@ -26,7 +28,7 @@ class Module extends amePersistentModule {
 
 	const PRELOADED_USER_LIMIT = 50;
 	const SEARCH_USER_LIMIT = 30;
-	protected static $desiredUserFields = array('ID', 'display_name', 'user_login');
+	protected static $desiredUserFields = ['ID', 'display_name', 'user_login'];
 
 	protected $tabSlug = 'redirects';
 	protected $tabTitle = 'Redirects';
@@ -69,11 +71,11 @@ class Module extends amePersistentModule {
 		}
 
 		if ( is_admin() ) {
-			$this->searchUsersAction = ajaw_v1_CreateAction('ws-ame-rui-search-users')
-				->requiredParam('term')
+			$this->searchUsersAction = Action::builder('ws-ame-rui-search-users')
+				->requiredParam('term', Action::PARSE_STRING)
 				->method('get')
-				->permissionCallback(array($this, 'userCanSearchUsers'))
-				->handler(array($this, 'ajaxSearchUsers'))
+				->permissionCallback([$this, 'userCanSearchUsers'])
+				->handler([$this, 'ajaxSearchUsers'])
 				->register();
 
 			add_action('admin_menu_editor-load_tab-' . $this->tabSlug, [$this, 'addContextualHelp']);
@@ -111,7 +113,7 @@ class Module extends amePersistentModule {
 	 * @return array<string,bool>
 	 */
 	protected function getUserActors(WP_User $user) {
-		$actorIds = ['special:default' => true]; //The "default" setting applies to every user.
+		$actorIds = [self::DEFAULT_SETTING_ACTOR_ID => true]; //The "default" setting applies to every user.
 
 		if ( !isset($user) ) {
 			return $actorIds;
@@ -308,6 +310,7 @@ class Module extends amePersistentModule {
 		return $user;
 	}
 
+	/** @noinspection PhpVariableIsUsedOnlyInClosureInspection */
 	public function enqueueTabScripts() {
 		parent::enqueueTabScripts();
 
@@ -323,7 +326,7 @@ class Module extends amePersistentModule {
 				'ame-actor-manager',
 				'ame-knockout-sortable',
 				'ame-lodash',
-				$this->searchUsersAction->getScriptHandle(),
+				$this->searchUsersAction->getRegisteredScriptHandle(),
 			]
 		);
 
@@ -346,6 +349,22 @@ class Module extends amePersistentModule {
 		}
 
 		list($loadedUsers, $hasMoreUsers) = $this->preloadUsers($flattenedRedirects);
+
+		//Optionally, discard redirects associated with roles or users that no longer exist.
+		if ( $this->menuEditor->get_plugin_option('delete_orphan_actor_settings') ) {
+			$cleaner = new \ameActorAccessCleaner();
+			$flattenedRedirects = array_filter($flattenedRedirects, function ($details) use ($cleaner) {
+				//Special case: the "actor" that holds the default setting is always valid.
+				if ( $details['actorId'] === self::DEFAULT_SETTING_ACTOR_ID ) {
+					return true;
+				}
+				return $cleaner->tryActorExists($details['actorId'], true);
+			});
+
+			//Reindex the array. If filtering removed some elements, the array keys can be sparse,
+			//which would cause it to be serialized as an object instead of an array.
+			$flattenedRedirects = array_values($flattenedRedirects);
+		}
 
 		$scriptData = [
 			'redirects'       => $flattenedRedirects,
@@ -378,7 +397,7 @@ class Module extends amePersistentModule {
 		);
 	}
 
-	public function handleSettingsForm($post = array()) {
+	public function handleSettingsForm($post = []) {
 		parent::handleSettingsForm($post);
 
 		$submittedSettings = json_decode($post['settings'], true);
@@ -408,7 +427,7 @@ class Module extends amePersistentModule {
 			$params['selectedTrigger'] = strval($post['selectedTrigger']);
 		}
 
-		wp_redirect($this->getTabUrl($params));
+		wp_safe_redirect($this->getTabUrl($params));
 		exit;
 	}
 

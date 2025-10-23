@@ -169,8 +169,9 @@ class CommonMethodSettings implements MethodSettings {
 		];
 
 		$settings[] = [
-			'type' => 'title',
-			'id'   => 'flexible_shipping_method_settings_end',
+			'type'    => 'title',
+			'id'      => 'flexible_shipping_method_settings_end',
+			'default' => '',
 		];
 
 		return apply_filters( 'flexible-shipping/settings/common-method-settings', $settings );
@@ -187,8 +188,9 @@ class CommonMethodSettings implements MethodSettings {
 
 		if ( 1 < count( $integrations_options ) ) {
 			$settings['title_shipping_integration'] = [
-				'title' => __( 'Shipping Integration', 'flexible-shipping' ),
-				'type'  => 'title',
+				'title'   => __( 'Shipping Integration', 'flexible-shipping' ),
+				'type'    => 'title',
+				'default' => '',
 			];
 			$settings['method_integration']         = [
 				'title'    => __( 'Integration', 'flexible-shipping' ),
@@ -206,8 +208,9 @@ class CommonMethodSettings implements MethodSettings {
 		foreach ( $filtered_settings as $settings_key => $settings_value ) {
 			if ( 'method_enabled' === $settings_key ) {
 				$settings['title_general_settings'] = [
-					'title' => __( 'General Settings', 'flexible-shipping' ),
-					'type'  => 'title',
+					'title'   => __( 'General Settings', 'flexible-shipping' ),
+					'type'    => 'title',
+					'default' => '',
 				];
 			}
 
@@ -224,6 +227,7 @@ class CommonMethodSettings implements MethodSettings {
 						'<a href="' . $free_shipping_docs_url . '" target="_blank">',
 						'</a>'
 					),
+					'default'     => '',
 				];
 				if ( ! defined( 'FLEXIBLE_SHIPPING_PRO_VERSION' ) ) {
 					$compare_versions_link                                     = get_user_locale() === 'pl_PL' ? 'https://octol.io/free-shipping-requires-fs-free-pro-comparison-pl' : 'https://octol.io/free-shipping-requires-fs-free-pro-comparison';
@@ -250,15 +254,17 @@ class CommonMethodSettings implements MethodSettings {
 
 			if ( 'method_max_cost' === $settings_key || ( self::SETTING_METHOD_CALCULATION_METHOD === $settings_key && ! isset( $settings['method_max_cost'] ) ) ) {
 				$settings['title_cost_calculation'] = [
-					'title' => __( 'Cost Calculation', 'flexible-shipping' ),
-					'type'  => 'title',
+					'title'   => __( 'Cost Calculation', 'flexible-shipping' ),
+					'type'    => 'title',
+					'default' => '',
 				];
 			}
 
 			if ( 'method_visibility' === $settings_key ) {
 				$settings['title_advanced_options'] = [
-					'title' => __( 'Advanced Options', 'flexible-shipping' ),
-					'type'  => 'title',
+					'title'   => __( 'Advanced Options', 'flexible-shipping' ),
+					'type'    => 'title',
+					'default' => '',
 				];
 			}
 

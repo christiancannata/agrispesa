@@ -8,7 +8,7 @@ namespace FSVendor\WPDesk\Notice;
  * WordPress admin dismissible notice.
  * @package WPDesk\Notice
  */
-class PermanentDismissibleNotice extends \FSVendor\WPDesk\Notice\Notice
+class PermanentDismissibleNotice extends Notice
 {
     const OPTION_NAME_PREFIX = 'wpdesk_notice_dismiss_';
     const OPTION_VALUE_DISMISSED = '1';
@@ -39,10 +39,10 @@ class PermanentDismissibleNotice extends \FSVendor\WPDesk\Notice\Notice
         parent::__construct($noticeContent, $noticeType, \true, $priority, $attributes, $showInGutenberg);
         $this->noticeName = $noticeName;
         $this->noticeDismissOptionName = static::OPTION_NAME_PREFIX . $noticeName;
-        if (self::OPTION_VALUE_DISMISSED === \get_option($this->noticeDismissOptionName, '')) {
+        if (self::OPTION_VALUE_DISMISSED === get_option($this->noticeDismissOptionName, '')) {
             $this->removeAction();
         } else {
-            $this->noticeSecurity = \wp_create_nonce($this->noticeDismissOptionName);
+            $this->noticeSecurity = wp_create_nonce($this->noticeDismissOptionName);
         }
     }
     /**
@@ -50,7 +50,7 @@ class PermanentDismissibleNotice extends \FSVendor\WPDesk\Notice\Notice
      */
     public function undoDismiss()
     {
-        \delete_option($this->noticeDismissOptionName);
+        delete_option($this->noticeDismissOptionName);
         $this->addAction();
     }
     /**
@@ -61,9 +61,9 @@ class PermanentDismissibleNotice extends \FSVendor\WPDesk\Notice\Notice
     protected function getAttributesAsString()
     {
         $attributesAsString = parent::getAttributesAsString();
-        $attributesAsString .= \sprintf(' data-notice-name="%1$s"', \esc_attr($this->noticeName));
-        $attributesAsString .= \sprintf(' data-security="%1$s"', \esc_attr($this->noticeSecurity));
-        $attributesAsString .= \sprintf(' id="wpdesk-notice-%1$s"', \esc_attr($this->noticeName));
+        $attributesAsString .= sprintf(' data-notice-name="%1$s"', esc_attr($this->noticeName));
+        $attributesAsString .= sprintf(' data-security="%1$s"', esc_attr($this->noticeSecurity));
+        $attributesAsString .= sprintf(' id="wpdesk-notice-%1$s"', esc_attr($this->noticeName));
         return $attributesAsString;
     }
 }

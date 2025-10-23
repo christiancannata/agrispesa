@@ -15,9 +15,9 @@ trait HookableParent
      *
      * @param Hookable|HookablePluginDependant $hookable_object Hookable object.
      */
-    public function add_hookable(\FSVendor\WPDesk\PluginBuilder\Plugin\Hookable $hookable_object)
+    public function add_hookable(Hookable $hookable_object)
     {
-        if ($hookable_object instanceof \FSVendor\WPDesk\PluginBuilder\Plugin\HookablePluginDependant) {
+        if ($hookable_object instanceof HookablePluginDependant) {
             $hookable_object->set_plugin($this);
         }
         $this->hookable_objects[] = $hookable_object;
@@ -45,7 +45,7 @@ trait HookableParent
     {
         /** @var Hookable $hookable_object $hookable_object */
         foreach ($this->hookable_objects as $hookable_object) {
-            if ($hookable_object instanceof \FSVendor\WPDesk\PluginBuilder\Plugin\Conditional) {
+            if ($hookable_object instanceof Conditional) {
                 if ($hookable_object::is_needed()) {
                     $hookable_object->hooks();
                 }

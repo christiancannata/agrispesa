@@ -8,9 +8,7 @@ use wpie\import\chunk\WPIE_Chunk;
 use wpie\import\upload\WPIE_Upload;
 use wpie\import\Compatibility\Manager as AddOns;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_Import {
 

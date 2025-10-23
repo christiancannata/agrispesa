@@ -35,7 +35,7 @@ class Parser {
 	private $blockRules;
 	private $aSizeUnits;
 
-	public function __construct($sText, Settings $oParserSettings = null) {
+	public function __construct($sText, ?Settings $oParserSettings = null) {
 		$this->sText = $sText;
 		$this->iCurrentPosition = 0;
 		if ($oParserSettings === null) {

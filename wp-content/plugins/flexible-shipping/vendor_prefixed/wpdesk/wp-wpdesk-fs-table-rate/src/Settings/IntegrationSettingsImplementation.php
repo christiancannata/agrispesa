@@ -10,7 +10,7 @@ use FSVendor\WPDesk\FS\TableRate\Logger\CanFormatForLog;
 /**
  * Integration settings implementation.
  */
-class IntegrationSettingsImplementation implements \FSVendor\WPDesk\FS\TableRate\Settings\IntegrationSettings, \FSVendor\WPDesk\FS\TableRate\Logger\CanFormatForLog
+class IntegrationSettingsImplementation implements IntegrationSettings, CanFormatForLog
 {
     /**
      * @var string
@@ -37,7 +37,7 @@ class IntegrationSettingsImplementation implements \FSVendor\WPDesk\FS\TableRate
      */
     public function format_for_log()
     {
-        $integrations_options = \apply_filters('flexible_shipping_integration_options', array('' => \__('None', 'flexible-shipping')));
-        return \sprintf(\__('Integration: %1$s', 'flexible-shipping'), isset($integrations_options[$this->name]) ? $integrations_options[$this->name] : $this->name) . "\n";
+        $integrations_options = apply_filters('flexible_shipping_integration_options', array('' => __('None', 'flexible-shipping')));
+        return sprintf(__('Integration: %1$s', 'flexible-shipping'), isset($integrations_options[$this->name]) ? $integrations_options[$this->name] : $this->name) . "\n";
     }
 }

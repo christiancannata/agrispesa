@@ -118,12 +118,12 @@ abstract class OAuth_Client_Base {
 	 */
 	public function __construct(
 		Context $context,
-		Options $options = null,
-		User_Options $user_options = null,
-		Credentials $credentials = null,
-		Google_Proxy $google_proxy = null,
-		Profile $profile = null,
-		Token $token = null
+		?Options $options = null,
+		?User_Options $user_options = null,
+		?Credentials $credentials = null,
+		?Google_Proxy $google_proxy = null,
+		?Profile $profile = null,
+		?Token $token = null
 	) {
 		$this->context      = $context;
 		$this->options      = $options ?: new Options( $this->context );
@@ -153,7 +153,7 @@ abstract class OAuth_Client_Base {
 					'redirect_uri'             => $this->get_redirect_uri(),
 					'token'                    => $this->get_token(),
 					'token_callback'           => array( $this, 'set_token' ),
-					'token_exception_callback' => function( Exception $e ) {
+					'token_exception_callback' => function ( Exception $e ) {
 						$this->handle_fetch_token_exception( $e );
 					},
 					'required_scopes'          => $this->get_required_scopes(),

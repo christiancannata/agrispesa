@@ -51,7 +51,7 @@ class PluginDetails
      */
     public function get_version()
     {
-        return \defined($this->version_constant_name) ? \constant($this->version_constant_name) : '0.0.0';
+        return defined($this->version_constant_name) ? constant($this->version_constant_name) : '0.0.0';
     }
     /**
      * @return string
@@ -75,7 +75,7 @@ class PluginDetails
      */
     private function compare_version($version, $operator = null)
     {
-        return \version_compare($this->get_version(), $version, $operator);
+        return version_compare($this->get_version(), $version, $operator);
     }
     /**
      * @param string $plugin_file .
@@ -84,10 +84,10 @@ class PluginDetails
      */
     private function is_plugin_activate($plugin_file)
     {
-        $active_plugins = (array) \get_option('active_plugins', []);
-        if (\is_multisite()) {
-            $active_plugins = \array_merge($active_plugins, \get_site_option('active_sitewide_plugins', []));
+        $active_plugins = (array) get_option('active_plugins', []);
+        if (is_multisite()) {
+            $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', []));
         }
-        return \in_array($plugin_file, $active_plugins) || \array_key_exists($plugin_file, $active_plugins);
+        return in_array($plugin_file, $active_plugins) || array_key_exists($plugin_file, $active_plugins);
     }
 }

@@ -36,6 +36,12 @@
 		$('#mc-woocommerce-create-activate-account').click((e) => {
 			e.preventDefault();
 
+			var data = {
+				action: 'mailchimp_woocommerce_activate_account_event',
+			}
+
+			$.post(ajaxurl, data, function(response) {})
+
 			profileDetailsInputs  = $('#mc-woocommerce-profile-details input');
 			profileErrors         = getInitialErrors(profileDetailsInputs);
 			detailsValid          = validateForm(profileErrors, '#mc-woocommerce-profile-details', true);
@@ -48,6 +54,45 @@
 				$('.js-mc-woocommerce-activate-account').submit();
 			}
 		})
+
+
+		$('#js-mc-woocommerce-switch-account').submit((e) => {
+			e.preventDefault();
+
+			$("#js-mc-woocommerce-switch-account-button").attr('disabled', true)
+			$("#js-mc-woocommerce-switch-account-button .mc-wc-loading").removeClass('hidden')
+
+			let formData = $(e.target).serializeArray()
+			let formDataObject = {};
+			formData.map(obj => {
+				let newObj = {}
+				formDataObject[obj.name] = obj.value
+				return newObj
+			})
+
+			var data = {
+				action: 'mailchimp_woocommerce_switch_account',
+				data: formDataObject
+			};
+
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				url: phpVars.ajaxurl,
+				data: data,
+				success: function (response) {
+					console.log('response', response.data)
+					if (response.data.success) {
+						window.location.href = response.data.redirect
+					} else {
+						alert(response.data.message)
+					}
+				},
+				error: function (error) {
+					console.log('error', error)
+				}
+			})
+		});
 
 		$('.js-mc-woocommerce-activate-account').submit((e) => {
 			e.preventDefault();
@@ -83,25 +128,37 @@
 				action:'mailchimp_woocommerce_create_account_signup',
 				data: postData
 			};
+			$('#mc-woocommerce-error-box').empty();
 			$.ajax({
 				type : "post",
 				dataType : "json",
 				url : phpVars.ajaxurl,
 				data : data,
 				success: function(response) {
-					$('.js-mc-woocommerce-activate-account').addClass('hidden')
-					$("#mc-woocommerce-create-activate-account").attr('disabled', false)
-					$("#mc-woocommerce-create-activate-account .mc-wc-loading").addClass('hidden')
+					console.log('response', response.data)
 
-					if (response.data.suggest_login) {
-						$('.js-mc-woocommerce-suggest-to-login').removeClass('hidden');
-						$('.js-mc-woocommerce-email').text(formDataObject.email)
-						$('.mailchimp-connect').attr('href', response.data.login_link)
+					if (!response.data.success) {
+						let errorHasUsername = response.data.errors?.some(err => err.field === 'username')
+						if (errorHasUsername) {
+							$('.js-mc-woocommerce-activate-account').addClass('hidden')
+							$("#mc-woocommerce-create-activate-account").attr('disabled', false)
+							$("#mc-woocommerce-create-activate-account .mc-wc-loading").addClass('hidden')
+
+							$('.js-mc-woocommerce-suggest-to-login').removeClass('hidden');
+							$('.js-mc-woocommerce-email').text(formDataObject.email)
+							$('.mailchimp-connect').attr('href', response.data.login_link)
+						} else if (response.data.errors) {
+							let errorMessage = ''
+							console.log('errors', response.data.errors)
+							response.data.errors?.forEach(err => {
+								errorMessage += `<div class="error">${err.message}</div>`
+							});
+							$("#mc-woocommerce-create-activate-account").attr('disabled', false)
+							$("#mc-woocommerce-create-activate-account .mc-wc-loading").addClass('hidden')
+							$('#mc-woocommerce-error-box').append(errorMessage)
+						}
 					} else {
-						$('.js-mc-woocommerce-confirm-email').removeClass('hidden')
-						$('.js-mc-woocommerce-email').text(formDataObject.email)
-
-						waitingForLogin()
+						window.location.href = response.data.redirect
 					}
 				}
 			});

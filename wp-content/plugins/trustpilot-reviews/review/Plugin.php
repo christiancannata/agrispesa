@@ -161,25 +161,28 @@ class Plugin {
 	}
 
 	public function trustpilot_load_js( $hook ) {
-		wp_register_script( 'tp-js', plugins_url( 'assets/js/headerScript.min.js#trustpilot_async', __FILE__ ), [], '1.0' );
-		$key = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION )->key;
-		$trustbox = trustpilot_get_settings( TRUSTPILOT_TRUSTBOX_CONFIGURATION );
-		wp_localize_script(
-			'tp-js',
-			'trustpilot_settings',
-			array(
-				TRUSTPILOT_INTEGRATION_KEY => $key,
-				TRUSTPILOT_SCRIPT          => TRUSTPILOT_SCRIPT_URL,
-				TRUSTPILOT_INTEGRATION_APP => TRUSTPILOT_INTEGRATION_APP_URL,
-				TRUSTPILOT_PREVIEW_SCRIPT  => TRUSTPILOT_PREVIEW_SCRIPT_URL,
-				TRUSTPILOT_PREVIEW_CSS     => TRUSTPILOT_PREVIEW_CSS_URL,
-				TRUSTPILOT_WP_PREVIEW_CSS  => TRUSTPILOT_WP_PREVIEW_CSS_URL,
-				TRUSTPILOT_WIDGET_SCRIPT   => TRUSTPILOT_WIDGET_SCRIPT_URL,
-			)
-		);
-		wp_enqueue_script( 'tp-js' );
-		if (isset($trustbox->trustboxes) && count($trustbox->trustboxes) > 0) {
-			wp_enqueue_script( 'widget-bootstrap', TRUSTPILOT_WIDGET_SCRIPT_URL . '#trustpilot_async', [], '1.0' );
+		// let's not load our scripts when using Oxygen Builder
+		if ( !isset($_GET['ct_builder']) && !isset($_GET['ct_template']) && !isset($_GET['oxygen_iframe']) ) {
+			wp_register_script( 'tp-js', plugins_url( 'assets/js/headerScript.min.js#trustpilot_async', __FILE__ ), [], '1.0' );
+			$key = trustpilot_get_settings( TRUSTPILOT_GENERAL_CONFIGURATION )->key;
+			$trustbox = trustpilot_get_settings( TRUSTPILOT_TRUSTBOX_CONFIGURATION );
+			wp_localize_script(
+				'tp-js',
+				'trustpilot_settings',
+				array(
+					TRUSTPILOT_INTEGRATION_KEY => $key,
+					TRUSTPILOT_SCRIPT          => TRUSTPILOT_SCRIPT_URL,
+					TRUSTPILOT_INTEGRATION_APP => TRUSTPILOT_INTEGRATION_APP_URL,
+					TRUSTPILOT_PREVIEW_SCRIPT  => TRUSTPILOT_PREVIEW_SCRIPT_URL,
+					TRUSTPILOT_PREVIEW_CSS     => TRUSTPILOT_PREVIEW_CSS_URL,
+					TRUSTPILOT_WP_PREVIEW_CSS  => TRUSTPILOT_WP_PREVIEW_CSS_URL,
+					TRUSTPILOT_WIDGET_SCRIPT   => TRUSTPILOT_WIDGET_SCRIPT_URL,
+				)
+			);
+			wp_enqueue_script( 'tp-js' );
+			if (isset($trustbox->trustboxes) && count($trustbox->trustboxes) > 0) {
+				wp_enqueue_script( 'widget-bootstrap', TRUSTPILOT_WIDGET_SCRIPT_URL . '#trustpilot_async', [], '1.0' );
+			}
 		}
 	}
 }

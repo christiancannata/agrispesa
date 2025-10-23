@@ -76,8 +76,8 @@ final class WC_Satispay_Blocks extends AbstractPaymentMethodType {
      */
     public function get_payment_method_data() {
         return [
-            'title'       => __(WC_Satispay::METHOD_TITLE, 'woo-satispay'),
-            'description' => __(WC_Satispay::METHOD_DESCRIPTION, 'woo-satispay'),
+            'title'       => __('Satispay', 'woo-satispay'),
+            'description' => __('Do it smart. Choose Satispay and pay with a tap!', 'woo-satispay'),
             'icon' => WC_Satispay::plugin_url() . '/logo.svg',
             'supports'    => WC_Satispay::SUPPORTS
         ];

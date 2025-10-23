@@ -192,6 +192,9 @@ final class None extends Option {
 		//Prevent others from instantiating this class.
 	}
 
+	/**
+	 * @return self
+	 */
 	public static function getInstance() {
 		if ( self::$instance === null ) {
 			self::$instance = new self();

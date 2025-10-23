@@ -19,7 +19,7 @@ use WP_Post;
 trait OrderAttributionMeta {
 
 	/**
-	 * The default fields and their sourcebuster accesors,
+	 * The default fields and their sourcebuster accessors,
 	 * to show in the source data metabox.
 	 *
 	 * @var string[]
@@ -311,6 +311,12 @@ trait OrderAttributionMeta {
 				$source = $translated ?
 					__( 'Web admin', 'woocommerce' )
 					: 'Web admin';
+				break;
+			case 'pos':
+				$label  = '';
+				$source = $translated ?
+					__( 'Point of Sale', 'woocommerce' )
+					: 'Point of Sale';
 				break;
 
 			default:

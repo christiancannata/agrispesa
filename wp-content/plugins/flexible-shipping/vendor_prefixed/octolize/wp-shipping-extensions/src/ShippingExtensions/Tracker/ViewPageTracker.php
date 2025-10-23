@@ -16,7 +16,7 @@ class ViewPageTracker
      *
      * @return int
      */
-    public function get_views(string $type) : int
+    public function get_views(string $type): int
     {
         $options = $this->get_options();
         return (int) ($options[$type] ?? 0);
@@ -24,21 +24,21 @@ class ViewPageTracker
     /**
      * @return self
      */
-    public function add_view_direct() : self
+    public function add_view_direct(): self
     {
         return $this->update_views(self::OPTION_DIRECT);
     }
     /**
      * @return self
      */
-    public function add_view_plugins_list() : self
+    public function add_view_plugins_list(): self
     {
         return $this->update_views(self::OPTION_PLUGINS_LIST);
     }
     /**
      * @return bool
      */
-    public function option_exists() : bool
+    public function option_exists(): bool
     {
         return !empty($this->get_options([]));
     }
@@ -47,11 +47,11 @@ class ViewPageTracker
      *
      * @return self
      */
-    private function update_views(string $type) : self
+    private function update_views(string $type): self
     {
         $options = $this->get_options();
         $options[$type]++;
-        \update_option(self::OPTION_NAME, $options, 'yes');
+        update_option(self::OPTION_NAME, $options, 'yes');
         return $this;
     }
     /**
@@ -59,8 +59,8 @@ class ViewPageTracker
      *
      * @return array
      */
-    private function get_options($default = self::DEFAULT_OPTIONS) : array
+    private function get_options($default = self::DEFAULT_OPTIONS): array
     {
-        return (array) \get_option(self::OPTION_NAME, $default);
+        return (array) get_option(self::OPTION_NAME, $default);
     }
 }

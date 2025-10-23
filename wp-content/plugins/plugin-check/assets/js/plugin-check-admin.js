@@ -22,6 +22,10 @@
 		return;
 	}
 
+	const includeExperimental = document.getElementById(
+		'plugin-check__include-experimental'
+	);
+
 	// Handle disabling the Check it button when a plugin is not selected.
 	function canRunChecks() {
 		if ( '' === pluginsList.value ) {
@@ -125,6 +129,10 @@
 			'action',
 			pluginCheck.actionSetUpRuntimeEnvironment
 		);
+		pluginCheckData.append(
+			'include-experimental',
+			includeExperimental && includeExperimental.checked ? 1 : 0
+		);
 
 		for ( let i = 0; i < data.checks.length; i++ ) {
 			pluginCheckData.append( 'checks[]', data.checks[ i ] );
@@ -193,6 +201,10 @@
 		pluginCheckData.append( 'nonce', pluginCheck.nonce );
 		pluginCheckData.append( 'plugin', pluginsList.value );
 		pluginCheckData.append( 'action', pluginCheck.actionGetChecksToRun );
+		pluginCheckData.append(
+			'include-experimental',
+			includeExperimental && includeExperimental.checked ? 1 : 0
+		);
 
 		for ( let i = 0; i < categoriesList.length; i++ ) {
 			if ( categoriesList[ i ].checked ) {
@@ -291,6 +303,10 @@
 		pluginCheckData.append( 'plugin', plugin );
 		pluginCheckData.append( 'checks[]', check );
 		pluginCheckData.append( 'action', pluginCheck.actionRunChecks );
+		pluginCheckData.append(
+			'include-experimental',
+			includeExperimental && includeExperimental.checked ? 1 : 0
+		);
 
 		return fetch( ajaxurl, {
 			method: 'POST',

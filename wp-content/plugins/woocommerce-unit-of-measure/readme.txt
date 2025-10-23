@@ -2,8 +2,8 @@
 Contributors: Brad Davis
 Tags: woocommerce, woocommerce-price
 Requires at least: 4.0
-Tested up to: 6.5.3
-Stable tag: 3.1.0
+Tested up to: 6.6.2
+Stable tag: 3.2.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,6 +38,11 @@ Yes you can, follow these steps:
 Hard to say really, so many themes to test so little time.
 
 == Changelog ==
+
+= 3.2.0 = 
+* Tested on WordPress 6.6.2
+* Tested on WooCommerce 9.3.3
+* Feature added to display UOM text on the cart page
 
 = 3.1.0 =
 * Added compatible with High Performance Order Storage (HPOS)

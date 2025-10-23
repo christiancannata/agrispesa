@@ -40,11 +40,11 @@ class ActivationTracker
      */
     public function get_activation_date()
     {
-        $activation_date = \get_option($this->get_option_name_activation_date());
+        $activation_date = get_option($this->get_option_name_activation_date());
         if (empty($activation_date)) {
             return $this->touch_activation_date();
         }
-        return \intval($activation_date);
+        return intval($activation_date);
     }
     /**
      * Was activation more than two weeks before today
@@ -54,7 +54,7 @@ class ActivationTracker
     public function is_activated_more_than_two_weeks()
     {
         $two_weeks = 60 * 60 * 24 * 7 * 2;
-        return $this->get_activation_date() + $two_weeks < \time();
+        return $this->get_activation_date() + $two_weeks < time();
     }
     /**
      * Sets activatiion date for today
@@ -63,8 +63,8 @@ class ActivationTracker
      */
     public function touch_activation_date()
     {
-        $now = \time();
-        \update_option($this->get_option_name_activation_date(), $now);
+        $now = time();
+        update_option($this->get_option_name_activation_date(), $now);
         return $now;
     }
 }

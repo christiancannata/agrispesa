@@ -359,6 +359,9 @@ class Controller extends Cloud {
 			$grace_period      = isset( $response['grace_period_ends_at'] ) ? strtotime( sanitize_text_field( $response['grace_period_ends_at'] ) ) : false;
 			$grace_period_ends = isset( $grace_period ) && is_int( $grace_period ) ? gmdate( 'F d, Y', $grace_period ) : '';
 
+			$pageview_reset_timestamp = isset( $response['pageviews']['ends_at'] ) ? strtotime( sanitize_text_field( $response['pageviews']['ends_at'] ) ) : false;
+			$pageview_reset_date = is_int( $pageview_reset_timestamp ) ? gmdate( 'F d, Y', $pageview_reset_timestamp ) : '';
+
 			$data = array(
 				'id'             => $this->get_website_id(),
 				'url'            => isset( $response['url'] ) ? esc_url_raw( $response['url'] ) : esc_url_raw( get_site_url() ),
@@ -418,6 +421,7 @@ class Controller extends Cloud {
 					'count'    => isset( $response['pageviews']['views'] ) ? absint( $response['pageviews']['views'] ) : 0,
 					'limit'    => isset( $response['pageviews']['views_limit'] ) ? absint( $response['pageviews']['views_limit'] ) : 25000,
 					'exceeded' => isset( $response['pageviews']['limit_exceeded'] ) && 1 === absint( $response['pageviews']['limit_exceeded'] ),
+					'ends_at'   => $pageview_reset_date,
 				),
 				'website'        => array(
 					'status'               => isset( $response['website_status'] ) ? sanitize_text_field( $response['website_status'] ) : 'active',
@@ -425,6 +429,8 @@ class Controller extends Cloud {
 					'is_trial_with_card'   => isset( $response['trial_with_card'] ) && true === $response['trial_with_card'],
 					'grace_period_ends_at' => $grace_period_ends,
 					'payment_status'       => isset( $response['payment_status'] ) && true === $response['payment_status'],
+					'selected_plan'        => isset( $plan['slug'] ) ? sanitize_text_field( $plan['slug'] ) : 'free',
+					'canStartOptoutTrial'  => isset( $response['canStartOptoutTrial'] ) ? (bool) $response['canStartOptoutTrial'] : false,
 				),
 			);
 			return $data;

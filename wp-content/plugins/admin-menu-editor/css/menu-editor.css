@@ -15,6 +15,66 @@
   border-bottom-right-radius: 0;
 }
 
+/*
+Standard WordPress admin colors.
+
+Announcement post:
+https://make.wordpress.org/core/2021/02/23/standardization-of-wp-admin-colors-in-wordpress-5-7/
+
+Source:
+https://codepen.io/ryelle/pen/WNGVEjw
+
+A "wp" prefix has been added to avoid name conflicts with other code in this plugin.
+ */
+/*
+ * The minimum screen width at which the sticky bar will be sticky.
+ * The Admin Bar stops sticking to the top of the window at 600px. Let's do the same for our top bar.
+ */
+.ame-sticky-top-bar {
+  padding-top: 6px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid transparent;
+  display: block;
+}
+
+@media screen and (min-width: 601px) {
+  .ame-sticky-top-bar {
+    position: sticky;
+    top: calc(var(--wp-admin--admin-bar--height, 32px));
+    z-index: 5;
+    padding-top: 16px;
+    margin-top: -10px;
+    pointer-events: none;
+  }
+  .ame-sticky-top-bar > * {
+    pointer-events: auto;
+  }
+  .ame-sticky-top-bar.ame-is-pinned-top-bar {
+    background-color: #f6f7f7;
+    border-bottom: 1px solid #c3c4c7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+    padding-bottom: 16px;
+    margin-bottom: -9px;
+  }
+  .ame-is-pinned-top-bar {
+    margin-left: calc(-1 * var(--ame-sticky-bar-left-offset, 0));
+    padding-left: var(--ame-sticky-bar-left-offset, 0);
+    margin-right: calc(-1 * var(--ame-sticky-bar-right-offset, 0));
+    padding-right: var(--ame-sticky-bar-right-offset, 0);
+  }
+}
+.ame-sticky-top-bar-flex-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.ame-sticky-top-bar #ws_actor_selector {
+  margin-top: 0;
+}
+
 #ws_menu_editor {
   min-width: 780px;
 }
@@ -66,6 +126,10 @@
   border-width: 1px;
 }
 
+.ws_invalid_item_drop_target {
+  outline: 2px solid red;
+}
+
 /*************************************************
                      Actor UI
  *************************************************/
@@ -103,7 +167,7 @@
   margin-right: 2px;
   margin-left: 2px;
   margin-top: 1px;
-  vertical-align: text-top;
+  float: none;
 }
 #ws_menu_editor .ws_actor_access_checkbox:indeterminate:before,
 #ws_menu_editor input[type=checkbox].ws_actor_access_checkbox:indeterminate:before {
@@ -119,7 +183,7 @@
 }
 @media screen and (max-width: 782px) {
   #ws_menu_editor .ws_actor_access_checkbox:indeterminate:before,
-#ws_menu_editor input[type=checkbox].ws_actor_access_checkbox:indeterminate:before {
+  #ws_menu_editor input[type=checkbox].ws_actor_access_checkbox:indeterminate:before {
     height: 1.5625rem;
     width: 1.5625rem;
     line-height: 1.5625rem;
@@ -211,23 +275,32 @@ body.rtl .ws_container {
 
 .ws_item_head {
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .ws_item_title {
-  display: inline-block;
-  padding: 2px;
+  order: 2;
+  margin-right: auto;
   cursor: default;
+  padding: 2px;
   font-size: 13px;
   line-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ws_edit_link {
-  float: right;
+  order: 4;
   margin-right: 0;
   cursor: pointer;
   display: block;
   width: 40px;
   height: 22px;
+  flex-shrink: 0;
+  flex-grow: 0;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -309,10 +382,6 @@ body.rtl .ws_container {
   padding: 4px;
   border-radius: 2px;
   border-top-right-radius: 0;
-  -moz-border-radius: 2px;
-  -moz-border-radius-topright: 0;
-  -webkit-border-radius: 2px;
-  -webkit-border-top-right-radius: 0;
 }
 
 .ws_edit_panel {
@@ -322,8 +391,12 @@ body.rtl .ws_container {
 }
 
 .ws_edit_field {
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   min-height: 45px;
+  line-height: 18px;
+}
+.ws_edit_field .ws_field_label_text, .ws_edit_field br {
+  line-height: 18px;
 }
 .ws_edit_field:after {
   visibility: hidden;
@@ -374,7 +447,7 @@ body.rtl .ws_container {
   background: url("../images/pencil_delete_gray.png") no-repeat center;
 }
 .ame-is-wp53-plus .ws_reset_button {
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 .ws_reset_button:hover {
@@ -408,7 +481,7 @@ body.rtl .ws_container {
 .ame-is-wp53-plus #ws_menu_editor .ws_editbox input[type=text],
 .ame-is-wp53-plus #ws_menu_editor .ws_editbox select {
   height: 28px;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 #ws_menu_editor .ws_edit_field label {
@@ -434,7 +507,7 @@ body.rtl .ws_container {
   width: 25px;
   height: 25px;
   min-height: 25px;
-  margin: 1px 1px 1px 0;
+  margin: 2px 1px 0 0;
   padding: 0 1px 0 0;
   text-align: center;
   font-family: dashicons;
@@ -515,12 +588,15 @@ to accommodate the drop-down button.
 .ws_toggle_container {
   text-align: right;
   margin-right: 27px;
+  margin-top: 6px;
+  line-height: 18px;
 }
 
 .ws_toggle_advanced_fields {
   color: #6087CB;
   text-decoration: none;
-  font-size: 0.85em;
+  font-size: 11px;
+  line-height: 18px;
 }
 
 .ws_toggle_advanced_fields:visited, .ws_toggle_advanced_fields:active {
@@ -536,9 +612,12 @@ to accommodate the drop-down button.
             Menu flags
 *************************************/
 .ws_flag_container {
-  float: right;
+  order: 3;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-shrink: 0;
   margin-right: 4px;
-  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .ws_flag {
@@ -572,13 +651,10 @@ to accommodate the drop-down button.
 }
 
 .ws_custom_actor_permissions_flag::before {
-  /*content: "\f160";*/
-  /* padlock */
-  content: "\f110";
-  /* human silhouette */
+  /*content: "\f160";*/ /* padlock */
+  content: "\f110"; /* human silhouette */
   color: black;
-  filter: alpha(opacity=25);
-  /*IE 5-7*/
+  filter: alpha(opacity=25); /*IE 5-7*/
   opacity: 0.25;
 }
 
@@ -592,8 +668,7 @@ to accommodate the drop-down button.
   font: 16px/1 "dashicons";
   content: "\f348";
   color: black;
-  filter: alpha(opacity=25);
-  /*IE 5-7*/
+  filter: alpha(opacity=25); /*IE 5-7*/
   opacity: 0.25;
 }
 
@@ -603,8 +678,6 @@ to accommodate the drop-down button.
 *************************************/
 .ws_toolbar {
   display: block;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
   padding: 6px 6px 0 6px;
@@ -620,8 +693,6 @@ to accommodate the drop-down button.
   margin-bottom: 4px;
   padding: 4px;
   float: left;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   width: 16px;
   height: 16px;
@@ -759,24 +830,13 @@ select.ws_dropdown optgroup option {
   border: 1px solid #bbb;
   border-radius: 3px;
   /* Gradients and colours cribbed from WP 3.5.1 button styles */
-  background: #f3f3f3;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#f4f4f4));
-  background-image: -webkit-linear-gradient(top, #fefefe, #f4f4f4);
-  background-image: -moz-linear-gradient(top, #fefefe, #f4f4f4);
-  background-image: -o-linear-gradient(top, #fefefe, #f4f4f4);
-  background-image: linear-gradient(to bottom, #fefefe, #f4f4f4);
+  background: #f3f3f3 linear-gradient(to bottom, #fefefe, #f4f4f4);
 }
 
 #ws_icon_selector .ws_icon_option:hover {
   /* Gradients and colours cribbed from WP 3.5.1 button styles */
   border-color: #999;
-  background: #f3f3f3;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3f3f3));
-  background-image: -webkit-linear-gradient(top, #fff, #f3f3f3);
-  background-image: -moz-linear-gradient(top, #fff, #f3f3f3);
-  background-image: -ms-linear-gradient(top, #fff, #f3f3f3);
-  background-image: -o-linear-gradient(top, #fff, #f3f3f3);
-  background-image: linear-gradient(to bottom, #fff, #f3f3f3);
+  background: #f3f3f3 linear-gradient(to bottom, #fff, #f3f3f3);
 }
 
 #ws_icon_selector .ws_icon_option.ws_selected_icon {
@@ -827,7 +887,7 @@ select.ws_dropdown optgroup option {
 .ame-is-wp53-plus #ws_menu_editor .ws_select_icon {
   height: 28px;
   min-height: 28px;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .ws_select_icon .ws_icon_image {
@@ -922,8 +982,7 @@ select.ws_dropdown optgroup option {
 
 .ws_page_selector_tab {
   border-top: 1px solid #DFDFDF;
-  padding: 12px;
-  /* The same padding as post editor boxes. */
+  padding: 12px; /* The same padding as post editor boxes. */
   margin-top: -1px;
   background-color: #FDFDFD;
   border-bottom-left-radius: 3px;
@@ -976,7 +1035,7 @@ select.ws_dropdown optgroup option {
 .ame-is-wp53-plus .ws_color_scheme_display {
   border-color: #7e8993;
   border-radius: 4px;
-  margin-top: 1px;
+  margin-top: 2px;
   margin-bottom: 1px;
   padding: 3px 8px;
   height: 28px;
@@ -1466,8 +1525,6 @@ select.ws_dropdown optgroup option {
   display: block;
   float: left;
   position: relative;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 350px;
   height: 400px;
@@ -1479,8 +1536,6 @@ select.ws_dropdown optgroup option {
   margin-right: 0;
 }
 #ws_user_selection_panels #ws_available_user_query {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
   max-height: 28px;
@@ -1625,7 +1680,7 @@ select.ws_dropdown optgroup option {
   margin-bottom: 0.5em;
   border-radius: 3px;
   position: relative;
-  padding-right: 20px;
+  padding-right: 22px;
 }
 
 .ws_hint_close {
@@ -1721,6 +1776,7 @@ select.ws_dropdown optgroup option {
 *************************************/
 #ws-ame-copy-permissions-dialog select {
   min-width: 280px;
+  max-width: 100%;
 }
 
 /*********************************************
@@ -1787,7 +1843,7 @@ select.ws_dropdown optgroup option {
       WordPress 5.3+ consistent styles
 **********************************************/
 .ame-is-wp53-plus .ws_edit_field input[type=button] {
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /*********************************************
@@ -1828,6 +1884,7 @@ select.ws_dropdown optgroup option {
 **********************************************/
 #ws_sidebar_pro_ad {
   min-width: 225px;
+  max-width: 300px;
   margin-top: 5px;
   margin-left: 3px;
   position: fixed;
@@ -2034,6 +2091,108 @@ from the first tab. */
 of the page. I haven't found a good way to change the margins of just the last row, so here's a partial fix. */
 .ws-ame-too-many-tabs #ws_actor_selector {
   margin-top: 0;
+}
+
+/*
+"Condensed" tab style for when there are too many tabs.
+
+The current implementation doesn't actually take less space, but it reduces gaps and makes the tabs
+flow better due to fixed-step sizing. Tabs on different rows will sometimes align. Individual tabs
+don't get pushed around by "Screen Options" or other elements that might appear above the tabs (instead,
+the tabs will wrap to the next row).
+ */
+#ws_ame_tab_leader_heading {
+  display: none;
+  box-sizing: border-box;
+  font-size: 23px;
+  font-weight: 400;
+  align-self: center;
+  text-align: left;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0 1px;
+  margin-right: 0;
+  padding: 0;
+}
+
+.ws-ame-nav-tab-list {
+  --ame-tab-col-width: 32px;
+  --ame-tab-cnd-horizontal-padding: 8px;
+  --ame-tab-cnd-gap: 5px;
+}
+
+@media screen and (min-width: 601px) {
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled #ws_ame_editor_heading {
+    display: none;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled #ws_ame_tab_leader_heading {
+    display: inline;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list .nav-tab {
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    z-index: 1;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list .nav-tab-active {
+    z-index: 2;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list .nav-tab:focus, .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list .nav-tab:active {
+    z-index: 3;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-1 {
+    min-width: 32px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-2 {
+    min-width: 69px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-3 {
+    min-width: 106px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-4 {
+    min-width: 143px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-5 {
+    min-width: 180px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-6 {
+    min-width: 217px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-7 {
+    min-width: 254px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-8 {
+    min-width: 291px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-9 {
+    min-width: 328px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-10 {
+    min-width: 365px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-11 {
+    min-width: 402px;
+  }
+  .ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ame-nav-tab-col-12 {
+    min-width: 439px;
+  }
+}
+.ame-tab-list-bottom-margin-disabled .ws-ame-nav-tab-list, .ame-tab-list-bottom-margin-disabled.ws-ame-too-many-tabs.ame-condensed-tabs-enabled .ws-ame-nav-tab-list {
+  margin-bottom: 0;
+}
+.ame-tab-list-bottom-margin-disabled > .notice {
+  margin-bottom: 9px;
 }
 
 /*# sourceMappingURL=menu-editor.css.map */

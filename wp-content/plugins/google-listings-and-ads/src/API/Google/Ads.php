@@ -13,12 +13,12 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsInterface;
 use Exception;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Enums\AccessRoleEnum\AccessRole;
-use Google\Ads\GoogleAds\V16\Enums\ProductLinkInvitationStatusEnum\ProductLinkInvitationStatus;
-use Google\Ads\GoogleAds\V16\Resources\ProductLinkInvitation;
-use Google\Ads\GoogleAds\V16\Services\ListAccessibleCustomersRequest;
-use Google\Ads\GoogleAds\V16\Services\UpdateProductLinkInvitationRequest;
+use Google\Ads\GoogleAds\Util\V20\ResourceNames;
+use Google\Ads\GoogleAds\V20\Enums\AccessRoleEnum\AccessRole;
+use Google\Ads\GoogleAds\V20\Enums\ProductLinkInvitationStatusEnum\ProductLinkInvitationStatus;
+use Google\Ads\GoogleAds\V20\Resources\ProductLinkInvitation;
+use Google\Ads\GoogleAds\V20\Services\ListAccessibleCustomersRequest;
+use Google\Ads\GoogleAds\V20\Services\UpdateProductLinkInvitationRequest;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 
@@ -123,17 +123,13 @@ class Ads implements OptionsAwareInterface {
 	}
 
 	/**
-	 * Accept a link from a merchant account.
+	 * Accept the pending approval link sent from a merchant account.
 	 *
 	 * @param int $merchant_id Merchant Center account id.
-	 * @throws Exception When a link is unavailable.
+	 * @throws Exception When the pending approval link can not be found.
 	 */
 	public function accept_merchant_link( int $merchant_id ) {
-		$link        = $this->get_merchant_link( $merchant_id, 3 );
-		$link_status = $link->getStatus();
-		if ( $link_status === ProductLinkInvitationStatus::ACCEPTED ) {
-			return;
-		}
+		$link    = $this->get_merchant_link( $merchant_id, 10 );
 		$request = new UpdateProductLinkInvitationRequest();
 		$request->setCustomerId( $this->options->get_ads_id() );
 		$request->setResourceName( $link->getResourceName() );
@@ -323,7 +319,7 @@ class Ads implements OptionsAwareInterface {
 	}
 
 	/**
-	 * Get the link from a merchant account.
+	 * Get the pending approval link sent from a Google Merchant account.
 	 *
 	 * The invitation link may not be available in Google Ads immediately after
 	 * the invitation is sent from Google Merchant Center, so this method offers
@@ -333,12 +329,12 @@ class Ads implements OptionsAwareInterface {
 	 * @param int $attempts_left The number of attempts left to get the link.
 	 *
 	 * @return ProductLinkInvitation
-	 * @throws Exception When the merchant link hasn't been created.
+	 * @throws Exception When the pending approval link can not be found.
 	 */
 	private function get_merchant_link( int $merchant_id, int $attempts_left = 0 ): ProductLinkInvitation {
 		$res = ( new AdsProductLinkInvitationQuery() )
 			->set_client( $this->client, $this->options->get_ads_id() )
-			->where( 'product_link_invitation.status', [ ProductLinkInvitationStatus::name( ProductLinkInvitationStatus::ACCEPTED ), ProductLinkInvitationStatus::name( ProductLinkInvitationStatus::PENDING_APPROVAL ) ], 'IN' )
+			->where( 'product_link_invitation.status', ProductLinkInvitationStatus::name( ProductLinkInvitationStatus::PENDING_APPROVAL ) )
 			->get_results();
 
 		foreach ( $res->iterateAllElements() as $row ) {
@@ -351,9 +347,10 @@ class Ads implements OptionsAwareInterface {
 		}
 
 		if ( $attempts_left > 0 ) {
+			sleep( 1 );
 			return $this->get_merchant_link( $merchant_id, $attempts_left - 1 );
 		}
 
-		throw new Exception( __( 'Merchant link is not available to accept', 'google-listings-and-ads' ) );
+		throw new Exception( __( 'Unable to find the pending approval link sent from the Merchant Center account', 'google-listings-and-ads' ) );
 	}
 }

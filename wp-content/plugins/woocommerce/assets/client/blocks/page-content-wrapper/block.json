@@ -1,6 +1,5 @@
 {
 	"name": "woocommerce/page-content-wrapper",
-	"version": "1.0.0",
 	"title": "WooCommerce Page",
 	"description": "Displays WooCommerce page content.",
 	"category": "woocommerce",
@@ -21,6 +20,6 @@
 		"postId": "postId",
 		"postType": "postType"
 	},
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

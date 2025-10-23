@@ -5,7 +5,7 @@ namespace FSVendor\WPDesk\ShowDecision;
 /**
  * Show when some conditions with $_GET are meet.
  */
-class GetStrategy implements \FSVendor\WPDesk\ShowDecision\ShouldShowStrategy
+class GetStrategy implements ShouldShowStrategy
 {
     /**
      * @var array

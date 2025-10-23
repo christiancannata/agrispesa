@@ -59,13 +59,13 @@ window.yith = window.yith || {};
 		options.classes = $.extend( {}, defaults.classes, options.classes );
 
 		var classes       = {
-				wrap   : cssClasses( ['yith-plugin-fw__confirm__wrap', options.classes.wrap] ),
-				content: cssClasses( ['yith-plugin-fw__confirm__content', options.classes.content] ),
-				title  : cssClasses( ['yith-plugin-fw__confirm__title', options.classes.title] ),
-				message: cssClasses( ['yith-plugin-fw__confirm__message', options.classes.message] ),
-				footer : cssClasses( ['yith-plugin-fw__confirm__footer', options.classes.footer] ),
-				cancel : cssClasses( ['yith-plugin-fw__confirm__button', 'yith-plugin-fw__confirm__button--cancel', options.classes.cancel] ),
-				confirm: cssClasses( ['yith-plugin-fw__confirm__button', 'yith-plugin-fw__confirm__button--' + options.confirmButtonType, options.classes.confirm] )
+				wrap   : cssClasses( [ 'yith-plugin-fw__confirm__wrap', options.classes.wrap ] ),
+				content: cssClasses( [ 'yith-plugin-fw__confirm__content', options.classes.content ] ),
+				title  : cssClasses( [ 'yith-plugin-fw__confirm__title', options.classes.title ] ),
+				message: cssClasses( [ 'yith-plugin-fw__confirm__message', options.classes.message ] ),
+				footer : cssClasses( [ 'yith-plugin-fw__confirm__footer', options.classes.footer ] ),
+				cancel : cssClasses( [ 'yith-plugin-fw__confirm__button', 'yith-plugin-fw__confirm__button--cancel', options.classes.cancel ] ),
+				confirm: cssClasses( [ 'yith-plugin-fw__confirm__button', 'yith-plugin-fw__confirm__button--' + options.confirmButtonType, options.classes.confirm ] )
 			},
 			dom           = {
 				message: false,
@@ -103,7 +103,7 @@ window.yith = window.yith || {};
 							content: classes.content
 						},
 						title                     : options.title,
-						content                   : [dom.message, dom.footer],
+						content                   : [ dom.message, dom.footer ],
 						width                     : options.width,
 						allowWpMenu               : options.allowWpMenu,
 						allowWpMenuInMobile       : options.allowWpMenuInMobile,
@@ -187,12 +187,12 @@ window.yith = window.yith || {};
 
 		var container            = $( '#wpwrap' ),
 			classes              = {
-				wrap   : ['yith-plugin-ui', 'yith-plugin-fw__modal__wrap', options.classes.wrap],
-				main   : ['yith-plugin-fw__modal__main', options.classes.main],
-				close  : ['yith-plugin-fw__modal__close', 'yith-icon', 'yith-icon-close', options.classes.close],
-				title  : ['yith-plugin-fw__modal__title', options.classes.title],
-				content: ['yith-plugin-fw__modal__content', options.classes.content],
-				footer : ['yith-plugin-fw__modal__footer', options.classes.footer]
+				wrap   : [ 'yith-plugin-ui', 'yith-plugin-fw__modal__wrap', options.classes.wrap ],
+				main   : [ 'yith-plugin-fw__modal__main', options.classes.main ],
+				close  : [ 'yith-plugin-fw__modal__close', 'yith-icon', 'yith-icon-close', options.classes.close ],
+				title  : [ 'yith-plugin-fw__modal__title', options.classes.title ],
+				content: [ 'yith-plugin-fw__modal__content', options.classes.content ],
+				footer : [ 'yith-plugin-fw__modal__footer', options.classes.footer ]
 			},
 			dom                  = {
 				wrap   : false,
@@ -252,9 +252,13 @@ window.yith = window.yith || {};
 					dom.main.append( dom.close );
 				}
 
-				dom.main.append( dom.title );
-				dom.main.append( dom.content );
+				if ( options.title !== false ) {
+					dom.main.append( dom.title );
+				} else {
+					container.addClass( 'yith-plugin-fw__modal--no-title' );
+				}
 
+				dom.main.append( dom.content );
 
 				if ( options.footer ) {
 					if ( typeof options.footer === 'string' ) {

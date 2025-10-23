@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class RadioField extends \FSVendor\WPDesk\Forms\Field\BasicField
+class RadioField extends BasicField
 {
     public function get_template_name()
     {

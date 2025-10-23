@@ -173,7 +173,7 @@ jQuery( function ( $ ) {
 	( function () {
 		var noticesWrapper = $( '#yith-plugin-fw__panel__notices' ),
 			wrap           = $( '.wrap.yith-plugin-ui, .yith-plugin-fw-wp-page-wrapper' ).first(), // TODO: remove when all plugins will use the ui-version 2, since notices will be shown in the noticesWrapper.
-			notices        = $( 'div.updated, div.error, div.notice, .yith-plugin-fw__notice' ).not( '.inline, .yith-plugin-fw--inline' );
+			notices        = $( 'div.updated, div.error, div.notice, .yith-plugin-fw__notice, .yith-plugin-fw__notice-banner' ).not( '.inline, .yith-plugin-fw--inline' );
 
 		// Prevent moving notices into the wrapper
 		notices.addClass( 'inline' );

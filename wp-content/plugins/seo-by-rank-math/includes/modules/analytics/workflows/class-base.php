@@ -11,10 +11,10 @@
 namespace RankMath\Analytics\Workflow;
 
 use RankMath\Helper;
-use function has_filter;
 use RankMath\Analytics\DB;
 use RankMath\Traits\Hooker;
-use function as_schedule_single_action;
+use RankMath\Helpers\Schedule;
+use function has_filter;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -61,8 +61,8 @@ abstract class Base {
 			for ( $current = 1; $current <= $days; $current++ ) {
 				$date = date_i18n( 'Y-m-d', $start - ( DAY_IN_SECONDS * $current ) );
 				if ( ! DB::date_exists( $date, $action ) ) {
-					$count++;
-					as_schedule_single_action(
+					++$count;
+					Schedule::single_action(
 						time() + ( $time_gap * $count ),
 						'rank_math/analytics/' . $hook,
 						[ $date ],
@@ -75,8 +75,8 @@ abstract class Base {
 				for ( $j = 0; $j < $interval; $j++ ) {
 					$date = date_i18n( 'Y-m-d', $start - ( DAY_IN_SECONDS * ( $current + $j ) ) );
 					if ( ! DB::date_exists( $date, $action ) ) {
-						$count++;
-						as_schedule_single_action(
+						++$count;
+						Schedule::single_action(
 							time() + ( $time_gap * $count ),
 							'rank_math/analytics/' . $hook,
 							[ $date ],
@@ -114,18 +114,18 @@ abstract class Base {
 	 * Check if google profile is updated.
 	 *
 	 * @param string $param Google profile param name.
-	 * @param string $prev Previous profile data.
-	 * @param string $new  New posted profile data.
+	 * @param string $previous_value Previous profile data.
+	 * @param string $new_value  New posted profile data.
 	 *
 	 * @return boolean
 	 */
-	public function is_profile_updated( $param, $prev, $new ) {
+	public function is_profile_updated( $param, $previous_value, $new_value ) {
 		if (
-			! is_null( $prev ) &&
-			! is_null( $new ) &&
-			isset( $prev[ $param ] ) &&
-			isset( $new[ $param ] ) &&
-			$prev[ $param ] === $new[ $param ]
+			! is_null( $previous_value ) &&
+			! is_null( $new_value ) &&
+			isset( $previous_value[ $param ] ) &&
+			isset( $new_value[ $param ] ) &&
+			$previous_value[ $param ] === $new_value[ $param ]
 		) {
 			return false;
 		}
@@ -192,7 +192,7 @@ abstract class Base {
 				$args
 			);
 
-			as_schedule_single_action(
+			Schedule::single_action(
 				$timestamp,
 				'rank_math/analytics/get_' . $action . '_data',
 				$args,

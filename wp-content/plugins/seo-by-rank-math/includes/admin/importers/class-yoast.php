@@ -61,19 +61,19 @@ class Yoast extends Plugin_Importer {
 	/**
 	 * Convert Yoast / AIO SEO variables if needed.
 	 *
-	 * @param string $string Value to convert.
+	 * @param string $value Value to convert.
 	 *
 	 * @return string
 	 */
-	public function convert_variables( $string ) {
-		$string = str_replace( '%%term_title%%', '%term%', $string );
-		$string = str_replace( '%%category_description%%', '%term_description%', $string );
-		$string = str_replace( '%%searchphrase%%', '%search_query%', $string );
-		$string = preg_replace( '/%%cf_([^%]+)%%/i', '%customfield($1)%', $string );
-		$string = preg_replace( '/%%ct_([^%]+)%%/i', '%customterm($1)%', $string );
-		$string = preg_replace( '/%%ct_desc_([^%]+)%%/i', '%customterm($1)%', $string );
+	public function convert_variables( $value ) {
+		$value = str_replace( '%%term_title%%', '%term%', $value );
+		$value = str_replace( '%%category_description%%', '%term_description%', $value );
+		$value = str_replace( '%%searchphrase%%', '%search_query%', $value );
+		$value = preg_replace( '/%%cf_([^%]+)%%/i', '%customfield($1)%', $value );
+		$value = preg_replace( '/%%ct_([^%]+)%%/i', '%customterm($1)%', $value );
+		$value = preg_replace( '/%%ct_desc_([^%]+)%%/i', '%customterm($1)%', $value );
 
-		return str_replace( '%%', '%', $string );
+		return str_replace( '%%', '%', $value );
 	}
 
 	/**
@@ -121,8 +121,8 @@ class Yoast extends Plugin_Importer {
 		$this->set_additional_organization_details( $yoast_titles );
 		$this->set_separator( $yoast_titles );
 		$this->set_post_types( $yoast_titles );
-		$this->set_taxonomies( $yoast_titles );
-		$this->sitemap_settings( $yoast_main, $yoast_sitemap );
+		$this->set_taxonomies( $yoast_titles, $yoast_sitemap );
+		$this->sitemap_settings( $yoast_main, $yoast_sitemap, $yoast_titles );
 		$this->social_webmaster_settings( $yoast_main, $yoast_social );
 		$this->breadcrumb_settings( $yoast_titles, $yoast_internallinks );
 		$this->misc_settings( $yoast_titles, $yoast_social );
@@ -166,9 +166,10 @@ class Yoast extends Plugin_Importer {
 	/**
 	 * Set taxonomies settings.
 	 *
-	 * @param array $yoast_titles Settings.
+	 * @param array $yoast_titles  Titles & Meta Settings.
+	 * @param array $yoast_sitemap Sitemap Settings.
 	 */
-	private function set_taxonomies( $yoast_titles ) {
+	private function set_taxonomies( $yoast_titles, $yoast_sitemap ) {
 		$hash = [];
 		foreach ( Helper::get_accessible_taxonomies() as $taxonomy => $object ) {
 			$this->set_robots( "tax_{$taxonomy}", "tax-{$taxonomy}", $yoast_titles );
@@ -253,6 +254,7 @@ class Yoast extends Plugin_Importer {
 			$this->replace_image( get_post_meta( $post_id, '_yoast_wpseo_twitter-image', true ), 'post', 'rank_math_twitter_image', 'rank_math_twitter_image_id', $post_id );
 			$this->set_post_focus_keyword( $post_id );
 			$this->is_twitter_using_facebook( 'post', $post_id );
+			$this->add_schema_data( $post_id );
 		}
 
 		return $this->get_pagination_arg();
@@ -274,7 +276,7 @@ class Yoast extends Plugin_Importer {
 			$args['post_type'] = 'rank_math_locations';
 
 			$post_id = wp_insert_post( $args );
-			if ( is_wp_error( $post_id ) ) {
+			if ( $post_id === 0 ) {
 				continue;
 			}
 
@@ -285,6 +287,28 @@ class Yoast extends Plugin_Importer {
 		}
 
 		return $this->get_pagination_arg();
+	}
+
+	/**
+	 * Import Schema Data.
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	private function add_schema_data( $post_id ) {
+		$type = get_post_meta( $post_id, '_yoast_wpseo_schema_article_type', true );
+		if ( empty( $type ) || ! in_array( $type, [ 'Article', 'BlogPosting', 'NewsArticle' ], true ) ) {
+			return;
+		}
+
+		$data['@type']    = $type;
+		$data['metadata'] = [
+			'title'     => Helper::sanitize_schema_title( $type ),
+			'type'      => 'template',
+			'isPrimary' => 1,
+			'shortcode' => uniqid( 's-' ),
+		];
+
+		update_post_meta( $post_id, 'rank_math_schema_' . $type, $data );
 	}
 
 	/**
@@ -495,7 +519,7 @@ class Yoast extends Plugin_Importer {
 				'post_type'   => 'any',
 				'post_status' => 'any',
 				'fields'      => 'ids',
-				'meta_query'  => [
+				'meta_query'  => [ // phpcs:ignore -- Using meta_query here is acceptable as it is specifically for importing data from Yoast and runs exclusively in the background.
 					'relation' => 'AND',
 					[
 						'key'     => '_yoast_wpseo_video_meta',
@@ -623,7 +647,7 @@ class Yoast extends Plugin_Importer {
 		];
 		foreach ( $taxonomy_meta as $terms ) {
 			foreach ( $terms as $term_id => $data ) {
-				$count++;
+				++$count;
 				delete_term_meta( $term_id, 'rank_math_permalink' );
 				$this->replace_meta( $hash, $data, $term_id, 'term', 'convert_variables' );
 
@@ -723,7 +747,7 @@ class Yoast extends Plugin_Importer {
 		Helper::update_modules( [ 'redirections' => 'on' ] );
 		foreach ( $redirections as $redirection ) {
 			if ( false !== $this->save_redirection( $redirection ) ) {
-				$count++;
+				++$count;
 			}
 		}
 
@@ -907,8 +931,9 @@ class Yoast extends Plugin_Importer {
 	 *
 	 * @param array $yoast_main    Settings.
 	 * @param array $yoast_sitemap Settings.
+	 * @param array $yoast_titles  Settings.
 	 */
-	private function sitemap_settings( $yoast_main, $yoast_sitemap ) {
+	private function sitemap_settings( $yoast_main, $yoast_sitemap, $yoast_titles ) {
 		if ( ! isset( $yoast_main['enable_xml_sitemap'] ) && isset( $yoast_sitemap['enablexmlsitemap'] ) ) {
 			Helper::update_modules( [ 'sitemap' => 'on' ] );
 		}
@@ -922,6 +947,8 @@ class Yoast extends Plugin_Importer {
 		if ( empty( $yoast_sitemap['excluded-posts'] ) ) {
 			$this->sitemap['exclude_posts'] = '';
 		}
+
+		$this->sitemap['include_authors_without_posts'] = isset( $yoast_titles['noindex-author-noposts-wpseo'] ) && ! $yoast_titles['noindex-author-noposts-wpseo'] ? 'on' : 'off';
 
 		$this->sitemap_exclude_roles( $yoast_sitemap );
 	}

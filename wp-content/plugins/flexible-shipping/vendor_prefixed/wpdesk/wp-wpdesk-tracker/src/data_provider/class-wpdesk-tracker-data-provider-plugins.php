@@ -28,7 +28,7 @@ if (!\class_exists('WPDesk_Tracker_Data_Provider')) {
         private function get_all_plugins()
         {
             // Ensure get_plugins function is loaded.
-            if (!\function_exists('get_plugins')) {
+            if (!\function_exists('get_plugins') && !\function_exists('FSVendor\get_plugins')) {
                 include \ABSPATH . '/wp-admin/includes/plugin.php';
             }
             $plugins = \get_plugins();

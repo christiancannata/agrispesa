@@ -8,7 +8,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
  *
  * @package WPDesk\Pointer
  */
-class PointersScripts implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class PointersScripts implements Hookable
 {
     /**
      * @var array
@@ -24,7 +24,7 @@ class PointersScripts implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
         if (null === $enqueueOnScreens) {
             $enqueueOnScreens = array();
         }
-        if (!\is_array($enqueueOnScreens)) {
+        if (!is_array($enqueueOnScreens)) {
             $enqueueOnScreens = array($enqueueOnScreens);
         }
         $this->enqueueOnScreens = $enqueueOnScreens;
@@ -34,7 +34,7 @@ class PointersScripts implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function hooks()
     {
-        \add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
     }
     /**
      * Enqueue scripts.
@@ -43,9 +43,9 @@ class PointersScripts implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function enqueueScripts($hook)
     {
-        if (\count($this->enqueueOnScreens) === 0 || \in_array($hook, $this->enqueueOnScreens, \true)) {
-            \wp_enqueue_style('wp-pointer');
-            \wp_enqueue_script('wp-pointer');
+        if (count($this->enqueueOnScreens) === 0 || in_array($hook, $this->enqueueOnScreens, \true)) {
+            wp_enqueue_style('wp-pointer');
+            wp_enqueue_script('wp-pointer');
         }
     }
 }

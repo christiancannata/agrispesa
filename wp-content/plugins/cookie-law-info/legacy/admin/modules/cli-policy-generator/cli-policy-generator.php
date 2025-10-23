@@ -160,7 +160,7 @@ class Cookie_Law_Info_Cli_Policy_Generator {
 	**/
 	private function process_data( $txt ) {
 		$home_url    = home_url();
-		$home_domain = parse_url( $home_url, PHP_URL_HOST );
+		$home_domain = parse_url( $home_url, PHP_URL_HOST ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url
 		$txt         = str_replace(
 			array(
 				'{{site_url}}',

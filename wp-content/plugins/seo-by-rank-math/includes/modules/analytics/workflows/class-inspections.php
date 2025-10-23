@@ -13,9 +13,11 @@ namespace RankMath\Analytics\Workflow;
 use Exception;
 use RankMath\Helpers\DB;
 use RankMath\Traits\Hooker;
+use RankMath\Analytics\Workflow\Base;
 use RankMath\Analytics\DB as AnalyticsDB;
 use RankMath\Analytics\Url_Inspection;
 use RankMath\Google\Console;
+use RankMath\Helpers\Schedule;
 
 use function as_unschedule_all_actions;
 
@@ -89,8 +91,6 @@ class Inspections {
                 coverage_state text NOT NULL,                  /* String, e.g. 'Submitted and indexed'. */
                 page_fetch_state varchar(64) NOT NULL,         /* SUCCESSFUL, SOFT_404, BLOCKED_ROBOTS_TXT, NOT_FOUND, ACCESS_DENIED, SERVER_ERROR, REDIRECT_ERROR, ACCESS_FORBIDDEN, BLOCKED_4XX, INTERNAL_CRAWL_ERROR, INVALID_URL, PAGE_FETCH_STATE_UNSPECIFIED */
                 robots_txt_state varchar(64) NOT NULL,         /* ALLOWED, DISALLOWED, ROBOTS_TXT_STATE_UNSPECIFIED */
-                mobile_usability_verdict varchar(64) NOT NULL, /* PASS, PARTIAL, FAIL, NEUTRAL, VERDICT_UNSPECIFIED */
-                mobile_usability_issues longtext NOT NULL,     /* JSON */
                 rich_results_verdict varchar(64) NOT NULL,     /* PASS, PARTIAL, FAIL, NEUTRAL, VERDICT_UNSPECIFIED */
                 rich_results_items longtext NOT NULL,          /* JSON */
                 last_crawl_time timestamp NOT NULL,
@@ -106,11 +106,10 @@ class Inspections {
                 KEY index_verdict (index_verdict),
                 KEY page_fetch_state (page_fetch_state),
                 KEY robots_txt_state (robots_txt_state),
-                KEY mobile_usability_verdict (mobile_usability_verdict),
                 KEY rich_results_verdict (rich_results_verdict)
             ) $collate;";
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php'; // @phpstan-ignore-line
 		try {
 			dbDelta( $schema );
 		} catch ( Exception $e ) { // phpcs:ignore
@@ -136,6 +135,8 @@ class Inspections {
 			return;
 		}
 
+		global $wpdb;
+
 		$inspections_table = AnalyticsDB::inspections()->table;
 		$objects_table     = AnalyticsDB::objects()->table;
 
@@ -146,17 +147,48 @@ class Inspections {
 			->orderBy( "$inspections_table.created", 'ASC' )
 			->get();
 
-		$count = 0;
+		$pages = [];
 		foreach ( $objects as $object ) {
-			$count++;
+			if ( $object->created && date( 'Y-m-d', strtotime( $object->created ) ) === date( 'Y-m-d' ) ) {
+				continue;
+			}
+
+			$pages[] = $object->page;
+		}
+
+		if ( empty( $pages ) ) {
+			return;
+		}
+
+		$dates = Base::get_dates();
+
+		$query = $wpdb->prepare(
+			"SELECT DISTINCT(page) as page, COUNT(impressions) as total
+			FROM {$wpdb->prefix}rank_math_analytics_gsc
+			WHERE page IN ('" . join( "', '", $pages ) . "')
+			AND DATE(created) BETWEEN %s AND %s
+			GROUP BY page
+			ORDER BY total DESC",
+			$dates['start_date'],
+			$dates['end_date']
+		);
+
+		$top_pages = $wpdb->get_results( $query );
+		$top_pages = wp_list_pluck( $top_pages, 'page' );
+
+		$pages = array_merge( $top_pages, $pages );
+		$pages = array_unique( $pages );
+
+		$count = 0;
+		foreach ( $pages as $page ) {
+			++$count;
 			$time = time() + ( $count * self::REQUEST_GAP_SECONDS );
 			if ( $count > self::API_LIMIT ) {
 				$delay_days = floor( $count / self::API_LIMIT );
 				$time       = strtotime( "+{$delay_days} days", $time );
 			}
 
-			as_schedule_single_action( $time, 'rank_math/analytics/get_inspections_data', [ $object->page ], 'rank-math' );
+			Schedule::single_action( $time, 'rank_math/analytics/get_inspections_data', [ $page ], 'rank-math' );
 		}
 	}
-
 }

@@ -4,6 +4,9 @@ namespace YahnisElsts\AdminMenuEditor\Customizable\Settings;
 
 use YahnisElsts\AdminMenuEditor\Customizable\Storage\StorageInterface;
 
+/**
+ * @deprecated Use a SingularSetting with a Record schema instead.
+ */
 class MapSetting extends Setting {
 	protected $dataType = 'map';
 	protected $defaultValue = [];
@@ -11,7 +14,7 @@ class MapSetting extends Setting {
 	protected $keyValidators = [];
 	protected $valueValidators = [];
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		parent::__construct($id, $store, $params);
 
 		if ( array_key_exists('keyValidators', $params) ) {

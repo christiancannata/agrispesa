@@ -68,6 +68,9 @@ if ( get_option('niteoCS_socialmedia') ) {
                 case 'wikipedia':
                     $icon = 'fab fa-wikipedia-w';
                     break;
+                case 'x':
+                    $icon = 'fab fa-x-twitter';
+                    break;
                 default:
                     break;
             } 

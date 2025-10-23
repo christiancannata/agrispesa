@@ -5,7 +5,7 @@ namespace FSVendor\WPDesk\RepositoryRating\DisplayStrategy;
 /**
  * DisplayDecision based on GET parameters.
  */
-class GetParametersDisplayDecision implements \FSVendor\WPDesk\RepositoryRating\DisplayStrategy\DisplayDecision
+class GetParametersDisplayDecision implements DisplayDecision
 {
     /**
      * Whether to show beacon on the page or not. Array of arrays with condition for _GET.
@@ -25,7 +25,7 @@ class GetParametersDisplayDecision implements \FSVendor\WPDesk\RepositoryRating\
      *
      * @return bool
      */
-    public function should_display() : bool
+    public function should_display(): bool
     {
         foreach ($this->conditions as $or_conditions) {
             $display = \true;

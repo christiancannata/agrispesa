@@ -132,7 +132,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 		);
 		$post_types        = $this->get_exclude_post_types();
 
-		$total_rows = $wpdb->get_row( $wpdb->prepare( "SELECT COUNT(ID) AS ttnum FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish' ORDER BY post_type='page' DESC LIMIT %d", $page_limit ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$total_rows = $wpdb->get_row( $wpdb->prepare( "SELECT COUNT(ID) AS ttnum FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish' ORDER BY post_type='page' DESC LIMIT %d", $page_limit ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.QuotedDynamicPlaceholderGeneration
 		$total      = $total_rows ? $total_rows['ttnum'] + 1 : 1; // always add 1 because home url is there.
 
 		$this->set_ckyes_scan_status( 0 );
@@ -143,7 +143,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 
 		$this->insert_url( $scan_id, get_home_url() );
 
-		$data = $wpdb->get_results( $wpdb->prepare( "SELECT post_name,post_title,post_type,ID FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish' ORDER BY post_type='page' DESC LIMIT %d", $page_limit ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$data = $wpdb->get_results( $wpdb->prepare( "SELECT post_name,post_title,post_type,ID FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish' ORDER BY post_type='page' DESC LIMIT %d", $page_limit ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.QuotedDynamicPlaceholderGeneration
 
 		if ( ! empty( $data ) ) {
 			foreach ( $data as $value ) {
@@ -285,7 +285,7 @@ class Cookie_Law_Info_Cookie_Scanner_Ajax extends Cookie_Law_Info_Cookie_Scaner 
 	public function get_total_page_count() {
 		global $wpdb;
 		$post_types = $this->get_exclude_post_types();
-		$total_rows = $wpdb->get_row( "SELECT COUNT(ID) AS ttnum FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish'", ARRAY_A );
+		$total_rows = $wpdb->get_row( "SELECT COUNT(ID) AS ttnum FROM {$wpdb->prefix}posts WHERE post_type IN( '" . implode( "','", array_map( 'esc_sql', array_keys( $post_types ) ) ) . "' ) AND post_status='publish'", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$pages      = ( isset( $total_rows ) ? $total_rows : 0 );
 		$page_count = intval( ( isset( $pages['ttnum'] ) ? $pages['ttnum'] : 0 ) );
 		return $page_count;

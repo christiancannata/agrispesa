@@ -104,7 +104,8 @@ class AJAX_Runner extends Abstract_Check_Runner {
 	 * @return bool Returns true to include experimental checks else false.
 	 */
 	protected function get_include_experimental_param() {
-		return false;
+		$include_experimental = filter_input( INPUT_POST, 'include-experimental', FILTER_VALIDATE_INT );
+		return ( 1 === absint( $include_experimental ) );
 	}
 
 	/**

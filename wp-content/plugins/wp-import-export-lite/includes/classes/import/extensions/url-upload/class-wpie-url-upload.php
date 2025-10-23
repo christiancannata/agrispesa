@@ -5,9 +5,7 @@ namespace wpie\import\upload\url;
 use WP_Error;
 use wpie\import\Downloader\Manager as Downloader;
 
-if ( ! defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-upload.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/class-wpie-upload.php');
 }

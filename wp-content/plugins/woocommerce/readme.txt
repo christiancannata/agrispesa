@@ -1,10 +1,10 @@
 === WooCommerce ===
-Contributors: automattic, woocommerce, mikejolley, jameskoster, claudiosanches, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski, wpmuguru, royho, barryhughes-1, claudiulodro, tiagonoronha, ryelle, levinmedia, aljullu, nerrad, joshuawold, assassinateur, haszari, mppfeiffer, nielslange, opr18, ralucastn, tjcafferkey, danielwrobert, patriciahillebrandt, albarin, dinhtungdu, imanish003, karolmanijak, sunyatasattva, alexandrelara, gigitux, danieldudzic, samueljseay, alexflorisca, opr18, tarunvijwani, pauloarromba, saadtarhi, bor0, kloon, coreymckrill, jorgeatorres, leifsinger
+Contributors: automattic, woocommerce, mikejolley, jameskoster, claudiosanches, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski, wpmuguru, royho, barryhughes-1, claudiulodro, tiagonoronha, ryelle, levinmedia, aljullu, nerrad, joshuawold, assassinateur, haszari, mppfeiffer, nielslange, opr18, ralucastn, tjcafferkey, danielwrobert, patriciahillebrandt, albarin, dinhtungdu, imanish003, karolmanijak, sunyatasattva, alexandrelara, gigitux, danieldudzic, samueljseay, alexflorisca, opr18, tarunvijwani, pauloarromba, saadtarhi, bor0, kloon, coreymckrill, jorgeatorres, leifsinger, neosinner
 Tags: online store, ecommerce, shop, shopping cart, sell online
-Requires at least: 6.4
-Tested up to: 6.5
+Requires at least: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 9.0.0
+Stable tag: 10.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,11 +36,11 @@ Built-in tools and popular integrations help you efficiently manage your busines
 
 = Grow your business, add features, and monitor your store on the go =
 
-WooCommerce means business. Keep tabs on the performance metrics most important to you with [WooCommerce Admin](https://wordpress.org/plugins/woocommerce-admin/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) – a powerful, customizable central dashboard for your store.
+WooCommerce means business. Keep tabs on the performance metrics most important to you with a powerful and flexible central dashboard built into WooCommerce.
 
 Expand your audience across marketing and social channels with [Google Ads](https://woocommerce.com/products/google-ads/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing), [HubSpot](https://woocommerce.com/products/hubspot-for-woocommerce/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing), [Mailchimp](https://woocommerce.com/products/mailchimp-for-woocommerce/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing), and [Facebook](https://woocommerce.com/products/facebook/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) integrations. You can always check out the in-dashboard [Marketing Hub](https://woocommerce.com/document/marketing-hub/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) for fresh ideas and tips to help you succeed.
 
-Enhance store functionality with hundreds of free and paid extensions from the [official WooCommerce Marketplace](https://woocommerce.com/products/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing). Our developers [vet each new extension](https://woocommerce.com/document/marketplace-overview/#section-6?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) and regularly review existing extensions to maintain Marketplace quality standards. We are actively [looking for products that help store builders create successful stores](https://woocommerce.com/document/marketplace-overview/#section-2?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing).
+Enhance store functionality with hundreds of free and paid extensions from the [WooCommerce Marketplace](https://woocommerce.com/products/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing). Our developers [vet each new extension](https://woocommerce.com/document/marketplace-overview/#section-6?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) and regularly review existing extensions to maintain Marketplace quality standards. We are actively [looking for products that help store builders create successful stores](https://woocommerce.com/document/marketplace-overview/#section-2?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing).
 
 Manage your store from anywhere with the free WooCommerce [mobile app](https://woocommerce.com/mobile/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) (Android and iOS). Spoiler alert: Keep an ear out for the slightly addictive "cha-ching" notification sound each time you make a new sale!
 
@@ -60,7 +60,7 @@ Developers can use [WooCommerce](https://woocommerce.com/woocommerce/) to create
 - Integrate virtually any service using a robust [REST API](https://developer.woocommerce.com/docs/getting-started-with-the-woocommerce-rest-api/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) and webhooks.
 - Design and build custom content blocks with React.
 - [Inspect and modify](https://developer.woocommerce.com/docs/category/extension-development/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) any aspect of the core plugin code.
-- Speed up development with a lightning-fast [CLI](https://woocommerce.github.io/code-reference/classes/wc-cli-rest-command.html?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing).
+- Speed up development with a lightning-fast [CLI](https://developer.woocommerce.com/docs/category/wc-cli/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing).
 
 The core platform is tested rigorously and often, supported by a dedicated development team working across time zones. Comprehensive documentation is updated with each release, empowering you to build exactly the store required.
 
@@ -77,6 +77,10 @@ WooCommerce also has a regular presence at WordCamps across the globe – we’d
 WooCommerce is developed and supported by Automattic, the creators of WordPress.com and Jetpack. We also have hundreds of independent contributors, and there’s always room for more. Head to the [WooCommerce GitHub Repository](https://github.com/woocommerce/woocommerce?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing) to find out how you can pitch in.
 
 WooCommerce is translated into multiple languages, including Danish, Ukrainian, and Persian. Help localize WooCommerce even further by adding your locale – visit [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/woocommerce/?utm_medium=referral&utm_source=wordpress.org&utm_campaign=wp_org_repo_listing).
+
+= Connection to WooCommerce.com =
+
+You can connect your store to [WooCommerce.com](https://woocommerce.com/) to manage your subscriptions on WooCommerce Marketplace and receive product updates without leaving WordPress admin. Connection also enables installation of purchased products right from WooCommerce.com and streamlines access to technical support. If you’d like to learn about what data is gathered and how it is used, please refer to our [Privacy Policy](https://automattic.com/privacy/).
 
 == Frequently Asked Questions ==
 
@@ -139,9 +143,10 @@ Check out [Frequently Asked Questions](https://woocommerce.com/document/frequent
 = Minimum Requirements =
 
 * PHP 7.4 or greater is required (PHP 8.0 or greater is recommended)
-* MySQL 5.6 or greater, OR MariaDB version 10.1 or greater, is required
-
-Visit the [WooCommerce server requirements documentation](https://woocommerce.com/document/server-requirements/?utm_source=wp%20org%20repo%20listing&utm_content=3.6) for a detailed list of server requirements.
+* MySQL 5.5.5 or greater, OR MariaDB version 10.1 or greater, is required
+* WordPress 6.7 or greater
+* (Recommended) WordPress [memory limit](https://woocommerce.com/document/increasing-the-wordpress-memory-limit/) of 256 MB or greater.
+* (Recommended) [HTTPS](https://woocommerce.com/document/ssl-and-https/) support.
 
 = Automatic installation =
 
@@ -165,10 +170,16 @@ WooCommerce comes with some sample data you can use to see how products look; im
 
 == Changelog ==
 
-= 9.0.1 2024-06-20 =
+= 10.2.1 2025-09-22 =
 
 **WooCommerce**
 
-* Fix - Check WC_Legacy_API instead of WC_API as that seems to be cached by lightspeed servers. [#48593](https://github.com/woocommerce/woocommerce/pull/48593)
+* Fix - Address update script issue where refunded $order may not exist, and disable refunded orders tool. [#61022](https://github.com/woocommerce/woocommerce/pull/61022)
+* Fix - Downgrade Emogrifier dependency to avoid conflict [#60997](https://github.com/woocommerce/woocommerce/pull/60997)
+* Fix - Fix product price display in RTL languages [#61000](https://github.com/woocommerce/woocommerce/pull/61000)
+* Update - Improve template slug recognition in mechanism registering product blocks. Assure compatibility with WordPress 6.9 [#61009](https://github.com/woocommerce/woocommerce/pull/61009)
+* Dev - Replace deprecated core/edit-site methods with core/editor methods [#61009](https://github.com/woocommerce/woocommerce/pull/61009)
+* Dev - Stop relying on deprecated core/edit-site methods [#61009](https://github.com/woocommerce/woocommerce/pull/61009)
+
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce/trunk/changelog.txt).

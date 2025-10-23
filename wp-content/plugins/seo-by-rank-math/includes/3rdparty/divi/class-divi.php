@@ -118,6 +118,7 @@ class Divi {
 	 * Add JSON data.
 	 */
 	public function add_json_data() {
+		$this->maybe_load_editor_deps();
 
 		if ( Helper::has_cap( 'onpage_snippet' ) ) {
 
@@ -193,6 +194,7 @@ class Divi {
 			'wp-element',
 			'wp-hooks',
 			'wp-media-utils',
+			'wp-wordcount',
 			'rank-math-analyzer',
 			'rank-math-app',
 		];
@@ -210,11 +212,16 @@ class Divi {
 		wp_enqueue_script( 'rank-math-editor', rank_math()->plugin_url() . 'includes/3rdparty/divi/assets/js/divi.js', $divi_deps, rank_math()->version, true );
 		wp_enqueue_script( 'rank-math-divi-iframe', rank_math()->plugin_url() . 'includes/3rdparty/divi/assets/js/divi-iframe.js', [ 'jquery', 'lodash' ], rank_math()->version, true );
 
+		wp_set_script_translations( 'rank-math-app', 'seo-by-rank-math', rank_math()->plugin_dir() . 'languages/' );
+		wp_set_script_translations( 'rank-math-divi-iframe', 'seo-by-rank-math', rank_math()->plugin_dir() . 'languages/' );
+		wp_set_script_translations( 'rank-math-editor', 'seo-by-rank-math', rank_math()->plugin_dir() . 'languages/' );
+		wp_set_script_translations( 'rank-math-analyzer', 'seo-by-rank-math', rank_math()->plugin_dir() . 'languages/' );
+
 		if ( Helper::is_module_active( 'rich-snippet' ) ) {
 			wp_enqueue_style( 'rank-math-schema', rank_math()->plugin_url() . 'includes/modules/schema/assets/css/schema.css', [ 'wp-components' ], rank_math()->version );
 
 			wp_enqueue_script( 'rank-math-schema', rank_math()->plugin_url() . 'includes/modules/schema/assets/js/schema-gutenberg.js', [ 'rank-math-editor' ], rank_math()->version, true );
-			wp_set_script_translations( 'rank-math-schema', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
+			wp_set_script_translations( 'rank-math-schema', 'seo-by-rank-math', rank_math()->plugin_dir() . 'languages/' );
 		}
 
 		rank_math()->variables->setup();
@@ -235,11 +242,10 @@ class Divi {
 	 *
 	 * @param string $tag The <script> tag for the enqueued script.
 	 * @param string $handle The script's registered handle.
-	 * @param string $src The script's source URL.
 	 *
 	 * @return string
 	 */
-	public function add_et_tag( $tag, $handle, $src ) {
+	public function add_et_tag( $tag, $handle ) {
 		$script_handles = [
 			'rm-react',
 			'rm-react-dom',
@@ -277,7 +283,11 @@ class Divi {
 
 		if ( Str::starts_with( 'wp-', $handle ) || in_array( $handle, $script_handles, true ) ) {
 			// These tags load in parent window only, not in Divi iframe.
-			return '<script type="text/javascript" src="' . $src . '" class="et_fb_ignore_iframe"></script>' . "\n"; // phpcs:ignore
+			$tag = preg_replace(
+				'/<script\b(?![^>]*\bclass=)([^>]*)>/i',
+				'<script class="et_fb_ignore_iframe"$1>',
+				$tag
+			);
 		}
 
 		return $tag;
@@ -351,5 +361,19 @@ class Divi {
 		];
 
 		return $schemas;
+	}
+
+	/**
+	 * Ensures required dependencies are loaded when toolbar is hidden.
+	 *
+	 * @return void
+	 */
+	private function maybe_load_editor_deps() {
+		if ( is_admin_bar_showing() ) {
+			return;
+		}
+
+		Helper::add_json( 'security', wp_create_nonce( 'rank-math-ajax-nonce' ) );
+		Helper::add_json( 'restNonce', ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ) );
 	}
 }

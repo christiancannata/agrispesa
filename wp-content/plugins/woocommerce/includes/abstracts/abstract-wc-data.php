@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Implemented by classes using the same CRUD(s) pattern.
  *
- * @version  2.6.0
+ * @since    2.6.0
+ * @version  10.2.0
  * @package  WooCommerce\Abstracts
  */
 abstract class WC_Data {
@@ -485,11 +486,11 @@ abstract class WC_Data {
 			}
 
 			if ( ! empty( $matches ) ) {
-				// Set matches to null so only one key gets the new value.
+				// Update first match and delete the rest.
+				$array_key = array_shift( $matches );
 				foreach ( $matches as $meta_data_array_key ) {
 					$this->meta_data[ $meta_data_array_key ]->value = null;
 				}
-				$array_key = current( $matches );
 			}
 		}
 
@@ -709,8 +710,7 @@ abstract class WC_Data {
 				do_action( "added_{$this->object_type}_meta", $meta->id, $this->get_id(), $meta->key, $meta->value );
 
 				$meta->apply_changes();
-			} else {
-				if ( $meta->get_changes() ) {
+			} elseif ( $meta->get_changes() ) {
 					$this->data_store->update_meta( $this, $meta );
 					/**
 					 * Fires immediately after updating metadata.
@@ -723,7 +723,6 @@ abstract class WC_Data {
 					do_action( "updated_{$this->object_type}_meta", $meta->id, $this->get_id(), $meta->key, $meta->value );
 
 					$meta->apply_changes();
-				}
 			}
 		}
 		if ( ! empty( $this->cache_group ) ) {
@@ -907,7 +906,7 @@ abstract class WC_Data {
 			} elseif ( is_numeric( $value ) ) {
 				// Timestamps are handled as UTC timestamps in all cases.
 				$datetime = new WC_DateTime( "@{$value}", new DateTimeZone( 'UTC' ) );
-			} else {
+			} elseif ( is_string( $value ) ) {
 				// Strings are defined in local WP timezone. Convert to UTC.
 				if ( 1 === preg_match( '/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|((-|\+)\d{2}:\d{2}))$/', $value, $date_bits ) ) {
 					$offset    = ! empty( $date_bits[7] ) ? iso8601_timezone_to_offset( $date_bits[7] ) : wc_timezone_offset();
@@ -916,6 +915,9 @@ abstract class WC_Data {
 					$timestamp = wc_string_to_timestamp( get_gmt_from_date( gmdate( 'Y-m-d H:i:s', wc_string_to_timestamp( $value ) ) ) );
 				}
 				$datetime = new WC_DateTime( "@{$timestamp}", new DateTimeZone( 'UTC' ) );
+			} else {
+				// If we get here, the value is not a valid date type.
+				$this->error( 'invalid_date', __( 'Invalid date provided.', 'woocommerce' ) );
 			}
 
 			// Set local timezone or offset.

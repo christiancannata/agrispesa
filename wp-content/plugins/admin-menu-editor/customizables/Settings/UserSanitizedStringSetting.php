@@ -28,7 +28,7 @@ class UserSanitizedStringSetting extends StringSetting {
 	 */
 	protected $sanitizationMode = self::SANITIZE_STRIP_HTML;
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		parent::__construct($id, $store, $params);
 		if ( isset($params['sanitizationMode']) ) {
 			$this->sanitizationMode = $params['sanitizationMode'];

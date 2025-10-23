@@ -16,8 +16,10 @@ class LocalPickupUtils {
 		$pickup_location_settings = get_option(
 			'woocommerce_pickup_location_settings',
 			[
-				'enabled' => 'no',
-				'title'   => __( 'Pickup', 'woocommerce' ),
+				'enabled'    => 'no',
+				'title'      => __( 'Pickup', 'woocommerce' ),
+				'cost'       => '',
+				'tax_status' => 'taxable',
 			]
 		);
 
@@ -27,6 +29,10 @@ class LocalPickupUtils {
 
 		if ( empty( $pickup_location_settings['enabled'] ) ) {
 			$pickup_location_settings['enabled'] = 'no';
+		}
+
+		if ( ! isset( $pickup_location_settings['cost'] ) ) {
+			$pickup_location_settings['cost'] = '';
 		}
 
 		// Return settings as is if we're editing them.
@@ -47,8 +53,20 @@ class LocalPickupUtils {
 	 * @return bool True if local pickup is enabled.
 	 */
 	public static function is_local_pickup_enabled() {
-		$pickup_location_settings = self::get_local_pickup_settings();
-		return $pickup_location_settings['enabled'];
+		// Get option directly to avoid early translation function call.
+		// See https://github.com/woocommerce/woocommerce/pull/47113.
+		$pickup_location_settings = get_option(
+			'woocommerce_pickup_location_settings',
+			[
+				'enabled' => 'no',
+			]
+		);
+
+		if ( empty( $pickup_location_settings['enabled'] ) ) {
+			$pickup_location_settings['enabled'] = 'no';
+		}
+
+		return wc_string_to_bool( $pickup_location_settings['enabled'] );
 	}
 	/**
 	 * Gets a list of payment method ids that support the 'local-pickup' feature.
@@ -64,7 +82,7 @@ class LocalPickupUtils {
 				}
 				return $methods;
 			},
-			array()
+			array( 'local_pickup' )
 		);
 
 		// We use array_values because this will be used in JS, so we don't need the (numerical) keys.
@@ -74,5 +92,15 @@ class LocalPickupUtils {
 				$all_methods_supporting_local_pickup
 			)
 		);
+	}
+
+	/**
+	 * Checks if a method is a local pickup method.
+	 *
+	 * @param string $method_id The method id to check.
+	 * @return bool True if the method is a local pickup method.
+	 */
+	public static function is_local_pickup_method( $method_id ) {
+		return in_array( $method_id, self::get_local_pickup_method_ids(), true );
 	}
 }

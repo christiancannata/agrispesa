@@ -76,17 +76,6 @@ class Notice
         $this->addAction();
     }
     /**
-     * @return bool
-     */
-    public function isBlockEditor()
-    {
-        if (!\function_exists('get_current_screen')) {
-            require_once \ABSPATH . '/wp-admin/includes/screen.php';
-        }
-        $screen = \get_current_screen();
-        return \is_object($screen) ? $screen->is_block_editor() : \false;
-    }
-    /**
      * @return string
      */
     public function getNoticeContent()
@@ -152,9 +141,8 @@ class Notice
     protected function addAction()
     {
         if (!$this->actionAdded) {
-            \add_action('admin_notices', [$this, 'showNotice'], $this->priority);
-            \add_action('admin_footer', [$this, 'showNotice'], self::ADMIN_FOOTER_BASE_PRIORITY + \intval($this->priority));
-            \add_action('admin_head', [$this, 'addGutenbergScript']);
+            add_action('admin_notices', [$this, 'showNotice'], $this->priority);
+            add_action('admin_footer', [$this, 'showNotice'], self::ADMIN_FOOTER_BASE_PRIORITY + intval($this->priority));
             $this->actionAdded = \true;
         }
     }
@@ -164,18 +152,9 @@ class Notice
     protected function removeAction()
     {
         if ($this->actionAdded) {
-            \remove_action('admin_notices', [$this, 'showNotice'], $this->priority);
-            \remove_action('admin_footer', [$this, 'showNotice'], self::ADMIN_FOOTER_BASE_PRIORITY + \intval($this->priority));
+            remove_action('admin_notices', [$this, 'showNotice'], $this->priority);
+            remove_action('admin_footer', [$this, 'showNotice'], self::ADMIN_FOOTER_BASE_PRIORITY + intval($this->priority));
             $this->actionAdded = \false;
-        }
-    }
-    /**
-     * Enqueue admin scripts.
-     */
-    public function addGutenbergScript()
-    {
-        if ($this->isBlockEditor()) {
-            include_once __DIR__ . '/views/admin-head-js-gutenberg.php';
         }
     }
     /**
@@ -210,7 +189,7 @@ class Notice
         if ($this->showInGutenberg) {
             $notice_classes[] = 'wpdesk-notice-gutenberg';
         }
-        return \implode(' ', $notice_classes);
+        return implode(' ', $notice_classes);
     }
     /**
      * Get attributes as string.
@@ -219,20 +198,20 @@ class Notice
      */
     protected function getAttributesAsString()
     {
-        $attribute_string = \sprintf('class="%1$s"', \esc_attr($this->getNoticeClass()));
+        $attribute_string = sprintf('class="%1$s"', esc_attr($this->getNoticeClass()));
         foreach ($this->attributes as $attribute_name => $attribute_value) {
             if ('class' !== $attribute_name) {
-                $attribute_string .= \sprintf(' %1$s="%2$s"', \esc_html($attribute_name), \esc_attr($attribute_value));
+                $attribute_string .= sprintf(' %1$s="%2$s"', esc_html($attribute_name), esc_attr($attribute_value));
             }
         }
         return $attribute_string;
     }
     private function addParagraphToContent()
     {
-        if (0 === \strpos($this->noticeContent, '<p>')) {
+        if (0 === strpos($this->noticeContent, '<p>')) {
             return \false;
         }
-        if (0 === \strpos($this->noticeContent, '<div>') || 0 === \strpos($this->noticeContent, '<div ')) {
+        if (0 === strpos($this->noticeContent, '<div>') || 0 === strpos($this->noticeContent, '<div ')) {
             return \false;
         }
         return \true;
@@ -247,6 +226,6 @@ class Notice
         if ($this->addParagraphToContent()) {
             $noticeFormat = '<div %1$s><p>%2$s</p></div>';
         }
-        echo \sprintf($noticeFormat, $this->getAttributesAsString(), $this->noticeContent);
+        echo \wp_kses_post(sprintf($noticeFormat, $this->getAttributesAsString(), $this->noticeContent));
     }
 }

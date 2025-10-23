@@ -12,6 +12,7 @@ namespace RankMath\Helpers;
 
 use RankMath\Admin\Admin_Helper;
 use RankMath\Helpers\Str;
+use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -57,11 +58,10 @@ trait Content_AI {
 	/**
 	 * Get the Content AI Credits.
 	 *
-	 * @param bool $force_update       Whether to send a request to API to get the new Credits value.
-	 * @param bool $return_error       Whether to return error when request fails.
-	 * @param bool $migration_complete Whether the request was send after migrating the user.
+	 * @param bool $force_update Whether to send a request to API to get the new Credits value.
+	 * @param bool $return_error Whether to return error when request fails.
 	 */
-	public static function get_content_ai_credits( $force_update = false, $return_error = false, $migration_complete = false ) {
+	public static function get_content_ai_credits( $force_update = false, $return_error = false ) {
 		$registered = Admin_Helper::get_registration_data();
 		if ( empty( $registered ) ) {
 			return 0;
@@ -69,7 +69,7 @@ trait Content_AI {
 
 		$transient = 'rank_math_content_ai_requested';
 		$credits   = self::get_credits();
-		if ( ! $force_update || ( get_site_transient( $transient ) && ! $migration_complete ) ) {
+		if ( ! $force_update || ( get_site_transient( $transient ) ) ) {
 			return $credits;
 		}
 
@@ -96,9 +96,6 @@ trait Content_AI {
 		);
 
 		$response_code = wp_remote_retrieve_response_code( $response );
-		if ( 404 === $response_code && ! $migration_complete ) {
-			return self::maybe_migrate_user( $response );
-		}
 
 		$is_error = self::is_content_ai_error( $response, $response_code );
 		if ( $is_error ) {
@@ -194,7 +191,7 @@ trait Content_AI {
 	/**
 	 * Function to get Default Schema type by post_type.
 	 *
-	 * @return string Default Schema Type.
+	 * @return array Default Schema Type.
 	 */
 	public static function get_chats() {
 		return array_values( get_option( self::$chat_key, [] ) );
@@ -235,7 +232,7 @@ trait Content_AI {
 		$outputs = self::get_outputs();
 
 		$output = array_map(
-			function( $item ) use ( $endpoint ) {
+			function ( $item ) use ( $endpoint ) {
 				return [
 					'key'    => $endpoint,
 					'output' => $item,
@@ -322,8 +319,8 @@ trait Content_AI {
 	 */
 	public static function save_default_prompts( $prompts ) {
 		$saved_prompts  = self::get_prompts();
-		$custom_prompts = ! is_array( $saved_prompts ) ? [] : array_map(
-			function( $prompt ) {
+		$custom_prompts = ! is_array( $saved_prompts ) || ! empty( $saved_prompts['error'] ) ? [] : array_map(
+			function ( $prompt ) {
 				return $prompt['PromptCategory'] === 'custom' ? $prompt : false;
 			},
 			$saved_prompts
@@ -440,55 +437,30 @@ trait Content_AI {
 	 */
 	public static function get_content_ai_errors() {
 		return [
-			'not_connected'          => esc_html__( 'Please connect your account to use the Content AI.', 'rank-math' ),
-			'plugin_update_required' => esc_html__( 'Please update the Rank Math SEO plugin to the latest version to use this feature.', 'rank-math' ),
-			'upgrade_required'       => esc_html__( 'This feature is only available for Content AI subscribers.', 'rank-math' ),
-			'rate_limit_exceeded'    => esc_html__( 'Oops! Too many requests in a short time. Please try again after some time.', 'rank-math' ),
-			'domain_limit_reached'   => esc_html__( 'You\'ve used up all available credits for this domain.', 'rank-math' ),
-			'account_limit_reached'  => esc_html__( 'You\'ve used up all available credits from the connected account.', 'rank-math' ),
-			'content_filter'         => esc_html__( 'Please revise the entered values in the fields as they are not secure. Make the required adjustments and try again.', 'rank-math' ),
-			'api_content_filter'     => esc_html__( 'The output was stopped as it was identified as potentially unsafe by the content filter.', 'rank-math' ),
-			'could_not_generate'     => esc_html__( 'Could not generate. Please try again later.', 'rank-math' ),
-			'invalid_key'            => esc_html__( 'Invalid API key. Please check your API key or reconnect the site and try again.', 'rank-math' ),
-			'not_found'              => esc_html__( 'User wallet not found.', 'rank-math' ),
+			'not_connected'           => esc_html__( 'Please connect your account to use the Content AI.', 'rank-math' ),
+			'plugin_update_required'  => esc_html__( 'Please update the Rank Math SEO plugin to the latest version to use this feature.', 'rank-math' ),
+			'upgrade_required'        => esc_html__( 'This feature is only available for Content AI subscribers.', 'rank-math' ),
+			'rate_limit_exceeded'     => esc_html__( 'Oops! Too many requests in a short time. Please try again after some time.', 'rank-math' ),
+			'domain_limit_reached'    => esc_html__( 'You\'ve used up all available credits for this domain.', 'rank-math' ),
+			'account_limit_reached'   => esc_html__( 'You\'ve used up all available credits from the connected account.', 'rank-math' ),
+			'content_filter'          => esc_html__( 'Please revise the entered values in the fields as they are not secure. Make the required adjustments and try again.', 'rank-math' ),
+			'api_content_filter'      => esc_html__( 'The output was stopped as it was identified as potentially unsafe by the content filter.', 'rank-math' ),
+			'could_not_generate'      => esc_html__( 'Could not generate. Please try again later.', 'rank-math' ),
+			'invalid_key'             => esc_html__( 'Invalid API key. Please check your API key or reconnect the site and try again.', 'rank-math' ),
+			'invalid_input'           => esc_html__( 'The input provided is invalid. Please check the format and try again.', 'rank-math' ),
+			'temporarily_unavailable' => esc_html__( 'The service is temporarily unavailable. Please try again later.', 'rank-math' ),
+			'invalid_client'          => esc_html__( 'Unauthorized request. The client credentials are invalid.', 'rank-math' ),
+			'no_results'              => esc_html__( 'No results found for the given query. Please modify your request and try again', 'rank-math' ),
+			'not_enough_results'      => esc_html__( 'Insufficient results to complete the request. Please refine your query or reduce the requirements.', 'rank-math' ),
+			'not_found'               => esc_html__( 'User wallet not found.', 'rank-math' ),
 		];
-	}
-
-	/**
-	 * User migration request.
-	 */
-	public static function migrate_user_to_nest_js() {
-		$registered = Admin_Helper::get_registration_data();
-		if ( empty( $registered ) || empty( $registered['username'] ) ) {
-			return;
-		}
-
-		$res = wp_remote_post(
-			CONTENT_AI_URL . '/migrate',
-			[
-				'headers' => [
-					'Content-type' => 'application/json',
-				],
-				'body'    => wp_json_encode( [ 'username' => $registered['username'] ] ),
-			]
-		);
-
-		$res_code = wp_remote_retrieve_response_code( $res );
-		if ( is_wp_error( $res ) || 400 <= $res_code ) {
-			return false;
-		}
-
-		$data             = json_decode( wp_remote_retrieve_body( $res ), true );
-		$migration_status = $data['status'] ?? '';
-
-		return in_array( $migration_status, [ 'added', 'migration_not_needed' ], true ) ? 'completed' : $migration_status;
 	}
 
 	/**
 	 * Function to return the error message.
 	 *
-	 * @param array $response      API response.
-	 * @param int   $response_code API response code.
+	 * @param array|WP_Error $response      API response.
+	 * @param int            $response_code API response code.
 	 */
 	public static function is_content_ai_error( $response, $response_code ) {
 		$data = wp_remote_retrieve_body( $response );
@@ -501,19 +473,9 @@ trait Content_AI {
 	}
 
 	/**
-	 * Migrate user depending on the error received in the response
-	 *
-	 * @param array $response API response.
+	 * Whether to add Keyword Intent.
 	 */
-	private static function maybe_migrate_user( $response ) {
-		$data = json_decode( wp_remote_retrieve_body( $response ), true );
-		if ( empty( $data['err_key'] ) || 'not_found' !== $data['err_key'] ) {
-			return;
-		}
-
-		$status = self::migrate_user_to_nest_js();
-		if ( 'completed' === $status ) {
-			return self::get_content_ai_credits( true, false, true );
-		}
+	public static function should_determine_search_intent() {
+		return apply_filters( 'rank_math/determine_search_intent', true );
 	}
 }

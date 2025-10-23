@@ -79,6 +79,7 @@ define( 'GTM4WP_OPTION_INTEGRATE_WCEINCLUDECARTINDL', 'integrate-woocommerce-car
 define( 'GTM4WP_OPTION_INTEGRATE_WCEECBRANDTAXONOMY', 'integrate-woocommerce-brand-taxonomy' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCBUSINESSVERTICAL', 'integrate-woocommerce-business-vertical' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCUSESKU', 'integrate-woocommerce-remarketing-usesku' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCVIEWITEMONPARENT', 'integrate-woocommerce-view-item-on-parent-product' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCUSEFULLCATEGORYPATH', 'integrate-woocommerce-use-full-category-path' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCREMPRODIDPREFIX', 'integrate-woocommerce-remarketing-productidprefix' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCCUSTOMERDATA', 'integrate-woocommerce-customer-data' );
@@ -88,6 +89,7 @@ define( 'GTM4WP_OPTION_INTEGRATE_WCEXCLUDETAX', 'integrate-woocommerce-exclude-t
 define( 'GTM4WP_OPTION_INTEGRATE_WCEXCLUDESHIPPING', 'integrate-woocommerce-exclude-shipping' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCNOORDERTRACKEDFLAG', 'integrate-woocommerce-do-not-use-order-tracked-flag' );
 define( 'GTM4WP_OPTION_INTEGRATE_WCCLEARECOMMERCEDL', 'integrate-woocommerce-clear-ecommerce-datalayer' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCDLMAXTIMEOUT', 'integrate-woocommerce-datalayer-max-timeout' );
 
 define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE', 'integrate-wp-e-commerce' );
 
@@ -186,6 +188,7 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_INTEGRATE_WCEECBRANDTAXONOMY       => '',
 	GTM4WP_OPTION_INTEGRATE_WCBUSINESSVERTICAL       => 'retail',
 	GTM4WP_OPTION_INTEGRATE_WCUSESKU                 => false,
+	GTM4WP_OPTION_INTEGRATE_WCVIEWITEMONPARENT       => false,
 	GTM4WP_OPTION_INTEGRATE_WCUSEFULLCATEGORYPATH    => false,
 	GTM4WP_OPTION_INTEGRATE_WCREMPRODIDPREFIX        => '',
 	GTM4WP_OPTION_INTEGRATE_WCCUSTOMERDATA           => false,
@@ -195,6 +198,7 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_INTEGRATE_WCEXCLUDESHIPPING        => false,
 	GTM4WP_OPTION_INTEGRATE_WCNOORDERTRACKEDFLAG     => false,
 	GTM4WP_OPTION_INTEGRATE_WCCLEARECOMMERCEDL       => false,
+	GTM4WP_OPTION_INTEGRATE_WCDLMAXTIMEOUT           => 2000,
 
 	GTM4WP_OPTION_INTEGRATE_WPECOMMERCE              => false,
 

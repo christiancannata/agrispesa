@@ -45,7 +45,7 @@ class WooCommerceCapture
      * @var ?callable
      */
     private $freeHookFunction;
-    public function __construct(\FSVendor\Monolog\Logger $monolog)
+    public function __construct(Logger $monolog)
     {
         $this->monolog = $monolog;
     }
@@ -57,10 +57,10 @@ class WooCommerceCapture
     {
         $monolog = $this->monolog;
         if ($this->captureHookFunction === null) {
-            $this->captureHookFunction = function () use($monolog) {
-                return new \FSVendor\WPDesk\Logger\WC\WooCommerceMonologPlugin($monolog, $this->originalWCLogger);
+            $this->captureHookFunction = function () use ($monolog) {
+                return new WooCommerceMonologPlugin($monolog, $this->originalWCLogger);
             };
-            $this->monolog->pushHandler(new \FSVendor\WPDesk\Logger\WC\WooCommerceHandler($this->originalWCLogger));
+            $this->monolog->pushHandler(new WooCommerceHandler($this->originalWCLogger));
         }
     }
     /**
@@ -70,7 +70,7 @@ class WooCommerceCapture
      */
     public static function isSupportedWCVersion()
     {
-        return \class_exists(\WooCommerce::class) && \version_compare(\WooCommerce::instance()->version, self::SUPPORTED_WC_VERSION, '>=');
+        return class_exists(\WooCommerce::class) && version_compare(\WooCommerce::instance()->version, self::SUPPORTED_WC_VERSION, '>=');
     }
     /**
      * Capture WooCommerce logger and inject our decorated Logger
@@ -79,16 +79,16 @@ class WooCommerceCapture
     {
         if (self::isSupportedWCVersion()) {
             if ($this->isCaptured) {
-                throw new \FSVendor\WPDesk\Logger\WC\Exception\WCLoggerAlreadyCaptured('Try to free wc logger first.');
+                throw new WCLoggerAlreadyCaptured('Try to free wc logger first.');
             }
             if ($this->isWooCommerceLoggerAvailable()) {
                 $this->prepareFreeHookCallable();
                 $this->prepareCaptureHookCallable();
-                \remove_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->freeHookFunction);
-                \add_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->captureHookFunction);
+                remove_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->freeHookFunction);
+                add_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->captureHookFunction);
                 $this->isCaptured = \true;
-            } elseif (\function_exists('add_action')) {
-                \add_action(self::WOOCOMMERCE_AFTER_IS_LOADED_ACTION, [$this, 'captureWcLogger']);
+            } elseif (function_exists('add_action')) {
+                add_action(self::WOOCOMMERCE_AFTER_IS_LOADED_ACTION, [$this, 'captureWcLogger']);
             } else {
                 $this->monolog->alert('Cannot capture WC - WordPress is not available.');
             }
@@ -103,7 +103,7 @@ class WooCommerceCapture
      */
     private function isWooCommerceLoggerAvailable()
     {
-        return \function_exists('wc_get_logger');
+        return function_exists('wc_get_logger');
     }
     /**
      * Prepares callable property freeHookFunction.
@@ -112,8 +112,8 @@ class WooCommerceCapture
     private function prepareFreeHookCallable()
     {
         if ($this->freeHookFunction === null) {
-            $this->originalWCLogger = $logger = \wc_get_logger();
-            $this->freeHookFunction = function () use($logger) {
+            $this->originalWCLogger = $logger = wc_get_logger();
+            $this->freeHookFunction = function () use ($logger) {
                 return $logger;
             };
         }
@@ -124,8 +124,8 @@ class WooCommerceCapture
     public function freeWcLogger()
     {
         if ($this->isCaptured) {
-            \remove_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->captureHookFunction);
-            \add_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->freeHookFunction);
+            remove_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->captureHookFunction);
+            add_filter(self::WOOCOMMERCE_LOGGER_FILTER, $this->freeHookFunction);
             $this->isCaptured = \false;
         }
     }

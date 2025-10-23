@@ -3,11 +3,11 @@
 namespace FSVendor\Octolize\Brand\UpsellingBox;
 
 use FSVendor\WPDesk\ShowDecision\AndStrategy;
-class ShippingMethodAndConstantDisplayStrategy extends \FSVendor\WPDesk\ShowDecision\AndStrategy
+class ShippingMethodAndConstantDisplayStrategy extends AndStrategy
 {
     public function __construct(string $method_id, string $constant)
     {
-        parent::__construct(new \FSVendor\Octolize\Brand\UpsellingBox\ConstantShouldShowStrategy($constant));
-        $this->addCondition(new \FSVendor\Octolize\Brand\UpsellingBox\ShippingMethodShouldShowStrategy($method_id));
+        parent::__construct(new ConstantShouldShowStrategy($constant));
+        $this->addCondition(new ShippingMethodShouldShowStrategy($method_id));
     }
 }

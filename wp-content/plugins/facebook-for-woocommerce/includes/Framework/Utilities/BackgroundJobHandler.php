@@ -656,8 +656,8 @@ abstract class BackgroundJobHandler extends AsyncRequest {
 				// process the item
 				$this->process_item( $item, $job );
 
-				$processed++;
-				$job->progress++;
+				++$processed;
+				++$job->progress;
 
 				// update job progress
 				$job = $this->update_job( $job );

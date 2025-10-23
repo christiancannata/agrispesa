@@ -17,16 +17,17 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\TransientsInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Google\Ads\GoogleAds\Util\FieldMasks;
-use Google\Ads\GoogleAds\Util\V16\ResourceNames;
-use Google\Ads\GoogleAds\V16\Common\MaximizeConversionValue;
-use Google\Ads\GoogleAds\V16\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
-use Google\Ads\GoogleAds\V16\Resources\Campaign;
-use Google\Ads\GoogleAds\V16\Resources\Campaign\ShoppingSetting;
-use Google\Ads\GoogleAds\V16\Services\Client\CampaignServiceClient;
-use Google\Ads\GoogleAds\V16\Services\CampaignOperation;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\MutateGoogleAdsRequest;
-use Google\Ads\GoogleAds\V16\Services\MutateOperation;
+use Google\Ads\GoogleAds\Util\V20\ResourceNames;
+use Google\Ads\GoogleAds\V20\Common\MaximizeConversionValue;
+use Google\Ads\GoogleAds\V20\Enums\AdvertisingChannelTypeEnum\AdvertisingChannelType;
+use Google\Ads\GoogleAds\V20\Resources\Campaign;
+use Google\Ads\GoogleAds\V20\Enums\EuPoliticalAdvertisingStatusEnum\EuPoliticalAdvertisingStatus;
+use Google\Ads\GoogleAds\V20\Resources\Campaign\ShoppingSetting;
+use Google\Ads\GoogleAds\V20\Services\Client\CampaignServiceClient;
+use Google\Ads\GoogleAds\V20\Services\CampaignOperation;
+use Google\Ads\GoogleAds\V20\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V20\Services\MutateGoogleAdsRequest;
+use Google\Ads\GoogleAds\V20\Services\MutateOperation;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ValidationException;
 use Exception;
@@ -82,30 +83,38 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 	protected $google_helper;
 
 	/**
+	 * @var AdsCampaignLabel $campaign_label
+	 */
+	protected $campaign_label;
+
+	/**
 	 * AdsCampaign constructor.
 	 *
 	 * @param GoogleAdsClient      $client
 	 * @param AdsCampaignBudget    $budget
 	 * @param AdsCampaignCriterion $criterion
 	 * @param GoogleHelper         $google_helper
+	 * @param AdsCampaignLabel     $campaign_label
 	 */
-	public function __construct( GoogleAdsClient $client, AdsCampaignBudget $budget, AdsCampaignCriterion $criterion, GoogleHelper $google_helper ) {
-		$this->client        = $client;
-		$this->budget        = $budget;
-		$this->criterion     = $criterion;
-		$this->google_helper = $google_helper;
+	public function __construct( GoogleAdsClient $client, AdsCampaignBudget $budget, AdsCampaignCriterion $criterion, GoogleHelper $google_helper, AdsCampaignLabel $campaign_label ) {
+		$this->client         = $client;
+		$this->budget         = $budget;
+		$this->criterion      = $criterion;
+		$this->google_helper  = $google_helper;
+		$this->campaign_label = $campaign_label;
 	}
 
 	/**
 	 * Returns a list of campaigns with targeted locations retrieved from campaign criterion.
 	 *
-	 * @param bool $exclude_removed Exclude removed campaigns (default true).
-	 * @param bool $fetch_criterion Combine the campaign data with criterion data (default true).
+	 * @param bool  $exclude_removed Exclude removed campaigns (default true).
+	 * @param bool  $fetch_criterion Combine the campaign data with criterion data (default true).
+	 * @param array $args Arguments for fetching campaigns, for example: per_page for limiting the number of results.
 	 *
 	 * @return array
 	 * @throws ExceptionWithResponseData When an ApiException is caught.
 	 */
-	public function get_campaigns( bool $exclude_removed = true, bool $fetch_criterion = true ): array {
+	public function get_campaigns( bool $exclude_removed = true, bool $fetch_criterion = true, array $args = [] ): array {
 		try {
 			$query = ( new AdsCampaignQuery() )->set_client( $this->client, $this->options->get_ads_id() );
 
@@ -113,18 +122,24 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				$query->where( 'campaign.status', 'REMOVED', '!=' );
 			}
 
-			$campaign_count      = 0;
+			$count               = 0;
 			$campaign_results    = $query->get_results();
 			$converted_campaigns = [];
 
 			foreach ( $campaign_results->iterateAllElements() as $row ) {
-				++$campaign_count;
+				++$count;
 				$campaign                               = $this->convert_campaign( $row );
 				$converted_campaigns[ $campaign['id'] ] = $campaign;
+
+				// Break early if we request a limited result.
+				if ( ! empty( $args['per_page'] ) && $count >= $args['per_page'] ) {
+					break;
+				}
 			}
 
 			if ( $exclude_removed ) {
 				// Cache campaign count.
+				$campaign_count = $campaign_results->getPage()->getResponseObject()->getTotalResultsCount();
 				$this->container->get( TransientsInterface::class )->set(
 					TransientsInterface::ADS_CAMPAIGN_COUNT,
 					$campaign_count,
@@ -234,6 +249,10 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 
 			$campaign_id = $this->mutate( $operations );
 
+			if ( isset( $params['label'] ) ) {
+				$this->campaign_label->assign_label_to_campaign_by_label_name( $campaign_id, $params['label'] );
+			}
+
 			// Clear cached campaign count.
 			$this->container->get( TransientsInterface::class )->delete( TransientsInterface::ADS_CAMPAIGN_COUNT );
 
@@ -284,6 +303,8 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 			if ( ! empty( $params['status'] ) ) {
 				$campaign_fields['status'] = CampaignStatus::number( $params['status'] );
 			}
+
+			$campaign_fields['contains_eu_political_advertising'] = EuPoliticalAdvertisingStatus::DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING;
 
 			if ( ! empty( $params['amount'] ) ) {
 				$operations[] = $this->budget->edit_operation( $campaign_id, $params['amount'] );
@@ -356,6 +377,31 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 				]
 			);
 		}
+	}
+
+	/**
+	 * Retrieve the enabled campaign with the highest spend amount.
+	 *
+	 * @return array
+	 */
+	public function get_highest_spend_campaign(): array {
+		try {
+			$campaigns = $this->get_campaigns();
+		} catch ( Exception $e ) {
+			return [];
+		}
+
+		return array_reduce(
+			$campaigns,
+			function ( $highest, $campaign ) {
+				if ( CampaignStatus::ENABLED === $campaign['status'] && ( empty( $highest ) || $campaign['amount'] > $highest['amount'] ) ) {
+					return $campaign;
+				}
+
+				return $highest;
+			},
+			[]
+		);
 	}
 
 	/**
@@ -438,19 +484,20 @@ class AdsCampaign implements ContainerAwareInterface, OptionsAwareInterface {
 	protected function create_operation( string $campaign_name, string $country ): MutateOperation {
 		$campaign = new Campaign(
 			[
-				'resource_name'             => $this->temporary_resource_name(),
-				'name'                      => $campaign_name,
-				'advertising_channel_type'  => AdvertisingChannelType::PERFORMANCE_MAX,
-				'status'                    => CampaignStatus::number( 'enabled' ),
-				'campaign_budget'           => $this->budget->temporary_resource_name(),
-				'maximize_conversion_value' => new MaximizeConversionValue(),
-				'url_expansion_opt_out'     => true,
-				'shopping_setting'          => new ShoppingSetting(
+				'resource_name'                     => $this->temporary_resource_name(),
+				'name'                              => $campaign_name,
+				'advertising_channel_type'          => AdvertisingChannelType::PERFORMANCE_MAX,
+				'status'                            => CampaignStatus::number( 'enabled' ),
+				'campaign_budget'                   => $this->budget->temporary_resource_name(),
+				'maximize_conversion_value'         => new MaximizeConversionValue(),
+				'url_expansion_opt_out'             => false,
+				'shopping_setting'                  => new ShoppingSetting(
 					[
 						'merchant_id' => $this->options->get_merchant_id(),
 						'feed_label'  => $country,
 					]
 				),
+				'contains_eu_political_advertising' => EuPoliticalAdvertisingStatus::DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING,
 			]
 		);
 

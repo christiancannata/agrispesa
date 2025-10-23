@@ -34,6 +34,7 @@ class WC_UOM_Public {
 	 */
 	public function wc_uom_public_activate() {
 		add_filter( 'woocommerce_get_price_html', array( $this, 'wc_uom_render_output' ), 999, 2 );
+		add_filter( 'woocommerce_cart_item_price', array( $this, 'wc_uom_add_uom_to_cart_item_price' ), 10, 3 );
 	}
 
 	/**
@@ -54,18 +55,41 @@ class WC_UOM_Public {
 	}
 
 	/**
+     * Add UOM to cart.php item price.
+     *
+     * @since 3.2.0
+     * @param string $price The product price.
+     * @param array $cart_item The cart item array.
+     * @param string $cart_item_key The cart item key.
+     * @return string Modified price with UOM.
+     */
+    public function wc_uom_add_uom_to_cart_item_price( $price, $cart_item, $cart_item_key ) {
+        $uom_item_id = $cart_item['product_id'];
+		$uom = $this->woo_uom_output_getter($uom_item_id);
+
+        if ( $uom ) {
+            $price .= ' <span class="uom">' . esc_attr( $uom, 'woocommerce-uom' ) . '</span>';
+        }
+
+        return $price;
+    }
+
+	/**
 	 * Get the uom from post meta for a product.
 	 *
 	 * @since 3.0.3
 	 * @return string $woo_uom_output
 	 */
-	private function woo_uom_output_getter() {
-		global $post;
+    private function woo_uom_output_getter($uom_item_id = null) {
+		if (is_null($uom_item_id)) {
+			global $post;
+			$uom_item_id = $post->ID;
+		}
 
-		$woo_uom_output = get_post_meta( $post->ID, '_woo_uom_input', true );
+        $woo_uom_output = get_post_meta( $uom_item_id, '_woo_uom_input', true );
 
-		return $woo_uom_output;
-	}
+        return $woo_uom_output;
+    }
 }
 
 /**

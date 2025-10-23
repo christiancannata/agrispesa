@@ -32,8 +32,10 @@ class Admin_Header {
 
 	/**
 	 * Display Header.
+	 *
+	 * @param bool $show_breadcrumbs Determines whether to show breadcrumbs or not.
 	 */
-	public function display() {
+	public function display( $show_breadcrumbs ) {
 		$logo_url        = '<a href="' . esc_url( Helper::get_admin_url() ) . '"><i class="rm-icon rm-icon-rank-math"></i></a>';
 		$this->screen_id = $this->get_current_screen();
 		?>
@@ -54,7 +56,9 @@ class Admin_Header {
 		<?php
 
 		// Breadcrumbs.
-		rank_math()->admin->display_admin_breadcrumbs();
+		if ( $show_breadcrumbs ) {
+			rank_math()->admin->display_admin_breadcrumbs();
+		}
 	}
 
 	/**
@@ -76,10 +80,12 @@ class Admin_Header {
 		}
 		?>
 		<div class="rank-math-search-options">
-			<div class="search-field">
-				<i class="rm-icon rm-icon-search"></i>
-				<input type="text" value="" placeholder="<?php esc_attr_e( 'Search Options', 'rank-math' ); ?>">
-				<em class="clear-search dashicons dashicons-no-alt"></em>
+			<div class="components-input-control">
+				<div class="components-input-control__container">
+						<!-- <i class="rm-icon rm-icon-search"></i> -->
+						<input type="search" class="components-input-control__input" value="" placeholder="<?php esc_attr_e( 'Search Options', 'rank-math' ); ?>" style="width: 100%;">
+						<!-- <em class="clear-search dashicons dashicons-no-alt"></em> -->
+				</div>
 			</div>
 		</div>
 		<?php

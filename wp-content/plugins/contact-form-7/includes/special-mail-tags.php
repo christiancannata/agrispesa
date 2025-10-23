@@ -71,7 +71,15 @@ function wpcf7_special_mail_tag( $output, $name, $html, $mail_tag = null ) {
 	}
 
 	if ( '_invalid_fields' === $name ) {
-		return count( $submission->get_invalid_fields() );
+		return (string) count( $submission->get_invalid_fields() );
+	}
+
+	if ( '_contact_form_title' === $name ) {
+		$contact_form = $submission->get_contact_form();
+
+		return $html
+			? esc_html( $contact_form->title() )
+			: $contact_form->title();
 	}
 
 	return $output;
@@ -190,6 +198,21 @@ function wpcf7_site_related_smt( $output, $name, $html, $mail_tag = null ) {
 		return get_bloginfo( 'url', $filter );
 	}
 
+	if ( '_site_domain' === $name ) {
+		$url = get_bloginfo( 'url', $filter );
+		$host = wp_parse_url( $url, PHP_URL_HOST );
+
+		if ( null === $host ) {
+			return '';
+		}
+
+		if ( str_starts_with( $host, 'www.' ) ) {
+			$host = substr( $host, 4 );
+		}
+
+		return $host;
+	}
+
 	if ( '_site_admin_email' === $name ) {
 		return get_bloginfo( 'admin_email', $filter );
 	}
@@ -236,12 +259,12 @@ function wpcf7_user_related_smt( $output, $name, $html, $mail_tag = null ) {
 
 	$primary_props = array( 'user_login', 'user_email', 'user_url' );
 	$opt = ltrim( $name, '_' );
-	$opt = in_array( $opt, $primary_props ) ? $opt : substr( $opt, 5 );
+	$opt = in_array( $opt, $primary_props, true ) ? $opt : substr( $opt, 5 );
 
 	$user = new WP_User( $user_id );
 
 	if ( $user->has_prop( $opt ) ) {
-		return $user->get( $opt );
+		return (string) $user->get( $opt );
 	}
 
 	return '';

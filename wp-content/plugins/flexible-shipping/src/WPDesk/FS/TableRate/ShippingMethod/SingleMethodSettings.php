@@ -50,6 +50,7 @@ class SingleMethodSettings implements MethodSettings {
 						'<a target="_blank" href="' . $tax_docs_link . '">',
 						'</a>'
 					),
+					'default'     => '',
 				];
 				$new_settings_fields['tax_status'] = [
 					'title'    => __( 'Tax Status', 'flexible-shipping' ),

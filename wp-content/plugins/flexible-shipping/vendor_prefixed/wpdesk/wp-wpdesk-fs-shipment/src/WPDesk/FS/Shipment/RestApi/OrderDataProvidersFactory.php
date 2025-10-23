@@ -22,7 +22,7 @@ class OrderDataProvidersFactory
     public static function get_providers()
     {
         if (empty(self::$data_providers)) {
-            self::$data_providers = new \FSVendor\WPDesk\FS\Shipment\RestApi\OrderDataProvidersCollection();
+            self::$data_providers = new OrderDataProvidersCollection();
         }
         return self::$data_providers;
     }

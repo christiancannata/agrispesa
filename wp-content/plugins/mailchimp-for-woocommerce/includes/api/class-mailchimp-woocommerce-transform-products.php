@@ -24,14 +24,17 @@ class MailChimp_WooCommerce_Transform_Products {
 			'count'    => 0,
 			'stuffed'  => false,
 			'items'    => array(),
+            'has_next_page' => false
 		);
 
-		if ( ( ( $products = $this->getProductPostsIds( $page, $limit ) ) && ! empty( $products ) ) ) {
-			foreach ( $products as $post_id ) {
+		if ( ( $products = $this->getProductPostsIds( $page, $limit ) ) && ! empty( $products['items'] )) {
+			foreach ( $products['items'] as $post_id ) {
 				$response->items[] = $post_id;
 				$response->count++;
 			}
-		}
+
+            $response->has_next_page = $products['has_next_page'];
+        }
 
 		$response->stuffed = $response->count > 0 && (int) $response->count === (int) $limit;
 
@@ -66,7 +69,7 @@ class MailChimp_WooCommerce_Transform_Products {
 	}
 
 	/**
-	 * @param $woo
+	 * @param WC_Product $woo
 	 * @param null    $fallback_title
 	 *
 	 * @return MailChimp_WooCommerce_Product
@@ -77,21 +80,26 @@ class MailChimp_WooCommerce_Transform_Products {
 
 		$variants = $variant_posts ? array_merge( array( $woo ), $variant_posts ) : array( $woo );
 
-		$is_variant = count( $variants ) > 1;
-
 		$product = new MailChimp_WooCommerce_Product();
 
 		if ( class_exists( 'SitePress' ) && function_exists( 'wpml_switch_language_action' ) ) {
 			$get_language_args  = array( 'element_id' => $woo->get_id(), 'element_type' => 'product' );
 			$post_language_info = apply_filters( 'wpml_element_language_details', null, $get_language_args );
-			wpml_switch_language_action( $post_language_info->language_code );
+
+            if (!empty($post_language_info->language_code)) {
+                wpml_switch_language_action( $post_language_info->language_code );
+            }
 		}
 
 		$product->setId( $woo->get_id() );
 		$product->setHandle( urldecode($woo->get_slug() ) );
 		$product->setImageUrl( $this->getProductImage( $woo ) );
 		$product->setDescription( $woo->get_description() );
-		$product->setPublishedAtForeign( mailchimp_date_utc( $woo->get_date_created() ) );
+        if ($woo->get_date_created()) {
+            $product->setPublishedAtForeign( mailchimp_date_utc( $woo->get_date_created() ) );
+        } else {
+            mailchimp_debug('product.transform', 'failed to get created date', ['product' => $woo]);
+        }
 		$product->setTitle( $woo->get_title() );
 		$product->setUrl( urldecode( $woo->get_permalink() ) );
 
@@ -173,8 +181,33 @@ class MailChimp_WooCommerce_Transform_Products {
 			}
 		}
 
+        /**
+         * -- if a product is not purchasable, it's always hidden --
+         * 1. category is hidden, status is draft or pending = HIDDEN
+         * 2. category is hidden, status is not draft or pending = HIDDEN
+         * 3. category is NOT hidden, status is draft or pending = HIDDEN
+         * 4. category is NOT hidden, status is NOT draft or pending = VISIBLE
+         */
+
+        $hidden_catalog = $woo->get_catalog_visibility() === 'hidden';
+        $visible = $woo->is_visible();
+        $is_purchasable = $woo->is_purchasable();
+        $status = $woo->get_status();
+        $is_private = $status === 'private';
+        $is_draft_or_pending = in_array($status, ['draft', 'pending']);
+
+        if ($is_private || !$is_purchasable) {
+            $visible = false;
+        } else if ( $hidden_catalog && $is_draft_or_pending ) {
+            $visible = false;
+        } else if ( ! $hidden_catalog && $is_draft_or_pending) {
+            $visible = false;
+        } else if ( ! $hidden_catalog && !$is_draft_or_pending ) {
+            $visible = true;
+        }
+
 		// only set these properties if the product is currently visible or purchasable.
-		if ( $woo->is_purchasable() && $woo->is_visible() ) {
+		if ( $is_purchasable && $visible ) {
 			if ( $woo->is_in_stock() ) {
 				$variant->setInventoryQuantity( ( $woo->managing_stock() ? $woo->get_stock_quantity() : 1000000 ) );
 			} else {
@@ -201,9 +234,10 @@ class MailChimp_WooCommerce_Transform_Products {
 			}
 
 			$variant->setTitle( implode( ' :: ', $title ) );
-			$variant->setVisibility( ( $woo->variation_is_visible() ? 'visible' : '' ) );
+            $variation_visible = $woo->variation_is_visible() && $is_purchasable;
+			$variant->setVisibility( ( $visible && $variation_visible ? 'visible' : 'hidden' ) );
 		} else {
-			$variant->setVisibility( ( $woo->is_visible() ? 'visible' : '' ) );
+			$variant->setVisibility( ( $visible ? 'visible' : 'hidden' ) );
 			$variant->setTitle( $woo->get_title() );
 		}
 
@@ -222,10 +256,12 @@ class MailChimp_WooCommerce_Transform_Products {
 			$offset = ( ( $page - 1 ) * $posts );
 		}
 
+        $limit = $posts + 1;
+
 		$params = array(
 			'post_type'      => array_merge( array_keys( wc_get_product_types() ), array( 'product' ) ),
-			'posts_per_page' => $posts,
-			'post_status'    => array( 'private', 'publish', 'draft' ),
+			'posts_per_page' => $limit,
+			'post_status'    => array( 'publish' ),
 			'offset'         => $offset,
 			'orderby'        => 'ID',
 			'order'          => 'ASC',
@@ -234,16 +270,32 @@ class MailChimp_WooCommerce_Transform_Products {
 
 		$products = get_posts( $params );
 
+        $has_next_page = count( $products ) > $posts;
+
+        if ( $has_next_page ) {
+            array_pop( $products );
+        }
+
 		if ( empty( $products ) ) {
 			sleep( 2 );
 			$products = get_posts( $params );
-			if ( empty( $products ) ) {
+
+            $has_next_page = count( $products ) > $posts;
+
+            if ( $has_next_page ) {
+                array_pop( $products );
+            }
+
+            if ( empty( $products ) ) {
 				return false;
 			}
 		}
 
-		return $products;
-	}
+        return [
+            'items' => $products,
+            'has_next_page' => $has_next_page,
+        ];
+    }
 
 	/**
 	 * @param $id
@@ -253,7 +305,7 @@ class MailChimp_WooCommerce_Transform_Products {
 		$variants = get_posts(
 			array(
 				'post_type'   => 'product_variation',
-				'post_status' => array( 'private', 'publish', 'draft' ),
+				'post_status' => array( 'publish' ),
 				'numberposts' => -1,
 				'post_parent' => $id,
 			)

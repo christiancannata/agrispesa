@@ -268,6 +268,12 @@ class Api extends Rest_Controller {
 	 * @return array
 	 */
 	public function bulk( $request ) {
+		$clear = $request->get_param('clear');
+		if ( is_null( $clear ) ) {
+			$clear = true;
+		} else {
+			$clear = filter_var( $clear, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+		}
 		try {
 			if ( ! isset( $request['banners'] ) ) {
 				return new WP_Error( 'cookieyes_rest_invalid_data', __( 'No data specified to create/edit banners', 'cookie-law-info' ), array( 'status' => 404 ) );
@@ -288,7 +294,7 @@ class Api extends Rest_Controller {
 				$data      = $this->prepare_item_for_response( $data, $request );
 				$objects[] = $this->prepare_response_for_collection( $data );
 			}
-			do_action( 'cky_after_update_banner' );
+			do_action( 'cky_after_update_banner', $clear );
 			return rest_ensure_response( $objects );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage(), array( 'status' => $e->getCode() ) );

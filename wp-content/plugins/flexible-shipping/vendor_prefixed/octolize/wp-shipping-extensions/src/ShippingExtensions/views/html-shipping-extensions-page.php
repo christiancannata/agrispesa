@@ -6,6 +6,7 @@ namespace FSVendor;
  * @var string $assets_url .
  * @var Plugin[] $plugins .
  * @var string[] $categories .
+ * @var string[] $header_promo .
  */
 use FSVendor\Octolize\ShippingExtensions\Plugin\Plugin;
 \defined('ABSPATH') || exit;
@@ -23,6 +24,9 @@ echo \esc_attr(\get_admin_page_title());
 ?>"
      data-header_description="<?php 
 \esc_attr_e('Dive into a system of Octolize ecommerce shipping plugins for WooCommerce. Don’t lose your customers, time and money. Let our plugins secure your sales!', 'flexible-shipping');
+?>"
+     data-header_promo="<?php 
+echo \esc_attr(\wp_json_encode($header_promo));
 ?>"
      data-default_category="<?php 
 \esc_attr_e('All', 'flexible-shipping');

@@ -106,7 +106,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 						$data = $this->prepare_item_for_response( $campaign, $request );
 						return $this->prepare_response_for_collection( $data );
 					},
-					$this->ads_campaign->get_campaigns( $exclude_removed )
+					$this->ads_campaign->get_campaigns( $exclude_removed, true, $request->get_params() )
 				);
 			} catch ( Exception $e ) {
 				return $this->response_from_exception( $e );
@@ -146,6 +146,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 				 * @property float  amount             Campaign budget.
 				 * @property string country            Base target country code.
 				 * @property string targeted_locations Additional target country codes.
+				 * @property string source             The source of the campaign creation.
 				 */
 				do_action(
 					'woocommerce_gla_track_event',
@@ -157,6 +158,7 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 						'amount'             => $campaign['amount'],
 						'country'            => $campaign['country'],
 						'targeted_locations' => join( ',', $campaign['targeted_locations'] ),
+						'source'             => $fields['label'] ?? '',
 					]
 				);
 
@@ -320,6 +322,14 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 				'default'           => true,
 				'validate_callback' => 'rest_validate_request_arg',
 			],
+			'per_page'        => [
+				'description'       => __( 'Maximum number of rows to be returned in result data.', 'google-listings-and-ads' ),
+				'type'              => 'integer',
+				'minimum'           => 1,
+				'maximum'           => 10000,
+				'sanitize_callback' => 'absint',
+				'validate_callback' => 'rest_validate_request_arg',
+			],
 		];
 	}
 
@@ -383,6 +393,14 @@ class CampaignController extends BaseController implements GoogleHelperAwareInte
 				'items'             => [
 					'type' => 'string',
 				],
+			],
+			'label'              => [
+				'type'              => 'string',
+				'description'       => __( 'The name of the label to assign to the campaign.', 'google-listings-and-ads' ),
+				'context'           => [ 'edit' ],
+				'validate_callback' => 'rest_validate_request_arg',
+				'required'          => false,
+
 			],
 		];
 	}

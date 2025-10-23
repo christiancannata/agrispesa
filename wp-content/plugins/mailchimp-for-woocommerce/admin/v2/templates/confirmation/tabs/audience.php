@@ -9,6 +9,7 @@
 ?>
 
 <input type="hidden" name="mailchimp_active_settings_tab" value="<?php echo MC_WC_AUDIENCE_TAB; ?>"/>
+<input type="hidden" name="mailchimp_connection_status" value="connected"/>
 <div class="mc-wc-tab-content-wrapper audience">
     <div class="mc-wc-tab-content-box">
         <div class="mc-wc-tab-content-title">
@@ -62,6 +63,33 @@
                     <input type="radio" id="cart_track_none" name="<?php echo esc_attr( $this->plugin_name ); ?>[mailchimp_cart_tracking]" value="disabled"<?php echo 'disabled' === $mailchimp_cart_tracking ? ' checked="checked" ' : ''; ?>>
 				    <?php esc_html_e( 'Disable cart tracking', 'mailchimp-for-woocommerce' ); ?>
                 </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mc-wc-tab-content-box has-underline">
+        <div class="mc-wc-tab-content-title">
+            <h3><?php esc_html_e( 'Landing page tracking preferences', 'mailchimp-for-woocommerce' ); ?></h3>
+        </div>
+        <div class="mc-wc-tab-content-description-small">
+            <?php esc_html_e( 'Control tracking of the landing page via the mailchimp_landing_site cookie for visitors that are not logged in.  For logged in customers, this is not needed.', 'mailchimp-for-woocommerce' ); ?>
+        </div>
+        <?php $landing_tracking_enabled = ( array_key_exists( 'mailchimp-woocommerce-enable-landing-tracking', $options ) && ! is_null( $options['mailchimp-woocommerce-enable-landing-tracking'] ) ) ? (bool) $options['mailchimp-woocommerce-enable-landing-tracking'] : false; ?>
+        <div class="mc-wc-contact-import-ref-choose">
+            <div class="mc-wc-import-list-sync">
+                <div class="mc-wc-import-list-sync-item">
+                    <div class="mc-wc-import-list-sync-input">
+                        <div class="mc-wc-checkbox">
+                            <label class="mc-wc-checkbox-label fw-700">
+                                <input type="checkbox" name="<?php echo esc_attr( $this->plugin_name ); ?>[mailchimp-woocommerce-enable-landing-tracking]" value="1" <?php if ($landing_tracking_enabled) { echo "checked"; } ?>>
+                                <?php esc_html_e( 'Enable landing page tracking', 'mailchimp-for-woocommerce' ); ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mc-wc-import-list-sync-description">
+                        <?php esc_html_e( 'Warning: this may impact the performance of your site.  Check with your hosting provider for more information about the impact of cookies on every page view.', 'mailchimp-for-woocommerce' ); ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

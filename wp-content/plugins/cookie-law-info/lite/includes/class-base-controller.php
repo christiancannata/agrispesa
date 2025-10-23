@@ -283,7 +283,7 @@ abstract class Base_Controller {
 			$table = wp_cache_get( $table_name . 'cky_table_exist', 'table-details' );
 			if ( $table === false ) {
 				global $wpdb;
-				$table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) );
+				$table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				wp_cache_set( $table_name . 'cky_table_exist', $table, 'table-details', MINUTE_IN_SECONDS );
 			}
 			if ( strtolower( $table_name ) !== strtolower( isset($table) ? $table : '' ) )  { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -306,7 +306,7 @@ abstract class Base_Controller {
 			if ( ! $this->table_exist() ) {
 				return false;
 			}
-			$count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared	
 			if ( $count > 0 ) {
 				return true;
 			} else {

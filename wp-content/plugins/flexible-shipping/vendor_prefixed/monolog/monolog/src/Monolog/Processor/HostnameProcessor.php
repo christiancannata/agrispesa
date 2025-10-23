@@ -14,18 +14,18 @@ namespace FSVendor\Monolog\Processor;
 /**
  * Injects value of gethostname in all records
  */
-class HostnameProcessor implements \FSVendor\Monolog\Processor\ProcessorInterface
+class HostnameProcessor implements ProcessorInterface
 {
     /** @var string */
     private static $host;
     public function __construct()
     {
-        self::$host = (string) \gethostname();
+        self::$host = (string) gethostname();
     }
     /**
      * {@inheritDoc}
      */
-    public function __invoke(array $record) : array
+    public function __invoke(array $record): array
     {
         $record['extra']['hostname'] = self::$host;
         return $record;

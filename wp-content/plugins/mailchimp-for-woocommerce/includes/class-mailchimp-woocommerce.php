@@ -76,7 +76,7 @@ class MailChimp_WooCommerce
             return static::$logging_config;
         }
 
-        $plugin_options = get_option('mailchimp-woocommerce');
+        $plugin_options = mailchimp_get_admin_options(false);
         $is_options = is_array($plugin_options);
 
         $api_key = $is_options && array_key_exists('mailchimp_api_key', $plugin_options) ?
@@ -258,7 +258,8 @@ class MailChimp_WooCommerce
 
         // update MC store information when woocommerce general settings are saved
         $this->loader->add_action('woocommerce_settings_save_general', $plugin_admin, 'mailchimp_update_woo_settings');
-        
+        $this->loader->add_action('update_option_blogname', $plugin_admin, 'mailchimp_update_wordpress_title', 10, 2);
+
         // update MC store information if "WooCommerce Multi-Currency Extension" settings are saved
         if ( class_exists( 'WOOMULTI_CURRENCY_F' ) ) {
             $this->loader->add_action('villatheme_support_woo-multi-currency', $plugin_admin, 'mailchimp_update_woo_settings');
@@ -266,12 +267,14 @@ class MailChimp_WooCommerce
 
         // Mailchimp oAuth
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_oauth_start', $plugin_admin, 'mailchimp_woocommerce_ajax_oauth_start' );
+        $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_activate_account_event', $plugin_admin, 'mailchimp_woocommerce_activate_account_event' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_oauth_status', $plugin_admin, 'mailchimp_woocommerce_ajax_oauth_status' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_oauth_finish', $plugin_admin, 'mailchimp_woocommerce_ajax_oauth_finish' );
 
         // Create new mailchimp Account methods
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_create_account_check_username', $plugin_admin, 'mailchimp_woocommerce_ajax_create_account_check_username' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_create_account_signup', $plugin_admin, 'mailchimp_woocommerce_ajax_create_account_signup' );
+        $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_switch_account', $plugin_admin, 'connect_account_flow_switch_account' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_check_login_session', $plugin_admin, 'mailchimp_woocommerce_ajax_check_login_session' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_support_form', $plugin_admin, 'mailchimp_woocommerce_ajax_support_form' );
 
@@ -289,6 +292,9 @@ class MailChimp_WooCommerce
 
         // delete log file via ajax
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_delete_log_file', $plugin_admin, 'mailchimp_woocommerce_ajax_delete_log_file' );
+
+        // toggle the chipmstatic script
+        $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_toggle_chimpstatic_script', $plugin_admin, 'mailchimp_woocommerce_ajax_toggle_chimpstatic_script' );
 
         // send event to mailchimp
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_send_event', $plugin_admin, 'mailchimp_woocommerce_send_event' );
@@ -393,7 +399,7 @@ class MailChimp_WooCommerce
 			$this->loader->add_action('woocommerce_new_order', $service, 'handleOrderCreate', 200, 2);
             $this->loader->add_action('woocommerce_update_order', $service, 'handleOrderUpdate', 10, 2);
             $this->loader->add_action('save_post_product', $service, 'handleProductCreated', 10, 3);
-            $this->loader->add_action('woocommerce_delete_product_variation', $service, 'handleDeleteProductVariation');
+            $this->loader->add_action('woocommerce_before_delete_product_variation', $service, 'handleDeleteProductVariation');
 
 			// this needs to listen for the title and the description updates.
             $this->loader->add_action('post_updated', $service, 'handleProductUpdated', 10, 3);
@@ -412,15 +418,24 @@ class MailChimp_WooCommerce
 
 			$this->loader->add_action('wp_trash_post', $service, 'handlePostTrashed');
             $this->loader->add_action('untrashed_post', $service, 'handlePostRestored');
+
 			//coupons
             $this->loader->add_action('woocommerce_new_coupon', $service, 'handleNewCoupon');
             $this->loader->add_action('woocommerce_coupon_options_save', $service, 'handleCouponSaved', 10, 2);
             $this->loader->add_action('woocommerce_api_create_coupon', $service, 'handleCouponSaved', 9, 2);
 
+            //product categories
+            $this->loader->add_action('created_product_cat', $service, 'handleProductCategory', 10, 1);
+            $this->loader->add_action('edited_product_cat', $service, 'handleProductCategory', 10, 1);
+            $this->loader->add_action('set_object_terms', $service, 'handleProductCategoriesChange', 10, 6);
+
             $this->loader->add_action('woocommerce_delete_coupon', $service, 'handlePostTrashed');
             $this->loader->add_action('woocommerce_trash_coupon', $service, 'handlePostTrashed');
-            
+
+            $this->loader->add_action('woocommerce_update_product_variation', $service, 'handleProductVariationUpdated', 10, 2);
+
             $this->loader->add_action('woocommerce_rest_delete_shop_coupon_object', $service, 'handleAPICouponTrashed', 10, 3);
+            $this->loader->add_action('woocommerce_rest_insert_shop_coupon_object', $service, 'handleAPICouponUpdated', 10, 3);
 
 			// handle the user registration hook
 			$this->loader->add_action('user_register', $service, 'handleUserRegistration');
@@ -438,15 +453,21 @@ class MailChimp_WooCommerce
 
 
             $jobs_classes = array(
+                "MailChimp_Woocommerce_Single_Customer",
                 "MailChimp_WooCommerce_Single_Order",
                 "MailChimp_WooCommerce_SingleCoupon",
                 "MailChimp_WooCommerce_Single_Product",
+                "MailChimp_WooCommerce_Single_Product_Variation",
+                "Mailchimp_WooCommerce_Single_Product_Category",
                 "MailChimp_WooCommerce_Cart_Update",
                 "MailChimp_WooCommerce_User_Submit",
+                "MailChimp_WooCommerce_Process_Customers",
                 "MailChimp_WooCommerce_Process_Coupons",
                 "MailChimp_WooCommerce_Process_Orders",
                 "MailChimp_WooCommerce_Process_Products",
-                "MailChimp_WooCommerce_WebHooks_Sync"
+                "MailChimp_WooCommerce_Process_Product_Categories",
+                "MailChimp_WooCommerce_WebHooks_Sync",
+                "Mailchimp_Woocommerce_Complete_Resource_Sync"
             );
             foreach ($jobs_classes as $job_class) {
                 $this->loader->add_action($job_class, $service, 'mailchimp_process_single_job');

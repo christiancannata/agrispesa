@@ -12,5 +12,5 @@ interface PetitionText
      *
      * @return string
      */
-    public function get_petition_text() : string;
+    public function get_petition_text(): string;
 }

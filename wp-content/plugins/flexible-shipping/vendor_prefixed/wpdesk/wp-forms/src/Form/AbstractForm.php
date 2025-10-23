@@ -37,7 +37,7 @@ abstract class AbstractForm
      *
      * @return array
      */
-    protected abstract function create_form_data();
+    abstract protected function create_form_data();
     /**
      * Add array to update data.
      *
@@ -54,7 +54,7 @@ abstract class AbstractForm
      */
     public function get_form_data()
     {
-        return \array_merge($this->create_form_data(), $this->updated_data);
+        return array_merge($this->create_form_data(), $this->updated_data);
     }
     /**
      * Get prefixed array returns array with prefixed form_id
@@ -65,9 +65,9 @@ abstract class AbstractForm
     {
         $array = $this->get_form_data();
         $form_id = $this->get_form_id();
-        return \array_combine(\array_map(function ($k) use($form_id) {
+        return array_combine(array_map(function ($k) use ($form_id) {
             return $form_id . '_' . $k;
-        }, \array_keys($array)), $array);
+        }, array_keys($array)), $array);
     }
     /**
      * return form Id

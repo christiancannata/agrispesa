@@ -41,6 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					echo sprintf(
 						wp_kses(
+							/* translators: %s: Cookie List URL */
 							__( 'Clicking “Add to cookie list” will import the discovered cookies to the <a href="%s" target="_blank">Cookie List</a> and thus display them in the cookie declaration section of your consent banner.', 'cookie-law-info' ),
 							array(
 								'a' => array(

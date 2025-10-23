@@ -1,7 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_EXPORT_CLASSES_DIR . '/class-wpie-export.php' ) ) {
         require_once(WPIE_EXPORT_CLASSES_DIR . '/class-wpie-export.php');

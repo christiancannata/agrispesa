@@ -18,20 +18,20 @@ class TrackerFactory
      *
      * @return Tracker
      */
-    public static function create_custom_tracker(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackData $user_feedback_data, $scripts = null, $thickbox = null, $ajax = null)
+    public static function create_custom_tracker(UserFeedbackData $user_feedback_data, $scripts = null, $thickbox = null, $ajax = null)
     {
         if (empty($scripts)) {
-            $scripts = new \FSVendor\WPDesk\Tracker\UserFeedback\Scripts($user_feedback_data);
+            $scripts = new Scripts($user_feedback_data);
         }
         if (empty($thickbox)) {
-            $thickbox = new \FSVendor\WPDesk\Tracker\UserFeedback\Thickbox($user_feedback_data);
+            $thickbox = new Thickbox($user_feedback_data);
         }
         if (empty($ajax)) {
             $sender = new \FSVendor\WPDesk_Tracker_Sender_Wordpress_To_WPDesk();
             $sender = new \FSVendor\WPDesk_Tracker_Sender_Logged($sender);
-            $ajax = new \FSVendor\WPDesk\Tracker\UserFeedback\AjaxUserFeedbackDataHandler($user_feedback_data, $sender);
+            $ajax = new AjaxUserFeedbackDataHandler($user_feedback_data, $sender);
         }
-        return new \FSVendor\WPDesk\Tracker\UserFeedback\Tracker($user_feedback_data, $scripts, $thickbox, $ajax);
+        return new Tracker($user_feedback_data, $scripts, $thickbox, $ajax);
     }
     /**
      * Create custom tracker without sender.
@@ -44,17 +44,17 @@ class TrackerFactory
      *
      * @return Tracker
      */
-    public static function create_custom_tracker_with_null_sender(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackData $user_feedback_data, $scripts = null, $thickbox = null, $ajax = null)
+    public static function create_custom_tracker_with_null_sender(UserFeedbackData $user_feedback_data, $scripts = null, $thickbox = null, $ajax = null)
     {
         if (empty($scripts)) {
-            $scripts = new \FSVendor\WPDesk\Tracker\UserFeedback\Scripts($user_feedback_data);
+            $scripts = new Scripts($user_feedback_data);
         }
         if (empty($thickbox)) {
-            $thickbox = new \FSVendor\WPDesk\Tracker\UserFeedback\Thickbox($user_feedback_data);
+            $thickbox = new Thickbox($user_feedback_data);
         }
         if (empty($ajax)) {
-            $ajax = new \FSVendor\WPDesk\Tracker\UserFeedback\AjaxUserFeedbackDataHandler($user_feedback_data, new \FSVendor\WPDesk\Tracker\Sender\NullSender());
+            $ajax = new AjaxUserFeedbackDataHandler($user_feedback_data, new NullSender());
         }
-        return new \FSVendor\WPDesk\Tracker\UserFeedback\Tracker($user_feedback_data, $scripts, $thickbox, $ajax);
+        return new Tracker($user_feedback_data, $scripts, $thickbox, $ajax);
     }
 }

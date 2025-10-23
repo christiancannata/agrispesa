@@ -118,8 +118,8 @@ class Background extends BackgroundJobHandler {
 				facebook_for_woocommerce()->log( "Background sync error: {$e->getMessage()}" );
 			}
 
-			$processed++;
-			$job->progress++;
+			++$processed;
+			++$job->progress;
 			// update job progress
 			$job = $this->update_job( $job );
 			// job limits reached

@@ -13,18 +13,68 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 class Cookie_Law_Info_Uninstall_Feedback {
 
-	protected $api_url         = '';
+	protected $api_url         = 'https://feedback.cookieyes.com/api/v1/feedbacks';
 	protected $current_version = CLI_VERSION;
-	protected $auth_key        = 'cookielawinfo_uninstall_1234#';
 	protected $plugin_id       = CLI_POST_TYPE;
 	protected $plugin_file     = CLI_PLUGIN_BASENAME; // plugin main file.
-	public function __construct() {
-		$this->api_url = 'https://feedback.webtoffee.com/wp-json/' . $this->plugin_id . '/v1/uninstall';
 
+	/**
+	 * Endpoint namespace.
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'cky/v1';
+
+	/**
+	 * Route base.
+	 *
+	 * @var string
+	 */
+	protected $rest_base = '/uninstall-feedback';
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 		add_action( 'admin_footer', array( $this, 'deactivate_scripts' ) );
-		add_action( 'wp_ajax_' . $this->plugin_id . '_submit_uninstall_reason', array( $this, 'send_uninstall_reason' ) );
 		add_filter( 'plugin_action_links_' . $this->plugin_file, array( $this, 'plugin_action_links' ) );
+		add_action( 'rest_api_init', array( $this, 'cky_register_routes' ) );
 	}
+
+	public function cky_register_routes() {
+
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base,
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'send_uninstall_reason' ),
+				'permission_callback' => array( $this, 'create_item_permissions_check' ),
+			)
+		);
+	}
+
+	/**
+	 * Check if a given request has access to create an item.
+	 *
+	 * @param  WP_REST_Request $request Full details about the request.
+	 * @return WP_Error|boolean
+	 */
+	public function create_item_permissions_check( $request ) {
+		// Check if user can manage options
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return new WP_Error( 'cookieyes_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'cookie-law-info' ), array( 'status' => rest_authorization_required_code() ) );
+		}
+
+		// Verify nonce from header
+		$nonce = $request->get_header( 'X-WP-Nonce' );
+		if ( ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
+			return new WP_Error( 'cookieyes_rest_invalid_nonce', __( 'Invalid nonce.', 'cookie-law-info' ), array( 'status' => 403 ) );
+		}
+
+		return true;
+	}
+	
 	public function plugin_action_links( $links ) {
 		if ( array_key_exists( 'deactivate', $links ) ) {
 			$links['deactivate'] = str_replace( '<a', '<a class="' . $this->plugin_id . '-deactivate-link"', $links['deactivate'] );
@@ -34,77 +84,44 @@ class Cookie_Law_Info_Uninstall_Feedback {
 	private function get_uninstall_reasons() {
 
 		$reasons = array(
-
 			array(
-				'id'          => 'did-not-work-as-expected',
-				'text'        => __( 'The plugin didn\'t work as expected', 'cookie-law-info' ),
-				'type'        => 'textarea',
-				'placeholder' => __( 'How can we make our plugin better?', 'cookie-law-info' ),
-			),
-			array(
-				'id'          => 'cookie-scanner-issue',
-				'text'        => __( 'Issues with cookie scanner', 'cookie-law-info' ),
+				'id'     => 'setup-difficult',
+				'text'   => __( 'Setup is too difficult/ Lack of documentation', 'cookie-law-info' ),
 				'type'        => 'textarea',
 				'placeholder' => __(
-					'Describe the challenges that you faced while using our Cookie Scanner.&#10;Eg:- Scan did not find all cookies.',
+					'Describe the challenges that you faced while using our plugin',
 					'cookie-law-info'
 				),
 			),
 			array(
-				'id'          => 'not-have-that-feature',
-				'text'        => __( 'The plugin is great, but I need specific feature that you don\'t support', 'cookie-law-info' ),
+				'id'     => 'not-have-that-feature',
+				'text'   => __( 'The plugin is great, but I need specific feature that you don\'t support', 'cookie-law-info' ),
 				'type'        => 'textarea',
 				'placeholder' => __( 'Could you tell us more about that feature?', 'cookie-law-info' ),
 			),
 			array(
-				'id'          => 'conflict-theme-plugin',
-				'text'        => __( 'A conflict with another plugin or theme', 'cookie-law-info' ),
-				'type'        => 'textarea',
-				'placeholder' => __( 'Specify whether you are having issues with the back-end or front-end functionalities. Enter your site URL to help us fix the plugin/theme conflicts.', 'cookie-law-info' ),
+				'id'   => 'affecting-performance',
+				'text' => __( 'The plugin is affecting website speed', 'cookie-law-info' ),
 			),
 			array(
-				'id'    => 'translation-issues',
-				'text'  => __( 'Translation issues', 'cookie-law-info' ),
-				'child' => array(
-					array(
-						'id'          => 'incorrect-missing-translation',
-						'text'        => __( 'Incorrect/missing translation', 'cookie-law-info' ),
-						'type'        => 'textarea',
-						'placeholder' => __( 'Name the language and specify the string with incorrect translation.', 'cookie-law-info' ),
-					),
-					array(
-						'id'          => 'could-not-translate',
-						'text'        => __( 'Unable to translate my dynamic content e.g, cookie message, button text etc', 'cookie-law-info' ),
-						'type'        => 'textarea',
-						'placeholder' => __( 'Name the language and the translator plugin that you are using', 'cookie-law-info' ),
-					),
-				),
-			),
-			array(
-				'id'          => 'found-better-plugin',
-				'text'        => __( 'I found a better plugin', 'cookie-law-info' ),
+				'id'     => 'found-better-plugin',
+				'text'   => __( 'I found a better plugin', 'cookie-law-info' ),
 				'type'        => 'text',
-				'placeholder' => __( 'Which plugin?', 'cookie-law-info' ),
-			),
-			array(
-				'id'   => 'upgrade-to-pro',
-				'text' => __( 'Upgrade to pro', 'cookie-law-info' ),
+				'placeholder' => __( 'Please share which plugin', 'cookie-law-info' ),
 			),
 			array(
 				'id'   => 'temporary-deactivation',
 				'text' => __( 'It’s a temporary deactivation', 'cookie-law-info' ),
 			),
 			array(
-				'id'          => 'other',
-				'text'        => __( 'Other', 'cookie-law-info' ),
+				'id'     => 'other',
+				'text'   => __( 'Other', 'cookie-law-info' ),
 				'type'        => 'textarea',
-				'placeholder' => __( 'Please describe your issue in detail.', 'cookie-law-info' ),
+				'placeholder' => __( 'Please share the reason', 'cookie-law-info' ),
 			),
 		);
 
 		return $reasons;
-	}
-	public function generate_reason_html() {
 	}
 	public function deactivate_scripts() {
 		global $pagenow;
@@ -146,7 +163,7 @@ class Cookie_Law_Info_Uninstall_Feedback {
 					<?php endforeach; ?>
 					</ul>
 					<div class="wt-uninstall-feedback-privacy-policy">
-						<?php esc_html__( "We do not collect any personal data when you submit this form. It's your feedback that we value.", 'cookie-law-info' ); ?>
+						<?php echo esc_html__( "We do not collect any personal data when you submit this form. It's your feedback that we value.", 'cookie-law-info' ); ?>
 						<a href="https://www.cookieyes.com/privacy-policy/" target="_blank"><?php echo esc_html__( 'Privacy Policy', 'cookie-law-info' ); ?></a>
 					</div>
 				</div>
@@ -281,17 +298,17 @@ class Cookie_Law_Info_Uninstall_Feedback {
 							$input = $selected_reason.find('textarea, input[type="text"]');
 
 						$.ajax({
-							url: ajaxurl,
+							url: "<?php echo esc_url_raw( rest_url() . $this->namespace . $this->rest_base ); ?>",
 							type: 'POST',
 							data: {
-								action: plugin_id + '_submit_uninstall_reason',
 								reason_id: (0 === $radio.length) ? 'none' : $radio.val(),
+								reason_text: (0 === $radio.length) ? 'none' : $radio.closest('label').text(),
 								reason_info: (0 !== $input.length) ? $input.val().trim() : '',
-								_wpnonce: '<?php echo esc_js( wp_create_nonce( $this->plugin_id ) ); ?>',
 							},
-							beforeSend: function() {
+							beforeSend: function(xhr) {
 								button.addClass('disabled');
 								button.text('Processing...');
+								xhr.setRequestHeader( 'X-WP-Nonce', '<?php echo esc_js( wp_create_nonce( 'wp_rest' ) ); ?>');
 							},
 							complete: function() {
 								window.location.href = deactivateLink;
@@ -304,39 +321,38 @@ class Cookie_Law_Info_Uninstall_Feedback {
 		<?php
 	}
 
-	public function send_uninstall_reason() {
-		check_ajax_referer( $this->plugin_id, '_wpnonce' );
+	public function send_uninstall_reason( $request ) {
 		global $wpdb;
-		if ( ! isset( $_POST['reason_id'] ) ) {
+		$post_data = $request->get_body_params();
+		if ( ! isset( $post_data['reason_id'] ) ) {
 			wp_send_json_error();
 		}
 		$data = array(
-			'reason_id'                   => sanitize_text_field( wp_unslash( $_POST['reason_id'] ) ),
-			'plugin'                      => $this->plugin_id,
-			'auth'                        => $this->auth_key,
+			'reason_slug'                 => sanitize_text_field( wp_unslash( $post_data['reason_id'] ) ),
+			'reason_detail'               => ! empty( $post_data['reason_text'] ) ? sanitize_text_field( wp_unslash( $post_data['reason_text'] ) ) : null,
 			'date'                        => gmdate( 'M d, Y h:i:s A' ),
-			'url'                         => '',
-			'user_email'                  => '',
-			'reason_info'                 => isset( $_REQUEST['reason_info'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['reason_info'] ) ) : '',
-			'software'                    => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
+			'comments'                    => ! empty( $post_data['reason_info'] ) ? sanitize_text_field( wp_unslash( $post_data['reason_info'] ) ) : '',
+			'server'                      => ! empty( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
 			'php_version'                 => phpversion(),
 			'mysql_version'               => $wpdb->db_version(),
 			'wp_version'                  => get_bloginfo( 'version' ),
-			'wc_version'                  => ( ! defined( 'WC_VERSION' ) ) ? '' : WC_VERSION,
+			'wc_version'                  => defined( 'WC_VERSION' ) ? WC_VERSION : null,
 			'locale'                      => get_locale(),
-			'multisite'                   => is_multisite() ? 'Yes' : 'No',
-			$this->plugin_id . '_version' => $this->current_version,
+			'plugin_version'              => $this->current_version,
+			'is_multisite'                => is_multisite(),
+			'is_legacy'                   => true,
 		);
 		// Write an action/hook here in webtoffe to receive the data
-		$resp = wp_remote_post(
+		$response = wp_remote_post(
 			$this->api_url,
 			array(
+				'headers'     => array( 'Content-Type' => 'application/json; charset=utf-8' ),
 				'method'      => 'POST',
 				'timeout'     => 45,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking'    => false,
-				'body'        => $data,
+				'body'        => wp_json_encode( $data ),
 				'cookies'     => array(),
 			)
 		);

@@ -16,6 +16,7 @@ namespace RankMath\Sitemap\Providers;
 use DateTime;
 use DateTimeZone;
 use RankMath\Helper;
+use RankMath\Helpers\DB as DB_Helper;
 use RankMath\Sitemap\Router;
 use RankMath\Sitemap\Sitemap;
 use RankMath\Traits\Hooker;
@@ -79,15 +80,16 @@ class Author implements Provider {
 		$user_pages = array_chunk( $users, $max_entries );
 
 		if ( 1 === count( $user_pages ) ) {
-			$page = '';
+			$page = 0;
 		}
 
 		foreach ( $user_pages as $user_page ) {
-			$user = array_shift( $user_page ); // Time descending, first user on page is most recently updated.
-			$item = $this->do_filter(
+			$current_page = $page > 0 ? $page : '';
+			$user         = array_shift( $user_page ); // Time descending, first user on page is most recently updated.
+			$item         = $this->do_filter(
 				'sitemap/index/entry',
 				[
-					'loc'     => Router::get_base_url( $this->sitemap_slug . '-sitemap' . $page . '.xml' ),
+					'loc'     => Router::get_base_url( $this->sitemap_slug . '-sitemap' . $current_page . '.xml' ),
 					'lastmod' => '@' . $user->last_update,
 				],
 				'author',
@@ -100,7 +102,7 @@ class Author implements Provider {
 
 			$index[] = $item;
 
-			$page++;
+			++$page;
 		}
 
 		return $index;
@@ -181,6 +183,7 @@ class Author implements Provider {
 		$defaults = [
 			'orderby'    => 'meta_value_num',
 			'order'      => 'DESC',
+			// phpcs:ignore WordPress.DB.SlowDBQuery -- Needed to generate the author sitemap by comparing values stored in the meta table
 			'meta_query' => [
 				'relation' => 'AND',
 				[
@@ -209,6 +212,11 @@ class Author implements Provider {
 		];
 
 		$args = $this->do_filter( 'sitemap/author/query', wp_parse_args( $args, $defaults ) );
+
+		if ( Helper::get_settings( 'sitemap.include_authors_without_posts' ) ) {
+			$args['has_published_posts'] = false;
+		}
+
 		return get_users( $args );
 	}
 
@@ -258,7 +266,9 @@ class Author implements Provider {
 		// We're not supporting sitemaps for author pages for attachments.
 		unset( $public_post_types['attachment'] );
 
-		$args['has_published_posts'] = array_keys( $public_post_types );
+		if ( ! Helper::get_settings( 'sitemap.include_authors_without_posts' ) ) {
+			$args['has_published_posts'] = array_keys( $public_post_types );
+		}
 
 		return $args;
 	}
@@ -270,18 +280,20 @@ class Author implements Provider {
 	 */
 	private function get_index_users() {
 		global $wpdb;
-		$exclude_users       = Helper::get_settings( 'sitemap.exclude_users' );
-		$exclude_roles       = Helper::get_settings( 'sitemap.exclude_roles' );
-		$exclude_users_query = ! $exclude_users ? '' : 'AND post_author NOT IN ( ' . esc_sql( $exclude_users ) . ' )';
-		$exclude_roles_query = '';
-		$meta_query          = "(
+		$table_prefix                  = $wpdb->get_blog_prefix();
+		$include_authors_without_posts = Helper::get_settings( 'sitemap.include_authors_without_posts' );
+		$exclude_users                 = Helper::get_settings( 'sitemap.exclude_users' );
+		$exclude_roles                 = Helper::get_settings( 'sitemap.exclude_roles' );
+		$exclude_users_query           = ! $exclude_users ? '' : 'AND post_author NOT IN ( ' . esc_sql( $exclude_users ) . ' )';
+		$exclude_roles_query           = '';
+		$meta_query                    = "(
 		 		( um.meta_key = 'rank_math_robots' AND um.meta_value NOT LIKE '%noindex%' )
 		 		OR um.user_id IS NULL
 			)
 			AND (  umt1.meta_key = 'last_update' OR umt1.user_id IS NULL )
 			";
 		if ( $exclude_roles ) {
-			$exclude_roles_query = "AND ( umt.meta_key ='wp_capabilities' AND ( ";
+			$exclude_roles_query = "AND ( umt.meta_key ='{$table_prefix}capabilities' AND ( ";
 			foreach ( $exclude_roles as $key => $role ) {
 				$exclude_roles_query .= 0 === $key ? " umt.meta_value NOT LIKE '%" . esc_sql( $role ) . "%'" : " AND umt.meta_value NOT LIKE '%" . esc_sql( $role ) . "%'";
 			}
@@ -291,22 +303,24 @@ class Author implements Provider {
 
 		$meta_query .= $exclude_roles_query;
 
+		$include_authors_without_posts_query = $include_authors_without_posts ? '' : "AND u.ID IN (
+			SELECT post_author
+			FROM {$wpdb->posts} as p
+			WHERE p.post_status = 'publish' AND p.post_password = ''
+			{$exclude_users_query}
+		)";
+
 		$sql = "
 		SELECT u.ID, umt1.meta_value as last_update
 		FROM {$wpdb->users} as u
 		    LEFT JOIN {$wpdb->usermeta} AS um ON ( u.ID = um.user_id AND um.meta_key = 'rank_math_robots' )
-		    LEFT JOIN {$wpdb->usermeta} AS umt ON ( u.ID = umt.user_id AND umt.meta_key = 'wp_capabilities' )
+		    LEFT JOIN {$wpdb->usermeta} AS umt ON ( u.ID = umt.user_id AND umt.meta_key = '{$table_prefix}capabilities' )
 		    LEFT JOIN {$wpdb->usermeta} AS umt1 ON ( u.ID = umt1.user_id AND umt1.meta_key = 'last_update' )
 		    WHERE ( {$meta_query} )
-		    AND u.ID IN (
-		    	SELECT post_author
-		    	FROM {$wpdb->posts} as p
-		    	WHERE p.post_status = 'publish' AND p.post_password = ''
-		    	{$exclude_users_query}
-		    	)
+		    {$include_authors_without_posts_query}
 		ORDER BY umt1.meta_value DESC
 		 ";
 
-		return $wpdb->get_results( $sql ); // phpcs:ignore
+		return DB_Helper::get_results( $sql );
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace wpie\lib\xml\array2xml;
 
+defined( 'ABSPATH' ) || exit;
+
 class ArrayToXml {
 
         /**
@@ -282,5 +284,4 @@ class ArrayToXml {
                         unset( $this->$key );
                 }
         }
-
 }

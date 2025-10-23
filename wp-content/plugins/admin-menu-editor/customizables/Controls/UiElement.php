@@ -106,22 +106,25 @@ abstract class UiElement {
 	}
 
 	public function serializeForJs() {
-		$description = $this->getDescription();
 		$result = ['t' => $this->getJsUiElementType()];
-		if ( !empty($this->classes) ) {
-			$result['classes'] = $this->classes;
-		}
-		if ( !empty($this->styles) ) {
-			$result['styles'] = $this->styles;
-		}
-		if ( !empty($description) ) {
-			$result['description'] = $description;
-		}
+
 		if ( !empty($this->id) ) {
 			$result['id'] = $this->id;
 		}
 
 		$params = $this->getKoComponentParams();
+
+		if ( !empty($this->classes) ) {
+			$params['classes'] = $this->classes;
+		}
+		if ( !empty($this->styles) ) {
+			$params['styles'] = $this->styles;
+		}
+		$description = $this->getDescription();
+		if ( !empty($description) ) {
+			$params['description'] = $description;
+		}
+
 		if ( !empty($params) ) {
 			$result['params'] = $params;
 		}

@@ -5,6 +5,9 @@
  */
 
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 function customtaxorder_subpage() {
 	global $sitepress;
 
@@ -165,9 +168,13 @@ function customtaxorder_subpage() {
 				<div class="widget order-widget">
 					<h2 class="widget-top"><?php echo esc_html( $tax_label ) ?> | <small><?php esc_html_e('Order the terms by dragging and dropping them into the desired order.', 'custom-taxonomy-order-ne') ?></small></h2>
 					<div class="misc-pub-section">
+						<input type="button" name="customtaxorder-toggle-slug" id="customtaxorder-toggle-slug" class="btn button" value="<?php esc_attr_e('Toggle Slugs', 'custom-taxonomy-order-ne'); ?>" />
 						<ul id="custom-order-list">
 							<?php foreach ( $terms as $term ) { ?>
-							<li id="id_<?php echo (int) $term->term_id; ?>" data-slug="<?php echo esc_attr( $term->slug ); ?>" class="lineitem"><?php echo esc_html( $term->name ); ?></li>
+							<li id="id_<?php echo (int) $term->term_id; ?>" data-slug="<?php echo esc_attr( $term->slug ); ?>" data-term-order="<?php echo (int) $term->term_order; ?>" class="lineitem"><?php echo esc_html( $term->name ); ?>
+								<br />
+								<span style="color:#aaa">(<?php echo esc_attr( $term->slug ); ?>)</span>
+							</li>
 							<?php } ?>
 						</ul>
 					</div>
@@ -368,6 +375,7 @@ function customtaxorder_update_settings() {
 
 					$options[$taxonomy->name] = $tax_setting;
 					$customtaxorder_settings = update_option( 'customtaxorder_settings', $options );
+					delete_transient( 'customtaxorder_get_settings' );
 					echo '<div class="updated fade notice is-dismissible" id="message"><p>' . esc_html__('Settings have been saved', 'custom-taxonomy-order-ne') . '</p></div>';
 					return;
 

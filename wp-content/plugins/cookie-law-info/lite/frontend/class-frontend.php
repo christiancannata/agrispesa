@@ -13,6 +13,7 @@ namespace CookieYes\Lite\Frontend;
 
 use CookieYes\Lite\Admin\Modules\Banners\Includes\Controller;
 use CookieYes\Lite\Admin\Modules\Settings\Includes\Settings;
+use CookieYes\Lite\Admin\Modules\Gcm\Includes\Gcm_Settings;
 /**
  * The public-facing functionality of the plugin.
  *
@@ -77,6 +78,14 @@ class Frontend {
 	 * @var object
 	 */
 	protected $settings;
+
+	/**
+	 * Plugin settings
+	 *
+	 * @var object
+	 */
+	protected $gcm_settings;
+
 	/**
 	 * Banner template
 	 *
@@ -103,6 +112,7 @@ class Frontend {
 		$this->version     = $version;
 		$this->load_modules();
 		$this->settings = new Settings();
+		$this->gcm_settings = new Gcm_Settings();
 		add_action( 'init', array( $this, 'load_banner' ) );
 		add_action( 'wp_footer', array( $this, 'banner_html' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 1 );
@@ -158,15 +168,23 @@ class Frontend {
 		if ( true === cky_disable_banner() ) {
 			return;
 		}
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		if ( false === $this->settings->is_connected() ) {
 			if ( ! $this->template ) {
 				return;
 			}
-			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			$css    = isset( $this->template['styles'] ) ? $this->template['styles'] : '';
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/script' . $suffix . '.js', array(), $this->version, false );
 			wp_localize_script( $this->plugin_name, '_ckyConfig', $this->get_store_data() );
 			wp_localize_script( $this->plugin_name, '_ckyStyles', array( 'css' => $css ) );
+		}
+		if ( true === $this->is_wpconsentapi_enabled() ) {
+			$handle = $this->plugin_name . '-wca';
+			wp_register_script( $handle, plugin_dir_url( __FILE__ ) . 'js/wca' . $suffix . '.js', array(), $this->version, false );
+			if ( true === $this->is_gsk_enabled() ) {
+				wp_add_inline_script( $handle, 'const _ckyGsk = true;', 'before' );
+			}
+			wp_enqueue_script( $handle );
 		}
 	}
 
@@ -189,6 +207,20 @@ class Frontend {
 	public function insert_script() {
 		if ( false === $this->settings->is_connected() || true === cky_disable_banner() ) {
 			return;
+		}
+		if ( true === $this->gcm_settings->is_gcm_enabled() ) {
+			$gcm = $this->get_gcm_data();
+			$gcm_json = wp_json_encode($gcm);
+			?>
+<script id="cookie-law-info-gcm-var-js">
+var _ckyGcm = <?php echo $gcm_json; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+</script>
+<?php
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			$script_url = plugin_dir_url( __FILE__ ) . 'js/gcm' . $suffix . '.js'; 
+?>
+<script id="cookie-law-info-gcm-js" type="text/javascript" src="<?php echo esc_url( $script_url ); ?>"></script> <?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		}
 		echo '<script id="cookieyes" type="text/javascript" src="' . esc_url( $this->settings->get_script_url() ) . '"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 	}
@@ -241,6 +273,19 @@ class Frontend {
 		return $tag;
 	}
 	/**
+	 * Get gcm data
+	 *
+	 * @return array
+	 */
+	public function get_gcm_data() {
+		if ( ! $this->gcm_settings ) {
+			return;
+		}
+		$gcm          = $this->gcm_settings;
+		$gcm_settings = $gcm->get();
+		return $gcm_settings;
+	}
+	/**
 	 * Get store data
 	 *
 	 * @return array
@@ -270,6 +315,7 @@ class Frontend {
 			'_tags'         => $this->prepare_tags(),
 			'_shortCodes'   => $this->prepare_shortcodes( $banner->get_settings() ),
 			'_rtl'          => $this->is_rtl(),
+			'_language'     => cky_current_language(),
 		);
 		foreach ( $this->providers as $key => $value ) {
 			$providers[] = array(
@@ -515,6 +561,13 @@ class Frontend {
 			'status'     => true,
 			'attributes' => array(),
 		);
+		$data[] = array(
+			'key'        => 'cky_preference_close_label',
+			'content'    => do_shortcode( '[cky_preference_close_label]' ),
+			'tag'        => '',
+			'status'     => true,
+			'attributes' => array(),
+		);
 		return $data;
 	}
 
@@ -530,5 +583,26 @@ class Frontend {
 		}
 
 		return in_array( $language, array( 'ar', 'az', 'dv', 'he', 'ku', 'fa', 'ur' ), true );
+	}
+
+	/**
+	 * Check whether the WP Consent API plugin is enabled
+	 *
+	 * @return boolean
+	 */
+	public function is_wpconsentapi_enabled() {
+		return class_exists( 'WP_CONSENT_API' );
+	}
+
+	/**
+	 * Check whether the Google Site Kit plugin is enabled
+	 *
+	 * @return boolean
+	 */
+	public function is_gsk_enabled() {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		return is_plugin_active( 'google-site-kit/google-site-kit.php' );
 	}
 }

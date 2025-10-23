@@ -5,7 +5,7 @@ namespace FSVendor\Octolize\Tracker\OptInNotice;
 /**
  * Should display shipping method settings page.
  */
-class ShouldDisplayShippingMethodInstanceSettings implements \FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplay
+class ShouldDisplayShippingMethodInstanceSettings implements ShouldDisplay
 {
     /**
      * @var string

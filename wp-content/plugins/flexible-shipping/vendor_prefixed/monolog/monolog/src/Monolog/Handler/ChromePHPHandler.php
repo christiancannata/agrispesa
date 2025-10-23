@@ -24,7 +24,7 @@ use FSVendor\Monolog\Utils;
  *
  * @phpstan-import-type Record from \Monolog\Logger
  */
-class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class ChromePHPHandler extends AbstractProcessingHandler
 {
     use WebRequestRecognizerTrait;
     /**
@@ -38,7 +38,7 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
     /**
      * Regular expression to detect supported browsers (matches any Chrome, or Firefox 43+)
      */
-    protected const USER_AGENT_REGEX = '{\\b(?:Chrome/\\d+(?:\\.\\d+)*|HeadlessChrome|Firefox/(?:4[3-9]|[5-9]\\d|\\d{3,})(?:\\.\\d)*)\\b}';
+    protected const USER_AGENT_REGEX = '{\b(?:Chrome/\d+(?:\.\d+)*|HeadlessChrome|Firefox/(?:4[3-9]|[5-9]\d|\d{3,})(?:\.\d)*)\b}';
     /** @var bool */
     protected static $initialized = \false;
     /**
@@ -53,17 +53,17 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
     protected static $json = ['version' => self::VERSION, 'columns' => ['label', 'log', 'backtrace', 'type'], 'rows' => []];
     /** @var bool */
     protected static $sendHeaders = \true;
-    public function __construct($level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct($level = Logger::DEBUG, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
-        if (!\function_exists('json_encode')) {
+        if (!function_exists('json_encode')) {
             throw new \RuntimeException('PHP\'s json extension is required to use Monolog\'s ChromePHPHandler');
         }
     }
     /**
      * {@inheritDoc}
      */
-    public function handleBatch(array $records) : void
+    public function handleBatch(array $records): void
     {
         if (!$this->isWebRequest()) {
             return;
@@ -79,16 +79,16 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
         }
         if (!empty($messages)) {
             $messages = $this->getFormatter()->formatBatch($messages);
-            self::$json['rows'] = \array_merge(self::$json['rows'], $messages);
+            self::$json['rows'] = array_merge(self::$json['rows'], $messages);
             $this->send();
         }
     }
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\ChromePHPFormatter();
+        return new ChromePHPFormatter();
     }
     /**
      * Creates & sends header for a record
@@ -96,7 +96,7 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
      * @see sendHeader()
      * @see send()
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         if (!$this->isWebRequest()) {
             return;
@@ -109,7 +109,7 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
      *
      * @see sendHeader()
      */
-    protected function send() : void
+    protected function send(): void
     {
         if (self::$overflowed || !self::$sendHeaders) {
             return;
@@ -122,36 +122,36 @@ class ChromePHPHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandl
             }
             self::$json['request_uri'] = $_SERVER['REQUEST_URI'] ?? '';
         }
-        $json = \FSVendor\Monolog\Utils::jsonEncode(self::$json, \FSVendor\Monolog\Utils::DEFAULT_JSON_FLAGS & ~\JSON_UNESCAPED_UNICODE, \true);
-        $data = \base64_encode($json);
-        if (\strlen($data) > 3 * 1024) {
+        $json = Utils::jsonEncode(self::$json, Utils::DEFAULT_JSON_FLAGS & ~\JSON_UNESCAPED_UNICODE, \true);
+        $data = base64_encode($json);
+        if (strlen($data) > 3 * 1024) {
             self::$overflowed = \true;
-            $record = ['message' => 'Incomplete logs, chrome header size limit reached', 'context' => [], 'level' => \FSVendor\Monolog\Logger::WARNING, 'level_name' => \FSVendor\Monolog\Logger::getLevelName(\FSVendor\Monolog\Logger::WARNING), 'channel' => 'monolog', 'datetime' => new \DateTimeImmutable(), 'extra' => []];
-            self::$json['rows'][\count(self::$json['rows']) - 1] = $this->getFormatter()->format($record);
-            $json = \FSVendor\Monolog\Utils::jsonEncode(self::$json, \FSVendor\Monolog\Utils::DEFAULT_JSON_FLAGS & ~\JSON_UNESCAPED_UNICODE, \true);
-            $data = \base64_encode($json);
+            $record = ['message' => 'Incomplete logs, chrome header size limit reached', 'context' => [], 'level' => Logger::WARNING, 'level_name' => Logger::getLevelName(Logger::WARNING), 'channel' => 'monolog', 'datetime' => new \DateTimeImmutable(), 'extra' => []];
+            self::$json['rows'][count(self::$json['rows']) - 1] = $this->getFormatter()->format($record);
+            $json = Utils::jsonEncode(self::$json, Utils::DEFAULT_JSON_FLAGS & ~\JSON_UNESCAPED_UNICODE, \true);
+            $data = base64_encode($json);
         }
-        if (\trim($data) !== '') {
+        if (trim($data) !== '') {
             $this->sendHeader(static::HEADER_NAME, $data);
         }
     }
     /**
      * Send header string to the client
      */
-    protected function sendHeader(string $header, string $content) : void
+    protected function sendHeader(string $header, string $content): void
     {
-        if (!\headers_sent() && self::$sendHeaders) {
-            \header(\sprintf('%s: %s', $header, $content));
+        if (!headers_sent() && self::$sendHeaders) {
+            header(sprintf('%s: %s', $header, $content));
         }
     }
     /**
      * Verifies if the headers are accepted by the current user agent
      */
-    protected function headersAccepted() : bool
+    protected function headersAccepted(): bool
     {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             return \false;
         }
-        return \preg_match(static::USER_AGENT_REGEX, $_SERVER['HTTP_USER_AGENT']) === 1;
+        return preg_match(static::USER_AGENT_REGEX, $_SERVER['HTTP_USER_AGENT']) === 1;
     }
 }

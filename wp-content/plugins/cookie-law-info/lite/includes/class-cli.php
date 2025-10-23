@@ -86,7 +86,7 @@ class CLI {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.2.4';
+			$this->version = '3.3.5';
 		}
 		$this->plugin_name = 'cookie-law-info';
 
@@ -138,7 +138,7 @@ class CLI {
 	private function set_locale() {
 
 		$plugin_i18n = I18n::get_instance();
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 

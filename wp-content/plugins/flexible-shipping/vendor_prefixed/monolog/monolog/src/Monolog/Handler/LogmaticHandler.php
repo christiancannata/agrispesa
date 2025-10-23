@@ -17,7 +17,7 @@ use FSVendor\Monolog\Formatter\LogmaticFormatter;
 /**
  * @author Julien Breux <julien.breux@gmail.com>
  */
-class LogmaticHandler extends \FSVendor\Monolog\Handler\SocketHandler
+class LogmaticHandler extends SocketHandler
 {
     /**
      * @var string
@@ -39,10 +39,10 @@ class LogmaticHandler extends \FSVendor\Monolog\Handler\SocketHandler
      *
      * @throws MissingExtensionException If SSL encryption is set to true and OpenSSL is missing
      */
-    public function __construct(string $token, string $hostname = '', string $appname = '', bool $useSSL = \true, $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true, bool $persistent = \false, float $timeout = 0.0, float $writingTimeout = 10.0, ?float $connectionTimeout = null, ?int $chunkSize = null)
+    public function __construct(string $token, string $hostname = '', string $appname = '', bool $useSSL = \true, $level = Logger::DEBUG, bool $bubble = \true, bool $persistent = \false, float $timeout = 0.0, float $writingTimeout = 10.0, ?float $connectionTimeout = null, ?int $chunkSize = null)
     {
-        if ($useSSL && !\extension_loaded('openssl')) {
-            throw new \FSVendor\Monolog\Handler\MissingExtensionException('The OpenSSL PHP extension is required to use SSL encrypted connection for LogmaticHandler');
+        if ($useSSL && !extension_loaded('openssl')) {
+            throw new MissingExtensionException('The OpenSSL PHP extension is required to use SSL encrypted connection for LogmaticHandler');
         }
         $endpoint = $useSSL ? 'ssl://api.logmatic.io:10515' : 'api.logmatic.io:10514';
         $endpoint .= '/v1/';
@@ -54,16 +54,16 @@ class LogmaticHandler extends \FSVendor\Monolog\Handler\SocketHandler
     /**
      * {@inheritDoc}
      */
-    protected function generateDataStream(array $record) : string
+    protected function generateDataStream(array $record): string
     {
         return $this->logToken . ' ' . $record['formatted'];
     }
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        $formatter = new \FSVendor\Monolog\Formatter\LogmaticFormatter();
+        $formatter = new LogmaticFormatter();
         if (!empty($this->hostname)) {
             $formatter->setHostname($this->hostname);
         }

@@ -62,9 +62,6 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 		if (!empty($language)) {
 			$this->language = $language;
 		}
-
-		mailchimp_debug('member.sync', "construct this -> subscribed " . $this->subscribed);
-
 	}
 
 	/**
@@ -82,22 +79,13 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 	 */
 	public function handle()
 	{
-
-		mailchimp_debug('member.sync', "first this -> subscribed " . $this->subscribed);
-
 		if (!mailchimp_is_configured()) {
 			mailchimp_debug(get_called_class(), 'Mailchimp is not configured properly');
 			static::$handling_for = null;
 			return false;
 		}
 
-		if ($this->should_ignore) {
-			mailchimp_debug(get_called_class(), "{$this->id} is currently in motion - skipping this one.");
-			static::$handling_for = null;
-			return false;
-		}
-
-		$options = get_option('mailchimp-woocommerce', array());
+		$options = \Mailchimp_Woocommerce_DB_Helpers::get_option('mailchimp-woocommerce', array());
 		$store_id = mailchimp_get_store_id();
 
 		// load up the user.
@@ -110,7 +98,7 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 			// just a precautionary to make sure it's available during
 			sleep(1);
 
-			$options = get_option('mailchimp-woocommerce', array());
+			$options = \Mailchimp_Woocommerce_DB_Helpers::get_option('mailchimp-woocommerce', array());
 			$store_id = mailchimp_get_store_id();
 
 			// load up the user.
@@ -201,7 +189,12 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 
 		// pull the transient key for this job.
 		$transient_id = mailchimp_get_transient_email_key($email);
-		$status_meta = mailchimp_get_subscriber_status_options($this->subscribed);
+
+        $subscribed = $this->subscribed === '' || $this->subscribed === '0' ? 'transactional' : $this->subscribed;
+
+		$status_meta = mailchimp_get_subscriber_status_options($subscribed);
+        $uses_doi = $status_meta && $status_meta['requires_double_optin'];
+        $api->useAutoDoi($uses_doi);
 
 		try {
 
@@ -212,16 +205,13 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 				return false;
 			}
 
-			// see if we have a member.
-			$member_data = $api->member($list_id, $email);
+            $member_data = $api->update($list_id, $email, $subscribed, $merge_fields, null, $language, $gdpr_fields);
 
-			// if we're updating a member and the email is different, we need to delete the old person
+            // if we're updating a member and the email is different, we need to delete the old person
 			if (is_array($this->updated_data) && isset($this->updated_data['user_email'])) {
 				if ($this->updated_data['user_email'] !== $email) {
 					// delete the old
 					$api->deleteMember($list_id, $this->updated_data['user_email']);
-					// subscribe the new
-					$api->subscribe($list_id, $email, $status_meta['created'], $merge_fields, null, $language, $gdpr_fields);
 
 					// update the member tags but fail silently just in case.
 					$api->updateMemberTags(mailchimp_get_list_id(), $email, true);
@@ -258,7 +248,10 @@ class MailChimp_WooCommerce_User_Submit extends Mailchimp_Woocommerce_Job
 
 			// if the status is not === 'transactional' we can update them to subscribed or pending now.
 			if (isset($member_data['status']) && $member_data['status'] === 'transactional' || $member_data['status'] === 'cleaned') {
-				// ok let's update this member
+				if ($subscribed !== 'subscribed' && $subscribed !== '1' && $subscribed !== true) {
+                    return false;
+                }
+                // ok let's update this member
 				$api->update($list_id, $email, $status_meta['updated'], $merge_fields, null, $language, $gdpr_fields);
 
 				// update the member tags but fail silently just in case.

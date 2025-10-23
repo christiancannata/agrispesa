@@ -72,7 +72,7 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 			/**
 			 * Add CSS style to gift card emails header
 			 */
-			add_action( 'woocommerce_email_header', array( $this, 'include_css_for_emails' ), 10, 2 );
+			add_action( 'woocommerce_email_styles', array( $this, 'include_css_for_emails' ), 10, 2 );
 
 			/**
 			 * Show an introductory text before the gift cards editor
@@ -192,6 +192,7 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 					array(
 						'apply_discount_url' => apply_filters( 'yith_ywgc_email_automatic_cart_discount_url', $shop_page_url, $gift_card ),
 						'gift_card'          => $gift_card,
+						'context'            => isset( $_GET['preview_woocommerce_mail'] ) && sanitize_text_field( wp_unslash( $_GET['preview_woocommerce_mail'] ) ) ? 'preview' : 'email', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
 					'',
 					YITH_YWGC_TEMPLATES_DIR
@@ -227,30 +228,20 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 
 
 		/**
-		 * Include_css_for_emails
-		 * Add CSS style to gift card emails header
 		 *
-		 * @param  mixed $email_heading email_heading.
-		 * @param  mixed $email email.
-		 * @return void
+		 * Add CSS styles to gift card emails.
+		 *
+		 * @param string   $css   CSS styles.
+		 * @param WC_Email $email Email object.
+		 *
+		 * @return string
 		 */
-		public function include_css_for_emails( $email_heading, $email = null ) {
-			if ( null === $email ) {
-				return;
+		public function include_css_for_emails( $css, $email ) {
+			if ( ! in_array( $email->id, array( 'ywgc-email-send-gift-card', 'ywgc-email-notify-customer', 'ywgc-email-delivered-gift-card' ), true ) ) {
+				return $css;
 			}
 
-			if ( ! isset( $email->object ) ) {
-				return;
-			}
-
-			if ( ! $email->object instanceof YITH_YWGC_Gift_Card ) {
-				return;
-			}
-
-			echo '<style type="text/css">';
-
-			include YITH_YWGC_ASSETS_DIR . '/css/ywgc-frontend.css';
-
+			ob_start();
 			if ( is_rtl() ) {
 				wc_get_template(
 					'emails/style-rtl.css',
@@ -266,8 +257,9 @@ if ( ! class_exists( 'YITH_YWGC_Emails' ) ) {
 					YITH_YWGC_TEMPLATES_DIR
 				);
 			}
+			$css .= ob_get_clean();
 
-			echo '</style>';
+			return $css;
 		}
 
 		/**

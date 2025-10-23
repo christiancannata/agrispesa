@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class Paragraph extends \FSVendor\WPDesk\Forms\Field\NoValueField
+class Paragraph extends NoValueField
 {
     public function get_template_name()
     {

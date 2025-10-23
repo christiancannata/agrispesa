@@ -23,6 +23,7 @@ use RankMath\Helpers\Content_AI;
 use RankMath\Helpers\HTML;
 use RankMath\Replace_Variables\Replacer;
 use RankMath\Helpers\Param;
+use RankMath\Helpers\DB as DB_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +32,16 @@ defined( 'ABSPATH' ) || exit;
  */
 class Helper {
 
-	use Api, Conditional, Choices, Post_Type, Options, Taxonomy, WordPress, Schema, Analytics, Content_AI;
+	use Api;
+	use Conditional;
+	use Choices;
+	use Post_Type;
+	use Options;
+	use Taxonomy;
+	use WordPress;
+	use Schema;
+	use Analytics;
+	use Content_AI;
 
 	/**
 	 * Replace `%variables%` with context-dependent value.
@@ -84,17 +94,17 @@ class Helper {
 	 * @deprecated 1.0.34 Use rank_math_register_var_replacement()
 	 * @see rank_math_register_var_replacement()
 	 *
-	 * @param  string $var       Variable name, for example %custom%. '%' signs are optional.
+	 * @param  string $variable  Variable name, for example %custom%. '%' signs are optional.
 	 * @param  mixed  $callback  Replacement callback. Should return value, not output it.
 	 * @param  array  $args      Array with additional title, description and example values for the variable.
 	 *
 	 * @return bool Replacement was registered successfully or not.
 	 */
-	public static function register_var_replacement( $var, $callback, $args = [] ) {
+	public static function register_var_replacement( $variable, $callback, $args = [] ) {
 		_deprecated_function( 'RankMath\Helper::register_var_replacement()', '1.0.34', 'rank_math_register_var_replacement()' );
 		$args['description'] = isset( $args['desc'] ) ? $args['desc'] : '';
-		$args['variable']    = $var;
-		return rank_math_register_var_replacement( $var, $args, $callback );
+		$args['variable']    = $variable;
+		return rank_math_register_var_replacement( $variable, $args, $callback );
 	}
 
 	/**
@@ -253,8 +263,14 @@ class Helper {
 		// Clear caches on WPEngine-hosted sites.
 		if ( class_exists( 'WpeCommon' ) ) {
 			\WpeCommon::purge_memcached();
-			\WpeCommon::clear_maxcdn_cache();
 			\WpeCommon::purge_varnish_cache();
+
+			// Clear WPEngine CDN cache. Added this condition to avoid PHP error as we are not sure when the new clear_cdn_cache method was added.
+			if ( method_exists( 'WpeCommon', 'clear_cdn_cache' ) ) {
+				\WpeCommon::clear_cdn_cache();
+			} else {
+				\WpeCommon::clear_maxcdn_cache();
+			}
 		}
 
 		// Clear Varnish caches.
@@ -378,8 +394,7 @@ class Helper {
 			return;
 		}
 
-		global $wpdb;
-		$rank_math_enable_big_select = $wpdb->query( 'SET SESSION SQL_BIG_SELECTS=1' );
+		$rank_math_enable_big_select = DB_Helper::query( 'SET SESSION SQL_BIG_SELECTS=1' );
 	}
 
 	/**

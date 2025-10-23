@@ -43,50 +43,73 @@ add_action( 'wpcf7_admin_init', 'wpcf7_add_tag_generator_submit', 55, 0 );
 
 function wpcf7_add_tag_generator_submit() {
 	$tag_generator = WPCF7_TagGenerator::get_instance();
+
 	$tag_generator->add( 'submit', __( 'submit', 'contact-form-7' ),
-		'wpcf7_tag_generator_submit', array( 'nameless' => 1 ) );
+		'wpcf7_tag_generator_submit',
+		array( 'version' => '2' )
+	);
 }
 
-function wpcf7_tag_generator_submit( $contact_form, $args = '' ) {
-	$args = wp_parse_args( $args, array() );
+function wpcf7_tag_generator_submit( $contact_form, $options ) {
+	$field_types = array(
+		'submit' => array(
+			'display_name' => __( 'Submit button', 'contact-form-7' ),
+			'heading' => __( 'Submit button form-tag generator', 'contact-form-7' ),
+			'description' => __( 'Generates a form-tag for a <a href="https://contactform7.com/submit-button/">submit button</a>.', 'contact-form-7' ),
+		),
+	);
 
-	$description = __( "Generate a form-tag for a submit button. For more details, see %s.", 'contact-form-7' );
+	$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
 
-	$desc_link = wpcf7_link( __( 'https://contactform7.com/submit-button/', 'contact-form-7' ), __( 'Submit button', 'contact-form-7' ) );
+	$formatter = new WPCF7_HTMLFormatter();
 
-?>
-<div class="control-box">
-<fieldset>
-<legend><?php echo sprintf( esc_html( $description ), $desc_link ); ?></legend>
+	$formatter->append_start_tag( 'header', array(
+		'class' => 'description-box',
+	) );
 
-<table class="form-table">
-<tbody>
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-values' ); ?>"><?php echo esc_html( __( 'Label', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="values" class="oneline" id="<?php echo esc_attr( $args['content'] . '-values' ); ?>" /></td>
-	</tr>
+	$formatter->append_start_tag( 'h3' );
 
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-id' ); ?>"><?php echo esc_html( __( 'Id attribute', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="id" class="idvalue oneline option" id="<?php echo esc_attr( $args['content'] . '-id' ); ?>" /></td>
-	</tr>
+	$formatter->append_preformatted(
+		esc_html( $field_types['submit']['heading'] )
+	);
 
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-class' ); ?>"><?php echo esc_html( __( 'Class attribute', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="class" class="classvalue oneline option" id="<?php echo esc_attr( $args['content'] . '-class' ); ?>" /></td>
-	</tr>
+	$formatter->end_tag( 'h3' );
 
-</tbody>
-</table>
-</fieldset>
-</div>
+	$formatter->append_start_tag( 'p' );
 
-<div class="insert-box">
-	<input type="text" name="submit" class="tag code" readonly="readonly" onfocus="this.select()" />
+	$formatter->append_preformatted(
+		wp_kses_data( $field_types['submit']['description'] )
+	);
 
-	<div class="submitbox">
-	<input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'contact-form-7' ) ); ?>" />
-	</div>
-</div>
-<?php
+	$formatter->end_tag( 'header' );
+
+	$formatter->append_start_tag( 'div', array(
+		'class' => 'control-box',
+	) );
+
+	$formatter->call_user_func( static function () use ( $tgg, $field_types ) {
+		$tgg->print( 'field_type', array(
+			'select_options' => array(
+				'submit' => $field_types['submit']['display_name'],
+			),
+		) );
+
+		$tgg->print( 'class_attr' );
+
+		$tgg->print( 'default_value', array(
+			'title' => __( 'Label', 'contact-form-7' ),
+		) );
+	} );
+
+	$formatter->end_tag( 'div' );
+
+	$formatter->append_start_tag( 'footer', array(
+		'class' => 'insert-box',
+	) );
+
+	$formatter->call_user_func( static function () use ( $tgg, $field_types ) {
+		$tgg->print( 'insert_box_content' );
+	} );
+
+	$formatter->print();
 }

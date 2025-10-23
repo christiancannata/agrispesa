@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Forms\Validator;
 
 use FSVendor\WPDesk\Forms\Validator;
-class NonceValidator implements \FSVendor\WPDesk\Forms\Validator
+class NonceValidator implements Validator
 {
     private $action;
     public function __construct($action)
@@ -12,7 +12,7 @@ class NonceValidator implements \FSVendor\WPDesk\Forms\Validator
     }
     public function is_valid($value)
     {
-        $valid = \wp_verify_nonce($value, $this->action);
+        $valid = wp_verify_nonce($value, $this->action);
         return $valid;
     }
     public function get_messages()

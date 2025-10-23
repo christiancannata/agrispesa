@@ -4,6 +4,7 @@ declare( strict_types=1 );
 namespace Automattic\WooCommerce\GoogleListingsAndAds\Jobs;
 
 use Automattic\WooCommerce\GoogleListingsAndAds\ActionScheduler\ActionSchedulerInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\WP\NotificationsService;
 use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\MerchantCenterService;
 use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\MerchantStatuses;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\BatchProductHelper;
@@ -17,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package Automattic\WooCommerce\GoogleListingsAndAds\Jobs
  */
-abstract class AbstractProductSyncerBatchedJob extends AbstractBatchedActionSchedulerJob implements ProductSyncerJobInterface {
+abstract class AbstractProductSyncerBatchedJob extends AbstractBatchedActionSchedulerJob {
 
 	/**
 	 * @var ProductSyncer
@@ -45,7 +46,7 @@ abstract class AbstractProductSyncerBatchedJob extends AbstractBatchedActionSche
 	protected $merchant_statuses;
 
 	/**
-	 * SyncProducts constructor.
+	 * AbstractProductSyncerBatchedJob constructor.
 	 *
 	 * @param ActionSchedulerInterface  $action_scheduler
 	 * @param ActionSchedulerJobMonitor $monitor
@@ -73,15 +74,6 @@ abstract class AbstractProductSyncerBatchedJob extends AbstractBatchedActionSche
 	}
 
 	/**
-	 * Get whether Merchant Center is connected and ready for syncing data.
-	 *
-	 * @return bool
-	 */
-	public function is_mc_ready_for_syncing(): bool {
-		return $this->merchant_center->is_ready_for_syncing();
-	}
-
-	/**
 	 * Can the job be scheduled.
 	 *
 	 * @param array|null $args
@@ -89,6 +81,6 @@ abstract class AbstractProductSyncerBatchedJob extends AbstractBatchedActionSche
 	 * @return bool Returns true if the job can be scheduled.
 	 */
 	public function can_schedule( $args = [] ): bool {
-		return ! $this->is_running( $args ) && $this->is_mc_ready_for_syncing();
+		return ! $this->is_running( $args ) && $this->merchant_center->is_ready_for_syncing() && $this->merchant_center->is_enabled_for_datatype( NotificationsService::DATATYPE_PRODUCT );
 	}
 }

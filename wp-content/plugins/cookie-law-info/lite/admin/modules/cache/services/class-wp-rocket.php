@@ -40,7 +40,10 @@ class Wp_Rocket extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		return rocket_clean_domain();
 	}
 

@@ -183,7 +183,7 @@ class Cookie_Law_Info_Shortcode {
 			'post_type'      => CLI_POST_TYPE,
 			/** 28/05/2013: Changing from 10 to 50 to allow longer tables of cookie data */
 			'posts_per_page' => 50,
-			'tax_query'      => array(),
+			'tax_query'      => array(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 			'order'          => 'ASC',
 			'orderby'        => 'title',
 		);
@@ -272,7 +272,7 @@ class Cookie_Law_Info_Shortcode {
 		$ret .= '</tbody></table>';
 		if ( count( $posts ) > 0 ) {
 			if ( $atts['heading'] != '' ) {
-				$ret = '<p>' . esc_html( __( $atts['heading'], 'cookie-law-info' ) ) . '</p>' . $ret;
+				$ret = '<p>' . esc_html( __( $atts['heading'], 'cookie-law-info' ) ) . '</p>' . $ret; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 			}
 		}
 		if ( '' === $atts['not_shown_message'] && empty( $posts ) ) {
@@ -295,7 +295,7 @@ class Cookie_Law_Info_Shortcode {
 		);
 		$defaults      = Cookie_Law_Info::get_default_settings( 'button_1_text' );
 		$settings      = wp_parse_args( Cookie_Law_Info::get_settings(), $defaults );
-		$button_1_text = __( $settings['button_1_text'], 'cookie-law-info' );
+		$button_1_text = __( $settings['button_1_text'], 'cookie-law-info' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 		$margin_style  = $atts['margin'] != '' ? ' style="margin:' . esc_attr( $atts['margin'] ) . ';" ' : '';
 		return '<a role="button" tabindex="0" class="cli_action_button cli-accept-button medium cli-plugin-button ' . esc_attr( $atts['colour'] ) . '" data-cli_action="accept"' . $margin_style . '>' . esc_html( stripslashes( $button_1_text ) ) . '</a>';
 	}
@@ -325,7 +325,7 @@ class Cookie_Law_Info_Shortcode {
 		$link_tag   = '';
 		$link_tag  .= '<a ' . $url_reject . ' id="' . esc_attr( Cookie_Law_Info_Public::cookielawinfo_remove_hash( $settings['button_3_action'] ) ) . '" ';
 		$link_tag  .= ( $settings['button_3_new_win'] ) ? 'target="_blank" ' : '';
-		$link_tag  .= $classr . '  data-cli_action="reject"' . $margin_style . '>' . esc_html( stripslashes( __( $settings['button_3_text'], 'cookie-law-info' ) ) ) . '</a>';
+		$link_tag  .= $classr . '  data-cli_action="reject"' . $margin_style . '>' . esc_html( stripslashes( __( $settings['button_3_text'], 'cookie-law-info' ) ) ) . '</a>'; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 		return $link_tag;
 	}
 	/*
@@ -391,7 +391,7 @@ class Cookie_Law_Info_Shortcode {
 		$url       = ( $settings['button_1_action'] == 'CONSTANT_OPEN_URL' && $settings['button_1_url'] != '#' ) ? 'href="' . esc_url( $settings['button_1_url'] ) . '"' : "role='button' tabindex='0'";
 		$link_tag  = '<a ' . $url . ' data-cli_action="accept" id="' . esc_attr( Cookie_Law_Info_Public::cookielawinfo_remove_hash( $settings['button_1_action'] ) ) . '" ';
 		$link_tag .= ( $settings['button_1_new_win'] ) ? 'target="_blank" ' : '';
-		$link_tag .= $class . ' style="display:inline-block; ' . $margin_style . '">' . esc_html( stripslashes( __( $settings['button_1_text'], 'cookie-law-info' ) ) ) . '</a>';
+		$link_tag .= $class . ' style="display:inline-block; ' . $margin_style . '">' . esc_html( stripslashes( __( $settings['button_1_text'], 'cookie-law-info' ) ) ) . '</a>'; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 
 		return $link_tag;
 	}

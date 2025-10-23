@@ -18,6 +18,7 @@ use RankMath\Traits\Hooker;
 use RankMath\Sitemap\Router;
 use RankMath\Sitemap\Sitemap;
 use RankMath\Sitemap\Image_Parser;
+use RankMath\Helpers\DB as DB_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -50,7 +51,7 @@ class Taxonomy implements Provider {
 			empty( $type ) ||
 			false === taxonomy_exists( $type ) ||
 			false === Helper::is_taxonomy_viewable( $type ) ||
-			false === Helper::is_taxonomy_indexable( $type ) ||
+			false === Helper::get_settings( 'sitemap.tax_' . $type . '_sitemap' ) ||
 			in_array( $type, [ 'link_category', 'nav_menu', 'post_format' ], true )
 		) {
 			return false;
@@ -83,15 +84,21 @@ class Taxonomy implements Provider {
 		 * Filter the setting of excluding empty terms from the XML sitemap.
 		 *
 		 * @param boolean $exclude        Defaults to true.
-		 * @param array   $taxonomy_names Array of names for the taxonomies being processed.
+		 * @param array   $taxonomy_name Array of names for the taxonomies being processed.
 		 */
 		$hide_empty = $this->do_filter( 'sitemap/exclude_empty_terms', true, $taxonomies );
 
 		$all_taxonomies = [];
 		foreach ( $taxonomies as $taxonomy_name => $object ) {
-			$all_taxonomies[ $taxonomy_name ] = get_terms(
-				$taxonomy_name,
+			$or_meta_query = ! Helper::is_taxonomy_indexable( $taxonomy_name ) ? [] :
 				[
+					'key'     => 'rank_math_robots',
+					'compare' => 'NOT EXISTS',
+				];
+
+			$all_taxonomies[ $taxonomy_name ] = get_terms(
+				[
+					'taxonomy'   => $taxonomy_name,
 					'hide_empty' => $hide_empty,
 					'fields'     => 'ids',
 					'orderby'    => 'name',
@@ -102,10 +109,7 @@ class Taxonomy implements Provider {
 							'value'   => 'noindex',
 							'compare' => 'NOT LIKE',
 						],
-						[
-							'key'     => 'rank_math_robots',
-							'compare' => 'NOT EXISTS',
-						],
+						$or_meta_query,
 					],
 				]
 			);
@@ -254,7 +258,7 @@ class Taxonomy implements Provider {
 				 */
 				'hierarchical'           => false,
 				'update_term_meta_cache' => false,
-				'meta_query' => [
+				'meta_query'             => [
 					'relation' => 'OR',
 					[
 						'key'     => 'rank_math_robots',
@@ -306,7 +310,7 @@ class Taxonomy implements Provider {
 	public function get_lastmod( $term ) {
 		global $wpdb;
 
-		return $wpdb->get_var(
+		return DB_Helper::get_var(
 			$wpdb->prepare(
 				"
 			SELECT MAX(p.post_modified_gmt) AS lastmod

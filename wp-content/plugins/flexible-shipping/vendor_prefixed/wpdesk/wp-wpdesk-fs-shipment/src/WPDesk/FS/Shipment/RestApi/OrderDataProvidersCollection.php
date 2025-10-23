@@ -20,7 +20,7 @@ class OrderDataProvidersCollection
      * @param string $integration .
      * @param OrderDataProvider $provider .
      */
-    public function set_provider($integration, \FSVendor\WPDesk\FS\Shipment\RestApi\OrderDataProvider $provider)
+    public function set_provider($integration, OrderDataProvider $provider)
     {
         $this->providers[$integration] = $provider;
     }
@@ -36,6 +36,6 @@ class OrderDataProvidersCollection
         if (isset($this->providers[$integration])) {
             return $this->providers[$integration];
         }
-        return new \FSVendor\WPDesk\FS\Shipment\RestApi\OrderDataProviderDefault();
+        return new OrderDataProviderDefault();
     }
 }

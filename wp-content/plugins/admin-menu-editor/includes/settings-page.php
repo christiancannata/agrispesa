@@ -405,6 +405,8 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 				</tr>
 			<?php endif; ?>
 
+			<?php do_action('admin_menu_editor-settings_page_extra'); ?>
+
 			<tr>
 				<th scope="row">
 					WPML support
@@ -453,7 +455,7 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 					<fieldset id="ame-submenu-icons-settings">
 						<p>
 							<label>
-								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_LOW); ?>>"
+								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_LOW); ?>"
 									<?php checked(WPMenuEditor::VERBOSITY_LOW, $settings['error_verbosity']); ?>>
 								Low
 
@@ -465,7 +467,7 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 
 						<p>
 							<label>
-								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_NORMAL); ?>>"
+								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_NORMAL); ?>"
 									<?php checked(WPMenuEditor::VERBOSITY_NORMAL, $settings['error_verbosity']); ?>>
 								Normal
 
@@ -478,7 +480,7 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 
 						<p>
 							<label>
-								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_VERBOSE); ?>>"
+								<input type="radio" name="error_verbosity" value="<?php echo esc_attr(WPMenuEditor::VERBOSITY_VERBOSE); ?>"
 									<?php checked(WPMenuEditor::VERBOSITY_VERBOSE, $settings['error_verbosity']); ?>>
 								Verbose
 
@@ -516,6 +518,29 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 								<?php checked($settings['force_custom_dashicons']); ?>>
 							Attempt to override menu icon CSS that was added by other plugins
 						</label>
+					</p>
+
+					<p>
+						<label>
+							<input type="checkbox" name="delete_orphan_actor_settings"
+								<?php checked($settings['delete_orphan_actor_settings']); ?>>
+							Automatically delete settings associated with missing roles and users
+						</label>
+						<br><span class="description">
+							Applies only to certain parts of the plugin. In Multisite, this option is disabled
+							by default because different sites can potentially have different roles.
+						</span>
+					</p>
+
+					<p>
+						<label>
+							<input type="checkbox" name="optimize_custom_menu_size"
+								<?php checked($settings['optimize_custom_menu_size']); ?>>
+							Optimize menu configuration size (default)
+						</label>
+						<br><span class="description">
+							Eliminates some redundancy in the menu configuration, making it smaller.
+						</span>
 					</p>
 
 					<p>

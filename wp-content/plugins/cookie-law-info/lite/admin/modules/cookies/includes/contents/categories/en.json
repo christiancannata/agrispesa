@@ -13,10 +13,10 @@
     },
     "performance": {
         "name": "Performance",
-        "description": "<p>Performance cookies are used to understand and analyze the key performance indexes of the website which helps in delivering a better user experience for the visitors.</p>"
+        "description": "<p>Performance cookies are used to understand and analyse the key performance indexes of the website which helps in delivering a better user experience for the visitors.</p>"
     },
     "advertisement": {
         "name": "Advertisement",
-        "description": "<p>Advertisement cookies are used to provide visitors with customized advertisements based on the pages you visited previously and to analyze the effectiveness of the ad campaigns.</p>"
+        "description": "<p>Advertisement cookies are used to provide visitors with customised advertisements based on the pages you visited previously and to analyse the effectiveness of the ad campaigns.</p>"
     }
 }

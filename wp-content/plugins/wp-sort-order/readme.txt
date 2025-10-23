@@ -1,9 +1,9 @@
 === WP Sort Order ===
-Contributors: fahadmahmood, kiranzehra
+Contributors: fahadmahmood, invoicepress
 Tags: taxonomy order, user order, plugins order, post order
 Requires at least: 3.5.0
-Tested up to: 6.5
-Stable tag: 1.3.3
+Tested up to: 6.8
+Stable tag: 1.3.5
 Requires PHP: 7.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,6 +103,8 @@ add_action( 'pre_get_posts', 'my_filter' );
 `
 
 == Changelog ==
+= 1.3.4 =
+* Fix: When enabling the order of the posts, it does not allow me to create new ones and the only way to create new ones was duplicating a previous post. [Thanks to Carlos][30/10/2024]
 = 1.3.3 =
 * Fix: PHP Notice:  Function is_home was called incorrectly. [Thanks to @goose1984 / Cotton Jamie][21/05/2024]
 = 1.3.2 =
@@ -150,6 +152,8 @@ add_action( 'pre_get_posts', 'my_filter' );
 Initial Release
 
 == Upgrade Notice ==
+= 1.3.4 =
+Fix: When enabling the order of the posts, it does not allow me to create new ones and the only way to create new ones was duplicating a previous post.
 = 1.3.3 =
 Fix: PHP Notice:  Function is_home was called incorrectly.
 = 1.3.2 =

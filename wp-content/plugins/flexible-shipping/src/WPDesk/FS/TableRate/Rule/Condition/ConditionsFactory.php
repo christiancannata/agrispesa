@@ -17,8 +17,13 @@ use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductCategory;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductDimensionHeight;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductDimensionLength;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductDimensionWidth;
+use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductFieldRange;
+use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductFieldValue;
+use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductStockQuantity;
+use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductStockStatus;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\ProductTag;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\ShippingClass;
+use WPDesk\FS\TableRate\Rule\Condition\Pro\ShippingCost;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\TimeOfTheDay;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\TotalOverallDimensions;
 use WPDesk\FS\TableRate\Rule\Condition\Pro\UserRole;
@@ -43,6 +48,11 @@ class ConditionsFactory {
 		$product                  = new Product( 30 );
 		$product_tag              = new ProductTag( 45 );
 		$product_category         = new ProductCategory( 50 );
+		$product_field_value      = new ProductFieldValue( 55 );
+		$product_field_range      = new ProductFieldRange( 56 );
+		$product_stock_quantity   = new ProductStockQuantity( 60 );
+		$product_stock_status     = new ProductStockStatus( \wc_get_product_stock_status_options(), 61 );
+		$shipping_cost            = new ShippingCost( 100 );
 		$time_of_the_day          = new TimeOfTheDay( 70 );
 		$max_dimension            = new MaxDimension( 40 );
 		$product_length           = new ProductDimensionLength( 41 );
@@ -75,6 +85,11 @@ class ConditionsFactory {
 			$total_overall_dimensions->get_condition_id() => $total_overall_dimensions,
 			$user_role->get_condition_id()                => $user_role,
 			$dimensional_weight->get_condition_id()       => $dimensional_weight,
+			$product_field_value->get_condition_id()      => $product_field_value,
+			$product_field_range->get_condition_id()      => $product_field_range,
+			$product_stock_quantity->get_condition_id()   => $product_stock_quantity,
+			$product_stock_status->get_condition_id()     => $product_stock_status,
+			$shipping_cost->get_condition_id()            => $shipping_cost,
 		];
 
 		$conditions = apply_filters( 'flexible_shipping_rule_conditions', $conditions );

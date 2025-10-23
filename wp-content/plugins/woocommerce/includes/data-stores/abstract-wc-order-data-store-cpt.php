@@ -6,7 +6,10 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Caches\OrderCache;
+use Automattic\WooCommerce\Enums\OrderStatus;
 use Automattic\WooCommerce\Proxies\LegacyProxy;
+use Automattic\WooCommerce\Utilities\OrderUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -319,7 +322,7 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 			}
 
 			wp_trash_post( $id );
-			$order->set_status( 'trash' );
+			$order->set_status( OrderStatus::TRASH );
 
 			if ( $do_filters ) {
 				/**
@@ -360,7 +363,7 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 			 *
 			 * @since 3.7.0
 			 */
-			$order_status = apply_filters( 'woocommerce_default_order_status', 'pending' );
+			$order_status = apply_filters( 'woocommerce_default_order_status', OrderStatus::PENDING );
 		}
 
 		$post_status    = $order_status;
@@ -370,7 +373,7 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 		// In the future this should only happen based on `wc_is_order_status`, but in order to
 		// preserve back-compatibility this happens to all statuses except a select few. A doing_it_wrong
 		// Notice will be needed here, followed by future removal.
-		if ( ! in_array( $post_status, array( 'auto-draft', 'draft', 'trash' ), true ) && in_array( 'wc-' . $post_status, $valid_statuses, true ) ) {
+		if ( ! in_array( $post_status, array( OrderStatus::AUTO_DRAFT, OrderStatus::DRAFT, OrderStatus::TRASH ), true ) && in_array( 'wc-' . $post_status, $valid_statuses, true ) ) {
 			$post_status = 'wc-' . $post_status;
 		}
 
@@ -502,6 +505,10 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 		clean_post_cache( $order->get_id() );
 		wc_delete_shop_order_transients( $order );
 		wp_cache_delete( 'order-items-' . $order->get_id(), 'orders' );
+		if ( OrderUtil::orders_cache_usage_is_enabled() ) {
+			$order_cache = wc_get_container()->get( OrderCache::class );
+			$order_cache->remove( $order->get_id() );
+		}
 	}
 
 	/**
@@ -803,5 +810,31 @@ abstract class Abstract_WC_Order_Data_Store_CPT extends WC_Data_Store_WP impleme
 		}
 
 		$this->update_post_meta( $order );
+	}
+
+	/**
+	 * Get the total shipping tax refunded.
+	 *
+	 * @param  WC_Order $order Order object.
+	 *
+	 * @since 10.2.0
+	 * @return float
+	 */
+	public function get_total_shipping_tax_refunded( $order ) {
+		global $wpdb;
+
+		$total = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT SUM( order_itemmeta.meta_value )
+				FROM {$wpdb->prefix}woocommerce_order_itemmeta AS order_itemmeta
+				INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
+				INNER JOIN {$wpdb->prefix}woocommerce_order_items AS order_items ON ( order_items.order_id = posts.ID AND order_items.order_item_type = 'tax' )
+				WHERE order_itemmeta.order_item_id = order_items.order_item_id
+				AND order_itemmeta.meta_key = 'shipping_tax_amount'",
+				$order->get_id()
+			)
+		) ?? 0;
+
+		return abs( $total );
 	}
 }

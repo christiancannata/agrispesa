@@ -11,12 +11,10 @@
 namespace WooCommerce\Facebook\Admin;
 
 use Automattic\WooCommerce\Admin\Features\Features as WooAdminFeatures;
-use Automattic\WooCommerce\Admin\Features\Navigation\Menu as WooAdminMenu;
 use WooCommerce\Facebook\Admin\Settings_Screens;
-use WooCommerce\Facebook\Admin\Settings_Screens\Connection;
 use WooCommerce\Facebook\Framework\Helper;
-use WooCommerce\Facebook\Framework\Plugin\Compatibility;
 use WooCommerce\Facebook\Framework\Plugin\Exception as PluginException;
+use WooCommerce\Facebook\RolloutSwitches;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -30,57 +28,62 @@ class Settings {
 	/** @var string base settings page ID */
 	const PAGE_ID = 'wc-facebook';
 
-	/**
-	 * Submenu page ID
-	 *
-	 * @var string
-	 */
-	const SUBMENU_PAGE_ID = 'edit-tags.php?taxonomy=fb_product_set&post_type=product';
-
 	/** @var Abstract_Settings_Screen[] */
 	private $screens;
 
-	/**
-	 * Whether the new Woo nav should be used.
-	 *
-	 * @var bool
-	 */
-	public $use_woo_nav;
+	/** @var \WC_Facebookcommerce */
+	private $plugin;
 
 	/**
 	 * Settings constructor.
 	 *
-	 * @param bool $is_connected is the state of the plugin connection to the Facebook Marketing API
+	 * @param \WC_Facebookcommerce $plugin is the plugin instance of WC_Facebookcommerce
 	 * @since 2.0.0
 	 */
-	public function __construct( bool $is_connected ) {
+	public function __construct( \WC_Facebookcommerce $plugin ) {
 
-		$this->screens = $this->build_menu_item_array( $is_connected );
+		$this->plugin = $plugin;
 
+		$this->screens = $this->build_menu_item_array();
+
+		add_action( 'admin_init', array( $this, 'add_extra_screens' ) );
 		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
 		add_action( 'wp_loaded', array( $this, 'save' ) );
-		add_filter( 'parent_file', array( $this, 'set_parent_and_submenu_file' ) );
+		add_action( 'admin_notices', array( $this, 'display_fb_product_sets_removed_banner' ) );
 	}
 
 	/**
 	 * Arranges the tabs. If the plugin is connected to FB, Advertise tab will be first, otherwise the Connection tab will be the first tab.
 	 *
-	 * @param bool $is_connected is Facebook connected
 	 * @since 3.0.7
 	 */
-	private function build_menu_item_array( bool $is_connected ): array {
-		$advertise  = [ Settings_Screens\Advertise::ID => new Settings_Screens\Advertise() ];
-		$connection = [ Settings_Screens\Connection::ID => new Settings_Screens\Connection() ];
-
-		$first = ( $is_connected ) ? $advertise : $connection;
-		$last  = ( $is_connected ) ? $connection : $advertise;
+	public function build_menu_item_array(): array {
 
 		$screens = array(
-			Settings_Screens\Product_Sync::ID => new Settings_Screens\Product_Sync(),
-			Settings_Screens\Product_Sets::ID => new Settings_Screens\Product_Sets(),
+			Settings_Screens\Product_Sync::ID       => new Settings_Screens\Product_Sync(),
+			Settings_Screens\Product_Attributes::ID => new Settings_Screens\Product_Attributes(),
 		);
 
-		return array_merge( array_merge( $first, $screens ), $last );
+		return $screens;
+	}
+
+	public function add_extra_screens(): void {
+		$rollout_switches                      = $this->plugin->get_rollout_switches();
+		$is_connected                          = $this->plugin->get_connection_handler()->is_connected();
+		$is_whatsapp_utility_messaging_enabled = $rollout_switches->is_switch_enabled( RolloutSwitches::WHATSAPP_UTILITY_MESSAGING );
+		if ( true === $is_connected && true === $is_whatsapp_utility_messaging_enabled ) {
+			$this->screens[ Settings_Screens\Whatsapp_Utility::ID ] = new Settings_Screens\Whatsapp_Utility();
+		}
+
+		$is_woo_all_products_sync_enbaled = $this->plugin->get_rollout_switches()->is_switch_enabled(
+			RolloutSwitches::SWITCH_WOO_ALL_PRODUCTS_SYNC_ENABLED
+		);
+		/**
+		 * If all products sync is not enabled should show the Product sync tab
+		 */
+		if ( true === $is_connected && false === $is_woo_all_products_sync_enbaled ) {
+			$this->screens[ Settings_Screens\Product_Sync::ID ] = new Settings_Screens\Product_Sync();
+		}
 	}
 
 	/**
@@ -89,22 +92,8 @@ class Settings {
 	 * @since 2.0.0
 	 */
 	public function add_menu_item() {
-		$root_menu_item       = 'woocommerce';
-		$is_marketing_enabled = false;
-		$this->use_woo_nav    = class_exists( WooAdminFeatures::class )
-			&& class_exists( WooAdminMenu::class )
-			&& WooAdminFeatures::is_enabled( 'navigation' );
-		if ( Compatibility::is_enhanced_admin_available() ) {
-			if ( class_exists( WooAdminFeatures::class ) ) {
-				$is_marketing_enabled = WooAdminFeatures::is_enabled( 'marketing' );
-			} else {
-				$is_marketing_enabled = is_callable( '\Automattic\WooCommerce\Admin\Loader::is_feature_enabled' )
-					&& \Automattic\WooCommerce\Admin\Loader::is_feature_enabled( 'marketing' );
-			}
-			if ( $is_marketing_enabled ) {
-				$root_menu_item = 'woocommerce-marketing';
-			}
-		}
+		$root_menu_item = $this->root_menu_item();
+
 		add_submenu_page(
 			$root_menu_item,
 			__( 'Facebook for WooCommerce', 'facebook-for-woocommerce' ),
@@ -114,55 +103,36 @@ class Settings {
 			[ $this, 'render' ],
 			5
 		);
-		$this->connect_to_enhanced_admin( $is_marketing_enabled ? 'marketing_page_wc-facebook' : 'woocommerce_page_wc-facebook' );
-		$this->register_woo_nav_menu_items();
-
-		if ( $is_marketing_enabled ) {
-			$this->add_fb_product_sets_to_marketing_menu();
-		}
+		$this->connect_to_enhanced_admin( $this->is_marketing_enabled() ? 'marketing_page_wc-facebook' : 'woocommerce_page_wc-facebook' );
 	}
 
 	/**
-	 * Checks for connection and if established adds Facebook Product Sets taxonomy page to the Marketing menu.
+	 * Get root menu item.
 	 *
-	 * @since 2.6.29
+	 * @since 3.2.10
+	 * return string Root menu item slug.
 	 */
-	private function add_fb_product_sets_to_marketing_menu() {
-		$is_connected = facebook_for_woocommerce()->get_connection_handler()->is_connected();
-
-		// If a connection is not established, do not add Facebook Product Sets to Marketing menu.
-		if ( ! $is_connected ) {
-			return;
+	public function root_menu_item() {
+		if ( $this->is_marketing_enabled() ) {
+			return 'woocommerce-marketing';
 		}
 
-		add_submenu_page(
-			'woocommerce-marketing',
-			esc_html__( 'Facebook Product Sets', 'facebook-for-woocommerce' ),
-			esc_html__( 'Facebook Product Sets', 'facebook-for-woocommerce' ),
-			'manage_woocommerce',
-			admin_url( self::SUBMENU_PAGE_ID ),
-			'',
-			10
-		);
+		return 'woocommerce';
 	}
 
 	/**
-	 * Set the parent and submenu file while accessing Facebook Product Sets in the marketing menu.
+	 * Check if marketing feature is enabled.
 	 *
-	 * @since 2.6.29
-	 * @param string $parent_file The parent file.
-	 * @return string
+	 * @since 3.2.10
+	 * return bool Is marketing enabled.
 	 */
-	public function set_parent_and_submenu_file( $parent_file ) {
-		global $submenu_file, $current_screen;
-
-		// The Facebook Product Set is now a submenu of woocommerce-marketing. Hence, we are overriding the $parent_file and $submenu_file when accessing the fb_product_set taxonomy page.
-		if ( isset( $current_screen->taxonomy ) && 'fb_product_set' === $current_screen->taxonomy ) {
-			$parent_file  = 'woocommerce-marketing';
-			$submenu_file = admin_url( self::SUBMENU_PAGE_ID ); //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+	public function is_marketing_enabled() {
+		if ( class_exists( WooAdminFeatures::class ) ) {
+			return WooAdminFeatures::is_enabled( 'marketing' );
 		}
 
-		return $parent_file;
+		return is_callable( '\Automattic\WooCommerce\Admin\Loader::is_feature_enabled' )
+				&& \Automattic\WooCommerce\Admin\Loader::is_feature_enabled( 'marketing' );
 	}
 
 	/**
@@ -173,20 +143,26 @@ class Settings {
 	 * @param string $screen_id the ID to connect to
 	 */
 	private function connect_to_enhanced_admin( $screen_id ) {
+		$is_woo_all_products_sync_enbaled = $this->plugin->get_rollout_switches()->is_switch_enabled(
+			RolloutSwitches::SWITCH_WOO_ALL_PRODUCTS_SYNC_ENABLED
+		);
+
 		if ( is_callable( 'wc_admin_connect_page' ) ) {
 			$crumbs = array(
 				__( 'Facebook for WooCommerce', 'facebook-for-woocommerce' ),
 			);
+			//phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! empty( $_GET['tab'] ) ) {
+				//phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				switch ( $_GET['tab'] ) {
-					case Connection::ID:
-						$crumbs[] = __( 'Connection', 'facebook-for-woocommerce' );
-						break;
 					case Settings_Screens\Product_Sync::ID:
-						$crumbs[] = __( 'Product sync', 'facebook-for-woocommerce' );
-						break;
-					case Settings_Screens\Advertise::ID:
-						$crumbs[] = __( 'Advertise', 'facebook-for-woocommerce' );
+						/**
+						 * If all proudcts sync not enabled
+						 * Show the product sync tab
+						 */
+						if ( ! $is_woo_all_products_sync_enbaled ) {
+							$crumbs[] = __( 'Product sync', 'facebook-for-woocommerce' );
+						}
 						break;
 				}
 			}
@@ -208,21 +184,11 @@ class Settings {
 	 * @since 2.0.0
 	 */
 	public function render() {
-		$tabs        = $this->get_tabs();
-		$current_tab = Helper::get_requested_value( 'tab' );
-		if ( ! $current_tab ) {
-			$current_tab = current( array_keys( $tabs ) );
-		}
-		$screen = $this->get_screen( $current_tab );
+		$current_tab = $this->get_current_tab();
+		$screen      = $this->get_screen( $current_tab );
 		?>
 		<div class="wrap woocommerce">
-			<?php if ( ! $this->use_woo_nav ) : ?>
-				<nav class="nav-tab-wrapper woo-nav-tab-wrapper">
-					<?php foreach ( $tabs as $id => $label ) : ?>
-						<a href="<?php echo esc_html( admin_url( 'admin.php?page=' . self::PAGE_ID . '&tab=' . esc_attr( $id ) ) ); ?>" class="nav-tab <?php echo $current_tab === $id ? 'nav-tab-active' : ''; ?>"><?php echo esc_html( $label ); ?></a>
-					<?php endforeach; ?>
-				</nav>
-			<?php endif; ?>
+			<?php $this->render_tabs( $current_tab ); ?>
 			<?php facebook_for_woocommerce()->get_message_handler()->show_messages(); ?>
 			<?php if ( $screen ) : ?>
 				<h1 class="screen-reader-text"><?php echo esc_html( $screen->get_title() ); ?></h1>
@@ -231,6 +197,51 @@ class Settings {
 			<?php endif; ?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Render the Facebook for WooCommerce extension navigation tabs.
+	 *
+	 * @since 3.3.0
+	 *
+	 * @param string $current_tab The current tab ID.
+	 */
+	public function render_tabs( $current_tab ) {
+		$tabs = $this->get_tabs();
+		?>
+		<nav class="nav-tab-wrapper woo-nav-tab-wrapper facebook-for-woocommerce-tabs">
+			<?php foreach ( $tabs as $id => $label ) : ?>
+				<?php $url = admin_url( 'admin.php?page=' . self::PAGE_ID . '&tab=' . esc_attr( $id ) ); ?>
+				<?php if ( 'whatsapp_utility' === $id ) : ?>
+					<?php
+					$wa_integration_config_id = get_option( 'wc_facebook_wa_integration_config_id', '' );
+					if ( ! empty( $wa_integration_config_id ) ) {
+						$url .= '&view=utility_settings';
+					}
+					?>
+					<a href="<?php echo esc_url( $url ); ?>" class="nav-tab <?php echo $current_tab === $id ? 'nav-tab-active' : ''; ?>"><?php echo esc_html( $label ); ?></a>
+				<?php else : ?>
+					<a href="<?php echo esc_url( $url ); ?>" class="nav-tab <?php echo $current_tab === $id ? 'nav-tab-active' : ''; ?>"><?php echo esc_html( $label ); ?></a>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</nav>
+		<?php
+	}
+
+	/**
+	 * Get the current tab ID.
+	 *
+	 * @since 3.3.0
+	 *
+	 * @return string
+	 */
+	protected function get_current_tab() {
+		$tabs        = $this->get_tabs();
+		$current_tab = Helper::get_requested_value( 'tab' );
+		if ( ! $current_tab ) {
+			$current_tab = current( array_keys( $tabs ) );
+		}
+		return $current_tab;
 	}
 
 
@@ -302,7 +313,7 @@ class Settings {
 		// ensure no bogus values are added via filter
 		$screens = array_filter(
 			$screens,
-			function( $value ) {
+			function ( $value ) {
 				return $value instanceof Abstract_Settings_Screen;
 			}
 		);
@@ -332,37 +343,23 @@ class Settings {
 		return (array) apply_filters( 'wc_facebook_admin_settings_tabs', $tabs, $this );
 	}
 
-	/**
-	 * Register nav items for new Woo nav.
-	 *
-	 * @since 2.3.3
-	 */
-	private function register_woo_nav_menu_items() {
-		if ( ! $this->use_woo_nav ) {
+	public function display_fb_product_sets_removed_banner() {
+		$dismissed = get_transient( 'fb_product_set_banner_dismissed' );
+		if ( $dismissed ) {
+			return; // Banner dismissed, do not show
+		}
+
+		$screen = get_current_screen();
+		if ( ! $screen || ( 'marketing_page_wc-facebook' !== $screen->id && 'woocommerce_page_wc-facebook' !== $screen->id ) ) {
 			return;
 		}
-		WooAdminMenu::add_plugin_category(
-			array(
-				'id'         => 'facebook-for-woocommerce',
-				'title'      => __( 'Facebook', 'facebook-for-woocommerce' ),
-				'capability' => 'manage_woocommerce',
-			)
-		);
-		$order = 1;
-		foreach ( $this->get_screens() as $screen_id => $screen ) {
-			$url = $screen instanceof Settings_Screens\Product_Sets
-				? 'edit-tags.php?taxonomy=fb_product_set&post_type=product'
-				: 'wc-facebook&tab=' . $screen->get_id();
-			WooAdminMenu::add_plugin_item(
-				array(
-					'id'     => 'facebook-for-woocommerce-' . $screen->get_id(),
-					'parent' => 'facebook-for-woocommerce',
-					'title'  => $screen->get_label(),
-					'url'    => $url,
-					'order'  => $order,
-				)
-			);
-			$order++;
-		}
+
+		$fb_catalog_id = facebook_for_woocommerce()->get_integration()->get_product_catalog_id();
+		?>
+			<div class="notice notice-info is-dismissible fb-product-set-banner">
+				<p><strong>The Product Sets tab has been removed</strong></p>
+				<p>The Product Sets tab is no longer available in the plugin. All product sets you created previously remain intact and accessible. Your WooCommerce categories will continue to sync automatically as product sets to your Meta catalog. To update synced sets, please <a href="edit-tags.php?taxonomy=product_cat&post_type=product" target="_blank" rel="noopener noreferrer">edit your categories in WooCommerce</a>. To view and manage your synced product sets, visit <a href="https://business.facebook.com/commerce/catalogs/<?php echo esc_attr( $fb_catalog_id ); ?>/sets" target="_blank" rel="noopener noreferrer">Commerce Manager</a>.</p>
+			</div>
+		<?php
 	}
 }

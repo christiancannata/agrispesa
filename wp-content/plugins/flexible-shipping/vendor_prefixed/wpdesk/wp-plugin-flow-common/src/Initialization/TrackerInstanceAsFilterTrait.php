@@ -35,7 +35,7 @@ trait TrackerInstanceAsFilterTrait
      */
     private function get_tracker_instance()
     {
-        return \apply_filters($this->get_tracker_action_name(), null);
+        return apply_filters($this->get_tracker_action_name(), null);
     }
     /**
      * Prepare tracker to be instantiated using wpdesk_tracker_instance filter
@@ -44,19 +44,19 @@ trait TrackerInstanceAsFilterTrait
      */
     private function prepare_tracker_action()
     {
-        \class_exists(\WPDesk_Tracker_Factory::class);
+        class_exists(\WPDesk_Tracker_Factory::class);
         //autoload this class
-        \add_filter($this->get_tracker_action_name(), function ($tracker_instance) {
-            if (\is_object($tracker_instance)) {
+        add_filter($this->get_tracker_action_name(), function ($tracker_instance) {
+            if (is_object($tracker_instance)) {
                 return $tracker_instance;
             }
-            if (\is_object(self::$tracker_instance)) {
+            if (is_object(self::$tracker_instance)) {
                 return self::$tracker_instance;
             }
-            if (\apply_filters('wpdesk_can_start_tracker', \true, $this->plugin_info)) {
+            if (apply_filters('wpdesk_can_start_tracker', \true, $this->plugin_info)) {
                 $tracker_factory = new \FSVendor\WPDesk_Tracker_Factory_Prefixed();
-                self::$tracker_instance = $tracker_factory->create_tracker(\basename($this->plugin_info->get_plugin_file_name()));
-                \do_action('wpdesk_tracker_started', self::$tracker_instance, $this->plugin_info);
+                self::$tracker_instance = $tracker_factory->create_tracker(basename($this->plugin_info->get_plugin_file_name()));
+                do_action('wpdesk_tracker_started', self::$tracker_instance, $this->plugin_info);
                 return self::$tracker_instance;
             }
         }, 10 - $this->get_tracker_version());
@@ -64,8 +64,8 @@ trait TrackerInstanceAsFilterTrait
     private function register_tracker_ui_extensions()
     {
         $shops = $this->plugin_info->get_plugin_shops();
-        $shop_url = $shops[\get_locale()] ?? $shops['default'] ?? 'https://wpdesk.net';
-        $tracker_ui = new \FSVendor\WPDesk\Tracker\OptInOptOut($this->plugin_info->get_plugin_file_name(), $this->plugin_info->get_plugin_slug(), $shop_url, $this->plugin_info->get_plugin_name());
+        $shop_url = $shops[get_locale()] ?? $shops['default'] ?? 'https://wpdesk.net';
+        $tracker_ui = new OptInOptOut($this->plugin_info->get_plugin_file_name(), $this->plugin_info->get_plugin_slug(), $shop_url, $this->plugin_info->get_plugin_name());
         $tracker_ui->create_objects();
         $tracker_ui->hooks();
     }

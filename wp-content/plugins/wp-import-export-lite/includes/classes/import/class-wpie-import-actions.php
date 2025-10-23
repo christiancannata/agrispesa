@@ -5,9 +5,7 @@ namespace wpie\import;
 
 use wpie\Security;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-import.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/class-wpie-import.php');
 }
@@ -20,8 +18,8 @@ class WPIE_Import_Actions extends WPIE_Import {
 
         public function __construct() {
 
-                $this->wpie_init_import_addons();
-
+                add_action( 'init', array( $this, 'wpie_init_import_addons' ) );
+                
                 add_action( 'wp_ajax_wpie_import_validate_uploads', array( $this, 'wpie_import_validate_uploads' ) );
 
                 add_action( 'wp_ajax_wpie_import_get_filtered_records', array( $this, 'wpie_import_get_filtered_records' ) );
@@ -49,7 +47,7 @@ class WPIE_Import_Actions extends WPIE_Import {
                 add_action( 'wp_ajax_wpie_import_process_reimport', array( $this, 'process_reimport' ) );
         }
 
-        private function wpie_init_import_addons() {
+        public function wpie_init_import_addons() {
 
                 if ( file_exists( WPIE_CLASSES_DIR . '/class-wpie-extensions.php' ) ) {
                         require_once(WPIE_CLASSES_DIR . '/class-wpie-extensions.php');

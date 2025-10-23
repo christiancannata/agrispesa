@@ -19,7 +19,7 @@ use FSVendor\Monolog\Utils;
  *
  * @author Florian Plattner <me@florianplattner.de>
  */
-class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
+class MongoDBFormatter implements FormatterInterface
 {
     /** @var bool */
     private $exceptionTraceAsString;
@@ -33,16 +33,16 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
      */
     public function __construct(int $maxNestingLevel = 3, bool $exceptionTraceAsString = \true)
     {
-        $this->maxNestingLevel = \max($maxNestingLevel, 0);
+        $this->maxNestingLevel = max($maxNestingLevel, 0);
         $this->exceptionTraceAsString = $exceptionTraceAsString;
-        $this->isLegacyMongoExt = \extension_loaded('mongodb') && \version_compare((string) \phpversion('mongodb'), '1.1.9', '<=');
+        $this->isLegacyMongoExt = extension_loaded('mongodb') && version_compare((string) phpversion('mongodb'), '1.1.9', '<=');
     }
     /**
      * {@inheritDoc}
      *
      * @return mixed[]
      */
-    public function format(array $record) : array
+    public function format(array $record): array
     {
         /** @var mixed[] $res */
         $res = $this->formatArray($record);
@@ -53,7 +53,7 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
      *
      * @return array<mixed[]>
      */
-    public function formatBatch(array $records) : array
+    public function formatBatch(array $records): array
     {
         $formatted = [];
         foreach ($records as $key => $record) {
@@ -75,9 +75,9 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
                 $array[$name] = $this->formatDate($value, $nestingLevel + 1);
             } elseif ($value instanceof \Throwable) {
                 $array[$name] = $this->formatException($value, $nestingLevel + 1);
-            } elseif (\is_array($value)) {
+            } elseif (is_array($value)) {
                 $array[$name] = $this->formatArray($value, $nestingLevel + 1);
-            } elseif (\is_object($value) && !$value instanceof \MongoDB\BSON\Type) {
+            } elseif (is_object($value) && !$value instanceof Type) {
                 $array[$name] = $this->formatObject($value, $nestingLevel + 1);
             }
         }
@@ -89,8 +89,8 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
      */
     protected function formatObject($value, int $nestingLevel)
     {
-        $objectVars = \get_object_vars($value);
-        $objectVars['class'] = \FSVendor\Monolog\Utils::getClass($value);
+        $objectVars = get_object_vars($value);
+        $objectVars['class'] = Utils::getClass($value);
         return $this->formatArray($objectVars, $nestingLevel);
     }
     /**
@@ -98,7 +98,7 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
      */
     protected function formatException(\Throwable $exception, int $nestingLevel)
     {
-        $formattedException = ['class' => \FSVendor\Monolog\Utils::getClass($exception), 'message' => $exception->getMessage(), 'code' => (int) $exception->getCode(), 'file' => $exception->getFile() . ':' . $exception->getLine()];
+        $formattedException = ['class' => Utils::getClass($exception), 'message' => $exception->getMessage(), 'code' => (int) $exception->getCode(), 'file' => $exception->getFile() . ':' . $exception->getLine()];
         if ($this->exceptionTraceAsString === \true) {
             $formattedException['trace'] = $exception->getTraceAsString();
         } else {
@@ -106,16 +106,16 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
         }
         return $this->formatArray($formattedException, $nestingLevel);
     }
-    protected function formatDate(\DateTimeInterface $value, int $nestingLevel) : \MongoDB\BSON\UTCDateTime
+    protected function formatDate(\DateTimeInterface $value, int $nestingLevel): UTCDateTime
     {
         if ($this->isLegacyMongoExt) {
             return $this->legacyGetMongoDbDateTime($value);
         }
         return $this->getMongoDbDateTime($value);
     }
-    private function getMongoDbDateTime(\DateTimeInterface $value) : \MongoDB\BSON\UTCDateTime
+    private function getMongoDbDateTime(\DateTimeInterface $value): UTCDateTime
     {
-        return new \MongoDB\BSON\UTCDateTime((int) \floor((float) $value->format('U.u') * 1000));
+        return new UTCDateTime((int) floor((float) $value->format('U.u') * 1000));
     }
     /**
      * This is needed to support MongoDB Driver v1.19 and below
@@ -124,11 +124,11 @@ class MongoDBFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
      *
      * It can probably be removed in 2.1 or later once MongoDB's 1.2 is released and widely adopted
      */
-    private function legacyGetMongoDbDateTime(\DateTimeInterface $value) : \MongoDB\BSON\UTCDateTime
+    private function legacyGetMongoDbDateTime(\DateTimeInterface $value): UTCDateTime
     {
-        $milliseconds = \floor((float) $value->format('U.u') * 1000);
+        $milliseconds = floor((float) $value->format('U.u') * 1000);
         $milliseconds = \PHP_INT_SIZE == 8 ? (int) $milliseconds : (string) $milliseconds;
         // @phpstan-ignore-next-line
-        return new \MongoDB\BSON\UTCDateTime($milliseconds);
+        return new UTCDateTime($milliseconds);
     }
 }

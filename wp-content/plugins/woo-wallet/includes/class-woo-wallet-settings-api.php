@@ -123,7 +123,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 					$callback = null;
 				}
 
-				add_settings_section( $section['id'], $section['title'], $callback, $section['id'] );
+				add_settings_section( $section['id'], '', $callback, $section['id'] );
 			}
 
 			// Register settings fields.
@@ -202,7 +202,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 		public function callback_rand( $args ) {
 			$value = wp_rand();
 			?>
-			<input type="hidden" id="<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>" value="<?php echo esc_html( $value ); ?>" />
+			<input type="hidden" id="<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['section'] ); ?>[<?php echo esc_attr( $args['id'] ); ?>]" value="<?php echo esc_html( $value ); ?>" />
 			<?php
 		}
 
@@ -243,11 +243,13 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			?>
 			<fieldset>
-				<label for="wcwp-<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>">
-				<input type="hidden" name="<?php echo esc_attr( $args['section'] ); ?>[<?php echo esc_attr( $args['id'] ); ?>]" value="off" />
-				<input type="checkbox" class="checkbox" id="wcwp-<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['section'] ); ?>[<?php echo esc_attr( $args['id'] ); ?>]" value="on" <?php checked( $value, 'on', true ); ?> />
-				<?php echo esc_html( $args['desc'] ); ?>
+				<label class="switch" for="wcwp-<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>">
+					<input type="hidden" name="<?php echo esc_attr( $args['section'] ); ?>[<?php echo esc_attr( $args['id'] ); ?>]" value="off" />
+					<input type="checkbox" class="checkbox" id="wcwp-<?php echo esc_attr( $args['section'] ); ?>-<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['section'] ); ?>[<?php echo esc_attr( $args['id'] ); ?>]" value="on" <?php checked( $value, 'on', true ); ?> />
+					<span class="slider"></span>
+					<span class="checkmark">✔</span>
 				</label>
+				<?php $this->get_field_description( $args ); ?>
 			</fieldset>
 			<?php
 		}
@@ -518,7 +520,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 		 * @param string $option  settings field name.
 		 * @param string $section the section name this field belongs to.
 		 * @param string $default default text if it's not found.
-		 * @return string
+		 * @return mixed
 		 */
 		public function get_option( $option, $section, $default = '' ) {
 
@@ -548,7 +550,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 						$tab['icon'] = 'dashicons-admin-generic';
 					}
 					?>
-					<a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="nav-tab" id="<?php echo esc_attr( $tab['id'] ); ?>-tab"><span class="dashicons <?php echo esc_attr( $tab['icon'] ); ?>"></span> <?php echo esc_html( $tab['title'] ); ?></a>
+					<a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="nav-tab" id="<?php echo esc_attr( $tab['id'] ); ?>-tab"><span class="dashicons <?php echo esc_attr( $tab['icon'] ); ?>"></span> <span><?php echo esc_html( $tab['title'] ); ?></span></a>
 					<?php
 				}
 				?>
@@ -608,7 +610,6 @@ if ( ! class_exists( 'Woo_Wallet_Settings_API' ) ) :
 				<?php
 			endif;
 		}
-
 	}
 
 

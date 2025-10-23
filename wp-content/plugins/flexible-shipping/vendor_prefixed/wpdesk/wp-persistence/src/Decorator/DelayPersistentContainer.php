@@ -10,7 +10,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence
  */
-class DelayPersistentContainer implements \FSVendor\WPDesk\Persistence\DeferredPersistentContainer
+class DelayPersistentContainer implements DeferredPersistentContainer
 {
     /**
      * Container with deferred access.
@@ -30,7 +30,7 @@ class DelayPersistentContainer implements \FSVendor\WPDesk\Persistence\DeferredP
      * @var bool[]
      */
     protected $changed = [];
-    public function __construct(\FSVendor\WPDesk\Persistence\PersistentContainer $container)
+    public function __construct(PersistentContainer $container)
     {
         $this->container = $container;
     }
@@ -40,7 +40,7 @@ class DelayPersistentContainer implements \FSVendor\WPDesk\Persistence\DeferredP
             if (isset($this->internal_data[$id])) {
                 return $this->internal_data[$id];
             }
-            throw new \FSVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $this->container->get($id);
     }

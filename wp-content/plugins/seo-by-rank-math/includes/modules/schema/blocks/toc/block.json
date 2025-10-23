@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"title": "Table of Contents by Rank Math",
 	"description": "Automatically generate the Table of Contents from the Headings added to this page.",
 	"name": "rank-math/toc-block",
@@ -7,8 +7,10 @@
 	"icon": "rm-icon rm-icon-stories",
 	"textdomain": "rank-math",
 	"editorScript": "file:./assets/js/index.js",
-	"editorStyle": "file:./assets/css/toc.css",
-	"style": "file:./assets/css/toc_list_style.css",
+	"editorStyle": [
+		"file:./assets/css/toc.css",
+		"file:./assets/css/toc_list_style.css"
+	],
 	"attributes": {
 		"title": {
 			"type": "string"

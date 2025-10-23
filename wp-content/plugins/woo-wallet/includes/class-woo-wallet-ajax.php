@@ -190,6 +190,9 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 		 * @param WC_Order $order order.
 		 */
 		public function recalculate_order_cashback_after_calculate_totals( $and_taxes, $order ) {
+			if ( ! is_a( $order, 'WC_Order' ) ) {
+				return;
+			}
 			$cashback_amount = woo_wallet()->cashback->calculate_cashback( false, $order->get_id(), true );
 			$transaction_id  = $order->get_meta( '_general_cashback_transaction_id' );
 			if ( $transaction_id ) {
@@ -399,13 +402,11 @@ if ( ! class_exists( 'Woo_Wallet_Ajax' ) ) {
 				'limit' => "$start, $length",
 			);
 			if ( isset( $search['value'] ) && ! empty( $search['value'] ) ) {
-				$args['where'] = array(
-					array(
-						'key'      => 'date',
-						'value'    => $search['value'] . '%',
-						'operator' => 'LIKE',
-					),
-				);
+				$date_rage = explode( '|', $search['value'] );
+				if ( count( $date_rage ) === 2 && ! empty( $date_rage[0] ) && ! empty( $date_rage[1] ) ) {
+					$args['after']  = $date_rage[0] . ' 00:00:00';
+					$args['before'] = $date_rage[1] . ' 23:59:59';
+				}
 			}
 			$transactions = get_wallet_transactions( $args );
 			unset( $args['limit'] );

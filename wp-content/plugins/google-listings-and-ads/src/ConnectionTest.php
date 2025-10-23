@@ -9,18 +9,27 @@
 
 namespace Automattic\WooCommerce\GoogleListingsAndAds;
 
+use Automattic\Jetpack\Connection\Client;
 use Automattic\Jetpack\Connection\Manager;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Ads;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\AdsCampaign;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Connection;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Merchant;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Middleware;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\WP\NotificationsService;
+use Automattic\WooCommerce\GoogleListingsAndAds\HelperTraits\GTINMigrationUtilities;
 use Automattic\WooCommerce\GoogleListingsAndAds\Infrastructure\Registerable;
 use Automattic\WooCommerce\GoogleListingsAndAds\Infrastructure\Service;
+use Automattic\WooCommerce\GoogleListingsAndAds\Internal\ContainerAwareTrait;
+use Automattic\WooCommerce\GoogleListingsAndAds\Internal\Interfaces\ContainerAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\CleanupProductsJob;
 use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\DeleteAllProducts;
+use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\JobRepository;
+use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\MigrateGTIN;
 use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\UpdateAllProducts;
 use Automattic\WooCommerce\GoogleListingsAndAds\Jobs\UpdateProducts;
+use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\AccountService;
+use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\MerchantCenterService;
 use Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter\MerchantStatuses;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\AdsAccountState;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\MerchantAccountState;
@@ -29,30 +38,17 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Product\BatchProductHelper;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\ProductRepository;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\ProductSyncer;
 use Automattic\WooCommerce\GoogleListingsAndAds\Product\ProductSyncerException;
-use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Container\ContainerInterface;
 use Jetpack_Options;
 use WP_REST_Request as Request;
 
 /**
  * Main class for Connection Test.
  */
-class ConnectionTest implements Service, Registerable {
+class ConnectionTest implements ContainerAwareInterface, Service, Registerable {
 
+	use ContainerAwareTrait;
+	use GTINMigrationUtilities;
 	use PluginHelper;
-
-	/**
-	 * @var ContainerInterface
-	 */
-	protected $container;
-
-	/**
-	 * ConnectionTest constructor.
-	 *
-	 * @param ContainerInterface $container
-	 */
-	public function __construct( ContainerInterface $container ) {
-		$this->container = $container;
-	}
 
 	/**
 	 * Register a service.
@@ -81,6 +77,13 @@ class ConnectionTest implements Service, Registerable {
 	protected $response = '';
 
 	/**
+	 * Store response from the integration status API request.
+	 *
+	 * @var string
+	 */
+	protected $integration_status_response = [];
+
+	/**
 	 * Add menu entries
 	 */
 	protected function register_admin_menu() {
@@ -88,9 +91,9 @@ class ConnectionTest implements Service, Registerable {
 			add_menu_page(
 				'Connection Test',
 				'Connection Test',
-				'manage_options',
+				'manage_woocommerce',
 				'connection-test-admin-page',
-				function() {
+				function () {
 					$this->render_admin_page();
 				}
 			);
@@ -99,9 +102,9 @@ class ConnectionTest implements Service, Registerable {
 				'',
 				'Connection Test',
 				'Connection Test',
-				'manage_options',
+				'manage_woocommerce',
 				'connection-test-admin-page',
-				function() {
+				function () {
 					$this->render_admin_page();
 				}
 			);
@@ -133,11 +136,14 @@ class ConnectionTest implements Service, Registerable {
 			$this->response .= 'Failed to connect to Google.';
 		}
 
+		$notification_service = new NotificationsService( $this->container->get( MerchantCenterService::class ), $this->container->get( AccountService::class ) );
+		$notification_service->set_options_object( $options );
+
 		?>
 		<div class="wrap">
 			<h2>Connection Test</h2>
 
-			<p>Google Listings & Ads connection testing page used for debugging purposes. Debug responses are output at the top of the page.</p>
+			<p>Google for WooCommerce connection testing page used for debugging purposes. Debug responses are output at the top of the page.</p>
 
 			<hr />
 
@@ -489,6 +495,19 @@ class ConnectionTest implements Service, Registerable {
 										<?php endforeach; ?>
 										)
 									</p>
+									<?php
+										$conversion_action = $options->get( OptionsInterface::ADS_CONVERSION_ACTION );
+										if ( ! empty( $conversion_action ) && is_array( $conversion_action ) ) :
+									?>
+									<p class="description" style="font-style: italic">
+										( Conversion Action --
+										<?php foreach ( $conversion_action as $name => $value ) : ?>
+											<?php echo "{$name} : \"{$value}\""; ?>
+										<?php endforeach; ?>
+										)
+									</p>
+									<?php endif; ?>
+									<br/>
 								<?php endif; ?>
 								<p class="description">
 									Begins/continues a multistep account-setup sequence.
@@ -556,7 +575,44 @@ class ConnectionTest implements Service, Registerable {
 				<hr />
 
 				<h2 class="title">Product Sync</h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th><label>Products MC PUSH:</label></th>
+						<td>
+							<p>
 
+								<code><?php echo $this->enabled_or_disabled( $notification_service->is_push_enabled_for_datatype( NotificationsService::DATATYPE_PRODUCT ) ); ?></code>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th><label>Coupons MC PUSH:</label></th>
+						<td>
+							<p>
+
+								<code><?php echo $this->enabled_or_disabled( $notification_service->is_push_enabled_for_datatype( NotificationsService::DATATYPE_COUPON ) ); ?></code>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th><label>Shipping MC PUSH:</label></th>
+						<td>
+							<p>
+
+								<code><?php echo $this->enabled_or_disabled( $notification_service->is_push_enabled_for_datatype( NotificationsService::DATATYPE_SHIPPING ) ); ?></code>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th><label>Settings MC PUSH:</label></th>
+						<td>
+							<p>
+
+								<code><?php echo $this->enabled_or_disabled( $notification_service->is_push_enabled_for_datatype( NotificationsService::DATATYPE_SETTINGS ) ); ?></code>
+							</p>
+						</td>
+					</tr>
+				</table>
 				<form action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" method="GET">
 					<table class="form-table" role="presentation">
 						<tr>
@@ -634,6 +690,183 @@ class ConnectionTest implements Service, Registerable {
 					<input name="page" value="connection-test-admin-page" type="hidden" />
 					<input name="action" value="wcs-cleanup-products" type="hidden" />
 				</form>
+				<form action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" method="GET">
+					<table class="form-table" role="presentation">
+						<tr>
+							<th><label>GTIN Migration:</label></th>
+							<td>
+								<p>
+									<code><?php echo $this->get_gtin_migration_status(); ?></code>
+								</p>
+								<p>
+									<a class="button" href="<?php echo esc_url( wp_nonce_url( add_query_arg( [ 'action' => 'migrate-gtin' ], $url ), 'migrate-gtin' ) ); ?>">Start GTIN Migration</a>
+								</p>
+							</td>
+						</tr>
+					</table>
+				</form>
+			<?php } ?>
+
+			<hr />
+
+			<?php if ( $blog_token ) { ?>
+				<?php
+				  $options = $this->container->get( OptionsInterface::class );
+				  $wp_api_status = $options->get( OptionsInterface::WPCOM_REST_API_STATUS );
+				?>
+				<h2 class="title">Partner API Pull Integration</h2>
+				<form action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" method="GET">
+					<table class="form-table" role="presentation">
+						<tr>
+							<th><label>Notification Service Enabled:</label></th>
+							<td>
+								<p>
+									<code><?php echo $this->yes_or_no( $notification_service->is_enabled() ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>Notification Service Ready:</label></th>
+							<td>
+								<p>
+									<code><?php echo $this->yes_or_no( $notification_service->is_ready() ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>Products API PULL Sync:</label></th>
+							<td>
+								<p>
+
+									<code><?php echo $this->enabled_or_disabled( $notification_service->is_pull_enabled_for_datatype( NotificationsService::DATATYPE_PRODUCT ) ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>Coupons API PULL Sync:</label></th>
+							<td>
+								<p>
+
+									<code><?php echo $this->enabled_or_disabled( $notification_service->is_pull_enabled_for_datatype( NotificationsService::DATATYPE_COUPON ) ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>Shipping API PULL Sync:</label></th>
+							<td>
+								<p>
+
+									<code><?php echo $this->enabled_or_disabled( $notification_service->is_pull_enabled_for_datatype( NotificationsService::DATATYPE_SHIPPING ) ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>Settings API PULL Sync:</label></th>
+							<td>
+								<p>
+
+									<code><?php echo $this->enabled_or_disabled( $notification_service->is_pull_enabled_for_datatype( NotificationsService::DATATYPE_SETTINGS ) ); ?></code>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>WPCOM REST API Status:</label></th>
+							<td>
+								<p>
+									<code><?php echo $wp_api_status ?? 'NOT SET'; ?></code>
+									<?php if ( $wp_api_status === 'approved' ) { ?> <a class="button" href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'disconnect-wp-api' ), $url ), 'disconnect-wp-api' ) ); ?>">Disconnect</a> <?php }  ?>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th>Send partner notification request to WPCOM:</th>
+							<td>
+								<p>
+									<label>
+										Product/Coupon ID <input name="item_id" type="text" value="<?php echo ! empty( $_GET['item_id'] ) ? intval( $_GET['item_id'] ) : ''; ?>" />
+									</label>
+									<br />
+									<br />
+									<label>
+										Topic
+										<select name="topic">
+											<option value="product.create" <?php echo (! isset( $_GET['topic'] ) || $_GET['topic'] === 'product.create') ? "selected" : "" ?>>product.create</option>
+											<option value="product.delete" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'product.delete' ? "selected" : ""?>>product.delete</option>
+											<option value="product.update" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'product.update' ? "selected" : ""?>>product.update</option>
+											<option value="coupon.create" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'coupon.create' ? "selected" : ""?>>coupon.create</option>
+											<option value="coupon.delete" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'coupon.delete' ? "selected" : ""?>>coupon.delete</option>
+											<option value="coupon.update" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'coupon.update' ? "selected" : ""?>>coupon.update</option>
+											<option value="shipping.update" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'shipping.update' ? "selected" : ""?>>shipping.update</option>
+											<option value="settings.update" <?php echo isset( $_GET['topic'] ) && $_GET['topic'] === 'settings.update' ? "selected" : ""?>>settings.update</option>
+										</select>
+									</label>
+									<button class="button">Send Notification</button>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<th><label>API Pull Integration Status:</label></th>
+							<td>
+								<p>
+									<a class="button" href="<?php echo esc_url( wp_nonce_url( add_query_arg( [ 'action' => 'partner-integration-status' ], $url ), 'partner-integration-status' ) ); ?>">Get API Pull Integration Status</a>
+								</p>
+							</td>
+						</tr>
+						<?php if ( isset( $this->integration_status_response['site'] ) || isset( $this->integration_status_response['errors'] ) ) { ?>
+							<tr>
+								<th><label>Site:</label></th>
+								<td>
+									<p>
+										<code><?php echo $this->integration_status_response['site'] ?? ''; ?></code>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th><label>Jetpack Connection Health:</label></th>
+								<td>
+									<p>
+										<code><?php echo isset( $this->integration_status_response['is_healthy'] ) && $this->integration_status_response['is_healthy'] === true ? 'Healthy' : 'Unhealthy'; ?></code>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th><label>Last Jetpack Contact:</label></th>
+								<td>
+									<p>
+										<code><?php echo isset( $this->integration_status_response['last_jetpack_contact'] ) ? date( 'Y-m-d H:i:s', $this->integration_status_response['last_jetpack_contact'] ) : '-'; ?></code>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th><label>WC REST API Health:</label></th>
+								<td>
+									<p>
+										<code><?php echo isset( $this->integration_status_response['is_wc_rest_api_healthy'] ) && $this->integration_status_response['is_wc_rest_api_healthy'] === true ? 'Healthy' : 'Unhealthy'; ?></code>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th><label>Google token health:</label></th>
+								<td>
+									<p>
+										<code><?php echo isset( $this->integration_status_response['is_partner_token_healthy'] ) && $this->integration_status_response['is_partner_token_healthy'] === true ? 'Connected' : 'Disconnected'; ?></code>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<th><label>Errors:</label></th>
+								<td>
+									<p>
+										<code><?php echo isset( $this->integration_status_response['errors'] ) ? wp_kses_post( wp_json_encode( $this->integration_status_response['errors'] ) ) ?? '' : '-'; ?></code>
+									</p>
+								</td>
+							</tr>
+						<?php } ?>
+					</table>
+					<?php wp_nonce_field( 'partner-notification' ); ?>
+					<input name="page" value="connection-test-admin-page" type="hidden" />
+					<input name="action" value="partner-notification" type="hidden" />
+				</form>
 			<?php } ?>
 
 		</div>
@@ -701,6 +934,8 @@ class ConnectionTest implements Service, Registerable {
 			/** @var OptionsInterface $options */
 			$options = $this->container->get( OptionsInterface::class );
 			$this->response .= "\n\n" . 'Saved Connection option = ' . ( $options->get( OptionsInterface::JETPACK_CONNECTED ) ? 'connected' : 'disconnected' );
+
+			$this->response .= "\n\n" . 'Connected plugins: ' . implode( ', ', array_column( $manager->get_connected_plugins(), 'name' ) ) . "\n";
 		}
 
 		if ( 'wcs-test' === $_GET['action'] && check_admin_referer( 'wcs-test' ) ) {
@@ -714,6 +949,62 @@ class ConnectionTest implements Service, Registerable {
 			}
 
 			$this->response .= wp_remote_retrieve_body( $response );
+		}
+
+		if ( 'partner-notification' === $_GET['action'] && check_admin_referer( 'partner-notification' ) ) {
+			if ( ! isset( $_GET['topic'] ) ) {
+				$this->response .= "\n Topic is required.";
+				return;
+			}
+
+			$item  = $_GET['item_id'] ?? null;
+			$topic = $_GET['topic'];
+			$mc    = $this->container->get( MerchantCenterService::class );
+			/** @var OptionsInterface $options */
+			$options = $this->container->get( OptionsInterface::class );
+			$service = new NotificationsService( $mc, $this->container->get( AccountService::class ) );
+			$service->set_options_object( $options );
+
+			if ( $service->notify( $topic, $item ) ) {
+				$this->response .= "\n Notification success. Item: " . $item . " - Topic: " . $topic;
+			} else {
+				$this->response .= "\n Notification failed. Item: " . $item . " - Topic: " . $topic;
+			}
+
+			return;
+		}
+
+		if ( 'partner-integration-status' === $_GET['action'] && check_admin_referer( 'partner-integration-status' ) ) {
+
+			$integration_status_args = [
+				'method'  => 'GET',
+				'timeout' => 30,
+				'url'     => 'https://public-api.wordpress.com/wpcom/v2/sites/' . Jetpack_Options::get_option( 'id' ) . '/wc/partners/google/remote-site-status',
+				'user_id' => get_current_user_id(),
+			];
+
+			$integration_remote_request_response = Client::remote_request( $integration_status_args, null );
+
+			if ( is_wp_error( $integration_remote_request_response ) ) {
+				$this->response .= $integration_remote_request_response->get_error_message();
+			} else {
+				$this->integration_status_response = json_decode( wp_remote_retrieve_body( $integration_remote_request_response ), true ) ?? [];
+
+				// If the merchant isn't connected to the Google App, it's not necessary to display an error indicating that the partner token isn't associated.
+				if ( ! $this->integration_status_response['is_partner_token_healthy'] && isset( $this->integration_status_response['errors'] ['rest_api_partner_token']['error_code'] ) && $this->integration_status_response['errors'] ['rest_api_partner_token']['error_code'] === 'wpcom_partner_token_not_associated' ) {
+					unset( $this->integration_status_response['errors'] ['rest_api_partner_token'] );
+				}
+
+				if ( json_last_error() || ! isset( $this->integration_status_response['site'] ) ) {
+					$this->response .= wp_remote_retrieve_body( $integration_remote_request_response );
+				}
+			}
+
+		}
+
+		if ( 'disconnect-wp-api' === $_GET['action'] && check_admin_referer( 'disconnect-wp-api' ) ) {
+			$request = new Request( 'DELETE', '/wc/gla/rest-api/authorize' );
+			$this->send_rest_request( $request );
 		}
 
 		if ( 'wcs-auth-test' === $_GET['action'] && check_admin_referer( 'wcs-auth-test' ) ) {
@@ -976,7 +1267,7 @@ class ConnectionTest implements Service, Registerable {
 
 			$this->response .= sprintf(
 				'Attempting to accept Tos. Successful? %s<br>Response body: %s',
-				$result->accepted() ? 'Yes' : 'No',
+				$this->yes_or_no( $result->accepted() ),
 				$result->message()
 			);
 		}
@@ -986,7 +1277,7 @@ class ConnectionTest implements Service, Registerable {
 
 			$this->response .= sprintf(
 				'Tos Accepted? %s<br>Response body: %s',
-				$accepted->accepted() ? 'Yes' : 'No',
+				$this->yes_or_no( $result->accepted() ),
 				$accepted->message()
 			);
 		}
@@ -1022,7 +1313,7 @@ class ConnectionTest implements Service, Registerable {
 				} else {
 					// schedule a job
 					/** @var UpdateProducts $update_job */
-					$update_job = $this->container->get( UpdateProducts::class );
+					$update_job = $this->container->get( JobRepository::class )->get( UpdateProducts::class );
 					$update_job->schedule( [ [ $product->get_id() ] ] );
 					$this->response = 'Successfully scheduled a job to sync the product ' . $product->get_id();
 				}
@@ -1056,7 +1347,7 @@ class ConnectionTest implements Service, Registerable {
 			} else {
 				// schedule a job
 				/** @var UpdateAllProducts $update_job */
-				$update_job = $this->container->get( UpdateAllProducts::class );
+				$update_job = $this->container->get( JobRepository::class )->get( UpdateAllProducts::class );
 				$update_job->schedule();
 				$this->response = 'Successfully scheduled a job to sync all products!';
 			}
@@ -1087,7 +1378,7 @@ class ConnectionTest implements Service, Registerable {
 			} else {
 				// schedule a job
 				/** @var DeleteAllProducts $delete_job */
-				$delete_job = $this->container->get( DeleteAllProducts::class );
+				$delete_job = $this->container->get( JobRepository::class )->get( DeleteAllProducts::class );
 				$delete_job->schedule();
 				$this->response = 'Successfully scheduled a job to delete all synced products!';
 			}
@@ -1121,11 +1412,19 @@ class ConnectionTest implements Service, Registerable {
 			} else {
 				// schedule a job
 				/** @var CleanupProductsJob $delete_job */
-				$delete_job = $this->container->get( CleanupProductsJob::class );
+				$delete_job = $this->container->get( JobRepository::class )->get( CleanupProductsJob::class );
 				$delete_job->schedule();
 				$this->response = 'Successfully scheduled a job to cleanup all products!';
 			}
 		}
+
+		if ( 'migrate-gtin' === $_GET['action'] && check_admin_referer( 'migrate-gtin' ) ) {
+			/** @var MigrateGTIN $job */
+			$job = $this->container->get( JobRepository::class )->get( MigrateGTIN::class );
+			$job->schedule();
+			$this->response = 'Successfully scheduled a job to migrate GTIN';
+		}
+
 
 	}
 

@@ -10,7 +10,7 @@ use FSVendor\WPDesk\Session\Session;
 /**
  * Can store session data in WooCommerce Session.
  */
-class WooCommerceSession implements \FSVendor\WPDesk\Session\Session
+class WooCommerceSession implements Session
 {
     /**
      * @var \WC_Session

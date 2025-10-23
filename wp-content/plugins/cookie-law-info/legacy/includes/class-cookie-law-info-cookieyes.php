@@ -387,10 +387,10 @@ if ( ! class_exists( 'Cookie_Law_Info_Cookieyes' ) ) {
 				}
 			}
 			if ( null === $token ) {
-				throw new Exception( __( 'Invalid json token', 'cookie-law-info' ) );
+				throw new Exception( esc_html__( 'Invalid json token', 'cookie-law-info' ) );
 			}
 			if ( ! isset( $token['access_token'] ) ) {
-				throw new Exception( __( 'Invalid token format', 'cookie-law-info' ) );
+				throw new Exception( esc_html__( 'Invalid token format', 'cookie-law-info' ) );
 			}
 			$this->token = $token;
 		}
@@ -619,7 +619,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Cookieyes' ) ) {
 			$email = $this->get_user_email();
 
 			$email    = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : $email;
-			$password = isset( $_POST['password'] ) ? $_POST['password'] : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$password = isset( $_POST['password'] ) ? $_POST['password'] : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 			if ( empty( $email ) || empty( $url ) || empty( $password ) ) {
 				$api_response['code'] = 101;
@@ -1064,6 +1064,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Cookieyes' ) ) {
 			$html .= '<div class="wt-cli-ckyes-login-icon">';
 			$html .= '<span class="dashicons dashicons-admin-users"></span>';
 			$html .= '</div>';
+			/* translators: %s: user email address */
 			$html .= '<h4>' . sprintf( __( 'Looks like you already have an account with CookieYes for email id %s, please login to continue.', 'cookie-law-info' ), esc_html( $this->get_user_email() ) ) . '</h4>';
 			$html .= '<form id="wt-cli-ckyes-form-login">';
 			$html .= '<div class="wt-cli-form-row">';

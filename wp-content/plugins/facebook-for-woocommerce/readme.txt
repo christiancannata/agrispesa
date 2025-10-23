@@ -1,10 +1,10 @@
 === Facebook for WooCommerce ===
-Contributors: facebook, automattic, woothemes
-Tags: facebook, woocommerce, marketing, product catalog feed, pixel
-Requires at least: 4.4
-Tested up to: 6.5
-Stable tag: 3.2.4
-Requires PHP: 5.6 or greater
+Contributors: facebook
+Tags: meta, facebook, conversions api, catalog sync, ads
+Requires at least: 5.6
+Tested up to: 6.8.1
+Stable tag: 3.5.7
+Requires PHP: 7.4
 MySQL: 5.6 or greater
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -28,61 +28,54 @@ Visit the Facebook Help Center [here](https://www.facebook.com/business/help/900
 
 == Support ==
 
-If you believe you have found a security vulnerability on Facebook, we encourage you to let us know right away. We investigate all legitimate reports and do our best to quickly fix the problem. Before reporting, please review [this page](https://www.facebook.com/whitehat), which includes our responsible disclosure policy and reward guideline. You can submit bugs [here](https://github.com/facebookincubator/facebook-for-woocommerce/issues) or contact advertising support [here](https://www.facebook.com/business/help/900699293402826).
+Before raising a question with Meta Support, please first take a look at the Meta [helpcenter docs](https://www.facebook.com/business/help), by searching for keywords like 'WooCommerce' here. If you didn't find what you were looking for, you can go to [Meta Direct Support](https://www.facebook.com/business-support-home) and ask your question.
 
-When opening a bug on GitHub, please give us as many details as possible.
-
+When reporting an issue on Meta Direct Support, please give us as many details as possible.
 * Symptoms of your problem
 * Screenshot, if possible
 * Your Facebook page URL
 * Your website URL
 * Current version of Facebook-for-WooCommerce, WooCommerce, Wordpress, PHP
 
+To suggest technical improvements, you can raise an issue on our [Github repository](https://github.com/facebook/facebook-for-woocommerce/issues).
+
 == Changelog ==
 
-= 3.2.4 - 2024-06-13 =
-* Dev - Adds support for wp-env.
-* Tweak - Fully remove Facebook Messenger code references.
-* Tweak - WC 9.0 compatibility.
+= 3.5.8 - 2025-09-23 =
+* Add - Add on-hold and pending as valid purchase order states by @ukilla in #3629
+* Fix - Added a check for the # of posts found with a query by @vahidkay-meta in #3606
+* Add - changelog: add parambuilder by @chc421 in #3549
+* Tweak - Removing unnecessary banner for every item publish by @vinkmeta in #3620
+* Fix - Fix - PHP 8.2 string interpolation warning by @ukilla in #3626
+* Fix - [WIFI][EZ]Update switch from only dogfooding GK to one combined with prod GK by @sharunaanandraj in #3627
+* Tweak - Deprecated product group update functionality by @vinkmeta in #3619
+* Tweak - Removed Graph API product delete functionality by @vinkmeta in #3621
+* Add - [WIFI]Return Error Banner if Iframe Management Url Fetching Fails by @sharunaanandraj in #3618
+* Add - Changes to support Order Placed by @woo-ardsouza in #3615
+* Add - Woo Changes to support Order Refunded by @woo-ardsouza in #3614
+* Fix - Remediate privacy vulnerability due to lack of nonce check by @guansu-meta in #3610
+* Add - WooCommerce Changes to call Customer Events Endpoint for Order Fulfilled by @woo-ardsouza in #3611
+* Add - [WIFI]Add Logs for WooCommerce WhatsApp Iframe Infra to Help with Debugging by @sharunaanandraj in #3612
+* Fix - [WIFI][EZ] Fix Iframe Management Url Stefi API Call by @sharunaanandraj in #3608
+* Fix - [WIFI][80/n][EZ]Fix Resize issue by listening to WA specific Resize PostMessage by @sharunaanandraj in #3607
+* Fix - Feat/stock update fix by @rithikb24 in #3602
+* Add - [EZ][WIFI][56/n] Fix CSS in Iframe for whatsapp integration by @sharunaanandraj in #3599
+* Fix - Rollout Switch Test for cache update on version upgrade by @rithikb24 in #3601
+* Add - [WIFI][51/n]Add Support to receive WA Disconnect message to delete settings in Woo DB by @sharunaanandraj in #3598
+* Fix - [WooCommerce] Fix selected category values bug after a new category is created by @Rebeca-Reis in #3597
+* Add - [WIFI][49/n]Add admin banner to Whatsapp Utility Page by @sharunaanandraj in #3596
+* Fix - fix: category name by @rithikb24 in #3590
+* Add - Feat/csv reupload changes by @rithikb24 in #3585
+* Fix - Adding back set-stable-tag workflow by @vahidkay-meta in #3594
+* Add - fix: rollout-switch-transient-flag by @rithikb24 in #3595
+* Add - [WIFI][45/n] Add changes to receive Resizing postMessage and update the Whatsapp iframe by @sharunaanandraj in #3592
+* Add - integrate last change time into external_update_time calculation by @rithikb24 in #3577
+* Add - add product meta change time update handler by @rithikb24 in #3576
+* Add - main decision function based on meta key & product validation by @rithikb24 in #3575
+* Add - add helper functions for tracking product meta change times & rate limit them (#3571) by @rithikb24 in #3578
+* Add - changelog: add parambuilder by @chc421 in #3549
+* Fix - Fix unit tests failing silently by @immadhavv in #3587
+* Add - [WIFI][43/n][EZ] Polish UI for Whatsapp Utility Message Iframe Beta by @sharunaanandraj in #3591
+* Add - [WIFI][37/n]Minor changes to move to new 2P app ID and allow WA Installation Creation by @sharunaanandraj in #3586
 
-= 3.2.3 - 2024-05-28 =
-* Add - Versioning and compatibility checks to implement support policy.
-* Fix - Errors and warnings while generating pot file.
-* Tweak - Bump Marketing API version to v20.0.
-* Tweak - Remove hidden files from build archive.
-
-= 3.2.2 - 2024-05-14 =
-* Fix - Incorrect alert for Product Sets without excluded categories.
-* Tweak - WC 8.9 compatibility.
-
-= 3.2.1 - 2024-05-07 =
-* Fix - Defer only AddToCart events if applicable.
-* Fix - Direct upgrade path from < 3.1.13 to ≥ 3.2.0.
-* Tweak - Adds WooCommerce as a dependency to the plugin header.
-* Tweak - Revert to WooCommerce.com domain.
-
-= 3.2.0 - 2024-05-01 =
-* Tweak - PHP8.3 to GitHub PHPCS and Unit Tests workflows.
-* Update - Remove the sunsetted Messenger Chat feature.
-
-= 3.1.15 - 2024-04-16 =
-* Tweak - Replace the middleware URL from connect.woocommerce.com to api.woocommerce.com/integrations.
-* Tweak - Test environment setup to resolve notice.
-
-= 3.1.14 - 2024-04-03 =
-* Fix - Remove facebook_messenger_deprecation_warning notice on deactivation.
-* Tweak - Insert pixel-event-placeholder element via vanilla JS.
-* Tweak - WC 8.8 compatibility.
-
-= 3.1.13 - 2024-03-27 =
-* Add - Messenger feature deprecation notices.
-
-= 3.1.12 - 2024-03-19 =
-* Tweak - Check if condition is set before setting a default value.
-* Tweak - Updates readme.txt to meet WordPress requirements.
-
-= 3.1.11 - 2024-03-12 =
-* Fix - Add video syncs to fbproduct.
-* Fix - Deprecation warnings with PHP 8.2.
-* Tweak - WC 8.7 compatibility.
-* Tweak - WP 6.5 compatibility.
+[See changelog for all versions](https://raw.githubusercontent.com/facebook/facebook-for-woocommerce/refs/heads/main/changelog.txt).

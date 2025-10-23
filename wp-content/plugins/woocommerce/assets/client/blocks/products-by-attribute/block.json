@@ -5,8 +5,12 @@
 	"keywords": [ "WooCommerce" ],
 	"description": "Display a grid of products with selected attributes.",
 	"supports": {
+		"interactivity": {
+			"clientNavigation": false
+		},
 		"align": [ "wide", "full" ],
-		"html": false
+		"html": false,
+		"inserter": false
 	},
 	"attributes": {
 		"attributes": {
@@ -84,6 +88,6 @@
 		}
 	},
 	"textdomain": "woocommerce",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

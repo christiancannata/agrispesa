@@ -66,8 +66,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 			add_filter( 'plugin_action_links_' . plugin_basename( YITH_YWGC_DIR . 'init.php' ), array( $this, 'action_links' ) );
 			add_filter( 'yith_show_plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 5 );
 
-			add_action( 'plugins_loaded', array( __CLASS__, 'include_admin_handlers' ), 20 );
-
 			add_action( 'before_woocommerce_init', array( $this, 'declare_wc_features_support' ) );
 
 			add_action( 'yith_ywgc_email_settings', array( $this, 'email_settings' ) );
@@ -352,15 +350,6 @@ if ( ! class_exists( 'YITH_YWGC_Admin' ) ) {
 			}
 
 			return $new_row_meta_args;
-		}
-
-		/**
-		 * Include Admin Post Type and Taxonomy handlers.
-		 */
-		public static function include_admin_handlers() {
-			require_once trailingslashit( YITH_YWGC_DIR ) . 'includes/admin/post-types/class-yith-ywgc-gift-card-post-type-admin.php';
-
-			do_action( 'yith_ywgc_admin_post_type_handlers_loaded' );
 		}
 
 		/**

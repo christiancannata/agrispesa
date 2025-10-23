@@ -43,6 +43,23 @@ jQuery( function ( $ ) {
 
 	$( document.body )
 		.on( 'yith-framework-enhanced-select-init', function () {
+
+			$( '.yith-enhanced-select' ).filter( ':not(.enhanced)' ).each( function () {
+				var select2_args = {
+					minimumResultsForSearch: 10,
+					allowClear             : $( this ).data( 'allow_clear' ) ? true : false,
+					placeholder            : $( this ).data( 'placeholder' ),
+					minimumInputLength     : $( this ).data( 'minimum_input_length' ) ? $( this ).data( 'minimum_input_length' ) : false,
+					closeOnSelect          : $( this ).data( 'close_on_select' ) !== 'no',
+					language               : getEnhancedSelectLanguage(),
+					escapeMarkup      : function ( m ) {
+						return m;
+					},
+				};
+
+				$( this ).select2( select2_args ).addClass( 'enhanced' );
+			} );
+
 			// Post Search
 			$( '.yith-post-search' ).filter( ':not(.enhanced)' ).each( function () {
 				var default_data = {

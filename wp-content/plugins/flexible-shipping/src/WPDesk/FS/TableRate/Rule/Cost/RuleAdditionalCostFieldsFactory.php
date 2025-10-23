@@ -7,11 +7,11 @@
 
 namespace WPDesk\FS\TableRate\Rule\Cost;
 
+
+
 use FSVendor\WPDesk\Forms\Field;
-use FSVendor\WPDesk\Forms\Field\InputTextField;
 use FSVendor\WPDesk\Forms\FieldProvider;
 use FSVendor\WPDesk\Forms\Renderer\JsonNormalizedRenderer;
-
 
 /**
  * Can create additional costs fields.

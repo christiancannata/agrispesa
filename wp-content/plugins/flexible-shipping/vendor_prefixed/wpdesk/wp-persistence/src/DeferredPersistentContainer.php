@@ -2,13 +2,13 @@
 
 namespace FSVendor\WPDesk\Persistence;
 
-use Psr\Container\ContainerInterface;
+use FSVendor\Psr\Container\ContainerInterface;
 /**
  * Container that persists values only after save method is used.
  *
  * @package WPDesk\Persistence
  */
-interface DeferredPersistentContainer extends \FSVendor\WPDesk\Persistence\PersistentContainer
+interface DeferredPersistentContainer extends PersistentContainer
 {
     /**
      * Save changed data.

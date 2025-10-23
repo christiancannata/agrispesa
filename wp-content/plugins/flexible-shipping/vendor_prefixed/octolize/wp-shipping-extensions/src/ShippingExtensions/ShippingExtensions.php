@@ -10,7 +10,7 @@ use FSVendor\WPDesk_Plugin_Info;
 /**
  * .
  */
-class ShippingExtensions implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShippingExtensions implements Hookable
 {
     use HookableParent;
     private const VERSION = 2;
@@ -27,7 +27,7 @@ class ShippingExtensions implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookab
      * @param WPDesk_Plugin_Info $plugin_info .
      * @param bool               $add_plugin_links .
      */
-    public function __construct(\FSVendor\WPDesk_Plugin_Info $plugin_info, $add_plugin_links = \false)
+    public function __construct(WPDesk_Plugin_Info $plugin_info, $add_plugin_links = \false)
     {
         $this->plugin_info = $plugin_info;
         $this->add_plugin_links = $add_plugin_links;
@@ -35,27 +35,27 @@ class ShippingExtensions implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookab
     /**
      * @return void
      */
-    public function hooks() : void
+    public function hooks(): void
     {
         if ($this->add_plugin_links) {
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\PluginLinks($this->plugin_info));
+            $this->add_hookable(new PluginLinks($this->plugin_info));
         }
-        if (\apply_filters(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, \false) === \false) {
-            \add_filter(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, '__return_true');
-            $tracker = new \FSVendor\Octolize\ShippingExtensions\Tracker\ViewPageTracker();
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\Page($this->get_assets_url(), $tracker));
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\Assets($this->get_assets_url(), self::VERSION));
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\Tracker\Tracker($tracker));
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\PageViewTracker($tracker));
-            $this->add_hookable(new \FSVendor\Octolize\ShippingExtensions\WooCommerceSuggestions());
+        if (apply_filters(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, \false) === \false) {
+            add_filter(self::OCTOLIZE_WP_SHIPPING_EXTENSIONS_INITIATED_FILTER, '__return_true');
+            $tracker = new ViewPageTracker();
+            $this->add_hookable(new Page($this->get_assets_url(), $tracker));
+            $this->add_hookable(new Assets($this->get_assets_url(), self::VERSION));
+            $this->add_hookable(new Tracker($tracker));
+            $this->add_hookable(new PageViewTracker($tracker));
+            $this->add_hookable(new WooCommerceSuggestions());
         }
         $this->hooks_on_hookable_objects();
     }
     /**
      * @return string
      */
-    private function get_assets_url() : string
+    private function get_assets_url(): string
     {
-        return \plugin_dir_url(__DIR__ . '/../../../') . 'assets/';
+        return plugin_dir_url(__DIR__ . '/../../../') . 'assets/';
     }
 }

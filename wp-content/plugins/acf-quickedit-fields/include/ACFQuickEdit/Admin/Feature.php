@@ -45,7 +45,7 @@ abstract class Feature extends Core\Singleton {
 			$actions = array_merge(
 				apply_filters( 'acf_quick_edit_post_ajax_actions', [ 'inline-save' ] ),
 				apply_filters( 'acf_quick_edit_term_ajax_actions', [ 'inline-save-tax' ] ),
-				[ 'get_acf_post_meta' ]
+				[ 'get_acf_post_meta', 'acf/validate_save_post', ]
 			);
 			if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $actions ) ) {
 				add_action( 'admin_init', [ $this, 'init_fields' ] );
@@ -150,7 +150,7 @@ abstract class Feature extends Core\Singleton {
 			}
 		} else {
 			// validate meta query
-			$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+			$meta_query = wp_unslash( $_REQUEST['meta_query'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			$meta_query = array_filter( $meta_query, function($clause) {
 				if ( ! is_array( $clause ) ) {

@@ -13,7 +13,7 @@ interface Renderer
      *
      * @param  Resolver $resolver
      */
-    public function set_resolver(\FSVendor\WPDesk\View\Resolver\Resolver $resolver);
+    public function set_resolver(Resolver $resolver);
     /**
      * @param string $template
      * @param array $params

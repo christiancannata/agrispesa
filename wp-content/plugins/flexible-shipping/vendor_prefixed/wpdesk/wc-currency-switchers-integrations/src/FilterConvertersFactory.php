@@ -12,7 +12,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher;
 /**
  * Can create filter converters.
  */
-class FilterConvertersFactory implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class FilterConvertersFactory implements Hookable
 {
     const PRIORITY_AFTER_DEFAULT = 100;
     /**
@@ -31,16 +31,16 @@ class FilterConvertersFactory implements \FSVendor\WPDesk\PluginBuilder\Plugin\H
      */
     public function hooks()
     {
-        \add_action('woocommerce_multicurrency_loaded', array($this, 'create_woocommerce_multicurrency_filter_converter'));
-        \add_action('woocommerce_init', [$this, 'create_currency_switcher_woocommerce_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
-        \add_action('woocommerce_init', [$this, 'create_wcml_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
-        \add_action('woocommerce_init', [$this, 'create_aelia_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
-        \add_action('woocommerce_init', [$this, 'create_fox_currency_switcher_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
-        \add_action('woocommerce_init', [$this, 'create_wmcs_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
+        add_action('woocommerce_multicurrency_loaded', array($this, 'create_woocommerce_multicurrency_filter_converter'));
+        add_action('woocommerce_init', [$this, 'create_currency_switcher_woocommerce_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
+        add_action('woocommerce_init', [$this, 'create_wcml_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
+        add_action('woocommerce_init', [$this, 'create_aelia_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
+        add_action('woocommerce_init', [$this, 'create_fox_currency_switcher_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
+        add_action('woocommerce_init', [$this, 'create_wmcs_filter_converter'], self::PRIORITY_AFTER_DEFAULT);
     }
     public function create_woocommerce_multicurrency_filter_converter()
     {
-        (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WooCommerceMultiCurrency\Converter(), $this->shipping_method_id))->hooks();
+        (new FilterConverter(new Switcher\WooCommerceMultiCurrency\Converter(), $this->shipping_method_id))->hooks();
     }
     public function create_currency_switcher_woocommerce_filter_converter()
     {
@@ -48,34 +48,34 @@ class FilterConvertersFactory implements \FSVendor\WPDesk\PluginBuilder\Plugin\H
         // php scoper faker.
         $alg_wc_cs_get_currency_exchange_rate = 'alg_wc_cs_get_currency_exchange_rate';
         // php scoper faker.
-        if (\function_exists($alg_get_current_currency_code) && \function_exists($alg_wc_cs_get_currency_exchange_rate)) {
-            (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\CurrencySwitcherWoocommerce\Converter(), $this->shipping_method_id))->hooks();
+        if (function_exists($alg_get_current_currency_code) && function_exists($alg_wc_cs_get_currency_exchange_rate)) {
+            (new FilterConverter(new Switcher\CurrencySwitcherWoocommerce\Converter(), $this->shipping_method_id))->hooks();
         }
     }
     public function create_wcml_filter_converter()
     {
-        (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WCML\Converter(), $this->shipping_method_id))->hooks();
+        (new FilterConverter(new Switcher\WCML\Converter(), $this->shipping_method_id))->hooks();
     }
     public function create_aelia_filter_converter()
     {
-        $class = 'Aelia' . '\\WC\\CurrencySwitcher\\WC_Aelia_CurrencySwitcher';
+        $class = 'Aelia' . '\WC\CurrencySwitcher\WC_Aelia_CurrencySwitcher';
         // php scoper faker
-        if (\class_exists($class)) {
-            (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\Aelia\Converter(), $this->shipping_method_id))->hooks();
+        if (class_exists($class)) {
+            (new FilterConverter(new Switcher\Aelia\Converter(), $this->shipping_method_id))->hooks();
         }
     }
     public function create_fox_currency_switcher_filter_converter()
     {
         if (isset($GLOBALS['WOOCS'])) {
-            (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\FoxCurrencySwitcher\Converter(), $this->shipping_method_id))->hooks();
+            (new FilterConverter(new Switcher\FoxCurrencySwitcher\Converter(), $this->shipping_method_id))->hooks();
         }
     }
     public function create_wmcs_filter_converter()
     {
         $wmcs_convert_price = 'wmcs_convert_price';
         // php scoper faker.
-        if (\function_exists($wmcs_convert_price)) {
-            (new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConverter(new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WMCS\Converter(), $this->shipping_method_id))->hooks();
+        if (function_exists($wmcs_convert_price)) {
+            (new FilterConverter(new Switcher\WMCS\Converter(), $this->shipping_method_id))->hooks();
         }
     }
 }

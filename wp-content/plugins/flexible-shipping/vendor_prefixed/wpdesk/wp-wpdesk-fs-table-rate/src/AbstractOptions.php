@@ -15,7 +15,7 @@ abstract class AbstractOptions
     /**
      * @return array
      */
-    public abstract function get_options();
+    abstract public function get_options();
     /**
      * @param $option_value
      *

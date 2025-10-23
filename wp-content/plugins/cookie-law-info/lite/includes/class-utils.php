@@ -214,11 +214,9 @@ if ( ! function_exists( 'cky_disable_banner' ) ) {
 	 */
 	function cky_disable_banner() {
 		global $wp_customize;
-		if ( isset( $_GET['et_fb'] ) || isset( $_GET['et_fb'] )
-		|| ( defined( 'ET_FB_ENABLED' ) && ET_FB_ENABLED )
-		|| isset( $_GET['elementor-preview'] )
-		|| isset( $_POST['cs_preview_state'] )
-		|| isset( $wp_customize ) ) {
+		if ( isset( $_GET['et_fb'] ) || isset( $_GET['et_fb'] ) || ( defined( 'ET_FB_ENABLED' ) && ET_FB_ENABLED ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		|| isset( $_GET['elementor-preview'] ) || isset( $_POST['cs_preview_state'] ) || isset( $wp_customize ) ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+		{
 			return true;
 		}
 		return false;
@@ -233,5 +231,19 @@ if ( ! function_exists( 'cky_missing_tables' ) ) {
 	 */
 	function cky_missing_tables() {
 		return get_option( 'cky_missing_tables', array() );
+	}
+}
+if ( ! function_exists( 'cky_verify_nonce' ) ) {
+	/**
+	 * Verify nonce.
+	 *
+	 * @return WP_Error|boolean
+	 */
+	function cky_verify_nonce( $request ) {
+		$nonce = $request->get_header( 'X-WP-Nonce' );
+		if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
+			return new WP_Error( 'cookieyes_rest_invalid_nonce', __( 'Invalid nonce. Please refresh the page and try again.', 'cookie-law-info' ), array( 'status' => 403 ) );
+		}
+		return true;
 	}
 }

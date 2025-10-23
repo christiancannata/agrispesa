@@ -50,7 +50,7 @@ class UserFeedbackData
      *
      * @return UserFeedbackData
      */
-    public function add_feedback_option(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackOption $feedback_option)
+    public function add_feedback_option(UserFeedbackOption $feedback_option)
     {
         $this->feedback_options[] = $feedback_option;
         return $this;

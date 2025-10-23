@@ -6,43 +6,56 @@
  * @subpackage Importer
  */
 
+use WordPress\DataLiberation\URL\WPURL;
+use function WordPress\DataLiberation\URL\wp_rewrite_urls;
+
 /**
  * WordPress importer class.
  */
 class WP_Import extends WP_Importer {
-	var $max_wxr_version = 1.2; // max. supported WXR version
+	public $max_wxr_version = 1.2; // max. supported WXR version
 
-	var $id; // WXR attachment ID
+	public $id; // WXR attachment ID
 
 	// information to import from WXR file
-	var $version;
-	var $authors    = array();
-	var $posts      = array();
-	var $terms      = array();
-	var $categories = array();
-	var $tags       = array();
-	var $base_url   = '';
+	public $version;
+	public $authors         = array();
+	public $posts           = array();
+	public $terms           = array();
+	public $categories      = array();
+	public $tags            = array();
+	public $base_url        = '';
+	public $base_url_parsed = null;
+	public $site_url_parsed = null;
 
 	// mappings from old information to new
-	var $processed_authors    = array();
-	var $author_mapping       = array();
-	var $processed_terms      = array();
-	var $processed_posts      = array();
-	var $post_orphans         = array();
-	var $processed_menu_items = array();
-	var $menu_item_orphans    = array();
-	var $missing_menu_items   = array();
+	public $processed_authors    = array();
+	public $author_mapping       = array();
+	public $processed_terms      = array();
+	public $processed_posts      = array();
+	public $post_orphans         = array();
+	public $processed_menu_items = array();
+	public $menu_item_orphans    = array();
+	public $missing_menu_items   = array();
 
-	var $fetch_attachments = false;
-	var $url_remap         = array();
-	var $featured_images   = array();
+	public $fetch_attachments = false;
+	public $url_remap         = array();
+	public $featured_images   = array();
+
+	/**
+	 * Import options.
+	 *
+	 * @since 0.9.1
+	 * @var array
+	 */
+	public $options = array();
 
 	/**
 	 * Registered callback function for the WordPress Importer
 	 *
 	 * Manages the three separate stages of the WXR import process
 	 */
-	function dispatch() {
+	public function dispatch() {
 		$this->header();
 
 		$step = empty( $_GET['step'] ) ? 0 : (int) $_GET['step'];
@@ -62,7 +75,7 @@ class WP_Import extends WP_Importer {
 				$this->id                = (int) $_POST['import_id'];
 				$file                    = get_attached_file( $this->id );
 				set_time_limit( 0 );
-				$this->import( $file );
+				$this->import( $file, array( 'rewrite_urls' => '1' === $_POST['rewrite_urls'] ) );
 				break;
 		}
 
@@ -72,13 +85,47 @@ class WP_Import extends WP_Importer {
 	/**
 	 * The main controller for the actual import stage.
 	 *
-	 * @param string $file Path to the WXR file for importing
+	 * @param string $file    Path to the WXR file for importing
+	 * @param array  $options Options to control import behavior. Supported:
+	 *                       - 'rewrite_urls' (bool) Enable rewriting URLs in post content/excerpt.
 	 */
-	function import( $file ) {
+	public function import( $file, $options = array() ) {
+		$options = wp_parse_args(
+			$options,
+			array(
+				'rewrite_urls' => false,
+			)
+		);
+
+		$this->options = apply_filters( 'wp_import_options', $options );
+
 		add_filter( 'import_post_meta_key', array( $this, 'is_valid_meta_key' ) );
 		add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
 
 		$this->import_start( $file );
+
+		/**
+		 * If URL rewriting was requested but the WP version is too old, report
+		 * an error and disable it.
+		 *
+		 * More context:
+		 * WordPress 6.7 introduced WP_HTML_Tag_Processor::set_modifiable_text
+		 * required for wp_rewrite_urls to work. We could also offer a graceful
+		 * downgrade and support versions down to WordPress 6.5 where the required
+		 * WP_HTML_Tag_Processor::get_token_type() method was introduced.
+		 *
+		 * Alternatively, it might be possible to just rely on the HTML Processor
+		 * polyfill shipped with this plugin and make URL rewriting work in any
+		 * WordPress version.
+		 */
+		if ( $this->options['rewrite_urls'] && version_compare( get_bloginfo( 'version' ), '6.7', '<' ) ) {
+			echo '<div class="error"><p><strong>' . __( 'URL rewriting requires WordPress 6.7 or newer. The import will continue without rewriting URLs.', 'wordpress-importer' ) . '</strong></p></div>';
+			$this->options['rewrite_urls'] = false;
+		}
+		// URL rewriting is only possible when we have the previous site base URL
+		if ( $this->options['rewrite_urls'] && ! $this->base_url_parsed ) {
+			$this->options['rewrite_urls'] = false;
+		}
 
 		$this->get_author_mapping();
 
@@ -102,7 +149,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @param string $file Path to the WXR file for importing
 	 */
-	function import_start( $file ) {
+	public function import_start( $file ) {
 		if ( ! is_file( $file ) ) {
 			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'wordpress-importer' ) . '</strong><br />';
 			echo __( 'The file does not exist, please try again.', 'wordpress-importer' ) . '</p>';
@@ -113,8 +160,10 @@ class WP_Import extends WP_Importer {
 		$import_data = $this->parse( $file );
 
 		if ( is_wp_error( $import_data ) ) {
+			/** @var WP_Error $import_error */
+			$import_error = $import_data;
 			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'wordpress-importer' ) . '</strong><br />';
-			echo esc_html( $import_data->get_error_message() ) . '</p>';
+			echo esc_html( $import_error->get_error_message() ) . '</p>';
 			$this->footer();
 			die();
 		}
@@ -127,6 +176,29 @@ class WP_Import extends WP_Importer {
 		$this->tags       = $import_data['tags'];
 		$this->base_url   = esc_url( $import_data['base_url'] );
 
+		/**
+		 * Add trailing slash to base URL and site URL. Without the trailing slashes,
+		 * the WHATWG URL spec tells us compare the parent pathname. For example:
+		 *
+		 * > is_child_url_of("https://example.com/path", "https://example.com/path-2")
+		 * true
+		 *
+		 * The example above actually ignores the `/path` and `/path-2` parts and only
+		 * compares the `example.com` parts.
+		 *
+		 * With the trailing slashes, the result is false:
+		 *
+		 * > is_child_url_of("https://example.com/path/", "https://example.com/path-2/")
+		 * false
+		 *
+		 * In this scenario, `/path/` and `/path-2/` are considered in the comparison.
+		 */
+		$base_url_with_trailing_slash = rtrim( $import_data['base_url'], '/' ) . '/';
+		$this->base_url_parsed        = WPURL::parse( $base_url_with_trailing_slash );
+
+		$site_url_with_trailing_slash = rtrim( get_site_url(), '/' ) . '/';
+		$this->site_url_parsed        = WPURL::parse( $site_url_with_trailing_slash );
+
 		wp_defer_term_counting( true );
 		wp_defer_comment_counting( true );
 
@@ -136,7 +208,7 @@ class WP_Import extends WP_Importer {
 	/**
 	 * Performs post-import cleanup of files and the cache
 	 */
-	function import_end() {
+	public function import_end() {
 		wp_import_cleanup( $this->id );
 
 		wp_cache_flush();
@@ -160,7 +232,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @return bool False if error uploading or invalid file, true otherwise
 	 */
-	function handle_upload() {
+	public function handle_upload() {
 		$file = wp_import_handle_upload();
 
 		if ( isset( $file['error'] ) ) {
@@ -177,8 +249,10 @@ class WP_Import extends WP_Importer {
 		$this->id    = (int) $file['id'];
 		$import_data = $this->parse( $file['file'] );
 		if ( is_wp_error( $import_data ) ) {
+			/** @var WP_Error $import_error */
+			$import_error = $import_data;
 			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'wordpress-importer' ) . '</strong><br />';
-			echo esc_html( $import_data->get_error_message() ) . '</p>';
+			echo esc_html( $import_error->get_error_message() ) . '</p>';
 			return false;
 		}
 
@@ -202,7 +276,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @param array $import_data Data returned by a WXR parser
 	 */
-	function get_authors_from_import( $import_data ) {
+	public function get_authors_from_import( $import_data ) {
 		if ( ! empty( $import_data['authors'] ) ) {
 			$this->authors = $import_data['authors'];
 			// no author information, grab it from the posts
@@ -229,7 +303,7 @@ class WP_Import extends WP_Importer {
 	 * Display pre-import options, author importing/mapping and option to
 	 * fetch attachments
 	 */
-	function import_options() {
+	public function import_options() {
 		$j = 0;
 		// phpcs:disable Generic.WhiteSpace.ScopeIndent.Incorrect
 		?>
@@ -240,15 +314,15 @@ class WP_Import extends WP_Importer {
 <?php if ( ! empty( $this->authors ) ) : ?>
 	<h3><?php _e( 'Assign Authors', 'wordpress-importer' ); ?></h3>
 	<p><?php _e( 'To make it simpler for you to edit and save the imported content, you may want to reassign the author of the imported item to an existing user of this site, such as your primary administrator account.', 'wordpress-importer' ); ?></p>
-<?php if ( $this->allow_create_users() ) : ?>
+		<?php if ( $this->allow_create_users() ) : ?>
 	<p><?php printf( __( 'If a new user is created by WordPress, a new password will be randomly generated and the new user&#8217;s role will be set as %s. Manually changing the new user&#8217;s details will be necessary.', 'wordpress-importer' ), esc_html( get_option( 'default_role' ) ) ); ?></p>
-<?php endif; ?>
+	<?php endif; ?>
 	<ol id="authors">
-<?php foreach ( $this->authors as $author ) : ?>
+		<?php foreach ( $this->authors as $author ) : ?>
 		<li><?php $this->author_select( $j++, $author ); ?></li>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</ol>
-<?php endif; ?>
+		<?php endif; ?>
 
 <?php if ( $this->allow_fetch_attachments() ) : ?>
 	<h3><?php _e( 'Import Attachments', 'wordpress-importer' ); ?></h3>
@@ -256,7 +330,13 @@ class WP_Import extends WP_Importer {
 		<input type="checkbox" value="1" name="fetch_attachments" id="import-attachments" />
 		<label for="import-attachments"><?php _e( 'Download and import file attachments', 'wordpress-importer' ); ?></label>
 	</p>
-<?php endif; ?>
+		<?php endif; ?>
+
+	<h3><?php _e( 'Content Options', 'wordpress-importer' ); ?></h3>
+	<p>
+		<input type="checkbox" value="1" name="rewrite_urls" id="rewrite-urls" checked="checked" />
+		<label for="rewrite-urls"><?php _e( 'Change all imported URLs that currently link to the previous site so that they now link to this site', 'wordpress-importer' ); ?></label>
+	</p>
 
 	<p class="submit"><input type="submit" class="button" value="<?php esc_attr_e( 'Submit', 'wordpress-importer' ); ?>" /></p>
 </form>
@@ -271,7 +351,7 @@ class WP_Import extends WP_Importer {
 	 * @param int $n Index for each author in the form
 	 * @param array $author Author information, e.g. login, display name, email
 	 */
-	function author_select( $n, $author ) {
+	public function author_select( $n, $author ) {
 		_e( 'Import author:', 'wordpress-importer' );
 		echo ' <strong>' . esc_html( $author['author_display_name'] );
 		if ( '1.0' != $this->version ) {
@@ -329,7 +409,7 @@ class WP_Import extends WP_Importer {
 	 * in import options form. Can map to an existing user, create a new user
 	 * or falls back to the current user in case of error with either of the previous
 	 */
-	function get_author_mapping() {
+	public function get_author_mapping() {
 		if ( ! isset( $_POST['imported_authors'] ) ) {
 			return;
 		}
@@ -393,7 +473,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * Doesn't create a new category if its slug already exists
 	 */
-	function process_categories() {
+	public function process_categories() {
 		$this->categories = apply_filters( 'wp_import_categories', $this->categories );
 
 		if ( empty( $this->categories ) ) {
@@ -448,7 +528,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * Doesn't create a tag if its slug already exists
 	 */
-	function process_tags() {
+	public function process_tags() {
 		$this->tags = apply_filters( 'wp_import_tags', $this->tags );
 
 		if ( empty( $this->tags ) ) {
@@ -499,7 +579,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * Doesn't create a term its slug already exists
 	 */
-	function process_terms() {
+	public function process_terms() {
 		$this->terms = apply_filters( 'wp_import_terms', $this->terms );
 
 		if ( empty( $this->terms ) ) {
@@ -599,7 +679,7 @@ class WP_Import extends WP_Importer {
 			}
 
 			// Export gets meta straight from the DB so could have a serialized string
-			$value = maybe_unserialize( $meta['value'] );
+			$value = $this->maybe_unserialize( $meta['value'] );
 
 			add_term_meta( $term_id, wp_slash( $key ), wp_slash_strings_only( $value ) );
 
@@ -624,7 +704,7 @@ class WP_Import extends WP_Importer {
 	 * is already noted as imported or a post with the same title and date already exists.
 	 * Note that new/updated terms, comments and meta are imported for the last of the above.
 	 */
-	function process_posts() {
+	public function process_posts() {
 		$this->posts = apply_filters( 'wp_import_posts', $this->posts );
 
 		foreach ( $this->posts as $post ) {
@@ -656,7 +736,7 @@ class WP_Import extends WP_Importer {
 
 			$post_type_object = get_post_type_object( $post['post_type'] );
 
-			$post_exists = post_exists( $post['post_title'], '', $post['post_date'] );
+			$post_exists = post_exists( $post['post_title'], '', $post['post_date'], $post['post_type'] );
 
 			/**
 			* Filter ID of the existing post corresponding to post currently importing.
@@ -717,6 +797,24 @@ class WP_Import extends WP_Importer {
 					'post_type'      => $post['post_type'],
 					'post_password'  => $post['post_password'],
 				);
+
+				if ( $this->options['rewrite_urls'] ) {
+					$url_mapping              = array(
+						$this->base_url_parsed->toString() => $this->site_url_parsed,
+					);
+					$postdata['post_content'] = wp_rewrite_urls(
+						array(
+							'block_markup' => $postdata['post_content'],
+							'url-mapping'  => $url_mapping,
+						)
+					);
+					$postdata['post_excerpt'] = wp_rewrite_urls(
+						array(
+							'block_markup' => $postdata['post_excerpt'],
+							'url-mapping'  => $url_mapping,
+						)
+					);
+				}
 
 				$original_post_id = $post['post_id'];
 				$postdata         = apply_filters( 'wp_import_post_data_processed', $postdata, $post );
@@ -854,12 +952,12 @@ class WP_Import extends WP_Importer {
 						do_action( 'wp_import_insert_comment', $inserted_comments[ $key ], $comment, $comment_post_id, $post );
 
 						foreach ( $comment['commentmeta'] as $meta ) {
-							$value = maybe_unserialize( $meta['value'] );
+							$value = $this->maybe_unserialize( $meta['value'] );
 
 							add_comment_meta( $inserted_comments[ $key ], wp_slash( $meta['key'] ), wp_slash_strings_only( $value ) );
 						}
 
-						$num_comments++;
+						++$num_comments;
 					}
 				}
 				unset( $newcomments, $inserted_comments, $post['comments'] );
@@ -888,7 +986,7 @@ class WP_Import extends WP_Importer {
 					if ( $key ) {
 						// export gets meta straight from the DB so could have a serialized string
 						if ( ! $value ) {
-							$value = maybe_unserialize( $meta['value'] );
+							$value = $this->maybe_unserialize( $meta['value'] );
 						}
 
 						add_post_meta( $post_id, wp_slash( $key ), wp_slash_strings_only( $value ) );
@@ -917,7 +1015,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @param array $item Menu item details from WXR file
 	 */
-	function process_menu_item( $item ) {
+	public function process_menu_item( $item ) {
 		// skip draft, orphaned menu items
 		if ( 'draft' == $item['status'] ) {
 			return;
@@ -972,7 +1070,7 @@ class WP_Import extends WP_Importer {
 		}
 
 		// wp_update_nav_menu_item expects CSS classes as a space separated string
-		$_menu_item_classes = maybe_unserialize( $_menu_item_classes );
+		$_menu_item_classes = $this->maybe_unserialize( $_menu_item_classes );
 		if ( is_array( $_menu_item_classes ) ) {
 			$_menu_item_classes = implode( ' ', $_menu_item_classes );
 		}
@@ -1006,7 +1104,7 @@ class WP_Import extends WP_Importer {
 	 * @param string $url URL to fetch attachment from
 	 * @return int|WP_Error Post ID on success, WP_Error otherwise
 	 */
-	function process_attachment( $post, $url ) {
+	public function process_attachment( $post, $url ) {
 		if ( ! $this->fetch_attachments ) {
 			return new WP_Error(
 				'attachment_processing_error',
@@ -1058,7 +1156,7 @@ class WP_Import extends WP_Importer {
 	 * @param array $post Attachment details
 	 * @return array|WP_Error Local file location details on success, WP_Error otherwise
 	 */
-	function fetch_remote_file( $url, $post ) {
+	public function fetch_remote_file( $url, $post ) {
 		// Extract the file name from the URL.
 		$path      = parse_url( $url, PHP_URL_PATH );
 		$file_name = '';
@@ -1202,7 +1300,56 @@ class WP_Import extends WP_Importer {
 			'error' => false,
 		);
 
-		// keep track of the old and new urls so we can substitute them later
+		/**
+		 * When URL rewriting is enabled, posts such as this one:
+		 *
+		 *     <img src="https://example.com/subpath/wp-content/uploads/2008/06/canola2.jpg" />
+		 *
+		 * Are already stored as:
+		 *
+		 *     <img src="https://example.org/wp-content/uploads/2008/06/canola2.jpg" />
+		 *
+		 * Therefore, we can't just remap the old URL to the new URL here. This substring
+		 * is no longer present in the post:
+		 *
+		 *     https://example.com/subpath/wp-content/uploads/2008/06/canola2.jpg
+		 *
+		 * We need to replace the base URL in the media file URL the same way as we did
+		 * in the post content:
+		 *
+		 *     https://example.org/wp-content/uploads/2008/06/canola2.jpg
+		 *
+		 * Only from there we can remap that URL to the new media files URL:
+		 *
+		 *     https://example.org/wp-content/uploads/canola2.jpg"
+		 *                                            ^ there may be no 2008/06 on the target site.
+		 */
+		if ( $this->options['rewrite_urls'] ) {
+			$url          = WPURL::replace_base_url(
+				array(
+					'url'          => $url,
+					'old_base_url' => $this->base_url_parsed,
+					'new_base_url' => $this->site_url_parsed,
+				)
+			);
+			$post['guid'] = WPURL::replace_base_url(
+				array(
+					'url'          => $post['guid'],
+					'old_base_url' => $this->base_url_parsed,
+					'new_base_url' => $this->site_url_parsed,
+				)
+			);
+			if ( isset( $headers['x-final-location'] ) ) {
+				$headers['x-final-location'] = WPURL::replace_base_url(
+					array(
+						'url'          => $headers['x-final-location'],
+						'old_base_url' => $this->base_url_parsed,
+						'new_base_url' => $this->site_url_parsed,
+					)
+				);
+			}
+		}
+
 		$this->url_remap[ $url ]          = $upload['url'];
 		$this->url_remap[ $post['guid'] ] = $upload['url']; // r13735, really needed?
 		// keep track of the destination if the remote url is redirected somewhere else
@@ -1220,7 +1367,7 @@ class WP_Import extends WP_Importer {
 	 * so try again. Similarly for child menu items and menu items which were missing
 	 * the object (e.g. post) they represent in the menu
 	 */
-	function backfill_parents() {
+	public function backfill_parents() {
 		global $wpdb;
 
 		// find parents for post orphans
@@ -1266,7 +1413,7 @@ class WP_Import extends WP_Importer {
 	/**
 	 * Use stored mapping information to update old attachment URLs
 	 */
-	function backfill_attachment_urls() {
+	public function backfill_attachment_urls() {
 		global $wpdb;
 		// make sure we do the longest urls first, in case one is a substring of another
 		uksort( $this->url_remap, array( &$this, 'cmpr_strlen' ) );
@@ -1282,7 +1429,7 @@ class WP_Import extends WP_Importer {
 	/**
 	 * Update _thumbnail_id meta to new, imported attachment IDs
 	 */
-	function remap_featured_images() {
+	public function remap_featured_images() {
 		// cycle through posts that have a featured image
 		foreach ( $this->featured_images as $post_id => $value ) {
 			if ( isset( $this->processed_posts[ $value ] ) ) {
@@ -1301,13 +1448,13 @@ class WP_Import extends WP_Importer {
 	 * @param string $file Path to WXR file for parsing
 	 * @return array Information gathered from the WXR file
 	 */
-	function parse( $file ) {
+	public function parse( $file ) {
 		$parser = new WXR_Parser();
 		return $parser->parse( $file );
 	}
 
 	// Display import page title
-	function header() {
+	public function header() {
 		echo '<div class="wrap">';
 		echo '<h2>' . __( 'Import WordPress', 'wordpress-importer' ) . '</h2>';
 
@@ -1322,14 +1469,14 @@ class WP_Import extends WP_Importer {
 	}
 
 	// Close div.wrap
-	function footer() {
+	public function footer() {
 		echo '</div>';
 	}
 
 	/**
 	 * Display introductory text and file upload form
 	 */
-	function greet() {
+	public function greet() {
 		echo '<div class="narrow">';
 		echo '<p>' . __( 'Howdy! Upload your WordPress eXtended RSS (WXR) file and we&#8217;ll import the posts, pages, comments, custom fields, categories, and tags into this site.', 'wordpress-importer' ) . '</p>';
 		echo '<p>' . __( 'Choose a WXR (.xml) file to upload, then click Upload file and import.', 'wordpress-importer' ) . '</p>';
@@ -1343,7 +1490,7 @@ class WP_Import extends WP_Importer {
 	 * @param string $key The meta key to check
 	 * @return string|bool The key if we do want to import, false if not
 	 */
-	function is_valid_meta_key( $key ) {
+	public function is_valid_meta_key( $key ) {
 		// skip attachment metadata since we'll regenerate it from scratch
 		// skip _edit_lock as not relevant for import
 		if ( in_array( $key, array( '_wp_attached_file', '_wp_attachment_metadata', '_edit_lock' ), true ) ) {
@@ -1358,7 +1505,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @return bool True if creating users is allowed
 	 */
-	function allow_create_users() {
+	public function allow_create_users() {
 		return apply_filters( 'import_allow_create_users', true );
 	}
 
@@ -1369,7 +1516,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @return bool True if downloading attachments is allowed
 	 */
-	function allow_fetch_attachments() {
+	public function allow_fetch_attachments() {
 		return apply_filters( 'import_allow_fetch_attachments', true );
 	}
 
@@ -1379,7 +1526,7 @@ class WP_Import extends WP_Importer {
 	 *
 	 * @return int Maximum attachment file size to import
 	 */
-	function max_attachment_size() {
+	public function max_attachment_size() {
 		return apply_filters( 'import_attachment_size_limit', 0 );
 	}
 
@@ -1387,12 +1534,12 @@ class WP_Import extends WP_Importer {
 	 * Added to http_request_timeout filter to force timeout at 60 seconds during import
 	 * @return int 60
 	 */
-	function bump_request_timeout( $val ) {
+	public function bump_request_timeout( $val ) {
 		return 60;
 	}
 
 	// return the difference in length between two strings
-	function cmpr_strlen( $a, $b ) {
+	public function cmpr_strlen( $a, $b ) {
 		return strlen( $b ) - strlen( $a );
 	}
 
@@ -1492,5 +1639,25 @@ class WP_Import extends WP_Importer {
 		}
 
 		return isset( $map[ $mime_type ] ) ? $map[ $mime_type ] : null;
+	}
+
+	/**
+	 * Unserializes data only if it was serialized.
+	 *
+	 * @since 0.8.4
+	 *
+	 * @param string $data Data that might be unserialized.
+	 * @return mixed Unserialized data can be any type.
+	 */
+	protected function maybe_unserialize( $data ) {
+		// Don't attempt to unserialize data that wasn't serialized going in.
+		if ( is_serialized( $data ) ) {
+			// Transform the serialized objects to a stdClass object.
+			$data = preg_replace( '/O:\d+:"[^"]+":/', 'O:8:"stdClass":', $data );
+
+			return maybe_unserialize( $data );
+		}
+
+		return $data;
 	}
 }

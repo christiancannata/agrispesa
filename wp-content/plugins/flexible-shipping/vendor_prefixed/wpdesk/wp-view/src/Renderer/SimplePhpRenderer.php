@@ -6,11 +6,11 @@ use FSVendor\WPDesk\View\Resolver\Resolver;
 /**
  * Can render templates
  */
-class SimplePhpRenderer implements \FSVendor\WPDesk\View\Renderer\Renderer
+class SimplePhpRenderer implements Renderer
 {
     /** @var Resolver */
     private $resolver;
-    public function __construct(\FSVendor\WPDesk\View\Resolver\Resolver $resolver)
+    public function __construct(Resolver $resolver)
     {
         $this->set_resolver($resolver);
     }
@@ -19,7 +19,7 @@ class SimplePhpRenderer implements \FSVendor\WPDesk\View\Renderer\Renderer
      *
      * @return void|Resolver
      */
-    public function set_resolver(\FSVendor\WPDesk\View\Resolver\Resolver $resolver)
+    public function set_resolver(Resolver $resolver)
     {
         $this->resolver = $resolver;
     }
@@ -31,9 +31,9 @@ class SimplePhpRenderer implements \FSVendor\WPDesk\View\Renderer\Renderer
      */
     public function render($template, array $params = null)
     {
-        \ob_start();
+        ob_start();
         $this->output_render($template, $params);
-        return \ob_get_clean();
+        return ob_get_clean();
     }
     /**
      * @param string $template
@@ -42,7 +42,7 @@ class SimplePhpRenderer implements \FSVendor\WPDesk\View\Renderer\Renderer
     public function output_render($template, array $params = null)
     {
         if ($params !== null) {
-            \extract($params, \EXTR_SKIP);
+            extract($params, \EXTR_SKIP);
         }
         include $this->resolver->resolve($template . '.php');
     }

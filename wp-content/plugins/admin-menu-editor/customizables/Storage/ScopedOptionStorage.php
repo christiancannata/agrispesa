@@ -75,6 +75,7 @@ class ScopedOptionStorage extends LazyArrayStorage implements StorageInterface, 
 			$this->compressionSupported
 			&& $this->compressionEnabled
 			&& function_exists('gzcompress')
+			&& function_exists('gzuncompress')
 		) {
 			//This presents a migration risk: if the database is migrated from a site
 			//that has the zlib extension to one that does not, the plugin won't be able

@@ -1,7 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 add_filter( 'wpie_import_mapping_fields', "wpie_import_post_mapping_fields", 10, 2 );
 

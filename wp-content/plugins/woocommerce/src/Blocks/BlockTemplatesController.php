@@ -1,12 +1,12 @@
 <?php
+declare( strict_types=1 );
 namespace Automattic\WooCommerce\Blocks;
 
-use Automattic\WooCommerce\Blocks\Templates\ProductCatalogTemplate;
 use Automattic\WooCommerce\Blocks\Utils\BlockTemplateUtils;
 use Automattic\WooCommerce\Blocks\Templates\ComingSoonTemplate;
 
 /**
- * BlockTypesController class.
+ * BlockTemplatesController class.
  *
  * @internal
  */
@@ -23,86 +23,35 @@ class BlockTemplatesController {
 	 * Initialization method.
 	 */
 	public function init() {
-		add_filter( 'pre_get_block_template', array( $this, 'get_block_template_fallback' ), 10, 3 );
 		add_filter( 'pre_get_block_file_template', array( $this, 'get_block_file_template' ), 10, 3 );
 		add_filter( 'get_block_template', array( $this, 'add_block_template_details' ), 10, 3 );
-		add_filter( 'get_block_templates', array( $this, 'add_block_templates' ), 10, 3 );
-		add_filter( 'taxonomy_template_hierarchy', array( $this, 'add_archive_product_to_eligible_for_fallback_templates' ), 10, 1 );
-		add_action( 'after_switch_theme', array( $this, 'check_should_use_blockified_product_grid_templates' ), 10, 2 );
-		add_filter( 'post_type_archive_title', array( $this, 'update_product_archive_title' ), 10, 2 );
+		add_filter( 'get_block_templates', array( $this, 'run_hooks_on_block_templates' ), 10, 3 );
+		add_filter( 'get_block_templates', array( $this, 'add_db_templates_with_woo_slug' ), 10, 3 );
+		add_filter( 'rest_pre_insert_wp_template', array( $this, 'dont_load_templates_for_suggestions' ), 10, 1 );
+		add_filter( 'block_type_metadata_settings', array( $this, 'add_plugin_templates_parts_support' ), 10, 2 );
+		add_filter( 'block_type_metadata_settings', array( $this, 'prevent_shortcodes_html_breakage' ), 10, 2 );
+		add_action( 'current_screen', array( $this, 'hide_template_selector_in_cart_checkout_pages' ), 10 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'dequeue_legacy_scripts' ], 20 );
+	}
 
-		if ( wc_current_theme_is_fse_theme() ) {
-			// By default, the Template Part Block only supports template parts that are in the current theme directory.
-			// This render_callback wrapper allows us to add support for plugin-housed template parts.
-			add_filter(
-				'block_type_metadata_settings',
-				function ( $settings, $metadata ) {
-					if (
-						isset( $metadata['name'], $settings['render_callback'] ) &&
-						'core/template-part' === $metadata['name'] &&
-						in_array( $settings['render_callback'], array( 'render_block_core_template_part', 'gutenberg_render_block_core_template_part' ), true )
-					) {
-						$settings['render_callback'] = array( $this, 'render_woocommerce_template_part' );
-					}
-					return $settings;
-				},
-				10,
-				2
-			);
+	/**
+	 * Dequeue legacy scripts that have no usage with block themes.
+	 */
+	public function dequeue_legacy_scripts() {
+		if ( ! wp_is_block_theme() ) {
+			return;
+		}
 
-			// Prevents shortcodes in templates having their HTML content broken by wpautop.
-			// @see https://core.trac.wordpress.org/ticket/58366 for more info.
-			add_filter(
-				'block_type_metadata_settings',
-				function ( $settings, $metadata ) {
-					if (
-						isset( $metadata['name'], $settings['render_callback'] ) &&
-						'core/shortcode' === $metadata['name']
-					) {
-						$settings['original_render_callback'] = $settings['render_callback'];
-						$settings['render_callback']          = function ( $attributes, $content ) use ( $settings ) {
-							// The shortcode has already been rendered, so look for the cart/checkout HTML.
-							if ( strstr( $content, 'woocommerce-cart-form' ) || strstr( $content, 'wc-empty-cart-message' ) || strstr( $content, 'woocommerce-checkout-form' ) ) {
-								// Return early before wpautop runs again.
-								return $content;
-							}
-
-							$render_callback = $settings['original_render_callback'];
-
-							return $render_callback( $attributes, $content );
-						};
-					}
-					return $settings;
-				},
-				10,
-				2
-			);
-
-			/**
-			 * Prevents the pages that are assigned as cart/checkout from showing the "template" selector in the page-editor.
-			 * We want to avoid this flow and point users towards the site editor instead.
-			 */
-			add_action(
-				'current_screen',
-				function () {
-					if ( ! is_admin() ) {
-						return;
-					}
-
-					$current_screen = get_current_screen();
-
-					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					if ( $current_screen && 'page' === $current_screen->id && ! empty( $_GET['post'] ) && in_array( absint( $_GET['post'] ), array( wc_get_page_id( 'cart' ), wc_get_page_id( 'checkout' ) ), true ) ) {
-						wp_add_inline_style( 'wc-blocks-editor-style', '.edit-post-post-template { display: none; }' );
-					}
-				},
-				10
-			);
+		if ( is_product() ) {
+			wp_dequeue_script( 'wc-single-product' );
 		}
 	}
 
 	/**
 	 * Renders the `core/template-part` block on the server.
+	 *
+	 * This is done because the core handling for template parts only supports templates from the current theme, not
+	 * from a plugin.
 	 *
 	 * @param array $attributes The block attributes.
 	 * @return string The render.
@@ -112,125 +61,85 @@ class BlockTemplatesController {
 			$template_part = get_block_template( $attributes['theme'] . '//' . $attributes['slug'], 'wp_template_part' );
 
 			if ( $template_part && ! empty( $template_part->content ) ) {
-				return do_blocks( $template_part->content );
+				$content = do_blocks( $template_part->content );
+
+				if ( empty( $attributes['tagName'] ) || tag_escape( $attributes['tagName'] ) !== $attributes['tagName'] ) {
+					$html_tag = 'div';
+				} else {
+					$html_tag = esc_attr( $attributes['tagName'] );
+				}
+				$wrapper_attributes = get_block_wrapper_attributes();
+
+				return "<$html_tag $wrapper_attributes>" . str_replace( ']]>', ']]&gt;', $content ) . "</$html_tag>";
 			}
 		}
 		return function_exists( '\gutenberg_render_block_core_template_part' ) ? \gutenberg_render_block_core_template_part( $attributes ) : \render_block_core_template_part( $attributes );
 	}
 
 	/**
-	 * This function is used on the `pre_get_block_template` hook to return the fallback template from the db in case
-	 * the template is eligible for it.
+	 * By default, the Template Part Block only supports template parts that are in the current theme directory.
+	 * This render_callback wrapper allows us to add support for plugin-housed template parts.
 	 *
-	 * @param \WP_Block_Template|null $template Block template object to short-circuit the default query,
-	 *                                          or null to allow WP to run its normal queries.
-	 * @param string                  $id Template unique identifier (example: theme_slug//template_slug).
-	 * @param string                  $template_type wp_template or wp_template_part.
-	 *
-	 * @return object|null
+	 * @param array $settings Array of determined settings for registering a block type.
+	 * @param array $metadata     Metadata provided for registering a block type.
 	 */
-	public function get_block_template_fallback( $template, $id, $template_type ) {
-		// Add protection against invalid ids.
-		if ( ! is_string( $id ) || ! strstr( $id, '//' ) ) {
-			return null;
-		}
-		// Add protection against invalid template types.
+	public function add_plugin_templates_parts_support( $settings, $metadata ) {
 		if (
-			'wp_template' !== $template_type &&
-			'wp_template_part' !== $template_type
+			isset( $metadata['name'], $settings['render_callback'] ) &&
+			'core/template-part' === $metadata['name'] &&
+			in_array( $settings['render_callback'], array( 'render_block_core_template_part', 'gutenberg_render_block_core_template_part' ), true )
 		) {
-			return null;
+			$settings['render_callback'] = array( $this, 'render_woocommerce_template_part' );
 		}
-		$template_name_parts = explode( '//', $id );
-		$theme               = $template_name_parts[0] ?? '';
-		$slug                = $template_name_parts[1] ?? '';
-
-		if ( empty( $theme ) || empty( $slug ) || ! BlockTemplateUtils::template_is_eligible_for_product_archive_fallback( $slug ) ) {
-			return null;
-		}
-
-		$wp_query_args  = array(
-			'post_name__in' => array( ProductCatalogTemplate::SLUG, $slug ),
-			'post_type'     => $template_type,
-			'post_status'   => array( 'auto-draft', 'draft', 'publish', 'trash' ),
-			'no_found_rows' => true,
-			'tax_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-				array(
-					'taxonomy' => 'wp_theme',
-					'field'    => 'name',
-					'terms'    => $theme,
-				),
-			),
-		);
-		$template_query = new \WP_Query( $wp_query_args );
-		$posts          = $template_query->posts;
-
-		// If we have more than one result from the query, it means that the current template is present in the db (has
-		// been customized by the user) and we should not return the `archive-product` template.
-		if ( count( $posts ) > 1 ) {
-			return null;
-		}
-
-		if ( count( $posts ) > 0 && ProductCatalogTemplate::SLUG === $posts[0]->post_name ) {
-			$template = _build_block_template_result_from_post( $posts[0] );
-
-			if ( ! is_wp_error( $template ) ) {
-				$template->id          = $theme . '//' . $slug;
-				$template->slug        = $slug;
-				$template->title       = BlockTemplateUtils::get_block_template_title( $slug );
-				$template->description = BlockTemplateUtils::get_block_template_description( $slug );
-				unset( $template->source );
-
-				return $template;
-			}
-		}
-
-		return $template;
+		return $settings;
 	}
 
+
 	/**
-	 * Adds the `archive-product` template to the `taxonomy-product_cat`, `taxonomy-product_tag`, `taxonomy-attribute`
-	 * templates to be able to fall back to it.
+	 * Prevents shortcodes in templates having their HTML content broken by wpautop.
 	 *
-	 * @param array $template_hierarchy A list of template candidates, in descending order of priority.
+	 * @see https://core.trac.wordpress.org/ticket/58366 for more info.
+	 *
+	 * @param array $settings Array of determined settings for registering a block type.
+	 * @param array $metadata     Metadata provided for registering a block type.
 	 */
-	public function add_archive_product_to_eligible_for_fallback_templates( $template_hierarchy ) {
-		$template_slugs = array_map(
-			'_strip_template_file_suffix',
-			$template_hierarchy
-		);
+	public function prevent_shortcodes_html_breakage( $settings, $metadata ) {
+		if (
+				isset( $metadata['name'], $settings['render_callback'] ) &&
+				'core/shortcode' === $metadata['name']
+			) {
+			$settings['original_render_callback'] = $settings['render_callback'];
+			$settings['render_callback']          = function ( $attributes, $content ) use ( $settings ) {
+				// The shortcode has already been rendered, so look for the cart/checkout HTML.
+				if ( strstr( $content, 'woocommerce-cart-form' ) || strstr( $content, 'wc-empty-cart-message' ) || strstr( $content, 'woocommerce-checkout-form' ) ) {
+					// Return early before wpautop runs again.
+					return $content;
+				}
 
-		$templates_eligible_for_fallback = array_filter(
-			$template_slugs,
-			function ( $template_slug ) {
-				return BlockTemplateUtils::template_is_eligible_for_product_archive_fallback( $template_slug );
-			}
-		);
+				$render_callback = $settings['original_render_callback'];
 
-		if ( count( $templates_eligible_for_fallback ) > 0 ) {
-			$template_hierarchy[] = ProductCatalogTemplate::SLUG;
+				return $render_callback( $attributes, $content );
+			};
 		}
-
-		return $template_hierarchy;
+		return $settings;
 	}
 
 	/**
-	 * Checks the old and current themes and determines if the "wc_blocks_use_blockified_product_grid_block_as_template"
-	 * option need to be updated accordingly.
+	 * Prevents the pages that are assigned as Cart/Checkout from showing the "template" selector in the page-editor.
+	 * We want to avoid this flow and point users towards the Site Editor instead.
 	 *
-	 * @param string    $old_name Old theme name.
-	 * @param \WP_Theme $old_theme Instance of the old theme.
 	 * @return void
 	 */
-	public function check_should_use_blockified_product_grid_templates( $old_name, $old_theme ) {
-		if ( ! wc_current_theme_is_fse_theme() ) {
-			update_option( Options::WC_BLOCK_USE_BLOCKIFIED_PRODUCT_GRID_BLOCK_AS_TEMPLATE, wc_bool_to_string( false ) );
+	public function hide_template_selector_in_cart_checkout_pages() {
+		if ( ! is_admin() ) {
 			return;
 		}
 
-		if ( ! $old_theme->is_block_theme() && wc_current_theme_is_fse_theme() ) {
-			update_option( Options::WC_BLOCK_USE_BLOCKIFIED_PRODUCT_GRID_BLOCK_AS_TEMPLATE, wc_bool_to_string( true ) );
-			return;
+		$current_screen = get_current_screen();
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( $current_screen && 'page' === $current_screen->id && ! empty( $_GET['post'] ) && in_array( absint( $_GET['post'] ), array( wc_get_page_id( 'cart' ), wc_get_page_id( 'checkout' ) ), true ) ) {
+			wp_add_inline_style( 'wc-blocks-editor-style', '.edit-post-post-template { display: none; }' );
 		}
 	}
 
@@ -253,13 +162,6 @@ class BlockTemplatesController {
 		}
 
 		list( $template_id, $template_slug ) = $template_name_parts;
-
-		// If the theme has an archive-product.html template, but not a taxonomy-product_cat/tag/attribute.html template let's use the themes archive-product.html template.
-		if ( BlockTemplateUtils::template_is_eligible_for_product_archive_fallback_from_theme( $template_slug ) ) {
-			$template_path   = BlockTemplateUtils::get_theme_template_path( ProductCatalogTemplate::SLUG );
-			$template_object = BlockTemplateUtils::create_new_block_template_object( $template_path, $template_type, $template_slug, true );
-			return BlockTemplateUtils::build_template_result_from_file( $template_object, $template_type );
-		}
 
 		// This is a real edge-case, we are supporting users who have saved templates under the deprecated slug. See its definition for more information.
 		// You can likely ignore this code unless you're supporting/debugging early customised templates.
@@ -311,75 +213,105 @@ class BlockTemplatesController {
 	}
 
 	/**
-	 * Add the block template objects to be used.
+	 * Run hooks on block templates.
+	 *
+	 * @param array $templates The block templates.
+	 * @return array The block templates.
+	 */
+	public function run_hooks_on_block_templates( $templates ) {
+		// There is a bug in the WordPress implementation that causes block hooks not to run in templates registered
+		// via the Template Registration API. Because of this, we run them manually.
+		// https://github.com/WordPress/gutenberg/issues/71139.
+		foreach ( $templates as $template ) {
+			if ( 'plugin' === $template->source && 'woocommerce' === $template->plugin ) {
+				$template->content = apply_block_hooks_to_content( $template->content, $template, 'insert_hooked_blocks_and_set_ignored_hooked_blocks_metadata' );
+			}
+		}
+
+		return $templates;
+	}
+
+	/**
+	 * Add the block template objects currently saved in the database with the WooCommerce slug.
+	 * That is, templates that have been customised before WooCommerce started to use the
+	 * Template Registration API.
 	 *
 	 * @param array  $query_result Array of template objects.
 	 * @param array  $query Optional. Arguments to retrieve templates.
 	 * @param string $template_type wp_template or wp_template_part.
 	 * @return array
 	 */
-	public function add_block_templates( $query_result, $query, $template_type ) {
+	public function add_db_templates_with_woo_slug( $query_result, $query, $template_type ) {
 		$slugs = isset( $query['slug__in'] ) ? $query['slug__in'] : array();
 
 		if ( ! BlockTemplateUtils::supports_block_templates( $template_type ) && ! in_array( ComingSoonTemplate::SLUG, $slugs, true ) ) {
 			return $query_result;
 		}
 
-		$post_type      = isset( $query['post_type'] ) ? $query['post_type'] : '';
-		$template_files = $this->get_block_templates( $slugs, $template_type );
-		$theme_slug     = wp_get_theme()->get_stylesheet();
+		// For templates, we only need to load templates from the database. For
+		// template parts, we also need to load them from the filesystem, as
+		// there is no Template registration API for template parts.
+		$template_files = 'wp_template' === $template_type ? BlockTemplateUtils::get_block_templates_from_db( $slugs, $template_type ) : $this->get_block_templates( $slugs, $template_type );
+		$new_templates  = array();
 
-		// @todo: Add apply_filters to _gutenberg_get_template_files() in Gutenberg to prevent duplication of logic.
 		foreach ( $template_files as $template_file ) {
-
-			// If we have a template which is eligible for a fallback, we need to explicitly tell Gutenberg that
-			// it has a theme file (because it is using the fallback template file). And then `continue` to avoid
-			// adding duplicates.
-			if ( BlockTemplateUtils::set_has_theme_file_if_fallback_is_available( $query_result, $template_file ) ) {
-				continue;
-			}
-
-			// If the current $post_type is set (e.g. on an Edit Post screen), and isn't included in the available post_types
-			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
-			// in the template dropdown on the Edit Post page.
-			if ( $post_type &&
-				isset( $template_file->post_types ) &&
-				! in_array( $post_type, $template_file->post_types, true )
-			) {
-				continue;
-			}
-
 			// It would be custom if the template was modified in the editor, so if it's not custom we can load it from
 			// the filesystem.
-			if ( 'custom' === $template_file->source ) {
-				$query_result[] = $template_file;
+			if (
+				'custom' === $template_file->source &&
+				(
+					BlockTemplateUtils::PLUGIN_SLUG === $template_file->theme ||
+					BlockTemplateUtils::DEPRECATED_PLUGIN_SLUG === $template_file->theme
+				)
+			) {
+				array_unshift( $new_templates, $template_file );
 				continue;
 			}
 
-			$is_not_custom   = false === array_search(
-				$theme_slug . '//' . $template_file->slug,
-				array_column( $query_result, 'id' ),
-				true
-			);
-			$fits_slug_query =
-				! isset( $query['slug__in'] ) || in_array( $template_file->slug, $query['slug__in'], true );
-			$fits_area_query =
-				! isset( $query['area'] ) || ( property_exists( $template_file, 'area' ) && $template_file->area === $query['area'] );
-			$should_include  = $is_not_custom && $fits_slug_query && $fits_area_query;
-			if ( $should_include ) {
-				$template       = BlockTemplateUtils::build_template_result_from_file( $template_file, $template_type );
-				$query_result[] = $template;
+			// We only need to build templates from the filesystem for template parts.
+			// Regular templates are handled by the Template registration API.
+			if ( 'wp_template_part' === $template_type ) {
+				$theme_slug            = get_stylesheet();
+				$possible_template_ids = [
+					$theme_slug . '//' . $template_file->slug,
+					$theme_slug . '//' . BlockTemplateUtils::DIRECTORY_NAMES['TEMPLATE_PARTS'] . '/' . $template_file->slug,
+					$theme_slug . '//' . BlockTemplateUtils::DIRECTORY_NAMES['DEPRECATED_TEMPLATE_PARTS'] . '/' . $template_file->slug,
+				];
+
+				$is_custom                 = false;
+				$query_result_template_ids = array_column( $query_result, 'id' );
+
+				foreach ( $possible_template_ids as $template_id ) {
+					if ( in_array( $template_id, $query_result_template_ids, true ) ) {
+						$is_custom = true;
+						break;
+					}
+				}
+				$fits_slug_query =
+					! isset( $query['slug__in'] ) || in_array( $template_file->slug, $query['slug__in'], true );
+				$fits_area_query =
+					! isset( $query['area'] ) || ( property_exists( $template_file, 'area' ) && $template_file->area === $query['area'] );
+				$should_include  = ! $is_custom && $fits_slug_query && $fits_area_query;
+				if ( $should_include ) {
+					$template       = BlockTemplateUtils::build_template_result_from_file( $template_file, $template_type );
+					$query_result[] = $template;
+				}
 			}
 		}
 
-		// We need to remove theme (i.e. filesystem) templates that have the same slug as a customised one.
-		// This only affects saved templates that were saved BEFORE a theme template with the same slug was added.
-		$query_result = BlockTemplateUtils::remove_theme_templates_with_custom_alternative( $query_result );
+		$query_result = array_merge( $new_templates, $query_result );
 
-		// There is the chance that the user customized the default template, installed a theme with a custom template
-		// and customized that one as well. When that happens, duplicates might appear in the list.
-		// See: https://github.com/woocommerce/woocommerce/issues/42220.
-		$query_result = BlockTemplateUtils::remove_duplicate_customized_templates( $query_result, $theme_slug );
+		if ( count( $new_templates ) > 0 ) {
+			// If there are certain templates that have been customised with the `woocommerce/woocommerce` slug,
+			// We prioritize them over the theme and WC templates. That is, we remove the theme and WC templates
+			// from the results and only keep the customised ones.
+			$query_result = BlockTemplateUtils::remove_templates_with_custom_alternative( $query_result );
+
+			// There is the chance that the user customized the default template, installed a theme with a custom template
+			// and customized that one as well. When that happens, duplicates might appear in the list.
+			// See: https://github.com/woocommerce/woocommerce/issues/42220.
+			$query_result = BlockTemplateUtils::remove_duplicate_customized_templates( $query_result );
+		}
 
 		/**
 		 * WC templates from theme aren't included in `$this->get_block_templates()` but are handled by Gutenberg.
@@ -397,16 +329,17 @@ class BlockTemplatesController {
 	}
 
 	/**
-	 * Gets the templates saved in the database.
+	 * When creating a template from the WP suggestion, don't load the templates with the WooCommerce slug.
+	 * Otherwise they take precedence and the new template can't be created.
 	 *
-	 * @param array  $slugs An array of slugs to retrieve templates for.
-	 * @param string $template_type wp_template or wp_template_part.
-	 *
-	 * @return int[]|\WP_Post[] An array of found templates.
+	 * @param stdClass $prepared_post An object representing a single post prepared
+	 *                                for inserting or updating the database.
 	 */
-	public function get_block_templates_from_db( $slugs = array(), $template_type = 'wp_template' ) {
-		wc_deprecated_function( 'BlockTemplatesController::get_block_templates_from_db()', '7.8', '\Automattic\WooCommerce\Blocks\Utils\BlockTemplateUtils::get_block_templates_from_db()' );
-		return BlockTemplateUtils::get_block_templates_from_db( $slugs, $template_type );
+	public function dont_load_templates_for_suggestions( $prepared_post ) {
+		if ( isset( $prepared_post->meta_input['is_wp_suggestion'] ) ) {
+			remove_filter( 'get_block_templates', array( $this, 'add_db_templates_with_woo_slug' ), 10, 3 );
+		}
+		return $prepared_post;
 	}
 
 	/**
@@ -452,32 +385,6 @@ class BlockTemplatesController {
 				continue;
 			}
 
-			if ( BlockTemplateUtils::template_is_eligible_for_product_archive_fallback_from_db( $template_slug, $already_found_templates ) ) {
-				$template              = clone BlockTemplateUtils::get_fallback_template_from_db( $template_slug, $already_found_templates );
-				$template_id           = explode( '//', $template->id );
-				$template->id          = $template_id[0] . '//' . $template_slug;
-				$template->slug        = $template_slug;
-				$template->title       = BlockTemplateUtils::get_block_template_title( $template_slug );
-				$template->description = BlockTemplateUtils::get_block_template_description( $template_slug );
-				$templates[]           = $template;
-				continue;
-			}
-
-			// If the theme has an archive-product.html template, but not a taxonomy-product_cat/tag/attribute.html template let's use the themes archive-product.html template.
-			if ( BlockTemplateUtils::template_is_eligible_for_product_archive_fallback_from_theme( $template_slug ) ) {
-				$template_file = BlockTemplateUtils::get_theme_template_path( ProductCatalogTemplate::SLUG );
-				$templates[]   = BlockTemplateUtils::create_new_block_template_object( $template_file, $template_type, $template_slug, true );
-				continue;
-			}
-
-			// At this point the template only exists in the Blocks filesystem, if is a taxonomy-product_cat/tag/attribute.html template
-			// let's use the archive-product.html template from Blocks.
-			if ( BlockTemplateUtils::template_is_eligible_for_product_archive_fallback( $template_slug ) ) {
-				$template_file = $this->get_template_path_from_woocommerce( ProductCatalogTemplate::SLUG );
-				$templates[]   = BlockTemplateUtils::create_new_block_template_object( $template_file, $template_type, $template_slug, false );
-				continue;
-			}
-
 			// At this point the template only exists in the Blocks filesystem and has not been saved in the DB,
 			// or superseded by the theme.
 			$templates[] = BlockTemplateUtils::create_new_block_template_object( $template_file, $template_type, $template_slug );
@@ -502,18 +409,6 @@ class BlockTemplatesController {
 	}
 
 	/**
-	 * Returns the path of a template on the Blocks template folder.
-	 *
-	 * @param string $template_slug Block template slug e.g. single-product.
-	 * @param string $template_type wp_template or wp_template_part.
-	 *
-	 * @return string
-	 */
-	public function get_template_path_from_woocommerce( $template_slug, $template_type = 'wp_template' ) {
-		return BlockTemplateUtils::get_templates_directory( $template_type ) . '/' . $template_slug . '.html';
-	}
-
-	/**
 	 * Checks whether a block template with that name exists in Woo Blocks
 	 *
 	 * @param string $template_name Template to check.
@@ -530,29 +425,5 @@ class BlockTemplatesController {
 		return is_readable(
 			$directory
 		) || $this->get_block_templates( array( $template_name ), $template_type );
-	}
-
-	/**
-	 * Update the product archive title to "Shop".
-	 *
-	 * Attention: this method is run in classic themes as well, so it
-	 * can't be moved to the ProductCatalogTemplate class. See:
-	 * https://github.com/woocommerce/woocommerce/pull/46429
-	 *
-	 * @param string $post_type_name Post type 'name' label.
-	 * @param string $post_type      Post type.
-	 *
-	 * @return string
-	 */
-	public function update_product_archive_title( $post_type_name, $post_type ) {
-		if (
-			function_exists( 'is_shop' ) &&
-			is_shop() &&
-			'product' === $post_type
-		) {
-			return __( 'Shop', 'woocommerce' );
-		}
-
-		return $post_type_name;
 	}
 }

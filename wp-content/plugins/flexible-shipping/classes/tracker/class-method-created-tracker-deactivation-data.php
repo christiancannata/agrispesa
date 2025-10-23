@@ -101,8 +101,9 @@ class WPDesk_Flexible_Shipping_Method_Created_Tracker_Deactivation_Data implemen
 	 * @return int timestamp
 	 */
 	private function activation_date_according_to_wpdesk_helper() {
-		$option_name     = 'plugin_activation_flexible-shipping/flexible-shipping.php';
-		$activation_date = get_option( $option_name, current_time( 'mysql' ) );
+		$old_option_name = 'plugin_activation_flexible-shipping/flexible-shipping.php';
+		$option_name     = 'activation_plugin_flexible-shipping/flexible-shipping.php';
+		$activation_date = get_option( $old_option_name, get_option( $option_name, current_time( 'mysql' ) ) );
 
 		if ( ! $activation_date ) {
 			return time();

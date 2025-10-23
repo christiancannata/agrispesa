@@ -1,5 +1,7 @@
 <?php
 
+use YahnisElsts\AjaxActionWrapper\v2\Action;
+
 class amePluginVisibility extends amePersistentModule {
 	const HIDE_USAGE_NOTICE_FLAG = 'ws_ame_hide_pv_notice';
 
@@ -16,6 +18,8 @@ class amePluginVisibility extends amePersistentModule {
 		'manage_network_plugins',
 	);
 
+	const CUSTOMIZATION_COMPONENT = 'plugin_visibility';
+
 	protected $optionName = 'ws_ame_plugin_visibility';
 
 	protected $tabSlug = 'plugin-visibility';
@@ -30,13 +34,30 @@ class amePluginVisibility extends amePersistentModule {
 	private static $lastInstance = null;
 
 	/**
-	 * @var Ajaw_v1_Action
+	 * @var Action
 	 */
 	private $dismissNoticeAction;
+
+	/**
+	 * @var ameCustomizationFeatureToggle
+	 */
+	private $customizationFeature;
 
 	public function __construct($menuEditor) {
 		parent::__construct($menuEditor);
 		self::$lastInstance = $this;
+
+		$this->customizationFeature = new ameCustomizationFeatureToggle(
+			self::CUSTOMIZATION_COMPONENT,
+			$this->menuEditor,
+			$this->tabSlug,
+			function () {
+				return [
+					__('You will see the unmodified plugin list on the "Plugins" page.', 'admin-menu-editor'),
+					__('Customized plugin list is disabled for your account.', 'admin-menu-editor'),
+				];
+			}
+		);
 
 		if ( !$this->isEnabledForRequest() ) {
 			return;
@@ -63,11 +84,18 @@ class amePluginVisibility extends amePersistentModule {
 
 		//Display a usage hint in our tab.
 		add_action('admin_notices', array($this, 'displayUsageNotice'));
-		$this->dismissNoticeAction = ajaw_v1_CreateAction('ws_ame_dismiss_pv_usage_notice')
+		$this->dismissNoticeAction = Action::builder('ws_ame_dismiss_pv_usage_notice')
 			->handler(array($this, 'ajaxDismissUsageNotice'))
 			->permissionCallback(array($this->menuEditor, 'current_user_can_edit_menu'))
 			->method('post')
 			->register();
+
+		//On save, let the feature toggle know that so it can display a notice if customization
+		//is disabled for the current user.
+		$params = $this->menuEditor->get_query_params();
+		if ( !empty($params['message']) ) {
+			$this->customizationFeature->onSettingsSaved();
+		}
 	}
 
 	/**
@@ -81,7 +109,7 @@ class amePluginVisibility extends amePersistentModule {
 	 *  - Precedence order: user > super admin > all roles.
 	 *
 	 * @param string $pluginFileName Plugin file name as returned by plugin_basename().
-	 * @param WP_User $user          Current user.
+	 * @param WP_User $user Current user.
 	 * @return bool
 	 */
 	private function isPluginVisible($pluginFileName, $user = null) {
@@ -226,6 +254,10 @@ class amePluginVisibility extends amePersistentModule {
 			return $plugins;
 		}
 
+		if ( $this->customizationFeature->isCustomizationDisabled() ) {
+			return $plugins;
+		}
+
 		$editableProperties = array(
 			'Name'        => 'name',
 			'Description' => 'description',
@@ -274,6 +306,10 @@ class amePluginVisibility extends amePersistentModule {
 			return $updates;
 		}
 
+		if ( $this->customizationFeature->isCustomizationDisabled() ) {
+			return $updates;
+		}
+
 		$pluginFileNames = array_keys($updates->response);
 		foreach ($pluginFileNames as $fileName) {
 			//Remove all hidden plugins.
@@ -295,6 +331,10 @@ class amePluginVisibility extends amePersistentModule {
 	 * @param string $action
 	 */
 	public function authorizePluginAction($action) {
+		if ( $this->customizationFeature->isCustomizationDisabled() ) {
+			return;
+		}
+
 		//PHPCS special case: This hook callback runs inside a function that validates
 		//nonces and selectively overrides the behaviour of that function.
 		//phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- See above
@@ -376,6 +416,10 @@ class amePluginVisibility extends amePersistentModule {
 			return $extensions;
 		}
 
+		if ( $this->customizationFeature->isCustomizationDisabled() ) {
+			return $extensions;
+		}
+
 		//Identify the plugin that's being edited.
 		$selectedPlugin = $this->identifyPluginFromFileName($pluginFile);
 		if ( $selectedPlugin !== null ) {
@@ -435,6 +479,10 @@ class amePluginVisibility extends amePersistentModule {
 		return $result;
 	}
 
+	protected function getWrapClasses() {
+		return array_merge(parent::getWrapClasses(), ['ame-tab-list-bottom-margin-disabled']);
+	}
+
 	public function handleFormSubmission($action, $post = array()) {
 		//Note: We don't need to check user permissions here because plugin core already did.
 		if ( $action === 'save_plugin_visibility' ) {
@@ -450,7 +498,7 @@ class amePluginVisibility extends amePersistentModule {
 				$params['selected_actor'] = strval($post['selected_actor']);
 			}
 
-			wp_redirect($this->getTabUrl($params));
+			wp_safe_redirect($this->getTabUrl($params));
 			exit;
 		}
 	}
@@ -463,7 +511,7 @@ class amePluginVisibility extends amePersistentModule {
 				'ame-lodash',
 				'ame-knockout',
 				'ame-actor-selector',
-				$this->dismissNoticeAction->getScriptHandle(),
+				$this->dismissNoticeAction->getRegisteredScriptHandle(),
 			)
 		);
 		wp_enqueue_script('ame-plugin-visibility');

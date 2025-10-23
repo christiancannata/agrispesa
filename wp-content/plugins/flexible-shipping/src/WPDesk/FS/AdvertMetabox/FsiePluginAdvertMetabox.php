@@ -29,21 +29,25 @@ class FsiePluginAdvertMetabox implements Hookable, HookableCollection {
 
 		$should_show_strategy = new ShippingMethodInstanceShouldShowStrategy( new \WC_Shipping_Zones(), ShippingMethodSingle::SHIPPING_METHOD_ID );
 		$this->add_hookable( new AdminAssets( $this->assets_url, 'fs', $should_show_strategy ) );
-		$this->add_hookable( new SettingsSidebar(
-			'woocommerce_settings_tabs_shipping',
-			$should_show_strategy,
-			__( 'Extend the Flexible Shipping capabilities with functional add-ons', 'flexible-shipping' ),
-			[
-				__( 'Calculate the shipping cost based on your custom locations or the WooCommerce defaults', 'flexible-shipping' ),
-				__( 'Define shipping cost for each Vendor / Product Author in your marketplace', 'flexible-shipping' ),
-				__( 'Move, replace, update or backup multiple shipping methods with Import / Export feature', 'flexible-shipping' ),
-			],
-			get_locale() === 'pl_PL' ? 'https://octol.io/fs-info-addons-pl' : 'https://octol.io/addons-box-fs',
-			__( 'Buy Flexible Shipping Add-ons', 'flexible-shipping' ),
-			1200
-		) );
+		add_action(
+			'admin_init',
+			function () use ( $should_show_strategy ) {
+				( new SettingsSidebar(
+					'woocommerce_settings_tabs_shipping',
+					$should_show_strategy,
+					__( 'Extend the Flexible Shipping capabilities with functional add-ons', 'flexible-shipping' ),
+					[
+						__( 'Calculate the shipping cost based on your custom locations or the WooCommerce defaults', 'flexible-shipping' ),
+						__( 'Define shipping cost for each Vendor / Product Author in your marketplace', 'flexible-shipping' ),
+						__( 'Move, replace, update or backup multiple shipping methods with Import / Export feature', 'flexible-shipping' ),
+					],
+					get_locale() === 'pl_PL' ? 'https://octol.io/fs-info-addons-pl' : 'https://octol.io/addons-box-fs',
+					__( 'Buy Flexible Shipping Add-ons', 'flexible-shipping' ),
+					1200
+				) )->hooks();
+			}
+		);
 
 		$this->hooks_on_hookable_objects();
 	}
-
 }

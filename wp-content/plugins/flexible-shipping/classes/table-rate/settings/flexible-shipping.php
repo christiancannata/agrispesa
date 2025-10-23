@@ -17,6 +17,7 @@ $settings = array(
 		'type'        => 'title',
 		// Translators: link.
 		'description' => sprintf( __( 'See how to %1$sconfigure Flexible Shipping%2$s.', 'flexible-shipping' ), '<a href="' . $docs_link . '" target="_blank">', '</a>' ),
+		'default'     => '',
 	),
 	'enabled'                => array(
 		'title'   => __( 'Enable/Disable', 'flexible-shipping' ),

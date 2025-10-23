@@ -8,7 +8,7 @@ use FSVendor\WPDesk_Plugin_Info;
 /**
  * .
  */
-class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class Assets implements Hookable
 {
     use AdminPage;
     public const HANDLE = 'octolize-shipping-extensions';
@@ -32,19 +32,19 @@ class Assets implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     /**
      * @return void
      */
-    public function hooks() : void
+    public function hooks(): void
     {
-        \add_action('admin_enqueue_scripts', [$this, 'register_scripts']);
+        add_action('admin_enqueue_scripts', [$this, 'register_scripts']);
     }
     /**
      * @return void
      */
-    public function register_scripts() : void
+    public function register_scripts(): void
     {
         if (!$this->is_shipping_extensions_page()) {
             return;
         }
-        \wp_enqueue_style(self::HANDLE, $this->assets_url . 'dist/css/shipping-extensions.css', [], $this->version);
-        \wp_enqueue_script(self::HANDLE, $this->assets_url . 'dist/js/shipping-extensions.js', ['jquery'], $this->version, \true);
+        wp_enqueue_style(self::HANDLE, $this->assets_url . 'dist/css/shipping-extensions.css', [], $this->version);
+        wp_enqueue_script(self::HANDLE, $this->assets_url . 'dist/js/shipping-extensions.js', ['jquery'], $this->version, \true);
     }
 }

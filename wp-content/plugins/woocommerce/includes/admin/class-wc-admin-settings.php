@@ -7,6 +7,8 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Internal\Features\FeaturesController;
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -47,25 +49,57 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 			if ( empty( self::$settings ) ) {
 				$settings = array();
 
-				include_once dirname( __FILE__ ) . '/settings/class-wc-settings-page.php';
+				include_once __DIR__ . '/settings/class-wc-settings-page.php';
 
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-general.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-products.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-tax.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-shipping.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-payment-gateways.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-accounts.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-emails.php';
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-integrations.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-general.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-products.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-tax.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-shipping.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-payment-gateways.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-accounts.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-emails.php';
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-integrations.php';
 				if ( \Automattic\WooCommerce\Admin\Features\Features::is_enabled( 'launch-your-store' ) ) {
-					$settings[] = include __DIR__ . '/settings/class-wc-settings-site-visibility.php';
+					$settings[] = include_once __DIR__ . '/settings/class-wc-settings-site-visibility.php';
 				}
-				$settings[] = include __DIR__ . '/settings/class-wc-settings-advanced.php';
+				if ( FeaturesUtil::feature_is_enabled( 'point_of_sale' ) ) {
+					$settings[] = include_once __DIR__ . '/settings/class-wc-settings-point-of-sale.php';
+				}
+				$settings[] = include_once __DIR__ . '/settings/class-wc-settings-advanced.php';
 
 				self::$settings = apply_filters( 'woocommerce_get_settings_pages', $settings );
+				add_action(
+					'admin_head',
+					function () {
+						if ( function_exists( 'get_current_screen' ) ) {
+							$screen = get_current_screen();
+							if ( 'woocommerce_page_wc-settings' === $screen->id ) {
+								$screen->remove_help_tabs();
+							}
+						}
+					}
+				);
+
+				// Reset settings when features that affect settings are toggled.
+				add_action( FeaturesController::FEATURE_ENABLED_CHANGED_ACTION, array( __CLASS__, 'reset_settings_pages_on_feature_change' ), 10, 2 );
 			}
 
 			return self::$settings;
+		}
+
+		/**
+		 * Reset settings when features that affect settings are toggled.
+		 *
+		 * @param string $feature_id The feature ID.
+		 * @param bool   $is_enabled Whether the feature is enabled.
+		 *
+		 * @internal For exclusive usage within this class, backwards compatibility not guaranteed.
+		 */
+		public static function reset_settings_pages_on_feature_change( $feature_id, $is_enabled ) {
+			if ( 'point_of_sale' === $feature_id && $is_enabled ) {
+				self::$settings = array();
+				self::get_settings_pages();
+			}
 		}
 
 		/**
@@ -153,7 +187,7 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 			// Get tabs for the settings page.
 			$tabs = apply_filters( 'woocommerce_settings_tabs_array', array() );
 
-			include dirname( __FILE__ ) . '/views/html-admin-settings.php';
+			include __DIR__ . '/views/html-admin-settings.php';
 		}
 
 		/**
@@ -375,7 +409,8 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 
 					// Textarea.
 					case 'textarea':
-						$option_value = $value['value'];
+						$option_value     = $value['value'];
+						$show_desc_at_end = $value['desc_at_end'] ?? false;
 
 						?>
 						<tr class="<?php echo esc_attr( $value['row_class'] ); ?>">
@@ -383,8 +418,11 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 								<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?></label>
 							</th>
 							<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
-								<?php echo $description; // WPCS: XSS ok. ?>
-
+								<?php
+								if ( ! $show_desc_at_end ) {
+									echo wp_kses_post( $description );
+								}
+								?>
 								<textarea
 									name="<?php echo esc_attr( $value['field_name'] ); ?>"
 									id="<?php echo esc_attr( $value['id'] ); ?>"
@@ -393,6 +431,11 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 									placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
 									<?php echo implode( ' ', $custom_attributes ); // WPCS: XSS ok. ?>
 									><?php echo esc_textarea( $option_value ); // WPCS: XSS ok. ?></textarea>
+								<?php
+								if ( $show_desc_at_end ) {
+									echo wp_kses_post( $description );
+								}
+								?>
 							</td>
 						</tr>
 						<?php
@@ -514,11 +557,19 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 							$visibility_class[] = $value['row_class'];
 						}
 
+						$must_disable = $value['disabled'] ?? false;
+
+						if ( $must_disable ) {
+							$visibility_class[] = 'disabled';
+						}
+
 						$container_class = implode( ' ', $visibility_class );
-						$must_disable    = $value['disabled'] ?? false;
+						$has_title       = isset( $value['title'] ) && '' !== $value['title'];
+						$has_legend      = isset( $value['legend'] ) && '' !== $value['legend'];
 
 						if ( ! isset( $value['checkboxgroup'] ) || 'start' === $value['checkboxgroup'] ) {
-							$has_tooltip             = isset( $value['tooltip'] ) && '' !== $value['tooltip'];
+							$has_tooltip = isset( $value['tooltip'] ) && '' !== $value['tooltip'];
+
 							$tooltip_container_class = $has_tooltip ? 'with-tooltip' : '';
 							?>
 								<tr class="<?php echo esc_attr( $container_class ); ?>">
@@ -535,9 +586,9 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 							<?php
 						}
 
-						if ( ! empty( $value['title'] ) ) {
+						if ( $has_title || $has_legend ) {
 							?>
-								<legend class="screen-reader-text"><span><?php echo esc_html( $value['title'] ); ?></span></legend>
+								<legend class="<?php echo $has_legend ? '' : 'screen-reader-text'; ?>"><span><?php echo esc_html( $has_legend ? $value['legend'] : $value['title'] ); ?></span></legend>
 							<?php
 						}
 
@@ -550,7 +601,6 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 									type="checkbox"
 									class="<?php echo esc_attr( isset( $value['class'] ) ? $value['class'] : '' ); ?>"
 									value="1"
-									<?php disabled( $value['disabled'] ?? false ); ?>
 									<?php checked( $option_value, 'yes' ); ?>
 									<?php echo implode( ' ', $custom_attributes ); // WPCS: XSS ok. ?>
 								/> <?php echo $description; // WPCS: XSS ok. ?>
@@ -689,7 +739,7 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 							<th scope="row" class="titledesc">
 								<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?></label>
 							</th>
-							<td class="forminp"><select name="<?php echo esc_attr( $value['field_name'] ); ?>" style="<?php echo esc_attr( $value['css'] ); ?>" data-placeholder="<?php esc_attr_e( 'Choose a country / region&hellip;', 'woocommerce' ); ?>" aria-label="<?php esc_attr_e( 'Country / Region', 'woocommerce' ); ?>" class="wc-enhanced-select">
+							<td class="forminp"><select name="<?php echo esc_attr( $value['field_name'] ); ?>" id="<?php echo esc_attr( $value['id'] ); ?>" style="<?php echo esc_attr( $value['css'] ); ?>" data-placeholder="<?php esc_attr_e( 'Choose a country / region&hellip;', 'woocommerce' ); ?>" aria-label="<?php esc_attr_e( 'Country / Region', 'woocommerce' ); ?>" class="wc-enhanced-select">
 								<?php WC()->countries->country_dropdown_options( $country, $state ); ?>
 							</select> <?php echo $description; // WPCS: XSS ok. ?>
 							</td>
@@ -714,7 +764,14 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 								<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?></label>
 							</th>
 							<td class="forminp">
-								<select multiple="multiple" name="<?php echo esc_attr( $value['field_name'] ); ?>[]" style="width:350px" data-placeholder="<?php esc_attr_e( 'Choose countries / regions&hellip;', 'woocommerce' ); ?>" aria-label="<?php esc_attr_e( 'Country / Region', 'woocommerce' ); ?>" class="wc-enhanced-select">
+								<select
+									multiple="multiple"
+									name="<?php echo esc_attr( $value['field_name'] ); ?>[]"
+									id="<?php echo esc_attr( $value['id'] ); ?>"
+									style="width:350px"
+									data-placeholder="<?php esc_attr_e( 'Choose countries / regions&hellip;', 'woocommerce' ); ?>"
+									aria-label="<?php esc_attr_e( 'Country / Region', 'woocommerce' ); ?>"
+									class="wc-enhanced-select">
 									<?php
 									if ( ! empty( $countries ) ) {
 										foreach ( $countries as $key => $val ) {
@@ -805,9 +862,12 @@ if ( ! class_exists( 'WC_Admin_Settings', false ) ) :
 				$description = $value['desc'];
 			}
 
+			$desc_at_end = ( isset( $value['desc_at_end'] ) ? $value['desc_at_end'] : false );
 			$error_class = ( ! empty( $value['description_is_error'] ) ) ? 'is-error' : '';
 
-			if ( $description && in_array( $value['type'], array( 'textarea', 'radio' ), true ) ) {
+			if ( $description && in_array( $value['type'], array( 'textarea' ), true ) && true !== $desc_at_end ) {
+				$description = '<p class="description ' . $error_class . '" style="margin-top:0;">' . wp_kses_post( $description ) . '</p>';
+			} elseif ( $description && in_array( $value['type'], array( 'radio' ), true ) ) {
 				$description = '<p style="margin-top:0">' . wp_kses_post( $description ) . '</p>';
 			} elseif ( $description && in_array( $value['type'], array( 'checkbox' ), true ) ) {
 				$description = wp_kses_post( $description );

@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class Header extends \FSVendor\WPDesk\Forms\Field\NoValueField
+class Header extends NoValueField
 {
     public function __construct()
     {

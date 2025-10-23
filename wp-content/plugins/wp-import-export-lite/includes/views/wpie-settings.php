@@ -1,7 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) )
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-
+defined( 'ABSPATH' ) || exit;
 global $wp_roles;
 
 $user_roles = $wp_roles->get_names();
@@ -47,7 +45,6 @@ if ( !is_string( $token ) || trim( $token ) === "" ) {
 }
 
 $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.php' ) );
-
 ?>
 
 <div class="wpie_main_container">
@@ -55,7 +52,7 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                 <div class="wpie_content_header_inner_wrapper">
                         <div class="wpie_content_header_title"><?php esc_html_e( 'Settings', 'wp-import-export-lite' ); ?></div>
                         <a class="wpie_btn wpie_btn_primary ms-4" href="https://1.envato.market/1krom" target="_blank">
-                            <?php esc_html_e( 'Upgrade Pro', 'wp-import-export-lite' ); ?>
+                                <?php esc_html_e( 'Upgrade Pro', 'wp-import-export-lite' ); ?>
                         </a>
                 </div>
         </div>
@@ -84,14 +81,12 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                                                                                                 $name = isset( $options[ 'template_name' ] ) ? $options[ 'template_name' ] : "";
                                                                                         }
                                                                                         if ( $id > 0 && !empty( $name ) ) {
-
                                                                                                 ?>
                                                                                                 <option value="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $name ); ?></option>
                                                                                                 <?php
                                                                                         }
                                                                                 }
                                                                         }
-
                                                                         ?>
                                                                 </select>
                                                         </form>
@@ -120,10 +115,9 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                                 </div>
                         </div>
                 </div>
-                <?php
-                if ( current_user_can( 'administrator' ) || is_super_admin() ) {
-
-                        ?>
+<?php
+if ( current_user_can( 'administrator' ) || is_super_admin() ) {
+        ?>
                         <div class="wpie_section_wrapper">
                                 <div class="wpie_content_data_header">
                                         <div class="wpie_content_title"><?php esc_html_e( 'Plugin Access Permission', 'wp-import-export-lite' ); ?></div>
@@ -136,16 +130,14 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                                                                 <div class="wpie_setting_element">
                                                                         <select class="wpie_content_data_select wpie_role_list" name="wpie_user_role" data-placeholder="<?php esc_attr_e( 'Choose Role', 'wp-import-export-lite' ); ?>">
                                                                                 <option value=""><?php esc_html_e( 'Choose Role', 'wp-import-export-lite' ); ?></option>                                   
-                                                                                <?php
-                                                                                if ( !empty( $user_roles ) ) {
-                                                                                        foreach ( $user_roles as $key => $name ) {
-
-                                                                                                ?>
+        <?php
+        if ( !empty( $user_roles ) ) {
+                foreach ( $user_roles as $key => $name ) {
+                        ?>
                                                                                                 <option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $name ); ?></option>
                                                                                                 <?php
                                                                                         }
                                                                                 }
-
                                                                                 ?>
                                                                         </select>
                                                                 </div>
@@ -189,7 +181,7 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                                         </div>
                                 </div>
                         </div>
-                <?php } ?>
+<?php } ?>
                 <div class="wpie_section_wrapper">
                         <div class="wpie_content_data_header">
                                 <div class="wpie_content_title"><?php esc_html_e( 'Advance Options', 'wp-import-export-lite' ); ?></div>
@@ -199,9 +191,8 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                                 <div class="wpie_setting_element_wrapper">
                                         <div class="wpie_import_cap_container">
                                                 <input type="checkbox" class="wpie_checkbox wpie_delete_data_on_unistall" <?php
-                                                if ( $delete_on_uninstall == 1 ) {
-
-                                                        ?>checked="checked"<?php } ?> id="wpie_delete_data_on_unistall" name="wpie_delete_data_on_unistall" value="1"/>
+if ( $delete_on_uninstall == 1 ) {
+        ?>checked="checked"<?php } ?> id="wpie_delete_data_on_unistall" name="wpie_delete_data_on_unistall" value="1"/>
                                                 <label for="wpie_delete_data_on_unistall" class="wpie_checkbox_label"><?php esc_html_e( 'Delete All Data on plugin uninstall', 'wp-import-export-lite' ); ?></label>
                                         </div>
                                         <div class="wpie_setting_element_btn">
@@ -286,6 +277,5 @@ $cron_url = add_query_arg( [ 'wpie_cron_token' => $token ], site_url( 'wp-load.p
                 <div></div>
                 <div></div>
         </div>
-        <?php
-        unset( $user_roles, $delete_on_uninstall, $templates );
-        
+<?php
+unset( $user_roles, $delete_on_uninstall, $templates );

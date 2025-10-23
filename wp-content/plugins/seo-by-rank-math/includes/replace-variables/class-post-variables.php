@@ -518,16 +518,16 @@ class Post_Variables extends Advanced_Variables {
 	/**
 	 * Get the auto generated post content.
 	 *
-	 * @param array $object Post Object.
+	 * @param array $post Post Object.
 	 * @return string|null
 	 */
-	private function get_post_content( $object ) {
-		if ( empty( $object->post_content ) ) {
+	private function get_post_content( $post ) {
+		if ( empty( $post->post_content ) ) {
 			return '';
 		}
 
-		$keywords     = Post::get_meta( 'focus_keyword', $object->ID );
-		$post_content = Paper::should_apply_shortcode() ? do_shortcode( $object->post_content ) : $object->post_content;
+		$keywords     = Post::get_meta( 'focus_keyword', $post->ID );
+		$post_content = Paper::should_apply_shortcode() ? do_shortcode( $post->post_content ) : $post->post_content;
 		$post_content = \preg_replace( '/<!--[\s\S]*?-->/iu', '', $post_content );
 		$post_content = wpautop( Helper::strip_shortcodes( $post_content ) );
 		$post_content = wp_kses( $post_content, [ 'p' => [] ] );
@@ -539,7 +539,7 @@ class Post_Variables extends Advanced_Variables {
 		if ( ! empty( $keywords ) ) {
 			$primary_keyword = explode( ',', $keywords );
 			$primary_keyword = trim( $primary_keyword[0] );
-			$regex           = '/<p>(.*' . str_replace( [ ',', ' ', '/' ], [ '|', '.', '\/' ], $primary_keyword ) . '.*)<\/p>/iu';
+			$regex           = '/<p>(.*' . str_replace( [ ',', ' ', '/', '(', ')', '[', ']', '{', '}', '?', '*', '+', '^', '$' ], [ '|', '.', '\/', '\(', '\)', '\[', '\]', '\{', '\}', '\?', '\*', '\+', '\^', '\$' ], $primary_keyword ) . '.*)<\/p>/iu';
 			\preg_match_all( $regex, $post_content, $matches );
 			if ( isset( $matches[1], $matches[1][0] ) ) {
 				return $matches[1][0];

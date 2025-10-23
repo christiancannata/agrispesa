@@ -34,7 +34,7 @@ class Host {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @return bool;
+	 * @return bool
 	 */
 	public function is_atomic_platform() {
 		return Constants::is_true( 'ATOMIC_SITE_ID' ) && Constants::is_true( 'ATOMIC_CLIENT_ID' );
@@ -76,6 +76,34 @@ class Host {
 	 */
 	public function is_wpcom_platform() {
 		return $this->is_wpcom_simple() || $this->is_woa_site();
+	}
+
+	/**
+	 * Determine if this is a P2 site.
+	 * This covers both P2 and P2020 themes.
+	 *
+	 * @return bool
+	 */
+	public function is_p2_site() {
+		$site_id = $this->get_wpcom_site_id();
+		if ( ! $site_id ) {
+			return false;
+		}
+		return str_contains( get_stylesheet(), 'pub/p2' ) || ( function_exists( '\WPForTeams\is_wpforteams_site' ) && \WPForTeams\is_wpforteams_site( $site_id ) );
+	}
+
+	/**
+	 * Get the current site's WordPress.com ID.
+	 *
+	 * @return mixed The site's WordPress.com ID.
+	 */
+	public function get_wpcom_site_id() {
+		if ( $this->is_wpcom_simple() ) {
+			return get_current_blog_id();
+		} elseif ( class_exists( 'Jetpack' ) && \Jetpack::is_connection_ready() ) {
+			return \Jetpack_Options::get_option( 'id' );
+		}
+		return false;
 	}
 
 	/**
@@ -127,11 +155,62 @@ class Host {
 	 */
 	public function get_source_query() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$allowed_sources = array( 'jetpack-manage' );
+		$allowed_sources = array( 'jetpack-manage', 'a8c-for-agencies' );
 		if ( isset( $_GET['source'] ) && in_array( $_GET['source'], $allowed_sources, true ) ) {
 			return sanitize_key( $_GET['source'] );
 		}
 
 		return '';
+	}
+
+	/**
+	 * Returns a guess of the hosting provider for the current site based on various checks.
+	 *
+	 * @since 5.0.4 Added $guess parameter.
+	 * @since 6.0.0 Removed $guess parameter.
+	 *
+	 * @return string
+	 */
+	public function get_known_host_guess() {
+		// First, let's check if we can recognize provider manually:
+		switch ( true ) {
+			case $this->is_woa_site():
+				$provider = 'woa';
+				break;
+			case $this->is_atomic_platform():
+				$provider = 'atomic';
+				break;
+			case $this->is_newspack_site():
+				$provider = 'newspack';
+				break;
+			case $this->is_vip_site():
+				$provider = 'vip';
+				break;
+			case $this->is_wpcom_simple():
+			case $this->is_wpcom_platform():
+				$provider = 'wpcom';
+				break;
+			default:
+				$provider = 'unknown';
+				break;
+		}
+
+		return $provider;
+	}
+
+	/**
+	 * Add public-api.wordpress.com to the safe redirect allowed list - only added when someone allows API access.
+	 *
+	 * @since 3.0.2 Ported from Jetpack to the Status package.
+	 *
+	 * To be used with a filter of allowed domains for a redirect.
+	 *
+	 * @param array $domains Allowed WP.com Environments.
+	 *
+	 * @return array
+	 */
+	public static function allow_wpcom_public_api_domain( $domains ) {
+		$domains[] = 'public-api.wordpress.com';
+		return $domains;
 	}
 }

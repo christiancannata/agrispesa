@@ -1,15 +1,15 @@
 ﻿=== WP Import Export Lite ===
 Contributors: vjinfotech
-Tags: export, import, migrate, csv, migration, product import, woocommerce import, bulk export, bulk import, bulk upload, Order Import, post import, Product Upload, schedule, wordpress import export
+Tags: export, import, migrate, csv, schedule
 Donate link: https://1.envato.market/1krom
 Requires at least: 4.4
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 3.9.27
+Stable tag: 3.9.30
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Complete Import & Export solution for Posts, Pages, Custom Post, Users, Taxonomies, Comments, Products, Orders, Coupons, Customers.
+Complete Import & Export solution for Posts, Pages, Custom Post, Users, Taxonomies, Comments etc.
 
 == Description ==
 

@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 1,
+	"apiVersion": 3,
 	"textdomain": "woocommerce",
 	"name": "woocommerce/all-products",
 	"title": "All Products",
@@ -8,9 +8,13 @@
 	"keywords": [ "WooCommerce" ],
 	"description": "Display products from your store in a grid layout.",
 	"supports": {
+		"interactivity": {
+			"clientNavigation": false
+		},
 		"align": [ "wide", "full" ],
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"attributes": {
 		"columns": {

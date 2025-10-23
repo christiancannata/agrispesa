@@ -14,7 +14,7 @@ use FSVendor\WPDesk\RepositoryRating\TimeWatcher;
  *
  * @todo This class is not tested yet. Should be used in UPS.
  */
-class ShippingMethodInstanceWatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable, \FSVendor\WPDesk\RepositoryRating\TimeWatcher
+class ShippingMethodInstanceWatcher implements Hookable, TimeWatcher
 {
     /**
      * First method added time.
@@ -72,21 +72,21 @@ class ShippingMethodInstanceWatcher implements \FSVendor\WPDesk\PluginBuilder\Pl
      */
     public function hooks()
     {
-        \add_action('admin_init', array($this, 'maybe_init_watching'), 10, 3);
-        \add_action('woocommerce_shipping_zone_method_added', array($this, 'watch_added_shipping_method'), 10, 3);
+        add_action('admin_init', array($this, 'maybe_init_watching'), 10, 3);
+        add_action('woocommerce_shipping_zone_method_added', array($this, 'watch_added_shipping_method'), 10, 3);
     }
     /**
      * Init watching.
      */
     public function maybe_init_watching()
     {
-        $this->first_method_watching = \intval(\get_option($this->prepare_option_name_watching(), 0));
+        $this->first_method_watching = intval(get_option($this->prepare_option_name_watching(), 0));
         if (0 === $this->first_method_watching) {
-            $ups_free_activation_time = \get_option($this->plugin_activation_time_option_name, \current_time('mysql'));
-            if (\strtotime($ups_free_activation_time) < \strtotime($this->zero_date)) {
+            $ups_free_activation_time = get_option($this->plugin_activation_time_option_name, current_time('mysql'));
+            if (strtotime($ups_free_activation_time) < strtotime($this->zero_date)) {
                 $this->init_watching_from_existing_shipping_methods();
             }
-            \update_option($this->prepare_option_name_watching(), 1);
+            update_option($this->prepare_option_name_watching(), 1);
             $this->first_method_watching = 1;
         }
     }
@@ -114,7 +114,7 @@ class ShippingMethodInstanceWatcher implements \FSVendor\WPDesk\PluginBuilder\Pl
                 $shipping_methods = $shipping_zone->get_shipping_methods();
                 foreach ($shipping_methods as $shipping_method) {
                     if ($shipping_method instanceof $this->shipping_method_name) {
-                        \update_option($this->prepare_option_name_method_created(), \current_time('mysql'));
+                        update_option($this->prepare_option_name_method_created(), current_time('mysql'));
                     }
                 }
             }
@@ -139,11 +139,11 @@ class ShippingMethodInstanceWatcher implements \FSVendor\WPDesk\PluginBuilder\Pl
      */
     public function watch_added_shipping_method($instance_id, $type, $zone_id)
     {
-        $this->first_method_creation_time = \get_option($this->prepare_option_name_method_created(), '');
+        $this->first_method_creation_time = get_option($this->prepare_option_name_method_created(), '');
         if ($this->namespace === $type) {
             if ('' === $this->first_method_creation_time) {
-                $this->first_method_creation_time = (string) \current_time('mysql');
-                \update_option($this->prepare_option_name_method_created(), $this->first_method_creation_time);
+                $this->first_method_creation_time = (string) current_time('mysql');
+                update_option($this->prepare_option_name_method_created(), $this->first_method_creation_time);
             }
         }
     }
@@ -154,7 +154,7 @@ class ShippingMethodInstanceWatcher implements \FSVendor\WPDesk\PluginBuilder\Pl
      */
     public function get_creation_time()
     {
-        $this->first_method_creation_time = \get_option($this->prepare_option_name_method_created(), '');
+        $this->first_method_creation_time = get_option($this->prepare_option_name_method_created(), '');
         return $this->first_method_creation_time;
     }
     /**

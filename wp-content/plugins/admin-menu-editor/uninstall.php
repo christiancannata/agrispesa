@@ -38,4 +38,15 @@ if( defined( 'ABSPATH') && defined('WP_UNINSTALL_PLUGIN') ) {
 	if ( function_exists('delete_metadata') ) {
 		delete_metadata('user', 0, 'ame_rui_first_login_done', '', true);
 	}
+
+	//Run module uninstallers.
+	$ameModuleUninstallers = [
+		__DIR__ . '/modules/highlight-new-menus/uninstall.php',
+		__DIR__ . '/modules/content-permissions/uninstall.php',
+	];
+	foreach ($ameModuleUninstallers as $ameUninstallerFile) {
+		if ( file_exists($ameUninstallerFile) ) {
+			include ($ameUninstallerFile);
+		}
+	}
 }

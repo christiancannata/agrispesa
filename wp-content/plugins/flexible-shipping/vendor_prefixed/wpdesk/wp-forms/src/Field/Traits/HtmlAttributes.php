@@ -20,8 +20,8 @@ trait HtmlAttributes
      */
     public function get_attributes($except = ['name', 'type'])
     {
-        return \array_filter($this->attributes, function ($value, $key) use($except) {
-            return !\in_array($key, $except, \true);
+        return array_filter($this->attributes, function ($value, $key) use ($except) {
+            return !in_array($key, $except, \true);
         }, \ARRAY_FILTER_USE_BOTH);
     }
     /**

@@ -2,9 +2,10 @@
 Contributors: wpforms, jaredatch, smub, slaFFik, capuderg
 Tags: smtp, email, gmail, outlook, email logs
 Requires at least: 5.5
-Tested up to: 6.4
-Stable tag: 4.0.1
-Requires PHP: 7.2
+Tested up to: 6.8
+Stable tag: 4.6.0
+Requires PHP: 7.4
+License: GNU General Public License v3.0 or later
 
 Make email delivery easy for WordPress. Connect with SMTP, Gmail, Outlook, SendGrid, Mailgun, SES, Zoho, + more. Rated #1 WordPress SMTP Email plugin.
 
@@ -51,15 +52,18 @@ WP Mail SMTP plugin includes many different SMTP mailers:
 1. SendLayer <strong>(#1 Recommended)</strong>
 2. SMTP.com <strong>(Recommended)</strong>
 3. Brevo (formerly Sendinblue) SMTP <strong>(Recommended)</strong>
-4. Mailgun SMTP
-5. SendGrid SMTP
-6. Postmark SMTP
-7. SparkPost SMTP
-8. Gmail SMTP (Gmail, Google Workspace, G Suite)
-9. Microsoft SMTP (Outlook.com and Office 365) [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
-10. Amazon SES SMTP [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
-11. Zoho Mail SMTP [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
-12. Other SMTP
+4. Gmail SMTP (Gmail, Google Workspace, G Suite)
+5. Elastic Email
+6. Mailgun SMTP
+7. Mailjet SMTP
+8. SendGrid SMTP
+9. Postmark SMTP
+10. SparkPost SMTP
+11. SMTP2GO
+12. Microsoft SMTP One-Click Setup (Outlook.com and Office 365) [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
+13. Amazon SES SMTP [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
+14. Zoho Mail SMTP [[Pro]](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme)
+15. Other SMTP
 
 For most options, you can specify the "from name" and "email address" for outgoing emails too.
 
@@ -135,7 +139,7 @@ Get statistics about WordPress emails, including how many emails are being sent 
 
 ### Email Alerts
 
-If your emails stop sending, get notified instantly via Slack, SMS/ Twilio, webhooks, or email (via secure API).
+If your emails stop sending, get notified instantly via Slack, Microsoft Teams, Discord, SMS/ Twilio, webhooks, or email (via secure API).
 
 In combination with our email logging and resending features, Email Alerts ensure that no important email will ever be lost.
 
@@ -196,7 +200,7 @@ You can try the [free version of WPForms plugin](https://wordpress.org/plugins/w
 1. Install WP Mail SMTP by WPForms either via the WordPress.org plugin repository or by uploading the files to your server. (See instructions on [how to install a WordPress plugin](http://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/))
 2. Activate WP Mail SMTP by WPForms.
 3. Navigate to the Settings area of WP Mail SMTP in the WordPress admin.
-4. Choose your SMTP option (SMTP.com, Brevo (formerly Sendinblue), Mailgun SMTP, SendGrid SMTP, Postmark, SparkPost, Gmail SMTP, or Other SMTP) and follow the instructions to set it up.
+4. Choose your SMTP option (SendLayer, SMTP.com, Brevo (formerly Sendinblue), Gmail SMTP, Elastic Email, Mailgun SMTP, Mailjet, SendGrid SMTP, Postmark, SparkPost, SMTP2GO, or Other SMTP) and follow the instructions to set it up.
 5. Need more help? Get support with [WP Mail SMTP PRO](https://wpmailsmtp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme).
 
 == Frequently Asked Questions ==
@@ -232,6 +236,24 @@ Their email deliverability experts are constantly at work optimizing the reliabi
 
 Read our [Brevo documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-sendinblue-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
 
+**Gmail SMTP (Gmail, Google Workspace, G Suite)**
+
+Often bloggers and small business owners don't want to use third-party SMTP services. Well you can use your Gmail or Google Workspace (also known as G Suite/Google Apps) account for SMTP emails.
+
+This allows you to use your [professional email address](http://www.wpbeginner.com/beginners-guide/how-to-setup-a-professional-email-address-with-gmail-and-google-apps/) and improve email deliverability.
+
+Unlike other Gmail SMTP plugins, our Gmail SMTP option uses OAuth to authenticate your Google account, keeping your login information 100% secure.
+
+Our plugin also offers the "One-Click Setup" option, which allows you to start sending emails from your Gmail account with just a few clicks. It eliminates the need to manually configure your own Google App, which is a technical and time-consuming process.
+
+Read our [Gmail documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-gmail-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
+
+**Elastic Email**
+
+Elastic Email is a cloud-based email marketing platform offering tools for email campaigns, automation, transactional emails, and analytics, designed for businesses of all sizes. Elastic Email offers a limited free plan where you can send emails to your verified addresses.
+
+Read our [Elastic Email documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-elastic-email-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
+
 **Mailgun SMTP**
 
 Mailgun SMTP is a popular SMTP service provider that allows you to send large quantities of emails. They provide 5,000 free emails per month for 3 months.
@@ -239,6 +261,14 @@ Mailgun SMTP is a popular SMTP service provider that allows you to send large qu
 WP Mail SMTP plugin offers a native integration with MailGun. All you have to do is connect your Mailgun account, and you will improve your email deliverability.
 
 Read our [Mailgun documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-mailgun-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
+
+**Mailjet SMTP**
+
+Mailjet is a global email sending service that allows you to design, send, and track marketing and transactional emails. They provide 6,000 free emails per month (up to 200 emails per day).
+
+WP Mail SMTP plugin offers seamless integration with Mailjet. By connecting your Mailjet account, you can enhance your email deliverability and ensure your WordPress emails reach your recipients' inboxes.
+
+Read our [Mailjet documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-mailjet-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
 
 **SendGrid SMTP**
 
@@ -258,21 +288,15 @@ SparkPost is a transactional email provider that's trusted by big brands and sma
 
 Read our [SparkPost documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-sparkpost-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
 
-**Gmail SMTP (Gmail, Google Workspace, G Suite)**
+**SMTP2GO**
 
-Often bloggers and small business owners don't want to use third-party SMTP services. Well you can use your Gmail or Google Workspace (also known as G Suite/Google Apps) account for SMTP emails.
+SMTP2GO is a transactional email provider that offers a robust and reliable email delivery service with global infrastructure, real-time analytics, and advanced security features. If you're just starting out, you can use SMTP2GO's free plan to send up to 1000 emails per month.
 
-This allows you to use your [professional email address](http://www.wpbeginner.com/beginners-guide/how-to-setup-a-professional-email-address-with-gmail-and-google-apps/) and improve email deliverability.
-
-Unlike other Gmail SMTP plugins, our Gmail SMTP option uses OAuth to authenticate your Google account, keeping your login information 100% secure.
-
-Our plugin also offers the "One-Click Setup" option, which allows you to start sending emails from your Gmail account with just a few clicks. It eliminates the need to manually configure your own Google App, which is a technical and time-consuming process.
-
-Read our [Gmail documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-gmail-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
+Read our [SMTP2GO documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-smtp2go-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
 
 **Microsoft SMTP (Outlook.com and Office 365)**
 
-Many businesses use Outlook.com or Microsoft 365 to power their email. Our Microsoft mailer integration allows you to use your existing Outlook.com or Microsoft 365 account to send emails from WordPress for better deliverability.
+The Microsoft 365 / Outlook mailer is a great choice if you already use Microsoft's email services (Outlook, Office 365, Microsoft 365, or Hotmail). Due to the fairly complex manual Microsoft App configuration, we recommend the One-Click Setup, which will get you up and running in just a few seconds.
 
 Read our [Outlook and Microsoft 365 documentation](https://wpmailsmtp.com/docs/how-to-set-up-the-outlook-mailer-in-wp-mail-smtp/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin&utm_content=readme) for more details.
 
@@ -349,7 +373,7 @@ We know that majority of people do not speak English, so we professionally trans
 
 The WP Mail SMTP team takes security very seriously. Not only does the plugin follow all security best practices, but we have several options available to ensure your site is safe and secure.
 
-- Direct SMTP mailer integrations (recommended), such as SendLayer, SMTP.com, Brevo (formerly Sendinblue), Mailgun, SendGrid, Postmark and SparkPost, use the official provider APIs. This means you never enter your username or password in the plugin settings and these credentials are not stored in the database. Instead, we use tokens or API keys which are much more secure.
+- Direct SMTP mailer integrations (recommended), such as SendLayer, SMTP.com, Brevo (formerly Sendinblue), Mailgun, SendGrid, Postmark, SparkPost and SMTP2GO, use the official provider APIs. This means you never enter your username or password in the plugin settings and these credentials are not stored in the database. Instead, we use tokens or API keys which are much more secure.
 
 - When using Other SMTP mailer, we provide the option to insert your password in your `wp-config.php` file, so it's not visible in your WordPress settings or saved in the database.
 
@@ -385,6 +409,43 @@ By all means please contact us to discuss features or options you'd like to see 
 
 == Changelog ==
 
+= 4.6.0 - 2025-08-26 =
+- Added: New transactional mailer: Mandrill integration.
+- Fixed: References and In-Reply-To email headers are now correctly preserved for API-based mailers.
+
+= 4.5.0 - 2025-06-05 =
+- IMPORTANT: Support for PHP 7.2 has been discontinued. If you are running this version, you MUST upgrade PHP before installing or upgrading to WP Mail SMTP v4.5. Failure to do that will disable WP Mail SMTP functionality.
+- Added: New transactional mailer: MailerSend integration.
+- Fixed: Microsoft Outlook basic auth deprecation notice dismissal.
+- Changed: Updated the list of conflicting plugins (added Site Mailer, SureMail, Gravity SMTP).
+
+= 4.4.0 - 2025-03-05 =
+- Fixed: Emails queue runner Action Scheduler task deadlock issue.
+- Fixed: Undefined array key "wp_mail_smtp_reports_widget_lite" warning in the dashboard widget.
+
+= 4.3.0 - 2024-12-11 =
+- Added: New transactional mailer: Elastic Email integration.
+- Changed: The "Tools -> Scheduled Actions" menu is now always visible when WooCommerce or the Action Scheduler plugin is active.
+- Fixed: SMTP password and username fields ignored `WPMS_SMTP_AUTH` constant.
+
+= 4.2.0 - 2024-11-06 =
+- Added: New transactional mailer: Mailjet integration.
+- Changed: Improved security for sensitive data (API keys).
+- Fixed: SMTP2GO mailer special characters handling in from name.
+
+= 4.1.1 - 2024-08-15 =
+- Changed: Delete `wp-mail-smtp` uploads folder on plugin uninstall, if the "Misc > Uninstall" option is enabled.
+- Changed: Decreased `PHPMailer` timeout value to 30 seconds from 5 minutes.
+- Changed: Improved Weekly Summary Email sending.
+- Fixed: Missing Reply-To support in SMTP2GO mailer.
+- Fixed: Setup Wizard translations not working correctly.
+
+= 4.1.0 - 2024-07-17 =
+- Added: New transactional mailer: SMTP2GO.
+- Changed: Recurring email queue tasks are now removed after completion.
+- Fixed: Wrong namespace in PHP 8.0x Symfony polyfills.
+- Fixed: All pending background tasks are now canceled on plugin deactivation.
+
 = 4.0.1 - 2024-02-29 =
 - Added: Optimized Email Sending - move email sending requests in the background process and speed up your site.
 - Added: Automatic database table structure migrations after plugin update.
@@ -405,7 +466,7 @@ By all means please contact us to discuss features or options you'd like to see 
 - Fixed: Compatibility issue with Action Scheduler lower than 3.3.0.
 
 = 3.10.0 - 2023-11-08 =
-- Added: Filter that allows to use self website Google OAuth redirect URL.
+- Added: Filter that allows to use your website's URL for Google OAuth redirect URL.
 - Changed: Improve plugin settings UI, by changing checkboxes to toggles and some dividers cleanup.
 - Changed: Replaced moment.js library to the WP Core's bundled one.
 - Fixed: Translation strings on the Dashboard widget.

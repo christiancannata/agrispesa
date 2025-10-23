@@ -41,7 +41,10 @@ class Hummingbird extends Services {
 	 *
 	 * @return void
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		do_action( 'wphb_clear_page_cache' );
 	}
 

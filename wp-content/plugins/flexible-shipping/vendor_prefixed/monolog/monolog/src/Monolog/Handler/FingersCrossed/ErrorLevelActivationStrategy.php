@@ -12,7 +12,7 @@ declare (strict_types=1);
 namespace FSVendor\Monolog\Handler\FingersCrossed;
 
 use FSVendor\Monolog\Logger;
-use Psr\Log\LogLevel;
+use FSVendor\Psr\Log\LogLevel;
 /**
  * Error level based activation strategy.
  *
@@ -21,7 +21,7 @@ use Psr\Log\LogLevel;
  * @phpstan-import-type Level from \Monolog\Logger
  * @phpstan-import-type LevelName from \Monolog\Logger
  */
-class ErrorLevelActivationStrategy implements \FSVendor\Monolog\Handler\FingersCrossed\ActivationStrategyInterface
+class ErrorLevelActivationStrategy implements ActivationStrategyInterface
 {
     /**
      * @var Level
@@ -34,9 +34,9 @@ class ErrorLevelActivationStrategy implements \FSVendor\Monolog\Handler\FingersC
      */
     public function __construct($actionLevel)
     {
-        $this->actionLevel = \FSVendor\Monolog\Logger::toMonologLevel($actionLevel);
+        $this->actionLevel = Logger::toMonologLevel($actionLevel);
     }
-    public function isHandlerActivated(array $record) : bool
+    public function isHandlerActivated(array $record): bool
     {
         return $record['level'] >= $this->actionLevel;
     }

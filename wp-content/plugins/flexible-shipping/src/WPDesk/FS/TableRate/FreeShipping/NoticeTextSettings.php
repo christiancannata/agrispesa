@@ -49,6 +49,7 @@ class NoticeTextSettings implements Hookable {
 				'<b>',
 				'</b>'
 			),
+			'default'     => '',
 			// Translators: bold.
 			'description' => sprintf( __( 'The %1$s%%1$s%2$s placeholder displays the numeric value of the amount left for free shipping.', 'flexible-shipping' ), '<b>', '</b>' ),
 		];

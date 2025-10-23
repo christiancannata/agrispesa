@@ -41,7 +41,10 @@ class Autoptimize extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		return \autoptimizeCache::clearall();
 	}
 

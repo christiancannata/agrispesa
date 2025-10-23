@@ -1,6 +1,5 @@
 {
 	"name": "woocommerce/breadcrumbs",
-	"version": "1.0.0",
 	"title": "Store Breadcrumbs",
 	"description": "Enable customers to keep track of their location within the store and navigate back to parent pages.",
 	"category": "woocommerce",
@@ -20,6 +19,9 @@
 		}
 	},
 	"supports": {
+		"interactivity": {
+			"clientNavigation": true
+		},
 		"align": [ "wide", "full" ],
 		"color": {
 			"background": false,
@@ -28,9 +30,16 @@
 		"html": false,
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontStyle": true,
+			"__experimentalFontWeight": true,
+			"__experimentalTextTransform": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
 		}
 	},
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

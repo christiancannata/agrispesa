@@ -48,7 +48,7 @@ class FormsCollection
      *
      * @throws \OutOfBoundsException
      */
-    public function add_form(\FSVendor\WPDesk\Forms\Form\AbstractForm $form)
+    public function add_form(AbstractForm $form)
     {
         if (!$this->is_form_exists($form->get_form_id())) {
             $this->forms[$form->get_form_id()] = $form;
@@ -97,9 +97,9 @@ class FormsCollection
                 continue;
             }
             if ($prefixed) {
-                $forms_data = \array_merge($forms_data, $form->get_prefixed_form_data());
+                $forms_data = array_merge($forms_data, $form->get_prefixed_form_data());
             } else {
-                $forms_data = \array_merge($forms_data, $form->get_form_data());
+                $forms_data = array_merge($forms_data, $form->get_form_data());
             }
         }
         return $forms_data;

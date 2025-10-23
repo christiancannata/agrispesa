@@ -1,11 +1,13 @@
 {
 	"name": "woocommerce/active-filters",
-	"version": "1.0.0",
 	"title": "Active Filters Controls",
 	"description": "Display the currently active filters.",
 	"category": "woocommerce",
 	"keywords": [ "WooCommerce" ],
 	"supports": {
+		"interactivity": {
+			"clientNavigation": false
+		},
 		"html": false,
 		"multiple": false,
 		"inserter": false,
@@ -26,6 +28,6 @@
 		}
 	},
 	"textdomain": "woocommerce",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"$schema": "https://schemas.wp.org/trunk/block.json"
 }

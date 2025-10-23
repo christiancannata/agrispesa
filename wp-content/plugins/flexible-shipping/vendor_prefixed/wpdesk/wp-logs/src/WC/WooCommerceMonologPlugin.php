@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Logger\WC;
 
 use FSVendor\Monolog\Logger;
-use Psr\Log\LogLevel;
+use FSVendor\Psr\Log\LogLevel;
 use WC_Log_Levels;
 /**
  * Can decorate monolog with WC_Logger_Interface
@@ -16,7 +16,7 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
     private $monolog;
     /** @var \WC_Logger */
     private $originalWCLogger;
-    public function __construct(\FSVendor\Monolog\Logger $monolog, \WC_Logger_Interface $originalLogger)
+    public function __construct(Logger $monolog, \WC_Logger_Interface $originalLogger)
     {
         $this->monolog = $monolog;
         $this->originalWCLogger = $originalLogger;
@@ -26,14 +26,14 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @param string $source
      */
-    public function clear($source = '') : void
+    public function clear($source = ''): void
     {
         $this->originalWCLogger->clear($source);
     }
     /**
      * Method added for compatibility with \WC_Logger
      */
-    public function clear_expired_logs() : void
+    public function clear_expired_logs(): void
     {
         $this->originalWCLogger->clear_expired_logs();
     }
@@ -47,7 +47,7 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @deprecated
      */
-    public function add($handle, $message, $level = \WC_Log_Levels::NOTICE) : void
+    public function add($handle, $message, $level = WC_Log_Levels::NOTICE): void
     {
         $this->log($message, $level);
     }
@@ -59,11 +59,11 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function emergency($message, $context = array()) : void
+    public function emergency($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::EMERGENCY, $message, $context);
+        $this->log(LogLevel::EMERGENCY, $message, $context);
     }
-    public function log($level, $message, $context = []) : void
+    public function log($level, $message, $context = []): void
     {
         $this->monolog->log($level, $message, $context);
     }
@@ -78,9 +78,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function alert($message, $context = array()) : void
+    public function alert($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::ALERT, $message, $context);
+        $this->log(LogLevel::ALERT, $message, $context);
     }
     /**
      * Critical conditions.
@@ -92,9 +92,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function critical($message, $context = array()) : void
+    public function critical($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::CRITICAL, $message, $context);
+        $this->log(LogLevel::CRITICAL, $message, $context);
     }
     /**
      * Runtime errors that do not require immediate action but should typically
@@ -105,9 +105,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function error($message, $context = array()) : void
+    public function error($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::ERROR, $message, $context);
+        $this->log(LogLevel::ERROR, $message, $context);
     }
     /**
      * Exceptional occurrences that are not errors.
@@ -120,9 +120,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function warning($message, $context = array()) : void
+    public function warning($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::WARNING, $message, $context);
+        $this->log(LogLevel::WARNING, $message, $context);
     }
     /**
      * Normal but significant events.
@@ -132,9 +132,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function notice($message, $context = array()) : void
+    public function notice($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::NOTICE, $message, $context);
+        $this->log(LogLevel::NOTICE, $message, $context);
     }
     /**
      * Interesting events.
@@ -146,9 +146,9 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function info($message, $context = array()) : void
+    public function info($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::INFO, $message, $context);
+        $this->log(LogLevel::INFO, $message, $context);
     }
     /**
      * Detailed debug information.
@@ -158,8 +158,8 @@ class WooCommerceMonologPlugin implements \WC_Logger_Interface
      *
      * @return void
      */
-    public function debug($message, $context = array()) : void
+    public function debug($message, $context = array()): void
     {
-        $this->log(\Psr\Log\LogLevel::DEBUG, $message, $context);
+        $this->log(LogLevel::DEBUG, $message, $context);
     }
 }

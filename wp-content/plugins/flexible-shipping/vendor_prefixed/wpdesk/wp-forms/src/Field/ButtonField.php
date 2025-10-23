@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class ButtonField extends \FSVendor\WPDesk\Forms\Field\NoValueField
+class ButtonField extends NoValueField
 {
     public function get_template_name()
     {

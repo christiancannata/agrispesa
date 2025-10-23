@@ -14,7 +14,11 @@ declare var wsAmeActorSelectorData: {
 };
 
 interface SelectedActorChangedCallback {
-	(newSelectedActor: string|null, oldSelectedActor: string|null): void
+	(newSelectedActor: string | null, oldSelectedActor: string | null): void
+}
+
+interface VisibleActorsChangedCallback {
+	(newVisibleActors: IAmeActor[]): void;
 }
 
 interface SaveVisibleActorAjaxParams {
@@ -23,29 +27,30 @@ interface SaveVisibleActorAjaxParams {
 	adminAjaxUrl: string,
 }
 
-class AmeActorSelector {
-	private static _ = wsAmeLodash;
+class AmeActorSelectorCore {
+	protected static _ = wsAmeLodash;
 
-	public selectedActor: string|null = null;
+	public selectedActor: string | null = null;
 	public selectedDisplayName: string = 'All';
 
 	private visibleUsers: string[] = [];
 	private subscribers: SelectedActorChangedCallback[] = [];
-	private readonly actorManager: AmeActorManagerInterface;
+	private visibleActorsSubscribers: VisibleActorsChangedCallback[] = [];
+
+	protected readonly actorManager: AmeActorManagerInterface;
 	private readonly currentUserLogin: string;
-	private readonly isProVersion: boolean = false;
+	protected readonly isProVersion: boolean = false;
 	private ajaxParams: SaveVisibleActorAjaxParams;
-	private readonly allOptionEnabled: boolean = true;
+	protected readonly allOptionEnabled: boolean = true;
 
-	private cachedVisibleActors: IAmeActor[]|null = null;
-
-	private selectorNode: JQuery|null = null;
-	private isDomInitStarted: boolean = false;
+	protected cachedVisibleActors: IAmeActor[] | null = null;
+	private specialActors: IAmeActor[] = [];
 
 	constructor(
 		actorManager: AmeActorManagerInterface,
 		isProVersion?: boolean,
-		allOptionEnabled: boolean = true
+		allOptionEnabled: boolean = true,
+		private readonly specialActorPosition: number = -1
 	) {
 		this.actorManager = actorManager;
 
@@ -61,6 +66,267 @@ class AmeActorSelector {
 		//Discard any users that don't exist / were not loaded by the actor manager.
 		const _ = AmeActorSelector._;
 		this.visibleUsers = _.intersection(this.visibleUsers, _.keys(actorManager.getUsers()));
+	}
+
+	setSelectedActor(actorId: string | null) {
+		if ((actorId !== null) && !this.actorManager.actorExists(actorId)) {
+			return;
+		}
+
+		const previousSelection = this.selectedActor;
+		this.selectedActor = actorId;
+
+		if (actorId !== null) {
+			const actor = this.actorManager.getActor(actorId);
+			if (actor !== null) {
+				this.selectedDisplayName = actor.getDisplayName();
+			} else {
+				this.selectedDisplayName = '[' + actorId + ']';
+			}
+		} else {
+			this.selectedDisplayName = 'All';
+		}
+
+		//Notify subscribers that the selection has changed.
+		if (this.selectedActor !== previousSelection) {
+			for (let i = 0; i < this.subscribers.length; i++) {
+				this.subscribers[i](this.selectedActor, previousSelection);
+			}
+		}
+	}
+
+	onChange(callback: SelectedActorChangedCallback) {
+		this.subscribers.push(callback);
+	}
+
+	getVisibleActors(): IAmeActor[] {
+		if (this.cachedVisibleActors) {
+			return this.cachedVisibleActors;
+		}
+
+		const _ = AmeActorSelector._;
+		let actors: IAmeActor[] = [];
+
+		//Include all roles.
+		//Idea: Sort roles either alphabetically or by typical privilege level (admin, editor, author, ...).
+		_.forEach(this.actorManager.getRoles(), function (role: IAmeActor) {
+			actors.push(role);
+		});
+
+		//Sort the default roles in a fixed order, the rest alphabetically.
+		const defaultRoleOrder: Record<string, number> = {
+			'role:administrator': 1,
+			'role:editor': 2,
+			'role:author': 3,
+			'role:contributor': 4,
+			'role:subscriber': 5
+		};
+		actors.sort(function (a, b) {
+			const aId = a.getId();
+			const bId = b.getId();
+			if (defaultRoleOrder.hasOwnProperty(aId) && defaultRoleOrder.hasOwnProperty(bId)) {
+				return defaultRoleOrder[aId] - defaultRoleOrder[bId];
+			} else if (defaultRoleOrder.hasOwnProperty(aId)) {
+				return -1;
+			} else if (defaultRoleOrder.hasOwnProperty(bId)) {
+				return 1;
+			} else {
+				return a.getDisplayName().localeCompare(b.getDisplayName());
+			}
+		});
+
+		//Include the Super Admin (multisite only).
+		const user = this.actorManager.getUser(this.currentUserLogin);
+		if (user && user.isSuperAdmin) {
+			actors.push(this.actorManager.getSuperAdmin());
+		}
+
+		//Include special actors, if any. Note that these must also be added to the actor manager;
+		//the actor selector doesn't do that automatically.
+		if (this.specialActorPosition < 0) {
+			//Add them at the beginning.
+			actors.unshift(...this.specialActors);
+		} else {
+			//Add them near the end, before individual users.
+			actors.push(...this.specialActors);
+		}
+
+		//Include the current user.
+		const currentUser = this.actorManager.getUser(this.currentUserLogin);
+		if (currentUser) {
+			actors.push(currentUser);
+		}
+
+		//Include other visible users.
+		_(this.visibleUsers)
+			.without(this.currentUserLogin)
+			.sortBy()
+			.forEach((login) => {
+				const user = this.actorManager.getUser(login);
+				if (user) {
+					actors.push(user);
+				}
+			});
+
+		this.cachedVisibleActors = actors;
+		return actors;
+	}
+
+	protected refreshVisibleActors() {
+		this.cachedVisibleActors = null;
+		const newVisibleActors = this.getVisibleActors();
+		for (let i = 0; i < this.visibleActorsSubscribers.length; i++) {
+			this.visibleActorsSubscribers[i](newVisibleActors);
+		}
+	}
+
+	onVisibleActorsChanged(callback: VisibleActorsChangedCallback) {
+		this.visibleActorsSubscribers.push(callback);
+	}
+
+	addSpecialActor(actor: IAmeActor) {
+		this.specialActors.push(actor);
+	}
+
+	private saveVisibleUsers() {
+		jQuery.post(
+			this.ajaxParams.adminAjaxUrl,
+			{
+				'action': this.ajaxParams.ajaxUpdateAction,
+				'_ajax_nonce': this.ajaxParams.ajaxUpdateNonce,
+				'visible_users': JSON.stringify(this.visibleUsers)
+			}
+		);
+	}
+
+	getCurrentUserActor(): IAmeUser | null {
+		return this.actorManager.getUser(this.currentUserLogin);
+	}
+
+	getNiceName(actor: IAmeActor): string {
+		let name = actor.getDisplayName();
+		if (actor.hasOwnProperty('userLogin')) {
+			const user = actor as IAmeUser;
+			if (user.userLogin === this.currentUserLogin) {
+				name = 'Current user (' + user.userLogin + ')';
+			} else {
+				name = user.getDisplayName() + ' (' + user.userLogin + ')';
+			}
+		}
+		return name;
+	}
+
+	/**
+	 * Wrap the selected actor ID in a computed observable so that it can be used with Knockout.
+	 * @param ko
+	 */
+	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string | null> {
+		const internalObservable = ko.observable(this.selectedActor);
+		const publicObservable = ko.computed({
+			read: function () {
+				return internalObservable();
+			},
+			write: (newActor: string) => {
+				this.setSelectedActor(newActor);
+			}
+		});
+		this.onChange((newSelectedActor: string | null) => {
+			internalObservable(newSelectedActor);
+		});
+		return publicObservable;
+	}
+
+	createIdObservable(ko: KnockoutStatic): KnockoutComputed<string | null> {
+		return this.createKnockoutObservable(ko);
+	}
+
+	createActorObservable(ko: KnockoutStatic): KnockoutComputed<IAmeActor | null> {
+		const internalObservable = ko.observable(
+			(this.selectedActor === null) ? null : this.actorManager.getActor(this.selectedActor)
+		);
+		const publicObservable = ko.computed<IAmeActor | null>({
+			read: function () {
+				return internalObservable();
+			},
+			write: (newActor: IAmeActor | null) => {
+				this.setSelectedActor(
+					(newActor !== null) ? newActor.getId() : null
+				);
+			}
+		});
+
+		const self = this;
+		this.onChange(function (newSelectedActor: string | null) {
+			if (newSelectedActor === null) {
+				internalObservable(null);
+			} else {
+				internalObservable(self.actorManager.getActor(newSelectedActor));
+			}
+		});
+		return publicObservable;
+	}
+
+	/**
+	 * Select an actor based on the "selected_actor" URL parameter.
+	 *
+	 * Does nothing if the parameter is not set or the actor ID is invalid.
+	 */
+	setSelectedActorFromUrl() {
+		if (!URLSearchParams) {
+			return;
+		}
+
+		//Select an actor based on the "selected_actor" URL parameter.
+		const urlParams = new URLSearchParams(window.location.search);
+		const selectedActor = urlParams.get('selected_actor');
+		if (selectedActor !== null) {
+			this.setSelectedActor(selectedActor);
+		}
+	}
+
+	openVisibleUsersDialog() {
+		if (!AmeVisibleUserDialog) {
+			return;
+		}
+
+		AmeVisibleUserDialog.open({
+			currentUserLogin: this.currentUserLogin,
+			users: this.actorManager.getUsers(),
+			visibleUsers: this.visibleUsers,
+			actorManager: this.actorManager,
+
+			save: (userDetails: IAmeUser[], selectedUsers: string[]) => {
+				this.actorManager.addUsers(userDetails);
+				this.visibleUsers = selectedUsers;
+				//The user list has changed, so update the actor list.
+				this.refreshVisibleActors();
+
+				//Save the user list via AJAX.
+				this.saveVisibleUsers();
+			}
+		});
+	}
+}
+
+class AmeActorSelector extends AmeActorSelectorCore {
+
+	private selectorNode: JQuery | null = null;
+	private isDomInitStarted: boolean = false;
+
+	constructor(
+		actorManager: AmeActorManagerInterface,
+		isProVersion?: boolean,
+		allOptionEnabled: boolean = true,
+		specialActorPosition: number = -1
+	) {
+		super(actorManager, isProVersion, allOptionEnabled, specialActorPosition);
+
+		this.onVisibleActorsChanged(() => {
+			this.populateActorSelector();
+		});
+		this.onChange(() => {
+			this.highlightSelectedActor();
+		});
 
 		jQuery(() => {
 			this.initDOM();
@@ -102,57 +368,8 @@ class AmeActorSelector {
 		//Display the user selection dialog when the user clicks "Choose users".
 		this.selectorNode.on('click', '#ws_show_more_users', (event) => {
 			event.preventDefault();
-			AmeVisibleUserDialog.open({
-				currentUserLogin: this.currentUserLogin,
-				users: this.actorManager.getUsers(),
-				visibleUsers: this.visibleUsers,
-				actorManager: this.actorManager,
-
-				save: (userDetails: IAmeUser[], selectedUsers: string[]) => {
-					this.actorManager.addUsers(userDetails);
-					this.visibleUsers = selectedUsers;
-					//The user list has changed, so clear the cache.
-					this.cachedVisibleActors = null;
-					//Display the new actor list.
-					this.populateActorSelector();
-
-					//Save the user list via AJAX.
-					this.saveVisibleUsers();
-				}
-			});
+			this.openVisibleUsersDialog();
 		});
-	}
-
-	setSelectedActor(actorId: string|null) {
-		if ((actorId !== null) && !this.actorManager.actorExists(actorId)) {
-			return;
-		}
-
-		const previousSelection = this.selectedActor;
-		this.selectedActor = actorId;
-		this.highlightSelectedActor();
-
-		if (actorId !== null) {
-			const actor = this.actorManager.getActor(actorId);
-			if (actor !== null) {
-				this.selectedDisplayName = actor.getDisplayName();
-			} else {
-				this.selectedDisplayName = '[' + actorId  + ']';
-			}
-		} else {
-			this.selectedDisplayName = 'All';
-		}
-
-		//Notify subscribers that the selection has changed.
-		if (this.selectedActor !== previousSelection) {
-			for (let i = 0; i < this.subscribers.length; i++) {
-				this.subscribers[i](this.selectedActor, previousSelection);
-			}
-		}
-	}
-
-	onChange(callback: SelectedActorChangedCallback) {
-		this.subscribers.push(callback);
 	}
 
 	private highlightSelectedActor() {
@@ -245,142 +462,7 @@ class AmeActorSelector {
 	}
 
 	repopulate() {
-		this.cachedVisibleActors = null;
-		this.populateActorSelector();
-	}
-
-	getVisibleActors(): IAmeActor[] {
-		if (this.cachedVisibleActors) {
-			return this.cachedVisibleActors;
-		}
-
-		const _ = AmeActorSelector._;
-		let actors: IAmeActor[] = [];
-
-		//Include all roles.
-		//Idea: Sort roles either alphabetically or by typical privilege level (admin, editor, author, ...).
-		_.forEach(this.actorManager.getRoles(), function (role: IAmeActor) {
-			actors.push(role);
-		});
-		//Include the Super Admin (multisite only).
-		const user = this.actorManager.getUser(this.currentUserLogin);
-		if (user && user.isSuperAdmin) {
-			actors.push(this.actorManager.getSuperAdmin());
-		}
-		//Include the current user.
-		const currentUser = this.actorManager.getUser(this.currentUserLogin);
-		if (currentUser) {
-			actors.push(currentUser);
-		}
-
-		//Include other visible users.
-		_(this.visibleUsers)
-			.without(this.currentUserLogin)
-			.sortBy()
-			.forEach((login) => {
-				const user = this.actorManager.getUser(login);
-				if (user) {
-					actors.push(user);
-				}
-			});
-
-		this.cachedVisibleActors = actors;
-		return actors;
-	}
-
-	private saveVisibleUsers() {
-		jQuery.post(
-			this.ajaxParams.adminAjaxUrl,
-			{
-				'action': this.ajaxParams.ajaxUpdateAction,
-				'_ajax_nonce': this.ajaxParams.ajaxUpdateNonce,
-				'visible_users': JSON.stringify(this.visibleUsers)
-			}
-		);
-	}
-
-	getCurrentUserActor(): IAmeUser|null {
-		return this.actorManager.getUser(this.currentUserLogin);
-	}
-
-	getNiceName(actor: IAmeActor): string {
-		let name = actor.getDisplayName();
-		if (actor.hasOwnProperty('userLogin')) {
-			const user = actor as IAmeUser;
-			if (user.userLogin === this.currentUserLogin) {
-				name = 'Current user (' + user.userLogin + ')';
-			} else {
-				name = user.getDisplayName() + ' (' + user.userLogin + ')';
-			}
-		}
-		return name;
-	}
-
-	/**
-	 * Wrap the selected actor ID in a computed observable so that it can be used with Knockout.
-	 * @param ko
-	 */
-	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string|null> {
-		const internalObservable = ko.observable(this.selectedActor);
-		const publicObservable = ko.computed({
-			read: function () {
-				return internalObservable();
-			},
-			write: (newActor: string) => {
-				this.setSelectedActor(newActor);
-			}
-		});
-		this.onChange((newSelectedActor: string|null) => {
-			internalObservable(newSelectedActor);
-		});
-		return publicObservable;
-	}
-
-	createIdObservable(ko: KnockoutStatic): KnockoutComputed<string|null> {
-		return this.createKnockoutObservable(ko);
-	}
-
-	createActorObservable(ko: KnockoutStatic): KnockoutComputed<IAmeActor|null> {
-		const internalObservable = ko.observable(
-			(this.selectedActor === null) ? null : this.actorManager.getActor(this.selectedActor)
-		);
-		const publicObservable = ko.computed<IAmeActor|null>({
-			read: function () {
-				return internalObservable();
-			},
-			write: (newActor: IAmeActor|null) => {
-				this.setSelectedActor(
-					(newActor !== null) ? newActor.getId() : null
-				);
-			}
-		});
-
-		const self = this;
-		this.onChange(function (newSelectedActor: string|null) {
-			if (newSelectedActor === null) {
-				internalObservable(null);
-			} else {
-				internalObservable(self.actorManager.getActor(newSelectedActor));
-			}
-		});
-		return publicObservable;
-	}
-
-	/**
-	 * Select an actor based on the "selected_actor" URL parameter.
-	 *
-	 * Does nothing if the parameter is not set or the actor ID is invalid.
-	 */
-	setSelectedActorFromUrl() {
-		if (!URLSearchParams) {
-			return;
-		}
-
-		//Select an actor based on the "selected_actor" URL parameter.
-		const urlParams = new URLSearchParams(window.location.search);
-		const selectedActor = urlParams.get('selected_actor');
-		if (selectedActor !== null) {
-			this.setSelectedActor(selectedActor);
-		}
+		this.refreshVisibleActors();
+		//This will clear the cache and indirectly trigger a call to populateActorSelector().
 	}
 }

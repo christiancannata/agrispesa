@@ -27,12 +27,12 @@ trait UserFeedbackContent
         $thickbox_heading = $this->user_feedback_data->get_heading();
         $thickbox_question = $this->user_feedback_data->get_question();
         $thickbox_feedback_options = $this->user_feedback_data->get_feedback_options();
-        $thickbox_all_options = \count($thickbox_feedback_options);
-        $button_send_text = \__('Proceed', 'flexible-shipping');
-        $ajax_action = \FSVendor\WPDesk\Tracker\UserFeedback\AjaxUserFeedbackDataHandler::AJAX_ACTION . $thickbox_id;
-        $ajax_nonce = \wp_create_nonce($ajax_action);
-        \ob_start();
+        $thickbox_all_options = count($thickbox_feedback_options);
+        $button_send_text = __('Proceed', 'flexible-shipping');
+        $ajax_action = AjaxUserFeedbackDataHandler::AJAX_ACTION . $thickbox_id;
+        $ajax_nonce = wp_create_nonce($ajax_action);
+        ob_start();
         include $this->view_file;
-        return \ob_get_clean();
+        return ob_get_clean();
     }
 }

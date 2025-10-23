@@ -37,7 +37,7 @@ function wpcf7_checkbox_form_tag_handler( $tag ) {
 	$free_text = $tag->has_option( 'free_text' );
 	$multiple = false;
 
-	if ( 'checkbox' == $tag->basetype ) {
+	if ( 'checkbox' === $tag->basetype ) {
 		$multiple = ! $exclusive;
 	} else { // radio
 		$exclusive = false;
@@ -143,30 +143,31 @@ function wpcf7_checkbox_form_tag_handler( $tag ) {
 		$class = 'wpcf7-list-item';
 		$count += 1;
 
-		if ( 1 == $count ) {
+		if ( 1 === $count ) {
 			$class .= ' first';
 		}
 
-		if ( count( $values ) == $count ) { // last round
+		if ( count( $values ) === $count ) { // last round
 			$class .= ' last';
 
 			if ( $free_text ) {
 				$free_text_name = sprintf( '_wpcf7_free_text_%s', $tag->name );
 
 				$free_text_atts = array(
+					'type' => 'text',
 					'name' => $free_text_name,
 					'class' => 'wpcf7-free-text',
 					'tabindex' => $tabindex,
 				);
 
-				if ( wpcf7_is_posted()
-				and isset( $_POST[$free_text_name] ) ) {
-					$free_text_atts['value'] = wp_unslash( $_POST[$free_text_name] );
+				if ( wpcf7_is_posted() ) {
+					$free_text_atts['value'] = wpcf7_superglobal_post( $free_text_name );
 				}
 
-				$free_text_atts = wpcf7_format_atts( $free_text_atts );
-
-				$item .= sprintf( ' <input type="text" %s />', $free_text_atts );
+				$item .= sprintf(
+					' <input %s />',
+					wpcf7_format_atts( $free_text_atts )
+				);
 
 				$class .= ' has-free-text';
 			}
@@ -196,16 +197,30 @@ add_action(
 
 function wpcf7_swv_add_checkbox_rules( $schema, $contact_form ) {
 	$tags = $contact_form->scan_form_tags( array(
-		'type' => array( 'checkbox*', 'radio' ),
+		'basetype' => array( 'checkbox', 'radio' ),
 	) );
 
 	foreach ( $tags as $tag ) {
-		$schema->add_rule(
-			wpcf7_swv_create_rule( 'required', array(
-				'field' => $tag->name,
-				'error' => wpcf7_get_message( 'invalid_required' ),
-			) )
-		);
+		if ( $tag->is_required() or 'radio' === $tag->type ) {
+			$schema->add_rule(
+				wpcf7_swv_create_rule( 'required', array(
+					'field' => $tag->name,
+					'error' => wpcf7_get_message( 'invalid_required' ),
+				) )
+			);
+		}
+
+		if ( 'radio' === $tag->type or $tag->has_option( 'exclusive' ) ) {
+			$schema->add_rule(
+				wpcf7_swv_create_rule( 'maxitems', array(
+					'field' => $tag->name,
+					'threshold' => 1,
+					'error' => $contact_form->filter_message(
+						__( 'Too many items are selected.', 'contact-form-7' )
+					),
+				) )
+			);
+		}
 	}
 }
 
@@ -282,7 +297,7 @@ function wpcf7_swv_add_checkbox_enum_rules( $schema, $contact_form ) {
 				'field' => $field,
 				'accept' => array_values( $field_values ),
 				'error' => $contact_form->filter_message(
-					__( "Undefined value was submitted through this field.", 'contact-form-7' )
+					__( 'Undefined value was submitted through this field.', 'contact-form-7' )
 				),
 			) )
 		);
@@ -310,7 +325,7 @@ function wpcf7_posted_data_checkbox( $value, $value_orig, $form_tag ) {
 		$value = (array) $value;
 
 		$free_text_name = sprintf( '_wpcf7_free_text_%s', $form_tag->name );
-		$free_text = wp_unslash( $_POST[$free_text_name] ?? '' );
+		$free_text = wpcf7_superglobal_post( $free_text_name );
 
 		$last_val = array_pop( $value );
 
@@ -331,93 +346,96 @@ add_action( 'wpcf7_admin_init',
 
 function wpcf7_add_tag_generator_checkbox_and_radio() {
 	$tag_generator = WPCF7_TagGenerator::get_instance();
-	$tag_generator->add( 'checkbox', __( 'checkboxes', 'contact-form-7' ),
-		'wpcf7_tag_generator_checkbox' );
-	$tag_generator->add( 'radio', __( 'radio buttons', 'contact-form-7' ),
-		'wpcf7_tag_generator_checkbox' );
+
+	$basetypes = array(
+		'checkbox' => __( 'checkboxes', 'contact-form-7' ),
+		'radio' => __( 'radio buttons', 'contact-form-7' ),
+	);
+
+	foreach ( $basetypes as $id => $title ) {
+		$tag_generator->add( $id, $title,
+			'wpcf7_tag_generator_checkbox',
+			array( 'version' => '2' )
+		);
+	}
 }
 
-function wpcf7_tag_generator_checkbox( $contact_form, $args = '' ) {
-	$args = wp_parse_args( $args, array() );
-	$type = $args['id'];
+function wpcf7_tag_generator_checkbox( $contact_form, $options ) {
+	$field_types = array(
+		'checkbox' => array(
+			'display_name' => __( 'Checkboxes', 'contact-form-7' ),
+			'heading' => __( 'Checkboxes form-tag generator', 'contact-form-7' ),
+			'description' => __( 'Generates a form-tag for a group of <a href="https://contactform7.com/checkboxes-radio-buttons-and-menus/">checkboxes</a>.', 'contact-form-7' ),
+		),
+		'radio' => array(
+			'display_name' => __( 'Radio buttons', 'contact-form-7' ),
+			'heading' => __( 'Radio buttons form-tag generator', 'contact-form-7' ),
+			'description' => __( 'Generates a form-tag for a group of <a href="https://contactform7.com/checkboxes-radio-buttons-and-menus/">radio buttons</a>.', 'contact-form-7' ),
+		),
+	);
 
-	if ( 'radio' != $type ) {
-		$type = 'checkbox';
+	$basetype = $options['id'];
+
+	if ( ! in_array( $basetype, array_keys( $field_types ), true ) ) {
+		$basetype = 'checkbox';
 	}
 
-	if ( 'checkbox' == $type ) {
-		$description = __( "Generate a form-tag for a group of checkboxes. For more details, see %s.", 'contact-form-7' );
-	} elseif ( 'radio' == $type ) {
-		$description = __( "Generate a form-tag for a group of radio buttons. For more details, see %s.", 'contact-form-7' );
-	}
+	$tgg = new WPCF7_TagGeneratorGenerator( $options['content'] );
 
-	$desc_link = wpcf7_link( __( 'https://contactform7.com/checkboxes-radio-buttons-and-menus/', 'contact-form-7' ), __( 'Checkboxes, radio buttons and menus', 'contact-form-7' ) );
+	$formatter = new WPCF7_HTMLFormatter();
 
-?>
-<div class="control-box">
-<fieldset>
-<legend><?php echo sprintf( esc_html( $description ), $desc_link ); ?></legend>
+	$formatter->append_start_tag( 'header', array(
+		'class' => 'description-box',
+	) );
 
-<table class="form-table">
-<tbody>
-<?php if ( 'checkbox' == $type ) : ?>
-	<tr>
-	<th scope="row"><?php echo esc_html( __( 'Field type', 'contact-form-7' ) ); ?></th>
-	<td>
-		<fieldset>
-		<legend class="screen-reader-text"><?php echo esc_html( __( 'Field type', 'contact-form-7' ) ); ?></legend>
-		<label><input type="checkbox" name="required" /> <?php echo esc_html( __( 'Required field', 'contact-form-7' ) ); ?></label>
-		</fieldset>
-	</td>
-	</tr>
-<?php endif; ?>
+	$formatter->append_start_tag( 'h3' );
 
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-name' ); ?>"><?php echo esc_html( __( 'Name', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="name" class="tg-name oneline" id="<?php echo esc_attr( $args['content'] . '-name' ); ?>" /></td>
-	</tr>
+	$formatter->append_preformatted(
+		esc_html( $field_types[$basetype]['heading'] )
+	);
 
-	<tr>
-	<th scope="row"><?php echo esc_html( __( 'Options', 'contact-form-7' ) ); ?></th>
-	<td>
-		<fieldset>
-		<legend class="screen-reader-text"><?php echo esc_html( __( 'Options', 'contact-form-7' ) ); ?></legend>
-		<textarea name="values" class="values" id="<?php echo esc_attr( $args['content'] . '-values' ); ?>"></textarea>
-		<label for="<?php echo esc_attr( $args['content'] . '-values' ); ?>"><span class="description"><?php echo esc_html( __( "One option per line.", 'contact-form-7' ) ); ?></span></label><br />
-		<label><input type="checkbox" name="label_first" class="option" /> <?php echo esc_html( __( 'Put a label first, a checkbox last', 'contact-form-7' ) ); ?></label><br />
-		<label><input type="checkbox" name="use_label_element" class="option" checked="checked" /> <?php echo esc_html( __( 'Wrap each item with label element', 'contact-form-7' ) ); ?></label>
-<?php if ( 'checkbox' == $type ) : ?>
-		<br /><label><input type="checkbox" name="exclusive" class="option" /> <?php echo esc_html( __( 'Make checkboxes exclusive', 'contact-form-7' ) ); ?></label>
-<?php endif; ?>
-		</fieldset>
-	</td>
-	</tr>
+	$formatter->end_tag( 'h3' );
 
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-id' ); ?>"><?php echo esc_html( __( 'Id attribute', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="id" class="idvalue oneline option" id="<?php echo esc_attr( $args['content'] . '-id' ); ?>" /></td>
-	</tr>
+	$formatter->append_start_tag( 'p' );
 
-	<tr>
-	<th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-class' ); ?>"><?php echo esc_html( __( 'Class attribute', 'contact-form-7' ) ); ?></label></th>
-	<td><input type="text" name="class" class="classvalue oneline option" id="<?php echo esc_attr( $args['content'] . '-class' ); ?>" /></td>
-	</tr>
+	$formatter->append_preformatted(
+		wp_kses_data( $field_types[$basetype]['description'] )
+	);
 
-</tbody>
-</table>
-</fieldset>
-</div>
+	$formatter->end_tag( 'header' );
 
-<div class="insert-box">
-	<input type="text" name="<?php echo $type; ?>" class="tag code" readonly="readonly" onfocus="this.select()" />
+	$formatter->append_start_tag( 'div', array(
+		'class' => 'control-box',
+	) );
 
-	<div class="submitbox">
-	<input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'contact-form-7' ) ); ?>" />
-	</div>
+	$formatter->call_user_func( static function () use ( $tgg, $field_types, $basetype ) {
+		$tgg->print( 'field_type', array(
+			'with_required' => 'checkbox' === $basetype,
+			'select_options' => array(
+				$basetype => $field_types[$basetype]['display_name'],
+			),
+		) );
 
-	<br class="clear" />
+		$tgg->print( 'field_name' );
 
-	<p class="description mail-tag"><label for="<?php echo esc_attr( $args['content'] . '-mailtag' ); ?>"><?php echo sprintf( esc_html( __( "To use the value input through this field in a mail field, you need to insert the corresponding mail-tag (%s) into the field on the Mail tab.", 'contact-form-7' ) ), '<strong><span class="mail-tag"></span></strong>' ); ?><input type="text" class="mail-tag code hidden" readonly="readonly" id="<?php echo esc_attr( $args['content'] . '-mailtag' ); ?>" /></label></p>
-</div>
-<?php
+		$tgg->print( 'class_attr' );
+
+		$tgg->print( 'selectable_values', array(
+			'use_label_element' => 'checked',
+		) );
+	} );
+
+	$formatter->end_tag( 'div' );
+
+	$formatter->append_start_tag( 'footer', array(
+		'class' => 'insert-box',
+	) );
+
+	$formatter->call_user_func( static function () use ( $tgg, $field_types ) {
+		$tgg->print( 'insert_box_content' );
+
+		$tgg->print( 'mail_tag_tip' );
+	} );
+
+	$formatter->print();
 }

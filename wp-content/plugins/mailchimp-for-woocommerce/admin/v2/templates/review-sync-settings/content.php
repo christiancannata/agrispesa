@@ -26,7 +26,7 @@ if ( ! isset( $options ) ) {
 $newsletter_settings_error = $this->getData( 'errors.mailchimp_list', false );
 
 $checkout_page_id = get_option('woocommerce_checkout_page_id');
-$mailchimp_customer_count = mailchimp_get_customer_count();
+$mailchimp_customer_count = mailchimp_get_customer_lookup_count();
 //$initial_sync_subscribe = ( array_key_exists( 'mailchimp_auto_subscribe', $options ) && ! is_null( $options['mailchimp_auto_subscribe'] ) ) ? (string) $options['mailchimp_auto_subscribe'] : '1';
 //$ongoing_sync_subscribe = ( array_key_exists( 'mailchimp_ongoing_sync_status', $options ) && ! is_null( $options['mailchimp_ongoing_sync_status'] ) ) ? (string) $options['mailchimp_ongoing_sync_status'] : '1';
 $initial_sync_subscribe = '1';
@@ -38,6 +38,7 @@ $ongoing_sync_subscribe = '1';
 	</div>
 <?php endif; ?>
 <input type="hidden" name="mailchimp_active_settings_tab" value="newsletter_settings"/>
+<input type="hidden" name="mailchimp_connection_status" value="not_connected"/>
 <div class="mc-wc-review-sync-settings-content">
     <div class="mc-wc-linked-audience">
         <div class="mc-wc-linked-audience-wrapper">
@@ -65,7 +66,7 @@ $ongoing_sync_subscribe = '1';
             </div>
             <p class="mc-wc-linked-audience-description">
                 <?php esc_html_e( 'Confirm the Mailchimp audience you want to associate with your WooCommerce store', 'mailchimp-for-woocommerce' ); ?>
-                <span class="mc-wc-text-md store_name"><?php echo esc_attr($store_name); ?>.</span>
+                <span class="mc-wc-text-md store_name"><?php echo !empty($store_name) ? esc_attr($store_name) : esc_attr(get_option("siteurl")); ?>.</span>
             </p>
         </div>
     </div>
@@ -132,7 +133,7 @@ $ongoing_sync_subscribe = '1';
                     </div>
                 </div>
                 <div class="mc-wc-import-list-sync-description">
-                    <?php esc_html_e( 'Import new customers who haven’t opted in to receive your email marketing.  This setting must be active to use', 'mailchimp-for-woocommerce' ); ?> <a href="https://mailchimp.com/help/create-abandoned-cart-customer-journey/" target="_blank"><?php esc_html_e( 'Abandoned Cart automations.', 'mailchimp-for-woocommerce' ); ?></a>
+                    <?php esc_html_e( 'Import new customers who haven’t opted in to receive your email marketing.  This setting must be active to use', 'mailchimp-for-woocommerce' ); ?> <a href="https://mailchimp.com/help/create-abandoned-cart-customer-journey/" target="_blank" data-mc-event="abandoned_cart"><?php esc_html_e( 'Abandoned Cart automations.', 'mailchimp-for-woocommerce' ); ?></a>
                 </div>
             </div>
         </div>

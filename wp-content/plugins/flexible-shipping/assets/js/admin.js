@@ -129,3 +129,36 @@ jQuery(function($) {
 
 	fs_toggle_prices_include_tax();
 });
+
+jQuery(function($) {
+	function fs_toggle_costs_calculation() {
+		$('.fs-costs-calculation-enabled').each(function(){
+			$('tr.flexible_shipping_method_rules').toggle($(this).prop('checked'));
+			$('tr.flexible-shipping-method-rules-settings').toggle($(this).prop('checked'));
+		});
+		$('div.flexible-shipping-method-rules-settings-modal').hide();
+	}
+
+	function fs_toggle_costs_calculation_modal() {
+		$('.wc-modal-shipping-method-settings .fs-costs-calculation-enabled').each(function(){
+			$('.wc-modal-shipping-method-settings div.flexible-shipping-method-rules-settings-modal').toggle($(this).prop('checked'));
+		});
+	}
+
+	$( document ).on( 'change', '.fs-costs-calculation-enabled', function () {
+		fs_toggle_costs_calculation();
+	} );
+
+	$( document ).on( 'change', '.wc-modal-shipping-method-settings .fs-costs-calculation-enabled', function () {
+		fs_toggle_costs_calculation_modal();
+	} );
+
+	$( document.body ).on( 'init_tooltips', function() {
+		fs_toggle_costs_calculation_modal();
+		$( 'a.fs-non-modal-method-edit' ).each( function () {
+			$( this ).attr( 'href', $( this ).attr( 'href' ) + '&instance_id=' + $( this ).closest( 'article.wc-modal-shipping-method-settings' ).data( 'id' ) );
+		} );
+	} );
+
+	fs_toggle_costs_calculation();
+});

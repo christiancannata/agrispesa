@@ -1,2 +1,0 @@
-2025-01-24T18:34:56+00:00 NOTICE filter :: Order 56820 was skipped by the filter
-2025-01-24T18:34:59+00:00 ERROR order_submit.error :: updateStoreOrder :: #66639 :: Error Code 400 :: <p>lines.item:0: Unable to process this order line item.</p> on 2471 in /shared/httpd/agrispesa/wp-content/plugins/mailchimp-for-woocommerce/includes/api/class-mailchimp-api.php

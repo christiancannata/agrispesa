@@ -1,37 +1,24 @@
 <?php
 
-if( !defined( 'ABSPATH' ) )
-{
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
+if ( !function_exists( "wpie_sanitize_field" ) ) {
 
-if( !function_exists( "wpie_sanitize_field" ) )
-{
-
-        function wpie_sanitize_field( $var )
-        {
-                if( empty( $var ) )
-                {
+        function wpie_sanitize_field( $var ) {
+                if ( empty( $var ) ) {
                         return $var;
                 }
-                if( is_array( $var ) )
-                {
+                if ( is_array( $var ) ) {
                         return array_map( 'wpie_sanitize_field', $var );
-                }
-                else
-                {
+                } else {
                         return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
                 }
         }
 
 }
-if( !function_exists( "wpie_sanitize_textarea" ) )
-{
+if ( !function_exists( "wpie_sanitize_textarea" ) ) {
 
-        function wpie_sanitize_textarea( $var )
-        {
-                if( empty( $var ) )
-                {
+        function wpie_sanitize_textarea( $var ) {
+                if ( empty( $var ) ) {
                         return $var;
                 }
                 return implode( "\n", array_map( 'wpie_sanitize_field', explode( "\n", $var ) ) );
@@ -41,11 +28,9 @@ if( !function_exists( "wpie_sanitize_textarea" ) )
 
 add_action( 'init', 'wpie_remove_draft_entries' );
 
-if( !function_exists( "wpie_remove_draft_entries" ) )
-{
+if ( !function_exists( "wpie_remove_draft_entries" ) ) {
 
-        function wpie_remove_draft_entries()
-        {
+        function wpie_remove_draft_entries() {
 
                 global $wpdb;
 
@@ -58,11 +43,9 @@ if( !function_exists( "wpie_remove_draft_entries" ) )
 
 }
 
-if( !function_exists( "wpie_get_export_id" ) )
-{
+if ( !function_exists( "wpie_get_export_id" ) ) {
 
-        function wpie_get_export_id()
-        {
+        function wpie_get_export_id() {
 
                 global $wpie_export_id;
 
@@ -70,24 +53,18 @@ if( !function_exists( "wpie_get_export_id" ) )
         }
 
 }
-if( !function_exists( "wpie_load_vendor_autoloader" ) )
-{
+if ( !function_exists( "wpie_load_vendor_autoloader" ) ) {
 
-        function wpie_load_vendor_autoloader()
-        {
+        function wpie_load_vendor_autoloader() {
                 $file = "";
 
-                if( version_compare( phpversion(), "7.3", '<' ) )
-                {
+                if ( version_compare( phpversion(), "7.3", '<' ) ) {
                         $file = 'vendor_deprecated/autoload.php';
-                }
-                else
-                {
+                } else {
                         $file = 'vendor/autoload.php';
                 }
 
-                if( file_exists( WPIE_PLUGIN_DIR . $file ) )
-                {
+                if ( file_exists( WPIE_PLUGIN_DIR . $file ) ) {
                         require_once(WPIE_PLUGIN_DIR . $file );
                 }
         }

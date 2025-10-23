@@ -13,6 +13,7 @@ namespace RankMath\Google;
 defined( 'ABSPATH' ) || exit;
 
 use WP_Error;
+use RankMath\Helper;
 use RankMath\Google\Api;
 use RankMath\Helpers\Str;
 use RankMath\Analytics\Workflow\Base;
@@ -21,6 +22,11 @@ use RankMath\Analytics\Workflow\Base;
  * Analytics class.
  */
 class Analytics extends Request {
+
+	/**
+	 * Connection status key.
+	 */
+	const CONNECTION_STATUS_KEY = 'rank_math_analytics_connection_error';
 
 	/**
 	 * Get analytics accounts.
@@ -76,7 +82,7 @@ class Analytics extends Request {
 	public function add_ga4_accounts( $accounts ) {
 
 		$v4_response = $this->http_get( 'https://analyticsadmin.googleapis.com/v1alpha/accountSummaries?pageSize=200' );
-		if ( ! $this->is_success() || isset( $v4_response->error ) ) {
+		if ( ! $v4_response || ! $this->is_success() || isset( $v4_response->error ) ) {
 			return $accounts;
 		}
 		foreach ( $v4_response['accountSummaries'] as $account ) {
@@ -116,12 +122,40 @@ class Analytics extends Request {
 	}
 
 	/**
+	 * Is valid connection
+	 */
+	public static function is_valid_connection() {
+		return Api::get()->get_connection_status( self::CONNECTION_STATUS_KEY );
+	}
+
+	/**
+	 * Test connection
+	 */
+	public static function test_connection() {
+		return Api::get()->check_connection_status( self::CONNECTION_STATUS_KEY, [ __CLASS__, 'get_sample_response' ] );
+	}
+
+	/**
+	 * Get sample response to test connection.
+	 *
+	 * @return array|false|WP_Error
+	 */
+	public static function get_sample_response() {
+		return self::get_analytics(
+			[
+				'row_limit' => 1,
+			],
+			true
+		);
+	}
+
+	/**
 	 * Query analytics data from google client api.
 	 *
 	 * @param array   $options Analytics options.
 	 * @param boolean $days    Whether to include dates.
 	 *
-	 * @return array
+	 * @return array|false|WP_Error
 	 */
 	public static function get_analytics( $options = [], $days = false ) {
 		// Check view ID.
@@ -160,101 +194,9 @@ class Analytics extends Request {
 			return false;
 		}
 
-		// Request params.
-		$row_limit = isset( $options['row_limit'] ) ? $options['row_limit'] : Api::get()->get_row_limit();
-		$country   = isset( $options['country'] ) ? $options['country'] : '';
-		if ( ! empty( $stored['country'] ) && 'all' !== $stored['country'] ) {
-			$country = $stored['country'];
-		}
-
-		// Check the property for old Google Analytics.
-		if ( Str::starts_with( 'UA-', $property_id ) ) {
-			$args = [
-				'viewId'                 => $view_id,
-				'pageSize'               => $row_limit,
-				'dateRanges'             => [
-					[
-						'startDate' => $start_date,
-						'endDate'   => $end_date,
-					],
-				],
-				'dimensionFilterClauses' => [
-					[
-						'filters' => [
-							[
-								'dimensionName' => 'ga:medium',
-								'operator'      => 'EXACT',
-								'expressions'   => 'organic',
-							],
-						],
-					],
-				],
-			];
-
-			// Include only dates.
-			if ( true === $days ) {
-				$args = wp_parse_args(
-					[
-						'dimensions' => [
-							[ 'name' => 'ga:date' ],
-						],
-					],
-					$args
-				);
-			} else {
-				$args = wp_parse_args(
-					[
-						'metrics'    => [
-							[ 'expression' => 'ga:pageviews' ],
-							[ 'expression' => 'ga:users' ],
-						],
-						'dimensions' => [
-							[ 'name' => 'ga:date' ],
-							[ 'name' => 'ga:pagePath' ],
-							[ 'name' => 'ga:hostname' ],
-						],
-						'orderBys'   => [
-							[
-								'fieldName' => 'ga:pageviews',
-								'sortOrder' => 'DESCENDING',
-							],
-						],
-					],
-					$args
-				);
-
-				// Add country.
-				if ( ! $country ) {
-					$args['dimensionFilterClauses'][0]['filters'][] = [
-						'dimensionName' => 'ga:countryIsoCode',
-						'operator'      => 'EXACT',
-						'expressions'   => $country,
-					];
-				}
-			}
-
-			$response = Api::get()->http_post(
-				'https://analyticsreporting.googleapis.com/v4/reports:batchGet',
-				[
-					'reportRequests' => [ $args ],
-				]
-			);
-
-			Api::get()->log_failed_request( $response, 'analytics', $start_date, func_get_args() );
-
-			if ( ! Api::get()->is_success() ) {
-				return new WP_Error( 'request_failed', __( 'The Google Analytics request failed.', 'rank-math' ) );
-			}
-
-			if ( ! isset( $response['reports'], $response['reports'][0]['data']['rows'] ) ) {
-				return false;
-			}
-
-			return $response['reports'][0]['data']['rows'];
-		}
-
 		// Request for GA4 API.
 		$args = [
+			'limit'           => isset( $options['row_limit'] ) ? $options['row_limit'] : Api::get()->get_row_limit(),
 			'dateRanges'      => [
 				[
 					'startDate' => $start_date,
@@ -287,6 +229,26 @@ class Analytics extends Request {
 			],
 		];
 
+		$dimensions = isset( $options['dimensions'] ) ? $options['dimensions'] : [];
+		if ( $dimensions ) {
+			$args = wp_parse_args(
+				[
+					'dimensions' => $dimensions,
+				],
+				$args
+			);
+		}
+
+		$metrics = isset( $options['metrics'] ) ? $options['metrics'] : [];
+		if ( $metrics ) {
+			$args = wp_parse_args(
+				[
+					'metrics' => $metrics,
+				],
+				$args
+			);
+		}
+
 		// Include only dates.
 		if ( true === $days ) {
 			$args = wp_parse_args(
@@ -297,39 +259,12 @@ class Analytics extends Request {
 				],
 				$args
 			);
-		} else {
-			$args = wp_parse_args(
-				[
-					'dimensions' => [
-						[ 'name' => 'hostname' ],
-						[ 'name' => 'pagePath' ],
-						[ 'name' => 'countryId' ],
-						[ 'name' => 'sessionMedium' ],
-					],
-					'metrics'    => [
-						[ 'name' => 'screenPageViews' ],
-						[ 'name' => 'totalUsers' ],
-					],
-				],
-				$args
-			);
-
-			// Include country.
-			if ( $country ) {
-				$args['dimensionFilter']['andGroup']['expressions'][] = [
-					'filter' => [
-						'fieldName'    => 'countryId',
-						'stringFilter' => [
-							'matchType' => 'EXACT',
-							'value'     => $country,
-						],
-					],
-				];
-			}
 		}
 
 		$workflow = 'analytics';
 		Api::get()->set_workflow( $workflow );
+
+		// Request.
 		$response = Api::get()->http_post(
 			'https://analyticsdata.googleapis.com/v1beta/properties/' . $property_id . ':runReport',
 			$args
@@ -345,7 +280,29 @@ class Analytics extends Request {
 			return false;
 		}
 
-		return $response['rows'];
+		$dimensions = isset( $response['dimensionHeaders'] ) ? array_column( $response['dimensionHeaders'], 'name' ) : [];
+		$metrics    = isset( $response['metricHeaders'] ) ? array_column( $response['metricHeaders'], 'name' ) : [];
+
+		$rows = [];
+		foreach ( $response['rows'] as $row ) {
+			$item = [];
+
+			if ( isset( $row['dimensionValues'] ) ) {
+				foreach ( $row['dimensionValues'] as $i => $dim ) {
+					$item[ $dimensions[ $i ] ] = $dim['value'];
+				}
+			}
+
+			if ( isset( $row['metricValues'] ) ) {
+				foreach ( $row['metricValues'] as $i => $met ) {
+					$item[ $metrics[ $i ] ] = (int) $met['value'];
+				}
+			}
+
+			$rows[] = $item;
+		}
+
+		return $rows;
 	}
 
 	/**

@@ -136,6 +136,8 @@ class RadioGroup extends ChoiceControl implements ControlContainer {
 		}
 		echo '</fieldset>';
 		//phpcs:enable
+
+		static::enqueueDependencies();
 	}
 
 	/**

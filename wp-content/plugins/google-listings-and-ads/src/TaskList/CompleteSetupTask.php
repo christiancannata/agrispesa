@@ -51,7 +51,7 @@ class CompleteSetupTask extends Task implements Service, Registerable, MerchantC
 	 */
 	public function get_title() {
 		return __(
-			'Set up Google Listings & Ads',
+			'Set up Google for WooCommerce',
 			'google-listings-and-ads'
 		);
 	}
@@ -72,15 +72,6 @@ class CompleteSetupTask extends Task implements Service, Registerable, MerchantC
 	 */
 	public function get_time() {
 		return __( '20 minutes', 'google-listings-and-ads' );
-	}
-
-	/**
-	 * Always dismissable.
-	 *
-	 * @return bool
-	 */
-	public function is_dismissable() {
-		return true;
 	}
 
 	/**

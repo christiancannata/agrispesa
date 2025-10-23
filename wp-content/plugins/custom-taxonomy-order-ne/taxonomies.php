@@ -1,6 +1,9 @@
 <?php
 
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 function custom_taxonomy_order() {
 
 	// Set your custom capability through this filter.
@@ -178,3 +181,4 @@ function customtaxorder_sort_woocommerce_taxonomies( $attributes ) {
 	return $attributes;
 }
 add_filter( 'woocommerce_product_get_attributes', 'customtaxorder_sort_woocommerce_taxonomies' );
+

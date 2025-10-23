@@ -42,6 +42,10 @@ class AmeReflectionCallable {
 			$callback = array($callback, '__invoke');
 		}
 
+		if ( !is_array($callback) ) {
+			throw new ReflectionException('Invalid callback: not array, string or Closure.');
+		}
+
 		if ( is_object($callback[0]) ) {
 			$reflectionObject = new ReflectionObject($callback[0]);
 		} else {
@@ -74,5 +78,30 @@ class AmeReflectionCallable {
 	 */
 	public function getFileName() {
 		return $this->reflection->getFileName();
+	}
+
+	/**
+	 * @param string $tag
+	 * @return AmeReflectionCallable[]
+	 */
+	public static function getHookReflections($tag) {
+		global $wp_filter;
+		if ( !isset($wp_filter[$tag]) ) {
+			return [];
+		}
+
+		$reflections = [];
+		foreach ($wp_filter[$tag] as $handlers) {
+			foreach ($handlers as $callback) {
+				try {
+					$reflection = new self($callback['function']);
+					$reflections[] = $reflection;
+				} catch (ReflectionException $e) {
+					//Invalid callback, let's just ignore it.
+					continue;
+				}
+			}
+		}
+		return $reflections;
 	}
 }

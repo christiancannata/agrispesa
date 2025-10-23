@@ -2,10 +2,7 @@
 
 
 namespace wpie\export\base;
-
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 abstract class WPIE_Export_Base {
 

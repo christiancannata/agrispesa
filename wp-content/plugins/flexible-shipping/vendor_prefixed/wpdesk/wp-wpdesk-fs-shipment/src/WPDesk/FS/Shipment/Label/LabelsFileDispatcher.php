@@ -20,15 +20,15 @@ class LabelsFileDispatcher
      */
     public function dispatch_and_delete_labels_file($file_name, $tmp_file_path)
     {
-        \header('Content-Description: File Transfer');
-        \header('Content-Type: application/octet-stream');
-        \header('Content-Disposition: attachment; filename="' . \basename($file_name) . '"');
-        \header('Expires: 0');
-        \header('Cache-Control: must-revalidate');
-        \header('Pragma: public');
-        \header('Content-Length: ' . \filesize($tmp_file_path));
-        \readfile($tmp_file_path);
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($file_name) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($tmp_file_path));
+        readfile($tmp_file_path);
         // phpcs:ignore
-        \unlink($tmp_file_path);
+        unlink($tmp_file_path);
     }
 }

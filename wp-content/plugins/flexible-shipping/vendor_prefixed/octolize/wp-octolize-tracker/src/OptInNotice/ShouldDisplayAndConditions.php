@@ -5,7 +5,7 @@ namespace FSVendor\Octolize\Tracker\OptInNotice;
 /**
  * Should display AND conditions.
  */
-class ShouldDisplayAndConditions implements \FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplay
+class ShouldDisplayAndConditions implements ShouldDisplay
 {
     /**
      * @var ShouldDisplay[]
@@ -16,7 +16,7 @@ class ShouldDisplayAndConditions implements \FSVendor\Octolize\Tracker\OptInNoti
      *
      * @return void
      */
-    public function add_should_diaplay_condition(\FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplay $should_display)
+    public function add_should_diaplay_condition(ShouldDisplay $should_display)
     {
         $this->conditions[] = $should_display;
     }

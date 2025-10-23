@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "wpdesk\/wp-view": "^1.1|^2.0.0",
         "psr\/log": "^1.1|2|3",
         "wpdesk\/wp-builder": "^2.0"

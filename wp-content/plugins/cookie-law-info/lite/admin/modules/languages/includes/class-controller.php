@@ -281,36 +281,36 @@ class Controller extends Cloud{
 	}
 
 	public function download( $src ) {
-		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-		$upload_dir = $this->get_upload_path('languages/banners/');
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        $upload_dir = $this->get_upload_path('languages/banners/');
 
-		if ( ! file_exists( $upload_dir ) ) {
-			wp_mkdir_p( $upload_dir, 0755);
-		}
+        if ( ! file_exists( $upload_dir ) ) {
+            wp_mkdir_p( $upload_dir, 0755);
+        }
 
-		//download file
-		$tmpfile  = download_url( $src, $timeout = 25 );
-		$file     = $upload_dir . basename( $src );
+        //download file
+        $tmpfile  = download_url( $src, $timeout = 25 );
+        $file     = $upload_dir . basename( $src );
 
-		//check for errors
-		if ( !is_wp_error( $tmpfile ) ) {
-			//remove current file
-			if ( file_exists( $file ) ) {
-				unlink( $file );
-			}
+        //check for errors
+        if ( !is_wp_error( $tmpfile ) ) {
+            //remove current file
+            if ( file_exists( $file ) && strpos( realpath( $file ), realpath( $upload_dir ) ) === 0 ) {
+                wp_delete_file( $file );
+            }
 
-			//in case the server prevents deletion, we check it again.
-			if ( ! file_exists( $file ) ) {
-				copy( $tmpfile, $file );
-			}
-		} else {
-			return $tmpfile;
-		}
+            //in case the server prevents deletion, we check it again.
+            if ( ! file_exists( $file ) ) {
+                copy( $tmpfile, $file );
+            }
+        } else {
+            return $tmpfile;
+        }
 
-		if ( is_string( $tmpfile ) && file_exists( $tmpfile ) ) {
-			unlink( $tmpfile );
-		}
-	}
+        if ( is_string( $tmpfile ) && file_exists( $tmpfile ) && strpos( realpath( $tmpfile ), realpath( sys_get_temp_dir() ) ) === 0 ) {
+            wp_delete_file( $tmpfile );
+        }
+    }
 
 	public function get_translations($lang) {
 		if ($lang != 'en' && $this->is_cky_translated($lang)) {

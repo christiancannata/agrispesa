@@ -12,7 +12,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Converts shipping costs and taxes from shop currency to current currency.
  */
-class ShippingMethodController implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShippingMethodController implements Hookable
 {
     /**
      * @var string
@@ -37,8 +37,8 @@ class ShippingMethodController implements \FSVendor\WPDesk\PluginBuilder\Plugin\
      */
     public function hooks()
     {
-        \add_filter('woocommerce_shipping_rate_cost', array($this, 'convert_shipping_rate_costs_for_shipping_method'), 10, 2);
-        \add_filter('woocommerce_shipping_rate_taxes', array($this, 'convert_shipping_rate_taxes_for_shipping_method'), 10, 2);
+        add_filter('woocommerce_shipping_rate_cost', array($this, 'convert_shipping_rate_costs_for_shipping_method'), 10, 2);
+        add_filter('woocommerce_shipping_rate_taxes', array($this, 'convert_shipping_rate_taxes_for_shipping_method'), 10, 2);
     }
     /**
      * Filter the rate cost.

@@ -69,7 +69,7 @@ class Cookie_Law_Info_Cookies {
 		if ( get_option( 'finished_splitting_shared_terms' ) ) {
 			return false;
 		}
-		$tt_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_taxonomy WHERE term_id = %d", $term_id ) );
+		$tt_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_taxonomy WHERE term_id = %d", $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		return $tt_count > 1;
 	}
 
@@ -88,13 +88,13 @@ class Cookie_Law_Info_Cookies {
 			);
 			$terms = get_terms( $args );
 		} else {
-			$terms = get_terms( $taxonomy, array( 'hide_empty' => false ) );
+			$terms = get_terms( $taxonomy, array( 'hide_empty' => false ) ); // phpcs:ignore WordPress.WP.DeprecatedParameters.Get_termsParam2Found
 		}
 		return $terms;
 	}
 	public function enqueue_scripts( $hook ) {
 		global $wp_version;
-		if ( isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'cookielawinfo-category' && isset( $_GET['tag_ID'] ) ) {
+		if ( isset( $_GET['taxonomy'] ) && $_GET['taxonomy'] == 'cookielawinfo-category' && isset( $_GET['tag_ID'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( version_compare( $wp_version, '4.9', '>=' ) ) {
 				$code_editor_js = wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
 
@@ -229,17 +229,17 @@ class Cookie_Law_Info_Cookies {
 	/** Saves all form data from custom post meta boxes, including saitisation of input */
 	public function save_custom_metaboxes() {
 		global $post;
-		if ( isset( $_POST['_cli_cookie_type'] ) ) {
-			update_post_meta( $post->ID, '_cli_cookie_type', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_type'] ) ) );
+		if ( isset( $_POST['_cli_cookie_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_post_meta( $post->ID, '_cli_cookie_type', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_type'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if ( isset( $_POST['_cli_cookie_duration'] ) ) {
-			update_post_meta( $post->ID, '_cli_cookie_duration', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_duration'] ) ) );
+		if ( isset( $_POST['_cli_cookie_duration'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_post_meta( $post->ID, '_cli_cookie_duration', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_duration'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if ( isset( $_POST['_cli_cookie_sensitivity'] ) ) {
-			update_post_meta( $post->ID, '_cli_cookie_sensitivity', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_sensitivity'] ) ) );
+		if ( isset( $_POST['_cli_cookie_sensitivity'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_post_meta( $post->ID, '_cli_cookie_sensitivity', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_sensitivity'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if ( isset( $_POST['_cli_cookie_slugid'] ) ) {
-			update_post_meta( $post->ID, '_cli_cookie_slugid', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_slugid'] ) ) );
+		if ( isset( $_POST['_cli_cookie_slugid'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_post_meta( $post->ID, '_cli_cookie_slugid', sanitize_text_field( wp_unslash( $_POST['_cli_cookie_slugid'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
 	}
 	public function manage_edit_columns( $columns ) {
@@ -577,7 +577,7 @@ class Cookie_Law_Info_Cookies {
 		$args    = array(
 			'posts_per_page' => -1,
 			'post_type'      => 'cookielawinfo',
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				array(
 					'taxonomy' => $taxonomy,
 					'field'    => 'slug',
@@ -637,8 +637,8 @@ class Cookie_Law_Info_Cookies {
 	* Category Active State save form
 	*/
 	public function cookie_save_defaultstate( $term_id ) {
-		if ( isset( $_POST['CLIdefaultstate'] ) ) {
-			$term_default_state = sanitize_text_field( wp_unslash( $_POST['CLIdefaultstate'] ) );
+		if ( isset( $_POST['CLIdefaultstate'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$term_default_state = sanitize_text_field( wp_unslash( $_POST['CLIdefaultstate'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 			if ( $term_default_state ) {
 				$this->update_term_meta( $term_id, 'CLIdefaultstate', $term_default_state );
@@ -679,7 +679,11 @@ class Cookie_Law_Info_Cookies {
 				<label for="_cli_cookie_head_scripts"><?php echo esc_html__( 'Head scripts', 'cookie-law-info' ); ?></label>
 			</th>			 
 			<td>
-				<textarea id="_cli_cookie_head_scripts" rows="5" name="_cli_cookie_head_scripts" class="wt-cli-code-editor"><?php echo wp_unslash( $head_scripts ); ?></textarea>
+				<textarea id="_cli_cookie_head_scripts" rows="5" name="_cli_cookie_head_scripts" class="wt-cli-code-editor">
+					<?php
+					echo wp_unslash( $head_scripts ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+				</textarea>
 			</td>
 		</tr>
 		<tr class="form-field term-head-scripts-field">
@@ -687,15 +691,19 @@ class Cookie_Law_Info_Cookies {
 				<label for="_cli_cookie_body_scripts"><?php echo esc_html__( 'Body scripts', 'cookie-law-info' ); ?></label>
 			</th>			 
 			<td>
-				<textarea  id="_cli_cookie_body_scripts" rows="5" name="_cli_cookie_body_scripts" class="wt-cli-code-editor"><?php echo wp_unslash( $body_scripts ); ?></textarea>
+				<textarea  id="_cli_cookie_body_scripts" rows="5" name="_cli_cookie_body_scripts" class="wt-cli-code-editor">
+					<?php
+					echo wp_unslash( $body_scripts ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+				</textarea>
 			</td>
 		</tr>
 		<?php
 	}
 
 	public function save_scripts_meta( $term_id ) {
-		$head_scripts = ( isset( $_POST['_cli_cookie_head_scripts'] ) ? wp_unslash( $_POST['_cli_cookie_head_scripts'] ) : '' );
-		$body_scripts = ( isset( $_POST['_cli_cookie_body_scripts'] ) ? wp_unslash( $_POST['_cli_cookie_body_scripts'] ) : '' );
+		$head_scripts = ( isset( $_POST['_cli_cookie_head_scripts'] ) ? wp_unslash( $_POST['_cli_cookie_head_scripts'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$body_scripts = ( isset( $_POST['_cli_cookie_body_scripts'] ) ? wp_unslash( $_POST['_cli_cookie_body_scripts'] ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$this->update_term_meta( $term_id, '_cli_cookie_head_scripts', $head_scripts );
 		$this->update_term_meta( $term_id, '_cli_cookie_body_scripts', $body_scripts );
@@ -819,7 +827,7 @@ class Cookie_Law_Info_Cookies {
 		$cookies = array();
 		$args    = array(
 			'post_type'  => CLI_POST_TYPE,
-			'meta_query' => array(
+			'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'   => $meta,
 					'value' => $value,

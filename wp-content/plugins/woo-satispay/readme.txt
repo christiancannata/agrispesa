@@ -1,9 +1,9 @@
-=== WooCommerce Satispay ===
+=== Satispay for WooCommerce ===
 Contributors: Satispay
 Tags: woocommerce, satispay, payment method
 Requires at least: 5.0
-Tested up to: 6.5.4
-Stable tag: 2.2.4
+Tested up to: 6.8
+Stable tag: 2.2.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -35,7 +35,28 @@ Manage all of your refund requests directly with the Refund function integrated 
 **Eliminate the risk of chargeback**
 As soon as the customer confirms the payment, the transaction is completed, thus eliminating the possibility of chargeback.
 
+== External Services ==
+
+This plugin connects to the Satispay API to process payments. To function correctly, it sends payment and order details to Satispay's servers.
+This is essential for creating and verifying transactions.
+
+You can view Satispay's terms of service and privacy policy here:
+* Terms of Service: https://www.satispay.com/en-it/legal-hub/terms-and-conditions/
+* Privacy Policy: https://www.satispay.com/en-it/legal-hub/privacy-policy/
+
 == Changelog ==
+= 2.2.8 =
+* Guidelines improvement
+
+= 2.2.7 =
+* Updated compatibility to WP-6.8.1
+
+= 2.2.6 =
+* Updated compatibility to WP-6.6.0
+
+= 2.2.5 =
+* Fixed logo resizing issue
+
 = 2.2.4 =
 * Updated plugin's icon with new logo
 

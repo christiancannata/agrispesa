@@ -100,7 +100,7 @@
 }
 
 .ame-rui-drag-icon {
-  fill: #1e1e1e;
+  fill: rgb(30, 30, 30);
 }
 
 #ame-rui-menu-items {
@@ -307,6 +307,8 @@
   margin: 0;
   line-height: 1.4;
   border-bottom: 1px solid #ccd0d4;
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
 }
 #ame-rui-main-actions .ws-ame-postbox-header h3 {
   padding: 10px 12px;
@@ -358,6 +360,8 @@
 #ame-rui-main-actions .ws-ame-postbox-content {
   border-top: none;
   padding: 12px;
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
 }
 #ame-rui-main-actions.ws-ame-closed-postbox .ws-ame-postbox-content {
   display: none;
@@ -377,7 +381,6 @@
   .ame-rui-actor {
     min-width: 12em;
   }
-
   .ame-rui-actions button .dashicons {
     display: none;
   }
@@ -386,7 +389,6 @@
   .ame-rui-actor {
     min-width: 10em;
   }
-
   .ame-rui-shortcodes-enabled .ame-rui-button-label, .ame-rui-actions .ame-rui-button-label {
     display: none;
   }
@@ -395,7 +397,6 @@
   .ame-rui-actor {
     line-height: 38px;
   }
-
   .ame-rui-redirect .ame-rui-actions button {
     margin-bottom: 0;
   }
@@ -403,7 +404,6 @@
     line-height: 38px;
     vertical-align: top;
   }
-
   .ame-rui-shortcodes-enabled {
     line-height: 38px;
   }

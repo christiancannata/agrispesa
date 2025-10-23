@@ -7,10 +7,12 @@ $cli_icon              = ( $script_blocker_status === true ? '<span class="dashi
 $action_text           = ( $script_blocker_status === true ? __( 'Disable', 'cookie-law-info' ) : __( 'Enable', 'cookie-law-info' ) );
 $action_value          = ( $script_blocker_status === true ? 'disabled' : 'enabled' );
 $script_blocker_text   = ( $script_blocker_status === true ? __( 'Script blocker is enabled.', 'cookie-law-info' ) : __( 'Script blocker is currently disabled. Enable the blocker if you want any of the below listed plugins to be auto blocked.', 'cookie-law-info' ) );
-$cli_notice_text       = sprintf( __( '<a id="wt-cli-script-blocker-action">%s</a>', 'cookie-law-info' ), $action_text );
+/* translators: %s: action text */
+$cli_notice_text       = sprintf( __( '<a id="wt-cli-script-blocker-action">%s</a>', 'cookie-law-info' ), $action_text ); // phpcs:ignore WordPress.WP.I18n.NoHtmlWrappedStrings
 $js_blocking_status    = ( $js_blocking === false || $js_blocking === 'no' ) ? false : true;
 $script_blocker_class  = ( $js_blocking_status === false || $script_blocker_status === false ) ? 'wt-cli-script-blocker-disabled' : '';
 $advanced_settings_url = get_admin_url( null, 'edit.php?post_type=' . CLI_POST_TYPE . '&page=cookie-law-info#cookie-law-info-advanced' );
+/* translators: %s: advanced settings URL */
 $js_blocking_notice    = sprintf( wp_kses( __( 'Advanced script rendering is currently disabled. It should be enabled for the automatic script blocker to function. <a href="%s">Enable.</a>', 'cookie-law-info' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( $advanced_settings_url ) );
 $count                 = 0;
 $plugin_help_url       = 'https://www.cookieyes.com/documentation/gdpr-cookie-consent-plugin/#Script_Blo_8';
@@ -141,6 +143,7 @@ $plugin_help_url       = 'https://www.cookieyes.com/documentation/gdpr-cookie-co
 		<?php
 		echo sprintf(
 			wp_kses(
+				/* translators: %s: plugin help URL */
 				__( 'Below is the list of plugins currently supported for auto blocking. Plugins marked inactive are either not installed or activated on your website. Enabled plugins will be blocked by default on the front-end of your website prior to obtaining user consent and rendered respectively based on consent. <a href="%s" target="_blank">Read more.</a>', 'cookie-law-info' ),
 				array(
 					'a' => array(

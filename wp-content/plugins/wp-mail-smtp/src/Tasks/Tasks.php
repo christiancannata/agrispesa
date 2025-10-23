@@ -64,6 +64,9 @@ class Tasks {
 
 		// Remove scheduled action meta after action execution.
 		add_action( 'action_scheduler_after_execute', [ $this, 'clear_action_meta' ], PHP_INT_MAX, 2 );
+
+		// Cancel tasks on plugin deactivation.
+		register_deactivation_hook( WPMS_PLUGIN_FILE, [ $this, 'cancel_all' ] );
 	}
 
 	/**
@@ -83,6 +86,7 @@ class Tasks {
 			ProcessQueueTask::class,
 			CleanupQueueTask::class,
 			SendEnqueuedEmailTask::class,
+			NotificationsUpdateTask::class,
 		];
 
 		/**
@@ -102,8 +106,25 @@ class Tasks {
 	 */
 	public function admin_hide_as_menu() {
 
+		$plugin_exceptions = [
+			'woocommerce/woocommerce.php',
+			'action-scheduler/action-scheduler.php',
+		];
+
+		/**
+		 * Filters the list of plugins for which
+		 * the Action Scheduler Tools ->Scheduled Actions menu item
+		 * should remain visible.
+		 *
+		 * @since 4.3.0
+		 *
+		 * @param array $plugin_exceptions List of plugins exceptions.
+		 */
+		$plugin_exceptions = apply_filters( 'wp_mail_smtp_tasks_tasks_action_scheduler_tools_plugin_exceptions', $plugin_exceptions );
+		$hide_as_menu      = empty( array_filter( $plugin_exceptions, 'is_plugin_active' ) );
+
 		// Filter to redefine that WP Mail SMTP hides Tools > Action Scheduler menu item.
-		if ( apply_filters( 'wp_mail_smtp_tasks_admin_hide_as_menu', true ) ) {
+		if ( apply_filters( 'wp_mail_smtp_tasks_admin_hide_as_menu', $hide_as_menu ) ) {
 			remove_submenu_page( 'tools.php', 'action-scheduler' );
 		}
 	}

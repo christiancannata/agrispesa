@@ -40,16 +40,16 @@ trait TemplateLoad
      */
     public function load_template($name, $path = '', $args = array())
     {
-        $plugin_template_path = \trailingslashit($this->plugin_path) . 'templates/';
+        $plugin_template_path = trailingslashit($this->plugin_path) . 'templates/';
         // Look within passed path within the theme - this is priority.
-        $template = \locate_template(array(\trailingslashit($this->get_template_path()) . \trailingslashit($path) . $name . '.php'));
+        $template = locate_template(array(trailingslashit($this->get_template_path()) . trailingslashit($path) . $name . '.php'));
         if (!$template) {
-            $template = $plugin_template_path . \trailingslashit($path) . $name . '.php';
+            $template = $plugin_template_path . trailingslashit($path) . $name . '.php';
         }
-        \extract($args);
-        \ob_start();
+        extract($args);
+        ob_start();
         include $template;
-        return \ob_get_clean();
+        return ob_get_clean();
     }
     /**
      * Get template path.
@@ -58,6 +58,6 @@ trait TemplateLoad
      */
     public function get_template_path()
     {
-        return \trailingslashit($this->template_path);
+        return trailingslashit($this->template_path);
     }
 }

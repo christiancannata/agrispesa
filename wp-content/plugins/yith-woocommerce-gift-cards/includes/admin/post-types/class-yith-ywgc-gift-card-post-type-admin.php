@@ -15,6 +15,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 	 * Class YITH_YWGC_Gift_Cards_Post_Type_Admin
 	 */
 	class YITH_YWGC_Gift_Cards_Post_Type_Admin extends YITH_Post_Type_Admin {
+
 		/**
 		 * The post type.
 		 *
@@ -42,7 +43,24 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 			add_action( 'admin_head-edit.php', array( $this, 'add_custom_dashboard_header' ) );
 
 			add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'render_columns_custom' ), 10, 2 );
+		}
 
+		/**
+		 * Define primary column.
+		 *
+		 * @return string
+		 */
+		protected function get_primary_column() {
+			return 'code';
+		}
+
+		/**
+		 * Return true if you want to use the object. False otherwise.
+		 *
+		 * @return bool
+		 */
+		protected function use_object() {
+			return false;
 		}
 
 		/**
@@ -54,7 +72,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 * @since 3.0.0
 		 */
 		public function filter_views( $views ) {
-			// phpcs:disable WordPress.Security.NonceVerification.Recommended
 			global $wpdb;
 
 			// Views args.
@@ -80,13 +97,14 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 			$num_posts   = wp_count_posts( $this->post_type );
 			$total_posts = $num_posts->publish;
 
-			$count_redeemed   = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( post_id ) ) FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON p.ID = pm.post_id WHERE meta_key = %s AND ROUND(meta_value, %d) = 0 AND p.post_type= %s AND p.post_status= %s", '_ywgc_balance_total', wc_get_price_decimals(), 'gift_card', 'publish' ) );//phpcs:ignore --Direct call to Database is discouraged.
-
-			$count_not_redeemed   = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( post_id ) ) FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON p.ID = pm.post_id WHERE meta_key = %s AND ROUND(meta_value, %d) > 0 AND p.post_type= %s AND p.post_status= %s", '_ywgc_balance_total', wc_get_price_decimals(), 'gift_card', 'publish' ) );//phpcs:ignore --Direct call to Database is discouraged.
+			// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$count_redeemed     = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( post_id ) ) FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON p.ID = pm.post_id WHERE meta_key = %s AND ROUND(meta_value, %d) = 0 AND p.post_type= %s AND p.post_status= %s", '_ywgc_balance_total', wc_get_price_decimals(), 'gift_card', 'publish' ) );
+			$count_not_redeemed = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( post_id ) ) FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON p.ID = pm.post_id WHERE meta_key = %s AND ROUND(meta_value, %d) > 0 AND p.post_type= %s AND p.post_status= %s", '_ywgc_balance_total', wc_get_price_decimals(), 'gift_card', 'publish' ) );
+			// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 			// Views URL.
 			$all_url   = add_query_arg( $args_all_gift_cards, admin_url( 'edit.php' ) );
-			$all_attrs = isset( $_GET['all_posts'] ) || ! isset( $_GET['balance'] ) ? 'class="current" aria-current="page"' : '';
+			$all_attrs = isset( $_GET['all_posts'] ) || ! isset( $_GET['balance'] ) ? 'class="current" aria-current="page"' : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			$redeemed_url   = add_query_arg( $args_redeemed, admin_url( 'edit.php' ) );
 			$redeemed_attrs = $this->is_redeemed_view() ? 'class="current" aria-current="page"' : '';
@@ -100,17 +118,21 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 				'not_redeemed' => "<a href='{$not_redeemed_url}' {$not_redeemed_attrs}>" . esc_html__( 'Not Redeemed', 'yith-woocommerce-gift-cards' ) . ' <span class="count">(' . esc_html( number_format_i18n( $count_not_redeemed ) ) . ')</span></a>',
 			);
 
-			// phpcs:enable
 			return $views;
 		}
 
 		/**
 		 * Set the "all" view as default when loading the dashboard
 		 *
+		 * @param string $url         URL.
+		 * @param string $page        Page.
+		 * @param string $tab         Tab.
+		 * @param string $sub_tab     Sub tab.
+		 * @param string $parent_page Parent page.
+		 *
 		 * @return string
 		 */
 		public function set_all_view_as_default( $url, $page, $tab, $sub_tab, $parent_page ) {
-
 			if ( 'yith_woocommerce_gift_cards_panel' === $page && str_ends_with( $url, 'edit.php?post_type=gift_card' ) ) {
 				$url .= '&post_status=publish';
 			}
@@ -125,10 +147,9 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 */
 		private function is_redeemed_view() {
 			static $is_redeemed = null;
-			if ( is_null( $is_redeemed ) ) {
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$is_redeemed = isset( $_GET['balance'] ) && 'used' === $_GET['balance'];
 
+			if ( is_null( $is_redeemed ) ) {
+				$is_redeemed = isset( $_GET['balance'] ) && 'used' === $_GET['balance']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			}
 
 			return $is_redeemed;
@@ -141,10 +162,9 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 */
 		private function is_not_redeemed_view() {
 			static $is_not_redeemed = null;
-			if ( is_null( $is_not_redeemed ) ) {
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$is_not_redeemed = isset( $_GET['balance'] ) && 'active' === $_GET['balance'];
 
+			if ( is_null( $is_not_redeemed ) ) {
+				$is_not_redeemed = isset( $_GET['balance'] ) && 'active' === $_GET['balance']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			}
 
 			return $is_not_redeemed;
@@ -165,6 +185,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 			if ( isset( $actions['trash'] ) ) {
 				unset( $actions['trash'] );
 			}
+
 			$post_type_object = get_post_type_object( $this->post_type );
 
 			if ( current_user_can( $post_type_object->cap->delete_posts ) ) {
@@ -184,13 +205,13 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 * @return string
 		 */
 		public function handle_bulk_actions( $redirect_to, $action, $ids ) {
-
 			switch ( $action ) {
 				case 'delete_gift_cards':
 					foreach ( $ids as $gift_card_id ) {
 						wp_delete_post( $gift_card_id );
 					}
 					break;
+
 				default:
 			}
 
@@ -205,7 +226,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 * @return array
 		 */
 		public function define_columns( $columns ) {
-
 			unset( $columns['date'] );
 			unset( $columns['shortcode'] );
 			unset( $columns['title'] );
@@ -236,11 +256,10 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		/**
 		 * Show content for custom columns
 		 *
-		 * @param mixed $column_name  column shown.
-		 * @param mixed $post_ID          post to use.
+		 * @param mixed $column  column shown.
+		 * @param mixed $post_id post to use.
 		 */
 		public function render_columns_custom( $column, $post_id ) {
-
 			$gift_card = new YITH_YWGC_Gift_Card( array( 'ID' => $post_id ) );
 
 			if ( ! $gift_card->exists() ) {
@@ -248,11 +267,9 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 			}
 
 			switch ( $column ) {
-
 				case 'code':
 					$gift_card_code = $gift_card->get_code();
-
-					$code_field = array(
+					$code_field     = array(
 						'id'    => 'gift_card_code',
 						'type'  => 'copy-to-clipboard',
 						'value' => $gift_card_code,
@@ -261,11 +278,12 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 					yith_plugin_fw_get_field( $code_field, true );
 
 					break;
+
 				case 'order':
 					$generated_in_bulk = get_post_meta( $gift_card->ID, 'generated_in_bulk' );
 
 					if ( $gift_card->order_id ) {
-						echo $this->get_order_number_and_details( $gift_card->order_id );
+						echo wp_kses_post( $this->get_order_number_and_details( $gift_card->order_id ) );
 					} elseif ( $generated_in_bulk ) {
 						/**
 						 * APPLY_FILTERS: yith_wcgc_table_generated_in_bulk_message
@@ -276,8 +294,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 						 *
 						 * @return string
 						 */
-						echo apply_filters( 'yith_wcgc_table_generated_in_bulk_message', esc_html__( 'Generated in bulk', 'yith-woocommerce-gift-cards' ) );
-
+						echo esc_html( apply_filters( 'yith_wcgc_table_generated_in_bulk_message', __( 'Generated in bulk', 'yith-woocommerce-gift-cards' ) ) );
 					} else {
 						/**
 						 * APPLY_FILTERS: yith_wcgc_table_created_manually_message
@@ -288,7 +305,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 						 *
 						 * @return string
 						 */
-						echo apply_filters( 'yith_wcgc_table_created_manually_message', esc_html__( 'Created manually', 'yith-woocommerce-gift-cards' ) );
+						echo esc_html( apply_filters( 'yith_wcgc_table_created_manually_message', __( 'Created manually', 'yith-woocommerce-gift-cards' ) ) );
 					}
 
 					break;
@@ -304,35 +321,40 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 					 *
 					 * @return string
 					 */
-					echo apply_filters( 'yith_wcgc_table_get_balance', wc_price( $gift_card->get_balance(), array( 'currency' => $gift_card->currency ) ), $gift_card );
+					echo wp_kses_post( apply_filters( 'yith_wcgc_table_get_balance', wc_price( $gift_card->get_balance(), array( 'currency' => $gift_card->currency ) ), $gift_card ) );
 					break;
 
 				case 'redeemed':
 					$redemptions = $gift_card->get_redemption_history();
+
 					if ( ! empty( $redemptions ) ) {
 						foreach ( $redemptions as $redemption ) {
-							echo $redemption;
+							echo wp_kses_post( $redemption );
 							echo '<br>';
 						}
 					}
 
 					$orders = $gift_card->get_registered_orders();
+
 					if ( ! empty( $orders ) ) {
 						echo esc_html_x( 'In order:', 'Display the gift card used in specific WC orders, for example, In order: #1234', 'yith-woocommerce-gift-cards' );
 						echo '<br>';
 
 						$order_count = count( $orders );
 						$counter     = 1;
+
 						foreach ( $orders as $order_id ) {
-							echo wp_kses( $this->get_order_number_and_details( $order_id ), 'post' );
+							echo wp_kses_post( $this->get_order_number_and_details( $order_id ) );
+
 							if ( $counter < $order_count ) {
 								echo ',';
 							}
-							$counter++;
+
+							++$counter;
 						}
 					}
 
-					if ( $gift_card->get_balance() === $gift_card->total_amount && empty( $redemptions ) ) {
+					if ( $gift_card->get_balance() === floatval( $gift_card->total_amount ) && empty( $redemptions ) && empty( $orders ) ) {
 						/**
 						 * APPLY_FILTERS: yith_wcgc_table_code_no_used_message
 						 *
@@ -342,7 +364,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 						 *
 						 * @return string
 						 */
-						echo apply_filters( 'yith_wcgc_table_code_no_used_message', esc_html__( 'The code has not been used yet', 'yith-woocommerce-gift-cards' ) );
+						echo esc_html( apply_filters( 'yith_wcgc_table_code_no_used_message', __( 'The code has not been used yet', 'yith-woocommerce-gift-cards' ) ) );
 					}
 
 					break;
@@ -428,7 +450,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		 * @return int
 		 */
 		public function get_order_number_and_details( $order ) {
-
 			if ( is_numeric( $order ) ) {
 				$order = wc_get_order( $order );
 			}
@@ -438,21 +459,18 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 			}
 
 			return '<a href="' . admin_url( 'post.php?post=' . absint( $order->get_id() ) . '&action=edit' ) . '" class="row-title">#' . esc_attr( $order->get_order_number() );
-
 		}
 
 		/**
 		 * Show details
 		 *
-		 * @param int                 $post_ID
-		 * @param YITH_YWGC_Gift_Card $gift_card
+		 * @param int                 $post_ID   Post ID.
+		 * @param YITH_YWGC_Gift_Card $gift_card Gift card object.
 		 */
 		public function show_details_on_gift_cards_table( $post_ID, $gift_card ) {
-
 			if ( $gift_card->is_dismissed() ) {
 				?>
-				<span
-					class="ywgc-dismissed-text"><?php echo esc_html__( 'This card is dismissed.', 'yith-woocommerce-gift-cards' ); ?></span>
+				<span class="ywgc-dismissed-text"><?php echo esc_html__( 'This card is dismissed.', 'yith-woocommerce-gift-cards' ); ?></span>
 				<?php
 			}
 
@@ -463,12 +481,13 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 				</div>
 				<?php
 			} else {
-
 				if ( $gift_card->delivery_send_date ) {
 					$status_class   = 'sent';
 					$formatted_date = $gift_card->get_formatted_date( $gift_card->delivery_send_date );
-					$message        = sprintf( esc_html__( 'Sent on %s', 'yith-woocommerce-gift-cards' ), (string) $formatted_date );
-				} elseif ( $gift_card->delivery_date >= current_time ( 'timestamp' ) ) {//phpcs:ignore --timestamp is discouraged
+
+					// translators: %s is the date when the gift card was sent to the receiver.
+					$message = sprintf( esc_html__( 'Sent on %s', 'yith-woocommerce-gift-cards' ), (string) $formatted_date );
+				} elseif ( $gift_card->delivery_date >= current_time( 'timestamp' ) ) { // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
 					$status_class = 'scheduled';
 					$message      = esc_html__( 'Scheduled', 'yith-woocommerce-gift-cards' );
 				} elseif ( '' === $gift_card->has_been_sent() ) {
@@ -478,25 +497,25 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 					$status_class = 'failed';
 					$message      = esc_html__( 'Failed', 'yith-woocommerce-gift-cards' );
 				}
+
 				?>
-
 				<div>
-					<span><?php echo sprintf( '%s', $gift_card->recipient ); ?></span>
+					<span><?php echo wp_kses_post( apply_filters( 'yith_ywgc_table_gift_card_recipient', $gift_card->recipient, $gift_card ) ); ?></span>
 				</div>
-
 				<div>
 					<?php
-
 					if ( $gift_card->delivery_date ) :
 						?>
-						<span><?php echo sprintf( esc_html__( 'Delivery date: %s', 'yith-woocommerce-gift-cards' ), get_post_meta( $post_ID, '_ywgc_delivery_date_formatted', true ) ); ?></span>
+						<span>
+							<?php
+							// translators: %s is the gift card delivery date.
+							echo esc_html( sprintf( __( 'Delivery date: %s', 'yith-woocommerce-gift-cards' ), get_post_meta( $post_ID, '_ywgc_delivery_date_formatted', true ) ) );
+							?>
+						</span>
 						<br>
 					<?php endif; ?>
-					<span
-						class="ywgc-delivery-status <?php echo esc_attr( $status_class ); ?>"><?php echo esc_attr( $message ); ?></span>
-
+					<span class="ywgc-delivery-status <?php echo esc_attr( $status_class ); ?>"><?php echo esc_attr( $message ); ?></span>
 				</div>
-
 				<?php
 			}
 		}
@@ -515,9 +534,9 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		protected function get_blank_state_params() {
 			return array(
 				'icon'    => 'more',
-				'message' => __( 'You have no Gift Cards yet!', 'yith-pft' ),
+				'message' => __( 'You have no Gift Cards yet!', 'yith-woocommerce-gift-cards' ),
 				'cta'     => array(
-					'title' => _x( 'Create code', 'Button text', 'yith-pft' ),
+					'title' => _x( 'Create code', 'Button text', 'yith-woocommerce-gift-cards' ),
 				),
 			);
 		}
@@ -541,16 +560,14 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 
 				$this->render_blank_state();
 
-				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .tablenav.top, .tablenav.bottom > *, .edit-php.post-type-gift_card .subsubsub  { display: none; } #posts-filter .tablenav.bottom, .tablenav.bottom #ywgc-list-table-blank-state{ height: auto; display: block } .yith-plugin-ui--gift_card-post_type .wrap a.page-title-action { display: none; } </style>';
+				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .yith-plugin-ui__wp-list-auto-h-scroll__wrapper, #posts-filter .tablenav.top, .tablenav.bottom > *, .edit-php.post-type-gift_card .subsubsub  { display: none; } #posts-filter .tablenav.bottom, .tablenav.bottom #ywgc-list-table-blank-state{ height: auto; display: block } .yith-plugin-ui--gift_card-post_type .wrap a.page-title-action { display: none; } </style>';
 			}
-
 		}
 
 		/**
 		 * Render an empty state.
 		 */
 		public function render_blank_state() {
-
 			if ( ! wp_style_is( 'yith-plugin-ui', 'registered' ) ) {
 				$plugin_fw_assets = class_exists( 'YIT_Assets' ) && is_callable( 'YIT_Assets::instance' ) ? YIT_Assets::instance() : false;
 
@@ -559,7 +576,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 				}
 			}
 
-			$message = __( 'You don’t have any gift card code to display. Once a user has purchased a gift card you will be able to see the code here. You can also manually create a gift card code to share.', 'yith-woocommerce-gift-cards' );
+			$message = __( 'You don\'t have any gift card code to display. Once a user has purchased a gift card you will be able to see the code here. You can also manually create a gift card code to share.', 'yith-woocommerce-gift-cards' );
 
 			yith_plugin_fw_get_component(
 				array(
@@ -575,7 +592,6 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 				),
 				true
 			);
-
 		}
 
 		/**
@@ -613,6 +629,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 					admin_url( 'edit.php' )
 				);
 				$text = $this->get_back_to_wp_list_text();
+
 				if ( $text ) {
 					?>
 					<div id='yith-plugin-fw__back-to-wp-list__wrapper' class='yith-plugin-fw__back-to-wp-list__wrapper'>
@@ -637,21 +654,20 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		public function add_custom_dashboard_header() {
 			global $current_screen;
 
-			if ('gift_card' != $current_screen->post_type) {
+			if ( 'gift_card' !== $current_screen->post_type ) {
 				return;
 			}
 
 			?>
-            <script type="text/javascript">
-                jQuery(function () {
-                    jQuery('hr.wp-header-end').before("<a class='page-title-action export-import-custom-button' title='<?php echo esc_html__( 'Available on Premium', 'yith-woocommerce-gift-cards' ) ?>'><?php echo esc_html__( 'Export/Import', 'yith-woocommerce-gift-cards' ) ?></a>");
-                    jQuery('hr.wp-header-end').before("<div class='yith-plugin-fw-wp-page__description'><?php echo esc_html_x( 'A table with all the gift card codes generated in your shop.', 'gift cards dashboard description', 'yith-woocommerce-gift-cards' ) ?></div>");
-                });
-            </script>
+			<script type="text/javascript">
+				jQuery(function () {
+					jQuery('hr.wp-header-end').before("<a class='page-title-action export-import-custom-button' title='<?php echo esc_html__( 'Available on Premium', 'yith-woocommerce-gift-cards' ); ?>'><?php echo esc_html__( 'Export/Import', 'yith-woocommerce-gift-cards' ); ?></a>");
+					jQuery('hr.wp-header-end').before("<div class='yith-plugin-fw-wp-page__description'><?php echo esc_html_x( 'A table with all the gift card codes generated in your shop.', 'gift cards dashboard description', 'yith-woocommerce-gift-cards' ); ?></div>");
+				});
+			</script>
 
 			<?php
 		}
-
 	}
 }
 

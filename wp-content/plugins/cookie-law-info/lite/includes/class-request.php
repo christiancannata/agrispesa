@@ -234,7 +234,7 @@ abstract class Request {
 
 		$args = array(
 			'headers'   => $this->headers,
-			'sslverify' => false,
+			'sslverify' => apply_filters( 'cky_request_sslverify', true ),
 			'method'    => strtoupper( $method ),
 			'timeout'   => $this->timeout,
 		);

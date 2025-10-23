@@ -39,7 +39,24 @@ class MethodDescription implements Hookable {
 	 * Hooks.
 	 */
 	public function hooks() {
-		add_action( 'woocommerce_after_shipping_rate', array( $this, 'display_description_if_present' ), 10, 2 );
+		add_action( 'woocommerce_after_shipping_rate', [ $this, 'display_description_if_present' ], 10, 2 );
+		add_filter( 'woocommerce_package_rates', [ $this, 'add_description_to_rate_if_present' ] );
+	}
+
+	/**
+	 * @param WC_Shipping_Rate[] $rates .
+	 *
+	 * @return WC_Shipping_Rate[]
+	 */
+	public function add_description_to_rate_if_present( $rates ) {
+		foreach ( $rates as $rate ) {
+			if ( ! $rate instanceof WC_Shipping_Rate || ! $this->should_display_method_description( $rate ) ) {
+				continue;
+			}
+			$rate->description = $this->get_method_description( $rate );
+		}
+
+		return $rates;
 	}
 
 	/**

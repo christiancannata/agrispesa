@@ -1,6 +1,5 @@
 <?php
 
-
 namespace wpie\import\upload\validate;
 
 use wpie\import\chunk\csv;
@@ -9,9 +8,7 @@ use PhpOffice\PhpSpreadsheet\Reader;
 use PhpOffice\PhpSpreadsheet\Writer;
 use WP_Error;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_Upload_Validate {
 
@@ -84,9 +81,17 @@ class WPIE_Upload_Validate {
                 }
 
                 if ( preg_match( '%\W(txt)$%i', trim( $file_name ) ) ) {
+    
+                        if ( $fileFormat === false || !in_array( $fileFormat, [ 'csv', 'json', 'xml' ] ) ) {
+                                $fileFormat = isset( $_GET[ 'activeFormat' ] ) && !empty( $_GET[ 'activeFormat' ] ) && in_array( $_GET[ 'activeFormat' ], [ 'csv', 'json', 'xml' ] ) ? wpie_sanitize_field( $_GET[ 'activeFormat' ] ) : "csv";
+                        }
 
-                        if ( $fileFormat === false ) {
-                                $fileFormat = isset( $_GET[ 'activeFormat' ] ) && !empty( $_GET[ 'activeFormat' ] ) ? wpie_sanitize_field( $_GET[ 'activeFormat' ] ) : "csv";
+                        $validate = \wp_check_filetype( $file );
+
+                        if ( $validate[ 'type' ] !== 'text/plain' ) {
+
+                                echo json_encode( [ 'status' => 'error', 'message' => __( 'File type is not allowed', 'wp-import-export-lite' ) ] );
+                                die();
                         }
 
                         $newFileName = pathinfo( $file_name, PATHINFO_FILENAME ) . "." . $fileFormat;
@@ -313,5 +318,4 @@ class WPIE_Upload_Validate {
                         unset( $this->$key );
                 }
         }
-
 }

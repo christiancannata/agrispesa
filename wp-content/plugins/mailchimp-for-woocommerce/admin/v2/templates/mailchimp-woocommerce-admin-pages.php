@@ -10,8 +10,7 @@
 $handler = MailChimp_WooCommerce_Admin::connect();
 
 /** Grab all options for this particular tab we're viewing. */
-
-$options = get_option( $this->plugin_name, array() );
+$options = mailchimp_get_admin_options();
 
 /** Verify that the nonce is correct for the GET and POST variables. */
 
@@ -29,7 +28,7 @@ $is_mailchimp_post 	= isset( $_POST['mailchimp_woocommerce_settings_hidden'] ) &
 $is_confirmation 	= isset( $_GET['resync'] ) ? ( esc_attr( sanitize_key( $_GET['resync'] ) ) === '1' ) : false;
 /**  If we have a transient set to start the sync on this page view, initiate it now that the values have been saved. */
 
-if ($mc_configured && ! $is_confirmation && (bool) get_site_transient( 'mailchimp_woocommerce_start_sync' ) ) {
+if ($mc_configured && ! $is_confirmation && (bool) \Mailchimp_Woocommerce_DB_Helpers::get_transient( 'mailchimp_woocommerce_start_sync' ) ) {
 	$is_confirmation 		= true;
 }
 
@@ -40,6 +39,7 @@ $clicked_sync_button      	= $mc_configured && $is_mailchimp_post && MC_WC_OVERV
 $has_api_error            	= isset( $options['api_ping_error'] ) && ! empty( $options['api_ping_error'] ) ? $options['api_ping_error'] : null;
 $audience_name 				= $handler->getListName() ? $handler->getListName() : '';
 $account_name               = $handler->getAccountName();
+$mailchimp_user_id          = $handler->getUserID();
 $store_name                 = get_option( 'blogname' );
 
 // only do this if we haven't selected an audience.
@@ -95,7 +95,18 @@ if ((MC_WC_CONFIRMATION === $active_breadcrumb && ! $is_confirmation)) {
 		$active_breadcrumb = MC_WC_REVIEW_SYNC_SETTINGS;
 	}
 }
+$promo_active = false;
+if (mailchimp_waiting_for_account_confirmation() && $active_breadcrumb !== MC_WC_REVIEW_SYNC_SETTINGS) {
+    wp_redirect('admin.php?page=create-mailchimp-account');
+}
 ?>
+
+<?php if ( defined( 'ICL_SITEPRESS_VERSION' )  && MC_WC_OVERVIEW_TAB === $active_tab): ?>
+    <div class="notice notice-warning is-dismissible">
+        <p><?php esc_html_e( 'Texts from embedded forms can not be translated with WPML.', 'mailchimp-for-woocommerce' ); ?></p>
+    </div>
+<?php endif; ?>
+
 
 <div class="mc-wc-settings-wrapper woocommerce <?php echo $active_breadcrumb; ?>">
 	<h2 class="mc-wc-settings-title">
@@ -136,7 +147,7 @@ if ((MC_WC_CONFIRMATION === $active_breadcrumb && ! $is_confirmation)) {
 			<?php if ( MC_WC_CONNECT_ACCOUNTS === $active_breadcrumb) : ?>
 				<?php Mailchimp_Woocommerce_Event::track('connect_accounts:view_screen', new DateTime()); ?>
 				<?php include_once 'connect-accounts/header.php'; ?>
-      <?php elseif (MC_WC_REVIEW_SYNC_SETTINGS === $active_breadcrumb && $has_valid_api_key): ?>
+            <?php elseif (MC_WC_REVIEW_SYNC_SETTINGS === $active_breadcrumb && $has_valid_api_key): ?>
 				<?php Mailchimp_Woocommerce_Event::track('review_settings:view_screen', new DateTime()); ?>
 				<?php include_once 'review-sync-settings/header.php'; ?>
 			<?php elseif (MC_WC_CONFIRMATION === $active_breadcrumb && $is_confirmation): ?>
@@ -204,5 +215,11 @@ if ((MC_WC_CONFIRMATION === $active_breadcrumb && ! $is_confirmation)) {
 			<?php endif;?>
 		</div>
 		<?php endif; ?>
+
+        <?php if($promo_active): ?>
+        <div class="promo-disclaimer">
+            *24X ROI Standard Plan: Based on all e-commerce revenue attributable to Standard plan users’ Mailchimp campaigns from April 2023 to April 2024.
+        </div>
+        <?php endif; ?>
 	</form>
 </div>

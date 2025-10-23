@@ -24,7 +24,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Notices implements Runner {
 
-	use Hooker, Ajax;
+	use Hooker;
+	use Ajax;
 
 	/**
 	 * Register hooks.
@@ -114,7 +115,7 @@ class Notices implements Runner {
 		}
 
 		$message = $this->do_filter( 'admin/notice/new_post_type', $message, $count );
-		$message = sprintf( wp_kses_post( $message ), $list, Helper::get_admin_url( 'options-titles#setting-panel-post-type-' . key( $new ) ), Helper::get_admin_url( 'options-sitemap#setting-panel-sitemap-post-type-' . key( $new ) ) );
+		$message = sprintf( wp_kses_post( $message ), $list, Helper::get_settings_url( 'titles', 'post-type-' . key( $new ) ), Helper::get_settings_url( 'sitemap', 'post-type-' . key( $new ) ) );
 		Helper::add_notification(
 			$message,
 			[
@@ -145,7 +146,7 @@ class Notices implements Runner {
 			return;
 		}
 
-		$languages = icl_get_languages();
+		$languages = icl_get_languages(); // @phpstan-ignore-line
 		foreach ( $languages as $lang_code => $language ) {
 
 			foreach ( [ 'general', 'titles' ] as $option ) {
@@ -160,8 +161,8 @@ class Notices implements Runner {
 				}
 
 				foreach ( $common_data as $option_key ) {
-					$string_id = icl_get_string_id( Helper::get_settings( "$option.$option_key" ), "admin_texts_rank-math-options-$option" );
-					icl_add_string_translation( $string_id, $lang_code, $data[ $option_key ], 10 );
+					$string_id = icl_get_string_id( Helper::get_settings( "$option.$option_key" ), "admin_texts_rank-math-options-$option" ); // @phpstan-ignore-line
+					icl_add_string_translation( $string_id, $lang_code, $data[ $option_key ], 10 ); // @phpstan-ignore-line
 				}
 			}
 		}

@@ -9,10 +9,12 @@
 			let href = $(this).attr('href');
 
 			let mcEvent = $(this).data('mc-event');
+			let mcEventContext = $(this).data('mc-tab');
 
 			var data = {
 				action:'mailchimp_woocommerce_send_event',
-				mc_event: mcEvent
+				mc_event: mcEvent,
+				mc_context: mcEventContext
 			};
 
 			$.post(ajaxurl, data, function(response) {
@@ -102,6 +104,11 @@
 			$temp.remove();
 			$('.mc-woocommerce-copy-log-button span.clipboard').hide();
 			$('.mc-woocommerce-copy-log-button span.yes').show();
+			var data = {
+				action:'mailchimp_woocommerce_send_event',
+				mc_event: 'save_log',
+			};
+			$.post(ajaxurl, data, function(response) {});
 		});
 
 		$('.mc-woocommerce-copy-log-button').mouseleave(function (e) {
@@ -176,6 +183,34 @@
 			});
 		});
 
+		let executing_chimpstatic = false;
+
+		$('#mailchimp_woocommerce_toggle_chimpstatic_script').off('click').on('click', function(e) {
+			e.preventDefault();
+			if (executing_chimpstatic) {
+				console.log("preventing duplicate button clicks for chimpstatic script");
+				return null;
+			}
+			executing_chimpstatic = true;
+
+			Swal.fire({
+				title: phpVars.l10n.toggling_chimpstatic_in_progress,
+				onBeforeOpen: () => {
+					Swal.showLoading()
+				}
+			});
+
+			var data = {
+				action:'mailchimp_woocommerce_toggle_chimpstatic_script',
+			};
+
+			console.log('about to toggle mailchimp script options');
+			$.post(ajaxurl, data, function(response) {
+				console.log('toggled mailchimp script', data.status);
+				window.location.reload();
+			});
+		});
+
 		/*
 		* Shows dialog on store disconnect
 		* Change wp_http_referer URL in case of store disconnect
@@ -194,7 +229,7 @@
 
 			const swalWithBootstrapButtons = Swal.mixin({
 				customClass: {
-				  confirmButton: 'button button-primary tab-content-submit disconnect-confirm',
+				  confirmButton: 'button button-default mc-wc-btn-disconnect',
 				  cancelButton: 'button button-default mc-woocommerce-resync-button disconnect-button'
 				},
 				buttonsStyling: false,

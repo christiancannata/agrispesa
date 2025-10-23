@@ -25,7 +25,7 @@ class NumberInputBuilder extends ControlBuilder {
 		return $this;
 	}
 
-	public function unitSetting(Settings\Setting $unitSetting) {
+	public function unitSetting(Settings\AbstractSetting $unitSetting) {
 		$this->params['unit'] = $unitSetting;
 		return $this;
 	}

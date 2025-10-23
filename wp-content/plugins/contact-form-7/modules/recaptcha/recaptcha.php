@@ -56,12 +56,7 @@ function wpcf7_recaptcha_enqueue_scripts() {
 		array( 'in_footer' => true )
 	);
 
-	$assets = array();
-	$asset_file = wpcf7_plugin_path( 'modules/recaptcha/index.asset.php' );
-
-	if ( file_exists( $asset_file ) ) {
-		$assets = include( $asset_file );
-	}
+	$assets = include wpcf7_plugin_path( 'modules/recaptcha/index.asset.php' );
 
 	$assets = wp_parse_args( $assets, array(
 		'dependencies' => array(),
@@ -84,15 +79,20 @@ function wpcf7_recaptcha_enqueue_scripts() {
 
 	wp_enqueue_script( 'wpcf7-recaptcha' );
 
-	wp_localize_script( 'wpcf7-recaptcha',
-		'wpcf7_recaptcha',
-		array(
-			'sitekey' => $service->get_sitekey(),
-			'actions' => apply_filters( 'wpcf7_recaptcha_actions', array(
-				'homepage' => 'homepage',
-				'contactform' => 'contactform',
-			) ),
-		)
+	$wpcf7_recaptcha_obj = array(
+		'sitekey' => $service->get_sitekey(),
+		'actions' => apply_filters( 'wpcf7_recaptcha_actions', array(
+			'homepage' => 'homepage',
+			'contactform' => 'contactform',
+		) ),
+	);
+
+	wp_add_inline_script( 'wpcf7-recaptcha',
+		sprintf(
+			'var wpcf7_recaptcha = %s;',
+			wp_json_encode( $wpcf7_recaptcha_obj, JSON_PRETTY_PRINT )
+		),
+		'before'
 	);
 }
 
@@ -135,7 +135,7 @@ function wpcf7_recaptcha_verify_response( $spam, $submission ) {
 		return $spam;
 	}
 
-	$token = trim( $_POST['_wpcf7_recaptcha_response'] ?? '' );
+	$token = wpcf7_superglobal_post( '_wpcf7_recaptcha_response' );
 
 	if ( $service->verify( $token ) ) { // Human
 		$spam = false;
@@ -145,19 +145,14 @@ function wpcf7_recaptcha_verify_response( $spam, $submission ) {
 		if ( '' === $token ) {
 			$submission->add_spam_log( array(
 				'agent' => 'recaptcha',
-				'reason' => __(
-					'reCAPTCHA response token is empty.',
-					'contact-form-7'
-				),
+				'reason' => __( 'reCAPTCHA response token is empty.', 'contact-form-7' ),
 			) );
 		} else {
 			$submission->add_spam_log( array(
 				'agent' => 'recaptcha',
 				'reason' => sprintf(
-					__(
-						'reCAPTCHA score (%1$.2f) is lower than the threshold (%2$.2f).',
-						'contact-form-7'
-					),
+					/* translators: 1: value of reCAPTCHA score 2: value of reCAPTCHA threshold */
+					__( 'reCAPTCHA score (%1$.2f) is lower than the threshold (%2$.2f).', 'contact-form-7' ),
 					$service->get_last_score(),
 					$service->get_threshold()
 				),
@@ -251,19 +246,15 @@ function wpcf7_admin_warnings_recaptcha_v2_v3( $page, $action, $object ) {
 		return;
 	}
 
-	$message = sprintf(
-		esc_html( __(
-			"API keys for reCAPTCHA v3 are different from those for v2; keys for v2 do not work with the v3 API. You need to register your sites again to get new keys for v3. For details, see %s.",
-			'contact-form-7'
-		) ),
-		wpcf7_link(
-			__( 'https://contactform7.com/recaptcha/', 'contact-form-7' ),
-			__( 'reCAPTCHA (v3)', 'contact-form-7' )
-		)
-	);
-
-	echo sprintf(
-		'<div class="notice notice-warning"><p>%s</p></div>',
-		$message
+	wp_admin_notice(
+		sprintf(
+			/* translators: %s: link labeled 'reCAPTCHA (v3)' */
+			__( 'API keys for reCAPTCHA v3 are different from those for v2; keys for v2 do not work with the v3 API. You need to register your sites again to get new keys for v3. For details, see %s.', 'contact-form-7' ),
+			wpcf7_link(
+				__( 'https://contactform7.com/recaptcha/', 'contact-form-7' ),
+				__( 'reCAPTCHA (v3)', 'contact-form-7' )
+			)
+		),
+		array( 'type' => 'warning' )
 	);
 }

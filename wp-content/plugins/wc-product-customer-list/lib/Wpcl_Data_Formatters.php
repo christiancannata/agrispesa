@@ -4,12 +4,10 @@
 if ( !defined( 'WPINC' ) ) {
     die;
 }
-class Wpcl_Data_Formatters
-{
-    public function __construct()
-    {
+class Wpcl_Data_Formatters {
+    public function __construct() {
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -41,9 +39,8 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $clean_column = str_replace( [ 'wpcl_custom_field__', 'wpcl_user_meta__' ], '', $column );
+    ) {
+        $clean_column = str_replace( ['wpcl_custom_field__', 'wpcl_user_meta__'], '', $column );
         $value = maybe_unserialize( $order->get_meta( $clean_column, true ) );
         $current_row[$column] = $value;
         return [
@@ -51,7 +48,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -83,8 +80,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order_id;
         // if the user has permissions to edit orders, link the order number to its order.
         if ( is_admin() || is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
@@ -96,7 +92,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -128,8 +124,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = date_format( $order->get_date_created(), 'Y-m-d' );
         $current_row[$column] = $value;
         return [
@@ -137,7 +132,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -169,8 +164,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $product_id;
         $current_row[$column] = $value;
         return [
@@ -178,7 +172,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -210,8 +204,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $product->get_sku();
         $current_row[$column] = $value;
         return [
@@ -219,7 +212,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -251,8 +244,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_first_name();
         $current_row[$column] = $value;
         return [
@@ -260,7 +252,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -292,8 +284,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_last_name();
         $current_row[$column] = $value;
         return [
@@ -301,7 +292,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -333,8 +324,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_company();
         $current_row[$column] = $value;
         return [
@@ -342,7 +332,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -374,8 +364,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_email();
         $value = '<a href="mailto:' . sanitize_email( $value ) . '">' . $value . '</a>';
         $current_row[$column] = $value;
@@ -384,7 +373,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -416,8 +405,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_phone();
         $value = '<a href="tel:' . $value . '">' . $value . '</a>';
         $current_row[$column] = $value;
@@ -426,7 +414,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -458,8 +446,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_address_1();
         $current_row[$column] = $value;
         return [
@@ -467,7 +454,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -499,8 +486,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_address_2();
         $current_row[$column] = $value;
         return [
@@ -508,7 +494,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -540,8 +526,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_city();
         $current_row[$column] = $value;
         return [
@@ -549,7 +534,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -581,8 +566,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_state();
         $current_row[$column] = $value;
         return [
@@ -590,7 +574,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -622,8 +606,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_postcode();
         $current_row[$column] = $value;
         return [
@@ -631,7 +614,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -663,8 +646,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_billing_country();
         $current_row[$column] = $value;
         return [
@@ -672,7 +654,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -704,8 +686,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_first_name();
         $current_row[$column] = $value;
         return [
@@ -713,7 +694,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -745,8 +726,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_last_name();
         $current_row[$column] = $value;
         return [
@@ -754,7 +734,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -786,8 +766,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_company();
         $current_row[$column] = $value;
         return [
@@ -795,7 +774,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -827,8 +806,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_address_1();
         $current_row[$column] = $value;
         return [
@@ -836,7 +814,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -868,8 +846,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_address_2();
         $current_row[$column] = $value;
         return [
@@ -877,7 +854,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -909,8 +886,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_city();
         $current_row[$column] = $value;
         return [
@@ -918,7 +894,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -950,8 +926,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_state();
         $current_row[$column] = $value;
         return [
@@ -959,7 +934,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -991,8 +966,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_postcode();
         $current_row[$column] = $value;
         return [
@@ -1000,7 +974,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1032,8 +1006,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_country();
         $current_row[$column] = $value;
         return [
@@ -1041,7 +1014,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1073,8 +1046,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_customer_note();
         $current_row[$column] = $value;
         return [
@@ -1082,7 +1054,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1114,10 +1086,9 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $customer_id;
-        if ( empty($value) ) {
+        if ( empty( $value ) ) {
             $value = '';
         }
         if ( $customer_id && is_user_logged_in() ) {
@@ -1129,7 +1100,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1161,22 +1132,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
-        if ( empty($customer) == false && is_a( $customer, 'WP_User' ) ) {
+    ) {
+        if ( empty( $customer ) == false && is_a( $customer, 'WP_User' ) ) {
             $value = get_admin_url() . 'user-edit.php?user_id=' . $customer_id;
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1208,25 +1176,22 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
-        if ( empty($customer) == false && is_a( $customer, 'WP_User' ) ) {
+    ) {
+        if ( empty( $customer ) == false && is_a( $customer, 'WP_User' ) ) {
             $value = $customer->user_login;
-            if ( !empty($params['wpcl_customer_username_link']) && is_user_logged_in() ) {
+            if ( !empty( $params['wpcl_customer_username_link'] ) && is_user_logged_in() ) {
                 $value = '<a href="' . get_admin_url() . 'user-edit.php?user_id=' . $customer_id . '" target="_blank">' . $value . '</a>';
             }
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1258,25 +1223,22 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
-        if ( empty($customer) == false && is_a( $customer, 'WP_User' ) ) {
+    ) {
+        if ( empty( $customer ) == false && is_a( $customer, 'WP_User' ) ) {
             $value = $customer->display_name;
-            if ( !empty($params['wpcl_customer_username_link']) && is_user_logged_in() ) {
+            if ( !empty( $params['wpcl_customer_username_link'] ) && is_user_logged_in() ) {
                 $value = '<a href="' . get_admin_url() . 'user-edit.php?user_id=' . $customer_id . '" target="_blank">' . $value . '</a>';
             }
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1308,22 +1270,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
-        if ( empty($customer) == false && is_a( $customer, 'WP_User' ) ) {
+    ) {
+        if ( empty( $customer ) == false && is_a( $customer, 'WP_User' ) ) {
             $value = get_avatar( $customer_id, 96 );
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1355,8 +1314,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = wc_get_order_status_name( $order->get_status() );
         $current_row[$column] = $value;
         return [
@@ -1364,7 +1322,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1396,8 +1354,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_payment_method_title();
         $current_row[$column] = $value;
         return [
@@ -1405,7 +1362,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1437,8 +1394,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_shipping_method();
         $current_row[$column] = $value;
         return [
@@ -1446,7 +1402,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1478,8 +1434,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = implode( ', ', $order->get_coupon_codes() );
         $current_row[$column] = $value;
         return [
@@ -1487,7 +1442,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1519,29 +1474,24 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $variations = $order->get_item( $item_id );
         $value = [];
         // data gathering BEGIN
-        
         if ( method_exists( $variations, 'get_variation_id' ) ) {
             $variation_id = $variations->get_variation_id();
-            $variation = new WC_Product_Variation( $variation_id );
-            
+            $variation = new WC_Product_Variation($variation_id);
             if ( is_a( $variation, 'WC_Product_Variation' ) ) {
                 $variation_name = $variation->get_name();
-                if ( !empty($variation_name) ) {
+                if ( !empty( $variation_name ) ) {
                     $value[] = [
                         'label' => __( 'Variation Name', 'wc-product-customer-list' ),
                         'value' => $variation->get_name(),
                     ];
                 }
             }
-        
         }
-        
-        $skipped_attributes = [ '_reduced_stock' ];
+        $skipped_attributes = ['_reduced_stock'];
         foreach ( $variations->get_meta_data() as $itemvariation ) {
             if ( !is_array( $itemvariation->value ) && in_array( $itemvariation->key, $skipped_attributes ) === false ) {
                 $value[] = [
@@ -1552,8 +1502,7 @@ class Wpcl_Data_Formatters
         }
         // data gathering END
         // data display BEGIN
-        
-        if ( !empty($value) ) {
+        if ( !empty( $value ) ) {
             $value_out = '<span style="max-height: 50px; overflow-y: auto; display: block;">';
             foreach ( $value as $itemvariation ) {
                 if ( !is_array( $itemvariation['value'] ) ) {
@@ -1566,14 +1515,13 @@ class Wpcl_Data_Formatters
             // the new format always expects a string for column data
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1605,8 +1553,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_formatted_order_total();
         $current_row[$column] = $value;
         return [
@@ -1614,7 +1561,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1646,8 +1593,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $order->get_total_tax();
         $current_row[$column] = $value;
         return [
@@ -1655,7 +1601,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1687,8 +1633,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $value = $quantity;
         $current_row[$column] = $value;
         return [
@@ -1696,7 +1641,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1728,22 +1673,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
+    ) {
         if ( is_a( $customer, 'WP_User' ) ) {
             $value = $customer->last_name;
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1775,22 +1717,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
+    ) {
         if ( is_a( $customer, 'WP_User' ) ) {
             $value = $customer->rich_editing;
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -1822,22 +1761,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        
-        if ( !empty($customer_id) ) {
+    ) {
+        if ( !empty( $customer_id ) ) {
             $value = get_edit_user_link( $customer_id );
         } else {
             $value = '';
         }
-        
         $current_row[$column] = $value;
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /*
      * The next section is for special data formatters / options
      */
@@ -1880,27 +1816,23 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $custom_fields = ( !empty($params['wpcl_custom_fields']) ? $params['wpcl_custom_fields'] : false );
-        if ( empty($custom_fields) ) {
+    ) {
+        $custom_fields = ( !empty( $params['wpcl_custom_fields'] ) ? $params['wpcl_custom_fields'] : false );
+        if ( empty( $custom_fields ) ) {
             return [
                 'current_row' => $current_row,
                 'columns'     => $columns,
             ];
         }
         // coming from shortcodes, we might have arrays as strings
-        
         if ( is_string( $custom_fields ) ) {
             $custom_fields = explode( ',', $custom_fields );
             $custom_fields = array_map( function ( $array_element ) {
                 return trim( $array_element );
             }, $custom_fields );
         }
-        
         foreach ( $custom_fields as $custom_field_key => $custom_field ) {
             $sanitized_column_name = 'wpcl_custom_field__' . sanitize_title( $custom_field );
-            
             if ( isset( $columns[$sanitized_column_name] ) ) {
                 $current_row[$sanitized_column_name] = maybe_unserialize( $order->get_meta( $custom_field, true ) );
                 /*
@@ -1917,12 +1849,10 @@ class Wpcl_Data_Formatters
                  * $table_options[ 'wpcl_custom_field__my_custom_column' ] => [ 'data_formatter' => 'my_custom_columns_formatter' ]
                  *
                  */
-                
-                if ( empty($table_options[$sanitized_column_name]['data_formatter']) == false ) {
+                if ( empty( $table_options[$sanitized_column_name]['data_formatter'] ) == false ) {
                     $data_formatter = explode( '::', $table_options[$sanitized_column_name]['data_formatter'] );
                     // we can pass it a class' method
-                    
-                    if ( !empty($data_formatter[1]) ) {
+                    if ( !empty( $data_formatter[1] ) ) {
                         $class = $data_formatter[0];
                         $method = $data_formatter[1];
                         if ( method_exists( $class, $method ) ) {
@@ -1962,9 +1892,7 @@ class Wpcl_Data_Formatters
                             );
                         }
                     }
-                
                 } else {
-                    
                     if ( is_array( $current_row[$sanitized_column_name] ) ) {
                         $string_version = '';
                         foreach ( $current_row[$sanitized_column_name] as $key => $value ) {
@@ -1972,18 +1900,15 @@ class Wpcl_Data_Formatters
                         }
                         $current_row[$sanitized_column_name] = '<div style="max-height: 50px; overflow: auto;">' . $string_version . '</div>';
                     }
-                
                 }
-            
             }
-        
         }
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2015,8 +1940,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $cleaned_field_name = str_replace( 'wpcl_custom_field__', '', $column );
         $sanitized_column_name = 'wpcl_custom_field__' . sanitize_title( $cleaned_field_name );
         $current_row[$sanitized_column_name] = maybe_unserialize( $order->get_meta( $cleaned_field_name, true ) );
@@ -2025,7 +1949,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     //    _    _                 __  __      _
     //   | |  | |               |  \/  |    | |
     //   | |  | |___  ___ _ __  | \  / | ___| |_ __ _
@@ -2066,27 +1990,23 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $user_meta_keys = ( !empty($params['wpcl_user_meta']) ? $params['wpcl_user_meta'] : false );
-        if ( empty($user_meta_keys) ) {
+    ) {
+        $user_meta_keys = ( !empty( $params['wpcl_user_meta'] ) ? $params['wpcl_user_meta'] : false );
+        if ( empty( $user_meta_keys ) ) {
             return [
                 'current_row' => $current_row,
                 'columns'     => $columns,
             ];
         }
         // coming from shortcodes, we might have arrays as strings
-        
         if ( is_string( $user_meta_keys ) ) {
             $user_meta_keys = explode( ',', $user_meta_keys );
             $user_meta_keys = array_map( function ( $array_element ) {
                 return trim( $array_element );
             }, $user_meta_keys );
         }
-        
         foreach ( $user_meta_keys as $user_key => $user_meta_key ) {
             $sanitized_column_name = 'wpcl_user_meta__' . sanitize_title( $user_meta_key );
-            
             if ( isset( $columns[$sanitized_column_name] ) && $customer_id ) {
                 $current_row[$sanitized_column_name] = get_user_meta( $customer_id, $user_meta_key, true );
                 /*
@@ -2103,12 +2023,10 @@ class Wpcl_Data_Formatters
                  * $table_options[ 'wpcl_user_meta__my_custom_column' ] => [ 'data_formatter' => 'my_custom_columns_formatter' ]
                  *
                  */
-                
-                if ( empty($table_options[$sanitized_column_name]['data_formatter']) == false ) {
+                if ( empty( $table_options[$sanitized_column_name]['data_formatter'] ) == false ) {
                     $data_formatter = explode( '::', $table_options[$sanitized_column_name]['data_formatter'] );
                     // we can pass it a class' method
-                    
-                    if ( !empty($data_formatter[1]) ) {
+                    if ( !empty( $data_formatter[1] ) ) {
                         $class = $data_formatter[0];
                         $method = $data_formatter[1];
                         if ( method_exists( $class, $method ) ) {
@@ -2148,21 +2066,18 @@ class Wpcl_Data_Formatters
                             );
                         }
                     }
-                
                 }
-            
             } else {
                 // We need to add the column, even if empty, or DataTables gets angry.
                 $current_row[$sanitized_column_name] = '';
             }
-        
         }
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2194,22 +2109,19 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $cleaned_field_name = str_replace( 'wpcl_user_meta__', '', $column );
-        
-        if ( !empty($customer_id) ) {
+        if ( !empty( $customer_id ) ) {
             $current_row[$column] = get_user_meta( $customer_id, $cleaned_field_name, true );
         } else {
             $current_row[$column] = '';
         }
-        
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     //   __          __           _______
     //   \ \        / /          |__   __|
     //    \ \  /\  / /__   ___      | | ___  _   _ _ __ ___
@@ -2250,24 +2162,20 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $woo_tours_out = '<p>';
         $id = $product_id;
-        $current_item = new WC_Order_Item_Product( $item_id );
+        $current_item = new WC_Order_Item_Product($item_id);
         $order_items = $order->get_items();
         $n = 0;
         $find = 0;
         foreach ( $order_items as $items_key => $items_value ) {
             $n++;
-            
             if ( $items_value->get_id() == $item_id ) {
                 $find = 1;
                 break;
             }
-        
         }
-        
         if ( $find == 0 ) {
         } else {
             $value_id = $id . '_' . $n;
@@ -2276,11 +2184,9 @@ class Wpcl_Data_Formatters
             if ( $metadata == '' ) {
                 $metadata = $order->get_meta( 'att_info-' . $id, true );
             }
-            
             if ( $metadata != '' ) {
                 $metadata = explode( "][", $metadata );
-                
-                if ( !empty($metadata) ) {
+                if ( !empty( $metadata ) ) {
                     $i = 0;
                     foreach ( $metadata as $item ) {
                         $i++;
@@ -2299,11 +2205,8 @@ class Wpcl_Data_Formatters
                         }
                     }
                 }
-            
             }
-        
         }
-        
         $woo_tours_out .= '</p>';
         $current_row['wpcl_wootours'] = $woo_tours_out;
         return [
@@ -2311,7 +2214,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     //    _____  _       _     _   _____
     //   |  __ \(_)     | |   | | |  __ \
     //   | |__) |_  __ _| |__ | |_| |__) | __ ___  ___ ___
@@ -2351,10 +2254,9 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $rightpress_custom_fields = ( !empty($params["wpcl_rightpress_custom_fields"]) ? $params["wpcl_rightpress_custom_fields"] : false );
-        if ( empty($rightpress_custom_fields) || !is_array( $rightpress_custom_fields ) ) {
+    ) {
+        $rightpress_custom_fields = ( !empty( $params["wpcl_rightpress_custom_fields"] ) ? $params["wpcl_rightpress_custom_fields"] : false );
+        if ( empty( $rightpress_custom_fields ) || !is_array( $rightpress_custom_fields ) ) {
             return [
                 'current_row' => $current_row,
                 'columns'     => $columns,
@@ -2374,17 +2276,14 @@ class Wpcl_Data_Formatters
         $consolidate_rightpress_columns = isset( $params['wpcl_consolidate_rightpress_columns'] ) && $params['wpcl_consolidate_rightpress_columns'] == true;
         foreach ( $rightpress_custom_fields as $rightpress_custom_field_key ) {
             if ( $item['product_id'] == $product_id ) {
-                
                 if ( $field = WCCF_Field_Controller::get_field_by_key( 'product_field', $rightpress_custom_field_key, true ) ) {
                     $rightpress_field_label = $field->get_label();
                     $data_field_key = 'wccf_pf_' . $rightpress_custom_field_key;
-                    
                     if ( $consolidate_rightpress_columns ) {
                         $column_key = 'rightpress_cf__' . sanitize_title( $rightpress_field_label );
                     } else {
                         $column_key = 'rightpress_cf__' . sanitize_title( $rightpress_custom_field_key ) . '_' . sanitize_title( $rightpress_field_label );
                     }
-                    
                     if ( !isset( $columns[$column_key] ) ) {
                         $columns[$column_key] = $rightpress_field_label;
                     }
@@ -2397,7 +2296,6 @@ class Wpcl_Data_Formatters
                         $current_row[$column_key] = [];
                     }
                 }
-            
             }
         }
         return [
@@ -2405,7 +2303,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2437,10 +2335,9 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $rightpress_custom_fields = ( !empty($params["wpcl_rightpress_checkout_fields"]) ? $params["wpcl_rightpress_checkout_fields"] : false );
-        if ( empty($rightpress_custom_fields) || !is_array( $rightpress_custom_fields ) ) {
+    ) {
+        $rightpress_custom_fields = ( !empty( $params["wpcl_rightpress_checkout_fields"] ) ? $params["wpcl_rightpress_checkout_fields"] : false );
+        if ( empty( $rightpress_custom_fields ) || !is_array( $rightpress_custom_fields ) ) {
             return [
                 'current_row' => $current_row,
                 'columns'     => $columns,
@@ -2457,23 +2354,20 @@ class Wpcl_Data_Formatters
         $wccf_wc_order = WCCF_WC_Order::get_instance();
         $right_press_info = [];
         $right_press_info_cleaned = [];
-        $consolidate_rightpress_columns = !empty($params['wpcl_consolidate_rightpress_columns']) && $params['wpcl_consolidate_rightpress_columns'] == true;
+        $consolidate_rightpress_columns = !empty( $params['wpcl_consolidate_rightpress_columns'] ) && $params['wpcl_consolidate_rightpress_columns'] == true;
         foreach ( $rightpress_custom_fields as $rightpress_custom_field_key ) {
-            
             if ( $field = WCCF_Field_Controller::get_field_by_key( 'checkout_field', $rightpress_custom_field_key, true ) ) {
                 $rightpress_field_label = $field->get_label();
                 $data_field_key = 'wccf_cf_' . $rightpress_custom_field_key;
-                
                 if ( $consolidate_rightpress_columns ) {
                     $column_key = 'rightpress_co__' . sanitize_title( $rightpress_field_label );
                 } else {
                     $column_key = 'rightpress_co__' . sanitize_title( $rightpress_custom_field_key ) . '_' . sanitize_title( $rightpress_field_label );
                 }
-                
                 if ( !isset( $columns[$column_key] ) ) {
                     $columns[$column_key] = $rightpress_field_label;
                 }
-                $display_values = $wccf_wc_order->get_field_values_from_order( $order, [ $field ] );
+                $display_values = $wccf_wc_order->get_field_values_from_order( $order, [$field] );
                 foreach ( $display_values as $display_key => $display_value ) {
                     $current_row[$column_key][] = $display_value;
                 }
@@ -2481,14 +2375,13 @@ class Wpcl_Data_Formatters
                     $current_row[$column_key] = [];
                 }
             }
-        
         }
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2520,10 +2413,9 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $rightpress_custom_fields = ( !empty($params["wpcl_rightpress_order_fields"]) ? $params["wpcl_rightpress_order_fields"] : false );
-        if ( empty($rightpress_custom_fields) || !is_array( $rightpress_custom_fields ) ) {
+    ) {
+        $rightpress_custom_fields = ( !empty( $params["wpcl_rightpress_order_fields"] ) ? $params["wpcl_rightpress_order_fields"] : false );
+        if ( empty( $rightpress_custom_fields ) || !is_array( $rightpress_custom_fields ) ) {
             return [
                 'current_row' => $current_row,
                 'columns'     => $columns,
@@ -2540,23 +2432,20 @@ class Wpcl_Data_Formatters
         $wccf_wc_order = WCCF_WC_Order::get_instance();
         $right_press_info = [];
         $right_press_info_cleaned = [];
-        $consolidate_rightpress_columns = !empty($params['wpcl_consolidate_rightpress_columns']) && $params['wpcl_consolidate_rightpress_columns'] == true;
+        $consolidate_rightpress_columns = !empty( $params['wpcl_consolidate_rightpress_columns'] ) && $params['wpcl_consolidate_rightpress_columns'] == true;
         foreach ( $rightpress_custom_fields as $rightpress_custom_field_key ) {
-            
             if ( $field = WCCF_Field_Controller::get_field_by_key( 'order_field', $rightpress_custom_field_key, true ) ) {
                 $rightpress_field_label = $field->get_label();
                 $data_field_key = 'wccf_of_' . $rightpress_custom_field_key;
-                
                 if ( $consolidate_rightpress_columns ) {
                     $column_key = 'rightpress_of__' . sanitize_title( $rightpress_field_label );
                 } else {
                     $column_key = 'rightpress_of__' . sanitize_title( $rightpress_custom_field_key ) . '_' . sanitize_title( $rightpress_field_label );
                 }
-                
                 if ( !isset( $columns[$column_key] ) ) {
                     $columns[$column_key] = $rightpress_field_label;
                 }
-                $display_values = $wccf_wc_order->get_field_values_from_order( $order, [ $field ] );
+                $display_values = $wccf_wc_order->get_field_values_from_order( $order, [$field] );
                 foreach ( $display_values as $display_key => $display_value ) {
                     $current_row[$column_key][] = $display_value;
                 }
@@ -2564,14 +2453,13 @@ class Wpcl_Data_Formatters
                     $current_row[$column_key] = [];
                 }
             }
-        
         }
         return [
             'current_row' => $current_row,
             'columns'     => $columns,
         ];
     }
-    
+
     //   __          __          _____
     //   \ \        / /         / ____|
     //    \ \  /\  / /__   ___ | |     ___  _ __ ___  _ __ ___   ___ _ __ ___ ___
@@ -2616,20 +2504,17 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
         $ids = array();
         foreach ( $subscriptions_ids as $subscription_id => $subscription_obj ) {
-            
             if ( is_admin() || is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
                 $ids[] = '<a href="' . admin_url( 'post.php' ) . '?post=' . $subscription_obj->get_order_number() . '&action=edit" target="_blank">' . $subscription_obj->get_order_number() . '</a>';
             } else {
                 $ids[] = $subscription_obj->get_order_number();
             }
-        
         }
         $value = implode( '<br />', $ids );
         $current_row[$column] = $value;
@@ -2638,7 +2523,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2670,8 +2555,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
@@ -2686,7 +2570,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2718,8 +2602,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
@@ -2734,7 +2617,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2766,20 +2649,17 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
         $start_dates = array();
         foreach ( $subscriptions_ids as $subscription_id => $subscription_obj ) {
             $start_date = $subscription_obj->get_time( 'start' );
-            
             if ( $start_date !== 0 ) {
-                $dt = new DateTime( "@{$start_date}" );
+                $dt = new DateTime("@{$start_date}");
                 $start_dates[] = $dt->format( get_option( 'date_format' ) );
             }
-        
         }
         $value = implode( '<br />', $start_dates );
         $current_row[$column] = $value;
@@ -2788,7 +2668,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2820,20 +2700,17 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
         $trial_ends = array();
         foreach ( $subscriptions_ids as $subscription_id => $subscription_obj ) {
             $trial_end = $subscription_obj->get_time( 'trial_end' );
-            
             if ( $trial_end !== 0 ) {
-                $dt = new DateTime( "@{$trial_end}" );
+                $dt = new DateTime("@{$trial_end}");
                 $trial_ends[] = $dt->format( 'j F Y' );
             }
-        
         }
         $value = implode( '<br />', $trial_ends );
         $current_row[$column] = $value;
@@ -2842,7 +2719,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2874,20 +2751,17 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
         $end_dates = array();
         foreach ( $subscriptions_ids as $subscription_id => $subscription_obj ) {
             $end_date = $subscription_obj->get_time( 'end' );
-            
             if ( $end_date !== 0 ) {
-                $dt = new DateTime( "@{$end_date}" );
+                $dt = new DateTime("@{$end_date}");
                 $end_dates[] = $dt->format( get_option( 'date_format' ) );
             }
-        
         }
         $value = implode( '<br />', $end_dates );
         $current_row[$column] = $value;
@@ -2896,7 +2770,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2928,8 +2802,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
@@ -2949,7 +2822,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -2981,8 +2854,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
@@ -3005,7 +2877,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     /**
      * @param string       $column
      * @param string       $source
@@ -3037,8 +2909,7 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
+    ) {
         $subscriptions_ids = wcs_get_subscriptions_for_order( $order_id, array(
             'order_type' => 'any',
         ) );
@@ -3053,7 +2924,7 @@ class Wpcl_Data_Formatters
             'columns'     => $columns,
         ];
     }
-    
+
     //   __          __          _____
     //   \ \        / /         / ____|
     //    \ \  /\  / /__   ___ | |     ___  _ __ ___  _ __ ___   ___ _ __ ___ ___
@@ -3103,9 +2974,8 @@ class Wpcl_Data_Formatters
         $customer,
         $quantity,
         $current_row
-    )
-    {
-        $order_item = new WC_Order_Item_Product( $item_id );
+    ) {
+        $order_item = new WC_Order_Item_Product($item_id);
         $bundled_items = wc_pb_get_bundled_order_items( $order_item );
         $value = '<ul>';
         foreach ( $bundled_items as $bundled_item ) {

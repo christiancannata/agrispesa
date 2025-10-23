@@ -1,5 +1,7 @@
 <?php
 
+use YahnisElsts\WpDependencyWrapper\v1\ScriptDependency;
+
 abstract class ameModule {
 	protected $tabSlug = '';
 	protected $tabTitle = '';
@@ -65,7 +67,7 @@ abstract class ameModule {
 	}
 
 	public function displaySettingsPage() {
-		$this->menuEditor->display_settings_page_header();
+		$this->menuEditor->display_settings_page_header($this->getWrapClasses());
 
 		if ( !$this->outputMainTemplate() ) {
 			printf(
@@ -109,6 +111,15 @@ abstract class ameModule {
 	protected function getTemplateVariables($templateName) {
 		//Override this method to pass variables to a template.
 		return array();
+	}
+
+	/**
+	 * Get extra CSS classes to add to the .wrap element in the module tab.
+	 *
+	 * @return string[]
+	 */
+	protected function getWrapClasses() {
+		return [];
 	}
 
 	public function registerScripts() {
@@ -158,5 +169,73 @@ abstract class ameModule {
 
 	public function getTabTitle() {
 		return $this->tabTitle;
+	}
+
+	protected function enqueueLocalScript($handle, $relativePath, $dependencies = [], $inFooter = false) {
+		list($scriptUrl, $version) = $this->findModuleBrowserDependency($relativePath);
+		wp_enqueue_script($handle, $scriptUrl, $dependencies, $version, $inFooter);
+	}
+
+	protected function enqueueLocalStyle($handle, $relativePath, $dependencies = [], $media = 'all') {
+		list($styleUrl, $version) = $this->findModuleBrowserDependency($relativePath);
+		wp_enqueue_style($handle, $styleUrl, $dependencies, $version, $media);
+	}
+
+	protected function registerLocalScript($handle, $relativePath, $dependencies = [], $inFooter = false) {
+		$dependency = $this->createScriptDependency($relativePath, $handle);
+		if ( $inFooter ) {
+			$dependency->setInFooter();
+		}
+		if ( !empty($dependencies) ) {
+			$dependency->addDependencies(...$dependencies);
+		}
+		return $dependency->register();
+	}
+
+	protected function registerLocalStyle($handle, $relativePath, $dependencies = [], $media = 'all') {
+		list($styleUrl, $version) = $this->findModuleBrowserDependency($relativePath);
+		wp_register_style($handle, $styleUrl, $dependencies, $version, $media);
+	}
+
+	/**
+	 * @param string $relativePath
+	 * @param string|null $handle
+	 * @return ScriptDependency
+	 */
+	protected function createScriptDependency($relativePath, $handle = null) {
+		$relativePath = ltrim($relativePath, '/');
+		$fullPath = $this->moduleDir . '/' . $relativePath;
+
+		return ScriptDependency::create(
+			plugins_url($relativePath, $this->moduleDir . '/dummy.php'),
+			$handle,
+			$fullPath
+		);
+	}
+
+	/**
+	 * @param string $relativePath
+	 * @return string[] Dependency URL and version, in that order.
+	 */
+	private function findModuleBrowserDependency($relativePath) {
+		$relativePath = ltrim($relativePath, '/');
+		$url = plugins_url($relativePath, $this->moduleDir . '/dummy.php');
+		$version = $this->getModuleFileVersion($relativePath);
+		return array($url, $version);
+	}
+
+	/**
+	 * @param string $relativePath
+	 * @return string|false
+	 */
+	private function getModuleFileVersion($relativePath) {
+		$fullPath = $this->moduleDir . '/' . $relativePath;
+		if ( is_file($fullPath) ) {
+			$modTime = filemtime($fullPath);
+			if ( $modTime !== false ) {
+				return (string)$modTime;
+			}
+		}
+		return false;
 	}
 }

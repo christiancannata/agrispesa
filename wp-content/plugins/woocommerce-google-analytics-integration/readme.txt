@@ -1,9 +1,9 @@
 === Google Analytics for WooCommerce ===
 Contributors: woocommerce, automattic, claudiosanches, bor0, royho, laurendavissmith001, cshultz88, mmjones, tomalec
 Tags: woocommerce, google analytics
-Requires at least: 6.2
-Tested up to: 6.5
-Stable tag: 2.1.2
+Requires at least: 6.7
+Tested up to: 6.8
+Stable tag: 2.1.17
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -48,17 +48,18 @@ Duplicate Google Analytics code causes a conflict in tracking. Remove any other 
 
 == Changelog ==
 
-= 2.1.2 - 2024-06-18 =
-* Tweak -  Replace woo.com references with woocommerce.com.
-* Tweak - Do not replace other extensions' `add_to_cart` listeners.
+= 2.1.17 - 2025-08-12 =
+* Dev - Updated vulnerable dependencies.
+* Tweak - WC 10.1 compatibility.
+* Update - Require WooCommerce 10.0+.
+* Update - Require WordPress 6.7+.
 
-= 2.1.1 - 2024-06-12 =
-* Tweak - Confirm WC_Cart is available before formatting cart data.
-* Tweak - WC 9.0 compatibility.
+= 2.1.16 - 2025-07-01 =
+* Tweak - WC 10.0 compatibility.
+* Update - Require WooCommerce 9.5+.
+* Update - Require WordPress 6.6+.
 
-= 2.1.0 - 2024-06-05 =
-* Add - Integration with the WP Consent API plugin.
-* Fix - Add E2E tests for denying via WP Consent API.
-* Tweak - Document WP Consent API support.
+= 2.1.15 - 2025-06-04 =
+* Tweak - WC 9.9 compatibility.
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce-google-analytics-integration/trunk/changelog.txt).

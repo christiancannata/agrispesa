@@ -17,14 +17,14 @@ namespace FSVendor\Monolog\Processor;
  * @see Monolog\Processor\MemoryProcessor::__construct() for options
  * @author Rob Jensen
  */
-class MemoryPeakUsageProcessor extends \FSVendor\Monolog\Processor\MemoryProcessor
+class MemoryPeakUsageProcessor extends MemoryProcessor
 {
     /**
      * {@inheritDoc}
      */
-    public function __invoke(array $record) : array
+    public function __invoke(array $record): array
     {
-        $usage = \memory_get_peak_usage($this->realUsage);
+        $usage = memory_get_peak_usage($this->realUsage);
         if ($this->useFormatting) {
             $usage = $this->formatBytes($usage);
         }

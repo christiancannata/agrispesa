@@ -183,9 +183,9 @@ class ameUtils {
 	 * Also, if an error has a data item that's an array with a 'title' key,
 	 * this escapes HTML in the title.
 	 *
-	 * @param \WP_Error $error
+	 * @param WP_Error $error
 	 * @param callable $callback
-	 * @return \WP_Error
+	 * @return WP_Error
 	 */
 	protected static function copyErrorWithFilter($error, $callback) {
 		$result = new WP_Error();
@@ -250,6 +250,35 @@ class ameUtils {
 	}
 
 	/**
+	 * Get specific keys from each item of a collection.
+	 *
+	 * Notes:
+	 * - Collection indexes are preserved.
+	 * - Items that don't have any of the specified keys are ignored.
+	 *
+	 * @param iterable $collection An iterable collection of arrays or objects.
+	 * @param array $keys
+	 * @return array[] Array of arrays.
+	 */
+	public static function collectionPick($collection, array $keys) {
+		$result = array();
+		foreach ($collection as $index => $item) {
+			$values = array();
+			foreach ($keys as $key) {
+				if ( is_array($item) && array_key_exists($key, $item) ) {
+					$values[$key] = $item[$key];
+				} else if ( is_object($item) && property_exists($item, $key) ) {
+					$values[$key] = $item->$key;
+				}
+			}
+			if ( !empty($values) ) {
+				$result[$index] = $values;
+			}
+		}
+		return $result;
+	}
+
+	/**
 	 * Send HTTP caching headers.
 	 *
 	 * @param int|null $lastModified Unix timestamp for the last modification time.
@@ -277,11 +306,14 @@ class ameUtils {
 		//Enable browser caching.
 		//Note that admin-ajax.php always adds HTTP headers that prevent caching, so we will
 		//override all of them even though we don't actually need some of them, like "Expires".
+		$expirationBaseTime = time();
 		if ( !empty($lastModified) ) {
 			header('Last-Modified: ' . gmdate('D, d M Y H:i:s ', $lastModified) . 'GMT');
+			if ( $lastModified > $expirationBaseTime ) {
+				$expirationBaseTime = $lastModified;
+			}
 		}
-		$expires = !empty($lastModified) ? ($lastModified + $cacheLifetime) : (time() + $cacheLifetime);
-		header('Expires: ' . gmdate('D, d M Y H:i:s ', $expires) . 'GMT');
+		header('Expires: ' . gmdate('D, d M Y H:i:s ', $expirationBaseTime + $cacheLifetime) . 'GMT');
 		header('Cache-Control: public, max-age=' . $cacheLifetime);
 
 		return $omitResponseBody;
@@ -322,21 +354,106 @@ class ameUtils {
 			);
 
 		if ( $isValid ) {
-			$outputQueryParams['selected_actor'] = $selectedActor;
+			$outputQueryParams[$queryParameterName] = $selectedActor;
 		}
 
 		return $outputQueryParams;
 	}
+
+	/**
+	 * Check if a string starts with a specific substring.
+	 *
+	 * @param string $haystack
+	 * @param string $needle
+	 * @return bool
+	 */
+	public static function stringStartsWith($haystack, $needle) {
+		return (substr($haystack, 0, strlen($needle)) === $needle);
+	}
+
+	/**
+	 * Get the component - e.g. a specific plugin or theme - from a file path.
+	 *
+	 * @param string $absolutePath Full path to a file or directory.
+	 * @return array{type: string, path: string}|null
+	 */
+	public static function getComponentFromPath($absolutePath) {
+		static $pluginDirectory = null, $muPluginDirectory = null, $themeDirectory = null;
+		if ( $pluginDirectory === null ) {
+			$pluginDirectory = wp_normalize_path(WP_PLUGIN_DIR);
+			$muPluginDirectory = wp_normalize_path(WPMU_PLUGIN_DIR);
+			$themeDirectory = wp_normalize_path(WP_CONTENT_DIR . '/themes');
+		}
+
+		$absolutePath = wp_normalize_path($absolutePath);
+		if ( empty($absolutePath) ) {
+			return null;
+		}
+
+		$pos = null;
+		$type = '';
+		if ( strpos($absolutePath, $pluginDirectory) === 0 ) {
+			$type = 'plugin';
+			$pos = strlen($pluginDirectory);
+		} else if ( !empty($muPluginDirectory) && (strpos($absolutePath, $muPluginDirectory) === 0) ) {
+			$type = 'mu-plugin';
+			$pos = strlen($muPluginDirectory);
+		} else if ( strpos($absolutePath, $themeDirectory) === 0 ) {
+			$type = 'theme';
+			$pos = strlen($themeDirectory);
+		}
+
+		if ( $pos !== null ) {
+			$nextSlash = strpos($absolutePath, '/', $pos + 1);
+			if ( $nextSlash !== false ) {
+				$componentDirectory = substr($absolutePath, $pos + 1, $nextSlash - $pos - 1);
+			} else {
+				$componentDirectory = substr($absolutePath, $pos + 1);
+			}
+			return ['type' => $type, 'path' => $componentDirectory];
+		}
+		return null;
+	}
+
+	/**
+	 * Convert a color in the #RRGGBB or #RGB format to the rgba() format.
+	 *
+	 * @param string $color
+	 * @param float $opacity
+	 * @return string
+	 */
+	public static function convertHexColorToRgba($color, $opacity = 1.0) {
+		$color = trim($color);
+		if ( $color === '' ) {
+			return 'rgba(0, 0, 0, ' . $opacity . ')';
+		}
+
+		//Strip the leading hash, if any.
+		if ( $color[0] === '#' ) {
+			$color = substr($color, 1);
+		}
+
+		//Convert 3-digit hex to 6-digit hex.
+		if ( strlen($color) === 3 ) {
+			$color = $color[0] . $color[0] . $color[1] . $color[1] . $color[2] . $color[2];
+		}
+
+		//Convert hex to RGB.
+		$red = hexdec(substr($color, 0, 2));
+		$green = hexdec(substr($color, 2, 2));
+		$blue = hexdec(substr($color, 4, 2));
+
+		return 'rgba(' . $red . ', ' . $green . ', ' . $blue . ', ' . $opacity . ')';
+	}
 }
 
 /**
- * @see ameUtils::escapeWpError
- *
  * This function exists because the "EscapeOutput" sniff in the WordPress coding standards
  * doesn't understand class methods.
  *
- * @param \WP_Error $error
- * @return \WP_Error
+ * @param WP_Error $error
+ * @return WP_Error
+ * @see ameUtils::escapeWpError
  */
 function wsAmeEscapeWpError($error) {
 	return ameUtils::escapeWpError($error);
@@ -351,7 +468,7 @@ class ameFileLock {
 	}
 
 	//fopen() and flock() should be fine here because we only need read permissions.
-	//phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_flock,WordPress.WP.AlternativeFunctions.file_system_read_fopen
+	//phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_flock,WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 	public function acquire($timeout = null) {
 		if ( $this->handle !== null ) {
 			throw new RuntimeException('Cannot acquire a lock that is already held.');
@@ -824,5 +941,213 @@ class ameMultiDictionary {
 		}
 
 		return $current;
+	}
+}
+
+class ameCustomizationFeatureToggle {
+	/**
+	 * @var string
+	 */
+	private $component;
+	/**
+	 * @var WPMenuEditor
+	 */
+	private $menuEditor;
+	/**
+	 * @var string
+	 */
+	private $tabSlug;
+
+	/**
+	 * @var callable|null
+	 */
+	private $noticeTextCallback;
+
+	public function __construct(
+		$component,
+		$menuEditor,
+		$tabSlug = '',
+		$noticeTextCallback = null
+	) {
+		$this->component = $component;
+		$this->menuEditor = $menuEditor;
+		$this->tabSlug = $tabSlug;
+		$this->noticeTextCallback = $noticeTextCallback;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isCustomizationDisabled() {
+		return $this->menuEditor->is_customization_disabled($this->component);
+	}
+
+	public function onSettingsSaved() {
+		if ( !empty($this->tabSlug) && !empty($this->noticeTextCallback) ) {
+			add_action(
+				'admin_menu_editor-tab_admin_notices-' . $this->tabSlug,
+				[$this, 'maybeShowNotice']
+			);
+		}
+	}
+
+	public function maybeShowNotice() {
+		if ( !empty($this->noticeTextCallback) && $this->isCustomizationDisabled() ) {
+			$texts = call_user_func($this->noticeTextCallback);
+			if ( empty($texts) ) {
+				return;
+			}
+
+			list($mainText, $additionalText) = $texts;
+			if ( empty($mainText) ) {
+				return;
+			}
+
+			printf(
+				'<div class="notice notice-info"><p><strong>%s</strong> %s</p></div>',
+				esc_html($mainText),
+				!empty($additionalText) ? esc_html(' ' . $additionalText) : ''
+			);
+		}
+	}
+}
+
+class ameKnockoutSaveForm {
+	private $action;
+	private $submitUrl;
+	private $saveButtonText;
+
+	public function __construct($action, $submitUrl, $saveButtonText = '') {
+		$this->action = $action;
+		$this->submitUrl = $submitUrl;
+		$this->saveButtonText = $saveButtonText;
+	}
+
+	public function getSaveFormConfig() {
+		$config = [
+			'action'      => $this->action,
+			'actionNonce' => wp_create_nonce($this->action),
+			'submitUrl'   => $this->submitUrl,
+			'referer'     => remove_query_arg('_wp_http_referer'),
+		];
+		if ( !empty($this->saveButtonText) ) {
+			$config['saveButtonText'] = $this->saveButtonText;
+		}
+		return $config;
+	}
+
+	public function processSubmission(array $post) {
+		check_admin_referer($this->action);
+
+		if ( empty($post['settings']) ) {
+			wp_die('The "settings" field is missing or empty.');
+		}
+
+		if ( !is_string($post['settings']) ) {
+			wp_die('Invalid settings data: expected a JSON string.');
+		}
+
+		$newSettings = json_decode($post['settings'], true);
+		if ( !is_array($newSettings) ) {
+			wp_die('Invalid settings data: expected a valid JSON object.');
+		}
+
+		return new ameParsedKnockoutFormSubmission($newSettings, $post);
+	}
+}
+
+class ameParsedKnockoutFormSubmission {
+	const SELECTED_ACTOR_FIELD = 'selectedActor';
+
+	private $settings;
+	private $fields;
+
+	public function __construct(array $settings, array $fields) {
+		$this->settings = $settings;
+		$this->fields = $fields;
+	}
+
+	public function getSettings() {
+		return $this->settings;
+	}
+
+	public function getField($name, $defaultValue = null) {
+		if ( isset($this->fields[$name]) ) {
+			return $this->fields[$name];
+		}
+		return $defaultValue;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSelectedActorId() {
+		$defaultValue = '';
+		$result = $this->getField('selectedActor', $defaultValue);
+		if ( is_string($result) ) {
+			return $result;
+		}
+		return $defaultValue;
+	}
+
+	/**
+	 * Add the selected actor submitted via the form to the provided query parameters.
+	 *
+	 * @param array $queryParams
+	 * @return array
+	 */
+	public function withSelectedActor(array $queryParams) {
+		return ameUtils::withSelectedActor(
+			$queryParams,
+			$this->fields,
+			self::SELECTED_ACTOR_FIELD
+		);
+	}
+}
+
+class ameLockedGlobalOption {
+	private $optionName;
+	private $lockFileName;
+	private $autoload;
+	/**
+	 * @var float|null
+	 */
+	private $lockTimeout;
+
+	/**
+	 * @param string $optionName
+	 * @param string $lockFileName
+	 * @param float|null $lockTimeout
+	 * @param bool|null $autoload
+	 */
+	public function __construct($optionName, $lockFileName, $lockTimeout = null, $autoload = null) {
+		$this->optionName = $optionName;
+		$this->lockFileName = $lockFileName;
+		$this->autoload = $autoload;
+		$this->lockTimeout = $lockTimeout;
+	}
+
+	public function get($defaultValue = null) {
+		if ( is_multisite() ) {
+			return get_site_option($this->optionName, $defaultValue);
+		} else {
+			return get_option($this->optionName, $defaultValue);
+		}
+	}
+
+	public function set($value) {
+		$lock = ameFileLock::create($this->lockFileName);
+
+		if ( $lock->acquire($this->lockTimeout) ) {
+			if ( is_multisite() ) {
+				update_site_option($this->optionName, $value);
+			} else {
+				update_option($this->optionName, $value, $this->autoload);
+			}
+			$lock->release();
+			return true;
+		}
+
+		return false;
 	}
 }

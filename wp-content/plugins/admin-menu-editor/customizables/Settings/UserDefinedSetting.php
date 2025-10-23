@@ -10,7 +10,7 @@ class UserDefinedSetting extends Setting {
 	 */
 	protected $validationCallback;
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = array()) {
 		parent::__construct($id, $store, $params);
 
 		if ( isset($params['validationCallback']) ) {

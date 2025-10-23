@@ -18,6 +18,11 @@ $highlights-color: #cd2653;
 @import "fonts";
 
 /**
+ * Forms
+ */
+@import "forms";
+
+/**
  * Global elements
  */
 a.button {
@@ -35,20 +40,31 @@ a.button {
 	}
 }
 
+.select2-container {
+	.select2-selection,
+	.select2-dropdown {
+		font-size: 1.6rem;
+		border-color: #dcd7ca;
+
+		.select2-search__field {
+			border-color: #dcd7ca;
+		}
+	}
+}
+
+body {
+	--wc-form-border-color: #dcd7ca;
+	--wc-form-border-radius: 4px;
+}
+
 .woocommerce {
 	form .form-row {
-		.required {
-			color: #b22222;
-			text-decoration: none;
-			visibility: hidden; // Only show optional by default.
-
-			&[title] {
-				border: 0 !important;
+		.woocommerce-input-wrapper {
+			select,
+			.input-text {
+				font-size: 1.6rem;
+				border-color: #dcd7ca;
 			}
-		}
-
-		.optional {
-			visibility: visible;
 		}
 	}
 
@@ -146,7 +162,7 @@ a.button {
 	font-family: $headings;
 
 	del {
-		opacity: 0.5;
+		opacity: 0.7;
 		display: inline-block;
 	}
 
@@ -222,6 +238,11 @@ a.button {
 .woocommerce-ordering {
 	margin: 0 0 1rem;
 	padding: 0.75rem 0;
+}
+
+.woocommerce-ordering > label {
+	display: inline;
+	margin-right: 0.25rem;
 }
 
 /**
@@ -510,6 +531,11 @@ a.reset_variations {
 		display: inline-block;
 	}
 
+	.woocommerce-product-gallery__image a {
+		display: block;
+		outline-offset: -2px;
+	}
+
 	.flex-control-thumbs {
 		li {
 			list-style: none;
@@ -574,10 +600,7 @@ a.reset_variations {
 }
 
 .woocommerce-product-gallery__trigger {
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	z-index: 99;
+	@include woocommerce-product-gallery__trigger;
 }
 
 .woocommerce-tabs {
@@ -704,6 +727,7 @@ a.reset_variations {
 				display: inline-block;
 				text-decoration: none;
 				box-shadow: none;
+				font-size: 24px;
 
 				&::before {
 					display: block;
@@ -1075,6 +1099,10 @@ a.reset_variations {
 		button {
 			margin-top: 3rem;
 		}
+
+		button.show-password-input {
+			margin-top: 0;
+		}
 	}
 }
 
@@ -1310,45 +1338,6 @@ a.reset_variations {
 			margin: 0 auto;
 		}
 	}
-
-	.select2-container .select2-selection--single {
-		height: 48px;
-	}
-
-	.select2-container .select2-selection--single .select2-selection__rendered {
-		line-height: 48px;
-		font-family: $headings;
-		font-size: 1.6rem;
-		color: #000;
-		padding-left: 1.8rem;
-	}
-
-	.select2-container--default
-		.select2-selection--single
-		.select2-selection__arrow {
-		height: 46px;
-	}
-
-	.select2-container--focus .select2-selection {
-		border-color: #000;
-	}
-
-	.select2-results__option {
-		margin-left: 0;
-	}
-
-	.select2-container {
-		.select2-search__field {
-			height: 4rem;
-			background: #eee;
-		}
-	}
-
-	p.form-row {
-		input {
-			border: 1px solid #ddd;
-		}
-	}
 }
 
 /**
@@ -1540,7 +1529,7 @@ a.reset_variations {
 				}
 
 				.woocommerce-Price-amount {
-					font-weight: bold;
+					font-weight: 700;
 				}
 
 				.cart-subtotal,
@@ -1608,48 +1597,6 @@ a.reset_variations {
 		padding-top: 1.55rem;
 		padding-bottom: 1.8rem;
 		font-size: 1.6rem;
-	}
-
-	.select2-choice,
-	.select2-choice:hover {
-		box-shadow: none !important;
-	}
-
-	.select2-choice {
-		padding: 0.7rem 0 0.7rem 0.7rem;
-	}
-
-	.select2-container .select2-selection--single {
-		height: 48px;
-	}
-
-	.select2-container .select2-selection--single .select2-selection__rendered {
-		line-height: 48px;
-		font-family: $headings;
-		font-size: 1.6rem;
-		color: #000;
-		padding-left: 1.8rem;
-	}
-
-	.select2-container--default
-		.select2-selection--single
-		.select2-selection__arrow {
-		height: 46px;
-	}
-
-	.select2-container--focus .select2-selection {
-		border-color: #000;
-	}
-
-	.select2-results__option {
-		margin-left: 0;
-	}
-
-	.select2-container {
-		.select2-search__field {
-			height: 4rem;
-			background: #eee;
-		}
 	}
 }
 
@@ -2336,16 +2283,8 @@ a.reset_variations {
 	overflow: hidden;
 	width: 100%;
 
-	a {
-		color: #fff;
-
-		&:hover {
-			color: #fff;
-		}
-
-		&.button {
-			background: #000000;
-		}
+	a.button {
+		background: #000;
 	}
 }
 
@@ -2410,5 +2349,33 @@ a.reset_variations {
 	&:hover {
 		text-decoration: none;
 		color: #000;
+	}
+}
+
+/**
+ * Coupon error notice
+ */
+.woocommerce-cart {
+	td.actions .coupon .coupon-error-notice {
+		@include coupon-error-notice-cart();
+	}
+}
+
+form.checkout_coupon {
+	.coupon-error-notice {
+		@include coupon-error-notice-checkout();
+	}
+
+	.input-text.has-error:focus {
+		border-color: var(--wc-red);
+	}
+}
+
+/**
+ * Checkout error message
+ */
+.checkout {
+	.checkout-inline-error-message {
+		@include checkout-inline-error-message();
 	}
 }

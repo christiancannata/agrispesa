@@ -115,6 +115,11 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 		'description' => esc_html__( 'Check this to use product SKU instead of the ID of the products for remarketing and ecommerce tracking. Will fallback to ID if no SKU is set.', 'duracelltomi-google-tag-manager' ),
 		'phase'       => GTM4WP_PHASE_STABLE,
 	),
+	GTM4WP_OPTION_INTEGRATE_WCVIEWITEMONPARENT       => array(
+		'label'       => esc_html__( 'Fire view_item on parent product', 'duracelltomi-google-tag-manager' ),
+		'description' => esc_html__( 'If this option is turned on, the view_item event will be also fired during page load of a variable product using parent product data.', 'duracelltomi-google-tag-manager' ),
+		'phase'       => GTM4WP_PHASE_STABLE,
+	),
 	GTM4WP_OPTION_INTEGRATE_WCNOORDERTRACKEDFLAG     => array(
 		'label'       => esc_html__( 'Do not flag orders as being tracked', 'duracelltomi-google-tag-manager' ),
 		'description' => gtm4wp_safe_admin_html(
@@ -138,6 +143,24 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 					Althought it is %1$srecommended by Google%2$s, it is not mandatory to activate this feature as
 					the GA4 event tag reads only the last pushed ecommerce data on any new event.<br />
 					Use it if you encounter issues with your GTM implementation.',
+					'duracelltomi-google-tag-manager'
+				)
+			),
+			'<a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce?client_type=gtm#clear_the_ecommerce_object" target="_blank" rel="noopener">',
+			'</a>'
+		),
+		'phase'       => GTM4WP_PHASE_STABLE,
+	),
+	GTM4WP_OPTION_INTEGRATE_WCDLMAXTIMEOUT           => array(
+		'label'       => esc_html__( 'Set maximum timeout for select_item event', 'duracelltomi-google-tag-manager' ),
+		'description' => sprintf(
+			gtm4wp_safe_admin_html(
+				// translators: 1: anchor element linking to the official GA4 doc about clearing the ecommerce object. 2: closing anchor element.
+				__(
+					'When a user clicks on a product in a list, the <code>select_item</code> event uses a callback function with Google Tag Manager (GTM).
+					This ensures that GTM can fire all related tags before the browser navigates to the product detail page.
+					You can customize a timeout period (in milliseconds). This timeout only comes into play if a tag fails to fire within the specified time
+					for some reason. If all tags fire correctly, this timeout won\'t affect anything.',
 					'duracelltomi-google-tag-manager'
 				)
 			),
@@ -204,7 +227,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_ANALYTICS    => array(
 		'label'       => esc_html__( 'Analytics Storage', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the analytics_storage flag "granted" by default.',
+			'Select this checkbox to make the analytics_storage flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -212,7 +235,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_ADS          => array(
 		'label'       => esc_html__( 'Ad Storage', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the ad_storage flag "granted" by default.',
+			'Select this checkbox to make the ad_storage flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -220,7 +243,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_AD_USER_DATA => array(
 		'label'       => esc_html__( 'Ad User Data', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the ad_user_data flag "granted" by default.',
+			'Select this checkbox to make the ad_user_data flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -228,7 +251,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_AD_PERSO     => array(
 		'label'       => esc_html__( 'Ad Personalization', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the ad_personalization flag "granted" by default.',
+			'Select this checkbox to make the ad_personalization flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -236,7 +259,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_FUNC         => array(
 		'label'       => esc_html__( 'Functionality Storage', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the functionality_storage flag "granted" by default.',
+			'Select this checkbox to make the functionality_storage flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -244,7 +267,7 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_SECURUTY     => array(
 		'label'       => esc_html__( 'Security Storage', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the security_storage flag "granted" by default.',
+			'Select this checkbox to make the security_storage flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
@@ -252,15 +275,24 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 	GTM4WP_OPTION_INTEGRATE_CONSENTMODE_PERSO        => array(
 		'label'       => esc_html__( 'Personalization Storage', 'duracelltomi-google-tag-manager' ),
 		'description' => esc_html__(
-			'Select thic checkbox to make the personalization_storage flag "granted" by default.',
+			'Select this checkbox to make the personalization_storage flag "granted" by default.',
 			'duracelltomi-google-tag-manager'
 		),
 		'phase'       => GTM4WP_PHASE_STABLE,
 	),
 
 	GTM4WP_OPTION_INTEGRATE_WEBTOFFEE_GDPR           => array(
-		'label'         => esc_html__( 'WebToffee GDPR Cookie Consent', 'duracelltomi-google-tag-manager' ),
-		'description'   => esc_html__( 'Enabling this feature will fire a GTM event (cookie_consent_update) when the consent banner has been closed with consents being set or during pageload when previously set consents have been found.', 'duracelltomi-google-tag-manager' ),
+		'label'         => esc_html__( 'WebToffee GDPR Cookie Consent (v2.x)', 'duracelltomi-google-tag-manager' ),
+		'description'   =>
+			esc_html__(
+				'Enabling this feature will fire a GTM event (cookie_consent_update) when the consent banner has been closed
+				with consents being set or during pageload when previously set consents have been found.
+				You do not need to use this integration with v3.x or above since it includes all the necessary codes to integrate
+				the consent banner with Google Tag Manager. Just use their wcc_gcm_consent_update event to fire
+				tags that do not support advanced consent mode (usually non-Google tags) or if you would like to implement
+				basic consent mode.',
+				'duracelltomi-google-tag-manager'
+			),
 		'phase'         => GTM4WP_PHASE_STABLE,
 		'plugintocheck' => 'webtoffee-gdpr-cookie-consent/cookie-law-info.php',
 	),

@@ -6,6 +6,8 @@
 namespace Automattic\WooCommerce\Utilities;
 
 use Automattic\WooCommerce\Caches\OrderCacheController;
+use Automattic\WooCommerce\Caches\OrderCountCache;
+use Automattic\WooCommerce\Enums\OrderStatus;
 use Automattic\WooCommerce\Internal\Admin\Orders\PageController;
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
 use Automattic\WooCommerce\Internal\Utilities\COTMigrationUtil;
@@ -22,7 +24,7 @@ final class OrderUtil {
 	 *
 	 * @return string
 	 */
-	public static function get_order_admin_screen() : string {
+	public static function get_order_admin_screen(): string {
 		return wc_get_container()->get( COTMigrationUtil::class )->get_order_admin_screen();
 	}
 
@@ -32,8 +34,17 @@ final class OrderUtil {
 	 *
 	 * @return bool
 	 */
-	public static function custom_orders_table_usage_is_enabled() : bool {
+	public static function custom_orders_table_usage_is_enabled(): bool {
 		return wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled();
+	}
+
+	/**
+	 * Helper function to get whether custom order tables are enabled or not.
+	 *
+	 * @return bool
+	 */
+	public static function custom_orders_table_datastore_cache_enabled(): bool {
+		return wc_get_container()->get( CustomOrdersTableController::class )->hpos_data_caching_is_enabled();
 	}
 
 	/**
@@ -41,7 +52,7 @@ final class OrderUtil {
 	 *
 	 * @return bool True if the orders cache should be used, false otherwise.
 	 */
-	public static function orders_cache_usage_is_enabled() : bool {
+	public static function orders_cache_usage_is_enabled(): bool {
 		return wc_get_container()->get( OrderCacheController::class )->orders_cache_usage_is_enabled();
 	}
 
@@ -50,7 +61,7 @@ final class OrderUtil {
 	 *
 	 * @return bool
 	 */
-	public static function is_custom_order_tables_in_sync() : bool {
+	public static function is_custom_order_tables_in_sync(): bool {
 		return wc_get_container()->get( COTMigrationUtil::class )->is_custom_order_tables_in_sync();
 	}
 
@@ -87,7 +98,7 @@ final class OrderUtil {
 	 *
 	 * @return int Order or post ID.
 	 */
-	public static function get_post_or_order_id( $post_or_order_object ) : int {
+	public static function get_post_or_order_id( $post_or_order_object ): int {
 		return wc_get_container()->get( COTMigrationUtil::class )->get_post_or_order_id( $post_or_order_object );
 	}
 
@@ -121,7 +132,7 @@ final class OrderUtil {
 	 *
 	 * @return string Admin url for an order.
 	 */
-	public static function get_order_admin_edit_url( int $order_id ) : string {
+	public static function get_order_admin_edit_url( int $order_id ): string {
 		return wc_get_container()->get( PageController::class )->get_edit_url( $order_id );
 	}
 
@@ -130,7 +141,7 @@ final class OrderUtil {
 	 *
 	 * @return string Link for new order.
 	 */
-	public static function get_order_admin_new_url() : string {
+	public static function get_order_admin_new_url(): string {
 		return wc_get_container()->get( PageController::class )->get_new_page_url();
 	}
 
@@ -141,7 +152,7 @@ final class OrderUtil {
 	 *
 	 * @return bool
 	 */
-	public static function is_order_list_table_screen( $order_type = 'shop_order' ) : bool {
+	public static function is_order_list_table_screen( $order_type = 'shop_order' ): bool {
 		return wc_get_container()->get( PageController::class )->is_order_screen( $order_type, 'list' );
 	}
 
@@ -152,7 +163,7 @@ final class OrderUtil {
 	 *
 	 * @return bool
 	 */
-	public static function is_order_edit_screen( $order_type = 'shop_order' ) : bool {
+	public static function is_order_edit_screen( $order_type = 'shop_order' ): bool {
 		return wc_get_container()->get( PageController::class )->is_order_screen( $order_type, 'edit' );
 	}
 
@@ -163,7 +174,7 @@ final class OrderUtil {
 	 *
 	 * @return bool
 	 */
-	public static function is_new_order_screen( $order_type = 'shop_order' ) : bool {
+	public static function is_new_order_screen( $order_type = 'shop_order' ): bool {
 		return wc_get_container()->get( PageController::class )->is_order_screen( $order_type, 'new' );
 	}
 
@@ -196,10 +207,12 @@ final class OrderUtil {
 	public static function get_count_for_type( $order_type ) {
 		global $wpdb;
 
-		$cache_key        = \WC_Cache_Helper::get_cache_prefix( 'orders' ) . 'order-count-' . $order_type;
-		$count_per_status = wp_cache_get( $cache_key, 'counts' );
+		$order_type = (string) $order_type;
 
-		if ( false === $count_per_status ) {
+		$order_count_cache = new OrderCountCache();
+		$count_per_status  = $order_count_cache->get( $order_type );
+
+		if ( null === $count_per_status ) {
 			if ( self::custom_orders_table_usage_is_enabled() ) {
 				// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 				$results = $wpdb->get_results(
@@ -212,20 +225,50 @@ final class OrderUtil {
 				// phpcs:enable
 
 				$count_per_status = array_map( 'absint', array_column( $results, 'count', 'status' ) );
+
 			} else {
 				$count_per_status = (array) wp_count_posts( $order_type );
 			}
 
 			// Make sure all order statuses are included just in case.
 			$count_per_status = array_merge(
-				array_fill_keys( array_keys( wc_get_order_statuses() ), 0 ),
+				array_fill_keys( array_merge( array_keys( wc_get_order_statuses() ), array( OrderStatus::TRASH ) ), 0 ),
 				$count_per_status
 			);
 
-			wp_cache_set( $cache_key, $count_per_status, 'counts' );
+			$order_count_cache->set_multiple( $order_type, $count_per_status );
 		}
 
 		return $count_per_status;
 	}
 
+	/**
+	 * Removes the 'wc-' prefix from status.
+	 *
+	 * @param string $status The status to remove the prefix from.
+	 *
+	 * @return string The status without the prefix.
+	 * @since 9.2.0
+	 */
+	public static function remove_status_prefix( string $status ): string {
+		if ( strpos( $status, 'wc-' ) === 0 ) {
+			$status = substr( $status, 3 );
+		}
+
+		return $status;
+	}
+
+	/**
+	 * Checks if the new full refund data is used.
+	 *
+	 * @return bool
+	 */
+	public static function uses_new_full_refund_data() {
+		$db_version                = get_option( 'woocommerce_db_version', null );
+		$uses_old_full_refund_data = get_option( 'woocommerce_analytics_uses_old_full_refund_data', 'no' );
+		if ( null === $db_version ) {
+			return 'no' === $uses_old_full_refund_data;
+		}
+		return version_compare( $db_version, '10.2.0', '>=' ) && 'no' === $uses_old_full_refund_data;
+	}
 }

@@ -8,7 +8,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence\Wordpress
  */
-final class WordpressSerializedOptionsContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
+final class WordpressSerializedOptionsContainer implements PersistentContainer
 {
     /** @var string */
     private $option_name;
@@ -26,19 +26,19 @@ final class WordpressSerializedOptionsContainer implements \FSVendor\WPDesk\Pers
      */
     private function refresh_value()
     {
-        $this->option_value = \get_option($this->option_name, []);
+        $this->option_value = get_option($this->option_name, []);
     }
     public function set($id, $value)
     {
         $this->refresh_value();
         $this->option_value[$id] = $value;
-        \update_option($this->option_name, $this->option_value);
+        update_option($this->option_name, $this->option_value);
     }
     public function delete($id)
     {
         $this->refresh_value();
         unset($this->option_value[$id]);
-        \update_option($this->option_name, $this->option_value);
+        update_option($this->option_name, $this->option_value);
     }
     public function has($key)
     {
@@ -49,7 +49,7 @@ final class WordpressSerializedOptionsContainer implements \FSVendor\WPDesk\Pers
     {
         $this->refresh_value();
         if (!isset($this->option_value[$id])) {
-            throw new \FSVendor\WPDesk\Persistence\Adapter\WordPress\ElementNotFoundException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotFoundException(sprintf('Element %s not exists!', $id));
         }
         return $this->option_value[$id];
     }

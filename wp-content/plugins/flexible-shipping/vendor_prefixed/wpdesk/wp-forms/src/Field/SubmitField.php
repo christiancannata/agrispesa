@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class SubmitField extends \FSVendor\WPDesk\Forms\Field\NoValueField
+class SubmitField extends NoValueField
 {
     public function get_template_name()
     {

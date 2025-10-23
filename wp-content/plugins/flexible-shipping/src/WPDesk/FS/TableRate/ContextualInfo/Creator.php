@@ -390,7 +390,7 @@ class Creator implements HookableCollection {
 					'<a class="oct-btn-more" href="https://octol.io/fs-integrations" target="_blank">',
 					'</a>'
 				);
-		} else {
+		} elseif ( ! defined( 'FLEXIBLE_SHIPPING_PRO_VERSION' ) ) {
 			return __( 'Upgrade from the free version to the Flexible Shipping PRO and create even the most complex shipping scenarios with ease.', 'flexible-shipping' ) . '&nbsp;&nbsp;' .
 				sprintf(
 					// Translators: link.
@@ -398,6 +398,8 @@ class Creator implements HookableCollection {
 					'<a class="oct-btn-more" href="https://octol.io/fs-context-fs-pro" target="_blank">',
 					'</a>'
 				);
+		} else {
+			return '';
 		}
 	}
 

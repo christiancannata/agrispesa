@@ -24,7 +24,8 @@ use Google\Site_Kit\Core\Tags\Tag_With_Linker_Trait;
  */
 class AMP_Tag extends Module_AMP_Tag implements Tag_Interface, Tag_With_Linker_Interface {
 
-	use Method_Proxy_Trait, Tag_With_Linker_Trait;
+	use Method_Proxy_Trait;
+	use Tag_With_Linker_Trait;
 
 	/**
 	 * Custom dimensions data.
@@ -33,14 +34,6 @@ class AMP_Tag extends Module_AMP_Tag implements Tag_Interface, Tag_With_Linker_I
 	 * @var array
 	 */
 	private $custom_dimensions;
-
-	/**
-	 * Ads conversion ID.
-	 *
-	 * @since 1.118.0
-	 * @var string
-	 */
-	private $ads_conversion_id;
 
 	/**
 	 * Sets the current home domain.
@@ -53,16 +46,6 @@ class AMP_Tag extends Module_AMP_Tag implements Tag_Interface, Tag_With_Linker_I
 		$this->home_domain = $domain;
 	}
 
-	/**
-	 * Sets the ads conversion ID.
-	 *
-	 * @since 1.32.0
-	 *
-	 * @param string $ads_conversion_id Ads ID.
-	 */
-	public function set_ads_conversion_id( $ads_conversion_id ) {
-		$this->ads_conversion_id = $ads_conversion_id;
-	}
 
 	/**
 	 * Sets custom dimensions data.
@@ -109,12 +92,6 @@ class AMP_Tag extends Module_AMP_Tag implements Tag_Interface, Tag_With_Linker_I
 	protected function render() {
 		$config = $this->get_tag_config();
 
-		if ( ! empty( $this->ads_conversion_id ) ) {
-			$config[ $this->ads_conversion_id ] = array(
-				'groups' => 'default',
-			);
-		}
-
 		$gtag_amp_opt = array(
 			'optoutElementId' => '__gaOptOutExtension',
 			'vars'            => array(
@@ -153,7 +130,6 @@ class AMP_Tag extends Module_AMP_Tag implements Tag_Interface, Tag_With_Linker_I
 		);
 
 		printf( "\n<!-- %s -->\n", esc_html__( 'End Google Analytics AMP snippet added by Site Kit', 'google-site-kit' ) );
-
 	}
 
 	/**

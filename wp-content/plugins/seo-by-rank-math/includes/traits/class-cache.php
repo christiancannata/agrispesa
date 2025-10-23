@@ -20,27 +20,27 @@ trait Cache {
 	/**
 	 * To generate hash of object.
 	 *
-	 * @param string|array|object $object Object for that hash need to generate.
+	 * @param string|array|object $value Object for that hash need to generate.
 	 *
 	 * @return string Hash value of provided object.
 	 */
-	public function generate_hash( $object ) {
+	public function generate_hash( $value ) {
 
-		if ( empty( $object ) ) {
+		if ( empty( $value ) ) {
 			return '';
 		}
 
-		if ( is_object( $object ) ) {
-			$object = (array) $object;
+		if ( is_object( $value ) ) {
+			$value = (array) $value;
 		}
 
-		if ( is_array( $object ) ) {
-			ksort( $object );
-			$object = wp_json_encode( $object );
+		if ( is_array( $value ) ) {
+			ksort( $value );
+			$value = wp_json_encode( $value );
 		}
 
-		$object = trim( $object );
-		$hash   = hash( 'sha256', $object );
+		$value = apply_filters( 'rank_math/cache/generate_hash', trim( $value ) );
+		$hash  = hash( 'sha256', $value );
 
 		return $hash;
 	}
@@ -58,7 +58,7 @@ trait Cache {
 	 * @return bool              Returns TRUE on success or FALSE on failure.
 	 */
 	public function set_cache( $key, $data, $group = '', $expire = 0 ) {
-		if ( false === wp_using_ext_object_cache() ) {
+		if ( ! $this->is_enabled() ) {
 			return false;
 		}
 
@@ -76,7 +76,7 @@ trait Cache {
 	 * @return bool|mixed Cached object value.
 	 */
 	public function get_cache( $key, $group ) {
-		if ( false === wp_using_ext_object_cache() ) {
+		if ( ! $this->is_enabled() ) {
 			return false;
 		}
 
@@ -91,7 +91,7 @@ trait Cache {
 	 * @return bool True if group was flushed, false otherwise.
 	 */
 	public function cache_flush_group( $group ) {
-		if ( false === wp_using_ext_object_cache() ) {
+		if ( ! $this->is_enabled() ) {
 			return false;
 		}
 
@@ -103,5 +103,16 @@ trait Cache {
 		$wp_object_cache->delete_multiple( array_keys( $wp_object_cache->cache[ $group ] ), $group );
 
 		return true;
+	}
+
+	/**
+	 * Check if cache is enabled.
+	 */
+	public function is_enabled() {
+		if ( wp_using_ext_object_cache() === false ) {
+			return false;
+		}
+
+		return apply_filters( 'rank_math/cache/enabled', true );
 	}
 }

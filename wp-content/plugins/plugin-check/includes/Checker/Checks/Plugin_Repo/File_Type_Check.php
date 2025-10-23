@@ -24,13 +24,15 @@ class File_Type_Check extends Abstract_File_Check {
 	use Amend_Check_Result;
 	use Stable_Check;
 
-	const TYPE_COMPRESSED  = 1;
-	const TYPE_PHAR        = 2;
-	const TYPE_VCS         = 4;
-	const TYPE_HIDDEN      = 8;
-	const TYPE_APPLICATION = 16;
-	const TYPE_BADLY_NAMED = 32;
-	const TYPE_ALL         = 63; // Same as all of the above with bitwise OR.
+	const TYPE_COMPRESSED   = 1;
+	const TYPE_PHAR         = 2;
+	const TYPE_VCS          = 4;
+	const TYPE_HIDDEN       = 8;
+	const TYPE_APPLICATION  = 16;
+	const TYPE_BADLY_NAMED  = 32;
+	const TYPE_LIBRARY_CORE = 64;
+	const TYPE_COMPOSER     = 128;
+	const TYPE_ALL          = 255; // Same as all of the above with bitwise OR.
 
 	/**
 	 * Bitwise flags to control check behavior.
@@ -74,6 +76,8 @@ class File_Type_Check extends Abstract_File_Check {
 	 *
 	 * @throws Exception Thrown when the check fails with a critical error (unrelated to any errors detected as part of
 	 *                   the check).
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
 	protected function check_files( Check_Result $result, array $files ) {
 		if ( $this->flags & self::TYPE_COMPRESSED ) {
@@ -94,6 +98,12 @@ class File_Type_Check extends Abstract_File_Check {
 		if ( $this->flags & self::TYPE_BADLY_NAMED ) {
 			// Check for badly named files.
 			$this->look_for_badly_named_files( $result, $files );
+		}
+		if ( $this->flags & self::TYPE_LIBRARY_CORE ) {
+			$this->look_for_library_core_files( $result, $files );
+		}
+		if ( $this->flags & self::TYPE_COMPOSER ) {
+			$this->look_for_composer_files( $result, $files );
 		}
 	}
 
@@ -231,7 +241,7 @@ class File_Type_Check extends Abstract_File_Check {
 	protected function look_for_application_files( Check_Result $result, array $files ) {
 		$application_files = self::filter_files_by_extensions(
 			$files,
-			array( 'a', 'bin', 'bpk', 'deploy', 'dist', 'distz', 'dmg', 'dms', 'DS_Store', 'dump', 'elc', 'exe', 'iso', 'lha', 'lrf', 'lzh', 'o', 'obj', 'phar', 'pkg', 'sh', 'so' )
+			array( 'a', 'bin', 'bpk', 'deploy', 'dist', 'distz', 'dmg', 'dms', 'dump', 'elc', 'exe', 'iso', 'lha', 'lrf', 'lzh', 'o', 'obj', 'phar', 'pkg', 'sh', 'so' )
 		);
 		if ( $application_files ) {
 			foreach ( $application_files as $file ) {
@@ -260,6 +270,15 @@ class File_Type_Check extends Abstract_File_Check {
 	protected function look_for_badly_named_files( Check_Result $result, array $files ) {
 		$conflict_chars = '!@#$%^&*()+=[]{};:"\'<>,?/\\|`~';
 
+		$plugin_path = $result->plugin()->path();
+
+		$files = array_map(
+			function ( $file ) use ( $plugin_path ) {
+				return str_replace( $plugin_path, '', $file );
+			},
+			$files
+		);
+
 		foreach ( $files as $file ) {
 			$badly_name = false;
 			if ( preg_match( '/\s/', $file ) ) {
@@ -273,7 +292,7 @@ class File_Type_Check extends Abstract_File_Check {
 			if ( $badly_name ) {
 				$this->add_result_error_for_file(
 					$result,
-					__( 'Badly named files are not permitted.', 'plugin-check' ),
+					__( 'File and folder names must not contain spaces or special characters.', 'plugin-check' ),
 					'badly_named_files',
 					$file,
 					0,
@@ -282,6 +301,161 @@ class File_Type_Check extends Abstract_File_Check {
 					8
 				);
 			}
+		}
+
+		// Duplicated names in different folders.
+		$folders = array();
+		foreach ( $files as $file ) {
+			$folder = str_replace( basename( $file ), '', $file );
+			if ( empty( $folder ) ) {
+				continue;
+			}
+			$folders[] = $folder;
+		}
+		$folders                = array_unique( $folders );
+		$folders_lowercase      = array_map( 'strtolower', $folders );
+		$case_sensitive_folders = array_unique( array_diff_assoc( $folders_lowercase, array_unique( $folders_lowercase ) ) );
+
+		if ( ! empty( $case_sensitive_folders ) ) {
+			$this->add_result_error_for_file(
+				$result,
+				__( 'Multiple folders with the same name but different case were found. This can be problematic on certain file systems.', 'plugin-check' ),
+				'case_sensitive_folders',
+				implode( ', ', $case_sensitive_folders ),
+				0,
+				0,
+				'',
+				8
+			);
+		}
+
+		// Duplicated names in same folder.
+		$files_lowercase      = array_map( 'strtolower', $files );
+		$case_sensitive_files = array_unique( array_diff_assoc( $files_lowercase, array_unique( $files_lowercase ) ) );
+
+		if ( ! empty( $case_sensitive_files ) ) {
+			$this->add_result_error_for_file(
+				$result,
+				__( 'Multiple files with the same name but different case were found. This can be problematic on certain file systems.', 'plugin-check' ),
+				'case_sensitive_files',
+				implode( ', ', $case_sensitive_files ),
+				0,
+				0,
+				'',
+				8
+			);
+		}
+	}
+
+	/**
+	 * Looks for library core files and amends the given result with an error if found.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param Check_Result $result The check result to amend, including the plugin context to check.
+	 * @param array        $files  List of absolute file paths.
+	 */
+	protected function look_for_library_core_files( Check_Result $result, array $files ) {
+		// Known libraries that are part of WordPress core.
+		// https://meta.trac.wordpress.org/browser/sites/trunk/api.wordpress.org/public_html/core/credits/wp-59.php#L739 .
+		$look_known_libraries_core_services = array(
+			'(?<![\.|-])jquery(-[0-9|\.]*)?(\.slim)?(\.min)?\.js(?!\/)',
+			'jquery-ui(-[0-9|\.]*)?(\.slim)?(\.min)?\.js(?!\/)',
+			'jquery.color(\.slim)?(\.min)?\.js(?!\/)',
+			'jquery.ui.touch-punch(?!\/)',
+			'jquery.hoverintent(?!\/)',
+			'jquery.imgareaselect(?!\/)',
+			'jquery.hotkeys(?!\/)',
+			'jquery.ba-serializeobject(?!\/)',
+			'jquery.query-object(?!\/)',
+			'jquery.suggest(?!\/)',
+			'polyfill(\.min)?\.js(?!\/)',
+			'iris(\.min)?\.js(?!\/)',
+			'backbone(\.min)?\.js(?!\/)',
+			'clipboard(\.min)?\.js(?!\/)',
+			'closest(\.min)?\.js(?!\/)',
+			'codemirror(\.min)?\.js(?!\/)',
+			'formdata(\.min)?\.js(?!\/)',
+			'json2(\.min)?\.js(?!\/)',
+			'lodash(\.min)?\.js(?!\/)',
+			'masonry(\.pkgd)(\.min)?\.js(?!\/)',
+			'mediaelement-and-player(\.min)?\.js(?!\/)',
+			'moment(\.min)?\.js(?!\/)',
+			'plupload(\.full)(\.min)?\.js(?!\/)',
+			'thickbox(\.min)?\.js(?!\/)',
+			'twemoji(\.min)?\.js(?!\/)',
+			'underscore([\.|-]min)?\.js(?!\/)',
+			'moxie(\.min)?\.js(?!\/)',
+			'zxcvbn(\.min)?\.js(?!\/)',
+			'getid3\.php(?!\/)',
+			'pclzip\.lib\.php(?!\/)',
+			'PasswordHash\.php(?!\/)',
+			'PHPMailer\.php(?!\/)',
+			'SimplePie\.php(?!\/)',
+		);
+
+		$combined_pattern = '/(' . implode( ')|(', $look_known_libraries_core_services ) . ')/i';
+
+		$plugin_path = $result->plugin()->path();
+
+		$files = array_map(
+			function ( $file ) use ( $plugin_path ) {
+				return str_replace( $plugin_path, '', $file );
+			},
+			$files
+		);
+
+		foreach ( $files as $file ) {
+			if ( preg_match( $combined_pattern, $file ) ) {
+				$this->add_result_error_for_file(
+					$result,
+					__( 'Library files that are already in the WordPress core are not permitted.', 'plugin-check' ),
+					'library_core_files',
+					$file,
+					0,
+					0,
+					'',
+					8
+				);
+			}
+		}
+	}
+
+	/**
+	 * Looks for composer files.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param Check_Result $result The check result to amend, including the plugin context to check.
+	 * @param array        $files  List of absolute file paths.
+	 */
+	protected function look_for_composer_files( Check_Result $result, array $files ) {
+		if ( $result->plugin()->is_single_file_plugin() ) {
+			return;
+		}
+
+		$plugin_path = $result->plugin()->path();
+
+		if (
+			is_dir( $plugin_path . 'vendor' ) &&
+			file_exists( $plugin_path . 'vendor/autoload.php' ) &&
+			! file_exists( $plugin_path . 'composer.json' )
+		) {
+			$this->add_result_warning_for_file(
+				$result,
+				sprintf(
+					/* translators: 1: directory, 2: filename */
+					esc_html__( 'The "%1$s" directory using composer exists, but "%2$s" file is missing.', 'plugin-check' ),
+					'/vendor',
+					'composer.json'
+				),
+				'missing_composer_json_file',
+				'composer.json',
+				0,
+				0,
+				'https://developer.wordpress.org/plugins/wordpress-org/common-issues/#included-unneeded-folders',
+				6
+			);
 		}
 	}
 
@@ -295,7 +469,7 @@ class File_Type_Check extends Abstract_File_Check {
 	 * @return string Description.
 	 */
 	public function get_description(): string {
-		return __( 'Detects the usage of hidden and compressed files, VCS directories, application files and badly named files.', 'plugin-check' );
+		return __( 'Detects the usage of hidden and compressed files, VCS directories, application files, badly named files and Library Core Files.', 'plugin-check' );
 	}
 
 	/**

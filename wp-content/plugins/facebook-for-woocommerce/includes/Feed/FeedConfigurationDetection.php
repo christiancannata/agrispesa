@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 
 namespace WooCommerce\Facebook\Feed;
 
@@ -13,6 +12,7 @@ use WooCommerce\Facebook\API\Response;
 use WooCommerce\Facebook\Framework\Api\Exception as ApiException;
 use WooCommerce\Facebook\Products\Feed;
 use WooCommerce\Facebook\Utilities\Heartbeat;
+use WooCommerce\Facebook\Framework\Logger;
 
 /**
  * A class responsible detecting feed configuration.
@@ -37,6 +37,11 @@ class FeedConfigurationDetection {
 	 * @return void
 	 */
 	public function track_data_source_feed_tracker_info() {
+		$flag_name = '_wc_facebook_for_woocommerce_track_data_source_feed_tracker_info';
+		if ( 'yes' === get_transient( $flag_name ) ) {
+			return;
+		}
+		set_transient( $flag_name, 'yes', DAY_IN_SECONDS );
 		try {
 			$info = $this->get_data_source_feed_tracker_info();
 			facebook_for_woocommerce()->get_tracker()->track_facebook_feed_config( $info );
@@ -87,7 +92,15 @@ class FeedConfigurationDetection {
 				$metadata = $this->get_feed_metadata( $feed['id'] );
 			} catch ( Exception $e ) {
 				$message = sprintf( 'There was an error trying to get feed metadata: %s', $e->getMessage() );
-				WC_Facebookcommerce_Utils::log( $message );
+				Logger::log(
+					$message,
+					[],
+					array(
+						'should_send_log_to_meta'        => false,
+						'should_save_log_in_woocommerce' => true,
+						'woocommerce_log_level'          => \WC_Log_Levels::ERROR,
+					)
+				);
 				continue;
 			}
 
@@ -183,22 +196,15 @@ class FeedConfigurationDetection {
 	/**
 	 * Given catalog id this function fetches all feed configurations defined for this catalog.
 	 *
-	 * @throws Error Feed configurations fetch was not successful.
-	 * @param String                        $catalog_id Facebook Catalog ID.
-	 *
+	 * @param string $product_catalog_id Facebook Catalog ID.
 	 * @return array Array of feed configurations.
-	 */
-
-	/**
-	 * @param string $product_catalog_id
-	 *
-	 * @return array Facebook Product Feeds.
-	 * @throws Request_Limit_Reached
-	 * @throws ApiException
+	 * @throws Request_Limit_Reached When API request limit is reached.
+	 * @throws ApiException When there is an error in the API request.
+	 * @throws Error Feed configurations fetch was not successful.
 	 */
 	private function get_feed_nodes_for_catalog( string $product_catalog_id ) {
 		try {
-			$response = facebook_for_woocommerce()->get_api()->read_feeds($product_catalog_id);
+			$response = facebook_for_woocommerce()->get_api()->read_feeds( $product_catalog_id );
 		} catch ( \Exception $e ) {
 			$message = sprintf( 'There was an error trying to get feed nodes for catalog: %s', $e->getMessage() );
 			facebook_for_woocommerce()->log( $message );
@@ -213,8 +219,8 @@ class FeedConfigurationDetection {
 	 * @param string $feed_id Facebook Product Feed ID.
 	 *
 	 * @return Response
-	 * @throws Request_Limit_Reached
-	 * @throws ApiException
+	 * @throws Request_Limit_Reached When API request limit is reached.
+	 * @throws ApiException When there is an error in the API request.
 	 */
 	private function get_feed_metadata( string $feed_id ) {
 		return facebook_for_woocommerce()->get_api()->read_feed( $feed_id );
@@ -230,7 +236,7 @@ class FeedConfigurationDetection {
 	 */
 	private function get_feed_upload_metadata( $upload_id ) {
 		try {
-			$response = facebook_for_woocommerce()->get_api()->read_upload($upload_id);
+			$response = facebook_for_woocommerce()->get_api()->read_upload( $upload_id );
 		} catch ( \Exception $e ) {
 			$message = sprintf( 'There was an error trying to get feed upload metadata: %s', $e->getMessage() );
 			facebook_for_woocommerce()->log( $message );
@@ -238,5 +244,4 @@ class FeedConfigurationDetection {
 		}
 		return $response;
 	}
-
 }

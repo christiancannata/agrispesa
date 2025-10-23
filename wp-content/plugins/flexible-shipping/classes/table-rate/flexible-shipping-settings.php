@@ -103,14 +103,16 @@ class WPDesk_Flexible_Shipping_Settings extends WC_Shipping_Method {
 			],
 		];
 		$this->form_fields[] = [
-			'type'  => 'title',
-			'title' => __( 'Advanced settings', 'flexible-shipping' ),
+			'type'    => 'title',
+			'title'   => __( 'Advanced settings', 'flexible-shipping' ),
+			'default' => '',
 		];
 
 		$this->form_fields = $this->logger_settings->add_fields_to_settings( $this->form_fields );
 		$this->form_fields = $this->add_beacon_search_data_to_fields( $this->form_fields );
 		$this->form_fields[] = [
-			'type'  => 'title',
+			'type'    => 'title',
+			'default' => '',
 		];
 
 	}

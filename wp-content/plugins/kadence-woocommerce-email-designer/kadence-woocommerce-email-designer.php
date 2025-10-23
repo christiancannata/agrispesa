@@ -3,13 +3,13 @@
  * Plugin Name: Kadence WooCommerce Email Designer
  * Plugin URI: http://kadencewp.com/products/woocommerce-email-designer/
  * Description: Customize the default woocommerce email templates design and text through the native WordPress customizer. Preview emails and send test emails.
- * Version: 1.5.12
+ * Version: 1.5.17
  * Author: Kadence WP
  * Author URI: http://kadencewp.com/
  * License: GPLv2 or later
  * Text Domain: kadence-woocommerce-email-designer
  * WC requires at least: 5.6.0
- * WC tested up to: 8.2
+ * WC tested up to: 9.7
  *
  * @package Kadence Woocommerce Email Designer
  */
@@ -59,7 +59,7 @@ class Kadence_Woomail_Designer {
 
 		define( 'KT_WOOMAIL_PATH', realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
 		define( 'KT_WOOMAIL_URL', plugin_dir_url( __FILE__ ) );
-		define( 'KT_WOOMAIL_VERSION', '1.5.12' );
+		define( 'KT_WOOMAIL_VERSION', '1.5.17' );
 
 		if ( ! kadence_woomail_is_woo_active() ) {
 			add_action( 'admin_notices', array( $this, 'admin_notice_need_woocommerce' ) );
@@ -328,7 +328,7 @@ class Kadence_Woomail_Designer {
 			$setting_key = 'customer_refunded_order_body_partial';
 			$body_text = Kadence_Woomail_Customizer::opt( $setting_key );
 		} elseif ( 'customer_invoice' == $key ) {
-			if ( $order->has_status( 'pending' ) ) {
+			if ( $order->needs_payment() ) {
 				$body_text = Kadence_Woomail_Customizer::opt( $setting_key );
 				$btn_switch = Kadence_Woomail_Customizer::opt( $key . '_btn_switch' );
 				if ( true == $btn_switch ) {
@@ -342,7 +342,7 @@ class Kadence_Woomail_Designer {
 				$body_text = Kadence_Woomail_Customizer::opt( $setting_key );
 			}
 		} elseif ( 'customer_renewal_invoice' == $key ) {
-			if ( $order->has_status( 'pending' ) ) {
+			if ( $order->needs_payment() ) {
 				$body_text = Kadence_Woomail_Customizer::opt( $setting_key );
 				$btn_switch = Kadence_Woomail_Customizer::opt( $key . '_btn_switch' );
 				if ( true == $btn_switch ) {
@@ -610,7 +610,7 @@ class Kadence_Woomail_Designer {
 			$string = str_replace( '{customer_first_name}', $first_name, $string );
 			$string = str_replace( '{customer_last_name}', $last_name, $string );
 			$string = str_replace( '{customer_full_name}', $full_name, $string );
-			$string = str_replace( '{customer_username}', $email->user_login, $string );
+			$string = str_replace( '{customer_username}', $email->user_login ?? '', $string );
 			$string = str_replace( '{customer_email}', $email->object->user_email, $string );
 
 		} else if ( is_a( $email->object, 'WC_Order' ) ) {

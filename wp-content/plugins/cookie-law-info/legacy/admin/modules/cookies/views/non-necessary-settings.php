@@ -59,7 +59,11 @@ if ( ! defined( 'WPINC' ) ) {
 				<tr>
 					<td>
 						<label for="thirdparty_head_section"><?php echo esc_html__( 'This script will be added to the page HEAD section if the above settings is enabled and user has give consent.', 'cookie-law-info' ); ?></label>
-						<textarea name="thirdparty_head_section" class="vvv_textbox"><?php echo apply_filters( 'format_to_edit', stripslashes( $settings['head_scripts'] ) ); ?></textarea>
+						<textarea name="thirdparty_head_section" class="vvv_textbox">
+							<?php
+							echo apply_filters( 'format_to_edit', stripslashes( $settings['head_scripts'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</textarea>
 						<span class="cli_form_help">
 							<?php echo esc_html__( 'Print scripts in the head tag on the front end if above cookie settings is enabled and user has given consent.', 'cookie-law-info' ); ?> <br />
 							eg:- &lt;script&gt;console.log("header script");&lt;/script&gt
@@ -69,7 +73,11 @@ if ( ! defined( 'WPINC' ) ) {
 				<tr>
 					<td>
 						<label for="thirdparty_body_section"><?php echo esc_html__( 'This script will be added right after the BODY section if the above settings is enabled and user has given consent.', 'cookie-law-info' ); ?></label>
-						<textarea name="thirdparty_body_section" class="vvv_textbox"><?php echo apply_filters( 'format_to_edit', stripslashes( $settings['body_scripts'] ) ); ?></textarea>
+						<textarea name="thirdparty_body_section" class="vvv_textbox">
+							<?php
+							echo apply_filters( 'format_to_edit', stripslashes( $settings['body_scripts'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</textarea>
 						<span class="cli_form_help">
 							<?php echo esc_html__( 'Print scripts before the closing body tag on the front end if above cookie settings is enabled and user has given consent.', 'cookie-law-info' ); ?> <br />eg:- &lt;script&gt;console.log("body script");&lt;/script&gt;
 						</span>

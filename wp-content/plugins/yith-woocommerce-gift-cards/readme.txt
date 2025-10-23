@@ -2,9 +2,9 @@
 
 Contributors: yithemes
 Tags: gift card, gift cards, coupon, gift, discount
-Requires at least: 6.3
-Tested up to: 6.5
-Stable tag: 4.14.0
+Requires at least: 6.6
+Tested up to: 6.8
+Stable tag: 4.28.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -122,6 +122,8 @@ The gift card code is generated only after the order status goes to "processing"
 
 Each time the gift card is used, the available credit is updated and if there's some left, it can be used for future purchases.
 
+= How can I report security bugs? =
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/yith-woocommerce-gift-cards)
 
 == Installation ==
 
@@ -141,6 +143,69 @@ Want to add a new language to our YITH WooCommerce Gift Cards? Learn how to cont
 
 
 == Changelog ==
+
+= 4.28.0 - Released on 4 September 2025 =
+
+* New: support for WooCommerce 10.2
+* Update: YITH plugin framework
+
+= 4.27.0 - Released on 7 August 2025 =
+
+* New: support for WooCommerce 10.1
+* Update: YITH plugin framework
+
+= 4.26.0 - Released on 7 July 2025 =
+
+* New: support for WooCommerce 10.0
+* Update: YITH plugin framework
+* Dev: added new filter yith_ywgc_table_gift_card_recipient
+
+= 4.25.0 - Released on 4 June 2025 =
+
+* New: support for WooCommerce 9.9
+* Update: YITH plugin framework
+
+= 4.24.0 - Released on 24 April 2025 =
+
+* New: support for WordPress 6.8
+* Update: YITH plugin framework
+
+= 4.23.0 - Released on 19 March 2025 =
+
+* New: support for WooCommerce 9.8
+* Update: YITH plugin framework
+
+= 4.22.0 - Released on 20 February 2025 =
+
+* New: support for WooCommerce 9.7
+* Update: YITH plugin framework
+
+= 4.21.0 - Released on 28 January 2025 =
+
+* New: support for WooCommerce 9.6
+* Update: YITH plugin framework
+
+= 4.20.0 - Released on 24 December 2024 =
+
+* New: support for WordPress 6.7
+* New: support for WooCommerce 9.5
+* Update: YITH plugin framework
+
+= 4.17.0 - Released on 16 September 2024 =
+
+* New: support for WooCommerce 9.3
+* Update: YITH plugin framework
+
+= 4.16.0 - Released on 20 August 2024 =
+
+* New: support for WooCommerce 9.2
+* Update: YITH plugin framework
+
+= 4.15.0 - Released on 22 July 2024 =
+
+* New: support for WordPress 6.6
+* New: support for WooCommerce 9.1
+* Update: YITH plugin framework
 
 = 4.14.0 - Released on 19 June 2024 =
 

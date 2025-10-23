@@ -226,6 +226,8 @@ abstract class Control extends UiElement {
 	protected function getMainSettingValue($default = null) {
 		if ( $this->mainSetting instanceof Setting ) {
 			return $this->mainSetting->getValue($default);
+		} else if ( $this->mainSetting instanceof Settings\WithSchema\SingularSetting ) {
+			return $this->mainSetting->getValue($default);
 		}
 		return $default;
 	}
@@ -234,7 +236,7 @@ abstract class Control extends UiElement {
 	 * Generate the "name" attribute value for a form element associated with
 	 * this control.
 	 *
-	 * @param string|null $compositeChildKey         Only for composite settings: the key of the child setting.
+	 * @param string|null $compositeChildKey Only for composite settings: the key of the child setting.
 	 * @param Settings\AbstractSetting|null $setting The setting shown in the field. Defaults to the main setting.
 	 * @return string
 	 */
@@ -290,13 +292,13 @@ abstract class Control extends UiElement {
 	}
 
 	protected function getAutoAcSettingId() {
-		if ( ($this->mainSetting instanceof Setting) && $this->hasPrimaryInput ) {
+		if ( ($this->mainSetting instanceof AbstractSetting) && $this->hasPrimaryInput ) {
 			return $this->mainSetting->getId();
 		}
 		return null;
 	}
 
-	protected function getKoObservableExpression($defaultValue, AbstractSetting $setting = null) {
+	protected function getKoObservableExpression($defaultValue, ?AbstractSetting $setting = null) {
 		if ( $setting === null ) {
 			$setting = $this->mainSetting;
 		}
@@ -374,21 +376,6 @@ abstract class Control extends UiElement {
 		}
 		$result['settings'] = $settingIds;
 
-		//Input classes.
-		if ( !empty($this->inputClasses) ) {
-			$result['inputClasses'] = $this->inputClasses;
-		}
-
-		//Input attributes.
-		if ( !empty($this->inputAttributes) ) {
-			$result['inputAttributes'] = $this->inputAttributes;
-		}
-
-		//Primary input ID.
-		if ( $this->hasPrimaryInput ) {
-			$result['primaryInputId'] = $this->getPrimaryInputId();
-		}
-
 		//Enabled state or condition.
 		$result['enabled'] = $this->serializeConditionForJs();
 
@@ -398,10 +385,31 @@ abstract class Control extends UiElement {
 			$result['includesOwnLabel'] = true;
 		}
 		$labelTargetId = $this->getLabelTargetId();
-		if ($this->supportsLabelAssociation() && !empty($labelTargetId) ) {
+		if ( $this->supportsLabelAssociation() && !empty($labelTargetId) ) {
 			$result['labelTargetId'] = $labelTargetId;
 		}
 
 		return $result;
+	}
+
+	protected function getKoComponentParams() {
+		$params = parent::getKoComponentParams();
+
+		//Primary input ID.
+		if ( $this->hasPrimaryInput ) {
+			$params['primaryInputId'] = $this->getPrimaryInputId();
+		}
+
+		//Input classes.
+		if ( !empty($this->inputClasses) ) {
+			$params['inputClasses'] = $this->inputClasses;
+		}
+
+		//Input attributes.
+		if ( !empty($this->inputAttributes) ) {
+			$params['inputAttributes'] = $this->inputAttributes;
+		}
+
+		return $params;
 	}
 }

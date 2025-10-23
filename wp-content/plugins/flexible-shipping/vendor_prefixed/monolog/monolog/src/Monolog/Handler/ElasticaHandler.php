@@ -33,7 +33,7 @@ use FSVendor\Elastica\Exception\ExceptionInterface;
  *
  * @author Jelle Vink <jelle.vink@gmail.com>
  */
-class ElasticaHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class ElasticaHandler extends AbstractProcessingHandler
 {
     /**
      * @var Client
@@ -47,11 +47,11 @@ class ElasticaHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandle
      * @param Client  $client  Elastica Client object
      * @param mixed[] $options Handler configuration
      */
-    public function __construct(\FSVendor\Elastica\Client $client, array $options = [], $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct(Client $client, array $options = [], $level = Logger::DEBUG, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
         $this->client = $client;
-        $this->options = \array_merge([
+        $this->options = array_merge([
             'index' => 'monolog',
             // Elastic index name
             'type' => 'record',
@@ -62,16 +62,16 @@ class ElasticaHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandle
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->bulkSend([$record['formatted']]);
     }
     /**
      * {@inheritDoc}
      */
-    public function setFormatter(\FSVendor\Monolog\Formatter\FormatterInterface $formatter) : \FSVendor\Monolog\Handler\HandlerInterface
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
-        if ($formatter instanceof \FSVendor\Monolog\Formatter\ElasticaFormatter) {
+        if ($formatter instanceof ElasticaFormatter) {
             return parent::setFormatter($formatter);
         }
         throw new \InvalidArgumentException('ElasticaHandler is only compatible with ElasticaFormatter');
@@ -79,21 +79,21 @@ class ElasticaHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandle
     /**
      * @return mixed[]
      */
-    public function getOptions() : array
+    public function getOptions(): array
     {
         return $this->options;
     }
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\ElasticaFormatter($this->options['index'], $this->options['type']);
+        return new ElasticaFormatter($this->options['index'], $this->options['type']);
     }
     /**
      * {@inheritDoc}
      */
-    public function handleBatch(array $records) : void
+    public function handleBatch(array $records): void
     {
         $documents = $this->getFormatter()->formatBatch($records);
         $this->bulkSend($documents);
@@ -105,11 +105,11 @@ class ElasticaHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandle
      *
      * @throws \RuntimeException
      */
-    protected function bulkSend(array $documents) : void
+    protected function bulkSend(array $documents): void
     {
         try {
             $this->client->addDocuments($documents);
-        } catch (\FSVendor\Elastica\Exception\ExceptionInterface $e) {
+        } catch (ExceptionInterface $e) {
             if (!$this->options['ignore_error']) {
                 throw new \RuntimeException("Error sending messages to Elasticsearch", 0, $e);
             }

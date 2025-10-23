@@ -1,3 +1,14 @@
+<?php
+/**
+ * Cookie Policy Block 4 Content
+ *
+ * This file contains HTML content for the cookie policy generator.
+ *
+ * @package Cookie_Law_Info
+ */
+
+// phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
+?>
 <p><span style="font-weight:bold;">Essential:</span> Some cookies are essential for you to be able to experience the full functionality of our site. They allow us to maintain user sessions and prevent any security threats. They do not collect or store any personal information. For example, these cookies allow you to log-in to your account and add products to your basket, and checkout securely.</p>
 
 <p><span style="font-weight:bold;">Statistics:</span> These cookies store information like the number of visitors to the website, the number of unique visitors, which pages of the website have been visited, the source of the visit, etc. These data help us understand and analyze how well the website performs and where it needs improvement.</p>

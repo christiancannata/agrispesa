@@ -6,6 +6,7 @@ namespace Automattic\WooCommerce\GoogleListingsAndAds\MerchantCenter;
 use Automattic\WooCommerce\GoogleListingsAndAds\Ads\AdsService;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Merchant;
 use Automattic\WooCommerce\GoogleListingsAndAds\API\Google\Settings;
+use Automattic\WooCommerce\GoogleListingsAndAds\API\WP\NotificationsService;
 use Automattic\WooCommerce\GoogleListingsAndAds\DB\Query\ShippingRateQuery;
 use Automattic\WooCommerce\GoogleListingsAndAds\DB\Query\ShippingTimeQuery;
 use Automattic\WooCommerce\GoogleListingsAndAds\Exception\ExceptionWithResponseData;
@@ -125,6 +126,35 @@ class MerchantCenterService implements ContainerAwareInterface, OptionsAwareInte
 	}
 
 	/**
+	 * Whether we should push data into MC. Only if MC is ready for syncing.
+	 *
+	 * @see is_ready_for_syncing
+	 * @return bool
+	 * @since 2.8.0
+	 */
+	public function should_push(): bool {
+		return $this->is_ready_for_syncing();
+	}
+
+	/**
+	 * Whether push is enabled for a specific data type.
+	 * This method checks if push synchronization is enabled for a specific data type
+	 * (products, coupons, shipping, settings) in the Merchant Center.
+	 *
+	 * This differs from should_push() which checks if the Merchant Center is ready
+	 * for syncing in general, while this method checks if a specific data type
+	 * has been enabled for push operations.
+	 *
+	 * @param string $data_type The data type to check.
+	 * @return bool True if push is enabled for the specified data type.
+	 */
+	public function is_enabled_for_datatype( string $data_type ): bool {
+		/** @var NotificationsService $notifications_service */
+		$notifications_service = $this->container->get( NotificationsService::class );
+		return $notifications_service->is_push_enabled_for_datatype( $data_type );
+	}
+
+	/**
 	 * Get whether the country is supported by the Merchant Center.
 	 *
 	 * @return bool True if the country is in the list of MC-supported countries.
@@ -216,16 +246,13 @@ class MerchantCenterService implements ContainerAwareInterface, OptionsAwareInte
 
 		if (
 			$this->connected_account() &&
-			$this->container->get( AdsService::class )->connected_account()
+			$this->container->get( AdsService::class )->connected_account() &&
+			$this->is_mc_contact_information_setup()
 		) {
 			$step = 'product_listings';
 
 			if ( $this->saved_target_audience() && $this->saved_shipping_and_tax_options() ) {
-				$step = 'store_requirements';
-
-				if ( $this->is_mc_contact_information_setup() && $this->checked_pre_launch_checklist() ) {
-					$step = 'paid_ads';
-				}
+				$step = 'paid_ads';
 			}
 		}
 
@@ -299,9 +326,7 @@ class MerchantCenterService implements ContainerAwareInterface, OptionsAwareInte
 	 */
 	protected function is_mc_contact_information_setup(): bool {
 		$is_setup = [
-			'phone_number'          => false,
-			'phone_number_verified' => false,
-			'address'               => false,
+			'address' => false,
 		];
 
 		try {
@@ -317,9 +342,6 @@ class MerchantCenterService implements ContainerAwareInterface, OptionsAwareInte
 		}
 
 		if ( $contact_info instanceof AccountBusinessInformation ) {
-			$is_setup['phone_number']          = ! empty( $contact_info->getPhoneNumber() );
-			$is_setup['phone_number_verified'] = 'VERIFIED' === $contact_info->getPhoneVerificationStatus();
-
 			/** @var Settings $settings */
 			$settings = $this->container->get( Settings::class );
 
@@ -331,35 +353,7 @@ class MerchantCenterService implements ContainerAwareInterface, OptionsAwareInte
 			}
 		}
 
-		return $is_setup['phone_number'] && $is_setup['phone_number_verified'] && $is_setup['address'];
-	}
-
-	/**
-	 * Check if all items in the pre-launch checklist have been checked.
-	 *
-	 * NOTE: This is a temporary method that will be replaced by the Policy Compliance Checks project.
-	 *
-	 * @return bool If all required items in the pre-launch checklist have been checked.
-	 *
-	 * @since 2.2.0
-	 */
-	protected function checked_pre_launch_checklist(): bool {
-		$settings = $this->options->get( OptionsInterface::MERCHANT_CENTER, [] );
-		$keys     = [
-			'website_live',
-			'checkout_process_secure',
-			'payment_methods_visible',
-			'refund_tos_visible',
-			'contact_info_visible',
-		];
-
-		foreach ( $keys as $key ) {
-			if ( empty( $settings[ $key ] ) || $settings[ $key ] !== true ) {
-				return false;
-			}
-		}
-
-		return true;
+		return $is_setup['address'];
 	}
 
 	/**

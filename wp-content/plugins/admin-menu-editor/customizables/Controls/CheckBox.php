@@ -3,7 +3,7 @@
 namespace YahnisElsts\AdminMenuEditor\Customizable\Controls;
 
 use YahnisElsts\AdminMenuEditor\Customizable\Rendering\Renderer;
-use YahnisElsts\AdminMenuEditor\Customizable\Settings\Setting;
+use YahnisElsts\AdminMenuEditor\Customizable\Settings\AbstractSetting;
 
 class CheckBox extends ClassicControl {
 	protected $type = 'checkbox';
@@ -35,7 +35,7 @@ class CheckBox extends ClassicControl {
 	}
 
 	public function isChecked() {
-		if ( $this->mainSetting instanceof Setting ) {
+		if ( $this->mainSetting instanceof AbstractSetting ) {
 			return boolval($this->mainSetting->getValue());
 		}
 		return false;

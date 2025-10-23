@@ -10,10 +10,14 @@
 
 namespace RankMath\Analytics;
 
+use RankMath\Helpers\DB as DB_Helper;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Objects class.
+ *
+ * @method set_page_as_key()
  */
 class Objects extends Summary {
 
@@ -89,8 +93,7 @@ class Objects extends Summary {
 		}
 
 		// Get filtered objects data limited by page param.
-		// phpcs:disable
-		$pages = $wpdb->get_results(
+		$pages = DB_Helper::get_results(
 			"SELECT * FROM {$wpdb->prefix}rank_math_analytics_objects 
 			WHERE is_indexable = 1 
 			{$subwhere} 
@@ -98,15 +101,14 @@ class Objects extends Summary {
 			LIMIT {$offset} , {$per_page}",
 			ARRAY_A
 		);
-		
+
 		// Get total filtered objects count.
-		$total_rows = $wpdb->get_var(
+		$total_rows = DB_Helper::get_var(
 			"SELECT count(*) FROM {$wpdb->prefix}rank_math_analytics_objects 
 			WHERE is_indexable = 1 
 			{$subwhere}
 			ORDER BY created DESC"
 		);
-		// phpcs:enable
 
 		return [
 			'rows'      => $this->set_page_as_key( $pages ),

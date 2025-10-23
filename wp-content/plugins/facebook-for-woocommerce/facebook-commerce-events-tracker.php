@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
  *
@@ -12,6 +11,7 @@
 use WooCommerce\Facebook\Events\Event;
 use WooCommerce\Facebook\Framework\Api\Exception as ApiException;
 use WooCommerce\Facebook\Framework\Helper;
+use WooCommerce\Facebook\Framework\Logger;
 
 if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
@@ -23,6 +23,11 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		include_once 'facebook-commerce-pixel-event.php';
 	}
 
+	/**
+	 * Class WC_Facebookcommerce_EventsTracker
+	 *
+	 * This class is responsible for tracking events and sending them to Facebook.
+	 */
 	class WC_Facebookcommerce_EventsTracker {
 
 		/** @var \WC_Facebookcommerce_Pixel instance */
@@ -38,7 +43,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		private $tracked_events;
 
 		/** @var array array with epnding events */
-		private $pending_events = [];
+		private $pending_events = array();
 
 		/** @var AAMSettings aam settings instance, used to filter advanced matching fields*/
 		private $aam_settings;
@@ -50,8 +55,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		/**
 		 * Events tracker constructor.
 		 *
-		 * @param $user_info
-		 * @param $aam_settings
+		 * @param array       $user_info
+		 * @param AAMSettings $aam_settings
 		 */
 		public function __construct( $user_info, $aam_settings ) {
 
@@ -105,8 +110,10 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			add_action( 'woocommerce_after_single_product', array( $this, 'inject_view_content_event' ) );
 			add_action( 'woocommerce_after_single_product', array( $this, 'maybe_inject_search_event' ) );
 
+			// ViewCategory events
 			add_action( 'woocommerce_after_shop_loop', array( $this, 'inject_view_category_event' ) );
 
+			// Search events
 			add_action( 'pre_get_posts', array( $this, 'inject_search_event' ) );
 			add_filter( 'woocommerce_redirect_single_search_result', array( $this, 'maybe_add_product_search_event_to_session' ) );
 
@@ -122,35 +129,33 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			// InitiateCheckout events
 			add_action( 'woocommerce_after_checkout_form', array( $this, 'inject_initiate_checkout_event' ) );
+
 			// InitiateCheckout events for checkout block.
 			add_action( 'woocommerce_blocks_checkout_enqueue_data', array( $this, 'inject_initiate_checkout_event' ) );
+
 			// Purchase and Subscribe events
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'inject_purchase_event' ) );
+			add_action( 'woocommerce_new_order', array( $this, 'inject_purchase_event' ), 10 );
+			add_action( 'woocommerce_process_shop_order_meta', array( $this, 'inject_purchase_event' ), 20 );
+			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'inject_purchase_event' ), 30 );
 			add_action( 'woocommerce_thankyou', array( $this, 'inject_purchase_event' ), 40 );
 
-			// Checkout update order meta from the Checkout Block.
-			if ( version_compare( \Automattic\WooCommerce\Blocks\Package::get_version(), '7.2.0', '>=' ) ) {
-				add_action( 'woocommerce_store_api_checkout_update_order_meta', array( $this, 'inject_order_meta_event_for_checkout_block_flow' ), 10, 1 );
-			} elseif ( version_compare( \Automattic\WooCommerce\Blocks\Package::get_version(), '6.3.0', '>=' ) ) {
-				add_action( 'woocommerce_blocks_checkout_update_order_meta', array( $this, 'inject_order_meta_event_for_checkout_block_flow' ), 10, 1 );
-			} else {
-				add_action( '__experimental_woocommerce_blocks_checkout_update_order_meta', array( $this, 'inject_order_meta_event_for_checkout_block_flow' ), 10, 1 );
-			}
-
-			// TODO move this in some 3rd party plugin integrations handler at some point {FN 2020-03-20}
+			// Lead events through Contact Form 7
 			add_action( 'wpcf7_contact_form', array( $this, 'inject_lead_event_hook' ), 11 );
+
+			// Flush pending events on shutdown
 			add_action( 'shutdown', array( $this, 'send_pending_events' ) );
 		}
 
 
 		/**
-		 * Prints the base JavaScript pixel code.
+		 * Prints the base JavaScript pixel code
+		 *
+		 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		 */
 		public function inject_base_pixel() {
-
 			if ( $this->is_pixel_enabled() ) {
-				// phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 				echo $this->pixel->pixel_base_code();
+				$this->inject_page_view_event();
 			}
 		}
 
@@ -159,13 +164,37 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 * Prints the base <noscript> pixel code.
 		 *
 		 * This is necessary to avoid W3 validation errors.
+		 *
+		 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		 */
 		public function inject_base_pixel_noscript() {
-
 			if ( $this->is_pixel_enabled() ) {
-				// phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 				echo $this->pixel->pixel_base_code_noscript();
 			}
+		}
+
+
+		/**
+		 * Triggers the PageView event
+		 */
+		public function inject_page_view_event() {
+			if ( ! $this->is_pixel_enabled() ) {
+				return;
+			}
+
+			$event_name = 'PageView';
+			$event_data = array(
+				'event_name' => $event_name,
+				'user_data'  => $this->pixel->get_user_info(),
+			);
+
+			$event = new Event( $event_data );
+
+			$this->send_api_event( $event, false );
+
+			$event_data['event_id'] = $event->get_id();
+
+			$this->pixel->inject_event( $event_name, $event_data );
 		}
 
 
@@ -181,7 +210,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$products = array_values(
 				array_map(
-					function( $post ) {
+					function ( $post ) {
 						return wc_get_product( $post );
 					},
 					$wp_query->posts
@@ -222,7 +251,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				'custom_data' => array(
 					'content_name'     => $category->name,
 					'content_category' => $category->name,
-					'content_ids'      => json_encode( array_slice( $product_ids, 0, 10 ) ),
+					'content_ids'      => wp_json_encode( array_slice( $product_ids, 0, 10 ) ),
 					'content_type'     => $content_type,
 					'contents'         => $contents,
 				),
@@ -231,7 +260,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$event = new Event( $event_data );
 
-			$this->send_api_event( $event, false );
+			$this->send_api_event( $event );
 
 			$event_data['event_id'] = $event->get_id();
 
@@ -287,6 +316,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 * This does nothing if there is no session set.
 		 *
 		 * @since 2.1.2
+		 *
+		 * @param Event $event
 		 *
 		 * @return void
 		 */
@@ -395,7 +426,13 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 */
 		public function send_search_event() {
 
-			$this->send_api_event( $this->get_search_event() );
+			$event = $this->get_search_event();
+
+			if ( null === $event ) {
+				return;
+			}
+
+			$this->send_api_event( $event );
 		}
 
 
@@ -418,6 +455,10 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				$product_ids  = array();
 				$contents     = array();
 				$total_value  = 0.00;
+
+				if ( empty( $wp_query->posts ) ) {
+					return null;
+				}
 
 				foreach ( $wp_query->posts as $post ) {
 
@@ -445,7 +486,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 					'event_name'  => 'Search',
 					'custom_data' => array(
 						'content_type'  => $content_type,
-						'content_ids'   => json_encode( array_slice( $product_ids, 0, 10 ) ),
+						'content_ids'   => wp_json_encode( array_slice( $product_ids, 0, 10 ) ),
 						'contents'      => $contents,
 						'search_string' => get_search_query(),
 						'value'         => Helper::number_format( $total_value ),
@@ -469,6 +510,12 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		public function actually_inject_search_event() {
 
 			$event = $this->get_search_event();
+
+			if ( null === $event ) {
+				return;
+			}
+
+			$this->send_api_event( $event );
 
 			$this->pixel->inject_event(
 				$event->get_name(),
@@ -507,17 +554,17 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			}
 
 			if ( WC_Facebookcommerce_Utils::is_variable_type( $product->get_type() ) ) {
-                            $product_price = $product->get_variation_price( 'min' );
-                        } else {
-                            $product_price = $product->get_price();
-                        }
+							$product_price = $product->get_variation_price( 'min' );
+			} else {
+				$product_price = $product->get_price();
+			}
 
 			$categories = \WC_Facebookcommerce_Utils::get_product_categories( $product->get_id() );
 
 			$event_data = array(
 				'event_name'  => 'ViewContent',
 				'custom_data' => array(
-					'content_name'     => $product->get_title(),
+					'content_name'     => \WC_Facebookcommerce_Utils::clean_string( $product->get_title() ),
 					'content_ids'      => wp_json_encode( \WC_Facebookcommerce_Utils::get_fb_content_ids( $product ) ),
 					'content_type'     => $content_type,
 					'contents'         => wp_json_encode(
@@ -537,7 +584,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$event = new Event( $event_data );
 
-			$this->send_api_event( $event, false );
+			$this->send_api_event( $event );
 
 			$event_data['event_id'] = $event->get_id();
 
@@ -571,7 +618,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			if ( ! isset( $cart->cart_contents[ $cart_item_key ] ) ) {
 				return;
 			}
-
+			// phpcs:ignore Universal.Operators.DisallowShortTernary.Found
 			$product = wc_get_product( $variation_id ?: $product_id );
 
 			// bail if invalid product or error
@@ -583,13 +630,13 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				'event_name'  => 'AddToCart',
 				'custom_data' => array(
 					'content_ids'  => wp_json_encode( \WC_Facebookcommerce_Utils::get_fb_content_ids( $product ) ),
-					'content_name' => $product->get_name(),
+					'content_name' => \WC_Facebookcommerce_Utils::clean_string( $product->get_title() ),
 					'content_type' => 'product',
 					'contents'     => wp_json_encode(
 						array(
 							array(
-								"id"	   => \WC_Facebookcommerce_Utils::get_fb_retailer_id( $product ),
-								"quantity" =>  $quantity,
+								'id'       => \WC_Facebookcommerce_Utils::get_fb_retailer_id( $product ),
+								'quantity' => $quantity,
 							),
 						)
 					),
@@ -601,7 +648,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$event = new WooCommerce\Facebook\Events\Event( $event_data );
 
-			$this->send_api_event( $event, false );
+			$this->send_api_event( $event );
 
 			// send the event ID to prevent duplication
 			$event_data['event_id'] = $event->get_id();
@@ -639,23 +686,24 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 *
 		 * @param array $fragments add to cart fragments
 		 * @return array
+		 *
+		 * phpcs:disable WordPress.Security.NonceVerification.Missing
 		 */
 		public function add_add_to_cart_event_fragment( $fragments ) {
 
 			$product_id = isset( $_POST['product_id'] ) ? (int) $_POST['product_id'] : '';
-			$quantity   = isset( $_POST['quantity']) ? (int) $_POST['quantity'] : '';
-			$product 	= wc_get_product($product_id);
+			$quantity   = isset( $_POST['quantity'] ) ? (int) $_POST['quantity'] : '';
+			$product    = wc_get_product( $product_id );
 
 			if ( ! $product instanceof \WC_Product || empty( $quantity ) ) {
 				return $fragments;
 			}
 
-
 			if ( $this->is_pixel_enabled() ) {
 
 				$params = array(
 					'content_ids'  => wp_json_encode( \WC_Facebookcommerce_Utils::get_fb_content_ids( $product ) ),
-					'content_name' => $product->get_name(),
+					'content_name' => \WC_Facebookcommerce_Utils::clean_string( $product->get_title() ),
 					'content_type' => 'product',
 					'contents'     => wp_json_encode(
 						array(
@@ -670,7 +718,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				);
 
 				// send the event ID to prevent duplication
-				if ( ! empty( $event_id = WC()->session->get( 'facebook_for_woocommerce_add_to_cart_event_id' ) ) ) {
+				$event_id = WC()->session->get( 'facebook_for_woocommerce_add_to_cart_event_id' );
+				if ( ! empty( $event_id ) ) {
 					$params['event_id'] = $event_id;
 				}
 
@@ -715,7 +764,6 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		public function add_conditional_add_to_cart_event_fragment( $fragments ) {
 
 			if ( $this->is_pixel_enabled() ) {
-
 				$params = array(
 					'content_ids'  => $this->get_cart_content_ids(),
 					'content_name' => $this->get_cart_content_names(),
@@ -726,8 +774,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				);
 
 				// send the event ID to prevent duplication
-				if ( ! empty( $event_id = WC()->session->get( 'facebook_for_woocommerce_add_to_cart_event_id' ) ) ) {
-
+				$event_id = WC()->session->get( 'facebook_for_woocommerce_add_to_cart_event_id' );
+				if ( ! empty( $event_id ) ) {
 					$params['event_id'] = $event_id;
 				}
 
@@ -766,7 +814,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			);
 
 			// if there is only one item in the cart, send its first category
-			if ( ( $cart = WC()->cart ) && count( $cart->get_cart() ) === 1 ) {
+			$cart = WC()->cart;
+			if ( ( $cart ) && count( $cart->get_cart() ) === 1 ) {
 
 				$item = current( $cart->get_cart() );
 
@@ -782,7 +831,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$event = new Event( $event_data );
 
-			$this->send_api_event( $event, false );
+			$this->send_api_event( $event );
 
 			$event_data['event_id'] = $event->get_id();
 
@@ -795,6 +844,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 *
 		 * This may happen either when:
 		 * - WooCommerce signals a payment transaction complete (most gateways)
+		 * - The order status is changed through the Woo dashboard to Processing or Completed
+		 * - The Payment Completed event is fired, which happens in case of some external payment gateways.
 		 * - Customer reaches Thank You page skipping payment (for gateways that do not require payment, e.g. Cheque, BACS, Cash on delivery...)
 		 *
 		 * The method checks if the event was not triggered already avoiding a duplicate.
@@ -808,7 +859,9 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$event_name = 'Purchase';
 
-			if ( ! $this->is_pixel_enabled() || $this->pixel->is_last_event( $event_name ) ) {
+			$valid_purchase_order_states = array( 'processing', 'completed', 'on-hold', 'pending' );
+
+			if ( ! $this->is_pixel_enabled() ) {
 				return;
 			}
 
@@ -818,22 +871,43 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				return;
 			}
 
-			// use a session flag to ensure an order is tracked with any payment method, also when the order is placed through AJAX
-			$order_placed_flag = '_wc_' . facebook_for_woocommerce()->get_id() . '_order_placed_' . $order_id;
+			// Get the status of the order to ensure we track the actual purchases and not the ones that have a failed payment.
+			$order_state = $order->get_status();
 
-			// use a session flag to ensure a Purchase event is not tracked multiple times
+			// Return if this Purchase event order state is invalid.
+			if ( ! in_array( $order_state, $valid_purchase_order_states, true ) ) {
+				return;
+			}
+
+			// use a session flag to ensure this Purchase event is not tracked multiple times
 			$purchase_tracked_flag = '_wc_' . facebook_for_woocommerce()->get_id() . '_purchase_tracked_' . $order_id;
 
-			// when saving the order meta data: add a flag to mark the order tracked
-			if ( 'woocommerce_checkout_update_order_meta' === current_action() ) {
-				set_transient( $order_placed_flag, 'yes', 15 * MINUTE_IN_SECONDS );
+			// Return if this Purchase event has already been tracked.
+			if ( 'yes' === get_transient( $purchase_tracked_flag ) || $order->meta_exists( '_meta_purchase_tracked' ) ) {
 				return;
 			}
 
-			// bail if by the time we are on the thank you page the meta has not been set or we already tracked a Purchase event
-			if ( 'yes' !== get_transient( $order_placed_flag ) || 'yes' === get_transient( $purchase_tracked_flag ) ) {
-				return;
-			}
+			// Mark the order as tracked for the session.
+			set_transient( $purchase_tracked_flag, 'yes', 45 * MINUTE_IN_SECONDS );
+
+			// Set a flag to ensure this Purchase event is not going to be sent across different sessions.
+			$order->add_meta_data( '_meta_purchase_tracked', true, true );
+
+			// Save the metadata.
+			$order->save();
+
+			// Log which hook triggered this purchase event.
+			$hook_name = current_action();
+
+			Logger::log(
+				'Purchase event fired for order ' . $order_id . ' by hook ' . $hook_name . '.',
+				array(),
+				array(
+					'should_send_log_to_meta'        => false,
+					'should_save_log_in_woocommerce' => true,
+					'woocommerce_log_level'          => \WC_Log_Levels::INFO,
+				)
+			);
 
 			$content_type  = 'product';
 			$contents      = array();
@@ -846,7 +920,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 				if ( $product ) {
 					$product_ids[]   = \WC_Facebookcommerce_Utils::get_fb_content_ids( $product );
-					$product_names[] = $product->get_name();
+					$product_names[] = \WC_Facebookcommerce_Utils::clean_string( $product->get_title() );
 
 					if ( 'product_group' !== $content_type && $product->is_type( 'variable' ) ) {
 						$content_type = 'product_group';
@@ -865,12 +939,13 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			$event_data = array(
 				'event_name'  => $event_name,
 				'custom_data' => array(
-					'content_ids'  => wp_json_encode( array_merge( ... $product_ids ) ),
+					'content_ids'  => wp_json_encode( array_merge( ...$product_ids ) ),
 					'content_name' => wp_json_encode( $product_names ),
 					'contents'     => wp_json_encode( $contents ),
 					'content_type' => $content_type,
 					'value'        => $order->get_total(),
 					'currency'     => get_woocommerce_currency(),
+					'order_id'     => $order_id,
 				),
 				'user_data'   => $this->get_user_data_from_billing_address( $order ),
 			);
@@ -884,42 +959,6 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			$this->pixel->inject_event( $event_name, $event_data );
 
 			$this->inject_subscribe_event( $order_id );
-
-			// mark the order as tracked
-			set_transient( $purchase_tracked_flag, 'yes', 15 * MINUTE_IN_SECONDS );
-
-		}
-
-		/**
-		 * Inject order meta gor WooCommerce Checkout Blocks flow.
-		 * The blocks flow does not trigger the woocommerce_checkout_update_order_meta so we can't rely on it.
-		 * The Checkout Block has its own hook that allows us to inject the meta at
-		 * the appropriate moment: woocommerce_store_api_checkout_update_order_meta.
-		 *
-		 * Note: __experimental_woocommerce_blocks_checkout_update_order_meta has been deprecated
-		 * as of WooCommerce Blocks 6.3.0
-		 *
-		 *  @since 2.6.6
-		 *
-		 *  @param WC_Order|int $the_order Order object or id.
-		 */
-		public function inject_order_meta_event_for_checkout_block_flow( $the_order ) {
-
-			$event_name = 'Purchase';
-
-			if ( ! $this->is_pixel_enabled() || $this->pixel->is_last_event( $event_name ) ) {
-				return;
-			}
-
-			$order = wc_get_order($the_order);
-
-			if ( ! $order ) {
-				return;
-			}
-
-			$order_placed_flag = '_wc_' . facebook_for_woocommerce()->get_id() . '_order_placed_' . $order->get_id();
-			set_transient( $order_placed_flag, 'yes', 15 * MINUTE_IN_SECONDS );
-
 		}
 
 
@@ -988,7 +1027,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 * @since 2.0.0
 		 *
 		 * @param Event $event event object
-		 * @param bool $send_now optional, defaults to true
+		 * @param bool  $send_now optional, defaults to true
 		 */
 		protected function send_api_event( Event $event, bool $send_now = true ) {
 			$this->tracked_events[] = $event;
@@ -1029,7 +1068,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$product_ids = array( array() );
 
-			if ( $cart = WC()->cart ) {
+			$cart = WC()->cart;
+			if ( $cart ) {
 
 				foreach ( $cart->get_cart() as $item ) {
 
@@ -1040,7 +1080,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				}
 			}
 
-			return wp_json_encode( array_unique( array_merge( ... $product_ids ) ) );
+			return wp_json_encode( array_unique( array_merge( ...$product_ids ) ) );
 		}
 
 
@@ -1055,13 +1095,14 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$product_names = array();
 
-			if ( $cart = WC()->cart ) {
+			$cart = WC()->cart;
+			if ( $cart ) {
 
 				foreach ( $cart->get_cart() as $item ) {
 
 					if ( isset( $item['data'] ) && $item['data'] instanceof \WC_Product ) {
 
-						$product_names[] = $item['data']->get_name();
+						$product_names[] = \WC_Facebookcommerce_Utils::clean_string( $item['data']->get_title() );
 					}
 				}
 			}
@@ -1081,7 +1122,8 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 
 			$cart_contents = array();
 
-			if ( $cart = WC()->cart ) {
+			$cart = WC()->cart;
+			if ( $cart ) {
 
 				foreach ( $cart->get_cart() as $item ) {
 
@@ -1117,33 +1159,47 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 *
 		 * @since 2.0.3
 		 *
+		 * @param \WC_Order $order
+		 *
 		 * @return array
 		 */
 		private function get_user_data_from_billing_address( $order ) {
-			if ( $this->aam_settings == null || ! $this->aam_settings->get_enable_automatic_matching() ) {
+			if ( null === $this->aam_settings || ! $this->aam_settings->get_enable_automatic_matching() ) {
 				return array();
 			}
-			$user_data       = array();
-			$user_data['fn'] = $order->get_billing_first_name();
-			$user_data['ln'] = $order->get_billing_last_name();
-			$user_data['em'] = $order->get_billing_email();
-			// get_user_id() returns 0 if the current user is a guest
-			$user_data['external_id'] = $order->get_user_id() === 0 ? null : strval( $order->get_user_id() );
-			$user_data['zp']          = $order->get_billing_postcode();
-			$user_data['st']          = $order->get_billing_state();
-			// We can use country as key because this information is for CAPI events only
-			$user_data['country'] = $order->get_billing_country();
-			$user_data['ct']      = $order->get_billing_city();
-			$user_data['ph']      = $order->get_billing_phone();
-			// The fields contain country, so we do not need to add a condition
+			$user_data = $this->pixel->get_user_info();
+			self::update_array_if_not_null( $order->get_billing_first_name(), $user_data, 'fn' );
+			self::update_array_if_not_null( $order->get_billing_last_name(), $user_data, 'ln' );
+			self::update_array_if_not_null( $order->get_billing_email(), $user_data, 'em' );
+			self::update_array_if_not_null( $order->get_billing_postcode(), $user_data, 'zp' );
+			self::update_array_if_not_null( $order->get_billing_state(), $user_data, 'st' );
+			self::update_array_if_not_null( $order->get_billing_country(), $user_data, 'country' );
+			self::update_array_if_not_null( $order->get_billing_city(), $user_data, 'ct' );
+			self::update_array_if_not_null( $order->get_billing_phone(), $user_data, 'ph' );
+			self::update_array_if_not_null( strval( $order->get_user_id() ), $user_data, 'external_id' );
+
 			foreach ( $user_data as $field => $value ) {
-				if ( $value === null || $value === '' ||
-					! in_array( $field, $this->aam_settings->get_enabled_automatic_matching_fields() )
+				if ( null === $value || '' === $value ||
+					! in_array( $field, $this->aam_settings->get_enabled_automatic_matching_fields(), true )
 				) {
 					unset( $user_data[ $field ] );
 				}
 			}
+
 			return $user_data;
+		}
+
+		/**
+		 * Checks the value, if it's not null, updates the array at array_key with value
+		 *
+		 * @param mixed  $value
+		 * @param array  $array
+		 * @param string $array_key
+		 */
+		private static function update_array_if_not_null( $value, &$array, $array_key ) {
+			if ( ! empty( $value ) ) {
+				$array[ $array_key ] = $value;
+			}
 		}
 
 		/**
@@ -1180,7 +1236,6 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 				$this->send_api_event( $event );
 			}
 		}
-
 	}
 
 endif;

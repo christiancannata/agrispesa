@@ -78,7 +78,7 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 	 */
 	protected $tags = [];
 
-	public function __construct($id, StorageInterface $store = null, $params = []) {
+	public function __construct($id, ?StorageInterface $store = null, $params = []) {
 		parent::__construct($id, $store, $params);
 
 		if ( isset($params['isEditable']) && is_callable($params['isEditable']) ) {
@@ -434,6 +434,7 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 
 			//Descend into structs and arrays, except composite settings.
 			//WP 4.9.6+ includes a polyfill for is_iterable().
+			/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
 			$isContainer = is_iterable($setting) && !($setting instanceof CompositeSetting);
 
 			if ( ($setting instanceof AbstractSetting) && (!$isContainer || !$leavesOnly) ) {
@@ -539,5 +540,30 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 			$serialized[$setting->id] = $data;
 		}
 		return $serialized;
+	}
+
+	/**
+	 * Convert a setting value to a string usable in HTML forms.
+	 *
+	 * This does NOT encode special HTML characters. It is only intended to convert
+	 * non-string values - like booleans and NULLs - to a format suitable for form field.
+	 *
+	 * @param $value
+	 * @return string
+	 */
+	public function encodeForForm($value) {
+		//Subclasses that require more advanced encoding should override this method.
+		return (string)$value;
+	}
+
+	/**
+	 * Convert submitted form data to a type suitable for validation.
+	 * This is not necessarily the same as the setting data type.
+	 *
+	 * @param string $value
+	 */
+	public function decodeSubmittedValue($value) {
+		//The default implementation is a no-op. Subclasses can override this.
+		return $value;
 	}
 }

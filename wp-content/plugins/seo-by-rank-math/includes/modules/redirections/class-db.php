@@ -47,7 +47,7 @@ class DB {
 			->one( ARRAY_A );
 
 		$redirction_counts = array_map(
-			function( $value ) {
+			function ( $value ) {
 				return $value ? $value : 0;
 			},
 			$redirction_counts
@@ -279,14 +279,25 @@ class DB {
 	 * @return bool|array
 	 */
 	public static function get_redirection( $data ) {
+		$args = [];
+		if ( isset( $data['destination'] ) ) {
+			$args[] = [ 'url_to', '=', $data['destination'] ];
+		}
+
+		if ( isset( $data['type'] ) ) {
+			$args[] = [ 'header_code', '=', $data['type'] ];
+		}
+
+		if ( isset( $data['status'] ) ) {
+			$args[] = [ 'status', '=', $data['status'] ];
+		}
+
+		if ( empty( $args ) ) {
+			return false;
+		}
+
 		// Exist by destination.
-		$exist = self::get_redirection_by(
-			[
-				[ 'url_to', '=', $data['destination'] ],
-				[ 'header_code', '=', $data['type'] ],
-				[ 'status', '=', $data['status'] ],
-			]
-		);
+		$exist = self::get_redirection_by( $args );
 
 		if ( $exist ) {
 			return $exist;
@@ -303,12 +314,11 @@ class DB {
 	/**
 	 *  Get source by.
 	 *
-	 * @param array  $data     Redirection fields.
-	 * @param string $status Status to filter with.
+	 * @param array $data Redirection fields.
 	 *
 	 * @return bool|array
 	 */
-	public static function get_redirection_by( $data = [], $status = 'all' ) {
+	public static function get_redirection_by( $data = [] ) {
 		$table = self::table()->where( $data );
 
 		$item = $table->one( ARRAY_A );
@@ -339,6 +349,10 @@ class DB {
 	public static function add( $args = [] ) {
 		if ( empty( $args ) ) {
 			return false;
+		}
+
+		if ( array_key_exists( 'id', $args ) ) {
+			unset( $args['id'] );
 		}
 
 		$args = wp_parse_args(
@@ -443,7 +457,7 @@ class DB {
 		$args['hits']          = absint( $redirection['hits'] ) + 1;
 		$args['last_accessed'] = current_time( 'mysql' );
 
-		self::table()->set( $args )->where( 'id', $redirection['id'] )->update();
+		return self::table()->set( $args )->where( 'id', $redirection['id'] )->update();
 	}
 
 	/**
@@ -486,15 +500,15 @@ class DB {
 	/**
 	 * Clean trashed redirects after 30 days.
 	 *
-	 * @return int Number of records deleted.
+	 * @return void
 	 */
 	public static function periodic_clean_trash() {
 		$ids = self::table()->select( 'id' )->where( 'status', 'trashed' )->where( 'updated', '<=', date_i18n( 'Y-m-d', strtotime( '30 days ago' ) ) )->get( ARRAY_A );
 		if ( empty( $ids ) ) {
-			return 0;
+			return;
 		}
 
-		return self::delete( wp_list_pluck( $ids, 'id' ) );
+		self::delete( wp_list_pluck( $ids, 'id' ) );
 	}
 
 	/**

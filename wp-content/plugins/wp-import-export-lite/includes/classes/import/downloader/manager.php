@@ -3,9 +3,7 @@
 
 namespace wpie\import\Downloader;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 if ( is_readable( WPIE_IMPORT_CLASSES_DIR . '/downloader/file-header.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/downloader/file-header.php');
 }

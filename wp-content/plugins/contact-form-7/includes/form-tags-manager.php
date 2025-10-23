@@ -75,7 +75,7 @@ class WPCF7_FormTagsManager {
 	 */
 	public static function get_instance() {
 		if ( empty( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -178,8 +178,10 @@ class WPCF7_FormTagsManager {
 		$output = array();
 
 		foreach ( $tag_types as $tag_type ) {
-			if ( ! $invert && $this->tag_type_supports( $tag_type, $features )
-			|| $invert && ! $this->tag_type_supports( $tag_type, $features ) ) {
+			if (
+				! $invert and $this->tag_type_supports( $tag_type, $features ) or
+				$invert and ! $this->tag_type_supports( $tag_type, $features )
+			) {
 				$output[] = $tag_type;
 			}
 		}
@@ -216,7 +218,7 @@ class WPCF7_FormTagsManager {
 		}
 
 		$content = preg_replace_callback(
-			'/' . $this->tag_regex() . '/s',
+			'/' . $this->tag_regex() . '/su',
 			array( $this, 'normalize_callback' ),
 			$content
 		);
@@ -230,8 +232,7 @@ class WPCF7_FormTagsManager {
 	 */
 	private function normalize_callback( $matches ) {
 		// allow [[foo]] syntax for escaping a tag
-		if ( $matches[1] == '['
-		and $matches[6] == ']' ) {
+		if ( '[' === $matches[1] and ']' === $matches[6] ) {
 			return $matches[0];
 		}
 
@@ -287,7 +288,7 @@ class WPCF7_FormTagsManager {
 			$placeholder = sprintf(
 				'<%1$s id="%2$s" />',
 				$placeholder_tag_name,
-				sha1( $tag )
+				hash( 'sha256', $tag )
 			);
 
 			list( $placeholder ) =
@@ -299,7 +300,7 @@ class WPCF7_FormTagsManager {
 		};
 
 		return preg_replace_callback(
-			'/' . $this->tag_regex() . '/s',
+			'/' . $this->tag_regex() . '/su',
 			$callback,
 			$content
 		);
@@ -351,7 +352,7 @@ class WPCF7_FormTagsManager {
 
 		if ( $replace ) {
 			$content = preg_replace_callback(
-				'/' . $this->tag_regex() . '/s',
+				'/' . $this->tag_regex() . '/su',
 				array( $this, 'replace_callback' ),
 				$content
 			);
@@ -359,7 +360,7 @@ class WPCF7_FormTagsManager {
 			return $content;
 		} else {
 			preg_replace_callback(
-				'/' . $this->tag_regex() . '/s',
+				'/' . $this->tag_regex() . '/su',
 				array( $this, 'scan_callback' ),
 				$content
 			);
@@ -402,23 +403,29 @@ class WPCF7_FormTagsManager {
 			function ( $tag ) use ( $cond ) {
 				$tag = new WPCF7_FormTag( $tag );
 
-				if ( $cond['type']
-				and ! in_array( $tag->type, $cond['type'], true ) ) {
+				if (
+					$cond['type'] and
+					! in_array( $tag->type, $cond['type'], true )
+				) {
 					return false;
 				}
 
-				if ( $cond['basetype']
-				and ! in_array( $tag->basetype, $cond['basetype'], true ) ) {
+				if (
+					$cond['basetype'] and
+					! in_array( $tag->basetype, $cond['basetype'], true )
+				) {
 					return false;
 				}
 
-				if ( $cond['name']
-				and ! in_array( $tag->name, $cond['name'], true ) ) {
+				if (
+					$cond['name'] and
+					! in_array( $tag->name, $cond['name'], true )
+				) {
 					return false;
 				}
 
 				foreach ( $cond['feature'] as $feature ) {
-					if ( '!' === substr( $feature, 0, 1 ) ) { // Negation
+					if ( str_starts_with( $feature, '!' ) ) { // Negation
 						$feature = trim( substr( $feature, 1 ) );
 
 						if ( $this->tag_type_supports( $tag->type, $feature ) ) {
@@ -443,11 +450,16 @@ class WPCF7_FormTagsManager {
 	 * Returns the regular expression for a form-tag.
 	 */
 	private function tag_regex() {
-		$tagnames = array_keys( $this->tag_types );
-		$tagregexp = implode( '|', array_map( 'preg_quote', $tagnames ) );
+		$tag_types = implode( '|',
+			array_map( 'preg_quote', array_keys( $this->tag_types ) )
+		);
+
+		$whitespaces = wpcf7_get_unicode_whitespaces();
 
 		return '(\[?)'
-			. '\[(' . $tagregexp . ')(?:[\r\n\t ](.*?))?(?:[\r\n\t ](\/))?\]'
+			. '\[(' . $tag_types . ')'
+			. '(?:[' . $whitespaces . ']+(.*?))?'
+			. '(?:[' . $whitespaces . ']+(\/))?\]'
 			. '(?:([^[]*?)\[\/\2\])?'
 			. '(\]?)';
 	}
@@ -466,8 +478,7 @@ class WPCF7_FormTagsManager {
 	 */
 	private function scan_callback( $matches, $replace = false ) {
 		// allow [[foo]] syntax for escaping a tag
-		if ( $matches[1] == '['
-		and $matches[6] == ']' ) {
+		if ( '[' === $matches[1] and ']' === $matches[6] ) {
 			return substr( $matches[0], 1, -1 );
 		}
 
@@ -565,15 +576,29 @@ class WPCF7_FormTagsManager {
 	 *                      otherwise the input text itself.
 	 */
 	private function parse_atts( $text ) {
-		$atts = array( 'options' => array(), 'values' => array() );
-		$text = preg_replace( "/[\x{00a0}\x{200b}]+/u", " ", $text );
-		$text = trim( $text );
+		$atts = array(
+			'options' => array(),
+			'values' => array(),
+		);
 
-		$pattern = '%^([-+*=0-9a-zA-Z:.!?#$&@_/|\%\r\n\t ]*?)((?:[\r\n\t ]*"[^"]*"|[\r\n\t ]*\'[^\']*\')*)$%';
+		$whitespaces = wpcf7_get_unicode_whitespaces();
+
+		$text = preg_replace( '/[\x{00a0}\x{200b}]+/u', ' ', $text );
+		$text = wpcf7_strip_whitespaces( $text );
+
+		$pattern = '%^([-+*=0-9a-zA-Z:.!?#$&@_/|\%' . $whitespaces . ']*?)'
+			. '((?:'
+			. '[' . $whitespaces . ']*"[^"]*"'
+			. '|'
+			. '[' . $whitespaces . ']*\'[^\']*\''
+			. ')*)$%u';
 
 		if ( preg_match( $pattern, $text, $matches ) ) {
 			if ( ! empty( $matches[1] ) ) {
-				$atts['options'] = preg_split( '/[\r\n\t ]+/', trim( $matches[1] ) );
+				$atts['options'] = preg_split(
+					sprintf( '/[%s]+/u', $whitespaces ),
+					wpcf7_strip_whitespaces( $matches[1] )
+				);
 			}
 
 			if ( ! empty( $matches[2] ) ) {

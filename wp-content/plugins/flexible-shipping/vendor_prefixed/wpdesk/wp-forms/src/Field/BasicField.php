@@ -14,7 +14,7 @@ use FSVendor\WPDesk\Forms\Validator\RequiredValidator;
  *
  * @package WPDesk\Forms
  */
-abstract class BasicField implements \FSVendor\WPDesk\Forms\Field
+abstract class BasicField implements Field
 {
     use Field\Traits\HtmlAttributes;
     /** @var array[] */
@@ -115,7 +115,7 @@ abstract class BasicField implements \FSVendor\WPDesk\Forms\Field
     }
     public function get_classes()
     {
-        return \implode(' ', $this->meta['class']);
+        return implode(' ', $this->meta['class']);
     }
     public function has_classes()
     {
@@ -138,7 +138,7 @@ abstract class BasicField implements \FSVendor\WPDesk\Forms\Field
     }
     public function get_id()
     {
-        return isset($this->attributes['id']) ? $this->attributes['id'] : \sanitize_title($this->get_name());
+        return isset($this->attributes['id']) ? $this->attributes['id'] : sanitize_title($this->get_name());
     }
     public function get_name()
     {
@@ -251,9 +251,9 @@ abstract class BasicField implements \FSVendor\WPDesk\Forms\Field
      */
     public function get_validator()
     {
-        $chain = new \FSVendor\WPDesk\Forms\Validator\ChainValidator();
+        $chain = new ChainValidator();
         if ($this->is_required()) {
-            $chain->attach(new \FSVendor\WPDesk\Forms\Validator\RequiredValidator());
+            $chain->attach(new RequiredValidator());
         }
         return $chain;
     }
@@ -263,19 +263,19 @@ abstract class BasicField implements \FSVendor\WPDesk\Forms\Field
     }
     public function get_sanitizer()
     {
-        return new \FSVendor\WPDesk\Forms\Sanitizer\NoSanitize();
+        return new NoSanitize();
     }
     /**
      * @return Serializer
      */
     public function get_serializer()
     {
-        if (isset($this->meta['serializer']) && $this->meta['serializer'] instanceof \FSVendor\WPDesk\Forms\Serializer) {
+        if (isset($this->meta['serializer']) && $this->meta['serializer'] instanceof Serializer) {
             return $this->meta['serializer'];
         }
-        return new \FSVendor\WPDesk\Forms\Serializer\NoSerialize();
+        return new NoSerialize();
     }
-    public function set_serializer(\FSVendor\WPDesk\Forms\Serializer $serializer)
+    public function set_serializer(Serializer $serializer)
     {
         $this->meta['serializer'] = $serializer;
         return $this;

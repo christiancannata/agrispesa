@@ -19,7 +19,7 @@ use FSVendor\Monolog\Utils;
  *
  * @author Martijn van Calker <git@amvc.nl>
  */
-class SqsHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class SqsHandler extends AbstractProcessingHandler
 {
     /** 256 KB in bytes - maximum message size in SQS */
     protected const MAX_MESSAGE_SIZE = 262144;
@@ -29,7 +29,7 @@ class SqsHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
     private $client;
     /** @var string */
     private $queueUrl;
-    public function __construct(\FSVendor\Aws\Sqs\SqsClient $sqsClient, string $queueUrl, $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct(SqsClient $sqsClient, string $queueUrl, $level = Logger::DEBUG, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
         $this->client = $sqsClient;
@@ -38,14 +38,14 @@ class SqsHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
-        if (!isset($record['formatted']) || 'string' !== \gettype($record['formatted'])) {
-            throw new \InvalidArgumentException('SqsHandler accepts only formatted records as a string' . \FSVendor\Monolog\Utils::getRecordMessageForException($record));
+        if (!isset($record['formatted']) || 'string' !== gettype($record['formatted'])) {
+            throw new \InvalidArgumentException('SqsHandler accepts only formatted records as a string' . Utils::getRecordMessageForException($record));
         }
         $messageBody = $record['formatted'];
-        if (\strlen($messageBody) >= static::MAX_MESSAGE_SIZE) {
-            $messageBody = \FSVendor\Monolog\Utils::substr($messageBody, 0, static::HEAD_MESSAGE_SIZE);
+        if (strlen($messageBody) >= static::MAX_MESSAGE_SIZE) {
+            $messageBody = Utils::substr($messageBody, 0, static::HEAD_MESSAGE_SIZE);
         }
         $this->client->sendMessage(['QueueUrl' => $this->queueUrl, 'MessageBody' => $messageBody]);
     }

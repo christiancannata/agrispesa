@@ -5,7 +5,7 @@ interface JQueryStatic {
 }
 
 declare class WsAmePreferenceCookie {
-	constructor(name: string, expirationInDays: number, jsonEncodingEnabled: boolean);
+	constructor(name: string, expirationInDays: number, jsonEncodingEnabled: boolean, path?: string);
 	read(defaultValue: any): any;
 	write(value: any): void;
 	removeCookie(): boolean;

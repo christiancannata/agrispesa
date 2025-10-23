@@ -24,6 +24,7 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WP;
 use Automattic\WooCommerce\GoogleListingsAndAds\Value\BuiltScriptDependencyArray;
 use WC_Product;
+use WC_Countries;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -191,9 +192,23 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 
 		$this->assets_handler->register( $gtag_events );
 
+		$wp_consent_api = new ScriptWithBuiltDependenciesAsset(
+			'gla-wp-consent-api',
+			'js/build/wp-consent-api',
+			"{$this->get_root_dir()}/js/build/wp-consent-api.asset.php",
+			new BuiltScriptDependencyArray(
+				[
+					'dependencies' => [ 'wp-consent-api' ],
+					'version'      => $this->get_version(),
+				]
+			)
+		);
+
+		$this->assets_handler->register( $wp_consent_api );
+
 		add_action(
 			'wp_footer',
-			function () use ( $gtag_events ) {
+			function () use ( $gtag_events, $wp_consent_api ) {
 				$gtag_events->add_localization(
 					'glaGtagData',
 					[
@@ -204,6 +219,10 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 
 				$this->register_js_for_fast_refresh_dev();
 				$this->assets_handler->enqueue( $gtag_events );
+
+				if ( ! class_exists( '\WC_Google_Gtag_JS' ) && function_exists( 'wp_has_consent' ) ) {
+					$this->assets_handler->enqueue( $wp_consent_api );
+				}
 			}
 		);
 	}
@@ -218,7 +237,7 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 	public function activate_global_site_tag( string $ads_conversion_id ) {
 		if ( $this->gtag_js->is_adding_framework() ) {
 			if ( $this->gtag_js->ga4w_v2 ) {
-				wp_add_inline_script(
+				$this->wp->wp_add_inline_script(
 					'woocommerce-google-analytics-integration',
 					$this->get_gtag_config( $ads_conversion_id )
 				);
@@ -249,7 +268,7 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 		// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		?>
 
-		<!-- Global site tag (gtag.js) - Google Ads: <?php echo esc_js( $ads_conversion_id ); ?> - Google Listings & Ads -->
+		<!-- Global site tag (gtag.js) - Google Ads: <?php echo esc_js( $ads_conversion_id ); ?> - Google for WooCommerce -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $ads_conversion_id ); ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
@@ -264,6 +283,9 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 			<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $this->get_gtag_config( $ads_conversion_id );
+
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $this->get_enhanced_conversion_tag();
 			?>
 		</script>
 
@@ -293,6 +315,7 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 				ad_user_data: 'denied',
 				ad_personalization: 'denied',
 				region: ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'CH'],
+				wait_for_update: 500,
 			} );";
 		/**
 		 * Filters the default gtag consent mode configuration.
@@ -312,12 +335,12 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 	 */
 	public function add_inline_event_script( string $inline_script ) {
 		if ( class_exists( '\WC_Google_Gtag_JS' ) ) {
-			wp_add_inline_script(
+			$this->wp->wp_add_inline_script(
 				'woocommerce-google-analytics-integration',
 				$inline_script
 			);
 		} else {
-			wp_print_inline_script_tag( $inline_script );
+			$this->wp->wp_print_inline_script_tag( $inline_script );
 		}
 	}
 
@@ -336,7 +359,7 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 
 		$order = wc_get_order( $order_id );
 		// Make sure there is a valid order object and it is not already marked as tracked
-		if ( ! $order || 1 === $order->get_meta( self::ORDER_CONVERSION_META_KEY, true ) ) {
+		if ( ! $order || 1 === (int) $order->get_meta( self::ORDER_CONVERSION_META_KEY, true ) ) {
 			return;
 		}
 
@@ -582,5 +605,113 @@ class GlobalSiteTag implements Service, Registerable, Conditional, OptionsAwareI
 			$this->get_version(),
 			false
 		);
+	}
+
+	/**
+	 * Set user data config when Enhanced Conversions is enabled.
+	 *
+	 * @return string|null
+	 */
+	public function get_enhanced_conversion_tag() {
+		$enhanced_conversions = $this->options->get( OptionsInterface::ADS_ENHANCED_CONVERSIONS_ENABLED );
+
+		if ( ! $enhanced_conversions ) {
+			return;
+		}
+
+		// Retrieve user data from the current session, returns an empty array if not set.
+		$customer = $this->wc->get_customer_details();
+
+		$ec_data = [];
+
+		// Add email address to enhanced conversion data.
+		if ( ! empty( $customer['email'] ) ) {
+			$ec_data['sha256_email_address'] = $this->normalize_and_hash( $customer['email'] );
+		}
+
+		// Add address details if available.
+		if ( ! empty( $customer['first_name'] ) && ! empty( $customer['last_name'] ) && ! empty( $customer['postcode'] ) && ! empty( $customer['country'] ) ) {
+			$ec_data['address'] = [
+				'sha256_first_name' => $this->normalize_and_hash( $customer['first_name'] ),
+				'sha256_last_name'  => $this->normalize_and_hash( $customer['last_name'] ),
+				'postal_code'       => $customer['postcode'],
+				'country'           => $customer['country'],
+			];
+
+			if ( ! empty( $customer['address'] ) ) {
+				$ec_data['address']['street'] = $customer['address'];
+			}
+
+			if ( ! empty( $customer['city'] ) ) {
+				$ec_data['address']['city'] = $customer['city'];
+			}
+
+			if ( ! empty( $customer['state'] ) ) {
+				$ec_data['address']['region'] = $customer['state'];
+			}
+		}
+
+		// Phone number can only be added when email and/or address is present.
+		if ( empty( $ec_data ) ) {
+			return;
+		}
+
+		// Add phone number if available, requires country code for correct format.
+		if ( ! empty( $customer['phone'] ) && ! empty( $customer['country'] ) ) {
+			$phone = $this->format_phone_to_international( $customer['phone'], $customer['country'] );
+
+			if ( ! empty( $phone ) ) {
+				$ec_data['sha256_phone_number'] = $this->normalize_and_hash( $phone );
+			}
+		}
+
+		// Return the tag.
+		return sprintf(
+			'gtag("set", "user_data", %s);',
+			wp_json_encode( $ec_data )
+		);
+	}
+
+	/**
+	 * Converts a customers phone number to E.164 format.
+	 *
+	 * @param string $phone The customer entered phone number.
+	 * @param string $country The customer country code.
+	 * @return string
+	 */
+	private function format_phone_to_international( $phone, $country ) {
+		// Get the calling code for the customers country.
+		$countries    = new WC_Countries();
+		$calling_code = $countries->get_country_calling_code( $country );
+
+		// Cannot create a international number if there is no valid call code.
+		if ( empty( $calling_code ) ) {
+			return '';
+		}
+
+		// Remove any non-digit characters and the leading 0 from the phone number.
+		$phone = ltrim( preg_replace( '/[^0-9]/', '', $phone ), '0' );
+
+		// Prepend the calling code.
+		$phone = $calling_code . $phone;
+
+		// Validate the number is the correct length.
+		if ( strlen( $phone ) < 11 || strlen( $phone ) > 15 ) {
+			return '';
+		}
+
+		return $phone;
+	}
+
+	/**
+	 * Normalize and hash enhanced conversion data.
+	 *
+	 * @param string $value The value to hash.
+	 * @param string $algo The hashing algorithm to use.
+	 *
+	 * @return string
+	 */
+	private function normalize_and_hash( $value, $algo = 'sha256' ): string {
+		return hash( $algo, strtolower( trim( $value ) ) );
 	}
 }

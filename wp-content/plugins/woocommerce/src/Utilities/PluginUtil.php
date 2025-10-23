@@ -5,7 +5,7 @@
 
 namespace Automattic\WooCommerce\Utilities;
 
-use Automattic\WooCommerce\Internal\Traits\AccessiblePrivateMethods;
+use Automattic\WooCommerce\Internal\Features\FeaturesController;
 use Automattic\WooCommerce\Internal\Utilities\PluginInstaller;
 use Automattic\WooCommerce\Proxies\LegacyProxy;
 
@@ -13,8 +13,6 @@ use Automattic\WooCommerce\Proxies\LegacyProxy;
  * A class of utilities for dealing with plugins.
  */
 class PluginUtil {
-
-	use AccessiblePrivateMethods;
 
 	/**
 	 * The LegacyProxy instance to use.
@@ -48,8 +46,8 @@ class PluginUtil {
 	 * Creates a new instance of the class.
 	 */
 	public function __construct() {
-		self::add_action( 'activated_plugin', array( $this, 'handle_plugin_de_activation' ), 10, 0 );
-		self::add_action( 'deactivated_plugin', array( $this, 'handle_plugin_de_activation' ), 10, 0 );
+		add_action( 'activated_plugin', array( $this, 'handle_plugin_de_activation' ), 10, 0 );
+		add_action( 'deactivated_plugin', array( $this, 'handle_plugin_de_activation' ), 10, 0 );
 
 		$this->plugins_excluded_from_compatibility_ui = array( 'woocommerce-legacy-rest-api/woocommerce-legacy-rest-api.php' );
 	}
@@ -64,6 +62,37 @@ class PluginUtil {
 	final public function init( LegacyProxy $proxy ) {
 		$this->proxy = $proxy;
 		require_once ABSPATH . WPINC . '/plugin.php';
+	}
+
+	/**
+	 * Wrapper for WP's private `wp_get_active_and_valid_plugins` and `wp_get_active_network_plugins` functions.
+	 *
+	 * This combines the results of the two functions to get a list of all plugins that are active within a site.
+	 * It's more useful than just retrieving the option values because it also validates that the plugin files exist.
+	 * This wrapper is also a hedge against backward-incompatible changes since both of the WP methods are marked as
+	 * being "@access private", so if need be we can update our methods here to preserve functionality.
+	 *
+	 * Note that the doc block for `wp_get_active_and_valid_plugins` says it returns "Array of paths to plugin files
+	 * relative to the plugins directory", but it actually returns absolute paths.
+	 *
+	 * @return string[] Array of plugin basenames (paths relative to the plugin directory).
+	 */
+	public function get_all_active_valid_plugins() {
+		$local = wp_get_active_and_valid_plugins();
+
+		if ( is_multisite() ) {
+			require_once ABSPATH . WPINC . '/ms-load.php';
+			$network = wp_get_active_network_plugins();
+		} else {
+			$network = array();
+		}
+
+		$all = array_merge( $local, $network );
+		$all = array_unique( $all );
+		$all = array_map( 'plugin_basename', $all );
+		sort( $all );
+
+		return $all;
 	}
 
 	/**
@@ -158,7 +187,7 @@ class PluginUtil {
 				$full_matches[] = $wp_plugin;
 			}
 
-			if ( false !== strpos( $wp_plugin, $file_name ) ) {
+			if ( ! empty( $file_name ) && false !== strpos( $wp_plugin, $file_name ) ) {
 				$partial_matches[] = $wp_plugin;
 			}
 		}
@@ -176,8 +205,10 @@ class PluginUtil {
 
 	/**
 	 * Handle plugin activation and deactivation by clearing the WooCommerce aware plugin ids cache.
+	 *
+	 * @internal For exclusive usage of WooCommerce core, backwards compatibility not guaranteed.
 	 */
-	private function handle_plugin_de_activation(): void {
+	public function handle_plugin_de_activation(): void {
 		$this->woocommerce_aware_plugins        = null;
 		$this->woocommerce_aware_active_plugins = null;
 	}
@@ -189,13 +220,12 @@ class PluginUtil {
 	 * the Legacy REST API and HPOS are active.
 	 *
 	 * @param string $feature_id Feature id.
-	 * @param array  $plugin_feature_info Array of plugin feature info. See FeaturesControllers->get_compatible_plugins_for_feature() for details.
+	 * @param array  $plugin_feature_info Array of plugin feature info, as provided by FeaturesController->get_compatible_plugins_for_feature().
 	 *
 	 * @return string Warning string.
 	 */
 	public function generate_incompatible_plugin_feature_warning( string $feature_id, array $plugin_feature_info ): string {
-		$feature_warning    = '';
-		$incompatibles      = array_merge( $plugin_feature_info['incompatible'], $plugin_feature_info['uncertain'] );
+		$incompatibles      = $this->get_items_considered_incompatible( $feature_id, $plugin_feature_info );
 		$incompatibles      = array_filter( $incompatibles, 'is_plugin_active' );
 		$incompatibles      = array_values( array_diff( $incompatibles, $this->get_plugins_excluded_from_compatibility_ui() ) );
 		$incompatible_count = count( $incompatibles );
@@ -268,7 +298,8 @@ class PluginUtil {
 				),
 				admin_url( 'plugins.php' )
 			);
-			$feature_warnings[]       = sprintf(
+
+			$feature_warnings[] = sprintf(
 				/* translators: %1$s opening link tag %2$s closing link tag. */
 				__( '%1$sView and manage%2$s', 'woocommerce' ),
 				'<a href="' . esc_url( $incompatible_plugins_url ) . '">',
@@ -277,6 +308,23 @@ class PluginUtil {
 		}
 
 		return str_replace( "\n", '<br>', implode( "\n", $feature_warnings ) );
+	}
+
+	/**
+	 * Filter plugin/feature compatibility info, returning the names of the plugins/features that are considered incompatible.
+	 * "Uncertain" information will be included or not depending on the value of the value of the 'plugins_are_incompatible_by_default'
+	 * flag in the feature definition (default is true).
+	 *
+	 * @param string $feature_id Feature id.
+	 * @param array  $compatibility_info Array containing "compatible', 'incompatible' and 'uncertain' keys.
+	 * @return array Items in 'incompatible' and 'uncertain' if plugins are incompatible by default with the feature; only items in 'incompatible' otherwise.
+	 */
+	public function get_items_considered_incompatible( string $feature_id, array $compatibility_info ): array {
+		$incompatible_by_default = wc_get_container()->get( FeaturesController::class )->get_plugins_are_incompatible_by_default( $feature_id );
+
+		return $incompatible_by_default ?
+			array_merge( $compatibility_info['incompatible'], $compatibility_info['uncertain'] ) :
+			$compatibility_info['incompatible'];
 	}
 
 	/**

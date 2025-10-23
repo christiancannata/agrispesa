@@ -55,13 +55,6 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 	 */
 
 	public function __construct() {
-		$this->status_labels = array(
-			0 => '',
-			1 => __( 'Incomplete', 'cookie-law-info' ),
-			2 => __( 'Completed', 'cookie-law-info' ),
-			3 => __( 'Stopped', 'cookie-law-info' ),
-			4 => __( 'Failed', 'cookie-law-info' ),
-		);
 		add_action( 'admin_menu', array( $this, 'add_admin_pages' ), 5 );
 		add_action( 'wt_cli_cookie_scanner_body', array( $this, 'scanner_notices' ) );
 		add_action( 'init', array( $this, 'init' ) );
@@ -121,7 +114,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 	public function table_exists( $table_name ) {
 		global $wpdb;
 
-		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) === $table_name ) {
+		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) ) ) === $table_name ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			return true;
 		}
 		return false;
@@ -376,17 +369,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 			'scanned'            => 0,
 			'total_cookies'      => 0,
 		);
-		$wpdb->insert( $url_table, $data_arr );
-	}
-
-	/**
-	 * Get current scan status text
-	 *
-	 * @param [type] $status current status of the scan.
-	 * @return string
-	 */
-	public function get_scan_status_text( $status ) {
-		return isset( $this->status_labels[ $status ] ) ? $this->status_labels[ $status ] : __( 'Unknown', 'cookie-law-info' );
+		$wpdb->insert( $url_table, $data_arr ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 	}
 	/**
 	 * Return the last scan results
@@ -441,6 +424,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$notice = '<p>' . __( 'Scan your website with CookieYes, our scanning solution for high-speed, accurate cookie scanning', 'cookie-law-info' ) . '</p>';
 		$notice = '<p style="font-weight:500;">' . sprintf(
 			wp_kses(
+				/* translators: %1$s: CookieYes website URL, %2$s: Privacy Policy URL, %3$s: Terms of Service URL */
 				__( 'Clicking “Connect & scan” will let you connect with a free <a href="%1$s" target="_blank">CookieYes</a> account and initiate scanning of your website for cookies. These cookies along with their description will be listed under the cookie declaration popup. By continuing, you agree to CookieYes\'s <a href="%2$s" target="_blank">Privacy Policy</a> & <a href="%3$s" target="_blank">Terms of service</a>.', 'cookie-law-info' ),
 				array(
 					'a' => array(
@@ -516,9 +500,9 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$last_scan_date = ( isset( $scan_data['created_at'] ) ? $scan_data['created_at'] : '' );
 
 		if ( ! empty( ( $last_scan_date ) ) ) {
-			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date );
+			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		}
-
+		/* translators: %1$s: last scan date */
 		$last_scan_text = sprintf( wp_kses( __( 'Last scan: %1$s', 'cookie-law-info' ), array( 'a' => array( 'href' => array() ) ) ), $last_scan_date );
 		$message        = '<div class="wt-cli-scan-status"><p><b>' . __( 'Scan complete', 'cookie-law-info' ) . '</b></p></div>';
 		$message       .= '<div class="wt-cli-scan-date"><p style="color: #80827f;">' . $last_scan_text . '</p></div>';
@@ -537,7 +521,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$last_scan_date = ( isset( $scan_data['created_at'] ) ? $scan_data['created_at'] : '' );
 
 		if ( ! empty( ( $last_scan_date ) ) ) {
-			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date );
+			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		}
 
 		$message  = '<div class="wt-cli-scan-status"><p><b>' . __( 'Scan failed', 'cookie-law-info' ) . '</b></p></div>';
@@ -555,7 +539,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$last_scan_date = ( isset( $scan_data['created_at'] ) ? $scan_data['created_at'] : '' );
 
 		if ( ! empty( ( $last_scan_date ) ) ) {
-			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date );
+			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_date ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		}
 
 		$message  = '<div class="wt-cli-scan-status"><p><b>' . __( 'Scan aborted', 'cookie-law-info' ) . '</b></p></div>';
@@ -573,10 +557,10 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$total_urls               = ( isset( $last_scan['total_url'] ) ? $last_scan['total_url'] : 0 );
 		$last_scan_timestamp      = ( isset( $last_scan['created_at'] ) ? $last_scan['created_at'] : '' );
 		$scan_estimate_in_seconds = $this->get_ckyes_scan_estimate();
-		$scan_estimate            = date( 'H:i:s', $scan_estimate_in_seconds );
+		$scan_estimate            = date( 'H:i:s', $scan_estimate_in_seconds ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		$last_scan_date           = '';
 		if ( ! empty( ( $last_scan_timestamp ) ) ) {
-			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_timestamp );
+			$last_scan_date = date( 'F j, Y g:i a T', $last_scan_timestamp ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		}
 		// $offset_time = ( $scan_estimate_in_seconds > HOUR_IN_SECONDS ) ? $scan_estimate_in_seconds : HOUR_IN_SECONDS;
 		// $show_abort  = ( time() > ( intval( $last_scan_timestamp ) + intval( $offset_time ) ) ) ? true : false;
@@ -980,7 +964,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 			'status'         => 1,
 		);
 		update_option( 'CLI_BYPASS', 1 );
-		if ( $wpdb->insert( $scan_table, $data_arr ) ) {
+		if ( $wpdb->insert( $scan_table, $data_arr ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 			return $wpdb->insert_id;
 		} else {
 			return '0';
@@ -1032,7 +1016,7 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		if ( $cookie_data ) {
 			if ( $scan_id !== false ) {
 
-				$urls = $wpdb->get_results( $wpdb->prepare( "SELECT id_cli_cookie_scan_url,url FROM {$wpdb->prefix}cli_cookie_scan_url WHERE id_cli_cookie_scan = %s ORDER BY id_cli_cookie_scan_url ASC", $scan_id ), ARRAY_A );
+				$urls = $wpdb->get_results( $wpdb->prepare( "SELECT id_cli_cookie_scan_url,url FROM {$wpdb->prefix}cli_cookie_scan_url WHERE id_cli_cookie_scan = %s ORDER BY id_cli_cookie_scan_url ASC", $scan_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 				foreach ( $urls as $url_data ) {
 					$url               = isset( $url_data['url'] ) ? sanitize_text_field( $url_data['url'] ) : '';
@@ -1099,14 +1083,14 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 			$category    = ( isset( $category_data['category'] ) ? esc_sql( sanitize_text_field( $category_data['category'] ) ) : '' );
 			$description = ( isset( $category_data['category_desc'] ) ? esc_sql( addslashes( wp_kses_post( $category_data['category_desc'] ) ) ) : '' );
 			// Check if the entry already exists
-			$existing_entry = $wpdb->get_row(
-				$wpdb->prepare(
-					"SELECT * FROM $category_table WHERE cli_cookie_category_name = %s",
+			$existing_entry = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					"SELECT * FROM $category_table WHERE cli_cookie_category_name = %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					$category
 				)
 			);
 			if ( ! empty( $category ) && !$existing_entry ) {
-				$wpdb->insert(
+				$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 					$category_table,
 					array(
 						'cli_cookie_category_name'        => $category,
@@ -1142,15 +1126,15 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 				$category_id = esc_sql( absint( $category_id ) );
 
 				// Check if the entry already exists
-				$existing_entry = $wpdb->get_row(
-					$wpdb->prepare(
-						"SELECT * FROM $cookies_table WHERE cookie_id = %s",
+				$existing_entry = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+					$wpdb->prepare( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						"SELECT * FROM $cookies_table WHERE cookie_id = %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 						$cookie_id
 					)
 				);
 
 				if ( ! empty( $cookie_id ) && !$existing_entry ) {
-					$wpdb->insert(
+					$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 						$cookies_table,
 						array(
 							'id_cli_cookie_scan'     => $scan_id,

@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Mutex;
 
-class WordpressPostMutex implements \FSVendor\WPDesk\Mutex\Mutex
+class WordpressPostMutex implements Mutex
 {
     use WordpressWpdb;
     const LOCK_ID_DELIMITER = '_';
@@ -26,11 +26,11 @@ class WordpressPostMutex implements \FSVendor\WPDesk\Mutex\Mutex
     public function __construct($post_id, $lock_name = '_mutex', $timeout = 5, $waitForLockTimeout = 5)
     {
         $this->wpdb = $this->getWpdbFromGlobal();
-        $this->postId = \intval($post_id);
+        $this->postId = intval($post_id);
         $this->lockName = $this->wpdb->_real_escape($lock_name);
-        $this->timeout = \intval($timeout);
-        $this->waitForLockTimeout = \intval($waitForLockTimeout);
-        $this->lockId = \uniqid('', \true);
+        $this->timeout = intval($timeout);
+        $this->waitForLockTimeout = intval($waitForLockTimeout);
+        $this->lockId = uniqid('', \true);
     }
     /**
      * Factory method
@@ -56,11 +56,11 @@ class WordpressPostMutex implements \FSVendor\WPDesk\Mutex\Mutex
         $sql = "\nSELECT \n\tmeta_id, meta_value\nFROM \n\t{$this->wpdb->postmeta}\nWHERE \n\tmeta_key = '{$this->lockName}' AND \n\tpost_id = {$this->postId} AND \n\tSUBSTRING(meta_value, POSITION('{$delimiter}' IN meta_value) + 1) * 1 >= UNIX_TIMESTAMP()\nORDER BY\n\tmeta_id ASC";
         $lockId = null;
         $colRowset = $this->wpdb->get_results($sql);
-        $record = \is_array($colRowset) ? \reset($colRowset) : null;
+        $record = is_array($colRowset) ? reset($colRowset) : null;
         if (!empty($record)) {
             $lock_with_timestamp = $record->meta_value;
             if (!empty($lock_with_timestamp)) {
-                $lockId = \explode(self::LOCK_ID_DELIMITER, $lock_with_timestamp);
+                $lockId = explode(self::LOCK_ID_DELIMITER, $lock_with_timestamp);
                 $lockId = $lockId[0];
                 $this->cleanUnusedLocks($record->meta_id);
             }

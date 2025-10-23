@@ -67,8 +67,18 @@ class OAuth {
 		}
 
 		// Remove possible admin notice if we have new access token.
-		delete_option( 'rankmath_google_api_failed_attempts_data' );
-		delete_option( 'rankmath_google_api_reconnect' );
+		// Also remove the connection errors.
+		foreach (
+			[
+				'rankmath_google_api_failed_attempts_data',
+				'rankmath_google_api_reconnect',
+				'rank_math_console_connection_error',
+				'rank_math_analytics_connection_error',
+				'rank_math_adsense_connection_error',
+			] as $option
+		) {
+			delete_option( $option );
+		}
 
 		Permissions::fetch();
 
@@ -86,7 +96,7 @@ class OAuth {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'rank_math_reconnect_google' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'rank_math_reconnect_google' ) ) {
 			wp_nonce_ays( 'rank_math_reconnect_google' );
 			die();
 		}

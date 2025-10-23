@@ -96,7 +96,7 @@ class Google_Site_Kit_Client extends Google_Client {
 	 *
 	 * @throws Exception Thrown when fetching a new access token via refresh token on-the-fly fails.
 	 */
-	public function authorize( ClientInterface $http = null ) {
+	public function authorize( ?ClientInterface $http = null ) {
 		if ( $this->isUsingApplicationDefaultCredentials() ) {
 			return parent::authorize( $http );
 		}
@@ -128,13 +128,16 @@ class Google_Site_Kit_Client extends Google_Client {
 	 *
 	 * @since 1.0.0
 	 * @since 1.2.0 Ported from Google_Site_Kit_Proxy_Client.
+	 * @since 1.149.0 Added $code_verifier param for client v2.15.0 compatibility. (@link https://github.com/googleapis/google-api-php-client/commit/bded223ece445a6130cde82417b20180b1d6698a)
 	 *
-	 * @param string $code Temporary authorization code, or undelegated token code.
+	 * @param string $code          Temporary authorization code, or undelegated token code.
+	 * @param string $code_verifier The code verifier used for PKCE (if applicable).
+	 *
 	 * @return array Access token.
 	 *
 	 * @throws InvalidArgumentException Thrown when the passed code is empty.
 	 */
-	public function fetchAccessTokenWithAuthCode( $code ) {
+	public function fetchAccessTokenWithAuthCode( $code, $code_verifier = null ) {
 		if ( strlen( $code ) === 0 ) {
 			throw new InvalidArgumentException( 'Invalid code' );
 		}
@@ -142,6 +145,9 @@ class Google_Site_Kit_Client extends Google_Client {
 		$auth = $this->getOAuth2Service();
 		$auth->setCode( $code );
 		$auth->setRedirectUri( $this->getRedirectUri() );
+		if ( $code_verifier ) {
+			$auth->setCodeVerifier( $code_verifier );
+		}
 
 		$http_handler = HttpHandlerFactory::build( $this->getHttpClient() );
 
@@ -251,7 +257,7 @@ class Google_Site_Kit_Client extends Google_Client {
 	 * @param array         $extra_params Optional. Array of extra parameters to fetch with.
 	 * @return array Access token.
 	 */
-	protected function fetchAuthToken( OAuth2 $auth, callable $http_handler = null, $extra_params = array() ) {
+	protected function fetchAuthToken( OAuth2 $auth, ?callable $http_handler = null, $extra_params = array() ) {
 		if ( is_null( $http_handler ) ) {
 			$http_handler = HttpHandlerFactory::build( HttpClientCache::getHttpClient() );
 		}
@@ -303,5 +309,4 @@ class Google_Site_Kit_Client extends Google_Client {
 
 		return $auth;
 	}
-
 }

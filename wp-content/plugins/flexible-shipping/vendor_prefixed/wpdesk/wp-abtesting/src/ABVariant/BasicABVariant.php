@@ -8,7 +8,7 @@ use FSVendor\WPDesk\ABTesting\ABVariant;
  *
  * @package WPDesk\ABTesting\ABVariant
  */
-abstract class BasicABVariant implements \FSVendor\WPDesk\ABTesting\ABVariant
+abstract class BasicABVariant implements ABVariant
 {
     /** @var string */
     private $variant_id;
@@ -19,7 +19,7 @@ abstract class BasicABVariant implements \FSVendor\WPDesk\ABTesting\ABVariant
     {
         $this->variant_id = (string) $variant_id;
     }
-    public abstract function is_on($functionality);
+    abstract public function is_on($functionality);
     public function get_variant_id()
     {
         return $this->variant_id;

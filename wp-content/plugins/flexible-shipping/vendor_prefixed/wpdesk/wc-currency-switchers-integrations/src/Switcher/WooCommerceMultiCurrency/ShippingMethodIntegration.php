@@ -12,7 +12,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
  * Integrates shipping method (by method_id, ie.: flexible_shipping ) with WooCommerce Multicurrency plugin.
  * @see https://woocommerce.com/products/multi-currency/
  */
-class ShippingMethodIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShippingMethodIntegration implements Hookable
 {
     /**
      * @var string
@@ -34,14 +34,14 @@ class ShippingMethodIntegration implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     public function hooks()
     {
-        \add_action('woocommerce_multicurrency_loaded', array($this, 'add_integration_for_shipping_method'));
+        add_action('woocommerce_multicurrency_loaded', array($this, 'add_integration_for_shipping_method'));
     }
     /**
      * Add integration to WooCommerce MultiCurrency for shipping method.
      */
     public function add_integration_for_shipping_method()
     {
-        $this->woocommerce_multicurrency_controller = new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WooCommerceMultiCurrency\ShippingMethodController($this->shipping_method_id, new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WooCommerceMultiCurrency\Converter());
+        $this->woocommerce_multicurrency_controller = new ShippingMethodController($this->shipping_method_id, new Converter());
         $this->woocommerce_multicurrency_controller->hooks();
     }
 }

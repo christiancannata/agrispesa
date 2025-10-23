@@ -22,16 +22,16 @@ class AttributeMappingRulesTable extends Table {
 	 * @return string
 	 */
 	protected function get_install_query(): string {
-		return <<< SQL
+		return "
 CREATE TABLE `{$this->get_sql_safe_name()}` (
     `id` bigint(20) NOT NULL AUTO_INCREMENT,
     `attribute` varchar(255) NOT NULL,
     `source` varchar(100) NOT NULL,
     `category_condition_type` varchar(10) NOT NULL,
-    `categories` text DEFAULT '',
+    `categories` text NOT NULL,
     PRIMARY KEY `id` (`id`)
 ) {$this->get_collation()};
-SQL;
+";
 	}
 
 	/**

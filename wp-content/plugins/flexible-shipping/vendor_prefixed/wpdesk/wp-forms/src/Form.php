@@ -48,7 +48,7 @@ interface Form
      *
      * @return string
      */
-    public function render_form(\FSVendor\WPDesk\View\Renderer\Renderer $renderer);
+    public function render_form(Renderer $renderer);
     /**
      * Get data from form. Use after handle_request or set_data.
      *

@@ -41,6 +41,7 @@ class AmeAutoloader {
 
 			if ( file_exists($fileName) ) {
 				require $fileName;
+				return;
 			}
 		}
 	}

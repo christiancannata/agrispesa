@@ -1,7 +1,8 @@
 .wpdesk-rating-petition {
     font-size: 15px;
     width: 100%;
-    margin-bottom: 15px;
+    padding-bottom: 15px;
+    background-color: #f0f0f1;
 }
 
 .wpdesk-rating-petition a {

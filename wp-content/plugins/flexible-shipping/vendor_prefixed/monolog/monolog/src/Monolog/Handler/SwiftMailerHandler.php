@@ -25,7 +25,7 @@ use FSVendor\Swift;
  * @phpstan-import-type Record from \Monolog\Logger
  * @deprecated Since Monolog 2.6. Use SymfonyMailerHandler instead.
  */
-class SwiftMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
+class SwiftMailerHandler extends MailHandler
 {
     /** @var \Swift_Mailer */
     protected $mailer;
@@ -37,17 +37,17 @@ class SwiftMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      * @param \Swift_Mailer          $mailer  The mailer to use
      * @param callable|Swift_Message $message An example message for real messages, only the body will be replaced
      */
-    public function __construct(\FSVendor\Swift_Mailer $mailer, $message, $level = \FSVendor\Monolog\Logger::ERROR, bool $bubble = \true)
+    public function __construct(\FSVendor\Swift_Mailer $mailer, $message, $level = Logger::ERROR, bool $bubble = \true)
     {
         parent::__construct($level, $bubble);
-        @\trigger_error('The SwiftMailerHandler is deprecated since Monolog 2.6. Use SymfonyMailerHandler instead.', \E_USER_DEPRECATED);
+        @trigger_error('The SwiftMailerHandler is deprecated since Monolog 2.6. Use SymfonyMailerHandler instead.', \E_USER_DEPRECATED);
         $this->mailer = $mailer;
         $this->messageTemplate = $message;
     }
     /**
      * {@inheritDoc}
      */
-    protected function send(string $content, array $records) : void
+    protected function send(string $content, array $records): void
     {
         $this->mailer->send($this->buildMessage($content, $records));
     }
@@ -56,9 +56,9 @@ class SwiftMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      *
      * @param string|null $format The format of the subject
      */
-    protected function getSubjectFormatter(?string $format) : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getSubjectFormatter(?string $format): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\LineFormatter($format);
+        return new LineFormatter($format);
     }
     /**
      * Creates instance of Swift_Message to be sent
@@ -69,18 +69,18 @@ class SwiftMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
      *
      * @phpstan-param Record[] $records
      */
-    protected function buildMessage(string $content, array $records) : \FSVendor\Swift_Message
+    protected function buildMessage(string $content, array $records): Swift_Message
     {
         $message = null;
-        if ($this->messageTemplate instanceof \FSVendor\Swift_Message) {
+        if ($this->messageTemplate instanceof Swift_Message) {
             $message = clone $this->messageTemplate;
             $message->generateId();
-        } elseif (\is_callable($this->messageTemplate)) {
+        } elseif (is_callable($this->messageTemplate)) {
             $message = ($this->messageTemplate)($content, $records);
         }
-        if (!$message instanceof \FSVendor\Swift_Message) {
-            $record = \reset($records);
-            throw new \InvalidArgumentException('Could not resolve message as instance of Swift_Message or a callable returning it' . ($record ? \FSVendor\Monolog\Utils::getRecordMessageForException($record) : ''));
+        if (!$message instanceof Swift_Message) {
+            $record = reset($records);
+            throw new \InvalidArgumentException('Could not resolve message as instance of Swift_Message or a callable returning it' . ($record ? Utils::getRecordMessageForException($record) : ''));
         }
         if ($records) {
             $subjectFormatter = $this->getSubjectFormatter($message->getSubject());
@@ -92,11 +92,11 @@ class SwiftMailerHandler extends \FSVendor\Monolog\Handler\MailHandler
         }
         $message->setBody($content, $mime);
         /** @phpstan-ignore-next-line */
-        if (\version_compare(\FSVendor\Swift::VERSION, '6.0.0', '>=')) {
+        if (version_compare(Swift::VERSION, '6.0.0', '>=')) {
             $message->setDate(new \DateTimeImmutable());
         } else {
             /** @phpstan-ignore-next-line */
-            $message->setDate(\time());
+            $message->setDate(time());
         }
         return $message;
     }

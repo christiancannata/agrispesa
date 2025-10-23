@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Forms\Field;
 
 use FSVendor\WPDesk\Forms\Validator\NonceValidator;
-class NoOnceField extends \FSVendor\WPDesk\Forms\Field\BasicField
+class NoOnceField extends BasicField
 {
     public function __construct($action_name)
     {
@@ -12,7 +12,7 @@ class NoOnceField extends \FSVendor\WPDesk\Forms\Field\BasicField
     }
     public function get_validator()
     {
-        return new \FSVendor\WPDesk\Forms\Validator\NonceValidator($this->get_meta_value('action'));
+        return new NonceValidator($this->get_meta_value('action'));
     }
     public function get_template_name()
     {

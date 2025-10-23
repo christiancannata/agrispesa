@@ -31,9 +31,9 @@ class PluginCompatibilityChecker
      */
     public function __construct()
     {
-        $this->fs = new \FSVendor\WPDesk\FS\Compatibility\PluginDetails('flexible-shipping/flexible-shipping.php', 'FLEXIBLE_SHIPPING_VERSION', '4.0.0');
-        $this->fs_pro = new \FSVendor\WPDesk\FS\Compatibility\PluginDetails('flexible-shipping-pro/flexible-shipping-pro.php', 'FLEXIBLE_SHIPPING_PRO_VERSION', '2.0.0');
-        $this->fs_loc = new \FSVendor\WPDesk\FS\Compatibility\PluginDetails('flexible-shipping-locations/flexible-shipping-locations.php', 'FLEXIBLE_SHIPPING_LOCATIONS_VERSION', '2.0.0');
+        $this->fs = new PluginDetails('flexible-shipping/flexible-shipping.php', 'FLEXIBLE_SHIPPING_VERSION', '4.0.0');
+        $this->fs_pro = new PluginDetails('flexible-shipping-pro/flexible-shipping-pro.php', 'FLEXIBLE_SHIPPING_PRO_VERSION', '2.0.0');
+        $this->fs_loc = new PluginDetails('flexible-shipping-locations/flexible-shipping-locations.php', 'FLEXIBLE_SHIPPING_LOCATIONS_VERSION', '2.0.0');
     }
     /**
      * @return bool
@@ -91,13 +91,13 @@ class PluginCompatibilityChecker
     {
         $plugins_list = [];
         if (!$this->is_fs_compatible()) {
-            $plugins_list[] = \__('Flexible Shipping', 'flexible-shipping');
+            $plugins_list[] = __('Flexible Shipping', 'flexible-shipping');
         }
         if (!$this->is_fs_pro_compatible()) {
-            $plugins_list[] = \__('Flexible Shipping PRO', 'flexible-shipping');
+            $plugins_list[] = __('Flexible Shipping PRO', 'flexible-shipping');
         }
         if (!$this->is_fs_loc_compatible()) {
-            $plugins_list[] = \__('Flexible Shipping Locations', 'flexible-shipping');
+            $plugins_list[] = __('Flexible Shipping Locations', 'flexible-shipping');
         }
         return $plugins_list;
     }

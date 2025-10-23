@@ -176,7 +176,7 @@ class wfBlock {
 		if (!isset($payload['reason']) || empty($payload['reason'])) { return __('A block reason must be provided.', 'wordfence'); }
 		
 		if ($payload['type'] == 'ip-address') {
-			if (!isset($payload['ip']) || !filter_var(trim($payload['ip']), FILTER_VALIDATE_IP) || @wfUtils::inet_pton(trim($payload['ip'])) === false) { return __('Invalid IP address.', 'wordfence'); }
+			if (!isset($payload['ip']) || !filter_var(trim($payload['ip']), FILTER_VALIDATE_IP) || wfUtils::inet_pton(trim($payload['ip'])) === false) { return __('Invalid IP address.', 'wordfence'); }
 			if (self::isWhitelisted(trim($payload['ip']))) { return wp_kses(sprintf(/* translators: Support URL */ __('This IP address is in a range of addresses that Wordfence does not block. The IP range may be internal or belong to a service that is always allowed. Allowlisting of external services can be disabled. <a href="%s" target="_blank" rel="noopener noreferrer">Learn More<span class="screen-reader-text"> (opens in new tab)</span></a>', 'wordfence'), wfSupportController::supportURL(wfSupportController::ITEM_FIREWALL_WAF_OPTION_WHITELISTED_SERVICES)), array('a'=>array('href'=>array(), 'target'=>array(), 'rel'=>array()), 'span'=>array('class'=>array()))); }
 		}
 		else if ($payload['type'] == 'country') {
@@ -281,6 +281,19 @@ class wfBlock {
 			$wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, {$ipHex}, %d, %s, %d, %d, %d, NULL)", $type, $blockedTime, $reason, (int) $lastAttempt, (int) $blockedHits, ($duration ? $blockedTime + $duration : $duration)));
 			
 			wfConfig::inc('totalIPsBlocked');
+		}
+		
+		if ($type == self::TYPE_IP_MANUAL || $type == self::TYPE_IP_AUTOMATIC_PERMANENT) {
+			/**
+			 * Fires when an IP/Pattern block is created.
+			 *
+			 * @since 8.0.0
+			 *
+			 * @param string $type The type of block.
+			 * @param string $reason The reason for the block.
+			 * @param string|array $parameters The IP address being blocked for IP blocks or the pattern for pattern blocks.
+			 */
+			do_action('wordfence_created_ip_pattern_block', $type, $reason, $ip);
 		}
 		
 		if (!WFWAF_SUBDIRECTORY_INSTALL && class_exists('wfWAFIPBlocksController')) {
@@ -446,13 +459,52 @@ class wfBlock {
 		);
 		
 		$blocksTable = wfBlock::blocksTable();
-		$existing = $wpdb->get_var($wpdb->prepare("SELECT `id` FROM `{$blocksTable}` WHERE `type` = %d LIMIT 1", self::TYPE_COUNTRY));
+		$existing = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$blocksTable}` WHERE `type` = %d LIMIT 1", self::TYPE_COUNTRY), ARRAY_A);
+		$before = array(
+			'parameters' => null,
+			'bypass' => array(
+				'cbl_loggedInBlocked' => wfConfig::get('cbl_loggedInBlocked', false),
+				'cbl_action' => wfConfig::get('cbl_action'),
+				'cbl_redirURL' => wfConfig::get('cbl_redirURL', ''),
+				'cbl_bypassRedirURL' => wfConfig::get('cbl_bypassRedirURL', ''),
+				'cbl_bypassRedirDest' => wfConfig::get('cbl_bypassRedirDest', ''),
+				'cbl_bypassViewURL' => wfConfig::get('cbl_bypassViewURL', ''),
+			),
+		);
+		$after = $before;
+		$after['parameters'] = $parameters;
 		if ($existing) {
-			$wpdb->query($wpdb->prepare("UPDATE `{$blocksTable}` SET `reason` = %s, `parameters` = %s WHERE `id` = %d", $reason, json_encode($parameters), $existing));
+			$before['parameters'] = @json_decode($existing['parameters'], true);
+			if (!is_array($before['parameters'])) { $before['parameters'] = array(); }
+			$wpdb->query($wpdb->prepare("UPDATE `{$blocksTable}` SET `reason` = %s, `parameters` = %s WHERE `id` = %d", $reason, json_encode($parameters), $existing['id']));
 		}
 		else {
 			$wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, %s, %d, %s, %d, %d, %d, %s)", self::TYPE_COUNTRY, self::MARKER_COUNTRY, $blockedTime, $reason, (int) $lastAttempt, (int) $blockedHits, ($duration ? $blockedTime + $duration : $duration), json_encode($parameters)));
 		}
+		
+		/**
+		 * Fires when the country blocking rule is updated.
+		 *
+		 * @since 8.0.0
+		 *
+		 * @param array $before {
+		 * 		The country block configuration before the change
+		 * 
+		 * 		@type array $parameters The parameters of the country block.
+		 * 		@type array $bypass {
+		 * 			The assorted bypass settings for country blocking.
+		 * 
+		 * 			@type bool $cbl_loggedInBlocked Block countries even if there is a valid logged-in user for the request
+		 * 			@type string $cbl_action Action taken when a request is received from a blocked country
+		 * 			@type string $cbl_redirURL URL destination when $cbl_action is `redir`
+		 * 			@type string $cbl_bypassRedirURL If a visitor hits this URL
+		 * 			@type string $cbl_bypassRedirDest then redirect to this URL and set a cookie that will bypass all country blocking
+		 * 			@type string $cbl_bypassViewURL If a user currently not blocked hits this URL, then set a cookie that will bypass country blocking in the future even if visiting from a blocked country
+		 * 		}
+		 * }
+		 * @param array $after The country block configuration after the change, same structure as $before
+		 */
+		do_action('wordfence_updated_country_blocking', $before, $after);
 		
 		if (!WFWAF_SUBDIRECTORY_INSTALL && class_exists('wfWAFIPBlocksController')) {
 			wfWAFIPBlocksController::setNeedsSynchronizeConfigSettings();
@@ -489,6 +541,11 @@ class wfBlock {
 		$blocksTable = wfBlock::blocksTable();
 		$wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, %s, %d, %s, %d, %d, %d, %s)", self::TYPE_PATTERN, self::MARKER_PATTERN, $blockedTime, $reason, (int) $lastAttempt, (int) $blockedHits, ($duration ? $blockedTime + $duration : $duration), json_encode($parameters)));
 		
+		/**
+		 * @see wfBlock::createIP()
+		 */
+		do_action('wordfence_created_ip_pattern_block', self::TYPE_PATTERN, $reason, $parameters);
+		
 		if (!WFWAF_SUBDIRECTORY_INSTALL && class_exists('wfWAFIPBlocksController')) {
 			wfWAFIPBlocksController::setNeedsSynchronizeConfigSettings();
 		}
@@ -514,7 +571,8 @@ class wfBlock {
 		$blocksTable = wfBlock::blocksTable();
 		
 		if ($replaceExisting) {
-			$wpdb->query("DELETE FROM `{$blocksTable}` WHERE `expiration` = " . self::DURATION_FOREVER);
+			$removing = self::_recordsFromRows($wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `expiration` = " . self::DURATION_FOREVER, ARRAY_A));
+			self::removeMultiple($removing, true);
 		}
 		
 		foreach ($blocks as $b) {
@@ -539,7 +597,7 @@ class wfBlock {
 		if (!isset($b['type']) || !isset($b['IP']) || !isset($b['blockedTime']) || !isset($b['reason']) || !isset($b['lastAttempt']) || !isset($b['blockedHits'])) { return false; }
 		if (empty($b['IP']) || empty($b['reason'])) { return false; }
 		
-		$ip = @wfUtils::inet_ntop(wfUtils::hex2bin($b['IP']));
+		$ip = wfUtils::inet_ntop(wfUtils::hex2bin($b['IP']));
 		if (!wfUtils::isValidIP($ip)) { return false; }
 		
 		switch ($b['type']) {
@@ -551,6 +609,13 @@ class wfBlock {
 			case self::TYPE_RATE_THROTTLE:
 			case self::TYPE_LOCKOUT:
 				if (self::isWhitelisted($ip)) { return false; }
+
+				if ($b['type'] == self::TYPE_IP_MANUAL || $b['type'] == self::TYPE_IP_AUTOMATIC_PERMANENT) {
+					/**
+					 * @see wfBlock::createIP()
+					 */
+					do_action('wordfence_created_ip_pattern_block', $b['type'], $b['reason'], $ip);
+				}
 			
 				$ipHex = wfDB::binaryValueToSQLHex(wfUtils::inet_pton($ip));
 				return $wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, {$ipHex}, %d, %s, %d, %d, %d, NULL)", (int) $b['type'], (int) $b['blockedTime'], $b['reason'], (int) $b['lastAttempt'], (int) $b['blockedHits'], self::DURATION_FOREVER)) !== false;
@@ -558,6 +623,7 @@ class wfBlock {
 				if (!isset($b['parameters'])) { return false; }
 				if (wfUtils::inet_pton($ip) != self::MARKER_COUNTRY) { return false; }
 				$parameters = @json_decode($b['parameters'], true);
+				if (!is_array($parameters)) { $parameters = array(); }
 				if (!isset($parameters['blockLogin']) || !isset($parameters['blockSite']) || !isset($parameters['countries'])) { return false; }
 				$parameters['blockLogin'] = wfUtils::truthyToInt($parameters['blockLogin']);
 				$parameters['blockSite'] = wfUtils::truthyToInt($parameters['blockSite']);
@@ -570,6 +636,25 @@ class wfBlock {
 				}
 				
 				$parameters = array('blockLogin' => $parameters['blockLogin'], 'blockSite' => $parameters['blockSite'], 'countries' => $parameters['countries']);
+			
+				$before = array(
+					'parameters' => null,
+					'bypass' => array(
+						'cbl_loggedInBlocked' => wfConfig::get('cbl_loggedInBlocked', false),
+						'cbl_action' => wfConfig::get('cbl_action'),
+						'cbl_redirURL' => wfConfig::get('cbl_redirURL', ''),
+						'cbl_bypassRedirURL' => wfConfig::get('cbl_bypassRedirURL', ''),
+						'cbl_bypassRedirDest' => wfConfig::get('cbl_bypassRedirDest', ''),
+						'cbl_bypassViewURL' => wfConfig::get('cbl_bypassViewURL', ''),
+					),
+				);
+				$after = $before;
+				$after['parameters'] = $parameters;
+				
+				/**
+				 * @see wfBlock::createCountry()
+				 */
+				do_action('wordfence_updated_country_blocking', $before, $after);
 				
 				$ipHex = wfDB::binaryValueToSQLHex(self::MARKER_COUNTRY);
 				return $wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, {$ipHex}, %d, %s, %d, %d, %d, %s)", self::TYPE_COUNTRY, (int) $b['blockedTime'], $b['reason'], (int) $b['lastAttempt'], (int) $b['blockedHits'], self::DURATION_FOREVER, json_encode($parameters))) !== false;
@@ -577,6 +662,7 @@ class wfBlock {
 				if (!isset($b['parameters'])) { return false; }
 				if (wfUtils::inet_pton($ip) != self::MARKER_PATTERN) { return false; }
 				$parameters = @json_decode($b['parameters'], true);
+				if (!is_array($parameters)) { $parameters = array(); }
 				if (!isset($parameters['ipRange']) || !isset($parameters['hostname']) || !isset($parameters['userAgent']) || !isset($parameters['referrer'])) { return false; }
 				
 				$hasOne = false;
@@ -616,6 +702,11 @@ class wfBlock {
 					'userAgent' => $parameters['userAgent'],
 					'referrer' => $parameters['referrer'],
 				);
+				
+				/**
+				 * @see wfBlock::createIP()
+				 */
+				do_action('wordfence_created_ip_pattern_block', $b['type'], $b['reason'], $parameters);
 				
 				$ipHex = wfDB::binaryValueToSQLHex(self::MARKER_PATTERN);
 				return $wpdb->query($wpdb->prepare("INSERT INTO `{$blocksTable}` (`type`, `IP`, `blockedTime`, `reason`, `lastAttempt`, `blockedHits`, `expiration`, `parameters`) VALUES (%d, {$ipHex}, %d, %s, %d, %d, %d, %s)", self::TYPE_PATTERN, (int) $b['blockedTime'], $b['reason'], (int) $b['lastAttempt'], (int) $b['blockedHits'], self::DURATION_FOREVER, json_encode($parameters))) !== false;
@@ -737,6 +828,7 @@ END AS `detailSort`
 				$parameters = null;
 				if ($r['type'] == self::TYPE_PATTERN || $r['type'] == self::TYPE_COUNTRY) {
 					$parameters = @json_decode($r['parameters'], true);
+					if (!is_array($parameters)) { $parameters = array(); }
 				}
 				
 				$result[] = new wfBlock($r['id'], $r['type'], $ip, $r['blockedTime'], $r['reason'], $r['lastAttempt'], $r['blockedHits'], $r['expiration'], $parameters);
@@ -917,7 +1009,7 @@ END AS `detailSort`
 		$r = $wpdb->get_row($query, ARRAY_A);
 		if (is_array($r)) {
 			$ip = wfUtils::inet_ntop($r['IP']);
-			return new wfBlock($r['id'], $r['type'], $ip, $r['blockedTime'], $r['reason'], $r['lastAttempt'], $r['blockedHits'], $r['expiration'], null);
+			return self::_recordFromRow($r);
 		}
 		return false;
 	}
@@ -989,7 +1081,7 @@ END AS `detailSort`
 		
 		$row = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$blocksTable}` WHERE `IP` = {$ipHex} AND `type` = %d AND (`expiration` = %d OR `expiration` > UNIX_TIMESTAMP())",  self::TYPE_LOCKOUT, self::DURATION_FOREVER), ARRAY_A);
 		if ($row) {
-			return new wfBlock($row['id'], $row['type'], wfUtils::inet_ntop($row['IP']), $row['blockedTime'], $row['reason'], $row['lastAttempt'], $row['blockedHits'], $row['expiration'], null);
+			return self::_recordFromRow($row);
 		}
 		
 		return false;
@@ -1000,47 +1092,51 @@ END AS `detailSort`
 	 * 
 	 * @param array $blockIDs
 	 * @param bool $retrieve if true, fetch and return the deleted rows
+	 * @param bool $notify Whether or not to broadcast the deletion action (should only do when this is called in response to a manual action)
 	 * @return bool|array true(or an array of blocks, if $retrieve is specified) or false on failure
 	 */
-	public static function removeBlockIDs($blockIDs, $retrieve=false) {
-		global $wpdb;
-		$blocksTable = wfBlock::blocksTable();
-		
+	public static function removeBlockIDs($blockIDs, $retrieve = false, $notify = true) {
 		$blockIDs = array_map('intval', $blockIDs);
-		$inClause = implode(', ', $blockIDs);
-		if($retrieve){
-			$blocks = $wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `id` IN (".$inClause.")");
+		$blocks = self::_recordsFromRows($blockIDs);
+		$result = self::removeMultiple($blocks, $notify);
+		if ($retrieve && $result) {
+			return $result;
 		}
-		else{
-			$blocks=true;
-		}
-		$query = "DELETE FROM `{$blocksTable}` WHERE `id` IN (" . $inClause . ")";
-		if($wpdb->query($query)!==false) {
-			return $blocks;
-		}
-		return false;
+		
+		return !!$result;
 	}
 	
 	/**
 	 * Removes all IP blocks (i.e., manual, wfsn, or rate limited)
+	 *
+	 * @param bool $notify Whether or not to broadcast the deletion action (should only do when this is called in response to a manual action)
 	 */
-	public static function removeAllIPBlocks() {
+	public static function removeAllIPBlocks($notify = true) {
 		global $wpdb;
 		$blocksTable = wfBlock::blocksTable();
-		$wpdb->query("DELETE FROM `{$blocksTable}` WHERE `type` IN (" . implode(', ', array(self::TYPE_IP_MANUAL, self::TYPE_IP_AUTOMATIC_TEMPORARY, self::TYPE_IP_AUTOMATIC_PERMANENT, self::TYPE_WFSN_TEMPORARY, self::TYPE_RATE_BLOCK, self::TYPE_RATE_THROTTLE, self::TYPE_LOCKOUT)) . ")");
+		$rows = $wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `type` IN (" . implode(', ', array(self::TYPE_IP_MANUAL, self::TYPE_IP_AUTOMATIC_TEMPORARY, self::TYPE_IP_AUTOMATIC_PERMANENT, self::TYPE_WFSN_TEMPORARY, self::TYPE_RATE_BLOCK, self::TYPE_RATE_THROTTLE, self::TYPE_LOCKOUT)) . ")", ARRAY_A);
+		$blocks = self::_recordsFromRows($rows);
+		self::removeMultiple($blocks, $notify);
 	}
 	
 	/**
 	 * Removes all country blocks
+	 *
+	 * @param bool $notify Whether or not to broadcast the deletion action (should only do when this is called in response to a manual action)
 	 */
-	public static function removeAllCountryBlocks() {
+	public static function removeAllCountryBlocks($notify = true) {
 		global $wpdb;
 		$blocksTable = wfBlock::blocksTable();
-		$wpdb->query("DELETE FROM `{$blocksTable}` WHERE `type` IN (" . implode(', ', array(self::TYPE_COUNTRY)) . ")");
+		$rows = $wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `type` IN (" . implode(', ', array(self::TYPE_COUNTRY)) . ")", ARRAY_A);
+		$blocks = self::_recordsFromRows($rows);
+		self::removeMultiple($blocks, $notify);
 	}
 	
 	/**
 	 * Removes all blocks that were created by WFSN responses.
+	 * 
+	 * Note: if this ever becomes called by a manual user action, it should be refactored to call 
+	 * self::removeMultiple() in order to dispatch the relevant event.
 	 */
 	public static function removeTemporaryWFSNBlocks() {
 		global $wpdb;
@@ -1083,24 +1179,68 @@ END AS `detailSort`
 	 * Removes all specific IP blocks and lockouts that can result in the given IP being blocked.
 	 * 
 	 * @param string $ip
+	 * @param bool $notify Whether or not to broadcast the deletion action (should only do when this is called in response to a manual action)
 	 */
-	public static function unblockIP($ip) {
+	public static function unblockIP($ip, $notify = true) {
 		global $wpdb;
 		$blocksTable = wfBlock::blocksTable();
 		$ipHex = wfDB::binaryValueToSQLHex(wfUtils::inet_pton($ip));
-		$wpdb->query("DELETE FROM `{$blocksTable}` WHERE `IP` = {$ipHex}");
+		$rows = $wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `IP` = {$ipHex}", ARRAY_A);
+		$blocks = self::_recordsFromRows($rows);
+		self::removeMultiple($blocks, $notify);
 	}
 	
 	/**
 	 * Removes all lockouts that can result in the given IP being blocked.
 	 *
 	 * @param string $ip
+	 * @param bool $notify Whether or not to broadcast the deletion action (should only do when this is called in response to a manual action)
 	 */
-	public static function unlockOutIP($ip) {
+	public static function unlockOutIP($ip, $notify = true) {
 		global $wpdb;
 		$blocksTable = wfBlock::blocksTable();
 		$ipHex = wfDB::binaryValueToSQLHex(wfUtils::inet_pton($ip));
-		$wpdb->query($wpdb->prepare("DELETE FROM `{$blocksTable}` WHERE `IP` = {$ipHex} AND `type` = %d", self::TYPE_LOCKOUT));
+		$rows = $wpdb->get_results($wpdb->prepare("SELECT * FROM `{$blocksTable}` WHERE `IP` = {$ipHex} AND `type` = %d", self::TYPE_LOCKOUT), ARRAY_A);
+		$blocks = self::_recordsFromRows($rows);
+		self::removeMultiple($blocks, $notify);
+	}
+	
+	/**
+	 * Internal function to convert a raw query row result into a populated wfBlock instance. $row is expected to be an
+	 * associative array.
+	 * 
+	 * @param array $row
+	 * @return mixed
+	 */
+	private static function _recordFromRow($row) {
+		$records = self::_recordsFromRows(array($row));
+		return $records[0];
+	}
+	
+	/**
+	 * Internal function to convert an array of raw query row results to an array of populated wfBlock instances. $rows
+	 * is expected to be an array of integer IDs or an array of associative arrays.
+	 * 
+	 * @param array[]|int[] $rows
+	 * @return array
+	 */
+	private static function _recordsFromRows($rows) {
+		$records = array();
+		foreach ($rows as $r) {
+			if ($r instanceof stdClass) {
+				$r = (array) $r;
+			}
+			
+			if (is_array($r)) {
+				$b = new wfBlock($r['id']);
+				$b->_populateData($r);
+			}
+			else {
+				$b = new wfBlock($r);
+			}
+			$records[] = $b;
+		}
+		return $records;
 	}
 	
 	/**
@@ -1135,6 +1275,7 @@ END AS `detailSort`
 			case 'type':
 				if ($this->_type === false) { $this->_fetch(); }
 				return $this->_type;
+			case 'IP':
 			case 'ip':
 				if ($this->_type === false) { $this->_fetch(); }
 				return $this->_ip;
@@ -1238,29 +1379,39 @@ END AS `detailSort`
 		$blocksTable = wfBlock::blocksTable();
 		$row = $wpdb->get_row($wpdb->prepare("SELECT * FROM `{$blocksTable}` WHERE `id` = %d", $this->id), ARRAY_A);
 		if ($row !== null) {
-			$this->_type = $row['type'];
-			
-			$ip = $row['IP'];
-			if ($ip == self::MARKER_COUNTRY || $ip == self::MARKER_PATTERN) {
-				$this->_ip = null;
-			}
-			else {
-				$this->_ip = wfUtils::inet_ntop($ip);
-			}
-			
-			$this->_blockedTime = $row['blockedTime'];
-			$this->_reason = $row['reason'];
-			$this->_lastAttempt = $row['lastAttempt'];
-			$this->_blockedHits = $row['blockedHits'];
-			$this->_expiration = $row['expiration'];
-			
-			$parameters = $row['parameters'];
-			if ($parameters === null) {
-				$this->_parameters = null;
-			}
-			else {
-				$this->_parameters = @json_decode($parameters, true);
-			}
+			$this->_populateData($row);
+		}
+	}
+	
+	/**
+	 * Populates the instance data from the given $row.
+	 * 
+	 * @param array $row
+	 */
+	private function _populateData($row) {
+		$this->_type = $row['type'];
+		
+		$ip = $row['IP'];
+		if ($ip == self::MARKER_COUNTRY || $ip == self::MARKER_PATTERN) {
+			$this->_ip = null;
+		}
+		else {
+			$this->_ip = wfUtils::inet_ntop($ip);
+		}
+		
+		$this->_blockedTime = $row['blockedTime'];
+		$this->_reason = $row['reason'];
+		$this->_lastAttempt = $row['lastAttempt'];
+		$this->_blockedHits = $row['blockedHits'];
+		$this->_expiration = $row['expiration'];
+		
+		$parameters = $row['parameters'];
+		if ($parameters === null) {
+			$this->_parameters = null;
+		}
+		else {
+			$this->_parameters = @json_decode($parameters, true);
+			if (!is_array($this->_parameters)) { $this->_parameters = array(); }
 		}
 	}
 	
@@ -1452,7 +1603,7 @@ END AS `detailSort`
 		$log->getCurrentRequest()->actionDescription = __('blocked access via country blocking', 'wordfence');
 		wfConfig::inc('totalCountryBlocked');
 		wfActivityReport::logBlockedIP(wfUtils::getIP(), null, 'country');
-		$log->do503(3600, __('Access from your area has been temporarily limited for security reasons', 'wordfence')); //exits
+		$log->do503(3600, wfI18n::__('Access from your area has been temporarily limited for security reasons', 'wordfence')); //exits
 	}
 	
 	/**
@@ -1490,5 +1641,78 @@ END AS `detailSort`
 		}
 		
 		return array();
+	}
+	
+	/**
+	 * Removes this block record. May trigger an additional query to fetch the notification data if $notify is true and
+	 * the record is ID-only.
+	 * 
+	 * @param bool $notify If true, will dispatch the `wordfence_deleted_block` action.
+	 * @return null|wfBlock null if a failure occurs, otherwise the block
+	 */
+	public function remove($notify = false) {
+		$result = self::removeMultiple(array($this), $notify);
+		if (is_array($result)) {
+			return $result[0];
+		}
+		return null;
+	}
+	
+	/**
+	 * Deletes the given block, optionally dispatching the `wordfence_deleted_block` action for each block. May trigger 
+	 * an additional query to fetch the notification data if $notify is true and any record is ID-only.
+	 * 
+	 * @param wfBlock[] $blocks
+	 * @param bool $notify If true, will dispatch the `wordfence_deleted_block` action.
+	 * @return null|wfBlock[] null if a failure occurs, otherwise the blocks
+	 */
+	public static function removeMultiple($blocks, $notify = false) {
+		if (empty($blocks)) { return array(); }
+		
+		global $wpdb;
+		$blocksTable = wfBlock::blocksTable();
+		
+		$blockIDs = array_map(function($b) { return intval($b->id); }, $blocks);
+		$inClause = implode(', ', $blockIDs);
+		
+		if ($notify) {
+			$blockIDsToPopulate = array_filter(array_map(function($b) { return ($b->_type === false ? intval($b->id) : null); }, $blocks));
+			if (!empty($blockIDsToPopulate)) {
+				$populateInClause = implode(', ', $blockIDsToPopulate);
+				$data = wfUtils::array_kmap(function($r) { return array($r['id'] => $r); }, $wpdb->get_results("SELECT * FROM `{$blocksTable}` WHERE `id` IN ({$populateInClause})", ARRAY_A));
+				foreach ($blocks as $b) { /** @var wfBlock $b */
+					if (isset($data[$b->id])) {
+						$b->_populateData($data[$b->id]);
+					}
+				}
+			}
+		}
+		
+		$query = "DELETE FROM `{$blocksTable}` WHERE `id` IN (" . $inClause . ")";
+		if ($wpdb->query($query) !== false) {
+			$payload = array();
+			if ($notify) {
+				foreach ($blocks as $b) {
+					$type = $b->type;
+					$reason = $b->reason;
+					$parameters = (($type != self::TYPE_COUNTRY && $type != self::TYPE_PATTERN) ? $b->ip : $b->parameters);
+					
+					/**
+					 * Fires when a blocking rule is deleted by manual action.
+					 *
+					 * @since 8.0.0
+					 *
+					 * @param string $type The type of block.
+					 * @param string $reason The reason of the block.
+					 * @param array|null $parameters The parameters of the block if needed for disambiguation (e.g., the country block returns null because there is only one rule at most)
+					 */
+					do_action('wordfence_deleted_block', $type, $reason, $parameters);
+				}
+			}
+			
+			return $blocks;
+		}
+		
+		return null;
 	}
 }

@@ -46,7 +46,7 @@ function wpcf7_sendinblue_submit( $contact_form, $result ) {
 	}
 
 	if ( empty( $result['status'] )
-	or ! in_array( $result['status'], array( 'mail_sent', 'mail_failed' ) ) ) {
+	or ! in_array( $result['status'], array( 'mail_sent', 'mail_failed' ), true ) ) {
 		return;
 	}
 
@@ -175,7 +175,7 @@ function wpcf7_sendinblue_collect_parameters() {
 	foreach ( (array) $submission->get_posted_data() as $name => $val ) {
 		$name = strtoupper( $name );
 
-		if ( 'YOUR-' == substr( $name, 0, 5 ) ) {
+		if ( 'YOUR-' === substr( $name, 0, 5 ) ) {
 			$name = substr( $name, 5 );
 		}
 
@@ -187,15 +187,22 @@ function wpcf7_sendinblue_collect_parameters() {
 	}
 
 	if ( isset( $params['SMS'] ) ) {
-		$sms = implode( ' ', (array) $params['SMS'] );
-		$sms = trim( $sms );
+		$sms = trim( implode( ' ', (array) $params['SMS'] ) );
+		$sms = preg_replace( '/[#*].*$/', '', $sms ); // Remove extension
 
-		$plus = '+' == substr( $sms, 0, 1 ) ? '+' : '';
+		$is_international = false ||
+			str_starts_with( $sms, '+' ) ||
+			str_starts_with( $sms, '00' );
+
+		if ( $is_international ) {
+			$sms = preg_replace( '/^[+0]+/', '', $sms );
+		}
+
 		$sms = preg_replace( '/[^0-9]/', '', $sms );
 
-		if ( 6 < strlen( $sms ) and strlen( $sms ) < 18 ) {
-			$params['SMS'] = $plus . $sms;
-		} else { // Invalid phone number
+		if ( $is_international and 6 < strlen( $sms ) and strlen( $sms ) < 16 ) {
+			$params['SMS'] = '+' . $sms;
+		} else { // Invalid telephone number
 			unset( $params['SMS'] );
 		}
 	}

@@ -9,7 +9,7 @@ use FSVendor\WPDesk\View\Resolver\Exception\CanNotResolve;
  *
  * @package WPDesk\View\Resolver
  */
-class WPThemeResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
+class WPThemeResolver implements Resolver
 {
     /** @var string */
     private $template_base_path;
@@ -30,11 +30,11 @@ class WPThemeResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
      *
      * @return string
      */
-    public function resolve($name, \FSVendor\WPDesk\View\Renderer\Renderer $renderer = null)
+    public function resolve($name, Renderer $renderer = null)
     {
-        $templateFile = \locate_template([\trailingslashit($this->template_base_path) . $name]);
+        $templateFile = locate_template([trailingslashit($this->template_base_path) . $name]);
         if (!$templateFile) {
-            throw new \FSVendor\WPDesk\View\Resolver\Exception\CanNotResolve("Cannot resolve {$name}");
+            throw new CanNotResolve("Cannot resolve {$name}");
         }
         return $templateFile;
     }

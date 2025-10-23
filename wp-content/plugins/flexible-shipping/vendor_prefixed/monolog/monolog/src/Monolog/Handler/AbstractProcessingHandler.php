@@ -24,14 +24,14 @@ namespace FSVendor\Monolog\Handler;
  * @phpstan-import-type Record from \Monolog\Logger
  * @phpstan-type FormattedRecord array{message: string, context: mixed[], level: Level, level_name: LevelName, channel: string, datetime: \DateTimeImmutable, extra: mixed[], formatted: mixed}
  */
-abstract class AbstractProcessingHandler extends \FSVendor\Monolog\Handler\AbstractHandler implements \FSVendor\Monolog\Handler\ProcessableHandlerInterface, \FSVendor\Monolog\Handler\FormattableHandlerInterface
+abstract class AbstractProcessingHandler extends AbstractHandler implements ProcessableHandlerInterface, FormattableHandlerInterface
 {
     use ProcessableHandlerTrait;
     use FormattableHandlerTrait;
     /**
      * {@inheritDoc}
      */
-    public function handle(array $record) : bool
+    public function handle(array $record): bool
     {
         if (!$this->isHandling($record)) {
             return \false;
@@ -49,7 +49,7 @@ abstract class AbstractProcessingHandler extends \FSVendor\Monolog\Handler\Abstr
      *
      * @phpstan-param FormattedRecord $record
      */
-    protected abstract function write(array $record) : void;
+    abstract protected function write(array $record): void;
     /**
      * @return void
      */

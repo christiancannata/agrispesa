@@ -94,15 +94,5 @@ echo \esc_url_raw($terms_url);
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-	jQuery('.trigger').click(function(e) {
-		e.preventDefault();
-		if (jQuery(this).parent().hasClass('open')) {
-			jQuery(this).parent().removeClass('open')
-		}
-		else {
-			jQuery(this).parent().addClass('open');
-		}
-	});
-</script>
+
 <?php 

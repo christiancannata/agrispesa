@@ -6,9 +6,7 @@ namespace wpie\import\chunk\csv;
 use WP_Error;
 use wpie\lib\xml\array2xml;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-chunk.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/class-wpie-chunk.php');

@@ -8,7 +8,7 @@ define( 'TRUSTPILOT_PLUGIN_STATUS', 'trustpilot_plugin_status' );
 define( 'TRUSTPILOT_GENERAL_CONFIGURATION', 'general' );
 define( 'TRUSTPILOT_TRUSTBOX_CONFIGURATION', 'trustbox' );
 define( 'TRUSTPILOT_INTEGRATION_KEY', 'key' );
-define( 'TRUSTPILOT_PLUGIN_VERSION', '2.5.925' );
+define( 'TRUSTPILOT_PLUGIN_VERSION', '3.6.0' );
 define( 'TRUSTPILOT_SCRIPT', 'TrustpilotScriptUrl' );
 define( 'TRUSTPILOT_INTEGRATION_APP', 'IntegrationAppUrl' );
 define( 'TRUSTPILOT_WIDGET_SCRIPT', 'WidgetScriptUrl' );
@@ -24,5 +24,5 @@ define( 'TRUSTPILOT_PREVIEW_SCRIPT_URL', '//ecommplugins-scripts.trustpilot.com/
 define( 'TRUSTPILOT_PREVIEW_CSS_URL', '//ecommplugins-scripts.trustpilot.com/v2.1/css/preview.min.css' );
 define( 'TRUSTPILOT_WP_PREVIEW_CSS_URL', '//ecommplugins-scripts.trustpilot.com/v2.1/css/preview_wp.css' );
 define( 'TRUSTPILOT_IS_FROM_MARKETPLACE', 'true' );
-define( 'TRUSTPILOT_TRUSTBOX_PREVIEW_URL', '//ecommplugins-trustboxpreview.trustpilot.com/v1.0/trustboxpreview.min.js' );
+define( 'TRUSTPILOT_TRUSTBOX_PREVIEW_URL', '//ecommplugins-trustboxpreview.trustpilot.com/v2.0/trustboxpreview.min.js' );
 define( 'TRUSTPILOT_PRODUCT_ID_PREFIX', 'TRUSTPILOT_SKU_VALUE_' );

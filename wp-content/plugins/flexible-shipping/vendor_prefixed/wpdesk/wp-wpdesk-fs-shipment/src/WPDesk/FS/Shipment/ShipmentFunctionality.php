@@ -7,7 +7,7 @@
  */
 namespace FSVendor\WPDesk\FS\Shipment;
 
-use Psr\Log\LoggerInterface;
+use FSVendor\Psr\Log\LoggerInterface;
 use FSVendor\WPDesk\FS\Shipment\Label\SingleLabelFileDispatcher;
 use FSVendor\WPDesk\FS\Shipment\Manifest\ManifestCustomPostType;
 use FSVendor\WPDesk\FS\Shipment\Metabox\Ajax;
@@ -18,7 +18,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can load shipment functionality.
  */
-class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShipmentFunctionality implements Hookable
 {
     const LOAD_PRIORITY = -1;
     /**
@@ -44,7 +44,7 @@ class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hoo
      * @param string          $assets_url .
      * @param string          $scripts_version .
      */
-    public function __construct(\Psr\Log\LoggerInterface $logger, $assets_url, $scripts_version)
+    public function __construct(LoggerInterface $logger, $assets_url, $scripts_version)
     {
         $this->logger = $logger;
         $this->assets_url = $assets_url;
@@ -55,15 +55,15 @@ class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hoo
      */
     public function hooks()
     {
-        \add_action('plugins_loaded', [$this, 'load_functionality_on_init'], self::LOAD_PRIORITY);
-        \add_filter('flexible-shipping/shipment/load-functionality', [$this, 'load_functionality_if_not_already_loaded']);
+        add_action('plugins_loaded', [$this, 'load_functionality_on_init'], self::LOAD_PRIORITY);
+        add_filter('flexible-shipping/shipment/load-functionality', [$this, 'load_functionality_if_not_already_loaded']);
     }
     /**
      * @internal
      */
     public function load_functionality_on_init()
     {
-        $this->already_loaded = (bool) \apply_filters('flexible-shipping/shipment/load-functionality', $this->already_loaded);
+        $this->already_loaded = (bool) apply_filters('flexible-shipping/shipment/load-functionality', $this->already_loaded);
     }
     /**
      * Load functionality if not already loaded;
@@ -77,7 +77,7 @@ class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hoo
     public function load_functionality_if_not_already_loaded($already_loaded)
     {
         $class = 'WPDesk_Flexible_Shipping_Shipment';
-        if (!$already_loaded && !\class_exists($class)) {
+        if (!$already_loaded && !class_exists($class)) {
             $this->load_functionality();
         }
         $this->already_loaded = \true;
@@ -92,23 +92,23 @@ class ShipmentFunctionality implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hoo
         $this->load_dependencies();
         $class = 'WPDesk_Flexible_Shipping_Shipment';
         $class::set_fs_logger($this->logger);
-        $shipment_cpt = new \FSVendor\WPDesk\FS\Shipment\CustomPostType();
+        $shipment_cpt = new CustomPostType();
         $shipment_cpt->hooks();
-        $shipment_creator = new \FSVendor\WPDesk\FS\Shipment\Checkout\ShipmentCreator();
+        $shipment_creator = new Checkout\ShipmentCreator();
         $shipment_creator->hooks();
-        $subscriptions_integration = new \FSVendor\WPDesk\FS\Shipment\Subscriptions\SubscriptionsIntegration($shipment_creator);
+        $subscriptions_integration = new SubscriptionsIntegration($shipment_creator);
         $subscriptions_integration->hooks();
-        $add_shipping_metabox = new \FSVendor\WPDesk\FS\Shipment\Order\AddShippingMetabox();
+        $add_shipping_metabox = new AddShippingMetabox();
         $add_shipping_metabox->hooks();
-        $single_label_file_dispatcher = new \FSVendor\WPDesk\FS\Shipment\Label\SingleLabelFileDispatcher();
+        $single_label_file_dispatcher = new SingleLabelFileDispatcher();
         $single_label_file_dispatcher->hooks();
-        $metabox_ajax = new \FSVendor\WPDesk\FS\Shipment\Metabox\Ajax();
+        $metabox_ajax = new Ajax();
         $metabox_ajax->hooks();
-        $manifest_cpt = new \FSVendor\WPDesk\FS\Shipment\Manifest\ManifestCustomPostType();
+        $manifest_cpt = new ManifestCustomPostType();
         $manifest_cpt->hooks();
-        $rest_api_order_response_data_appender = new \FSVendor\WPDesk\FS\Shipment\RestApi\OrderResponseDataAppender();
+        $rest_api_order_response_data_appender = new OrderResponseDataAppender();
         $rest_api_order_response_data_appender->hooks();
-        $assets = new \FSVendor\WPDesk\FS\Shipment\Assets($this->assets_url, $this->scripts_version);
+        $assets = new Assets($this->assets_url, $this->scripts_version);
         $assets->hooks();
     }
     /**

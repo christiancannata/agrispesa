@@ -1,11 +1,12 @@
 === Custom Taxonomy Order ===
-Contributors: mpol
+Contributors: mpol, acusti, sunriseweb, mantish, eddy_boy, empiresafe, li-an, eric3d
 Tags: term order, category order, taxonomy order, order
 Requires at least: 4.1
-Tested up to: 6.5
-Stable tag: 4.0.0
+Tested up to: 6.8
+Stable tag: 4.0.2
 License: GPLv2 or later
 Requires PHP: 7.0
+Forked from: https://plugins.trac.wordpress.org/browser/custom-taxonomy-order
 
 Allows for the ordering of categories and custom taxonomy terms through a simple drag-and-drop interface
 
@@ -96,10 +97,13 @@ If it is a custom taxonomy, you can also use a filter:
 There is a bug with the the_tags function, where it will sort according to the setting for categories.
 This happens in the 'customtaxorder_apply_order_filter' function where the $args has two taxonomies but only one orderby can be returned.
 
-= I use WooCommerce Attributes. =
+= I use WooCommerce Attributes and Categories. =
 
 This plugin only supports sorting the attributes/terms. These are the items like S, M and L.
 For sorting the taxonomies like 'size', you need to sort them on Woo's attributes page.
+
+For Products Categories, you can change the order on Product > Categories.
+There’s a three-line icon next to each category, you can hold it and drag the category up or down to change the order.
 
 = What capabilities are needed? =
 
@@ -207,11 +211,23 @@ have you added as validator for this plugin/locale.
 == Screenshots ==
 
 1. Screenshot of the menu page for Custom Taxonomy Order.
-The WordPress menu completely left lists the different taxonomies.
+The WordPress menu completely left lists the "Term Order" main page.
 The left metabox lists the toplevel terms. Right (or below) are the sub-terms.
 
 
 == Changelog ==
+
+= 4.0.2 =
+* 2024-11-27
+* Use transient for caching settings to have less database queries.
+
+= 4.0.1 =
+* 2024-10-02
+* Add option to show slugs of terms.
+* Add data-term-order parameter to admin list of terms.
+* Loading plugin translations should be delayed until init action (in this case admin_init).
+* Use __DIR__ instead of dirname(__FILE__).
+* Check for direct access of files.
 
 = 4.0.0 =
 * 2023-11-14

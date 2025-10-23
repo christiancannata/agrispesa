@@ -40,6 +40,7 @@ class ProgressBarSettings implements Hookable {
 		return [
 			'title'       => __( 'LFFS progress bar', 'flexible-shipping' ),
 			'type'        => 'checkbox',
+			'default'     => 'no',
 			'label'       => __( 'Display the \'Left for free shipping\' progress bar', 'flexible-shipping' ),
 			'desc_tip'    => sprintf(
 				__( 'Tick this checkbox to display an additional progress bar to your customers showing the amount left to qualify for free shipping.', 'flexible-shipping' ),

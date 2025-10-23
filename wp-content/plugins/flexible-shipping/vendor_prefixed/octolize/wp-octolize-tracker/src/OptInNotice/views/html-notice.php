@@ -16,34 +16,9 @@ echo \wp_kses_post(\sprintf(\__('Hi %1$s, with your helping hand we can build ef
 ?><br/>
     </p>
     <p>
-        <button id="wpdesk_tracker_allow_button_notice-<?php 
+    <button id="wpdesk_tracker_allow_button_notice-<?php 
 echo \esc_attr($plugin_slug);
 ?>" class="button button-primary"><?php 
 \esc_html_e('Allow', 'flexible-shipping');
 ?></button>
-
-		<script type="text/javascript">
-			jQuery(document).on('click', '#wpdesk_tracker_allow_button_notice-<?php 
-echo \esc_attr($plugin_slug);
-?>',function(e){
-				e.preventDefault();
-				jQuery.ajax( '<?php 
-echo \admin_url('admin-ajax.php');
-?>',
-					{
-						type: 'POST',
-						data: {
-							security: '<?php 
-echo \wp_create_nonce(\FSVendor\WPDesk_Tracker::WPDESK_TRACKER_NOTICE);
-?>',
-							action: 'wpdesk_tracker_notice_handler',
-							type: 'allow',
-						}
-					}
-				);
-				jQuery('#wpdesk-notice-octolize_opt_in_<?php 
-echo \esc_attr($plugin_slug);
-?>').toggle( false );
-			});
-		</script>
 <?php 

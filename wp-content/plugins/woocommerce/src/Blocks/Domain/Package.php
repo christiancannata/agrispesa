@@ -47,12 +47,15 @@ class Package {
 	 *
 	 * @param string        $version        Version of the plugin.
 	 * @param string        $plugin_path    Path to the main plugin file.
-	 * @param FeatureGating $feature_gating Feature gating class instance.
+	 * @param FeatureGating $deprecated     Deprecated Feature gating class.
 	 */
-	public function __construct( $version, $plugin_path, FeatureGating $feature_gating ) {
-		$this->version        = $version;
-		$this->path           = $plugin_path;
-		$this->feature_gating = $feature_gating;
+	public function __construct( $version, $plugin_path, $deprecated = null ) {
+		if ( null !== $deprecated ) {
+			wc_deprecated_argument( 'FeatureGating', '9.6', 'FeatureGating class is deprecated, please use wp_get_environment_type() instead.' );
+			$this->feature_gating = new FeatureGating();
+		}
+		$this->version = $version;
+		$this->path    = $plugin_path;
 	}
 
 	/**
@@ -122,23 +125,5 @@ class Package {
 	 */
 	public function feature() {
 		return $this->feature_gating;
-	}
-
-	/**
-	 * Checks if we're executing the code in an experimental build mode.
-	 *
-	 * @return boolean
-	 */
-	public function is_experimental_build() {
-		return $this->feature()->is_experimental_build();
-	}
-
-	/**
-	 * Checks if we're executing the code in an feature plugin or experimental build mode.
-	 *
-	 * @return boolean
-	 */
-	public function is_feature_plugin_build() {
-		return $this->feature()->is_feature_plugin_build();
 	}
 }

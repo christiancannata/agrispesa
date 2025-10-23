@@ -25,7 +25,7 @@ if ( $slider == '1' && ($banner_type == '0' || $banner_type == '1') ) {
 if ( $fa === true ) {
     $local = get_option('niteoCS_fa_local', '0');
     if ( $local === '0') {
-        echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" >' . PHP_EOL;
+        echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" >' . PHP_EOL;
     } else {
         echo '<link rel="stylesheet" href="'. esc_url( $this->cmp_asset_url('/css/font-awesome.min.css') ) . '">' . PHP_EOL;
     }

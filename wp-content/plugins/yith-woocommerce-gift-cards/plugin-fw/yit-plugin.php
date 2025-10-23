@@ -39,6 +39,7 @@ require_once 'includes/privacy/class-yith-privacy-plugin-abstract.php';
 require_once 'includes/class-yith-system-status.php';
 require_once 'includes/class-yith-post-type-admin.php';
 require_once 'includes/class-yith-bh-onboarding.php';
+require_once 'includes/class-yith-external-services.php';
 
 // Gutenberg Support.
 if ( class_exists( 'WP_Block_Type_Registry' ) ) {
@@ -296,7 +297,15 @@ if ( ! function_exists( 'yith_plugin_fw_print_deactivation_message' ) ) {
 
 add_action( 'admin_notices', 'yith_plugin_fw_print_deactivation_message' );
 
-/**
- * Action triggered after the Plugin Framework initialization finishes.
- */
-do_action( 'yith_plugin_fw_loaded' );
+add_action(
+	'plugins_loaded',
+	function () {
+		/**
+		 * Action triggered after the Plugin Framework initialization finishes.
+		 *
+		 * @deprecated 4.7.0 | The framework is initialized at plugins_loaded:10; the plugin is loaded at plugins_loaded:11, so the framework is already loaded, and you don't need this action anymore! Kept for backward compatibility.
+		 */
+		do_action( 'yith_plugin_fw_loaded' );
+	},
+	15
+);

@@ -8,6 +8,7 @@
  * @subpackage wpie\Core
  * @author     VJinfotech <support@vjinfotech.com>
  */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Delete previous notices.

@@ -14,7 +14,7 @@ class Thickbox
      * @param UserFeedbackData $user_feedback_data .
      * @param string|null $view_file If null given default thickbox file is used.
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackData $user_feedback_data, $view_file = null)
+    public function __construct(UserFeedbackData $user_feedback_data, $view_file = null)
     {
         $thickbox_id = $user_feedback_data->get_thickbox_id();
         $this->user_feedback_data = $user_feedback_data;

@@ -13,6 +13,7 @@ namespace RankMath\Analytics;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Helpers\Param;
+use RankMath\Helpers\DB as DB_Helper;
 use RankMath\Google\Analytics;
 use RankMathPro\Analytics\Pageviews;
 use RankMath\Google\Console as Google_Analytics;
@@ -218,7 +219,7 @@ class Stats extends Keywords {
 
 			array_push( $sql_parts, sprintf( "WHEN %s BETWEEN '%s' AND '%s' THEN 'range%d'", $column, $start_date, $end_date, $index ) );
 
-			$index ++;
+			++$index;
 		}
 
 		array_push( $sql_parts, "ELSE 'none'" );
@@ -230,14 +231,14 @@ class Stats extends Keywords {
 	/**
 	 * Get date array
 	 *
-	 * @param  array $dates Dates.
-	 * @param  array $default Default value.
+	 * @param  array $dates         Dates.
+	 * @param  array $default_value Default value.
 	 * @return array
 	 */
-	public function get_date_array( $dates, $default ) {
+	public function get_date_array( $dates, $default_value ) {
 		$data = [];
 		foreach ( $dates as $date => $d ) {
-			$data[ $date ]                  = $default;
+			$data[ $date ]                  = $default_value;
 			$data[ $date ]['date']          = $date;
 			$data[ $date ]['dateFormatted'] = $d['start'] === $d['end'] ? $d['formatted_date'] : $d['formatted_period'];
 			$data[ $date ]['formattedDate'] = $d['formatted_date'];
@@ -453,12 +454,12 @@ class Stats extends Keywords {
 	/**
 	 * Get filter data.
 	 *
-	 * @param string $filter  Filter key.
-	 * @param string $default Filter default value.
+	 * @param string $filter        Filter key.
+	 * @param string $default_value Filter default value.
 	 *
 	 * @return mixed
 	 */
-	public function get_date_from_cookie( $filter, $default ) {
+	public function get_date_from_cookie( $filter, $default_value ) {
 		$cookie_key = 'rank_math_analytics_' . $filter;
 		$new_value  = sanitize_title( Param::post( $filter ) );
 		if ( $new_value ) {
@@ -467,10 +468,10 @@ class Stats extends Keywords {
 		}
 
 		if ( ! empty( $_COOKIE[ $cookie_key ] ) ) {
-			return $_COOKIE[ $cookie_key ];
+			return sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_key ] ) );
 		}
 
-		return $default;
+		return $default_value;
 	}
 
 	/**
@@ -485,6 +486,8 @@ class Stats extends Keywords {
 		$args = wp_parse_args(
 			$args,
 			[
+				'action'    => '',
+				'keyword'   => '',
 				'dimension' => 'page',
 				'order'     => 'DESC',
 				'orderBy'   => 'diffPosition',
@@ -499,6 +502,7 @@ class Stats extends Keywords {
 			]
 		);
 
+		$action         = $args['action'];
 		$dimension      = $args['dimension'];
 		$type           = $args['type'];
 		$offset         = $args['offset'];
@@ -521,12 +525,15 @@ class Stats extends Keywords {
 			$dimensions = array_map( 'esc_sql', $dimensions );
 
 			// Get metrics data based on above dimension list.
-			$metrics = $this->get_metrics_data_by_dimension(
-				[
-					'dimension' => $dimension,
-					'sub_where' => ' AND ' . $dimension . " IN ('" . join( "', '", $dimensions ) . "')",
-				]
-			);
+			$metrics_args = [
+				'dimension' => $dimension,
+				'sub_where' => ' AND ' . $dimension . " IN ('" . join( "', '", $dimensions ) . "')",
+			];
+
+			if ( 'get_keyword_pages' === $action ) {
+				$metrics_args['sub_where'] = $metrics_args['sub_where'] . ' AND query = "' . $args['keyword'] . '"';
+			}
+			$metrics = $this->get_metrics_data_by_dimension( $metrics_args );
 
 			// Merge above two data into one.
 			$rows = $this->get_merged_metrics( $positions, $metrics, true );
@@ -564,7 +571,7 @@ class Stats extends Keywords {
 			$rows = $this->filter_analytics_data( $rows, $args );
 		}
 
-		$page_urls = \array_merge( \array_keys( $rows ), $args['pages'] );
+		$page_urls = \array_unique( \array_merge( \array_keys( $rows ), $args['pages'] ) );
 
 		if ( $args['objects'] ) {
 			$objects = $this->get_objects( $page_urls );
@@ -644,28 +651,34 @@ class Stats extends Keywords {
 			// That is, among all the position value from the last date of the page, the top position(smallest position value) value will be the result.
 
 			// Get current position data.
-			// phpcs:disable
-			$query = $wpdb->prepare(
-				"SELECT {$dimension}, MAX(CONCAT({$dimension}, ':', DATE(created), ':', LPAD((100 - position), 3, '0'))) as uid
+			$positions = DB_Helper::get_results(
+				$wpdb->prepare(
+					"SELECT %i, MAX(CONCAT(%i, ':', DATE(`created`), ':', LPAD((100 - `position`), 3, '0'))) as uid
 				FROM {$wpdb->prefix}rank_math_analytics_gsc 
-				WHERE created BETWEEN %s AND %s {$sub_where}
-				GROUP BY {$dimension}",
-				$this->start_date,
-				$this->end_date
+				WHERE `created` BETWEEN %s AND %s {$sub_where}
+				GROUP BY %i",
+					$dimension,
+					$dimension,
+					$this->start_date,
+					$this->end_date,
+					$dimension
+				)
 			);
-			$positions = $wpdb->get_results( $query );
 
 			// Get old position data.
-			$query = $wpdb->prepare(
-				"SELECT {$dimension}, MAX(CONCAT({$dimension}, ':', DATE(created), ':', LPAD((100 - position), 3, '0'))) as uid
+			$old_positions = DB_Helper::get_results(
+				$wpdb->prepare(
+					"SELECT %i, MAX(CONCAT(%i, ':', DATE(`created`), ':', LPAD((100 - `position`), 3, '0'))) as uid
 				FROM {$wpdb->prefix}rank_math_analytics_gsc 
-				WHERE created BETWEEN %s AND %s 
-				GROUP BY {$dimension}",
-				$this->compare_start_date,
-				$this->compare_end_date
+				WHERE `created` BETWEEN %s AND %s {$sub_where}
+				GROUP BY %i",
+					$dimension,
+					$dimension,
+					$this->compare_start_date,
+					$this->compare_end_date,
+					$dimension,
+				)
 			);
-			$old_positions = $wpdb->get_results( $query );
-			// phpcs:enable
 
 			// Extract proper position data.
 			$positions     = $this->extract_data_from_mixed( $positions, 'uid', ':', [ 'position', 'date' ] );
@@ -690,60 +703,66 @@ class Stats extends Keywords {
 			// In case dimension is not 'page', position data for each dimension will be most recent position value.
 
 			// Step1. Get most recent row id for each dimension for current data.
-			// phpcs:disable
-			$query = $wpdb->prepare(
-				"SELECT t1.id as id
+			$ids = DB_Helper::get_results(
+				$wpdb->prepare(
+					"SELECT t1.id as id
 				FROM {$wpdb->prefix}rank_math_analytics_gsc t1
 				INNER JOIN (
 					SELECT query, MAX(created) as latest_created
 					FROM {$wpdb->prefix}rank_math_analytics_gsc
-					WHERE created BETWEEN %s AND %s {$sub_where} GROUP BY {$dimension}
+					WHERE created BETWEEN %s AND %s {$sub_where} GROUP BY %i
 				) t2 ON t1.query = t2.query AND t1.created = t2.latest_created",
-				$this->start_date,
-				$this->end_date
+					$this->start_date,
+					$this->end_date,
+					$dimension
+				)
 			);
-			$ids = $wpdb->get_results( $query );
-			// phpcs:enable
 
 			// Step2. Get id list from above result.
 			$ids       = wp_list_pluck( $ids, 'id' );
 			$ids_where = " AND id IN ('" . join( "', '", $ids ) . "')";
 
 			// Step3. Get most recent row id for each dimension for compare data.
-			// phpcs:disable
-			$query = $wpdb->prepare(
-				"SELECT t1.id as id
+			$old_ids = DB_Helper::get_results(
+				$wpdb->prepare(
+					"SELECT t1.id as id
 				FROM {$wpdb->prefix}rank_math_analytics_gsc t1
 				INNER JOIN (
 					SELECT query, MAX(created) as latest_created
 					FROM {$wpdb->prefix}rank_math_analytics_gsc
-					WHERE created BETWEEN %s AND %s {$sub_where} GROUP BY {$dimension}
+					WHERE created BETWEEN %s AND %s {$sub_where} GROUP BY %i
 				) t2 ON t1.query = t2.query AND t1.created = t2.latest_created",
-				$this->compare_start_date,
-				$this->compare_end_date
+					$this->compare_start_date,
+					$this->compare_end_date,
+					$dimension
+				)
 			);
-			$old_ids = $wpdb->get_results( $query );
-			// phpcs:enable
 
 			// Step4. Get id list from above result.
 			$old_ids       = wp_list_pluck( $old_ids, 'id' );
 			$old_ids_where = " AND id IN ('" . join( "', '", $old_ids ) . "')";
 
 			// Step5. Get position and difference data based on above id list.
-			// phpcs:disable
-			$positions = $wpdb->get_results(
-				"SELECT
-					t1.{$dimension} as {$dimension}, ROUND( t1.position, 0 ) as position,
-					COALESCE( ROUND( t1.position - COALESCE( t2.position, 100 ), 0 ), 0 ) as diffPosition
-				FROM
-					( SELECT a.{$dimension}, a.position FROM {$wpdb->prefix}rank_math_analytics_gsc AS a WHERE 1 = 1{$ids_where}) AS t1
-				LEFT JOIN
-					( SELECT a.{$dimension}, a.position FROM {$wpdb->prefix}rank_math_analytics_gsc AS a WHERE 1 = 1{$old_ids_where}) AS t2
-				ON t1.{$dimension} = t2.{$dimension}
-				{$where}",
+			$positions = DB_Helper::get_results(
+				$wpdb->prepare(
+					"SELECT
+						t1.%i as %i, ROUND( t1.position, 0 ) as position,
+						COALESCE( ROUND( t1.position - COALESCE( t2.position, 100 ), 0 ), 0 ) as diffPosition
+					FROM
+						( SELECT a.%i, a.position FROM {$wpdb->prefix}rank_math_analytics_gsc AS a WHERE 1 = 1{$ids_where}) AS t1
+					LEFT JOIN
+						( SELECT a.%i, a.position FROM {$wpdb->prefix}rank_math_analytics_gsc AS a WHERE 1 = 1{$old_ids_where}) AS t2
+					ON t1.%i = t2.%i
+					{$where}",
+					$dimension,
+					$dimension,
+					$dimension,
+					$dimension,
+					$dimension,
+					$dimension,
+				),
 				ARRAY_A
 			);
-			// phpcs:enable
 
 			$positions = $this->set_dimension_as_key( $positions, $dimension );
 		}
@@ -772,31 +791,39 @@ class Stats extends Keywords {
 		$sub_where = $args['sub_where'];
 
 		// Get metrics data like impressions, click, ctr, etc.
-		// phpcs:disable
-		$query = $wpdb->prepare(
-			"SELECT
-				t1.{$dimension} as {$dimension}, t1.clicks, t1.impressions, t1.ctr,
+		$metrics = DB_Helper::get_results(
+			$wpdb->prepare(
+				"SELECT
+				t1.%i as %i, t1.clicks, t1.impressions, t1.ctr,
 				COALESCE( t1.clicks - t2.clicks, 0 ) as diffClicks,
 				COALESCE( t1.impressions - t2.impressions, 0 ) as diffImpressions,
 				COALESCE( t1.ctr - t2.ctr, 0 ) as diffCtr
 			FROM
-				( SELECT {$dimension}, SUM( clicks ) as clicks, SUM(impressions) as impressions, AVG(ctr) as ctr
+				( SELECT %i, SUM( clicks ) as clicks, SUM(impressions) as impressions, AVG(ctr) as ctr
 					FROM {$wpdb->prefix}rank_math_analytics_gsc
 					WHERE 1 = 1 AND created BETWEEN %s AND %s {$sub_where}
-					GROUP BY {$dimension}) as t1
+					GROUP BY %i) as t1
 			LEFT JOIN
-				( SELECT {$dimension}, SUM( clicks ) as clicks, SUM(impressions) as impressions, AVG(ctr) as ctr
+				( SELECT %i, SUM( clicks ) as clicks, SUM(impressions) as impressions, AVG(ctr) as ctr
 					FROM {$wpdb->prefix}rank_math_analytics_gsc
 					WHERE 1 = 1 AND created BETWEEN %s AND %s {$sub_where}
-					GROUP BY {$dimension}) as t2
-			ON t1.{$dimension} = t2.{$dimension}",
-			$this->start_date,
-			$this->end_date,
-			$this->compare_start_date,
-			$this->compare_end_date
+					GROUP BY %i) as t2
+			ON t1.%i = t2.%i",
+				$dimension,
+				$dimension,
+				$dimension,
+				$this->start_date,
+				$this->end_date,
+				$dimension,
+				$dimension,
+				$this->compare_start_date,
+				$this->compare_end_date,
+				$dimension,
+				$dimension,
+				$dimension
+			),
+			ARRAY_A
 		);
-		$metrics = $wpdb->get_results( $query, ARRAY_A );
-		// phpcs:enable
 
 		$metrics = $this->set_dimension_as_key( $metrics, $dimension );
 
@@ -938,7 +965,8 @@ class Stats extends Keywords {
 		$key = 'rank_math_' . $what;
 
 		if ( ! empty( $args ) ) {
-			$key .= '_' . join( '_', (array) $args );
+			$key .= '_' . md5( wp_json_encode( $args ) );
+
 		}
 
 		return $key;

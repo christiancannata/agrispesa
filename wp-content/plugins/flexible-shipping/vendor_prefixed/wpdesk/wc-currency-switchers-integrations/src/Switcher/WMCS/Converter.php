@@ -12,7 +12,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter;
  * Can convert currency using WMCS plugin.
  * Unknown plugin URL. This is legacy from Flexible Shipping
  */
-class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter
+class Converter extends AbstractConverter
 {
     /**
      * @inheritDoc

@@ -70,6 +70,9 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
                         case 'wikipedia':
                             $icon = 'fab fa-wikipedia-w';
                             break;
+                        case 'x':
+                            $icon = 'fab fa-x-twitter';
+                            break;
                         default:
                             break;
                     } ?>

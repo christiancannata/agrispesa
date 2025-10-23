@@ -15,7 +15,7 @@ abstract class NumericSetting extends Setting {
 	 */
 	protected $maxValue = null;
 
-	public function __construct($id, StorageInterface $store = null, $params = []) {
+	public function __construct($id, ?StorageInterface $store = null, $params = []) {
 		parent::__construct($id, $store, $params);
 
 		$this->minValue = isset($params['minValue']) ? $params['minValue'] : $this->minValue;

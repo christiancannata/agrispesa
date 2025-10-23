@@ -42,49 +42,68 @@ class Rest extends WP_REST_Controller {
 	public function register_routes() {
 		$namespace = $this->namespace;
 
-		$endpoint = '/submitUrls/';
 		register_rest_route(
 			$namespace,
-			$endpoint,
+			'/submitUrls',
 			[
 				[
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'submit_urls' ],
 					'permission_callback' => [ $this, 'has_permission' ],
+					'args'                => [
+						'urls' => [
+							'description' => __( 'The list of urls to submit to the Instant Indexing API.', 'rank-math' ),
+							'type'        => 'string',
+							'required'    => true,
+						],
+					],
 				],
 			]
 		);
 
-		$endpoint = '/getLog/';
 		register_rest_route(
 			$namespace,
-			$endpoint,
+			'/getLog',
 			[
 				[
-					'methods'             => WP_REST_Server::READABLE,
+					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'get_log' ],
 					'permission_callback' => [ $this, 'has_permission' ],
+					'args'                => [
+						'filter' => [
+							'description' => __( 'Filter log by type.', 'rank-math' ),
+							'type'        => 'string',
+							'enum'        => [ 'all', 'manual', 'auto' ],
+							'default'     => 'all',
+						],
+					],
 				],
 			]
 		);
 
-		$endpoint = '/clearLog/';
 		register_rest_route(
 			$namespace,
-			$endpoint,
+			'/clearLog',
 			[
 				[
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'clear_log' ],
 					'permission_callback' => [ $this, 'has_permission' ],
+					'args'                => [
+						'filter' => [
+							'description' => __( 'Clear log by type.', 'rank-math' ),
+							'type'        => 'string',
+							'enum'        => [ 'all', 'manual', 'auto' ],
+							'default'     => 'all',
+						],
+					],
 				],
 			]
 		);
 
-		$endpoint = '/resetKey/';
 		register_rest_route(
 			$namespace,
-			$endpoint,
+			'/resetKey',
 			[
 				[
 					'methods'             => WP_REST_Server::EDITABLE,
@@ -148,7 +167,7 @@ class Rest extends WP_REST_Controller {
 	public function get_log( WP_REST_Request $request ) {
 		$filter = $request->get_param( 'filter' );
 		$result = Api::get()->get_log();
-		$total = count( $result );
+		$total  = count( $result );
 		foreach ( $result as $key => $value ) {
 			$result[ $key ]['timeFormatted'] = wp_date( 'Y-m-d H:i:s', $value['time'] );
 			// Translators: placeholder is human-readable time, e.g. "1 hour".
@@ -193,7 +212,7 @@ class Rest extends WP_REST_Controller {
 	public function reset_key( WP_REST_Request $request ) {
 		$api = Api::get();
 		$api->reset_key();
-		$key = $api->get_key();
+		$key      = $api->get_key();
 		$location = $api->get_key_location( 'reset_key' );
 		return new WP_REST_Response(
 			[

@@ -5,6 +5,8 @@
  * @package StandaleneTech
  */
 
+use Automattic\WooCommerce\Utilities\OrderUtil;
+
 if ( ! function_exists( 'is_wallet_rechargeable_order' ) ) {
 
 	/**
@@ -181,17 +183,32 @@ if ( ! function_exists( 'get_wallet_rechargeable_orders' ) ) {
 	 * @return array
 	 */
 	function get_wallet_rechargeable_orders( $args = array() ) {
-		$default_args = array(
-			'posts_per_page'   => -1,
-			'meta_key'         => '_wc_wallet_purchase_credited', // @codingStandardsIgnoreLine
-			'meta_value'       => true, // @codingStandardsIgnoreLine
-			'post_type'        => 'shop_order',
-			'post_status'      => array( 'completed', 'processing', 'on-hold' ),
-			'suppress_filters' => true,
-		);
-		$args         = wp_parse_args( $args, $default_args );
-		$orders       = get_posts( $args );
-		return wp_list_pluck( $orders, 'ID' );
+		$hpos_enabled = OrderUtil::custom_orders_table_usage_is_enabled();
+		if ( $hpos_enabled ) {
+			$order_ids = wc_get_orders(
+				array(
+					'limit'      => -1,
+					'meta_query' => array(
+						array(
+							'key'   => '_wc_wallet_purchase_credited',
+							'value' => true,
+						),
+					),
+					'return'     => 'ids',
+					'status'     => wc_get_is_paid_statuses(),
+				)
+			);
+		} else {
+			$order_ids = wc_get_orders(
+				array(
+					'limit'       => -1,
+					'return'      => 'ids',
+					'topuporders' => true,
+					'status'      => wc_get_is_paid_statuses(),
+				)
+			);
+		}
+		return $order_ids;
 	}
 }
 
@@ -286,18 +303,19 @@ if ( ! function_exists( 'get_wallet_transaction_meta' ) ) {
 	 * Fetch transaction meta
 	 *
 	 * @global object $wpdb
-	 * @param int     $transaction_id transaction_id.
-	 * @param string  $meta_key meta_key.
-	 * @param boolean $single single.
-	 * @return boolean
+	 * @param int    $transaction_id transaction_id.
+	 * @param string $meta_key meta_key.
+	 * @param mixed  $default The fallback value to return if the data does not exist.
+	 *                           Default false.
+	 * @return mixed
 	 */
-	function get_wallet_transaction_meta( $transaction_id, $meta_key, $single = true ) {
+	function get_wallet_transaction_meta( $transaction_id, $meta_key, $default = false ) {
 		global $wpdb;
 		$resualt = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->base_prefix}woo_wallet_transaction_meta WHERE transaction_id = %s AND meta_key = %s", $transaction_id, $meta_key ) ); // @codingStandardsIgnoreLine
 		if ( ! is_null( $resualt ) ) {
 			return maybe_unserialize( $resualt );
 		} else {
-			return false;
+			return $default;
 		}
 	}
 }
@@ -341,7 +359,7 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 
 		$query['where'] = 'WHERE 1=1';
 		if ( $user_id ) {
-			$query['where'] .= " AND transactions.user_id = {$user_id}";
+			$query['where'] .= $wpdb->prepare( ' AND transactions.user_id = %d', $user_id );
 		}
 
 		if ( ! $include_deleted ) {
@@ -353,7 +371,7 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 				if ( ! isset( $value['operator'] ) ) {
 					$value['operator'] = '=';
 				}
-				$query['where'] .= " AND (transaction_meta.meta_key = '{$value['key']}' AND transaction_meta.meta_value {$value['operator']} '{$value['value']}' )";
+				$query['where'] .= $wpdb->prepare( " AND (transaction_meta.meta_key = %s AND transaction_meta.meta_value {$value['operator']} %s )", $value['key'], $value['value'] );
 			}
 		}
 
@@ -363,10 +381,10 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 					$value['operator'] = '=';
 				}
 				if ( 'IN' === $value['operator'] && is_array( $value['value'] ) ) {
-					$value['value']  = implode( ',', $value['value'] );
+					$value['value']  = esc_sql( implode( ',', $value['value'] ) );
 					$query['where'] .= " AND transactions.{$value['key']} {$value['operator']} ({$value['value']})";
 				} else {
-					$query['where'] .= " AND transactions.{$value['key']} {$value['operator']} '{$value['value']}'";
+					$query['where'] .= $wpdb->prepare( " AND transactions.{$value['key']} {$value['operator']} %s", $value['value'] );
 				}
 			}
 		}
@@ -374,7 +392,7 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 		if ( ! empty( $after ) || ! empty( $before ) ) {
 			$after           = empty( $after ) ? '0000-00-00' : $after;
 			$before          = empty( $before ) ? current_time( 'mysql', 1 ) : $before;
-			$query['where'] .= " AND ( transactions.date BETWEEN STR_TO_DATE( '" . $after . "', '%Y-%m-%d %H:%i:%s' ) AND STR_TO_DATE( '" . $before . "', '%Y-%m-%d %H:%i:%s' ))";
+			$query['where'] .= $wpdb->prepare( ' AND transactions.date BETWEEN %s AND %s', $after, $before );
 		}
 
 		if ( $order_by ) {
@@ -385,8 +403,9 @@ if ( ! function_exists( 'get_wallet_transactions' ) ) {
 			$query['limit'] = "LIMIT {$limit}";
 		}
 		$wpdb->hide_errors();
-		$query          = apply_filters( 'woo_wallet_transactions_query', $query );
-		$query          = implode( ' ', $query );
+		$query = apply_filters( 'woo_wallet_transactions_query', $query );
+		$query = implode( ' ', $query );
+		
 		$query_hash     = md5( $user_id . $query );
 		$cached_results = is_array( get_transient( "woo_wallet_transaction_resualts_{$user_id}" ) ) ? get_transient( "woo_wallet_transaction_resualts_{$user_id}" ) : array();
 

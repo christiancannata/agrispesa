@@ -9,7 +9,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence
  */
-class ArrayContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
+class ArrayContainer implements PersistentContainer
 {
     /** @var array */
     protected $array;
@@ -27,12 +27,12 @@ class ArrayContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
     }
     public function has($id)
     {
-        return \key_exists($id, $this->array);
+        return key_exists($id, $this->array);
     }
     public function get($id)
     {
         if (!isset($this->array[$id])) {
-            throw new \FSVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $this->array[$id];
     }

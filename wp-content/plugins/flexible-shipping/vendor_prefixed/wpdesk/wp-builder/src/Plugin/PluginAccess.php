@@ -18,7 +18,7 @@ trait PluginAccess
      *
      * @param AbstractPlugin $plugin Plugin.
      */
-    public function set_plugin(\FSVendor\WPDesk\PluginBuilder\Plugin\AbstractPlugin $plugin)
+    public function set_plugin(AbstractPlugin $plugin)
     {
         $this->plugin = $plugin;
     }

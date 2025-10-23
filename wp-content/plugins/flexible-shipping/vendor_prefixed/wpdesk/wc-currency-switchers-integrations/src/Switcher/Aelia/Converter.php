@@ -12,7 +12,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter;
  * Can convert currency using Aelia  Currency Switcher plugin.
  * @see https://aelia.co/shop/currency-switcher-woocommerce/
  */
-class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractConverter
+class Converter extends AbstractConverter
 {
     /**
      * @inheritDoc
@@ -20,7 +20,7 @@ class Converter extends \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\AbstractC
     public function convert($value)
     {
         try {
-            $class = 'Aelia' . '\\WC\\CurrencySwitcher\\WC_Aelia_CurrencySwitcher';
+            $class = 'Aelia' . '\WC\CurrencySwitcher\WC_Aelia_CurrencySwitcher';
             // php scoper faker
             $aelia = $class::instance();
             $aelia_settings = $class::settings();

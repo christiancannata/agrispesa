@@ -10,7 +10,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\ABTesting\ABTest
  */
-abstract class EqualGroupsRandomABTest implements \FSVendor\WPDesk\ABTesting\ABTest
+abstract class EqualGroupsRandomABTest implements ABTest
 {
     const CONTAINER_VALUE_PREFIX = 'ab_test';
     /**
@@ -42,9 +42,9 @@ abstract class EqualGroupsRandomABTest implements \FSVendor\WPDesk\ABTesting\ABT
      * @param string              $test_name     Specific test name. Should be unique. Used to persist.
      * @param PersistentContainer $container     Container to persist data.
      */
-    public function __construct($variant_count, $test_name, \FSVendor\WPDesk\Persistence\PersistentContainer $container)
+    public function __construct($variant_count, $test_name, PersistentContainer $container)
     {
-        \assert(\is_int($variant_count) && $variant_count > 0, '$variant_count makes no sense');
+        assert(is_int($variant_count) && $variant_count > 0, '$variant_count makes no sense');
         $this->variant_count = $variant_count;
         $this->test_name = $test_name;
         $this->container = $container;
@@ -80,7 +80,7 @@ abstract class EqualGroupsRandomABTest implements \FSVendor\WPDesk\ABTesting\ABT
         try {
             $variant_id = $this->container->get($this->get_container_key());
             return (int) $variant_id;
-        } catch (\FSVendor\WPDesk\Persistence\ElementNotExistsException $e) {
+        } catch (ElementNotExistsException $e) {
             return null;
         }
     }
@@ -91,13 +91,13 @@ abstract class EqualGroupsRandomABTest implements \FSVendor\WPDesk\ABTesting\ABT
      */
     protected function get_container_key()
     {
-        return \implode('_', [self::CONTAINER_VALUE_PREFIX, $this->test_name, 'variant_id']);
+        return implode('_', [self::CONTAINER_VALUE_PREFIX, $this->test_name, 'variant_id']);
     }
     /**
      * @return int
      */
     private function generate_variant_id()
     {
-        return \mt_rand(1, $this->variant_count);
+        return mt_rand(1, $this->variant_count);
     }
 }

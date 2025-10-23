@@ -35,7 +35,7 @@
             * Retrieve the plugin options
             * 
             */
-            function get_options()
+            static public function get_options()
                 {
                     //make sure the vars are set as default
                     $options = get_option('cpto_options');
@@ -47,6 +47,7 @@
                                             'adminsort'                         =>  1,
                                             'use_query_ASC_DESC'                =>  '',
                                             'capability'                        =>  'manage_options',
+                                            'edit_view_links'                   =>  '',
                                             'navigation_sort_apply'             =>  1,
                                             
                                         );
@@ -66,10 +67,10 @@
                 {
                     ?>
                         <div id="cpt_info_box">
-                                       <p><?php esc_html_e('Did you find this plugin useful? Please support our work by purchasing the advanced version or write an article about this plugin in your blog with a link to our site', 'post-types-order') ?> <a href="https://www.nsp-code.com/" target="_blank"><strong>https://www.nsp-code.com/</strong></a>.</p>
-                            <h4><?php esc_html_e('Did you know there is available an Advanced version of this plug-in?', 'post-types-order') ?> <a target="_blank" href="https://www.nsp-code.com/premium-plugins/wordpress-plugins/advanced-post-types-order/"><?php _e('Read more', 'post-types-order') ?></a></h4>
+                            <p><?php esc_html_e('Did you find this plugin useful? Please support our work by purchasing the advanced version or write an article about this plugin in your blog with a link to our site', 'post-types-order') ?> <a href="https://www.nsp-code.com/" target="_blank"><strong>https://www.nsp-code.com/</strong></a>.</p>
+                            <h4><a href="https://www.nsp-code.com/premium-plugins/advanced-post-types-order/" target="_blank"><img width="151" src="<?php echo CPTURL ?>/images/logo.png" class="attachment-large size-large wp-image-36927" alt=""></a> <?php esc_html_e('Did you know there is available an Advanced version of this plug-in?', 'post-types-order') ?> <a target="_blank" href="https://www.nsp-code.com/premium-plugins/advanced-post-types-order/"><?php _e('Read more', 'post-types-order') ?></a></h4>
                             <p><?php esc_html_e('Check our', 'post-types-order') ?> <a target="_blank" href="https://wordpress.org/plugins/taxonomy-terms-order/">Category Order - Taxonomy Terms Order</a> <?php esc_html_e('plugin which allow to custom sort categories and custom taxonomies terms', 'post-types-order') ?> </p>
-                            <p><span style="color:#CC0000" class="dashicons dashicons-megaphone" alt="f488">&nbsp;</span> <?php esc_html_e('Check out', 'post-types-order') ?> <a href="https://wordpress.org/plugins/wp-hide-security-enhancer/" target="_blank"><b>WP Hide & Security Enhancer</b></a> <?php esc_html_e('an extra layer of security for your site. The easy way to completely hide your WordPress core files, themes and plugins', 'post-types-order') ?>.</p>
+                            <p><span style="color:#CC0000" class="dashicons dashicons-megaphone" alt="f488">&nbsp;</span> <?php esc_html_e('Check our', 'post-types-order') ?> <a href="https://wordpress.org/plugins/wp-hide-security-enhancer/" target="_blank"><b>WP Hide & Security Enhancer</b></a> <?php esc_html_e('an extra layer of security for your site. The easy way to completely hide your WordPress core files, themes and plugins', 'post-types-order') ?>.</p>
                             
                             <div class="clear"></div>
                         </div>
@@ -78,7 +79,13 @@
                 }
 
                 
-            
+            /**
+            * Gte previous post WHERE
+            * 
+            * @param mixed $where
+            * @param mixed $in_same_term
+            * @param mixed $excluded_terms
+            */
             function cpto_get_previous_post_where($where, $in_same_term, $excluded_terms)
                 {
                     global $post, $wpdb;
@@ -149,7 +156,13 @@
                     
                     return $where;
                 }
-                
+            
+            
+            /**
+            * Get the previous post sort
+            *     
+            * @param mixed $sort
+            */
             function cpto_get_previous_post_sort($sort)
                 {
                     global $post, $wpdb;
@@ -159,6 +172,14 @@
                     return $sort;
                 }
 
+                
+            /**
+            * Get the next post WHERE
+            * 
+            * @param mixed $where
+            * @param mixed $in_same_term
+            * @param mixed $excluded_terms
+            */
             function cpto_get_next_post_where($where, $in_same_term, $excluded_terms)
                 {
                     global $post, $wpdb;
@@ -230,6 +251,12 @@
                     return $where;
                 }
 
+            
+            /**
+            * Get next post sort
+            * 
+            * @param mixed $sort
+            */
             function cpto_get_next_post_sort($sort)
                 {
                     global $post, $wpdb; 
@@ -352,7 +379,7 @@
                             @unlink(FLYING_PRESS_CACHE_DIR . '/preload.txt');
 
                             // Delete all files and subdirectories
-                            $this->rrmdir( FLYING_PRESS_CACHE_DIR );
+                            FlyingPress\Purge::purge_everything();
 
                             @mkdir(FLYING_PRESS_CACHE_DIR, 0755, true);
 
@@ -372,5 +399,3 @@
                 }    
                 
         }
-
-?>

@@ -24,7 +24,7 @@ class PluginViewBuilder
     public function __construct($plugin_dir, $template_dir = 'templates')
     {
         $this->plugin_dir = $plugin_dir;
-        if (!\is_array($template_dir)) {
+        if (!is_array($template_dir)) {
             $this->template_dirs = [$template_dir];
         } else {
             $this->template_dirs = $template_dir;
@@ -43,13 +43,13 @@ class PluginViewBuilder
      */
     public function createSimpleRenderer()
     {
-        $resolver = new \FSVendor\WPDesk\View\Resolver\ChainResolver();
-        $resolver->appendResolver(new \FSVendor\WPDesk\View\Resolver\WPThemeResolver(\basename($this->plugin_dir)));
+        $resolver = new ChainResolver();
+        $resolver->appendResolver(new WPThemeResolver(basename($this->plugin_dir)));
         foreach ($this->template_dirs as $dir) {
-            $dir = \trailingslashit($this->plugin_dir) . \trailingslashit($dir);
-            $resolver->appendResolver(new \FSVendor\WPDesk\View\Resolver\DirResolver($dir));
+            $dir = trailingslashit($this->plugin_dir) . trailingslashit($dir);
+            $resolver->appendResolver(new DirResolver($dir));
         }
-        return new \FSVendor\WPDesk\View\Renderer\SimplePhpRenderer($resolver);
+        return new SimplePhpRenderer($resolver);
     }
     /**
      * Load templates using simple renderer.
@@ -63,6 +63,6 @@ class PluginViewBuilder
     public function loadTemplate($name, $path = '.', $args = [])
     {
         $renderer = $this->createSimpleRenderer();
-        return $renderer->render(\trailingslashit($path) . $name, $args);
+        return $renderer->render(trailingslashit($path) . $name, $args);
     }
 }

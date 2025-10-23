@@ -41,7 +41,10 @@ class Wp_Fastest_Cache extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		return wpfc_clear_all_cache();
 	}
 

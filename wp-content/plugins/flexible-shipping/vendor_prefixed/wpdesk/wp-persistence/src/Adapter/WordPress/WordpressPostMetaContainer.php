@@ -9,7 +9,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence\Wordpress
  */
-final class WordpressPostMetaContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
+final class WordpressPostMetaContainer implements PersistentContainer
 {
     /** @var int */
     private $post_id;
@@ -22,11 +22,11 @@ final class WordpressPostMetaContainer implements \FSVendor\WPDesk\Persistence\P
     }
     public function set($key, $value)
     {
-        \update_post_meta($this->post_id, $key, $value);
+        update_post_meta($this->post_id, $key, $value);
     }
     public function get($key)
     {
-        return \get_post_meta($this->post_id, $key, \true);
+        return get_post_meta($this->post_id, $key, \true);
     }
     /**
      * @param string $id
@@ -35,10 +35,10 @@ final class WordpressPostMetaContainer implements \FSVendor\WPDesk\Persistence\P
      */
     public function has($key)
     {
-        return \metadata_exists('post', $this->post_id, $key);
+        return metadata_exists('post', $this->post_id, $key);
     }
     public function delete($key)
     {
-        \delete_post_meta($this->post_id, $key);
+        delete_post_meta($this->post_id, $key);
     }
 }

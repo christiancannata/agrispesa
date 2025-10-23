@@ -52,13 +52,13 @@ class LabelsFileCreator
      */
     public function create_labels_file()
     {
-        if (1 === \count($this->labels)) {
-            \file_put_contents($this->tmp_file_name, $this->labels[0]['content']);
+        if (1 === count($this->labels)) {
+            file_put_contents($this->tmp_file_name, $this->labels[0]['content']);
             // phpcs:ignore
         } else {
             $zip = new \ZipArchive();
             if (!$zip->open($this->tmp_file_name, \ZipArchive::CREATE)) {
-                throw new \FSVendor\WPDesk\FS\Shipment\Exception\UnableToCreateTmpZipFileException();
+                throw new UnableToCreateTmpZipFileException();
             }
             foreach ($this->labels as $label) {
                 if (isset($label['content'])) {
@@ -74,15 +74,15 @@ class LabelsFileCreator
      */
     private function prepare_file_names()
     {
-        if (1 === \count($this->labels)) {
+        if (1 === count($this->labels)) {
             $this->file_name = $this->labels[0]['file_name'];
         } else {
             $this->file_name = 'labels.zip';
         }
-        $this->tmp_file_name = @\tempnam('tmp', 'labels_');
+        $this->tmp_file_name = @tempnam('tmp', 'labels_');
         // phpcs:ignore
         if (!$this->tmp_file_name) {
-            throw new \FSVendor\WPDesk\FS\Shipment\Exception\UnableToCreateTmpFileException();
+            throw new UnableToCreateTmpFileException();
         }
     }
     /**

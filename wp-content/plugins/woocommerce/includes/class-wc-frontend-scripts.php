@@ -3,12 +3,15 @@
  * Handle frontend scripts
  *
  * @package WooCommerce\Classes
- * @version 2.3.0
+ * @version 3.9.0
+ * @since 2.3.0
  */
 
  // phpcs:disable WooCommerce.Commenting.CommentHooks.MissingHookComment
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Admin\Features\Features;
+use Automattic\WooCommerce\Internal\AddressProvider\AddressProviderController;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -88,7 +91,7 @@ class WC_Frontend_Scripts {
 					'media'   => 'all',
 					'has_rtl' => true,
 				),
-				'woocommerce-blocktheme'  => wc_current_theme_is_fse_theme() ? array(
+				'woocommerce-blocktheme'  => wp_is_block_theme() ? array(
 					'src'     => self::get_asset_url( 'assets/css/woocommerce-blocktheme.css' ),
 					'deps'    => '',
 					'version' => $version,
@@ -298,6 +301,11 @@ class WC_Frontend_Scripts {
 				'deps'    => array( 'jquery', 'woocommerce' ),
 				'version' => $version,
 			),
+			'wc-account-i18n'            => array(
+				'src'     => self::get_asset_url( 'assets/js/frontend/account-i18n' . $suffix . '.js' ),
+				'deps'    => array( 'jquery' ),
+				'version' => $version,
+			),
 			'wc-password-strength-meter' => array(
 				'src'     => self::get_asset_url( 'assets/js/frontend/password-strength-meter' . $suffix . '.js' ),
 				'deps'    => array( 'jquery', 'password-strength-meter' ),
@@ -318,7 +326,21 @@ class WC_Frontend_Scripts {
 				'deps'    => array( 'jquery' ),
 				'version' => '1.7.21-wc.' . $version,
 			),
+			'wc-back-in-stock-form'      => array(
+				'src'     => self::get_asset_url( 'assets/js/frontend/back-in-stock-form' . $suffix . '.js' ),
+				'deps'    => array( 'jquery' ),
+				'version' => $version,
+			),
 		);
+
+		if ( Features::is_enabled( 'experimental-blocks' ) ) {
+			$register_scripts['wc-address-autocomplete'] = array(
+				'src'     => self::get_asset_url( 'assets/js/frontend/address-autocomplete' . $suffix . '.js' ),
+				'deps'    => array( 'jquery', 'woocommerce' ),
+				'version' => $version,
+			);
+		}
+
 		foreach ( $register_scripts as $name => $props ) {
 			self::register_script( $name, $props['src'], $props['deps'], $props['version'] );
 		}
@@ -356,6 +378,16 @@ class WC_Frontend_Scripts {
 				'has_rtl' => true,
 			),
 		);
+
+		if ( Features::is_enabled( 'experimental-blocks' ) ) {
+			$register_styles['wc-address-autocomplete'] = array(
+				'src'     => self::get_asset_url( 'assets/css/address-autocomplete.css' ),
+				'deps'    => array(),
+				'version' => $version,
+				'has_rtl' => false,
+			);
+		}
+
 		foreach ( $register_styles as $name => $props ) {
 			self::register_style( $name, $props['src'], $props['deps'], $props['version'], 'all', $props['has_rtl'] );
 		}
@@ -389,8 +421,21 @@ class WC_Frontend_Scripts {
 				self::enqueue_script( 'wc-password-strength-meter' );
 			}
 		}
+		if ( is_account_page() ) {
+			self::enqueue_script( 'wc-account-i18n' );
+		}
 		if ( is_checkout() ) {
 			self::enqueue_script( 'wc-checkout' );
+		}
+		if ( is_checkout() && Features::is_enabled( 'experimental-blocks' ) ) {
+			$address_provider_service = wc_get_container()->get( AddressProviderController::class );
+			if ( $address_provider_service && method_exists( $address_provider_service, 'get_providers' ) ) {
+				$registered_providers = $address_provider_service->get_providers();
+				if ( is_array( $registered_providers ) && count( $registered_providers ) > 0 ) {
+					self::enqueue_script( 'wc-address-autocomplete' );
+					self::enqueue_style( 'wc-address-autocomplete' );
+				}
+			}
 		}
 		if ( is_add_payment_method_page() ) {
 			self::enqueue_script( 'wc-add-payment-method' );
@@ -412,6 +457,7 @@ class WC_Frontend_Scripts {
 				self::enqueue_style( 'photoswipe-default-skin' );
 				add_action( 'wp_footer', 'woocommerce_photoswipe' );
 			}
+
 			self::enqueue_script( 'wc-single-product' );
 		}
 
@@ -486,8 +532,10 @@ class WC_Frontend_Scripts {
 		switch ( $handle ) {
 			case 'woocommerce':
 				$params = array(
-					'ajax_url'    => WC()->ajax_url(),
-					'wc_ajax_url' => WC_AJAX::get_endpoint( '%%endpoint%%' ),
+					'ajax_url'           => WC()->ajax_url(),
+					'wc_ajax_url'        => WC_AJAX::get_endpoint( '%%endpoint%%' ),
+					'i18n_password_show' => esc_attr__( 'Show password', 'woocommerce' ),
+					'i18n_password_hide' => esc_attr__( 'Hide password', 'woocommerce' ),
 				);
 				break;
 			case 'wc-geolocation':
@@ -498,9 +546,17 @@ class WC_Frontend_Scripts {
 				break;
 			case 'wc-single-product':
 				$params = array(
-					'i18n_required_rating_text' => esc_attr__( 'Please select a rating', 'woocommerce' ),
-					'review_rating_required'    => wc_review_ratings_required() ? 'yes' : 'no',
-					'flexslider'                => apply_filters(
+					'i18n_required_rating_text'         => esc_attr__( 'Please select a rating', 'woocommerce' ),
+					'i18n_rating_options'               => array(
+						esc_attr__( '1 of 5 stars', 'woocommerce' ),
+						esc_attr__( '2 of 5 stars', 'woocommerce' ),
+						esc_attr__( '3 of 5 stars', 'woocommerce' ),
+						esc_attr__( '4 of 5 stars', 'woocommerce' ),
+						esc_attr__( '5 of 5 stars', 'woocommerce' ),
+					),
+					'i18n_product_gallery_trigger_text' => esc_attr__( 'View full-screen image gallery', 'woocommerce' ),
+					'review_rating_required'            => wc_review_ratings_required() ? 'yes' : 'no',
+					'flexslider'                        => apply_filters(
 						'woocommerce_single_product_carousel_options',
 						array(
 							'rtl'            => is_rtl(),
@@ -514,10 +570,10 @@ class WC_Frontend_Scripts {
 							'allowOneSlide'  => false,
 						)
 					),
-					'zoom_enabled'              => apply_filters( 'woocommerce_single_product_zoom_enabled', get_theme_support( 'wc-product-gallery-zoom' ) ),
-					'zoom_options'              => apply_filters( 'woocommerce_single_product_zoom_options', array() ),
-					'photoswipe_enabled'        => apply_filters( 'woocommerce_single_product_photoswipe_enabled', get_theme_support( 'wc-product-gallery-lightbox' ) ),
-					'photoswipe_options'        => apply_filters(
+					'zoom_enabled'                      => apply_filters( 'woocommerce_single_product_zoom_enabled', get_theme_support( 'wc-product-gallery-zoom' ) ),
+					'zoom_options'                      => apply_filters( 'woocommerce_single_product_zoom_options', array() ),
+					'photoswipe_enabled'                => apply_filters( 'woocommerce_single_product_photoswipe_enabled', get_theme_support( 'wc-product-gallery-lightbox' ) ),
+					'photoswipe_options'                => apply_filters(
 						'woocommerce_single_product_photoswipe_options',
 						array(
 							'shareEl'               => false,
@@ -527,7 +583,7 @@ class WC_Frontend_Scripts {
 							'showAnimationDuration' => 0,
 						)
 					),
-					'flexslider_enabled'        => apply_filters( 'woocommerce_single_product_flexslider_enabled', get_theme_support( 'wc-product-gallery-slider' ) ),
+					'flexslider_enabled'                => apply_filters( 'woocommerce_single_product_flexslider_enabled', get_theme_support( 'wc-product-gallery-slider' ) ),
 				);
 				break;
 			case 'wc-checkout':
@@ -543,8 +599,20 @@ class WC_Frontend_Scripts {
 					'debug_mode'                => Constants::is_true( 'WP_DEBUG' ),
 					/* translators: %s: Order history URL on My Account section */
 					'i18n_checkout_error'       => sprintf( esc_attr__( 'There was an error processing your order. Please check for any charges in your payment method and review your <a href="%s">order history</a> before placing the order again.', 'woocommerce' ), esc_url( wc_get_account_endpoint_url( 'orders' ) ) ),
-
 				);
+				if ( Features::is_enabled( 'experimental-blocks' ) ) {
+					$providers                   = wc_get_container()->get( AddressProviderController::class )->get_providers();
+					$params['address_providers'] = array_map(
+						function ( $provider ) {
+							// Sanitize provider data before sending to frontend.
+							return array(
+								'id'   => sanitize_key( $provider->id ),
+								'name' => sanitize_text_field( $provider->name ),
+							);
+						},
+						$providers
+					);
+				}
 				break;
 			case 'wc-address-i18n':
 				$params = array(
@@ -591,6 +659,7 @@ class WC_Frontend_Scripts {
 					'i18n_no_matching_variations_text' => esc_attr__( 'Sorry, no products matched your selection. Please choose a different combination.', 'woocommerce' ),
 					'i18n_make_a_selection_text'       => esc_attr__( 'Please select some product options before adding this product to your cart.', 'woocommerce' ),
 					'i18n_unavailable_text'            => esc_attr__( 'Sorry, this product is unavailable. Please choose a different combination.', 'woocommerce' ),
+					'i18n_reset_alert_text'            => esc_attr__( 'Your selection has been reset. Please select some product options before adding this product to your cart.', 'woocommerce' ),
 				);
 				break;
 			case 'wc-country-select':

@@ -123,7 +123,7 @@ class Cookie_Law_Info_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE || isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE || isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cookie-law-info-admin.css', array(), $this->version, 'all' );
 		}
@@ -147,7 +147,7 @@ class Cookie_Law_Info_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE ) {
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cookie-law-info-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
 			wp_localize_script(
 				$this->plugin_name,
@@ -288,7 +288,7 @@ class Cookie_Law_Info_Admin {
 			foreach ( $the_options as $key => $value ) {
 				if ( isset( $_POST[ $key . '_field' ] ) ) {
 					// Store sanitised values only:
-					$the_options[ $key ] = Cookie_Law_Info::sanitise_settings( $key, wp_unslash( $_POST[ $key . '_field' ] ) );
+					$the_options[ $key ] = Cookie_Law_Info::sanitise_settings( $key, wp_unslash( $_POST[ $key . '_field' ] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				}
 			}
 			$the_options = apply_filters( 'wt_cli_before_save_settings', $the_options, $_POST );
@@ -486,7 +486,7 @@ class Cookie_Law_Info_Admin {
 		return $html;
 	}
 	public function redirect_to_settings_page() {
-		if ( ! isset( $_GET['post_type'] ) && isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) {
+		if ( ! isset( $_GET['post_type'] ) && isset( $_GET['page'] ) && $_GET['page'] == 'cookie-law-info' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect( admin_url( 'edit.php?post_type=' . CLI_POST_TYPE . '&page=cookie-law-info' ) );
 			exit();
 		}

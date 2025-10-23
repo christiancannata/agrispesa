@@ -46,9 +46,9 @@ class TextInputControl extends ClassicControl {
 				'value'     => ($value === null) ? '' : $value,
 				'class'     => $classes,
 				'style'     => $this->styles,
-				'data-bind' => $this->makeKoDataBind([
+				'data-bind' => $this->makeKoDataBind(array_merge([
 					'value' => $this->getKoObservableExpression($value),
-				]),
+				], $this->getKoEnableBinding())),
 			)
 		);
 		//phpcs:enable

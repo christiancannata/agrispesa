@@ -17,7 +17,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\SlimPlugin;
  * - initialize helper
  * - build with info about plugin active flag
  */
-class SimplePaidStrategy implements \FSVendor\WPDesk\Plugin\Flow\Initialization\InitializationStrategy
+class SimplePaidStrategy implements InitializationStrategy
 {
     use TrackerInstanceAsFilterTrait;
     use BuilderTrait;
@@ -55,9 +55,9 @@ class SimplePaidStrategy implements \FSVendor\WPDesk\Plugin\Flow\Initialization\
         }
         $this->prepare_tracker_action();
         $registrator = $this->register_plugin();
-        \add_action('plugins_loaded', function () use($registrator) {
-            $is_plugin_subscription_active = $registrator instanceof \FSVendor\WPDesk\License\PluginRegistrator && $registrator->is_active();
-            if ($this->plugin instanceof \FSVendor\WPDesk\PluginBuilder\Plugin\ActivationAware && $is_plugin_subscription_active) {
+        add_action('plugins_loaded', function () use ($registrator) {
+            $is_plugin_subscription_active = $registrator instanceof PluginRegistrator && $registrator->is_active();
+            if ($this->plugin instanceof ActivationAware && $is_plugin_subscription_active) {
                 $this->plugin->set_active();
             }
             $this->store_plugin($this->plugin);
@@ -77,8 +77,8 @@ class SimplePaidStrategy implements \FSVendor\WPDesk\Plugin\Flow\Initialization\
      */
     private function register_plugin()
     {
-        if (\apply_filters('wpdesk_can_register_plugin', \true, $this->plugin_info)) {
-            $registrator = new \FSVendor\WPDesk\License\PluginRegistrator($this->plugin_info);
+        if (apply_filters('wpdesk_can_register_plugin', \true, $this->plugin_info)) {
+            $registrator = new PluginRegistrator($this->plugin_info);
             $registrator->initialize_license_manager();
             return $registrator;
         }

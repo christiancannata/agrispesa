@@ -18,7 +18,7 @@ $icons = array();
 
 $allDashiconDefinitions = '';
 
-$ignoreIcons = array('dashboard', 'editor-bold', 'editor-italic');
+$ignoreIcons = array('dashboard');
 $ignoreIcons = array_flip($ignoreIcons);
 
 // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown -- Not fetching remote data.

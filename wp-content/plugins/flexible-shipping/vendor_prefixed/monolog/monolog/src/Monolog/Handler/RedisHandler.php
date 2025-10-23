@@ -27,7 +27,7 @@ use FSVendor\Monolog\Logger;
  *
  * @phpstan-import-type FormattedRecord from AbstractProcessingHandler
  */
-class RedisHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class RedisHandler extends AbstractProcessingHandler
 {
     /** @var \Predis\Client<\Predis\Client>|\Redis */
     private $redisClient;
@@ -40,10 +40,10 @@ class RedisHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
      * @param string                $key     The key name to push records to
      * @param int                   $capSize Number of entries to limit list size to, 0 = unlimited
      */
-    public function __construct($redis, string $key, $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true, int $capSize = 0)
+    public function __construct($redis, string $key, $level = Logger::DEBUG, bool $bubble = \true, int $capSize = 0)
     {
         if (!($redis instanceof \FSVendor\Predis\Client || $redis instanceof \Redis)) {
-            throw new \InvalidArgumentException('Predis\\Client or Redis instance required');
+            throw new \InvalidArgumentException('Predis\Client or Redis instance required');
         }
         $this->redisClient = $redis;
         $this->redisKey = $key;
@@ -53,7 +53,7 @@ class RedisHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         if ($this->capSize) {
             $this->writeCapped($record);
@@ -67,15 +67,15 @@ class RedisHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
      *
      * @phpstan-param FormattedRecord $record
      */
-    protected function writeCapped(array $record) : void
+    protected function writeCapped(array $record): void
     {
         if ($this->redisClient instanceof \Redis) {
-            $mode = \defined('\\Redis::MULTI') ? \Redis::MULTI : 1;
+            $mode = defined('FSVendor\Redis::MULTI') ? \Redis::MULTI : 1;
             $this->redisClient->multi($mode)->rpush($this->redisKey, $record["formatted"])->ltrim($this->redisKey, -$this->capSize, -1)->exec();
         } else {
             $redisKey = $this->redisKey;
             $capSize = $this->capSize;
-            $this->redisClient->transaction(function ($tx) use($record, $redisKey, $capSize) {
+            $this->redisClient->transaction(function ($tx) use ($record, $redisKey, $capSize) {
                 $tx->rpush($redisKey, $record["formatted"]);
                 $tx->ltrim($redisKey, -$capSize, -1);
             });
@@ -84,8 +84,8 @@ class RedisHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\LineFormatter();
+        return new LineFormatter();
     }
 }

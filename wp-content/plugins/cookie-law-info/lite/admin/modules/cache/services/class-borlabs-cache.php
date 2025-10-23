@@ -41,7 +41,10 @@ class Borlabs_Cache extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		if ( function_exists( \Borlabs\Cache\Frontend\Garbage::getInstance()->clearStylesPreCacheFiles() ) ) {
 			\Borlabs\Cache\Frontend\Garbage::getInstance()->clearStylesPreCacheFiles();
 		}

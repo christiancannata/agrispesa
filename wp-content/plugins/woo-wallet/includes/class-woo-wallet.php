@@ -1,16 +1,22 @@
 <?php
+/**
+ * Main wallet calss
+ *
+ * @package StandaloneTech
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 /**
  * Main wallet calss
  */
-final class WooWallet {
+final class Woo_Wallet {
 
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var WooWallet
+	 * @var Woo_Wallet
 	 * @since 1.0.0
 	 */
 	protected static $_instance = null;
@@ -57,15 +63,9 @@ final class WooWallet {
 	 * Class constructor
 	 */
 	public function __construct() {
-		if ( Woo_Wallet_Dependencies::is_woocommerce_active() ) {
-			$this->includes();
-			$this->init_hooks();
-			do_action( 'woo_wallet_loaded' );
-		} else {
-			require_once ABSPATH . '/wp-admin/includes/plugin.php';
-			deactivate_plugins( plugin_basename( WOO_WALLET_PLUGIN_FILE ) );
-			add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
-		}
+		$this->includes();
+		$this->init_hooks();
+		do_action( 'woo_wallet_loaded' );
 	}
 
 	/**
@@ -135,11 +135,11 @@ final class WooWallet {
 	 */
 	private function init_hooks() {
 		register_activation_hook( WOO_WALLET_PLUGIN_FILE, array( 'Woo_Wallet_Install', 'install' ) );
+		register_deactivation_hook( WOO_WALLET_PLUGIN_FILE, array( $this, 'deactivate_plugin' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( WOO_WALLET_PLUGIN_FILE ), array( $this, 'plugin_action_links' ) );
 		add_action( 'init', array( $this, 'init' ), 5 );
-		add_filter( 'woocommerce_get_query_vars', array( $this, 'woocommerce_query_vars' ) );
 		add_action( 'widgets_init', array( $this, 'woo_wallet_widget_init' ) );
-		add_action( 'woocommerce_loaded', array( $this, 'woocommerce_loaded_callback' ) );
+		add_action( 'init', array( $this, 'woocommerce_loaded_callback' ) );
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 		// Registers WooCommerce Blocks integration.
 		add_action( 'woocommerce_blocks_loaded', array( __CLASS__, 'add_woocommerce_block_support' ) );
@@ -162,8 +162,8 @@ final class WooWallet {
 			add_action( 'woocommerce_order_status_' . $status, array( $this->wallet, 'wallet_credit_purchase' ) );
 		}
 
-		add_action( 'woocommerce_checkout_order_processed', array( $this->wallet, 'wallet_partial_payment' ), 99 );
-		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this->wallet, 'wallet_partial_payment' ), 99 );
+		add_action( 'woocommerce_checkout_order_processed', array( $this->wallet, 'woocommerce_order_processed' ), 99 );
+		add_action( 'woocommerce_store_api_checkout_order_processed', array( $this->wallet, 'woocommerce_order_processed' ), 99 );
 
 		foreach ( apply_filters( 'wallet_cashback_order_status', $this->settings_api->get_option( 'process_cashback_status', '_wallet_settings_credit', array( 'processing', 'completed' ) ) ) as $status ) {
 			add_action( 'woocommerce_order_status_' . $status, array( $this->wallet, 'wallet_cashback' ), 12 );
@@ -182,17 +182,41 @@ final class WooWallet {
 		add_action( 'deleted_user', array( $this, 'delete_user_transaction_records' ) );
 
 		add_action( 'woocommerce_order_data_store_cpt_get_orders_query', array( $this, 'filter_wallet_topup_orders' ), 10, 2 );
+
+		add_filter( 'woocommerce_get_query_vars', array( $this, 'add_woocommerce_query_vars' ) );
+
+		add_action( 'woocommerce_order_item_fee_after_calculate_taxes', array( $this, 'woocommerce_order_item_fee_after_calculate_taxes_callback' ), 10 );
+
+		$is_active = get_option( 'woo_wallet_is_active', false );
+
+		if ( false === $is_active ) {
+			update_option( 'woo_wallet_is_active', true );
+			flush_rewrite_rules();
+			do_action( 'woo_wallet_activated' );
+		}
 	}
+
 	/**
-	 * Add wallet query vars
+	 * Add WooCommerce query vars.
 	 *
-	 * @param array $query_vars query_vars.
-	 * @return array
+	 * @param type $query_vars query_vars.
+	 * @return type
 	 */
-	public function woocommerce_query_vars( $query_vars ) {
-		$query_vars['my-wallet']           = get_option( 'woocommerce_woo_wallet_endpoint', 'my-wallet' );
-		$query_vars['wallet-transactions'] = get_option( 'woocommerce_woo_wallet_transactions_endpoint', 'wallet-transactions' );
+	public function add_woocommerce_query_vars( $query_vars ) {
+		$query_vars['woo-wallet']              = get_option( 'woocommerce_woo_wallet_endpoint', 'my-wallet' );
+		$query_vars['woo-wallet-transactions'] = get_option( 'woocommerce_woo_wallet_transactions_endpoint', 'wallet-transactions' );
 		return $query_vars;
+	}
+
+	/**
+	 * Runs the required processes when the plugin is deactivated.
+	 *
+	 * @since 1.5.0
+	 */
+	public function deactivate_plugin() {
+		delete_option( 'woo_wallet_is_active' );
+		flush_rewrite_rules();
+		do_action( 'woo_wallet_deactivated' );
 	}
 	/**
 	 * WooWallet init widget
@@ -249,10 +273,10 @@ final class WooWallet {
 	 * Text Domain loader
 	 */
 	public function load_plugin_textdomain() {
-		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		$locale = determine_locale();
 		$locale = apply_filters( 'plugin_locale', $locale, 'woo-wallet' );
 
-		unload_textdomain( 'woo-wallet' );
+		unload_textdomain( 'woo-wallet', true );
 		load_textdomain( 'woo-wallet', WP_LANG_DIR . '/woo-wallet/woo-wallet-' . $locale . '.mo' );
 		load_plugin_textdomain( 'woo-wallet', false, plugin_basename( dirname( WOO_WALLET_PLUGIN_FILE ) ) . '/languages' );
 	}
@@ -372,6 +396,7 @@ final class WooWallet {
 			$wpdb->query( $wpdb->prepare( "DELETE t.*, tm.* FROM {$wpdb->base_prefix}woo_wallet_transactions t JOIN {$wpdb->base_prefix}woo_wallet_transaction_meta tm ON t.transaction_id = tm.transaction_id WHERE t.user_id = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 	}
+
 	/**
 	 * Filter wallet topup orders.
 	 *
@@ -389,6 +414,7 @@ final class WooWallet {
 
 		return $query;
 	}
+
 	/**
 	 * Registers WooCommerce Blocks integration.
 	 */
@@ -406,13 +432,13 @@ final class WooWallet {
 		require_once WOO_WALLET_ABSPATH . 'includes/class-woo-wallet-partial-payment-blocks.php';
 		add_action(
 			'woocommerce_blocks_cart_block_registration',
-			function( $integration_registry ) {
+			function ( $integration_registry ) {
 				$integration_registry->register( new WOO_Wallet_Partial_Payment_Blocks() );
 			}
 		);
 		add_action(
 			'woocommerce_blocks_checkout_block_registration',
-			function( $integration_registry ) {
+			function ( $integration_registry ) {
 				$integration_registry->register( new WOO_Wallet_Partial_Payment_Blocks() );
 			}
 		);
@@ -420,13 +446,25 @@ final class WooWallet {
 		woocommerce_store_api_register_update_callback(
 			array(
 				'namespace' => 'apply-partial-payment',
-				'callback'  => function( $data ) {
+				'callback'  => function ( $data ) {
 					if ( ! is_null( wc()->session ) ) {
 						wc()->session->set( 'partial_payment_amount', $data['amount'] );
 					}
 				},
 			)
 		);
+	}
+
+	/**
+	 * Set wallet partial amount tax.
+	 *
+	 * @param WC_Order_Item_Fee $item item.
+	 * @return void
+	 */
+	public function woocommerce_order_item_fee_after_calculate_taxes_callback( $item ) {
+		if ( is_a( $item, 'WC_Order_Item_Fee' ) && '_via_wallet_partial_payment' === $item->get_meta( '_legacy_fee_key' ) ) {
+			$item->set_taxes( false );
+		}
 	}
 
 	/**
@@ -470,19 +508,5 @@ final class WooWallet {
 			$template = $default_path . $template_name;
 		}
 		return $template;
-	}
-
-	/**
-	 * Display admin notice
-	 */
-	public function admin_notices() {
-		?>
-		<div class="error">
-			<p>
-				<?php echo esc_html_e( 'TeraWallet plugin requires', 'woo-wallet' ); ?> 
-				<a href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a> <?php echo esc_html_e( 'plugins to be active!', 'woo-wallet' ); ?>
-			</p>
-		</div>
-		<?php
 	}
 }

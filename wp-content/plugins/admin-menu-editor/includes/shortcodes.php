@@ -54,8 +54,6 @@ class ameCoreShortcodes {
 			$tag
 		);
 
-		$placeholder = $attributes['placeholder'];
-
 		$field = strtolower($attributes['field']);
 		if ( $field === 'id' ) {
 			$field = 'ID';
@@ -76,9 +74,12 @@ class ameCoreShortcodes {
 			$user = apply_filters('admin_menu_editor-redirected_user', null);
 		}
 
-		//Display the placeholder text if nobody is logged in or the user doesn't exist.
-		if ( !self::couldBeValidUserObject($user) ) {
-			return $placeholder;
+		if ( self::couldBeValidUserObject($user) && isset($user->$field) ) {
+			$content = (string)($user->$field);
+		} else {
+			//Display the placeholder text if nobody is logged in, the user doesn't exist,
+			//or the requested field is invalid.
+			$content = wp_kses_post($attributes['placeholder']);
 		}
 
 		$escapingHandlers = array(
@@ -106,10 +107,7 @@ class ameCoreShortcodes {
 			return '(Error: The specified escape function is not available)';
 		}
 
-		if ( isset($user->$field) ) {
-			return call_user_func($escapeCallback, $user->$field);
-		}
-		return $placeholder;
+		return call_user_func($escapeCallback, $content);
 	}
 
 	/**

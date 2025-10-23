@@ -36,6 +36,7 @@ class Google_Proxy {
 	const OAUTH2_AUTH_URI           = '/o/oauth2/auth/';
 	const OAUTH2_DELETE_SITE_URI    = '/o/oauth2/delete-site/';
 	const SETUP_URI                 = '/v2/site-management/setup/';
+	const SETUP_V3_URI              = '/v3/site-management/setup/';
 	const PERMISSIONS_URI           = '/site-management/permissions/';
 	const FEATURES_URI              = '/site-management/features/';
 	const SURVEY_TRIGGER_URI        = '/survey/trigger/';
@@ -139,7 +140,12 @@ class Google_Proxy {
 			throw new Exception( __( 'Missing site_id or site_code parameter for setup URL.', 'google-site-kit' ) );
 		}
 
-		return add_query_arg( $query_params, $this->url( self::SETUP_URI ) );
+		return add_query_arg(
+			$query_params,
+			$this->url(
+				Feature_Flags::enabled( 'setupFlowRefresh' ) ? self::SETUP_V3_URI : self::SETUP_URI
+			)
+		);
 	}
 
 	/**
@@ -198,15 +204,10 @@ class Google_Proxy {
 	 * @return string Complete proxy URL.
 	 */
 	public function url( $path = '' ) {
-		$url          = self::PRODUCTION_BASE_URL;
-		$allowed_urls = array(
-			self::PRODUCTION_BASE_URL,
-			self::STAGING_BASE_URL,
-			self::DEVELOPMENT_BASE_URL,
-		);
+		$url = self::PRODUCTION_BASE_URL;
 
-		if ( defined( 'GOOGLESITEKIT_PROXY_URL' ) && in_array( GOOGLESITEKIT_PROXY_URL, $allowed_urls, true ) ) {
-			$url = GOOGLESITEKIT_PROXY_URL;
+		if ( defined( 'GOOGLESITEKIT_PROXY_URL' ) ) {
+			$url = $this->sanitize_base_url( GOOGLESITEKIT_PROXY_URL );
 		}
 
 		$url = untrailingslashit( $url );
@@ -215,6 +216,33 @@ class Google_Proxy {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Sanitizes the given base URL.
+	 *
+	 * @since 1.154.0
+	 *
+	 * @param string $url Base URL to sanitize.
+	 * @return string Sanitized base URL.
+	 */
+	public function sanitize_base_url( $url ) {
+		$allowed_urls = array(
+			self::PRODUCTION_BASE_URL,
+			self::STAGING_BASE_URL,
+			self::DEVELOPMENT_BASE_URL,
+		);
+
+		if ( in_array( $url, $allowed_urls, true ) ) {
+			return $url;
+		}
+
+		// Allow for version-specific URLs to application instances.
+		if ( preg_match( '#^https://(?:\d{8}t\d{6}-dot-)?site-kit(?:-dev|-local)?(?:\.[a-z]{2}\.r)?\.appspot\.com/?$#', $url, $_ ) ) {
+			return $url;
+		}
+
+		return self::PRODUCTION_BASE_URL;
 	}
 
 	/**
@@ -339,43 +367,6 @@ class Google_Proxy {
 	}
 
 	/**
-	 * Fetch site fields
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param Credentials $credentials Credentials instance.
-	 * @return array|WP_Error The response as an associative array or WP_Error on failure.
-	 */
-	public function fetch_site_fields( Credentials $credentials ) {
-		return $this->request( self::OAUTH2_SITE_URI, $credentials );
-	}
-
-	/**
-	 * Are site fields synced
-	 *
-	 * @since 1.22.0
-	 *
-	 * @param Credentials $credentials Credentials instance.
-	 *
-	 * @return boolean|WP_Error Boolean do the site fields match or WP_Error on failure.
-	 */
-	public function are_site_fields_synced( Credentials $credentials ) {
-		$site_fields = $this->fetch_site_fields( $credentials );
-		if ( is_wp_error( $site_fields ) ) {
-			return $site_fields;
-		}
-
-		$get_site_fields = $this->get_site_fields();
-		foreach ( $get_site_fields as $key => $site_field ) {
-			if ( ! array_key_exists( $key, $site_fields ) || $site_fields[ $key ] !== $site_field ) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Gets user fields.
 	 *
 	 * @since 1.10.0
@@ -442,7 +433,7 @@ class Google_Proxy {
 	 * @param string      $mode        Sync mode.
 	 * @return string|WP_Error Redirect URL on success, otherwise an error.
 	 */
-	private function send_site_fields( Credentials $credentials = null, $mode = 'async' ) {
+	private function send_site_fields( ?Credentials $credentials = null, $mode = 'async' ) {
 		$response = $this->request(
 			self::OAUTH2_SITE_URI,
 			$credentials,
@@ -583,7 +574,7 @@ class Google_Proxy {
 		if ( is_multisite() ) {
 			return 'wordpress-multisite';
 		}
-		return 'wordpress'; // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
+		return 'wordpress'; // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText
 	}
 
 	/**
@@ -638,5 +629,4 @@ class Google_Proxy {
 			)
 		);
 	}
-
 }

@@ -6,15 +6,19 @@ namespace Automattic\WooCommerce\GoogleListingsAndAds\API\Google;
 use Automattic\WooCommerce\GoogleListingsAndAds\Google\GoogleHelper;
 use Automattic\WooCommerce\GoogleListingsAndAds\Exception\InvalidTerm;
 use Automattic\WooCommerce\GoogleListingsAndAds\Exception\InvalidDomainName;
+use Automattic\WooCommerce\GoogleListingsAndAds\Internal\ContainerAwareTrait;
+use Automattic\WooCommerce\GoogleListingsAndAds\Internal\Interfaces\ContainerAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\TransientsInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\PluginHelper;
+use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WC;
 use Automattic\WooCommerce\GoogleListingsAndAds\Proxies\WP;
 use Automattic\WooCommerce\GoogleListingsAndAds\Utility\DateTimeUtility;
 use Automattic\WooCommerce\GoogleListingsAndAds\Value\TosAccepted;
 use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\GuzzleHttp\Client;
-use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Container\ContainerInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Container\ContainerExceptionInterface;
+use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Container\NotFoundExceptionInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Vendor\Psr\Http\Client\ClientExceptionInterface;
 use DateTime;
 use Exception;
@@ -30,29 +34,17 @@ defined( 'ABSPATH' ) || exit;
  * - DateTimeUtility
  * - GoogleHelper
  * - Merchant
+ * - WC
  * - WP
  *
  * @package Automattic\WooCommerce\GoogleListingsAndAds\API\Google
  */
-class Middleware implements OptionsAwareInterface {
+class Middleware implements ContainerAwareInterface, OptionsAwareInterface {
 
+	use ContainerAwareTrait;
 	use ExceptionTrait;
 	use OptionsAwareTrait;
 	use PluginHelper;
-
-	/**
-	 * @var ContainerInterface
-	 */
-	protected $container;
-
-	/**
-	 * Middleware constructor.
-	 *
-	 * @param ContainerInterface $container
-	 */
-	public function __construct( ContainerInterface $container ) {
-		$this->container = $container;
-	}
 
 	/**
 	 * Get all Merchant Accounts associated with the connected account.
@@ -139,7 +131,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_manager_url( 'create-merchant' ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'name'       => $name,
 							'websiteUrl' => $site_url,
@@ -206,7 +198,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_manager_url( 'link-merchant' ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'accountId' => $this->options->get_merchant_id(),
 						]
@@ -248,7 +240,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_manager_url( 'claim-website' ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'accountId' => $this->options->get_merchant_id(),
 							'overwrite' => $overwrite,
@@ -288,7 +280,7 @@ class Middleware implements OptionsAwareInterface {
 	 */
 	public function create_ads_account(): array {
 		try {
-			$country = WC()->countries->get_base_country();
+			$country = $this->container->get( WC::class )->get_base_country();
 
 			/** @var GoogleHelper $google_helper */
 			$google_helper = $this->container->get( GoogleHelper::class );
@@ -307,7 +299,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_manager_url( $country . '/create-customer' ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'descriptive_name' => $this->new_account_name(),
 							'currency_code'    => get_woocommerce_currency(),
@@ -366,7 +358,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_manager_url( 'link-customer' ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'client_customer' => $id,
 						]
@@ -437,7 +429,7 @@ class Middleware implements OptionsAwareInterface {
 			$result = $client->post(
 				$this->get_tos_url( $service ),
 				[
-					'body' => json_encode(
+					'body' => wp_json_encode(
 						[
 							'email' => $email,
 						]
@@ -480,6 +472,102 @@ class Middleware implements OptionsAwareInterface {
 	protected function get_manager_url( string $name = '' ): string {
 		$url = $this->container->get( 'connect_server_root' ) . 'google/manager';
 		return $name ? trailingslashit( $url ) . $name : $url;
+	}
+
+	/**
+	 * Get the server endpoint URL
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $name Resource name.
+	 *
+	 * @return string
+	 */
+	protected function get_server_url( string $name = '' ): string {
+		$url = $this->container->get( 'connect_server_root' );
+		return $name ? trailingslashit( $url ) . $name : $url;
+	}
+
+	/**
+	 * Get the Google Shopping Data Integration auth endpoint URL
+	 *
+	 * @return string
+	 */
+	public function get_sdi_auth_endpoint(): string {
+		return $this->container->get( 'connect_server_root' )
+				. 'google/google-sdi/v1/credentials/partners/WOO_COMMERCE/merchants/'
+				. $this->strip_url_protocol( $this->get_site_url() )
+				. '/oauth/redirect:generate'
+				. '?merchant_id=' . $this->options->get_merchant_id();
+	}
+
+	/**
+	 * Get the URL for the Google SDI merchant update endpoint.
+	 *
+	 * @return string
+	 */
+	public function get_sdi_merchant_update_endpoint(): string {
+		return $this->get_sdi_endpoint() . 'account:connect';
+	}
+
+	/**
+	 * Get the base endpoint to the Google Shopping Data Integration (SDI).
+	 *
+	 * @return string
+	 */
+	protected function get_sdi_endpoint(): string {
+		return $this->container->get( 'connect_server_root' )
+			. 'google/google-sdi/v1/credentials/partners/WOO_COMMERCE/merchants/'
+			. $this->strip_url_protocol( $this->get_site_url() )
+			. '/';
+	}
+
+	/**
+	 * Performs a request to Google Shopping Data Integration (SDI) to update the merchant center account.
+	 *
+	 * @throws NotFoundExceptionInterface  When the container was not found.
+	 * @throws ContainerExceptionInterface When an error happens while retrieving the container.
+	 * @throws Exception When the response status is not successful, or merchant ID is not set.
+	 * @see google-sdi in google/services inside WCS
+	 */
+	public function update_sdi_merchant_account() {
+		try {
+			if ( ! $this->options->get_merchant_id() ) {
+				throw new Exception( __( 'Merchant ID must be set before updating in SDI.', 'google-listings-and-ads' ) );
+			}
+
+			/** @var Client $client */
+			$client = $this->container->get( Client::class );
+			$result = $client->post(
+				$this->get_sdi_merchant_update_endpoint(),
+				[
+					'body' => wp_json_encode(
+						[
+							'merchant_center_id' => $this->options->get_merchant_id(),
+							'blog_id'            => \Jetpack_Options::get_option( 'id' ),
+						]
+					),
+				]
+			);
+
+			// Check the status, since an empty response is returned upon success.
+			if ( 200 !== $result->getStatusCode() ) {
+				$response = json_decode( $result->getBody()->getContents(), true );
+				do_action( 'woocommerce_gla_guzzle_invalid_response', $response, __METHOD__ );
+
+				throw new Exception(
+					__( 'Invalid response when updating merchant account in Google Partner APP.', 'google-listings-and-ads' ),
+					$result->getStatusCode()
+				);
+			}
+		} catch ( ClientExceptionInterface $e ) {
+			do_action( 'woocommerce_gla_guzzle_client_exception', $e, __METHOD__ );
+
+			throw new Exception(
+				$this->client_exception_message( $e, __( 'Error updating merchant account in Google Partner APP.', 'google-listings-and-ads' ) ),
+				$e->getCode()
+			);
+		}
 	}
 
 	/**
@@ -551,5 +639,122 @@ class Middleware implements OptionsAwareInterface {
 
 		// since transients don't support booleans, we save them as 0/1 and do the conversion here
 		return boolval( $is_subaccount );
+	}
+
+	/**
+	 * Performs a request to Google Shopping Data Integration (SDI) to get required information in order to form an auth URL.
+	 *
+	 * @return array An array with the JSON response from the WCS server.
+	 * @throws NotFoundExceptionInterface  When the container was not found.
+	 * @throws ContainerExceptionInterface When an error happens while retrieving the container.
+	 * @throws Exception When the response status is not successful.
+	 * @see google-sdi in google/services inside WCS
+	 */
+	public function get_sdi_auth_params() {
+		try {
+			/** @var Client $client */
+			$client   = $this->container->get( Client::class );
+			$result   = $client->get( $this->get_sdi_auth_endpoint() );
+			$response = json_decode( $result->getBody()->getContents(), true );
+
+			if ( 200 !== $result->getStatusCode() ) {
+				do_action(
+					'woocommerce_gla_partner_app_auth_failure',
+					[
+						'error'    => 'response',
+						'response' => $response,
+					]
+				);
+				do_action( 'woocommerce_gla_guzzle_invalid_response', $response, __METHOD__ );
+				$error = $response['message'] ?? __( 'Invalid response authenticating partner app.', 'google-listings-and-ads' );
+				throw new Exception( $error, $result->getStatusCode() );
+			}
+
+			return $response;
+
+		} catch ( ClientExceptionInterface $e ) {
+			do_action( 'woocommerce_gla_guzzle_client_exception', $e, __METHOD__ );
+
+			throw new Exception(
+				$this->client_exception_message( $e, __( 'Error authenticating Google Partner APP.', 'google-listings-and-ads' ) ),
+				$e->getCode()
+			);
+		}
+	}
+
+	/**
+	 * Fetch incentive credits from the Google Ads API.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return array The incentive credits data.
+	 * @throws Exception When an error occurs during the request.
+	 */
+	public function get_incentive_credits(): array {
+		$country = $this->container->get( WC::class )->get_base_country();
+
+		try {
+			/** @var Client $client */
+			$client = $this->container->get( Client::class );
+
+			// Send GET request to the incentive credits endpoint using the stores base country.
+			$result = $client->get(
+				$this->get_server_url( 'google/ads/incentive-credits' ),
+				[
+					'query' => [
+						'countries' => $country,
+					],
+				]
+			);
+
+			$response = json_decode( $result->getBody()->getContents(), true );
+
+			if ( 200 !== $result->getStatusCode() ) {
+				do_action( 'woocommerce_gla_guzzle_invalid_response', $response, __METHOD__ );
+				$error = $response['message'] ?? __( 'Invalid response when fetching incentive credits.', 'google-listings-and-ads' );
+				throw new Exception( $error, $result->getStatusCode() );
+			}
+
+			if ( ! empty( $response['offers'] ) && is_array( $response['offers'] ) ) {
+				$offers               = $response['offers'];
+				$ads_currency         = $this->container->get( Ads::class )->get_ads_currency();
+				$store_currency       = $this->container->get( WC::class )->get_woocommerce_currency();
+				$ads_currency_index   = -1;
+				$store_currency_index = -1;
+				$index_key            = -1;
+
+				// Loop through all offers and locate Ads currency and store currency as a fallback.
+				foreach ( $offers as $index => $offer ) {
+					if ( $offer['currency'] === $ads_currency ) {
+						$ads_currency_index = $index;
+					}
+					if ( $offer['currency'] === $store_currency ) {
+						$store_currency_index = $index;
+					}
+				}
+
+				// Ads account currency is prioritized.
+				if ( $ads_currency_index !== -1 ) {
+					$index_key = $ads_currency_index;
+				} elseif ( $store_currency_index !== -1 ) {
+					$index_key = $store_currency_index;
+				} else {
+					$index_key = array_key_first( $offers );
+				}
+
+				// Include Ads account currency in the response.
+				$offers[ $index_key ]['ads_currency'] = $ads_currency;
+				return $offers[ $index_key ];
+			}
+
+			return [];
+		} catch ( ClientExceptionInterface $e ) {
+			do_action( 'woocommerce_gla_guzzle_client_exception', $e, __METHOD__ );
+
+			throw new Exception(
+				$this->client_exception_message( $e, __( 'Error fetching incentive credits.', 'google-listings-and-ads' ) ),
+				$e->getCode()
+			);
+		}
 	}
 }

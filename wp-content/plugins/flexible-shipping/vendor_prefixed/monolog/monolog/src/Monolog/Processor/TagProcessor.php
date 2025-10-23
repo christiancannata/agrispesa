@@ -16,7 +16,7 @@ namespace FSVendor\Monolog\Processor;
  *
  * @author Martijn Riemers
  */
-class TagProcessor implements \FSVendor\Monolog\Processor\ProcessorInterface
+class TagProcessor implements ProcessorInterface
 {
     /** @var string[] */
     private $tags;
@@ -30,15 +30,15 @@ class TagProcessor implements \FSVendor\Monolog\Processor\ProcessorInterface
     /**
      * @param string[] $tags
      */
-    public function addTags(array $tags = []) : self
+    public function addTags(array $tags = []): self
     {
-        $this->tags = \array_merge($this->tags, $tags);
+        $this->tags = array_merge($this->tags, $tags);
         return $this;
     }
     /**
      * @param string[] $tags
      */
-    public function setTags(array $tags = []) : self
+    public function setTags(array $tags = []): self
     {
         $this->tags = $tags;
         return $this;
@@ -46,7 +46,7 @@ class TagProcessor implements \FSVendor\Monolog\Processor\ProcessorInterface
     /**
      * {@inheritDoc}
      */
-    public function __invoke(array $record) : array
+    public function __invoke(array $record): array
     {
         $record['extra']['tags'] = $this->tags;
         return $record;

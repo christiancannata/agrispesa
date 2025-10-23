@@ -22,7 +22,7 @@ class Video extends Metabox {
 	 * @return string
 	 */
 	private function get_body_content() {
-		$youtube_url = 'https://www.youtube.com/embed/Fk0mF0s6W8w';
+		$youtube_url = 'https://www.youtube.com/embed/UPumLCbqjZA';
 
 		return '<p style="text-align:center;"><iframe width="688" height="387" src="' . esc_url( $youtube_url ) . '?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>';
 	}

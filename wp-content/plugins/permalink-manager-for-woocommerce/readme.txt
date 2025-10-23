@@ -2,10 +2,10 @@
 Plugin Name: Permalink Manager for WooCommerce
 Contributors: dholovnia, berocket
 Donate link: https://berocket.com/?utm_source=wordpress_org&utm_medium=donate&utm_campaign=permalink_manager
-Tags: woocommerce url, remove product, remove product_category, remove product_cat, woocommerce permalink, permalink manager, permalink editor, woocommerce url, remove product_tag, woocommerce permalink, woocommerce, woocommerce seo
+Tags: remove url, url, permalink manager, permalink editor, seo
 Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 1.0.8.1
+Tested up to: 6.6
+Stable tag: 1.0.8.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,8 +27,8 @@ Permalink Manager for WooCommerce is developed to provide your store nicer urls.
 
 = General options =
 
-* Prefix - option to add extra level to the link
-* Update breadcrumbs - option to add Prefix( extra level ) to the WooCommerce breadcrumbs
+* Prefix – option to add extra level to the link
+* Update breadcrumbs – option to add Prefix( extra level ) to the WooCommerce breadcrumbs
 
 
 = Product options =
@@ -94,56 +94,59 @@ Please open site admin -> Settings -> Permalinks and scroll down to Permalink Ma
 
 == Changelog ==
 
+= 1.0.8.2 =
+* Enhancement – Compatibility version: WordPress 6.6 and WooCommerce 9.1
+
 = 1.0.8.1 =
-* Fix - fix issue with WooCommerce redirect to the right product page
-* Enhancement - Compatibility version: WordPress 6.2 and WooCommerce 7.8
-* Enhancement - WooCommerce High-Performance Order Storage support enable
+* Fix – fix issue with WooCommerce redirect to the right product page
+* Enhancement – Compatibility version: WordPress 6.2 and WooCommerce 7.8
+* Enhancement – WooCommerce High-Performance Order Storage support enable
 
 = 1.0.8 =
-* Enhancement - Compatibility version: WordPress 6.1 and WooCommerce 7.1
-* Enhancement - Compatibility with Elementor PRO
-* Fix - correct processing of WooCommerce redirect to the right product page
+* Enhancement – Compatibility version: WordPress 6.1 and WooCommerce 7.1
+* Enhancement – Compatibility with Elementor PRO
+* Fix – correct processing of WooCommerce redirect to the right product page
 
 = 1.0.7.6 =
-* Enhancement - Compatibility version: Wordpress 5.9 and WooCommerce 6.2
-* Fix - Compatibility with latest version of Advanced AJAX Product Filters
+* Enhancement – Compatibility version: Wordpress 5.9 and WooCommerce 6.2
+* Fix – Compatibility with latest version of Advanced AJAX Product Filters
 
 = 1.0.7.5 =
-* Enhancement - Compatibility version: WooCommerce 5.6
+* Enhancement – Compatibility version: WooCommerce 5.6
 
 = 1.0.7.4 =
-* Enhancement - Compatibility version: Wordpress 5.8 and WooCommerce 5.5
+* Enhancement – Compatibility version: Wordpress 5.8 and WooCommerce 5.5
 
 = 1.0.7.3 =
-* Enhancement - Compatibility version: WooCommerce 5.4
+* Enhancement – Compatibility version: WooCommerce 5.4
 
 = 1.0.7.1 =
-* Enhancement - Compatibility version: Wordpress 5.7.2 and WooCommerce 5.3
-* Fix - Link in admin area
-* Fix - Compatibility with SEO plugins
+* Enhancement – Compatibility version: Wordpress 5.7.2 and WooCommerce 5.3
+* Fix – Link in admin area
+* Fix – Compatibility with SEO plugins
 
 = 1.0.7.1 =
-* Enhancement - Compatibility version: Wordpress 5.7 and WooCommerce 5.1
+* Enhancement – Compatibility version: Wordpress 5.7 and WooCommerce 5.1
 
 = 1.0.7 =
-* Fix - don't redirect when it is preview
-* Fix - core prefix fixed when product is set to Default
+* Fix – don't redirect when it is preview
+* Fix – core prefix fixed when product is set to Default
 * Adding WC version
 
 = 1.0.6 =
-* Enhancement - Option to translate Prefix with WPML and Polylang
-* Fix - Admin product's filters by category wasn't working
-* Fix - Cleaning product permalink option when plugin's product rewrite is off
+* Enhancement – Option to translate Prefix with WPML and Polylang
+* Fix – Admin product's filters by category wasn't working
+* Fix – Cleaning product permalink option when plugin's product rewrite is off
 
 = 1.0.5 =
-* Enhancement - Option to add Prefix to the WooCommerce breadcrumbs
+* Enhancement – Option to add Prefix to the WooCommerce breadcrumbs
 
 = 1.0.4 =
-* Fix - Notice when prefix is empty.
+* Fix – Notice when prefix is empty.
 
 = 1.0.3 =
-* Fix - Product attribute base is saving again and can be configured
-* Enhancement - Prefix option is added
+* Fix – Product attribute base is saving again and can be configured
+* Enhancement – Prefix option is added
 
 = 1.0.2 =
 * Settings link to the Plugins page

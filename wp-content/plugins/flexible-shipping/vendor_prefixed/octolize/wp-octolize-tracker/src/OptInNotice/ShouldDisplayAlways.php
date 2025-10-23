@@ -5,7 +5,7 @@ namespace FSVendor\Octolize\Tracker\OptInNotice;
 /**
  * Should display always.
  */
-class ShouldDisplayAlways implements \FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplay
+class ShouldDisplayAlways implements ShouldDisplay
 {
     /**
      * @inheritDoc

@@ -9,6 +9,7 @@ namespace CookieYes\Lite\Admin\Modules\Review_Feedback;
 
 use CookieYes\Lite\Includes\Modules;
 use CookieYes\Lite\Includes\Notice;
+use CookieYes\Lite\Admin\Modules\Connect_Banner\Connect_Banner;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -50,6 +51,7 @@ class Review_Feedback extends Modules {
 	public function init() {
 		add_action( 'admin_notices', array( $this, 'add_notice' ) );
 		add_action( 'admin_print_footer_scripts', array( $this, 'add_script' ) );
+		add_filter( 'admin_footer_text', array( $this, 'add_footer_review_link' ) );
 	}
 
 	/**
@@ -69,14 +71,21 @@ class Review_Feedback extends Modules {
 		if ( ! isset( $notices['review_notice'] ) || empty( $notices['review_notice'] ) ) {
 			return;
 		}
+		$connect_banner = Connect_Banner::get_instance()->check_condition();
+		if ( $screen && 'plugins' === $screen->id && $connect_banner ) {
+			return;
+		}
 		?>
 		<div class="cky-notice-review cky-admin-notice cky-admin-notice-default is-dismissible">
 			<div class="cky-admin-notice-content">
 				<div class="cky-admin-notice-message">
 					<div class="cky-row cky-align-center">
 						<div class="cky-col-12">
-							<h4 class="cky-admin-notice-header"><img width="100" src="<?php echo esc_attr( $assets_path ) . 'logo.svg'; ?>" alt=""></h4>
-							<p style="margin-top: 15px; margin-bottom:5px;"><?php echo wp_kses_post( sprintf( __( 'Hey, we at %1$s CookieYes %2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.', 'cookie-law-info' ), '<b>', '</b>' ) ); ?></p>
+							<h4 class="cky-admin-notice-header"><img width="100" src="<?php echo esc_url( $assets_path . 'logo.svg' ); ?>" alt="<?php esc_attr_e( 'CookieYes Logo', 'cookie-law-info' ); ?>"></h4> <?php //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+							<p style="margin-top: 15px; margin-bottom:5px;"><?php 
+								/* translators: %1$s: opening bold tag, %2$s: closing bold tag */
+								echo wp_kses_post( sprintf( __( 'Hey, we at %1$s CookieYes %2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.', 'cookie-law-info' ), '<b>', '</b>' ) ); 
+							?></p>
 						</div>
 						<div class="cky-col-12">
 							<div class="cky-flex" style="margin-top: 10px;">
@@ -222,5 +231,41 @@ class Review_Feedback extends Modules {
 				})(jQuery)
 			</script>
 			<?php
+	}
+
+	function add_footer_review_link($footer_text) {
+		$notices = Notice::get_instance()->get_dismissed();
+	
+		if ( isset( $notices['review_notice'] ) && ( $notices['review_notice'] === false ) ) {
+			return $footer_text;
+		}
+		
+		// Check if we are on the plugin page
+		$screen = get_current_screen();
+		if ($screen->id == 'toplevel_page_cookie-law-info') {
+			$link_text = esc_html__( 'Give us a 5-star rating!', 'cookie-law-info' );
+			$link1 = sprintf(
+				'<a class="cky-button-review" href="%1$s" target="_blank" title="%2$s">&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
+				$this->review_url,
+				$link_text
+			);
+			$link2 = sprintf(
+				'<a class="cky-button-review" href="%1$s" target="_blank" title="%2$s">WordPress.org</a>',
+				$this->review_url,
+				$link_text
+			);
+
+			return sprintf(
+				/* translators: %1$s: CookieYes plugin name in bold, %2$s: star rating link, %3$s: WordPress.org link */
+				esc_html__(
+					'Please rate %1$s %2$s on %3$s to help us spread the word. Thank you from the team CookieYes!',
+					'cookie-law-info'
+				),
+				sprintf( '<strong>%1$s</strong>', 'CookieYes' ),
+				wp_kses_post( $link1 ),
+				wp_kses_post( $link2 )
+			);
+		}
+		return $footer_text;
 	}
 }

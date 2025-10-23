@@ -12,7 +12,7 @@ class StringSetting extends Setting {
 	protected $maxLength = null;
 	protected $validators = [];
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, ?StorageInterface $store = null, $params = []) {
 		parent::__construct($id, $store, $params);
 
 		if ( array_key_exists('minlength', $params) ) {
@@ -29,6 +29,10 @@ class StringSetting extends Setting {
 			isset($params['regex']) ? $params['regex'] : null,
 			array_key_exists('trimmed', $params) && $params['trimmed']
 		);
+
+		if ( array_key_exists('customValidators', $params) ) {
+			$this->validators = array_merge($this->validators, $params['customValidators']);
+		}
 	}
 
 	public function validate($errors, $value, $stopOnFirstError = false) {
@@ -36,19 +40,6 @@ class StringSetting extends Setting {
 			return null;
 		}
 
-		$convertedValue = $value;
-		foreach ($this->validators as $validator) {
-			$result = call_user_func($validator, $convertedValue, $errors);
-			if ( is_wp_error($result) ) {
-				$errors = $result;
-				if ( $stopOnFirstError ) {
-					return $errors;
-				}
-			} else {
-				$convertedValue = $result;
-			}
-		}
-
-		return $convertedValue;
+		return self::applyValidators($this->validators, $value, $errors, $stopOnFirstError);
 	}
 }

@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WPDesk\\FS\\' => array($baseDir . '/src/WPDesk/FS'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
 );

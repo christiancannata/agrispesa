@@ -179,6 +179,31 @@ class CLI_Runner extends Abstract_Check_Runner {
 	}
 
 	/**
+	 * Initializes the runtime environment so that runtime checks can be run against a separate set of database tables.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return callable[] Array of cleanup functions to run after the process has completed.
+	 */
+	protected function initialize_runtime(): array {
+		/*
+		 * Since for WP-CLI all checks are run in a single process, we should set up the runtime environment (i.e.
+		 * install the separate database tables) as part of this step.
+		 * This way it runs before the regular runtime preparations, just like it does for the AJAX based flow, where
+		 * they are invoked in a separate request prior to the requests performing actual checks.
+		 */
+		$runtime_setup = new Runtime_Environment_Setup();
+		$runtime_setup->set_up();
+
+		$cleanup_functions   = parent::initialize_runtime();
+		$cleanup_functions[] = function () use ( $runtime_setup ) {
+			$runtime_setup->clean_up();
+		};
+
+		return $cleanup_functions;
+	}
+
+	/**
 	 * Checks whether the current environment allows for runtime checks to be used.
 	 *
 	 * @since 1.2.0

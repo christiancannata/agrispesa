@@ -5,7 +5,7 @@ namespace FSVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Tracker_Sender_Wordpress_To_WPDesk')) {
+if (!\class_exists('FSVendor\WPDesk_Tracker_Sender_Wordpress_To_WPDesk')) {
     class WPDesk_Tracker_Sender_Wordpress_To_WPDesk implements \WPDesk_Tracker_Sender
     {
         /**
@@ -37,7 +37,7 @@ if (!\class_exists('FSVendor\\WPDesk_Tracker_Sender_Wordpress_To_WPDesk')) {
         {
             $response = \wp_remote_post($this->get_api_url(), ['method' => 'POST', 'timeout' => 5, 'redirection' => 5, 'httpversion' => '1.0', 'blocking' => \false, 'headers' => ['user-agent' => 'WPDeskTracker'], 'body' => \json_encode($payload), 'cookies' => []]);
             if ($response instanceof \WP_Error) {
-                throw new \FSVendor\WPDesk_Tracker_Sender_Exception_WpError('Payload send error', $response);
+                throw new WPDesk_Tracker_Sender_Exception_WpError('Payload send error', $response);
             } else {
                 return $response;
             }

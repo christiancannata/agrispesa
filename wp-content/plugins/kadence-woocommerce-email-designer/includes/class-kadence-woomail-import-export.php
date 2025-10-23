@@ -106,6 +106,17 @@ To reset your password, visit the following address:";s:31:"kt_woomail[email_loa
 		}
 
 		/**
+		 * Validates if an option key is allowed to be imported using the same logic as the export function
+		 * Only allows options containing 'kt_woomail' or those explicitly listed in $woo_core_options.
+		 *
+		 * @param string $option_key The option key to validate.
+		 * @return bool True if the option is allowed, false otherwise.
+		 */
+		private static function is_allowed_option( $option_key ) {
+			return ( stristr( $option_key, 'kt_woomail' ) || in_array( $option_key, self::$woo_core_options ) );
+		}
+
+		/**
 	 	 * Check to see if we need to do an export or import.
 	 	 * @param object $wp_customize An instance of WP_Customize_Manager.
 		 * @return void
@@ -193,7 +204,7 @@ To reset your password, visit the following address:";s:31:"kt_woomail[email_loa
 			// Setup internal vars.
 			$kt_woomail_import_error = false;
 			$template                = 'kadence-woomail-designer';
-			$overrides               = array( 'test_form' => false, 'test_type' => false, 'mimes' => array( 'dat' => 'text/plain', 'json' => 'text/plain' ) );
+			$overrides               = array( 'test_form' => false, 'test_type' => true, 'mimes' => array( 'dat' => 'text/plain', 'json' => 'text/plain' ) );
 			$file                    = wp_handle_upload( $_FILES['kadence-woomail-import-file'], $overrides );
 
 			// Make sure we have an uploaded file.
@@ -235,6 +246,10 @@ To reset your password, visit the following address:";s:31:"kt_woomail[email_loa
 			// Import custom options.
 			if ( isset( $data['options'] ) ) {
 				foreach ( $data['options'] as $option_key => $option_value ) {
+					if ( ! self::is_allowed_option( $option_key ) ) {
+						continue;
+					}
+					
 					$option = new Kadence_Woomail_Import_Option( $wp_customize, $option_key, array(
 						'default'		=> '',
 						'type'			=> 'option',
@@ -322,6 +337,9 @@ To reset your password, visit the following address:";s:31:"kt_woomail[email_loa
 			if ( isset( $data['options'] ) ) {
 				
 				foreach ( $data['options'] as $option_key => $option_value ) {
+					if ( ! self::is_allowed_option( $option_key ) ) {
+						continue;
+					}
 					
 					$option = new Kadence_Woomail_Import_Option( $wp_customize, $option_key, array(
 						'default'		=> '',

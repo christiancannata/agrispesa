@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Form;
 
-use Psr\Container\ContainerInterface;
+use FSVendor\Psr\Container\ContainerInterface;
 use FSVendor\WPDesk\Forms\ContainerForm;
 use FSVendor\WPDesk\Forms\Field;
 use FSVendor\WPDesk\Forms\FieldProvider;
@@ -11,7 +11,7 @@ use FSVendor\WPDesk\Persistence\Adapter\ArrayContainer;
 use FSVendor\WPDesk\Persistence\ElementNotExistsException;
 use FSVendor\WPDesk\Persistence\PersistentContainer;
 use FSVendor\WPDesk\View\Renderer\Renderer;
-class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Forms\ContainerForm, \FSVendor\WPDesk\Forms\FieldProvider
+class FormWithFields implements Form, ContainerForm, FieldProvider
 {
     use Field\Traits\HtmlAttributes;
     /**
@@ -88,7 +88,7 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
     /**
      * @inheritDoc
      */
-    public function add_field(\FSVendor\WPDesk\Forms\Field $field)
+    public function add_field(Field $field)
     {
         $this->fields[] = $field;
     }
@@ -106,7 +106,7 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
      */
     public function add_fields(array $fields)
     {
-        \array_map([$this, 'add_field'], $fields);
+        array_map([$this, 'add_field'], $fields);
     }
     /**
      * @inheritDoc
@@ -146,15 +146,15 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
      */
     public function set_data($data)
     {
-        if (\is_array($data)) {
-            $data = new \FSVendor\WPDesk\Persistence\Adapter\ArrayContainer($data);
+        if (is_array($data)) {
+            $data = new ArrayContainer($data);
         }
         foreach ($this->fields as $field) {
             $data_key = $field->get_name();
             if ($data->has($data_key)) {
                 try {
                     $this->updated_data[$data_key] = $data->get($data_key);
-                } catch (\FSVendor\WPDesk\Persistence\ElementNotExistsException $e) {
+                } catch (ElementNotExistsException $e) {
                     $this->updated_data[$data_key] = \false;
                 }
             }
@@ -167,7 +167,7 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
      *
      * @return string
      */
-    public function render_fields(\FSVendor\WPDesk\View\Renderer\Renderer $renderer)
+    public function render_fields(Renderer $renderer)
     {
         $content = '';
         $fields_data = $this->get_data();
@@ -179,7 +179,7 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
     /**
      * @inheritDoc
      */
-    public function render_form(\FSVendor\WPDesk\View\Renderer\Renderer $renderer)
+    public function render_form(Renderer $renderer)
     {
         $content = $renderer->render('form-start', [
             'form' => $this,
@@ -194,7 +194,7 @@ class FormWithFields implements \FSVendor\WPDesk\Forms\Form, \FSVendor\WPDesk\Fo
     /**
      * @inheritDoc
      */
-    public function put_data(\FSVendor\WPDesk\Persistence\PersistentContainer $container)
+    public function put_data(PersistentContainer $container)
     {
         foreach ($this->get_fields() as $field) {
             $data_key = $field->get_name();

@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class MultipleInputTextField extends \FSVendor\WPDesk\Forms\Field\InputTextField
+class MultipleInputTextField extends InputTextField
 {
     /**
      * @return string

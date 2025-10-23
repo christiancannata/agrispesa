@@ -472,7 +472,7 @@ if ( $page_filter == '1' ) {
 if ( !get_option('niteoCS_socialmedia') ) {
 	$social_icons = array(
 		'facebook',
-		'twitter',
+		'x',
 		'instagram',
 		'skype',
 		'500px',

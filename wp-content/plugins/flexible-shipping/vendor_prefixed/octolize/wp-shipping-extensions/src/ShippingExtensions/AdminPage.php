@@ -10,8 +10,8 @@ trait AdminPage
     /**
      * @return bool
      */
-    public function is_shipping_extensions_page() : bool
+    public function is_shipping_extensions_page(): bool
     {
-        return (\get_current_screen()->id ?? '') === \FSVendor\Octolize\ShippingExtensions\Page::SCREEN_ID;
+        return (get_current_screen()->id ?? '') === Page::SCREEN_ID;
     }
 }

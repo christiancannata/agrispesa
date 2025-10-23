@@ -2,6 +2,9 @@
 
 namespace YahnisElsts\AdminMenuEditor\Customizable\Builders;
 
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas;
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas\Schema;
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas\Struct;
 use YahnisElsts\AdminMenuEditor\Customizable\Settings;
 use YahnisElsts\AdminMenuEditor\Customizable\Storage\StorageInterface;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\Borders;
@@ -88,10 +91,11 @@ class SettingFactory {
 	}
 
 	public function boolean($path, $label = null, $params = array()) {
-		return new Settings\BooleanSetting(
-			$this->idFrom($path),
-			$this->slotFor($path),
-			$this->prepareParams($path, $label, $params)
+		return $this->schemaToSetting(
+			new Schemas\Boolean($label),
+			$path,
+			Settings\WithSchema\SingularSetting::class,
+			$params
 		);
 	}
 
@@ -322,6 +326,134 @@ class SettingFactory {
 			$this->slotFor($path),
 			...$otherConstructorArgs
 		);
+	}
+
+	/**
+	 * @param array<string|int, Schema|Settings\AbstractSetting> $items
+	 * @param callable $settingFromSchema
+	 * @return Settings\AbstractSetting[]
+	 */
+	public static function buildAllWithCustomFactory(array $items, $settingFromSchema) {
+		$instances = [];
+		$building = [];
+		foreach ($items as $key => $item) {
+			if ( $item instanceof Settings\AbstractSetting ) {
+				//This is already a setting, just add it to the list.
+				$instances[$key] = $item;
+			} else if ( $item instanceof Schema ) {
+				$instances[$key] = static::buildSettingFromSchema(
+					$items,
+					$key,
+					$settingFromSchema,
+					$instances,
+					$building
+				);
+			} else {
+				throw new \InvalidArgumentException(
+					esc_html('Invalid item type for a setting builder: ' . gettype($item))
+				);
+			}
+		}
+
+		return $instances;
+	}
+
+	protected static function buildSettingFromSchema(array $schemas, $key, $settingFromSchema, &$instances, &$building) {
+		if ( isset($instances[$key]) ) {
+			return $instances[$key];
+		}
+
+		if ( array_key_exists($key, $building) ) {
+			throw new \RuntimeException('Circular reference detected: ' . esc_html($key));
+		}
+
+		$building[$key] = true;
+
+		$thisSchema = $schemas[$key];
+		$hints = $thisSchema->getSettingBuilderHints();
+
+		//Note that we don't use the params from the hints here. It's up to the factory callback
+		//or the setting class to decide how to use them. This is because the existing callbacks
+		//can also be called directly, without preprocessing by this factory.
+
+		//On the other hand, setting references can only be resolved/built when you have the full
+		//list of relevant schemas, so we do that here.
+
+		$params = [];
+		if ( $hints ) {
+			//Resolve setting references, recursively building them if necessary.
+			foreach ($hints->getSettingReferences() as $paramName => $referenceKey) {
+				$params[$paramName] = static::buildSettingFromSchema(
+					$schemas,
+					$referenceKey,
+					$settingFromSchema,
+					$instances,
+					$building
+				);
+			}
+		}
+
+		$suggestedClassName = static::chooseSettingClassForSchema($thisSchema);
+
+		$instance = call_user_func_array(
+			$settingFromSchema,
+			[$thisSchema, $key, $suggestedClassName, $params]
+		);
+		$instances[$key] = $instance;
+
+		unset($building[$key]);
+
+		return $instance;
+	}
+
+	protected static function chooseSettingClassForSchema(Schema $schema) {
+		$hints = $schema->getSettingBuilderHints();
+		if ( $hints ) {
+			$className = $hints->getClassHint();
+			if ( !empty($className) ) {
+				return $className;
+			}
+		}
+
+		if ( $schema instanceof Struct ) {
+			return Settings\WithSchema\StructSetting::class;
+		}
+		return Settings\WithSchema\SingularSetting::class;
+	}
+
+	public function schemaToSetting(Schema $schema, $path, $className = null, $params = []) {
+		//Override the schema default if we have a specific default value for this setting.
+		if ( array_key_exists('default', $params) ) {
+			$schema = $schema->defaultValue($params['default']);
+		} elseif ( array_key_exists($path, $this->defaults) ) {
+			$schema = $schema->defaultValue($this->defaults[$path]);
+		}
+
+		$id = $this->idFrom($path);
+		$slot = $this->slotFor($path);
+
+		$hints = $schema->getSettingBuilderHints();
+		if ( $hints ) {
+			$params = array_merge($hints->getParams(), $params);
+		}
+		$params = $this->prepareParams($path, null, $params);
+
+		if ( empty($className) ) {
+			$className = static::chooseSettingClassForSchema($schema);
+		}
+
+		return new $className($schema, $id, $slot, $params);
+	}
+
+	/**
+	 * @param array<string|int, Schema|Settings\AbstractSetting> $items
+	 * @return array<Settings\AbstractSetting>
+	 */
+	public function buildSettings(array $items) {
+		return array_values(static::buildAllWithCustomFactory(
+			$items,
+			[$this, 'schemaToSetting']
+		));
 	}
 
 	/**

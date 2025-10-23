@@ -10,7 +10,7 @@ use FSVendor\WPDesk\Persistence\PersistentContainer;
  *
  * @package WPDesk\Persistence\WooCommerce
  */
-final class WooCommerceSettingsContainer implements \FSVendor\WPDesk\Persistence\PersistentContainer
+final class WooCommerceSettingsContainer implements PersistentContainer
 {
     /** @var \WC_Settings_API */
     private $settings;
@@ -21,7 +21,7 @@ final class WooCommerceSettingsContainer implements \FSVendor\WPDesk\Persistence
     public function get($id)
     {
         if (!$this->has($id)) {
-            throw new \FSVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
         }
         return $this->settings->get_option($id);
     }
@@ -31,7 +31,7 @@ final class WooCommerceSettingsContainer implements \FSVendor\WPDesk\Persistence
     }
     public function set($id, $value)
     {
-        if (\version_compare(\WC_VERSION, '3.4', '>=')) {
+        if (version_compare(\WC_VERSION, '3.4', '>=')) {
             $this->settings->update_option($id, $value);
         } else {
             $this->settings->settings[$id] = $value;
@@ -45,7 +45,7 @@ final class WooCommerceSettingsContainer implements \FSVendor\WPDesk\Persistence
      */
     private function update_db_using_wordpress()
     {
-        \update_option($this->settings->get_option_key(), \apply_filters('woocommerce_settings_api_sanitized_fields_' . $this->settings->id, $this->settings->settings), 'yes');
+        update_option($this->settings->get_option_key(), apply_filters('woocommerce_settings_api_sanitized_fields_' . $this->settings->id, $this->settings->settings), 'yes');
     }
     public function delete($id)
     {

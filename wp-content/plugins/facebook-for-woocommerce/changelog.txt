@@ -1,5 +1,463 @@
 *** Facebook for WooCommerce Changelog ***
 
+= 3.5.8 - 2025-09-23 =
+* Add - Add on-hold and pending as valid purchase order states by @ukilla in #3629
+* Fix - Added a check for the # of posts found with a query by @vahidkay-meta in #3606
+* Add - changelog: add parambuilder by @chc421 in #3549
+* Tweak - Removing unnecessary banner for every item publish by @vinkmeta in #3620
+* Fix - Fix - PHP 8.2 string interpolation warning by @ukilla in #3626
+* Fix - [WIFI][EZ]Update switch from only dogfooding GK to one combined with prod GK by @sharunaanandraj in #3627
+* Tweak - Deprecated product group update functionality by @vinkmeta in #3619
+* Tweak - Removed Graph API product delete functionality by @vinkmeta in #3621
+* Add - [WIFI]Return Error Banner if Iframe Management Url Fetching Fails by @sharunaanandraj in #3618
+* Add - Changes to support Order Placed by @woo-ardsouza in #3615
+* Add - Woo Changes to support Order Refunded by @woo-ardsouza in #3614
+* Fix - Remediate privacy vulnerability due to lack of nonce check by @guansu-meta in #3610
+* Add - WooCommerce Changes to call Customer Events Endpoint for Order Fulfilled by @woo-ardsouza in #3611
+* Add - [WIFI]Add Logs for WooCommerce WhatsApp Iframe Infra to Help with Debugging by @sharunaanandraj in #3612
+* Fix - [WIFI][EZ] Fix Iframe Management Url Stefi API Call by @sharunaanandraj in #3608
+* Fix - [WIFI][80/n][EZ]Fix Resize issue by listening to WA specific Resize PostMessage by @sharunaanandraj in #3607
+* Fix - Feat/stock update fix by @rithikb24 in #3602
+* Add - [EZ][WIFI][56/n] Fix CSS in Iframe for whatsapp integration by @sharunaanandraj in #3599
+* Fix - Rollout Switch Test for cache update on version upgrade by @rithikb24 in #3601
+* Add - [WIFI][51/n]Add Support to receive WA Disconnect message to delete settings in Woo DB by @sharunaanandraj in #3598
+* Fix - [WooCommerce] Fix selected category values bug after a new category is created by @Rebeca-Reis in #3597
+* Add - [WIFI][49/n]Add admin banner to Whatsapp Utility Page by @sharunaanandraj in #3596
+* Fix - fix: category name by @rithikb24 in #3590
+* Add - Feat/csv reupload changes by @rithikb24 in #3585
+* Fix - Adding back set-stable-tag workflow by @vahidkay-meta in #3594
+* Add - fix: rollout-switch-transient-flag by @rithikb24 in #3595
+* Add - [WIFI][45/n] Add changes to receive Resizing postMessage and update the Whatsapp iframe by @sharunaanandraj in #3592
+* Add - integrate last change time into external_update_time calculation by @rithikb24 in #3577
+* Add - add product meta change time update handler by @rithikb24 in #3576
+* Add - main decision function based on meta key & product validation by @rithikb24 in #3575
+* Add - add helper functions for tracking product meta change times & rate limit them (#3571) by @rithikb24 in #3578
+* Add - changelog: add parambuilder by @chc421 in #3549
+* Fix - Fix unit tests failing silently by @immadhavv in #3587
+* Add - [WIFI][43/n][EZ] Polish UI for Whatsapp Utility Message Iframe Beta by @sharunaanandraj in #3591
+* Add - [WIFI][37/n]Minor changes to move to new 2P app ID and allow WA Installation Creation by @sharunaanandraj in #3586
+
+= 3.5.7 - 2025-09-02 =
+* Add - DO change: Add route & feed column by @unnivgit in #3580
+* Fix - removing set stable tag to unblock release for now by @immadhavv in #3584
+* Fix - Fixed syncing of excluded product categories and tags info by @vinkmeta in #3582
+* Add - feat: quick edit syncing by @rithikb24 in #3557
+* Add - [WIFI]30/n]Fetch the iframe management url through the Stefi API by @sharunaanandraj in #3569
+* Add - changelog: add referrer url by @chc421 in #3545
+* Fix - Fix sale price higher than fb price by @guansu-meta in #3567
+* Add - [WIFI][26/n]Add Listener and update Whatsapp Settings in DB after onboarding by @sharunaanandraj in #3568
+* Add - [WIFI][25/n]Add scaffolding Iframe Integration in the Whatsapp Tab by @sharunaanandraj in #3566
+* Add - [WIFI][1/n] Add Scaffolding WhatsApp Page under Marketing for WAUM Beta Experience by @sharunaanandraj in #3564
+* Dev - cleanup: remove dead code for product sets sync rollout switch by @devbodaghe in #3560
+* Add - Automatically set last release from release-plugin workflow as latest by @immadhavv in #3552
+* Add - Run unit tests with coverage and compare against threshold by @immadhavv in #3553
+
+= 3.5.6 - 2025-08-18 =
+* Fix - Improving website prformance by reducing frequency of heavy queries by @vinkmeta in #3556
+* Dev - chore: add multiple images functionality tests with rollout switch in… by @devbodaghe in #3554
+* Update - Enable Offer Management APIs + Tweaks by @mradmeta in #3548
+* Add - Add Rollout Switches for Gating Multiple Variants by @devbodaghe in #3551
+* Add - Feature/multiple images for variants by @devbodaghe in #3543
+* Fix - Fix product set banner reappearance after dismissal  by @mshymon in #3547
+* Fix - Remove unnecessary logging for product attribute mapper attributes by @devbodaghe in #3546
+* Update - Deprecate FB Product Sets tab and migrate legacy product sets by @mshymon in #3534
+* Add - Automated secondary QA test to compare artifact from prepare-release and marketplace version by @immadhavv in #3544
+* Fix - Fix: Disable dropdown fields when 'Do not sync' is selected by @devbodaghe in #3541
+* Fix - Show Facebook Product Video field for variable products by @ukilla in #3542
+* Fix - Fix bug in plugin version upgrade/downgrade logic in Lifecycle by @mshymon in #3539
+* Add - Run e2e tests on marketplace release of the plugin by @immadhavv in #3535
+* Fix - Fix/prevent woocommerce attribute summaries in facebook short descriptions by @devbodaghe in #3531
+
+= 3.5.5 - 2025-07-23 =
+* Fix - Updated the links to Meta Support by @vahidkay-meta in #3523
+* Fix - Improving AAM settings params being captured + Purchase events captured by Pixel by @vahidkay-meta in #3512
+* Fix - Prevent cleanupAllUIElements from resetting selects with one option to maintain Composite Products compatibility by @ukilla in #3515
+* Tweak - Updated the agent string to be more accurate by @vahidkay-meta in #3514
+* Fix - Add surface catalog id display with link to commerce manager in produ… by @devbodaghe in #3517
+* Fix - Restrict Facebook banner to only show on attributes page and Facebook settings page by @devbodaghe in #3516
+* Fix - [WAUM] Add country_code to Message Events API by @woo-ardsouza in #3510
+* Fix - Updating promotions feed upload utils tests to fix failure by @nrostrow-meta in #3511
+* Update - Update Node.js & NPM versions used in the plugin by @iodic in #3361
+* Fix - Adding better queries for Filters & removing variant dependencies by @SayanPandey in #3496
+* Add - [facebook-for-woocommerce][PR] Add default brand name in Facebook tab by @Rebeca-Reis in #3505
+* Fix - Updated logger for JsonFeedFileWriter by @vinkmeta in #3503
+* Fix - Migrated Handler exceptions to centralisedLogger by @vinkmeta in #3498
+* Fix - Migrated Abstract Feed Meta loggers to centralised Logger by @vinkmeta in #3499
+* Fix - Moved AbstractFeedFileWriter Meta logs to centralised logger by @vinkmeta in #3500
+* Fix - Migrated CsvFeedFileWriter logs by @vinkmeta in #3501
+* Fix - Updated FeedUploadUtils loggers by @vinkmeta in #3502
+* Fix - Added support for exceptions in Logger by @vinkmeta in #3497
+* Fix - Fix UTF-8 character encoding in normalization method by @devbodaghe in #3495
+* Fix - Fixes add new attribute mapping row selection by @yuriferretti in #3490
+* Tweak - Remove tax attribute mapping option by @juan-goncalves in #3488
+* Fix - Rolling back out of stock change by @SayanPandey in #3492
+* Tweak - [BUG] fix: Product description is a different font size from the rest of the fields on the fb product page  by @mangalutsav in #3493
+* Fix - [Bug] fix: 'Facebook Product Video' field placement by @sarthakpandeymeta in #3491
+* Fix - Adding visibility hidden check for out of stock products by @SayanPandey in #3489
+* Fix - Fix exclude_sale_price Value Type in Discount Syncing by @mradmeta in #3487
+* Dev - Create unit tests for ./Framework/Plugin/Dependancies.php by @ajello-meta in #3485
+* Dev - Create unit tests for ./Framework/Plugin/Compatibility.php by @ajello-meta in #3484
+* Dev - Create unit tests for ./Framework/Api/JSONResponse.php by @ajello-meta in #3481
+* Dev - Create unit tests for ./Framework/Api/Request.php by @ajello-meta in #3479
+* Dev - Improve unit tests for ./Admin/Settings_Screens/Shops.php by @ajello-meta in #3477
+* Dev - Create unit tests for ./Framework/Api/Response.php by @ajello-meta in #3480
+* Dev - Create unit tests for ./Admin/Abstract_Settings_Screen.php by @ajello-meta in #3478
+* Dev - Improve unit tests for ./Admin/Settings_Screens/Connection.php by @ajello-meta in #3476
+* Add - Validate PR has single changelog label by @tzahgr in #3470
+* Add - Set stable tag manual workflow by @tzahgr in #3454
+
+= 3.5.4 - 2025-06-25 =
+* Add - Enhanced product attribute mapping system with improved support for custom fields and value normalization by @devbodaghe in #3234
+* Fix - Single batch call for bulk edit by @SayanPandey in #3352
+* Tweak - Redundant api calls reduction by @SayanPandey in #3356
+* Fix - Whatsapp consent checkbox enable for classic checkout by @sharunaanandraj in #3451
+* Add - Unit tests for FeedConfigurationDetection class by @sol-loup in #3450
+* Add - Unit tests for DebugTools class by @sol-loup in #3448
+* Add - Unit tests for AdminMessageHandler class by @sol-loup in #3447
+* Add - Unit tests for Enhanced_Catalog_Attribute_Fields class by @sol-loup in #3449
+* Add - Comprehensive unit tests for Google_Product_Category_Field class to improve code coverage by @sol-loup in #3446
+* Add - Comprehensive unit tests for Product_Categories class to improve code coverage by @sol-loup in #3426
+* Add - Unit tests for ProductCatalog ProductSets Delete Request class by @sol-loup in #3417
+* Add - Comprehensive unit tests for Request_Limit_Reached exception to improve code coverage by @sol-loup in #3427
+* Add - Comprehensive unit tests for WC_Facebookcommerce_WarmConfig to improve code coverage by @sol-loup in #3424
+* Add - Comprehensive unit tests for Commerce class to improve code coverage by @sol-loup in #3425
+* Add - Unit tests for SettingsMoved note class to improve code coverage by @sol-loup in #3428
+* Add - Comprehensive unit tests for ProfilingLoggerProcess to improve code coverage by @sol-loup in #3412
+* Fix - Logs for excluded categories and tags by @SayanPandey in #3445
+* Fix - Age group normalisation error and updating supported FB fields for age group by @devbodaghe in #3460
+
+= 3.5.3 - 2025-06-17 =
+*   Tweak - Add comprehensive unit tests for Locale class by @sol-loup in #3362
+*   Tweak - Add unit tests for Idempotent_Request trait by @sol-loup in #3380
+*   Tweak - Add comprehensive unit tests for MetaLog Response by @sol-loup in #3376
+*   Tweak - Add comprehensive unit tests for ProductSets Delete Response class by @sol-loup in #3398
+*   Fix - Since tags by @sol-loup in #3397
+*   Tweak - Add comprehensive unit tests for Pages Read Response by @sol-loup in #3378
+*   Tweak - Add comprehensive unit tests for User Response to improve code coverage by @sol-loup in #3377
+*   Fix - Linter errors for ./includes/fbproductfeed.php by @ajello-meta in #3396
+*   Tweak - Add unit tests for Events AAMSettings class by @sol-loup in #3369
+*   Tweak - Improve CAPI event handling & add logging for Purchase events by @iodic in #3360
+*   Fix - Adding links to the updated banner by @SayanPandey in #3388
+*   Fix - Removing deprecated tag from Product Sync tab by @SayanPandey in #3387
+*   Fix - Transmit opted_out_woo_all_products timestamp by @vinkmeta in #3386
+*   Tweak - Product sync tab deprecation using Rollout Switches by @SayanPandey in #3364
+*   Tweak - Excluded categories and tags from Rollout Switches by @SayanPandey in #3382
+*   Tweak - Add unit tests for ProductExcludedException and ProductInvalidException by @sol-loup in #3357
+*   Tweak - Global sync check for Rollout Switches by @SayanPandey in #3367
+*   Fix - Limiting BatchLogHandler processing for performance reasons by @vinkmeta in #3381
+*   Tweak - Add unit tests for Framework Api Exception class by @sol-loup in #3370
+*   Tweak - Add unit tests for Framework Plugin Exception class by @sol-loup in #3371
+*   Fix - Updated since tags across a few files by @sol-loup in #3374
+*   Fix - Deprecated the concept of tip info by @vinkmeta in #3373
+*   Fix - Removed instance of deprecated logger by @vinkmeta in #3372
+*   Fix - the process to share ExternalVersionUpdate with Meta by @vinkmeta in #3365
+*   Fix - Failing tests by @vinkmeta in #3366
+*   Fix - Deprecated legacy logging apis by @vinkmeta in #3351
+*   Fix - Issue with productSetSyncTest causing warnings during PHPUnit by @sol-loup in #3355
+*   Tweak - Add comprehensive unit tests for Events\Normalizer class by @sol-loup in #3359
+*   Tweak - Add unit tests for API Response classes to improve code coverage by @sol-loup in #3358
+*   Fix - Deprecated the concept of fblog by @vinkmeta in #3354
+*   Fix - Deprecated tool tip event concepts by @vinkmeta in #3349
+*   Fix - Removed unnecessary logs being sent to Meta servers by @vinkmeta in #3347
+*   Fix - Clean up info Banner releated class and components by @vinkmeta in #3348
+*   Fix - Sending backgroung syncing jobs action logs to Meta by @vinkmeta in #3346
+*   Fix - Tracking error messages being displayed to Admins by @vinkmeta in #3345
+*   Tweak - Workflow for Releasing Plugin by @tzahgr in #3309
+*   Fix - Deleted wp_ajax_ajax_sync_all_fb_products action by @vinkmeta in #3343
+*   Fix - Deprecated log_with_debug_mode_enabled by @vinkmeta in #3342
+*   Fix - Removed unnecessary logs by @vinkmeta in #3341
+*   Fix - removing duplicate logging by @vinkmeta in #3337
+*   Fix - Updated exception logs to centralized logger by @vinkmeta in #3338
+*   Fix - Migrated Feed Logger by @vinkmeta in #3340
+*   Fix - Deprecated log_to_meta functionality by @vinkmeta in #3336
+*   Fix - Enabled fbproduct for code sniffing in #3328
+*   Fix - Enabled phpcs for plugin banners by @vinkmeta in #3332
+*   Fix - Updated loggers for Feeds by @vinkmeta in #3335
+*   Fix - Updated loggers for checkout flow by @vinkmeta in #3334
+*   Fix - Logging background product syncing debug logs by @vinkmeta in #3329
+*   Fix - Enabled Pixel Normalizer for CS by @vinkmeta in #3333
+*   Fix - Update to Feed Loggers by @vinkmeta in #3330
+*   Fix - Debug logs for background product syncing by @vinkmeta in #3327
+*   Add - Sync all products if user has opted-in for Woo All Products by @SayanPandey in #3281
+*   Fix - PHPUnit warnings by renaming test files to match their class names by @sol-loup in #3311
+*   Tweak - Removing exclusion of sync of excluded categories and tags by @SayanPandey in #3244
+*   Fix - Lints and phpcs issues with fbproduct by @vinkmeta in #3324
+*   Fix - Code sniffing fixes for fbproduct by @vinkmeta in #3323
+*   Fix - Migrated Product Feed Progress Logging Mechanism by @vinkmeta in #3321
+*   Fix - Added critical log when user attempting non-permissible actions by @vinkmeta in #3322
+*   Fix - Handling edge case with BatchLogHandler in #3320
+*   Fix - Product Group Logging by @vinkmeta in #3317
+*   Fix - PHPCBF for fbproduct by @vinkmeta in #3319
+*   Fix - Linting for WC_Facebookcommerce_Background_Process by @vinkmeta in #3318
+*   Tweak - Adding tags on excluded categories and tags by @SayanPandey in #3308
+*   Tweak - Removing unnecessary modal for excluded categories by @SayanPandey in #3307
+*   Tweak - Removing delete on stock check by @SayanPandey in #3306
+*   Add - Showing a banner to the user about the changes by @SayanPandey in #3256
+*   Fix - Updated location for Product Feeds by @vinkmeta in #3316
+*   Tweak - Removing internal wiki links by @vinkmeta in #3315
+*   Add - Introducing a centralized logger by @vinkmeta in #3313
+*   Fix - Update ratings and reviews query logic and fix tests by @nrostrow-meta in #3312
+*   Fix - Restoring the product sync tagging with integers by @SayanPandey in #3305
+*   Tweak - Removing Enable Sync checkbox by @SayanPandey in #3241
+*   Fix - Flush rewrite rules to ensure /fb-checkout endpoint is working correctly by @ajello-meta in #3301
+*   Tweak - Deprecating Product Sync tab by @SayanPandey in #3273
+*   Tweak - Updated GitHub PR template by @vinkmeta in #3304
+*   Fix - Changed json_encode to wp_json_encode to avoid phpcs issues by @vinkmeta in #3303
+*   Fix - Replaced json_encode with wp_json_encode by @vinkmeta in #3276
+*   Fix - Linting issues resolved for includes/ProductSets/Sync.phpby @sol-loup in #3188
+*   Fix - Linting issues resolved for includes/Utilities/Background_Remove_Duplicate_Visibility_Meta.php by @sol-loup in #3187
+*   Fix - Linting issues resolved for includes/Events/Event.php by @sol-loup in #3189
+*   Tweak - Enable Video sync at Variable Product Level by @gurtejrehal in #3291
+*   Fix - Revert #3295 by @vinkmeta in #3299
+
+= 3.5.2 - 2025-06-04 =
+*  Tweak - Update ALL_PRODUCTS_PLUGIN_VERSION to 3.5.3 @tzahgr
+
+= 3.5.0 - 2025-05-28 =
+*  Add - Create basic checkout permalink w/ products and coupon support by @ajello-meta in #2887
+*  Add - Common Feed Upload Framework by @jmencab in #2875
+*  Fix - Fix bug where templates were not loading correctly by @ajello-meta in #2915
+*  Tweak - Change MICE to use base site url instead of shop url by @carterbuce in #2934
+*  Tweak - Improve custom checkout UI by @ajello-meta in #2930
+*  Tweak - Make custom checkout UI mobile compatible by @ajello-meta in #2942
+*  Fix - Update parsing for Checkout URL Product IDs by @carterbuce in #2935
+*  Add - Implement dummy logging util by @nealweiMeta in #2920
+*  Add - Setup cron job for batch logging with global message queue by @nealweiMeta in #2924
+*  Add - Error log request api activate by @nealweiMeta in #2933
+*  Add - Log locally with debug mode enabled by @nealweiMeta in #2939
+*  Add - Ratings and reviews feed upload by @nrostrow-meta in #2937
+*  Tweak - Feed upload skip logic and logging calls by @nrostrow-meta in #2964
+*  Add - Add function to fetch feed upload instance by @nrostrow-meta in #2970
+*  Tweak - Have feed uploads always use feed generator by @nrostrow-meta in #2971
+*  Tweak - Trigger metadata feed uploads on CPI ID change (post onboarding) by @nrostrow-meta in #2995
+*  Add - Shipping profile feed upload button by @nrostrow-meta in #3140
+*  Add - Navigation menu feed upload logic by @nrostrow-meta in #3159
+*  Fix - Fixing some fclose and logging gaps in the feed upload logic by @nrostrow-meta in #3192
+*  Add - Enabling navigation menu feed upload and adding manual sync button by @nrostrow-meta in #3223
+*  Add - Promotions feed upload by @carterbuce in #2941
+*  Add - Plugin AJAX API Framework by @sol-loup in #2928
+*  Tweak - Test Infrastructure Enhancement by @sol-loup in #2944
+*  Add - Implement telemetry logs api by @nealweiMeta in #2940
+*  Fix -  Make error logging event configurable by @nealweiMeta in #2954
+*  Add - Implement logging toggle by @nealweiMeta in #2959
+*  Fix - auto products sync by @nealweiMeta in #2978
+*  Tweak - Sync products with restriction by @nealweiMeta in #2983
+*  Fix - Fix use_enhanced_onboarding for legacy connections by @carterbuce in #2986
+*  Add - Create enhanced settings UI by @ajello-meta in #2968
+*  Add - Create new troubleshooting drawer from legacy debug settings by @ajello-meta in #2977
+*  Add - Add manual product and coupon sync buttons by @ajello-meta in #2984
+*  Tweak - Make page title in enhanced settings static by @ajello-meta in #2985
+*  Tweak - Align finalized content for logging toggle by @nealweiMeta in #2992
+*  Tweak - Improve local log by @nealweiMeta in #3009
+*  Fix - Fix free shipping coupon sync by @carterbuce in #2993
+*  Tweak - Add logging for feed generation scheduling failure by @carterbuce in #2994
+*  Tweak - Add logging in checkout for coupon code by @ajello-meta in #2991
+*  Tweak - Clean up CSS in enhanced settings UI by @ajello-meta in #2996
+*  Tweak - Remove the "Advertise" tab by @ajello-meta in #3024
+*  Tweak - Sync "Usage Count" in Promos Feed by @carterbuce in #3036
+*  Tweak - Disable mini_shops product capability for unsupported items by @carterbuce in #3084
+*  Add - Add usage logging for enhanced settings tabs by @ajello-meta in #3202
+*  Tweak - Remove UI of a checkbox that controls enablement of the new style feed generation by @mshymon in #3056
+*  Fix - Fix linter errors for ./includes/fbutils.php files by @ajello-meta in #3075
+*  Tweak - Removing Variant Level Sync by @SayanPandey in #2931
+*  Tweak - Removed concept of Product Group Deletion from the plugin by @vinkmeta in #3062
+*  Tweak - Tagging woo all products using a flag by @SayanPandey in #3165
+*  Add - A simple column for Woo All Products sync in feed file by @SayanPandey in #3197
+*  Tweak - Preparation for migrating Batch API to Graph API by @vinkmeta in #3203
+*  Tweak Block Product Group Creation for Simple Products by @vinkmeta in #3204
+*  Fix - Removed html tags from product set description by @mshymon in #3230
+*  Fix - Fix for the rollout Switches by @vinkmeta in #3236
+*  Add - Opt out sync experience. by @SayanPandey in #3220
+*  Fix - Added a transient flag to avoid flooding of product set api requests by @vinkmeta in #3245
+*  Fix - Additional check for the opt-out banner by @SayanPandey in #3259
+*  Fix - Bump up GraphAPI version to 21 by @vahidkay-meta in #3219
+*  Fix - fix linter errors for ./class-wc-facebookcommerce.php by @ajello-meta in #3255
+*  Fix - fix linter errors for ./facebook-commerce-events-tracker.php by @ajello-meta in #3254
+*  Fix - fix linter errors for ./includes/Admin/Settings_Screens/Advertise.php by @ajello-meta in #3237
+*  Fix - fix linter errors for ./includes/Admin/Settings_Screens/Product_Sync.php by @ajello-meta in #3239
+*  Fix - fix function return typing for get_settings() by @ajello-meta in #3257
+*  Tweak - Addition check for opt out by @SayanPandey in #3259
+*  Tweak - Update the GraphAPI version to 21 by @vahidkay-meta in #3219
+*  Fix - Enabled rollout switch only for plugin admins by @vinkmeta in #3242
+*  Add - reset connection functionality by @jczhuoMeta in #3262
+*  Fix - fixing the non static method called as static issue by @SayanPandey in #3263
+*  Fix - Fix linter errors for ./facebook-commerce.php by @ajello-meta in #3251
+*  Fix - updating banners to show the latest version as 3.5.1 by @SayanPandey in #3265
+*  Tweak - enforced product sets functionality for plugin admins by @vinkmeta in #3243
+*  Tweak - removing the product set functionality migration to Admin by @vinkmeta in #3267
+*  Tweak - removing the migration of rollout switch to Admin by @vinkmeta in #3268
+*  Fix - fix to remove html encoding in fb product sets names by @mshymon in #3266
+*  Add - trigger product sets sync in Handler on catalog ID update (new SAOff MBE onboarding flow) by @mshymon in #3270
+*  Fix - fix linter errors for ./facebook-commerce-pixel-event.php by @ajello-meta in #3248
+*  Fix - fix /variation field persistence & rich text description handling for variants by @devbodaghe in #3269
+*  Tweak - update product validation logic for checkout by @ajello-meta in #3271
+*  Fix - Adding precautionary bug fix by @SayanPandey in #3275
+*  Add - Added Loading States to WAUM flows by @woo-ardsouza in #3272
+*  Add - Add logging for coupon in checkout by @ajello-meta in #3279
+*  Fix - fix inconsistency between enhanced and legacy flow by @jczhuoMeta in #3285
+*  Fix - Removing the tag to get rid of warnings by @SayanPandey in #3287
+
+= 3.4.10 - 2025-05-22 =
+* Fix - Disabled the RollOut switch
+* Fix - Removed the Global Admin Notice
+
+= 3.4.9 - 2025-05-14 =
+* Add - Support for rollout switches in the plugin to control feature rollouts from meta side @francorisso in #3126
+* Fix - Tests in the rollout switches file by @francorisso in #3146
+* Fix - RolloutSwitches Init by @carterbuce in #3157
+* Add - Integrate Whatsapp Utility Messaging for WooCommerce Order Update Notifications by @sharunaanandraj in #3164
+* Tweak - Improve Test Filter Management with AbstractWPUnitTestWithSafeFiltering by @sol-loup in #2944
+* Fix - Namespacing issue causing some tests to be skipped @sol-loup in #3037
+* Tweak - Additional logs and timeout for Utility Message Flows by @woo-ardsouza in #3171
+* Fix - The WAUM payment progress to only Show Up after Consent Collection is Enabled by @sharunaanandraj in #3175
+* Tweak - Update language dropdown based on supported_languages in GET api response by @woo-ardsouza in #3178
+* Add - Error notice to gracefully handle errors in Manage Events view by @woo-ardsouza in #3179
+* Fix - The Status on the Whatsapp Consent Collection Pill and Button @sharunaanandraj in #3183
+* Tweak - Update Message Sending API from Messages to Message Events by @woo-ardsouza in #3182
+* Tweak - Update the Authentication mechanism for Whatsapp Webhook by @sharunaanandraj #3186
+* Tweak - Minor design updates to Utility Event Settings card by @woo-ardsouza in #3193
+* Add - Admin notice for WhatsApp utility messaging recruitment @iodic in #3177
+* Fix - The product sync button showing up twice by @sharunaanandraj in #3199
+* Tweak - Bump WooCommerce and WordPress compatibility by @iodic in #3200
+* Add - An automated process that synchronizes all WooCommerce product categories with Meta, creating catalog product sets for each category. The synchronization process ensures that any changes made to the WooCommerce product categories are reflected in the corresponding Meta catalog product sets by @mshymon in #3168
+* Add - A banner in product sets tab to explain recent changes to product sets sync by @mshymon in #3207
+* Add - Admin notice for WhatsApp utility messaging recruitment by @iodic in #3211
+
+= 3.4.8 - 2025-05-06 =
+* Add - Feature to sync global attributes to Meta and test API format by @devbodaghe in #3050
+* Fix - Facebook attribute dropdown display and syncing issues by @devbodaghe in #3051
+* Tweak - Set helper text for dropdown sync by @devbodaghe in #3104
+* Tweak - Remove unused condition field code for variable products by @devbodaghe in #3114
+* Fix - Cursor style not resetting after attribute removal by @devbodaghe in #3113
+* Fix - 'Call to a member function is_taxonomy() on string' error when processing variable products by @devbodaghe in #3155
+
+= 3.4.7 - 2025-04-17 =
+* Tweak - Added external_variant_id to the feed file by @mshymon in #2998
+* Tweak - Added support for syncing product type by @vinkmeta in #3013
+* Tweak - Relocating bulk actions by @SayanPandey in #2943
+* Tweak - Filtration on All Products page | Synced and Not Synced by @SayanPandey in #2999
+* Tweak - Updated PR Template by @vinkmeta in #3019
+* Fix - Null check exceptions by @vinkmeta in #3015
+* Tweak - Relaxing sync validations by @raymon1 in #2969
+* Tweak - Truncates extra characters from title and description by @raymon1 in #3023
+* Tweak - Updated PR template by @vinkmeta in #3053
+* Fix - The item not found error by using filter in the product endpoint @vinkmeta in #3054
+* Fix - Bug where MPN input box had no tooltip by @devbodaghe in #3034
+* Tweak - Investigation: WooCommerce to Facebook Product Attribute Syncing by @devbodaghe in #3033
+* Fix - Add parent product material inheritance for variations by @devbodaghe in #3035
+* Fix - Tooltip Messages for Skirt Length and Sleeve Length by @devbodaghe in #3039
+* Fix - Typo in Admin.php by @SayanPandey in #3063
+* Add - Add separate short_description field to Facebook product data by @devbodaghe in #3029
+* Tweak - Sync short description remove dropdown by @devbodaghe in #3031
+* Tweak - Short Description Fallback by @devbodaghe in #3048
+* Fix - A problem where Purchase event was not firing if thankyou page was not shown or Purchase state updated through Woo dashboard by @vahidkay-meta in #3060
+* Tweak - Remove type casting for gpc to int by @devbodaghe in 3078
+* Tweak - Disable unmapped fields to batch api by @devbodaghe in #3079
+* Fix - Product variation fields not saving correctly by @devbodaghe in #3090
+* Fix - Removed failing test due to merge conflicts @vinkmeta in #3103
+
+= 3.4.6 - 2025-04-04 =
+* Fix - Product availability syncing by @vinkmeta in #3010
+* Fix - Product attribute sort error which prevented product edits in certain scenarios by @iodic in #3012
+
+= 3.4.5 - 2025-04-01 =
+* Tweak - Add new product field external_update_time to measure product update latency by @mshymon in #2973
+* Fix - for 'PHP Warning: Undefined variable $fb_product_parent' by @mshymon in #2976
+* Fix - Updated logic to choose/create the feed for product sync by @mshymon in #2989
+* Add - Facebook Product Data Tab Enhancement by @devbodaghe in #2938
+* Fix - PHP Warning for empty attributes by @vinkmeta in #3001
+
+= 3.4.4 - 2025-03-26 =
+* Add - Create tests for ProductFeedUploads create endpoint by @ajello-meta in #2902
+* Add - Create tests for ProductFeedUploads read endpoint by @ajello-meta in #2903
+* Tweak - Remove phpcs:ignoreFile annotation + Enable code coverage report generation with phpunit by @sol-loup in #2897 and #2901
+* Fix - Restores the original dynamic property behavior in the AsyncRequest class by @sol-loup in #2921
+* Tweak - Changing APP to PLUGIN on README.MD by @SayanPandey in #2916
+* Tweak - Update README.md - Added noification for ownership transfer by @SayanPandey in #2910
+* Tweak - Added is_multisite logging to the update_plugin_version_configuration request by @carterbuce in #2955
+* Tweak - Add woo_commerce_retailer_id to products API request by @crisojog in #2958
+* Tweak - Syncing plugin version info by @vinkmeta in #2960
+* Fix - sync products out of stock to meta despite visibility config by @francorisso in #2952
+* Fix - Update woo_commerce_retailer_id to existing field external_variant_id by @crisojog in #2963
+* Tweak - Update readme.txt by @vinkmeta in #2949
+
+= 3.4.3 - 2025-03-19 =
+* Add - Items batch request and response tests by @nrostrow-meta in #2917
+* Tweak - Always run PHP-based github workflows by @carterbuce in #2926
+* Fix - feed upload error "feed_column_count_mismatch" when product has multiple colors separated by a comma by @mshymon in #2947
+* Tweak - Updated Pull Request Template by @vinkmeta in #2948
+* Dev - Improved readability of function prepare_product() in fbproduct.php by @mshymon in #2889
+* Tweak - Enabled PHPUnit code coverage report generation by @carterbuce in #2893
+
+= 3.4.2 - 2025-03-13 =
+* Tweak - Update README.md - Added noification for ownership transfer by @SayanPandey in #2910 and #2916
+
+= 3.4.1 - 2025-02-27 =
+* Tweak - Removed custom field definitions by @devbodaghe in #2876
+* Dev - Improved readability of function prepare_product() in fbproduct.php by @mshymon in #2889
+* Dev - Enabled PHPUnit code coverage report generation by @carterbruce in #2893
+
+= 3.4.0 - 2025-02-19 =
+* Add - FB product video field to add videos. Also added products sync to support the video field with Batch API by @gurtejrehal in #2874
+* Tweak - tests for #2874 by @gurtejrehal in #2888
+* Tweak - tests for Product Update action as ramp up task by @nealweiMeta in #2883
+* Fix - translations loading before the init hook by @iodic in #2866
+* Fix - Fixed feeds by requesting a feed file upload session after feed file is generated and added missing new fields to the feed file by @mshymon in #2841
+
+= 3.3.5 - 2025-02-12 =
+* Add - Rich Text Description to Woo Product Sync with Meta by devbodaghe in #2843
+
+= 3.3.4 - 2025-02-11 =
+* Fix - Fixing the issue with version number
+
+= 3.3.3 - 2025-02-06 =
+* Fix - Use of recommended delete connection endpoint over delete permission endpoint by atuld123 in #2844
+* Add - Expose Brand & MPN to Woocommerce UI by @devbodaghe in #2842
+
+= 3.3.2 - 2025-01-21 =
+* Fix - a bug that arose from reliance on the plugin version compatibility tag by @vinkmeta in #2856
+* Fix - Update catalog link in connections tab to point to Catalog by @devbodaghe in #2848
+* Fix - Product URL links now point to items tab by @vinkmeta in #2852
+* Tweak - Removed sell on Instagram by @mshymon in #2854
+* Tweak - Add custom fields to product data structure by @devbodaghe in #2836
+* Fix - Multiple issues with Fixed FB Attribute Syncing by @vinkmeta in #2860
+
+= 3.3.1 - 2024-12-06 =
+* Fix - Sale price effective date by @vinkmeta in #2809
+* Fix - Sync stock quantity when available by @mshymon in #2811
+* Fix - Sync product GTIN when available by @mshymon in #2810
+
+= 3.3.0 - 2024-11-07 =
+* Add - Extension navigation tabs on Product Sets screens.
+* Tweak - Tooltips, config labels, documentation links.
+* Tweak - WC 9.4 compatibility.
+* Tweak - WP 6.7 compatibility.
+
+= 3.2.10 - 2024-09-30 =
+* Update -  Remove Marketing Products Sets menu entry.
+
+= 3.2.9 - 2024-09-12 =
+* Break - Removes WooCommerce navigation items.
+* Tweak - WC 9.3 compatibility.
+
+= 3.2.8 - 2024-09-03 =
+* Update - Access Token retrieval procedure.
+* Update - Use get_title() for content_name to match catalog name.
+
+= 3.2.7 - 2024-08-13 =
+* Dev - Updated `phpcs` ruleset.
+* Fix - Update failing due to undefined constant error in Lifecycle.
+* Tweak - WC 9.2 compatibility.
+
+= 3.2.6 - 2024-07-23 =
+* Add - Filter facebook_for_woocommerce_fb_product_description.
+* Fix - Remove deprecated FILTER_SANITIZE_STRING usage.
+* Tweak - Align PHP require version to composer.json.
+
+= 3.2.5 - 2024-07-10 =
+* Tweak - WC 9.1 compatibility.
+* Tweak - WP 6.6 compatibility.
+
 = 3.2.4 - 2024-06-13 =
 * Dev - Adds support for wp-env.
 * Tweak - Fully remove Facebook Messenger code references.

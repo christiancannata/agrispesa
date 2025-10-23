@@ -6,7 +6,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can handle ajax request with user feedback data and sends data to WP Desk.
  */
-class AjaxUserFeedbackDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class AjaxUserFeedbackDataHandler implements Hookable
 {
     const AJAX_ACTION = 'wpdesk_tracker_user_feedback_handler_';
     const REQUEST_ADDITIONAL_INFO = 'additional_info';
@@ -24,7 +24,7 @@ class AjaxUserFeedbackDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      * @param UserFeedbackData $user_feedback_data .
      * @param \WPDesk_Tracker_Sender $sender
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\UserFeedback\UserFeedbackData $user_feedback_data, $sender)
+    public function __construct(UserFeedbackData $user_feedback_data, $sender)
     {
         $this->user_feedback_data = $user_feedback_data;
         $this->sender = $sender;
@@ -34,7 +34,7 @@ class AjaxUserFeedbackDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      */
     public function hooks()
     {
-        \add_action('wp_ajax_' . self::AJAX_ACTION . $this->user_feedback_data->get_thickbox_id(), array($this, 'handle_ajax_request'));
+        add_action('wp_ajax_' . self::AJAX_ACTION . $this->user_feedback_data->get_thickbox_id(), array($this, 'handle_ajax_request'));
     }
     /**
      * Prepare payload.
@@ -49,7 +49,7 @@ class AjaxUserFeedbackDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
         if (!empty($request[self::REQUEST_ADDITIONAL_INFO])) {
             $payload['additional_info'] = $request[self::REQUEST_ADDITIONAL_INFO];
         }
-        return \apply_filters('wpdesk_tracker_user_feedback_data', $payload);
+        return apply_filters('wpdesk_tracker_user_feedback_data', $payload);
     }
     /**
      * Send payload to WP Desk.
@@ -65,11 +65,14 @@ class AjaxUserFeedbackDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      */
     public function handle_ajax_request()
     {
-        \check_ajax_referer(self::AJAX_ACTION . $this->user_feedback_data->get_thickbox_id());
+        check_ajax_referer(self::AJAX_ACTION . $this->user_feedback_data->get_thickbox_id());
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error();
+        }
         if (isset($_REQUEST[self::REQUEST_SELECTED_OPTION])) {
             $payload = $this->prepare_payload($_REQUEST);
             $this->send_payload_to_wpdesk($this->prepare_payload($_REQUEST));
-            \do_action('wpdesk_tracker_user_feedback_data_handled', $payload);
+            do_action('wpdesk_tracker_user_feedback_data_handled', $payload);
         }
     }
 }

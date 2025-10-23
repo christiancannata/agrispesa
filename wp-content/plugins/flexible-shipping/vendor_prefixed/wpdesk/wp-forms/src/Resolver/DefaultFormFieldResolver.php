@@ -10,15 +10,15 @@ use FSVendor\WPDesk\View\Resolver\Resolver;
  *
  * @package WPDesk\Forms\Resolver
  */
-class DefaultFormFieldResolver implements \FSVendor\WPDesk\View\Resolver\Resolver
+class DefaultFormFieldResolver implements Resolver
 {
     /** @var Resolver */
     private $dir_resolver;
     public function __construct()
     {
-        $this->dir_resolver = new \FSVendor\WPDesk\View\Resolver\DirResolver(__DIR__ . '/../../templates');
+        $this->dir_resolver = new DirResolver(__DIR__ . '/../../templates');
     }
-    public function resolve($name, \FSVendor\WPDesk\View\Renderer\Renderer $renderer = null)
+    public function resolve($name, Renderer $renderer = null)
     {
         return $this->dir_resolver->resolve($name, $renderer);
     }

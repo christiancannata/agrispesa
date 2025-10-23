@@ -9,7 +9,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can append shipments data to WooCommerce REST API Order response.
  */
-class OrderResponseDataAppender implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class OrderResponseDataAppender implements Hookable
 {
     const REST_API_DATA_KEY = 'fs_shipping_lines';
     /**
@@ -17,7 +17,7 @@ class OrderResponseDataAppender implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     public function hooks()
     {
-        \add_filter('woocommerce_rest_prepare_shop_order_object', array($this, 'maybe_append_shipment_to_order_data'), 10, 3);
+        add_filter('woocommerce_rest_prepare_shop_order_object', array($this, 'maybe_append_shipment_to_order_data'), 10, 3);
     }
     /**
      * Appends shipment data if exists to order in REST API response.
@@ -67,6 +67,6 @@ class OrderResponseDataAppender implements \FSVendor\WPDesk\PluginBuilder\Plugin
      */
     protected function get_providers()
     {
-        return \FSVendor\WPDesk\FS\Shipment\RestApi\OrderDataProvidersFactory::get_providers();
+        return OrderDataProvidersFactory::get_providers();
     }
 }

@@ -3,7 +3,7 @@
 Plugin Name: Custom Taxonomy Order
 Plugin URI: https://wordpress.org/plugins/custom-taxonomy-order-ne/
 Description: Allows for the ordering of categories and custom taxonomy terms through a simple drag-and-drop interface.
-Version: 4.0.0
+Version: 4.0.2
 Author: Marcel Pol
 Author URI: https://timelord.nl/
 License: GPLv2 or later
@@ -12,7 +12,15 @@ Domain Path: /lang/
 
 
 Copyright 2011 - 2011  Drew Gourley
-Copyright 2013 - 2023  Marcel Pol   (marcel@timelord.nl)
+Copyright 2013 - 2025  Marcel Pol   (marcel@timelord.nl)
+Copyright 2015         acusti (Andrew Patton)
+Copyright 2015         sunriseweb
+Copyright 2015         mantish
+Copyright 2016         eddy_boy
+Copyright 2018         empiresafe
+Copyright 2020         li-an
+Copyright 2020         eric3d
+
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,8 +46,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+
 // Plugin Version
-define('CUSTOMTAXORDER_VER', '4.0.0');
+define('CUSTOMTAXORDER_VER', '4.0.2');
 
 
 /*
@@ -52,22 +63,35 @@ define('CUSTOMTAXORDER_VER', '4.0.0');
  * 4: orderby Post Count (based on term_taxonomy table)
  *
  * @return array $customtaxorder_settings an array with key: $taxonomy->name and value:
+ *
+ * @uses transient customtaxorder_get_settings as cache (since 4.0.2).
  */
 function customtaxorder_get_settings() {
-	$customtaxorder_defaults = array( 'category' => 0 );
 
-	$taxonomies = customtaxorder_get_taxonomies();
-	foreach ( $taxonomies as $taxonomy ) {
-		$customtaxorder_defaults[$taxonomy->name] = 0;
+	$transient = get_transient( 'customtaxorder_get_settings' );
+	if ( false === $transient ) {
+
+		$customtaxorder_defaults = array( 'category' => 0 );
+
+		$taxonomies = customtaxorder_get_taxonomies();
+		foreach ( $taxonomies as $taxonomy ) {
+			$customtaxorder_defaults[$taxonomy->name] = 0;
+		}
+
+		$customtaxorder_defaults = apply_filters( 'customtaxorder_defaults', $customtaxorder_defaults );
+		$customtaxorder_settings = get_option( 'customtaxorder_settings' );
+		$customtaxorder_settings = wp_parse_args( $customtaxorder_settings, $customtaxorder_defaults );
+
+		$customtaxorder_settings = apply_filters( 'customtaxorder_settings', $customtaxorder_settings );
+
+		set_transient( 'customtaxorder_get_settings', $customtaxorder_settings, DAY_IN_SECONDS );
+
+		return $customtaxorder_settings;
+
 	}
 
-	$customtaxorder_defaults = apply_filters( 'customtaxorder_defaults', $customtaxorder_defaults );
-	$customtaxorder_settings = get_option( 'customtaxorder_settings' );
-	$customtaxorder_settings = wp_parse_args( $customtaxorder_settings, $customtaxorder_defaults );
+	return $transient;
 
-	$customtaxorder_settings = apply_filters( 'customtaxorder_settings', $customtaxorder_settings );
-
-	return $customtaxorder_settings;
 }
 
 

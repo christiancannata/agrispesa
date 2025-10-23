@@ -41,7 +41,10 @@ class Wp_Super_Cache extends Services {
 	 *
 	 * @return boolean
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		global $file_prefix, $supercachedir;
 		if ( empty( $supercachedir ) && function_exists( 'get_supercache_dir' ) ) {
 			$supercachedir = get_supercache_dir();

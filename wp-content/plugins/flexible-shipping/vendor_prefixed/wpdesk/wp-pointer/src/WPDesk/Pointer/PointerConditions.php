@@ -63,11 +63,11 @@ class PointerConditions
     {
         $screenIdMet = \false;
         if (!empty($this->screenId)) {
-            if (!\is_array($this->screenId)) {
+            if (!is_array($this->screenId)) {
                 $this->screenId = array($this->screenId);
             }
-            $screen = \get_current_screen();
-            if (null !== $screen && \in_array($screen->id, $this->screenId, \true)) {
+            $screen = get_current_screen();
+            if (null !== $screen && in_array($screen->id, $this->screenId, \true)) {
                 $screenIdMet = \true;
             }
         } else {
@@ -81,7 +81,7 @@ class PointerConditions
     private function areCapabilityMet()
     {
         if (!empty($this->capability)) {
-            $capabilityMet = \current_user_can($this->capability);
+            $capabilityMet = current_user_can($this->capability);
         } else {
             $capabilityMet = \true;
         }

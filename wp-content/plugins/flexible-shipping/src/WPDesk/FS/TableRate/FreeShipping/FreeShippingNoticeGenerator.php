@@ -243,8 +243,14 @@ class FreeShippingNoticeGenerator implements Hookable {
 	 * @return bool
 	 */
 	private function has_shipping_rate_with_free_shipping( $package_rates ) {
+		if ( ! is_array( $package_rates ) ) {
+			return false;
+		}
 		/** @var WC_Shipping_Rate $package_rate */
 		foreach ( $package_rates as $package_rate ) {
+			if ( ! $package_rate instanceof WC_Shipping_Rate ) {
+				continue;
+			}
 			if ( $this->is_package_rate_from_flexible_shipping( $package_rate ) ) {
 				$meta_data = $package_rate->get_meta_data();
 				if ( isset( $meta_data[ self::META_DATA_FS_METHOD ] ) ) {

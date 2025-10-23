@@ -79,7 +79,7 @@ class Console extends Base {
 				KEY rank_position (position)
 			) $collate;";
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php'; // @phpstan-ignore-line
 		try {
 			dbDelta( $schema );
 		} catch ( Exception $e ) { // phpcs:ignore
@@ -94,13 +94,13 @@ class Console extends Base {
 	/**
 	 * Create jobs to fetch data.
 	 *
-	 * @param integer $days Number of days to fetch from past.
-	 * @param string  $prev Previous saved value.
-	 * @param string  $new  New posted value.
+	 * @param integer $days      Number of days to fetch from past.
+	 * @param string  $prev      Previous saved value.
+	 * @param string  $new_value New posted value.
 	 */
-	public function create_data_jobs( $days, $prev, $new ) {
+	public function create_data_jobs( $days, $prev, $new_value ) {
 		// Early bail if saved & new profile are same.
-		if ( ! $this->is_profile_updated( 'profile', $prev, $new ) ) {
+		if ( ! $this->is_profile_updated( 'profile', $prev, $new_value ) ) {
 			return;
 		}
 

@@ -16,17 +16,18 @@
  * Plugin Name:       Mailchimp for WooCommerce
  * Plugin URI:        https://mailchimp.com/connect-your-store/
  * Description:       Connects WooCommerce to Mailchimp to sync your store data, send targeted campaigns to your customers, and sell more stuff. 
- * Version:           4.1
+ * Version:           5.6
  * Author:            Mailchimp
  * Author URI:        https://mailchimp.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       mailchimp-for-woocommerce
  * Domain Path:       /languages
- * Requires at least: 4.9
- * Tested up to: 6.5
- * WC requires at least: 4.2
- * WC tested up to: 9.0
+ * Requires Plugins: woocommerce
+ * Requires at least: 6.2
+ * Tested up to: 6.8
+ * WC requires at least: 8.2
+ * WC tested up to: 10.1
  */
 
 // If this file is called directly, abort.
@@ -35,10 +36,6 @@ if (!defined( 'WPINC')) {
 }
 
 if (!isset($mailchimp_woocommerce_spl_autoloader) || $mailchimp_woocommerce_spl_autoloader === false) {
-    // require Action Scheduler
-    if( file_exists( __DIR__ . "/includes/vendor/action-scheduler/action-scheduler.php" ) ){
-    	include_once __DIR__ . "/includes/vendor/action-scheduler/action-scheduler.php";
-    }
     // bootstrapper
     include_once __DIR__ . "/bootstrap.php";
 }
@@ -52,11 +49,14 @@ add_action('plugins_loaded', 'mailchimp_on_all_plugins_loaded', 12);
 include_once __DIR__ . '/blocks/newsletter.php';
 
 add_action( 'before_woocommerce_init', function() {
-	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+	if ( class_exists( 'Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'product_block_editor', __FILE__, true );
-
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 	}
 } );
+
+/// if the user chas enabled the high performance bolt on
+if (defined('MAILCHIMP_HIGH_PERFORMANCE') && MAILCHIMP_HIGH_PERFORMANCE) {
+    include_once __DIR__.'/includes/function-include-action-scheduler.php';
+}

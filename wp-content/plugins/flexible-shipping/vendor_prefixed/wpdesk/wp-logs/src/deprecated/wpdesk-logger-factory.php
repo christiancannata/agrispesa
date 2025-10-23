@@ -5,7 +5,7 @@ namespace FSVendor;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
+if (!\class_exists('FSVendor\WPDesk_Logger_Factory')) {
     /**
      * @deprecated Only for backward compatibility. Please use injected Logger compatible with PSR
      */
@@ -27,7 +27,7 @@ if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
         public static function create_logger()
         {
             if (empty(self::$logger)) {
-                $logger = new \FSVendor\WPDesk_Logger();
+                $logger = new WPDesk_Logger();
                 $logger->attach_hooks();
                 self::$logger = $logger;
             }
@@ -44,7 +44,7 @@ if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
         public static function log_wp_error(\WP_Error $e, array $backtrace = array())
         {
             $message = 'Error: ' . \get_class($e) . ' Code: ' . $e->get_error_code() . ' Message: ' . $e->get_error_message();
-            self::log_message_backtrace($message, \FSVendor\WPDesk_Logger::ERROR, $backtrace);
+            self::log_message_backtrace($message, WPDesk_Logger::ERROR, $backtrace);
         }
         /**
          * Log this exception into WPDesk logger
@@ -54,7 +54,7 @@ if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
         public static function log_exception(\Exception $e)
         {
             $message = 'Exception: ' . \get_class($e) . ' Code: ' . $e->getCode() . ' Message: ' . $e->getMessage() . ' Stack: ' . $e->getTraceAsString();
-            self::log_message($message, $e->getFile(), \FSVendor\WPDesk_Logger::ERROR);
+            self::log_message($message, $e->getFile(), WPDesk_Logger::ERROR);
         }
         /**
          * Log message into WPDesk logger
@@ -63,7 +63,7 @@ if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
          * @param string $source Source of the message - can be file name, class name or whatever.
          * @param string $level Level of error.
          */
-        public static function log_message($message, $source = 'unknown', $level = \FSVendor\WPDesk_Logger::DEBUG)
+        public static function log_message($message, $source = 'unknown', $level = WPDesk_Logger::DEBUG)
         {
             self::create_logger();
             \do_action(self::WPDESK_LOG_ACTION_NAME, $level, $source, $message);
@@ -76,7 +76,7 @@ if (!\class_exists('FSVendor\\WPDesk_Logger_Factory')) {
          * @param string $level Level of error.
          * @param array  $backtrace Backtrace information with snapshot of error env.
          */
-        public static function log_message_backtrace($message, $level = \FSVendor\WPDesk_Logger::DEBUG, array $backtrace = array())
+        public static function log_message_backtrace($message, $level = WPDesk_Logger::DEBUG, array $backtrace = array())
         {
             $message .= ' Backtrace: ' . \json_encode($backtrace);
             if (isset($backtrace[self::BACKTRACE_FILENAME_KEY])) {

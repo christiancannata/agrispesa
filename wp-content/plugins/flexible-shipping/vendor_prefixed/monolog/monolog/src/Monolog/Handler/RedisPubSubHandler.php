@@ -25,7 +25,7 @@ use FSVendor\Monolog\Logger;
  *
  * @author Gaëtan Faugère <gaetan@fauge.re>
  */
-class RedisPubSubHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class RedisPubSubHandler extends AbstractProcessingHandler
 {
     /** @var \Predis\Client<\Predis\Client>|\Redis */
     private $redisClient;
@@ -35,10 +35,10 @@ class RedisPubSubHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHan
      * @param \Predis\Client<\Predis\Client>|\Redis $redis The redis instance
      * @param string                $key   The channel key to publish records to
      */
-    public function __construct($redis, string $key, $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct($redis, string $key, $level = Logger::DEBUG, bool $bubble = \true)
     {
         if (!($redis instanceof \FSVendor\Predis\Client || $redis instanceof \Redis)) {
-            throw new \InvalidArgumentException('Predis\\Client or Redis instance required');
+            throw new \InvalidArgumentException('Predis\Client or Redis instance required');
         }
         $this->redisClient = $redis;
         $this->channelKey = $key;
@@ -47,15 +47,15 @@ class RedisPubSubHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHan
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->redisClient->publish($this->channelKey, $record["formatted"]);
     }
     /**
      * {@inheritDoc}
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\LineFormatter();
+        return new LineFormatter();
     }
 }

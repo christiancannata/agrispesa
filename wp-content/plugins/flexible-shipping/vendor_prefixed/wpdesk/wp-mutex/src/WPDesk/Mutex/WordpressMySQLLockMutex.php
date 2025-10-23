@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Mutex;
 
-class WordpressMySQLLockMutex implements \FSVendor\WPDesk\Mutex\Mutex
+class WordpressMySQLLockMutex implements Mutex
 {
     use WordpressWpdb;
     /** @var string Name of the resource to lock */
@@ -19,7 +19,7 @@ class WordpressMySQLLockMutex implements \FSVendor\WPDesk\Mutex\Mutex
     {
         $this->wpdb = $this->getWpdbFromGlobal();
         $this->lockName = $this->wpdb->_real_escape($lockName);
-        $this->waitForLockTimeout = \intval($waitForLockTimeout);
+        $this->waitForLockTimeout = intval($waitForLockTimeout);
     }
     /**
      * Factory method
@@ -32,7 +32,7 @@ class WordpressMySQLLockMutex implements \FSVendor\WPDesk\Mutex\Mutex
      */
     public static function fromOrder(\WC_Order $order, $lockName = '_mutex', $waitForLockTimeout = 5)
     {
-        return new self('order' . \strval($order->get_id()) . $lockName, $waitForLockTimeout);
+        return new self('order' . strval($order->get_id()) . $lockName, $waitForLockTimeout);
     }
     /**
      * Tries to set lock and returns true if successful
@@ -43,7 +43,7 @@ class WordpressMySQLLockMutex implements \FSVendor\WPDesk\Mutex\Mutex
     {
         $this->wpdb = $this->getWpdbFromGlobal();
         $lockRow = $this->wpdb->get_row($this->wpdb->prepare('SELECT GET_LOCK(%s,%d) as lock_set', array($this->lockName, $this->waitForLockTimeout)));
-        return 1 === \intval($lockRow->lock_set);
+        return 1 === intval($lockRow->lock_set);
     }
     /**
      * Releases all locks

@@ -12,7 +12,7 @@ use FSVendor\WPDesk\RepositoryRating\TimeWatcher;
 /**
  * Can watch shipping method creation.
  */
-class ShippingMethodGlobalSettingsWatcher implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable, \FSVendor\WPDesk\RepositoryRating\TimeWatcher
+class ShippingMethodGlobalSettingsWatcher implements Hookable, TimeWatcher
 {
     const NO_CREATION_TIME = '';
     /**
@@ -35,7 +35,7 @@ class ShippingMethodGlobalSettingsWatcher implements \FSVendor\WPDesk\PluginBuil
      */
     public function hooks()
     {
-        \add_action("woocommerce_update_options_shipping_{$this->shipping_method_unique_id}", function () {
+        add_action("woocommerce_update_options_shipping_{$this->shipping_method_unique_id}", function () {
             $this->watch_saved_settings();
         });
     }
@@ -62,7 +62,7 @@ class ShippingMethodGlobalSettingsWatcher implements \FSVendor\WPDesk\PluginBuil
      */
     private function update_creation_time()
     {
-        \update_option($this->prepare_creation_time_option_name(), \current_time('mysql'));
+        update_option($this->prepare_creation_time_option_name(), current_time('mysql'));
     }
     /**
      * Option name to save time in db.
@@ -80,6 +80,6 @@ class ShippingMethodGlobalSettingsWatcher implements \FSVendor\WPDesk\PluginBuil
      */
     public function get_creation_time()
     {
-        return \get_option($this->prepare_creation_time_option_name(), self::NO_CREATION_TIME);
+        return get_option($this->prepare_creation_time_option_name(), self::NO_CREATION_TIME);
     }
 }

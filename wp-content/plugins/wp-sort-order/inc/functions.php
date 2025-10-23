@@ -12,7 +12,7 @@
 				$new_input = sanitize_email($new_input);
 			}
 			if(stripos($new_input, 'http') || wp_http_validate_url($new_input)){
-				$new_input = esc_url($new_input);
+				$new_input = sanitize_url($new_input);
 			}			
 		}	
 		return $new_input;
@@ -195,4 +195,15 @@
 		}
 	
 		delete_option( 'wpso_activation' );	
+	}
+	add_action('admin_init', 'wpso_admin_init');
+	function wpso_admin_init(){
+		//pree($_GET);
+		if(isset($_GET['get_keys'])){
+			if(isset($_GET['post']) && is_numeric($_GET['post'])){
+				pre(get_post($_GET['post']));
+				pre(get_post_meta($_GET['post']));
+				exit;
+			}
+		}
 	}

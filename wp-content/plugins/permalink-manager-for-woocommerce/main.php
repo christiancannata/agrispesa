@@ -3,12 +3,12 @@
  * Plugin Name: Permalink Manager for WooCommerce
  * Plugin URI: https://wordpress.org/plugins/permalink-manager-for-woocommerce/
  * Description: Permalink Manager for WooCommerce
- * Version: 1.0.8.1
+ * Version: 1.0.8.2
  * Author: BeRocket
  * Requires at least: 5.0
  * Author URI: https://woocommerce-permalink-manager.com/
  * Text Domain: permalink-manager-for-woocommerce
- * WC tested up to: 7.8
+ * WC tested up to: 9.1
  */
 define( "BWLM_file", __FILE__ );
 

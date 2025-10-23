@@ -42,13 +42,13 @@ class Beacon
      * @param BeaconShouldShowStrategy $strategy When to display beacon.
      * @param string $assets_url With ending /
      */
-    public function __construct($beacon_id, \FSVendor\WPDesk\Beacon\BeaconShouldShowStrategy $strategy, $assets_url, $beacon_search_elements_class = 'hs-beacon-search', $beacon_image_content = '')
+    public function __construct($beacon_id, BeaconShouldShowStrategy $strategy, $assets_url, $beacon_search_elements_class = 'hs-beacon-search', $beacon_image_content = '')
     {
         $this->beacon_id = $beacon_id;
         $this->activation_strategy = $strategy;
         $this->assets_url = $assets_url;
         $this->beacon_search_elements_class = $beacon_search_elements_class;
-        $this->confirmation_message = \__('When you click OK we will open our HelpScout beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
+        $this->confirmation_message = __('When you click OK we will open our HelpScout beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
         $this->beacon_image_content = $beacon_image_content;
     }
     /**
@@ -63,8 +63,8 @@ class Beacon
      */
     public function hooks()
     {
-        \add_action('admin_footer', [$this, 'add_beacon_to_footer']);
-        \add_action('admin_enqueue_scripts', [$this, 'add_beacon_js']);
+        add_action('admin_footer', [$this, 'add_beacon_to_footer']);
+        add_action('admin_enqueue_scripts', [$this, 'add_beacon_js']);
     }
     /**
      * Should display beacon?
@@ -73,13 +73,13 @@ class Beacon
      */
     protected function should_display_beacon()
     {
-        return \apply_filters('helpscout-beacon/should-display-beacon', $this->activation_strategy->shouldDisplay());
+        return apply_filters('helpscout-beacon/should-display-beacon', $this->activation_strategy->shouldDisplay());
     }
     public function add_beacon_js()
     {
         if ($this->should_display_beacon()) {
-            \wp_enqueue_style('hs-beacon', $this->assets_url . 'css/beacon.css', []);
-            \wp_enqueue_script('hs-beacon', $this->assets_url . 'js/hs-bc.js', []);
+            wp_enqueue_style('hs-beacon', $this->assets_url . 'css/beacon.css', []);
+            wp_enqueue_script('hs-beacon', $this->assets_url . 'js/hs-bc.js', []);
         }
     }
     /**
@@ -89,7 +89,7 @@ class Beacon
     {
         if ($this->should_display_beacon()) {
             $beacon_id = $this->beacon_id;
-            $confirmation_message = \__('When you click OK we will open our HelpScout beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
+            $confirmation_message = __('When you click OK we will open our HelpScout beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
             $beacon_search_elements_class = $this->beacon_search_elements_class;
             $confirmation_message = $this->confirmation_message;
             $beacon_image_content = $this->beacon_image_content;

@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class TimepickerField extends \FSVendor\WPDesk\Forms\Field\BasicField
+class TimepickerField extends BasicField
 {
     /**
      * @inheritDoc

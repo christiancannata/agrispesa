@@ -158,7 +158,11 @@ class MenuEd_ShadowPluginFramework {
 				$stored_options = $this->json_encode($stored_options);
 			}
 
-			if ( $this->zlib_compression && function_exists('gzcompress') ) {
+			if (
+				$this->zlib_compression
+				&& function_exists('gzcompress')
+				&& function_exists('gzuncompress')
+			) {
 				$stored_options = 'gzcompress:' . base64_encode(gzcompress(serialize($stored_options)));
 			}
 

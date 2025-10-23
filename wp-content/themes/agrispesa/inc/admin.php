@@ -258,12 +258,12 @@ function give_user_subscription($product, $user, $row)
     $lname = $user->last_name;
     $email = $user->user_email;
     /*$address_1 = get_user_meta( $user_id, 'billing_address_1', true );
-		$address_2 = get_user_meta( $user_id, 'billing_address_2', true );
-		$city      = get_user_meta( $user_id, 'billing_city', true );
-		$postcode  = get_user_meta( $user_id, 'billing_postcode', true );
-		$country   = get_user_meta( $user_id, 'billing_country', true );
-		$state     = get_user_meta( $user_id, 'billing_state', true );
-		*/
+        $address_2 = get_user_meta( $user_id, 'billing_address_2', true );
+        $city      = get_user_meta( $user_id, 'billing_city', true );
+        $postcode  = get_user_meta( $user_id, 'billing_postcode', true );
+        $country   = get_user_meta( $user_id, 'billing_country', true );
+        $state     = get_user_meta( $user_id, 'billing_state', true );
+        */
     $shippingAddress = [
         "first_name" => $fname,
         "last_name" => $lname,
@@ -359,7 +359,7 @@ function give_user_subscription($product, $user, $row)
         : __("Programmatically added order and subscription.");
     //$order->update_status( 'completed', $note, true );
     // Also update subscription status to active from pending (and add note)
-    //	$sub->update_status( 'active', $note, true );
+    //  $sub->update_status( 'active', $note, true );
     return $sub;
 }
 function get_order_delivery_date($id)
@@ -917,8 +917,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ]);
 
             $wpdb->query("UPDATE wp_posts
-			SET post_status = 'draft'
-			WHERE post_type = 'gruppo-prodotto';");
+            SET post_status = 'draft'
+            WHERE post_type = 'gruppo-prodotto';");
 
             $productIds = [];
             $newProducts = [];
@@ -937,7 +937,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             );*/
 
             $productsToInclude = array_filter($productsToInclude,function($id){
-				return !empty($id);
+                return !empty($id);
             });
             $wpdb->query(
                 "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
@@ -945,8 +945,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     ");"
             );
 
-			    $productsToExclude = array_filter($productsToExclude,function($id){
-				return !empty($id);
+                $productsToExclude = array_filter($productsToExclude,function($id){
+                return !empty($id);
             });
 
             if (!empty($productsToExclude)) {
@@ -1257,16 +1257,16 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                         $weigth_nav[0]
                     );
                 }
- 				*/
+                */
                 $productObj->save();
                 $product["wordpress_id"] = $productObj->get_id();
                 //$productIds[] = $productObj->get_id();
                 //update_post_meta($productId,'_is_active_shop',1);
                 /*
-				$product = new WC_Product($productId);
-				$product->set_status('publish');
-				$product->save();
-				*/
+                $product = new WC_Product($productId);
+                $product->set_status('publish');
+                $product->save();
+                */
 
                 update_post_meta(
                     $productObj->get_id(),
@@ -1311,8 +1311,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $wpdb->query(
                 "UPDATE wp_posts
-	SET post_status = 'draft'
-	WHERE post_type = 'product' AND ID NOT IN (" .
+    SET post_status = 'draft'
+    WHERE post_type = 'product' AND ID NOT IN (" .
                     implode(",", $productsToExclude) .
                     ")"
             );
@@ -1342,8 +1342,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                 (new DateTime())->format("Y-m-d H:i:s")
             );
 
-				    $productsToExclude = array_filter($productsToExclude,function($id){
-				return !empty($id);
+                    $productsToExclude = array_filter($productsToExclude,function($id){
+                return !empty($id);
             });
 
             if (!empty($productsToExclude)) {
@@ -1365,409 +1365,402 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
     ]);
 
-    register_rest_route("agrispesa/v1", "import-box", [
-        "methods" => "POST",
-        "permission_callback" => function () {
-            return true;
-        },
-        "callback" => function ($request) {
-            $now = new DateTime();
-            $file = "box_" . $now->format("dmY_Hi") . ".xml";
-            $uploadDire = wp_upload_dir($now->format("Y/m"));
-            file_put_contents(
-                $uploadDire["path"] . "/" . $file,
-                $request->get_body()
-            );
 
-            ($xml = simplexml_load_string($request->get_body())) or
-                die("Error: Cannot create object");
-            $products = (array) $xml;
-            $boxes = [];
-            global $wpdb;
 
-            $productsToExclude = get_posts([
-                "post_type" => ["product", "product_variation"],
-                "numberposts" => -1,
-                "fields" => "ids",
-                "post_status" => "any",
-                "tax_query" => [
-                    [
-                        "taxonomy" => "product_cat",
-                        "field" => "slug",
-                        "terms" => ["box", "sos", "box-singola", "gift-card"],
-                        "operator" => "IN",
-                    ],
-                ],
-            ]);
-            /* ACTIVATE GRUPPI CATEGORIE */
+// REST: /wp-json/agrispesa/v1/import-box
+register_rest_route("agrispesa/v1", "import-box", [
+    "methods" => "POST",
+    "permission_callback" => function () {
+        return true; // ⚠️ ROUTE APERTA: chiunque può chiamarla. Metti auth (nonce/user cap) o firma HMAC.
+    },
+    "callback" => function ($request) {
+        $now = new DateTime();
 
-            $allGroups = get_posts([
-                "post_type" => "gruppo-prodotto",
-                "post_status" => ["draft", "publish"],
-                "posts_per_page" => -1,
-            ]);
+        // Salvataggio XML raw per auditing/debug
+        $file = "box_" . $now->format("dmY_Hi") . ".xml";
+        $uploadDire = wp_upload_dir($now->format("Y/m")); // ok: wp_upload_dir può ricevere 'Y/m'
+        file_put_contents(
+            $uploadDire["path"] . "/" . $file,
+            $request->get_body()
+        );
 
-            $allGroups = array_map(function ($group) {
-                $group->products_sku = get_post_meta(
-                    $group->ID,
-                    "products_sku",
-                    true
-                );
-                return $group;
-            }, $allGroups);
+        // Parse XML
+        // ⚠️ NON USARE die() in una REST API → restituisci un WP_REST_Response 400
+        ($xml = simplexml_load_string($request->get_body())) or
+            die("Error: Cannot create object");
 
-            foreach ($products["ROW"] as $product) {
-                $product = (array) $product;
+        // Attenzione: (array)$xml su SimpleXML è fragile: $products["ROW"] può essere obj se c'è un solo elemento
+        $products = (array) $xml;
+        $boxes = [];
+        global $wpdb;
 
-                if (strstr((string) $product["offer_no"], "STCOMP") == false) {
-                    continue;
-                }
+        // Elenco prodotti da escludere da successive operazioni (per categorie specifiche)
+        $productsToExclude = get_posts([
+            "post_type"   => ["product", "product_variation"],
+            "numberposts" => -1,
+            "fields"      => "ids",
+            "post_status" => "any",
+            "tax_query"   => [[
+                "taxonomy" => "product_cat",
+                "field"    => "slug",
+                "terms"    => ["box", "sos", "box-singola", "gift-card"],
+                "operator" => "IN",
+            ]],
+        ]);
 
-                $sku = $product["id_product"];
+        /* ACTIVATE GRUPPI CATEGORIE */
 
-                $isFoundGroup = array_filter($allGroups, function ($group) use (
-                    $sku
-                ) {
-                    return is_array($group->products_sku) &&
-                        in_array($sku, $group->products_sku);
-                });
+        // Carica tutti i gruppi "gruppo-prodotto" (draft+publish)
+        $allGroups = get_posts([
+            "post_type"      => "gruppo-prodotto",
+            "post_status"    => ["draft", "publish"],
+            "posts_per_page" => -1,
+        ]);
 
-                if (!empty($isFoundGroup)) {
-                    foreach ($isFoundGroup as $group) {
-                        wp_update_post([
-                            "ID" => $group->ID,
-                            "post_status" => "publish",
-                        ]);
-                    }
+        // Aggiunge ai post caricati il meta 'products_sku' (lista SKU che appartengono a quel gruppo)
+        $allGroups = array_map(function ($group) {
+            $group->products_sku = get_post_meta($group->ID, "products_sku", true);
+            return $group;
+        }, $allGroups);
+
+        // ⚠️ Se $products["ROW"] non è un array (singolo nodo), questo foreach esploderà.
+        // Suggerito: $rows = $products['ROW']; if (!is_array($rows)) { $rows = [$rows]; }
+        foreach ($products["ROW"] as $product) {
+            $product = (array) $product;
+
+            // Pubblica i gruppi che contengono SKU dei prodotti con offer_no tipo 'STCOMP'
+            if (strstr((string) $product["offer_no"], "STCOMP") == false) {
+                continue;
+            }
+
+            $sku = $product["id_product"];
+
+            // ⚠️ O(n*m): per ogni prodotto filtri tutti i gruppi → performance pessime su grossi dataset.
+            // Migliore: indicizza $sku → [groupIds...] una volta, poi set di publish.
+            $isFoundGroup = array_filter($allGroups, function ($group) use ($sku) {
+                return is_array($group->products_sku) && in_array($sku, $group->products_sku);
+            });
+
+            if (!empty($isFoundGroup)) {
+                foreach ($isFoundGroup as $group) {
+                    wp_update_post([
+                        "ID"          => $group->ID,
+                        "post_status" => "publish",
+                    ]);
                 }
             }
-            /* FINE ACTIVATE GRUPPI CATEGORIE */
+        }
+        /* FINE ACTIVATE GRUPPI CATEGORIE */
 
-            $productsSku = [];
-            $week = null;
-            foreach ($products["ROW"] as $product) {
-                $product = (array) $product;
-                if (!isset($boxes[(string) $product["offer_no"]])) {
-                    $boxes[(string) $product["offer_no"]] = [];
-                }
-                $productsSku[] = (string) $product["id_product"];
-                $boxes[(string) $product["offer_no"]][] = $product;
-                $week = explode("-", (string) $product["offer_no"]);
-                $week = substr($week[0], -2);
+        // Raggruppa righe per "offer_no" (identifica il box) e raccoglie gli SKU
+        $productsSku = [];
+        $week = null;
+
+        foreach ($products["ROW"] as $product) {
+            $product = (array) $product;
+
+            if (!isset($boxes[(string) $product["offer_no"]])) {
+                $boxes[(string) $product["offer_no"]] = [];
             }
-            $productsSku = array_unique($productsSku);
 
-            $productsToInclude = get_posts([
-                "post_type" => ["product", "product_variation"],
-                "numberposts" => -1,
-                "fields" => "ids",
-                "post_status" => "any",
-            ]);
+            $productsSku[] = (string) $product["id_product"];
+            $boxes[(string) $product["offer_no"]][] = $product;
 
-            /* $wpdb->query(
-                "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                    implode(",", $productsToInclude) .
-                    ");"
-            );*/
+            // Estrai la settimana dagli offer_no: es. ABC-... → prendi ultime 2 cifre della prima parte
+            $week = explode("-", (string) $product["offer_no"]);
+            $week = substr($week[0], -2);
+        }
+        $productsSku = array_unique($productsSku);
+
+        // ⚠️ ATTENZIONE: prendi TUTTI i prodotti (qualsiasi status)...
+        $productsToInclude = get_posts([
+            "post_type"   => ["product", "product_variation"],
+            "numberposts" => -1,
+            "fields"      => "ids",
+            "post_status" => "any",
+        ]);
+
+        // ...e li metti nel cestino (solo 'product', non 'product_variation')
+        // ⚠️ Se $productsToInclude è vuoto → "IN ()" SQL INVALIDO. Controlla prima di eseguire.
+        // ⚠️ Usi SQL raw senza prepare; meglio wp_update_post in batch o $wpdb->prepare.
+        /* $wpdb->query(
+            "UPDATE wp_postmeta SET meta_value = '0' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
+                implode(",", $productsToInclude) .
+                ");"
+        );*/
+        $wpdb->query(
+            "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
+                implode(",", $productsToInclude) .
+                ");"
+        );
+
+        // ID magico "17647" sempre escluso
+        $productsToExclude[] = 17647;
+
+        // Ripubblica gli esclusi
+        // ⚠️ Qui pubblichi anche 'product_variation' perché non filtri per post_type. Verifica sia voluto.
+        if (!empty($productsToExclude)) {
             $wpdb->query(
-                "UPDATE wp_posts SET post_status = 'trash' WHERE post_type = 'product' AND ID IN (" .
-                    implode(",", $productsToInclude) .
-                    ");"
+                "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
+            );
+        }
+
+        $facciamoNoiProducts = []; // verranno resi 'private'
+        $scegliTuProducts    = []; // verranno resi 'publish'
+
+        $postIds = [];
+        $skuBoxSingole = array_keys($boxes);
+        // Dalle chiavi tipo "XXX-12345" prendi l'ID dopo il trattino
+        $skuBoxSingole = array_map(function ($box) {
+            $id = explode("-", $box);
+            return $id[1];
+        }, $skuBoxSingole);
+
+        // Trova la variation (e parent) per ogni SKU di box singolo e mettili publish
+        foreach ($skuBoxSingole as $sku) {
+            $singleProductBox = new WP_Query([
+                "post_type"      => "product_variation",
+                "meta_key"       => "_sku",
+                "meta_value"     => $sku,
+                "order"          => "DESC",
+                "posts_per_page" => 1,
+            ]);
+            if ($singleProductBox->have_posts()) {
+                $singleProductBox = $singleProductBox->get_posts();
+                $postIds[] = $singleProductBox[0]->ID;           // variation
+                $postIds[] = $singleProductBox[0]->post_parent;  // parent product
+            }
+        }
+
+        if (!empty($postIds)) {
+            $wpdb->query(
+                "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) .");"
+            );
+        }
+
+        $boxIds = [];
+
+        // Pulizia meta orfani (postmeta senza post): ⚠️ operazione pesante su DB grandi, valuta CRON dedicato
+        $wpdb->query("DELETE pm
+            FROM wp_postmeta pm
+            LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
+            WHERE wp.ID IS NULL;");
+
+        $createdBoxes = [];
+        
+        // Crea i post "weekly-box" uno per ogni offer_no
+        foreach ($boxes as $idBox => $boxProducts) {
+            $boxName = "Box settimana " . date("Y") . "_" . $week . " - " . $idBox;
+
+            // ⚠️ CANCELLAZIONE PER TITOLO: rischiosa (colpisce qualsiasi post con quel titolo, qualsiasi post_type).
+            // ⚠️ Non cancella meta/term: restano orfani fino alla prossima pulizia.
+            // Meglio: cerca gli ID e usa wp_delete_post($id, true).
+            $wpdb->query(
+                'DELETE from wp_posts WHERE post_title = "' . $boxName . '";'
             );
 
-            $productsToExclude[] = 17647;
+            // Dall'idBox estrai il Navision ID (ultima parte dopo '-')
+            $navisionId = explode("-", $idBox);
+            $navisionId = end($navisionId);
 
-            if (!empty($productsToExclude)) {
-                /* $wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                        implode(",", $productsToExclude) .
-                        ");"
-                );*/
-                $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
-                );
+            // Trova la variation pubblicata con _sku = navisionId
+            $singleProductBox = new WP_Query([
+                "post_type"   => "product_variation",
+                "fields"      => "ids",
+                "meta_key"    => "_sku",
+                "post_status" => ["publish"],
+                "meta_value"  => $navisionId,
+                "order"       => "DESC",
+                "posts_per_page" => 1,
+            ]);
+
+            if (!$singleProductBox->have_posts()) {
+                continue; // Se non c'è variazione pubblicata, salta la creazione del weekly-box
             }
 
-            $facciamoNoiProducts = [];
-            $scegliTuProducts = [];
+            $singleProductBox = $singleProductBox->get_posts();
+            $singleProductBox = reset($singleProductBox);
 
-            /*
- 			$importedPosts = $wpdb->get_results(
-                "SELECT post_id,meta_value FROM " .
-                    $wpdb->postmeta .
-                    ' WHERE meta_key = "_navision_id" and meta_value IN ("' .
-                    implode('","', $productsSku) .
-                    '")'
-            );
-            $postIds = array_map(function ($post) {
-                return $post->post_id;
-            }, $importedPosts);*/
+            // Crea il post "weekly-box"
+            $post_id = wp_insert_post([
+                "post_type"      => "weekly-box",
+                "post_title"     => $boxName,
+                "post_content"   => "",
+                "post_status"    => "publish",
+                "comment_status" => "closed",
+                "ping_status"    => "closed",
+            ]);
 
-            $postIds = [];
-            $skuBoxSingole = array_keys($boxes);
-            $skuBoxSingole = array_map(function ($box) {
-                $id = explode("-", $box);
-                return $id[1];
-            }, $skuBoxSingole);
-
-            foreach ($skuBoxSingole as $sku) {
-                $singleProductBox = new WP_Query([
-                    "post_type" => "product_variation",
-                    "meta_key" => "_sku",
-                    "meta_value" => $sku,
-                    "order" => "DESC",
-                    "posts_per_page" => 1,
+            if (!$post_id) {
+                $response = new WP_REST_Response([
+                    "error" => "Errore creazione box " . $boxName,
                 ]);
-                if ($singleProductBox->have_posts()) {
-                    $singleProductBox = $singleProductBox->get_posts();
-                    $postIds[] = $singleProductBox[0]->ID;
-                    $postIds[] = $singleProductBox[0]->post_parent;
+                $response->set_status(500);
+                return $response;
+            }
+
+            // Meta del weekly-box
+            $deliveryDate = (string) $boxProducts[0]["requesteddeliverydate"];
+            $deliveryDate = DateTime::createFromFormat("dmY", $deliveryDate);
+            update_post_meta($post_id, "_week", date("Y") . "_" . $week);
+            update_post_meta($post_id, "_data_consegna", $deliveryDate->format("Y-m-d"));
+            update_post_meta($post_id, "_product_box_id", $singleProductBox);
+            update_post_meta($post_id, "_navision_id", (string) $boxProducts[0]["offer_no"]);
+
+            // Collezione prodotti del box
+            $arrayProducts = [];
+            foreach ($boxProducts as $boxProduct) {
+                if (is_array($boxProduct["id_product"])) {
+                    $boxProduct["id_product"] = $boxProduct["id_product"][0];
                 }
-            }
+                $boxProduct["id_product"] = (string) $boxProduct["id_product"];
 
-            if (!empty($postIds)) {
-                $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" . implode(",", $postIds) .");"
-                );
-                /*$wpdb->query(
-                    "UPDATE wp_postmeta SET meta_value = '1' WHERE meta_key = '_is_active_shop' AND post_id IN (" .
-                        implode(",", $postIds) .
-                        ")"
-                );*/
-            }
-
-            $boxIds = [];
-            //delete all box for the same week
-            /*$boxIdsToDelete = $wpdb->get_results(
-                "select ID from wp_posts p,wp_postmeta m where p.post_type = 'weekly-box' and p.ID = m.post_id and m.meta_key = '_week' and m.meta_value = '" .
-                    date("Y") .
-                    "_" .
-                    $week .
-                    "'"
-            );
-            $boxIdsToDelete = array_map(function ($post) {
-                return $post->ID;
-            }, $boxIdsToDelete);
-
-            if (!empty($boxIdsToDelete)) {
-                $wpdb->query(
-                    "DELETE from wp_posts  WHERE ID IN (" .
-                        implode(",", $boxIdsToDelete) .
-                        ")"
-                );
-            }*/
-            $wpdb->query("DELETE pm
-	FROM wp_postmeta pm
-	LEFT JOIN wp_posts wp ON wp.ID = pm.post_id
-	WHERE wp.ID IS NULL;");
-
-            foreach ($boxes as $idBox => $boxProducts) {
-                $boxName =
-                    "Box settimana " . date("Y") . "_" . $week . " - " . $idBox;
-
-                // DELETE BOX FOR THE CURRENT WEEK
-                $wpdb->query(
-                    'DELETE from wp_posts WHERE post_title = "' . $boxName . '";'
-                );
-
-                $navisionId = explode("-", $idBox);
-                $navisionId = end($navisionId);
-
-                $singleProductBox = new WP_Query([
-                    "post_type" => "product_variation",
-                    "fields" => "ids",
-                    "meta_key" => "_sku",
-                    "post_status" => ["publish"],
-                    "meta_value" => $navisionId,
-                    "order" => "DESC",
-                    "posts_per_page" => 1,
-                ]);
-
-                if (!$singleProductBox->have_posts()) {
+                // Prodotto "trasporto" → salva linea per spese di consegna e skippa
+                if ($boxProduct["id_product"] == "TRASPORTO1") {
+                    update_option(
+                        "delivery_product_offer_no",
+                        (string) $boxProduct["offer_line_no"]
+                    );
                     continue;
                 }
 
-                $singleProductBox = $singleProductBox->get_posts();
-                $singleProductBox = reset($singleProductBox);
-
-                $post_id = wp_insert_post([
-                    "post_type" => "weekly-box",
-                    "post_title" => $boxName,
-                    "post_content" => "",
-                    "post_status" => "publish",
-                    "comment_status" => "closed", // if you prefer
-                    "ping_status" => "closed", // if you prefer
+                // Cerca il product per _navision_id (accetta anche trash/draft)
+                $singleProduct = new WP_Query([
+                    "post_type"   => "product",
+                    "meta_key"    => "_navision_id",
+                    "post_status" => ["publish", "private", "trash", "draft"],
+                    "meta_value"  => $boxProduct["id_product"],
+                    "order"       => "ASC",
+                    "posts_per_page" => 1,
                 ]);
 
-                if (!$post_id) {
-                    $response = new WP_REST_Response([
-                        "error" =>
-                            "Errore creazione box " .
-                            "Box settimana " .
-                            date("Y") .
-                            "_" .
-                            $week .
-                            " - " .
-                            $idBox,
-                    ]);
-                    $response->set_status(500);
-                    return $response;
+                $productId = null;
+                $productName = null;
+
+                if ($singleProduct->have_posts()) {
+                    $singleProduct = $singleProduct->get_posts();
+                    $singleProduct = reset($singleProduct); // WP_Post
+                    $productId     = $singleProduct->ID;
+                    $productName   = $singleProduct->post_title;
                 }
 
-                // insert post meta
-                $deliveryDate =
-                    (string) $boxProducts[0]["requesteddeliverydate"];
-                $deliveryDate = DateTime::createFromFormat(
-                    "dmY",
-                    $deliveryDate
-                );
-                update_post_meta($post_id, "_week", date("Y") . "_" . $week);
-                update_post_meta(
-                    $post_id,
-                    "_data_consegna",
-                    $deliveryDate->format("Y-m-d")
-                );
-                update_post_meta(
-                    $post_id,
-                    "_product_box_id",
-                    $singleProductBox
-                );
-                update_post_meta(
-                    $post_id,
-                    "_navision_id",
-                    (string) $boxProducts[0]["offer_no"]
-                );
+                // Aggiungi alla struttura _products del weekly-box
+                $arrayProducts[] = [
+                    "id"           => $productId, // ⚠️ può essere null se non trovato
+                    "navision_id"  => $boxProduct["id_product"],
+                    "quantity"     => 1,
+                    "name"         => $productName,
+                    "offer_line_no"=> (string) $boxProduct["offer_line_no"],
+                ];
 
-                $arrayProducts = [];
-                foreach ($boxProducts as $boxProduct) {
-                    if (is_array($boxProduct["id_product"])) {
-                        $boxProduct["id_product"] =
-                            $boxProduct["id_product"][0];
-                    }
+                // Flag attivazione in shop e liste di post da (ri)pubblicare o privatizzare
+                $isActive = 1;
 
-                    $boxProduct["id_product"] =
-                        (string) $boxProduct["id_product"];
-
-                    if ($boxProduct["id_product"] == "TRASPORTO1") {
-                        update_option(
-                            "delivery_product_offer_no",
-                            (string) $boxProduct["offer_line_no"]
-                        );
-                        continue;
-                    }
-
-                    $singleProduct = new WP_Query([
-                        "post_type" => "product",
-                        "meta_key" => "_navision_id",
-                        "post_status" => [
-                            "publish",
-                            "private",
-                            "trash",
-                            "draft",
-                        ],
-                        "meta_value" => $boxProduct["id_product"],
-                        "order" => "ASC",
-                        "posts_per_page" => 1,
-                    ]);
-                    $productId = null;
-                    $productName = null;
-
-                    if ($singleProduct->have_posts()) {
-                        // continue;
-
-                        $singleProduct = $singleProduct->get_posts();
-                        $singleProduct = reset($singleProduct);
-                        $productId = $singleProduct->ID;
-                        $productName = $singleProduct->post_title;
-                    }
-
-                    //update_post_meta($singleProduct->ID,'_is_active_shop',1);
-
-                    $arrayProducts[] = [
-                        "id" => $productId,
-                        "navision_id" => $boxProduct["id_product"],
-                        "quantity" => 1,
-                        "name" => $productName,
-                        "offer_line_no" =>
-                            (string) $boxProduct["offer_line_no"],
-                    ];
-
-                    $isActive = 1;
-
-                    if (
-                        strstr((string) $product["offer_no"], "STCOMP") == false
-                    ) {
-                        $isActive = 0;
-                        $facciamoNoiProducts[] = $singleProduct->ID;
-                    } else {
-                        $scegliTuProducts[] = $singleProduct->ID;
-                    }
-
-                    /* update_post_meta(
-                        $singleProduct->ID,
-                        "_is_active_shop",
-                        $isActive
-                    );*/
-                    update_post_meta(
-                        $singleProduct->ID,
-                        "_sku",
-                        $boxProduct["id_product"]
-                    );
+                // ⚠️ BUG: qui stai leggendo $product["offer_no"] ma dentro il foreach si chiama $boxProduct.
+                // Dovrebbe essere: if (strstr((string)$boxProduct["offer_no"], "STCOMP") == false) { ... }
+                if (strstr((string) $product["offer_no"], "STCOMP") == false) {
+                    $isActive = 0;
+                    // ⚠️ $singleProduct potrebbe NON essere definito se have_posts() era false → controlla $productId prima
+                    $facciamoNoiProducts[] = $singleProduct->ID;
+                } else {
+                    $scegliTuProducts[] = $singleProduct->ID;
                 }
-                add_post_meta($post_id, "_products", $arrayProducts);
-                $boxIds[] = $post_id;
-            }
 
-            // ENABLE PRODUCTS
-            	    $scegliTuProducts = array_filter($scegliTuProducts,function($id){
-				return !empty($id);
-            });
-
-            if (!empty($scegliTuProducts)) {
-                $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $scegliTuProducts) .");"
+                // Aggiorna sempre lo SKU del product (allineamento)
+                // ⚠️ Se il product non esiste ($productId null) questo warninga. Aggiungi un check.
+                update_post_meta(
+                    $singleProduct->ID,
+                    "_sku",
+                    $boxProduct["id_product"]
                 );
             }
 
-            if (!empty($facciamoNoiProducts)) {
-                $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'private' WHERE post_type = 'product' AND ID IN (" .
-                        implode(",", $facciamoNoiProducts) .
-                        ");"
-                );
-            }
+            // ⚠️ add_post_meta aggiunge una nuova riga ogni volta → rischi duplicati.
+            // Se vuoi sostituire, usa update_post_meta($post_id, "_products", $arrayProducts);
+            add_post_meta($post_id, "_products", $arrayProducts);
+            $boxIds[] = $post_id;
+            
+            $createdBoxes[] = [
+    'id'             => $post_id,
+    'title'          => $boxName,
+    'week'           => date("Y") . "_" . $week,
+    'delivery_date'  => $deliveryDate->format("Y-m-d"),
+    'products_count' => count($arrayProducts),
+    'navision_offer' => (string) $boxProducts[0]["offer_no"],
+];
+            
+        }
 
-            wc_recount_all_terms();
-            update_option(
-                "last_import_box",
-                (new DateTime())->format("Y-m-d H:i:s")
+        // ENABLE PRODUCTS
+
+        // Ripulisci ID vuoti
+        $scegliTuProducts = array_values(array_unique(array_filter($scegliTuProducts, fn($id) => !empty($id))));
+$scegliTuActivatedRows = 0;
+
+if (!empty($scegliTuProducts)) {
+    $sql = "UPDATE wp_posts SET post_status = 'publish' WHERE post_type = 'product' AND ID IN (" . implode(",", array_map('intval', $scegliTuProducts)) . ")";
+    $scegliTuActivatedRows = (int) $wpdb->query($sql); // numero righe effettivamente aggiornate
+}
+
+        $facciamoNoiProducts = array_values(array_unique(array_filter($facciamoNoiProducts, fn($id) => !empty($id))));
+$facciamoNoiPrivateRows = 0;
+
+if (!empty($facciamoNoiProducts)) {
+    $sql = "UPDATE wp_posts SET post_status = 'private' WHERE post_type = 'product' AND ID IN (" . implode(",", array_map('intval', $facciamoNoiProducts)) . ")";
+    $facciamoNoiPrivateRows = (int) $wpdb->query($sql);
+}
+
+        // Recount termini WooCommerce (categoria/attributi)
+        wc_recount_all_terms();
+
+        // Traccia timestamp import
+        update_option(
+            "last_import_box",
+            (new DateTime())->format("Y-m-d H:i:s")
+        );
+
+        // Ripulisci ID vuoti per excluded
+        $productsToExclude = array_filter($productsToExclude,function($id){
+            return !empty($id);
+        });
+
+        if (!empty($productsToExclude)) {
+            // ⚠️ Idem sopra: pubblica senza filtrare per post_type
+            $wpdb->query(
+                "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
             );
+        }
 
-			            	    $productsToExclude = array_filter($productsToExclude,function($id){
-				return !empty($id);
-            });
+        // Aggiorna info settemana corrente/precedente
+        $lastOrderWeek = get_option("current_order_week", true);
+        update_option("current_order_week", date("Y") . "_" . $week);
+        update_option("last_order_week", $lastOrderWeek);
 
+        wc_recount_all_terms();
 
-            if (!empty($productsToExclude)) {
+        // Risposta 201 con lista ID weekly-box creati
+        $payload = [
+    'week'                  => date("Y") . "_" . $week,
+    'created_boxes'         => $createdBoxes,                  // elenco box create con dettagli
+    'scegli_tu'             => [
+        'requested_ids'     => $scegliTuProducts,              // quali ID volevi pubblicare
+        'activated_count'   => $scegliTuActivatedRows,         // righe effettivamente aggiornate
+    ],
+    // opzionale: includi anche i “facciamo noi”
+    'facciamo_noi'          => [
+        'requested_ids'     => $facciamoNoiProducts ?? [],
+        'privated_count'    => $facciamoNoiPrivateRows ?? 0,
+    ],
+    // se vuoi mantenere l’array storico degli ID dei weekly-box:
+    'weekly_box_ids'        => $boxIds,
+    'last_import_box'       => (new DateTime())->format("Y-m-d H:i:s"),
+];
 
-                $wpdb->query(
-                    "UPDATE wp_posts SET post_status = 'publish' WHERE ID IN (" .implode(",", $productsToExclude) .");"
-                );
-            }
-
-            $lastOrderWeek = get_option("current_order_week", true);
-
-            update_option("current_order_week", date("Y") . "_" . $week);
-            update_option("last_order_week", $lastOrderWeek);
-
-            wc_recount_all_terms();
-
-            $response = new WP_REST_Response($boxIds);
-            $response->set_status(201);
-
-            return $response;
-        },
-    ]);
+$response = new WP_REST_Response($payload);
+$response->set_status(201);
+return $response;
+    },
+]);
 
     register_rest_route("agrispesa/v1", "import-fido", [
         "methods" => "POST",
@@ -2187,9 +2180,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             foreach ($invoices as $key => $invoice) {
                 $invoice = (array) $invoice;
 
-				if(!isset($invoice['documentno']) || !isset( $invoice["id_codeclient"])){
-					continue;
-				}
+                if(!isset($invoice['documentno']) || !isset( $invoice["id_codeclient"])){
+                    continue;
+                }
 
                 $alreadyExists = get_posts([
                     "post_type" => "invoice",
@@ -2536,10 +2529,10 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
 
             $enabledWeeksList = $ENABLED_WEEKS[$today->format("Y")];
 
-			$enabledWeeksList = array_map(function($weekTmp){
-				 $weekTmp+=1;
-				 return $weekTmp;
-			},$enabledWeeksList);
+            $enabledWeeksList = array_map(function($weekTmp){
+                 $weekTmp+=1;
+                 return $weekTmp;
+            },$enabledWeeksList);
 
             $doc = new DOMDocument();
             $doc->formatOutput = true;
@@ -2563,8 +2556,8 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             $lastOrderWeek = get_option("last_order_week", true);
 
             /*if(!empty($week)){
-				$lastOrderWeek = $week;
-			}*/
+                $lastOrderWeek = $week;
+            }*/
 
             /*
  *            "meta_key" => "_date_completed",
@@ -2672,9 +2665,9 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
                     continue;
                 }
 
-                /*	if(!$isSubscription){
-					continue;
-				}*/
+                /*  if(!$isSubscription){
+                    continue;
+                }*/
 
                 if ($isSubscription) {
                     $subscription = new WC_Subscription($isSubscription);
@@ -3322,60 +3315,60 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
         },
         "callback" => function ($request) {
 
-		if(strlen($request["cap"]) < 5){
+        if(strlen($request["cap"]) < 5){
             $response = new WP_REST_Response(["is_valid" => true]);
             $response->set_status(200);
-			return $response;
-		}
+            return $response;
+        }
 
-		$cart = $_POST;
-
-
-		$petfoodId = 1079;
+        $cart = $_POST;
 
 
-	$petfoodCategories = [
-		$petfoodId
-	];
+        $petfoodId = 1079;
 
-	$args_query = array(
-		'taxonomy' => 'product_cat',
-		'hide_empty' => false,
-		'child_of' => $petfoodId
-	);
 
-	foreach (get_terms($args_query) as $term) {
-		if ($term->term_id) {
-			$petfoodCategories[] = $term->term_id;
-		}
-	}
+    $petfoodCategories = [
+        $petfoodId
+    ];
 
-	//is no petfood cart
-	$hasPetfoodInCart = false;
-	$hasOtherProductInCart = false;
+    $args_query = array(
+        'taxonomy' => 'product_cat',
+        'hide_empty' => false,
+        'child_of' => $petfoodId
+    );
 
-	foreach ($cart as $item) {
+    foreach (get_terms($args_query) as $term) {
+        if ($term->term_id) {
+            $petfoodCategories[] = $term->term_id;
+        }
+    }
 
-		if ($hasPetfoodInCart && $hasOtherProductInCart) {
-			continue;
-		}
+    //is no petfood cart
+    $hasPetfoodInCart = false;
+    $hasOtherProductInCart = false;
 
-		$terms = get_the_terms($item['product_id'], 'product_cat');
-		foreach ($terms as $term) {
-			if (in_array($term->term_id, $petfoodCategories)) {
-				$hasPetfoodInCart = true;
-			} else {
-				$hasOtherProductInCart = true;
-			}
-		}
-	}
+    foreach ($cart as $item) {
 
-	if($hasPetfoodInCart){
+        if ($hasPetfoodInCart && $hasOtherProductInCart) {
+            continue;
+        }
+
+        $terms = get_the_terms($item['product_id'], 'product_cat');
+        foreach ($terms as $term) {
+            if (in_array($term->term_id, $petfoodCategories)) {
+                $hasPetfoodInCart = true;
+            } else {
+                $hasOtherProductInCart = true;
+            }
+        }
+    }
+
+    if($hasPetfoodInCart){
 
             $response = new WP_REST_Response(["is_valid" => true]);
             $response->set_status(200);
             return $response;
-	}
+    }
 
             $data_store = WC_Data_Store::load("shipping-zone");
             $raw_zones = $data_store->get_zones();
@@ -3509,7 +3502,7 @@ GROUP BY meta_value HAVING COUNT(meta_value) > 1"
             ]);
             $subscription = reset($subscription);
 
-			$disabledWeeks = [];
+            $disabledWeeks = [];
 
             foreach ($events as $event) {
                 $day = new \DateTime($event["start"]);
@@ -4194,16 +4187,16 @@ if (!function_exists("mv_add_meta_boxes")) {
         );
         if (!empty($oldPreferences)): ?>
 
-			<h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
-			<table class="table">
-			<?php foreach ($oldPreferences as $preference): ?>
-			<tr>
-			<td>NO <?php echo $preference["name"]; ?></td>
-			<td>Sostituire con <?php echo $preference["substitute"]; ?></td>
-	</tr>
-			<?php endforeach; ?>
-	</table>
-			<?php endif;
+            <h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
+            <table class="table">
+            <?php foreach ($oldPreferences as $preference): ?>
+            <tr>
+            <td>NO <?php echo $preference["name"]; ?></td>
+            <td>Sostituire con <?php echo $preference["substitute"]; ?></td>
+    </tr>
+            <?php endforeach; ?>
+    </table>
+            <?php endif;
     }
     function old_preferences_meta_box_callback($post)
     {
@@ -4215,16 +4208,16 @@ if (!function_exists("mv_add_meta_boxes")) {
         );
         if (!empty($oldPreferences)): ?>
 
-			<h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
-			<table class="table">
-			<?php foreach ($oldPreferences as $preference): ?>
-			<tr>
-			<td>NO <?php echo $preference["name"]; ?></td>
-			<td>Sostituire con <?php echo $preference["substitute"]; ?></td>
-	</tr>
-			<?php endforeach; ?>
-	</table>
-			<?php endif;
+            <h4>Preferenze inserite nel vecchio sito Agrispesa</h4>
+            <table class="table">
+            <?php foreach ($oldPreferences as $preference): ?>
+            <tr>
+            <td>NO <?php echo $preference["name"]; ?></td>
+            <td>Sostituire con <?php echo $preference["substitute"]; ?></td>
+    </tr>
+            <?php endforeach; ?>
+    </table>
+            <?php endif;
     }
     function box_preferences_meta_box_callback($order)
     {
@@ -4238,35 +4231,35 @@ if (!function_exists("mv_add_meta_boxes")) {
         $boxBlacklist = get_post_meta($subscriptionId, "_box_blacklist", true);
         if (!empty($boxPreferences)): ?>
 
-			<h4>Cosa mi piacerebbe ricevere</h4>
-			<table class="table">
-			<?php foreach ($boxPreferences as $preference): ?>
-			<tr>
-			<td><?php echo $preference["name"]; ?></td>
-			<td><a href="/wp-admin/post.php?post=<?php echo $preference[
+            <h4>Cosa mi piacerebbe ricevere</h4>
+            <table class="table">
+            <?php foreach ($boxPreferences as $preference): ?>
+            <tr>
+            <td><?php echo $preference["name"]; ?></td>
+            <td><a href="/wp-admin/post.php?post=<?php echo $preference[
        "id"
    ]; ?>&action=edit" target="_blank">Vai al prodotto</a></td>
-	</tr>
-			<?php endforeach; ?>
-	</table>
-			<?php endif;
+    </tr>
+            <?php endforeach; ?>
+    </table>
+            <?php endif;
         if (!empty($boxBlacklist)): ?>
 
-			<h4>Cosa non voglio ricevere</h4>
-			<table class="table">
-			<?php foreach ($boxBlacklist as $preference): ?>
-			<?php $category = get_post_meta(
+            <h4>Cosa non voglio ricevere</h4>
+            <table class="table">
+            <?php foreach ($boxBlacklist as $preference): ?>
+            <?php $category = get_post_meta(
        $preference["id"],
        "categoria_principale_gruppo_prodotto",
        true
    ); ?>
-			<tr>
-			<td><?php echo $category . " > " . $preference["name"]; ?></td>
-			</tr>
-	</tr>
-			<?php endforeach; ?>
-	</table>
-	<?php endif;
+            <tr>
+            <td><?php echo $category . " > " . $preference["name"]; ?></td>
+            </tr>
+    </tr>
+            <?php endforeach; ?>
+    </table>
+    <?php endif;
     }
 }
 // if you don't add 3 as as 4th argument, this will not work as expected
@@ -4313,11 +4306,11 @@ if (!function_exists("mv_add_other_fields_for_packaging")) {
             $deliveryDay .
             "</strong></span><br><br>";
         /*  echo '<strong>Numero di consegna:</strong><br>
-			<input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
+            <input autocomplete="off" type="text" value="' . $numConsegna . '" name="_numero_consegna"><br><br>';
 
-			global $wpdb;
-			$allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
-	*/
+            global $wpdb;
+            $allDataConsegna = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '_data_consegna' group by meta_value", ARRAY_A);
+    */
     }
 }
 function get_products_to_add_from_subscription(
@@ -4332,33 +4325,33 @@ function get_products_to_add_from_subscription(
 
     $productsToAdd = get_post_meta($box->ID, "_products", true);
     /*if ($overrideProducts) {
-			//check preferences
-			$boxPreferences = get_post_meta($subscription->get_id(), "_box_preferences", true);
-			if (empty($boxPreferences)) {
-				$boxPreferences = [];
-			}
-			$boxPreferences = [];
-			foreach ($boxPreferences as $preference) {
-				$productSearched = array_filter($productsToAdd, function ($product) use ($preference) {
-					return $product["id"] == $preference["id"];
-				});
-				if (!empty($productSearched)) {
-					$keys = array_keys($productSearched);
-					$productSearched = reset($productSearched);
-					$productSearchedKey = reset($keys);
-					$quantity = $productsToAdd[$productSearchedKey]["quantity"];
-					unset($productsToAdd[$productSearchedKey]);
-					$categories = get_the_terms($productSearched["id"], "product_cat");
-					$category = reset($categories);
-					$prod_categories = [$category->term_id];
-					$product_args = ["numberposts" => - 1, "post_status" => ["publish"], "post_type" => ["product"], "suppress_filters" => false, "order" => "ASC", "offset" => 0, ];
-					$product_args["tax_query"] = [["taxonomy" => "product_cat", "field" => "id", "terms" => $prod_categories, "operator" => "IN", ], ];
-					$productsByCategory = get_posts($product_args);
-					$productToAdd = reset($productsByCategory);
-					$productsToAdd[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title, "quantity" => $quantity, ];
-				}
-			}
-		}*/
+            //check preferences
+            $boxPreferences = get_post_meta($subscription->get_id(), "_box_preferences", true);
+            if (empty($boxPreferences)) {
+                $boxPreferences = [];
+            }
+            $boxPreferences = [];
+            foreach ($boxPreferences as $preference) {
+                $productSearched = array_filter($productsToAdd, function ($product) use ($preference) {
+                    return $product["id"] == $preference["id"];
+                });
+                if (!empty($productSearched)) {
+                    $keys = array_keys($productSearched);
+                    $productSearched = reset($productSearched);
+                    $productSearchedKey = reset($keys);
+                    $quantity = $productsToAdd[$productSearchedKey]["quantity"];
+                    unset($productsToAdd[$productSearchedKey]);
+                    $categories = get_the_terms($productSearched["id"], "product_cat");
+                    $category = reset($categories);
+                    $prod_categories = [$category->term_id];
+                    $product_args = ["numberposts" => - 1, "post_status" => ["publish"], "post_type" => ["product"], "suppress_filters" => false, "order" => "ASC", "offset" => 0, ];
+                    $product_args["tax_query"] = [["taxonomy" => "product_cat", "field" => "id", "terms" => $prod_categories, "operator" => "IN", ], ];
+                    $productsByCategory = get_posts($product_args);
+                    $productToAdd = reset($productsByCategory);
+                    $productsToAdd[] = ["id" => $productToAdd->ID, "name" => $productToAdd->post_title, "quantity" => $quantity, ];
+                }
+            }
+        }*/
     return $productsToAdd;
 }
 function get_box_from_subscription($subscription, $week = null)
@@ -4497,22 +4490,22 @@ function generate_fabbisogno()
     global $wpdb;
     $wpdb->query(
         "DELETE p, pm
-	  FROM {$wpdb->prefix}posts p
-	 INNER
-	  JOIN {$wpdb->prefix}postmeta pm
-		ON pm.post_id = p.ID
-	 WHERE p.post_type = 'fabbisogno' AND
-		   pm.meta_key = 'settimana'
-	   AND pm.meta_value = '" .
+      FROM {$wpdb->prefix}posts p
+     INNER
+      JOIN {$wpdb->prefix}postmeta pm
+        ON pm.post_id = p.ID
+     WHERE p.post_type = 'fabbisogno' AND
+           pm.meta_key = 'settimana'
+       AND pm.meta_value = '" .
             $week .
             "';"
     );
     $wpdb->query("
-		DELETE pm
-	FROM {$wpdb->prefix}postmeta pm
-	LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
-	WHERE wp.ID IS NULL
-		");
+        DELETE pm
+    FROM {$wpdb->prefix}postmeta pm
+    LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
+    WHERE wp.ID IS NULL
+        ");
     foreach ($fabbisogni as $key => $product) {
         $key = explode("_", $key);
         $productId = $key[0];
@@ -4537,15 +4530,15 @@ add_filter(
     "woo_wallet_current_balance",
     function ($wallet_balance, $user_id) {
 
-		$wallet_balance = get_user_meta($user_id, '_saldo_navision', true);
+        $wallet_balance = get_user_meta($user_id, '_saldo_navision', true);
 
-		if(!$wallet_balance){
-			return 0;
-		}
+        if(!$wallet_balance){
+            return 0;
+        }
 
-		$wallet_balance = str_replace(",", ".", $wallet_balance);
-		return floatval($wallet_balance);
-		/*
+        $wallet_balance = str_replace(",", ".", $wallet_balance);
+        return floatval($wallet_balance);
+        /*
         $customWallet = get_user_meta(
             $user_id,
             "_current_woo_wallet_balance",
@@ -4644,8 +4637,8 @@ function create_order_from_subscription($id)
 
     $weight = 0;
     /*    if (!empty($productData['weight'])) {
-		$weight = $productData['weight'];
-		}*/
+        $weight = $productData['weight'];
+        }*/
     $box = get_box_from_subscription($subscription);
 
     if (!$box) {
@@ -4758,15 +4751,15 @@ function create_order_from_subscription($id)
         "shipping"
     );
     /*$items = $subscription->get_items();
-		foreach ($items as $item) {
+        foreach ($items as $item) {
 
-		$order->add_product(, 1);
-		}
+        $order->add_product(, 1);
+        }
 
-		foreach ($order->get_items() as $item) {
-		$item->set_name($item->get_name() . ' - Settimana ' . $week);
-		$item->save();
-		}*/
+        foreach ($order->get_items() as $item) {
+        $item->set_name($item->get_name() . ' - Settimana ' . $week);
+        $item->save();
+        }*/
     $args = [
         "customer_id" => $subscription->get_customer_id(),
         "status" => ["wc-completed"],
@@ -4814,10 +4807,10 @@ function create_order_from_subscription($id)
     }
     update_post_meta($order->get_id(), "shipping_piano", $pianoValue);
     /*
-		if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
-		$order->get_date_paid()->add(new DateInterval('P7D'));
-		}
-		*/
+        if (($order->get_date_paid()->format('w') > 5 && $order->get_date_paid()->format('H') >= 8) || $order->get_date_paid()->format('w') == 0) {
+        $order->get_date_paid()->add(new DateInterval('P7D'));
+        }
+        */
     update_post_meta($order->get_id(), "_data_consegna", $consegna);
     update_post_meta($order->get_id(), "_order_type", "FN");
     update_post_meta($order->get_id(), "_subscription_id", $id);
@@ -4850,12 +4843,12 @@ function create_order_from_subscription($id)
 
     //get all orders of same user
     /*$args = array(
-		'customer_id' => $customerId,
-		'status' => 'completed',
-		'limit' => -1, // to retrieve _all_ orders by this user
-		);
-		$orders = wc_get_orders($args);
-	*/
+        'customer_id' => $customerId,
+        'status' => 'completed',
+        'limit' => -1, // to retrieve _all_ orders by this user
+        );
+        $orders = wc_get_orders($args);
+    */
 
     calculate_delivery_date_order($order->get_id(), false);
 }
@@ -5083,8 +5076,8 @@ function rinnovi_fn_page()
         ?>
 
         <!--<h4 style="color:white;background:darkgreen;padding:15px;display:block">Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h4>
-		<br>-->
-		<?php
+        <br>-->
+        <?php
     }
 
     $pendingOrders = wc_get_orders([
@@ -5146,65 +5139,65 @@ function rinnovi_fn_page()
     ];
     ?>
 
-		<div id="wpbody-content">
+        <div id="wpbody-content">
 
-			<div class="wrap">
-				<div class="agr-create-new-orders">
+            <div class="wrap">
+                <div class="agr-create-new-orders">
 
-					<h1 class="wp-heading-inline">
-						Rinnovi FN in sospeso</h1>
+                    <h1 class="wp-heading-inline">
+                        Rinnovi FN in sospeso</h1>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "FACCIAMO NOI" ancora in sospeso come COMPLETATO.<br>
-					In questo modo gli abbonamenti si riattiveranno.</p>
-
-
-					<hr class="wp-header-end">
-
-					<br>
-
-					<form id="comments-form" method="POST"
-						  action="">
-
-						<input type="hidden" name="complete_orders" value="1">
+                    <p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "FACCIAMO NOI" ancora in sospeso come COMPLETATO.<br>
+                    In questo modo gli abbonamenti si riattiveranno.</p>
 
 
-						<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-							<thead>
+                    <hr class="wp-header-end">
 
-							<th id="cb" class="manage-column column-cb check-column"
-								style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span style="display:flex;align-items:center;">
-									<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
-									<label for="cb-select-all-1" style="font-size:16px;">
-										Seleziona tutti
-									</label>
-								</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Cliente</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Prodotti</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Totale</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="comment" class="manage-column column-comment column-primary">
-								<span>Stato</span>
-							</th>
+                    <br>
+
+                    <form id="comments-form" method="POST"
+                          action="">
+
+                        <input type="hidden" name="complete_orders" value="1">
+
+
+                        <table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+                            <thead>
+
+                            <th id="cb" class="manage-column column-cb check-column"
+                                style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span style="display:flex;align-items:center;">
+                                    <input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+                                    <label for="cb-select-all-1" style="font-size:16px;">
+                                        Seleziona tutti
+                                    </label>
+                                </span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="author" class="manage-column column-author sortable desc">
+                                <span>Cliente</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span>Prodotti</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span>Totale</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="comment" class="manage-column column-comment column-primary">
+                                <span>Stato</span>
+                            </th>
 <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="comment" class="manage-column column-comment column-primary">
-								<span>Tipo</span>
-							</th>
+                                scope="col" id="comment" class="manage-column column-comment column-primary">
+                                <span>Tipo</span>
+                            </th>
 <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Creato Il</span>
-							</th>
+                                <span>Creato Il</span>
+                            </th>
 
-							</thead>
+                            </thead>
 
-							<tbody>
+                            <tbody>
 <?php foreach ($pendingOrders as $order): ?>
 <?php $isUpdating = get_post_meta(
     $order->get_id(),
@@ -5257,29 +5250,29 @@ function rinnovi_fn_page()
 </td>
 </tr>
 <?php endforeach; ?>
-							</tbody>
-						</table>
-						<br><br>
-						<select name="status">
-						<option value="completed">Aggiorna a COMPLETATO</option>
-						<option value="cancelled">Aggiorna a CANCELLATO</option>
-						</select>
+                            </tbody>
+                        </table>
+                        <br><br>
+                        <select name="status">
+                        <option value="completed">Aggiorna a COMPLETATO</option>
+                        <option value="cancelled">Aggiorna a CANCELLATO</option>
+                        </select>
 
-						<button type="submit" class="button-primary">Aggiorna Ordini</button>
-					</form>
+                        <button type="submit" class="button-primary">Aggiorna Ordini</button>
+                    </form>
 
-					<br/>
+                    <br/>
 
-				</div>
+                </div>
 
 
-			</div>
+            </div>
 
-			<div id="ajax-response"></div>
+            <div id="ajax-response"></div>
 
-			<div class="clear"></div>
-		</div>
-		<?php
+            <div class="clear"></div>
+        </div>
+        <?php
 }
 function scegli_tu_page()
 {
@@ -5295,8 +5288,8 @@ function scegli_tu_page()
         ?>
 
         <h4 style="color:white;background:darkgreen;padding:15px;display:block">Sto completando tutti gli ordini, l'operazione viene fatta in background in modo che non devi aspettare tempo.</h4>
-		<br>
-		<?php
+        <br>
+        <?php
     }
     $pendingOrders = wc_get_orders([
         "limit" => -1,
@@ -5325,61 +5318,61 @@ function scegli_tu_page()
     ];
     ?>
 
-		<div id="wpbody-content">
+        <div id="wpbody-content">
 
-			<div class="wrap">
-				<div class="agr-create-new-orders">
+            <div class="wrap">
+                <div class="agr-create-new-orders">
 
-					<h1 class="wp-heading-inline">
-						Scegli Tu in sospeso</h1>
+                    <h1 class="wp-heading-inline">
+                        Scegli Tu in sospeso</h1>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "SCEGLI TU" ancora in sospeso come COMPLETATO.<br>
-					In questo modo saranno importati su Navision.</p>
-
-
-					<hr class="wp-header-end">
-
-					<br>
-
-					<form id="comments-form" method="POST"
-						  action="">
-
-						<input type="hidden" name="complete_orders" value="1">
+                    <p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi settare gli ordini "SCEGLI TU" ancora in sospeso come COMPLETATO.<br>
+                    In questo modo saranno importati su Navision.</p>
 
 
-						<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-							<thead>
+                    <hr class="wp-header-end">
 
-							<th id="cb" class="manage-column column-cb check-column"
-								style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span style="display:flex;align-items:center;">
-									<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
-									<label for="cb-select-all-1" style="font-size:16px;">
-										Seleziona tutti
-									</label>
-								</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Cliente</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Prodotti</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Totale</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="comment" class="manage-column column-comment column-primary">
-								<span>Stato</span>
-							</th>
+                    <br>
+
+                    <form id="comments-form" method="POST"
+                          action="">
+
+                        <input type="hidden" name="complete_orders" value="1">
+
+
+                        <table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+                            <thead>
+
+                            <th id="cb" class="manage-column column-cb check-column"
+                                style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span style="display:flex;align-items:center;">
+                                    <input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+                                    <label for="cb-select-all-1" style="font-size:16px;">
+                                        Seleziona tutti
+                                    </label>
+                                </span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="author" class="manage-column column-author sortable desc">
+                                <span>Cliente</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span>Prodotti</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span>Totale</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="comment" class="manage-column column-comment column-primary">
+                                <span>Stato</span>
+                            </th>
 <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Creato Il</span>
-							</th>
+                                <span>Creato Il</span>
+                            </th>
 
-							</thead>
+                            </thead>
 
-							<tbody>
+                            <tbody>
 <?php foreach ($pendingOrders as $order): ?>
 <?php $isUpdating = get_post_meta(
     $order->get_id(),
@@ -5418,29 +5411,29 @@ function scegli_tu_page()
 </td>
 </tr>
 <?php endforeach; ?>
-							</tbody>
-						</table>
-						<br><br>
-						<select name="status">
-						<option value="completed">Aggiorna a COMPLETATO</option>
-						<!--<option value="trash">Sposta nel cestino</option>-->
-						</select>
+                            </tbody>
+                        </table>
+                        <br><br>
+                        <select name="status">
+                        <option value="completed">Aggiorna a COMPLETATO</option>
+                        <!--<option value="trash">Sposta nel cestino</option>-->
+                        </select>
 
-						<button type="submit" class="button-primary">Aggiorna Ordini</button>
-					</form>
+                        <button type="submit" class="button-primary">Aggiorna Ordini</button>
+                    </form>
 
-					<br/>
+                    <br/>
 
-				</div>
+                </div>
 
 
-			</div>
+            </div>
 
-			<div id="ajax-response"></div>
+            <div id="ajax-response"></div>
 
-			<div class="clear"></div>
-		</div>
-		<?php
+            <div class="clear"></div>
+        </div>
+        <?php
 }
 function my_custom_submenu_page_callback()
 {
@@ -5460,9 +5453,9 @@ function my_custom_submenu_page_callback()
             );
         }
         ?>
-		<br>
-		<h4 style="color:white;background:darkgreen;padding:15px;display:block">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
-		<?php
+        <br>
+        <h4 style="color:white;background:darkgreen;padding:15px;display:block">Creazione ordini in corso, l'operazione ci metterà qualche minuto...</h4><br>
+        <?php
     }
     if (isset($_GET["generate_fabbisogno"])) {
         //generate_fabbisogno();
@@ -5505,77 +5498,77 @@ function my_custom_submenu_page_callback()
     }
     ?>
 
-		<div id="wpbody-content">
+        <div id="wpbody-content">
 
-			<div class="wrap">
-				<div class="agr-create-new-orders">
+            <div class="wrap">
+                <div class="agr-create-new-orders">
 
-					<h1 class="wp-heading-inline">
-						Genera Ordini BOX</h1>
+                    <h1 class="wp-heading-inline">
+                        Genera Ordini BOX</h1>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
-						per gli abbonamenti delle "Facciamo noi" attivi, in base
-						alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
-						prodotti che preferisci. Seleziona gli ordini che vuoi generare.</p>
+                    <p style="font-size: 16px; margin-bottom: 24px;">In questa pagina puoi generare in automatico gli ordini
+                        per gli abbonamenti delle "Facciamo noi" attivi, in base
+                        alle loro preferenze espresse.<br/>Potrai modificare successivamente il singolo ordine modificando i
+                        prodotti che preferisci. Seleziona gli ordini che vuoi generare.</p>
 
-					<span
-						style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
-					<?php $wednesday = date("d/m/Y", strtotime("wednesday next week")); ?>
-					<span
-						style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
-					<hr class="wp-header-end">
+                    <span
+                        style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Settimana <?php echo $week; ?> di 52</span>
+                    <?php $wednesday = date("d/m/Y", strtotime("wednesday next week")); ?>
+                    <span
+                        style="background: rgba(60,33,255,.1);padding:8px 12px;border-radius: 8px;font-weight: 700;font-size: 16px;margin: 16px 0;display: inline-block;">Data di consegna: <?php echo $wednesday; ?></span>
+                    <hr class="wp-header-end">
 
-					<br>
+                    <br>
 
-					<h3>Facciamo Noi: <?php echo count($subscriptions); ?></h3>
-					<h3>Scegli Tu: <?php echo count($orders); ?></h3>
+                    <h3>Facciamo Noi: <?php echo count($subscriptions); ?></h3>
+                    <h3>Scegli Tu: <?php echo count($orders); ?></h3>
 
-					<form id="comments-form" method="POST"
-						  action="">
+                    <form id="comments-form" method="POST"
+                          action="">
 
-						<input type="hidden" name="generate_orders" value="1">
-						<div class="tablenav top">
-
-
-							<div class="tablenav-pages one-page">
-								<span class="displaying-num">Abbonamenti attivi</span>
-							</div>
-							<br class="clear">
-						</div>
-						<h2 class="screen-reader-text">Elenco abbonamenti</h2>
+                        <input type="hidden" name="generate_orders" value="1">
+                        <div class="tablenav top">
 
 
-						<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-							<thead>
+                            <div class="tablenav-pages one-page">
+                                <span class="displaying-num">Abbonamenti attivi</span>
+                            </div>
+                            <br class="clear">
+                        </div>
+                        <h2 class="screen-reader-text">Elenco abbonamenti</h2>
 
-							<th id="cb" class="manage-column column-cb check-column"
-								style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span style="display:flex;align-items:center;">
-									<input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
-									<label for="cb-select-all-1" style="font-size:16px;">
-										Seleziona tutti
-									</label>
-								</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="author" class="manage-column column-author sortable desc">
-								<span>Cliente</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="comment" class="manage-column column-comment column-primary">
-								<span>Abbonamento</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
-								scope="col" id="comment" class="manage-column column-comment column-primary">
-								<span>Attivo dal</span>
-							</th>
-							<th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
-								<span>Ordine</span>
-							</th>
-							</thead>
 
-							<tbody>
-							<?php foreach ($subscriptions as $subscription):
+                        <table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+                            <thead>
+
+                            <th id="cb" class="manage-column column-cb check-column"
+                                style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span style="display:flex;align-items:center;">
+                                    <input id="cb-select-all-1" type="checkbox" style="margin: 0 8px 0 0;">
+                                    <label for="cb-select-all-1" style="font-size:16px;">
+                                        Seleziona tutti
+                                    </label>
+                                </span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="author" class="manage-column column-author sortable desc">
+                                <span>Cliente</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="comment" class="manage-column column-comment column-primary">
+                                <span>Abbonamento</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;"
+                                scope="col" id="comment" class="manage-column column-comment column-primary">
+                                <span>Attivo dal</span>
+                            </th>
+                            <th style="padding: 16px;border-width: 1px; border-style: solid; border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0); border-image: initial; background: rgb(255, 255, 255); font-size: 16px; border-radius: 6px 6px 0px 0px;">
+                                <span>Ordine</span>
+                            </th>
+                            </thead>
+
+                            <tbody>
+                            <?php foreach ($subscriptions as $subscription):
 
            $args = [
                "posts_per_page" => -1,
@@ -5614,11 +5607,11 @@ function my_custom_submenu_page_callback()
                true
            );
            ?>
-								<tr id="comment-1" class="comment even thread-even depth-1 approved">
-									<th scope="row" class="check-column" style="padding: 16px;">
-										<label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
+                                <tr id="comment-1" class="comment even thread-even depth-1 approved">
+                                    <th scope="row" class="check-column" style="padding: 16px;">
+                                        <label class="screen-reader-text" for="cb-select-1">Seleziona un abbonamento</label>
 
-										<?php
+                                        <?php
           $box = get_single_box_from_attributes($tipologia, $dimensione);
           if (!$box) {
               echo "Box Singola Non disponibile";
@@ -5627,100 +5620,100 @@ function my_custom_submenu_page_callback()
               //check if exist weekly box
               $weekBox = get_weekly_box_from_box($box->get_id(), $week);
               if ($weekBox): ?>
-												<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-													   value="<?php echo $subscription->get_id(); ?>"
-													<?php if (count($orders) > 0): ?>
-														disabled
-													<?php endif; ?>
-												><br>
-											<?php else: ?>
-												Devi prima creare la box
-											<?php endif;
+                                                <input id="cb-select-1" type="checkbox" name="subscriptions[]"
+                                                       value="<?php echo $subscription->get_id(); ?>"
+                                                    <?php if (count($orders) > 0): ?>
+                                                        disabled
+                                                    <?php endif; ?>
+                                                ><br>
+                                            <?php else: ?>
+                                                Devi prima creare la box
+                                            <?php endif;
               ?>
-										<?php
+                                        <?php
           }
           ?>
 
-									</th>
-									<td class="author column-author" data-colname="Autore" style="padding: 16px;">
-										<span><?php echo $subscription->get_billing_first_name() .
+                                    </th>
+                                    <td class="author column-author" data-colname="Autore" style="padding: 16px;">
+                                        <span><?php echo $subscription->get_billing_first_name() .
               " " .
               $subscription->get_billing_last_name(); ?></span>
-									</td>
-									<td class="comment column-comment has-row-actions column-primary"
-										data-colname="Commento" style="padding: 16px;">
-										<span><?php echo $boxProduct->get_name(); ?>
-											</span>
-									</td>
+                                    </td>
+                                    <td class="comment column-comment has-row-actions column-primary"
+                                        data-colname="Commento" style="padding: 16px;">
+                                        <span><?php echo $boxProduct->get_name(); ?>
+                                            </span>
+                                    </td>
 
-									<td class="response column-response" data-colname="In risposta a"
-										style="padding: 16px;">
-										<span>
-										<?php // fix nathi per errore data di consegna
+                                    <td class="response column-response" data-colname="In risposta a"
+                                        style="padding: 16px;">
+                                        <span>
+                                        <?php // fix nathi per errore data di consegna
 
 
           $fixdate = $subscription->get_date_created();
           $fixdate = new DateTime($fixdate);
           echo $fixdate->format("d/m/Y");
           ?>
-										</span>
-									</td>
-									<td style="padding: 16px;">
-										<?php if (count($orders) > 0): ?>
-											<a target="_blank"
-											   href="/wp-admin/post.php?post=<?php echo $orders[0]->ID; ?>&action=edit">Vai
-												all'ordine</a>
-										<?php endif; ?>
-									</td>
-								</tr>
-							<?php
+                                        </span>
+                                    </td>
+                                    <td style="padding: 16px;">
+                                        <?php if (count($orders) > 0): ?>
+                                            <a target="_blank"
+                                               href="/wp-admin/post.php?post=<?php echo $orders[0]->ID; ?>&action=edit">Vai
+                                                all'ordine</a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php
        endforeach; ?>
-							</tbody>
-						</table>
-						<br><br>
+                            </tbody>
+                        </table>
+                        <br><br>
 
-						<button type="submit" class="button-primary">Genera Ordini</button>
-					</form>
-	<!--
-					<br>
-					<br>
-					<br>
-					<h2>Fabbisogno (non modificabile)</h2>
+                        <button type="submit" class="button-primary">Genera Ordini</button>
+                    </form>
+    <!--
+                    <br>
+                    <br>
+                    <br>
+                    <h2>Fabbisogno (non modificabile)</h2>
 
-					<p style="font-size: 16px; margin-bottom: 24px;">
-						Qui puoi generare il fabbisogno automatico degli ordini appena generati (Facciamo noi) e di tutti
-						gli ordini ricevuti per questa settimana attraverso il negozio.<br/>
-						Per modificare il fabbisogno, bisogna andare nel menu "Modifica fabbisogno".
-					</p>
+                    <p style="font-size: 16px; margin-bottom: 24px;">
+                        Qui puoi generare il fabbisogno automatico degli ordini appena generati (Facciamo noi) e di tutti
+                        gli ordini ricevuti per questa settimana attraverso il negozio.<br/>
+                        Per modificare il fabbisogno, bisogna andare nel menu "Modifica fabbisogno".
+                    </p>
 
-					<table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
-						<thead>
-						<tr>
-							<th style="padding: 8px 10px;">Fornitore</th>
-							<th style="padding: 8px 10px;">Prodotti</th>
-						</tr>
-						</thead>
-						<tbody>
-						<?php foreach ($groupedFabbisogno as $fornitore => $fabbisognoList): ?>
-							<tr>
-								<td><?php echo $fornitore; ?></td>
-								<td>
-									<table style="width:100%;border-collapse: collapse;">
-										<thead>
-										<th style="padding: 8px 10px;">Descrizione</th>
-										<th style="padding: 8px 10px;">Codice</th>
-										<th style="padding: 8px 10px;">Gruppo Consegna</th>
-										<th style="padding: 8px 10px;">Peso</th>
+                    <table class="datatable styled-table" style="width:100%;border-collapse: collapse;">
+                        <thead>
+                        <tr>
+                            <th style="padding: 8px 10px;">Fornitore</th>
+                            <th style="padding: 8px 10px;">Prodotti</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($groupedFabbisogno as $fornitore => $fabbisognoList): ?>
+                            <tr>
+                                <td><?php echo $fornitore; ?></td>
+                                <td>
+                                    <table style="width:100%;border-collapse: collapse;">
+                                        <thead>
+                                        <th style="padding: 8px 10px;">Descrizione</th>
+                                        <th style="padding: 8px 10px;">Codice</th>
+                                        <th style="padding: 8px 10px;">Gruppo Consegna</th>
+                                        <th style="padding: 8px 10px;">Peso</th>
 
-										<th style="padding: 8px 10px;">Prezzo</th>
-										<th style="padding: 8px 10px;">Un. Misura</th>
-										<th style="padding: 8px 10px;">Cod. Conf</th>
-										<th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
-										<th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
-										</thead>
-										<tbody>
+                                        <th style="padding: 8px 10px;">Prezzo</th>
+                                        <th style="padding: 8px 10px;">Un. Misura</th>
+                                        <th style="padding: 8px 10px;">Cod. Conf</th>
+                                        <th style="padding: 8px 10px;">Disponibilità<br/>in magazzino</th>
+                                        <th style="padding: 8px 10px;">Quantità<br/>richiesta</th>
+                                        </thead>
+                                        <tbody>
 
-										<?php
+                                        <?php
           $countFB = 0;
           $sum = 0;
           $sum_weight = 0;
@@ -5766,87 +5759,87 @@ function my_custom_submenu_page_callback()
               $sum += $fabbisogno;
               $sum_weight += $weight;
               ?>
-											<td style="padding: 8px 10px;">
-												<a href="<?php echo esc_url(home_url()) .
+                                            <td style="padding: 8px 10px;">
+                                                <a href="<?php echo esc_url(home_url()) .
                 "/wp-admin/post.php?post=" .
                 $prodottoId .
                 "&action=edit"; ?>"><?php echo $product->get_name(); ?></a>
-											</td>
+                                            </td>
 
-											<td style="padding: 8px 10px;"><?php echo $sku; ?></td>
-											<td style="padding: 8px 10px;"><?php echo $gruppoConsegna; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $sku; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $gruppoConsegna; ?></td>
 
-											<td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
-											<td style="padding: 8px 10px;"><?php echo "€" . $price; ?></td>
-											<td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
-											<td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $weight . $unitaMisura; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo "€" . $price; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $measureAcquisto; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $codiceConfezionamento; ?></td>
 
-											<td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
-											<td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $product->get_stock_quantity(); ?></td>
+                                            <td style="padding: 8px 10px;"><?php echo $fabbisogno; ?></td>
 
-											</tr>
-											<?php
+                                            </tr>
+                                            <?php
            if ($countFB == count($fabbisognoList) - 1): ?>
-												<tr>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
-														<strong><?php echo $sum_weight; ?></strong>
-													</td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
-													<td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
-														<strong><?php echo $sum; ?></strong>
-													</td>
-												</tr>
-											<?php endif;
+                                                <tr>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+                                                        <strong><?php echo $sum_weight; ?></strong>
+                                                    </td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;"></td>
+                                                    <td style="padding: 8px 10px 26px; border-top:2px solid #000;border-bottom: none;">
+                                                        <strong><?php echo $sum; ?></strong>
+                                                    </td>
+                                                </tr>
+                                            <?php endif;
            $countFB = $countFB + 1;
 
           endforeach;
           ?>
-										</tbody>
-									</table>
+                                        </tbody>
+                                    </table>
 
-								</td>
-							</tr>
-						<?php endforeach; ?>
-						</tbody>
-					</table>
-					<br/>
-					<a href="/wp-admin/admin.php?page=genera-ordini-box&generate_fabbisogno=1" class="button-primary">
-						Genera Fabbisogno
-					</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <a href="/wp-admin/admin.php?page=genera-ordini-box&generate_fabbisogno=1" class="button-primary">
+                        Genera Fabbisogno
+                    </a>
 
-					<?php if (!empty($fabbisognoList)): ?>
-						<br><br>
+                    <?php if (!empty($fabbisognoList)): ?>
+                        <br><br>
 
-						<form method="POST" action="/wp-admin/admin.php?page=genera-ordini-box">
-							<input type="hidden" name="send_email_produttori" value="1">
+                        <form method="POST" action="/wp-admin/admin.php?page=genera-ordini-box">
+                            <input type="hidden" name="send_email_produttori" value="1">
 
-							<button type="submit"
-									class="button-primary">
-								Invia email ai produttori
-							</button>
-						</form>
-
-
-					<?php endif; ?>
-	-->
-					<br/>
-
-				</div>
+                            <button type="submit"
+                                    class="button-primary">
+                                Invia email ai produttori
+                            </button>
+                        </form>
 
 
-			</div>
+                    <?php endif; ?>
+    -->
+                    <br/>
 
-			<div id="ajax-response"></div>
+                </div>
 
-			<div class="clear"></div>
-		</div>
-		<?php
+
+            </div>
+
+            <div id="ajax-response"></div>
+
+            <div class="clear"></div>
+        </div>
+        <?php
 }
 add_action("admin_menu", "register_my_custom_submenu_page", 99);
 add_filter("manage_edit-shop_order_columns", "custom_shop_order_column", 20);
@@ -6195,30 +6188,30 @@ function consegne_ordini_pages()
                             }
                         }
                         ?>
-						<span class="custom-alert alert-success"
-							  style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
-						<?php
+                        <span class="custom-alert alert-success"
+                              style="font-size: 14px;padding: 16px;background: greenyellow;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;">Ordini aggiornati: <?php echo $i; ?></span>
+                        <?php
                     }
                 } else {
                     echo "<span style='font-size: 14px;padding: 16px;background: orangered; color:#fff;margin: 24px 19px 4px 2px;display: block;border-radius: 8px;'>Nessun file inserito.</span>";
                 }
             }
             ?>
-			<div id="wpbody-content">
+            <div id="wpbody-content">
 
-				<div class="wrap">
-					<div class="agr-create-new-boxes">
-						<h1 class="wp-heading-inline">
-							Consegne Ordini</h1>
+                <div class="wrap">
+                    <div class="agr-create-new-boxes">
+                        <h1 class="wp-heading-inline">
+                            Consegne Ordini</h1>
 
-						<hr class="wp-header-end">
+                        <hr class="wp-header-end">
 
-						<p style="font-size: 16px; margin-bottom: 24px;">
-							In questa pagina puoi caricare il file di Map&Guide.</p>
+                        <p style="font-size: 16px; margin-bottom: 24px;">
+                            In questa pagina puoi caricare il file di Map&Guide.</p>
 
-						<form enctype="multipart/form-data" method="POST" action="">
-							<input type="hidden" name="import_consegne" value="1">
-							<?php
+                        <form enctype="multipart/form-data" method="POST" action="">
+                            <input type="hidden" name="import_consegne" value="1">
+                            <?php
        $date = new DateTime();
        $currentWeek = $date->format("W");
        global $wpdb;
@@ -6227,61 +6220,61 @@ function consegne_ordini_pages()
            ARRAY_A
        );
        ?>
-							<strong>Data di consegna:</strong><br>
-							<select autocomplete="off" name="_data_consegna">
+                            <strong>Data di consegna:</strong><br>
+                            <select autocomplete="off" name="_data_consegna">
 
-								<?php foreach ($allDataConsegna as $dataConsegna):
+                                <?php foreach ($allDataConsegna as $dataConsegna):
             $dataConsegna = new DateTime($dataConsegna["meta_value"]); ?>
-									<option
+                                    <option
 
-										value="<?php echo $dataConsegna->format(
+                                        value="<?php echo $dataConsegna->format(
               "Y-m-d"
           ); ?>"><?php echo $dataConsegna->format("d/m/Y"); ?></option>
-								<?php
+                                <?php
         endforeach; ?>
-							</select>
-							<p style="font-style:italic;font-size:14px;">
-								Settimana corrente: <?php echo $currentWeek; ?>
-							</p>
-							<br>
-							<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di
-								Map&Guide</label>
-							<input type="file" name="file" required><br><br>
-							<button class="btn button-primary">
-								Importa CSV
-							</button>
+                            </select>
+                            <p style="font-style:italic;font-size:14px;">
+                                Settimana corrente: <?php echo $currentWeek; ?>
+                            </p>
+                            <br>
+                            <label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">CSV di
+                                Map&Guide</label>
+                            <input type="file" name="file" required><br><br>
+                            <button class="btn button-primary">
+                                Importa CSV
+                            </button>
 
-							<br>
-						</form>
+                            <br>
+                        </form>
 
-					</div>
+                    </div>
 
 
-					<form id="comments-form" method="POST"
-						  action="" style="margin-top:40px;width:100%;">
+                    <form id="comments-form" method="POST"
+                          action="" style="margin-top:40px;width:100%;">
 
-						<input type="hidden" name="generate_orders" value="1">
-						<table class="wp-list-table widefat fixed striped table-view-list comments"
-							   style="background:transparent;border:none;">
-							<thead>
-							<tr>
-								<!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
-																								for="cb-select-all-1">Seleziona
-										tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
-								<th scope="col" id="author" class="manage-column column-author sortable desc"
-									style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
-									<span>Gruppo</span>
-								</th>
-								<th scope="col" id="comment" class="manage-column column-comment column-primary"
-									style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
-									<span>Ordini</span>
-								</th>
+                        <input type="hidden" name="generate_orders" value="1">
+                        <table class="wp-list-table widefat fixed striped table-view-list comments"
+                               style="background:transparent;border:none;">
+                            <thead>
+                            <tr>
+                                <!--<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text"
+                                                                                                for="cb-select-all-1">Seleziona
+                                        tutto</label><input id="cb-select-all-1" type="checkbox"></td>-->
+                                <th scope="col" id="author" class="manage-column column-author sortable desc"
+                                    style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+                                    <span>Gruppo</span>
+                                </th>
+                                <th scope="col" id="comment" class="manage-column column-comment column-primary"
+                                    style="padding: 16px;font-weight: bold;border-width: 1px;border-style: solid;border-color: rgb(241, 241, 241) rgb(241, 241, 241) rgb(0, 0, 0);border-image: initial;background: rgb(255, 255, 255);font-size: 16px;border-radius: 6px 6px 0px 0px;">
+                                    <span>Ordini</span>
+                                </th>
 
-							</tr>
-							</thead>
+                            </tr>
+                            </thead>
 
-							<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
-							<?php foreach ($groups as $group):
+                            <tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
+                            <?php foreach ($groups as $group):
 
            $caps = get_post_meta($group->ID, "cap", true);
            $orders = wc_get_orders([
@@ -6295,59 +6288,59 @@ function consegne_ordini_pages()
            });
            ?>
 
-								<tr id="comment-1" class="comment even thread-even depth-1 approved">
-									<!--	<th scope="row" class="check-column"><label class="screen-reader-text"
-																				for="cb-select-1">Seleziona
-											un abbonamento</label>
-										<?php if (count($orders) == 0): ?>
-											<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-												   value="<?php echo $group->ID; ?>">
-										<?php else: ?>
-											<input id="cb-select-1" type="checkbox" name="subscriptions[]"
-												   value="<?php echo $group->ID; ?>" disabled><br>
-										<?php endif; ?>
-									</th>-->
-									<td class="author column-author" data-colname="Autore" style="padding: 16px;">
-										<span><?php echo $group->post_name; ?></span>
-									</td>
-									<td class="comment column-comment has-row-actions column-primary" style="padding: 16px;"
-										data-colname="Commento">
-										<table style="width:100%;border-collapse: collapse;">
+                                <tr id="comment-1" class="comment even thread-even depth-1 approved">
+                                    <!--    <th scope="row" class="check-column"><label class="screen-reader-text"
+                                                                                for="cb-select-1">Seleziona
+                                            un abbonamento</label>
+                                        <?php if (count($orders) == 0): ?>
+                                            <input id="cb-select-1" type="checkbox" name="subscriptions[]"
+                                                   value="<?php echo $group->ID; ?>">
+                                        <?php else: ?>
+                                            <input id="cb-select-1" type="checkbox" name="subscriptions[]"
+                                                   value="<?php echo $group->ID; ?>" disabled><br>
+                                        <?php endif; ?>
+                                    </th>-->
+                                    <td class="author column-author" data-colname="Autore" style="padding: 16px;">
+                                        <span><?php echo $group->post_name; ?></span>
+                                    </td>
+                                    <td class="comment column-comment has-row-actions column-primary" style="padding: 16px;"
+                                        data-colname="Commento">
+                                        <table style="width:100%;border-collapse: collapse;">
 
-											<tr>
-												<td><b>ID</b></td>
-												<td><b>Consegna</b></td>
-											</tr>
+                                            <tr>
+                                                <td><b>ID</b></td>
+                                                <td><b>Consegna</b></td>
+                                            </tr>
 
-											<?php foreach ($orders as $order): ?>
-												<?php $consegna = get_post_meta($order->get_id(), "_numero_consegna", true); ?>
-												<tr>
-													<td>#<?php echo $order->get_id(); ?>
-														- <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?></td>
-													<td><?php echo $consegna; ?></td>
-												</tr>
-											<?php endforeach; ?>
-										</table>
-									</td>
+                                            <?php foreach ($orders as $order): ?>
+                                                <?php $consegna = get_post_meta($order->get_id(), "_numero_consegna", true); ?>
+                                                <tr>
+                                                    <td>#<?php echo $order->get_id(); ?>
+                                                        - <?php echo $order->get_shipping_first_name(); ?> <?php echo $order->get_shipping_last_name(); ?></td>
+                                                    <td><?php echo $consegna; ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                    </td>
 
 
-								</tr>
-							<?php
+                                </tr>
+                            <?php
        endforeach; ?>
-							</tbody>
-						</table>
-						<br><br>
+                            </tbody>
+                        </table>
+                        <br><br>
 
-						<!--<button type="submit" class="button-primary">Genera Ordini</button>-->
-					</form>
-				</div>
+                        <!--<button type="submit" class="button-primary">Genera Ordini</button>-->
+                    </form>
+                </div>
 
-				<div id="ajax-response"></div>
+                <div id="ajax-response"></div>
 
-				<div class="clear"></div>
-			</div>
+                <div class="clear"></div>
+            </div>
 
-			<?php
+            <?php
         }
     );
     add_menu_page(
@@ -6370,46 +6363,46 @@ function consegne_ordini_pages()
             $currentWeek = $date->format("W");
             ?>
 
-			<div id="wpbody-content">
+            <div id="wpbody-content">
 
-				<div class="wrap" id="box-app">
+                <div class="wrap" id="box-app">
 
-					<div class="agr-create-new-boxes">
-						<h1 class="wp-heading-inline">
-							Box Settimanali</h1>
+                    <div class="agr-create-new-boxes">
+                        <h1 class="wp-heading-inline">
+                            Box Settimanali</h1>
 
-						<hr class="wp-header-end">
+                        <hr class="wp-header-end">
 
 
-					<form id="comments-form" method="POST"
-						  action="" style="margin-top:100px;width:100%;">
-						<input type="hidden" name="generate_orders" value="1">
+                    <form id="comments-form" method="POST"
+                          action="" style="margin-top:100px;width:100%;">
+                        <input type="hidden" name="generate_orders" value="1">
 
-						<table style="max-width: 100%;" class="wp-list-table box-table">
-							<thead>
-							<tr>
-								<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
-									style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Creata il</span></th>
-								<th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
-									style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Settimana</span></th>
-								<th scope="col" id="comment" class="manage-column column-comment column-primary"
-									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Box</span>
-								</th>
+                        <table style="max-width: 100%;" class="wp-list-table box-table">
+                            <thead>
+                            <tr>
+                                <th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
+                                    style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+                                    <span style="padding-right:16px;">Creata il</span></th>
+                                <th scope="col" id="author" class="manage-column column-author sortable sorting_desc"
+                                    style="width:100px;border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+                                    <span style="padding-right:16px;">Settimana</span></th>
+                                <th scope="col" id="comment" class="manage-column column-comment column-primary"
+                                    style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+                                    <span style="padding-right:16px;">Box</span>
+                                </th>
 
-								<th scope="col" id="comment" class="manage-column column-comment column-primary"
-									style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
-									<span style="padding-right:16px;">Prodotti</span>
-								</th>
+                                <th scope="col" id="comment" class="manage-column column-comment column-primary"
+                                    style="border:1px solid #f1f1f1;background-image: none !important;border-bottom: 1px solid #000;font-size: 16px;background: #fff;border-radius: 6px 6px 0 0;">
+                                    <span style="padding-right:16px;">Prodotti</span>
+                                </th>
 
-							</tr>
-							</thead>
+                            </tr>
+                            </thead>
 
-							<tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
+                            <tbody id="the-comment-list" class="create-box-table--mega-table" data-wp-lists="list:comment">
 
-							<?php
+                            <?php
        $i = 1;
        foreach ($boxs as $box):
 
@@ -6433,11 +6426,11 @@ function consegne_ordini_pages()
            $fixdate = new DateTime($dataConsegna);
            ?>
 
-								<tr id="comment-1" class="comment even thread-even depth-1 approved ">
+                                <tr id="comment-1" class="comment even thread-even depth-1 approved ">
 
-									<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
-										<span
-											class="create-box-table--span-item week"><?php
+                                    <td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
+                                        <span
+                                            class="create-box-table--span-item week"><?php
            $boxdate = date_create($box->post_date);
            echo '<span style="display:block;">' .
                date_format($boxdate, "Y/m/d") .
@@ -6445,31 +6438,31 @@ function consegne_ordini_pages()
                date_format($boxdate, "H:i:s") .
                "</span>";
            ?></span>
-									</td>
-									<td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
-										<span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
-									</td>
-									<td class="comment column-comment has-row-actions column-primary"
-										data-colname="Commento" style="padding:25px 10px 10px;">
-										<span
-											class="create-box-table--span-item the-product"><?php echo $productBox->post_excerpt; ?></span>
-									</td>
-									<td class="response column-response">
-										<table style="max-width: 100%;border-collapse: collapse">
-											<thead>
-											<th>Descrizione</th>
-											<th>Codice</th>
-											<th>Fornitore</th>
-											<th>Prezzo</th>
-											<th>Quantità</th>
-											</thead>
-											<tbody>
-											<?php
+                                    </td>
+                                    <td class="author column-author" data-colname="Autore" style="padding:25px 10px 10px;">
+                                        <span class="create-box-table--span-item week">Settimana <?php echo $week; ?></span>
+                                    </td>
+                                    <td class="comment column-comment has-row-actions column-primary"
+                                        data-colname="Commento" style="padding:25px 10px 10px;">
+                                        <span
+                                            class="create-box-table--span-item the-product"><?php echo $productBox->post_excerpt; ?></span>
+                                    </td>
+                                    <td class="response column-response">
+                                        <table style="max-width: 100%;border-collapse: collapse">
+                                            <thead>
+                                            <th>Descrizione</th>
+                                            <th>Codice</th>
+                                            <th>Fornitore</th>
+                                            <th>Prezzo</th>
+                                            <th>Quantità</th>
+                                            </thead>
+                                            <tbody>
+                                            <?php
            $totalWeight = 0;
            $totalPrice = 0;
            ?>
-											<?php foreach ($products as $key => $product): ?>
-												<?php
+                                            <?php foreach ($products as $key => $product): ?>
+                                                <?php
             $sku = get_post_meta($product["id"], "_sku", true);
             $product["price"] = get_post_meta(
                 $product["id"],
@@ -6492,59 +6485,59 @@ function consegne_ordini_pages()
                //tabella riepilogo box
                ?>
 
-												<tr class="create-box-table--row">
-													<td class="create-box-table--name">
-														<a target="_blank"
-														   href="<?php echo esc_url(home_url()) .
+                                                <tr class="create-box-table--row">
+                                                    <td class="create-box-table--name">
+                                                        <a target="_blank"
+                                                           href="<?php echo esc_url(home_url()) .
                      "/wp-admin/post.php?post=" .
                      $product["id"] .
                      "&action=edit"; ?>"><?php echo $product["name"]; ?></a>
-													</td>
-													<td>
-														<?php echo $sku; ?>
-													</td>
-													<td class="create-box-table--producer">
-														<?php if ($fornitoreString): ?>
-															<?php echo $fornitoreString; ?>
-														<?php else: ?>
-															<?php echo "-"; ?>
-														<?php endif; ?>
-													</td>
-													<td class="create-box-table--price">
-														€<?php echo number_format($product["price"] * $product["quantity"], 2); ?>
-													</td>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $sku; ?>
+                                                    </td>
+                                                    <td class="create-box-table--producer">
+                                                        <?php if ($fornitoreString): ?>
+                                                            <?php echo $fornitoreString; ?>
+                                                        <?php else: ?>
+                                                            <?php echo "-"; ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="create-box-table--price">
+                                                        €<?php echo number_format($product["price"] * $product["quantity"], 2); ?>
+                                                    </td>
 
-													<td class="create-box-table--quantity">
+                                                    <td class="create-box-table--quantity">
 <?php echo $product["quantity"]; ?>
-													</td>
+                                                    </td>
 
-												</tr>
-											<?php endforeach; ?>
+                                                </tr>
+                                            <?php endforeach; ?>
 
 
-											</tbody>
-										</table>
-										<span>
-									</span>
-									</td>
+                                            </tbody>
+                                        </table>
+                                        <span>
+                                    </span>
+                                    </td>
 
-								</tr>
-								<?php $i++;
+                                </tr>
+                                <?php $i++;
        endforeach;?>
-							</tbody>
-						</table>
-						<br><br>
+                            </tbody>
+                        </table>
+                        <br><br>
 
-						<!--<button type="submit" class="button-primary">Genera Ordini</button>-->
-					</form>
-				</div>
+                        <!--<button type="submit" class="button-primary">Genera Ordini</button>-->
+                    </form>
+                </div>
 
-				<div id="ajax-response"></div>
+                <div id="ajax-response"></div>
 
-				<div class="clear"></div>
-			</div>
+                <div class="clear"></div>
+            </div>
 
-			<?php
+            <?php
         }
     );
     add_menu_page(
@@ -6576,48 +6569,48 @@ function consegne_ordini_pages()
                 ARRAY_A
             );
             ?>
-			<div id="wpbody-content">
+            <div id="wpbody-content">
 
-				<div class="wrap" id="box-app">
+                <div class="wrap" id="box-app">
 
 
-					<div class="agr-create-new-boxes">
-						<h1 class="wp-heading-inline">
-							Esporta Documenti</h1>
+                    <div class="agr-create-new-boxes">
+                        <h1 class="wp-heading-inline">
+                            Esporta Documenti</h1>
 
-						<br/>
-						<br/>
-						<br/>
-						<hr class="wp-header-end">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <hr class="wp-header-end">
 
-						<form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
-							<div style="display:flex;">
-								<div style="margin-right: 16px;">
-									<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana
-										n°</label>
-									<?php
-         $date = new DateTime(); //	$date->modify('+1 week');
+                        <form method="POST" action="/wp-admin/admin.php?noheader=1&page=esporta-documenti" target="_blank">
+                            <div style="display:flex;">
+                                <div style="margin-right: 16px;">
+                                    <label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana
+                                        n°</label>
+                                    <?php
+         $date = new DateTime(); // $date->modify('+1 week');
          $currentWeek = $date->format("W");
          ?>
-									<input class="change_week_print" name="week_print" id="week_print"
-										   value="<?php echo $currentWeek; ?>"
-										   type="number" style="width:150px;">
-								</div>
-								<div id="data_consegna_div">
-									<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Data
-										di consegna</label>
+                                    <input class="change_week_print" name="week_print" id="week_print"
+                                           value="<?php echo $currentWeek; ?>"
+                                           type="number" style="width:150px;">
+                                </div>
+                                <div id="data_consegna_div">
+                                    <label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Data
+                                        di consegna</label>
 
-									<?php if (count($allDataConsegna) == 0): ?>
-										<i>Nessun ordine con data consegna.</i>
-									<?php
+                                    <?php if (count($allDataConsegna) == 0): ?>
+                                        <i>Nessun ordine con data consegna.</i>
+                                    <?php
              //fix nathi per errore data di consegna quiiii
              //print_r($wednesday);
              //fix nathi per errore data di consegna quiiii
              //print_r($wednesday);
              ?>else: ?>
-										<select name="data_consegna" autocomplete="on" class="get_date_shipping">
-											<option disabled selected value="null">Seleziona</option>
-											<?php foreach ($allDataConsegna as $dataConsegna):
+                                        <select name="data_consegna" autocomplete="on" class="get_date_shipping">
+                                            <option disabled selected value="null">Seleziona</option>
+                                            <?php foreach ($allDataConsegna as $dataConsegna):
 
                $fixdate = $dataConsegna["meta_value"];
                $fixdate = new DateTime($fixdate);
@@ -6627,91 +6620,91 @@ function consegne_ordini_pages()
                //print_r($wednesday);
                ?>
 
-												<?php if (
+                                                <?php if (
                 is_array($dataConsegna["meta_value"]) ||
                 empty($dataConsegna["meta_value"])
             ) {
                 continue;
             } ?>
-												<option <?php if ($wednesday === $fixdate) {
+                                                <option <?php if ($wednesday === $fixdate) {
                 echo "selected";
             } ?> value="<?php echo $fixdate; ?>"><?php echo $fixdate; ?></option>
 
-											<?php
+                                            <?php
            endforeach; ?>
-										</select>
-									<?php wp_enqueue_script(
+                                        </select>
+                                    <?php wp_enqueue_script(
              "moment",
              get_template_directory_uri() . "/assets/js/moment.min.js",
              ["jquery"],
              null,
              true
          ); ?>
-										<script type="text/javascript">
-											jQuery(document).ready(function ($) {
-												$(".change_week_print").on("change paste keyup", function () {
-													const y = new Date().getFullYear();
-													const jan1 = new Date(y, 0, 1);
-													const jan1Day = jan1.getDay();
-													const daysToMonday = jan1Day === 1 ? 0 : jan1Day === 0 ? 1 : 8 - jan1Day
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function ($) {
+                                                $(".change_week_print").on("change paste keyup", function () {
+                                                    const y = new Date().getFullYear();
+                                                    const jan1 = new Date(y, 0, 1);
+                                                    const jan1Day = jan1.getDay();
+                                                    const daysToMonday = jan1Day === 1 ? 0 : jan1Day === 0 ? 1 : 8 - jan1Day
 
-													const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
-													// console.log(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY'));
-													// console.log($(this).val());
+                                                    const firstWednesday = daysToMonday === 0 ? jan1 : new Date(+jan1 + daysToMonday * 86400e3);
+                                                    // console.log(moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY'));
+                                                    // console.log($(this).val());
 
-													if ($('.get_date_shipping :contains(' + moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') + ')').length) {
-														$('.get_date_shipping option[value=' + moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') + ']').attr('selected', 'selected');
-													} else {
-														$('.get_date_shipping option[value=null]').attr('selected', 'selected');
-													}
-
-
-												});
-											})
-										</script>
+                                                    if ($('.get_date_shipping :contains(' + moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') + ')').length) {
+                                                        $('.get_date_shipping option[value=' + moment(new Date(+firstWednesday + (($(this).val() - 1) * 7 * 86400e3) + (86400e3 * 2))).format('DD-MM-YYYY') + ']').attr('selected', 'selected');
+                                                    } else {
+                                                        $('.get_date_shipping option[value=null]').attr('selected', 'selected');
+                                                    }
 
 
-									<?php endif; ?>
-								</div>
-							</div>
-
-							<br/>
+                                                });
+                                            })
+                                        </script>
 
 
-							<div id="codice_confezionamento_container">
-								<h4 style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Codice
-									di confezionamento</h4>
-								<div style="display: flex">
-									<div style="margin-right:8px;">
-										<label
-											style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Dal</label>
-										<select autocomplete="off" name="confezionamento_dal">
-											<option value="">-- Seleziona --</option>
-											<?php foreach ($confezionamento as $codice): ?>
-												<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-									<div>
-										<label
-											style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Al</label>
-										<select class="select2" name="confezionamento_al">
-											<option value="">-- Seleziona --</option>
-											<?php foreach ($confezionamento as $codice): ?>
-												<option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div id="settimana_div" style="display: none">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
 
-								<div style="display: flex">
-									<div>
-										<label
-											style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
-										<?php
-          $date = new DateTime(); //		$date->modify('+1 week');
+                            <br/>
+
+
+                            <div id="codice_confezionamento_container">
+                                <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Codice
+                                    di confezionamento</h4>
+                                <div style="display: flex">
+                                    <div style="margin-right:8px;">
+                                        <label
+                                            style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Dal</label>
+                                        <select autocomplete="off" name="confezionamento_dal">
+                                            <option value="">-- Seleziona --</option>
+                                            <?php foreach ($confezionamento as $codice): ?>
+                                                <option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label
+                                            style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Al</label>
+                                        <select class="select2" name="confezionamento_al">
+                                            <option value="">-- Seleziona --</option>
+                                            <?php foreach ($confezionamento as $codice): ?>
+                                                <option value="<?php echo $codice; ?>"><?php echo $codice; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="settimana_div" style="display: none">
+
+                                <div style="display: flex">
+                                    <div>
+                                        <label
+                                            style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Settimana</label>
+                                        <?php
+          $date = new DateTime(); //        $date->modify('+1 week');
           $currentWeek = $date->format("W");
           $allSettimaneFabbisogno = $wpdb->get_results(
               "select meta_value from wp_postmeta pm, wp_posts p where p.ID = pm.post_id and pm.meta_key = 'settimana' and p.post_type = 'fabbisogno' group by pm.meta_value"
@@ -6720,44 +6713,44 @@ function consegne_ordini_pages()
               return $tmp->meta_value;
           }, $allSettimaneFabbisogno);
           ?>
-										<select autocomplete="off" name="settimana">
-											<option value="">-- Seleziona --</option>
-											<?php foreach ($allSettimaneFabbisogno as $week): ?>
-												<option
-													<?php if ($week == $currentWeek): ?> selected <?php endif; ?>
-													value="<?php echo $week; ?>"><?php echo $week; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-								</div>
-							</div>
-							<br>
-							<br>
-							<label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Cosa vuoi
-								esportare?</label>
+                                        <select autocomplete="off" name="settimana">
+                                            <option value="">-- Seleziona --</option>
+                                            <?php foreach ($allSettimaneFabbisogno as $week): ?>
+                                                <option
+                                                    <?php if ($week == $currentWeek): ?> selected <?php endif; ?>
+                                                    value="<?php echo $week; ?>"><?php echo $week; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <label style="font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block;">Cosa vuoi
+                                esportare?</label>
 
-							<select id="document_type" name="document_type" autocomplete="off">
-								<option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
-								<option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
-								<option value="fabbisogno">Fabbisogno</option>
-								<option value="confezionamento">Stampa per confezionamento</option>
-								<option value="riepilogo_spedizione">Riepilogo di consegna</option>
-								<option value="etichette">Etichette</option>
-							</select>
-
-
-							<button type="submit" class="button-primary">Scarica PDF</button>
-
-						</form>
+                            <select id="document_type" name="document_type" autocomplete="off">
+                                <option value="prelievi_magazzino_cliente">Lista prelievi magazzino per cliente</option>
+                                <option value="prelievi_magazzino_articolo">Lista prelievi magazzino per articolo</option>
+                                <option value="fabbisogno">Fabbisogno</option>
+                                <option value="confezionamento">Stampa per confezionamento</option>
+                                <option value="riepilogo_spedizione">Riepilogo di consegna</option>
+                                <option value="etichette">Etichette</option>
+                            </select>
 
 
-					</div>
-				</div>
+                            <button type="submit" class="button-primary">Scarica PDF</button>
 
-				<div class="clear"></div>
-			</div>
+                        </form>
 
-			<?php
+
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+            <?php
         }
     );
 }
@@ -6888,19 +6881,19 @@ add_action(
                 $allDataConsegna = array_map(function ($val) {
                     return $val["meta_value"];
                 }, $allDataConsegna);
-                $date = new DateTime(); //	$date->modify('+1 week');
+                $date = new DateTime(); //  $date->modify('+1 week');
                 $currentWeek = $date->format("W"); // // create DateTime object with current time // // $dt->setISODate($dt->format('o'), $dt->format('W') + 1); // // set object to Monday on next week // // $periods = new DatePeriod($dt, new DateInterval('P1D'), 6); // // get all 1day periods from Monday to +6 days // // $days = iterator_to_array($periods); // // convert DatePeriod object to array // // $currentWeek = $days[0]->format("W"); // echo '<br/>Mon:' . $days[0]->format('Y-m-d'); // echo '<br/>Sun:' . $days[6]->format('Y-m-d'); // //print_r($days); // $dt = new DateTime();
                 $allDataConsegna = array_unique($allDataConsegna);
                 sort($allDataConsegna);
                 ?>
-				<?php if (count($allDataConsegna) == 0): ?>
-				<i>Nessun ordine con data consegna.</i>
-			<?php
+                <?php if (count($allDataConsegna) == 0): ?>
+                <i>Nessun ordine con data consegna.</i>
+            <?php
         // fix nathi per errore data di consegna
         // fix nathi per errore data di consegna
         ?>else: ?>
-				<select name="data_consegna" autocomplete="off">
-					<?php foreach ($allDataConsegna as $dataConsegna):
+                <select name="data_consegna" autocomplete="off">
+                    <?php foreach ($allDataConsegna as $dataConsegna):
 
          $fixdate = $dataConsegna;
          try {
@@ -6909,22 +6902,22 @@ add_action(
              continue;
          }
          ?>
-						<option
-							value="<?php echo $dataConsegna; ?>"><?php echo $fixdate->format(
+                        <option
+                            value="<?php echo $dataConsegna; ?>"><?php echo $fixdate->format(
     "d/m/Y"
 ); ?></option>
-					<?php
+                    <?php
      endforeach; ?>
-				</select>
+                </select>
 
-			<?php endif; ?>
-				<a class="btn button-primary generate-csv" href="#" data-delivery-group="<?php echo $post_id; ?>">
-					Genera CSV
-				</a>
+            <?php endif; ?>
+                <a class="btn button-primary generate-csv" href="#" data-delivery-group="<?php echo $post_id; ?>">
+                    Genera CSV
+                </a>
 
-				<br>
-				<em>Settimana corrente: <?php echo $currentWeek; ?></em>
-				<?php break;
+                <br>
+                <em>Settimana corrente: <?php echo $currentWeek; ?></em>
+                <?php break;
         }
     },
     10,

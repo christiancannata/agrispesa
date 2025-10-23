@@ -18,9 +18,9 @@ class WPCapture
      */
     private function add_notice_for_dir($dir)
     {
-        new \FSVendor\WPDesk\Notice\Notice(\sprintf(
+        new \FSVendor\WPDesk\Notice\Notice(sprintf(
             // Translators: directory.
-            \__('Can not enable WP Desk Debug log! Cannot create directory %s or this directory is not writeable!', 'flexible-shipping'),
+            __('Can not enable WP Desk Debug log! Cannot create directory %s or this directory is not writeable!', 'flexible-shipping'),
             $dir
         ), \FSVendor\WPDesk\Notice\Notice::NOTICE_TYPE_ERROR);
     }
@@ -31,9 +31,9 @@ class WPCapture
      */
     private function add_notice_for_file($file)
     {
-        new \FSVendor\WPDesk\Notice\Notice(\sprintf(
+        new \FSVendor\WPDesk\Notice\Notice(sprintf(
             // Translators: directory.
-            \__('Can not enable WP Desk Debug log! Cannot create file %s!', 'flexible-shipping'),
+            __('Can not enable WP Desk Debug log! Cannot create file %s!', 'flexible-shipping'),
             $file
         ), \FSVendor\WPDesk\Notice\Notice::NOTICE_TYPE_ERROR);
     }
@@ -47,31 +47,31 @@ class WPCapture
         $log_dir = $this->get_log_dir();
         $log_file = $this->get_log_file();
         $index_file = $this->get_index_file();
-        if (!\file_exists($log_dir)) {
-            if (!\mkdir($log_dir, 0777, \true)) {
+        if (!file_exists($log_dir)) {
+            if (!mkdir($log_dir, 0777, \true)) {
                 $this->add_notice_for_dir($log_dir);
                 return \false;
             }
         }
-        if (!\file_exists($index_file)) {
-            $index_html = \fopen($index_file, 'w');
+        if (!file_exists($index_file)) {
+            $index_html = fopen($index_file, 'w');
             if (\false === $index_html) {
                 $this->add_notice_for_file($index_file);
                 return \false;
             } else {
-                \fclose($index_html);
+                fclose($index_html);
             }
         }
-        if (!\file_exists($log_file)) {
-            $log = \fopen($log_file, 'w');
+        if (!file_exists($log_file)) {
+            $log = fopen($log_file, 'w');
             if (\false === $log) {
                 $this->add_notice_for_file($log_file);
                 return \false;
             } else {
-                \fclose($log);
+                fclose($log);
             }
         }
-        if (!\is_writable($log_file)) {
+        if (!is_writable($log_file)) {
             $this->add_notice_for_file($log_file);
             return \false;
         }
@@ -83,8 +83,8 @@ class WPCapture
     public function init_debug_log_file()
     {
         if ($this->is_debug_log_writable_or_show_notice()) {
-            \ini_set('log_errors', 1);
-            \ini_set('error_log', $this->get_log_file());
+            ini_set('log_errors', 1);
+            ini_set('error_log', $this->get_log_file());
         }
     }
     /**
@@ -94,8 +94,8 @@ class WPCapture
      */
     private function get_uploads_dir()
     {
-        $upload_dir = \wp_upload_dir();
-        return \untrailingslashit($upload_dir['basedir']);
+        $upload_dir = wp_upload_dir();
+        return untrailingslashit($upload_dir['basedir']);
     }
     /**
      * Get log dir.
@@ -104,7 +104,7 @@ class WPCapture
      */
     private function get_log_dir()
     {
-        return \trailingslashit($this->get_uploads_dir()) . self::LOG_DIR;
+        return trailingslashit($this->get_uploads_dir()) . self::LOG_DIR;
     }
     /**
      * Get log file.
@@ -113,7 +113,7 @@ class WPCapture
      */
     public function get_log_file()
     {
-        return \trailingslashit($this->get_log_dir()) . $this->filename;
+        return trailingslashit($this->get_log_dir()) . $this->filename;
     }
     /**
      * Get log file.
@@ -122,6 +122,6 @@ class WPCapture
      */
     private function get_index_file()
     {
-        return \trailingslashit($this->get_log_dir()) . 'index.html';
+        return trailingslashit($this->get_log_dir()) . 'index.html';
     }
 }

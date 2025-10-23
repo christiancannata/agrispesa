@@ -1,13 +1,10 @@
 <?php
 
-
 namespace wpie\import;
 
 use wpie\import\Downloader\Manager as Downloader;
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-import-base.php' ) ) {
 
@@ -384,22 +381,22 @@ class WPIE_Attachments extends \wpie\import\base\WPIE_Import_Base {
 
                                 if ( !empty( $meta[ 'album' ] ) && !empty( $meta[ 'artist' ] ) ) {
                                         /* translators: 1: Audio track title, 2: Album title, 3: Artist name. */
-                                        $content .= sprintf( __( '"%1$s" from %2$s by %3$s.' ), $title, $meta[ 'album' ], $meta[ 'artist' ] );
+                                        $content .= sprintf( __( '"%1$s" from %2$s by %3$s.', 'wp-import-export-lite' ), $title, $meta[ 'album' ], $meta[ 'artist' ] );
                                 } elseif ( !empty( $meta[ 'album' ] ) ) {
                                         /* translators: 1: Audio track title, 2: Album title. */
-                                        $content .= sprintf( __( '"%1$s" from %2$s.' ), $title, $meta[ 'album' ] );
+                                        $content .= sprintf( __( '"%1$s" from %2$s.', 'wp-import-export-lite' ), $title, $meta[ 'album' ] );
                                 } elseif ( !empty( $meta[ 'artist' ] ) ) {
                                         /* translators: 1: Audio track title, 2: Artist name. */
-                                        $content .= sprintf( __( '"%1$s" by %2$s.' ), $title, $meta[ 'artist' ] );
+                                        $content .= sprintf( __( '"%1$s" by %2$s.', 'wp-import-export-lite' ), $title, $meta[ 'artist' ] );
                                 } else {
                                         /* translators: %s: Audio track title. */
-                                        $content .= sprintf( __( '"%s".' ), $title );
+                                        $content .= sprintf( __( '"%s".', 'wp-import-export-lite' ), $title );
                                 }
                         } elseif ( !empty( $meta[ 'album' ] ) ) {
 
                                 if ( !empty( $meta[ 'artist' ] ) ) {
                                         /* translators: 1: Audio album title, 2: Artist name. */
-                                        $content .= sprintf( __( '%1$s by %2$s.' ), $meta[ 'album' ], $meta[ 'artist' ] );
+                                        $content .= sprintf( __( '%1$s by %2$s.', 'wp-import-export-lite' ), $meta[ 'album' ], $meta[ 'artist' ] );
                                 } else {
                                         $content .= $meta[ 'album' ] . '.';
                                 }
@@ -410,7 +407,7 @@ class WPIE_Attachments extends \wpie\import\base\WPIE_Import_Base {
 
                         if ( !empty( $meta[ 'year' ] ) ) {
                                 /* translators: Audio file track information. %d: Year of audio track release. */
-                                $content .= ' ' . sprintf( __( 'Released: %d.' ), $meta[ 'year' ] );
+                                $content .= ' ' . sprintf( __( 'Released: %d.', 'wp-import-export-lite' ), $meta[ 'year' ] );
                         }
 
                         if ( !empty( $meta[ 'track_number' ] ) ) {
@@ -418,16 +415,16 @@ class WPIE_Attachments extends \wpie\import\base\WPIE_Import_Base {
 
                                 if ( isset( $track_number[ 1 ] ) ) {
                                         /* translators: Audio file track information. 1: Audio track number, 2: Total audio tracks. */
-                                        $content .= ' ' . sprintf( __( 'Track %1$s of %2$s.' ), number_format_i18n( $track_number[ 0 ] ), number_format_i18n( $track_number[ 1 ] ) );
+                                        $content .= ' ' . sprintf( __( 'Track %1$s of %2$s.', 'wp-import-export-lite' ), number_format_i18n( $track_number[ 0 ] ), number_format_i18n( $track_number[ 1 ] ) );
                                 } else {
                                         /* translators: Audio file track information. %s: Audio track number. */
-                                        $content .= ' ' . sprintf( __( 'Track %s.' ), number_format_i18n( $track_number[ 0 ] ) );
+                                        $content .= ' ' . sprintf( __( 'Track %s.', 'wp-import-export-lite' ), number_format_i18n( $track_number[ 0 ] ) );
                                 }
                         }
 
                         if ( !empty( $meta[ 'genre' ] ) ) {
                                 /* translators: Audio file genre information. %s: Audio genre name. */
-                                $content .= ' ' . sprintf( __( 'Genre: %s.' ), $meta[ 'genre' ] );
+                                $content .= ' ' . sprintf( __( 'Genre: %s.', 'wp-import-export-lite' ), $meta[ 'genre' ] );
                         }
 
                         // Use image exif/iptc data for title and caption defaults if possible.
@@ -505,5 +502,4 @@ class WPIE_Attachments extends \wpie\import\base\WPIE_Import_Base {
                         unset( $this->$key );
                 }
         }
-
 }

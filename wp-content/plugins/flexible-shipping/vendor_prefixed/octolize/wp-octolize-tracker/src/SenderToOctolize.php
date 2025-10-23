@@ -25,7 +25,7 @@ class SenderToOctolize implements \WPDesk_Tracker_Sender
     public function send_payload(array $payload)
     {
         \FSVendor\WPDesk_Logger_Factory::log_message("Target URL: " . $this->get_api_url(), 'octolize-sender', \FSVendor\WPDesk_Logger::DEBUG);
-        $response = \wp_remote_post($this->get_api_url(), array('method' => 'POST', 'timeout' => 5, 'redirection' => 5, 'httpversion' => '1.0', 'blocking' => \false, 'headers' => array('user-agent' => 'OctolizeSender'), 'body' => \json_encode($payload), 'cookies' => array()));
+        $response = \wp_remote_post($this->get_api_url(), array('method' => 'POST', 'timeout' => 5, 'redirection' => 5, 'httpversion' => '1.0', 'blocking' => \false, 'headers' => array('user-agent' => 'OctolizeSender'), 'body' => json_encode($payload), 'cookies' => array()));
         if ($response instanceof \WP_Error) {
             throw new \FSVendor\WPDesk_Tracker_Sender_Exception_WpError('Payload send error', $response);
         } else {
@@ -38,7 +38,7 @@ class SenderToOctolize implements \WPDesk_Tracker_Sender
     private function get_api_url()
     {
         $api_url = $this->api_url;
-        if (\apply_filters('wpdesk_tracker_use_testdata', \false)) {
+        if (apply_filters('wpdesk_tracker_use_testdata', \false)) {
             $api_url = $this->test_api_url;
         }
         return $api_url;

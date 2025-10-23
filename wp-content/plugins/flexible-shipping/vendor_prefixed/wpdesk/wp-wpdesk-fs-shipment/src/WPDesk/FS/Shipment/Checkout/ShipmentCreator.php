@@ -4,7 +4,7 @@ namespace FSVendor\WPDesk\FS\Shipment\Checkout;
 
 use FSVendor\WPDesk\Mutex\WordpressPostMutex;
 use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
-class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShipmentCreator implements Hookable
 {
     /**
      * Is order processed on checkout?
@@ -15,8 +15,8 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     public function hooks()
     {
         $last_priority = \PHP_INT_MAX;
-        \add_action('woocommerce_checkout_update_order_meta', array($this, 'create_shipping_for_order'), $last_priority);
-        \add_action('woocommerce_store_api_checkout_update_order_from_request', [$this, 'create_shipment_block_checkout'], $last_priority, 2);
+        add_action('woocommerce_checkout_update_order_meta', array($this, 'create_shipping_for_order'), $last_priority);
+        add_action('woocommerce_store_api_checkout_update_order_from_request', [$this, 'create_shipment_block_checkout'], $last_priority, 2);
     }
     /**
      * @param \WC_Order $order .
@@ -26,9 +26,9 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     {
         if ($order && !$this->is_order_processed_on_checkout) {
             $shipments = fs_get_order_shipments($order->get_id());
-            if (0 === \count($shipments)) {
+            if (0 === count($shipments)) {
                 $this->is_order_processed_on_checkout = \true;
-                $this->create_shipping_for_order_and_cart($order, \WC()->cart);
+                $this->create_shipping_for_order_and_cart($order, WC()->cart);
             }
         }
     }
@@ -39,14 +39,14 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function create_shipping_for_order($order_id)
     {
-        $order = \wc_get_order($order_id);
+        $order = wc_get_order($order_id);
         if ($order && !$this->is_order_processed_on_checkout) {
             $mutex = $this->get_mutex($order);
             $mutex->acquireLock();
             $shipments = fs_get_order_shipments($order_id);
-            if (0 === \count($shipments)) {
+            if (0 === count($shipments)) {
                 $this->is_order_processed_on_checkout = \true;
-                $this->create_shipping_for_order_and_cart($order, \WC()->cart);
+                $this->create_shipping_for_order_and_cart($order, WC()->cart);
             }
             $mutex->releaseLock();
         }
@@ -57,13 +57,16 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function create_shipping_for_order_and_cart($order, $cart)
     {
+        if ($order === null || $cart === null) {
+            return;
+        }
         global $fs_package_id;
         $order_shipping_methods = $order->get_shipping_methods();
         $packages = $cart->get_shipping_packages();
         $current_package = -1;
         foreach ($order_shipping_methods as $shipping_id => $shipping_method) {
             $current_package++;
-            $package_id = \array_keys($packages)[$current_package];
+            $package_id = array_keys($packages)[$current_package];
             $fs_package_id = $package_id;
             $fs_method = $this->get_fs_method_from_order_shipping_method($shipping_method);
             if (!empty($fs_method['method_integration'])) {
@@ -75,7 +78,7 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
                      *
                      * @param \WPDesk_Flexible_Shipping_Shipment $shipment Created shipment.
                      */
-                    \do_action('flexible_shipping_checkout_shipment_created', $shipment);
+                    do_action('flexible_shipping_checkout_shipment_created', $shipment);
                 }
             }
         }
@@ -89,8 +92,8 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     private function is_order_type_supported_by_integration($order_type, $integration)
     {
         $supported = 'shop_order' === $order_type;
-        $supported = \apply_filters('flexible-shipping/shipment/supported-order-type/' . $integration, $supported, $order_type);
-        return \is_bool($supported) ? $supported : \false;
+        $supported = apply_filters('flexible-shipping/shipment/supported-order-type/' . $integration, $supported, $order_type);
+        return is_bool($supported) ? $supported : \false;
     }
     /**
      * @param \WC_Order $order .
@@ -100,7 +103,7 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     protected function get_mutex(\WC_Order $order)
     {
-        return \FSVendor\WPDesk\Mutex\WordpressPostMutex::fromOrder($order);
+        return WordpressPostMutex::fromOrder($order);
     }
     /**
      * Create shipment for order and shipping method.
@@ -126,7 +129,7 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
             $shipment->save();
             return $shipment;
         } catch (\Exception $e) {
-            \wp_delete_post($shipment->get_id(), \true);
+            wp_delete_post($shipment->get_id(), \true);
             throw $e;
         }
     }
@@ -140,7 +143,7 @@ class ShipmentCreator implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     private function get_fs_method_from_order_shipping_method($shipping_method)
     {
         $fs_method = $shipping_method->get_meta('_fs_method');
-        if (!\is_array($fs_method) || empty($fs_method)) {
+        if (!is_array($fs_method) || empty($fs_method)) {
             return [];
         }
         return $fs_method;

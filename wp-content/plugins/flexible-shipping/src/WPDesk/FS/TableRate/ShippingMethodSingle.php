@@ -7,10 +7,10 @@
 
 namespace WPDesk\FS\TableRate;
 
+use FSVendor\Psr\Log\LoggerInterface;
 use FSVendor\WPDesk\FS\TableRate\Logger\NoticeLogger;
 use FSVendor\WPDesk\FS\TableRate\Logger\ShippingMethodLogger;
 use FSVendor\WPDesk\FS\TableRate\Settings\MethodSettingsFactory;
-use Psr\Log\LoggerInterface;
 use WC_Shipping_Method;
 use WPDesk\FS\TableRate\Rule\Condition\ConditionsFactory;
 use WPDesk\FS\TableRate\Rule\Cost\RuleAdditionalCostFactory;
@@ -185,7 +185,14 @@ class ShippingMethodSingle extends WC_Shipping_Method {
 	public function generate_shipping_rules_html( $key, $data ) {
 		$field_key             = $this->get_field_key( $key );
 		$method_rules_settings = $this->get_option( $key, '[]' );
-		$rules_settings        = new RulesSettingsField( $field_key, $field_key, $data['title'], $data, ! is_array( $method_rules_settings ) ? json_decode( $method_rules_settings, true ) : $method_rules_settings );
+		$rules_settings        = new RulesSettingsField(
+			$field_key,
+			$field_key,
+			$data['title'],
+			$data,
+			! is_array( $method_rules_settings ) ? json_decode( $method_rules_settings, true ) : $method_rules_settings,
+			$this->instance_settings
+		);
 
 		return $rules_settings->render();
 	}

@@ -15,7 +15,7 @@ abstract class AbstractBuilder
     /**
      * Store plugin class in some kind of storage
      */
-    public function store_plugin(\FSVendor\WPDesk\PluginBuilder\Storage\PluginStorage $storage)
+    public function store_plugin(PluginStorage $storage)
     {
     }
     /**

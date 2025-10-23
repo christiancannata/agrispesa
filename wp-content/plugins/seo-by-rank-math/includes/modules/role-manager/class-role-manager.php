@@ -29,7 +29,7 @@ class Role_Manager extends Base {
 	 */
 	public function __construct() {
 
-		$directory = dirname( __FILE__ );
+		$directory = __DIR__;
 		$this->config(
 			[
 				'id'        => 'role-manager',
@@ -75,12 +75,13 @@ class Role_Manager extends Base {
 						'wp-data'                => '',
 						'wp-components'          => '',
 						'wp-api-fetch'           => '',
+						'rank-math-components'   => '',
 						'rank-math-role-manager' => $uri . '/assets/js/role-manager.js',
 					],
 					'json'    => [
-						'roles'            => Helper::get_roles(),
-						'roleCapabilities' => Helper::get_roles_capabilities(),
-						'capabilities'     => Capability_Manager::get()->get_capabilities(),
+						'roles'        => Helper::get_roles(),
+						'data'         => Helper::get_roles_capabilities(),
+						'capabilities' => Capability_Manager::get()->get_capabilities(),
 					],
 				],
 			]

@@ -149,10 +149,26 @@ class Assets {
 			],
 		];
 
+		/**
+		 * Filter the enabled tests for Content AI research.
+		 *
+		 * @since 1.0.243
+		 * @return array
+		 */
+		$values['enabledTests'] = $this->do_filter(
+			'content_ai/research_tests',
+			[
+				'wordCount',
+				'linkCount',
+				'headingCount',
+				'mediaCount',
+			]
+		);
+
 		$content_ai_viewed = get_option( 'rank_math_content_ai_viewed', false );
 		if ( ! $content_ai_viewed ) {
 			$values['viewed'] = false;
-			update_option( 'rank_math_content_ai_viewed', true );
+			update_option( 'rank_math_content_ai_viewed', true, false );
 		}
 
 		$researched_values = $screen->get_meta( $screen->get_object_type(), $screen->get_object_id(), 'rank_math_ca_keyword' );
@@ -173,7 +189,7 @@ class Assets {
 		$values['keyword'] = $keyword;
 		$values['country'] = $country;
 		$content_ai_data   = $screen->get_meta( $screen->get_object_type(), $screen->get_object_id(), 'rank_math_contentai_score' );
-		$values['score']   = (array) $content_ai_data;
+		$values['score']   = (object) $content_ai_data;
 
 		return $values;
 	}

@@ -134,10 +134,10 @@ abstract class Module {
 	 */
 	public function __construct(
 		Context $context,
-		Options $options = null,
-		User_Options $user_options = null,
-		Authentication $authentication = null,
-		Assets $assets = null
+		?Options $options = null,
+		?User_Options $user_options = null,
+		?Authentication $authentication = null,
+		?Assets $assets = null
 	) {
 		$this->context        = $context;
 		$this->options        = $options ?: new Options( $this->context );
@@ -294,7 +294,13 @@ abstract class Module {
 			throw new Invalid_Datapoint_Exception();
 		}
 
-		return new Datapoint( $definitions[ $datapoint_id ] );
+		$datapoint = $definitions[ $datapoint_id ];
+
+		if ( $datapoint instanceof Datapoint ) {
+			return $datapoint;
+		}
+
+		return new Datapoint( $datapoint );
 	}
 
 	/**
@@ -308,7 +314,7 @@ abstract class Module {
 	 * @return RequestInterface|callable|WP_Error Request object or callable on success, or WP_Error on failure.
 	 * @throws Invalid_Datapoint_Exception Override in a sub-class.
 	 */
-	protected function create_data_request( Data_Request $data ) {
+	protected function create_data_request( Data_Request $data ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found,Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		throw new Invalid_Datapoint_Exception();
 	}
 
@@ -357,11 +363,13 @@ abstract class Module {
 				$restore_defers[] = $oauth_client->get_client()->withDefer( true );
 
 				$current_user = wp_get_current_user();
-				// Adds the current user to the active consumers list.
-				$oauth_client->add_active_consumer( $current_user );
 			}
 
-			$request = $this->create_data_request( $data );
+			if ( $datapoint instanceof Executable_Datapoint ) {
+				$request = $datapoint->create_request( $data );
+			} else {
+				$request = $this->create_data_request( $data );
+			}
 
 			if ( is_wp_error( $request ) ) {
 				return $request;
@@ -386,6 +394,10 @@ abstract class Module {
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
+		}
+
+		if ( $datapoint instanceof Executable_Datapoint ) {
+			return $datapoint->parse_response( $response, $data );
 		}
 
 		return $this->parse_data_response( $data, $response );
@@ -582,7 +594,7 @@ abstract class Module {
 	 * @return array Google services as $identifier => $service_instance pairs. Every $service_instance must be an
 	 *               instance of Google_Service.
 	 */
-	protected function setup_services( Google_Site_Kit_Client $client ) {
+	protected function setup_services( Google_Site_Kit_Client $client ) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 		return array();
 	}
 
@@ -642,7 +654,7 @@ abstract class Module {
 	 * @param string    $datapoint Optional. Datapoint originally requested. Default is an empty string.
 	 * @return WP_Error WordPress error object.
 	 */
-	protected function exception_to_error( Exception $e, $datapoint = '' ) {
+	protected function exception_to_error( Exception $e, $datapoint = '' ) { // phpcs:ignore phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter.Found,Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( $e instanceof WP_Errorable ) {
 			return $e->to_wp_error();
 		}
@@ -711,7 +723,7 @@ abstract class Module {
 		}
 
 		$items = array_map(
-			function( $item ) {
+			function ( $item ) {
 				if ( ! is_string( $item ) ) {
 					return false;
 				}
@@ -772,8 +784,12 @@ abstract class Module {
 	public function is_shareable() {
 		if ( $this instanceof Module_With_Owner && $this->is_connected() ) {
 			$datapoints = $this->get_datapoint_definitions();
-			foreach ( $datapoints as $details ) {
-				if ( ! empty( $details['shareable'] ) ) {
+			foreach ( $datapoints as $datapoint ) {
+				if ( $datapoint instanceof Shareable_Datapoint ) {
+					return $datapoint->is_shareable();
+				}
+
+				if ( ! empty( $datapoint['shareable'] ) ) {
 					return true;
 				}
 			}

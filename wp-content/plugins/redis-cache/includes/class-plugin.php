@@ -333,7 +333,12 @@ class Plugin {
             return;
         }
 
-        wp_enqueue_style( 'redis-cache', WP_REDIS_PLUGIN_DIR . '/assets/css/admin.css', [], WP_REDIS_VERSION );
+        wp_enqueue_style(
+            'redis-cache',
+            trailingslashit( WP_REDIS_PLUGIN_DIR ) . 'assets/css/admin.css',
+            [],
+            WP_REDIS_VERSION
+        );
     }
 
     /**
@@ -822,8 +827,9 @@ class Plugin {
      * @return string
      */
     protected function admin_bar_style() {
+        // phpcs:disable Squiz.PHP.Heredoc.NotAllowed
         return <<<HTML
-            <style>
+            <style id="redis-cache-admin-bar-style">
                 #wpadminbar ul li.redis-cache-error {
                     background: #b30000;
                 }
@@ -847,7 +853,7 @@ HTML;
         $flushMessage = __( 'Flushing cache...', 'redis-cache' );
 
         return <<<HTML
-            <script>
+            <script id="redis-cache-admin-bar">
                 (function (element) {
                     if (! element) {
                         return;
@@ -1071,15 +1077,13 @@ HTML;
      * @return void
      */
     public function ajax_flush_cache() {
-        if ( ! wp_verify_nonce( $_POST['nonce'] ) ) {
-            $message = 'Invalid Nonce.';
+        if ( ! wp_verify_nonce( $_POST['nonce'] ?? '' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+            wp_die( esc_html__( 'Invalid Nonce.', 'redis-cache' ) );
         } else if ( wp_cache_flush() ) {
-            $message = 'Object cache flushed.';
+            wp_die( esc_html__( 'Object cache flushed.', 'redis-cache' ) );
         } else {
-            $message = 'Object cache could not be flushed.';
+            wp_die( esc_html__( 'Object cache could not be flushed.', 'redis-cache' ) );
         }
-
-        wp_die( __( $message , 'redis-cache' ) );
     }
 
     /**
@@ -1565,7 +1569,19 @@ HTML;
      * @return string
      */
     public function manage_redis_capability() {
-        return is_multisite() ? 'manage_network_options' : 'manage_options';
+        if ( defined( 'WP_REDIS_MANAGER_CAPABILITY' ) && WP_REDIS_MANAGER_CAPABILITY ) {
+            return WP_REDIS_MANAGER_CAPABILITY;
+        }
+
+        $capability = is_multisite() ? 'manage_network_options' : 'manage_options';
+
+        /**
+         * Filters the capability used to determine if a user can manage Redis.
+         *
+         * @since 2.6.0
+         * @param string   $capability The default capability to determine if the user can manage cache.
+         */
+        return apply_filters( 'redis_cache_manager_capability', $capability );
     }
 
     /**
@@ -1583,6 +1599,7 @@ HTML;
      * @return void
      */
     public function litespeed_disable_objectcache() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if ( isset( $_POST['LSCWP_CTRL'], $_POST['LSCWP_NONCE'], $_POST['object'] ) ) {
             $_POST['object'] = '0';
         }

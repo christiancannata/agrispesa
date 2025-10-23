@@ -34,13 +34,13 @@ class Beacon
      * @var BeaconOptions
      */
     private $beacon_options;
-    public function __construct(\FSVendor\Octolize\BetterDocs\Beacon\BeaconOptions $beacon_options, \FSVendor\WPDesk\Beacon\BeaconShouldShowStrategy $strategy, $assets_url, $beacon_search_elements_class = 'search-input', $beacon_image_content = '')
+    public function __construct(BeaconOptions $beacon_options, BeaconShouldShowStrategy $strategy, $assets_url, $beacon_search_elements_class = 'search-input', $beacon_image_content = '')
     {
         $this->beacon_options = $beacon_options;
         $this->activation_strategy = $strategy;
         $this->assets_url = $assets_url;
         $this->beacon_search_elements_class = $beacon_search_elements_class;
-        $this->confirmation_message = \__('When you click OK we will open our BetterDocs beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
+        $this->confirmation_message = __('When you click OK we will open our BetterDocs beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies.', 'flexible-shipping');
         $this->beacon_image_content = $beacon_image_content;
     }
     /**
@@ -48,8 +48,8 @@ class Beacon
      */
     public function hooks()
     {
-        \add_action('admin_footer', [$this, 'add_beacon_to_footer']);
-        \add_action('admin_enqueue_scripts', [$this, 'add_beacon_js']);
+        add_action('admin_footer', [$this, 'add_beacon_to_footer']);
+        add_action('admin_enqueue_scripts', [$this, 'add_beacon_js']);
     }
     /**
      * Should display beacon?

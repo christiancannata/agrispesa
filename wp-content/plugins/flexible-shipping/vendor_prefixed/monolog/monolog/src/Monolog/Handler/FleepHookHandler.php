@@ -24,7 +24,7 @@ use FSVendor\Monolog\Logger;
  *
  * @phpstan-import-type FormattedRecord from AbstractProcessingHandler
  */
-class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
+class FleepHookHandler extends SocketHandler
 {
     protected const FLEEP_HOST = 'fleep.io';
     protected const FLEEP_HOOK_URI = '/hook/';
@@ -41,10 +41,10 @@ class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
      * @param  string                    $token  Webhook token
      * @throws MissingExtensionException
      */
-    public function __construct(string $token, $level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true, bool $persistent = \false, float $timeout = 0.0, float $writingTimeout = 10.0, ?float $connectionTimeout = null, ?int $chunkSize = null)
+    public function __construct(string $token, $level = Logger::DEBUG, bool $bubble = \true, bool $persistent = \false, float $timeout = 0.0, float $writingTimeout = 10.0, ?float $connectionTimeout = null, ?int $chunkSize = null)
     {
-        if (!\extension_loaded('openssl')) {
-            throw new \FSVendor\Monolog\Handler\MissingExtensionException('The OpenSSL PHP extension is required to use the FleepHookHandler');
+        if (!extension_loaded('openssl')) {
+            throw new MissingExtensionException('The OpenSSL PHP extension is required to use the FleepHookHandler');
         }
         $this->token = $token;
         $connectionString = 'ssl://' . static::FLEEP_HOST . ':443';
@@ -57,14 +57,14 @@ class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
      *
      * @return LineFormatter
      */
-    protected function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\LineFormatter(null, null, \true, \true);
+        return new LineFormatter(null, null, \true, \true);
     }
     /**
      * Handles a log record
      */
-    public function write(array $record) : void
+    public function write(array $record): void
     {
         parent::write($record);
         $this->closeSocket();
@@ -72,7 +72,7 @@ class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
     /**
      * {@inheritDoc}
      */
-    protected function generateDataStream(array $record) : string
+    protected function generateDataStream(array $record): string
     {
         $content = $this->buildContent($record);
         return $this->buildHeader($content) . $content;
@@ -80,12 +80,12 @@ class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
     /**
      * Builds the header of the API Call
      */
-    private function buildHeader(string $content) : string
+    private function buildHeader(string $content): string
     {
         $header = "POST " . static::FLEEP_HOOK_URI . $this->token . " HTTP/1.1\r\n";
         $header .= "Host: " . static::FLEEP_HOST . "\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $header .= "Content-Length: " . \strlen($content) . "\r\n";
+        $header .= "Content-Length: " . strlen($content) . "\r\n";
         $header .= "\r\n";
         return $header;
     }
@@ -94,9 +94,9 @@ class FleepHookHandler extends \FSVendor\Monolog\Handler\SocketHandler
      *
      * @phpstan-param FormattedRecord $record
      */
-    private function buildContent(array $record) : string
+    private function buildContent(array $record): string
     {
         $dataArray = ['message' => $record['formatted']];
-        return \http_build_query($dataArray);
+        return http_build_query($dataArray);
     }
 }

@@ -56,8 +56,18 @@ class wsNewMenuHighlighter {
 		'sites.php'                         => true,
 		'theme-install.php'                 => true,
 		'upgrade.php'                       => true,
+
 		//Hidden ACF menu. It's used to show the "Welcome to Advanced Custom Fields" page.
 		'edit.php?post_type=acf-field-group&page=acf-settings-info' => true,
+
+		//The Forminator Forms plugin adds some menus, then hides them in "admin_head" hooks.
+		'admin.php?page=forminator-cform-wizard'     => true,
+		'admin.php?page=forminator-cform-view'       => true,
+		'admin.php?page=forminator-poll-wizard'      => true,
+		'admin.php?page=forminator-poll-view'        => true,
+		'admin.php?page=forminator-nowrong-wizard'   => true,
+		'admin.php?page=forminator-knowledge-wizard' => true,
+		'admin.php?page=forminator-quiz-view'        => true,
 	);
 
 	private $menusWithNewSubmenus = array();
@@ -205,7 +215,7 @@ class wsNewMenuHighlighter {
 			'ws-nmh-admin-script',
 			plugins_url('assets/highlight-menus.js', __FILE__),
 			$dependencies,
-			'20191111'
+			'20250629-2'
 		);
 
 		wp_localize_script(

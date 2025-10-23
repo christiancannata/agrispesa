@@ -10,7 +10,7 @@ use FSVendor\WPDesk\Persistence\AllDataAccessContainer;
  *
  * @package WPDesk\Persistence
  */
-final class DelaySinglePersistentContainer extends \FSVendor\WPDesk\Persistence\Decorator\DelayPersistentContainer implements \FSVendor\WPDesk\Persistence\AllDataAccessContainer
+final class DelaySinglePersistentContainer extends DelayPersistentContainer implements AllDataAccessContainer
 {
     /**
      * Key where the data will be saved.
@@ -18,7 +18,7 @@ final class DelaySinglePersistentContainer extends \FSVendor\WPDesk\Persistence\
      * @var string
      */
     private $key;
-    public function __construct(\FSVendor\WPDesk\Persistence\PersistentContainer $container, $key)
+    public function __construct(PersistentContainer $container, $key)
     {
         parent::__construct($container);
         $this->key = $key;
@@ -31,11 +31,11 @@ final class DelaySinglePersistentContainer extends \FSVendor\WPDesk\Persistence\
             }
         } else {
             $data = \unserialize($this->container->get($this->key));
-            if (\is_array($data) && isset($data[$id])) {
+            if (is_array($data) && isset($data[$id])) {
                 return $data[$id];
             }
         }
-        throw new \FSVendor\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $id));
+        throw new ElementNotExistsException(sprintf('Element %s not exists!', $id));
     }
     public function has($id)
     {
@@ -44,7 +44,7 @@ final class DelaySinglePersistentContainer extends \FSVendor\WPDesk\Persistence\
         }
         if ($this->container->has($this->key)) {
             $data = \unserialize($this->container->get($this->key));
-            return \is_array($data) && isset($data[$id]);
+            return is_array($data) && isset($data[$id]);
         }
         return \false;
     }

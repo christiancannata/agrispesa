@@ -47,7 +47,6 @@ if ( ! class_exists( 'Woo_Wallet_Cashback' ) ) {
 		 * Class constructor.
 		 */
 		public function __construct() {
-
 		}
 
 		/**
@@ -70,8 +69,17 @@ if ( ! class_exists( 'Woo_Wallet_Cashback' ) ) {
 		 */
 		public static function calculate_cashback( $form_cart = true, $order_id = 0, $force = false ) {
 			self::init_cashback_settings();
-			$order = wc_get_order( $order_id );
+			$order   = wc_get_order( $order_id );
+			$user_id = get_current_user_id();
+			if ( $order ) {
+				$user_id = $order->get_customer_id();
+			}
+			$user         = new WP_User( $user_id );
+			$exclude_role = woo_wallet()->settings_api->get_option( 'exclude_role', '_wallet_settings_credit', array() );
 			if ( 'on' !== woo_wallet()->settings_api->get_option( 'is_enable_cashback_reward_program', '_wallet_settings_credit' ) ) {
+				return 0;
+			}
+			if ( $user && ! empty( $user->roles ) && ! array_diff( $user->roles, $exclude_role ) ) {
 				return 0;
 			}
 			if ( ! $form_cart && ! $order_id ) {
@@ -231,17 +239,15 @@ if ( ! class_exists( 'Woo_Wallet_Cashback' ) ) {
 					} else {
 						$cashback_amount += $product_wise_cashback_amount * $qty;
 					}
-				} else {
-					if ( 'percent' === self::$global_cashbak_type ) {
+				} elseif ( 'percent' === self::$global_cashbak_type ) {
 						$product_wise_percent_cashback_amount = $product_price * $qty * ( self::$global_cashbak_amount / 100 );
-						if ( self::$max_cashbak_amount && $product_wise_percent_cashback_amount > self::$max_cashbak_amount ) {
-							$cashback_amount += self::$max_cashbak_amount;
-						} else {
-							$cashback_amount += $product_wise_percent_cashback_amount;
-						}
+					if ( self::$max_cashbak_amount && $product_wise_percent_cashback_amount > self::$max_cashbak_amount ) {
+						$cashback_amount += self::$max_cashbak_amount;
 					} else {
-						$cashback_amount += self::$global_cashbak_amount * $qty;
+						$cashback_amount += $product_wise_percent_cashback_amount;
 					}
+				} else {
+					$cashback_amount += self::$global_cashbak_amount * $qty;
 				}
 			}
 			return apply_filters( 'woo_wallet_product_wise_cashback_amount', $cashback_amount, $product, $qty, $product_price );
@@ -290,22 +296,19 @@ if ( ! class_exists( 'Woo_Wallet_Cashback' ) ) {
 				}
 				if ( ! empty( $category_wise_cashback_amounts ) ) {
 					$cashback_amount += ( 'on' === woo_wallet()->settings_api->get_option( 'allow_min_cashback', '_wallet_settings_credit', 'on' ) ) ? min( $category_wise_cashback_amounts ) : max( $category_wise_cashback_amounts );
-				} else {
-					if ( 'percent' === self::$global_cashbak_type ) {
+				} elseif ( 'percent' === self::$global_cashbak_type ) {
 						$category_wise_cashback_amount = $product_price * $qty * ( self::$global_cashbak_amount / 100 );
-						if ( self::$max_cashbak_amount && $category_wise_cashback_amount > self::$max_cashbak_amount ) {
-							$cashback_amount += self::$max_cashbak_amount;
-						} else {
-							$cashback_amount += $category_wise_cashback_amount;
-						}
+					if ( self::$max_cashbak_amount && $category_wise_cashback_amount > self::$max_cashbak_amount ) {
+						$cashback_amount += self::$max_cashbak_amount;
 					} else {
-						$cashback_amount += self::$global_cashbak_amount;
+						$cashback_amount += $category_wise_cashback_amount;
 					}
+				} else {
+					$cashback_amount += self::$global_cashbak_amount;
 				}
 			}
 			return apply_filters( 'woo_wallet_product_category_wise_cashback_amount', $cashback_amount, $product, $qty, $product_price );
 		}
-
 	}
 
 }

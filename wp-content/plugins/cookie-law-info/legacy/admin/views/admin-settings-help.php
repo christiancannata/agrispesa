@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<?php echo esc_html__( 'This is the "read more" link you customise above.', 'cookie-law-info' ); ?>
 				</li>
 
-				<li><div style="font-weight: bold;"><?php echo esc_html__( 'Setup margin for above buttons' ); ?></div>
+				<li><div style="font-weight: bold;"><?php echo esc_html__( 'Setup margin for above buttons', 'cookie-law-info' ); ?></div>
 					Eg: [cookie_button margin="10px"]
 <pre>
 	margin: 5%;                 /* All sides: 5% margin */

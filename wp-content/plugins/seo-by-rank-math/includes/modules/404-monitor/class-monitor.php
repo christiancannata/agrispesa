@@ -24,7 +24,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Monitor {
 
-	use Hooker, Ajax;
+	use Hooker;
+	use Ajax;
 
 	/**
 	 * Admin object.
@@ -129,7 +130,11 @@ class Monitor {
 		}
 
 		$uri = untrailingslashit( Helper::get_current_page_url( Helper::get_settings( 'general.404_monitor_ignore_query_parameters' ) ) );
+		$uri = preg_replace( '/(?<=\/)(https?:\/[^\s]*)/i', '', $uri );
 		$uri = str_replace( Helper::get_home_url( '/' ), '', $uri );
+		if ( ! $uri ) {
+			return;
+		}
 
 		// Check if excluded.
 		if ( $this->is_url_excluded( $uri ) ) {
@@ -253,14 +258,17 @@ class Monitor {
 	 * @return string WP hook.
 	 */
 	private function get_hook() {
-		if ( defined( 'CT_VERSION' ) ) {
-			return 'oxygen_enqueue_frontend_scripts';
-		}
+		$hook = defined( 'CT_VERSION' ) ?
+			'oxygen_enqueue_frontend_scripts' :
+			(
+				function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ?
+				'wp_head' :
+				'get_header'
+			);
 
-		if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
-			return 'wp_head';
-		}
-
-		return 'get_header';
+		/**
+		 * Allow developers to change the action hook that will trigger the 404 capture.
+		*/
+		return $this->do_filter( '404_monitor/hook', $hook );
 	}
 }

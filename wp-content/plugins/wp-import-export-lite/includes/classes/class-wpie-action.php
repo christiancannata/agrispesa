@@ -1,9 +1,7 @@
 <?php
 
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( substr( wpie_sanitize_field( $_REQUEST[ 'action' ] ), 0, 11 ) == 'wpie_export' ) {
 

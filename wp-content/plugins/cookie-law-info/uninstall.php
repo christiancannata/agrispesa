@@ -29,6 +29,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+delete_option( 'cky_connect_notice' );
+
 if ( defined( 'CKY_REMOVE_ALL_DATA' ) && true === CKY_REMOVE_ALL_DATA ) {
 	try {
 		global $wpdb;
@@ -67,6 +69,6 @@ if ( defined( 'CKY_REMOVE_ALL_DATA' ) && true === CKY_REMOVE_ALL_DATA ) {
 			delete_option( $option_name );
 		}
 	} catch ( Exception $e ) {
-		error_log( __( 'Failed to delete CookieYes plugin data!', 'cookie-law-info' ) );
+		error_log( __( 'Failed to delete CookieYes plugin data!', 'cookie-law-info' ) ); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 	}
 }

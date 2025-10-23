@@ -27,7 +27,7 @@ final class Tracking {
 
 	use Method_Proxy_Trait;
 
-	const TRACKING_ID = 'UA-130569087-3';
+	const TRACKING_ID = 'G-EQDN3BWDSD';
 
 	/**
 	 * Screens instance.
@@ -67,8 +67,8 @@ final class Tracking {
 	 */
 	public function __construct(
 		Context $context,
-		User_Options $user_options = null,
-		Screens $screens = null
+		?User_Options $user_options = null,
+		?Screens $screens = null
 	) {
 		$user_options          = $user_options ?: new User_Options( $context );
 		$this->screens         = $screens ?: new Screens( $context );

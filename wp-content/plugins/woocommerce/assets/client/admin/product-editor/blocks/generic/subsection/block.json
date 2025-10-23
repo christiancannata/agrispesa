@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "woocommerce/product-subsection",
     "title": "Product subsection",
     "category": "woocommerce",
@@ -13,7 +13,7 @@
         },
         "description": {
             "type": "string",
-            "__experimentalRole": "content"
+            "role": "content"
         },
         "blockGap": {
             "type": "string",
@@ -29,6 +29,5 @@
         "inserter": false,
         "lock": false,
         "__experimentalToolbar": false
-    },
-    "editorStyle": "file:./editor.css"
+    }
 }

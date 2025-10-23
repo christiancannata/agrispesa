@@ -15,7 +15,7 @@ function red_get_plugin_data( $plugin ) {
 }
 
 function red_get_post_types( $full = true ) {
-	$types = get_post_types( array( 'public' => true ), 'objects' );
+	$types = get_post_types( [ 'public' => true ], 'objects' );
 	$types[] = (object) array(
 		'name' => 'trash',
 		'label' => __( 'Trash', 'default' ),
@@ -57,7 +57,6 @@ function red_get_default_options() {
 		'log_header'          => false,
 		'track_hits'          => true,
 		'modules'             => [],
-		'newsletter'          => false,
 		'redirect_cache'      => 1,   // 1 hour
 		'ip_logging'          => 0,   // No IP logging
 		'ip_headers'          => [],
@@ -181,7 +180,7 @@ function red_set_options( array $settings = [] ) {
 	}
 
 	// Boolean settings
-	foreach ( [ 'support', 'https', 'newsletter', 'log_external', 'log_header', 'track_hits' ] as $name ) {
+	foreach ( [ 'support', 'https', 'log_external', 'log_header', 'track_hits' ] as $name ) {
 		if ( isset( $settings[ $name ] ) ) {
 			$options[ $name ] = $settings[ $name ] ? true : false;
 		}
@@ -250,7 +249,12 @@ function red_set_options( array $settings = [] ) {
 	}
 
 	if ( isset( $settings['permalinks'] ) && is_array( $settings['permalinks'] ) ) {
-		$options['permalinks'] = array_map( 'sanitize_text_field', $settings['permalinks'] );
+		$options['permalinks'] = array_map(
+			function ( $permalink ) {
+				return sanitize_option( 'permalink_structure', $permalink );
+			},
+			$settings['permalinks']
+		);
 		$options['permalinks'] = array_values( array_filter( array_map( 'trim', $options['permalinks'] ) ) );
 		$options['permalinks'] = array_slice( $options['permalinks'], 0, 10 ); // Max 10
 	}

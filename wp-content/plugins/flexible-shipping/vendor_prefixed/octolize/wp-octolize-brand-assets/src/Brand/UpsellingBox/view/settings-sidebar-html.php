@@ -64,7 +64,7 @@ echo \esc_attr($align_top_to_element);
 		function show_oct_metabox() {
 			oct_metabox.addClass( 'fixed' )
 				.css( 'top', jQuery( align_top_to_element ).position().top + 20 )
-				.css( 'right', position_right )
+				.css( ( document.dir === 'rtl' ) ? 'left' : 'right', position_right )
 				.toggle( window.innerWidth > min_width );
 		}
 

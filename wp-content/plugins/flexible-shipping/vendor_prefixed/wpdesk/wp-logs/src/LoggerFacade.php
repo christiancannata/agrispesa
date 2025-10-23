@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Logger;
 
 use FSVendor\Monolog\Logger;
-use Psr\Log\LogLevel;
+use FSVendor\Psr\Log\LogLevel;
 use WP_Error;
 use Exception;
 /**
@@ -24,10 +24,10 @@ class LoggerFacade
      * @param string $name Name of the logger
      * @return Logger
      */
-    public static function getLogger($name = \FSVendor\WPDesk\Logger\WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
+    public static function getLogger($name = WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
     {
         if (self::$factory === null) {
-            self::$factory = new \FSVendor\WPDesk\Logger\WPDeskLoggerFactory();
+            self::$factory = new WPDeskLoggerFactory();
         }
         return self::$factory->createWPDeskLogger($name);
     }
@@ -38,7 +38,7 @@ class LoggerFacade
      *
      * @return Logger
      */
-    public static function get_logger($name = \FSVendor\WPDesk\Logger\WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
+    public static function get_logger($name = WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
     {
         return self::getLogger($name);
     }
@@ -47,7 +47,7 @@ class LoggerFacade
      *
      * @param string $name Name of the logger
      */
-    public static function set_disable_log($name = \FSVendor\WPDesk\Logger\WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
+    public static function set_disable_log($name = WPDeskLoggerFactory::DEFAULT_LOGGER_CHANNEL_NAME)
     {
         self::$factory->disableLog($name);
     }
@@ -61,9 +61,9 @@ class LoggerFacade
      *
      * @see http://php.net/manual/en/function.debug-backtrace.php
      */
-    public static function log_wp_error(\WP_Error $e, array $backtrace, array $context = array(), $level = \Psr\Log\LogLevel::ERROR)
+    public static function log_wp_error(WP_Error $e, array $backtrace, array $context = array(), $level = LogLevel::ERROR)
     {
-        $message = 'Error: ' . \get_class($e) . ' Code: ' . $e->get_error_code() . ' Message: ' . $e->get_error_message();
+        $message = 'Error: ' . get_class($e) . ' Code: ' . $e->get_error_code() . ' Message: ' . $e->get_error_message();
         self::log_message_backtrace($message, $backtrace, $context, $level);
     }
     /**
@@ -73,10 +73,10 @@ class LoggerFacade
      * @param array $context Context to log
      * @param string $level Level of error.
      */
-    public static function log_exception(\Exception $e, array $context = array(), $level = \Psr\Log\LogLevel::ERROR)
+    public static function log_exception(Exception $e, array $context = array(), $level = LogLevel::ERROR)
     {
-        $message = 'Exception: ' . \get_class($e) . ' Code: ' . $e->getCode() . ' Message: ' . $e->getMessage() . ' Stack: ' . $e->getTraceAsString();
-        self::log_message($message, \array_merge($context, ['exception' => $e]), $e->getFile(), $level);
+        $message = 'Exception: ' . get_class($e) . ' Code: ' . $e->getCode() . ' Message: ' . $e->getMessage() . ' Stack: ' . $e->getTraceAsString();
+        self::log_message($message, array_merge($context, ['exception' => $e]), $e->getFile(), $level);
     }
     /**
      * Log message into WPDesk logger
@@ -86,11 +86,11 @@ class LoggerFacade
      * @param string $source Source of the message - can be file name, class name or whatever.
      * @param string $level Level of error.
      */
-    public static function log_message($message, array $context = array(), $source = null, $level = \Psr\Log\LogLevel::DEBUG)
+    public static function log_message($message, array $context = array(), $source = null, $level = LogLevel::DEBUG)
     {
         $logger = self::getLogger();
         if ($source !== null) {
-            $context = \array_merge($context, ['source' => $source]);
+            $context = array_merge($context, ['source' => $source]);
         }
         $logger->log($level, $message, $context);
     }
@@ -102,9 +102,9 @@ class LoggerFacade
      * @param array $context Context to log
      * @param string $level Level of error.
      */
-    public static function log_message_backtrace($message, array $backtrace, array $context = array(), $level = \Psr\Log\LogLevel::DEBUG)
+    public static function log_message_backtrace($message, array $backtrace, array $context = array(), $level = LogLevel::DEBUG)
     {
-        $message .= ' Backtrace: ' . \json_encode($backtrace);
+        $message .= ' Backtrace: ' . json_encode($backtrace);
         $source = null;
         if (isset($backtrace[self::BACKTRACE_FILENAME_KEY])) {
             $source = $backtrace[self::BACKTRACE_FILENAME_KEY];

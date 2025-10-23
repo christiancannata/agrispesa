@@ -11,7 +11,7 @@ use FSVendor\WPDesk\ShowDecision\ShouldShowStrategy;
 /**
  * Can display settings sidebar.
  */
-class SettingsSidebar implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class SettingsSidebar implements Hookable
 {
     /**
      * @var string
@@ -53,7 +53,7 @@ class SettingsSidebar implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      * @var string
      */
     private $align_top_to_element;
-    public function __construct($action, \FSVendor\WPDesk\ShowDecision\ShouldShowStrategy $should_show_strategy, $title, array $features, $url, $label, $min_width = 1000, $position_right = 20, $align_top_to_element = '#mainform h2:first', $additional_content = '')
+    public function __construct($action, ShouldShowStrategy $should_show_strategy, $title, array $features, $url, $label, $min_width = 1000, $position_right = 20, $align_top_to_element = '#mainform h2:first', $additional_content = '')
     {
         $this->action = $action;
         $this->should_show_strategy = $should_show_strategy;
@@ -69,18 +69,18 @@ class SettingsSidebar implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     /**
      * Hooks.
      */
-    public function hooks() : void
+    public function hooks(): void
     {
-        \add_action($this->action, [$this, 'maybe_display_settings_sidebar']);
+        add_action($this->action, [$this, 'maybe_display_settings_sidebar']);
     }
-    public function set_additional_content(string $additional_content) : void
+    public function set_additional_content(string $additional_content): void
     {
         $this->additional_content = $additional_content;
     }
     /**
      * Maybe display settings sidebar.
      */
-    public function maybe_display_settings_sidebar() : void
+    public function maybe_display_settings_sidebar(): void
     {
         if ($this->should_show_strategy->shouldDisplay()) {
             $title = $this->title;

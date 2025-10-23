@@ -3,14 +3,14 @@
 namespace YahnisElsts\AdminMenuEditor\Customizable\Controls;
 
 use YahnisElsts\AdminMenuEditor\Customizable\Rendering\Renderer;
-use YahnisElsts\AdminMenuEditor\Customizable\Settings\Setting;
+use YahnisElsts\AdminMenuEditor\Customizable\Settings\AbstractSetting;
 
 class ColorPicker extends ClassicControl {
 	protected $type = 'colorPicker';
 	protected $koComponentName = 'ame-color-picker';
 
 	/**
-	 * @var \YahnisElsts\AdminMenuEditor\Customizable\Settings\ColorSetting
+	 * @var AbstractSetting
 	 */
 	protected $mainSetting;
 
@@ -24,7 +24,7 @@ class ColorPicker extends ClassicControl {
 		if ( !is_string($value) ) {
 			$value = '';
 		}
-		$settingId = ($this->mainSetting instanceof Setting) ? $this->mainSetting->getId() : null;
+		$settingId = ($this->mainSetting instanceof AbstractSetting) ? $this->mainSetting->getId() : null;
 
 		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- buildInputElement() is safe
 		echo $this->buildInputElement([

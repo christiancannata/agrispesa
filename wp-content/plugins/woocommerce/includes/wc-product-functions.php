@@ -9,6 +9,10 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Enums\ProductStatus;
+use Automattic\WooCommerce\Enums\ProductStockStatus;
+use Automattic\WooCommerce\Enums\ProductType;
+use Automattic\WooCommerce\Enums\CatalogVisibility;
 use Automattic\WooCommerce\Proxies\LegacyProxy;
 use Automattic\WooCommerce\Utilities\ArrayUtil;
 use Automattic\WooCommerce\Utilities\NumberUtil;
@@ -155,6 +159,57 @@ function wc_delete_product_transients( $post_id = 0 ) {
 }
 
 /**
+ * Delete all related products transients when a product is updated/created.
+ * This is necessary because changing one product affects all related products too.
+ *
+ * @since 9.8.0
+ * @deprecated 10.1.0 This function is deprecated and will be removed in a future version.
+ * @param int $post_id The product ID updated/created.
+ */
+function wc_delete_related_product_transients( $post_id ) {
+	wc_deprecated_function( 'wc_delete_related_product_transients', '10.1.0', 'This function is deprecated and will be removed in a future version.' );
+
+	if ( ! is_numeric( $post_id ) ) {
+		return;
+	}
+
+	$transient_name          = 'wc_related_' . $post_id;
+	$old_transient           = get_transient( $transient_name );
+	$old_related_product_ids = array();
+
+	if ( is_array( $old_transient ) && ! empty( $old_transient ) ) {
+		$old_related_product_ids = $old_transient[ array_key_first( $old_transient ) ];
+	}
+
+	// Delete current product transient so that it can be refreshed below.
+	delete_transient( $transient_name );
+
+	// Gets new related products and sets current product transient.
+	$new_related_product_ids = wc_get_related_products( $post_id, 1000 );
+
+	// Combine all product IDs that need their transients cleared.
+	$related_product_ids = array_unique(
+		array_merge(
+			$old_related_product_ids,
+			$new_related_product_ids
+		)
+	);
+
+	if ( empty( $related_product_ids ) ) {
+		return;
+	}
+
+	// Create the list of transient names to delete.
+	$related_product_transients = array_map(
+		function ( $id ) {
+			return 'wc_related_' . $id;
+		},
+		$related_product_ids
+	);
+	_wc_delete_transients( $related_product_transients );
+}
+
+/**
  * Function that returns an array containing the IDs of the products that are on sale.
  *
  * @since 2.0
@@ -283,13 +338,56 @@ function wc_product_post_type_link( $permalink, $post ) {
 add_filter( 'post_type_link', 'wc_product_post_type_link', 10, 2 );
 
 /**
+ * Ensure that the product_cat value determined in `wc_product_post_type_link` is the canonical value.
+ *
+ * If other values are used in this part of the permalink, it will be redirected.
+ *
+ * @return void
+ */
+function wc_product_canonical_redirect(): void {
+	global $wp_rewrite;
+
+	if (
+		! did_action( 'woocommerce_init' )
+		|| ! is_product()
+		|| ! is_a( $wp_rewrite, WP_Rewrite::class )
+	) {
+		return;
+	}
+
+	// In the event we are dealing with ugly permalinks, this will be empty.
+	$specified_category_slug = get_query_var( 'product_cat' );
+	$specified_category_slug = urldecode( $specified_category_slug );
+
+	if ( ! is_string( $specified_category_slug ) || strlen( $specified_category_slug ) < 1 ) {
+		return;
+	}
+
+	// What category slug did we expect? Normally this maps back to the first assigned product_cat
+	// term. However, this is filterable so we use the relevant helper function to figure this out.
+	$expected_category_slug = wc_product_post_type_link( '%product_cat%', get_post( get_the_ID() ) );
+	$expected_category_slug = urldecode( $expected_category_slug );
+
+	if ( $specified_category_slug === $expected_category_slug ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$query_vars = isset( $_GET ) && is_array( $_GET ) ? $_GET : array();
+
+	wp_safe_redirect( add_query_arg( $query_vars, wc_get_product( get_the_ID() )->get_permalink() ), 301 );
+	exit();
+}
+add_action( 'template_redirect', 'wc_product_canonical_redirect', 5 );
+
+/**
  * Get the placeholder image URL either from media, or use the fallback image.
  *
  * @param string $size Thumbnail size to use.
  * @return string
  */
 function wc_placeholder_img_src( $size = 'woocommerce_thumbnail' ) {
-	$src               = WC()->plugin_url() . '/assets/images/placeholder.png';
+	$src               = WC()->plugin_url() . '/assets/images/placeholder.webp';
 	$placeholder_image = get_option( 'woocommerce_placeholder_image', 0 );
 
 	if ( ! empty( $placeholder_image ) ) {
@@ -381,7 +479,7 @@ function wc_get_formatted_variation( $variation, $flat = false, $include_names =
 
 	$list_type = $include_names ? 'dl' : 'ul';
 
-	if ( is_array( $variation_attributes ) ) {
+	if ( is_array( $variation_attributes ) && ! empty( $variation_attributes ) ) {
 
 		if ( ! $flat ) {
 			$return = '<' . $list_type . ' class="variation">';
@@ -409,12 +507,10 @@ function wc_get_formatted_variation( $variation, $flat = false, $include_names =
 				} else {
 					$variation_list[] = '<dt>' . wc_attribute_label( $name, $product ) . ':</dt><dd>' . rawurldecode( $value ) . '</dd>';
 				}
-			} else {
-				if ( $flat ) {
+			} elseif ( $flat ) {
 					$variation_list[] = rawurldecode( $value );
-				} else {
-					$variation_list[] = '<li>' . rawurldecode( $value ) . '</li>';
-				}
+			} else {
+				$variation_list[] = '<li>' . rawurldecode( $value ) . '</li>';
 			}
 		}
 
@@ -598,10 +694,10 @@ function wc_get_product_types() {
 	return (array) apply_filters(
 		'product_type_selector',
 		array(
-			'simple'   => __( 'Simple product', 'woocommerce' ),
-			'grouped'  => __( 'Grouped product', 'woocommerce' ),
-			'external' => __( 'External/Affiliate product', 'woocommerce' ),
-			'variable' => __( 'Variable product', 'woocommerce' ),
+			ProductType::SIMPLE   => __( 'Simple product', 'woocommerce' ),
+			ProductType::GROUPED  => __( 'Grouped product', 'woocommerce' ),
+			ProductType::EXTERNAL => __( 'External/Affiliate product', 'woocommerce' ),
+			ProductType::VARIABLE => __( 'Variable product', 'woocommerce' ),
 		)
 	);
 }
@@ -633,6 +729,52 @@ function wc_product_has_unique_sku( $product_id, $sku ) {
 	$sku_found  = $data_store->is_existing_sku( $product_id, $sku );
 
 	if ( apply_filters( 'wc_product_has_unique_sku', $sku_found, $product_id, $sku ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Check if product unique ID is unique.
+ *
+ * @since 9.1.0
+ * @param int    $product_id Product ID.
+ * @param string $global_unique_id Product Unique ID.
+ * @return bool
+ */
+function wc_product_has_global_unique_id( $product_id, $global_unique_id ) {
+	/**
+	 * Gives plugins an opportunity to verify Unique ID uniqueness themselves.
+	 *
+	 * @since 9.1.0
+	 *
+	 * @param bool|null $has_global_unique_id Set to a boolean value to short-circuit the default Unique ID check.
+	 * @param int $product_id The ID of the current product.
+	 * @param string $sku The Unique ID to check for uniqueness.
+	 */
+	$has_global_unique_id = apply_filters( 'wc_product_pre_has_global_unique_id', null, $product_id, $global_unique_id );
+	if ( ! is_null( $has_global_unique_id ) ) {
+		return boolval( $has_global_unique_id );
+	}
+
+	$data_store = WC_Data_Store::load( 'product' );
+	if ( $data_store->has_callable( 'is_existing_global_unique_id' ) ) {
+		$global_unique_id_found = $data_store->is_existing_global_unique_id( $product_id, $global_unique_id );
+	} else {
+		$logger = wc_get_logger();
+		$logger->error( 'The method is_existing_global_unique_id is not implemented in the data store.', array( 'source' => 'wc_product_has_global_unique_id' ) );
+	}
+	/**
+	 * Gives plugins an opportunity to verify Unique ID uniqueness themselves.
+	 *
+	 * @since 9.1.0
+	 *
+	 * @param boolean $global_unique_id_found Whether the Unique ID is found.
+	 * @param int $product_id The ID of the current product.
+	 * @param string $sku The Unique ID to check for uniqueness.
+	 */
+	if ( apply_filters( 'wc_product_has_global_unique_id', $global_unique_id_found, $product_id, $global_unique_id ) ) {
 		return false;
 	}
 
@@ -693,7 +835,25 @@ function wc_get_product_id_by_sku( $sku ) {
 }
 
 /**
- * Get attributes/data for an individual variation from the database and maintain it's integrity.
+ * Get product ID by Unique ID.
+ *
+ * @since  9.1.0
+ * @param  string $global_unique_id Product Unique ID.
+ * @return int|null
+ */
+function wc_get_product_id_by_global_unique_id( $global_unique_id ) {
+	$data_store = WC_Data_Store::load( 'product' );
+	if ( $data_store->has_callable( 'get_product_id_by_global_unique_id' ) ) {
+		return $data_store->get_product_id_by_global_unique_id( $global_unique_id );
+	} else {
+		$logger = wc_get_logger();
+		$logger->error( 'The method get_product_id_by_global_unique_id is not implemented in the data store.', array( 'source' => 'wc_get_product_id_by_global_unique_id' ) );
+	}
+	return null;
+}
+
+/**
+ * Get attributes/data for an individual variation from the database and maintain its integrity.
  *
  * @since  2.4.0
  * @param  int $variation_id Variation ID.
@@ -849,10 +1009,10 @@ function wc_get_product_visibility_options() {
 	return apply_filters(
 		'woocommerce_product_visibility_options',
 		array(
-			'visible' => __( 'Shop and search results', 'woocommerce' ),
-			'catalog' => __( 'Shop only', 'woocommerce' ),
-			'search'  => __( 'Search results only', 'woocommerce' ),
-			'hidden'  => __( 'Hidden', 'woocommerce' ),
+			CatalogVisibility::VISIBLE => __( 'Shop and search results', 'woocommerce' ),
+			CatalogVisibility::CATALOG => __( 'Shop only', 'woocommerce' ),
+			CatalogVisibility::SEARCH  => __( 'Search results only', 'woocommerce' ),
+			CatalogVisibility::HIDDEN  => __( 'Hidden', 'woocommerce' ),
 		)
 	);
 }
@@ -886,9 +1046,9 @@ function wc_get_product_stock_status_options() {
 	return apply_filters(
 		'woocommerce_product_stock_status_options',
 		array(
-			'instock'     => __( 'In stock', 'woocommerce' ),
-			'outofstock'  => __( 'Out of stock', 'woocommerce' ),
-			'onbackorder' => __( 'On backorder', 'woocommerce' ),
+			ProductStockStatus::IN_STOCK     => __( 'In stock', 'woocommerce' ),
+			ProductStockStatus::OUT_OF_STOCK => __( 'Out of stock', 'woocommerce' ),
+			ProductStockStatus::ON_BACKORDER => __( 'On backorder', 'woocommerce' ),
 		)
 	);
 }
@@ -914,9 +1074,29 @@ function wc_get_product_backorder_options() {
  * @param  int   $product_id  Product ID.
  * @param  int   $limit       Limit of results.
  * @param  array $exclude_ids Exclude IDs from the results.
+ * @param  array $related_by  Related by category and tags boolean flags.
  * @return array
  */
-function wc_get_related_products( $product_id, $limit = 5, $exclude_ids = array() ) {
+function wc_get_related_products( $product_id, $limit = 5, $exclude_ids = array(), $related_by = array() ) {
+	// Log an error if the limit is not an integer since this is what we expect.
+	// However this is not a problem and we can continue.
+	if ( ! is_int( $limit ) ) {
+		wc_get_logger()->error(
+			sprintf(
+				'Invalid limit type passed to wc_get_related_products. Expected integer, got %s with value: %s',
+				gettype( $limit ),
+				wp_json_encode( $limit )
+			),
+			array( 'source' => 'wc_get_related_products' )
+		);
+	}
+
+	// If the limit is not numeric, set it to null.
+	$limit = is_numeric( $limit ) ? (int) $limit : null;
+
+	if ( null === $limit ) {
+		return array();
+	}
 
 	$product_id     = absint( $product_id );
 	$limit          = $limit >= -1 ? $limit : 5;
@@ -926,6 +1106,7 @@ function wc_get_related_products( $product_id, $limit = 5, $exclude_ids = array(
 		array(
 			'limit'       => $limit,
 			'exclude_ids' => $exclude_ids,
+			'related_by'  => $related_by,
 		)
 	);
 
@@ -964,6 +1145,8 @@ function wc_get_related_products( $product_id, $limit = 5, $exclude_ids = array(
 			'excluded_ids' => $exclude_ids,
 		)
 	);
+
+	$related_posts = is_array( $related_posts ) ? $related_posts : array();
 
 	if ( apply_filters( 'woocommerce_product_related_posts_shuffle', true ) ) {
 		shuffle( $related_posts );
@@ -1081,6 +1264,10 @@ function wc_get_price_including_tax( $product, $args = array() ) {
  * @return float|string Price with tax excluded, or an empty string if price calculation failed.
  */
 function wc_get_price_excluding_tax( $product, $args = array() ) {
+	if ( ! ( $product instanceof WC_Product ) ) {
+		return '';
+	}
+
 	$args = wp_parse_args(
 		$args,
 		array(
@@ -1207,7 +1394,7 @@ function wc_products_array_filter_visible( $product ) {
  * @return bool
  */
 function wc_products_array_filter_visible_grouped( $product ) {
-	return $product && is_a( $product, 'WC_Product' ) && ( 'publish' === $product->get_status() || current_user_can( 'edit_product', $product->get_id() ) );
+	return $product && is_a( $product, 'WC_Product' ) && ( ProductStatus::PUBLISH === $product->get_status() || current_user_can( 'edit_product', $product->get_id() ) );
 }
 
 /**
@@ -1421,6 +1608,7 @@ function wc_update_product_lookup_tables() {
 		'min_max_price',
 		'stock_quantity',
 		'sku',
+		'global_unique_id',
 		'stock_status',
 		'average_rating',
 		'total_sales',
@@ -1517,6 +1705,7 @@ function wc_update_product_lookup_tables_column( $column ) {
 			);
 			break;
 		case 'sku':
+		case 'global_unique_id':
 		case 'stock_status':
 		case 'average_rating':
 		case 'total_sales':

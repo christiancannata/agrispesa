@@ -49,7 +49,7 @@ class Upgrade extends Modules {
 	 */
 	public function init() {
 		add_action( 'admin_init', array( $this, 'migrate' ) );
-		$this->add_migration_notice();
+		add_action( 'admin_init', array( $this, 'add_migration_notice' ) );
 		add_action( 'admin_init', array( $this, 'revert' ) );
 	}
 
@@ -111,7 +111,7 @@ class Upgrade extends Modules {
 			);
 			$terms = get_terms( $args );
 		} else {
-			$terms = get_terms( $taxonomy, array( 'hide_empty' => false ) );
+			$terms = get_terms( $taxonomy, array( 'hide_empty' => false ) ); // phpcs:ignore WordPress.WP.DeprecatedParameters.Get_termsParam2Found
 		}
 		return $this->order_term_by_key( $terms );
 	}
@@ -212,7 +212,7 @@ class Upgrade extends Modules {
 		$args    = array(
 			'posts_per_page' => -1,
 			'post_type'      => 'cookielawinfo',
-			'tax_query'      => array(
+			'tax_query'      => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				array(
 					'taxonomy' => 'cookielawinfo-category',
 					'field'    => 'slug',
@@ -308,6 +308,7 @@ class Upgrade extends Modules {
 		$config['config']['notice']['styles']['border-color']                     = $border_color;
 		$config['config']['notice']['elements']['title']['styles']['color']       = $color;
 		$config['config']['notice']['elements']['description']['styles']['color'] = $color;
+		$config['config']['notice']['elements']['closeButton']['status'] = has_shortcode( $settings['notify_message'], 'cookie_close' );
 
 		$config['config']['preferenceCenter']['styles']['background-color'] = $background_color;
 		$config['config']['preferenceCenter']['styles']['border-color']     = $border_color;

@@ -50,6 +50,34 @@ final class JsonWebToken {
 	 * @return bool
 	 */
 	public static function validate( string $token, string $secret ) {
+		if ( ! self::shallow_validate( $token ) ) {
+			return false;
+		}
+
+		$parts = self::get_parts( $token );
+
+		/**
+		 * Check if the token is based on our secret.
+		 */
+		$encoded_regenerated_signature = self::to_base_64_url(
+			self::generate_signature( $parts->header_encoded . '.' . $parts->payload_encoded, $secret )
+		);
+
+		return hash_equals( $encoded_regenerated_signature, $parts->signature_encoded );
+	}
+
+	/**
+	 * Shallow validate a token, it does not check the signature or expiration, but it checks the structure and expiry.
+	 *
+	 * @param string $token Full token string.
+	 *
+	 * @return bool
+	 */
+	public static function shallow_validate( string $token ) {
+		if ( ! $token ) {
+			return false;
+		}
+
 		/**
 		 * Confirm the structure of a JSON Web Token, it has three parts separated
 		 * by dots and complies with Base64URL standards.
@@ -80,14 +108,7 @@ final class JsonWebToken {
 			return false;
 		}
 
-		/**
-		 * Check if the token is based on our secret.
-		 */
-		$encoded_regenerated_signature = self::to_base_64_url(
-			self::generate_signature( $parts->header_encoded . '.' . $parts->payload_encoded, $secret )
-		);
-
-		return hash_equals( $encoded_regenerated_signature, $parts->signature_encoded );
+		return true;
 	}
 
 	/**

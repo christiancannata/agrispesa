@@ -41,7 +41,10 @@ class Cache_Enabler extends Services {
 	 *
 	 * @return void
 	 */
-	public function clear_cache() {
+	public function clear_cache( $clear = true ) {
+		if ( $clear === false ) {
+			return;
+		}
 		do_action( 'ce_clear_cache' );
 	}
 

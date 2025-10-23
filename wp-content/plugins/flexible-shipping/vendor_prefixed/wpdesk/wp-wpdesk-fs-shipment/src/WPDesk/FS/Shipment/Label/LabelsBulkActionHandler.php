@@ -75,7 +75,7 @@ class LabelsBulkActionHandler
     {
         $labels = array();
         foreach ($this->builders_collection as $labels_builder) {
-            $labels = \array_merge($labels, $labels_builder->get_labels_for_shipments());
+            $labels = array_merge($labels, $labels_builder->get_labels_for_shipments());
         }
         return $labels;
     }

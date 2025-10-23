@@ -20,14 +20,14 @@ use FSVendor\Monolog\Utils;
  *
  * @author Tiago Brito <tlfbrito@gmail.com>
  */
-class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
+class HtmlFormatter extends NormalizerFormatter
 {
     /**
      * Translates Monolog log levels to html color priorities.
      *
      * @var array<int, string>
      */
-    protected $logLevels = [\FSVendor\Monolog\Logger::DEBUG => '#CCCCCC', \FSVendor\Monolog\Logger::INFO => '#28A745', \FSVendor\Monolog\Logger::NOTICE => '#17A2B8', \FSVendor\Monolog\Logger::WARNING => '#FFC107', \FSVendor\Monolog\Logger::ERROR => '#FD7E14', \FSVendor\Monolog\Logger::CRITICAL => '#DC3545', \FSVendor\Monolog\Logger::ALERT => '#821722', \FSVendor\Monolog\Logger::EMERGENCY => '#000000'];
+    protected $logLevels = [Logger::DEBUG => '#CCCCCC', Logger::INFO => '#28A745', Logger::NOTICE => '#17A2B8', Logger::WARNING => '#FFC107', Logger::ERROR => '#FD7E14', Logger::CRITICAL => '#DC3545', Logger::ALERT => '#821722', Logger::EMERGENCY => '#000000'];
     /**
      * @param string|null $dateFormat The format of the timestamp: one supported by DateTime::format
      */
@@ -42,11 +42,11 @@ class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
      * @param string $td       Row standard cell content
      * @param bool   $escapeTd false if td content must not be html escaped
      */
-    protected function addRow(string $th, string $td = ' ', bool $escapeTd = \true) : string
+    protected function addRow(string $th, string $td = ' ', bool $escapeTd = \true): string
     {
-        $th = \htmlspecialchars($th, \ENT_NOQUOTES, 'UTF-8');
+        $th = htmlspecialchars($th, \ENT_NOQUOTES, 'UTF-8');
         if ($escapeTd) {
-            $td = '<pre>' . \htmlspecialchars($td, \ENT_NOQUOTES, 'UTF-8') . '</pre>';
+            $td = '<pre>' . htmlspecialchars($td, \ENT_NOQUOTES, 'UTF-8') . '</pre>';
         }
         return "<tr style=\"padding: 4px;text-align: left;\">\n<th style=\"vertical-align: top;background: #ccc;color: #000\" width=\"100\">{$th}:</th>\n<td style=\"padding: 4px;text-align: left;vertical-align: top;background: #eee;color: #000\">" . $td . "</td>\n</tr>";
     }
@@ -57,9 +57,9 @@ class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
      * @param  int    $level Error level
      * @return string
      */
-    protected function addTitle(string $title, int $level) : string
+    protected function addTitle(string $title, int $level): string
     {
-        $title = \htmlspecialchars($title, \ENT_NOQUOTES, 'UTF-8');
+        $title = htmlspecialchars($title, \ENT_NOQUOTES, 'UTF-8');
         return '<h1 style="background: ' . $this->logLevels[$level] . ';color: #ffffff;padding: 5px;" class="monolog-output">' . $title . '</h1>';
     }
     /**
@@ -67,7 +67,7 @@ class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
      *
      * @return string The formatted record
      */
-    public function format(array $record) : string
+    public function format(array $record): string
     {
         $output = $this->addTitle($record['level_name'], $record['level']);
         $output .= '<table cellspacing="1" width="100%" class="monolog-output">';
@@ -97,7 +97,7 @@ class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
      *
      * @return string The formatted set of records
      */
-    public function formatBatch(array $records) : string
+    public function formatBatch(array $records): string
     {
         $message = '';
         foreach ($records as $record) {
@@ -108,12 +108,12 @@ class HtmlFormatter extends \FSVendor\Monolog\Formatter\NormalizerFormatter
     /**
      * @param mixed $data
      */
-    protected function convertToString($data) : string
+    protected function convertToString($data): string
     {
-        if (null === $data || \is_scalar($data)) {
+        if (null === $data || is_scalar($data)) {
             return (string) $data;
         }
         $data = $this->normalize($data);
-        return \FSVendor\Monolog\Utils::jsonEncode($data, \JSON_PRETTY_PRINT | \FSVendor\Monolog\Utils::DEFAULT_JSON_FLAGS, \true);
+        return Utils::jsonEncode($data, \JSON_PRETTY_PRINT | Utils::DEFAULT_JSON_FLAGS, \true);
     }
 }

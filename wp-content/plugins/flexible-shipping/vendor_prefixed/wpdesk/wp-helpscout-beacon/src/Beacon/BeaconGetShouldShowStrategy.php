@@ -5,7 +5,7 @@ namespace FSVendor\WPDesk\Beacon;
 /**
  * When and if show Beacon.
  */
-class BeaconGetShouldShowStrategy implements \FSVendor\WPDesk\Beacon\BeaconShouldShowStrategy
+class BeaconGetShouldShowStrategy implements BeaconShouldShowStrategy
 {
     /**
      * Whether to show beacon on the page or not. Array of arrays with condition for _GET.

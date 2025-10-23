@@ -58,7 +58,7 @@ class AdminNotices implements Hookable {
 					if ( isset( $labels['error'] ) ) {
 						new Notice( $labels['error'], Notice::NOTICE_TYPE_ERROR, true, 20 );
 					} else {
-						$nonce = wp_create_nonce( 'flexible_shipping_labels' );
+						$nonce = wp_create_nonce( 'flexible_shipping_labels' . basename( $labels['tmp_file'] ) );
 						new Notice(
 							sprintf(
 								__( 'Bulk labels - processed orders: %d. If download not start automatically click %shere%s.', 'flexible-shipping' ), // phpcs:ignore

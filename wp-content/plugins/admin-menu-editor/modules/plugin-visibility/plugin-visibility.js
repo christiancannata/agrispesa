@@ -312,12 +312,12 @@ class AmePlugin {
     }
 }
 AmePlugin.editablePropertyNames = ['name', 'description', 'author', 'siteUrl', 'version'];
-jQuery(function ($) {
+jQuery(function () {
     amePluginVisibility = new AmePluginVisibilityModule(wsPluginVisibilityData);
     ko.applyBindings(amePluginVisibility, document.getElementById('ame-plugin-visibility-editor'));
     //Permanently dismiss the usage hint via AJAX.
     jQuery('#ame-pv-usage-notice').on('click', '.notice-dismiss', function () {
-        AjawV1.getAction('ws_ame_dismiss_pv_usage_notice').request();
+        AjawV2.getAction('ws_ame_dismiss_pv_usage_notice').request();
     });
 });
 //# sourceMappingURL=plugin-visibility.js.map

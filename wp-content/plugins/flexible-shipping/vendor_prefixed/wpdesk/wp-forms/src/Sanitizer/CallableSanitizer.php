@@ -3,7 +3,7 @@
 namespace FSVendor\WPDesk\Forms\Sanitizer;
 
 use FSVendor\WPDesk\Forms\Sanitizer;
-class CallableSanitizer implements \FSVendor\WPDesk\Forms\Sanitizer
+class CallableSanitizer implements Sanitizer
 {
     private $callable;
     public function __construct($callable)
@@ -12,6 +12,6 @@ class CallableSanitizer implements \FSVendor\WPDesk\Forms\Sanitizer
     }
     public function sanitize($value)
     {
-        return \call_user_func($this->callable, $value);
+        return call_user_func($this->callable, $value);
     }
 }

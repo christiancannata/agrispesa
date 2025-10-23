@@ -7,12 +7,12 @@
  */
 namespace FSVendor\WPDesk\WooCommerce\CurrencySwitchers;
 
-use Psr\Log\LoggerInterface;
+use FSVendor\Psr\Log\LoggerInterface;
 use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can add filter to convert currency.
  */
-class FilterConverter implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class FilterConverter implements Hookable
 {
     /**
      * @var AbstractConverter
@@ -26,14 +26,14 @@ class FilterConverter implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      * @param SwitcherConverter $converter
      * @param string $shipping_method_id
      */
-    public function __construct(\FSVendor\WPDesk\WooCommerce\CurrencySwitchers\SwitcherConverter $converter, $shipping_method_id)
+    public function __construct(SwitcherConverter $converter, $shipping_method_id)
     {
         $this->converter = $converter;
         $this->shipping_method_id = $shipping_method_id;
     }
     public function hooks()
     {
-        \add_filter($this->shipping_method_id . '/currency-switchers/amount', [$this, 'convert'], 10, 2);
+        add_filter($this->shipping_method_id . '/currency-switchers/amount', [$this, 'convert'], 10, 2);
     }
     /**
      * @param float $amount_in_shop_currency
@@ -43,7 +43,7 @@ class FilterConverter implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function convert($amount_in_shop_currency, $logger = null)
     {
-        if ($logger instanceof \Psr\Log\LoggerInterface) {
+        if ($logger instanceof LoggerInterface) {
             $this->converter->setLogger($logger);
         }
         return $this->converter->convert($amount_in_shop_currency);

@@ -15,6 +15,7 @@ interface OptionsInterface {
 	public const ADS_ACCOUNT_CURRENCY                      = 'ads_account_currency';
 	public const ADS_ACCOUNT_OCID                          = 'ads_account_ocid';
 	public const ADS_ACCOUNT_STATE                         = 'ads_account_state';
+	public const ADS_ENHANCED_CONVERSIONS_ENABLED          = 'enhanced_conversions_enabled';
 	public const ADS_BILLING_URL                           = 'ads_billing_url';
 	public const ADS_ID                                    = 'ads_id';
 	public const ADS_CONVERSION_ACTION                     = 'ads_conversion_action';
@@ -26,7 +27,9 @@ interface OptionsInterface {
 	public const DB_VERSION                                = 'db_version';
 	public const FILE_VERSION                              = 'file_version';
 	public const GOOGLE_CONNECTED                          = 'google_connected';
+	public const GOOGLE_WPCOM_AUTH_NONCE                   = 'google_wpcom_auth_nonce';
 	public const INSTALL_TIMESTAMP                         = 'install_timestamp';
+	public const INSTALL_VERSION                           = 'install_version';
 	public const JETPACK_CONNECTED                         = 'jetpack_connected';
 	public const MC_SETUP_COMPLETED_AT                     = 'mc_setup_completed_at';
 	public const MERCHANT_ACCOUNT_STATE                    = 'merchant_account_state';
@@ -43,11 +46,15 @@ interface OptionsInterface {
 	public const TOURS                                     = 'tours';
 	public const UPDATE_ALL_PRODUCTS_LAST_SYNC             = 'update_all_products_last_sync';
 	public const WP_TOS_ACCEPTED                           = 'wp_tos_accepted';
+	public const WPCOM_REST_API_STATUS                     = 'wpcom_rest_api_status';
+	public const GTIN_MIGRATION_STATUS                     = 'gtin_migration_status';
+	public const API_PULL_SYNC_MODE                        = 'api_pull_sync_mode';
 
 	public const VALID_OPTIONS = [
 		self::ADS_ACCOUNT_CURRENCY                      => true,
 		self::ADS_ACCOUNT_OCID                          => true,
 		self::ADS_ACCOUNT_STATE                         => true,
+		self::ADS_ENHANCED_CONVERSIONS_ENABLED          => true,
 		self::ADS_BILLING_URL                           => true,
 		self::ADS_ID                                    => true,
 		self::ADS_CONVERSION_ACTION                     => true,
@@ -59,6 +66,7 @@ interface OptionsInterface {
 		self::FILE_VERSION                              => true,
 		self::GOOGLE_CONNECTED                          => true,
 		self::INSTALL_TIMESTAMP                         => true,
+		self::INSTALL_VERSION                           => true,
 		self::JETPACK_CONNECTED                         => true,
 		self::MC_SETUP_COMPLETED_AT                     => true,
 		self::MERCHANT_ACCOUNT_STATE                    => true,
@@ -76,6 +84,10 @@ interface OptionsInterface {
 		self::TOURS                                     => true,
 		self::UPDATE_ALL_PRODUCTS_LAST_SYNC             => true,
 		self::WP_TOS_ACCEPTED                           => true,
+		self::WPCOM_REST_API_STATUS                     => true,
+		self::GOOGLE_WPCOM_AUTH_NONCE                   => true,
+		self::GTIN_MIGRATION_STATUS                     => true,
+		self::API_PULL_SYNC_MODE                        => true,
 	];
 
 	public const OPTION_TYPES = [

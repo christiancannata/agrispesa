@@ -21,6 +21,19 @@ if ( ! class_exists( 'YITH_YWGC_Mail' ) ) {
 	 */
 	class YITH_YWGC_Mail extends WC_Email {
 
+		/**
+		 * Email case
+		 *
+		 * @var string
+		 */
+		protected $case;
+
+		/**
+		 * True when the email notification is sent to customers.
+		 *
+		 * @var bool
+		 */
+		protected $customer_email = true;
 
 		/**
 		 * Generate custom fields by using YITH framework fields.
@@ -74,6 +87,5 @@ if ( ! class_exists( 'YITH_YWGC_Mail' ) ) {
 
 			return ob_get_clean();
 		}
-
 	}
 }

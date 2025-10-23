@@ -7,9 +7,6 @@ require_once(__DIR__ . '/satispay-sdk/init.php');
 
 class WC_Satispay extends WC_Payment_Gateway {
 
-    const METHOD_TITLE = 'Satispay';
-    const ORDER_BUTTON_TEXT = 'Pay with Satispay';
-    const METHOD_DESCRIPTION = 'Do it smart. Choose Satispay and pay with a tap!';
     const SUPPORTS = array(
         'products',
         'refunds'
@@ -20,9 +17,9 @@ class WC_Satispay extends WC_Payment_Gateway {
       $GLOBALS['hide_save_button'] = false;
     }
     $this->id                   = 'satispay';
-    $this->method_title         = __(self::METHOD_TITLE, 'woo-satispay');
-    $this->order_button_text    = __(self::ORDER_BUTTON_TEXT, 'woo-satispay');
-    $this->method_description   = __(self::METHOD_DESCRIPTION, 'woo-satispay');
+    $this->method_title         = __('Satispay', 'woo-satispay');
+    $this->order_button_text    = __('Pay with Satispay', 'woo-satispay');
+    $this->method_description   = __('Do it smart. Choose Satispay and pay with a tap!', 'woo-satispay');
     $this->has_fields           = false;
     $this->supports             = self::SUPPORTS;
 
@@ -46,8 +43,8 @@ class WC_Satispay extends WC_Payment_Gateway {
     add_action('woocommerce_available_payment_gateways', array($this, 'check_gateway'), 15);
   }
 
-  public function process_refund($order, $amount = null, $reason = '') {
-    $order = new WC_Order($order);
+  public function process_refund($order_id, $amount = null, $reason = '') {
+    $order = new WC_Order($order_id);
 
     try {
       $response = \SatispayGBusiness\Payment::create(array(
@@ -122,14 +119,14 @@ class WC_Satispay extends WC_Payment_Gateway {
       'activationCode' => array(
         'title' => __('Activation Code', 'woo-satispay'),
         'type' => 'text',
-        'description' => sprintf(__('Get a six characters Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>.', 'woo-satispay'), 'https://dashboard.satispay.com')
+        'description' => wp_kses_post(sprintf(__('Get a six characters Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>.', 'woo-satispay'), 'https://dashboard.satispay.com'))
       ),
       'sandbox' => array(
         'title' => __('Sandbox', 'woo-satispay'),
         'label' => __('Sandbox Mode', 'woo-satispay'),
         'type' => 'checkbox',
         'default' => 'no',
-        'description' => sprintf(__('Sandbox Mode can be used to test payments. Request a <a href="%s" target="_blank">Sandbox Account</a>.', 'woo-satispay'), 'https://developers.satispay.com/docs/sandbox-account')
+        'description' => wp_kses_post(sprintf(__('Sandbox Mode can be used to test payments. Request a <a href="%s" target="_blank">Sandbox Account</a>.', 'woo-satispay'), 'https://developers.satispay.com/docs/sandbox-account'))
       ),
       'finalizeUnhandledTransactions' => array(
         'title' => __('Finalize unhandled payments', 'woo-satispay'),
@@ -214,7 +211,7 @@ class WC_Satispay extends WC_Payment_Gateway {
         \SatispayGBusiness\Api::setPublicKey($authentication->publicKey);
       } catch(\Exception $ex) {
         echo '<div class="notice-error notice">';
-        echo '<p>'.sprintf(__('The Activation Code "%s" is invalid', 'woo-satispay'), $newActivationCode).'</p>';
+        echo '<p>'. esc_html(sprintf(__('The Activation Code "%s" is invalid', 'woo-satispay'), $newActivationCode)).'</p>';
         echo '</div>';
       }
     } else if (empty($newActivationCode)) {
@@ -232,7 +229,7 @@ class WC_Satispay extends WC_Payment_Gateway {
       \SatispayGBusiness\Payment::all();
     } catch (\Exception $ex) {
       echo '<div class="notice-error notice">';
-      echo '<p>'.sprintf(__('Satispay is not correctly configured, get an Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>', 'woo-satispay'), 'https://dashboard.satispay.com').'</p>';
+      echo '<p>' . wp_kses_post(sprintf(__('Satispay is not correctly configured, get an Activation Code from Online Shop section on <a href="%s" target="_blank">Satispay Dashboard</a>', 'woo-satispay'), 'https://dashboard.satispay.com')) .'</p>';
       echo '</div>';
     }
     

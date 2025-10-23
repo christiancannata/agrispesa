@@ -18,7 +18,6 @@ class Cookie_Law_Info_Review_Request {
 	private $plugin_prefix       = 'wt_cli'; /* must be unique name */
 	private $days_to_show_banner = 15; /* when did the banner to show */
 	private $remind_days         = 15; /* remind interval in days */
-	private $webtoffee_logo_url  = '';
 
 
 
@@ -47,17 +46,23 @@ class Cookie_Law_Info_Review_Request {
 		register_deactivation_hook( CLI_PLUGIN_FILENAME, array( $this, 'on_deactivate' ) );
 
 		if ( $this->check_condition() ) { /* checks the banner is active now */
-			$this->banner_message = sprintf( __( 'Hey, we at %1$sWebToffee%2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.', 'cookie-law-info' ), '<b>', '</b>' );
-
-			/* button texts */
-			$this->later_btn_text  = __( 'Remind me later', 'cookie-law-info' );
-			$this->never_btn_text  = __( 'Not interested', 'cookie-law-info' );
-			$this->review_btn_text = __( 'Review now', 'cookie-law-info' );
-
+			
+			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'admin_notices', array( $this, 'show_banner' ) ); /* show banner */
 			add_action( 'admin_print_footer_scripts', array( $this, 'add_banner_scripts' ) ); /* add banner scripts */
 			add_action( 'wp_ajax_' . $this->ajax_action_name, array( $this, 'process_user_action' ) ); /* process banner user action */
 		}
+		add_filter( 'admin_footer_text', array( $this, 'add_footer_review_link' ) );
+	}
+
+	public function init() {
+		/* translators: %1$s: opening bold tag, %2$s: closing bold tag */
+		$this->banner_message = sprintf( __( 'Hey, we at %1$sCookieYes%2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.', 'cookie-law-info' ), '<b>', '</b>' );
+
+		/* button texts */
+		$this->later_btn_text  = __( 'Remind me later', 'cookie-law-info' );
+		$this->never_btn_text  = __( 'Not interested', 'cookie-law-info' );
+		$this->review_btn_text = __( 'Review now', 'cookie-law-info' );
 	}
 
 	/**
@@ -72,8 +77,6 @@ class Cookie_Law_Info_Review_Request {
 		$this->start_date           = absint( get_option( $this->start_date_option_name ) );
 		$banner_state               = absint( get_option( $this->banner_state_option_name ) );
 		$this->current_banner_state = ( $banner_state == 0 ? $this->current_banner_state : $banner_state );
-		$this->webtoffee_logo_url   = CLI_PLUGIN_URL . 'images/webtoffee-logo_small.png';
-
 	}
 
 	/**
@@ -115,13 +118,6 @@ class Cookie_Law_Info_Review_Request {
 		$this->update_banner_state( 1 ); /* update banner active state */
 		?>
 		<div class="<?php echo esc_attr( $this->banner_css_class ); ?> notice-info notice is-dismissible">
-			<?php
-			if ( $this->webtoffee_logo_url != '' ) {
-				?>
-				<h3 style="margin: 10px 0;"><?php echo esc_html( $this->plugin_title ); ?></h3>
-				<?php
-			}
-			?>
 			<p>
 				<?php echo wp_kses_post( $this->banner_message ); ?>
 			</p>
@@ -129,9 +125,6 @@ class Cookie_Law_Info_Review_Request {
 				<a class="button button-secondary" style="color:#333; border-color:#ccc; background:#efefef;" data-type="later"><?php echo esc_html( $this->later_btn_text ); ?></a>
 				<a class="button button-primary" data-type="review"><?php echo esc_html( $this->review_btn_text ); ?></a>
 			</p>
-			<div class="wt-cli-review-footer" style="position: relative;">
-				<span class="wt-cli-footer-icon" style="position: absolute;right: 0;bottom: 10px;"><img src="<?php echo esc_url( $this->webtoffee_logo_url ); ?>" style="max-width:100px;"></span>
-			</div>
 		</div>
 		<?php
 	}
@@ -204,6 +197,15 @@ class Cookie_Law_Info_Review_Request {
 						type: 'POST',
 					});
 
+				}).on('click', '.cli-button-review', function(e) {
+					e.preventDefault();
+					window.open('<?php echo esc_js( $this->review_url ); ?>');
+					data_obj['wt_review_action_type'] = "review";
+					$.ajax({
+						url: '<?php echo esc_js( $ajax_url ); ?>',
+						data: data_obj,
+						type: 'POST'
+					});
 				});
 
 			})(jQuery)
@@ -239,6 +241,36 @@ class Cookie_Law_Info_Review_Request {
 		}
 
 		return false;
+	}
+
+	function add_footer_review_link($footer_text) {
+		if ( $this->current_banner_state != 4 ) { 
+			// Check if we are on the plugin page
+			$screen = get_current_screen();
+			if ( preg_match( '/cookielawinfo/' , $screen->id ) ) {
+				$link_text = esc_html__( 'Give us a 5-star rating!', 'cookie-law-info' );
+				$link1 = sprintf(
+					'<a class="cli-button-review" href="" title="%1$s">&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
+					$link_text
+				);
+				$link2 = sprintf(
+					'<a class="cli-button-review" href="" title="%1$s">WordPress.org</a>',
+					$link_text
+				);
+
+				return sprintf(
+					/* translators: %1$s: plugin name in bold, %2$s: star rating link, %3$s: WordPress.org link */
+					esc_html__(
+						'Please rate %1$s %2$s on %3$s to help us spread the word. Thank you from the team CookieYes!',
+						'cookie-law-info'
+					),
+					sprintf( '<strong>%1$s</strong>', 'CookieYes' ),
+					wp_kses_post( $link1 ),
+					wp_kses_post( $link2 )
+				);
+			}
+		}
+		return $footer_text;
 	}
 }
 new Cookie_Law_Info_Review_Request();

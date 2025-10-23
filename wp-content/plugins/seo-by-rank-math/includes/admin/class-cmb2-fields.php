@@ -11,6 +11,7 @@
 namespace RankMath\Admin;
 
 use RankMath\Runner;
+use RankMath\Helpers\Str;
 use RankMath\Traits\Hooker;
 use RankMath\Admin\Admin_Helper;
 
@@ -50,6 +51,33 @@ class CMB2_Fields implements Runner {
 		}
 
 		$this->filter( 'cmb2_sanitize_toggle', 'sanitize_toggle', 10, 2 );
+		$this->filter( 'cmb2_field_arguments_raw', 'default_value', 10, 2 );
+	}
+
+	/**
+	 * Set a default value in default_cb to prevent the callback function from executing on the site.
+	 *
+	 * @see https://github.com/CMB2/CMB2/issues/750
+	 *
+	 * @param array  $args The field arguments.
+	 * @param object $cmb2 The CMB2 object.
+	 */
+	public function default_value( $args, $cmb2 ) {
+		if (
+			! Str::starts_with( 'rank-math', trim( $cmb2->cmb_id ) ) ||
+			! isset( $args['default'] ) ||
+			! is_callable( $args['default'] )
+		) {
+			return $args;
+		}
+
+		$args['default_cb'] = function () use ( $args ) {
+			return $args['default'];
+		};
+
+		$args['default'] = null;
+
+		return $args;
 	}
 
 	/**
@@ -179,7 +207,7 @@ class CMB2_Fields implements Runner {
 			'addressLocality' => 'Locality',
 			'addressRegion'   => 'Region',
 			'postalCode'      => 'Postal Code',
-			'addressCountry'  => 'Country',
+			'addressCountry'  => '2-letter Country Code (ISO 3166-1)',
 		];
 
 		foreach ( array_keys( $value ) as $id ) :
@@ -226,7 +254,7 @@ class CMB2_Fields implements Runner {
 			'max-image-preview' => __( 'Image Preview', 'rank-math' ) . Admin_Helper::get_tooltip( esc_html__( 'Specify a maximum size of image preview to be shown for images on this page.', 'rank-math' ) ),
 		];
 
-		echo '<ul class="cmb-advanced-robots-list no-select-all cmb2-list cmb-advanced-robots-field">';
+		echo '<ul class="cmb-advanced-robots-list no-select-all cmb2-list cmb-rank-math-advanced-robots-field">';
 		foreach ( $values as $id => $value ) :
 			$value = isset( $escaped_value[ $id ] ) ? $escaped_value[ $id ] : $value;
 

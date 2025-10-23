@@ -26,7 +26,7 @@ class DefaultRulesSettings {
 	 * @return array
 	 */
 	private function get_default_settings(): array {
-		return [
+		$default_settings = [
 			[
 				'conditions'     => [
 					[
@@ -37,5 +37,7 @@ class DefaultRulesSettings {
 				self::NEW_FIELD  => true,
 			],
 		];
+
+		return apply_filters( 'flexible-shipping/shipping-method/default-rules-settings', $default_settings );
 	}
 }

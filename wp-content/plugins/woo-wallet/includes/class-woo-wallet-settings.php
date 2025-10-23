@@ -60,8 +60,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 		public function admin_enqueue_scripts() {
 			$screen    = get_current_screen();
 			$screen_id = $screen ? $screen->id : '';
-			$suffix    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			wp_register_script( 'woo-wallet-admin-settings', woo_wallet()->plugin_url() . '/assets/js/admin/admin-settings' . $suffix . '.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'woo-wallet-admin-settings', woo_wallet()->plugin_url() . '/build/admin/settings.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
 			$woo_wallet_settings_screen_id = sanitize_title( __( 'TeraWallet', 'woo-wallet' ) );
 			if ( in_array( $screen_id, array( "{$woo_wallet_settings_screen_id}_page_woo-wallet-settings" ) ) ) {
 				wp_enqueue_style( 'dashicons' );
@@ -89,13 +88,13 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 			$sections = array(
 				array(
 					'id'    => '_wallet_settings_general',
-					'title' => __( 'General', 'woo-wallet' ),
+					'title' => __( 'General Options', 'woo-wallet' ),
 					'icon'  => 'dashicons-admin-generic',
 				),
 				array(
 					'id'    => '_wallet_settings_credit',
 					'title' => __( 'Credit Options', 'woo-wallet' ),
-					'icon'  => 'dashicons-money',
+					'icon'  => 'dashicons-money-alt',
 				),
 			);
 			return apply_filters( 'woo_wallet_settings_sections', $sections );
@@ -110,6 +109,13 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 			$settings_fields = array(
 				'_wallet_settings_general' => array_merge(
 					array(
+						array(
+							'name'    => 'is_enable_wallet_topup',
+							'label'   => __( 'Wallet topup', 'woo-wallet' ),
+							'desc'    => __( 'If enabled user will be able to add funds into wallet.', 'woo-wallet' ),
+							'type'    => 'checkbox',
+							'default' => 'on',
+						),
 						array(
 							'name'    => 'product_title',
 							'label'   => __( 'Rechargeable Product Title', 'woo-wallet' ),
@@ -147,9 +153,46 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 							'type'  => 'number',
 							'step'  => '0.01',
 						),
+						array(
+							'name'     => 'allowed_payment_gateways',
+							'label'    => __( 'Allowed Payment Gateways', 'woo-wallet' ),
+							'desc'     => __( 'Select the payment gateways you want to allow for wallet top up.', 'woo-wallet' ),
+							'type'     => 'select',
+							'options'  => $this->get_wc_payment_allowed_gateways(),
+							'default'  => array_keys( $this->get_wc_payment_allowed_gateways() ),
+							'size'     => 'regular-text wc-enhanced-select',
+							'multiple' => true,
+						),
 					),
+					array(
+						array(
+							'name'  => 'is_enable_gateway_charge',
+							'label' => __( 'Payment gateway charge', 'woo-wallet' ),
+							'desc'  => __( 'Charge customer when they add balance to their wallet?', 'woo-wallet' ),
+							'type'  => 'checkbox',
+						),
+						array(
+							'name'    => 'gateway_charge_type',
+							'label'   => __( 'Charge type', 'woo-wallet' ),
+							'desc'    => __( 'Select gateway charge type percentage or fixed', 'woo-wallet' ),
+							'type'    => 'select',
+							'options' => array(
+								'percent' => __( 'Percentage', 'woo-wallet' ),
+								'fixed'   => __( 'Fixed', 'woo-wallet' ),
+							),
+							'size'    => 'regular-text wc-enhanced-select',
+						),
+					),
+					$this->get_wc_payment_gateways(),
 					$this->wp_menu_locations(),
 					array(
+						array(
+							'name'    => 'is_enable_partial_payment',
+							'label'   => __( 'Partial payment', 'woo-wallet' ),
+							'desc'    => __( 'If checked user will be able to use part of wallet balance at checkout page.', 'woo-wallet' ),
+							'type'    => 'checkbox',
+							'default' => 'on',
+						),
 						array(
 							'name'  => 'is_auto_deduct_for_partial_payment',
 							'label' => __( 'Auto deduct wallet balance for partial payment', 'woo-wallet' ),
@@ -158,14 +201,14 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 						),
 						array(
 							'name'    => 'is_enable_wallet_transfer',
-							'label'   => __( 'Allow Wallet Transfer', 'woo-wallet' ),
+							'label'   => __( 'Wallet transfer', 'woo-wallet' ),
 							'desc'    => __( 'If checked user will be able to transfer fund to another user.', 'woo-wallet' ),
 							'type'    => 'checkbox',
 							'default' => 'on',
 						),
 						array(
 							'name'  => 'min_transfer_amount',
-							'label' => __( 'Minimum Transfer Amount', 'woo-wallet' ),
+							'label' => __( 'Minimum transfer amount', 'woo-wallet' ),
 							'desc'  => __( 'Enter minimum transfer amount', 'woo-wallet' ),
 							'type'  => 'number',
 							'step'  => '0.01',
@@ -189,7 +232,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 							'step'  => '0.01',
 						),
 					),
-					$this->get_wc_payment_allowed_gateways()
+					array()
 				),
 				'_wallet_settings_credit'  => array_merge(
 					array(
@@ -217,6 +260,16 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 								)
 							),
 							'default'  => array( 'processing', 'completed' ),
+							'size'     => 'regular-text wc-enhanced-select',
+							'multiple' => true,
+						),
+						array(
+							'name'     => 'exclude_role',
+							'label'    => __( 'Exclude user role', 'woo-wallet' ),
+							'desc'     => __( 'This option lets you specify which user role you want to exclude from the cashback program.', 'woo-wallet' ),
+							'type'     => 'select',
+							'options'  => $this->get_editable_role_options(),
+							'default'  => array(),
 							'size'     => 'regular-text wc-enhanced-select',
 							'multiple' => true,
 						),
@@ -277,26 +330,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 							'type'    => 'checkbox',
 							'default' => 'on',
 						),
-						array(
-							'name'  => 'is_enable_gateway_charge',
-							'label' => __( 'Payment gateway charge', 'woo-wallet' ),
-							'desc'  => __( 'Charge customer when they add balance to their wallet?', 'woo-wallet' ),
-							'type'  => 'checkbox',
-						),
-						array(
-							'name'    => 'gateway_charge_type',
-							'label'   => __( 'Charge type', 'woo-wallet' ),
-							'desc'    => __( 'Select gateway charge type percentage or fixed', 'woo-wallet' ),
-							'type'    => 'select',
-							'options' => array(
-								'percent' => __( 'Percentage', 'woo-wallet' ),
-								'fixed'   => __( 'Fixed', 'woo-wallet' ),
-							),
-							'size'    => 'regular-text wc-enhanced-select',
-						),
 					),
-					$this->get_wc_payment_gateways(),
-					array()
 				),
 			);
 			return apply_filters( 'woo_wallet_settings_filds', $settings_fields );
@@ -343,7 +377,7 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 					$method_title = $gateway->get_title() ? $gateway->get_title() : __( '(no title)', 'woo-wallet' );
 					if ( 'field' === $context ) {
 						$gateways[] = array(
-							'name'  => $gateway->id,
+							'name'  => 'charge_amount_' . $gateway->id,
 							'label' => $method_title,
 							'desc'  => __( 'Enter gateway charge amount for ', 'woo-wallet' ) . $method_title,
 							'type'  => 'number',
@@ -361,21 +395,24 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 		 * Allowed payment gateways
 		 *
 		 * @param string $context context.
+		 * @param string $prefix prefix.
 		 * @return array
 		 */
-		public function get_wc_payment_allowed_gateways( $context = 'field' ) {
+		public function get_wc_payment_allowed_gateways( $context = 'edit', $prefix = '' ) {
 			$gateways = array();
 			foreach ( WC()->payment_gateways()->payment_gateways as $gateway ) {
+				$method_title = $gateway->get_title() ? $gateway->get_title() : __( '(no title)', 'woo-wallet' );
 				if ( 'yes' === $gateway->enabled && 'wallet' !== $gateway->id ) {
-					$method_title = $gateway->get_title() ? $gateway->get_title() : __( '(no title)', 'woo-wallet' );
 					if ( 'field' === $context ) {
 						$gateways[] = array(
-							'name'    => $gateway->id,
+							'name'    => $prefix . $gateway->id,
 							'label'   => $method_title,
 							'desc'    => __( 'Allow this gateway for recharge wallet', 'woo-wallet' ),
 							'type'    => 'checkbox',
 							'default' => 'on',
 						);
+					} else {
+						$gateways[ $gateway->id ] = $method_title;
 					}
 				}
 			}
@@ -425,17 +462,37 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 			if ( current_theme_supports( 'menus' ) ) {
 				$locations = get_registered_nav_menus();
 				if ( $locations ) {
+					$menu_item_locations = array();
 					foreach ( $locations as $location => $title ) {
-						$menu_locations[] = array(
-							'name'  => $location,
-							'label' => ( current( $locations ) === $title ) ? __( 'Mini wallet display location', 'woo-wallet' ) : '',
-							'desc'  => $title,
-							'type'  => 'checkbox',
-						);
+						$menu_item_locations[ $location ] = $title;
 					}
+					$menu_locations = array(
+						array(
+							'name'     => 'mini_wallet_display_location',
+							'label'    => __( 'Mini wallet display location', 'woo-wallet' ),
+							'desc'     => __( 'Select the location where you want to display mini wallet.', 'woo-wallet' ),
+							'type'     => 'select',
+							'options'  => $menu_item_locations,
+							'size'     => 'regular-text wc-enhanced-select',
+							'multiple' => true,
+						),
+					);
 				}
 			}
 			return $menu_locations;
+		}
+
+		/**
+		 * Get all editable roles.
+		 */
+		public function get_editable_role_options() {
+			$role_options   = array();
+			$editable_roles = array_reverse( wp_roles()->roles );
+			foreach ( $editable_roles as $role => $details ) {
+				$name                  = translate_user_role( $details['name'] );
+				$role_options[ $role ] = $name;
+			}
+			return $role_options;
 		}
 
 		/**
@@ -514,7 +571,6 @@ if ( ! class_exists( 'Woo_Wallet_Settings' ) ) :
 			}
 			return false;
 		}
-
 	}
 
 	endif;

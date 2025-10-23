@@ -109,3 +109,22 @@ jQuery(document).ready(function($) {
 	}
 
 });
+
+
+/*
+ * Show slug of term as well.
+ *
+ * @since 4.0.1
+ */
+jQuery(document).ready(function($) {
+	jQuery( '#customtaxorder-toggle-slug' ).on( 'click', function() {
+
+		var height = jQuery( '.customtaxorder li.lineitem' ).first().css( 'height' );
+		if ( height == '24px' ) {
+			jQuery( '.customtaxorder li.lineitem' ).css( 'height', '48px' );
+		} else if ( height == '48px' ) {
+			jQuery( '.customtaxorder li.lineitem' ).css( 'height', '24px' );
+		}
+
+	});
+});

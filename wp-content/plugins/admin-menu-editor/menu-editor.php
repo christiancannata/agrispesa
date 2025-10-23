@@ -3,10 +3,10 @@
 Plugin Name: Admin Menu Editor
 Plugin URI: http://w-shadow.com/blog/2008/12/20/admin-menu-editor-for-wordpress/
 Description: Lets you directly edit the WordPress admin menu. You can re-order, hide or rename existing menus, add custom menus and more. 
-Version: 1.12.2
+Version: 1.14.1
 Author: Janis Elsts
 Author URI: http://w-shadow.com/blog/
-Requires PHP: 5.6
+Requires PHP: 7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */

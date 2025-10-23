@@ -14,7 +14,7 @@ use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WooCommerceMultiCurre
  * Creates integrations for plugins which do not works by default, ie. WooCommerce MultiCurrency.
  * @see https://woocommerce.com/products/multi-currency/
  */
-class ShippingIntegrations implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class ShippingIntegrations implements Hookable
 {
     /**
      * @var string
@@ -32,14 +32,14 @@ class ShippingIntegrations implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hook
      */
     public function hooks()
     {
-        \add_action('woocommerce_loaded', array($this, 'add_integrations_for_shipping_method'));
+        add_action('woocommerce_loaded', array($this, 'add_integrations_for_shipping_method'));
     }
     /**
      * Add integration to WooCommerce MultiCurrency for shipping method.
      */
     public function add_integrations_for_shipping_method()
     {
-        $woocommerce_multicurrency_integration = new \FSVendor\WPDesk\WooCommerce\CurrencySwitchers\Switcher\WooCommerceMultiCurrency\ShippingMethodIntegration($this->shipping_method_id);
+        $woocommerce_multicurrency_integration = new ShippingMethodIntegration($this->shipping_method_id);
         $woocommerce_multicurrency_integration->hooks();
     }
 }

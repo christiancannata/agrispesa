@@ -1,4 +1,87 @@
 == Changelog ==
+= 5.6 =
+* Adds support for syncing based on Mailchimp list interests with a new filter
+* Adds support for Multi-currency with a new filter
+* Fix sync on product variant update
+= 5.5.1 =
+* Guest checkout sync logic fix
+* Site Performance update -  Disabled mailchimp_landing_site cookie by default.
+= 5.5 =
+* WooCommerce block dependency updates
+* Logging enhancements
+* Better compatibility when external object cache is detected
+* Refactor Connected Sites API connection
+* Adds support for Product visibility logic for syncing
+= 5.4 =
+* Performance and User Interface improvements
+* Ability to sync Product Short Description
+= 5.3 =
+* WooCommerce Product Category Sync
+* Updated compatibility with WPML 4.7
+* Improved database query performance to reduce processing time and optimize overall plugin efficiency
+* Fix issue where logs were being saved despite setting preferences to disable logging
+* Fix for trash and permanently deleted coupons
+* Removed duplicate queries
+* Updated various dependencies including cookie, express, and @wordpress/e2e-test-utils
+* Bumped `serialize-javascript` from 6.0.1 to 6.0.2 in `/blocks`
+* Bumped cookie, express, and @wordpress/e2e-test-utils-playwright**: Bumped cookie from 0.4.2 to 0.7.1, express, and @wordpress/e2e-test-utils-playwright
+= 5.2 =
+* Fix cached value for double opt in ( optimization )
+* Fix for subscription statuses changing on updates 
+* Removes WooCommerce plugin check #1226
+* Fix for trashed and permanently deleted products appearing in Mailchimp 
+= 5.1 =
+* New Features
+* Feature: Backend Optimizations/enhancements to aid in support.*
+= 5.0 =
+* New Features
+* Feature: Introduced a user-agent header "Mailchimp Support" to identify the plugin for support. Servers blocking external post traffic should add this to their safe user-agents.*
+* Fixed
+* Bug: Resolved issue where product images appeared blurry after plugin updates and improved product image handling.
+* Bug: Fixed PHP warning triggered when executing wpml_switch_language_action due to missing language information. Language code validation is now performed before function execution.
+* Bug: Addressed syncing issues with customers and promo codes, specifically the inability to sync more than 500 orders.
+* Bug: Resolved API Request Error related to Mailchimp's API during sync operations.
+* Bug: Corrected inaccurate overview stats shifting during sync, which incorrectly displayed order numbers.
+* Bug: Fixed an issue where esc_html was incorrectly used instead of esc_attr, causing store names to be saved with HTML entities in Mailchimp.
+* Maintenance
+* Maintenance: Implemented workaround for Content Security Policy issues related to unsafe-eval in mailchimp-woocommerce-public.min.js.
+= 4.4.1 =
+* Bump serve-static and express in /blocks for improved performance
+* Resolved issue with Mailchimp sync getting stuck at 200 contacts
+* Fixed deprecated warning for Menu::add_plugin_item in Mailchimp for WooCommerce 
+* Corrected customer count function to ensure accurate reporting
+* Fixed inaccuracies in overview stats display
+* Enhanced Remote Diagnostics error handling 
+= 4.4 =
+* Bumps axios from 1.6.7 to 1.7.7 in /blocks
+* Bumps webpack from 5.88.2 to 5.94.0 in /blocks
+* Fix for Multisite users unable to activate or view plugin 
+* Removes unused admin/partial files
+* Updates to copy on account creation page 
+= 4.3 =
+* Adds Order HPOS function for pagination
+* Now starts syncing customers via HPOS
+* Changes sync order: customers > products > coupons > orders — and make sync actions more atomic
+* Use direct WP DB SELECT / INSERT for sync options to circumvent object caching
+* Removes the bundled version of Action Scheduler
+* Removes checkout opt-in if customers already subscribed
+* Fixes cli sync issue where historical Orders Not Syncing Correctly
+* Fixes Account Connection Issue Related to Object Caching
+* Fixes HTTP worker warning
+* Change to replace option, transient functions with direct DB queries
+* Fallback function to check for options autoloader
+= 4.2.1 =
+* Bug fix for product variations
+* Front end optimizations
+= 4.2 =
+* Remote diagnostics setting maintenance 
+* Adds support for syncing Wordpress user/customer account language to Mailchimp contact 
+* Fix for WooCommerce coupons date_expires not syncing to Mailchimp 
+* Design update for disconnect modal 
+* Fix for issue with setting logging preference to none
+* Enhances syncing orders by starting from newest to oldest 
+* Adds WooCommerce plugin dependency feature 
+* Bump braces from 3.0.2 to 3.0.3 in /blocks
 = 4.1 =
 * Introduced a new filter for coupons (details available in the Wiki).
 * Restored the "Resync Now" button.

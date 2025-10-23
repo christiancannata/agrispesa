@@ -1,22 +1,22 @@
-# Copyright (C) 2024 Satispay
-# This file is distributed under the same license as the WooCommerce Satispay plugin.
+# Copyright (C) 2025 Satispay
+# This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Satispay 2.2.4\n"
+"Project-Id-Version: Satispay for WooCommerce 2.2.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-satispay\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-13T07:48:50+00:00\n"
+"POT-Creation-Date: 2025-07-18T09:01:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: woo-satispay\n"
 
 #. Plugin Name of the plugin
 #: woo-satispay.php
-msgid "WooCommerce Satispay"
+msgid "Satispay for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -31,6 +31,9 @@ msgstr ""
 
 #. Author of the plugin
 #: woo-satispay.php
+#: includes/blocks/wc-satispay-blocks.php:79
+#: wc-satispay.php:20
+#: resources/js/frontend/index.js:9
 msgid "Satispay"
 msgstr ""
 
@@ -39,63 +42,81 @@ msgstr ""
 msgid "https://www.satispay.com/"
 msgstr ""
 
-#: wc-satispay.php:117
+#: includes/blocks/wc-satispay-blocks.php:80
+#: wc-satispay.php:22
+#: resources/js/frontend/index.js:11
+msgid "Do it smart. Choose Satispay and pay with a tap!"
+msgstr ""
+
+#: wc-satispay.php:21
+msgid "Pay with Satispay"
+msgstr ""
+
+#: wc-satispay.php:114
 msgid "Enable/Disable"
 msgstr ""
 
-#: wc-satispay.php:118
+#: wc-satispay.php:115
 msgid "Enable Satispay"
 msgstr ""
 
-#: wc-satispay.php:123
+#: wc-satispay.php:120
 msgid "Activation Code"
 msgstr ""
 
-#: wc-satispay.php:125
+#: wc-satispay.php:122
+#, php-format
 msgid "Get a six characters Activation Code from Online Shop section on <a href=\"%s\" target=\"_blank\">Satispay Dashboard</a>."
 msgstr ""
 
-#: wc-satispay.php:128
+#: wc-satispay.php:125
 msgid "Sandbox"
 msgstr ""
 
-#: wc-satispay.php:129
+#: wc-satispay.php:126
 msgid "Sandbox Mode"
 msgstr ""
 
-#: wc-satispay.php:132
+#: wc-satispay.php:129
+#, php-format
 msgid "Sandbox Mode can be used to test payments. Request a <a href=\"%s\" target=\"_blank\">Sandbox Account</a>."
 msgstr ""
 
-#: wc-satispay.php:135
+#: wc-satispay.php:132
 msgid "Finalize unhandled payments"
 msgstr ""
 
-#: wc-satispay.php:136
+#: wc-satispay.php:133
 msgid "Enable cron"
 msgstr ""
 
-#: wc-satispay.php:139
+#: wc-satispay.php:136
 msgid "Finalize unhandled Satispay payments with a cron."
 msgstr ""
 
-#: wc-satispay.php:142
-#: wc-satispay.php:143
+#: wc-satispay.php:139
+#: wc-satispay.php:140
 msgid "Finalize pending payments up to"
 msgstr ""
 
-#: wc-satispay.php:146
+#: wc-satispay.php:143
 msgid "Choose a number of hours, default is four and minimum is two."
 msgstr ""
 
-#: wc-satispay.php:217
+#: wc-satispay.php:214
+#, php-format
 msgid "The Activation Code \"%s\" is invalid"
 msgstr ""
 
-#: wc-satispay.php:235
+#: wc-satispay.php:232
+#, php-format
 msgid "Satispay is not correctly configured, get an Activation Code from Online Shop section on <a href=\"%s\" target=\"_blank\">Satispay Dashboard</a>"
 msgstr ""
 
-#: woo-satispay.php:53
+#: woo-satispay.php:57
 msgid "Settings"
+msgstr ""
+
+#: woo-satispay.php:74
+msgid "Every 4 hours"
 msgstr ""

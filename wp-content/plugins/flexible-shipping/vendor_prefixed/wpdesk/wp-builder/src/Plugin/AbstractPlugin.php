@@ -12,7 +12,7 @@ namespace FSVendor\WPDesk\PluginBuilder\Plugin;
  * The $plugin_url, $docs_url and most other fields should be removed as they only litter the place but for compatibility reasons we can't do it right now.
  * Hook methods should be moved to external classes but for compatibility reasons we can't do it right now.
  */
-abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\SlimPlugin
+abstract class AbstractPlugin extends SlimPlugin
 {
     /**
      * Most info about plugin internals.
@@ -58,7 +58,7 @@ abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\Slim
     public function __construct($plugin_info)
     {
         $this->plugin_info = $plugin_info;
-        $this->plugin_namespace = \strtolower($plugin_info->get_plugin_dir());
+        $this->plugin_namespace = strtolower($plugin_info->get_plugin_dir());
         $this->plugin_url = $this->plugin_info->get_plugin_url();
         $this->init_base_variables();
     }
@@ -118,7 +118,7 @@ abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\Slim
      */
     public function get_plugin_url()
     {
-        return \esc_url(\trailingslashit($this->plugin_url));
+        return esc_url(trailingslashit($this->plugin_url));
     }
     /**
      * Returns plugin absolute URL to dir with front end assets.
@@ -127,7 +127,7 @@ abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\Slim
      */
     public function get_plugin_assets_url()
     {
-        return \esc_url(\trailingslashit($this->get_plugin_url() . 'assets'));
+        return esc_url(trailingslashit($this->get_plugin_url() . 'assets'));
     }
     /**
      * @return $this
@@ -145,19 +145,9 @@ abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\Slim
      */
     protected function hooks()
     {
-        \add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
-        \add_action('wp_enqueue_scripts', [$this, 'wp_enqueue_scripts']);
-        \add_action('plugins_loaded', [$this, 'load_plugin_text_domain']);
-        \add_filter('plugin_action_links_' . \plugin_basename($this->get_plugin_file_path()), [$this, 'links_filter']);
-    }
-    /**
-     * Initialize plugin test domain. This is a hook function. Do not execute directly.
-     *
-     * @return void
-     */
-    public function load_plugin_text_domain()
-    {
-        \load_plugin_textdomain($this->get_text_domain(), '', $this->get_namespace() . '/lang/');
+        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
+        add_action('wp_enqueue_scripts', [$this, 'wp_enqueue_scripts']);
+        add_filter('plugin_action_links_' . plugin_basename($this->get_plugin_file_path()), [$this, 'links_filter']);
     }
     /**
      * Append JS scripts in the WordPress admin panel. This is a hook function. Do not execute directly.
@@ -184,19 +174,19 @@ abstract class AbstractPlugin extends \FSVendor\WPDesk\PluginBuilder\Plugin\Slim
      */
     public function links_filter($links)
     {
-        $support_link = \get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/support/' : 'https://www.wpdesk.net/support';
+        $support_link = get_locale() === 'pl_PL' ? 'https://www.wpdesk.pl/support/' : 'https://www.wpdesk.net/support';
         if ($this->support_url) {
             $support_link = $this->support_url;
         }
-        $plugin_links = ['<a target="_blank" href="' . $support_link . '">' . \esc_html__('Support', 'flexible-shipping') . '</a>'];
-        $links = \array_merge($plugin_links, $links);
+        $plugin_links = ['<a target="_blank" href="' . $support_link . '">' . esc_html__('Support', 'flexible-shipping') . '</a>'];
+        $links = array_merge($plugin_links, $links);
         if ($this->docs_url) {
-            $plugin_links = ['<a target="_blank" href="' . $this->docs_url . '">' . \esc_html__('Docs', 'flexible-shipping') . '</a>'];
-            $links = \array_merge($plugin_links, $links);
+            $plugin_links = ['<a target="_blank" href="' . $this->docs_url . '">' . esc_html__('Docs', 'flexible-shipping') . '</a>'];
+            $links = array_merge($plugin_links, $links);
         }
         if ($this->settings_url) {
-            $plugin_links = ['<a href="' . $this->settings_url . '">' . \esc_html__('Settings', 'flexible-shipping') . '</a>'];
-            $links = \array_merge($plugin_links, $links);
+            $plugin_links = ['<a href="' . $this->settings_url . '">' . esc_html__('Settings', 'flexible-shipping') . '</a>'];
+            $links = array_merge($plugin_links, $links);
         }
         return $links;
     }

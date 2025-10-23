@@ -4,7 +4,7 @@
 Plugin Name: Product Customer List for WooCommerce
 Plugin URI: https://wordpress.org/plugins/wc-product-customer-list/
 Description: Displays a list of customers that bought a product on the edit page.
-Version: 3.1.6
+Version: 3.1.8
 Author: Kokomo
 Author URI: http://www.kokomoweb.com/
 Developer: Thierry Lavergne
@@ -14,37 +14,30 @@ Domain Path: /languages
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 5.0.0
-WC tested up to: 8.2.0
+WC tested up to: 9.6.0
 */
 /**
  * @package WC_Product_Customer_List
  * @version 3.0.0
  */
 // Prevent direct access
-
 if ( !defined( 'ABSPATH' ) ) {
     exit;
     // Exit if accessed directly
 }
-
 add_action( 'before_woocommerce_init', function () {
     if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
     }
 } );
-
 if ( function_exists( 'wpcl_activation' ) ) {
     wpcl_activation()->set_basename( false, __FILE__ );
     return;
 }
-
-
 if ( !function_exists( 'wpcl_activation' ) ) {
     // Create a helper function for easy SDK access.
-    function wpcl_activation()
-    {
-        global  $wpcl_activation ;
-        
+    function wpcl_activation() {
+        global $wpcl_activation;
         if ( !isset( $wpcl_activation ) ) {
             // Include Freemius SDK.
             require_once dirname( __FILE__ ) . '/freemius/start.php';
@@ -58,59 +51,52 @@ if ( !function_exists( 'wpcl_activation' ) ) {
                 'has_addons'     => false,
                 'has_paid_plans' => true,
                 'menu'           => [
-                'slug'           => 'wc-settings',
-                'override_exact' => true,
-                'contact'        => false,
-                'support'        => false,
-                'parent'         => [
-                'slug' => 'woocommerce',
-            ],
-                'account'        => false,
-                'pricing'        => false,
-            ],
+                    'slug'           => 'wc-settings',
+                    'override_exact' => true,
+                    'contact'        => false,
+                    'support'        => false,
+                    'parent'         => [
+                        'slug' => 'woocommerce',
+                    ],
+                    'account'        => false,
+                    'pricing'        => false,
+                ],
                 'is_live'        => true,
             ] );
         }
-        
         return $wpcl_activation;
     }
-    
+
     // Init Freemius.
     wpcl_activation();
     // Signal that SDK was initiated.
     do_action( 'wpcl_activation_loaded' );
-    function wpcl_activation_settings_url()
-    {
+    function wpcl_activation_settings_url() {
         return admin_url( 'admin.php?page=wc-settings&tab=products&section=wpcl' );
     }
-    
+
     wpcl_activation()->add_filter( 'connect_url', 'wpcl_activation_settings_url' );
     wpcl_activation()->add_filter( 'after_skip_url', 'wpcl_activation_settings_url' );
     wpcl_activation()->add_filter( 'after_connect_url', 'wpcl_activation_settings_url' );
     wpcl_activation()->add_filter( 'after_pending_connect_url', 'wpcl_activation_settings_url' );
     // Add action links
-    
     if ( !function_exists( 'wpcl_action_links' ) ) {
-        function wpcl_action_links( $links )
-        {
-            $actionlinks = [ '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=products&section=wpcl' ) . '">Settings</a>' ];
+        function wpcl_action_links(  $links  ) {
+            $actionlinks = ['<a href="' . admin_url( 'admin.php?page=wc-settings&tab=products&section=wpcl' ) . '">Settings</a>'];
             return array_merge( $links, $actionlinks );
         }
-        
+
         add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpcl_action_links' );
     }
-    
     // Define plugin path
     define( 'WPCL_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
     define( 'WPCL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'WPCL_PRO_URL', 'https://www.kokomoweb.com/en/product-customer-list-for-woocommerce/' );
     // Init
-    function wpcl_init()
-    {
+    function wpcl_init() {
         // Init functions
         require_once WPCL_PLUGIN_PATH . 'functions.php';
         // Check if WooCommerce is activated
-        
         if ( class_exists( 'woocommerce' ) ) {
             require_once WPCL_PLUGIN_PATH . 'lib/Wpcl_Helpers.php';
             require_once WPCL_PLUGIN_PATH . 'lib/Wpcl_Options.php';
@@ -137,7 +123,6 @@ if ( !function_exists( 'wpcl_activation' ) ) {
             // Enqueue stylesheets and scripts on post edit page only
             //			require_once( WPCL_PLUGIN_PATH . 'admin/wpcl-scripts.php' );
             // Display customer table in product edit page
-            
             if ( woocommerce_version_check() ) {
                 // 3.0+ customer table
                 require_once WPCL_PLUGIN_PATH . 'views/table-customer-list.php';
@@ -154,13 +139,11 @@ if ( !function_exists( 'wpcl_activation' ) ) {
                 // Pre 3.0 Shortcode
                 require_once WPCL_PLUGIN_PATH . 'views/legacy/shortcodes-2-6.php';
             }
-        
         } else {
             // Output error message if Woocommerce is not activated
             add_action( 'admin_notices', 'wpcl_admin_message' );
         }
-    
     }
-    
+
     add_action( 'plugins_loaded', 'wpcl_init' );
 }

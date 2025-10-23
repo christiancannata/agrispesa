@@ -33,10 +33,6 @@ class Cookie_Law_Info_i18n {
 	 * @since    1.6.6
 	 */
 	public function load_plugin_textdomain() {
-		load_plugin_textdomain(
-			'cookie-law-info',
-			false,
-			dirname( dirname( CLI_PLUGIN_BASENAME ) ) . '/languages/'
-		);
+		load_plugin_textdomain( 'cookie-law-info', false, dirname( dirname( CLI_PLUGIN_BASENAME ) ) . '/languages/'); // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
 	}
 }

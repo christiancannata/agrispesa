@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('ABSPATH')) {
-    die(__("Can't load this file directly", 'wp-import-export-lite'));
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPIE_User_Export_Extension {
 

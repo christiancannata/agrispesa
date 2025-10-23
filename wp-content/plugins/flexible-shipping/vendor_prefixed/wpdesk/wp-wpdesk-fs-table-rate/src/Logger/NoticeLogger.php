@@ -7,15 +7,14 @@
  */
 namespace FSVendor\WPDesk\FS\TableRate\Logger;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerTrait;
+use FSVendor\Psr\Log\LoggerInterface;
+use FSVendor\Psr\Log\LoggerTrait;
 use FSVendor\WPDesk\View\Renderer\SimplePhpRenderer;
-use FSVendor\WPDesk\View\Resolver\ChainResolver;
 use FSVendor\WPDesk\View\Resolver\DirResolver;
 /**
  * Can log to WC Notice.
  */
-class NoticeLogger implements \Psr\Log\LoggerInterface
+class NoticeLogger implements LoggerInterface
 {
     use LoggerTrait;
     /**
@@ -52,7 +51,7 @@ class NoticeLogger implements \Psr\Log\LoggerInterface
      * @param string $message .
      * @param array $context .
      */
-    public function log($level, $message, array $context = array()) : void
+    public function log($level, $message, array $context = array()): void
     {
         if ($this->notice_enabled) {
             if (isset($context['section'])) {
@@ -69,16 +68,16 @@ class NoticeLogger implements \Psr\Log\LoggerInterface
      */
     public function show_notice_if_enabled()
     {
-        if ($this->notice_enabled && \count($this->messages)) {
+        if ($this->notice_enabled && count($this->messages)) {
             $content = $this->prepare_notice_content();
-            if (!\wc_has_notice($content, 'notice')) {
-                \wc_add_notice($content, 'notice');
+            if (!wc_has_notice($content, 'notice')) {
+                wc_add_notice($content, 'notice');
                 /**
                  * Do actions when Flexible Shipping debug notice is added.
                  *
                  * @param string $content Notice content.
                  */
-                \do_action('flexible_shipping_debug_notice_added', $content);
+                do_action('flexible_shipping_debug_notice_added', $content);
             }
         }
     }
@@ -89,7 +88,7 @@ class NoticeLogger implements \Psr\Log\LoggerInterface
      */
     private function prepare_notice_content()
     {
-        $renderer = new \FSVendor\WPDesk\View\Renderer\SimplePhpRenderer(new \FSVendor\WPDesk\View\Resolver\DirResolver(__DIR__ . '/view'));
+        $renderer = new SimplePhpRenderer(new DirResolver(__DIR__ . '/view'));
         $content = $renderer->render('display-notice-header', array('shipping_method_url' => $this->shipping_method_url, 'shipping_method_title' => $this->shipping_method_title));
         foreach ($this->messages as $section => $section_messages) {
             $section_content = $this->prepare_content_from_section_messages($section_messages);
@@ -109,6 +108,6 @@ class NoticeLogger implements \Psr\Log\LoggerInterface
         foreach ($section_messages as $message) {
             $content .= $message['message'] . \PHP_EOL;
         }
-        return \trim($content);
+        return trim($content);
     }
 }

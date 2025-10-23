@@ -42,11 +42,6 @@ class Onboarding implements Hookable {
 	private $fs_methods_checker;
 
 	/**
-	 * @var array
-	 */
-	private $popups;
-
-	/**
 	 * @param FinishOption           $finish_option        .
 	 * @param string                 $scripts_version      .
 	 * @param string                 $plugin_assets_url    .
@@ -57,15 +52,13 @@ class Onboarding implements Hookable {
 		string $scripts_version,
 		string $plugin_assets_url,
 		WooSettingsPageChecker $setting_page_checker,
-		FlexibleShippingMethodsChecker $fs_methods_checker,
-		array $popups
+		FlexibleShippingMethodsChecker $fs_methods_checker
 	) {
 		$this->finish_option        = $finish_option;
 		$this->scripts_version      = $scripts_version;
 		$this->plugin_assets_url    = $plugin_assets_url;
 		$this->setting_page_checker = $setting_page_checker;
 		$this->fs_methods_checker   = $fs_methods_checker;
-		$this->popups               = $popups;
 	}
 
 	/**
@@ -117,7 +110,7 @@ class Onboarding implements Hookable {
 				'steps'      => 4,
 				'locale'     => get_user_locale(),
 				'open_auto'  => $this->should_auto_load(),
-				'popups'     => $this->popups,
+				'popups'     => ( new PopupData() )->get_popups(),
 			]
 		);
 	}

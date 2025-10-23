@@ -7,8 +7,8 @@
 
 namespace WPDesk\FS\TableRate\Rule\Cost;
 
-use FSVendor\WPDesk\Forms\Field;
 use FSVendor\WPDesk\Forms\FieldProvider;
+use FSVendor\WPDesk\Forms\Field;
 use FSVendor\WPDesk\Forms\Renderer\JsonNormalizedRenderer;
 
 /**

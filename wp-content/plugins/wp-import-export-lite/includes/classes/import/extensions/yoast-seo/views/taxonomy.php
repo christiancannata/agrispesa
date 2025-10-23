@@ -1,7 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 if ( !function_exists( "wpie_import_get_yoast_seo_taxonomy_tab" ) ) {
 
         function wpie_import_get_yoast_seo_taxonomy_tab( $wpie_import_type = "" ) {

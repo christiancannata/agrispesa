@@ -352,7 +352,7 @@ ul.wt-gdprpro-features {
 			<li>
 				<?php
 				echo wp_kses(
-					__( '<strong>After migrating, you can add custom CSS to:</strong>', 'cookie-law-info' ),
+					__( '<strong>After migrating, you can add custom CSS to:</strong>', 'cookie-law-info' ), // phpcs:ignore WordPress.WP.I18n.NoHtmlWrappedStrings
 					array(
 						'p'      => array(),
 						'strong' => array(),
@@ -374,7 +374,7 @@ ul.wt-gdprpro-features {
 			<li>
 				<?php
 				echo wp_kses(
-					__( '<strong>The following customization features will no longer be available:</strong>', 'cookie-law-info' ),
+					__( '<strong>The following customization features will no longer be available:</strong>', 'cookie-law-info' ), // phpcs:ignore WordPress.WP.I18n.NoHtmlWrappedStrings
 					array(
 						'p'      => array(),
 						'strong' => array(),

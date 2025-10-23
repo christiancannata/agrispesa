@@ -97,7 +97,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 			global $wpdb;
 			$script_table = $wpdb->prefix . $this->script_table;
 			$scripts      = array();
-			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $script_table ) ) == $script_table ) {
+			if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $script_table ) ) == $script_table ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 				$script_data = $wpdb->get_results( "select * from {$wpdb->prefix}cli_scripts", ARRAY_A );
 				foreach ( $script_data as $key => $data ) {
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( esc_html__( 'You do not have sufficient permission to perform this operation', 'cookie-law-info' ) );
 			}
-			if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE && isset( $_GET['page'] ) && $_GET['page'] == 'cli-script-settings' ) {
+			if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == CLI_POST_TYPE && isset( $_GET['page'] ) && $_GET['page'] == 'cli-script-settings' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 				global $wt_cli_integration_list;
 				$script_data           = $this->get_scripts();
@@ -302,7 +302,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			if ( is_multisite() ) {
 				// Get all blogs in the network and activate plugin on each one
-				$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+				$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				foreach ( $blog_ids as $blog_id ) {
 					switch_to_blog( $blog_id );
 					self::install_tables();
@@ -324,8 +324,9 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 			$charset_collate = $wpdb->get_charset_collate();
 			$like            = '%' . $wpdb->prefix . 'cli_scripts%';
 			$table_name      = $wpdb->prefix . 'cli_scripts';
-			if ( ! $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', $like ), ARRAY_N ) ) {
+			if ( ! $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', $like ), ARRAY_N ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
 				$sql = "CREATE TABLE $table_name(
                     `id` INT NOT NULL AUTO_INCREMENT,
                     `cliscript_title` TEXT NOT NULL,
@@ -367,7 +368,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 
 			global $wpdb;
 			$script_table = $wpdb->prefix . $this->script_table;
-			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}cli_scripts SET cliscript_status = %d WHERE id = %d", $status, $id ) );
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}cli_scripts SET cliscript_status = %d WHERE id = %d", $status, $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		}
 		/**
@@ -389,12 +390,12 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 					'cliscript_status'      => isset( $value['status'] ) ? $value['status'] : true,
 					'cliscript_description' => isset( $value['description'] ) ? $value['description'] : '',
 				);
-				$data_exists = $wpdb->get_row( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}cli_scripts WHERE cliscript_key= %s", $key ), ARRAY_A );
+				$data_exists = $wpdb->get_row( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}cli_scripts WHERE cliscript_key= %s", $key ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				if ( ! $data_exists ) {
 					if ( Cookie_Law_Info::maybe_first_time_install() === false ) {
 						$data['cliscript_status'] = false;
 					}
-					$wpdb->insert( $table_name, $data );
+					$wpdb->insert( $table_name, $data ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				}
 			}
 		}
@@ -406,8 +407,8 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 		 */
 		private static function update_table_columns() {
 			global $wpdb;
-			if ( ! $wpdb->get_results( "SHOW COLUMNS FROM {$wpdb->prefix}cli_scripts LIKE 'cliscript_type'", ARRAY_N ) ) {
-				$wpdb->query( "ALTER TABLE {$wpdb->prefix}cli_scripts ADD `cliscript_type` INT DEFAULT 0 AFTER `cliscript_category`" );
+			if ( ! $wpdb->get_results( "SHOW COLUMNS FROM {$wpdb->prefix}cli_scripts LIKE 'cliscript_type'", ARRAY_N ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->query( "ALTER TABLE {$wpdb->prefix}cli_scripts ADD `cliscript_type` INT DEFAULT 0 AFTER `cliscript_category`" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
 			}
 		}
 		/**
@@ -425,7 +426,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 					if ( file_exists( $file ) ) {
 						require_once $file;
 					} else {
-						error_log( "searched for $plugin integration at $file, but did not find it" );
+						error_log( "searched for $plugin integration at $file, but did not find it" ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 					}
 				}
 			}
@@ -672,7 +673,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Script_Blocker' ) ) {
 
 			global $wpdb;
 
-			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}cli_scripts SET cliscript_category = %s WHERE id = %s", $cat, $id ) );
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}cli_scripts SET cliscript_category = %s WHERE id = %s", $cat, $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 		public function get_category_by_script_slug( $slug ) {
 			$category    = 'non-necessary';

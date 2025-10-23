@@ -17,14 +17,14 @@ use FSVendor\Monolog\Logger;
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ChromePHPFormatter implements \FSVendor\Monolog\Formatter\FormatterInterface
+class ChromePHPFormatter implements FormatterInterface
 {
     /**
      * Translates Monolog log levels to Wildfire levels.
      *
      * @var array<int, 'log'|'info'|'warn'|'error'>
      */
-    private $logLevels = [\FSVendor\Monolog\Logger::DEBUG => 'log', \FSVendor\Monolog\Logger::INFO => 'info', \FSVendor\Monolog\Logger::NOTICE => 'info', \FSVendor\Monolog\Logger::WARNING => 'warn', \FSVendor\Monolog\Logger::ERROR => 'error', \FSVendor\Monolog\Logger::CRITICAL => 'error', \FSVendor\Monolog\Logger::ALERT => 'error', \FSVendor\Monolog\Logger::EMERGENCY => 'error'];
+    private $logLevels = [Logger::DEBUG => 'log', Logger::INFO => 'info', Logger::NOTICE => 'info', Logger::WARNING => 'warn', Logger::ERROR => 'error', Logger::CRITICAL => 'error', Logger::ALERT => 'error', Logger::EMERGENCY => 'error'];
     /**
      * {@inheritDoc}
      */
@@ -43,8 +43,8 @@ class ChromePHPFormatter implements \FSVendor\Monolog\Formatter\FormatterInterfa
         if ($record['extra']) {
             $message['extra'] = $record['extra'];
         }
-        if (\count($message) === 1) {
-            $message = \reset($message);
+        if (count($message) === 1) {
+            $message = reset($message);
         }
         return [$record['channel'], $message, $backtrace, $this->logLevels[$record['level']]];
     }

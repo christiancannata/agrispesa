@@ -1,7 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-import.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/class-wpie-import.php');
@@ -213,7 +211,7 @@ $manageImportUrl = add_query_arg( [ 'page' => "wpie-manage-import" ], admin_url(
                                                                                                                 }
 
                                                                                                         ?>
-                                                                                                        <option value="<?php echo esc_attr( $key ); ?>"><?php esc_html_e( $val ); ?></option>
+                                                                                                        <option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $val ); ?></option>
                                                                                                 <?php } ?>
                                                                                         <?php } ?>
                                                                                         </optgroup>

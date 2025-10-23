@@ -2,15 +2,15 @@
 
 namespace FSVendor;
 
-if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker')) {
+if (!\class_exists('FSVendor\WPDesk_Basic_Requirement_Checker')) {
     require_once __DIR__ . '/Basic_Requirement_Checker.php';
 }
-if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker_With_Update_Disable')) {
+if (!\class_exists('FSVendor\WPDesk_Basic_Requirement_Checker_With_Update_Disable')) {
     /**
      * Checks requirements for plugin. When required plugin is updated right now, then say that requirements are not met temporary.
      * have to be compatible with PHP 5.2.x
      */
-    class WPDesk_Basic_Requirement_Checker_With_Update_Disable extends \FSVendor\WPDesk_Basic_Requirement_Checker
+    class WPDesk_Basic_Requirement_Checker_With_Update_Disable extends WPDesk_Basic_Requirement_Checker
     {
         /**
          * Returns true if are requirements are met.
@@ -26,7 +26,7 @@ if (!\class_exists('FSVendor\\WPDesk_Basic_Requirement_Checker_With_Update_Disab
             foreach ($this->plugin_require as $name => $plugin_info) {
                 if ($this->is_currently_updated($name)) {
                     $nice_name = $plugin_info[self::PLUGIN_INFO_KEY_NICE_NAME];
-                    $this->notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin is temporarily disabled since the required %s plugin is being upgraded.', $this->get_text_domain()), $this->plugin_name, $nice_name, $nice_name));
+                    $this->notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin is temporarily disabled since the required %s plugin is being upgraded.', 'flexible-shipping'), $this->plugin_name, $nice_name, $nice_name));
                 }
             }
             return \count($this->notices) === 0;

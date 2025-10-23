@@ -6,7 +6,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can handle ajax request with plugin deactivation reason and sends data to WP Desk.
  */
-class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class AjaxDeactivationDataHandler implements Hookable
 {
     const AJAX_ACTION = 'wpdesk_tracker_deactivation_handler_';
     const REQUEST_ADDITIONAL_INFO = 'additional_info';
@@ -24,7 +24,7 @@ class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      * @param PluginData $plugin_data .
      * @param \WPDesk_Tracker_Sender $sender
      */
-    public function __construct(\FSVendor\WPDesk\Tracker\Deactivation\PluginData $plugin_data, \WPDesk_Tracker_Sender $sender)
+    public function __construct(PluginData $plugin_data, \WPDesk_Tracker_Sender $sender)
     {
         $this->plugin_data = $plugin_data;
         $this->sender = $sender;
@@ -34,7 +34,7 @@ class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      */
     public function hooks()
     {
-        \add_action('wp_ajax_' . self::AJAX_ACTION . $this->plugin_data->getPluginSlug(), array($this, 'handleAjaxRequest'));
+        add_action('wp_ajax_' . self::AJAX_ACTION . $this->plugin_data->getPluginSlug(), array($this, 'handleAjaxRequest'));
     }
     /**
      * Prepare payload.
@@ -49,7 +49,7 @@ class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
         if (!empty($request[self::REQUEST_ADDITIONAL_INFO])) {
             $payload['additional_info'] = $request[self::REQUEST_ADDITIONAL_INFO];
         }
-        return \apply_filters('wpdesk_tracker_deactivation_data', $payload);
+        return apply_filters('wpdesk_tracker_deactivation_data', $payload);
     }
     /**
      * Send payload to WP Desk.
@@ -65,9 +65,9 @@ class AjaxDeactivationDataHandler implements \FSVendor\WPDesk\PluginBuilder\Plug
      */
     public function handleAjaxRequest()
     {
-        \check_ajax_referer(self::AJAX_ACTION . $this->plugin_data->getPluginSlug());
-        if (!\current_user_can('activate_plugins')) {
-            \wp_send_json_error();
+        check_ajax_referer(self::AJAX_ACTION . $this->plugin_data->getPluginSlug());
+        if (!current_user_can('activate_plugins')) {
+            wp_send_json_error();
         }
         if (isset($_REQUEST['reason'])) {
             $this->sendPayloadToWpdesk($this->preparePayload($_REQUEST));

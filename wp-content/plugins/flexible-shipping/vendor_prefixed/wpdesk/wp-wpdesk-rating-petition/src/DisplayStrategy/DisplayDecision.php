@@ -12,5 +12,5 @@ interface DisplayDecision
      *
      * @return bool
      */
-    public function should_display() : bool;
+    public function should_display(): bool;
 }

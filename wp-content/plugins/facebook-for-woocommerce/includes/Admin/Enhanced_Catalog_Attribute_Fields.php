@@ -47,7 +47,7 @@ class Enhanced_Catalog_Attribute_Fields {
 	 */
 	private $category_handler;
 
-	public function __construct( $page_type, \WP_Term $term = null, \WC_Product $product = null ) {
+	public function __construct( $page_type, ?\WP_Term $term = null, ?\WC_Product $product = null ) {
 		$this->page_type        = $page_type;
 		$this->term             = $term;
 		$this->product          = $product;
@@ -85,24 +85,25 @@ class Enhanced_Catalog_Attribute_Fields {
 		$extracted = false === $index ? array() : array_splice( $attributes, $index, 1 );
 		return empty( $extracted ) ? null : array_shift( $extracted );
 	}
-
 	public function render( $category_id ) {
-		$all_attributes             = $this->category_handler->get_attributes_with_fallback_to_parent_category( $category_id );
+		$all_attributes = (array) $this->category_handler->get_attributes_with_fallback_to_parent_category( $category_id );
+
 		$all_attributes_with_values = array_map(
-			function( $attribute ) use ( $category_id ) {
+			function ( $attribute ) use ( $category_id ) {
 				return array_merge( $attribute, array( 'value' => $this->get_value( $attribute['key'], $category_id ) ) );
 			},
 			$all_attributes
 		);
-		$recommended_attributes     = array_filter(
+
+		$recommended_attributes = array_filter(
 			$all_attributes_with_values,
-			function( $attr ) {
+			function ( $attr ) {
 				return $attr['recommended'];
 			}
 		);
-		$optional_attributes        = array_filter(
+		$optional_attributes    = array_filter(
 			$all_attributes_with_values,
-			function( $attr ) {
+			function ( $attr ) {
 				return ! $attr['recommended'];
 			}
 		);
@@ -117,7 +118,7 @@ class Enhanced_Catalog_Attribute_Fields {
 					$this->extract_attribute( $optional_attributes, 'size' ),
 					$this->extract_attribute( $optional_attributes, 'gender' ),
 				),
-				function( $attr ) {
+				function ( $attr ) {
 					return ! is_null( $attr );
 				}
 			);
@@ -134,6 +135,7 @@ class Enhanced_Catalog_Attribute_Fields {
 			'default'        => 100,
 		);
 
+		$priority = array(); // Initialize priority array.
 		foreach ( $recommended_attributes as $key => $attribute ) {
 			$recommended_attributes[ $key ]['priority'] = 5; // Assign 5 initially to each attribute
 			if ( 'measurement' === $attribute['type'] ) {
@@ -142,15 +144,23 @@ class Enhanced_Catalog_Attribute_Fields {
 			$priority[ $key ] = $recommended_attributes[ $key ]['priority'];
 		}
 
-		array_multisort( $priority, SORT_DESC, $recommended_attributes );
+		$should_render_checkbox = ! empty( $recommended_attributes );
 
-		foreach ( $recommended_attributes as $attribute ) {
-			$this->render_attribute( $attribute );
+		// Only sort if we have recommended attributes.
+		if ( ! empty( $priority ) ) {
+			array_multisort( $priority, SORT_DESC, $recommended_attributes );
 		}
-
 		$selector_value      = $this->get_value( self::OPTIONAL_SELECTOR_KEY, $category_id );
 		$is_showing_optional = 'on' === $selector_value;
-		$this->render_selector_checkbox( $is_showing_optional );
+
+		// Only show the selector if we have natural recommendations
+		if ( $should_render_checkbox ) {
+			$this->render_selector_checkbox( $is_showing_optional );
+		}
+
+		foreach ( $recommended_attributes as $attribute ) {
+			$this->render_attribute( $attribute, true, $is_showing_optional );
+		}
 
 		foreach ( $optional_attributes as $attribute ) {
 			$this->render_attribute( $attribute, true, $is_showing_optional );
@@ -159,7 +169,7 @@ class Enhanced_Catalog_Attribute_Fields {
 
 	private function render_selector_checkbox( $is_showing_optional ) {
 		$selector_id    = self::FIELD_ENHANCED_CATALOG_ATTRIBUTE_PREFIX . self::OPTIONAL_SELECTOR_KEY;
-		$selector_label = __( 'Show advanced options', 'facebook-for-woocommerce' );
+		$selector_label = __( 'Show more attributes', 'facebook-for-woocommerce' );
 		$checked_attr   = $is_showing_optional ? 'checked="checked"' : '';
 
 		if ( self::PAGE_TYPE_EDIT_PRODUCT === $this->page_type ) {
@@ -266,7 +276,6 @@ class Enhanced_Catalog_Attribute_Fields {
 				// string
 				$this->render_text_field( $attr_id, $attribute, $placeholder );
 		}
-
 	}
 
 	private function render_select_field( $attr_id, $attribute ) {

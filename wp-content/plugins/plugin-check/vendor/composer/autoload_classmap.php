@@ -44,5 +44,4 @@ return array(
     'PHPCSUtils\\Utils\\TextStrings' => $vendorDir . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/TextStrings.php',
     'PHPCSUtils\\Utils\\UseStatements' => $vendorDir . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/UseStatements.php',
     'PHPCSUtils\\Utils\\Variables' => $vendorDir . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Variables.php',
-    'WordPressdotorg\\Plugin_Directory\\Readme\\Parser' => $vendorDir . '/afragen/wordpress-plugin-readme-parser/class-parser.php',
 );

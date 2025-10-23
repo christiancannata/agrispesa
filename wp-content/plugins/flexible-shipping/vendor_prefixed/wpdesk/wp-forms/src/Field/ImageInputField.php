@@ -2,7 +2,7 @@
 
 namespace FSVendor\WPDesk\Forms\Field;
 
-class ImageInputField extends \FSVendor\WPDesk\Forms\Field\BasicField
+class ImageInputField extends BasicField
 {
     public function __construct()
     {

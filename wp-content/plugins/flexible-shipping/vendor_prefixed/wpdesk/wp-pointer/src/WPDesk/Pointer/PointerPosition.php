@@ -59,6 +59,6 @@ class PointerPosition
      */
     public function render()
     {
-        echo \json_encode(array('edge' => $this->edge, 'align' => $this->align));
+        echo json_encode(array('edge' => $this->edge, 'align' => $this->align));
     }
 }

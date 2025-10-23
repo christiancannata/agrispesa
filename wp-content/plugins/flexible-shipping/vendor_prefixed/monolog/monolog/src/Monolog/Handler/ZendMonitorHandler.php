@@ -22,7 +22,7 @@ use FSVendor\Monolog\Logger;
  *
  * @phpstan-import-type FormattedRecord from AbstractProcessingHandler
  */
-class ZendMonitorHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHandler
+class ZendMonitorHandler extends AbstractProcessingHandler
 {
     /**
      * Monolog level / ZendMonitor Custom Event priority map
@@ -33,21 +33,21 @@ class ZendMonitorHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHan
     /**
      * @throws MissingExtensionException
      */
-    public function __construct($level = \FSVendor\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct($level = Logger::DEBUG, bool $bubble = \true)
     {
-        if (!\function_exists('FSVendor\\zend_monitor_custom_event')) {
-            throw new \FSVendor\Monolog\Handler\MissingExtensionException('You must have Zend Server installed with Zend Monitor enabled in order to use this handler');
+        if (!function_exists('FSVendor\zend_monitor_custom_event')) {
+            throw new MissingExtensionException('You must have Zend Server installed with Zend Monitor enabled in order to use this handler');
         }
         //zend monitor constants are not defined if zend monitor is not enabled.
-        $this->levelMap = [\FSVendor\Monolog\Logger::DEBUG => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FSVendor\Monolog\Logger::INFO => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FSVendor\Monolog\Logger::NOTICE => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, \FSVendor\Monolog\Logger::WARNING => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_WARNING, \FSVendor\Monolog\Logger::ERROR => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FSVendor\Monolog\Logger::CRITICAL => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FSVendor\Monolog\Logger::ALERT => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, \FSVendor\Monolog\Logger::EMERGENCY => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR];
+        $this->levelMap = [Logger::DEBUG => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::INFO => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::NOTICE => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_INFO, Logger::WARNING => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_WARNING, Logger::ERROR => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::CRITICAL => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::ALERT => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR, Logger::EMERGENCY => \FSVendor\ZEND_MONITOR_EVENT_SEVERITY_ERROR];
         parent::__construct($level, $bubble);
     }
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
-        $this->writeZendMonitorCustomEvent(\FSVendor\Monolog\Logger::getLevelName($record['level']), $record['message'], $record['formatted'], $this->levelMap[$record['level']]);
+        $this->writeZendMonitorCustomEvent(Logger::getLevelName($record['level']), $record['message'], $record['formatted'], $this->levelMap[$record['level']]);
     }
     /**
      * Write to Zend Monitor Events
@@ -58,21 +58,21 @@ class ZendMonitorHandler extends \FSVendor\Monolog\Handler\AbstractProcessingHan
      *
      * @phpstan-param FormattedRecord $formatted
      */
-    protected function writeZendMonitorCustomEvent(string $type, string $message, array $formatted, int $severity) : void
+    protected function writeZendMonitorCustomEvent(string $type, string $message, array $formatted, int $severity): void
     {
         zend_monitor_custom_event($type, $message, $formatted, $severity);
     }
     /**
      * {@inheritDoc}
      */
-    public function getDefaultFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    public function getDefaultFormatter(): FormatterInterface
     {
-        return new \FSVendor\Monolog\Formatter\NormalizerFormatter();
+        return new NormalizerFormatter();
     }
     /**
      * @return array<int, int>
      */
-    public function getLevelMap() : array
+    public function getLevelMap(): array
     {
         return $this->levelMap;
     }

@@ -6,6 +6,7 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 use Automattic\WooCommerce\Utilities\RestApiUtil;
 
 defined( 'ABSPATH' ) || exit;
@@ -101,12 +102,12 @@ if ( file_exists( $plugin_path ) ) {
 			<td class="help"><?php echo wc_help_tip( esc_html__( 'The WooCommerce Legacy REST API plugin running on this site.', 'woocommerce' ) ); ?></td>
 			<td>
 				<?php
-				if ( is_null( wc()->api ) ) {
-					echo '<mark class="info-icon"><span class="dashicons dashicons-info"></span> ' . esc_html__( 'The Legacy REST API plugin is not installed on this site.', 'woocommerce' ) . '</mark>';
-				} else {
+				if ( WC()->legacy_rest_api_is_available() ) {
 					$plugin_path = wc_get_container()->get( \Automattic\WooCommerce\Utilities\PluginUtil::class )->get_wp_plugin_id( 'woocommerce-legacy-rest-api' );
 					$version     = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_path )['Version'] ?? '';
 					echo '<mark class="yes"><span class="dashicons dashicons-yes"></span> ' . esc_html( $version ) . ' <code class="private">' . esc_html( wc()->api->get_rest_api_package_path() ) . '</code></mark> ';
+				} else {
+					echo '<mark class="info-icon"><span class="dashicons dashicons-info"></span> ' . esc_html__( 'The Legacy REST API plugin is not installed on this site.', 'woocommerce' ) . '</mark>';
 				}
 				?>
 			</td>
@@ -249,6 +250,11 @@ if ( file_exists( $plugin_path ) ) {
 			<td data-export-label="Server Info"><?php esc_html_e( 'Server info', 'woocommerce' ); ?>:</td>
 			<td class="help"><?php echo wc_help_tip( esc_html__( 'Information about the web server that is currently hosting your site.', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
 			<td><?php echo esc_html( $environment['server_info'] ); ?></td>
+		</tr>
+		<tr>
+			<td data-export-label="Server Architecture"><?php esc_html_e( 'Server architecture', 'woocommerce' ); ?>:</td>
+			<td class="help"><?php echo wc_help_tip( esc_html__( 'Information about the operating system your server is running.', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
+			<td><?php echo ! empty( $environment['server_architecture'] ) ? esc_html( $environment['server_architecture'] ) : esc_html__( 'Unable to determine server architecture.  Please ask your hosting provider for this information.', 'woocommerce' ); ?></td>
 		</tr>
 		<tr>
 			<td data-export-label="PHP Version"><?php esc_html_e( 'PHP version', 'woocommerce' ); ?>:</td>
@@ -694,8 +700,8 @@ if ( 0 < $mu_plugins_count ) :
 	</thead>
 	<tbody>
 		<tr>
-			<td data-export-label="API Enabled"><?php esc_html_e( 'API enabled', 'woocommerce' ); ?>:</td>
-			<td class="help"><?php echo wc_help_tip( esc_html__( 'Does your site have REST API enabled?', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
+			<td data-export-label="Legacy API Enabled"><?php esc_html_e( 'Legacy API enabled', 'woocommerce' ); ?>:</td>
+			<td class="help"><?php echo wc_help_tip( esc_html__( 'Does your site have the Legacy REST API enabled?', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
 			<td><?php echo $settings['api_enabled'] ? '<mark class="yes"><span class="dashicons dashicons-yes"></span></mark>' : '<mark class="no">&ndash;</mark>'; ?></td>
 		</tr>
 		<tr>
@@ -779,6 +785,12 @@ if ( 0 < $mu_plugins_count ) :
 			<td data-export-label="HPOS data sync enabled"><?php esc_html_e( 'HPOS data sync enabled:', 'woocommerce' ); ?></td>
 			<td class="help"><?php echo wc_help_tip( esc_html__( 'Is data sync enabled for HPOS?', 'woocommerce' ) ); ?></td>
 			<td><?php echo $settings['HPOS_sync_enabled'] ? '<mark class="yes"><span class="dashicons dashicons-yes"></span></mark>' : '<mark class="no">&ndash;</mark>'; ?></td>
+		</tr>
+
+		<tr>
+			<td data-export-label="Enabled Features"><?php esc_html_e( 'Enabled features:', 'woocommerce' ); ?></td>
+			<td class="help"><?php echo wc_help_tip( esc_html__( 'Features that are currently enabled.', 'woocommerce' ) ); ?></td>
+			<td><?php echo esc_html( implode( ', ', $settings['enabled_features'] ) ); ?></td>
 		</tr>
 
 	</tbody>
@@ -873,10 +885,42 @@ if ( 0 < $mu_plugins_count ) :
 					echo '<mark class="error"><span class="dashicons dashicons-warning"></span> ' . ( $_page['block_required'] ? sprintf( esc_html__( 'Page does not contain the %1$s shortcode or the %2$s block.', 'woocommerce' ), esc_html( $_page['shortcode'] ), esc_html( $_page['block'] ) ) : sprintf( esc_html__( 'Page does not contain the %s shortcode.', 'woocommerce' ), esc_html( $_page['shortcode'] ) ) ) . '</mark>'; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
 					$found_error = true;
 				}
+
+				// Warn merchants if both the shortcode and block are present, which will be a confusing shopper experience.
+				if ( $_page['shortcode_present'] && $_page['block_present'] ) {
+					/* Translators: %1$s: shortcode text, %2$s: block slug. */
+					echo '<mark class="error"><span class="dashicons dashicons-warning"></span> ' . sprintf( esc_html__( 'Page contains both the %1$s shortcode and the %2$s block.', 'woocommerce' ), esc_html( $_page['shortcode'] ), esc_html( $_page['block'] ) ) . '</mark>'; /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */
+					$found_error = true;
+				}
 			}
 
 			if ( ! $found_error ) {
-				echo '<mark class="yes">#' . absint( $_page['page_id'] ) . ' - ' . esc_html( str_replace( home_url(), '', get_permalink( $_page['page_id'] ) ) ) . '</mark>';
+
+				$additional_info = '';
+
+				if ( ! empty( $_page['shortcode'] ) || ! empty( $_page['block'] ) ) {
+					// We check first if, in a blocks theme, the template content does not load the page content.
+					if ( CartCheckoutUtils::is_overriden_by_custom_template_content( $_page['block'] ) ) {
+						$additional_info = __( "This page's content is overridden by custom template content", 'woocommerce' );
+					} elseif ( $_page['shortcode_present'] ) {
+						// Always display the shortcode with square brackets for consistency.
+						$shortcode_display = $_page['shortcode'];
+						if ( $shortcode_display && '[' !== $shortcode_display[0] ) {
+							$shortcode_display = '[' . $shortcode_display . ']';
+						}
+						/* translators: %1$s: shortcode text. */
+						$additional_info = sprintf( __( 'Contains the <strong>%1$s</strong> shortcode', 'woocommerce' ), esc_html( $shortcode_display ) );
+					} elseif ( $_page['block_present'] ) {
+						/* Translators: %1$s: block slug. */
+						$additional_info = sprintf( __( 'Contains the <strong>%1$s</strong> block', 'woocommerce' ), esc_html( $_page['block'] ) );
+					}
+
+					if ( ! empty( $additional_info ) ) {
+						$additional_info = '<mark class="no"> - <span class="dashicons dashicons-info"></span> ' . $additional_info . '</mark>';
+					}
+				}
+
+				echo '<mark class="yes">#' . absint( $_page['page_id'] ) . ' - ' . esc_html( str_replace( home_url(), '', get_permalink( $_page['page_id'] ) ) ) . '</mark>' . $additional_info; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
 			}
 
 			echo '</td></tr>';
@@ -954,6 +998,21 @@ if ( 0 < $mu_plugins_count ) :
 				<td><?php echo esc_html( $theme['parent_author_url'] ); ?></td>
 			</tr>
 		<?php endif ?>
+		<?php if ( isset( $theme['is_block_theme'] ) ) : ?>
+		<tr>
+			<td data-export-label="Theme type"><?php esc_html_e( 'Theme type', 'woocommerce' ); ?>:</td>
+			<td class="help"><?php echo wc_help_tip( esc_html__( 'Displays whether the current active theme is a block theme or a classic theme.', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
+			<td>
+				<?php
+				if ( $theme['is_block_theme'] ) {
+					esc_html_e( 'Block theme', 'woocommerce' );
+				} else {
+					esc_html_e( 'Classic theme', 'woocommerce' );
+				}
+				?>
+			</td>
+		</tr>
+		<?php endif ?>
 		<tr>
 			<td data-export-label="WooCommerce Support"><?php esc_html_e( 'WooCommerce support', 'woocommerce' ); ?>:</td>
 			<td class="help"><?php echo wc_help_tip( esc_html__( 'Displays whether or not the current active theme declares WooCommerce support.', 'woocommerce' ) ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></td>
@@ -969,7 +1028,7 @@ if ( 0 < $mu_plugins_count ) :
 		</tr>
 	</tbody>
 </table>
-<table class="wc_status_table widefat" cellspacing="0">
+<table class="wc_status_table widefat" id="status-table-templates" cellspacing="0">
 	<thead>
 		<tr>
 			<th colspan="3" data-export-label="Templates"><h2><?php esc_html_e( 'Templates', 'woocommerce' ); ?><?php echo wc_help_tip( esc_html__( 'This section shows any files that are overriding the default WooCommerce template pages.', 'woocommerce' ) ); ?></h2></th>
@@ -1029,8 +1088,14 @@ if ( 0 < $mu_plugins_count ) :
 					<mark class="error">
 						<span class="dashicons dashicons-warning"></span>
 					</mark>
-					<a href="https://woocommerce.com/document/fix-outdated-templates-woocommerce/" target="_blank">
+					<a href="https://developer.woocommerce.com/docs/theming/theme-development/fixing-outdated-woocommerce-templates/" target="_blank">
 						<?php esc_html_e( 'Learn how to update', 'woocommerce' ); ?>
+					</a> |
+					<mark class="info">
+						<span class="dashicons dashicons-info"></span>
+					</mark>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=wc-status&tab=tools' ) ); ?>">
+						<?php esc_html_e( 'Clear system status theme info cache', 'woocommerce' ); ?>
 					</a>
 				</td>
 			</tr>
@@ -1039,12 +1104,15 @@ if ( 0 < $mu_plugins_count ) :
 </table>
 
 <?php
-	// phpcs:disable WooCommerce.Commenting.CommentHooks.MissingSinceComment
 	/**
 	 * Action fired when the WooCommerce system status report is rendered.
+	 *
+	 * @since 2.4.0 Introduced hook.
+	 * @since 9.8.0 Made SSR report data available to callbacks.
+	 *
+	 * @param array|WP_Error $report Report data.
 	 */
-	do_action( 'woocommerce_system_status_report' );
-	// phpcs:enable WooCommerce.Commenting.CommentHooks.MissingSinceComment
+	do_action( 'woocommerce_system_status_report', $report );
 ?>
 
 <table class="wc_status_table widefat" cellspacing="0">

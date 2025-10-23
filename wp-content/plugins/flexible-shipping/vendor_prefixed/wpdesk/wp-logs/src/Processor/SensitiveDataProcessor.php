@@ -9,7 +9,7 @@ use FSVendor\Monolog\Processor\ProcessorInterface;
  *
  * @package WPDesk\Logger\Processor
  */
-class SensitiveDataProcessor implements \FSVendor\Monolog\Processor\ProcessorInterface
+class SensitiveDataProcessor implements ProcessorInterface
 {
     /**
      * Replace array.
@@ -21,26 +21,26 @@ class SensitiveDataProcessor implements \FSVendor\Monolog\Processor\ProcessorInt
     {
         $this->replace = $replace;
     }
-    public function __invoke(array $record) : array
+    public function __invoke(array $record): array
     {
         return $this->replace_array($record);
     }
-    private function replace_array(array $value) : array
+    private function replace_array(array $value): array
     {
         foreach ($value as $key => $item) {
-            if (\is_array($item)) {
+            if (is_array($item)) {
                 $value[$key] = $this->replace_array($item);
             }
-            if (\is_string($item)) {
+            if (is_string($item)) {
                 $value[$key] = $this->replace($item);
             }
         }
         return $value;
     }
-    private function replace(string $value) : string
+    private function replace(string $value): string
     {
         foreach ($this->replace as $search => $replace) {
-            $value = \str_replace($search, $replace, $value);
+            $value = str_replace($search, $replace, $value);
         }
         return $value;
     }

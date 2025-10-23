@@ -75,13 +75,13 @@ class PointerMessage
         $this->title = $title;
         $this->content = $content;
         if ($position === null) {
-            $position = new \FSVendor\WPDesk\Pointer\PointerPosition();
+            $position = new PointerPosition();
         }
         $this->position = $position;
         $this->pointerClass = $pointerClass;
         $this->pointerWidth = $pointerWidth;
         if (null === $conditions) {
-            $this->conditions = new \FSVendor\WPDesk\Pointer\PointerConditions();
+            $this->conditions = new PointerConditions();
         } else {
             $this->conditions = $conditions;
         }
@@ -93,8 +93,8 @@ class PointerMessage
      */
     public function enqueueScripts()
     {
-        \wp_enqueue_style('wp-pointer');
-        \wp_enqueue_script('wp-pointer');
+        wp_enqueue_style('wp-pointer');
+        wp_enqueue_script('wp-pointer');
     }
     /**
      * Add notice action.
@@ -102,8 +102,8 @@ class PointerMessage
     protected function addAction()
     {
         if (!$this->actionAdded) {
-            \add_action('admin_print_footer_scripts', array($this, 'maybeRenderJavascript'));
-            \add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+            add_action('admin_print_footer_scripts', array($this, 'maybeRenderJavascript'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
             $this->actionAdded = \true;
         }
     }
@@ -113,8 +113,8 @@ class PointerMessage
     public function removeAction()
     {
         if ($this->actionAdded) {
-            \remove_action('admin_print_footer_scripts', array($this, 'maybeRenderJavascript'));
-            \remove_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+            remove_action('admin_print_footer_scripts', array($this, 'maybeRenderJavascript'));
+            remove_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
             $this->actionAdded = \false;
         }
     }
@@ -246,10 +246,10 @@ class PointerMessage
         $pointerClass = $this->getPointerClass();
         $pointerContentId = 'wpdesk_pointer_content_' . $this->getId();
         $pointerWidth = $this->getPointerWidth();
-        $pointerContent = \sprintf('<h3>%1$s</h3><p id="%2$s">%3$s</p>', $this->title, $pointerContentId, $this->content);
+        $pointerContent = sprintf('<h3>%1$s</h3><p id="%2$s">%3$s</p>', $this->title, $pointerContentId, $this->content);
         $pointerPosition = $this->getPosition();
         $pointerId = $this->getId();
-        $pointerCss = \array_merge($this->defaultPointerCss, $this->getPointerCss());
+        $pointerCss = array_merge($this->defaultPointerCss, $this->getPointerCss());
         include 'views/html-script-pointer-message.php';
     }
     /**
@@ -268,19 +268,19 @@ class PointerMessage
      */
     private function isDismissed()
     {
-        $dismissedPointerMessages = \array_filter(\explode(',', (string) \get_user_meta(\get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, \true)));
-        return \in_array($this->id, $dismissedPointerMessages, \true);
+        $dismissedPointerMessages = array_filter(explode(',', (string) get_user_meta(get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, \true)));
+        return in_array($this->id, $dismissedPointerMessages, \true);
     }
     /**
      * Un dismiss pointer message.
      */
     public function unDismiss()
     {
-        $dismissedPointerMessages = \array_filter(\explode(',', (string) \get_user_meta(\get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, \true)));
+        $dismissedPointerMessages = array_filter(explode(',', (string) get_user_meta(get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, \true)));
         foreach ($dismissedPointerMessages as $key => $value) {
             if ($value === $this->getId()) {
                 unset($dismissedPointerMessages[$key]);
-                \update_user_meta(\get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, \implode(',', $dismissedPointerMessages));
+                update_user_meta(get_current_user_id(), self::USER_META_DISMISSED_WP_POINTERS, implode(',', $dismissedPointerMessages));
             }
         }
     }

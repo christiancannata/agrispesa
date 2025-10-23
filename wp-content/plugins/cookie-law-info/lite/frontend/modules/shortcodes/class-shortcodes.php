@@ -562,6 +562,15 @@ class Shortcodes {
 	}
 
 	/**
+	 * Callback for the shortcode [cky_preference_close_label]
+	 *
+	 * @return string
+	 */
+	public function cky_preference_close_label() {
+		return isset( $this->contents['preferenceCenter']['elements']['closeButton'] ) ? $this->contents['preferenceCenter']['elements']['closeButton'] : '';
+	}
+
+	/**
 	 * Callback for the shortcode [cky_optout_cancel_text]
 	 *
 	 * @return string

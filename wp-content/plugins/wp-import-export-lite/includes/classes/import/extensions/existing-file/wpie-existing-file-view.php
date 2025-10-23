@@ -1,8 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
-
+defined( 'ABSPATH' ) || exit;
 $uploader = new \wpie\import\upload\WPIE_Upload();
 
 $wpie_existing_file_list = $uploader->wpie_get_file_list( WPIE_UPLOAD_MAIN_DIR, false, true );

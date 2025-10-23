@@ -4,9 +4,7 @@ namespace wpie\import\upload\existingfile;
 
 use WP_Error;
 
-if ( ! defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( WPIE_IMPORT_CLASSES_DIR . '/class-wpie-upload.php' ) ) {
         require_once(WPIE_IMPORT_CLASSES_DIR . '/class-wpie-upload.php');

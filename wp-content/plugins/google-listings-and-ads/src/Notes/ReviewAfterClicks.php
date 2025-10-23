@@ -73,12 +73,12 @@ class ReviewAfterClicks extends AbstractNote implements MerchantCenterAwareInter
 		$note->set_title(
 			sprintf(
 				/* translators: %s number of clicks */
-				__( 'You’ve gotten %s+ clicks on your free listings! 🎉', 'google-listings-and-ads' ),
+				__( 'You’ve gotten %s+ clicks on your product feed! 🎉', 'google-listings-and-ads' ),
 				$this->wp->number_format_i18n( $clicks_count_rounded )
 			)
 		);
 		$note->set_content(
-			__( 'Congratulations! Tell us what you think about Google Listings & Ads by leaving a review. Your feedback will help us make WooCommerce even better for you.', 'google-listings-and-ads' )
+			__( 'Congratulations! Tell us what you think about Google for WooCommerce by leaving a review. Your feedback will help us make WooCommerce even better for you.', 'google-listings-and-ads' )
 		);
 		$note->set_content_data( (object) [] );
 		$note->set_type( NoteEntry::E_WC_ADMIN_NOTE_INFORMATIONAL );

@@ -90,7 +90,9 @@ class MailChimp_WooCommerce_Public extends MailChimp_WooCommerce_Options {
      */
     public function add_inline_footer_script()
     {
-        if (apply_filters( 'mailchimp_add_inline_footer_script', true)) {
+        $code_snippet_activated = (bool) \Mailchimp_Woocommerce_DB_Helpers::get_option( 'mailchimp-woocommerce-code-snippet', true);
+
+        if ($code_snippet_activated && apply_filters( 'mailchimp_add_inline_footer_script', true)) {
             if (($fragment = mailchimp_get_connected_site_script_fragment()) && !empty($fragment)) {
                 echo $fragment;
             }
@@ -126,11 +128,17 @@ class MailChimp_WooCommerce_Public extends MailChimp_WooCommerce_Options {
         update_user_meta( $user_id, 'mailchimp_woocommerce_is_subscribed', $subscribed);
         update_user_meta( $user_id, 'mailchimp_woocommerce_gdpr_fields', $gdpr_fields);
 
+		$language = get_user_meta($user_id, 'locale', true);
+		if (strpos($language, '_') !== false) {
+			$languageArray = explode('_', $language);
+			$language = $languageArray[0];
+		}
+
         $job = new MailChimp_WooCommerce_User_Submit(
             $user_id,
             $subscribed,
             null,
-            null,
+			$language,
             !empty($gdpr_fields) ? $gdpr_fields : null
         );
 
@@ -192,7 +200,7 @@ class MailChimp_WooCommerce_Public extends MailChimp_WooCommerce_Options {
             }
             if (empty($cached_gdpr_fields) && !empty($user) && $user->user_email) {
                 try {
-                    $member = mailchimp_get_api()->member(mailchimp_get_list_id(), $user->user_email);
+                    $member = $api->member(mailchimp_get_list_id(), $user->user_email);
                     $current_gdpr_fields = isset($member['marketing_permissions']) ?
                         $member['marketing_permissions'] : array();
                 } catch (Exception $e) {

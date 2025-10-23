@@ -2,8 +2,8 @@
 Contributors: kokomoweb, freemius
 Tags: woocommerce, customer list, who bought, admin order list, product-specific, export customers to csv, email customers, customer list, customer, list, print, front-end, tickets, shows, courses, customers, shortcode
 Requires at least: 5.0
-Tested up to: 6.3.1
-Stable tag: 3.1.6
+Tested up to: 6.7.1
+Stable tag: 3.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,14 @@ Please see documentation [here](https://www.kokomoweb.com/docs/).
 2. The settings page.
 
 == Changelog =
+
+= 3.1.8 =
+* Version bump
+* Updated freemius SDK
+
+= 3.1.7 =
+* Security update
+* Updated freemius SDK
 
 = 3.1.6 =
 * Support for High Performance Order Storage (HPOS)

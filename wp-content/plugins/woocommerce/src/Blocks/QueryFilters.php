@@ -1,4 +1,6 @@
 <?php
+declare( strict_types = 1 );
+
 namespace Automattic\WooCommerce\Blocks;
 
 use WC_Tax;
@@ -13,12 +15,10 @@ final class QueryFilters {
 	 *
 	 * @internal
 	 */
-	public function init() {
-		add_filter( 'posts_clauses', array( $this, 'main_query_filter' ), 10, 2 );
-	}
+	public function init() {}
 
 	/**
-	 * Filter the posts clauses of the main query to suport global filters.
+	 * Filter the posts clauses of the main query to support global filters.
 	 *
 	 * @param array     $args     Query args.
 	 * @param \WP_Query $wp_query WP_Query object.
@@ -148,7 +148,7 @@ final class QueryFilters {
 			WHERE product_id IN ( {$product_query_sql} )
 			AND average_rating > 0
 			GROUP BY rounded_average_rating
-			ORDER BY rounded_average_rating ASC
+			ORDER BY rounded_average_rating DESC
 		";
 
 		$results = $wpdb->get_results( $rating_count_sql ); // phpcs:ignore
@@ -209,7 +209,7 @@ final class QueryFilters {
 		}
 
 		$args['join']   = $this->append_product_sorting_table_join( $args['join'] );
-		$args['where'] .= ' AND wc_product_meta_lookup.stock_status IN ("' . implode( '","', array_map( 'esc_sql', explode( ',', $wp_query->get( 'filter_stock_status' ) ) ) ) . '")';
+		$args['where'] .= ' AND wc_product_meta_lookup.stock_status IN (\'' . implode( '\',\'', array_map( 'esc_sql', explode( ',', $wp_query->get( 'filter_stock_status' ) ) ) ) . '\')';
 
 		return $args;
 	}
@@ -306,7 +306,7 @@ final class QueryFilters {
 		global $wpdb;
 
 		// Select only used tax classes to avoid unwanted calculations.
-		$product_tax_classes = $wpdb->get_col( "SELECT DISTINCT tax_class FROM {$wpdb->wc_product_meta_lookup};" );
+		$product_tax_classes = array_filter( $wpdb->get_col( "SELECT DISTINCT tax_class FROM {$wpdb->wc_product_meta_lookup};" ) );
 
 		if ( empty( $product_tax_classes ) ) {
 			return '';
@@ -427,7 +427,12 @@ final class QueryFilters {
 		$attribute_ids_for_and_filtering = array();
 
 		foreach ( $chosen_attributes as $taxonomy => $data ) {
-			$all_terms                  = get_terms( $taxonomy, array( 'hide_empty' => false ) );
+			$all_terms                  = get_terms(
+				array(
+					'taxonomy'   => $taxonomy,
+					'hide_empty' => false,
+				)
+			);
 			$term_ids_by_slug           = wp_list_pluck( $all_terms, 'term_id', 'slug' );
 			$term_ids_to_filter_by      = array_values( array_intersect_key( $term_ids_by_slug, array_flip( $data['terms'] ) ) );
 			$term_ids_to_filter_by      = array_map( 'absint', $term_ids_to_filter_by );
@@ -497,6 +502,10 @@ final class QueryFilters {
 
 		foreach ( $query_vars as $key => $value ) {
 			if ( 0 === strpos( $key, 'filter_' ) ) {
+				if ( ! is_string( $value ) ) {
+					continue;
+				}
+
 				$attribute    = wc_sanitize_taxonomy_name( str_replace( 'filter_', '', $key ) );
 				$taxonomy     = wc_attribute_taxonomy_name( $attribute );
 				$filter_terms = ! empty( $value ) ? explode( ',', wc_clean( wp_unslash( $value ) ) ) : array();

@@ -14,7 +14,7 @@ namespace FSVendor\Monolog\Handler;
 use FSVendor\Monolog\Logger;
 use FSVendor\Monolog\ResettableInterface;
 use FSVendor\Monolog\Formatter\FormatterInterface;
-use Psr\Log\LogLevel;
+use FSVendor\Psr\Log\LogLevel;
 /**
  * Simple handler wrapper that filters records based on a list of levels
  *
@@ -27,7 +27,7 @@ use Psr\Log\LogLevel;
  * @phpstan-import-type Level from \Monolog\Logger
  * @phpstan-import-type LevelName from \Monolog\Logger
  */
-class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVendor\Monolog\Handler\ProcessableHandlerInterface, \FSVendor\Monolog\ResettableInterface, \FSVendor\Monolog\Handler\FormattableHandlerInterface
+class FilterHandler extends Handler implements ProcessableHandlerInterface, ResettableInterface, FormattableHandlerInterface
 {
     use ProcessableHandlerTrait;
     /**
@@ -61,21 +61,21 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
      * @phpstan-param Level|LevelName|LogLevel::*|array<Level|LevelName|LogLevel::*> $minLevelOrList
      * @phpstan-param Level|LevelName|LogLevel::* $maxLevel
      */
-    public function __construct($handler, $minLevelOrList = \FSVendor\Monolog\Logger::DEBUG, $maxLevel = \FSVendor\Monolog\Logger::EMERGENCY, bool $bubble = \true)
+    public function __construct($handler, $minLevelOrList = Logger::DEBUG, $maxLevel = Logger::EMERGENCY, bool $bubble = \true)
     {
         $this->handler = $handler;
         $this->bubble = $bubble;
         $this->setAcceptedLevels($minLevelOrList, $maxLevel);
-        if (!$this->handler instanceof \FSVendor\Monolog\Handler\HandlerInterface && !\is_callable($this->handler)) {
-            throw new \RuntimeException("The given handler (" . \json_encode($this->handler) . ") is not a callable nor a Monolog\\Handler\\HandlerInterface object");
+        if (!$this->handler instanceof HandlerInterface && !is_callable($this->handler)) {
+            throw new \RuntimeException("The given handler (" . json_encode($this->handler) . ") is not a callable nor a Monolog\\Handler\\HandlerInterface object");
         }
     }
     /**
      * @phpstan-return array<int, Level>
      */
-    public function getAcceptedLevels() : array
+    public function getAcceptedLevels(): array
     {
-        return \array_flip($this->acceptedLevels);
+        return array_flip($this->acceptedLevels);
     }
     /**
      * @param int|string|array $minLevelOrList A list of levels to accept or a minimum level or level name if maxLevel is provided
@@ -84,31 +84,31 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
      * @phpstan-param Level|LevelName|LogLevel::*|array<Level|LevelName|LogLevel::*> $minLevelOrList
      * @phpstan-param Level|LevelName|LogLevel::*                                    $maxLevel
      */
-    public function setAcceptedLevels($minLevelOrList = \FSVendor\Monolog\Logger::DEBUG, $maxLevel = \FSVendor\Monolog\Logger::EMERGENCY) : self
+    public function setAcceptedLevels($minLevelOrList = Logger::DEBUG, $maxLevel = Logger::EMERGENCY): self
     {
-        if (\is_array($minLevelOrList)) {
-            $acceptedLevels = \array_map('Monolog\\Logger::toMonologLevel', $minLevelOrList);
+        if (is_array($minLevelOrList)) {
+            $acceptedLevels = array_map('FSVendor\Monolog\Logger::toMonologLevel', $minLevelOrList);
         } else {
-            $minLevelOrList = \FSVendor\Monolog\Logger::toMonologLevel($minLevelOrList);
-            $maxLevel = \FSVendor\Monolog\Logger::toMonologLevel($maxLevel);
-            $acceptedLevels = \array_values(\array_filter(\FSVendor\Monolog\Logger::getLevels(), function ($level) use($minLevelOrList, $maxLevel) {
+            $minLevelOrList = Logger::toMonologLevel($minLevelOrList);
+            $maxLevel = Logger::toMonologLevel($maxLevel);
+            $acceptedLevels = array_values(array_filter(Logger::getLevels(), function ($level) use ($minLevelOrList, $maxLevel) {
                 return $level >= $minLevelOrList && $level <= $maxLevel;
             }));
         }
-        $this->acceptedLevels = \array_flip($acceptedLevels);
+        $this->acceptedLevels = array_flip($acceptedLevels);
         return $this;
     }
     /**
      * {@inheritDoc}
      */
-    public function isHandling(array $record) : bool
+    public function isHandling(array $record): bool
     {
         return isset($this->acceptedLevels[$record['level']]);
     }
     /**
      * {@inheritDoc}
      */
-    public function handle(array $record) : bool
+    public function handle(array $record): bool
     {
         if (!$this->isHandling($record)) {
             return \false;
@@ -123,7 +123,7 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
     /**
      * {@inheritDoc}
      */
-    public function handleBatch(array $records) : void
+    public function handleBatch(array $records): void
     {
         $filtered = [];
         foreach ($records as $record) {
@@ -131,8 +131,8 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
                 $filtered[] = $record;
             }
         }
-        if (\count($filtered) > 0) {
-            $this->getHandler($filtered[\count($filtered) - 1])->handleBatch($filtered);
+        if (count($filtered) > 0) {
+            $this->getHandler($filtered[count($filtered) - 1])->handleBatch($filtered);
         }
     }
     /**
@@ -146,9 +146,9 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
      */
     public function getHandler(?array $record = null)
     {
-        if (!$this->handler instanceof \FSVendor\Monolog\Handler\HandlerInterface) {
+        if (!$this->handler instanceof HandlerInterface) {
             $this->handler = ($this->handler)($record, $this);
-            if (!$this->handler instanceof \FSVendor\Monolog\Handler\HandlerInterface) {
+            if (!$this->handler instanceof HandlerInterface) {
                 throw new \RuntimeException("The factory callable should return a HandlerInterface");
             }
         }
@@ -157,30 +157,30 @@ class FilterHandler extends \FSVendor\Monolog\Handler\Handler implements \FSVend
     /**
      * {@inheritDoc}
      */
-    public function setFormatter(\FSVendor\Monolog\Formatter\FormatterInterface $formatter) : \FSVendor\Monolog\Handler\HandlerInterface
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         $handler = $this->getHandler();
-        if ($handler instanceof \FSVendor\Monolog\Handler\FormattableHandlerInterface) {
+        if ($handler instanceof FormattableHandlerInterface) {
             $handler->setFormatter($formatter);
             return $this;
         }
-        throw new \UnexpectedValueException('The nested handler of type ' . \get_class($handler) . ' does not support formatters.');
+        throw new \UnexpectedValueException('The nested handler of type ' . get_class($handler) . ' does not support formatters.');
     }
     /**
      * {@inheritDoc}
      */
-    public function getFormatter() : \FSVendor\Monolog\Formatter\FormatterInterface
+    public function getFormatter(): FormatterInterface
     {
         $handler = $this->getHandler();
-        if ($handler instanceof \FSVendor\Monolog\Handler\FormattableHandlerInterface) {
+        if ($handler instanceof FormattableHandlerInterface) {
             return $handler->getFormatter();
         }
-        throw new \UnexpectedValueException('The nested handler of type ' . \get_class($handler) . ' does not support formatters.');
+        throw new \UnexpectedValueException('The nested handler of type ' . get_class($handler) . ' does not support formatters.');
     }
     public function reset()
     {
         $this->resetProcessors();
-        if ($this->getHandler() instanceof \FSVendor\Monolog\ResettableInterface) {
+        if ($this->getHandler() instanceof ResettableInterface) {
             $this->getHandler()->reset();
         }
     }

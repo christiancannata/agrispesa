@@ -8,19 +8,19 @@ use Automattic\WooCommerce\GoogleListingsAndAds\Google\Ads\GoogleAdsClient;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareInterface;
 use Automattic\WooCommerce\GoogleListingsAndAds\Options\OptionsAwareTrait;
 use Exception;
-use Google\Ads\GoogleAds\V16\Common\TagSnippet;
-use Google\Ads\GoogleAds\V16\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
-use Google\Ads\GoogleAds\V16\Enums\ConversionActionStatusEnum\ConversionActionStatus;
-use Google\Ads\GoogleAds\V16\Enums\ConversionActionTypeEnum\ConversionActionType;
-use Google\Ads\GoogleAds\V16\Enums\TrackingCodePageFormatEnum\TrackingCodePageFormat;
-use Google\Ads\GoogleAds\V16\Enums\TrackingCodeTypeEnum\TrackingCodeType;
-use Google\Ads\GoogleAds\V16\Resources\ConversionAction;
-use Google\Ads\GoogleAds\V16\Resources\ConversionAction\ValueSettings;
-use Google\Ads\GoogleAds\V16\Services\ConversionActionOperation;
-use Google\Ads\GoogleAds\V16\Services\Client\ConversionActionServiceClient;
-use Google\Ads\GoogleAds\V16\Services\GoogleAdsRow;
-use Google\Ads\GoogleAds\V16\Services\MutateConversionActionResult;
-use Google\Ads\GoogleAds\V16\Services\MutateConversionActionsRequest;
+use Google\Ads\GoogleAds\V20\Common\TagSnippet;
+use Google\Ads\GoogleAds\V20\Enums\ConversionActionCategoryEnum\ConversionActionCategory;
+use Google\Ads\GoogleAds\V20\Enums\ConversionActionStatusEnum\ConversionActionStatus;
+use Google\Ads\GoogleAds\V20\Enums\ConversionActionTypeEnum\ConversionActionType;
+use Google\Ads\GoogleAds\V20\Enums\TrackingCodePageFormatEnum\TrackingCodePageFormat;
+use Google\Ads\GoogleAds\V20\Enums\TrackingCodeTypeEnum\TrackingCodeType;
+use Google\Ads\GoogleAds\V20\Resources\ConversionAction;
+use Google\Ads\GoogleAds\V20\Resources\ConversionAction\ValueSettings;
+use Google\Ads\GoogleAds\V20\Services\ConversionActionOperation;
+use Google\Ads\GoogleAds\V20\Services\Client\ConversionActionServiceClient;
+use Google\Ads\GoogleAds\V20\Services\GoogleAdsRow;
+use Google\Ads\GoogleAds\V20\Services\MutateConversionActionResult;
+use Google\Ads\GoogleAds\V20\Services\MutateConversionActionsRequest;
 use Google\ApiCore\ApiException;
 
 /**
@@ -50,14 +50,14 @@ class AdsConversionAction implements OptionsAwareInterface {
 	}
 
 	/**
-	 * Create the 'Google Listings and Ads purchase action' conversion action.
+	 * Create the 'Google for WooCommerce purchase action' conversion action.
 	 *
 	 * @return array An array with some conversion action details.
 	 * @throws Exception If the conversion action can't be created or retrieved.
 	 */
 	public function create_conversion_action(): array {
 		try {
-			$unique = sprintf( '%04x', mt_rand( 0, 0xffff ) );
+			$unique = sprintf( '%04x', wp_rand( 0, 0xffff ) );
 
 			$conversion_action_operation = new ConversionActionOperation();
 			$conversion_action_operation->setCreate(
@@ -67,7 +67,7 @@ class AdsConversionAction implements OptionsAwareInterface {
 							'woocommerce_gla_conversion_action_name',
 							sprintf(
 							/* translators: %1 is a random 4-digit string */
-								__( '[%1$s] Google Listings and Ads purchase action', 'google-listings-and-ads' ),
+								__( '[%1$s] Google for WooCommerce purchase action', 'google-listings-and-ads' ),
 								$unique
 							)
 						),

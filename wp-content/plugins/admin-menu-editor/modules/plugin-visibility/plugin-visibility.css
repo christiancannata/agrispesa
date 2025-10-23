@@ -40,13 +40,8 @@
  The "Save Changes" form
  */
 .ame-pv-save-form {
-  float: right;
-  margin-top: 5px;
-  margin-bottom: 6px;
-}
-
-#ws_actor_selector_container {
-  margin-right: 130px;
+  margin-left: auto;
+  padding-left: 2em;
 }
 
 /*

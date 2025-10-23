@@ -2,8 +2,10 @@
 
 namespace YahnisElsts\AdminMenuEditor\Customizable\Controls;
 
+use YahnisElsts\AdminMenuEditor\Customizable\Schemas\Enum;
 use YahnisElsts\AdminMenuEditor\Customizable\Settings\EnumSetting;
 use YahnisElsts\AdminMenuEditor\Customizable\Settings\Setting;
+use YahnisElsts\AdminMenuEditor\Customizable\Settings\WithSchema\SettingWithSchema;
 
 abstract class ChoiceControl extends ClassicControl {
 	protected $type = 'choice';
@@ -48,6 +50,11 @@ abstract class ChoiceControl extends ClassicControl {
 			}
 		} else if ( $this->mainSetting instanceof EnumSetting ) {
 			$this->options = $this->mainSetting->generateChoiceOptions();
+		} else if ( $this->mainSetting instanceof SettingWithSchema ) {
+			$schema = $this->mainSetting->getSchema();
+			if ( $schema instanceof Enum ) {
+				$this->options = ChoiceControlOption::fromEnumSchema($schema);
+			}
 		}
 	}
 

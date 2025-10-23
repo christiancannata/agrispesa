@@ -1,19 +1,16 @@
 <?php
 
-
 /*
   Plugin Name: WP Import Export Lite
   Description: The Advanced and powerful solution for importing and exporting data to WordPress. Import and Export to Posts, Pages, and Custom Post Types. Ability to update existing data, and much more.
-  Version: 3.9.27
+  Version: 3.9.30
   Author: VJInfotech
   Author URI: http://www.vjinfotech.com
   Text Domain: wp-import-export-lite
   Domain Path: /languages/
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-        die( __( "Can't load this file directly", 'wp-import-export-lite' ) );
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( file_exists( realpath( plugin_dir_path( __FILE__ ) ) . '/deactivate-plugins.php' ) ) {
         require_once(realpath( plugin_dir_path( __FILE__ ) ) . '/deactivate-plugins.php');
@@ -22,7 +19,7 @@ if ( file_exists( realpath( plugin_dir_path( __FILE__ ) ) . '/deactivate-plugins
 
 // Plugin version
 if ( !defined( 'WPIE_PLUGIN_VERSION' ) ) {
-        define( 'WPIE_PLUGIN_VERSION', '3.9.27' );
+        define( 'WPIE_PLUGIN_VERSION', '3.9.30' );
 }
 // Plugin version
 if ( !defined( 'WPIE_DB_VERSION' ) ) {
@@ -193,14 +190,22 @@ if ( file_exists( WPIE_CLASSES_DIR . '/function.php' ) ) {
         require_once(WPIE_CLASSES_DIR . '/function.php');
 }
 
-if ( file_exists( WPIE_CLASSES_DIR . '/class-wpie-extensions.php' ) ) {
-        require_once(WPIE_CLASSES_DIR . '/class-wpie-extensions.php');
+add_action( 'init', 'wpie_init_addons' );
 
-        $wpie_ext = new \wpie\addons\WPIE_Extension();
+if ( !function_exists( 'wpie_init_addons' ) ) {
 
-        $wpie_ext->wpie_init_extensions();
+        function wpie_init_addons() {
+                if ( file_exists( WPIE_CLASSES_DIR . '/class-wpie-extensions.php' ) ) {
+                        require_once(WPIE_CLASSES_DIR . '/class-wpie-extensions.php');
 
-        unset( $wpie_ext );
+                        $wpie_ext = new \wpie\addons\WPIE_Extension();
+
+                        $wpie_ext->wpie_init_extensions();
+
+                        unset( $wpie_ext );
+                }
+        }
+
 }
 
 

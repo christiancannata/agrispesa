@@ -8,26 +8,12 @@ jQuery(document).ready(function ($) {
 
     2025: [
       1, 2, 4, 6, 8, 10, 12, 14, 16, 17, 19, 21, 23, 25, 27, 29,31, 32, 33, 34, 35, 36, 38, 40, 42, 44, 46, 48, 50, 52
+    ],
+    2026: [
+      1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 29, 31
     ]
   }
 
-  function getDatesBetween(startDate, endDate) {
-    const currentDate = new Date(startDate.getTime());
-    const dates = [];
-    while (currentDate <= endDate) {
-      let appoDate = new Date(currentDate)
-      appoDate.setHours(0, 0, 0)
-      dates.push(appoDate);
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dates;
-  }
-
-  /*const date1 = new Date('2023-07-24');
-  const date2 = new Date('2023-09-10');
-
-  let allDates = getDatesBetween(date1, date2);
-*/
   function isAnOverlapEvent(eventStartDay, eventEndDay) {
     // Events
     var events = window.calendar.getEvents()
@@ -115,17 +101,20 @@ jQuery(document).ready(function ($) {
     /* validRange: {
        start: nextAvailableMonday
      },*/
-    dayCellDidMount: function (date) {
-      let appoDate = date.date
-      appoDate.setHours(0, 0, 0)
+      dayCellDidMount: function (arg) {
+        const d = new Date(arg.date.getTime());
+        d.setHours(0, 0, 0, 0);
 
-      if (window.blockedWeeks[moment(appoDate).year()].includes(moment(appoDate).week())) {
-        //if (moment(appoDate) >= moment(allDates[0]) && moment(appoDate) <= moment(allDates[allDates.length - 1])) {
-        date.el.style.backgroundColor = "#f99090";
-        date.el.style.color = '#5d2929'
-      }
+        const m = moment(d);
+        const y = m.isoWeekYear();   // <- ISO year
+        const w = m.isoWeek();       // <- ISO week (lun–dom)
 
-    },
+        const weeksForYear = (window.blockedWeeks[y] || []);
+        if (weeksForYear.includes(w)) {
+          arg.el.style.backgroundColor = '#f99090';
+          arg.el.style.color = '#5d2929';
+        }
+      },
     eventClick: function (info) {
 
       //let week = info.event.week
@@ -305,6 +294,7 @@ jQuery(document).ready(function ($) {
         url: window.baseurl + '/wp-json/agrispesa/v1/user-blocked-weeks?userId=' + window.userId
       }
     ],
+    weekNumberCalculation: 'ISO',  // assicura numerazione lun–dom
     firstDay: 1,
     initialView: 'dayGridMonth',
     locale: 'it'

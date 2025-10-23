@@ -8,7 +8,7 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\Hookable;
 /**
  * Can display Opt In notice.
  */
-class OptInNotice implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
+class OptInNotice implements Hookable
 {
     /**
      * @var string
@@ -27,7 +27,7 @@ class OptInNotice implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      * @param string $shop_url
      * @param ShouldDisplay $should_display
      */
-    public function __construct(string $plugin_slug, string $shop_url, \FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplay $should_display)
+    public function __construct(string $plugin_slug, string $shop_url, ShouldDisplay $should_display)
     {
         $this->plugin_slug = $plugin_slug;
         $this->should_display = $should_display;
@@ -38,7 +38,7 @@ class OptInNotice implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
      */
     public function hooks()
     {
-        \add_action('admin_notices', [$this, 'display_notice_if_should']);
+        add_action('admin_notices', [$this, 'display_notice_if_should']);
     }
     /**
      * @return void
@@ -47,7 +47,19 @@ class OptInNotice implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     {
         if ($this->should_display->should_display()) {
             $this->create_notice();
+            $this->add_script_to_footer();
         }
+    }
+    private function add_script_to_footer()
+    {
+        add_action('admin_footer', [$this, 'add_js_to_footer']);
+    }
+    public function add_js_to_footer()
+    {
+        $plugin_slug = $this->plugin_slug;
+        ob_start();
+        include __DIR__ . '/views/html-footer-script.php';
+        echo wp_kses(ob_get_clean(), array('script' => array()));
     }
     /**
      * @return PermanentDismissibleNotice
@@ -55,19 +67,19 @@ class OptInNotice implements \FSVendor\WPDesk\PluginBuilder\Plugin\Hookable
     protected function create_notice()
     {
         $notice_name = 'octolize_opt_in_' . $this->plugin_slug;
-        new \FSVendor\WPDesk\Notice\PermanentDismissibleNotice($this->prepare_notice_content(), $notice_name, \FSVendor\WPDesk\Notice\Notice::NOTICE_TYPE_SUCCESS);
+        new PermanentDismissibleNotice($this->prepare_notice_content(), $notice_name, Notice::NOTICE_TYPE_SUCCESS);
     }
     /**
      * @return string
      */
     private function prepare_notice_content()
     {
-        $user = \wp_get_current_user();
+        $user = wp_get_current_user();
         $username = $user->first_name ? $user->first_name : $user->user_login;
-        $terms_url = \sprintf('%1$s/usage-tracking/', \untrailingslashit($this->shop_url));
+        $terms_url = sprintf('%1$s/usage-tracking/', untrailingslashit($this->shop_url));
         $plugin_slug = $this->plugin_slug;
-        \ob_start();
+        ob_start();
         include __DIR__ . '/views/html-notice.php';
-        return \ob_get_clean();
+        return ob_get_clean();
     }
 }

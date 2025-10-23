@@ -295,17 +295,17 @@ class Cookie_Law_Info_Public {
 	public function process_scripts( $script, $slug, $advanced_script_rendering, $head ) {
 		if ( $advanced_script_rendering === false ) {
 			if ( $this->check_consent( $slug ) === true ) {
-				echo $script;
+				echo $script; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		} else {
-			echo $this->pre_process_scripts( $slug, $script, $head );
+			echo $this->pre_process_scripts( $slug, $script, $head ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 	public function check_consent( $slug ) {
 
 		$preference_cookie = isset( $_COOKIE[ 'cookielawinfo-checkbox-' . $slug ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ 'cookielawinfo-checkbox-' . $slug ] ) ) : 'no';
 		$main_cookie       = isset( $_COOKIE['viewed_cookie_policy'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['viewed_cookie_policy'] ) ) : 'no';
-		if ( $main_cookie === 'yes' && $preference_cookie === 'yes' || isset( $_GET['cli_bypass'] ) && get_option( 'CLI_BYPASS' ) == 1 ) {
+		if ( $main_cookie === 'yes' && $preference_cookie === 'yes' || isset( $_GET['cli_bypass'] ) && get_option( 'CLI_BYPASS' ) == 1 ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return true;
 		}
 		return false;
@@ -442,10 +442,10 @@ class Cookie_Law_Info_Public {
 	 */
 	public function is_page_editor_active() {
 		global $wp_customize;
-		if ( isset( $_GET['et_fb'] )
+		if ( isset( $_GET['et_fb'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			|| ( defined( 'ET_FB_ENABLED' ) && ET_FB_ENABLED )
-			|| isset( $_GET['elementor-preview'] )
-			|| isset( $_POST['cs_preview_state'] )
+			|| isset( $_GET['elementor-preview'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			|| isset( $_POST['cs_preview_state'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			|| isset( $wp_customize )
 		) {
 			return true;

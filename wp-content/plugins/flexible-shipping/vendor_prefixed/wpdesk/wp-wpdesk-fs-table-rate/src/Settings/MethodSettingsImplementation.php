@@ -12,7 +12,7 @@ use FSVendor\WPDesk\FS\TableRate\Logger\CanFormatForLog;
 /**
  * Class MethodSettingsImplementation
  */
-class MethodSettingsImplementation implements \FSVendor\WPDesk\FS\TableRate\Settings\MethodSettings, \FSVendor\WPDesk\FS\TableRate\Logger\CanFormatForLog
+class MethodSettingsImplementation implements MethodSettings, CanFormatForLog
 {
     use CheckboxValue;
     /**
@@ -109,7 +109,7 @@ class MethodSettingsImplementation implements \FSVendor\WPDesk\FS\TableRate\Sett
      * @param IntegrationSettingsImplementation $integration_settings
      * @param array $rules_settings
      */
-    public function __construct(array $raw_settings, $id, $enabled, $title, $description, $tax_status, $prices_include_tax, $free_shipping, $free_shipping_label, $free_shipping_cart_notice, $calculation_method, $cart_calculation, $visibility, $default, $debug_mode, $integration, \FSVendor\WPDesk\FS\TableRate\Settings\IntegrationSettingsImplementation $integration_settings, array $rules_settings)
+    public function __construct(array $raw_settings, $id, $enabled, $title, $description, $tax_status, $prices_include_tax, $free_shipping, $free_shipping_label, $free_shipping_cart_notice, $calculation_method, $cart_calculation, $visibility, $default, $debug_mode, $integration, IntegrationSettingsImplementation $integration_settings, array $rules_settings)
     {
         $this->raw_settings = $raw_settings;
         $this->id = $id;
@@ -269,14 +269,14 @@ class MethodSettingsImplementation implements \FSVendor\WPDesk\FS\TableRate\Sett
      */
     public function format_for_log()
     {
-        return \sprintf(\__('Method settings:%1$s Enabled: %2$s Method Title: %3$s Method Description: %4$s Tax status: %5$s Costs includes tax: %6$s Free Shipping: %7$s Free Shipping Label: %8$s \'Left to free shipping\' notice: %9$s Rules Calculation: %10$s Cart Calculation: %11$s Visibility (Show only for logged in users): %12$s Default: %13$s Debug mode: %14$s', 'flexible-shipping'), "\n", $this->get_as_translated_checkbox_value($this->get_enabled()) . "\n", $this->get_title() . "\n", $this->get_description() . "\n", $this->get_tax_status_translated() . "\n", $this->get_prices_include_tax() . "\n", $this->get_free_shipping() . "\n", $this->get_free_shipping_label() . "\n", $this->get_as_translated_checkbox_value($this->get_free_shipping_cart_notice()) . "\n", (new \FSVendor\WPDesk\FS\TableRate\CalculationMethodOptions())->get_option_label($this->get_calculation_method()) . "\n", (new \FSVendor\WPDesk\FS\TableRate\Settings\CartCalculationOptions())->get_option_label($this->get_cart_calculation()) . "\n", $this->get_as_translated_checkbox_value($this->get_visibility()) . "\n", $this->get_as_translated_checkbox_value($this->get_default()) . "\n", $this->get_as_translated_checkbox_value($this->get_debug_mode()) . "\n") . $this->integration_settings->format_for_log();
+        return sprintf(__('Method settings:%1$s Enabled: %2$s Method Title: %3$s Method Description: %4$s Tax status: %5$s Costs includes tax: %6$s Free Shipping: %7$s Free Shipping Label: %8$s \'Left to free shipping\' notice: %9$s Rules Calculation: %10$s Cart Calculation: %11$s Visibility (Show only for logged in users): %12$s Default: %13$s Debug mode: %14$s', 'flexible-shipping'), "\n", $this->get_as_translated_checkbox_value($this->get_enabled()) . "\n", $this->get_title() . "\n", $this->get_description() . "\n", $this->get_tax_status_translated() . "\n", $this->get_prices_include_tax() . "\n", $this->get_free_shipping() . "\n", $this->get_free_shipping_label() . "\n", $this->get_as_translated_checkbox_value($this->get_free_shipping_cart_notice()) . "\n", (new CalculationMethodOptions())->get_option_label($this->get_calculation_method()) . "\n", (new CartCalculationOptions())->get_option_label($this->get_cart_calculation()) . "\n", $this->get_as_translated_checkbox_value($this->get_visibility()) . "\n", $this->get_as_translated_checkbox_value($this->get_default()) . "\n", $this->get_as_translated_checkbox_value($this->get_debug_mode()) . "\n") . $this->integration_settings->format_for_log();
     }
     /**
      * @return string
      */
     public function get_tax_status_translated()
     {
-        $tax_status_options = array('taxable' => \__('Taxable', 'flexible-shipping'), 'none' => \_x('None', 'Tax status', 'flexible-shipping'));
+        $tax_status_options = array('taxable' => __('Taxable', 'flexible-shipping'), 'none' => _x('None', 'Tax status', 'flexible-shipping'));
         return isset($tax_status_options[$this->tax_status]) ? $tax_status_options[$this->tax_status] : $this->tax_status;
     }
 }

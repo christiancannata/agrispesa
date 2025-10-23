@@ -101,3 +101,7 @@
     margin-left: 25px;
     width: 350px;
 }
+
+.wpdesk-tracker-test div {
+	color: yellow !important;
+}

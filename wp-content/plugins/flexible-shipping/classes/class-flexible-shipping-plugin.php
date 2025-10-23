@@ -17,6 +17,8 @@ use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayGetParameterValue;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayOrConditions;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayShippingMethodInstanceSettings;
 use FSVendor\Octolize\Tracker\TrackerInitializer;
+use FSVendor\Psr\Log\LoggerInterface;
+use FSVendor\Psr\Log\NullLogger;
 use FSVendor\WPDesk\FS\Compatibility\PluginCompatibility;
 use FSVendor\WPDesk\FS\Shipment\ShipmentFunctionality;
 use FSVendor\WPDesk\FS\TableRate\Logger\Assets;
@@ -37,21 +39,20 @@ use FSVendor\WPDesk\View\Resolver\DirResolver;
 use FSVendor\WPDesk\View\Resolver\WPThemeResolver;
 use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\FilterConvertersFactory;
 use FSVendor\WPDesk\WooCommerce\CurrencySwitchers\ShippingIntegrations;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use WPDesk\FS\Blocks\FreeShipping\FreeShippingBlock;
 use WPDesk\FS\Blocks\FreeShipping\FreeShippingStoreEndpointData;
 use WPDesk\FS\Helpers\FlexibleShippingMethodsChecker;
 use WPDesk\FS\Helpers\WooSettingsPageChecker;
 use WPDesk\FS\Integration\ExternalPluginAccess;
+use WPDesk\FS\Newsletter\SubscriptionForm;
 use WPDesk\FS\Onboarding\TableRate\FinishOption;
 use WPDesk\FS\Onboarding\TableRate\Onboarding;
 use WPDesk\FS\Onboarding\TableRate\OptionAjaxUpdater;
-use WPDesk\FS\Onboarding\TableRate\PopupData;
 use WPDesk\FS\Plugin\PluginActivation;
 use WPDesk\FS\ProFeatures;
 use WPDesk\FS\ProVersion\ProVersionUpdateReminder;
 use WPDesk\FS\Shipment;
+use WPDesk\FS\TableRate\AI\TrackerDataOnShippingMethodSaver;
 use WPDesk\FS\TableRate\Beacon\Beacon;
 use WPDesk\FS\TableRate\Beacon\BeaconClickedAjax;
 use WPDesk\FS\TableRate\Beacon\BeaconDeactivationTracker;
@@ -87,6 +88,7 @@ use WPDesk\FS\TableRate\ShippingMethod\Management\ShippingMethodManagement;
 use WPDesk\FS\TableRate\ShippingMethod\MethodDescription;
 use WPDesk\FS\TableRate\ShippingMethod\MethodTitle;
 use WPDesk\FS\TableRate\ShippingMethodSingle;
+use WPDesk\FS\TableRate\ShippingMethodsIntegration\ShippingRate;
 use WPDesk\FS\TableRate\Tax\Tracker;
 use WPDesk\FS\TableRate\UserFeedback;
 use WPDesk\WooCommerceCartWeight\Block\StoreEndpointData;
@@ -179,6 +181,7 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 	public function init_logger_on_shipping_method() {
 		WPDesk_Flexible_Shipping::set_fs_logger( $this->logger );
 		ShippingMethodSingle::set_fs_logger( $this->logger );
+		ShippingRate::set_fs_logger( $this->logger );
 	}
 
 	/**
@@ -238,7 +241,6 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 			);
 		}
 
-
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Shorcode_Unit_Weight() );
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Shorcode_Unit_Dimension() );
 
@@ -273,8 +275,7 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 				$this->scripts_version,
 				trailingslashit( $this->get_plugin_assets_url() ),
 				$setting_page_checker,
-				$fs_methods_checker,
-				( new PopupData() )->get_popups()
+				$fs_methods_checker
 			)
 		);
 		$this->add_hookable( new \WPDesk\FS\Onboarding\TableRate\Tracker( $finish_option ) );
@@ -319,6 +320,9 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$this->add_hookable( new ProFeatures\Tracker\AjaxTracker( $tracking_data ) );
 		$this->add_hookable( new ProFeatures\Tracker\Tracker( $tracking_data ) );
 
+		// Time tracking
+		$this->add_hookable( new \WPDesk\FS\TableRate\ShippingMethod\Timestamps\MethodTimestamps() );
+		$this->add_hookable( new \WPDesk\FS\TableRate\ShippingMethod\Timestamps\TrackerData() );
 
 		$this->add_hookable( new PluginActivation() );
 
@@ -338,6 +342,24 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$should_show_strategy = new ShippingMethodShouldShowStrategy( \WPDesk_Flexible_Shipping_Settings::METHOD_ID );
 		$this->add_hookable( new AdminAssets( $brand_assets_url, 'fs', $should_show_strategy ) );
 
+		// Shipping methods integration.
+		$this->add_hookable( new \WPDesk\FS\TableRate\ShippingMethodsIntegration\Integration() );
+
+		// Upgrade onboarding
+		$this->add_hookable( new WPDesk\FS\Plugin\UpgradeOnboarding( $this->plugin_info ) );
+
+		// CSAT
+		$this->add_hookable(
+			new FSVendor\Octolize\Csat\Csat(
+				new \WPDesk\FS\Csat\CsatOptionDependedOnShippingMethodAndAiUsage( 'csat_flexible_shipping_ai', 'flexible_shipping_single' ),
+				new \FSVendor\Octolize\Csat\CsatCodeFromFile( __DIR__ . '/views/csat.php' ),
+				'woocommerce_after_settings_shipping',
+				new \FSVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodInstanceStrategy( new \WC_Shipping_Zones(), 'flexible_shipping_single' )
+			)
+		);
+
+		// Newsletter
+		$this->add_hookable( new SubscriptionForm() );
 	}
 
 	/**
@@ -408,6 +430,7 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 		$this->init_renderer();
 		$this->load_dependencies();
 		$this->init_tracker();
+		$this->init_ai();
 		$this->hooks();
 		$this->init_assets_url_on_rules_settings_field();
 		$this->init_checkout_blocks();
@@ -567,6 +590,12 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 			( new WPDesk_Flexible_Shipping_Tracker() )->hooks();
 			( new TrackerData() )->hooks();
 		} );
+
+	}
+
+	private function init_ai() {
+		( new TrackerDataOnShippingMethodSaver() )->hooks();
+		( new \WPDesk\FS\TableRate\AI\TrackerData() )->hooks();
 	}
 
 	/**
