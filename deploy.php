@@ -9,9 +9,9 @@ set('keep_releases', 3);
 
 set('repository', 'git@github.com:christiancannata/agrispesa.git');
 
-add('shared_files', ['wp-config.php', 'wp-content/debug.log', 'wp-content/advanced-cache.php']);
-add('shared_dirs', ['wp-content/uploads', 'wp-content/plugins', 'wp-content/wp-rocket-config']);
-add('writable_dirs', ['wp-content/uploads', 'wp-content/wp-rocket-config']);
+add('shared_files', ['wp-config.php', 'wp-content/debug.log','nginx.conf']);
+add('shared_dirs', ['wp-content/uploads','wp-content/upgrade', 'wp-content/plugins', 'wp-content/wp-rocket-config','wp-content/w3tc-config','nginx.conf']);
+add('writable_dirs', ['wp-content/uploads', 'wp-content/wp-rocket-config', 'wp-content/upgrade','wp-content/w3tc-config']);
 
 // Hosts
 
