@@ -130,70 +130,135 @@ function abbonamenti_debito_page()
 }
 
 
-function sospensioni_abbonamento_page()
-{
-
+function sospensioni_abbonamento_page() {
 	global $wpdb;
 
-	$today = new DateTime();
-	$currentYear = $today->format('Y');
-	$nextYear = $today->format('Y') + 1;
+	$today       = new DateTime();
+	$currentYear = (int) $today->format('Y');
+	$nextYear    = $currentYear + 1;
+	$currentWeek = (int) $today->format('W'); // ISO week
 
-	// Recupera sia le sospensioni dell'anno corrente che dell'anno successivo
+	// Prendi entrambe le chiavi (anno corrente + prossimo)
+	$meta_keys = [
+		"disable_weeks_{$currentYear}",
+		"disable_weeks_{$nextYear}",
+	];
+	$placeholders = implode(',', array_fill(0, count($meta_keys), '%s'));
+
 	$subscriptionsDatabase = $wpdb->get_results(
-		"SELECT * FROM wp_postmeta
-         WHERE meta_key IN ('disable_weeks_{$currentYear}', 'disable_weeks_{$nextYear}')",
+		$wpdb->prepare(
+			"SELECT post_id, meta_key, meta_value
+             FROM {$wpdb->postmeta}
+             WHERE meta_key IN ($placeholders)",
+			$meta_keys
+		),
 		ARRAY_A
 	);
 
-	$subscriptions = [];
+	// Costruiamo una lista di record (NON indicizzata per id, così evitiamo sovrascritture).
+	// Ogni record = un abbinamento (subscription, anno, settimane)
+	$records = [];
+
 	foreach ($subscriptionsDatabase as $record) {
 		$subscription = wcs_get_subscription($record['post_id']);
 		if (!$subscription) {
 			continue;
 		}
 
-		$subscriptions[$subscription->get_id()] = [
+		// Decodifica weeks in modo robusto
+		$weeks = [];
+		$raw   = $record['meta_value'];
+
+		if (is_string($raw) && $raw !== '') {
+			// prova JSON
+			$decoded = json_decode($raw, true);
+			if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+				$weeks = $decoded;
+			} else {
+				// prova PHP serialize
+				$tmp = @unserialize($raw);
+				if ($tmp !== false && is_array($tmp)) {
+					$weeks = $tmp;
+				}
+			}
+		} elseif (is_array($raw)) {
+			$weeks = $raw;
+		}
+
+		// normalizza array di interi
+		$weeks = array_values(array_unique(array_filter(array_map('intval', $weeks))));
+		if (empty($weeks)) {
+			continue;
+		}
+
+		$year = (int) str_replace('disable_weeks_', '', $record['meta_key']);
+
+		$records[] = [
 			'subscription' => $subscription,
-			'weeks' => unserialize($record['meta_value']),
-			'year' => str_replace('disable_weeks_', '', $record['meta_key']) // Estrae l'anno dalla meta_key
+			'weeks'        => $weeks,
+			'year'         => $year,
 		];
 	}
 
-	$currentWeek = $today->format("W");
-
+	// Costruisci le settimane da mostrare (anno corrente dalla settimana attuale; anno prossimo 1..53)
 	$weeksArray = [];
 
-	// Gestisce le settimane dell'anno corrente
-	for ($i = $currentWeek; $i <= 52; $i++) {
-		$weeksArray[] = [
-			'week' => $i,
-			'year' => $currentYear,
-			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i, $currentYear) {
-				return $subscription['year'] == $currentYear && in_array($i, $subscription['weeks']);
-			})
-		];
+	// limite massimo 53 settimane
+	$maxWeeks = 53;
+
+	// anno corrente
+	for ($w = $currentWeek; $w <= $maxWeeks; $w++) {
+		// filtra i record che hanno quell'anno e contengono quella settimana
+		$subs = array_filter($records, function ($rec) use ($w, $currentYear) {
+			return ($rec['year'] === $currentYear) && in_array($w, $rec['weeks'], true);
+		});
+
+		if (!empty($subs)) {
+			// reindicizza e ordina per cognome spedizione
+			$subs = array_values($subs);
+			usort($subs, function ($a, $b) {
+				return strcmp(
+					(string) $a['subscription']->get_shipping_last_name(),
+					(string) $b['subscription']->get_shipping_last_name()
+				);
+			});
+
+			$weeksArray[] = [
+				'week'          => $w,
+				'year'          => $currentYear,
+				'subscriptions' => $subs,
+			];
+		}
 	}
 
-	// Gestisce le settimane dell'anno successivo
-	for ($i = 1; $i <= 52; $i++) {
-		$weeksArray[] = [
-			'week' => $i,
-			'year' => $nextYear,
-			'subscriptions' => array_filter($subscriptions, function ($subscription) use ($i, $nextYear) {
-				return $subscription['year'] == $nextYear && in_array($i, $subscription['weeks']);
-			})
-		];
+	// anno prossimo
+	for ($w = 1; $w <= $maxWeeks; $w++) {
+		$subs = array_filter($records, function ($rec) use ($w, $nextYear) {
+			return ($rec['year'] === $nextYear) && in_array($w, $rec['weeks'], true);
+		});
+
+		if (!empty($subs)) {
+			$subs = array_values($subs);
+			usort($subs, function ($a, $b) {
+				return strcmp(
+					(string) $a['subscription']->get_shipping_last_name(),
+					(string) $b['subscription']->get_shipping_last_name()
+				);
+			});
+
+			$weeksArray[] = [
+				'week'          => $w,
+				'year'          => $nextYear,
+				'subscriptions' => $subs,
+			];
+		}
 	}
 
 	?>
 	<h1>Sospensioni Abbonamento</h1>
 
-	<?php
-	foreach ($weeksArray as $week):
-		if (empty($week['subscriptions'])) continue; // Salta le settimane senza sospensioni
-		?>
-		<h3>Settimana <?php echo $week['week'] . ' - ' . $week['year']; ?></h3>
+	<?php foreach ($weeksArray as $week): ?>
+		<h3>Settimana <?php echo (int) $week['week']; ?> - <?php echo (int) $week['year']; ?></h3>
 		<table class="table-admin-subscriptions">
 			<thead>
 			<tr>
@@ -203,28 +268,23 @@ function sospensioni_abbonamento_page()
 			</tr>
 			</thead>
 			<tbody>
-			<?php
-			usort($week['subscriptions'], function ($a, $b) {
-				return strcmp($a['subscription']->get_shipping_last_name(), $b['subscription']->get_shipping_last_name());
-			});
-
-			foreach ($week['subscriptions'] as $subscription):
-				$items = $subscription['subscription']->get_items();
+			<?php foreach ($week['subscriptions'] as $rec): ?>
+				<?php
+				/** @var WC_Subscription $sub */
+				$sub   = $rec['subscription'];
+				$items = $sub->get_items();
+				$name  = trim($sub->get_shipping_last_name() . ' ' . $sub->get_shipping_first_name());
 				?>
 				<tr>
+					<td><?php echo esc_html($name); ?></td>
 					<td>
-						<?php echo $subscription['subscription']->get_shipping_last_name() . " " . $subscription['subscription']->get_shipping_first_name(); ?>
-					</td>
-					<td>
-						<?php
-						foreach ($items as $item) {
-							echo $item->get_name() . "<br>";
-						}
-						?>
+						<?php foreach ($items as $item): ?>
+							<?php echo esc_html($item->get_name()); ?><br>
+						<?php endforeach; ?>
 					</td>
 					<td>
 						<a target="_blank"
-						   href="/wp-admin/post.php?post=<?php echo $subscription['subscription']->get_id(); ?>&action=edit">
+						   href="<?php echo esc_url(admin_url('post.php?post=' . $sub->get_id() . '&action=edit')); ?>">
 							Vai all'abbonamento
 						</a>
 					</td>
@@ -239,20 +299,16 @@ function sospensioni_abbonamento_page()
 			border-collapse: collapse;
 			width: 100%;
 		}
-
 		.table-admin-subscriptions td, .table-admin-subscriptions th {
 			border: 1px solid #ddd;
 			padding: 8px;
 		}
-
 		.table-admin-subscriptions tr:nth-child(even) {
 			background-color: #f2f2f2;
 		}
-
 		.table-admin-subscriptions tr:hover {
 			background-color: #ddd;
 		}
-
 		.table-admin-subscriptions th {
 			background-color: #04AA6D;
 			color: white;
@@ -262,5 +318,4 @@ function sospensioni_abbonamento_page()
 	</style>
 	<?php
 }
-
 ?>
