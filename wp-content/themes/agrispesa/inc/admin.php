@@ -1547,7 +1547,7 @@ register_rest_route("agrispesa/v1", "import-box", [
             WHERE wp.ID IS NULL;");
 
         $createdBoxes = [];
-        
+
         // Crea i post "weekly-box" uno per ogni offer_no
         foreach ($boxes as $idBox => $boxProducts) {
             $boxName = "Box settimana " . date("Y") . "_" . $week . " - " . $idBox;
@@ -1679,7 +1679,7 @@ register_rest_route("agrispesa/v1", "import-box", [
             // Se vuoi sostituire, usa update_post_meta($post_id, "_products", $arrayProducts);
             add_post_meta($post_id, "_products", $arrayProducts);
             $boxIds[] = $post_id;
-            
+
             $createdBoxes[] = [
     'id'             => $post_id,
     'title'          => $boxName,
@@ -1688,7 +1688,7 @@ register_rest_route("agrispesa/v1", "import-box", [
     'products_count' => count($arrayProducts),
     'navision_offer' => (string) $boxProducts[0]["offer_no"],
 ];
-            
+
         }
 
         // ENABLE PRODUCTS
@@ -3591,92 +3591,93 @@ register_rest_route("agrispesa/v1", "user-blocked-weeks", [
         return true;
     },
     "callback" => function ($request) {
-        $loggedUser = $_GET["userId"];
 
-        $startDate = $_GET["start"];
-        $startDate = new DateTime($startDate);
+        require_once get_template_directory() . "/libraries/carbon/autoload.php";
 
-        $endDate = $_GET["end"];
-        $endDate = new DateTime($endDate);
+        $userId = intval($_GET["userId"] ?? 0);
+        if (!$userId) {
+            return new WP_REST_Response(["error" => "Missing userId"], 400);
+        }
 
+        // Date range
+        try {
+            $startDate = new DateTime($_GET["start"]);
+            $endDate   = new DateTime($_GET["end"]);
+        } catch (Exception $e) {
+            return new WP_REST_Response(["error" => "Invalid date format"], 400);
+        }
+
+        // Carbon wrapper
+        $from = new Carbon\Carbon($startDate);
+        $to   = new Carbon\Carbon($endDate);
+
+        // Allinea il punto di partenza al primo mercoledì disponibile (come vostro requisito)
+        $from = ($from->dayOfWeek === Carbon\Carbon::WEDNESDAY)
+            ? $from
+            : $from->copy()->next(Carbon\Carbon::WEDNESDAY);
+
+        // Recupera l'abbonamento
         $subscription = wcs_get_subscriptions([
             "subscriptions_per_page" => 1,
             "orderby" => "ID",
             "order" => "DESC",
             "subscription_status" => ["active", "on-hold"],
-            "customer_id" => $loggedUser,
+            "customer_id" => $userId,
         ]);
 
         $subscription = reset($subscription);
-
-        require_once get_template_directory() .
-            "/libraries/carbon/autoload.php";
-
-        $fromDate = new Carbon\Carbon($startDate);
-
-        $fromDate =
-            $fromDate->dayOfWeek == Carbon\Carbon::WEDNESDAY
-                ? $fromDate
-                : $fromDate->copy()->modify("next Wednesday");
-
-        $toDate = new Carbon\Carbon($endDate);
-        $dates = [];
-        $events = [];
-
-        // Ottieni gli anni compresi tra startDate e endDate
-        $startYear = $fromDate->format("Y");
-        $endYear = $toDate->format("Y");
-
-        $disabledWeeks = [];
-        for ($year = $startYear; $year <= $endYear; $year++) {
-            $yearWeeks = get_post_meta(
-                $subscription->get_id(),
-                "disable_weeks_" . $year,
-                true
-            );
-
-            if (is_array($yearWeeks)) {
-                $disabledWeeks = array_merge($disabledWeeks, $yearWeeks);
-            }
+        if (!$subscription) {
+            return new WP_REST_Response([], 200);
         }
 
-        // Calcolo degli eventi per le settimane disabilitate
-        if (is_array($disabledWeeks)) {
-            for ($date = $fromDate; $date->lte($toDate); $date->addWeek()) {
-                if (in_array($date->format("W"), $disabledWeeks)) {
-                    $timestamp =
-                        mktime(0, 0, 0, 1, 1, date("Y")) +
-                        $date->format("W") * 7 * 24 * 60 * 60;
-                    $timestamp_for_monday =
-                        $timestamp - 86400 * (date("N", $timestamp) - 1);
+        // ---- RECUPERO DELLE SETTIMANE DISABILITATE PER ANNO ---- //
+        $disabledWeeks = [];
+        $startYear = intval($from->format("Y"));
+        $endYear   = intval($to->format("Y"));
 
-                    $monday = new DateTime();
-                    $monday->setTimestamp($timestamp_for_monday);
-                    $monday->setDate(
-                        $date->format("Y"),
-                        $monday->format("m"),
-                        $monday->format("d")
-                    );
+        for ($year = $startYear; $year <= $endYear; $year++) {
+            $weeks = get_post_meta($subscription->get_id(), "disable_weeks_" . $year, true);
 
-                    $monday->sub(new \DateInterval('P1W'));
-
-                    $sunday = clone $monday;
-                    $sunday->modify("next sunday");
-
-                    $events[] = [
-                        "start" => $monday->format("Y-m-d 00:00:00"),
-                        "end" => $sunday->format("Y-m-d 23:59:59"),
-                        "title" =>
-                            "Questa settimana non ricevi la Facciamo Noi",
-                        "week" => $sunday->format("W"),
-                    ];
+            if (is_array($weeks)) {
+                foreach ($weeks as $w) {
+                    $disabledWeeks[] = intval($w);
                 }
             }
         }
 
-        $response = new WP_REST_Response($events);
-        $response->set_status(200);
-        return $response;
+        $disabledWeeks = array_unique($disabledWeeks);
+
+        // ---- GENERAZIONE EVENTI ---- //
+        $events = [];
+
+        // Cloniamo $from per non modificarlo accidentalmente
+        $cursor = $from->copy();
+
+        while ($cursor->lte($to)) {
+
+            $weekNumber = intval($cursor->format("W"));
+
+            if (in_array($weekNumber, $disabledWeeks, true)) {
+
+                // Monday della settimana ISO
+                $monday = $cursor->copy()->startOfWeek(Carbon\Carbon::MONDAY);
+
+                // Sunday della settimana ISO
+                $sunday = $cursor->copy()->endOfWeek(Carbon\Carbon::SUNDAY);
+
+                $events[] = [
+                    "start" => $monday->format("Y-m-d 00:00:00"),
+                    "end"   => $sunday->format("Y-m-d 23:59:59"),
+                    "title" => "Questa settimana non ricevi la Facciamo Noi",
+                    "week"  => strval($weekNumber),
+                ];
+            }
+
+            // Avanza di una settimana ISO
+            $cursor->addWeek();
+        }
+
+        return new WP_REST_Response($events, 200);
     },
 ]);
 
