@@ -21,3 +21,6 @@
 2025-11-25T13:12:01+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to register_post_type.
 2025-11-25T13:16:57+00:00 WARNING Sono stati ricevuti pattern vuoti dal PTK Negozio di pattern
 2025-11-25T13:24:30+00:00 WARNING Sono stati ricevuti pattern vuoti dal PTK Negozio di pattern
+2025-11-25T13:34:36+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to get_post_type_items.
+2025-11-25T13:34:36+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to add_plugin_item.
+2025-11-25T13:34:36+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to register_post_type.

@@ -3534,56 +3534,98 @@ return $response;
         },
     ]);
 
-    register_rest_route("agrispesa/v1", "delete-user-blocked-weeks", [
-        "methods" => "POST",
-        "permission_callback" => function () {
-            return true;
-        },
-        "callback" => function ($request) {
-            $loggedUser = $_POST["userId"];
+register_rest_route("agrispesa/v1", "user-blocked-weeks", [
+    "methods" => "GET",
+    "permission_callback" => function () {
+        return true;
+    },
+    "callback" => function ($request) {
 
-            $day = $_POST["day"];
-            $day = new DateTime($day);
-            $week = $_POST["week"];
+        $loggedUser = intval($_GET["userId"]);
 
-            $subscription = wcs_get_subscriptions([
-                "subscriptions_per_page" => 1,
-                "orderby" => "ID",
-                "order" => "DESC",
-                "subscription_status" => ["active", "on-hold"],
-                "customer_id" => $loggedUser,
-            ]);
-            $subscription = reset($subscription);
+        // --- PARSE DELLE DATE ----------------------------------------------------
+        $startDate = new DateTime($_GET["start"]);
+        $endDate   = new DateTime($_GET["end"]);
 
-            $disabledWeeks = get_post_meta(
+        require_once get_template_directory() . "/libraries/carbon/autoload.php";
+
+        $fromDate = new Carbon\Carbon($startDate);
+        $toDate   = new Carbon\Carbon($endDate);
+
+        // --- ALLINEA LA DATA DI PARTENZA AL LUNEDÌ DELLA SETTIMANA ISO ----------
+        $isoWeek = (int)$fromDate->format("W");
+        $isoYear = (int)$fromDate->format("o"); // anno ISO (importante!)
+        $fromDate = new Carbon\Carbon();
+        $fromDate->setISODate($isoYear, $isoWeek, 1); // Monday
+
+        // --- RECUPERA LA SUBSCRIPTION -------------------------------------------
+        $subscription = wcs_get_subscriptions([
+            "subscriptions_per_page" => 1,
+            "orderby" => "ID",
+            "order" => "DESC",
+            "subscription_status" => ["active", "on-hold"],
+            "customer_id" => $loggedUser,
+        ]);
+
+        $subscription = reset($subscription);
+        if (!$subscription) {
+            return new WP_REST_Response([], 200);
+        }
+
+        // --- RECUPERA LE SETTIMANE DISABILITATE SUL PROFILO ---------------------
+        $disabledWeeks = [];
+
+        $startYear = (int)$fromDate->format("Y");
+        $endYear   = (int)$toDate->format("Y");
+
+        for ($year = $startYear; $year <= $endYear; $year++) {
+            $yearWeeks = get_post_meta(
                 $subscription->get_id(),
-                "disable_weeks_" . $day->format("Y"),
+                "disable_weeks_" . $year,
                 true
             );
-            if (!$disabledWeeks || !is_array($disabledWeeks)) {
-                $disabledWeeks = [];
+
+            if (is_array($yearWeeks)) {
+                $disabledWeeks = array_merge($disabledWeeks, $yearWeeks);
+            }
+        }
+
+        // Normalizza
+        $disabledWeeks = array_values(array_unique(array_map('intval', $disabledWeeks)));
+
+        // --- COSTRUZIONE EVENTI PER LE SETTIMANE BLOCCATE -----------------------
+        $events = [];
+
+        for ($date = $fromDate->copy(); $date->lte($toDate); $date->addWeek()) {
+
+            // Calcolo settimana ISO reale (settimana e anno)
+            $week = (int)$date->format("W");
+            $year = (int)$date->format("o");
+
+            if (!in_array($week, $disabledWeeks, true)) {
+                continue;
             }
 
-            if (in_array($week, $disabledWeeks)) {
-                $key = array_search($week, $disabledWeeks);
-                if ($key !== false) {
-                    unset($disabledWeeks[$key]);
-                }
-            }
+            // Calcolo corretto del range LUN → DOM della settimana ISO
+            $monday = new DateTime();
+            $monday->setISODate($year, $week, 1);
 
-            sort($disabledWeeks);
-            array_unique($disabledWeeks);
-            update_post_meta(
-                $subscription->get_id(),
-                "disable_weeks_" . $day->format("Y"),
-                $disabledWeeks
-            );
+            $sunday = new DateTime();
+            $sunday->setISODate($year, $week, 7);
 
-            $response = new WP_REST_Response($disabledWeeks);
-            $response->set_status(201);
-            return $response;
-        },
-    ]);
+            $events[] = [
+                "start" => $monday->format("Y-m-d 00:00:00"),
+                "end"   => $sunday->format("Y-m-d 23:59:59"),
+                "title" => "Questa settimana non ricevi la Facciamo Noi",
+                "week"  => $week
+            ];
+        }
+
+        $response = new WP_REST_Response($events);
+        $response->set_status(200);
+        return $response;
+    },
+]);
 
 register_rest_route("agrispesa/v1", "user-blocked-weeks", [
     "methods" => "GET",
