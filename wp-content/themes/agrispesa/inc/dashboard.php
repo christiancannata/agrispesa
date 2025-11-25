@@ -258,7 +258,22 @@ function sospensioni_abbonamento_page() {
 	<h1>Sospensioni Abbonamento</h1>
 
 	<?php foreach ($weeksArray as $week): ?>
-		<h3>Settimana <?php echo (int) $week['week']; ?> - <?php echo (int) $week['year']; ?></h3>
+		<?php
+		$year = (int) $week['year'];
+		$w    = (int) $week['week'];
+
+// Calcolo range settimana ISO
+		$monday = new \DateTime();
+		$monday->setISODate($year, $w, 1);
+
+		$sunday = new \DateTime();
+		$sunday->setISODate($year, $w, 7);
+		?>
+
+		<h3>
+			Settimana <?php echo $w; ?> - <?php echo $year; ?>
+			(dal <?php echo $monday->format('d/m/Y'); ?> al <?php echo $sunday->format('d/m/Y'); ?>)
+		</h3>
 		<table class="table-admin-subscriptions">
 			<thead>
 			<tr>
