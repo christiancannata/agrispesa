@@ -9,18 +9,18 @@ get_header(); ?>
 
 
 
-
-
-	<?php /* Sticky post */ ?>
 <?php
-	$wp_query = new WP_Query([
-		'post_type'      => 'post',
-	  'posts_per_page' => 1,
-	  'post_status'    => 'publish',
-    'orderby' => 'date',
-    'order'   => 'DESC',
-		//'category_name' => 'storie',
-	]);
+$exclude_cat = get_term_by('slug', 'progetti-di-agriecologia', 'category');
+$exclude_cat_id = $exclude_cat ? (int) $exclude_cat->term_id : 0;
+
+$wp_query = new WP_Query([
+	'post_type'      => 'post',
+	'posts_per_page' => 1,
+	'post_status'    => 'publish',
+	'orderby'        => 'date',
+	'order'          => 'DESC',
+	'category__not_in' => $exclude_cat_id ? [$exclude_cat_id] : [],
+]);
  if($wp_query->have_posts()): ?>
 
 
