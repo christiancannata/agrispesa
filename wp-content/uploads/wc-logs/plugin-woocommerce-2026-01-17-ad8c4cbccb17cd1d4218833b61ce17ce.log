@@ -1,0 +1,3 @@
+2026-01-17T13:08:57+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to get_post_type_items.
+2026-01-17T13:08:57+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to add_plugin_item.
+2026-01-17T13:08:57+00:00 WARNING The WooCommerce Admin Navigation feature and its classes (Screen, Menu, CoreMenu) are deprecated since 9.3 with no alternative. Please remove the call to register_post_type.

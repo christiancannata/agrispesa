@@ -5,7 +5,7 @@
 /*
 Plugin Name: Meteo Plugin
 Plugin URL: https://christiancannata.com/
-Version: 1.5
+Version: 1.7
 Author: Christian Cannata
 Description: Plugin per visualizzare le previsioni meteo
 */
@@ -208,31 +208,36 @@ class MeteoWidget
         ];
 
         $currentDate = new \DateTime($date);
+        $year = (int)$currentDate->format('Y');
 
         foreach ($zodiac as [$name, $start, $end]) {
-            // Anno corrente
-            $year = $currentDate->format('Y');
+            $startDate = new \DateTime(sprintf('%04d-%s', $year, $start));
+            $endDate   = new \DateTime(sprintf('%04d-%s', $year, $end));
 
-            // Creazione delle date di inizio e fine
-            $startDate = new \DateTime("{$year}-{$start}");
-            $endDate = new \DateTime("{$year}-{$end}");
+            // Se attraversa l'anno (es: 12-22 -> 01-19)
+            if ($end < $start) {
+                // la fine è nell'anno successivo
+                $endDate->modify('+1 year');
 
-            // Gestione del cambio anno
-            if ($end < $start) { // Segno zodiacale attraversa l'anno (es: Capricorno e Acquario)
-                $endDate->modify('+1 year'); // La fine appartiene all'anno successivo
+                // se siamo prima dello start (es. gennaio), consideriamo la current nell'anno successivo
+                $currentComparable = clone $currentDate;
+                if ($currentComparable < $startDate) {
+                    $currentComparable->modify('+1 year');
+                }
+            } else {
+                $currentComparable = $currentDate;
             }
 
-            // Verifica se la data corrente è all'interno del range
-            if ($currentDate >= $startDate && $currentDate <= $endDate) {
+            if ($currentComparable >= $startDate && $currentComparable <= $endDate) {
                 return [
-                    'name' => $name,
+                    'name'  => $name,
                     'start' => self::formatItalianDate($startDate),
-                    'end' => self::formatItalianDate($endDate)
+                    'end'   => self::formatItalianDate($endDate),
                 ];
             }
         }
 
-        return null; // Nessun segno zodiacale trovato
+        return null;
     }
 
 // Funzione per formattare la data in italiano
@@ -1144,6 +1149,7 @@ function meteo_parser_new($atts = array())
             background: <?php echo $sectionBg; ?>;
             padding: 10px;
             border-radius: 10px;
+            text-align:center;
         }
 
         <?php echo esc_attr("#".$unique_id); ?>
