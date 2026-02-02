@@ -103,7 +103,9 @@ $wp_query = new WP_Query([
 					'orderby' => 'date',
 					'order'   => 'DESC',
 					'cat' => $remove_ricette,
-					'post__not_in' => $ids
+					'post__not_in' => $ids,
+					'category__not_in' => $exclude_cat_id ? [$exclude_cat_id] : [],
+
 
 				]);
 
@@ -133,7 +135,9 @@ $wp_query = new WP_Query([
 				    'orderby' => 'date',
 				    'order'   => 'DESC',
 						'post__not_in' => $ids,
-						'cat' => $remove_ricette
+						'cat' => $remove_ricette,
+						'category__not_in' => $exclude_cat_id ? [$exclude_cat_id] : [],
+
 					]);
 				 if($myquery->have_posts()): ?>
 
@@ -162,7 +166,9 @@ $wp_query = new WP_Query([
 				  				'orderby' => 'date',
 				          'order' => 'DESC',
 									'post__not_in' => $ids,
-				      );
+					  'category__not_in' => $exclude_cat_id ? [$exclude_cat_id] : [],
+
+				  );
 				  $query = new WP_Query( $args );
 				  if( $query->have_posts()) : while( $query->have_posts() ) : $query->the_post();
 					$ids[] = get_the_ID(); ?>
