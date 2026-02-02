@@ -10,7 +10,7 @@ get_header(); ?>
 
 
 <?php
-$exclude_cat = get_term_by('slug', 'progetti-di-agriecologia', 'category');
+$exclude_cat = get_term_by('slug', 'progetti-di-agroecologia', 'category');
 $exclude_cat_id = $exclude_cat ? (int) $exclude_cat->term_id : 0;
 
 $wp_query = new WP_Query([
