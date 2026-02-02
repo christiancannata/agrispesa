@@ -8,9 +8,51 @@ get_header(); ?>
 
 			<?php
 			// =====================================================
-			// 1) Categoria scelta nella pagina via Custom Field
+			// 0) HEADER PAGINA: titolo + featured image + content
 			// =====================================================
 			$page_id = get_queried_object_id();
+
+			// Setta il post globale per usare the_content() correttamente
+			$page_post = get_post($page_id);
+			if ($page_post) {
+				setup_postdata($page_post);
+			}
+			?>
+
+			<section class="fogliospesa--hero">
+				<div class="fogliospesa--hero--container">
+					<?php if (get_the_title($page_id)) : ?>
+						<h1 class="fogliospesa--hero--title">
+							<?php echo esc_html(get_the_title($page_id)); ?>
+						</h1>
+					<?php endif; ?>
+				</div>
+			</section>
+
+			<?php if (has_post_thumbnail($page_id)) : ?>
+				<div class="mb-4">
+					<?php echo get_the_post_thumbnail($page_id, 'large', [
+						'class' => 'img-fluid w-100',
+						'alt'   => esc_attr(get_the_title($page_id)),
+					]); ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ($page_post) : ?>
+				<div class="mb-5">
+					<?php
+					// contenuto pagina (supporta shortcode, block editor, ecc)
+					echo apply_filters('the_content', $page_post->post_content);
+					?>
+				</div>
+				<?php wp_reset_postdata(); ?>
+			<?php endif; ?>
+
+
+			<?php
+			// =====================================================
+			// 1) Categoria scelta nella pagina via Custom Field
+			// =====================================================
 			$cat_id_raw = get_post_meta($page_id, 'template_category_id', true);
 			$cat_id = (int) $cat_id_raw;
 
@@ -47,16 +89,13 @@ get_header(); ?>
 				<div class="fogliospesa--sticky">
 					<section class="fogliospesa--hero">
 						<div class="fogliospesa--hero--container">
-							<h1 class="fogliospesa--hero--title">
-								<?php echo esc_html(get_the_title($page_id)); ?>
-								<span class="what_week"><?php echo esc_html(date('W')); ?></span>
-							</h1>
 
 							<div class="categories-list">
 								<a href="<?php echo esc_url(get_category_link($cat_id)); ?>">
 									<?php echo esc_html($term->name); ?>
 								</a>
 							</div>
+
 						</div>
 					</section>
 
@@ -160,7 +199,7 @@ get_header(); ?>
 						?>
 					</div>
 
-					<!-- DX: lista titoli (stile "ricette") ma sempre stessa categoria -->
+					<!-- DX: lista titoli -->
 					<div class="fogliospesa--magazine--dx">
 						<div class="fogliospesa--ricette">
 							<h4 class="fogliospesa--ricette--title">Altri articoli</h4>
