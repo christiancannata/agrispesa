@@ -854,13 +854,6 @@ function cf_checkout_update_user_meta($customer_id, $posted)
 
 add_action('woocommerce_checkout_update_user_meta', 'cf_checkout_update_user_meta', 10, 2);
 
-//validazione del codice fiscale
-function required_cf_checkout_field_process()
-{
-	if ($_POST['codice_fiscale'] && !codiceFiscale($_POST['codice_fiscale']))
-		wc_add_notice(__('Devi inserire un codice fiscale valido per inoltrare l\'ordine.'), 'error');
-}
-
 /** controllo del codice fiscale **/
 function codiceFiscale($cf)
 {
@@ -1569,3 +1562,58 @@ function wp_ajax_get_cart_items_action()
 		wp_die();
 	}
 }
+
+
+add_filter('woocommerce_checkout_get_value', function ($value, $input) {
+
+	if ($input !== 'codice_fiscale') {
+		return $value;
+	}
+
+	// Se l'utente ha già scritto qualcosa (POST) non toccare
+	if (!empty($_POST['codice_fiscale'])) {
+		return $_POST['codice_fiscale'];
+	}
+
+	if (!is_user_logged_in()) {
+		return $value;
+	}
+
+	$user_id = get_current_user_id();
+
+	// 1) prima prova user_meta (dove lo stai già salvando)
+	$cf = get_user_meta($user_id, 'codice_fiscale', true);
+
+	// 2) fallback: se non c'è, prova a recuperarlo dall’ultimo ordine
+	if (empty($cf)) {
+		$orders = wc_get_orders([
+			'customer_id' => $user_id,
+			'limit'       => 1,
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+			'return'      => 'ids',
+			'status'      => array_keys(wc_get_order_statuses()),
+		]);
+
+		if (!empty($orders)) {
+			$order = wc_get_order($orders[0]);
+			if ($order) {
+				// prima standard
+				$cf = $order->get_meta('_billing_codice_fiscale', true);
+
+				// poi vecchia chiave che usavi
+				if (empty($cf)) {
+					$cf = $order->get_meta('Codice Fiscale', true);
+				}
+			}
+		}
+	}
+
+	if (!empty($cf)) {
+		$cf = strtoupper(trim($cf));
+		// Woo si aspetta stringa
+		return $cf;
+	}
+
+	return $value;
+}, 10, 2);

@@ -16,8 +16,8 @@ class Cookie_Law_Info_Review_Request {
 	private $plugin_title        = 'GDPR Cookie Consent (CCPA Ready)';
 	private $review_url          = 'https://wordpress.org/support/plugin/cookie-law-info/reviews/#new-post';
 	private $plugin_prefix       = 'wt_cli'; /* must be unique name */
-	private $days_to_show_banner = 15; /* when did the banner to show */
-	private $remind_days         = 15; /* remind interval in days */
+	private $days_to_show_banner = 60; /* when did the banner to show */
+	private $remind_days         = 60; /* remind interval in days */
 
 
 
@@ -61,7 +61,7 @@ class Cookie_Law_Info_Review_Request {
 
 		/* button texts */
 		$this->later_btn_text  = __( 'Remind me later', 'cookie-law-info' );
-		$this->never_btn_text  = __( 'Not interested', 'cookie-law-info' );
+		$this->never_btn_text  = __( 'Never show again', 'cookie-law-info' );
 		$this->review_btn_text = __( 'Review now', 'cookie-law-info' );
 	}
 
@@ -115,6 +115,12 @@ class Cookie_Law_Info_Review_Request {
 	 *  Prints the banner
 	 */
 	public function show_banner() {
+		// Check if we are on plugin screens or WordPress plugins page
+		$screen = get_current_screen();
+		if ( ! ( preg_match( '/cookielawinfo/' , $screen->id ) || $screen->id === 'plugins' ) ) {
+			return;
+		}
+
 		$this->update_banner_state( 1 ); /* update banner active state */
 		?>
 		<div class="<?php echo esc_attr( $this->banner_css_class ); ?> notice-info notice is-dismissible">
@@ -122,7 +128,7 @@ class Cookie_Law_Info_Review_Request {
 				<?php echo wp_kses_post( $this->banner_message ); ?>
 			</p>
 			<p>
-				<a class="button button-secondary" style="color:#333; border-color:#ccc; background:#efefef;" data-type="later"><?php echo esc_html( $this->later_btn_text ); ?></a>
+				<a class="button button-secondary" style="color:#333; border-color:#ccc; background:#efefef;" data-type="never"><?php echo esc_html( $this->never_btn_text ); ?></a>
 				<a class="button button-primary" data-type="review"><?php echo esc_html( $this->review_btn_text ); ?></a>
 			</p>
 		</div>
@@ -139,10 +145,10 @@ class Cookie_Law_Info_Review_Request {
 
 			/* current action is in allowed action list */
 			if ( in_array( $action_type, $this->allowed_action_type_arr ) ) {
-				if ( $action_type == 'never' || $action_type == 'closed' ) {
+				if ( $action_type == 'never' ) {
 					$new_banner_state = 3;
 				} elseif ( $action_type == 'review' ) {
-					$new_banner_state = 4;
+					$new_banner_state = 1;
 				} else {
 					/* reset start date to current date */
 					$this->reset_start_date();
@@ -178,8 +184,9 @@ class Cookie_Law_Info_Review_Request {
 					var btn_type = elm.attr('data-type');
 					if (btn_type == 'review') {
 						window.open('<?php echo esc_js( $this->review_url ); ?>');
+					} else {
+						elm.parents('.<?php echo esc_js( $this->banner_css_class ); ?>').hide();
 					}
-					elm.parents('.<?php echo esc_js( $this->banner_css_class ); ?>').hide();
 
 					data_obj['wt_review_action_type'] = btn_type;
 					$.ajax({
@@ -244,31 +251,31 @@ class Cookie_Law_Info_Review_Request {
 	}
 
 	function add_footer_review_link($footer_text) {
-		if ( $this->current_banner_state != 4 ) { 
-			// Check if we are on the plugin page
-			$screen = get_current_screen();
-			if ( preg_match( '/cookielawinfo/' , $screen->id ) ) {
-				$link_text = esc_html__( 'Give us a 5-star rating!', 'cookie-law-info' );
-				$link1 = sprintf(
-					'<a class="cli-button-review" href="" title="%1$s">&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
-					$link_text
-				);
-				$link2 = sprintf(
-					'<a class="cli-button-review" href="" title="%1$s">WordPress.org</a>',
-					$link_text
-				);
+		// Check if we are on the plugin page
+		$screen = get_current_screen();
+		if ( preg_match( '/cookielawinfo/' , $screen->id ) ) {
+			$link_text = esc_html__( 'Give us a 5-star rating!', 'cookie-law-info' );
+			$link1 = sprintf(
+				'<a class="cli-button-review" href="%2$s" title="%1$s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
+				$link_text,
+				$this->review_url
+			);
+			$link2 = sprintf(
+				'<a class="cli-button-review" href="%2$s" title="%1$s" target="_blank">WordPress.org</a>',
+				$link_text,
+				$this->review_url
+			);
 
-				return sprintf(
-					/* translators: %1$s: plugin name in bold, %2$s: star rating link, %3$s: WordPress.org link */
-					esc_html__(
-						'Please rate %1$s %2$s on %3$s to help us spread the word. Thank you from the team CookieYes!',
-						'cookie-law-info'
-					),
-					sprintf( '<strong>%1$s</strong>', 'CookieYes' ),
-					wp_kses_post( $link1 ),
-					wp_kses_post( $link2 )
-				);
-			}
+			return sprintf(
+				/* translators: %1$s: CookieYes plugin name in bold, %2$s: star rating link, %3$s: WordPress.org link */
+				esc_html__(
+					'Please rate %1$s %2$s on %3$s to help us spread the word. Thank you from the team CookieYes!',
+					'cookie-law-info'
+				),
+				sprintf( '<strong>%1$s</strong>', 'CookieYes' ),
+				wp_kses_post( $link1 ),
+				wp_kses_post( $link2 )
+			);
 		}
 		return $footer_text;
 	}

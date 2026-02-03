@@ -3,15 +3,15 @@
  * Plugin Name: Flexible Shipping
  * Plugin URI: https://wordpress.org/plugins/flexible-shipping/
  * Description: Create additional shipment methods in WooCommerce and enable pricing based on cart weight or total.
- * Version: 6.4.0
+ * Version: 6.5.4
  * Author: Octolize
  * Author URI: https://octol.io/fs-author
  * Text Domain: flexible-shipping
  * Domain Path: /lang/
  * Requires at least: 6.4
- * Tested up to: 6.8
- * WC requires at least: 9.7
- * WC tested up to: 10.2
+ * Tested up to: 6.9
+ * WC requires at least: 10.1
+ * WC tested up to: 10.5
  * Requires PHP: 7.4
  * ​
  * Copyright 2017 WP Desk Ltd.
@@ -34,7 +34,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /* THIS VARIABLE CAN BE CHANGED AUTOMATICALLY */
-$plugin_version = '6.4.0';
+$plugin_version = '6.5.4';
 
 $plugin_name        = 'Flexible Shipping';
 $plugin_class_name  = Flexible_Shipping_Plugin::class;
@@ -80,12 +80,12 @@ add_action(
 	'plugins_loaded',
 	function () {
 		$dependent_plugins_versions = [
-			'FLEXIBLE_SHIPPING_LOCATIONS_VERSION'                     => '3.0.0',
-			'FLEXIBLE_SHIPPING_PRO_VERSION'                           => '3.0.0',
-			'FLEXIBLE_SHIPPING_VENDORS_VERSION'                       => '2.0.0',
-			'OCTOLIZE_BOX_PACKING_VERSION'                            => '2.0.0',
+			'FLEXIBLE_SHIPPING_LOCATIONS_VERSION'   => '3.0.0',
+			'FLEXIBLE_SHIPPING_PRO_VERSION'         => '3.0.0',
+			'FLEXIBLE_SHIPPING_VENDORS_VERSION'     => '2.0.0',
+			'OCTOLIZE_BOX_PACKING_VERSION'          => '2.0.0',
 			'OCTOLIZE_OCTOLIZE_DISTANCE_BASED_SHIPPING_RATES_VERSION' => '2.0.0',
-			'OCTOLIZE_DELIVERY_DATE_PICKER_VERSION'                   => '2.0.0',
+			'OCTOLIZE_DELIVERY_DATE_PICKER_VERSION' => '2.0.0',
 		];
 		$psr_not_prefixed           = false;
 		foreach ( $dependent_plugins_versions as $constant_name => $plugins_version ) {

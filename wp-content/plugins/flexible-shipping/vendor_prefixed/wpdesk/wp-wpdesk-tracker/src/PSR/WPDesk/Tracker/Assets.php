@@ -33,7 +33,9 @@ class Assets implements Hookable
         if ($screen->id === 'admin_page_wpdesk_tracker_' . $this->plugin_slug) {
             $handle = 'wpdesk-helper-tracker_' . $this->plugin_slug;
             wp_register_style($handle, plugin_dir_url(__FILE__) . '../../../assets/css/tracker.css', [], $this->script_version);
+            wp_register_script($handle, plugin_dir_url(__FILE__) . '../../../assets/js/admin.js', [], $this->script_version);
             wp_enqueue_style($handle);
+            wp_enqueue_script($handle);
         }
     }
 }

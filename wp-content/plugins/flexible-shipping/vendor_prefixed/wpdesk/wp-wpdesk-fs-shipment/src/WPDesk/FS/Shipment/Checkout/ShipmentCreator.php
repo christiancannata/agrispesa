@@ -16,13 +16,13 @@ class ShipmentCreator implements Hookable
     {
         $last_priority = \PHP_INT_MAX;
         add_action('woocommerce_checkout_update_order_meta', array($this, 'create_shipping_for_order'), $last_priority);
-        add_action('woocommerce_store_api_checkout_update_order_from_request', [$this, 'create_shipment_block_checkout'], $last_priority, 2);
+        add_action('woocommerce_store_api_checkout_order_processed', [$this, 'create_shipment_block_checkout'], $last_priority);
     }
     /**
      * @param \WC_Order $order .
      * @param \WP_REST_Request $request .
      */
-    public function create_shipment_block_checkout($order, $request)
+    public function create_shipment_block_checkout($order)
     {
         if ($order && !$this->is_order_processed_on_checkout) {
             $shipments = fs_get_order_shipments($order->get_id());

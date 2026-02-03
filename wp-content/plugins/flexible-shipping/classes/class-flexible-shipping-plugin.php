@@ -10,6 +10,8 @@ use FSVendor\Octolize\Blocks\Registrator;
 use FSVendor\Octolize\Blocks\StoreEndpoint;
 use FSVendor\Octolize\Brand\Assets\AdminAssets;
 use FSVendor\Octolize\Brand\UpsellingBox\ShippingMethodShouldShowStrategy;
+use FSVendor\Octolize\Docs\Chat\ChatSettings;
+use FSVendor\Octolize\Docs\Chat\HookableChatObjects;
 use FSVendor\Octolize\ShippingExtensions\ShippingExtensions;
 use FSVendor\Octolize\Tracker\DeactivationTracker\OctolizeReasonsFactory;
 use FSVendor\Octolize\Tracker\OptInNotice\ShouldDisplayAndConditions;
@@ -31,9 +33,13 @@ use FSVendor\WPDesk\PluginBuilder\Plugin\HookableCollection;
 use FSVendor\WPDesk\PluginBuilder\Plugin\HookableParent;
 use FSVendor\WPDesk\PluginBuilder\Plugin\TemplateLoad;
 use FSVendor\WPDesk\RepositoryRating\DisplayStrategy\ShippingMethodDisplayDecision;
+use FSVendor\WPDesk\RepositoryRating\PopupPetition\PopupPetition;
 use FSVendor\WPDesk\RepositoryRating\RepositoryRatingPetitionText;
 use FSVendor\WPDesk\RepositoryRating\TextPetitionDisplayer;
 use FSVendor\WPDesk\Session\SessionFactory;
+use FSVendor\WPDesk\ShowDecision\OrStrategy;
+use FSVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodInstanceStrategy;
+use FSVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodStrategy;
 use FSVendor\WPDesk\View\Resolver\ChainResolver;
 use FSVendor\WPDesk\View\Resolver\DirResolver;
 use FSVendor\WPDesk\View\Resolver\WPThemeResolver;
@@ -53,10 +59,6 @@ use WPDesk\FS\ProFeatures;
 use WPDesk\FS\ProVersion\ProVersionUpdateReminder;
 use WPDesk\FS\Shipment;
 use WPDesk\FS\TableRate\AI\TrackerDataOnShippingMethodSaver;
-use WPDesk\FS\TableRate\Beacon\Beacon;
-use WPDesk\FS\TableRate\Beacon\BeaconClickedAjax;
-use WPDesk\FS\TableRate\Beacon\BeaconDeactivationTracker;
-use WPDesk\FS\TableRate\Beacon\BeaconDisplayStrategy;
 use WPDesk\FS\TableRate\ContextualInfo;
 use WPDesk\FS\TableRate\Debug\DebugTracker;
 use WPDesk\FS\TableRate\Debug\MultipleShippingZonesMatchedSameTerritoryNotice;
@@ -226,21 +228,6 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 
 		$this->add_hookable( new WPDesk\FS\Rate\WPDesk_Flexible_Shipping_Rate_Notice() );
 
-		if ( class_exists( '\WC_Shipping_Zones' ) ) {
-			$this->add_hookable(
-				new TextPetitionDisplayer(
-					'woocommerce_after_settings_shipping',
-					new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), ShippingMethodSingle::SHIPPING_METHOD_ID ),
-					new RepositoryRatingPetitionText(
-						'Octolize',
-						$this->plugin_info->get_plugin_name(),
-						'https://octol.io/fs-rate',
-						'center'
-					)
-				)
-			);
-		}
-
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Shorcode_Unit_Weight() );
 		$this->add_hookable( new WPDesk_Flexible_Shipping_Shorcode_Unit_Dimension() );
 
@@ -354,31 +341,57 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 				new \WPDesk\FS\Csat\CsatOptionDependedOnShippingMethodAndAiUsage( 'csat_flexible_shipping_ai', 'flexible_shipping_single' ),
 				new \FSVendor\Octolize\Csat\CsatCodeFromFile( __DIR__ . '/views/csat.php' ),
 				'woocommerce_after_settings_shipping',
-				new \FSVendor\WPDesk\ShowDecision\WooCommerce\ShippingMethodInstanceStrategy( new \WC_Shipping_Zones(), 'flexible_shipping_single' )
+				new ShippingMethodInstanceStrategy( new \WC_Shipping_Zones(), 'flexible_shipping_single' )
 			)
 		);
 
 		// Newsletter
 		$this->add_hookable( new SubscriptionForm() );
+
+		// Rating petition
+		add_action( 'admin_init', [ $this, 'init_rating_petition' ] );
 	}
 
-	/**
-	 * Init beacon.
-	 */
-	public function init_beacon() {
-		if ( 'pl_PL' !== get_locale() ) {
-			$strategy = new BeaconDisplayStrategy();
+	public function init_rating_petition() {
+		if ( class_exists( '\WC_Shipping_Zones' ) ) {
+			$shipping_method_display_decision = new ShippingMethodDisplayDecision( new \WC_Shipping_Zones(), ShippingMethodSingle::SHIPPING_METHOD_ID );
+			( new TextPetitionDisplayer(
+				'woocommerce_after_settings_shipping',
+				$shipping_method_display_decision,
+				new RepositoryRatingPetitionText(
+					'Octolize',
+					$this->plugin_info->get_plugin_name(),
+					'https://octol.io/fs-rate',
+					'center'
+				)
+			) )->hooks();
 
-			$beacon = new Beacon(
-				$strategy,
-				trailingslashit( $this->get_plugin_url() ) . 'vendor_prefixed/octolize/wp-betterdocs-beacon/assets/'
-			);
-			$beacon->hooks();
+			$option_name      = 'flexible-shipping-method-update-count';
+			$max_update_count = 5;
+			$option_value     = (int) get_option( $option_name, 0 );
+			if ( $option_value >= $max_update_count ) {
+				$current_user = wp_get_current_user();
+				( new PopupPetition(
+					'flexible-shipping',
+					__( 'Flexible Shipping', 'flexible-shipping' ),
+					'help@octolize.com',
+					$current_user ? $current_user->user_email : '',
+					'admin_footer',
+					$shipping_method_display_decision
+				) )->init()->hooks();
+			}
 
-			$beacon_clicked_ajax = new BeaconClickedAjax( $strategy, $this->get_plugin_assets_url(), $this->scripts_version );
-			$beacon_clicked_ajax->hooks();
+			add_action( 'flexible_shipping_method_updated', function ( $instance_id ) use ( $option_name, $max_update_count, $option_value ) {
+				if ( $option_value < $max_update_count ) {
+					update_option( $option_name, (int) get_option( $option_name, 0 ) + 1 );
+				}
+			} );
 
-			( new BeaconDeactivationTracker() )->hooks();
+			add_action( 'wpdesk_rating_petition_postpone', function ( $plugin_slug ) use ( $option_name, $max_update_count ) {
+				if ( $plugin_slug === 'flexible-shipping' ) {
+					update_option( $option_name, (int) floor( $max_update_count / 2 ) );
+				}
+			} );
 		}
 	}
 
@@ -492,15 +505,75 @@ class Flexible_Shipping_Plugin extends AbstractPlugin implements HookableCollect
 
 		add_action( 'woocommerce_init', [ $this, 'init_contextual_info' ] );
 
-		add_action( 'woocommerce_init', [ $this, 'init_beacon' ] );
-
 		add_action( 'woocommerce_init', [ $this, 'init_shipping_zones_notice' ] );
 
 		add_action( 'woocommerce_init', [ $this, 'init_multicurrency' ] );
 
 		add_action( 'woocommerce_init', [ $this, 'init_external_plugin_access' ] );
 
+		add_action( 'admin_init', [ $this, 'init_octolize_docs_chat' ] );
+
 		$this->hooks_on_hookable_objects();
+	}
+
+	public function init_octolize_docs_chat() {
+		$plugin_slug = 'flexible-shipping';
+		$plugin_name = __( 'Flexible Shipping', 'flexible-shipping' );
+		if ( defined( 'FLEXIBLE_SHIPPING_PRO_VERSION' ) ) {
+			$plugin_slug = 'flexible-shipping-pro';
+			$plugin_name = __( 'Flexible Shipping PRO', 'flexible-shipping' );
+		}
+
+		$show_strategy = new OrStrategy(
+			new ShippingMethodStrategy( WPDesk_Flexible_Shipping_Settings::METHOD_ID )
+		);
+		$show_strategy->addCondition(
+			new ShippingMethodInstanceStrategy(
+				new \WC_Shipping_Zones(),
+				ShippingMethodSingle::SHIPPING_METHOD_ID
+			)
+		);
+
+		add_filter(
+			'octolize_docs_chat_settings_' . $plugin_slug,
+			function ( $settings, $data ) use ( $plugin_name ) {
+				$chat_settings = new ChatSettings();
+				$chat_settings->set_consent(
+					[
+						'title'              => __( 'Do you consent to sending data to the chat?', 'flexible-shipping' ),
+						'message'            => __( 'To start the chat, we need to send your inputs and technical data to the chat service.', 'flexible-shipping' ),
+						'accept'             => __( 'Accept', 'flexible-shipping' ),
+						'decline'            => __( 'Decline', 'flexible-shipping' ),
+						'privacy_policy_url' => ' ',
+						'privacy_link_label' => ' ',
+						'support_url'        => 'https://wordpress.org/support/plugin/flexible-shipping/',
+						'support_text'       => __( 'If you don’t want to give consent, you can contact our support using this: ', 'flexible-shipping' ),
+						'support_link_label' => __( 'support forum', 'flexible-shipping' ),
+					]
+				);
+				$chat_settings->set_plugin( $plugin_name );
+				$chat_settings->set_plugin_settings( ( new WPDesk_Flexible_Shipping_Settings() )->settings );
+				$instance_id = $data['instance_id'] ?? '';
+				$chat_settings->set_current_page( $instance_id ? 'Shipping method' : 'Plugin Settings' );
+				if ( $instance_id ) {
+					$shipping_method = \WC_Shipping_Zones::get_shipping_method( (int) $instance_id );
+					$chat_settings->set_shipping_method_settings( $shipping_method->instance_settings );
+				}
+
+				return $chat_settings->get_settings();
+			},
+			10,
+			2
+		);
+
+		(
+		new HookableChatObjects(
+			$plugin_slug,
+			$this->plugin_url,
+			$this->plugin_info->get_version(),
+			$show_strategy
+		)
+		)->hooks();
 	}
 
 	private function init_checkout_blocks() {

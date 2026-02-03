@@ -131,12 +131,6 @@ class Admin extends WP_REST_Controller {
 		$module = $request->get_param( 'module' );
 		$state  = $request->get_param( 'state' );
 
-		if ( $module === 'react-settings' ) {
-			update_option( 'rank_math_react_settings_ui', $state );
-			do_action( 'rank_math/module_changed', $module, $state );
-			return true;
-		}
-
 		Helper::update_modules( [ $module => $state ] );
 		$this->maybe_delete_rewrite_rules( $module );
 		do_action( 'rank_math/module_changed', $module, $state );
@@ -161,7 +155,7 @@ class Admin extends WP_REST_Controller {
 	 */
 	public function tools_actions( WP_REST_Request $request ) {
 		$action = $request->get_param( 'action' );
-		return apply_filters( 'rank_math/tools/' . $action, 'Something went wrong.' );
+		return apply_filters( 'rank_math/tools/' . $action, 'Something went wrong.', $request );
 	}
 
 	/**

@@ -1,0 +1,5 @@
+2026-02-03T06:38:30+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id eb289dc645b77d39e17335f6aca2f0f1 with id 2470221
+2026-02-03T06:38:46+00:00 NOTICE abandoned_cart.success :: email: francescarov@hotmail.it :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=eb289dc645b77d39e17335f6aca2f0f1
+2026-02-03T06:38:47+00:00 NOTICE cart.member.updated :: Updated francescarov@hotmail.it subscriber status to transactionaland language to it
+2026-02-03T06:39:18+00:00 NOTICE action_scheduler.queue_job :: MailChimp_WooCommerce_Cart_Update queued :: obj_id eb289dc645b77d39e17335f6aca2f0f1 with id 2470224
+2026-02-03T06:45:24+00:00 NOTICE abandoned_cart.success :: email: francescarov@hotmail.it :: checkout_url: https://agrispesa.loc/pagamento/?mc_cart_id=eb289dc645b77d39e17335f6aca2f0f1

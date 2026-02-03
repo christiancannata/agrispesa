@@ -11,6 +11,7 @@ use WordPress\Plugin_Check\Checker\Check_Categories;
 use WordPress\Plugin_Check\Checker\Check_Result;
 use WordPress\Plugin_Check\Checker\Checks\Abstract_File_Check;
 use WordPress\Plugin_Check\Traits\Amend_Check_Result;
+use WordPress\Plugin_Check\Traits\Find_Uninstall;
 use WordPress\Plugin_Check\Traits\Stable_Check;
 
 /**
@@ -21,6 +22,7 @@ use WordPress\Plugin_Check\Traits\Stable_Check;
 class Plugin_Uninstall_Check extends Abstract_File_Check {
 
 	use Amend_Check_Result;
+	use Find_Uninstall;
 	use Stable_Check;
 
 	/**
@@ -45,9 +47,8 @@ class Plugin_Uninstall_Check extends Abstract_File_Check {
 	 * @param array        $files  List of absolute file paths.
 	 */
 	protected function check_files( Check_Result $result, array $files ) {
-		$plugin_path = $result->plugin()->path();
-
-		$plugin_uninstall_file = $plugin_path . 'uninstall.php';
+		$plugin_path           = $result->plugin()->path();
+		$plugin_uninstall_file = $this->get_uninstall_file( $plugin_path );
 
 		if ( file_exists( $plugin_uninstall_file ) ) {
 			// Check the uninstall constant.

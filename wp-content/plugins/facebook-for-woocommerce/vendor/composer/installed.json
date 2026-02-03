@@ -155,6 +155,43 @@
             "install-path": "./installers"
         },
         {
+            "name": "facebook/capi-param-builder-php",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/capi-param-builder.git",
+                "reference": "b9ddd734c11a44d99f0d71913255a70cbc43b35b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/capi-param-builder/zipball/b9ddd734c11a44d99f0d71913255a70cbc43b35b",
+                "reference": "b9ddd734c11a44d99f0d71913255a70cbc43b35b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "time": "2025-08-04T23:12:03+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "FacebookAds\\": "php/capi-param-builder/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Parameter builder SDK for Conversion API events",
+            "support": {
+                "issues": "https://github.com/facebook/capi-param-builder/issues",
+                "source": "https://github.com/facebook/capi-param-builder/tree/v1.0.1"
+            },
+            "install-path": "../facebook/capi-param-builder-php"
+        },
+        {
             "name": "firebase/php-jwt",
             "version": "v6.10.0",
             "version_normalized": "6.10.0.0",
@@ -271,18 +308,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/grow.git",
-                "reference": "92a72d51e81b2ec62eb74d3e950a1e55cac63469"
+                "reference": "3bc225916439d7b93d4f5ecb209c94fb47e76172"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/grow/zipball/92a72d51e81b2ec62eb74d3e950a1e55cac63469",
-                "reference": "92a72d51e81b2ec62eb74d3e950a1e55cac63469",
+                "url": "https://api.github.com/repos/woocommerce/grow/zipball/3bc225916439d7b93d4f5ecb209c94fb47e76172",
+                "reference": "3bc225916439d7b93d4f5ecb209c94fb47e76172",
                 "shasum": ""
             },
             "require-dev": {
                 "woocommerce/woocommerce-sniffs": "^0.1.3"
             },
-            "time": "2024-05-09T12:50:05+00:00",
+            "time": "2025-06-25T12:19:53+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

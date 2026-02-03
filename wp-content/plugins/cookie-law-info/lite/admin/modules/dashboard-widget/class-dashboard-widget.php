@@ -42,7 +42,6 @@ class Dashboard_Widget extends Modules {
      */
     private static $instance;
 
-    
     /**
      * Return the current instance of the class
      *
@@ -60,52 +59,28 @@ class Dashboard_Widget extends Modules {
      */
     public function __construct() {
         parent::__construct('dashboard_widget');
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
     /**
      * Enqueue required scripts
      */
-    public function enqueue_scripts($hook) {
-        if ('index.php' !== $hook) {
+    public function enqueue_scripts( $hook ) {
+        if ( 'index.php' !== $hook ) {
+            return;
+        }
+        if (!current_user_can('manage_options')) {
             return;
         }
 
-        // Check if we have any consents logged before loading Chart.js
-        $has_consents = $this->has_consent_logs();
-        if ($has_consents) {
-            $script_suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-            wp_enqueue_script(
-                'cky-chart',
-                plugin_dir_url(__FILE__) . 'assets/js/chart' . $script_suffix . '.js',
-                array(),
-                '4.4.1',
-                true
-            );
-        }
-    }
-
-    /**
-     * Check if there are any consent logs
-     *
-     * @return boolean
-     */
-    private function has_consent_logs() {
-        $response = rest_do_request(new \WP_REST_Request('GET', '/cky/v1/consent_logs/statistics'));
-        if ($response->is_error()) {
-            return false;
-        }
-        $data = $response->get_data();
-        if (!is_array($data)) {
-            return false;
-        }
-        $total = 0;
-        foreach ($data as $item) {
-            if (isset($item['count'])) {
-                $total += intval($item['count']);
-            }
-        }
-        return $total > 0;
+        $script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+        wp_enqueue_script(
+            'cky-chart',
+            plugin_dir_url( __FILE__ ) . 'assets/js/chart' . $script_suffix . '.js',
+            array(),
+            '4.4.1',
+            true
+        );
     }
 
     /**
@@ -119,6 +94,9 @@ class Dashboard_Widget extends Modules {
      * Add the CookieYes dashboard widget.
      */
     public function add_cookieyes_dashboard_widget() {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
         wp_add_dashboard_widget(
             'cookieyes_dashboard_widget',
             __( 'CookieYes', 'cookie-law-info' ),
@@ -130,15 +108,18 @@ class Dashboard_Widget extends Modules {
      * Render the CookieYes dashboard widget.
      */
     public function render_cookieyes_dashboard_widget() {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
         $connected = false;
-        if (class_exists('CookieYes\\Lite\\Admin\\Modules\\Settings\\Includes\\Settings')) {
+        if ( class_exists( 'CookieYes\\Lite\\Admin\\Modules\\Settings\\Includes\\Settings' ) ) {
             $settings = \CookieYes\Lite\Admin\Modules\Settings\Includes\Settings::get_instance();
-            $connected = !empty($settings->get_website_id());
+            $connected = ! empty( $settings->get_website_id() );
         } else {
-            $connected = get_option('cky_webapp_connected');
+            $connected = get_option( 'cky_webapp_connected' );
         }
 
-        if (!$connected) {
+        if ( ! $connected ) {
             $this->render_dashboard_widget_disconnected();
         } else {
             $this->render_dashboard_widget_connected();
@@ -153,16 +134,16 @@ class Dashboard_Widget extends Modules {
         <div class="cky-consent-chart-section">
             <div class="cky-consent-chart cky-blur">
                 <img 
-                    src="<?php echo esc_url(CKY_PLUGIN_URL . 'admin/dist/img/trends.png'); ?>" 
+                    src="<?php echo esc_url( CKY_PLUGIN_URL . 'admin/dist/img/trends.png' ); ?>" 
                     alt="Consent Trends Dummy Chart"
                     style="display:block;width:100%;height:auto;"
                 />
                 <div class="cky-modal-overlay">
                     <div class="cky-modal-content">
-                        <b><?php esc_html_e('Get cookie consent insights in your Dashboard!', 'cookie-law-info'); ?></b>
-                        <p><?php esc_html_e('Track your consent rates and unlock advanced features that keep your site in check.', 'cookie-law-info'); ?></p>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=cookie-law-info')); ?>" class="button button-primary">
-                            <?php esc_html_e('Connect to CookieYes Web App', 'cookie-law-info'); ?>
+                        <b><?php esc_html_e( 'Get cookie consent insights in your Dashboard!', 'cookie-law-info' ); ?></b>
+                        <p><?php esc_html_e( 'Track your consent rates and unlock advanced features that keep your site in check.', 'cookie-law-info' ); ?></p>
+                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=cookie-law-info' ) ); ?>" class="button button-primary">
+                            <?php esc_html_e( 'Connect to CookieYes Web App', 'cookie-law-info' ); ?>
                         </a>
                     </div>
                 </div>
@@ -220,18 +201,24 @@ class Dashboard_Widget extends Modules {
      * Render the widget for connected state.
      */
     private function render_dashboard_widget_connected() {
-        $has_consents = $this->has_consent_logs();
         ?>
         <div class="cky-consent-chart-widget" id="cky-dashboard-widget-chart">
             <div class="cky-chart-container" id="cky-dashboard-widget-chart-container">
-                <?php if ($has_consents): ?>
-                    <canvas id="cky-pie-chart-widget" width="320" height="320" style="display:none;width:100%;height:auto;"></canvas>
-                    <div class="cky-center-total-consents" style="display:none;">
-                        <span class="cky-center-total-consents-value"></span>
-                        <div class="cky-center-total-consents-label">Total Consents</div>
+                <div id="cky-chart-loader" class="cky-card-loader-container" style="display:flex;">
+                    <div class="cky-card-loader">
+                        <div class="cky-card-loader--line"></div>
+                        <div class="cky-card-loader--line"></div>
+                        <div class="cky-card-loader--line"></div>
+                        <div class="cky-card-loader--line"></div>
+                        <div class="cky-card-loader--line cky-card-loader--rect"></div>
                     </div>
-                <?php endif; ?>
-                <div id="cky-no-consents-placeholder" style="display:<?php echo $has_consents ? 'none' : 'block'; ?>;text-align:center;padding:40px 0;">
+                </div>
+                <canvas id="cky-pie-chart-widget" width="320" height="320" style="display:none;width:100%;height:auto;"></canvas>
+                <div class="cky-center-total-consents" style="display:none;">
+                    <span class="cky-center-total-consents-value"></span>
+                    <div class="cky-center-total-consents-label">Total Consents</div>
+                </div>
+                <div id="cky-no-consents-placeholder" style="display:none;text-align:center;padding:40px 0;">
                     <svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="55" cy="55" r="55" fill="#E5E7EA"/>
                         <circle cx="38" cy="54" r="9" fill="#FFFFFF"/>
@@ -242,101 +229,191 @@ class Dashboard_Widget extends Modules {
                     </svg>
                     <p style="font-size:20px;color:#656178;margin-top:20px;">No consents were logged</p>
                 </div>
-            </div>
-            <?php if ($has_consents): ?>
-                <div class="cky-consent-legend" id="cky-consent-legend" style="display:none;">
-                    <div class="cky-legend-item"><span class="cky-legend-color cky-legend-accepted"></span>Accepted</div>
-                    <div class="cky-legend-item"><span class="cky-legend-color cky-legend-rejected"></span>Rejected</div>
-                    <div class="cky-legend-item"><span class="cky-legend-color cky-legend-partial"></span>Partially Accepted</div>
+                <div id="cky-api-error-placeholder" style="display:none;text-align:center;padding:40px 0;">
+                    <svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="55" cy="55" r="55" fill="#E5E7EA"/>
+                        <circle cx="38" cy="54" r="9" fill="#FFFFFF"/>
+                        <circle cx="55" cy="80" r="5" fill="#FFFFFF"/>
+                        <circle cx="75" cy="45" r="11" fill="#FFFFFF"/>
+                        <circle cx="55" cy="30" r="5" fill="#FFFFFF"/>
+                        
+                    </svg>
+                    <p style="font-size:20px;color:#656178;margin-top:20px;"><?php esc_html_e( 'Unable to load consent trends. Please try again later.', 'cookie-law-info' ); ?></p>
                 </div>
-            <?php endif; ?>
+            </div>
+            <div class="cky-consent-legend" id="cky-consent-legend" style="display:none;">
+                <div class="cky-legend-item"><span class="cky-legend-color cky-legend-accepted"></span>Accepted</div>
+                <div class="cky-legend-item"><span class="cky-legend-color cky-legend-rejected"></span>Rejected</div>
+                <div class="cky-legend-item"><span class="cky-legend-color cky-legend-partial"></span>Partially Accepted</div>
+            </div>
         </div>
-        <?php if ($has_consents): ?>
         <script>
-        (async function(){
-            try {
-                const response = await fetch('<?php echo esc_url_raw(rest_url() . "cky/v1/consent_logs/statistics"); ?>', {
-                    method: 'GET',
-                    headers: {
-                        'X-WP-Nonce': '<?php echo esc_js(wp_create_nonce('wp_rest')); ?>'
-                    }
-                });
-                const data = await response.json();
+        (function(){
+            function initChart() {
+                const TIMEOUT_MS = <?php echo esc_js( 180 * 1000 ); ?>;
+                let controller = null;
+                let timeoutId = null;
+
+                let loading = true;
+                let data = [];
+
                 function getCount(consents, type) {
                     let consent = false;
                     if (typeof consents === "object") {
-                        consent = consents.find(function(item) {
+                        consent = consents.find(function (item) {
                             return item.type === type;
                         });
                     }
                     return (consent && consent.count) || 0;
                 }
-                const accepted = getCount(data, 'accepted');
-                const rejected = getCount(data, 'rejected');
-                const partial = getCount(data, 'partial');
-                const responseArr = [accepted, rejected, partial];
-                const total = accepted + rejected + partial;
 
-                if (total === 0) {
-                    document.getElementById('cky-no-consents-placeholder').style.display = 'block';
-                } else {
-                    document.getElementById('cky-pie-chart-widget').style.display = 'block';
-                    document.querySelector('.cky-center-total-consents').style.display = 'block';
-                    document.getElementById('cky-consent-legend').style.display = 'flex';
-                    document.querySelector('.cky-center-total-consents-value').textContent = total;
+                async function getChartData() {
+                    loading = true;
+                    data = [];
+                    
+                    controller = new AbortController();
+                    timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-                    const ctx = document.getElementById('cky-pie-chart-widget').getContext('2d');
-                    new window.Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Accepted', 'Rejected', 'Partially Accepted'],
-                            datasets: [{
-                                data: responseArr,
-                                backgroundColor: ['rgba(51, 168, 129, 0.5)', 'rgba(236, 74, 94, 0.5)', 'rgba(68, 147, 249, 0.5)'],
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            cutout: '80%',
-                            plugins: {
-                                legend: { display: false },
-                                tooltip: {
-                                    enabled: true,
-                                    backgroundColor: '#656178',
-                                    titleFont: {
-                                        size: 14,
-                                        weight: 'bold'
-                                    },
-                                    bodyFont: {
-                                        size: 13
-                                    },
-                                    padding: 12,
-                                    cornerRadius: 8,
-                                    displayColors: false,
-                                    callbacks: {
-                                        label: function(context) {
-                                            const value = context.raw;
-                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                            const percentage = Math.round((value / total) * 100);
-                                            return `${context.label}: ${value} (${percentage}%)`;
-                                        }
-                                    }
-                                }
+                    try {
+                        const response = await fetch('<?php echo esc_url_raw( rest_url() . 'cky/v1/consent_logs/statistics' ); ?>', {
+                            method: 'GET',
+                            headers: {
+                                'X-WP-Nonce': '<?php echo esc_js( wp_create_nonce( 'wp_rest' ) ); ?>'
                             },
-                            responsive: true,
-                            maintainAspectRatio: false
+                            signal: controller.signal
+                        });
+                        clearTimeout(timeoutId);
+
+                        if (!response.ok) {
+                            throw new Error('API request failed with status: ' + response.status);
                         }
-                    });
+
+                        data = await response.json();
+
+                        if (data.length <= 0) {
+                            loading = false;
+                            const loader = document.getElementById('cky-chart-loader');
+                            if (loader) {
+                                loader.style.display = 'none';
+                            }
+                            document.getElementById('cky-no-consents-placeholder').style.display = 'block';
+                            return;
+                        }
+
+                        let responseArr = [getCount(data, "accepted"), getCount(data, "rejected"), getCount(data, "partial")];
+                        const total = responseArr.reduce((a, b) => a + b, 0);
+
+                        if (total === 0) {
+                            loading = false;
+                            const loader = document.getElementById('cky-chart-loader');
+                            if (loader) {
+                                loader.style.display = 'none';
+                            }
+                            document.getElementById('cky-no-consents-placeholder').style.display = 'block';
+                            return;
+                        }
+
+                        if (responseArr && responseArr.length > 0) {
+                            const loader = document.getElementById('cky-chart-loader');
+                            if (loader) {
+                                loader.style.display = 'none';
+                            }
+                            document.getElementById('cky-pie-chart-widget').style.display = 'block';
+                            document.querySelector('.cky-center-total-consents').style.display = 'block';
+                            document.getElementById('cky-consent-legend').style.display = 'flex';
+                            document.querySelector('.cky-center-total-consents-value').textContent = total;
+
+                            const ctx = document.getElementById('cky-pie-chart-widget').getContext('2d');
+                            new window.Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Accepted', 'Rejected', 'Partially Accepted'],
+                                    datasets: [{
+                                        data: responseArr,
+                                        backgroundColor: ['rgba(51, 168, 129, 0.5)', 'rgba(236, 74, 94, 0.5)', 'rgba(68, 147, 249, 0.5)'],
+                                        borderWidth: 0
+                                    }]
+                                },
+                                options: {
+                                    cutout: '80%',
+                                    plugins: {
+                                        legend: { display: false },
+                                        tooltip: {
+                                            enabled: true,
+                                            backgroundColor: '#656178',
+                                            titleFont: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            },
+                                            bodyFont: {
+                                                size: 13
+                                            },
+                                            padding: 12,
+                                            cornerRadius: 8,
+                                            displayColors: false,
+                                            callbacks: {
+                                                label: function(context) {
+                                                    const value = context.raw;
+                                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                    const percentage = Math.round((value / total) * 100);
+                                                    return `${context.label}: ${value} (${percentage}%)`;
+                                                }
+                                            }
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        if (timeoutId) {
+                            clearTimeout(timeoutId);
+                        }
+                        console.error(e);
+                        const loader = document.getElementById('cky-chart-loader');
+                        if (loader) {
+                            loader.style.display = 'none';
+                        }
+                        const chartContainer = document.getElementById('cky-dashboard-widget-chart-container');
+                        const noConsentsPlaceholder = document.getElementById('cky-no-consents-placeholder');
+                        const apiErrorPlaceholder = document.getElementById('cky-api-error-placeholder');
+                        const consentLegend = document.getElementById('cky-consent-legend');
+                        
+                        if (chartContainer) {
+                            const chartCanvas = document.getElementById('cky-pie-chart-widget');
+                            const centerTotal = document.querySelector('.cky-center-total-consents');
+                            if (chartCanvas) {
+                                chartCanvas.style.display = 'none';
+                            }
+                            if (centerTotal) {
+                                centerTotal.style.display = 'none';
+                            }
+                            if (noConsentsPlaceholder) {
+                                noConsentsPlaceholder.style.display = 'none';
+                            }
+                            if (consentLegend) {
+                                consentLegend.style.display = 'none';
+                            }
+                            if (apiErrorPlaceholder) {
+                                apiErrorPlaceholder.style.display = 'block';
+                            }
+                        }
+                    }
+
+                    loading = false;
                 }
-            } catch (e) {
-                const chartDiv = document.getElementById('cky-dashboard-widget-chart');
-                if (chartDiv) {
-                    chartDiv.innerHTML = '<p style="color:red;">Unable to load consent trends.</p>';
-                }
+
+                getChartData();
+            }
+
+            if (document.readyState === 'complete') {
+                initChart();
+            } else {
+                window.addEventListener('load', initChart);
             }
         })();
         </script>
-        <?php endif; ?>
         <style>
     .cky-consent-chart-widget {
         display: flex;
@@ -415,6 +492,57 @@ class Dashboard_Widget extends Modules {
     }
     .cky-legend-partial {
         background: rgba(68, 147, 249, 0.5);
+    }
+    .cky-card-loader-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        z-index: 12;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        min-height: 114px;
+    }
+    .cky-card-loader {
+        width: 100%;
+    }
+    .cky-card-loader--line {
+        opacity: 0.5;
+        background: #f6f7f8;
+        background: linear-gradient(to right, #d7e1f2 8%, #c1d1eb 18%, #d7e1f2 33%);
+        background-size: 800px 100px;
+        border-radius: 3px;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: cky-shimmer;
+        animation-timing-function: linear;
+        height: 10px;
+        width: 100%;
+    }
+    .cky-card-loader--line:nth-child(1) {
+        width: 70%;
+        height: 15px;
+    }
+    .cky-card-loader--line:nth-child(2) {
+        width: 60%;
+    }
+    .cky-card-loader--line:not(:first-child) {
+        margin-top: 6px;
+    }
+    .cky-card-loader--rect {
+        min-height: 35px;
+    }
+    @keyframes cky-shimmer {
+        0% {
+            background-position: -400px 0;
+        }
+        100% {
+            background-position: 400px 0;
+        }
     }
 </style> 
         <?php

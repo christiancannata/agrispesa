@@ -437,13 +437,11 @@ if ( ! class_exists( 'YITH_YWGC_Frontend' ) ) {
 			 * @return bool
 			 */
 			if ( is_product() || is_cart() || is_checkout() || is_account_page() || apply_filters( 'yith_ywgc_do_eneuque_frontend_scripts', false ) ) {
-				wp_register_script( 'accounting', WC()->plugin_url() . yit_load_js_file( '/assets/js/accounting/accounting.js' ), array( 'jquery' ), '0.4.2', true );
-
 				$frontend_deps = array(
 					'jquery',
 					'woocommerce',
 					'jquery-ui-datepicker',
-					'accounting',
+					\YIT_Assets::wc_script_handle( 'wc-accounting' ),
 				);
 
 				if ( is_cart() ) {

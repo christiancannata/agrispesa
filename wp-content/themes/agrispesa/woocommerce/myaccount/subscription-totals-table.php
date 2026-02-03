@@ -76,7 +76,6 @@ if (!defined('ABSPATH')) {
 					$total = $subscription->get_formatted_line_subtotal($item);
 					$total = str_replace("every anni", 'a settimana', $total);
 					?>
-					<?php echo wp_kses_post($total); ?>
 				</td>
 			</tr>
 			<?php
@@ -94,11 +93,19 @@ if (!defined('ABSPATH')) {
 	</tbody>
 	<tfoot>
 	<?php
-	foreach ($totals as $key => $total) : ?>
-		<tr>
-			<th scope="row" <?php echo ($allow_item_removal) ? 'colspan="2"' : ''; ?>><?php echo esc_html($total['label']); ?></th>
-			<td><?php echo wp_kses_post($total['value']); ?></td>
-		</tr>
-	<?php endforeach; ?>
+	foreach ($totals as $key => $total) {
+		if ($key === 'order_total') {
+			// totale numerico reale
+			$total['value'] = wc_price($subscription->get_total()).' / 2 settimane';
+			// se vuoi aggiungere anche la periodicità:
+			// $total['value'] = wc_price($subscription->get_total()) . ' / ' . $subscription->get_billing_interval() . ' ' . $subscription->get_billing_period();
+		}
+
+		echo '<tr>';
+		echo '<th scope="row"' . ($allow_item_removal ? ' colspan="2"' : '') . '>' . esc_html($total['label']) . '</th>';
+		echo '<td>' . wp_kses_post($total['value']) .'</td>';
+		echo '</tr>';
+	}
+	?>
 	</tfoot>
 </table>

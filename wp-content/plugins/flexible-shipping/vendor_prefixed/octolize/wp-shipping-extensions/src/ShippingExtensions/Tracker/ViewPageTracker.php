@@ -47,9 +47,12 @@ class ViewPageTracker
      *
      * @return self
      */
-    private function update_views(string $type): self
+    public function update_views(string $type): self
     {
         $options = $this->get_options();
+        if (!isset($options[$type])) {
+            $options[$type] = 0;
+        }
         $options[$type]++;
         update_option(self::OPTION_NAME, $options, 'yes');
         return $this;

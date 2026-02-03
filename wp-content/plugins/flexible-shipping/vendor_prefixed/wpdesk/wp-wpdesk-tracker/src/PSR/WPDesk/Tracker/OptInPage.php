@@ -28,7 +28,7 @@ class OptInPage implements Hookable
     {
         $this->plugin_file = $plugin_file;
         $this->plugin_slug = $plugin_slug;
-        $this->shop = $shop ?? new Shop('');
+        $this->shop = $shop ?? new Shop('', $this->plugin_slug);
     }
     public function hooks()
     {
@@ -52,7 +52,7 @@ class OptInPage implements Hookable
         $allow_url = add_query_arg('allow', '1', $allow_url);
         $skip_url = add_query_arg('allow', '0', $skip_url);
         if (current_user_can('activate_plugins') && \false !== check_ajax_referer(self::WPDESK_TRACKER_ACTION, self::WPDESK_TRACKER_NONCE, \false) && isset($_GET['shop_url'])) {
-            $shop = new Shop(sanitize_text_field(wp_unslash($_GET['shop_url'])));
+            $shop = new Shop(sanitize_text_field(wp_unslash($_GET['shop_url'])), $this->plugin_slug);
         } else {
             $shop = $this->shop;
         }

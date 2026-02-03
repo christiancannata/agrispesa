@@ -39,7 +39,6 @@ if (!defined('ABSPATH')) {
 			</thead>
 
 			<tbody>
-			<?php /** @var WC_Subscription $subscription */ ?>
 			<?php foreach ($subscriptions as $subscription_id => $subscription) : ?>
 				<tr class="order woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr($subscription->get_status()); ?>">
 					<td class="subscription-id order-number woocommerce-orders-table__cell woocommerce-orders-table__cell-subscription-id woocommerce-orders-table__cell-order-number"

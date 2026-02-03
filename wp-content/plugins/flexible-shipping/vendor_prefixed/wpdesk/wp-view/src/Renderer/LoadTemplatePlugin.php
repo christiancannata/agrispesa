@@ -18,7 +18,7 @@ class LoadTemplatePlugin implements Renderer
     public function set_resolver(Resolver $resolver)
     {
     }
-    public function render($template, array $params = null)
+    public function render($template, ?array $params = null)
     {
         return $this->plugin->load_template($template, $this->path, $params);
     }

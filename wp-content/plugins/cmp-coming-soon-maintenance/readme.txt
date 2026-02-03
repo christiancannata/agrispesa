@@ -5,7 +5,7 @@ Tags: coming soon, coming soon page, launch page, maintenance mode, under constr
 Requires at least: 3.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 4.1.15
+Stable tag: 4.1.16
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,10 @@ https://www.youtube.com/watch?v=uxuJfHzwdtE
 <p>Nothing is better than a good feedback! Please go to <a href="https://wordpress.org/support/plugin/cmp-coming-soon-maintenance/reviews/">Plugin reviews</a> and rate it! Alternatively you can click on a Donate button too!:)</p>
 
 == Changelog ==
+<h4>CMP 4.1.16 - 02-December-25</h4>
+<ul>
+	<li>Bump compatibility with WP 6.9</li>
+</ul>
 <h4>CMP 4.1.15 - 30-April-25</h4>
 <ul>
 	<li>Bump compatibility with WP 6.7</li>

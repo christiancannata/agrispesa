@@ -2,10 +2,10 @@
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, WordPress SEO, google search console, schema, redirection, 
-Tested up to: 6.8
+Tested up to: 6.9
 Requires at least: 6.3
 Requires PHP: 7.4
-Stable tag: 1.0.254
+Stable tag: 1.0.263
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -233,7 +233,7 @@ and many more
 ✔ PREMIUM 24x7x365 Dedicated Support Managers
 ✔ MOST COMPETITIVE PRICING EVER!
 
-**<a href="https://rankmath.com/pricing/" target="_blank">CHEK ALL THE PREMIUM FEATURES AND PRICING HERE</a>**
+**<a href="https://rankmath.com/pricing/" target="_blank">CHECK ALL THE PREMIUM FEATURES AND PRICING HERE</a>**
 
 
 ## CONNECT WITH THE TEAM AND SEO EXPERTS ##
@@ -339,11 +339,10 @@ Please drop us an email at support@rankmath.com, and we will be more than happy 
 
 == Changelog ==
 
-= 1.0.254 [Sept 26, 2025] =
-- Fixed: [Update SEO Score tool](https://rankmath.com/kb/seo-score-not-available/#update-seo-scores) was not considering the Product's short description when calculating the SEO score
-- Fixed: PHP warning when using [Focus Keyword variable](https://rankmath.com/kb/variables-in-seo-title-description/#focus-keyword) with keywords containing special characters
-- Fixed: Deprecated capability used in the plugin to access Rank Math Dashboard
-- Fixed: [Fallback behaviour](https://rankmath.com/kb/general-settings/#fallback-behaviour) was not working when URL contained query parameters of page IDs
-- Fixed: Updating the [Sitemap settings](https://rankmath.com/kb/configure-sitemaps/) was not clearing the Sitemap cache
+= 1.0.263 [Jan 28, 2026] =
+- Fixed: Incorrect SEO description was shown in the [SERP Preview](https://rankmath.com/kb/general-tab/#the-preview-section) on taxonomy pages
+- Fixed: Missing Rank Math SEO metabox on some taxonomies that use a higher priority to register the metabox
+- Fixed: [Focus keyword in the URL test](https://rankmath.com/kb/score-100-in-tests/#focus-keyword-in-the-url-primary-focus-keyword-only) was failing when Cyrillic letters were used in the URL
+- Fixed: Console errors on some setups related to the Content analysis
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

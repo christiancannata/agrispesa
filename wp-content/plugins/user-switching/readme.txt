@@ -1,7 +1,7 @@
 # User Switching
 
-Stable tag: 1.10.0
-Tested up to: 6.8
+Stable tag: 1.11.1
+Tested up to: 6.9
 License: GPL v2 or later
 Tags: users, user switching, fast user switching, multisite, woocommerce
 Contributors: johnbillion
@@ -336,13 +336,18 @@ In addition, User Switching respects the following filters from WordPress core w
 [I am accepting sponsorships via the GitHub Sponsors program](https://github.com/sponsors/johnbillion) and any support you can give will help me maintain this plugin and keep it free for everyone.
 ## Changelog ##
 
-### 1.10.0 (27 July 2025) ###
+### 1.11.1 (4 December 2025) ###
 
-## Improvements
+* Confirms support for WordPress 6.9
+
+### 1.11.0 (15 October 2025) ###
+
+- Adds a Switch Back link to all `wp_die()` screens when you're switched into another account.
+
+### 1.10.0 (27 July 2025) ###
 
 * When the user is switched, display all of User Switching's messages in the language of the original user
 
-🤖 Generated with [Claude Code](https://claude.ai/code)
 
 ### 1.9.2 (16 April 2025) ###
 
@@ -381,20 +386,6 @@ In addition, User Switching respects the following filters from WordPress core w
 
 * Fix the redirect type parameter passed to the `user_switching_redirect_to` filter
 * Increase the minimum supported version of PHP to 7.4
-
-### 1.7.0 (30 July 2022) ###
-
-* Redirect to the current post, term, user, or comment being edited when switching off
-* Clean up some user-facing messages
-* Apply basic styling to the Switch Back link that appears in the footer
-* Use a better placement for the Switch To menu on bbPress profiles
-* Use a more appropriate HTTP response code if switching off fails
-* Exclude `.editorconfig` from dist ZIP
-
-### 1.6.0 (24 June 2022) ###
-
-* Add a 'Switch To' link to the order screen in WooCommerce
-* Add a 'Switch back' link to the My Account screen and the login screen in WooCommerce
 
 ### Earlier versions ###
 

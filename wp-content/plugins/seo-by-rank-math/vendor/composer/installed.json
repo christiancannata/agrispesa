@@ -117,17 +117,17 @@
         },
         {
             "name": "donatj/phpuseragentparser",
-            "version": "v1.10.0",
-            "version_normalized": "1.10.0.0",
+            "version": "v1.11.0",
+            "version_normalized": "1.11.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/donatj/PhpUserAgent.git",
-                "reference": "3ba73057d2a4a275badb88b7708e91e159c40367"
+                "reference": "c98541c5198bb75564d7db4a8971773bc848361e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/donatj/PhpUserAgent/zipball/3ba73057d2a4a275badb88b7708e91e159c40367",
-                "reference": "3ba73057d2a4a275badb88b7708e91e159c40367",
+                "url": "https://api.github.com/repos/donatj/PhpUserAgent/zipball/c98541c5198bb75564d7db4a8971773bc848361e",
+                "reference": "c98541c5198bb75564d7db4a8971773bc848361e",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "ext-json": "*",
                 "phpunit/phpunit": "~4.8|~9"
             },
-            "time": "2024-10-30T15:45:03+00:00",
+            "time": "2025-09-10T21:58:40+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -174,7 +174,7 @@
             ],
             "support": {
                 "issues": "https://github.com/donatj/PhpUserAgent/issues",
-                "source": "https://github.com/donatj/PhpUserAgent/tree/v1.10.0"
+                "source": "https://github.com/donatj/PhpUserAgent/tree/v1.11.0"
             },
             "funding": [
                 {
@@ -191,52 +191,6 @@
                 }
             ],
             "install-path": "../donatj/phpuseragentparser"
-        },
-        {
-            "name": "mythemeshop/wordpress-helpers",
-            "version": "v1.1.22",
-            "version_normalized": "1.1.22.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MyThemeShopTeam/wordpress-helpers.git",
-                "reference": "0ee4a87a03dac72e9e503cc4e1b0208d3269f4dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MyThemeShopTeam/wordpress-helpers/zipball/0ee4a87a03dac72e9e503cc4e1b0208d3269f4dc",
-                "reference": "0ee4a87a03dac72e9e503cc4e1b0208d3269f4dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "time": "2023-06-15T08:54:41+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "MyThemeShop\\Helpers\\": "src/"
-                },
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "MyThemeShop",
-                    "email": "info@mythemeshop.com"
-                }
-            ],
-            "description": "Collection of utilities required during development of a plugin or theme for WordPress. Built for developers by developers.",
-            "support": {
-                "issues": "https://github.com/MyThemeShopTeam/wordpress-helpers/issues",
-                "source": "https://github.com/MyThemeShopTeam/wordpress-helpers/tree/v1.1.22"
-            },
-            "install-path": "../mythemeshop/wordpress-helpers"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -286,17 +240,17 @@
         },
         {
             "name": "wp-media/wp-mixpanel",
-            "version": "v1.2.0",
-            "version_normalized": "1.2.0.0",
+            "version": "v1.4.0",
+            "version_normalized": "1.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-media/wp-mixpanel.git",
-                "reference": "b73de3558313642298a0ffaf32afbe8b555622ac"
+                "reference": "dfedab2014e816a1040c57d544a6180f1d446624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-media/wp-mixpanel/zipball/b73de3558313642298a0ffaf32afbe8b555622ac",
-                "reference": "b73de3558313642298a0ffaf32afbe8b555622ac",
+                "url": "https://api.github.com/repos/wp-media/wp-mixpanel/zipball/dfedab2014e816a1040c57d544a6180f1d446624",
+                "reference": "dfedab2014e816a1040c57d544a6180f1d446624",
                 "shasum": ""
             },
             "require": {
@@ -313,7 +267,7 @@
                 "wp-coding-standards/wpcs": "^3",
                 "wp-media/phpunit": "^3"
             },
-            "time": "2025-09-08T14:54:11+00:00",
+            "time": "2025-11-12T09:51:35+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -338,7 +292,7 @@
             "description": "WordPress Mixpanel Integration",
             "support": {
                 "issues": "https://github.com/wp-media/wp-mixpanel/issues",
-                "source": "https://github.com/wp-media/wp-mixpanel/tree/v1.2.0"
+                "source": "https://github.com/wp-media/wp-mixpanel/tree/v1.4.0"
             },
             "install-path": "../wp-media/wp-mixpanel"
         }

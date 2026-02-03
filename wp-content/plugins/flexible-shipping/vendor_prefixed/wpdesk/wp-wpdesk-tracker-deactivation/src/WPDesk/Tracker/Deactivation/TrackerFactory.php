@@ -39,10 +39,11 @@ class TrackerFactory
      * @param Scripts|null $scripts .
      * @param Thickbox|null $thickbox .
      * @param AjaxDeactivationDataHandler|null $ajax
+     * @param ReasonsFactory|null $reasons_factory
      *
      * @return Tracker
      */
-    public static function createCustomTracker(PluginData $plugin_data, $scripts = null, $thickbox = null, $ajax = null, ReasonsFactory $reasons_factory = null)
+    public static function createCustomTracker(PluginData $plugin_data, ?Scripts $scripts = null, ?Thickbox $thickbox = null, ?AjaxDeactivationDataHandler $ajax = null, ?ReasonsFactory $reasons_factory = null)
     {
         $reasons_factory = $reasons_factory ?? new DefaultReasonsFactory();
         if (empty($scripts)) {

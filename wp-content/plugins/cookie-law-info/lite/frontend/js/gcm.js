@@ -3,6 +3,28 @@ let setDefaultSetting = true;
 const regionSettings = data.default_settings || [];
 const waitForTime = data.wait_for_update;
 
+function getCookieValues(cookieName) {
+    const values = [];
+    const name = cookieName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+            values.push(cookie.substring(name.length, cookie.length));
+        }
+    }
+    return values;
+}
+
+function getConsentStateForCategory(categoryConsent) {
+    return categoryConsent === "yes" ? "granted" : "denied";
+}
+
 const dataLayerName =
   window.ckySettings && window.ckySettings.dataLayerName
     ? window.ckySettings.dataLayerName
@@ -52,4 +74,27 @@ if (setDefaultSetting) {
       ad_user_data: "denied",
       ad_personalization: "denied"
     });
+}
+
+const consentString = getCookieValues("cookieyes-consent")[0];
+if (consentString && typeof consentString === "string") {
+    const cookieObj = consentString.split(",").reduce(function (acc, curr) {
+        const cookieValue = curr.trim().split(":");
+        acc[cookieValue[0]] = getConsentStateForCategory(cookieValue[1]);
+        return acc;
+    }, {});
+    
+    function updateConsentState(consentState) {
+        gtag("consent", "update", consentState);
+    }
+
+  updateConsentState({
+    ad_storage: cookieObj.advertisement,
+    analytics_storage: cookieObj.analytics,
+    functionality_storage: cookieObj.functional,
+    personalization_storage: cookieObj.functional,
+    security_storage: cookieObj.necessary,
+    ad_user_data: cookieObj.advertisement,
+    ad_personalization: cookieObj.advertisement,
+  });
 }

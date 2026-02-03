@@ -16,5 +16,5 @@ interface Resolver
      *
      * @return string
      */
-    public function resolve($name, Renderer $renderer = null);
+    public function resolve($name, ?Renderer $renderer = null);
 }

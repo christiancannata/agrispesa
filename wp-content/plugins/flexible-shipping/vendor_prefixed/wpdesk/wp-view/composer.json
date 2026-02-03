@@ -12,10 +12,10 @@
         }
     ],
     "require": {
-        "php": ">=7.0 | ^8"
+        "php": ">=7.4 | ^8"
     },
     "require-dev": {
-        "phpunit\/phpunit": "<7",
+        "phpunit\/phpunit": "^7||^8||^9",
         "wpdesk\/wp-code-sniffer": "^1",
         "mockery\/mockery": "*",
         "10up\/wp_mock": "*",
@@ -34,6 +34,9 @@
         "phpunit-integration-fast": "phpunit --configuration phpunit-integration.xml --no-coverage"
     },
     "config": {
+        "platform": {
+            "php": "7.4"
+        },
         "allow-plugins": {
             "dealerdirect\/phpcodesniffer-composer-installer": true,
             "phpstan\/extension-installer": true

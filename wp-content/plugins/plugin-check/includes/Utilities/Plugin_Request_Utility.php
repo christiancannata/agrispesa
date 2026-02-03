@@ -83,6 +83,26 @@ class Plugin_Request_Utility {
 	}
 
 	/**
+	 * Returns the plugin slug based on the input provided.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $plugin_url The plugin url.
+	 * @return string The plugin slug.
+	 */
+	public static function get_slug_from_url( $plugin_url ) {
+		$plugin_slug = '';
+
+		if ( false !== strpos( $plugin_url, '#wporgapi:' ) ) {
+			$plugin_url = substr( $plugin_url, 0, strpos( $plugin_url, '#' ) );
+		}
+		$plugin_slug = basename( $plugin_url );
+		$plugin_slug = str_replace( '.zip', '', $plugin_slug );
+
+		return $plugin_slug;
+	}
+
+	/**
 	 * Initializes the runner classes.
 	 *
 	 * @since 1.0.0
@@ -143,11 +163,13 @@ class Plugin_Request_Utility {
 	 * @since 1.0.0
 	 */
 	public static function get_directories_to_ignore() {
-		// By default, ignore the '.git', 'vendor' and 'node_modules' directories.
+		// By default, ignore the '.git', 'vendor', 'vendor_prefixed, 'vendor-prefixed' and 'node_modules' directories.
 		$default_ignore_directories = array(
 			'.git',
 			'vendor',
 			'node_modules',
+			'vendor_prefixed',
+			'vendor-prefixed',
 		);
 
 		/**

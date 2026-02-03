@@ -1,31 +1,38 @@
-.cky-consent-chart-section .cky-card-body {
-  height: 198px;
-}
-.cky-consent-chart-section .cky-card-body .cky-consent-chart {
-  height: 100%;
-}
-.cky-consent-chart-section .cky-card-body .cky-consent-chart .apexcharts-legend {
+.cky-connect-success .cky-connect-success-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
-.cky-consent-chart-section .cky-card-body .cky-consent-chart .apexcharts-donut-slice-0:hover {
-  fill: #33A881; /* Change color of first slice on hover */
+.cky-connect-success .cky-connect-success-icon {
+  background-image: url(../img/connect-success.svg);
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
-.cky-consent-chart-section .cky-card-body .cky-consent-chart .apexcharts-donut-slice-1:hover {
-  fill: #EC4A5E; /* Change color of second slice on hover */
+.cky-connect-success .cky-connect-success-message {
+  margin-top: 15px;
+  margin-bottom: 40px;
+  text-align: center;
 }
-.cky-consent-chart-section .cky-card-body .cky-consent-chart .apexcharts-donut-slice-2:hover {
-  fill: #4493F9; /* Change color of second slice on hover */
+.cky-connect-success .cky-connect-success-animate {
+  max-width: 600px;
+  margin-top: 20px;
 }
-.cky-consent-chart-section .cky-card-body .cky-consent-chart .cky-chart-tooltip {
-  padding: 2px;
-  font-size: 12px;
+.cky-app-modal-disconnect .cky-app-modal {
+  max-width: 500px;
 }
-.cky-consent-chart-section .cky-empty-state {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  right: 0;
+.cky-account-info label {
+  display: block;
+  font-weight: 500;
+}
+.cky-account-info label span {
+  font-weight: 400;
+  margin-left: 5px;
+}
+.cky-account-info label span:nth-of-type(2) {
+  margin-left: 0;
+}
+.cky-account-actions {
+  margin-top: 15px;
 }

@@ -1,0 +1,178 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Images to WebP\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-02 21:13+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.1; wp-5.3"
+
+#: images-to-webp.php:299
+#, php-format
+msgid "%d converted"
+msgstr ""
+
+#: tabs/tab-general.php:142
+msgid "(Of course, you can activate it back to fix this problem.)"
+msgstr ""
+
+#: tests/configs.php:107
+msgid ""
+"Add the following code to your <code>.htaccess</code> file above <code># "
+"BEGIN WordPress</code>,"
+msgstr ""
+
+#: tests/configs.php:101
+msgid "and the most important: RESTART YOUR SERVER after these changes!"
+msgstr ""
+
+#: tabs/tab-general.php:137
+msgid "Be EXTREMELY CAREFUL with this option!"
+msgstr ""
+
+#: tabs/tab-general.php:95
+msgid "Conversion method"
+msgstr ""
+
+#: images-to-webp.php:130
+msgid "Convert existing images"
+msgstr ""
+
+#: tabs/tab-general.php:79
+msgid "Convert images to WebP during upload"
+msgstr ""
+
+#. Description of the plugin
+msgid "Convert JPG, PNG and GIF images to WEBP, speed up your web"
+msgstr ""
+
+#: tabs/tab-general.php:109
+msgid "Convert these image extensions to WebP:"
+msgstr ""
+
+#: tabs/tab-general.php:124
+msgid "Delete original images after conversion"
+msgstr ""
+
+#: images-to-webp.php:42
+msgid "Error {{ERROR}}, trying to continue with missing images... "
+msgstr ""
+
+#: tabs/tab-convert.php:18
+msgid "Find and convert ALL images"
+msgstr ""
+
+#: tabs/tab-convert.php:16
+msgid "Find and convert MISSING images"
+msgstr ""
+
+#: images-to-webp.php:129
+msgid "General"
+msgstr ""
+
+#: tests/configs.php:112
+msgid ""
+"If you have a proxy setup or some combination of NGiNX and Apache on your "
+"server, you may probably need to disable NGiNX direct processing of image "
+"static files."
+msgstr ""
+
+#: tests/configs.php:114
+msgid ""
+"If you have these lines in .htaccess and you still see this message, then "
+"there is some other problem with your server configuration."
+msgstr ""
+
+#: tabs/tab-general.php:71
+msgid "Images quality"
+msgstr ""
+
+#: tests/server.php:21
+msgid "Imagick"
+msgstr ""
+
+#: tabs/tab-general.php:140
+msgid "It is a good idea to create some backup."
+msgstr ""
+
+#: tests/server.php:39
+msgid ""
+"Please enable WebP in GD or Imagick on your server, then try activate "
+"<strong>Images to WebP</strong> again."
+msgstr ""
+
+#: tests/server.php:12
+msgid ""
+"Please install GD or Imagick on your server, then try activate <strong>"
+"Images to WebP</strong> again."
+msgstr ""
+
+#: tests/server.php:7
+msgid ""
+"Please update your PHP to version 5.6.12 or higher, then try activate "
+"<strong>Images to WebP</strong> again."
+msgstr ""
+
+#: images-to-webp.php:42
+msgid "Please wait, converting your images is in progress..."
+msgstr ""
+
+#: tabs/tab-convert.php:13
+msgid "Select folders you want to scan for images and convert them to WebP:"
+msgstr ""
+
+#: tests/configs.php:120
+#, php-format
+msgid ""
+"Testing file <code>%1$s</code> is not accessible, but returns HTTP response "
+"code <code>%2$d</code>. Contact your hosting provider or developer."
+msgstr ""
+
+#: tests/configs.php:103
+msgid "Then try to activate Images to WebP again ;)"
+msgstr ""
+
+#: tests/configs.php:109
+msgid "then try to activate Images to WebP again:"
+msgstr ""
+
+#: tests/configs.php:92
+msgid ""
+"then you need to add this to your server block, usually site.conf or "
+"/nginx/sites-enabled/default ( inside of the server{} section ):"
+msgstr ""
+
+#: tabs/tab-convert.php:6
+msgid "This operation will NOT alter your original images."
+msgstr ""
+
+#: tabs/tab-convert.php:4
+msgid ""
+"This operation will PERMANENTLY DELETE original images, because you set this "
+"in general settings. It is a good idea to create some backup."
+msgstr ""
+
+#: tabs/tab-general.php:139
+msgid ""
+"This will PERMANENTLY DELETE ORIGINAL IMAGES (only WebP versions will exist)!"
+msgstr ""
+
+#: tabs/tab-general.php:141
+msgid ""
+"You CAN NOT DEACTIVATE THIS PLUGIN when you use this option, otherwise all "
+"converted images will throw 404 ERROR!"
+msgstr ""
+
+#: tests/configs.php:78
+msgid ""
+"You need to add this map directive to your http config, usually nginx.conf ( "
+"inside of the http{} section ):"
+msgstr ""

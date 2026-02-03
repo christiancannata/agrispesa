@@ -134,11 +134,11 @@ class ShippingContentsImplementation implements ShippingContents
     /**
      * @return float
      */
-    private function calculate_contents_cost()
+    private function calculate_contents_cost(): float
     {
         $cost = 0.0;
         foreach ($this->contents as $item) {
-            $cost += $this->get_item_cost($item);
+            $cost += round($this->get_item_cost($item), $this->cost_rounding_precision);
         }
         return $cost;
     }

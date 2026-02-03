@@ -325,7 +325,7 @@ ul.wt-gdprpro-features {
 			<li>
 				<b><?php echo esc_html( __( 'Access additional free and premium features by connecting to CookieYes web app (Optional)', 'cookie-law-info' ) ); ?></b>                						  
 				<?php echo esc_html(
-					__( '— Cookie scan, Consent log, Support for Google Consent Mode v2, IAB TCF v2.2 banner, Google’s Additional Consent Mode, etc.', 'cookie-law-info' )
+					__( '— Cookie scan, Consent log, Support for Google Consent Mode v2, IAB TCF v2.3 banner, Google’s Additional Consent Mode, etc.', 'cookie-law-info' )
 				); ?>
 			</li>
 		</ul>
@@ -397,6 +397,9 @@ ul.wt-gdprpro-features {
 				</li>
 				<li>
 					<?php echo esc_html( __( 'Accepting cookie consent on the page scroll or delay action on the cookie banner.', 'cookie-law-info' ) ); ?>
+				</li>
+				<li>
+					<?php echo esc_html( __( 'Disabling the accept button.', 'cookie-law-info' ) ); ?>
 				</li>
 			</ul>
 			<li>

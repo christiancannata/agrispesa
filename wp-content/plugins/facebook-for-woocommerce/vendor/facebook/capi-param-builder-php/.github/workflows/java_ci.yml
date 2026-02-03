@@ -1,0 +1,32 @@
+name: Param builder Java CI
+
+on:
+  push:
+    paths:
+      - 'java/**'
+  pull_request:
+    paths:
+      - 'java/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [8, 11, 17, 21]
+    defaults:
+      run:
+        working-directory: java/capi-param-builder
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Java ${{ matrix.java }} on Param builder SDK
+      uses: actions/setup-java@v4
+      with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+    - name: Change gradlew wrapper permissions
+      run: chmod +x ./gradlew
+    - name: Build with Gradle
+      run: ./gradlew build

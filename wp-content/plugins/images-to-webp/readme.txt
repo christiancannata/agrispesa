@@ -1,11 +1,11 @@
 === Images to WebP ===
 Contributors: kubiq
 Donate link: https://www.paypal.me/jakubnovaksl
-Tags: webp, images, pictures, optimize, convert, media
-Requires at least: 3.0.1
-Requires PHP: 5.6
-Tested up to: 6.5
-Stable tag: 4.7
+Tags: pictures, optimize, convert, media
+Requires at least: 5.0
+Requires PHP: 7.0
+Tested up to: 6.9
+Stable tag: 4.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,17 +32,6 @@ Convert PNG, JPG and GIF images to WebP and speed up your web, save visitors dow
 </ul>
 
 ## Hooks for developers
-
-#### itw_extensions
-Maybe you want to support also less famous JPEG extension like jpe, jfif or jif
-
-`add_filter( 'itw_extensions', 'extra_itw_extensions', 10, 1 );
-function extra_itw_extensions( $extensions ){
-	$extensions[] = 'jpe';
-	$extensions[] = 'jfif';
-	$extensions[] = 'jif';
-	return $extensions;
-}`
 
 #### itw_sizes
 Maybe you want to disable WebP for thumbnails
@@ -156,6 +145,21 @@ map $http_accept $webp_suffix{
 	"~*webp" ".webp";
 }`
 
+or without `map` directive:
+
+`if ( $http_accept ~ "image/webp" ) {
+	set $webp .webp ;
+}
+
+location ~* (.*)\.(?:png|jpe?g|gif)$ {
+	if ( -f $document_root$1.webp ) {
+			set $webp serve$webp ;
+	}
+	if ( $webp = "serve.webp" ) {
+		return 301 '$1.webp';
+	}
+}`
+
 then you need to add this to your server block, usually site.conf or /nginx/sites-enabled/default ( inside of the server{} section ):
 
 `location ~* ^/.+\.(png|gif|jpe?g)$ {
@@ -178,6 +182,18 @@ This will find all the files with a `.webp` extension and if there is similar fi
 
 
 == Changelog ==
+
+= 4.9.1 =
+* optimize old images convert process
+* remove not working itw_extensions filter
+
+= 4.9 =
+* info banner about new free Images to AVIF plugin
+* prioritize GD library
+* readme small changes
+
+= 4.8 =
+* Tested on WP 6.9
 
 = 4.7 =
 * Tested on WP 6.5

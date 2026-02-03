@@ -35,9 +35,6 @@ if ( ! class_exists( 'WC_Product_Gift_Card' ) ) {
 		 */
 		public function __construct( $product ) {
 			parent::__construct( $product );
-
-			$this->downloadable = 'no';
-			$this->product_type = YWGC_GIFT_CARD_PRODUCT_TYPE;
 		}
 
 		/**

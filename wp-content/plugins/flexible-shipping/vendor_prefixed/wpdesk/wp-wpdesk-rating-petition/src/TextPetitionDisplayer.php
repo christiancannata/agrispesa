@@ -23,9 +23,9 @@ class TextPetitionDisplayer implements Hookable
      */
     private $petition_text_generator;
     /**
-     * @param string $display_on_action
+     * @param string          $display_on_action
      * @param DisplayDecision $display_decision
-     * @param PetitionText $petition_text_generator
+     * @param PetitionText    $petition_text_generator
      */
     public function __construct(string $display_on_action, DisplayDecision $display_decision, PetitionText $petition_text_generator)
     {
@@ -44,7 +44,7 @@ class TextPetitionDisplayer implements Hookable
     public function enqueue_css_if_should()
     {
         if ($this->display_decision->should_display()) {
-            wp_enqueue_style('flexible-shipping', plugin_dir_url(__DIR__ . '/../assets/css/style.css') . 'style.css', array(), self::SCRIPTS_VERSION);
+            wp_enqueue_style('flexible-shipping', plugin_dir_url(__DIR__ . '/../assets/css/style.css') . 'style.css', [], self::SCRIPTS_VERSION);
         }
     }
     /**
@@ -53,7 +53,12 @@ class TextPetitionDisplayer implements Hookable
     public function display_petition_if_should()
     {
         if ($this->display_decision->should_display()) {
+            $this->clear_footer_text();
             echo wp_kses_post($this->petition_text_generator->get_petition_text());
         }
+    }
+    private function clear_footer_text()
+    {
+        add_filter('admin_footer_text', '__return_empty_string');
     }
 }

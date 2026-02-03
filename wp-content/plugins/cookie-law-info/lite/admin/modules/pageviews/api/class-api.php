@@ -79,14 +79,20 @@ class Api extends Rest_Controller {
 		$objects = array();
 		$items   = array();
 		if ( false === cky_is_cloud_request() ) {
-			return $items;
+			$objects['data'] = $items;
+			$objects['total_views'] = 0;
+			$objects['total_overage_views'] = 0;
+			return rest_ensure_response( $objects );
 		}
-		$items = Controller::get_instance()->get_pageviews();
+		$pageviews = Controller::get_instance()->get_pageviews();
+		$items = isset($pageviews['data']) ? $pageviews['data'] : array();
+		$objects['total_views'] = isset($pageviews['total_views']) ? $pageviews['total_views'] : 0;
+		$objects['total_overage_views'] = isset($pageviews['total_overage_views']) ? $pageviews['total_overage_views'] : 0;
 		foreach ( $items as $data ) {
 			$context   = ! empty( $request['context'] ) ? $request['context'] : 'view';
 			$data      = $this->add_additional_fields_to_object( $data, $request );
 			$data      = $this->filter_response_by_context( $data, $context );
-			$objects[] = $this->prepare_response_for_collection( $data );
+			$objects['data'][] = $this->prepare_response_for_collection( $data );
 		}
 		return rest_ensure_response( $objects );
 	}

@@ -426,7 +426,7 @@ if (!\class_exists('FSVendor\WPDesk_Basic_Requirement_Checker')) {
                 if (\class_exists($class_name)) {
                     continue;
                 }
-                $notices[] = $this->prepare_notice_message(\sprintf(\__('The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin.', 'flexible-shipping'), \esc_html($this->plugin_name), \esc_html($plugin_nice_name), \esc_html($plugin_nice_name)));
+                $notices[] = $this->prepare_notice_message(\sprintf('The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin.', \esc_html($this->plugin_name), \esc_html($plugin_nice_name), \esc_html($plugin_nice_name)));
             }
             return $notices;
         }

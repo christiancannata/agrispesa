@@ -20,10 +20,10 @@ interface Renderer
      *
      * @return string
      */
-    public function render($template, array $params = null);
+    public function render(string $template, ?array $params = null);
     /**
      * @param string $template
      * @param array $params
      */
-    public function output_render($template, array $params = null);
+    public function output_render(string $template, ?array $params = null);
 }

@@ -2,9 +2,9 @@
 
 defined('ABSPATH') || exit;
 
-if( version_compare( PHP_VERSION, '5.6.12', '<' ) ){
+if( version_compare( PHP_VERSION, '7.0', '<' ) ){
 	deactivate_plugins( __DIR__ );
-	wp_die( __( 'Please update your PHP to version 5.6.12 or higher, then try activate <strong>Images to WebP</strong> again.', 'images-to-webp' ) );
+	wp_die( __( 'Please update your PHP to version 7.0 or higher, then try activate <strong>Images to WebP</strong> again.', 'images-to-webp' ) );
 }
 
 if( ! extension_loaded('gd') && ! extension_loaded('imagick') ){
@@ -13,15 +13,6 @@ if( ! extension_loaded('gd') && ! extension_loaded('imagick') ){
 }
 
 $methods = array();
-
-if( extension_loaded('imagick') ){
-	if( class_exists('Imagick') ){
-		$image = new Imagick();
-		if( in_array( 'WEBP', $image->queryFormats() ) ){
-			$methods['imagick'] = __( 'Imagick', 'images-to-webp' );
-		}
-	}
-}
 
 if(
 	function_exists('imagecreatefromjpeg') &&
@@ -32,6 +23,15 @@ if(
 	function_exists('imagewebp')
 ){
 	$methods['gd'] = __( 'GD', 'images-to-webp' );
+}
+
+if( extension_loaded('imagick') ){
+	if( class_exists('Imagick') ){
+		$image = new Imagick();
+		if( in_array( 'WEBP', $image->queryFormats() ) ){
+			$methods['imagick'] = __( 'Imagick', 'images-to-webp' );
+		}
+	}
 }
 
 if( count( $methods ) === 0 ){

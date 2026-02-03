@@ -97,9 +97,9 @@ class Controller extends Base_Controller {
 			name varchar(190) NOT NULL DEFAULT '',
 			slug varchar(190) NOT NULL DEFAULT '',
 			status int(11) NOT NULL DEFAULT 0,
-			settings longtext NOT NULL DEFAULT '',
+			settings longtext NOT NULL,
 			banner_default int(11) NOT NULL DEFAULT 0,
-			contents longtext NOT NULL DEFAULT '',
+			contents longtext NOT NULL,
 			date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			PRIMARY KEY (banner_id)

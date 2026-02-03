@@ -86,7 +86,7 @@ class CLI {
 		if ( defined( 'CLI_VERSION' ) ) {
 			$this->version = CLI_VERSION;
 		} else {
-			$this->version = '3.3.5';
+			$this->version = '3.4.0';
 		}
 		$this->plugin_name = 'cookie-law-info';
 

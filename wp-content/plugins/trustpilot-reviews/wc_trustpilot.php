@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       Trustpilot-reviews
  * Description:       Trustpilot-reviews helps Woocommerce store owners generate a ton of reviews for their products.
- * Version:           3.6.0
+ * Version:           3.11.0
  * Author:            Trustpilot
  * Author URI:        https://trustpilot.com
  * Text Domain:       Trustpilot-reviews

@@ -80,6 +80,13 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 		public $order_id = 0;
 
 		/**
+		 * Order item ID
+		 *
+		 * @var int The order item ID
+		 */
+		public $order_item_id = 0;
+
+		/**
 		 * Gift_card_number
 		 *
 		 * @var string the gift card code

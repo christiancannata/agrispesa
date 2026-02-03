@@ -408,6 +408,10 @@ var _ckyGcm = <?php echo $gcm_json; //phpcs:ignore WordPress.Security.EscapeOutp
 			'settings-button',
 			'readmore-button',
 			'donotsell-button',
+			'show-desc-button',
+			'hide-desc-button',
+			'cky-always-active',
+			'cky-link',
 			'accept-button',
 			'revisit-consent',
 		);
@@ -449,6 +453,10 @@ var _ckyGcm = <?php echo $gcm_json; //phpcs:ignore WordPress.Security.EscapeOutp
 		$data['config']['videoPlaceholder']['status'] = $properties['config']['videoPlaceholder']['status'];
 		$data['config']['videoPlaceholder']['styles'] = array_merge( $properties['config']['videoPlaceholder']['styles'], $properties['config']['videoPlaceholder']['elements']['title']['styles'] );
 		$data['config']['readMore']                   = $properties['config']['notice']['elements']['buttons']['elements']['readMore'];
+		$data['config']['showMore']                    = $properties['config']['accessibilityOverrides']['elements']['preferenceCenter']['elements']['showMore'] ?? array();
+		$data['config']['showLess']                    = $properties['config']['accessibilityOverrides']['elements']['preferenceCenter']['elements']['showLess'] ?? array();
+		$data['config']['alwaysActive']                = $properties['config']['accessibilityOverrides']['elements']['preferenceCenter']['elements']['alwaysActive'] ?? array();
+		$data['config']['manualLinks']                 = $properties['config']['accessibilityOverrides']['elements']['manualLinks'] ?? array();
 		$data['config']['auditTable']['status']       = $properties['config']['auditTable']['status'];
 		$data['config']['optOption']['status']        = $properties['config']['optoutPopup']['elements']['optOption']['status'];
 		$data['config']['optOption']['toggle']        = $properties['config']['optoutPopup']['elements']['optOption']['elements']['toggle'];
@@ -494,6 +502,20 @@ var _ckyGcm = <?php echo $gcm_json; //phpcs:ignore WordPress.Security.EscapeOutp
 			'key'        => 'cky_hide_desc',
 			'content'    => do_shortcode( '[cky_hide_desc]' ),
 			'tag'        => 'hide-desc-button',
+			'status'     => true,
+			'attributes' => array(),
+		);
+		$data[] = array(
+			'key'        => 'cky_optout_show_desc',
+			'content'    => do_shortcode( '[cky_optout_show_desc]' ),
+			'tag'        => 'optout-show-desc-button',
+			'status'     => true,
+			'attributes' => array(),
+		);
+		$data[] = array(
+			'key'        => 'cky_optout_hide_desc',
+			'content'    => do_shortcode( '[cky_optout_hide_desc]' ),
+			'tag'        => 'optout-hide-desc-button',
 			'status'     => true,
 			'attributes' => array(),
 		);

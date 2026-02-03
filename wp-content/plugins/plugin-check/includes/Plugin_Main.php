@@ -67,5 +67,15 @@ class Plugin_Main {
 		// Create the Admin page.
 		$admin_page = new Admin_Page( $admin_ajax );
 		$admin_page->add_hooks();
+
+		// Create the Settings page.
+		$settings_page_class = '\\WordPress\\Plugin_Check\\Admin\\Settings_Page';
+		$settings_page       = new $settings_page_class();
+		$settings_page->add_hooks();
+
+		// Create the Plugin Check Namer tool page.
+		$namer_page_class = '\\WordPress\\Plugin_Check\\Admin\\Namer_Page';
+		$namer_page       = new $namer_page_class();
+		$namer_page->add_hooks();
 	}
 }

@@ -2,16 +2,16 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Redis Object Cache 2.6.3\n"
+"Project-Id-Version: Redis Object Cache 2.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/redis-cache\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-24T21:29:53+00:00\n"
+"POT-Creation-Date: 2025-09-29T16:10:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: redis-cache\n"
 
 #. Plugin Name of the plugin
@@ -134,11 +134,13 @@ msgstr ""
 
 #. translators: %s = Action link to update the drop-in.
 #: includes/class-plugin.php:706
+#, php-format
 msgid "The Redis object cache drop-in is outdated. Please <a href=\"%s\">update the drop-in</a>."
 msgstr ""
 
 #. translators: %s = Link to settings page.
 #: includes/class-plugin.php:713
+#, php-format
 msgid "A foreign object cache drop-in was found. To use Redis for object caching, please <a href=\"%s\">enable the drop-in</a>."
 msgstr ""
 
@@ -155,11 +157,13 @@ msgstr ""
 
 #. translators: %s = The status of the Redis connection.
 #: includes/class-plugin.php:785
+#, php-format
 msgid "Status: %s"
 msgstr ""
 
 #. translators: 1: Hit ratio, 2: Hits, 3: Misses. 4: Human-readable size of cache.
 #: includes/class-plugin.php:805
+#, php-format
 msgid "(Current page) Hit Ratio: %1$s%%, Hits %2$s, Misses: %3$s, Size: %4$s"
 msgstr ""
 
@@ -213,6 +217,7 @@ msgstr ""
 
 #. translators: %s = Action link to update the drop-in.
 #: includes/class-plugin.php:1107
+#, php-format
 msgid "The Object Cache Pro plugin appears to be installed and should be used. You can safely <a href=\"%s\">uninstall Redis Object Cache</a>."
 msgstr ""
 
@@ -222,6 +227,7 @@ msgstr ""
 
 #. translators: %s = Link to the plugin setting screen.
 #: includes/class-plugin.php:1142
+#, php-format
 msgid "A <u>business class</u> object cache backend. Truly reliable, highly-optimized and fully customizable, with a <u>dedicated engineer</u> when you most need it. <a href=\"%s\">Learn more »</a>"
 msgstr ""
 
@@ -231,11 +237,13 @@ msgstr ""
 
 #. translators: %s = Link to the plugin's settings screen.
 #: includes/class-plugin.php:1190
+#, php-format
 msgid "Object Cache Pro is a <u>business class</u> object cache that’s highly-optimized for WooCommerce to provide true reliability, peace of mind and faster load times for your store. <a style=\"color: #bb77ae;\" href=\"%s\">Learn more »</a>"
 msgstr ""
 
 #. translators: %1$d = number of objects. %2$s = human-readable size of cache. %3$s = name of the used client.
 #: includes/class-plugin.php:1260
+#, php-format
 msgid "Retrieved %1$d objects (%2$s) from Redis using %3$s."
 msgstr ""
 
@@ -302,6 +310,7 @@ msgstr ""
 
 #. translators: %s = The Redis connection error message.
 #: includes/cli/class-commands.php:68
+#, php-format
 msgid "Object cache could not be enabled. Redis server is unreachable: %s"
 msgstr ""
 
@@ -311,38 +320,43 @@ msgstr ""
 
 #. translators: %s = The Redis connection error message.
 #: includes/cli/class-commands.php:160
+#, php-format
 msgid "Object cache drop-in could not be updated. Redis server is unreachable: %s"
 msgstr ""
 
-#: includes/object-cache.php:3005
+#: includes/object-cache.php:2967
 msgid "Error establishing a Redis connection"
 msgstr ""
 
 #. translators: %s = Formatted wp-config.php file name.
-#: includes/object-cache.php:3012
+#: includes/object-cache.php:2974
+#, php-format
 msgid "WordPress is unable to establish a connection to Redis. This means that the connection information in your %s file are incorrect, or that the Redis server is not reachable."
 msgstr ""
 
-#: includes/object-cache.php:3017
+#: includes/object-cache.php:2979
 msgid "Is the correct Redis host and port set?"
 msgstr ""
 
-#: includes/object-cache.php:3018
+#: includes/object-cache.php:2980
 msgid "Is the Redis server running?"
 msgstr ""
 
 #. translators: %s = Link to installation instructions.
-#: includes/object-cache.php:3023
+#: includes/object-cache.php:2985
+#, php-format
 msgid "If you need help, please read the <a href=\"%s\">installation instructions</a>."
 msgstr ""
 
 #. translators: %1$s = Formatted object-cache.php file name, %2$s = Formatted wp-content directory name.
-#: includes/object-cache.php:3030
+#: includes/object-cache.php:2992
+#, php-format
 msgid "To disable Redis, delete the %1$s file in the %2$s directory."
 msgstr ""
 
 #. translators: %s = Tab label.
 #: includes/ui/class-tab.php:154
+#, php-format
 msgid "%s are disabled for this site."
 msgstr ""
 
@@ -396,6 +410,7 @@ msgstr ""
 
 #. translators: %s = Object Cache Pro.
 #: includes/ui/settings.php:83
+#, php-format
 msgid "Check out %s"
 msgstr ""
 
@@ -453,6 +468,7 @@ msgstr ""
 
 #. translators: %s = PHP Version.
 #: includes/ui/settings.php:132
+#, php-format
 msgid "The current version of PHP (%s) is too old. PHP 7.2 or newer is required."
 msgstr ""
 
@@ -462,6 +478,7 @@ msgstr ""
 
 #. translators: %s = Version of the PhpRedis extension.
 #: includes/ui/settings.php:148
+#, php-format
 msgid "The current version of the PhpRedis extension (%s) is too old. PhpRedis 3.1.1 or newer is required."
 msgstr ""
 
@@ -584,6 +601,7 @@ msgstr ""
 #. translators: %s = Redis connection/read timeout in seconds.
 #: includes/ui/tabs/overview.php:220
 #: includes/ui/tabs/overview.php:237
+#, php-format
 msgid "%ss"
 msgstr ""
 
@@ -597,6 +615,7 @@ msgstr ""
 
 #. translators: %s = Redis retry interval in milliseconds.
 #: includes/ui/tabs/overview.php:254
+#, php-format
 msgid "%sms"
 msgstr ""
 

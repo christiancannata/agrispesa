@@ -48,6 +48,7 @@ class ShippingExtensions implements Hookable
             $this->add_hookable(new Tracker($tracker));
             $this->add_hookable(new PageViewTracker($tracker));
             $this->add_hookable(new WooCommerceSuggestions());
+            $this->add_hookable(new BlackFriday2025Promo());
         }
         $this->hooks_on_hookable_objects();
     }

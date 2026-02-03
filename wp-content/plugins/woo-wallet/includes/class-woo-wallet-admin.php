@@ -518,10 +518,6 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 				wp_enqueue_style( 'terawallet-exporter-style' );
 			}
 
-			if ( in_array( $screen_id, array( 'toplevel_page_woo-wallet' ), true ) ) {
-				add_thickbox();
-			}
-
 			wp_enqueue_script( 'terawallet_admin' );
 		}
 
@@ -1008,14 +1004,6 @@ if ( ! class_exists( 'Woo_Wallet_Admin' ) ) {
 						'id'       => 'woocommerce_woo_wallet_endpoint',
 						'type'     => 'text',
 						'default'  => 'my-wallet',
-						'desc_tip' => true,
-					),
-					array(
-						'title'    => __( 'Wallet Transactions', 'woo-wallet' ),
-						'desc'     => __( 'Endpoint for the "My account &rarr; View wallet transactions" page.', 'woo-wallet' ),
-						'id'       => 'woocommerce_woo_wallet_transactions_endpoint',
-						'type'     => 'text',
-						'default'  => 'wallet-transactions',
 						'desc_tip' => true,
 					),
 				)

@@ -3,7 +3,7 @@
  * Plugin Name: Kadence WooCommerce Email Designer
  * Plugin URI: http://kadencewp.com/products/woocommerce-email-designer/
  * Description: Customize the default woocommerce email templates design and text through the native WordPress customizer. Preview emails and send test emails.
- * Version: 1.5.17
+ * Version: 1.5.18
  * Author: Kadence WP
  * Author URI: http://kadencewp.com/
  * License: GPLv2 or later
@@ -59,7 +59,7 @@ class Kadence_Woomail_Designer {
 
 		define( 'KT_WOOMAIL_PATH', realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
 		define( 'KT_WOOMAIL_URL', plugin_dir_url( __FILE__ ) );
-		define( 'KT_WOOMAIL_VERSION', '1.5.17' );
+		define( 'KT_WOOMAIL_VERSION', '1.5.18' );
 
 		if ( ! kadence_woomail_is_woo_active() ) {
 			add_action( 'admin_notices', array( $this, 'admin_notice_need_woocommerce' ) );

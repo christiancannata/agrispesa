@@ -55,7 +55,7 @@ class TrackerInitializer implements HookableCollection
      * @param ShouldDisplay $should_display Should display.
      * @param ReasonsFactory|null $reasons_factory Reasons factory.
      */
-    public function __construct(string $plugin_file, string $plugin_slug, string $plugin_name, string $shop_url, ShouldDisplay $should_display, ReasonsFactory $reasons_factory = null)
+    public function __construct(string $plugin_file, string $plugin_slug, string $plugin_name, string $shop_url, ShouldDisplay $should_display, ?ReasonsFactory $reasons_factory = null)
     {
         $this->plugin_file = $plugin_file;
         $this->plugin_slug = $plugin_slug;
@@ -96,12 +96,12 @@ class TrackerInitializer implements HookableCollection
      * Creates tracker initializer from plugin info.
      *
      * @param \WPDesk_Plugin_Info $plugin_info .
-     * @param ShouldDisplay       $should_display .
+     * @param ShouldDisplay|null  $should_display .
      * @param ReasonsFactory|null $reasons_factory .
      *
      * @return TrackerInitializer
      */
-    public static function create_from_plugin_info(\FSVendor\WPDesk_Plugin_Info $plugin_info, $should_display, ReasonsFactory $reasons_factory = null)
+    public static function create_from_plugin_info(\FSVendor\WPDesk_Plugin_Info $plugin_info, ?ShouldDisplay $should_display = null, ?ReasonsFactory $reasons_factory = null)
     {
         $shops = $plugin_info->get_plugin_shops();
         $shop_url = $shops[get_locale()] ?? $shops['default'] ?? 'https://octolize.com';
@@ -116,7 +116,7 @@ class TrackerInitializer implements HookableCollection
      *
      * @return TrackerInitializer
      */
-    public static function create_from_plugin_info_for_shipping_method(\FSVendor\WPDesk_Plugin_Info $plugin_info, string $shipping_method_id, ReasonsFactory $reasons_factory = null)
+    public static function create_from_plugin_info_for_shipping_method(\FSVendor\WPDesk_Plugin_Info $plugin_info, string $shipping_method_id, ?ReasonsFactory $reasons_factory = null)
     {
         $shops = $plugin_info->get_plugin_shops();
         $shop_url = $shops[get_locale()] ?? $shops['default'] ?? 'https://octolize.com';

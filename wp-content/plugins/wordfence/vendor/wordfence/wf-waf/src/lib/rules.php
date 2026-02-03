@@ -611,6 +611,12 @@ class wfWAFRuleComparison implements wfWAFRuleInterface {
 			'subjects',
 		);
 	}
+	
+	public function __wakeup() {
+		if (empty($this->getWAF())) {
+			$this->setWAF(wfWAF::getInstance());
+		}
+	}
 
 	/**
 	 * @param string|array $subject

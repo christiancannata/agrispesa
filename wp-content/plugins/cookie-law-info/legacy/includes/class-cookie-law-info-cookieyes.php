@@ -59,7 +59,7 @@ if ( ! class_exists( 'Cookie_Law_Info_Cookieyes' ) ) {
 		 */
 		public $module_id;
 
-		const API_BASE_PATH = 'https://app.cookieyes.com/public/api/wp-basic/v1/';
+		const API_BASE_PATH = 'https://app.cookieyes.com/api/wp-basic/v1/';
 
 		const EC_WT_CKYES_CONNECTION_FAILED      = 100;
 		const EC_WT_CKYES_INVALID_CREDENTIALS    = 101;

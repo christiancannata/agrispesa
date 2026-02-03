@@ -41,5 +41,6 @@ class PageViewTracker implements Hookable
         } else {
             $this->tracker->add_view_direct();
         }
+        do_action('octolize/shipping-extensions/view-tracking', $this->tracker);
     }
 }

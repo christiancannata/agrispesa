@@ -71,7 +71,7 @@ class TrustBox {
 
 	private function do_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_trustbox' ) );
-		add_action( 'posts_results', array( $this, 'get_current_category_products' ) );
+		add_action( 'template_redirect', array( $this, 'get_current_category_products' ) );
 	}
 
 	public function getPage() {
@@ -124,15 +124,23 @@ class TrustBox {
 		return null;
 	}
 
-	public function get_current_category_products( $results ) {
+	public function get_current_category_products() {
 		try {
 			if ( class_exists( 'woocommerce' ) && is_product_category() ) {
 				$products = array();
-				foreach ( $results as $result ) {
-					if ( 'product' == $result->post_type ) {
-						$product = wc_get_product( $result->ID );
-						array_push( $products, $product );
+				global $wp_query;
+				
+				if ( $wp_query->have_posts() ) {
+					while ( $wp_query->have_posts() ) {
+						$wp_query->the_post();
+						if ( 'product' == get_post_type() ) {
+							$product = wc_get_product( get_the_ID() );
+							if ( $product ) {
+								array_push( $products, $product );
+							}
+						}
 					}
+					wp_reset_postdata();
 				}
 				$this->products = $products;
 			}
@@ -143,8 +151,6 @@ class TrustBox {
 			$message = 'Unable to get current category products ';
 			TrustpilotLogger::error($e, $message);
 		}
-	
-		return $results;
 	}
 
 	public function get_category_product_info( $products ) {

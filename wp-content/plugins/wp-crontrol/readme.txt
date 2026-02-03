@@ -2,8 +2,8 @@
 
 Contributors: johnbillion, scompt
 Tags: cron, wp-cron, crontrol, debug, woocommerce
-Tested up to: 6.8
-Stable tag: 1.19.2
+Tested up to: 6.9
+Stable tag: 1.21.0
 License: GPL v2 or later
 Donate link: https://github.com/sponsors/johnbillion
 
@@ -143,7 +143,7 @@ There are two steps to getting a functioning cron event that executes regularly.
 
 *Step One: Adding the event*
 
-From the Tools → Cron Events menu, click on Add New Cron Event. Fill out the details of the event. You're best off using a hook name that conforms to normal PHP variable naming conventions. The schedule is how often the event will be executed. If you don't see a good interval, then add one in the Settings → Cron Schedules menu.
+From the Tools → Cron Events menu, click on Add Cron Event. Fill out the details of the event. You're best off using a hook name that conforms to normal PHP variable naming conventions. The schedule is how often the event will be executed. If you don't see a good interval, then add one in the Settings → Cron Schedules menu.
 
 *Step Two: Writing the function*
 
@@ -163,13 +163,13 @@ function my_function() {
 
 ### How can I create a cron event that requests a URL?
 
-From the Tools → Cron Events menu, click on Add New Cron Event. Select the "URL cron event" option, fill out the details, and press the "Add Event" button.
+From the Tools → Cron Events menu, click on Add Cron Event. Select the "URL cron event" option, fill out the details, and press the "Add Event" button.
 
 [You can read all about the features and security of URL cron events on the WP Crontrol website](https://wp-crontrol.com/docs/url-cron-events/).
 
 ### How do I create a new PHP cron event?
 
-From the Tools → Cron Events menu, click on Add New Cron Event. Select the "PHP cron event" option and enter the schedule and next run time. The event schedule is how often your event will be executed. If you don't see a good interval, then add one in the Settings → Cron Schedules menu. In the "PHP Code" area, enter the PHP code that should be run when your cron event is executed. You don't need to provide the PHP opening tag (`<?php`).
+From the Tools → Cron Events menu, click on Add Cron Event. Select the "PHP cron event" option and enter the schedule and next run time. The event schedule is how often your event will be executed. If you don't see a good interval, then add one in the Settings → Cron Schedules menu. In the "PHP Code" area, enter the PHP code that should be run when your cron event is executed. You don't need to provide the PHP opening tag (`<?php`).
 
 Creating, editing, and running PHP cron events is subject to restrictive security permissions. [You can read all about the features and security of PHP cron events on the WP Crontrol website](https://wp-crontrol.com/docs/php-cron-events/).
 
@@ -212,6 +212,22 @@ The photo was taken by <a href="https://www.flickr.com/photos/michaelpardo/21453
 3. New cron schedules can be added, giving plugin developers more options when scheduling events
 ## Changelog ##
 
+### 1.21.0 (28 January 2026) ###
+
+* Adds support for invalid args in cron events by relaxing the strict typing and showing a warning on the listing and editing screens.
+
+### 1.20.0 (17 December 2025) ###
+
+* Confirms support for WordPress 6.9
+* Minor UI and UX improvements
+* Some architectural changes to prepare for future enhancements
+
+
+### 1.19.3 (23 October 2025) ###
+
+* Corrects the handling of closures as cron event actions.
+
+
 ### 1.19.2 (19 August 2025) ###
 
 * Security: Hardens the "URL cron event" functionality by rejecting disallowed URLs. [More information see the security advisory](https://github.com/johnbillion/wp-crontrol/security/advisories/GHSA-35c5-67fm-cpcp).
@@ -248,27 +264,6 @@ The photo was taken by <a href="https://www.flickr.com/photos/michaelpardo/21453
 ### 1.16.3 (19 April 2024) ###
 
 * Corrects the displayed PHP cron event name if one is provided
-
-### 1.16.2 (24 March 2024) ###
-
-* Security hardening: [An anti-tampering mechanism has been introduced for PHP cron events](https://wp-crontrol.com/help/check-php-cron-events/)
-* Improvements to accessibility and internationalisation
-* Removes the dependency on jQuery
-* Confirms support for WordPress 6.5
-
-
-### 1.16.1 (16 November 2023) ###
-
-* Confirms support for WordPress 6.4
-
-### 1.16.0 (17 October 2023) ###
-
-* Allow persistent WordPress core hooks to be cleared if there's more than one event with that hook
-* Add the number of matching events to the hook deletion link text
-* Scrap the Ajax request that checks if the current page of cron events has changed since loading
-* Make some improvements to sorting the cron event list table columns
-* Increase the minimum supported PHP version to 7.4
-
 
 ### Earlier versions ###
 

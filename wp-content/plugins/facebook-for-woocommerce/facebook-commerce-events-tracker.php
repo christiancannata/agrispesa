@@ -51,6 +51,11 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		/** @var bool whether the pixel should be enabled */
 		private $is_pixel_enabled;
 
+		/**
+		 * @var \FacebookAds\ParamBuilder|null shared ParamBuilder instance
+		 */
+		private static $param_builder = null;
+
 
 		/**
 		 * Events tracker constructor.
@@ -68,7 +73,74 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			$this->aam_settings   = $aam_settings;
 			$this->tracked_events = array();
 
+			$this->param_builder_server_setup();
 			$this->add_hooks();
+		}
+
+		public static function get_param_builder() {
+			if ( null === self::$param_builder ) {
+				try {
+					$site_url = get_site_url();
+					self::$param_builder = new \FacebookAds\ParamBuilder( array( $site_url ) );
+
+					self::$param_builder->processRequest(
+						$site_url,
+						$_GET,
+						$_COOKIE,
+						isset( $_SERVER['HTTP_REFERER'] ) ?
+						sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) :
+						null
+					);
+				} catch ( \Exception $exception ) {
+					Logger::log(
+						'Error initializing CAPI Parameter Builder: ' . $exception->getMessage(),
+						array(),
+						array(
+							'should_send_log_to_meta'        => true,
+							'should_save_log_in_woocommerce' => true,
+							'woocommerce_log_level'          => \WC_Log_Levels::ERROR,
+						)
+					);
+				}
+			}
+
+			return self::$param_builder;
+		}
+
+		/**
+		 * Initializes the CAPI server side Parameter Builder and sets cookies as needed.
+		 */
+		public function param_builder_server_setup() {
+			try {
+
+				if ( ! (bool) apply_filters( 'facebook_for_woocommerce_integration_pixel_enabled', true ) ) {
+					return;
+				}
+
+				$cookie_to_set = self::get_param_builder()->getCookiesToSet();
+
+				if ( ! headers_sent() ) {
+					foreach ( $cookie_to_set as $cookie ) {
+						setcookie(
+							$cookie->name,
+							$cookie->value,
+							time() + $cookie->max_age,
+							'/',
+							$cookie->domain
+						);
+					}
+				}
+			} catch ( \Exception $exception ) {
+				Logger::log(
+					'Error setting up server side CAPI Parameter Builder: ' . $exception->getMessage(),
+					array(),
+					array(
+						'should_send_log_to_meta'        => true,
+						'should_save_log_in_woocommerce' => true,
+						'woocommerce_log_level'          => \WC_Log_Levels::ERROR,
+					)
+				);
+			}
 		}
 
 
@@ -105,6 +177,9 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			// inject Pixel
 			add_action( 'wp_head', array( $this, 'inject_base_pixel' ) );
 			add_action( 'wp_footer', array( $this, 'inject_base_pixel_noscript' ) );
+
+			// set up CAPI Param Builder libraries
+			add_action( 'wp_enqueue_scripts', array( $this, 'param_builder_client_setup' ) );
 
 			// ViewContent for individual products
 			add_action( 'woocommerce_after_single_product', array( $this, 'inject_view_content_event' ) );
@@ -173,6 +248,30 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 			}
 		}
 
+		/**
+		 * Enqueues the Facebook CAPI Param Builder script.
+		 */
+		public function param_builder_client_setup() {
+			// Client js setup
+			if ( ! facebook_for_woocommerce()->get_connection_handler()->is_connected() ) {
+				return;
+			}
+
+			wp_enqueue_script(
+				'facebook-capi-param-builder',
+				'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js',
+				array(),
+				null,
+				true
+			);
+			// Add inline script that executes after the external script has loaded
+			wp_add_inline_script(
+				'facebook-capi-param-builder',
+				'if (typeof clientParamBuilder !== "undefined") {
+					clientParamBuilder.processAndCollectAllParams(window.location.href);
+				}'
+			);
+		}
 
 		/**
 		 * Triggers the PageView event
@@ -857,6 +956,10 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 		 */
 		public function inject_purchase_event( $order_id ) {
 
+			if ( \WC_Facebookcommerce_Utils::is_admin_user() ) {
+				return;
+			}
+
 			$event_name = 'Purchase';
 
 			$valid_purchase_order_states = array( 'processing', 'completed', 'on-hold', 'pending' );
@@ -944,7 +1047,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 					'contents'     => wp_json_encode( $contents ),
 					'content_type' => $content_type,
 					'value'        => $order->get_total(),
-					'currency'     => get_woocommerce_currency(),
+					'currency'     => ( method_exists( $order, 'get_currency' ) ? $order->get_currency() : get_woocommerce_currency() ),
 					'order_id'     => $order_id,
 				),
 				'user_data'   => $this->get_user_data_from_billing_address( $order ),
@@ -988,7 +1091,7 @@ if ( ! class_exists( 'WC_Facebookcommerce_EventsTracker' ) ) :
 					'custom_data' => array(
 						'sign_up_fee' => $subscription->get_sign_up_fee(),
 						'value'       => $subscription->get_total(),
-						'currency'    => get_woocommerce_currency(),
+						'currency'    => ( method_exists( $subscription, 'get_currency' ) ? $subscription->get_currency() : get_woocommerce_currency() ),
 					),
 					'user_data'   => $this->pixel->get_user_info(),
 				);

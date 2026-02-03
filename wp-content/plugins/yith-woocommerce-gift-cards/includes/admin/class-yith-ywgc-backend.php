@@ -170,6 +170,8 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 			add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages' ), 10, 2 );
 
+			// Remove Yoast SEO metabox from gift card categories.
+			add_action( 'admin_init', array( $this, 'disable_yoast_seo_metabox_in_gift_card_categories' ) );
 		}
 
 		/**
@@ -244,7 +246,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					YITH_YWGC_SCRIPT_URL . yit_load_js_file( 'ywgc-backend.js' ),
 					array(
 						'jquery',
-						'jquery-blockui',
+						\YIT_Assets::wc_script_handle( 'wc-jquery-blockui' ),
 					),
 					YITH_YWGC_VERSION,
 					true
@@ -284,7 +286,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 					YITH_YWGC_SCRIPT_URL . yit_load_js_file( 'ywgc-categories.js' ),
 					array(
 						'jquery',
-						'jquery-blockui',
+						\YIT_Assets::wc_script_handle( 'wc-jquery-blockui' ),
 					),
 					YITH_YWGC_VERSION,
 					true
@@ -1181,7 +1183,7 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 
 			if ( '_ywgc_delivery_date' === $meta->key ) {
 				$date_format = apply_filters( 'yith_wcgc_date_format', 'Y-m-d' );
-				$meta_value  = date_i18n( $date_format, $meta_value ) . ' (' . $date_format . ')';
+				$meta_value  = apply_filters( 'yith_ywgc_delivery_date_meta_value', date_i18n( $date_format, $meta_value ) . ' (' . $date_format . ')', $meta_value, $date_format );
 			}
 
 			return $meta_value;
@@ -1401,6 +1403,14 @@ if ( ! class_exists( 'YITH_YWGC_Backend' ) ) {
 			return $classes;
 		}
 
+		/**
+		 * Remove Yoast SEO metabox in gift card categories
+		 */
+		public function disable_yoast_seo_metabox_in_gift_card_categories() {
+			if ( class_exists( 'WPSEO_Options' ) ) {
+				WPSEO_Options::set( 'display-metabox-tax-' . YWGC_CATEGORY_TAXONOMY, false );
+			}
+		}
 	}
 }
 

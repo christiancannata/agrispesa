@@ -41,7 +41,7 @@ class Bulk_Actions implements Runner {
 	}
 
 	/**
-	 * Intialize.
+	 * Initialize.
 	 */
 	public function init() {
 		if ( ! Helper::has_cap( 'onpage_general' ) || ! $this->can_add() ) {
@@ -97,6 +97,10 @@ class Bulk_Actions implements Runner {
 			$post_type                                 = Param::get( 'post_type', get_post_type() );
 			$post_type_default                         = Helper::get_settings( 'titles.pt_' . $post_type . '_default_rich_snippet' );
 
+			if ( ( class_exists( 'WooCommerce' ) && 'product' === $post_type ) || ( class_exists( 'Easy_Digital_Downloads' ) && 'download' === $post_type ) ) {
+				$post_type_default = 'download' === $post_type ? esc_html__( 'EDD Product', 'rank-math' ) : esc_html__( 'WC Product', 'rank-math' );
+			}
+
 			if ( $post_type_default ) {
 				// Translators: placeholder is the default Schema type setting.
 				$new_actions['rank_math_bulk_schema_default'] = sprintf( __( 'Set Schema: Default (%s)', 'rank-math' ), $post_type_default );
@@ -151,7 +155,12 @@ class Bulk_Actions implements Runner {
 		$screen = get_current_screen();
 		wp_enqueue_style( 'rank-math-post-bulk-edit', rank_math()->plugin_url() . 'assets/admin/css/post-list.css', [ 'wp-components' ], rank_math()->version );
 
-		$allow_editing = Helper::get_settings( 'titles.pt_' . $screen->post_type . '_bulk_editing', true );
+		if ( Admin_Helper::is_term_listing() ) {
+			$allow_editing = Helper::get_settings( 'titles.tax_' . $screen->taxonomy . '_bulk_editing', false );
+		} else {
+			$allow_editing = Helper::get_settings( 'titles.pt_' . $screen->post_type . '_bulk_editing', true );
+		}
+
 		if ( ! $allow_editing || 'readonly' === $allow_editing ) {
 			return;
 		}

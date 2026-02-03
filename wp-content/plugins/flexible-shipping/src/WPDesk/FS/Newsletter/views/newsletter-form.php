@@ -35,7 +35,7 @@
 			$newsletter_status.removeClass('error');
 		}
 
-		jQuery('div.fs-info-wrapper').prepend($newsletter_element);
+		jQuery('div.fs-info-wrapper').append($newsletter_element);
 		$newsletter_element.show();
 
 		jQuery('#fs-newsletter-checkbox').on('change', function() {

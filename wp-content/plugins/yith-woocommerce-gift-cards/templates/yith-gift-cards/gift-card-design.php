@@ -75,6 +75,8 @@ if ( 'yes' === $allow_templates ) : ?>
 
 						$term_slug_array = array();
 
+						$selected_categories_unserialized = is_array( $selected_categories_unserialized ) ? $selected_categories_unserialized : array( '0' => '0' );
+
 						foreach ( $selected_categories_unserialized  as $selected_categories ) {
 							if ( '0' !== $selected_categories ) {
 								$term_slug_array[] = get_term( $selected_categories )->slug;

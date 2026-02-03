@@ -78,7 +78,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Choix de consentement"
+                "title": "Préférences de consentement"
             }
         },
         "auditTable": {
@@ -178,7 +178,7 @@
         },
         "revisitConsent": {
             "elements": {
-                "title": "Choix de consentement"
+                "title": "Préférences de consentement"
             }
         },
         "auditTable": {

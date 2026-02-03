@@ -16,12 +16,17 @@ use WooCommerce\Facebook\Admin\Abstract_Settings_Screen;
 use WooCommerce\Facebook\Framework\Api\Exception as ApiException;
 use WooCommerce\Facebook\RolloutSwitches;
 
+// Include the localization trait
+require_once __DIR__ . '/Localization_Settings_Trait.php';
+
 /**
  * Shops settings screen object.
  *
  * @since 3.5.0
  */
 class Shops extends Abstract_Settings_Screen {
+
+	use Localization_Settings_Trait;
 
 	/** @var string */
 	const ID = 'shops';
@@ -49,6 +54,10 @@ class Shops extends Abstract_Settings_Screen {
 		add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		add_action( 'admin_footer', array( $this, 'render_message_handler' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+		// Only register this action once across all settings screens that use the trait
+		if ( ! has_action( 'woocommerce_admin_field_localization_plugin_status' ) ) {
+			add_action( 'woocommerce_admin_field_localization_plugin_status', array( $this, 'render_localization_plugin_status' ) );
+		}
 	}
 
 	/**
@@ -140,6 +149,8 @@ class Shops extends Abstract_Settings_Screen {
 				'sync_navigation_menu_nonce'   => wp_create_nonce( self::ACTION_SYNC_NAVIGATION_MENU ),
 			)
 		);
+
+		wp_enqueue_style( 'wc-facebook-admin-whatsapp-banner', facebook_for_woocommerce()->get_plugin_url() . '/assets/css/admin/facebook-for-woocommerce-whatsapp-banner.css', array(), \WC_Facebookcommerce::VERSION );
 	}
 
 	/**
@@ -149,6 +160,10 @@ class Shops extends Abstract_Settings_Screen {
 	 */
 	public function render() {
 		$is_connected = facebook_for_woocommerce()->get_connection_handler()->is_connected();
+
+		if ( $is_connected ) {
+			$this->render_whatsapp_promo_banner();
+		}
 
 		$this->render_facebook_iframe();
 
@@ -182,7 +197,6 @@ class Shops extends Abstract_Settings_Screen {
 		if ( empty( $iframe_url ) ) {
 			return;
 		}
-
 		?>
 	<div style="display: flex; justify-content: center; max-width: 1200px; margin: 0 auto;">
 		<iframe
@@ -277,6 +291,7 @@ class Shops extends Abstract_Settings_Screen {
 					</tr>
 				</tbody>
 			</table>
+
 			<?php parent::render(); ?>
 		</div>
 	</div>
@@ -314,8 +329,14 @@ class Shops extends Abstract_Settings_Screen {
 	 * @since 3.5.0
 	 */
 	public function get_settings(): array {
-		//phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
-		return self::get_settings_with_title_static( __( '', 'facebook-for-woocommerce' ) );
+		// Get the parent settings (debug mode, meta diagnosis, etc.)
+		$parent_settings = self::get_settings_with_title_static( '' );
+
+		// Get the localization settings
+		$localization_settings = $this->get_localization_settings();
+
+		// Merge both settings arrays
+		return array_merge( $parent_settings, $localization_settings );
 	}
 
 	/**
@@ -459,5 +480,17 @@ class Shops extends Abstract_Settings_Screen {
 				}
 			});
 		JAVASCRIPT;
+	}
+
+	public static function render_whatsapp_promo_banner() {
+		$should_show_whatsapp_utility_banner = facebook_for_woocommerce()->get_rollout_switches()->is_switch_enabled(
+			RolloutSwitches::WHATSAPP_UTILITY_MESSAGING_BETA_EXPERIENCE
+		);
+		if ( ! $should_show_whatsapp_utility_banner ) {
+			return;
+		}
+		$wa_banner = new \WC_Facebookcommerce_Admin_Banner();
+		$wa_banner->render_banner();
+		$wa_banner->enqueue_banner_script();
 	}
 }

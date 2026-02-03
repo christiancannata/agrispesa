@@ -1,19 +1,19 @@
 <?php
 /**
  * Framework Name: YIT Plugin Framework
- * Version: 4.7.4
+ * Version: 4.7.8
  * Author: YITH
  * Text Domain: yith-plugin-fw
  * Domain Path: /languages/
  *
  * @author  YITH <plugins@yithemes.com>
- * @version 4.7.4
+ * @version 4.7.8
  * @package YITH\PluginFramework
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
-global $yith_plugin_fw_data;
+global $yith_plugin_fw_data, $plugin_upgrade_fw_data;
 
 $default_headers = array(
 	'Name'       => 'Framework Name',

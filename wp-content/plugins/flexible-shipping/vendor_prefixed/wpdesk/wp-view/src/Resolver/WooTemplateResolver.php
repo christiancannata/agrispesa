@@ -19,7 +19,7 @@ class WooTemplateResolver implements Resolver
         }
         $this->base_path = $base_path;
     }
-    public function resolve($name, Renderer $renderer = null): string
+    public function resolve($name, ?Renderer $renderer = null): string
     {
         $template = wc_locate_template($name, '', $this->base_path);
         if ($template === '') {

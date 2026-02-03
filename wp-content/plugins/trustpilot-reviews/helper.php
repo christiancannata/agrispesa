@@ -1,7 +1,5 @@
 <?php
 
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
 use Trustpilot\Review\TrustpilotHttpClient;
 use Trustpilot\Review\TrustpilotLogger;
 

@@ -20,12 +20,6 @@ class Cookie_Law_Info_Cookie_Scanner_Api extends Cookie_Law_Info_Cookie_Scaner {
 	 */
 	public $api_url = 'https://wp-scanner.cookieyes.com/api/v2/';
 	/**
-	 * Cookie serve API alternate URL
-	 *
-	 * @var string
-	 */
-	public $api_url_alternate = 'https://scanner.cookieyes.com/api/';
-	/**
 	 * Cookie serve API base path
 	 *
 	 * @var string
@@ -84,9 +78,6 @@ class Cookie_Law_Info_Cookie_Scanner_Api extends Cookie_Law_Info_Cookie_Scaner {
 	 */
 	private function get_api_url() {
 		$url = $this->api_url;
-		// if ( get_option( 'cli_scanner_api' ) == 2 ) { // wt_cli_temp_fix.
-		// $url = $this->api_url_alternate;
-		// }
 		return apply_filters( 'wt_cli_cookie_scanner_api_url', $url );
 	}
 	/**

@@ -74,7 +74,7 @@ class Page implements Hookable
      */
     private function should_add_badge(): bool
     {
-        return !$this->view_page_tracker->option_exists();
+        return apply_filters('octolize/shipping-extensions/should-add-badge', !$this->view_page_tracker->option_exists(), $this->view_page_tracker);
     }
     /**
      * @return Plugin[]
@@ -141,9 +141,6 @@ class Page implements Hookable
     private function get_header_promo(): array
     {
         $promo = [];
-        if (current_time('timestamp') < strtotime('2025-08-30')) {
-            $promo['summer10'] = '<span>☀️ <strong>Summer Deal! Get an Extra 10% OFF Your First Order</strong> | Valid until Aug 31</span><span class="oct-code">SUMMER10 <span class="oct-copy-to-clipboard" data-value="SUMMER10">Copy code</span></span>';
-        }
         return array_values(apply_filters('octolize/shipping-extensions/header-promo', $promo));
     }
 }

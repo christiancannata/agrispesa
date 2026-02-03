@@ -3,8 +3,8 @@ Contributors: mmaunder, wfryan, wfmatt, wfmattr
 Tags: security, malware, 2fa, firewall, scanner
 Requires at least: 4.7
 Requires PHP: 7.0
-Tested up to: 6.8
-Stable tag: 8.1.0
+Tested up to: 6.9
+Stable tag: 8.1.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,7 +43,7 @@ Rounded out by 2FA and a suite of additional features, Wordfence is the most com
 - **Real-time malware signature updates [Premium]** via the Threat Defense Feed (free version is delayed by 30 days).
 - **Compares with WordPress.org repository** your core files, themes and plugins, checking their integrity and reporting any changes to you.
 - **Repair WordPress core, theme, and plugin files** that have changed by overwriting them with a pristine, original version. Delete any files that don’t belong easily within the Wordfence interface.
-- **Malware Removal Tools: "Delete File" and "Delete All Deletable Files" options allow for efficient malware removal. Remember to investigate the scan results and backup files first!
+- **Malware Removal Tools** "Delete File" and "Delete All Deletable Files" options allow for efficient malware removal. Remember to investigate the scan results and backup files first!
 - **Checks your site for known security vulnerabilities** and alerts you to any issues. Also alerts you to potential security issues when a plugin has been closed or abandoned.
 - **Checks your content safety** by scanning file contents, posts and comments for dangerous URLs and suspicious content.
 - **Checks to see if your site or IP have been blocklisted [Premium]** for malicious activity, generating spam or other security issues.
@@ -206,6 +206,27 @@ Secure your website with Wordfence.
 9. Logging in is easy with Wordfence 2FA.
 
 == Changelog ==
+
+= 8.1.4 - December 20, 2025 =
+* Fix: Fixed an issue with `inet_pton` introduced by a recent patch to PHP 8.1+ that could cause a fatal error if a malformed IP address was passed to the call
+
+= 8.1.3 - December 3, 2025 =
+* Improvement: Updated the bundled geoip database
+* Note: Verified compatibility with WordPress 6.9
+
+= 8.1.2 - November 12, 2025 =
+* Improvement: Updated the bundled geoip database
+
+= 8.1.1 - November 5, 2025 =
+* Improvement: Improved localization support for the various block screens and messages
+* Improvement: Updated the bundled geoip database
+* Improvement: Prioritized Wordfence tables in the diagnostics tool when large numbers of tables exist
+* Improvement: Allow non-US Google crawler IP addresses to pass country blocking
+* Improvement: Enforcement of password strength requirements is now applied on the corresponding REST API endpoints
+* Fix: Fixed detection for first-time logins and overall sending for login alerts when the corresponding settings are enabled
+* Fix: When the WAF is using the mysql storage engine, fixed an issue with exclusion rules for the WAF not running correctly
+* Fix: Reduced per-hit database query load around checking license status for free installations
+* Fix: Optimized data sync with the WAF to better detect when the known server IP address list has changed
 
 = 8.1.0 - August 25, 2025 =
 * Improvement: Added password scanning support for WordPress 6.8 and later

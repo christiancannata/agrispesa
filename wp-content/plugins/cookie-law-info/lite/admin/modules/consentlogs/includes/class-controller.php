@@ -8,7 +8,6 @@
 namespace CookieYes\Lite\Admin\Modules\Consentlogs\Includes;
 
 use CookieYes\Lite\Integrations\Cookieyes\Includes\Cloud;
-use CookieYes\Lite\Includes\Cache;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -96,7 +95,6 @@ class Controller extends Cloud {
 				return array();
 			}
 		}
-		Cache::set( 'statistics', $this->cache_group, $logs );
 		return $logs;
 	}
 

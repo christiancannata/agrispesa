@@ -879,14 +879,14 @@ if ( ! class_exists( 'Kadence_Woomail_Preview' ) ) {
 			$scripts .= 'var pl_year = "' . date( 'Y' ) . '";';
 			if ( is_object( self::$current_order ) ) {
 				$scripts .= 'var pl_order_date = "' . wc_format_datetime( self::$current_order->get_date_created() ) . '";';
-				$scripts .= 'var pl_order_number = "' . self::$current_order->get_order_number() . '";';
-				$scripts .= 'var pl_customer_first_name = "' . self::$current_order->get_billing_first_name() . '";';
-				$scripts .= 'var pl_customer_last_name = "' . self::$current_order->get_billing_last_name() . '";';
-				$scripts .= 'var pl_customer_full_name = "' . self::$current_order->get_formatted_billing_full_name() . '";';
+				$scripts .= 'var pl_order_number = "' . esc_js(self::$current_order->get_order_number()) . '";';
+				$scripts .= 'var pl_customer_first_name = "' . esc_js(self::$current_order->get_billing_first_name()) . '";';
+				$scripts .= 'var pl_customer_last_name = "' . esc_js(self::$current_order->get_billing_last_name()) . '";';
+				$scripts .= 'var pl_customer_full_name = "' . esc_js(self::$current_order->get_formatted_billing_full_name()) . '";';
 				if ( 0 === ( $user_id = (int) self::$current_order->get_customer_id() ) ) {
 					$user_id = get_current_user_id();
 				}
-				$scripts .= 'var pl_customer_username = "' . Kadence_Woomail_Designer::get_username_from_id( $user_id ) . '";';
+				$scripts .= 'var pl_customer_username = "' . esc_js( Kadence_Woomail_Designer::get_username_from_id( $user_id ) ). '";';
 			}
 			$scripts .= 'var pl_member_plan = "' . ( is_object( self::$current_member ) ? self::$current_member->get_plan()->get_name() : 'Membership Plan Name' ) . '";';
 			$scripts .= 'var pl_product_title = "' . self::$current_product_title . '";';

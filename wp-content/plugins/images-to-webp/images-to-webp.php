@@ -3,7 +3,7 @@
 	Plugin Name: Images to WebP
 	Plugin URI: https://www.paypal.me/jakubnovaksl
 	Description: Convert JPG, PNG and GIF images to WEBP, speed up your web
-	Version: 4.7
+	Version: 4.9.1
 	Author: KubiQ
 	Author URI: https://kubiq.sk
 	Text Domain: images-to-webp
@@ -32,6 +32,33 @@ class images_to_webp{
 		add_filter( 'wp_update_attachment_metadata', array( $this, 'wp_update_attachment_metadata' ), 77, 2 );
 		add_action( 'fly_image_created', array( $this, 'fly_images_to_webp' ), 10, 2 );
 		add_action( 'bis_image_created', array( $this, 'bis_images_to_webp' ), 10, 2 );
+
+		$avif_plugin_file = WP_PLUGIN_DIR . '/images-to-avif/images-to-avif.php';
+		if( ! file_exists( $avif_plugin_file ) ){
+			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+			add_action( 'wp_ajax_avif_notice_dismissed', array( $this, 'avif_notice_dismissed' ) );
+		}
+	}
+
+	function admin_notices(){
+		if( current_user_can('manage_options') && ! get_user_meta( get_current_user_id(), 'avif_notice_dismissed' ) ){
+			if( function_exists('get_current_screen') && isset( get_current_screen()->id ) && in_array( get_current_screen()->id, array( 'dashboard', 'plugins', 'plugin-install', 'upload', 'attachment' ) ) ){ ?>
+				<div class="avif-notice notice notice-info is-dismissible"><p><?php printf( esc_html__( 'There is a new %sImages to AVIF%s plugin that can improve your load time even more and it works perfectly with Images to WebP too.', 'images-to-webp' ), '<a href="' . admin_url( 'plugin-install.php?s=kubiq%20Images%20to%20AVIF&tab=search&type=term' ) . '" target="_blank">', '</a>' ) ?></p></div>
+				<script>
+				jQuery(document).ready(function($){
+					$(document).on('click', '.avif-notice .notice-dismiss', function(){
+						$.post( ajaxurl, { action: 'avif_notice_dismissed', _wpnonce: '<?php echo wp_create_nonce('avif_notice_dismissed') ?>' });
+					});
+				});
+				</script><?php
+			}
+		}
+	}
+
+	function avif_notice_dismissed(){
+		if( defined('DOING_AJAX') && DOING_AJAX && check_ajax_referer('avif_notice_dismissed') ){
+			add_user_meta( get_current_user_id(), 'avif_notice_dismissed', 1, true );
+		}
 	}
 
 	function admin_enqueue_scripts( $hook ){
@@ -171,9 +198,16 @@ class images_to_webp{
 			}
 		} ?>
 		<div class="wrap">
-			<h2><?php _e( 'Images to WebP', 'images-to-webp' ); ?></h2>
-			<?php $this->plugin_admin_tabs( $this->tab ); ?>
-			<?php include_once 'tabs/tab-' . $this->tab . '.php'; ?>
+			<h2><?php _e( 'Images to WebP', 'images-to-webp' ); ?></h2><?php
+			
+			$avif_plugin_file = WP_PLUGIN_DIR . '/images-to-avif/images-to-avif.php';
+			if( ! file_exists( $avif_plugin_file ) ){
+				echo '<div class="notice notice-info"><p>' . sprintf( esc_html__( 'There is a new %sImages to AVIF%s plugin that can improve your load time even more and it works perfectly with this plugin too.', 'images-to-webp' ), '<a href="' . admin_url( 'plugin-install.php?s=kubiq%20Images%20to%20AVIF&tab=search&type=term' ) . '" target="_blank">', '</a>' ) . '</p></div>';
+			}
+
+			$this->plugin_admin_tabs( $this->tab );
+			
+			include_once 'tabs/tab-' . $this->tab . '.php'; ?>
 		</div><?php
 	}
 
@@ -291,11 +325,30 @@ class images_to_webp{
 						if( substr( $folder, 0, $secure_path_len ) === $secure_path ){
 							$files = scandir( $folder );
 							$converted = 0;
+
+							$skip_until = false;
+							$webp_processed_file = $folder . '/.webp-processed.json';
+							if( file_exists( $webp_processed_file ) ){
+								$skip_until = trim( file_get_contents( $webp_processed_file ) );
+							}
+
 							foreach( $files as $file ){
 								if( ! $only_missing || ! file_exists( $folder . '/' . $file . '.webp' ) ){
-									$converted += $this->convert_image( $folder . '/' . $file ) ? 1 : 0;
+									if( ! in_array( substr( $file, -5 ), [ '.webp', '.avif' ] ) ){
+										if( $skip_until ){
+											if( $skip_until == $folder . '/' . $file ){
+												$skip_until = false;
+											}
+										}else{
+											$converted += $this->convert_image( $folder . '/' . $file ) ? 1 : 0;
+											file_put_contents( $webp_processed_file, $folder . '/' . $file, LOCK_EX );
+										}
+									}
 								}
 							}
+
+							wp_delete_file( $webp_processed_file );
+
 							printf( __( '%d converted', 'images-to-webp' ), $converted );
 						}
 					}

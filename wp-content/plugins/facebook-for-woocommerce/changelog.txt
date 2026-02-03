@@ -1,5 +1,76 @@
 *** Facebook for WooCommerce Changelog ***
 
+= 3.5.15 - 2025-12-05 =
+* Add - Adding Language Override Feeds for Products by @rafael-curran in #3713
+* Add - Automated CAPI/Pixel E2E testing by @immadhavv in #3738
+* Dev - set unique SKU for composite product E2E test by @ashiqursuperfly in #3741
+* Add - continue on error temporarily for e2e tests by @immadhavv in #3742
+* Dev - add E2E test for composite product creation by @ashiqursuperfly in #3734
+* Dev - Add E2E tests for product sync exclusion by @ashiqursuperfly in #3732
+* Dev - Add E2E test for managing product stock by @ashiqursuperfly in #3731
+* Dev - misc improvements to playwright test suite by @ashiqursuperfly in #3723
+* Add - add e2e test by @chc421 in #3722
+* Add - Feature/Purchase use order currency by @ukilla in #3720
+* Dev - add E2E test editing variable product FB options by @ashiqursuperfly in #3719
+* Dev - Add E2E test for simple product FB options edit flow by @ashiqursuperfly in #3709
+* Add - Request unit test by @chc421 in #3702
+* Add - Feature/add fb video by @devbodaghe in #3657
+* Add - [Code Cleanup] Remove WhatsApp Integration Alpha PHP Code by @woo-ardsouza in #3708
+* Dev - Add E2E test for simple and variable product delete flow by @ashiqursuperfly in #3705
+* Dev - add E2E test for variable product edit flow by @ashiqursuperfly in #3699
+* Add - Remove WooCommerce call to Message Events Post API by @woo-ardsouza in #3704
+* Add - quick edit testing by @rithikb24 in #3701
+* Add - [WIFI][Customer Events] Support additional order statuses by @woo-ardsouza in #3700
+
+= 3.5.14 - 2025-11-19 =
+* Tweak - Adjust ParamBuilder to pixel integration
+
+= 3.5.13 - 2025-11-10 =
+* Fix - [Woo-Alpha][Deprecate][1/n] Remove WhatsApp Webhook from Woo by @sharunaanandraj in #3693
+* Dev - Enhance E2E testing infrastructure for WooCommerce product workflows and add tests for product modification/edit flow by @ashiqursuperfly in #3692
+* Fix - Fix: Prevent integer overflow in Facebook product IDs by @sol-loup in #3688
+* Add - Feature/ Update Integration Config Endpoint by @olu-meta in #3665
+* Add - feat: logging plugin versions for better tracking by @rithikb24 in #3677
+* Fix - Fix: CRON error calling is_master_sync_on() on null plugin_render_han… by @devbodaghe in #3676
+* Fix - removing external-time from feed job by @rithikb24 in #3673
+* Fix - Fix click_id API validation error by @devbodaghe in #3668
+* Fix - Update checkout page to prevent lazy loading plugin interference by @carterbuce in #3664
+* Fix - Fix/Optimize is wp com detection by @ukilla in #3661
+
+= 3.5.12 - 2025-10-20 =
+* Fix - Fix click_id API validation error by @devbodaghe in #3668
+* Add - Promo Banner for WhatsApp Utility by @woo-ardsouza in #3660
+* Add - Pb fix option 3 by @chc421 in #3617
+* Fix - Fix: Facebook product videos and attributes not saving by @devbodaghe in #3655
+* Tweak - feat: reducing promotions feed overhead by @rithikb24 in #3654
+* Fix - Updated the ajax calls to check if the caller is a legit user by @vahidkay-meta in #3647
+* Add - feat: making product update sync to fb async by @rithikb24 in #3645
+* Dev - Fix/automate stable version prep release by @vahidkay-meta in #3646
+* Fix - Stale pixel fix by @jczhuoMeta in #3640
+
+= 3.5.10 - 2025-10-14 =
+* Add - Promo Banner for WhatsApp Utility by @woo-ardsouza in #3660
+* Add - Pb fix option 3 by @chc421 in #3617
+* Fix - Fix: Facebook product videos and attributes not saving by @devbodaghe in #3655
+* Tweak - feat: reducing promotions feed overhead by @rithikb24 in #3654
+* Fix - Updated the ajax calls to check if the caller is a legit user by @vahidkay-meta in #3647
+* Add - feat: making product update sync to fb async by @rithikb24 in #3645
+* Dev - Fix/automate stable version prep release by @vahidkay-meta in #3646
+* Fix - Stale pixel fix by @jczhuoMeta in #3640
+
+= 3.5.9 - 2025-09-30 =
+* Tweak - Focus admin user check on order creation capabilities by @iodic in #3643
+* Fix - Added code to exclude purchases registered by the admin user by @vahidkay-meta in #3641
+* Add - [WIFI][EZ] Localization Fix on WhatsApp Splash page by @sharunaanandraj in #3642
+* Tweak - Removed get_product_fbid graph api functionality by @vinkmeta in #3624
+* Dev - Plugin availability logging by @rafael-curran in #3637
+* Add - Added complete e2e tests automation framework by @immadhavv in #3634
+* Fix - Fix/issue with set stable tag by @vahidkay-meta in #3636
+* Fix - Removed the new changes by @vahidkay-meta in #3635
+* Tweak - Removed API call to delete products by @vinkmeta in #3623
+* Tweak - Cleanup deprecated product delete functionality by @vinkmeta in #3622
+* Fix - [EZ] Error Message for Customer Events API call by @woo-ardsouza in #3630
+
 = 3.5.8 - 2025-09-23 =
 * Add - Add on-hold and pending as valid purchase order states by @ukilla in #3629
 * Fix - Added a check for the # of posts found with a query by @vahidkay-meta in #3606

@@ -3,7 +3,7 @@ Contributors: TrustpilotApp
 Tags: widget, wordpress, brand, review, trustpilot, trustpilot reviews, trustpilot social reviews, trustbox, orders, woocommerce, woocommerce reviews, woocommerce product reviews, woocommerce extensions, woocommerce plugins, woocommerce addons, woocommerce add-ons,  social reviews, feedback, service reviews
 Requires at least: 3.5.1
 Tested up to: 6.2.2
-Stable tag: 2.5.925
+Stable tag: 3.11.0
 Requires PHP: 5.2.0
 WC requires at least: 3.0.0
 WC tested up to: 7.9.0
@@ -81,6 +81,11 @@ There are a number of ways to get in touch with the Support Team at Trustpilot -
 4. Enable product review invitations
 
 == Changelog ==
+= 3.11.0 - 03/01/2026 =
+
+* Fix Google malware issue
+* Fix PHP notice
+* Fix permissions issue
 
 = 2.5.925 - 25/07/2023 =
 

@@ -48,7 +48,7 @@ class Module {
 	 * Getter.
 	 *
 	 * @param string $key           Key to get data for.
-	 * @param mixed  $default_value Defaul value if not found.
+	 * @param mixed  $default_value Default value if not found.
 	 *
 	 * @return mixed
 	 */
@@ -208,10 +208,6 @@ class Module {
 	public function is_active() {
 		if ( $this->is_disabled() ) {
 			return false;
-		}
-
-		if ( $this->get_id() === 'react-settings' ) {
-			return Helper::is_react_enabled();
 		}
 
 		$active_modules = get_option( 'rank_math_modules', [] );

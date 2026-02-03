@@ -95,14 +95,14 @@ class Category_Controller extends Base_Controller {
 		$tables = "
 		CREATE TABLE {$wpdb->prefix}cky_cookie_categories (
 			category_id bigint(20) NOT NULL AUTO_INCREMENT,
-			name text NOT NULL DEFAULT '',
+			name text NOT NULL,
 			slug varchar(190) NOT NULL DEFAULT '',
-			description longtext NOT NULL DEFAULT '',
+			description longtext NOT NULL,
 			prior_consent int(11) NOT NULL default 0,
 			visibility int(11) NOT NULL default 1,
 			priority int(11) NOT NULL default 0,
 			sell_personal_data int(11) NOT NULL default 0,
-			meta longtext NULL DEFAULT '', 
+			meta longtext NULL, 
 			date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			PRIMARY KEY (category_id),

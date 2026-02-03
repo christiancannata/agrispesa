@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'wpfactory/popup-notices-for-woocommerce',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '62d0bc6995f703ead17f38712a11140b756d8b35',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'wpfactory/popup-notices-for-woocommerce' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '62d0bc6995f703ead17f38712a11140b756d8b35',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpfactory/wpfactory-autoloader' => array(
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => 'd4387cb8fa8aa9f759dbc067ea9201d1d7a70cbc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wpfactory/wpfactory-autoloader',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpfactory/wpfactory-promoting-notice' => array(
+            'pretty_version' => 'v1.0.6',
+            'version' => '1.0.6.0',
+            'reference' => '9b0dc91c32662ce9040b36a4b40827454e806856',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wpfactory/wpfactory-promoting-notice',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

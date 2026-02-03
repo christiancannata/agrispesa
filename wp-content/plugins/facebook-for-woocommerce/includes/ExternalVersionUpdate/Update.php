@@ -17,6 +17,8 @@ use WC_Facebookcommerce_Utils;
 use WooCommerce\Facebook\Utilities\Heartbeat;
 use WooCommerce\Facebook\Framework\Logger;
 use WooCommerce\Facebook\Framework\LogHandlerBase;
+use WooCommerce\Facebook\Handlers\PluginRender;
+use WooCommerce\Facebook\Integrations\IntegrationRegistry;
 
 /**
  * Facebook for WooCommerce External Plugin Version Update.
@@ -33,6 +35,12 @@ class Update {
 
 	/** @var string master sync option */
 	const MASTER_SYNC_OPT_OUT_TIME = 'wc_facebook_master_sync_opt_out_time';
+
+	/** @var string Transient key for caching language feed statistics */
+	const TRANSIENT_LANGUAGE_FEED_STATS = 'facebook_for_woocommerce_language_feed_stats';
+
+	/** @var int Transient lifetime for language feed stats cache (2 weeks) */
+	const TRANSIENT_LANGUAGE_FEED_STATS_LIFETIME = 2 * WEEK_IN_SECONDS;
 
 	/**
 	 * Update class constructor.
@@ -84,6 +92,8 @@ class Update {
 				$excluded_product_tags = $term_query->get_terms();
 			}
 
+			$language_feed_stats = get_transient( self::TRANSIENT_LANGUAGE_FEED_STATS );
+
 			$context  = array(
 				'flow_name'  => 'plugin_updates',
 				'flow_step'  => 'send_plugin_updates',
@@ -94,6 +104,9 @@ class Update {
 					'excluded_product_tags'       => wp_json_encode( $excluded_product_tags ),
 					'published_product_count'     => facebook_for_woocommerce()->get_integration()->get_product_count(),
 					'opted_out_woo_all_products'  => get_option( self::MASTER_SYNC_OPT_OUT_TIME ),
+					'active_plugins'              => wp_json_encode( IntegrationRegistry::get_all_active_plugin_data() ),
+					'language_override_enabled'   => get_option( \WC_Facebookcommerce_Integration::OPTION_LANGUAGE_OVERRIDE_FEED_GENERATION_ENABLED, 'no' ),
+					'language_feed_stats'         => wp_json_encode( is_array( $language_feed_stats ) ? $language_feed_stats : [] ),
 				],
 			);
 			$context  = [ LogHandlerBase::set_core_log_context( $context ) ];
@@ -149,7 +162,7 @@ class Update {
 		// Send the request to the Meta server with the latest plugin version.
 		try {
 			$external_business_id         = $plugin->get_connection_handler()->get_external_business_id();
-			$is_woo_all_product_opted_out = $plugin->get_plugin_render_handler()->is_master_sync_on() === false;
+			$is_woo_all_product_opted_out = PluginRender::is_master_sync_on() === false;
 			$response                     = $plugin->get_api()->update_plugin_version_configuration( $external_business_id, $is_woo_all_product_opted_out, WC_Facebookcommerce_Utils::PLUGIN_VERSION );
 			if ( $response->has_api_error() ) {
 				// If the request fails, we should retry it in the next heartbeat.

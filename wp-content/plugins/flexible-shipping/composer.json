@@ -45,11 +45,11 @@
         "10up/wp_mock": "*",
         "albertofem/rsync-lib": "^1.0",
         "moneyphp/money": "^3.2.1",
-        "octolize/flexible-shipping-rules": "^1.3.0",
+        "octolize/flexible-shipping-rules": "^1.5",
         "octolize/octolize-checkout-block-integration": "^1.1",
-        "octolize/wp-betterdocs-beacon": "^1.0.2",
         "octolize/wp-csat-petition": "^1.0",
         "octolize/wp-octolize-brand-assets": "^1.3",
+        "octolize/wp-octolize-docs-chat": "^1.4.0",
         "octolize/wp-octolize-tracker": "^1.3.2",
         "octolize/wp-onboarding": "^1.9",
         "octolize/wp-shipping-extensions": "^1.9.0",
@@ -70,7 +70,7 @@
         "wpdesk/wp-wpdesk-fs-compatibility": "^1.0.0",
         "wpdesk/wp-wpdesk-fs-shipment": "^2.4.2",
         "wpdesk/wp-wpdesk-fs-table-rate": "^4.4",
-        "wpdesk/wp-wpdesk-rating-petition": "^1.6",
+        "wpdesk/wp-wpdesk-rating-petition": "^1.9.0",
         "wpdesk/wp-wpdesk-tracker": "^3.1",
         "wpdesk/wp-wpdesk-tracker-deactivation": "^2.0.0",
         "wpdesk/wp-wpdesk-tracker-user-feedback": "^1.0.0",
@@ -128,6 +128,6 @@
             "url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
         }
     },
-    "version": "6.4.0",
+    "version": "6.5.4",
     "type": "wordpress-plugin"
 }

@@ -843,6 +843,9 @@ function _ckyRenderBanner() {
     _ckySetCCPAOptions();
     _ckySetPlaceHolder();
     _ckyAttachReadMore();
+    _ckyAttachShowMoreLessStyles();
+    _ckyAttachAlwaysActiveStyles();
+    _ckyAttachManualLinksStyles();
     _ckyRemoveStyles();
     _ckyAddPositionClass();
     _ckyAddRtlClass();
@@ -942,10 +945,12 @@ function _ckySetShowMoreLess() {
     function showMoreHandler() {
         element.innerHTML = `${contentHTML}${hideButtonContent}`;
         _ckyAttachListener("=hide-desc-button", showLessHandler);
+        _ckyAttachShowMoreLessStyles();
     }
     function showLessHandler() {
         element.innerHTML = strippedContent;
         _ckyAttachListener("=show-desc-button", showMoreHandler);
+        _ckyAttachShowMoreLessStyles();
     }
     showLessHandler();
 }
@@ -1221,6 +1226,88 @@ function _ckyAttachReadMore() {
         for (const style in styles) {
             if (!styles[style]) continue;
             placeHolder.style[style] = styles[style];
+        }
+    });
+}
+
+/**
+ * Apply styles to show more/show less buttons.
+ * 
+ * @returns void
+ */
+function _ckyAttachShowMoreLessStyles() {
+    if (!_ckyStore._bannerConfig.config.showMore || !_ckyStore._bannerConfig.config.showLess) return;
+    
+    const showMoreStyles = _ckyStore._bannerConfig.config.showMore.styles;
+    const showLessStyles = _ckyStore._bannerConfig.config.showLess.styles;
+    
+    if (showMoreStyles) {
+        const showMoreButtons = document.querySelectorAll('[data-cky-tag="show-desc-button"]');
+        if (showMoreButtons.length > 0) {
+            Array.from(showMoreButtons).forEach((button) => {
+                for (const style in showMoreStyles) {
+                    if (!showMoreStyles[style]) continue;
+                    button.style[style] = showMoreStyles[style];
+                }
+            });
+        }
+    }
+    
+    if (showLessStyles) {
+        const showLessButtons = document.querySelectorAll('[data-cky-tag="hide-desc-button"]');
+        if (showLessButtons.length > 0) {
+            Array.from(showLessButtons).forEach((button) => {
+                for (const style in showLessStyles) {
+                    if (!showLessStyles[style]) continue;
+                    button.style[style] = showLessStyles[style];
+                }
+            });
+        }
+    }
+}
+
+/**
+ * Apply styles to Always Active text.
+ * 
+ * @returns void
+ */
+function _ckyAttachAlwaysActiveStyles() {
+    if (!_ckyStore._bannerConfig.config.alwaysActive) return;
+    
+    const alwaysActiveStyles = _ckyStore._bannerConfig.config.alwaysActive.styles;
+    if (!alwaysActiveStyles) return;
+    
+    const alwaysActiveElements = document.querySelectorAll('.cky-always-active');
+    if (alwaysActiveElements.length < 1) return;
+    Array.from(alwaysActiveElements).forEach((element) => {
+        for (const style in alwaysActiveStyles) {
+            if (!alwaysActiveStyles[style]) continue;
+            element.style[style] = alwaysActiveStyles[style];
+        }
+    });
+}
+
+/**
+ * Apply styles to manually added links.
+ * 
+ * @returns void
+ */
+function _ckyAttachManualLinksStyles() {
+    if (!_ckyStore._bannerConfig.config.manualLinks) return;
+    
+    const manualLinksStyles = _ckyStore._bannerConfig.config.manualLinks.styles;
+    if (!manualLinksStyles) return;
+    
+    const manualLinks = document.querySelectorAll('.cky-link, a.cky-link, [data-cky-tag="detail"] a, [data-cky-tag="optout-popup"] a, [data-cky-tag="notice"] a');
+    if (manualLinks.length < 1) return;
+    Array.from(manualLinks).forEach((link) => {
+        if (link.getAttribute('data-cky-tag') === 'readmore-button') return;
+        for (const style in manualLinksStyles) {
+            if (!manualLinksStyles[style]) continue;
+            link.style[style] = manualLinksStyles[style];
+        }
+        if (manualLinksStyles.color) {
+            link.style.textDecorationColor = manualLinksStyles.color;
         }
     });
 }

@@ -109,7 +109,6 @@ if( isset( $_POST['plugin_sent'] ) ) echo '<div class="updated"><p>' . __('Setti
 				<label><?php _e( 'Convert these image extensions to WebP:', 'images-to-webp' ) ?></label> 
 			</th>
 			<td>
-				<?php $this->extensions = apply_filters( 'itw_extensions', $this->extensions ); ?>
 				<?php foreach( $this->extensions as $extension ): ?>
 					<br>
 					<label>

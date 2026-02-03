@@ -549,7 +549,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 		public function maybe_render_blank_state( $which ) {
 			global $post_type;
 
-			if ( 'gift_card' === $post_type && 'bottom' === $which ) {
+			if ( 'gift_card' === $post_type && 'top' === $which ) {
 				$counts = (array) wp_count_posts( $post_type );
 				unset( $counts['auto-draft'], $counts['draft'] );
 				$count = array_sum( $counts );
@@ -560,7 +560,7 @@ if ( ! class_exists( 'YITH_YWGC_Gift_Cards_Post_Type_Admin' ) ) {
 
 				$this->render_blank_state();
 
-				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .yith-plugin-ui__wp-list-auto-h-scroll__wrapper, #posts-filter .tablenav.top, .tablenav.bottom > *, .edit-php.post-type-gift_card .subsubsub  { display: none; } #posts-filter .tablenav.bottom, .tablenav.bottom #ywgc-list-table-blank-state{ height: auto; display: block } .yith-plugin-ui--gift_card-post_type .wrap a.page-title-action { display: none; } </style>';
+				echo '<style type="text/css">#posts-filter .wp-list-table, #posts-filter .yith-plugin-ui__wp-list-auto-h-scroll__wrapper, #posts-filter .tablenav.top, .tablenav.top > *, .edit-php.post-type-gift_card .subsubsub  { display: none; } #posts-filter .tablenav.top, .tablenav.top #ywgc-list-table-blank-state{ height: auto; display: block } .yith-plugin-ui--gift_card-post_type .wrap a.page-title-action { display: none; } </style>';
 			}
 		}
 

@@ -8,8 +8,6 @@
 
 namespace Trustpilot\Review;
 
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
 /**
  * Trustpilot-reviews
  * 

@@ -18,21 +18,23 @@ use WordPress\Plugin_Check\Traits\Stable_Check;
  * Check to detect disallowed file types.
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class File_Type_Check extends Abstract_File_Check {
 
 	use Amend_Check_Result;
 	use Stable_Check;
 
-	const TYPE_COMPRESSED   = 1;
-	const TYPE_PHAR         = 2;
-	const TYPE_VCS          = 4;
-	const TYPE_HIDDEN       = 8;
-	const TYPE_APPLICATION  = 16;
-	const TYPE_BADLY_NAMED  = 32;
-	const TYPE_LIBRARY_CORE = 64;
-	const TYPE_COMPOSER     = 128;
-	const TYPE_ALL          = 255; // Same as all of the above with bitwise OR.
+	const TYPE_COMPRESSED      = 1;
+	const TYPE_PHAR            = 2;
+	const TYPE_VCS             = 4;
+	const TYPE_HIDDEN          = 8;
+	const TYPE_APPLICATION     = 16;
+	const TYPE_BADLY_NAMED     = 32;
+	const TYPE_LIBRARY_CORE    = 64;
+	const TYPE_COMPOSER        = 128;
+	const TYPE_AI_INSTRUCTIONS = 256;
+	const TYPE_ALL             = 511; // Same as all of the above with bitwise OR.
 
 	/**
 	 * Bitwise flags to control check behavior.
@@ -104,6 +106,9 @@ class File_Type_Check extends Abstract_File_Check {
 		}
 		if ( $this->flags & self::TYPE_COMPOSER ) {
 			$this->look_for_composer_files( $result, $files );
+		}
+		if ( $this->flags & self::TYPE_AI_INSTRUCTIONS ) {
+			$this->look_for_ai_instructions( $result, $files );
 		}
 	}
 
@@ -212,12 +217,26 @@ class File_Type_Check extends Abstract_File_Check {
 	 * @param array        $files  List of absolute file paths.
 	 */
 	protected function look_for_hidden_files( Check_Result $result, array $files ) {
-		// Any files outside of 'vendor' or 'node_modules' directories that start with a period.
-		$hidden_files = self::filter_files_by_regex( $files, '/^((?!\/vendor\/|\/node_modules\/).)*\/\.\w+(\.\w+)*$/' );
+		// Any files outside of 'vendor' or 'vendor_prefixed' or 'vendor-prefixed' or 'node_modules' directories that start with a period.
+		$hidden_files = self::filter_files_by_regex( $files, '/^((?!\/vendor\/|\/node_modules\/|\/vendor_prefixed\/|\/vendor-prefixed\/).)*\/\.[\w\.\-_]+$/' );
+
+		// Allow development-only files that are commonly used in plugin development workflows.
+		$allowed_dev_files = array( '.distignore', '.gitignore' );
+
 		if ( $hidden_files ) {
+			$is_error_dev_files = ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && 'production' === wp_get_environment_type();
+
+			$plugin_path = $result->plugin()->path();
 			foreach ( $hidden_files as $file ) {
-				$this->add_result_error_for_file(
+				// Get the relative file path from the plugin root.
+				$relative_file = str_replace( $plugin_path, '', $file );
+				$basename      = basename( $relative_file );
+
+				$is_error = in_array( $basename, $allowed_dev_files, true ) && ! $is_error_dev_files ? false : true;
+
+				$this->add_result_message_for_file(
 					$result,
+					$is_error,
 					__( 'Hidden files are not permitted.', 'plugin-check' ),
 					'hidden_files',
 					$file,
@@ -460,6 +479,139 @@ class File_Type_Check extends Abstract_File_Check {
 	}
 
 	/**
+	 * Looks for AI instruction files and directories.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Check_Result $result The check result to amend, including the plugin context to check.
+	 * @param array        $files  List of absolute file paths.
+	 */
+	protected function look_for_ai_instructions( Check_Result $result, array $files ) {
+		$this->check_ai_directories( $result, $files );
+		$this->check_github_directory( $result, $files );
+		$this->check_unexpected_markdown_files( $result, $files );
+	}
+
+	/**
+	 * Checks for AI instruction directories.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Check_Result $result Check result to amend.
+	 * @param array        $files  List of file paths.
+	 */
+	protected function check_ai_directories( Check_Result $result, array $files ) {
+		$plugin_path    = $result->plugin()->path();
+		$ai_directories = array( '.cursor', '.claude', '.aider', '.continue', '.windsurf', '.ai' );
+		$found_ai_dirs  = array();
+
+		foreach ( $files as $file ) {
+			$relative_path = str_replace( $plugin_path, '', $file );
+
+			foreach ( $ai_directories as $ai_dir ) {
+				if ( strpos( $relative_path, '/' . $ai_dir . '/' ) !== false || strpos( $relative_path, $ai_dir . '/' ) === 0 ) {
+					$found_ai_dirs[ $ai_dir ] = true;
+					break;
+				}
+			}
+		}
+
+		foreach ( array_keys( $found_ai_dirs ) as $ai_dir ) {
+			$this->add_result_warning_for_file(
+				$result,
+				sprintf(
+					/* translators: %s: directory name */
+					__( 'AI instruction directory "%s" detected. These directories should not be included in production plugins.', 'plugin-check' ),
+					$ai_dir
+				),
+				'ai_instruction_directory',
+				$plugin_path . $ai_dir,
+				0,
+				0,
+				'',
+				9
+			);
+		}
+	}
+
+	/**
+	 * Checks for GitHub workflow directory.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Check_Result $result Check result to amend.
+	 * @param array        $files  List of file paths.
+	 */
+	protected function check_github_directory( Check_Result $result, array $files ) {
+		$plugin_path  = $result->plugin()->path();
+		$found_github = false;
+
+		foreach ( $files as $file ) {
+			$relative_path = str_replace( $plugin_path, '', $file );
+			if ( strpos( $relative_path, '/.github/' ) !== false || strpos( $relative_path, '.github/' ) === 0 ) {
+				$found_github = true;
+				break;
+			}
+		}
+
+		if ( $found_github ) {
+			$this->add_result_warning_for_file(
+				$result,
+				__( 'GitHub workflow directory ".github" detected. This directory should not be included in production plugins.', 'plugin-check' ),
+				'github_directory',
+				$plugin_path . '.github',
+				0,
+				0,
+				'',
+				9
+			);
+		}
+	}
+
+	/**
+	 * Checks for unexpected markdown files.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Check_Result $result Check result to amend.
+	 * @param array        $files  List of file paths.
+	 */
+	protected function check_unexpected_markdown_files( Check_Result $result, array $files ) {
+		$plugin_path           = $result->plugin()->path();
+		$allowed_root_md_files = array( 'README.md', 'readme.txt', 'LICENSE', 'LICENSE.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'SECURITY.md' );
+		$root_md_files         = array();
+
+		foreach ( $files as $file ) {
+			$relative_path = str_replace( $plugin_path, '', $file );
+			$relative_path = ltrim( $relative_path, '/' );
+			$basename      = basename( $file );
+
+			if ( substr_count( $relative_path, '/' ) === 0 && pathinfo( $file, PATHINFO_EXTENSION ) === 'md' ) {
+				if ( ! in_array( $basename, $allowed_root_md_files, true ) ) {
+					$root_md_files[] = $file;
+				}
+			}
+		}
+
+		foreach ( $root_md_files as $file ) {
+			$this->add_result_warning_for_file(
+				$result,
+				sprintf(
+					/* translators: %s: file name */
+					__( 'Unexpected markdown file "%s" detected in plugin root. Only specific markdown files are expected in production plugins.', 'plugin-check' ),
+					basename( $file )
+				),
+				'unexpected_markdown_file',
+				$file,
+				0,
+				0,
+				'',
+				9
+			);
+		}
+	}
+
+	/**
 	 * Gets the description for the check.
 	 *
 	 * Every check must have a short description explaining what the check does.
@@ -469,7 +621,7 @@ class File_Type_Check extends Abstract_File_Check {
 	 * @return string Description.
 	 */
 	public function get_description(): string {
-		return __( 'Detects the usage of hidden and compressed files, VCS directories, application files, badly named files and Library Core Files.', 'plugin-check' );
+		return __( 'Detects the usage of hidden and compressed files, VCS directories, application files, badly named files, Library Core Files, AI development directories, and unexpected markdown files.', 'plugin-check' );
 	}
 
 	/**

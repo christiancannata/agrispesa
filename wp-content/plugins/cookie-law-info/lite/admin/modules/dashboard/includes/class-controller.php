@@ -141,6 +141,9 @@ class Controller extends Cloud {
 					}
 				}
 			}
+			if(isset($response['overage']['price_per_unit'])){
+				$data['overage_price'] = $response['overage']['price_per_unit'];
+			}
 		}
 		return $data;
 	}

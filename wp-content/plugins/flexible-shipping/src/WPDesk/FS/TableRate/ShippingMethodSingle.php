@@ -151,6 +151,9 @@ class ShippingMethodSingle extends WC_Shipping_Method {
 		add_filter( $filter_name, $filter_callback );
 		$processed = parent::process_admin_options();
 		remove_filter( $filter_name, $filter_callback );
+		if ( $this->instance_id ) {
+			do_action( 'flexible_shipping_method_updated', $this->instance_id );
+		}
 
 		return $processed;
 	}
@@ -318,5 +321,4 @@ class ShippingMethodSingle extends WC_Shipping_Method {
 			)
 		);
 	}
-
 }

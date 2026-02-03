@@ -40,10 +40,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		public function __construct() {
 			add_filter( 'wp_nav_menu_items', array( $this, 'add_wallet_nav_menu' ), 100, 2 );
 			add_filter( 'woocommerce_endpoint_woo-wallet_title', array( $this, 'woocommerce_endpoint_title' ), 10, 2 );
-			add_filter( 'woocommerce_endpoint_woo-wallet-transactions_title', array( $this, 'woocommerce_endpoint_title' ), 10, 2 );
 			add_filter( 'woocommerce_account_menu_items', array( $this, 'woo_wallet_menu_items' ), 10, 1 );
 			add_action( 'woocommerce_account_woo-wallet_endpoint', array( $this, 'woo_wallet_endpoint_content' ) );
-			add_action( 'woocommerce_account_woo-wallet-transactions_endpoint', array( $this, 'woo_wallet_transactions_endpoint_content' ) );
 
 			add_filter( 'woocommerce_is_purchasable', array( $this, 'make_woo_wallet_recharge_product_purchasable' ), 10, 2 );
 			add_action( 'wp_loaded', array( $this, 'woo_wallet_frontend_loaded' ), 20 );
@@ -85,6 +83,10 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 			add_action( 'woocommerce_order_details_after_order_table', array( $this, 'remove_woocommerce_order_again_button_for_wallet_rechargeable_order' ), 5 );
 
 			add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'woocommerce_cart_loaded_from_session' ) );
+
+			add_action( 'woo_wallet_add_content', array( $this, 'woo_wallet_add_content' ) );
+			add_action( 'woo_wallet_transfer_content', array( $this, 'woo_wallet_transfer_content' ) );
+			add_action( 'woo_wallet_transactions_content', array( $this, 'woo_wallet_transactions_content' ) );
 		}
 		/**
 		 * Remove wallet rechargeable product from the cart
@@ -122,7 +124,7 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 */
 		public function wp_nav_menu_objects( $items ) {
 			foreach ( $items as &$item ) {
-				if ( 'my-wallet' === $item->post_name && get_post_meta( $item->ID, '_show_wallet_icon_amount', true ) ) {
+				if ( is_object( $item ) && 'my-wallet' === $item->post_name && get_post_meta( $item->ID, '_show_wallet_icon_amount', true ) ) {
 					$item->title = apply_filters( 'wp_wallet_nav_menu_title', '<span dir="rtl" class="woo-wallet-icon-wallet"></span>&nbsp;' . woo_wallet()->wallet->get_wallet_balance( get_current_user_id() ), $item );
 				}
 			}
@@ -159,16 +161,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		 * @param string $endpoint endpoint.
 		 */
 		public function woocommerce_endpoint_title( $title, $endpoint ) {
-			switch ( $endpoint ) {
-				case 'woo-wallet':
-					$title = apply_filters( 'woo_wallet_account_menu_title', __( 'My Wallet', 'woo-wallet' ) );
-					break;
-				case 'woo-wallet-transactions':
-					$title = apply_filters( 'woo_wallet_account_transaction_menu_title', __( 'Wallet Transactions', 'woo-wallet' ) );
-					break;
-				default:
-					$title = '';
-					break;
+			if ( 'woo-wallet' === $endpoint ) {
+				return apply_filters( 'woo_wallet_account_menu_title', __( 'My Wallet', 'woo-wallet' ) );
 			}
 			return $title;
 		}
@@ -186,25 +180,14 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 			wp_style_add_data( 'woo-wallet-style', 'rtl', 'replace' );
 			wp_register_script( 'jquery-datatables-script', woo_wallet()->plugin_url() . '/assets/jquery/js/jquery.dataTables.min.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
 			wp_register_script( 'jquery-datatables-responsive-script', woo_wallet()->plugin_url() . '/assets/jquery/js/dataTables.responsive.min.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
-			wp_register_script( 'moment-script', woo_wallet()->plugin_url() . '/assets/jquery/js/moment.min.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
-			wp_register_script( 'jquery-daterangepicker-script', woo_wallet()->plugin_url() . '/assets/jquery/js/daterangepicker.min.js', array( 'jquery' ), WOO_WALLET_PLUGIN_VERSION, true );
-			wp_register_script( 'wc-endpoint-wallet', woo_wallet()->plugin_url() . '/build/frontend/main.js', array( 'jquery', 'jquery-datatables-script' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'jquery-daterangepicker-script', woo_wallet()->plugin_url() . '/assets/jquery/js/daterangepicker.min.js', array( 'jquery', 'moment' ), WOO_WALLET_PLUGIN_VERSION, true );
+			wp_register_script( 'wc-endpoint-wallet', woo_wallet()->plugin_url() . '/build/frontend/main.js', array( 'jquery', 'jquery-datatables-script', 'moment' ), WOO_WALLET_PLUGIN_VERSION, true );
 			$data_table_columns = apply_filters(
 				'woo_wallet_transactons_datatable_columns',
 				array(
 					array(
-						'data'      => 'id',
-						'title'     => __( 'ID', 'woo-wallet' ),
-						'orderable' => false,
-					),
-					array(
-						'data'      => 'type',
-						'title'     => __( 'Type', 'woo-wallet' ),
-						'orderable' => false,
-					),
-					array(
-						'data'      => 'amount',
-						'title'     => __( 'Amount', 'woo-wallet' ),
+						'data'      => 'date',
+						'title'     => __( 'Date', 'woo-wallet' ),
 						'orderable' => false,
 					),
 					array(
@@ -213,8 +196,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 						'orderable' => false,
 					),
 					array(
-						'data'      => 'date',
-						'title'     => __( 'Date', 'woo-wallet' ),
+						'data'      => 'amount',
+						'title'     => __( 'Amount', 'woo-wallet' ),
 						'orderable' => false,
 					),
 				)
@@ -258,8 +241,8 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 					'zeroRecords'          => __( 'No matching records found', 'woo-wallet' ),
 					'inputTooShort'        => __( 'Please enter 3 or more characters', 'woo-wallet' ),
 					'searching'            => __( 'Searching…', 'woo-wallet' ),
-					'processing'           => __( 'Processing...', 'woo-wallet' ),
-					'search'               => __( 'Search by date:', 'woo-wallet' ),
+					'processing'           => '',
+					'search'               => '',
 					'placeholder'          => __( 'yyyy-mm-dd', 'woo-wallet' ),
 					'cancel'               => __( 'Cancel', 'woo-wallet' ),
 					'apply'                => __( 'Apply', 'woo-wallet' ),
@@ -300,7 +283,6 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 				),
 			);
 			wp_localize_script( 'wc-endpoint-wallet', 'wallet_param', $wallet_localize_param );
-			wp_enqueue_style( 'woo-wallet-style' );
 			if ( is_account_page() ) {
 				wp_enqueue_style( 'woo-wallet-payment-jquery-ui' );
 				wp_enqueue_style( 'dashicons' );
@@ -308,11 +290,11 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 				wp_enqueue_style( 'jquery-datatables-style' );
 				wp_enqueue_style( 'jquery-datatables-responsive-style' );
 				wp_enqueue_style( 'jquery-daterangepicker-style' );
+				wp_enqueue_style( 'woo-wallet-style' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
 				wp_enqueue_script( 'selectWoo' );
 				wp_enqueue_script( 'jquery-datatables-script' );
 				wp_enqueue_script( 'jquery-datatables-responsive-script' );
-				wp_enqueue_script( 'moment-script' );
 				wp_enqueue_script( 'jquery-daterangepicker-script' );
 				wp_enqueue_script( 'wc-endpoint-wallet' );
 			}
@@ -339,7 +321,7 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		}
 
 		/**
-		 * WooCommerce endpoint contents for wallet
+		 * WooCommerce endpoint contents for wallet.
 		 */
 		public function woo_wallet_endpoint_content() {
 			if ( is_wallet_account_locked() ) {
@@ -350,14 +332,24 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 		}
 
 		/**
-		 * WooCommerce endpoint contents for transaction details
+		 * Wallet dashboard top-up endpoint contents.
 		 */
-		public function woo_wallet_transactions_endpoint_content() {
-			if ( is_wallet_account_locked() ) {
-				woo_wallet()->get_template( 'no-access.php' );
-			} else {
-				woo_wallet()->get_template( 'wc-endpoint-wallet-transactions.php' );
-			}
+		public function woo_wallet_add_content() {
+			woo_wallet()->get_template( 'topup.php' );
+		}
+
+		/**
+		 * Wallet dashboard transfer endpoint contents.
+		 */
+		public function woo_wallet_transfer_content() {
+			woo_wallet()->get_template( 'transfer.php' );
+		}
+
+		/**
+		 * Wallet dashboard transactions endpoint contents.
+		 */
+		public function woo_wallet_transactions_content() {
+			woo_wallet()->get_template( 'transactions.php' );
 		}
 
 		/**
@@ -857,23 +849,14 @@ if ( ! class_exists( 'Woo_Wallet_Frontend' ) ) {
 				wp_enqueue_style( 'select2' );
 				wp_enqueue_style( 'jquery-datatables-style' );
 				wp_enqueue_style( 'jquery-datatables-responsive-style' );
+				wp_enqueue_style( 'woo-wallet-style' );
 				wp_enqueue_script( 'jquery-datatables-script' );
 				wp_enqueue_script( 'jquery-datatables-responsive-script' );
 				wp_enqueue_script( 'selectWoo' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
-				wp_enqueue_script( 'moment-script' );
 				wp_enqueue_script( 'jquery-daterangepicker-script' );
 				wp_enqueue_script( 'wc-endpoint-wallet' );
-				if ( isset( $_GET['wallet_action'] ) && ! empty( $_GET['wallet_action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					if ( 'view_transactions' === $_GET['wallet_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						woo_wallet()->get_template( 'wc-endpoint-wallet-transactions.php' );
-					} elseif ( in_array( $_GET['wallet_action'], apply_filters( 'woo_wallet_endpoint_actions', array( 'add', 'transfer' ) ), true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						woo_wallet()->get_template( 'wc-endpoint-wallet.php' );
-					}
-					do_action( 'woo_wallet_shortcode_action', wp_unslash( $_GET['wallet_action'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
-				} else {
-					woo_wallet()->get_template( 'wc-endpoint-wallet.php' );
-				}
+				woo_wallet()->get_template( 'wc-endpoint-wallet.php' );
 			}
 		}
 		/**

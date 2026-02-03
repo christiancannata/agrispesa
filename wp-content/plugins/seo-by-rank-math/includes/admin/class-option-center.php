@@ -245,7 +245,7 @@ class Option_Center implements Runner {
 
 		$tabs['p_types'] = [
 			'title' => esc_html__( 'Post Types:', 'rank-math' ),
-			'type'  => 'seprator',
+			'type'  => 'separator',
 			'name'  => 'p_types_separator',
 		];
 
@@ -328,10 +328,10 @@ class Option_Center implements Runner {
 		}
 
 		foreach ( $taxonomies_data as $attached => $taxonomies ) {
-			// Seprator.
+			// Separator.
 			$tabs[ $attached ] = [
 				'title' => ucwords( $attached ) . ':',
-				'type'  => 'seprator',
+				'type'  => 'separator',
 				'name'  => 'taxonomy_separator',
 			];
 
@@ -499,6 +499,8 @@ class Option_Center implements Runner {
 		wp_set_script_translations( 'rank-math-settings-chunk', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
 		wp_set_script_translations( 'rank-math-options', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
 		wp_set_script_translations( 'rank-math-components', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
+
+		$this->do_action( 'admin/after_settings_scripts' );
 	}
 
 	/**

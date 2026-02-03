@@ -44,7 +44,7 @@ class Instant_Indexing extends Base {
 	private $submitted = [];
 
 	/**
-	 * Store previous post status that we can check agains in save_post.
+	 * Store previous post status that we can check against in save_post.
 	 *
 	 * @var array
 	 */
@@ -286,6 +286,9 @@ class Instant_Indexing extends Base {
 	 * @return void
 	 */
 	public function save_post( $post_id, $post ) {
+		if ( defined( 'RANK_MATH_IMPORTING_CSV' ) && RANK_MATH_IMPORTING_CSV ) {
+			return;
+		}
 		// Check if already submitted.
 		if ( in_array( $post_id, $this->submitted, true ) ) {
 			return;
@@ -317,12 +320,25 @@ class Instant_Indexing extends Base {
 			}
 		}
 
-		Sitepress::get()->remove_home_url_filter();
 		$url = get_permalink( $post );
 		if ( 'trash' === $post->post_status ) {
 			$url = $this->previous_post_permalinks[ $post_id ];
 		}
-		Sitepress::get()->restore_home_url_filter();
+
+		if ( Sitepress::get()->is_active() ) {
+			$details = apply_filters( 'wpml_post_language_details', null, $post_id );
+			$code    = $details['language_code'] ?? '';
+			$url     = apply_filters( 'wpml_permalink', get_the_permalink( $post_id ), $code );
+
+			$sitepress = Sitepress::get()->get_var();
+			$urls      = $sitepress->get_setting( 'urls' );
+			if ( isset( $urls['directory_for_default_language'] ) && $urls['directory_for_default_language'] ) {
+				$lang = $sitepress->get_current_language();
+				if ( 0 !== strpos( $url, '/' . $lang ) ) {
+					$url = get_home_url() . $post->post_name;
+				}
+			}
+		}
 
 		/**
 		 * Filter the URL to be submitted to IndexNow.

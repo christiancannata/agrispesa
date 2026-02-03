@@ -136,8 +136,12 @@
             amount_buttons.removeClass('selected_button');
             amount_buttons_hidden_inputs.removeClass('selected_button');
             amount_buttons_hidden_inputs.removeAttr('name');
+
             $(this).addClass('selected_button');
-            $(this).next().addClass('selected_button');
+
+            if ( $( this ).next().hasClass( 'ywgc-amount-buttons' ) ) {
+				$( this ).next().addClass( 'selected_button' );
+			}
 
         });
 

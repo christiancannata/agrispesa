@@ -51,8 +51,6 @@ if ( ! class_exists( 'YITH_YWGC_Email_Send_Gift_Card' ) ) {
 			$this->template_html  = 'emails/send-gift-card.php';
 			$this->template_plain = 'emails/plain/send-gift-card.php';
 
-			$this->introductory_text = __( 'Hi {recipient_name}, you have received this gift card from {sender}, use it on our online shop.', 'yith-woocommerce-gift-cards' );
-
 			// Trigger on specific action call.
 			add_action( 'ywgc_email_send_gift_card_notification', array( $this, 'trigger', ), 10, 2 );
 

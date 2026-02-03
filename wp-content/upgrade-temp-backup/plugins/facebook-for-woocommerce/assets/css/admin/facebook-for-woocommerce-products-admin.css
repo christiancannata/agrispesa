@@ -1,0 +1,382 @@
+#woocommerce-product-data .fb-product-image-source-field .wc-radios {
+	width: auto;
+}
+
+#woocommerce-product-data ul.wc-tabs li.fb_commerce_tab_options a::before {
+	content: "\f304";
+}
+
+/* added #woocommerce-product-data to increase selector specificity */
+#woocommerce-product-data .fb-product-image-source-field .wc-radios li {
+	margin-bottom: 0;
+}
+#woocommerce-product-data .fb-product-image-source-field .wc-radios li:last-child {
+	padding-bottom: 0;
+}
+
+
+/* Ensure proper spacing between fields */
+#facebook_options .options_group {
+    padding: 0;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #eee;
+}
+
+#facebook_options .google_product_catgory {
+    border-top: 1px solid #eee;
+}
+
+.woocommerce_variable_attributes .wp-editor-wrap label {
+    float: left;
+    width: 150px;
+    padding: 0;
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+/* Ensure editor area has proper height */
+.wp-editor-area {
+    min-height: 100px;
+	color: #000000
+}
+
+/* Match WooCommerce field hover states */
+#facebook_options .wp-editor-container:hover {
+    border-color: #666;
+}
+
+/* add padding-top for first radio button in variation fields */
+#woocommerce-product-data .woocommerce_variation .fb-product-image-source-field .wc-radios li:first-child {
+	padding-top: 10px;
+}
+
+.woocommerce_variation .fb-product-image-source-field {
+	margin: 1em 0;
+}
+
+.woocommerce_variation .fb-product-image-source-field legend {
+	float: left;
+	padding-inline-start: 0;
+	padding-inline-end: 0;
+}
+
+.woocommerce_variation .fb-product-image-source-field .woocommerce-help-tip {
+	float: left;
+	margin-left: 4px;
+	vertical-align: top;
+}
+
+.woocommerce_variation .fb-product-image-source-field .wc-radios {
+	clear: both;
+}
+
+#woocommerce-product-data .wc_facebook_commerce_enabled_field label,
+#woocommerce-product-data .wc_facebook_commerce_fields label {
+	padding-right: 37px;
+	position: relative;
+	width: 113px;
+}
+#woocommerce-product-data .wc_facebook_commerce_enabled_field label .woocommerce-help-tip,
+#woocommerce-product-data .wc_facebook_commerce_fields label .woocommerce-help-tip {
+	margin: 0;
+	position: absolute;
+	top: 4px;
+	right: 12px;
+}
+
+#woocommerce-product-data #fb_product_video_selected_thumbnails p.video-thumbnail {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#woocommerce-product-data #fb_product_video_selected_thumbnails p.video-thumbnail img {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+#woocommerce-product-data #fb_product_video_selected_thumbnails p.video-thumbnail span {
+	margin-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	white-space: normal;
+	line-height: 1.2em;
+	max-height: 2.4em;
+}
+
+#woocommerce-product-data #fb_product_video_selected_thumbnails p.video-thumbnail a.remove-video {
+	color: red;
+    font-weight: 400;
+    line-height: 26px;
+    text-decoration: none;
+}
+
+.fb-product-video-media-frame .media-toolbar-secondary select.attachment-filters {
+	width: 350px;
+}
+
+/* Facebook Product Images for Variations */
+.fb-product-images-thumbnails p.image-thumbnail {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.fb-product-images-thumbnails p.image-thumbnail img {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.fb-product-images-thumbnails p.image-thumbnail span {
+	margin-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	white-space: normal;
+	line-height: 1.2em;
+	max-height: 2.4em;
+	flex: 1;
+}
+
+.fb-product-images-thumbnails p.image-thumbnail a.remove-image {
+	color: red;
+    font-weight: 400;
+    line-height: 26px;
+    text-decoration: none;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.fb-product-images-thumbnails p.image-thumbnail a.remove-image:hover {
+    color: #d63638;
+}
+
+.fb_product_images_field .button.fb-open-images-library {
+    margin-left: 5px;
+}
+
+.fb-product-images-media-frame .media-toolbar-secondary select.attachment-filters {
+	width: 350px;
+}
+
+/* Hide product image source fields by default - JavaScript will show the selected one */
+.woocommerce_variation .product-image-source-field {
+	display: none !important;
+}
+
+/* Show the selected product image source field */
+.woocommerce_variation .product-image-source-field.show {
+	display: block !important;
+}
+
+/* Specifically hide multiple images thumbnails when not selected */
+.woocommerce_variation .show-if-product-image-source-multiple:not(.show) .fb-product-images-thumbnails,
+.woocommerce_variation .show-if-product-image-source-multiple:not(.show) .image-thumbnail {
+	display: none !important;
+}
+
+/* Show multiple images thumbnails only when multiple images is selected */
+.woocommerce_variation .show-if-product-image-source-multiple.show .fb-product-images-thumbnails,
+.woocommerce_variation .show-if-product-image-source-multiple.show .image-thumbnail {
+	display: block !important;
+}
+
+#woocommerce-product-data #wc-facebook-google-product-category-fields {
+	width: 50%;
+}
+
+#woocommerce-product-data .wc-facebook-google-product-category-field select {
+	float: none;
+	width: 100%;
+	max-width: none;
+}
+
+#woocommerce-product-data #wc-facebook-google-product-category-fields .select2-container {
+	float: none;
+	width: 100% !important;
+}
+
+.notice .button.js-wc-plugin-framework-notice-dismiss {
+	margin-left: 10px;
+}
+
+/* adjusts widths of the products table, same as WooCommerce categories and tags */
+.column-facebook_sync {
+	width: 11% !important;
+}
+
+.woocommerce_options_panel .wp-editor-container {
+    margin-left: 162px;
+    width: calc(100% - 182px);
+    max-width: 550px;
+}
+
+.woocommerce_options_panel .wp-editor-tabs {
+    margin-left: 162px;
+    max-width: 550px;
+}
+
+/* Ensure the label aligns properly */
+.woocommerce_options_panel label[for="fb_product_description"] {
+    float: left;
+    width: 150px;
+    padding: 0;
+    margin: 0 0 0 12px;
+	font-size: 12px;
+}
+
+/* Ensure the wp-editor-wrap takes full width */
+.wp-editor-wrap {
+    width: 100%;
+    max-width: 100%;
+}
+
+.facebook-metabox {
+	overflow: hidden;
+	clear: both;
+	border: 1px solid #ddd;
+	margin: 16px 0 !important;
+	background: #fff;
+	padding: 0 !important; /* Remove the previous padding */
+	border-bottom: 1px solid #eee !important;
+}
+.facebook-metabox h3 {
+	margin: 0 !important;
+	font-size: 1em !important;
+	padding: 0.5em 0.75em 0.5em 1em !important;
+	cursor: pointer;
+	border-bottom: 1px solid #ddd;
+}
+.facebook-metabox.closed .handlediv:before {
+	content: "\f140" !important;
+}
+.facebook-metabox .handlediv:before {
+	content: "\f142" !important;
+	font: normal 20px/1 dashicons;
+}
+.facebook-metabox .wc-metabox-content {
+	padding: 1em;
+	background: #fff;
+}
+.facebook-metabox h3 strong {
+	line-height: 26px;
+	font-weight: 600;
+}
+
+.sync-indicator .sync-tooltip {
+	display: none;
+	position: absolute;
+	background: #32373c;
+	padding: 8px;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 11px;
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	line-height: 1.4;
+	white-space: nowrap;
+	z-index: 9999;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(8px);
+}
+
+.sync-indicator .sync-tooltip:before {
+	content: '';
+	position: absolute;
+	border: 6px solid transparent;
+	border-bottom-color: #32373c;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.sync-indicator:hover .sync-tooltip {
+	display: block;
+}
+
+.synced-attribute {
+	background-color: #f0f0f1 !important;
+	cursor: not-allowed;
+}
+
+/* Styles for synced fields */
+.multi-value-display,
+select.synced-attribute,
+input.synced-attribute {
+	cursor: not-allowed !important;
+	color: rgba(44, 51, 56, .5) !important;
+	background-color: #f0f0f1 !important;
+}
+
+/* Style for Select2 when parent select is synced */
+select.synced-attribute + .select2-container .select2-selection {
+	cursor: not-allowed !important;
+	background-color: #f0f0f1 !important;
+	color: rgba(44, 51, 56, .5) !important;
+}
+
+select.synced-attribute + .select2-container .select2-selection__rendered {
+	color: rgba(44, 51, 56, .5) !important;
+}
+
+/* Sync indicator styles */
+.wc-attributes-icon {
+	position: relative;
+	display: inline-block;
+	margin-left: 8px;
+	vertical-align: middle;
+	cursor: help;
+}
+
+.wc-attributes-icon:after {
+	content: '\f175';
+	font-family: dashicons;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	vertical-align: text-bottom;
+	opacity: 0.8;
+	color: #000;
+	font-size: 18px;
+}
+
+.woocommerce_options_panel {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    select {
+        font-size: 12px !important;
+    }
+}
+
+/* Multi-value display styles */
+.multi-value-display {
+    width: 50%;
+    max-width: 100%;
+    height: 34px;
+    margin: 0;
+    padding: 0 8px;
+    background-color: #f0f0f1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 32px;
+    color: rgba(44, 51, 56, .5);
+    display: inline-block;
+    vertical-align: middle;
+    cursor: not-allowed;
+}

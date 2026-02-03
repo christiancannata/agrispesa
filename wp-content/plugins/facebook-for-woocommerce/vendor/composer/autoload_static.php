@@ -4,23 +4,24 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
+class ComposerStaticInitb893d11fc146c4af223557f99ee67187
 {
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WooCommerce\\Facebook\\Feed\\' => 26,
             'WooCommerce\\Facebook\\' => 21,
         ),
-        'F' => 
+        'F' =>
         array (
             'Firebase\\JWT\\' => 13,
+            'FacebookAds\\' => 12,
         ),
-        'C' => 
+        'C' =>
         array (
             'Composer\\Installers\\' => 20,
         ),
-        'A' => 
+        'A' =>
         array (
             'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\' => 55,
             'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\' => 51,
@@ -28,7 +29,7 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
     );
 
     public static $prefixDirsPsr4 = array (
-        'WooCommerce\\Facebook\\Feed\\' => 
+        'WooCommerce\\Facebook\\Feed\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes/Feed',
             1 => __DIR__ . '/../..' . '/includes/Feed/Promotions',
@@ -36,23 +37,27 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
             3 => __DIR__ . '/../..' . '/includes/Feed/ShippingProfiles',
             4 => __DIR__ . '/../..' . '/includes/Feed/NavigationMenu',
         ),
-        'WooCommerce\\Facebook\\' => 
+        'WooCommerce\\Facebook\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),
-        'Firebase\\JWT\\' => 
+        'Firebase\\JWT\\' =>
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
-        'Composer\\Installers\\' => 
+        'FacebookAds\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/facebook/capi-param-builder-php/php/capi-param-builder/src',
+        ),
+        'Composer\\Installers\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
-        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\' => 
+        'Automattic\\WooCommerce\\Grow\\Tools\\CompatChecker\\v0_0_1\\' =>
         array (
             0 => __DIR__ . '/..' . '/woocommerce/grow/src',
         ),
-        'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\' => 
+        'Automattic\\WooCommerce\\ActionSchedulerJobFramework\\' =>
         array (
             0 => __DIR__ . '/..' . '/woocommerce/action-scheduler-job-framework/src',
         ),
@@ -175,6 +180,8 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
         'Composer\\Installers\\YawikInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/YawikInstaller.php',
         'Composer\\Installers\\ZendInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZendInstaller.php',
         'Composer\\Installers\\ZikulaInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/ZikulaInstaller.php',
+        'FacebookAds\\ETLDPlus1Resolver' => __DIR__ . '/..' . '/facebook/capi-param-builder-php/php/capi-param-builder/src/ETLDPlus1Resolver.php',
+        'FacebookAds\\ParamBuilder' => __DIR__ . '/..' . '/facebook/capi-param-builder-php/php/capi-param-builder/src/ParamBuilder.php',
         'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
         'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
@@ -224,6 +231,7 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
         'WooCommerce\\Facebook\\API\\Plugin\\Traits\\JS_Exposable' => __DIR__ . '/../..' . '/includes/API/Plugin/Traits/JS_Exposable.php',
         'WooCommerce\\Facebook\\API\\Plugin\\WhatsAppSettings\\Handler' => __DIR__ . '/../..' . '/includes/API/Plugin/WhatsAppSettings/Handler.php',
         'WooCommerce\\Facebook\\API\\Plugin\\WhatsAppSettings\\Uninstall\\Request' => __DIR__ . '/../..' . '/includes/API/Plugin/WhatsAppSettings/Uninstall/Request.php',
+        'WooCommerce\\Facebook\\API\\Plugin\\WhatsAppSettings\\UpdateIntegrationConfig\\Request' => __DIR__ . '/../..' . '/includes/API/Plugin/WhatsAppSettings/UpdateIntegrationConfig/Request.php',
         'WooCommerce\\Facebook\\API\\Plugin\\WhatsAppSettings\\Update\\Request' => __DIR__ . '/../..' . '/includes/API/Plugin/WhatsAppSettings/Update/Request.php',
         'WooCommerce\\Facebook\\API\\ProductCatalog\\ItemsBatch\\Create\\Request' => __DIR__ . '/../..' . '/includes/API/ProductCatalog/ItemsBatch/Create/Request.php',
         'WooCommerce\\Facebook\\API\\ProductCatalog\\ItemsBatch\\Create\\Response' => __DIR__ . '/../..' . '/includes/API/ProductCatalog/ItemsBatch/Create/Response.php',
@@ -281,10 +289,10 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
         'WooCommerce\\Facebook\\Admin\\Product_Categories' => __DIR__ . '/../..' . '/includes/Admin/Product_Categories.php',
         'WooCommerce\\Facebook\\Admin\\Products' => __DIR__ . '/../..' . '/includes/Admin/Products.php',
         'WooCommerce\\Facebook\\Admin\\Settings' => __DIR__ . '/../..' . '/includes/Admin/Settings.php',
+        'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Localization_Settings_Trait' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Localization_Settings_Trait.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Product_Attributes' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Product_Attributes.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Product_Sync' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Product_Sync.php',
         'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Shops' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Shops.php',
-        'WooCommerce\\Facebook\\Admin\\Settings_Screens\\Whatsapp_Utility' => __DIR__ . '/../..' . '/includes/Admin/Settings_Screens/Whatsapp_Utility.php',
         'WooCommerce\\Facebook\\Admin\\Tasks\\Setup' => __DIR__ . '/../..' . '/includes/Admin/Tasks/Setup.php',
         'WooCommerce\\Facebook\\Admin\\WhatsApp_Integration_Settings' => __DIR__ . '/../..' . '/includes/Admin/WhatsApp_Integration_Settings.php',
         'WooCommerce\\Facebook\\Checkout' => __DIR__ . '/../..' . '/includes/Checkout.php',
@@ -306,6 +314,10 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
         'WooCommerce\\Facebook\\Feed\\FeedManager' => __DIR__ . '/../..' . '/includes/Feed/FeedManager.php',
         'WooCommerce\\Facebook\\Feed\\FeedUploadUtils' => __DIR__ . '/../..' . '/includes/Feed/FeedUploadUtils.php',
         'WooCommerce\\Facebook\\Feed\\JsonFeedFileWriter' => __DIR__ . '/../..' . '/includes/Feed/JsonFeedFileWriter.php',
+        'WooCommerce\\Facebook\\Feed\\Localization\\LanguageFeedData' => __DIR__ . '/../..' . '/includes/Feed/Localization/LanguageFeedData.php',
+        'WooCommerce\\Facebook\\Feed\\Localization\\LanguageFeedManagementTrait' => __DIR__ . '/../..' . '/includes/Feed/Localization/LanguageFeedManagementTrait.php',
+        'WooCommerce\\Facebook\\Feed\\Localization\\LanguageOverrideFeed' => __DIR__ . '/../..' . '/includes/Feed/Localization/LanguageOverrideFeed.php',
+        'WooCommerce\\Facebook\\Feed\\Localization\\LanguageOverrideFeedWriter' => __DIR__ . '/../..' . '/includes/Feed/Localization/LanguageOverrideFeedWriter.php',
         'WooCommerce\\Facebook\\Feed\\NavigationMenuFeed' => __DIR__ . '/../..' . '/includes/Feed/NavigationMenu/NavigationMenuFeed.php',
         'WooCommerce\\Facebook\\Feed\\NavigationMenuFeedGenerator' => __DIR__ . '/../..' . '/includes/Feed/NavigationMenu/NavigationMenuFeedGenerator.php',
         'WooCommerce\\Facebook\\Feed\\NavigationMenuFeedHandler' => __DIR__ . '/../..' . '/includes/Feed/NavigationMenu/NavigationMenuFeedHandler.php',
@@ -343,9 +355,12 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
         'WooCommerce\\Facebook\\Handlers\\WebHook' => __DIR__ . '/../..' . '/includes/Handlers/WebHook.php',
         'WooCommerce\\Facebook\\Handlers\\WhatsAppConnection' => __DIR__ . '/../..' . '/includes/Handlers/WhatsAppConnection.php',
         'WooCommerce\\Facebook\\Handlers\\WhatsAppExtension' => __DIR__ . '/../..' . '/includes/Handlers/WhatsAppExtension.php',
-        'WooCommerce\\Facebook\\Handlers\\WhatsAppUtilityConnection' => __DIR__ . '/../..' . '/includes/Handlers/WhatsAppUtilityConnection.php',
-        'WooCommerce\\Facebook\\Handlers\\Whatsapp_Webhook' => __DIR__ . '/../..' . '/includes/Handlers/Whatsapp_Webhook.php',
+        'WooCommerce\\Facebook\\Integrations\\Abstract_Localization_Integration' => __DIR__ . '/../..' . '/includes/Integrations/Abstract_Localization_Integration.php',
         'WooCommerce\\Facebook\\Integrations\\Bookings' => __DIR__ . '/../..' . '/includes/Integrations/Bookings.php',
+        'WooCommerce\\Facebook\\Integrations\\Facebook_Fields_Translation_Trait' => __DIR__ . '/../..' . '/includes/Integrations/Facebook_Fields_Translation_Trait.php',
+        'WooCommerce\\Facebook\\Integrations\\IntegrationRegistry' => __DIR__ . '/../..' . '/includes/Integrations/IntegrationRegistry.php',
+        'WooCommerce\\Facebook\\Integrations\\Polylang' => __DIR__ . '/../..' . '/includes/Integrations/Polylang.php',
+        'WooCommerce\\Facebook\\Integrations\\WPML' => __DIR__ . '/../..' . '/includes/Integrations/WPML.php',
         'WooCommerce\\Facebook\\Jobs\\AbstractChainedJob' => __DIR__ . '/../..' . '/includes/Jobs/AbstractChainedJob.php',
         'WooCommerce\\Facebook\\Jobs\\GenerateProductFeed' => __DIR__ . '/../..' . '/includes/Jobs/GenerateProductFeed.php',
         'WooCommerce\\Facebook\\Jobs\\JobManager' => __DIR__ . '/../..' . '/includes/Jobs/JobManager.php',
@@ -383,9 +398,9 @@ class ComposerStaticInit4e80c194ac3fde3776fb76150346aee6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4e80c194ac3fde3776fb76150346aee6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4e80c194ac3fde3776fb76150346aee6::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4e80c194ac3fde3776fb76150346aee6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb893d11fc146c4af223557f99ee67187::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb893d11fc146c4af223557f99ee67187::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb893d11fc146c4af223557f99ee67187::$classMap;
 
         }, null, ClassLoader::class);
     }

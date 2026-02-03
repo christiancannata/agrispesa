@@ -155,10 +155,12 @@
                         return $orderBy;
                         
                     //check for orderby GET paramether in which case return default data
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if (isset($_GET['orderby']) && $_GET['orderby'] !==  'menu_order')
                         return $orderBy;
                         
                     //Avada orderby
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if (isset($_GET['product_orderby']) && $_GET['product_orderby'] !==  'default')
                         return $orderBy;
                     
@@ -182,9 +184,11 @@
                     if ( preg_match('/FIELD\s*\(/i', $orderBy ))
                         return( $orderBy );
                                         
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if ( ( is_admin() &&  !wp_doing_ajax() )    ||  ( wp_doing_ajax() && isset($_REQUEST['action']) && $_REQUEST['action'] === 'query-attachments') )
                             {
                                 
+                                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                                 if ( strval ( $options['adminsort'] ) === "1" || ( wp_doing_ajax() && isset($_REQUEST['action']) && $_REQUEST['action'] === 'query-attachments') )
                                     {
                                         
@@ -194,9 +198,11 @@
                                         
                                         //temporary ignore ACF group and admin ajax calls, should be fixed within ACF plugin sometime later
                                         if (is_object($post) && $post->post_type    ===  "acf-field-group"
+                                                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                                                 ||  (defined('DOING_AJAX') && isset($_REQUEST['action']) && strpos($_REQUEST['action'], 'acf/') === 0))
                                             return $orderBy;
-                                            
+                                        
+                                        // phpcs:ignore WordPress.Security.NonceVerification.Recommended    ordPress.Security.NonceVerification.Missing     
                                         if(isset($_POST['query'])   &&  isset($_POST['query']['post__in'])  &&  is_array($_POST['query']['post__in'])   &&  count($_POST['query']['post__in'])  >   0)
                                             return $orderBy;   
                                         
@@ -293,7 +299,7 @@
                     if( isset( $screen->taxonomy ) && !empty($screen->taxonomy) )
                         return;
                     
-                    if ( empty ( $options['allow_reorder_default_interfaces'][$screen->post_type] )     ||  ( isset ( $options['allow_reorder_default_interfaces'][$screen->post_type] )  &&  $options['allow_reorder_default_interfaces'][$screen->post_type]   !==      'yes' ) )
+                    if ( isset( $options['allow_reorder_default_interfaces'][$screen->post_type] )  && $options['allow_reorder_default_interfaces'][$screen->post_type] !== 'yes' )
                         return;
                         
                     if ( wp_is_mobile() || ( function_exists( 'jetpack_is_mobile' ) && jetpack_is_mobile() ) )
@@ -316,11 +322,11 @@
                         return false;
                     
                     //load required dependencies
-                    wp_enqueue_style('cpt-archive-dd', CPTURL . '/css/cpt-archive-dd.css');
+                    wp_enqueue_style('cpt-archive-dd', CPTURL . '/css/cpt-archive-dd.css', array(), PTO_VERSION );
                     
                     wp_enqueue_script('jquery');
                     wp_enqueue_script('jquery-ui-sortable');
-                    wp_register_script('cpto', CPTURL . '/js/cpt.js', array('jquery')); 
+                    wp_register_script('cpto', CPTURL . '/js/cpt.js', array('jquery'), PTO_VERSION, array( 'in_footer' => true ) ); 
                     
                     global $userdata;
                     
@@ -430,8 +436,6 @@
             function saveArchiveAjaxOrder()
                 {
                     
-                    set_time_limit(600);
-                    
                     global $wpdb, $userdata;
                     
                     $post_type  =   preg_replace( '/[^a-zA-Z0-9_\-]/', '', sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) );
@@ -448,10 +452,9 @@
                         die();
                     
                     //retrieve a list of all objects
-                    $mysql_query    =   $wpdb->prepare("SELECT ID FROM ". $wpdb->posts ." 
+                    $results        =   $wpdb->get_results( $wpdb->prepare("SELECT ID FROM ". $wpdb->posts ." 
                                                             WHERE post_type = %s AND post_status IN ('publish', 'pending', 'draft', 'private', 'future', 'inherit')
-                                                            ORDER BY menu_order, post_date DESC", $post_type);
-                    $results        =   $wpdb->get_results($mysql_query);
+                                                            ORDER BY menu_order, post_date DESC", $post_type) );
                     
                     if (!is_array($results)    ||  count($results)    <   1)
                         die();

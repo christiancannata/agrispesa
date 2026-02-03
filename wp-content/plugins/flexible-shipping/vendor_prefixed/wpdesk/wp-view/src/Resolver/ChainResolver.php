@@ -40,7 +40,7 @@ class ChainResolver implements Resolver
      *
      * @return string
      */
-    public function resolve($name, Renderer $renderer = null)
+    public function resolve($name, ?Renderer $renderer = null)
     {
         foreach ($this->resolvers as $resolver) {
             try {

@@ -63,6 +63,7 @@ class Controller extends Cloud {
 	 */
 	public function get_pageviews() {
 		$pageviews = array();
+		$this->set_api_url( CKY_APP_URL . '/api/v3/' );
 		$this->make_auth_request();
 		$data          = array( 'granularity' => '7d' );
 		$response      = $this->get(
@@ -73,16 +74,19 @@ class Controller extends Cloud {
 		if ( 200 === $response_code ) {
 			$response = json_decode( wp_remote_retrieve_body( $response ), true );
 			$items    = isset( $response['data'] ) ? $response['data'] : array();
+			$pageviews['total_views'] = isset( $response['totalViews'] ) ? absint( $response['totalViews'] ) : 0;
+			$pageviews['total_overage_views'] = isset( $response['totalOverageViews'] ) ? absint( $response['totalOverageViews'] ) : 0;
 			if ( empty( $items ) ) {
 				return $pageviews;
 			}
-			$total = 0;
 			foreach ( $items as $item ) {
 				$date        = isset( $item['date'] ) ? $item['date'] : '';
 				$views       = isset( $item['views'] ) ? absint( $item['views'] ) : 0;
-				$pageviews[] = array(
+				$overage_views = isset( $item['overage_views'] ) ? absint( $item['overage_views'] ) : 0;
+				$pageviews['data'][] = array(
 					'date'  => $date,
 					'views' => $views,
+					'overage_views' => $overage_views,
 				);
 			}
 		}

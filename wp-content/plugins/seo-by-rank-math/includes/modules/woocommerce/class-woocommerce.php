@@ -75,8 +75,8 @@ class WooCommerce extends WC_Vars {
 	 *
 	 * @return bool
 	 */
-	private function should_redirect() {
-		$remove_base = $this->remove_product_base || $this->remove_category_base;
+	public function should_redirect() {
+		$remove_base = $this->remove_product_base || $this->remove_category_base || $this->remove_parent_slugs;
 		if ( ! $remove_base ) {
 			return false;
 		}
@@ -179,7 +179,7 @@ class WooCommerce extends WC_Vars {
 	 */
 	public function robots( $robots ) {
 
-		// Early Bail if current page is Woocommerce OnePage Checkout.
+		// Early Bail if current page is WooCommerce OnePage Checkout.
 		if ( function_exists( 'is_wcopc_checkout' ) && is_wcopc_checkout() ) {
 			return $robots;
 		}

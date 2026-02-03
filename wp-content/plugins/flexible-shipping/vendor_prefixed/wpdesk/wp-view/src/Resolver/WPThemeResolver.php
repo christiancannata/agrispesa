@@ -30,7 +30,7 @@ class WPThemeResolver implements Resolver
      *
      * @return string
      */
-    public function resolve($name, Renderer $renderer = null)
+    public function resolve($name, ?Renderer $renderer = null)
     {
         $templateFile = locate_template([trailingslashit($this->template_base_path) . $name]);
         if (!$templateFile) {

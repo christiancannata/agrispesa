@@ -5,7 +5,7 @@ Tags: redis, object cache, caching, performance, relay
 Requires at least: 4.6
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 2.6.5
+Stable tag: 2.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -60,6 +60,13 @@ Redis Object Cache has various WP CLI commands, for more information run `wp hel
 4. Dashboard widget, displaying recent response time metrics.
 
 == Changelog ==
+
+= 2.7.0 =
+
+- Preserve key TTL when calling (in|de)crement methods
+- Updated `wp_cache_*()` function signatures to match core
+- Removed deprecated HHVM support
+- Removed deprecated `WP_REDIS_SERIALIZER` constant
 
 = 2.6.5 =
 
@@ -735,6 +742,6 @@ Since Predis isn't maintained any longer, it's highly recommended to switch over
 
 == Upgrade Notice ==
 
-= 2.4.0 =
+= 2.7.0 =
 
-Version 2.4.0 includes several stability and QoL improvements.
+Version 2.7.0 includes critical stability fixes.

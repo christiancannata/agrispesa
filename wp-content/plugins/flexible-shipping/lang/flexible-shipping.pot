@@ -1,21 +1,23 @@
-# Copyright (C) 2025 Octolize
+# Copyright (C) 2026 Octolize
 # This file is distributed under the same license as the Flexible Shipping plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Shipping 6.4.0\n"
+"Project-Id-Version: Flexible Shipping 6.5.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-08T11:35:17+00:00\n"
+"POT-Creation-Date: 2026-01-20T00:16:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-shipping\n"
 
 #. Plugin Name of the plugin
 #: flexible-shipping.php
+#: classes/class-flexible-shipping-plugin.php:376
+#: classes/class-flexible-shipping-plugin.php:521
 #: classes/table-rate/class-wpdesk-flexible-shipping-multilingual.php:48
 #: classes/table-rate/class-wpdesk-flexible-shipping-multilingual.php:51
 #: classes/table-rate/class-wpdesk-flexible-shipping-multilingual.php:54
@@ -51,24 +53,52 @@ msgstr ""
 msgid "https://octol.io/fs-author"
 msgstr ""
 
-#: classes/class-flexible-shipping-plugin.php:586
+#: classes/class-flexible-shipping-plugin.php:524
+#: classes/class-flexible-shipping-plugin.php:659
 #: vendor_prefixed/octolize/wp-shipping-extensions/src/ShippingExtensions/Plugin/PluginFactory.php:20
 #: vendor_prefixed/wpdesk/wp-wpdesk-fs-compatibility/src/PluginCompatibilityChecker.php:97
 msgid "Flexible Shipping PRO"
 msgstr ""
 
+#: classes/class-flexible-shipping-plugin.php:543
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:139
+msgid "Do you consent to sending data to the chat?"
+msgstr ""
+
+#: classes/class-flexible-shipping-plugin.php:544
+msgid "To start the chat, we need to send your inputs and technical data to the chat service."
+msgstr ""
+
+#: classes/class-flexible-shipping-plugin.php:545
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:141
+msgid "Accept"
+msgstr ""
+
+#: classes/class-flexible-shipping-plugin.php:546
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:142
+msgid "Decline"
+msgstr ""
+
+#: classes/class-flexible-shipping-plugin.php:550
+msgid "If you don’t want to give consent, you can contact our support using this: "
+msgstr ""
+
+#: classes/class-flexible-shipping-plugin.php:551
+msgid "support forum"
+msgstr ""
+
 #. Translators: link.
-#: classes/class-flexible-shipping-plugin.php:806
+#: classes/class-flexible-shipping-plugin.php:879
 #, php-format
 msgid "How can We make Flexible Shipping better for you? %1$sJust write to us.%2$s"
 msgstr ""
 
-#: classes/class-flexible-shipping-plugin.php:889
+#: classes/class-flexible-shipping-plugin.php:962
 #: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:188
 msgid "Settings"
 msgstr ""
 
-#: classes/class-flexible-shipping-plugin.php:897
+#: classes/class-flexible-shipping-plugin.php:970
 msgid "Buy PRO"
 msgstr ""
 
@@ -246,7 +276,7 @@ msgid "Shipping method %s updated."
 msgstr ""
 
 #: classes/table-rate/shipping-method.php:567
-#: src/WPDesk/FS/TableRate/ShippingMethodSingle.php:271
+#: src/WPDesk/FS/TableRate/ShippingMethodSingle.php:274
 msgid "Shipping cost added."
 msgstr ""
 
@@ -255,7 +285,6 @@ msgid "Code"
 msgstr ""
 
 #: classes/table-rate/views/html-custom-services.php:15
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
 msgid "Name"
 msgstr ""
 
@@ -1977,84 +2006,56 @@ msgstr ""
 msgid "Field"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/Beacon.php:43
-msgid "When you click OK we will open our BetterDocs beacon where you can find answers to your questions. This beacon will load our help articles and also potentially set cookies."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:112
+msgid "Hi there! 👋 I’m here to help you set up and use the plugin."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Contact us"
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:112
+msgid ""
+"You can ask me about:\n"
+"- settings and configuration,\n"
+"- common errors and how to fix them,\n"
+"- integrations with other tools.\n"
+"\n"
+"Just tell me what you need help with 🙂"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Need help? Send us a message."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:120
+msgid "Hi there! 👋"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "We usually respond within max a few hours."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:123
+msgid "I’m your AI Assistant. I’ll help you quickly configure the plugin and solve any issues."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Find answer"
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:126
+msgid "Type your question to get instant answer.."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Knowledge base"
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:129
+#: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:256
+#: assets/js/rules-settings.js:132
+msgid "AI can make mistakes. Octolize has access to the conversation held in this chat."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Search..."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:132
+msgid "New conversation"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Oops..."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:140
+msgid "To start the chat, we need to send your inputs and technical data to the chat service. Read more in our Privacy Policy."
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "We couldn’t find any docs that match your search. Try searching for a new term."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:144
+msgid "Privacy Policy"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Thanks for your feedback"
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:147
+msgid "If you don’t want to give consent, you can contact our support using this form:"
 msgstr ""
 
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "How did you like it?"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Thanks for the feedback"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Email address"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Subject"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "How can we help?"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Only .jpg, .png, .jpeg, .gif files are supported."
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Sending"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Send"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Thanks!"
-msgstr ""
-
-#: vendor_prefixed/octolize/wp-betterdocs-beacon/src/BeaconOptions.php:30
-msgid "Your message has been sent successfully."
+#: vendor_prefixed/octolize/wp-octolize-docs-chat/src/Chat/ChatSettings.php:148
+msgid "Support form"
 msgstr ""
 
 #: vendor_prefixed/octolize/wp-octolize-tracker/src/DeactivationTracker/OctolizeProReasonsFactory.php:22
@@ -2476,7 +2477,6 @@ msgid "The &#8220;%1$s&#8221; plugin requires at least %2$s version of %3$s to w
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-basic-requirements/src/Basic_Requirement_Checker.php:409
-#: vendor_prefixed/wpdesk/wp-basic-requirements/src/Basic_Requirement_Checker.php:429
 #, php-format
 msgid "The &#8220;%s&#8221; plugin cannot run without %s active. Please install and activate %s plugin."
 msgstr ""
@@ -2916,6 +2916,101 @@ msgstr ""
 msgid "Method settings:%1$s Enabled: %2$s Method Title: %3$s Method Description: %4$s Tax status: %5$s Costs includes tax: %6$s Free Shipping: %7$s Free Shipping Label: %8$s 'Left to free shipping' notice: %9$s Rules Calculation: %10$s Cart Calculation: %11$s Visibility (Show only for logged in users): %12$s Default: %13$s Debug mode: %14$s"
 msgstr ""
 
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:32
+msgid "Invalid nonce."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:46
+msgid "Unknown action."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:53
+msgid "Invalid rating value."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:68
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:78
+msgid "Message is required."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:70
+#, php-format
+msgid "Feedback for %s"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:83
+msgid "Thank you for your feedback!"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:85
+msgid "Could not send email. Please try again later."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionAjax.php:99
+msgid "Postponed."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Unexpected server response."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Request failed"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Message cannot be empty."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Your feedback"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Email"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Email (optional)"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Send"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Later"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+#: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:302
+#: assets-src/rules-settings/js/components/preconfigured-scenarios-unavailable-modal.js:65
+#: assets/js/rules-settings.js:132
+msgid "Close"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "Thank you!"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+#, php-format
+msgid "%d star"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/PopupPetitionDisplayer.php:44
+msgid "you@example.com"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/RepositoryPopupPetitionText.php:18
+#, php-format
+msgid "How's %1$s so far?"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/PopupPetition/RepositoryPopupRatingText.php:18
+msgid "Rate us clicking on the stars:"
+msgstr ""
+
 #. Translators: plugin name.
 #: vendor_prefixed/wpdesk/wp-wpdesk-rating-petition/src/RatingPetitionNotice.php:151
 #, php-format
@@ -3065,11 +3160,6 @@ msgstr ""
 msgid "Type your message..."
 msgstr ""
 
-#: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:256
-#: assets/js/rules-settings.js:132
-msgid "AI can make mistakes. Octolize has access to the conversation held in this chat."
-msgstr ""
-
 #: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:285
 #: assets/js/rules-settings.js:132
 msgid "Flexible Shipping AI assistant"
@@ -3078,12 +3168,6 @@ msgstr ""
 #: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:290
 #: assets/js/rules-settings.js:132
 msgid "Start new conversation"
-msgstr ""
-
-#: assets-src/rules-settings/js/components/ai/fs-ai-chat.js:302
-#: assets-src/rules-settings/js/components/preconfigured-scenarios-unavailable-modal.js:65
-#: assets/js/rules-settings.js:132
-msgid "Close"
 msgstr ""
 
 #: assets-src/rules-settings/js/components/ai/rules-settings-block.js:26

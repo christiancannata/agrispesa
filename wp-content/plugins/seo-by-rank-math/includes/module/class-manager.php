@@ -114,7 +114,7 @@ class Manager {
 
 		$modules['local-seo'] = [
 			'title'       => esc_html__( 'Local SEO', 'rank-math' ),
-			'desc'        => esc_html__( 'Dominate the search results for the local audiences by optimizing your website for Local SEO and it also helps you to aquire the Knowledge Graph.', 'rank-math' ),
+			'desc'        => esc_html__( 'Dominate the search results for the local audiences by optimizing your website for Local SEO and it also helps you to acquire the Knowledge Graph.', 'rank-math' ),
 			'class'       => 'RankMath\Local_Seo\Local_Seo',
 			'icon'        => 'local-seo',
 			'upgradeable' => true,
@@ -215,12 +215,6 @@ class Manager {
 			'probadge'      => true,
 			'disabled'      => true,
 			'disabled_text' => esc_html__( 'This module is available in the PRO version.', 'rank-math' ),
-		];
-
-		$modules['react-settings'] = [
-			'title' => esc_html__( 'React Settings UI', 'rank-math' ),
-			'desc'  => esc_html__( 'Enable the new React-powered interface for the plugin settings. Disable to revert to the classic PHP-based settings page.', 'rank-math' ),
-			'icon'  => 'settings',
 		];
 
 		return $modules;
@@ -539,7 +533,7 @@ class Manager {
 		?>
 			<div class="rank-math-box rank-math-unlock-pro-box">
 				<i class="rm-icon rm-icon-software"></i>
-				<a href="<?php KB::the( 'pro', 'Unlock PRO Module Box' ); ?>" target="_blank" class="pro-link" data-url="https://rankmath.com/site-checkout/">
+				<a href="<?php KB::the( 'pro', 'Unlock PRO Module Box' ); ?>" target="_blank" class="pro-link" data-url="<?php KB::the( 'site-checkout', 'Unlock PRO Module Box' ); ?>">
 					<header>
 						<h3><?php esc_html_e( 'Take SEO to the Next Level!', 'rank-math' ); ?></h3>
 						<ul>
